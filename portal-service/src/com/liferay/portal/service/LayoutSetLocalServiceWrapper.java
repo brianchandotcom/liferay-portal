@@ -289,6 +289,30 @@ public class LayoutSetLocalServiceWrapper implements LayoutSetLocalService,
 		return _layoutSetLocalService.getLayoutSetsByLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
 	}
 
+	/**
+	* Updates the state of the layout set prototype link.
+	*
+	* <p>
+	* <strong>Important:</strong> This method can disable the layout set
+	* prototype's link by setting <code>layoutSetPrototypeLinkEnabled</code> to
+	* <code>false</code>. However, this method can only enable the layout set
+	* prototype's link if the layout set prototype's current uuid is not
+	* <code>null</code>. Setting the <code>layoutSetPrototypeLinkEnabled</code>
+	* to <code>true</code> when the layout set prototype's current uuid is
+	* <code>null</code> will result in an
+	* <code>java.lang.IllegalStateException</code>.
+	* </p>
+	*
+	* @param groupId the primary key of the group
+	* @param privateLayout whether the layout set is private to the group
+	* @param layoutSetPrototypeLinkEnabled whether the layout set
+	prototype is link enabled
+	* @throws PortalException if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	* @deprecated As of 6.1, replaced by {@link
+	#updateLayoutSetPrototypeLinkEnabled(long, boolean, boolean,
+	String)}
+	*/
 	public void updateLayoutSetPrototypeLinkEnabled(long groupId,
 		boolean privateLayout, boolean layoutSetPrototypeLinkEnabled)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -297,6 +321,26 @@ public class LayoutSetLocalServiceWrapper implements LayoutSetLocalService,
 			privateLayout, layoutSetPrototypeLinkEnabled);
 	}
 
+	/**
+	* Updates the state of the layout set prototype link.
+	*
+	* <p>
+	* <strong>Important:</strong> Setting
+	* <code>layoutSetPrototypeLinkEnabled</code> to <code>true</code> and
+	* <code>layoutSetPrototypeUuid</code> to <code>null</code> when the layout
+	* set prototype's current uuid is <code>null</code> will result in an
+	* <code>java.lang.IllegalStateException</code>.
+	* </p>
+	*
+	* @param groupId the primary key of the group
+	* @param privateLayout whether the layout set is private to the group
+	* @param layoutSetPrototypeLinkEnabled whether the layout set prototype is
+	link enabled
+	* @param layoutSetPrototypeUuid the uuid of the layout set prototype to
+	link with
+	* @throws PortalException if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
 	public void updateLayoutSetPrototypeLinkEnabled(long groupId,
 		boolean privateLayout, boolean layoutSetPrototypeLinkEnabled,
 		java.lang.String layoutSetPrototypeUuid)

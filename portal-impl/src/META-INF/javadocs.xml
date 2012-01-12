@@ -13374,65 +13374,74 @@ This method handles the creation of the layout including its resources, metadata
 		</method>
 		<method>
 			<name>updateLayoutSetPrototypeLinkEnabled</name>
-			<comment><![CDATA[]]></comment>
+			<comment><![CDATA[Updates the state of the layout set prototype link.
+
+<p>
+<strong>Important:</strong> This method can disable the layout set prototype's link by setting <code>layoutSetPrototypeLinkEnabled</code> to <code>false</code>. However, this method can only enable the layout set prototype's link if the layout set prototype's current uuid is not <code>null</code>. Setting the <code>layoutSetPrototypeLinkEnabled</code> to <code>true</code> when the layout set prototype's current uuid is <code>null</code> will result in an <code>java.lang.IllegalStateException</code>.
+</p>]]></comment>
 			<param>
 				<name>groupId</name>
 				<type>long</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the primary key of the group]]></comment>
 			</param>
 			<param>
 				<name>privateLayout</name>
 				<type>boolean</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[whether the layout set is private to the group]]></comment>
 			</param>
 			<param>
 				<name>layoutSetPrototypeLinkEnabled</name>
 				<type>boolean</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[whether the layout set prototype is link enabled]]></comment>
 			</param>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[if a portal exception occurred]]></comment>
 			</throws>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[if a system exception occurred]]></comment>
 			</throws>
+			<deprecated><![CDATA[As of 6.1, replaced by {@link #updateLayoutSetPrototypeLinkEnabled(long, boolean, boolean, String)}]]></deprecated>
 		</method>
 		<method>
 			<name>updateLayoutSetPrototypeLinkEnabled</name>
-			<comment><![CDATA[]]></comment>
+			<comment><![CDATA[Updates the state of the layout set prototype link.
+
+<p>
+<strong>Important:</strong> Setting <code>layoutSetPrototypeLinkEnabled</code> to <code>true</code> and <code>layoutSetPrototypeUuid</code> to <code>null</code> when the layout set prototype's current uuid is <code>null</code> will result in an <code>java.lang.IllegalStateException</code>.
+</p>]]></comment>
 			<param>
 				<name>groupId</name>
 				<type>long</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the primary key of the group]]></comment>
 			</param>
 			<param>
 				<name>privateLayout</name>
 				<type>boolean</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[whether the layout set is private to the group]]></comment>
 			</param>
 			<param>
 				<name>layoutSetPrototypeLinkEnabled</name>
 				<type>boolean</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[whether the layout set prototype is link enabled]]></comment>
 			</param>
 			<param>
 				<name>layoutSetPrototypeUuid</name>
 				<type>java.lang.String</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the uuid of the layout set prototype to link with]]></comment>
 			</param>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[if a portal exception occurred]]></comment>
 			</throws>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[if a system exception occurred]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -14175,36 +14184,40 @@ This method handles the creation of the layout including its resources, metadata
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
 			<name>updateLayoutSetPrototypeLinkEnabled</name>
-			<comment><![CDATA[]]></comment>
+			<comment><![CDATA[Updates the state of the layout set prototype link.
+
+<p>
+<strong>Important:</strong> Setting <code>layoutSetPrototypeLinkEnabled</code> to <code>true</code> and <code>layoutSetPrototypeUuid</code> to <code>null</code> when the layout set prototype's current uuid is <code>null</code> will result in an <code>java.lang.IllegalStateException</code>.
+</p>]]></comment>
 			<param>
 				<name>groupId</name>
 				<type>long</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the primary key of the group]]></comment>
 			</param>
 			<param>
 				<name>privateLayout</name>
 				<type>boolean</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[whether the layout set is private to the group]]></comment>
 			</param>
 			<param>
 				<name>layoutSetPrototypeLinkEnabled</name>
 				<type>boolean</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[whether the layout set prototype is link enabled]]></comment>
 			</param>
 			<param>
 				<name>layoutSetPrototypeUuid</name>
 				<type>java.lang.String</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the uuid of the layout set prototype to link with]]></comment>
 			</param>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[if a portal exception occurred]]></comment>
 			</throws>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[if a system exception occurred]]></comment>
 			</throws>
 		</method>
 		<method>

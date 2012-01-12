@@ -149,11 +149,12 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		long categoryId = MBCategoryConstants.DISCUSSION_CATEGORY_ID;
 
-		if (Validator.isNull(subject) && Validator.isNotNull(body)) {
+		if (Validator.isNull(subject)) {
+			if (Validator.isNull(body)) {
+				throw new MessageBodyException();
+			}
+
 			subject = body.substring(0, Math.min(body.length(), 50)) + "...";
-		}
-		else {
-			throw new MessageBodyException();
 		}
 
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =

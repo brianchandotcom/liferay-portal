@@ -1358,11 +1358,20 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			repositoryPath, repository, _NAMESPACE);
 
-		RepositoryLocalServiceUtil.addRepository(
-			userId, portletDataContext.getScopeGroupId(), classNameId,
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, repository.getName(),
-			repository.getDescription(), repository.getPortletId(),
-			repository.getTypeSettingsProperties(), serviceContext);
+		try {
+			RepositoryLocalServiceUtil.addRepository(
+				userId, portletDataContext.getScopeGroupId(), classNameId,
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, repository.getName(),
+				repository.getDescription(), repository.getPortletId(),
+				repository.getTypeSettingsProperties(), serviceContext);
+		}
+		catch (PortalException e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to connect to repository. " + repository.getName() +
+					":" + repository.getTypeSettingsProperties(), e);
+			}
+		}
 	}
 
 	protected static boolean isDuplicateFileEntry(

@@ -95,10 +95,10 @@ public class InputLocalizedTag extends IncludeTag {
 			getDynamicAttributes());
 		request.setAttribute("liferay-ui:input-localized:formName", formName);
 		request.setAttribute(
-			"liferay-ui:input-localized:languageId", _languageId);
-		request.setAttribute(
 			"liferay-ui:input-localized:ignoreRequestValue",
 			String.valueOf(_ignoreRequestValue));
+		request.setAttribute(
+			"liferay-ui:input-localized:languageId", _languageId);
 		request.setAttribute("liferay-ui:input-localized:name", _name);
 		request.setAttribute("liferay-ui:input-localized:type", _type);
 		request.setAttribute("liferay-ui:input-localized:xml", _xml);

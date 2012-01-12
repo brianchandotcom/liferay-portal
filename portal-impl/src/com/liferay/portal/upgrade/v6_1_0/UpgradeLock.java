@@ -15,8 +15,6 @@
 package com.liferay.portal.upgrade.v6_1_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 import com.liferay.portal.upgrade.v6_1_0.util.LockTable;
 
 /**
@@ -30,13 +28,10 @@ public class UpgradeLock extends UpgradeProcess {
 			runSQL("alter_column_type Lock_ owner VARCHAR(300) null");
 		}
 		else {
-			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
-				LockTable.TABLE_NAME, LockTable.TABLE_COLUMNS);
-
-			upgradeTable.setCreateSQL(LockTable.TABLE_SQL_CREATE);
-			upgradeTable.setIndexesSQL(LockTable.TABLE_SQL_ADD_INDEXES);
-
-			upgradeTable.updateTable();
+			upgradeTable(
+				LockTable.TABLE_NAME, LockTable.TABLE_COLUMNS,
+				LockTable.TABLE_SQL_CREATE,
+				LockTable.TABLE_SQL_ADD_INDEXES);
 		}
 	}
 

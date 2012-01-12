@@ -40,13 +40,10 @@ public class UpgradeTags extends UpgradeProcess {
 
 			// TagsAsset
 
-			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
-				TagsAssetTable.TABLE_NAME, TagsAssetTable.TABLE_COLUMNS);
-
-			upgradeTable.setCreateSQL(TagsAssetTable.TABLE_SQL_CREATE);
-			upgradeTable.setIndexesSQL(TagsAssetTable.TABLE_SQL_ADD_INDEXES);
-
-			upgradeTable.updateTable();
+			upgradeTable(
+				TagsAssetTable.TABLE_NAME, TagsAssetTable.TABLE_COLUMNS,
+				TagsAssetTable.TABLE_SQL_CREATE,
+				TagsAssetTable.TABLE_SQL_ADD_INDEXES);
 		}
 
 		updateAssetViewCount();

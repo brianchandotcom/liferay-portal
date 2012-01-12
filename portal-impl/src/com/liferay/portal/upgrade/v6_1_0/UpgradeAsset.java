@@ -16,8 +16,6 @@ package com.liferay.portal.upgrade.v6_1_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 import com.liferay.portal.upgrade.v6_1_0.util.AssetEntryTable;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -38,13 +36,10 @@ public class UpgradeAsset extends UpgradeProcess {
 			runSQL("alter_column_type AssetEntry title STRING null");
 		}
 		else {
-			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
-				AssetEntryTable.TABLE_NAME, AssetEntryTable.TABLE_COLUMNS);
-
-			upgradeTable.setCreateSQL(AssetEntryTable.TABLE_SQL_CREATE);
-			upgradeTable.setIndexesSQL(AssetEntryTable.TABLE_SQL_ADD_INDEXES);
-
-			upgradeTable.updateTable();
+			upgradeTable(
+				AssetEntryTable.TABLE_NAME, AssetEntryTable.TABLE_COLUMNS,
+				AssetEntryTable.TABLE_SQL_CREATE,
+				AssetEntryTable.TABLE_SQL_ADD_INDEXES);
 		}
 
 		updateAssetClassTypeId();

@@ -15,8 +15,6 @@
 package com.liferay.portal.upgrade.v6_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.upgrade.v6_0_0.util.ShoppingItemTable;
 
@@ -41,13 +39,10 @@ public class UpgradeShopping extends UpgradeProcess {
 			runSQL("alter_column_type ShoppingItem largeImageURL STRING null");
 		}
 		else {
-			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
-				ShoppingItemTable.TABLE_NAME, ShoppingItemTable.TABLE_COLUMNS);
-
-			upgradeTable.setCreateSQL(ShoppingItemTable.TABLE_SQL_CREATE);
-			upgradeTable.setIndexesSQL(ShoppingItemTable.TABLE_SQL_ADD_INDEXES);
-
-			upgradeTable.updateTable();
+			upgradeTable(
+				ShoppingItemTable.TABLE_NAME, ShoppingItemTable.TABLE_COLUMNS,
+				ShoppingItemTable.TABLE_SQL_CREATE,
+				ShoppingItemTable.TABLE_SQL_ADD_INDEXES);
 		}
 	}
 

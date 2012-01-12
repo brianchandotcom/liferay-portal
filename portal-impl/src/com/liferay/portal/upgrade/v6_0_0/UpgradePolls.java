@@ -15,8 +15,6 @@
 package com.liferay.portal.upgrade.v6_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 import com.liferay.portal.upgrade.v6_0_0.util.PollsChoiceTable;
 import com.liferay.portal.upgrade.v6_0_0.util.PollsQuestionTable;
 
@@ -36,25 +34,18 @@ public class UpgradePolls extends UpgradeProcess {
 
 			// PollsChoice
 
-			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
-				PollsChoiceTable.TABLE_NAME, PollsChoiceTable.TABLE_COLUMNS);
-
-			upgradeTable.setCreateSQL(PollsChoiceTable.TABLE_SQL_CREATE);
-			upgradeTable.setIndexesSQL(PollsChoiceTable.TABLE_SQL_ADD_INDEXES);
-
-			upgradeTable.updateTable();
+			upgradeTable(
+				PollsChoiceTable.TABLE_NAME, PollsChoiceTable.TABLE_COLUMNS,
+				PollsChoiceTable.TABLE_SQL_CREATE,
+				PollsChoiceTable.TABLE_SQL_ADD_INDEXES);
 
 			// PollsQuestion
 
-			upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
+			upgradeTable(
 				PollsQuestionTable.TABLE_NAME,
-				PollsQuestionTable.TABLE_COLUMNS);
-
-			upgradeTable.setCreateSQL(PollsQuestionTable.TABLE_SQL_CREATE);
-			upgradeTable.setIndexesSQL(
+				PollsQuestionTable.TABLE_COLUMNS,
+				PollsQuestionTable.TABLE_SQL_CREATE,
 				PollsQuestionTable.TABLE_SQL_ADD_INDEXES);
-
-			upgradeTable.updateTable();
 		}
 	}
 

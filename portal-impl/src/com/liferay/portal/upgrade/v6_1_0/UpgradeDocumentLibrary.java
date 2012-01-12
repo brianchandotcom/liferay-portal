@@ -17,8 +17,6 @@ package com.liferay.portal.upgrade.v6_1_0;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -295,15 +293,11 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			runSQL("alter_column_type DLFileVersion title VARCHAR(255) null");
 		}
 		else {
-			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
+			upgradeTable(
 				DLFileVersionTable.TABLE_NAME,
-				DLFileVersionTable.TABLE_COLUMNS);
-
-			upgradeTable.setCreateSQL(DLFileVersionTable.TABLE_SQL_CREATE);
-			upgradeTable.setIndexesSQL(
+				DLFileVersionTable.TABLE_COLUMNS,
+				DLFileVersionTable.TABLE_SQL_CREATE,
 				DLFileVersionTable.TABLE_SQL_ADD_INDEXES);
-
-			upgradeTable.updateTable();
 		}
 
 		runSQL("alter table DLFileVersion drop column name");

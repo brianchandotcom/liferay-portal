@@ -15,8 +15,6 @@
 package com.liferay.portal.upgrade.v5_2_3;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.upgrade.v5_2_3.util.WikiPageTable;
 
@@ -34,13 +32,10 @@ public class UpgradeWiki extends UpgradeProcess {
 
 			// WikiPage
 
-			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
-				WikiPageTable.TABLE_NAME, WikiPageTable.TABLE_COLUMNS);
-
-			upgradeTable.setCreateSQL(WikiPageTable.TABLE_SQL_CREATE);
-			upgradeTable.setIndexesSQL(WikiPageTable.TABLE_SQL_ADD_INDEXES);
-
-			upgradeTable.updateTable();
+			upgradeTable(
+				WikiPageTable.TABLE_NAME, WikiPageTable.TABLE_COLUMNS,
+				WikiPageTable.TABLE_SQL_CREATE,
+				WikiPageTable.TABLE_SQL_ADD_INDEXES);
 		}
 
 		// groupId

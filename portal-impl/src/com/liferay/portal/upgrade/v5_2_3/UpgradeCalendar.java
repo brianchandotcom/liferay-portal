@@ -15,8 +15,6 @@
 package com.liferay.portal.upgrade.v5_2_3;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 import com.liferay.portal.upgrade.v5_2_3.util.CalEventTable;
 
 /**
@@ -33,13 +31,10 @@ public class UpgradeCalendar extends UpgradeProcess {
 
 			// CalEvent
 
-			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
-				CalEventTable.TABLE_NAME, CalEventTable.TABLE_COLUMNS);
-
-			upgradeTable.setCreateSQL(CalEventTable.TABLE_SQL_CREATE);
-			upgradeTable.setIndexesSQL(CalEventTable.TABLE_SQL_ADD_INDEXES);
-
-			upgradeTable.updateTable();
+			upgradeTable(
+				CalEventTable.TABLE_NAME, CalEventTable.TABLE_COLUMNS,
+				CalEventTable.TABLE_SQL_CREATE,
+				CalEventTable.TABLE_SQL_ADD_INDEXES);
 		}
 	}
 

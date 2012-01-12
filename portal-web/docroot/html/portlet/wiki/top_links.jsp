@@ -62,7 +62,7 @@ if (categoryId > 0) {
 <c:if test="<%= !print %>">
 	<div class="top-links-container">
 		<c:if test="<%= (nodes.size() > 1) && portletName.equals(PortletKeys.WIKI) %>">
-			<div class="top-links-nodes">
+			<ul class="top-links-nodes">
 
 				<%
 				for (int i = 0; i < nodes.size(); i++) {
@@ -81,80 +81,91 @@ if (categoryId > 0) {
 						<portlet:param name="title" value="<%= WikiPageConstants.FRONT_PAGE %>" />
 					</portlet:renderURL>
 
-					<%= (i == 0) ? "" : "|" %> <aui:a cssClass="<%= cssClass %>" href="<%= viewPageURL %>" label="<%= curNode.getName() %>" />
+					<li class="top-link-node <%= (i == (nodes.size() - 1)) ? "last" : StringPool.BLANK %>">
+						<aui:a cssClass="<%= cssClass %>" href="<%= viewPageURL %>" label="<%= curNode.getName() %>" />
+					</li>
 
 				<%
 				}
 				%>
 
-			</div>
+			</ul>
 		</c:if>
 
 		<div class="top-links">
-			<div class="top-links-navigation">
+			<ul class="top-links-navigation">
+			    <li class="top-link">
 
-				<%
-				PortletURL frontPageURL = PortletURLUtil.clone(portletURL, renderResponse);
+					<%
+					PortletURL frontPageURL = PortletURLUtil.clone(portletURL, renderResponse);
 
-				frontPageURL.setParameter("struts_action", "/wiki/view");
-				frontPageURL.setParameter("title", WikiPageConstants.FRONT_PAGE);
-				frontPageURL.setParameter("tag", StringPool.BLANK);
-				%>
+					frontPageURL.setParameter("struts_action", "/wiki/view");
+					frontPageURL.setParameter("title", WikiPageConstants.FRONT_PAGE);
+					frontPageURL.setParameter("tag", StringPool.BLANK);
+					%>
 
-				<liferay-ui:icon
-					cssClass="top-link"
-					image="../aui/home"
-					label="<%= true %>"
-					message="<%= WikiPageConstants.FRONT_PAGE %>"
-					url="<%= Validator.isNull(strutsAction) || ((wikiPage != null) && wikiPage.getTitle().equals(WikiPageConstants.FRONT_PAGE)) ? StringPool.BLANK : frontPageURL.toString() %>"
-				/>
+					<liferay-ui:icon
+						image="../aui/home"
+						label="<%= true %>"
+						message="<%= WikiPageConstants.FRONT_PAGE %>"
+						url="<%= Validator.isNull(strutsAction) || ((wikiPage != null) && wikiPage.getTitle().equals(WikiPageConstants.FRONT_PAGE)) ? StringPool.BLANK : frontPageURL.toString() %>"
+					/>
+				</li>
 
-				<%
-				portletURL.setParameter("struts_action", "/wiki/view_recent_changes");
-				%>
+				<li class="top-link">
 
-				<liferay-ui:icon
-					cssClass="top-link"
-					image="../aui/clock"
-					label="<%= true %>"
-					message="recent-changes"
-					url='<%= strutsAction.equals(strutsPath + "/view_recent_changes") ? StringPool.BLANK : portletURL.toString() %>'
-				/>
+					<%
+					portletURL.setParameter("struts_action", "/wiki/view_recent_changes");
+					%>
 
-				<%
-				portletURL.setParameter("struts_action", "/wiki/view_all_pages");
-				%>
+					<liferay-ui:icon
+						image="../aui/clock"
+						label="<%= true %>"
+						message="recent-changes"
+						url='<%= strutsAction.equals(strutsPath + "/view_recent_changes") ? StringPool.BLANK : portletURL.toString() %>'
+					/>
+				</li>
 
-				<liferay-ui:icon
-					cssClass="top-link"
-					image="../aui/document" label="<%= true %>"
-					message="all-pages" url='<%= strutsAction.equals(strutsPath + "/view_all_pages") ? StringPool.BLANK : portletURL.toString() %>'
-				/>
+				<li class="top-link">
 
-				<%
-				portletURL.setParameter("struts_action", "/wiki/view_orphan_pages");
-				%>
+					<%
+					portletURL.setParameter("struts_action", "/wiki/view_all_pages");
+					%>
 
-				<liferay-ui:icon
-					cssClass="top-link"
-					image="../aui/document-b"
-					label="<%= true %>"
-					message="orphan-pages"
-					url='<%= strutsAction.equals(strutsPath + "/view_orphan_pages") ? StringPool.BLANK : portletURL.toString() %>'
-				/>
+					<liferay-ui:icon
+						image="../aui/document" label="<%= true %>"
+						message="all-pages" url='<%= strutsAction.equals(strutsPath + "/view_all_pages") ? StringPool.BLANK : portletURL.toString() %>'
+					/>
+				</li>
 
-				<%
-				portletURL.setParameter("struts_action", "/wiki/view_draft_pages");
-				%>
+				<li class="top-link">
 
-				<liferay-ui:icon
-					cssClass="top-link last"
-					image="../aui/document-b"
-					label="<%= true %>"
-					message="draft-pages"
-					url='<%= strutsAction.equals(strutsPath + "/view_draft_pages") ? StringPool.BLANK : portletURL.toString() %>'
-				/>
-			</div>
+					<%
+					portletURL.setParameter("struts_action", "/wiki/view_orphan_pages");
+					%>
+
+					<liferay-ui:icon
+						image="../aui/document-b"
+						label="<%= true %>"
+						message="orphan-pages"
+						url='<%= strutsAction.equals(strutsPath + "/view_orphan_pages") ? StringPool.BLANK : portletURL.toString() %>'
+					/>
+				</li>
+
+				<li class="top-link last">
+
+					<%
+					portletURL.setParameter("struts_action", "/wiki/view_draft_pages");
+					%>
+
+					<liferay-ui:icon
+						image="../aui/document-b"
+						label="<%= true %>"
+						message="draft-pages"
+						url='<%= strutsAction.equals(strutsPath + "/view_draft_pages") ? StringPool.BLANK : portletURL.toString() %>'
+					/>
+				</li>
+			</ul>
 
 			<liferay-portlet:renderURL varImpl="searchURL">
 				<portlet:param name="struts_action" value="/wiki/search" />

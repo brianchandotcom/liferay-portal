@@ -33,47 +33,50 @@ portletURL.setParameter("tag", StringPool.BLANK);
 
 <div class="top-links-container">
 	<div class="top-links">
-		<div class="top-links-navigation">
-
-			<%
-			portletURL.setParameter("topLink", "home");
-			%>
-
-			<liferay-ui:icon
-				cssClass="top-link"
-				image="../aui/home"
-				label="<%= true %>"
-				message="home"
-				url='<%= (topLink.equals("home") && folderId == 0 && viewFolder && !useAssetEntryQuery) ? StringPool.BLANK : portletURL.toString() %>'
-			/>
-
-			<%
-			portletURL.setParameter("topLink", "recent");
-			%>
-
-			<liferay-ui:icon
-				cssClass='<%= "top-link" + (themeDisplay.isSignedIn() ? StringPool.BLANK : " last") %>'
-				image="../aui/clock"
-				label="<%= true %>"
-				message="recent"
-				url='<%= (topLink.equals("recent") && !useAssetEntryQuery) ? StringPool.BLANK : portletURL.toString() %>'
-			/>
-
-			<c:if test="<%= themeDisplay.isSignedIn() %>">
-
+		<ul class="top-links-navigation">
+			<li class="top-link">
 				<%
-				portletURL.setParameter("topLink", "mine");
+				portletURL.setParameter("topLink", "home");
 				%>
 
 				<liferay-ui:icon
-					cssClass="top-link last"
-					image="../aui/person"
+					image="../aui/home"
 					label="<%= true %>"
-					message="mine"
-					url='<%= (topLink.equals("mine") && !useAssetEntryQuery) ? StringPool.BLANK : portletURL.toString() %>'
+					message="home"
+					url='<%= (topLink.equals("home") && folderId == 0 && viewFolder && !useAssetEntryQuery) ? StringPool.BLANK : portletURL.toString() %>'
 				/>
+			</li>
+
+			<li class="top-link <%= (themeDisplay.isSignedIn() ? StringPool.BLANK : " last") %>">
+
+				<%
+				portletURL.setParameter("topLink", "recent");
+				%>
+
+				<liferay-ui:icon
+					image="../aui/clock"
+					label="<%= true %>"
+					message="recent"
+					url='<%= (topLink.equals("recent") && !useAssetEntryQuery) ? StringPool.BLANK : portletURL.toString() %>'
+				/>
+			</li>
+
+			<c:if test="<%= themeDisplay.isSignedIn() %>">
+				<li class="top-link last">
+
+					<%
+					portletURL.setParameter("topLink", "mine");
+					%>
+
+					<liferay-ui:icon
+						image="../aui/person"
+						label="<%= true %>"
+						message="mine"
+						url='<%= (topLink.equals("mine") && !useAssetEntryQuery) ? StringPool.BLANK : portletURL.toString() %>'
+					/>
+				</li>
 			</c:if>
-		</div>
+		</ul>
 
 		<liferay-portlet:renderURL varImpl="searchURL">
 			<portlet:param name="struts_action" value="/bookmarks/search" />

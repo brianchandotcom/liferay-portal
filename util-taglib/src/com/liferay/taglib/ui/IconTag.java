@@ -32,6 +32,10 @@ public class IconTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
+	public void setAlt(String alt) {
+		_alt = alt;
+	}
+
 	public void setCssClass(String cssClass) {
 		_cssClass = cssClass;
 	}
@@ -94,6 +98,7 @@ public class IconTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		_alt = null;
 		_cssClass = null;
 		_data = null;
 		_id = null;
@@ -137,6 +142,7 @@ public class IconTag extends IncludeTag {
 			id = PortalUtil.generateRandomKey(request, IconTag.class.getName());
 		}
 
+		request.setAttribute("liferay-ui:icon:alt", _alt);
 		request.setAttribute("liferay-ui:icon:cssClass", _cssClass);
 		request.setAttribute("liferay-ui:icon:data", _data);
 		request.setAttribute("liferay-ui:icon:id", id);
@@ -159,6 +165,7 @@ public class IconTag extends IncludeTag {
 
 	private static final String _PAGE = "/html/taglib/ui/icon/page.jsp";
 
+	private String _alt;
 	private String _cssClass;
 	private Map<String, Object> _data;
 	private String _id;

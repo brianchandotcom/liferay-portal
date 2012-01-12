@@ -192,7 +192,7 @@ UnicodeProperties typeSettingsProperties = layout.getTypeSettingsProperties();
 
 String defaultAssetPublisherPortletId = typeSettingsProperties.getProperty(LayoutTypePortletConstants.DEFAULT_ASSET_PUBLISHER_PORTLET_ID, StringPool.BLANK);
 
-if (defaultAssetPublisherPortletId.equals(portletDisplay.getId()) || defaultAssetPublisherPortletId.equals(portletResource)) {
+if (defaultAssetPublisherPortletId.equals(portletDisplay.getId()) || (Validator.isNotNull(defaultAssetPublisherPortletId) && defaultAssetPublisherPortletId.equals(portletResource))) {
 	defaultAssetPublisher = true;
 }
 

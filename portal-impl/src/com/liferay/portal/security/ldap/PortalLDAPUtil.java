@@ -86,27 +86,30 @@ public class PortalLDAPUtil {
 			String credentials)
 		throws Exception {
 
-		Properties env = new Properties();
+		Properties environmentProperties = new Properties();
 
-		env.put(
+		environmentProperties.put(
 			Context.INITIAL_CONTEXT_FACTORY,
 			PrefsPropsUtil.getString(
 				companyId, PropsKeys.LDAP_FACTORY_INITIAL));
-		env.put(Context.PROVIDER_URL, providerURL);
-		env.put(Context.SECURITY_PRINCIPAL, principal);
-		env.put(Context.SECURITY_CREDENTIALS, credentials);
-		env.put(
+		environmentProperties.put(Context.PROVIDER_URL, providerURL);
+		environmentProperties.put(Context.SECURITY_PRINCIPAL, principal);
+		environmentProperties.put(Context.SECURITY_CREDENTIALS, credentials);
+		environmentProperties.put(
 			Context.REFERRAL,
 			PrefsPropsUtil.getString(companyId, PropsKeys.LDAP_REFERRAL));
 
-		PropertiesUtil.merge(env, PropsValues.LDAP_CONNECTION);
+		Properties ldapConnectionProperties = PropsUtil.getProperties(
+			PropsKeys.LDAP_CONNECTION_PROPERTY_PREFIX, true);
 
-		LogUtil.debug(_log, env);
+		PropertiesUtil.merge(environmentProperties, ldapConnectionProperties);
+
+		LogUtil.debug(_log, environmentProperties);
 
 		LdapContext ldapContext = null;
 
 		try {
-			ldapContext = new InitialLdapContext(env, null);
+			ldapContext = new InitialLdapContext(environmentProperties, null);
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {

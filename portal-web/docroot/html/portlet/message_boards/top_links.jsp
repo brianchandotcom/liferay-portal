@@ -33,7 +33,7 @@ portletURL.setParameter("struts_action", "/message_boards/view");
 <div class="top-links-container">
 	<div class="top-links">
         <ul class="top-links-navigation">
-            <li class="top-link">
+            <li class="top-link first">
 
 				<%
 				portletURL.setParameter("topLink", "message-boards-home");

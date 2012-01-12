@@ -37,7 +37,7 @@
 			<div class="top-links">
 				<c:if test="<%= showTabs %>">
 					<ul class="top-links-navigation">
-						<li class="top-link">
+						<li class="top-link first">
 
 							<%
 							String homeMessage = "home";

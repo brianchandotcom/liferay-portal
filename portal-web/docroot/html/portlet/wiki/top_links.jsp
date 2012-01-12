@@ -94,7 +94,7 @@ if (categoryId > 0) {
 
 		<div class="top-links">
 			<ul class="top-links-navigation">
-			    <li class="top-link">
+			    <li class="top-link first">
 
 					<%
 					PortletURL frontPageURL = PortletURLUtil.clone(portletURL, renderResponse);

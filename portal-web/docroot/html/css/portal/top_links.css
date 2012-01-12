@@ -1,29 +1,29 @@
-.portlet-boundary .top-links-container {
+.top-links-container {
 	clear: both;
 	overflow: hidden;
 }
 
-.portlet-boundary .top-links {
+.top-links {
 	float: right;
 }
 
-.portlet-boundary .top-links .top-link .taglib-text {
+.top-link .taglib-text {
 	border-right: 1px solid #bbb;
 	margin-right: 0.4em;
 	padding-right: 0.6em;
 }
 
-.portlet-boundary .top-links .top-link.last .taglib-text {
+.top-link.last .taglib-text {
 	border-width: 0;
 }
 
-.portlet-boundary .top-links .top-links-navigation {
+.top-links-navigation {
 	list-style-type: none;
 	float: left;
 	margin: 0;
 }
 
-.portlet-boundary .top-links .top-links-navigation li {
+.top-links-navigation li {
 	list-style-type: none;
 	display: inline-block;
 }

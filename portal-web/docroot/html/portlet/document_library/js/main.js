@@ -3,12 +3,11 @@ AUI.add(
 	function(A) {
 		var AObject = A.Object;
 		var Lang = A.Lang;
+		var UA = A.UA;
 
 		var formatSelectorNS = A.Node.formatSelectorNS;
 
 		var owns = AObject.owns;
-
-		var ua = A.UA;
 
 		var WIN = A.config.win;
 
@@ -108,7 +107,7 @@ AUI.add(
 
 		var SRC_SEARCH_SINGLE = 1;
 
-		var TOUCH = ua.touch;
+		var TOUCH = UA.touch;
 
 		var TPL_MESSAGE_RESPONSE = '<div class="lfr-message-response" />';
 
@@ -1033,13 +1032,13 @@ AUI.add(
 
 						var webDavUrl = event.webDavUrl;
 
-						if (webDavUrl && ua.ie) {
+						if (webDavUrl && UA.ie) {
 							try {
 								var executor = new WIN.ActiveXObject('SharePoint.OpenDocuments');
 
 								executor.EditDocument(webDavUrl);
 							}
-							catch(exception) {
+							catch (exception) {
 								var errorMessage = Lang.sub(
 									Liferay.Language.get('cannot-open-the-requested-document-due-to-the-following-reason'),
 									[exception.message]

@@ -30,13 +30,14 @@
 			curExtension.equalsIgnoreCase("pptx") ||
 			curExtension.equalsIgnoreCase("xlsx")) {
 
-			String documentUrl = "javascript:(function(){Liferay.fire('" + liferayPortletResponse.getNamespace() + "openDocument',{webDavUrl: '" + webDavUrl + "'});}());";
+			String taglibOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "openDocument', {webDavUrl: '" + webDavUrl + "'});";
 		%>
 
 			<liferay-ui:icon
 				image="../document_library/msoffice"
 				message="open-in-ms-office"
-				url="<%= documentUrl %>"
+				onClick="<%= taglibOnClick %>"
+				url="javascript:;"
 			/>
 
 		<%

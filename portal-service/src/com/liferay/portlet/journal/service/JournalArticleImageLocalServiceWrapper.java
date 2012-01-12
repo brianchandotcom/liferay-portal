@@ -302,6 +302,15 @@ public class JournalArticleImageLocalServiceWrapper
 		return _journalArticleImageLocalService.getArticleImage(articleImageId);
 	}
 
+	public com.liferay.portlet.journal.model.JournalArticleImage getArticleImage(
+		long groupId, java.lang.String articleId, double version,
+		java.lang.String elInstanceId, java.lang.String elName,
+		java.lang.String languageId, boolean tempImage)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleImageLocalService.getArticleImage(groupId,
+			articleId, version, elInstanceId, elName, languageId, tempImage);
+	}
+
 	public long getArticleImageId(long groupId, java.lang.String articleId,
 		double version, java.lang.String elInstanceId, java.lang.String elName,
 		java.lang.String languageId)
@@ -322,6 +331,13 @@ public class JournalArticleImageLocalServiceWrapper
 		long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _journalArticleImageLocalService.getArticleImages(groupId);
+	}
+
+	public void updateArticleImage(
+		com.liferay.portlet.journal.model.JournalArticleImage journalArticleImage)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_journalArticleImageLocalService.updateArticleImage(journalArticleImage);
 	}
 
 	/**

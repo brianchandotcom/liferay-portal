@@ -267,6 +267,13 @@ public interface JournalArticleImageLocalService
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.journal.model.JournalArticleImage getArticleImage(
+		long groupId, java.lang.String articleId, double version,
+		java.lang.String elInstanceId, java.lang.String elName,
+		java.lang.String languageId, boolean tempImage)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getArticleImageId(long groupId, java.lang.String articleId,
 		double version, java.lang.String elInstanceId, java.lang.String elName,
 		java.lang.String languageId)
@@ -282,4 +289,9 @@ public interface JournalArticleImageLocalService
 	public java.util.List<com.liferay.portlet.journal.model.JournalArticleImage> getArticleImages(
 		long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void updateArticleImage(
+		com.liferay.portlet.journal.model.JournalArticleImage journalArticleImage)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 }

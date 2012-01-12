@@ -27,10 +27,10 @@ public class UpgradeUser extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
+		if (isSupportsAlterColumnType()) {
 			runSQL("alter_column_type User_ greeting VARCHAR(255) null");
 		}
-		catch (Exception e) {
+		else {
 
 			// User_
 

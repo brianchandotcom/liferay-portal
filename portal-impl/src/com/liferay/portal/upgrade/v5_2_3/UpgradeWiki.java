@@ -27,10 +27,10 @@ public class UpgradeWiki extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
+		if (isSupportsAlterColumnType()) {
 			runSQL("alter_column_type WikiPage title VARCHAR(255) null");
 		}
-		catch (Exception e) {
+		else {
 
 			// WikiPage
 

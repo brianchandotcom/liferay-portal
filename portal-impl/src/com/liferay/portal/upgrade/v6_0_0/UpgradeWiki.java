@@ -27,12 +27,15 @@ public class UpgradeWiki extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
+		if (isSupportsAlterColumnType()) {
 			runSQL("alter_column_type WikiPage parentTitle varchar(255) null");
 			runSQL(
 				"alter_column_type WikiPage redirectTitle varchar(255) null");
+
+			runSQL(
+				"alter_column_type WikiPageResource title varchar(255) null");
 		}
-		catch (Exception e) {
+		else {
 
 			// WikiPage
 
@@ -43,17 +46,10 @@ public class UpgradeWiki extends UpgradeProcess {
 			upgradeTable.setIndexesSQL(WikiPageTable.TABLE_SQL_ADD_INDEXES);
 
 			upgradeTable.updateTable();
-		}
-
-		try {
-			runSQL(
-				"alter_column_type WikiPageResource title varchar(255) null");
-		}
-		catch (Exception e) {
 
 			// WikiPageResource
 
-			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
+			upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
 				WikiPageResourceTable.TABLE_NAME,
 				WikiPageResourceTable.TABLE_COLUMNS);
 

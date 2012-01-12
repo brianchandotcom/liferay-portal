@@ -27,10 +27,12 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
+		if (isSupportsAlterColumnType()) {
 			runSQL("alter_column_type DLFileEntry size_ LONG");
+
+			runSQL("alter_column_type DLFileVersion size_ LONG");
 		}
-		catch (Exception e) {
+		else {
 
 			// DLFileEntry
 
@@ -41,16 +43,10 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			upgradeTable.setIndexesSQL(DLFileEntryTable.TABLE_SQL_ADD_INDEXES);
 
 			upgradeTable.updateTable();
-		}
-
-		try {
-			runSQL("alter_column_type DLFileVersion size_ LONG");
-		}
-		catch (Exception e) {
 
 			// DLFileVersion
 
-			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
+			upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
 				DLFileVersionTable.TABLE_NAME,
 				DLFileVersionTable.TABLE_COLUMNS);
 

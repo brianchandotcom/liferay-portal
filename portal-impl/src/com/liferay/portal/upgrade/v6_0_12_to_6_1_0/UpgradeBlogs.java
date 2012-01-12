@@ -26,10 +26,10 @@ public class UpgradeBlogs extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
+		if (isSupportsAlterColumnType()) {
 			runSQL("alter_column_type BlogsEntry smallImageURL STRING null");
 		}
-		catch (Exception e) {
+		else {
 			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
 				BlogsEntryTable.TABLE_NAME, BlogsEntryTable.TABLE_COLUMNS);
 

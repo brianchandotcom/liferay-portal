@@ -26,10 +26,10 @@ public class UpgradeResourceCode extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
+		if (isSupportsAlterColumnType()) {
 			runSQL("alter_column_type ResourceCode name VARCHAR(255) null");
 		}
-		catch (Exception e) {
+		else {
 
 			// ResourceCode
 

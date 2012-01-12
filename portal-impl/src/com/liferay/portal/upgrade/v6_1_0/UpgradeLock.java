@@ -26,10 +26,10 @@ public class UpgradeLock extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
+		if (isSupportsAlterColumnType()) {
 			runSQL("alter_column_type Lock_ owner VARCHAR(300) null");
 		}
-		catch (Exception e) {
+		else {
 			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
 				LockTable.TABLE_NAME, LockTable.TABLE_COLUMNS);
 

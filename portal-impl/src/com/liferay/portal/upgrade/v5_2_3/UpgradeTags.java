@@ -33,10 +33,10 @@ public class UpgradeTags extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
+		if (isSupportsAlterColumnType()) {
 			runSQL("alter_column_type TagsAsset title VARCHAR(255) null");
 		}
-		catch (Exception e) {
+		else {
 
 			// TagsAsset
 

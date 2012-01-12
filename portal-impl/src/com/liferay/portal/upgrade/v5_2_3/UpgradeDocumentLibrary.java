@@ -37,10 +37,16 @@ public class UpgradeDocumentLibrary extends BaseUpgradePortletPreferences {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
+		if (isSupportsAlterColumnType()) {
 			runSQL("alter_column_type DLFileEntry name VARCHAR(255) null");
+
+			runSQL("alter_column_type DLFileRank name VARCHAR(255) null");
+
+			runSQL("alter_column_type DLFileShortcut toName VARCHAR(255) null");
+
+			runSQL("alter_column_type DLFileVersion name VARCHAR(255) null");
 		}
-		catch (Exception e) {
+		else {
 
 			// DLFileEntry
 
@@ -51,32 +57,20 @@ public class UpgradeDocumentLibrary extends BaseUpgradePortletPreferences {
 			upgradeTable.setIndexesSQL(DLFileEntryTable.TABLE_SQL_ADD_INDEXES);
 
 			upgradeTable.updateTable();
-		}
-
-		try {
-			runSQL("alter_column_type DLFileRank name VARCHAR(255) null");
-		}
-		catch (Exception e) {
 
 			// DLFileRank
 
-			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
+			upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
 				DLFileRankTable.TABLE_NAME, DLFileRankTable.TABLE_COLUMNS);
 
 			upgradeTable.setCreateSQL(DLFileRankTable.TABLE_SQL_CREATE);
 			upgradeTable.setIndexesSQL(DLFileRankTable.TABLE_SQL_ADD_INDEXES);
 
 			upgradeTable.updateTable();
-		}
-
-		try {
-			runSQL("alter_column_type DLFileShortcut toName VARCHAR(255) null");
-		}
-		catch (Exception e) {
 
 			// DLFileShortcut
 
-			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
+			upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
 				DLFileShortcutTable.TABLE_NAME,
 				DLFileShortcutTable.TABLE_COLUMNS);
 
@@ -85,16 +79,10 @@ public class UpgradeDocumentLibrary extends BaseUpgradePortletPreferences {
 				DLFileShortcutTable.TABLE_SQL_ADD_INDEXES);
 
 			upgradeTable.updateTable();
-		}
-
-		try {
-			runSQL("alter_column_type DLFileVersion name VARCHAR(255) null");
-		}
-		catch (Exception e) {
 
 			// DLFileVersion
 
-			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
+			upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
 				DLFileVersionTable.TABLE_NAME,
 				DLFileVersionTable.TABLE_COLUMNS);
 

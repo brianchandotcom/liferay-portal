@@ -26,10 +26,10 @@ public class UpgradeSoftwareCatalog extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
+		if (isSupportsAlterColumnType()) {
 			runSQL("alter_column_type SCProductEntry tags VARCHAR(255) null");
 		}
-		catch (Exception e) {
+		else {
 
 			// SCProductEntry
 

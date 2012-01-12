@@ -29,10 +29,17 @@ public class UpgradeJournal extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
+		if (isSupportsAlterColumnType()) {
 			runSQL("alter_column_type JournalArticle title STRING null");
+
+			runSQL("alter_column_type JournalStructure name STRING null");
+			runSQL(
+				"alter_column_type JournalStructure description STRING null");
+
+			runSQL("alter_column_type JournalTemplate name STRING null");
+			runSQL("alter_column_type JournalTemplate description STRING null");
 		}
-		catch (Exception e) {
+		else {
 			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
 				JournalArticleTable.TABLE_NAME,
 				JournalArticleTable.TABLE_COLUMNS);
@@ -42,15 +49,8 @@ public class UpgradeJournal extends UpgradeProcess {
 				JournalArticleTable.TABLE_SQL_ADD_INDEXES);
 
 			upgradeTable.updateTable();
-		}
 
-		try {
-			runSQL("alter_column_type JournalStructure name STRING null");
-			runSQL(
-				"alter_column_type JournalStructure description STRING null");
-		}
-		catch (Exception e) {
-			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
+			upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
 				JournalStructureTable.TABLE_NAME,
 				JournalStructureTable.TABLE_COLUMNS);
 
@@ -59,14 +59,8 @@ public class UpgradeJournal extends UpgradeProcess {
 				JournalStructureTable.TABLE_SQL_ADD_INDEXES);
 
 			upgradeTable.updateTable();
-		}
 
-		try {
-			runSQL("alter_column_type JournalTemplate name STRING null");
-			runSQL("alter_column_type JournalTemplate description STRING null");
-		}
-		catch (Exception e) {
-			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
+			upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
 				JournalTemplateTable.TABLE_NAME,
 				JournalTemplateTable.TABLE_COLUMNS);
 

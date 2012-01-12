@@ -290,12 +290,11 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			DataAccess.cleanUp(con, ps, rs);
 		}
 
-		try {
+		if (isSupportsAlterColumnType()) {
 			runSQL("alter_column_type DLFileVersion extraSettings TEXT null");
 			runSQL("alter_column_type DLFileVersion title VARCHAR(255) null");
-			runSQL("alter table DLFileVersion drop column name");
 		}
-		catch (Exception e) {
+		else {
 			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
 				DLFileVersionTable.TABLE_NAME,
 				DLFileVersionTable.TABLE_COLUMNS);
@@ -306,6 +305,8 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 			upgradeTable.updateTable();
 		}
+
+		runSQL("alter table DLFileVersion drop column name");
 	}
 
 	protected void updateLocks() throws Exception {

@@ -35,12 +35,12 @@ public class UpgradeShopping extends UpgradeProcess {
 
 		runSQL(sb.toString());
 
-		try {
+		if (isSupportsAlterColumnType()) {
 			runSQL("alter_column_type ShoppingItem smallImageURL STRING null");
 			runSQL("alter_column_type ShoppingItem mediumImageURL STRING null");
 			runSQL("alter_column_type ShoppingItem largeImageURL STRING null");
 		}
-		catch (Exception e) {
+		else {
 			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
 				ShoppingItemTable.TABLE_NAME, ShoppingItemTable.TABLE_COLUMNS);
 

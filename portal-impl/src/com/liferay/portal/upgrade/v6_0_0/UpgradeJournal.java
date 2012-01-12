@@ -28,11 +28,18 @@ public class UpgradeJournal extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
+		if (isSupportsAlterColumnType()) {
 			runSQL(
 				"alter_column_type JournalArticle smallImageURL STRING null");
+
+			runSQL(
+				"alter_column_type JournalFeed targetLayoutFriendlyUrl " +
+					"VARCHAR(255) null");
+
+			runSQL(
+				"alter_column_type JournalTemplate smallImageURL STRING null");
 		}
-		catch (Exception e) {
+		else {
 			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
 				JournalArticleTable.TABLE_NAME,
 				JournalArticleTable.TABLE_COLUMNS);
@@ -42,29 +49,16 @@ public class UpgradeJournal extends UpgradeProcess {
 				JournalArticleTable.TABLE_SQL_ADD_INDEXES);
 
 			upgradeTable.updateTable();
-		}
 
-		try {
-			runSQL(
-				"alter_column_type JournalFeed targetLayoutFriendlyUrl " +
-					"VARCHAR(255) null");
-		}
-		catch (Exception e) {
-			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
+			upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
 				JournalFeedTable.TABLE_NAME, JournalFeedTable.TABLE_COLUMNS);
 
 			upgradeTable.setCreateSQL(JournalFeedTable.TABLE_SQL_CREATE);
 			upgradeTable.setIndexesSQL(JournalFeedTable.TABLE_SQL_ADD_INDEXES);
 
 			upgradeTable.updateTable();
-		}
 
-		try {
-			runSQL(
-				"alter_column_type JournalTemplate smallImageURL STRING null");
-		}
-		catch (Exception e) {
-			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
+			upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
 				JournalTemplateTable.TABLE_NAME,
 				JournalTemplateTable.TABLE_COLUMNS);
 

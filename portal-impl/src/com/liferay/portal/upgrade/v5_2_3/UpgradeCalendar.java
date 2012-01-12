@@ -26,10 +26,10 @@ public class UpgradeCalendar extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
+		if (isSupportsAlterColumnType()) {
 			runSQL("alter_column_type CalEvent remindBy INTEGER");
 		}
-		catch (Exception e) {
+		else {
 
 			// CalEvent
 

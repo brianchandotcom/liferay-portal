@@ -26,10 +26,10 @@ public class UpgradeResource extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
+		if (isSupportsAlterColumnType()) {
 			runSQL("alter_column_type Resource_ primKey VARCHAR(255) null");
 		}
-		catch (Exception e) {
+		else {
 
 			// Resource
 

@@ -27,10 +27,12 @@ public class UpgradePolls extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
+		if (isSupportsAlterColumnType()) {
 			runSQL("alter_column_type PollsChoice description STRING null");
+
+			runSQL("alter_column_type PollsQuestion title STRING null");
 		}
-		catch (Exception e) {
+		else {
 
 			// PollsChoice
 
@@ -41,16 +43,10 @@ public class UpgradePolls extends UpgradeProcess {
 			upgradeTable.setIndexesSQL(PollsChoiceTable.TABLE_SQL_ADD_INDEXES);
 
 			upgradeTable.updateTable();
-		}
-
-		try {
-			runSQL("alter_column_type PollsQuestion title STRING null");
-		}
-		catch (Exception e) {
 
 			// PollsQuestion
 
-			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
+			upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
 				PollsQuestionTable.TABLE_NAME,
 				PollsQuestionTable.TABLE_COLUMNS);
 
@@ -60,7 +56,6 @@ public class UpgradePolls extends UpgradeProcess {
 
 			upgradeTable.updateTable();
 		}
-
 	}
 
 }

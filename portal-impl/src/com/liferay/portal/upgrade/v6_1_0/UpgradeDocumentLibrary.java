@@ -291,6 +291,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		if (isSupportsAlterColumnType()) {
 			runSQL("alter_column_type DLFileVersion extraSettings TEXT null");
 			runSQL("alter_column_type DLFileVersion title VARCHAR(255) null");
+			runSQL("alter table DLFileVersion drop column name");
 		}
 		else {
 			upgradeTable(
@@ -299,8 +300,6 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 				DLFileVersionTable.TABLE_SQL_CREATE,
 				DLFileVersionTable.TABLE_SQL_ADD_INDEXES);
 		}
-
-		runSQL("alter table DLFileVersion drop column name");
 	}
 
 	protected void updateLocks() throws Exception {

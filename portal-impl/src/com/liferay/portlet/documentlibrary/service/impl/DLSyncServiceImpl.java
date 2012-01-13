@@ -52,9 +52,6 @@ public class DLSyncServiceImpl extends DLSyncServiceBaseImpl {
 			long companyId, long repositoryId, Date lastAccessDate)
 		throws PortalException, SystemException {
 
-		GroupPermissionUtil.check(
-			getPermissionChecker(), repositoryId, ActionKeys.VIEW);
-
 		Date now = new Date();
 
 		List<DLSync> dlSyncs = null;

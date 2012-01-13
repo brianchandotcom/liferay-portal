@@ -21,11 +21,14 @@ import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.service.RepositoryLocalService;
+import com.liferay.portal.service.RepositoryService;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.ResourceService;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.UserService;
 import com.liferay.portal.service.base.PrincipalBean;
+import com.liferay.portal.service.persistence.RepositoryPersistence;
 import com.liferay.portal.service.persistence.ResourceFinder;
 import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.UserFinder;
@@ -683,6 +686,62 @@ public abstract class DLSyncServiceBaseImpl extends PrincipalBean
 	}
 
 	/**
+	 * Returns the repository local service.
+	 *
+	 * @return the repository local service
+	 */
+	public RepositoryLocalService getRepositoryLocalService() {
+		return repositoryLocalService;
+	}
+
+	/**
+	 * Sets the repository local service.
+	 *
+	 * @param repositoryLocalService the repository local service
+	 */
+	public void setRepositoryLocalService(
+		RepositoryLocalService repositoryLocalService) {
+		this.repositoryLocalService = repositoryLocalService;
+	}
+
+	/**
+	 * Returns the repository remote service.
+	 *
+	 * @return the repository remote service
+	 */
+	public RepositoryService getRepositoryService() {
+		return repositoryService;
+	}
+
+	/**
+	 * Sets the repository remote service.
+	 *
+	 * @param repositoryService the repository remote service
+	 */
+	public void setRepositoryService(RepositoryService repositoryService) {
+		this.repositoryService = repositoryService;
+	}
+
+	/**
+	 * Returns the repository persistence.
+	 *
+	 * @return the repository persistence
+	 */
+	public RepositoryPersistence getRepositoryPersistence() {
+		return repositoryPersistence;
+	}
+
+	/**
+	 * Sets the repository persistence.
+	 *
+	 * @param repositoryPersistence the repository persistence
+	 */
+	public void setRepositoryPersistence(
+		RepositoryPersistence repositoryPersistence) {
+		this.repositoryPersistence = repositoryPersistence;
+	}
+
+	/**
 	 * Returns the resource local service.
 	 *
 	 * @return the resource local service
@@ -942,6 +1001,12 @@ public abstract class DLSyncServiceBaseImpl extends PrincipalBean
 	protected DLSyncPersistence dlSyncPersistence;
 	@BeanReference(type = CounterLocalService.class)
 	protected CounterLocalService counterLocalService;
+	@BeanReference(type = RepositoryLocalService.class)
+	protected RepositoryLocalService repositoryLocalService;
+	@BeanReference(type = RepositoryService.class)
+	protected RepositoryService repositoryService;
+	@BeanReference(type = RepositoryPersistence.class)
+	protected RepositoryPersistence repositoryPersistence;
 	@BeanReference(type = ResourceLocalService.class)
 	protected ResourceLocalService resourceLocalService;
 	@BeanReference(type = ResourceService.class)

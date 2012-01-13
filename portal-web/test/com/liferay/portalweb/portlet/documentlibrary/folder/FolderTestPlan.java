@@ -30,6 +30,7 @@ import com.liferay.portalweb.portlet.documentlibrary.folder.deletesubfolder.Dele
 import com.liferay.portalweb.portlet.documentlibrary.folder.editfolder.EditFolderTests;
 import com.liferay.portalweb.portlet.documentlibrary.folder.editsubfolder.EditSubfolderTests;
 import com.liferay.portalweb.portlet.documentlibrary.folder.movedlsubfoldertofolder2.MoveDLSubfolderToFolder2Tests;
+import com.liferay.portalweb.portlet.documentlibrary.folder.viewfolderactions.ViewFolderActionsTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -57,6 +58,7 @@ public class FolderTestPlan extends BaseTestSuite {
 		testSuite.addTest(EditFolderTests.suite());
 		testSuite.addTest(EditSubfolderTests.suite());
 		testSuite.addTest(MoveDLSubfolderToFolder2Tests.suite());
+		testSuite.addTest(ViewFolderActionsTests.suite());
 
 		return testSuite;
 	}

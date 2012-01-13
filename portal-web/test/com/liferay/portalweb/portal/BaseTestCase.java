@@ -48,6 +48,10 @@ public class BaseTestCase extends LiferaySeleneseTestCase {
 
 		String location = selenium.getLocation();
 
+		if (location.contains("/documents/")) {
+			return;
+		}
+
 		if (!location.contains(TestPropsValues.PORTAL_URL)) {
 			return;
 		}

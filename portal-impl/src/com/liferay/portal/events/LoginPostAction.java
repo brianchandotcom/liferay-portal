@@ -68,7 +68,11 @@ public class LoginPostAction extends Action {
 				ClusterNode clusterNode =
 					ClusterExecutorUtil.getLocalClusterNode();
 
-				jsonObject.put("clusterNodeId", clusterNode.getClusterNodeId());
+				if (clusterNode != null) {
+					jsonObject.put(
+						"clusterNodeId", clusterNode.getClusterNodeId());
+				}
+
 				jsonObject.put("command", "signIn");
 				jsonObject.put("companyId", companyId);
 				jsonObject.put("remoteAddr", request.getRemoteAddr());

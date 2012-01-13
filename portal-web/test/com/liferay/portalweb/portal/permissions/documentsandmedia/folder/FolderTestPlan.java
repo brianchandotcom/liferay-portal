@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portalweb.portal;
+package com.liferay.portalweb.portal.permissions.documentsandmedia.folder;
 
-import com.liferay.portalweb.portal.login.LoginTests;
-import com.liferay.portalweb.portal.permissions.documentlibrary.DocumentLibraryTestPlan;
-import com.liferay.portalweb.portal.permissions.documentsandmedia.DocumentsAndMediaTestPlan;
+import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.permissions.documentsandmedia.folder.guestaccessdmfolderinline.Guest_AccessDmFolderInlineTests;
+import com.liferay.portalweb.portal.permissions.documentsandmedia.folder.guestviewdmfolderinline.Guest_ViewDmFolderInlineTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -24,16 +24,13 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class PermissionsDocumentLibraryTestSuite extends BaseTestSuite {
+public class FolderTestPlan extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(LoginTests.suite());
-		testSuite.addTest(DocumentLibraryTestPlan.suite());
-		testSuite.addTest(DocumentsAndMediaTestPlan.suite());
-
-		testSuite.addTestSuite(StopSeleniumTest.class);
+		testSuite.addTest(Guest_AccessDmFolderInlineTests.suite());
+		testSuite.addTest(Guest_ViewDmFolderInlineTests.suite());
 
 		return testSuite;
 	}

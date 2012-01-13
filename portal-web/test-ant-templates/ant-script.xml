@@ -13,6 +13,7 @@
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugins.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite}" />
@@ -30,6 +31,7 @@
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugins.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite}" />
@@ -46,6 +48,7 @@
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugins.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite}" />
@@ -63,6 +66,7 @@
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugins.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite}" />
@@ -79,6 +83,7 @@
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugins.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite}" />
@@ -96,6 +101,7 @@
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugins.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite}" />
@@ -112,6 +118,7 @@
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugins.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite}" />
@@ -129,6 +136,7 @@
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugins.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite}" />
@@ -145,6 +153,7 @@
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugins.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite}" />
@@ -162,6 +171,7 @@
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugins.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite}" />
@@ -185,6 +195,7 @@
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugins.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite}" />
@@ -213,6 +224,7 @@
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugins.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite}" />
@@ -233,6 +245,7 @@
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugins.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite}" />
@@ -250,6 +263,7 @@
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugins.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite}" />
@@ -266,6 +280,7 @@
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugins.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite}" />
@@ -282,6 +297,7 @@
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugins.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.browser" value="googlechrome" />
@@ -299,6 +315,7 @@
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugins.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.browser" value="iehta" />
@@ -317,6 +334,7 @@
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugins.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite}" />
@@ -334,6 +352,7 @@
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugins.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.browser" value="googlechrome" />
@@ -352,6 +371,7 @@
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugins.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.browser" value="iehta" />
@@ -376,6 +396,7 @@
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugins.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite}" />
@@ -404,6 +425,7 @@
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugins.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite}" />
@@ -431,6 +453,7 @@
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugins.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite}" />
@@ -459,6 +482,7 @@
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugins.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite}" />
@@ -486,6 +510,7 @@
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugins.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite}" />
@@ -514,6 +539,7 @@
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugins.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite}" />
@@ -541,6 +567,7 @@
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugins.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite}" />
@@ -569,6 +596,7 @@
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugins.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite}" />
@@ -589,6 +617,7 @@
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugins.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite}" />
@@ -606,6 +635,7 @@
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugins.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite}" />
@@ -623,6 +653,7 @@
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugins.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite}" />
@@ -641,6 +672,7 @@
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugins.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite}" />
@@ -658,6 +690,7 @@
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugins.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite}" />
@@ -675,6 +708,7 @@
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugins.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite}" />
@@ -693,6 +727,7 @@
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugins.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite}" />
@@ -711,6 +746,7 @@
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugins.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite}" />

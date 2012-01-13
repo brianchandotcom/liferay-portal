@@ -102,6 +102,16 @@
 		</if>
 
 		<if>
+			<isset property="test.ant.script.plugins.portlets.properties" />
+			<then>
+				<property name="test.ant.script.file.plugins.portlets.properties" value="&lt;property name=&quot;plugins.portlets.properties&quot; value=&quot;${test.ant.script.plugins.portlets.properties}&quot; /&gt;" />
+			</then>
+			<else>
+				<property name="test.ant.script.file.plugins.portlets.properties" value=" " />
+			</else>
+		</if>
+
+		<if>
 			<isset property="test.ant.script.plugin.themes" />
 			<then>
 				<property name="test.ant.script.file.plugin.themes" value="&lt;property name=&quot;theme.plugins.includes&quot; value=&quot;${test.ant.script.plugin.themes}&quot; /&gt;" />
@@ -265,7 +275,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="3" />
+		<property name="build-test-ant-scripts.version" value="4" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -929,6 +939,7 @@
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="plugins-knowledge-base" />
 			<param name="test.ant.script.plugin.portlets" value="knowledge-base-portlet" />
+			<param name="test.ant.script.plugins.portlets.properties" value="admin.kb.article.sections=Application Server,Authentication,Content Management,Database,Development,Plugins,Portlets,Security,Server Configuration,User Interface${line.separator}admin.kb.article.default.sections=" />
 			<param name="test.ant.script.suite" value="PluginsKnowledgeBaseTestSuite" />
 		</antcall>
 

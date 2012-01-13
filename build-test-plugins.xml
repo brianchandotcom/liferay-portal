@@ -26,6 +26,13 @@ auto.deploy.dir=$${user.home}/liferay/deploy
 
 plugins.includes=${plugins.includes}</echo>
 
+		<if>
+			<isset property="plugins.portlets.properties" />
+			<then>
+				<echo file="${lp.plugins.dir}/${plugin.types}/${portlet.plugins.includes}/docroot/WEB-INF/src/portlet-ext.properties">${plugins.portlets.properties}</echo>
+			</then>
+		</if>
+
 		<ant dir="${lp.plugins.dir}/${plugin.types}" inheritAll="false">
 			<target name="clean" />
 			<target name="deploy" />

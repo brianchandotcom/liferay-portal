@@ -31,27 +31,7 @@ public class User_LoginTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Welcome")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("link=Welcome", RuntimeVariables.replace("Welcome"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("//input[@id='_58_login']")) {
+				if (selenium.isVisible("//input[@id='_58_login']")) {
 					break;
 				}
 			}
@@ -62,95 +42,16 @@ public class User_LoginTest extends BaseTestCase {
 		}
 
 		selenium.type("//input[@id='_58_login']",
-			RuntimeVariables.replace("wca@liferay.com"));
+			RuntimeVariables.replace("test01@selenium.com"));
 		selenium.type("//input[@id='_58_password']",
-			RuntimeVariables.replace("password"));
+			RuntimeVariables.replace("test"));
 		selenium.clickAt("//input[@id='_58_rememberMeCheckbox']",
 			RuntimeVariables.replace("Remember Me"));
 		selenium.clickAt("//input[@value='Sign In']",
 			RuntimeVariables.replace("Sign In"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@value='I Agree']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("//input[@value='I Agree']",
-			RuntimeVariables.replace("I Agree"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='password1']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.type("//input[@id='password1']",
-			RuntimeVariables.replace("test"));
-		selenium.type("//input[@id='password2']",
-			RuntimeVariables.replace("test"));
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='reminderQueryAnswer']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.type("//input[@id='reminderQueryAnswer']",
-			RuntimeVariables.replace("Test"));
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isTextPresent("You are signed in as WCA Liferay.")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertTrue(selenium.isTextPresent("You are signed in as WCA Liferay."));
+		assertTrue(selenium.isTextPresent(
+				"You are signed in as selen01 lenn nium01."));
 	}
 }

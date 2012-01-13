@@ -86,7 +86,7 @@ public class DefineWCARoleTest extends BaseTestCase {
 				"The role permissions were updated."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.select("//select[@id='_128_add-permissions']",
-			RuntimeVariables.replace("label=Web Content Display"));
+			RuntimeVariables.replace("Web Content Display"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.clickAt("//input[@name='_128_allRowIds']",
@@ -98,7 +98,8 @@ public class DefineWCARoleTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"The role permissions were updated."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		selenium.clickAt("link=Define Permissions", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Define Permissions",
+			RuntimeVariables.replace("Define Permissions"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.typeKeys("_128_add-permissions",

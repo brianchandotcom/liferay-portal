@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SA_LoginTest extends BaseTestCase {
-	public void testSA_Login() throws Exception {
+public class LoginTest extends BaseTestCase {
+	public void testLogin() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -51,5 +51,6 @@ public class SA_LoginTest extends BaseTestCase {
 			RuntimeVariables.replace("Sign In"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
+		assertTrue(selenium.isTextPresent("You are signed in as Joe Bloggs."));
 	}
 }

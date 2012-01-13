@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AssignUserRoleTest extends BaseTestCase {
-	public void testAssignUserRole() throws Exception {
+public class AssignUserRoleWCATest extends BaseTestCase {
+	public void testAssignUserRoleWCA() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -50,15 +50,15 @@ public class AssignUserRoleTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_125_keywords']",
-			RuntimeVariables.replace("WCA@liferay.com"));
+			RuntimeVariables.replace("test01@selenium.com"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("WCA"),
+		assertEquals(RuntimeVariables.replace("selen01"),
 			selenium.getText("//tbody/tr[3]/td[2]/a"));
 		selenium.clickAt("//tbody/tr[3]/td[2]/a",
-			RuntimeVariables.replace("WCA"));
+			RuntimeVariables.replace("selen01"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isPartialText("//a[@id='_125_rolesLink']", "Roles"));

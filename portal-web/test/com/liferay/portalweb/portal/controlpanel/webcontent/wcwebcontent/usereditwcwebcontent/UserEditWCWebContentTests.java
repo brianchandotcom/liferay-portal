@@ -25,20 +25,20 @@ import junit.framework.TestSuite;
 public class UserEditWCWebContentTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AddWebContentTest.class);
 		testSuite.addTestSuite(AddUserTest.class);
 		testSuite.addTestSuite(AddWCARoleTest.class);
 		testSuite.addTestSuite(DefineWCARoleTest.class);
-		testSuite.addTestSuite(AssignUserRoleTest.class);
+		testSuite.addTestSuite(AssignUserRoleWCATest.class);
+		testSuite.addTestSuite(AddWebContentTest.class);
 		testSuite.addTestSuite(LogoutTest.class);
 		testSuite.addTestSuite(User_LoginTest.class);
 		testSuite.addTestSuite(User_EditWCWebContentTest.class);
 		testSuite.addTestSuite(User_ViewEditWCWebContentTest.class);
 		testSuite.addTestSuite(LogoutTest.class);
-		testSuite.addTestSuite(SA_LoginTest.class);
+		testSuite.addTestSuite(LoginTest.class);
+		testSuite.addTestSuite(TearDownWebContentTest.class);
 		testSuite.addTestSuite(TearDownWCARoleTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
-		testSuite.addTestSuite(TearDownWebContentTest.class);
 
 		return testSuite;
 	}

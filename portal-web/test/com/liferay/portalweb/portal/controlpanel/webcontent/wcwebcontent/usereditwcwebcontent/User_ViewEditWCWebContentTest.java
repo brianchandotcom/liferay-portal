@@ -45,10 +45,11 @@ public class User_ViewEditWCWebContentTest extends BaseTestCase {
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.clickAt("link=Web Content", RuntimeVariables.replace("Roles"));
+		selenium.clickAt("link=Web Content",
+			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("WCA Liferay"),
+		assertEquals(RuntimeVariables.replace("selen01 lenn nium01"),
 			selenium.getText("//td[7]/a"));
 	}
 }

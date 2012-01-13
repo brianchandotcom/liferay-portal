@@ -29,11 +29,9 @@ public class MinimalAssetEntryValidator extends BaseAssetEntryValidator {
 			String[] tagNames)
 		throws PortalException {
 
-		if (className.equals(MBDiscussion.class.getName())) {
-			return;
-		}
+		if (!className.equals(MBDiscussion.class.getName()) &&
+			((tagNames == null) || (tagNames.length == 0))) {
 
-		if ((tagNames == null) || (tagNames.length == 0)) {
 			throw new AssetTagException(AssetTagException.AT_LEAST_ONE_TAG);
 		}
 	}

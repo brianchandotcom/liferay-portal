@@ -842,7 +842,7 @@ public class SitesUtil {
 		boolean layoutSetPrototypeLinkEnabled = false;
 
 		if (layoutSetPrototypeId > 0) {
-			layoutSetPrototypeLinkEnabled = 
+			layoutSetPrototypeLinkEnabled =
 				ParamUtil.getBoolean(serviceContext, parameterName);
 		}
 

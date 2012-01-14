@@ -89,6 +89,7 @@ public class EditKBAArticleSectionsPortletsAttachmentTest extends BaseTestCase {
 		selenium.waitForPopUp("selectAttachments",
 			RuntimeVariables.replace("30000"));
 		selenium.selectWindow("name=selectAttachments");
+		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -130,6 +131,7 @@ public class EditKBAArticleSectionsPortletsAttachmentTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("test_image.jpg (12.9k)"),
 			selenium.getText("//a/span"));
 		selenium.close();
+		Thread.sleep(5000);
 		selenium.selectWindow("null");
 
 		for (int second = 0;; second++) {

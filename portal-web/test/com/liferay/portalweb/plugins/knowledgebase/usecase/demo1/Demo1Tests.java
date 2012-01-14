@@ -50,6 +50,7 @@ public class Demo1Tests extends BaseTestSuite {
 		testSuite.addTestSuite(SearchKBAArticleTomcatKBSTest.class);
 		testSuite.addTestSuite(DeleteKBAArticleSectionsCMKBArTest.class);
 		testSuite.addTestSuite(TearDownKBAArticleTest.class);
+		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;
 	}

@@ -27,9 +27,9 @@ auto.deploy.dir=$${user.home}/liferay/deploy
 plugins.includes=${plugins.includes}</echo>
 
 		<if>
-			<isset property="plugins.portlets.properties" />
+			<isset property="plugin.portlets.properties" />
 			<then>
-				<echo file="${lp.plugins.dir}/${plugin.types}/${portlet.plugins.includes}/docroot/WEB-INF/src/portlet-ext.properties">${plugins.portlets.properties}</echo>
+				<echo file="${lp.plugins.dir}/${plugin.types}/${portlet.plugins.includes}/docroot/WEB-INF/src/portlet-ext.properties">${plugin.portlets.properties}</echo>
 			</then>
 		</if>
 

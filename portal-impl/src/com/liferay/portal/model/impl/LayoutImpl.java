@@ -138,7 +138,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 			Layout layout = itr.next();
 
 			layouts.add(layout);
-			layouts.addAll(layout.getChildren());
+			layouts.addAll(layout.getAllChildren());
 		}
 
 		return layouts;

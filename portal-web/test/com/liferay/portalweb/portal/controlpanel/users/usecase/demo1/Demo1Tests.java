@@ -46,6 +46,7 @@ public class Demo1Tests extends BaseTestSuite {
 		testSuite.addTestSuite(TearDownUserTest.class);
 		testSuite.addTestSuite(TearDownUserGroupTest.class);
 		testSuite.addTestSuite(TearDownCustomFieldTest.class);
+		testSuite.addTestSuite(EvaluateUserCSVFileTest.class);
 
 		return testSuite;
 	}

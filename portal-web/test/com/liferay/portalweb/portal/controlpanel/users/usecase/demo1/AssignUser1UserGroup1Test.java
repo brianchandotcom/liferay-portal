@@ -92,7 +92,7 @@ public class AssignUser1UserGroup1Test extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a")) {
 							break;
 						}
 					}
@@ -104,8 +104,8 @@ public class AssignUser1UserGroup1Test extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Assign Members"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a",
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a",
 					RuntimeVariables.replace("Assign Members"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();

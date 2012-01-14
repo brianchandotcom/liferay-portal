@@ -54,8 +54,8 @@ public class SeleneseToJavaBuilder {
 		directoryScanner.setBasedir(basedir);
 		directoryScanner.setExcludes(
 			new String[] {
-				"**\\EvaluateLogTest.java", "**\\IterateThemeTest.java",
-				"**\\StopSeleniumTest.java",
+				"**\\EvaluateLogTest.java", "**\\EvaluateUserCSVFileTest.java",
+				"**\\IterateThemeTest.java", "**\\StopSeleniumTest.java",
 				"**\\WaitForSystemShutdownTest.java"
 			});
 		directoryScanner.setIncludes(

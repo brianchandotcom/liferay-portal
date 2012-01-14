@@ -35,6 +35,7 @@ import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.deletew
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.expirewebcontentapproved.ExpireWebContentApprovedTests;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.incrementversionwebcontentapproved.IncrementVersionWebContentApprovedTests;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.searchwebcontent.SearchWebContentTests;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.usereditwcwebcontent.UserEditWCWebContentTests;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.viewwebcontentrecent.ViewWebContentRecentTests;
 
 import junit.framework.Test;
@@ -69,6 +70,7 @@ public class WCWebContentTestPlan extends BaseTestSuite {
 		testSuite.addTest(ExpireWebContentApprovedTests.suite());
 		testSuite.addTest(IncrementVersionWebContentApprovedTests.suite());
 		testSuite.addTest(SearchWebContentTests.suite());
+		testSuite.addTest(UserEditWCWebContentTests.suite());
 		testSuite.addTest(ViewWebContentRecentTests.suite());
 
 		return testSuite;

@@ -58,6 +58,17 @@ public class RatingsStatsFinderImpl
 		List<RatingsStats> list = (List<RatingsStats>)FinderCacheUtil.getResult(
 			FINDER_PATH_FIND_BY_C_C, finderArgs, this);
 
+		if ((list != null) && !list.isEmpty()) {
+			for (RatingsStats ratingsStats : list) {
+				if (classNameId != ratingsStats.getClassNameId() ||
+					!classPKs.contains(ratingsStats.getClassPK())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
 		if (list != null) {
 			return list;
 		}

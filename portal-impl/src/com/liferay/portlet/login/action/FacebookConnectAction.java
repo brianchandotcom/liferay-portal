@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroupRole;
+import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.struts.ActionConstants;
@@ -64,8 +65,10 @@ public class FacebookConnectAction extends PortletAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (!FacebookConnectUtil.isEnabled(themeDisplay.getCompanyId())) {
-			return null;
+		long companyId = themeDisplay.getCompanyId();
+
+		if (!FacebookConnectUtil.isEnabled(companyId)) {
+			return mapping.findForward("portlet.login.login");
 		}
 
 		return mapping.findForward("portlet.login.facebook_login");
@@ -80,8 +83,10 @@ public class FacebookConnectAction extends PortletAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (!FacebookConnectUtil.isEnabled(themeDisplay.getCompanyId())) {
-			return null;
+		long companyId = themeDisplay.getCompanyId();
+
+		if (!FacebookConnectUtil.isEnabled(companyId)) {
+			throw new PrincipalException();
 		}
 
 		HttpSession session = request.getSession();

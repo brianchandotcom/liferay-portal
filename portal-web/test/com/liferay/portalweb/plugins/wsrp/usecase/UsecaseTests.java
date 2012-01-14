@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.portalweb.plugins.wsrp;
+package com.liferay.portalweb.plugins.wsrp.usecase;
 
-import com.liferay.portalweb.plugins.wsrp.helloworld.HelloWorldTestPlan;
-import com.liferay.portalweb.plugins.wsrp.usecase.UseCaseTestPlan;
-import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.plugins.wsrp.usecase.demo1.Demo1Tests;
+import com.liferay.portalweb.portal.BaseTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -24,13 +23,12 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class WSRPTestPlan extends BaseTestSuite {
+public class UsecaseTests extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(HelloWorldTestPlan.suite());
-		testSuite.addTest(UseCaseTestPlan.suite());
+		testSuite.addTest(Demo1Tests.suite());
 
 		return testSuite;
 	}

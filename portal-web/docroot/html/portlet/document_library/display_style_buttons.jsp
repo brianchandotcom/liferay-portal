@@ -84,38 +84,27 @@ String keywords = ParamUtil.getString(request, "keywords");
 			);
 		}
 
+		var displayStyleToolbarChildren = [];
+
+		<%
+		for (int i = 0; i < displayViews.length; i++) {
+		%>
+			displayStyleToolbarChildren.push(
+				{
+					handler: A.bind(onButtonClick, null, '<%= displayViews[i] %>'),
+					icon: 'display-<%= displayViews[i] %>',
+					title: '<%= UnicodeLanguageUtil.get(pageContext, displayViews[i] + "-view") %>'
+				}
+			);
+		<%
+		}
+		%>
+
 		var displayStyleToolbar = new A.Toolbar(
 			{
 				activeState: true,
 				boundingBox: buttonRow,
-				children: [
-
-					<%
-					if (displayViews.length > 0) {
-					%>
-
-						{
-							handler: A.bind(onButtonClick, null, '<%= displayViews[0] %>'),
-							icon: 'display-<%= displayViews[0] %>',
-							title: '<%= UnicodeLanguageUtil.get(pageContext, displayViews[0] + "-view") %>'
-						}
-
-					<%
-						for (int i = 1; i < displayViews.length; i++) {
-					%>
-
-							, {
-								handler: A.bind(onButtonClick, null, '<%= displayViews[i] %>'),
-								icon: 'display-<%= displayViews[i] %>',
-								title: '<%= UnicodeLanguageUtil.get(pageContext, displayViews[i] + "-view") %>'
-							}
-
-					<%
-						}
-					}
-					%>
-
-				]
+				children: displayStyleToolbarChildren
 			}
 		).render();
 

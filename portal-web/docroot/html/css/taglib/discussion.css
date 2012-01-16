@@ -29,21 +29,19 @@
 }
 
 .taglib-discussion .lfr-discussion-details {
-	margin-right: -65px;
-	width: 65px;
+	width: 15%;
 }
 
 .taglib-discussion .lfr-discussion-details .taglib-user-display {
 	padding-bottom: 0;
 	padding-top: 0;
+	overflow: auto;
 }
 
 .taglib-discussion .lfr-discussion-details .taglib-user-display .user-details .user-name, .taglib-discussion .lfr-discussion-details .taglib-user-display .user-profile-image {
 	clear: none;
-	display: inline-block;
-	float: left;
 	vertical-align: top;
-	text-align: left;
+	text-align: center;
 }
 
 .taglib-discussion .lfr-discussion-details .taglib-user-display .user-details .user-name {
@@ -61,11 +59,10 @@
 }
 
 .taglib-discussion .lfr-discussion-body {
-	width: 100%;
+	width: 85%;
 }
 
 .taglib-discussion .lfr-discussion-body-content {
-	margin-left: 65px;
 	padding: 5px 0;
 }
 

@@ -57,25 +57,63 @@ long folderId = ParamUtil.getLong(request, "folderId");
 
 		<aui:input name="description" />
 
-		<c:if test="<%= repository == null %>">
-			<aui:select id="repositoryTypes" label="repository-type" name="className">
+		<c:choose>
+			<c:when test="<%= repository == null %>">
+				<aui:select id="repositoryTypes" label="repository-type" name="className">
 
-				<%
-				for (String dlRepositoryImpl : RepositoryFactoryUtil.getRepositoryClassNames()) {
-				%>
+					<%
+					for (String dlRepositoryImpl : RepositoryFactoryUtil.getRepositoryClassNames()) {
+					%>
 
-					<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, dlRepositoryImpl) %>" value="<%= dlRepositoryImpl %>" />
+						<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, dlRepositoryImpl) %>" value="<%= dlRepositoryImpl %>" />
 
-				<%
-				}
-				%>
+					<%
+					}
+					%>
 
-			</aui:select>
+				</aui:select>
 
-			<div id="<portlet:namespace />settingsConfiguration"></div>
+				<div id="<portlet:namespace />settingsConfiguration"></div>
 
-			<div id="<portlet:namespace />settingsParameters"></div>
-		</c:if>
+				<div id="<portlet:namespace />settingsParameters"></div>
+			</c:when>
+			<c:otherwise>
+				<div class="repository-settings-display">
+					<dt>
+						<liferay-ui:message key="repository-type" />
+					</dt>
+					<dd>
+						<%= ResourceActionsUtil.getModelResource(locale, repository.getClassName()) %>
+					</dd>
+
+					<%
+					UnicodeProperties repositoryTypeSettings = repository.getTypeSettingsProperties();
+
+					String configuration = repositoryTypeSettings.get("configuration-type");
+
+					String[] supportedParameters = RepositoryServiceUtil.getSupportedParameters(repository.getClassNameId(), configuration);
+
+					for (String supportedParameter : supportedParameters) {
+						String configurationParameterVal = repositoryTypeSettings.getProperty(supportedParameter);
+
+						if (Validator.isNotNull(configurationParameterVal)) {
+					%>
+
+							<dt>
+								<%= LanguageUtil.get(pageContext, StringUtil.replace(supportedParameter.toLowerCase(), CharPool.UNDERLINE, CharPool.DASH)) %>
+							</dt>
+							<dd>
+								<%= configurationParameterVal %>
+							</dd>
+
+					<%
+						}
+					}
+					%>
+
+				</div>
+			</c:otherwise>
+		</c:choose>
 		<c:if test="<%= repository == null %>">
 			<aui:field-wrapper label="permissions">
 				<liferay-ui:input-permissions

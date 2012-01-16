@@ -19,6 +19,11 @@
 		}
 	}
 
+	.repository-settings-display dt {
+		font-weight: bold;
+		margin-top: 1em;
+	}
+
 	.lfr-asset-panels .lfr-panel.lfr-extended {
 		border-bottom: none;
 	}

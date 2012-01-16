@@ -172,9 +172,14 @@ public class RepositorySearchQueryBuilderImpl
 			queryParser.setAllowLeadingWildcard(true);
 			queryParser.setLowercaseExpandedTerms(false);
 
-			value = KeywordsUtil.escape(value);
+			org.apache.lucene.search.Query query = null;
 
-			org.apache.lucene.search.Query query = queryParser.parse(value);
+			try {
+				query = queryParser.parse(value);
+			}
+			catch (Exception e) {
+				query = queryParser.parse(KeywordsUtil.escape(value));
+			}
 
 			translateQuery(
 				booleanQuery, searchContext, query,

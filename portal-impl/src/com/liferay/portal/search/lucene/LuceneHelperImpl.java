@@ -196,9 +196,14 @@ public class LuceneHelperImpl implements LuceneHelper {
 			QueryParser queryParser = new QueryParser(
 				getVersion(), field, getAnalyzer());
 
-			value = KeywordsUtil.escape(value);
+			Query query = null;
 
-			Query query = queryParser.parse(value);
+			try {
+				query = queryParser.parse(value);
+			}
+			catch (Exception e) {
+				query = queryParser.parse(KeywordsUtil.escape(value));
+			}
 
 			BooleanClause.Occur occur = null;
 

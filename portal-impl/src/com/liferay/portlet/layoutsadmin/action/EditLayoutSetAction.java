@@ -250,8 +250,11 @@ public class EditLayoutSetAction extends EditLayoutsAction {
 
 			if (Validator.isNotNull(themeId)) {
 				colorSchemeId = getColorSchemeId(
+					companyId, themeId, colorSchemeId, wapTheme);
+
+				getThemeSettingsProperties(
 					actionRequest, companyId, typeSettingsProperties, device,
-					themeId, colorSchemeId, wapTheme);
+					themeId, wapTheme);
 			}
 
 			long groupId = liveGroupId;

@@ -572,9 +572,8 @@ public class EditLayoutsAction extends PortletAction {
 	}
 
 	protected String getColorSchemeId(
-			ActionRequest actionRequest, long companyId,
-			UnicodeProperties typeSettingsProperties, String device,
-			String themeId, String colorSchemeId, boolean wapTheme)
+			long companyId, String themeId, String colorSchemeId,
+			boolean wapTheme)
 		throws Exception {
 
 		Theme theme = ThemeLocalServiceUtil.getTheme(
@@ -590,37 +589,6 @@ public class EditLayoutsAction extends PortletAction {
 					companyId, themeId, colorSchemeId, wapTheme);
 
 			colorSchemeId = colorScheme.getColorSchemeId();
-		}
-
-		deleteThemeSettings(typeSettingsProperties, device);
-
-		Map<String, ThemeSetting> configurableSettings =
-			theme.getConfigurableSettings();
-
-		if (configurableSettings.isEmpty()) {
-			return colorSchemeId;
-		}
-
-		for (String key : configurableSettings.keySet()) {
-			ThemeSetting themeSetting = configurableSettings.get(key);
-
-			String type = GetterUtil.getString(themeSetting.getType(), "text");
-
-			String property =
-				device + "ThemeSettingsProperties--" + key +
-					StringPool.DOUBLE_DASH;
-
-			String value = ParamUtil.getString(actionRequest, property);
-
-			if (type.equals("checkbox")) {
-				value = String.valueOf(GetterUtil.getBoolean(value));
-			}
-
-			if (!value.equals(themeSetting.getValue())) {
-				typeSettingsProperties.setProperty(
-					ThemeSettingImpl.namespaceProperty(device, key),
-					value);
-			}
 		}
 
 		return colorSchemeId;
@@ -654,6 +622,50 @@ public class EditLayoutsAction extends PortletAction {
 	@Override
 	protected boolean isCheckMethodOnProcessAction() {
 		return _CHECK_METHOD_ON_PROCESS_ACTION;
+	}
+
+	protected UnicodeProperties getThemeSettingsProperties(
+			ActionRequest actionRequest, long companyId,
+			UnicodeProperties typeSettingsProperties, String device,
+			String themeId, boolean wapTheme)
+		throws Exception {
+
+		Theme theme = ThemeLocalServiceUtil.getTheme(
+			companyId, themeId, wapTheme);
+
+		deleteThemeSettings(typeSettingsProperties, device);
+
+		Map<String, ThemeSetting> configurableSettings =
+			theme.getConfigurableSettings();
+
+		if (configurableSettings.isEmpty()) {
+			return typeSettingsProperties;
+		}
+
+		for (String key : configurableSettings.keySet()) {
+			ThemeSetting themeSetting = configurableSettings.get(key);
+
+			String type = GetterUtil.getString(
+				themeSetting.getType(), "text");
+
+			String property =
+				device + "ThemeSettingsProperties--" + key +
+					StringPool.DOUBLE_DASH;
+
+			String value = ParamUtil.getString(actionRequest, property);
+
+			if (type.equals("checkbox")) {
+				value = String.valueOf(GetterUtil.getBoolean(value));
+			}
+
+			if (!value.equals(themeSetting.getValue())) {
+				typeSettingsProperties.setProperty(
+					ThemeSettingImpl.namespaceProperty(device, key),
+					value);
+			}
+		}
+
+		return typeSettingsProperties;
 	}
 
 	protected void selectLayoutBranch(ActionRequest actionRequest)
@@ -996,8 +1008,11 @@ public class EditLayoutsAction extends PortletAction {
 			}
 			else if (Validator.isNotNull(themeId)) {
 				colorSchemeId = getColorSchemeId(
+					companyId, themeId, colorSchemeId, wapTheme);
+
+				getThemeSettingsProperties(
 					actionRequest, companyId, typeSettingsProperties, device,
-					themeId, colorSchemeId, wapTheme);
+					themeId, wapTheme);
 			}
 
 			long groupId = liveGroupId;

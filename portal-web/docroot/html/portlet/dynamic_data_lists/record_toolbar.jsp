@@ -27,17 +27,15 @@ long detailDDMTemplateId = ParamUtil.getLong(request, "detailDDMTemplateId");
 <aui:script use="aui-toolbar,aui-dialog-iframe,liferay-util-window">
 	var permissionPopUp = null;
 
-	var toolbarChildren = [];
+	var toolbarChildren = [
+		<c:if test="<%= record != null %>">
+			<portlet:renderURL var="viewHistoryURL">
+				<portlet:param name="struts_action" value="/dynamic_data_lists/view_record_history" />
+				<portlet:param name="backURL" value="<%= currentURL %>" />
+				<portlet:param name="recordId" value="<%= String.valueOf(record.getRecordId()) %>" />
+				<portlet:param name="detailDDMTemplateId" value="<%= String.valueOf(detailDDMTemplateId) %>" />
+			</portlet:renderURL>
 
-	<c:if test="<%= record != null %>">
-		<portlet:renderURL var="viewHistoryURL">
-			<portlet:param name="struts_action" value="/dynamic_data_lists/view_record_history" />
-			<portlet:param name="backURL" value="<%= currentURL %>" />
-			<portlet:param name="recordId" value="<%= String.valueOf(record.getRecordId()) %>" />
-			<portlet:param name="detailDDMTemplateId" value="<%= String.valueOf(detailDDMTemplateId) %>" />
-		</portlet:renderURL>
-
-		toolbarChildren.push(
 			{
 				handler: function (event) {
 					window.location = '<%= viewHistoryURL %>';
@@ -45,8 +43,8 @@ long detailDDMTemplateId = ParamUtil.getLong(request, "detailDDMTemplateId");
 				icon: 'clock',
 				label: '<%= UnicodeLanguageUtil.get(pageContext, "view-history") %>'
 			}
-		);
-	</c:if>
+		</c:if>
+	];
 
 	new A.Toolbar(
 		{

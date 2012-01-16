@@ -15,8 +15,6 @@
 package com.liferay.portal.upgrade.v5_2_3;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 import com.liferay.portal.upgrade.v5_2_3.util.ResourceCodeTable;
 
 /**
@@ -26,20 +24,17 @@ public class UpgradeResourceCode extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
+		if (isSupportsAlterColumnType()) {
 			runSQL("alter_column_type ResourceCode name VARCHAR(255) null");
 		}
-		catch (Exception e) {
+		else {
 
 			// ResourceCode
 
-			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
-				ResourceCodeTable.TABLE_NAME, ResourceCodeTable.TABLE_COLUMNS);
-
-			upgradeTable.setCreateSQL(ResourceCodeTable.TABLE_SQL_CREATE);
-			upgradeTable.setIndexesSQL(ResourceCodeTable.TABLE_SQL_ADD_INDEXES);
-
-			upgradeTable.updateTable();
+			upgradeTable(
+				ResourceCodeTable.TABLE_NAME, ResourceCodeTable.TABLE_COLUMNS,
+				ResourceCodeTable.TABLE_SQL_CREATE,
+				ResourceCodeTable.TABLE_SQL_ADD_INDEXES);
 		}
 	}
 

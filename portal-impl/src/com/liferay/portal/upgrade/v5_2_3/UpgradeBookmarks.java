@@ -15,8 +15,6 @@
 package com.liferay.portal.upgrade.v5_2_3;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.upgrade.v5_2_3.util.BookmarksEntryTable;
 
@@ -27,22 +25,18 @@ public class UpgradeBookmarks extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
+		if (isSupportsAlterColumnType()) {
 			runSQL("alter_column_type BookmarksEntry name VARCHAR(255) null");
 		}
-		catch (Exception e) {
+		else {
 
 			// BookmarksEntry
 
-			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
+			upgradeTable(
 				BookmarksEntryTable.TABLE_NAME,
-				BookmarksEntryTable.TABLE_COLUMNS);
-
-			upgradeTable.setCreateSQL(BookmarksEntryTable.TABLE_SQL_CREATE);
-			upgradeTable.setIndexesSQL(
+				BookmarksEntryTable.TABLE_COLUMNS,
+				BookmarksEntryTable.TABLE_SQL_CREATE,
 				BookmarksEntryTable.TABLE_SQL_ADD_INDEXES);
-
-			upgradeTable.updateTable();
 		}
 
 		// groupId

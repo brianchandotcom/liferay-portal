@@ -15,8 +15,6 @@
 package com.liferay.portal.upgrade.v6_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 import com.liferay.portal.upgrade.v6_0_0.util.LayoutTable;
 
 /**
@@ -26,20 +24,17 @@ public class UpgradeLayout extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
+		if (isSupportsAlterColumnType()) {
 			runSQL("alter_column_type Layout friendlyURL VARCHAR(255) null");
 		}
-		catch (Exception e) {
+		else {
 
 			// Layout
 
-			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
-				LayoutTable.TABLE_NAME, LayoutTable.TABLE_COLUMNS);
-
-			upgradeTable.setCreateSQL(LayoutTable.TABLE_SQL_CREATE);
-			upgradeTable.setIndexesSQL(LayoutTable.TABLE_SQL_ADD_INDEXES);
-
-			upgradeTable.updateTable();
+			upgradeTable(
+				LayoutTable.TABLE_NAME, LayoutTable.TABLE_COLUMNS,
+				LayoutTable.TABLE_SQL_CREATE,
+				LayoutTable.TABLE_SQL_ADD_INDEXES);
 		}
 	}
 

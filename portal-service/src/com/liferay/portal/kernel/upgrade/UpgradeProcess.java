@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
+import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 
 import java.io.IOException;
 
@@ -230,6 +232,20 @@ public abstract class UpgradeProcess {
 	}
 
 	protected void doUpgrade() throws Exception {
+	}
+
+	protected void upgradeTable(
+			String tableName, Object[][] tableColumns, String sqlCreate,
+			String[] sqlAddIndexes)
+		throws Exception {
+
+		UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
+				tableName, tableColumns);
+
+		upgradeTable.setCreateSQL(sqlCreate);
+		upgradeTable.setIndexesSQL(sqlAddIndexes);
+
+		upgradeTable.updateTable();
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(UpgradeProcess.class);

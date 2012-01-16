@@ -15,8 +15,6 @@
 package com.liferay.portal.upgrade.v6_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 import com.liferay.portal.upgrade.v6_0_0.util.WikiPageResourceTable;
 import com.liferay.portal.upgrade.v6_0_0.util.WikiPageTable;
 
@@ -27,41 +25,30 @@ public class UpgradeWiki extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
+		if (isSupportsAlterColumnType()) {
 			runSQL("alter_column_type WikiPage parentTitle varchar(255) null");
 			runSQL(
 				"alter_column_type WikiPage redirectTitle varchar(255) null");
-		}
-		catch (Exception e) {
 
-			// WikiPage
-
-			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
-				WikiPageTable.TABLE_NAME, WikiPageTable.TABLE_COLUMNS);
-
-			upgradeTable.setCreateSQL(WikiPageTable.TABLE_SQL_CREATE);
-			upgradeTable.setIndexesSQL(WikiPageTable.TABLE_SQL_ADD_INDEXES);
-
-			upgradeTable.updateTable();
-		}
-
-		try {
 			runSQL(
 				"alter_column_type WikiPageResource title varchar(255) null");
 		}
-		catch (Exception e) {
+		else {
+
+			// WikiPage
+
+			upgradeTable(
+				WikiPageTable.TABLE_NAME, WikiPageTable.TABLE_COLUMNS,
+				WikiPageTable.TABLE_SQL_CREATE,
+				WikiPageTable.TABLE_SQL_ADD_INDEXES);
 
 			// WikiPageResource
 
-			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
+			upgradeTable(
 				WikiPageResourceTable.TABLE_NAME,
-				WikiPageResourceTable.TABLE_COLUMNS);
-
-			upgradeTable.setCreateSQL(WikiPageResourceTable.TABLE_SQL_CREATE);
-			upgradeTable.setIndexesSQL(
+				WikiPageResourceTable.TABLE_COLUMNS,
+				WikiPageResourceTable.TABLE_SQL_CREATE,
 				WikiPageResourceTable.TABLE_SQL_ADD_INDEXES);
-
-			upgradeTable.updateTable();
 		}
 	}
 

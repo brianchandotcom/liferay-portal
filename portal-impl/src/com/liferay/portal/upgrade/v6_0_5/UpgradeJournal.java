@@ -15,8 +15,6 @@
 package com.liferay.portal.upgrade.v6_0_5;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 import com.liferay.portal.upgrade.v6_0_5.util.JournalArticleTable;
 
 /**
@@ -26,19 +24,15 @@ public class UpgradeJournal extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
+		if (isSupportsAlterColumnType()) {
 			runSQL("alter_column_type JournalArticle title VARCHAR(300) null");
 		}
-		catch (Exception e) {
-			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
+		else {
+			upgradeTable(
 				JournalArticleTable.TABLE_NAME,
-				JournalArticleTable.TABLE_COLUMNS);
-
-			upgradeTable.setCreateSQL(JournalArticleTable.TABLE_SQL_CREATE);
-			upgradeTable.setIndexesSQL(
+				JournalArticleTable.TABLE_COLUMNS,
+				JournalArticleTable.TABLE_SQL_CREATE,
 				JournalArticleTable.TABLE_SQL_ADD_INDEXES);
-
-			upgradeTable.updateTable();
 		}
 	}
 

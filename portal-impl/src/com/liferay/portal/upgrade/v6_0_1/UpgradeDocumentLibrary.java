@@ -15,8 +15,6 @@
 package com.liferay.portal.upgrade.v6_0_1;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 import com.liferay.portal.upgrade.v6_0_1.util.DLFileEntryTable;
 import com.liferay.portal.upgrade.v6_0_1.util.DLFileVersionTable;
 
@@ -27,38 +25,27 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
+		if (isSupportsAlterColumnType()) {
 			runSQL("alter_column_type DLFileEntry size_ LONG");
+
+			runSQL("alter_column_type DLFileVersion size_ LONG");
 		}
-		catch (Exception e) {
+		else {
 
 			// DLFileEntry
 
-			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
-				DLFileEntryTable.TABLE_NAME, DLFileEntryTable.TABLE_COLUMNS);
-
-			upgradeTable.setCreateSQL(DLFileEntryTable.TABLE_SQL_CREATE);
-			upgradeTable.setIndexesSQL(DLFileEntryTable.TABLE_SQL_ADD_INDEXES);
-
-			upgradeTable.updateTable();
-		}
-
-		try {
-			runSQL("alter_column_type DLFileVersion size_ LONG");
-		}
-		catch (Exception e) {
+			upgradeTable(
+				DLFileEntryTable.TABLE_NAME, DLFileEntryTable.TABLE_COLUMNS,
+				DLFileEntryTable.TABLE_SQL_CREATE,
+				DLFileEntryTable.TABLE_SQL_ADD_INDEXES);
 
 			// DLFileVersion
 
-			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
+			upgradeTable(
 				DLFileVersionTable.TABLE_NAME,
-				DLFileVersionTable.TABLE_COLUMNS);
-
-			upgradeTable.setCreateSQL(DLFileVersionTable.TABLE_SQL_CREATE);
-			upgradeTable.setIndexesSQL(
+				DLFileVersionTable.TABLE_COLUMNS,
+				DLFileVersionTable.TABLE_SQL_CREATE,
 				DLFileVersionTable.TABLE_SQL_ADD_INDEXES);
-
-			upgradeTable.updateTable();
 		}
 	}
 

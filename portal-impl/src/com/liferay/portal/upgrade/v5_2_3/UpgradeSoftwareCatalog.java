@@ -15,8 +15,6 @@
 package com.liferay.portal.upgrade.v5_2_3;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 import com.liferay.portal.upgrade.v5_2_3.util.SCProductEntryTable;
 
 /**
@@ -26,22 +24,18 @@ public class UpgradeSoftwareCatalog extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
+		if (isSupportsAlterColumnType()) {
 			runSQL("alter_column_type SCProductEntry tags VARCHAR(255) null");
 		}
-		catch (Exception e) {
+		else {
 
 			// SCProductEntry
 
-			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
+			upgradeTable(
 				SCProductEntryTable.TABLE_NAME,
-				SCProductEntryTable.TABLE_COLUMNS);
-
-			upgradeTable.setCreateSQL(SCProductEntryTable.TABLE_SQL_CREATE);
-			upgradeTable.setIndexesSQL(
+				SCProductEntryTable.TABLE_COLUMNS,
+				SCProductEntryTable.TABLE_SQL_CREATE,
 				SCProductEntryTable.TABLE_SQL_ADD_INDEXES);
-
-			upgradeTable.updateTable();
 		}
 	}
 

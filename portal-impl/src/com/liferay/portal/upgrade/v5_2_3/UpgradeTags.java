@@ -33,20 +33,17 @@ public class UpgradeTags extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
+		if (isSupportsAlterColumnType()) {
 			runSQL("alter_column_type TagsAsset title VARCHAR(255) null");
 		}
-		catch (Exception e) {
+		else {
 
 			// TagsAsset
 
-			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
-				TagsAssetTable.TABLE_NAME, TagsAssetTable.TABLE_COLUMNS);
-
-			upgradeTable.setCreateSQL(TagsAssetTable.TABLE_SQL_CREATE);
-			upgradeTable.setIndexesSQL(TagsAssetTable.TABLE_SQL_ADD_INDEXES);
-
-			upgradeTable.updateTable();
+			upgradeTable(
+				TagsAssetTable.TABLE_NAME, TagsAssetTable.TABLE_COLUMNS,
+				TagsAssetTable.TABLE_SQL_CREATE,
+				TagsAssetTable.TABLE_SQL_ADD_INDEXES);
 		}
 
 		updateAssetViewCount();

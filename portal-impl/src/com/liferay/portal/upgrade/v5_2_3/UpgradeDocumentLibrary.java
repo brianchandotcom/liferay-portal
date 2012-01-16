@@ -15,8 +15,6 @@
 package com.liferay.portal.upgrade.v5_2_3;
 
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -37,72 +35,45 @@ public class UpgradeDocumentLibrary extends BaseUpgradePortletPreferences {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
+		if (isSupportsAlterColumnType()) {
 			runSQL("alter_column_type DLFileEntry name VARCHAR(255) null");
+
+			runSQL("alter_column_type DLFileRank name VARCHAR(255) null");
+
+			runSQL("alter_column_type DLFileShortcut toName VARCHAR(255) null");
+
+			runSQL("alter_column_type DLFileVersion name VARCHAR(255) null");
 		}
-		catch (Exception e) {
+		else {
 
 			// DLFileEntry
 
-			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
-				DLFileEntryTable.TABLE_NAME, DLFileEntryTable.TABLE_COLUMNS);
-
-			upgradeTable.setCreateSQL(DLFileEntryTable.TABLE_SQL_CREATE);
-			upgradeTable.setIndexesSQL(DLFileEntryTable.TABLE_SQL_ADD_INDEXES);
-
-			upgradeTable.updateTable();
-		}
-
-		try {
-			runSQL("alter_column_type DLFileRank name VARCHAR(255) null");
-		}
-		catch (Exception e) {
+			upgradeTable(
+				DLFileEntryTable.TABLE_NAME, DLFileEntryTable.TABLE_COLUMNS,
+				DLFileEntryTable.TABLE_SQL_CREATE,
+				DLFileEntryTable.TABLE_SQL_ADD_INDEXES);
 
 			// DLFileRank
 
-			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
-				DLFileRankTable.TABLE_NAME, DLFileRankTable.TABLE_COLUMNS);
-
-			upgradeTable.setCreateSQL(DLFileRankTable.TABLE_SQL_CREATE);
-			upgradeTable.setIndexesSQL(DLFileRankTable.TABLE_SQL_ADD_INDEXES);
-
-			upgradeTable.updateTable();
-		}
-
-		try {
-			runSQL("alter_column_type DLFileShortcut toName VARCHAR(255) null");
-		}
-		catch (Exception e) {
+			upgradeTable(
+				DLFileRankTable.TABLE_NAME, DLFileRankTable.TABLE_COLUMNS,
+				DLFileRankTable.TABLE_SQL_CREATE,
+				DLFileRankTable.TABLE_SQL_ADD_INDEXES);
 
 			// DLFileShortcut
 
-			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
+			upgradeTable(
 				DLFileShortcutTable.TABLE_NAME,
-				DLFileShortcutTable.TABLE_COLUMNS);
-
-			upgradeTable.setCreateSQL(DLFileShortcutTable.TABLE_SQL_CREATE);
-			upgradeTable.setIndexesSQL(
+				DLFileShortcutTable.TABLE_COLUMNS,
+				DLFileShortcutTable.TABLE_SQL_CREATE,
 				DLFileShortcutTable.TABLE_SQL_ADD_INDEXES);
-
-			upgradeTable.updateTable();
-		}
-
-		try {
-			runSQL("alter_column_type DLFileVersion name VARCHAR(255) null");
-		}
-		catch (Exception e) {
 
 			// DLFileVersion
 
-			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
-				DLFileVersionTable.TABLE_NAME,
-				DLFileVersionTable.TABLE_COLUMNS);
-
-			upgradeTable.setCreateSQL(DLFileVersionTable.TABLE_SQL_CREATE);
-			upgradeTable.setIndexesSQL(
+			upgradeTable(
+				DLFileVersionTable.TABLE_NAME, DLFileVersionTable.TABLE_COLUMNS,
+				DLFileVersionTable.TABLE_SQL_CREATE,
 				DLFileVersionTable.TABLE_SQL_ADD_INDEXES);
-
-			upgradeTable.updateTable();
 		}
 
 		// groupId

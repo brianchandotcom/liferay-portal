@@ -15,8 +15,6 @@
 package com.liferay.portal.upgrade.v6_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 import com.liferay.portal.upgrade.v6_0_0.util.JournalArticleTable;
 import com.liferay.portal.upgrade.v6_0_0.util.JournalFeedTable;
 import com.liferay.portal.upgrade.v6_0_0.util.JournalTemplateTable;
@@ -28,51 +26,34 @@ public class UpgradeJournal extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
+		if (isSupportsAlterColumnType()) {
 			runSQL(
 				"alter_column_type JournalArticle smallImageURL STRING null");
-		}
-		catch (Exception e) {
-			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
-				JournalArticleTable.TABLE_NAME,
-				JournalArticleTable.TABLE_COLUMNS);
 
-			upgradeTable.setCreateSQL(JournalArticleTable.TABLE_SQL_CREATE);
-			upgradeTable.setIndexesSQL(
-				JournalArticleTable.TABLE_SQL_ADD_INDEXES);
-
-			upgradeTable.updateTable();
-		}
-
-		try {
 			runSQL(
 				"alter_column_type JournalFeed targetLayoutFriendlyUrl " +
 					"VARCHAR(255) null");
-		}
-		catch (Exception e) {
-			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
-				JournalFeedTable.TABLE_NAME, JournalFeedTable.TABLE_COLUMNS);
 
-			upgradeTable.setCreateSQL(JournalFeedTable.TABLE_SQL_CREATE);
-			upgradeTable.setIndexesSQL(JournalFeedTable.TABLE_SQL_ADD_INDEXES);
-
-			upgradeTable.updateTable();
-		}
-
-		try {
 			runSQL(
 				"alter_column_type JournalTemplate smallImageURL STRING null");
 		}
-		catch (Exception e) {
-			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
+		else {
+			upgradeTable(
+				JournalArticleTable.TABLE_NAME,
+				JournalArticleTable.TABLE_COLUMNS,
+				JournalArticleTable.TABLE_SQL_CREATE,
+				JournalArticleTable.TABLE_SQL_ADD_INDEXES);
+
+			upgradeTable(
+				JournalFeedTable.TABLE_NAME, JournalFeedTable.TABLE_COLUMNS,
+				JournalFeedTable.TABLE_SQL_CREATE,
+				JournalFeedTable.TABLE_SQL_ADD_INDEXES);
+
+			upgradeTable(
 				JournalTemplateTable.TABLE_NAME,
-				JournalTemplateTable.TABLE_COLUMNS);
-
-			upgradeTable.setCreateSQL(JournalTemplateTable.TABLE_SQL_CREATE);
-			upgradeTable.setIndexesSQL(
+				JournalTemplateTable.TABLE_COLUMNS,
+				JournalTemplateTable.TABLE_SQL_CREATE,
 				JournalTemplateTable.TABLE_SQL_ADD_INDEXES);
-
-			upgradeTable.updateTable();
 		}
 	}
 

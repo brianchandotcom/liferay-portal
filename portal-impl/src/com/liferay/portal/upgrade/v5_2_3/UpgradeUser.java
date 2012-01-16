@@ -15,8 +15,6 @@
 package com.liferay.portal.upgrade.v5_2_3;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.upgrade.v5_2_3.util.UserTable;
 
@@ -27,20 +25,17 @@ public class UpgradeUser extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
+		if (isSupportsAlterColumnType()) {
 			runSQL("alter_column_type User_ greeting VARCHAR(255) null");
 		}
-		catch (Exception e) {
+		else {
 
 			// User_
 
-			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
-				UserTable.TABLE_NAME, UserTable.TABLE_COLUMNS);
-
-			upgradeTable.setCreateSQL(UserTable.TABLE_SQL_CREATE);
-			upgradeTable.setIndexesSQL(UserTable.TABLE_SQL_ADD_INDEXES);
-
-			upgradeTable.updateTable();
+			upgradeTable(
+				UserTable.TABLE_NAME, UserTable.TABLE_COLUMNS,
+				UserTable.TABLE_SQL_CREATE,
+				UserTable.TABLE_SQL_ADD_INDEXES);
 		}
 
 		StringBundler sb = new StringBundler(9);

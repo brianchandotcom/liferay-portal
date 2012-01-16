@@ -847,7 +847,9 @@ public class SitesUtil {
 				LayoutSetPrototypeLocalServiceUtil.fetchLayoutSetPrototype(
 					layoutSetPrototypeId);
 
-			layoutSetPrototypeUuid = layoutSetPrototype.getUuid();
+			if (layoutSetPrototype != null) {
+				layoutSetPrototypeUuid = layoutSetPrototype.getUuid();
+			}
 		}
 
 		LayoutSetServiceUtil.updateLayoutSetPrototypeLinkEnabled(

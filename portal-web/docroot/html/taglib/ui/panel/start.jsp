@@ -29,7 +29,7 @@
 		</div>
 
 		<c:if test="<%= collapsible && extended %>">
-			<a class="lfr-panel-button" href="javascript:;"></a>
+			<a class="lfr-panel-button" href="javascript:;" title="<liferay-ui:message key='<%= panelState.equals("open") ? "collapse" : "expand" %>' />"></a>
 		</c:if>
 	</div>
 

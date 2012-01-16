@@ -71,7 +71,7 @@ public class ViewAction extends PortletAction {
 			true);
 
 		if (PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_POWER_USER_REQUIRED &&
-			 !hasPowerUserRole) {
+			!hasPowerUserRole) {
 
 			tabs1 = "private-pages";
 		}

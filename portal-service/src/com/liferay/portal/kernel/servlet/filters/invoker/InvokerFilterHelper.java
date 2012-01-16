@@ -188,13 +188,22 @@ public class InvokerFilterHelper {
 			contextClassLoader = currentThread.getContextClassLoader();
 		}
 
-		Filter filter = (Filter)InstanceFactory.newInstance(
-			contextClassLoader, filterClassName);
-
 		FilterConfig filterConfig = new InvokerFilterConfig(
 			servletContext, filterName, initParameterMap);
 
-		filter.init(filterConfig);
+		Filter filter = null;
+
+		try {
+			filter = (Filter)InstanceFactory.newInstance(
+				contextClassLoader, filterClassName);
+
+			filter.init(filterConfig);
+		}
+		catch (Exception e) {
+			_log.error("Failed to initialize filter " + filterClassName, e);
+
+			return;
+		}
 
 		boolean filterEnabled = true;
 

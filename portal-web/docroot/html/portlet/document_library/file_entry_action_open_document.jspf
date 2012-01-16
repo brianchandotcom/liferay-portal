@@ -17,57 +17,33 @@
 <c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) %>">
 
 	<%
-	String fileUrl = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + folderId + StringPool.SLASH + HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle()), true);
-	String webDavUrl = StringPool.BLANK;
-
-	if (portletDisplay.isWebDAVEnabled()) {
-		webDavUrl = DLUtil.getWebDavURL(themeDisplay, fileEntry.getFolder(), fileEntry);
-	}
-
-	String officeDoc = null;
-
-	String curExtension = fileEntry.getExtension();
-
 	if (portletDisplay.isWebDAVEnabled() && BrowserSnifferUtil.isIe(request)) {
+		String webDavUrl = DLUtil.getWebDavURL(themeDisplay, fileEntry.getFolder(), fileEntry);
+
+		String curExtension = fileEntry.getExtension();
+
 		if (curExtension.equalsIgnoreCase("doc") ||
 			curExtension.equalsIgnoreCase("dot") ||
 			curExtension.equalsIgnoreCase("ppt") ||
-			curExtension.equalsIgnoreCase("xls")) {
+			curExtension.equalsIgnoreCase("xls") ||
+			curExtension.equalsIgnoreCase("docx") ||
+			curExtension.equalsIgnoreCase("pptx") ||
+			curExtension.equalsIgnoreCase("xlsx")) {
 
-			officeDoc = "SharePoint.OpenDocuments.1";
+			String taglibOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "openDocument', {webDavUrl: '" + webDavUrl + "'});";
+		%>
+
+			<liferay-ui:icon
+				image="../document_library/msoffice"
+				message="open-in-ms-office"
+				onClick="<%= taglibOnClick %>"
+				url="javascript:;"
+			/>
+
+		<%
 		}
-		else if (curExtension.equalsIgnoreCase("docx") ||
-				 curExtension.equalsIgnoreCase("pptx") ||
-				 curExtension.equalsIgnoreCase("xlsx")) {
-
-			officeDoc = "SharePoint.OpenDocuments.2";
-		}
-	}
-
-	if (officeDoc != null) {
-		String taglibOpenInMSOffice = "javascript:" + liferayPortletResponse.getNamespace() + "openDocument('" + fileUrl + "','" + webDavUrl + "','" + officeDoc + "');";
-	%>
-
-		<liferay-ui:icon
-			image="../document_library/msoffice"
-			message="open-in-ms-office"
-			url="<%= taglibOpenInMSOffice %>"
-		/>
-
+		%>
 	<%
 	}
 	%>
-
-	<aui:script>
-		function <portlet:namespace />openDocument(fileUrl, webDavUrl, officeDoc) {
-			var officeDoc = new ActiveXObject("<%= officeDoc %>");
-
-			if (officeDoc) {
-				officeDoc.EditDocument(webDavUrl);
-			}
-			else {
-				window.location.href = fileUrl;
-			}
-		}
-	</aui:script>
 </c:if>

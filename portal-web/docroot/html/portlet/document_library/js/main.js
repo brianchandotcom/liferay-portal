@@ -3,10 +3,13 @@ AUI.add(
 	function(A) {
 		var AObject = A.Object;
 		var Lang = A.Lang;
+		var UA = A.UA;
 
 		var formatSelectorNS = A.Node.formatSelectorNS;
 
 		var owns = AObject.owns;
+
+		var WIN = A.config.win;
 
 		var History = Liferay.HistoryManager;
 
@@ -104,7 +107,7 @@ AUI.add(
 
 		var SRC_SEARCH_SINGLE = 1;
 
-		var TOUCH = A.UA.touch;
+		var TOUCH = UA.touch;
 
 		var TPL_MESSAGE_RESPONSE = '<div class="lfr-message-response" />';
 
@@ -152,6 +155,7 @@ AUI.add(
 						instance._eventDataRequest = instance.ns('dataRequest');
 						instance._eventDataRetrieveSuccess = instance.ns('dataRetrieveSuccess');
 						instance._eventPageLoaded = instance.ns('pageLoaded');
+						instance._eventOpenDocument = instance.ns('openDocument');
 
 						instance._displayStyleToolbarNode = instance.byId(DISPLAY_STYLE_TOOLBAR);
 						instance._entriesContainer = instance.byId('documentContainer');
@@ -215,7 +219,8 @@ AUI.add(
 							Liferay.on(instance._dataRetrieveFailure, instance._onDataRetrieveFailure, instance),
 							Liferay.on(instance._eventDataRequest, instance._onDataRequest, instance),
 							Liferay.on(instance._eventDataRetrieveSuccess, instance._onDataRetrieveSuccess, instance),
-							Liferay.on(instance._eventPageLoaded, instance._onPageLoaded, instance)
+							Liferay.on(instance._eventPageLoaded, instance._onPageLoaded, instance),
+							Liferay.on(instance._eventOpenDocument, instance._openDocument, instance)
 						];
 
 						var folderContainer = instance.byId(STR_FOLDER_CONTAINER);
@@ -772,7 +777,7 @@ AUI.add(
 
 						instance._toggleSelected(event.currentTarget, true);
 
-						window[instance.ns(STR_TOGGLE_ACTIONS_BUTTON)]();
+						WIN[instance.ns(STR_TOGGLE_ACTIONS_BUTTON)]();
 
 						Liferay.Util.checkAllBox(
 							instance._entriesContainer,
@@ -803,7 +808,7 @@ AUI.add(
 						var selectedItems = instance._ddHandler.dd.get(STR_DATA).selectedItems;
 
 						if (selectedItems.indexOf(folderContainer) == -1) {
-							window[instance.ns('moveEntries')](folderId);
+							WIN[instance.ns('moveEntries')](folderId);
 						}
 					},
 
@@ -1020,6 +1025,28 @@ AUI.add(
 								return repositoryNode;
 							}
 						);
+					},
+
+					_openDocument: function(event) {
+						var instance = this;
+
+						var webDavUrl = event.webDavUrl;
+
+						if (webDavUrl && UA.ie) {
+							try {
+								var executor = new WIN.ActiveXObject('SharePoint.OpenDocuments');
+
+								executor.EditDocument(webDavUrl);
+							}
+							catch (exception) {
+								var errorMessage = Lang.sub(
+									Liferay.Language.get('cannot-open-the-requested-document-due-to-the-following-reason'),
+									[exception.message]
+								);
+
+								instance._sendMessage(MESSAGE_TYPE_ERROR, errorMessage);
+							}
+						}
 					},
 
 					_processDefaultParams: function(event) {
@@ -1354,7 +1381,7 @@ AUI.add(
 						Liferay.Util.checkAll(documentContainer, instance.ns(STR_ROW_IDS_FILE_ENTRY_CHECKBOX), selectAllCheckbox, CSS_RESULT_ROW);
 						Liferay.Util.checkAll(documentContainer, instance.ns(STR_ROW_IDS_FILE_SHORTCUT_CHECKBOX), selectAllCheckbox, CSS_RESULT_ROW);
 
-						window[instance.ns(STR_TOGGLE_ACTIONS_BUTTON)]();
+						WIN[instance.ns(STR_TOGGLE_ACTIONS_BUTTON)]();
 
 						if (!instance._getDisplayStyle(DISPLAY_STYLE_LIST)) {
 							var documentDisplayStyle = A.all(CSS_DOCUMENT_DISPLAY_STYLE_SELECTABLE);

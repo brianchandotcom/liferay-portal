@@ -44,6 +44,7 @@ String imageHover = (String)request.getAttribute("liferay-ui:icon:imageHover");
 
 boolean auiImage = (image != null) && image.startsWith(_AUI_PATH);
 
+String alt = (String)request.getAttribute("liferay-ui:icon:alt");
 String message = (String)request.getAttribute("liferay-ui:icon:message");
 
 if (message == null) {
@@ -106,7 +107,16 @@ if ((iconMenuIconCount != null) || (iconMenuSingleIcon != null)) {
 
 String details = null;
 
-if (label) {
+if (alt != null) {
+	StringBundler sb = new StringBundler(3);
+
+	sb.append(" alt=\"");
+	sb.append(LanguageUtil.get(pageContext, alt));
+	sb.append("\"");
+
+	details = sb.toString();
+}
+else if (label) {
 	details = " alt=\"\"";
 }
 else {

@@ -36,55 +36,59 @@
 		<div class="top-links-container">
 			<div class="top-links">
 				<c:if test="<%= showTabs %>">
-					<div class="top-links-navigation">
-
-						<%
-						String homeMessage = "home";
-						String recentMessage = "recent";
-						String mineMessage = "mine";
-
-						PortletURL portletURL = renderResponse.createRenderURL();
-
-						portletURL.setParameter("categoryId", StringPool.BLANK);
-						portletURL.setParameter("tag", StringPool.BLANK);
-						portletURL.setParameter("topLink", homeMessage);
-						%>
-
-						<liferay-ui:icon
-							cssClass="top-link"
-							image="../aui/home"
-							label="<%= true %>"
-							message="<%= homeMessage %>"
-							url="<%= (topLink.equals(homeMessage) && (folderId == defaultFolderId) && viewFolder && !useAssetEntryQuery) ? StringPool.BLANK : portletURL.toString() %>"
-						/>
-
-						<%
-						portletURL.setParameter("topLink", recentMessage);
-						%>
-
-						<liferay-ui:icon
-							cssClass='<%= "top-link" + (themeDisplay.isSignedIn() ? StringPool.BLANK : " last") %>'
-							image="../aui/clock"
-							label="<%= true %>"
-							message="<%= recentMessage %>"
-							url="<%= (topLink.equals(recentMessage) && !useAssetEntryQuery) ? StringPool.BLANK : portletURL.toString() %>"
-						/>
-
-						<c:if test="<%= themeDisplay.isSignedIn() %>">
+					<ul class="top-links-navigation">
+						<li class="top-link first">
 
 							<%
-							portletURL.setParameter("topLink", mineMessage);
+							String homeMessage = "home";
+							String recentMessage = "recent";
+							String mineMessage = "mine";
+
+							PortletURL portletURL = renderResponse.createRenderURL();
+
+							portletURL.setParameter("categoryId", StringPool.BLANK);
+							portletURL.setParameter("tag", StringPool.BLANK);
+							portletURL.setParameter("topLink", homeMessage);
 							%>
 
 							<liferay-ui:icon
-								cssClass="top-link last"
-								image="../aui/person"
+								image="../aui/home"
 								label="<%= true %>"
-								message="<%= mineMessage %>"
-								url="<%= (topLink.equals(mineMessage) && !useAssetEntryQuery) ? StringPool.BLANK : portletURL.toString() %>"
+								message="<%= homeMessage %>"
+								url="<%= (topLink.equals(homeMessage) && (folderId == defaultFolderId) && viewFolder && !useAssetEntryQuery) ? StringPool.BLANK : portletURL.toString() %>"
 							/>
+						</li>
+
+						<li class="top-link <%= (themeDisplay.isSignedIn() ? StringPool.BLANK : " last") %>">
+
+							<%
+							portletURL.setParameter("topLink", recentMessage);
+							%>
+
+							<liferay-ui:icon
+								image="../aui/clock"
+								label="<%= true %>"
+								message="<%= recentMessage %>"
+								url="<%= (topLink.equals(recentMessage) && !useAssetEntryQuery) ? StringPool.BLANK : portletURL.toString() %>"
+							/>
+						</li>
+
+						<c:if test="<%= themeDisplay.isSignedIn() %>">
+							<li class="top-link last">
+
+								<%
+								portletURL.setParameter("topLink", mineMessage);
+								%>
+
+								<liferay-ui:icon
+									image="../aui/person"
+									label="<%= true %>"
+									message="<%= mineMessage %>"
+									url="<%= (topLink.equals(mineMessage) && !useAssetEntryQuery) ? StringPool.BLANK : portletURL.toString() %>"
+								/>
+							</li>
 						</c:if>
-					</div>
+					</ul>
 				</c:if>
 
 				<c:if test="<%= showFoldersSearch %>">

@@ -89,9 +89,7 @@ public class OpenIdAction extends PortletAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long companyId = themeDisplay.getCompanyId();
-
-		if (!OpenIdUtil.isEnabled(companyId)) {
+		if (!OpenIdUtil.isEnabled(themeDisplay.getCompanyId())) {
 			throw new PrincipalException();
 		}
 
@@ -150,9 +148,7 @@ public class OpenIdAction extends PortletAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long companyId = themeDisplay.getCompanyId();
-
-		if (!OpenIdUtil.isEnabled(companyId)) {
+		if (!OpenIdUtil.isEnabled(themeDisplay.getCompanyId())) {
 			return mapping.findForward("portlet.login.login");
 		}
 

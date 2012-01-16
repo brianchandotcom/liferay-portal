@@ -65,9 +65,7 @@ public class FacebookConnectAction extends PortletAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long companyId = themeDisplay.getCompanyId();
-
-		if (!FacebookConnectUtil.isEnabled(companyId)) {
+		if (!FacebookConnectUtil.isEnabled(themeDisplay.getCompanyId())) {
 			return mapping.findForward("portlet.login.login");
 		}
 
@@ -83,9 +81,7 @@ public class FacebookConnectAction extends PortletAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long companyId = themeDisplay.getCompanyId();
-
-		if (!FacebookConnectUtil.isEnabled(companyId)) {
+		if (!FacebookConnectUtil.isEnabled(themeDisplay.getCompanyId())) {
 			throw new PrincipalException();
 		}
 

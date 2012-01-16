@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.struts.PortletAction;
@@ -88,6 +89,10 @@ public class OpenIdAction extends PortletAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		if (!OpenIdUtil.isEnabled(themeDisplay.getCompanyId())) {
+			throw new PrincipalException();
+		}
+
 		if (actionRequest.getRemoteUser() != null) {
 			actionResponse.sendRedirect(themeDisplay.getPathMain());
 
@@ -142,6 +147,10 @@ public class OpenIdAction extends PortletAction {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		if (!OpenIdUtil.isEnabled(themeDisplay.getCompanyId())) {
+			return mapping.findForward("portlet.login.login");
+		}
 
 		renderResponse.setTitle(themeDisplay.translate("open-id"));
 
@@ -320,10 +329,6 @@ public class OpenIdAction extends PortletAction {
 			ThemeDisplay themeDisplay, ActionRequest actionRequest,
 			ActionResponse actionResponse)
 		throws Exception {
-
-		if (!OpenIdUtil.isEnabled(themeDisplay.getCompanyId())) {
-			return;
-		}
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			actionRequest);

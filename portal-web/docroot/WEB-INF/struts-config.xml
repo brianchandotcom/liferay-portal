@@ -1024,16 +1024,21 @@
 		<action path="/login/create_account" type="com.liferay.portlet.login.action.CreateAccountAction">
 			<forward name="portlet.login.create_account" path="portlet.login.create_account" />
 			<forward name="portlet.login.update_account" path="portlet.login.update_account" />
+			<forward name="portlet.login.login" path="portlet.login.login" />
 		</action>
 
 		<action path="/login/create_anonymous_account" type="com.liferay.portlet.login.action.CreateAnonymousAccountAction">
 			<forward name="portlet.login.create_anonymous_account" path="portlet.login.create_anonymous_account" />
+			<forward name="portlet.login.login" path="portlet.login.login" />
 		</action>
 
-		<action path="/login/facebook_connect_oauth" type="com.liferay.portlet.login.action.FacebookConnectAction" />
+		<action path="/login/facebook_connect_oauth" type="com.liferay.portlet.login.action.FacebookConnectAction">
+			<forward name="portlet.login.error" path="portlet.login.login" />
+		</action>
 
 		<action path="/login/forgot_password" type="com.liferay.portlet.login.action.ForgotPasswordAction">
 			<forward name="portlet.login.forgot_password" path="portlet.login.forgot_password" />
+			<forward name="portlet.login.login" path="portlet.login.login" />
 		</action>
 
 		<action path="/login/login" type="com.liferay.portlet.login.action.LoginAction">
@@ -1045,6 +1050,7 @@
 
 		<action path="/login/open_id" type="com.liferay.portlet.login.action.OpenIdAction">
 			<forward name="portlet.login.open_id" path="portlet.login.open_id" />
+			<forward name="portlet.login.login" path="portlet.login.login" />
 		</action>
 
 		<!-- Maps -->

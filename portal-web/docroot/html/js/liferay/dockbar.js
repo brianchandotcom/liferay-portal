@@ -770,6 +770,8 @@ AUI.add(
 					},
 					'.aui-toolbar a'
 				);
+
+				Liferay.fire('dockbarLoaded');
 			},
 			['aui-io-request', 'aui-overlay-context', 'liferay-dockbar-underlay', 'node-focusmanager']
 		);

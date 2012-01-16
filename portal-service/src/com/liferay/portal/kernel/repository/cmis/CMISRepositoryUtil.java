@@ -86,10 +86,10 @@ public class CMISRepositoryUtil {
 		return value;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(CMISRepositoryUtil.class);
-
 	private static final String _CLASS_NAME =
 		"com.liferay.portal.repository.cmis.CMISRepositoryUtil";
+
+	private static Log _log = LogFactoryUtil.getLog(CMISRepositoryUtil.class);
 
 	private static MethodKey _checkRepository = new MethodKey(
 		_CLASS_NAME, "checkRepository", long.class, Map.class,

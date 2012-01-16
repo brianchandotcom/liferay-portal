@@ -29,9 +29,6 @@ public class ServiceLocator {
 		return _instance;
 	}
 
-	private ServiceLocator() {
-	}
-
 	public Object findService(String serviceName) {
 		Object bean = null;
 
@@ -57,6 +54,9 @@ public class ServiceLocator {
 		}
 
 		return bean;
+	}
+
+	private ServiceLocator() {
 	}
 
 	private String _getServiceName(String serviceName) {

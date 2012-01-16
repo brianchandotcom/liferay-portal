@@ -25,8 +25,6 @@ import org.osgi.framework.FrameworkEvent;
  */
 public class FrameworkListener implements org.osgi.framework.FrameworkListener {
 
-	private static Log _log = LogFactoryUtil.getLog(FrameworkListener.class);
-
 	public void frameworkEvent(FrameworkEvent frameworkEvent) {
 		try {
 			int type = frameworkEvent.getType();
@@ -210,5 +208,7 @@ public class FrameworkListener implements org.osgi.framework.FrameworkListener {
 
 		log.warn("[WARNING]", frameworkEvent.getThrowable());
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(FrameworkListener.class);
 
 }

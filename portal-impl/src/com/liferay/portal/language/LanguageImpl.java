@@ -517,20 +517,6 @@ public class LanguageImpl implements Language {
 		CookieKeys.addCookie(request, response, languageIdCookie);
 	}
 
-	private static LanguageImpl _getInstance() {
-		Long companyId = CompanyThreadLocal.getCompanyId();
-
-		LanguageImpl instance = _instances.get(companyId);
-
-		if (instance == null) {
-			instance = new LanguageImpl(companyId);
-
-			_instances.put(companyId, instance);
-		}
-
-		return instance;
-	}
-
 	private LanguageImpl() {
 		this(CompanyConstants.SYSTEM);
 	}
@@ -592,6 +578,20 @@ public class LanguageImpl implements Language {
 
 			_localesBetaSet.add(locale);
 		}
+	}
+
+	private static LanguageImpl _getInstance() {
+		Long companyId = CompanyThreadLocal.getCompanyId();
+
+		LanguageImpl instance = _instances.get(companyId);
+
+		if (instance == null) {
+			instance = new LanguageImpl(companyId);
+
+			_instances.put(companyId, instance);
+		}
+
+		return instance;
 	}
 
 	private String _escapePattern(String pattern) {

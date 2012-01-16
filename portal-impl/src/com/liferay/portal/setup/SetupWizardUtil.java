@@ -495,7 +495,7 @@ public class SetupWizardUtil {
 		}
 	}
 
-	private final static String _PROPERTIES_PREFIX = "properties--";
+	private static final String _PROPERTIES_PREFIX = "properties--";
 
 	private static Log _log = LogFactoryUtil.getLog(SetupWizardUtil.class);
 

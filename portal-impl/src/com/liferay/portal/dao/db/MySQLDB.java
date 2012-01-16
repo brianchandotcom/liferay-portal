@@ -198,7 +198,7 @@ public class MySQLDB extends BaseDB {
 		return sb.toString();
 	}
 
-	private static String[] _MYSQL = {
+	private static final String[] _MYSQL = {
 		"##", "1", "0",
 		"'1970-01-01'", "now()",
 		" longblob", " longblob", " tinyint", " datetime",

@@ -322,7 +322,7 @@ public class SecureFilter extends BasePortalFilter {
 		_usePermissionChecker = usePermissionChecker;
 	}
 
-	public static final String _AUTHENTICATED_USER =
+	private static final String _AUTHENTICATED_USER =
 		SecureFilter.class + "_AUTHENTICATED_USER";
 
 	private static final String _BASIC_REALM =

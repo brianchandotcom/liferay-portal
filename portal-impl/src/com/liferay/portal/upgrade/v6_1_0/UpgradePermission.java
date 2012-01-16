@@ -118,7 +118,7 @@ public class UpgradePermission extends UpgradeProcess {
 
 		List<ResourcePermission> resourcePermissions =
 			ResourcePermissionLocalServiceUtil.getScopeResourcePermissions(
-				_scopes);
+				_SCOPES);
 
 		for (ResourcePermission resourcePermission : resourcePermissions) {
 			int scope = resourcePermission.getScope();
@@ -243,12 +243,12 @@ public class UpgradePermission extends UpgradeProcess {
 			name, RoleConstants.OWNER, scope, actionIdsLong);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(UpgradePermission.class);
-
-	private static final int[] _scopes = {
+	private static final int[] _SCOPES = {
 		ResourceConstants.SCOPE_COMPANY,
 		ResourceConstants.SCOPE_GROUP,
 		ResourceConstants.SCOPE_GROUP_TEMPLATE
 	};
+
+	private static Log _log = LogFactoryUtil.getLog(UpgradePermission.class);
 
 }

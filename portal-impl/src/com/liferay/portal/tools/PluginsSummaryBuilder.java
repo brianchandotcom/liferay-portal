@@ -208,7 +208,7 @@ public class PluginsSummaryBuilder {
 		return sb.toString();
 	}
 
-	public String _readProperty(Properties properties, String key) {
+	private String _readProperty(Properties properties, String key) {
 		return GetterUtil.getString(properties.getProperty(key));
 	}
 

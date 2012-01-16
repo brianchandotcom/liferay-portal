@@ -80,12 +80,12 @@ public class ImageImpl extends ImageBaseImpl {
 		return getImageId() + StringPool.PERIOD + getType();
 	}
 
-	private byte[] _textObj;
+	private static final long _DEFAULT_COMPANY_ID = 0;
 
-	private final long _DEFAULT_COMPANY_ID = 0;
-
-	private final long _DEFAULT_REPOSITORY_ID = 0;
+	private static final long _DEFAULT_REPOSITORY_ID = 0;
 
 	private static Log _log = LogFactoryUtil.getLog(ImageImpl.class);
+
+	private byte[] _textObj;
 
 }

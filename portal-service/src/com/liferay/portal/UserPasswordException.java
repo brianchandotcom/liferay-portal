@@ -39,8 +39,6 @@ public class UserPasswordException extends PortalException {
 
 	public static final int PASSWORDS_DO_NOT_MATCH = 10;
 
-	private int _type;
-
 	public UserPasswordException(int type) {
 		_type = type;
 	}
@@ -48,5 +46,7 @@ public class UserPasswordException extends PortalException {
 	public int getType() {
 		return _type;
 	}
+
+	private int _type;
 
 }

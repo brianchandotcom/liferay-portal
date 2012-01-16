@@ -34,6 +34,10 @@ import org.apache.commons.codec.binary.Hex;
  */
 public class CookieKeys implements com.liferay.portal.kernel.util.CookieKeys {
 
+	public static final int MAX_AGE = 31536000;
+
+	public static final int VERSION = 0;
+
 	public static void addCookie(
 		HttpServletRequest request, HttpServletResponse response,
 		Cookie cookie) {
@@ -212,10 +216,6 @@ public class CookieKeys implements com.liferay.portal.kernel.util.CookieKeys {
 			}
 		}
 	}
-
-	public static final int MAX_AGE = 31536000;
-
-	public static final int VERSION = 0;
 
 	private static Log _log = LogFactoryUtil.getLog(CookieKeys.class);
 

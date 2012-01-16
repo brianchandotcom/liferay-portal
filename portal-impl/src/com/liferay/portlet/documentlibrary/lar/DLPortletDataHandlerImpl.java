@@ -1335,7 +1335,7 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 		}
 	}
 
-	protected void importRepository(
+	protected static void importRepository(
 			PortletDataContext portletDataContext, Element repositoryElement)
 		throws Exception {
 

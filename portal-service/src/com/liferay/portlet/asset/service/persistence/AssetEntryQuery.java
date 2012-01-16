@@ -43,31 +43,6 @@ import javax.portlet.PortletRequest;
  */
 public class AssetEntryQuery {
 
-	public AssetEntryQuery(AssetEntryQuery assetEntryQuery) {
-		setAllCategoryIds(assetEntryQuery.getAllCategoryIds());
-		setAllTagIds(assetEntryQuery.getAllTagIds());
-		setAnyCategoryIds(assetEntryQuery.getAnyCategoryIds());
-		setAnyTagIds(assetEntryQuery.getAnyTagIds());
-		setClassNameIds(assetEntryQuery.getClassNameIds());
-		setClassTypeIds(assetEntryQuery.getClassTypeIds());
-		setEnd(assetEntryQuery.getEnd());
-		setExcludeZeroViewCount(assetEntryQuery.isExcludeZeroViewCount());
-		setExpirationDate(assetEntryQuery.getExpirationDate());
-		setGroupIds(assetEntryQuery.getGroupIds());
-		setLayout(assetEntryQuery.getLayout());
-		setNotAllCategoryIds(assetEntryQuery.getNotAllCategoryIds());
-		setNotAllTagIds(assetEntryQuery.getNotAllTagIds());
-		setNotAnyCategoryIds(assetEntryQuery.getNotAnyCategoryIds());
-		setNotAnyTagIds(assetEntryQuery.getNotAnyTagIds());
-		setOrderByCol1(assetEntryQuery.getOrderByCol1());
-		setOrderByCol2(assetEntryQuery.getOrderByCol2());
-		setOrderByType1(assetEntryQuery.getOrderByType1());
-		setOrderByType2(assetEntryQuery.getOrderByType2());
-		setPublishDate(assetEntryQuery.getPublishDate());
-		setStart(assetEntryQuery.getStart());
-		setVisible(assetEntryQuery.isVisible());
-	}
-
 	public static String[] ORDER_BY_COLUMNS = new String[] {
 		"title", "createDate", "modifiedDate", "publishDate", "expirationDate",
 		"priority", "viewCount", "ratings"
@@ -101,6 +76,31 @@ public class AssetEntryQuery {
 
 		_expirationDate = now;
 		_publishDate = now;
+	}
+
+	public AssetEntryQuery(AssetEntryQuery assetEntryQuery) {
+		setAllCategoryIds(assetEntryQuery.getAllCategoryIds());
+		setAllTagIds(assetEntryQuery.getAllTagIds());
+		setAnyCategoryIds(assetEntryQuery.getAnyCategoryIds());
+		setAnyTagIds(assetEntryQuery.getAnyTagIds());
+		setClassNameIds(assetEntryQuery.getClassNameIds());
+		setClassTypeIds(assetEntryQuery.getClassTypeIds());
+		setEnd(assetEntryQuery.getEnd());
+		setExcludeZeroViewCount(assetEntryQuery.isExcludeZeroViewCount());
+		setExpirationDate(assetEntryQuery.getExpirationDate());
+		setGroupIds(assetEntryQuery.getGroupIds());
+		setLayout(assetEntryQuery.getLayout());
+		setNotAllCategoryIds(assetEntryQuery.getNotAllCategoryIds());
+		setNotAllTagIds(assetEntryQuery.getNotAllTagIds());
+		setNotAnyCategoryIds(assetEntryQuery.getNotAnyCategoryIds());
+		setNotAnyTagIds(assetEntryQuery.getNotAnyTagIds());
+		setOrderByCol1(assetEntryQuery.getOrderByCol1());
+		setOrderByCol2(assetEntryQuery.getOrderByCol2());
+		setOrderByType1(assetEntryQuery.getOrderByType1());
+		setOrderByType2(assetEntryQuery.getOrderByType2());
+		setPublishDate(assetEntryQuery.getPublishDate());
+		setStart(assetEntryQuery.getStart());
+		setVisible(assetEntryQuery.isVisible());
 	}
 
 	public AssetEntryQuery(

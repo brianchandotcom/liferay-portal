@@ -82,7 +82,7 @@ public class BaseCacheKeyGeneratorTest extends TestCase {
 
 	protected CacheKeyGenerator cacheKeyGenerator;
 
-	private static String[] _KEYS = {"test1", "test2", "test3", "test4"};
+	private static final String[] _KEYS = {"test1", "test2", "test3", "test4"};
 
 	private static final String[][] _SPECIAL_CASES = {
 		{"fetchByT_C_C_P_.java.lang.Long.java.lang.Long.java.lang.Long_A_", ".",

@@ -57,7 +57,7 @@ public class PortletPreferencesLocalUtil {
 		_portalCache.remove(key);
 	}
 
-	public static final String _CACHE_NAME =
+	private static final String _CACHE_NAME =
 		PortletPreferencesLocalUtil.class.getName();
 
 	private static PortalCache _portalCache = MultiVMPoolUtil.getCache(

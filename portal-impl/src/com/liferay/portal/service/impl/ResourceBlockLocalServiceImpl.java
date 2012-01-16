@@ -55,9 +55,6 @@ import java.util.SortedMap;
 public class ResourceBlockLocalServiceImpl
 	extends ResourceBlockLocalServiceBaseImpl {
 
-	private static Log _log = LogFactoryUtil.getLog(
-		ResourceBlockLocalServiceImpl.class);
-
 	public void addCompanyScopePermission(
 			long companyId, String name, long roleId, String actionId)
 		throws PortalException, SystemException {
@@ -888,5 +885,8 @@ public class ResourceBlockLocalServiceImpl
 
 		updateResourceBlock(resourceBlock);
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		ResourceBlockLocalServiceImpl.class);
 
 }

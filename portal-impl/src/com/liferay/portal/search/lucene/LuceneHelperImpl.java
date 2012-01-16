@@ -818,6 +818,8 @@ public class LuceneHelperImpl implements LuceneHelper {
 
 	private static final long _BOOTUP_CLUSTER_NODE_RESPONSE_TIMEOUT = 10000;
 
+	private static final long _TRANSIENT_TOKEN_KEEP_ALIVE_TIME = 10000;
+
 	private static Log _log = LogFactoryUtil.getLog(LuceneHelperImpl.class);
 
 	private static MethodKey _createTokenMethodKey =
@@ -826,8 +828,6 @@ public class LuceneHelperImpl implements LuceneHelper {
 	private static MethodKey _getLastGenerationMethodKey =
 		new MethodKey(LuceneHelperUtil.class.getName(), "getLastGeneration",
 		long.class);
-
-	private static final long _TRANSIENT_TOKEN_KEEP_ALIVE_TIME = 10000;
 
 	private Analyzer _analyzer;
 	private Map<Long, IndexAccessor> _indexAccessors =

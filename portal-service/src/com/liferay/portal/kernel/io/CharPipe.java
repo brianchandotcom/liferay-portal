@@ -84,6 +84,11 @@ public class CharPipe {
 	protected int readIndex;
 	protected int writeIndex;
 
+	private static final int _DEFAULT_BUFFER_SIZE = 1024 * 8;
+
+	private PipeReader _pipeReader = new PipeReader();
+	private PipeWriter _pipeWriter = new PipeWriter();
+
 	private class PipeReader extends Reader {
 
 		@Override
@@ -554,10 +559,5 @@ public class CharPipe {
 		private volatile boolean _closed;
 
 	}
-
-	private static final int _DEFAULT_BUFFER_SIZE = 1024 * 8;
-
-	private PipeReader _pipeReader = new PipeReader();
-	private PipeWriter _pipeWriter = new PipeWriter();
 
 }

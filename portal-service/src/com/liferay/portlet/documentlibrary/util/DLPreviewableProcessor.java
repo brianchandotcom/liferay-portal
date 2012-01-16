@@ -98,6 +98,14 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			thumbnailType);
 	}
 
+	public boolean isSupported(FileVersion fileVersion) {
+		if (fileVersion == null) {
+			return false;
+		}
+
+		return isSupported(fileVersion.getMimeType());
+	}
+
 	protected static void deleteFiles(
 		long companyId, long groupId, long fileEntryId, long fileVersionId,
 		String thumbnailType) {
@@ -161,14 +169,6 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		}
 
 		return sb.toString();
-	}
-
-	public boolean isSupported(FileVersion fileVersion) {
-		if (fileVersion == null) {
-			return false;
-		}
-
-		return isSupported(fileVersion.getMimeType());
 	}
 
 	protected void addFileToStore(

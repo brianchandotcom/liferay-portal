@@ -220,18 +220,18 @@ public class PHPPortlet extends GenericPortlet {
 		return scriptPostProcess.getFinalizedPage();
 	}
 
-	private static final String _PHP_URI_PARAM = "phpURI";
-
-	private static final String _QUERCUS_SERVLET =
-		"com.caucho.quercus.servlet.QuercusServlet";
-
-	private static Log _log = LogFactoryUtil.getLog(PHPPortlet.class);
-
 	protected String editUri;
 	protected String helpUri;
 	protected String viewUri;
 	protected boolean addPortletParams;
 	protected ServletObjectsFactory servletObjectsFactory;
 	protected HttpServlet quercusServlet;
+
+	private static final String _PHP_URI_PARAM = "phpURI";
+
+	private static final String _QUERCUS_SERVLET =
+		"com.caucho.quercus.servlet.QuercusServlet";
+
+	private static Log _log = LogFactoryUtil.getLog(PHPPortlet.class);
 
 }

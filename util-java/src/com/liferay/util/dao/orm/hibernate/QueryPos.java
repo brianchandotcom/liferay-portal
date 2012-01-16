@@ -130,12 +130,12 @@ public class QueryPos {
 		return _pos;
 	}
 
-	private QueryPos(Query query) {
-		_query = query;
-	}
-
 	protected void addNull() {
 		_query.setSerializable(_pos++, null);
+	}
+
+	private QueryPos(Query query) {
+		_query = query;
 	}
 
 	private Query _query;

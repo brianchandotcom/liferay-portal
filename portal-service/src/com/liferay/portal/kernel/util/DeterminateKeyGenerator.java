@@ -92,7 +92,7 @@ public class DeterminateKeyGenerator {
 		return (seed % 127773) * 16807 - (seed / 127773) * 2836;
 	}
 
-	private static char[] _CHARACTERS =
+	private static final char[] _CHARACTERS =
 		"abcdefghijklmnopqrstuvwxyz".toCharArray();
 
 	private static final int _DEFAULT_LENGTH = 4;

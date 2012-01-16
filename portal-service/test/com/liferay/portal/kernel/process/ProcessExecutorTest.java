@@ -37,35 +37,6 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public class ProcessExecutorTest extends TestCase {
 
-	private static ExecutorService getExecutorService() throws Exception {
-		Field field = ProcessExecutor.class.getDeclaredField(
-			"_executorService");
-
-		field.setAccessible(true);
-
-		return (ExecutorService)field.get(null);
-	}
-
-	private static ExecutorService invokeGetExecutorService() throws Exception {
-		Method method = ProcessExecutor.class.getDeclaredMethod(
-			"_getExecutorService");
-
-		method.setAccessible(true);
-
-		return (ExecutorService)method.invoke(method);
-	}
-
-	private static void waitForSignalFile(
-			File signalFile, boolean expectedExists)
-		throws Exception {
-
-		while (expectedExists != signalFile.exists()) {
-			Thread.sleep(100);
-		}
-	}
-
-	private final String _classPath = System.getProperty("java.class.path");
-
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
@@ -269,6 +240,35 @@ public class ProcessExecutorTest extends TestCase {
 
 		assertEquals(DummyReturnProcessCallable.class.getName(), result);
 	}
+
+	private static ExecutorService getExecutorService() throws Exception {
+		Field field = ProcessExecutor.class.getDeclaredField(
+			"_executorService");
+
+		field.setAccessible(true);
+
+		return (ExecutorService)field.get(null);
+	}
+
+	private static ExecutorService invokeGetExecutorService() throws Exception {
+		Method method = ProcessExecutor.class.getDeclaredMethod(
+			"_getExecutorService");
+
+		method.setAccessible(true);
+
+		return (ExecutorService)method.invoke(method);
+	}
+
+	private static void waitForSignalFile(
+			File signalFile, boolean expectedExists)
+		throws Exception {
+
+		while (expectedExists != signalFile.exists()) {
+			Thread.sleep(100);
+		}
+	}
+
+	private final String _classPath = System.getProperty("java.class.path");
 
 	private static class DummyExceptionProcessCallable
 		implements ProcessCallable<Serializable> {

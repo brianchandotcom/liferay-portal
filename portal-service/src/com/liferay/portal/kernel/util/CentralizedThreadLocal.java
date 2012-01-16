@@ -146,17 +146,15 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 	private static Log _log = LogFactoryUtil.getLog(
 		CentralizedThreadLocal.class);
 
-	private static final AtomicInteger _longLivedNextHasCode =
-		new AtomicInteger();
-	private static final ThreadLocal<ThreadLocalMap> _longLivedThreadLocals =
+	private static AtomicInteger _longLivedNextHasCode = new AtomicInteger();
+	private static ThreadLocal<ThreadLocalMap> _longLivedThreadLocals =
 		new ThreadLocalMapThreadLocal();
-	private static final AtomicInteger _shortLivedNextHasCode =
-		new AtomicInteger();
-	private static final ThreadLocal<ThreadLocalMap> _shortLivedThreadLocals =
+	private static AtomicInteger _shortLivedNextHasCode = new AtomicInteger();
+	private static ThreadLocal<ThreadLocalMap> _shortLivedThreadLocals =
 		new ThreadLocalMapThreadLocal();
 
-	private final int _hashCode;
-	private final boolean _shortLived;
+	private int _hashCode;
+	private boolean _shortLived;
 
 	private static class Entry {
 

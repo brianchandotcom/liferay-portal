@@ -76,8 +76,6 @@ public class ResourcePermissionView extends Table {
 		return sb.toString();
 	}
 
-	private String _name = StringPool.BLANK;
-
 	private static final String _SELECT_SQL =
 		"SELECT Permission_.companyId, ResourceCode.scope, " +
 		"Resource_.primKey, Roles_Permissions.roleId, Permission_.actionId " +
@@ -85,5 +83,7 @@ public class ResourcePermissionView extends Table {
 		"Permission_.permissionId = Roles_Permissions.permissionId AND " +
 		"Permission_.resourceId = Resource_.resourceId AND " +
 		"Resource_.codeId = ResourceCode.codeId AND ResourceCode.name = ";
+
+	private String _name = StringPool.BLANK;
 
 }

@@ -139,6 +139,8 @@ public class WAIFriendlyURLMapper implements FriendlyURLMapper {
 		return false;
 	}
 
+	protected Router router;
+
 	private static final boolean _CHECK_MAPPING_WITH_PREFIX = true;
 
 	private static final String _MAPPING = "waiapp";
@@ -147,8 +149,6 @@ public class WAIFriendlyURLMapper implements FriendlyURLMapper {
 		".css", ".doc", ".gif", ".jpeg", ".jpg", ".js", ".odp", ".png", ".ppt",
 		".tgz", ".xls", ".zip",
 	};
-
-	protected Router router;
 
 	private String _portletId;
 

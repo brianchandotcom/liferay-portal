@@ -214,7 +214,7 @@ public class SQLServerDB extends BaseDB {
 		return sb.toString();
 	}
 
-	private static String[] _SQL_SERVER = {
+	private static final String[] _SQL_SERVER = {
 		"--", "1", "0",
 		"'19700101'", "GetDate()",
 		" image", " image", " bit", " datetime",

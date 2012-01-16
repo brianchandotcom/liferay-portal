@@ -67,13 +67,18 @@
 				List<Group> manageableSites = null;
 
 				if (Validator.isNotNull(controlPanelCategory)) {
-					long groupId = GetterUtil.getLong(HttpUtil.getParameter(PortalUtil.getCurrentURL(request), "doAsGroupId", false));
-
-					Group group = GroupServiceUtil.getGroup(groupId);
-
 					manageableSites = new ArrayList<Group>();
 
-					manageableSites.add(group);
+					if (curGroup.isUser()) {
+						manageableSites.add(user.getGroup());
+					}
+					else {
+						long groupId = GetterUtil.getLong(HttpUtil.getParameter(PortalUtil.getCurrentURL(request), "doAsGroupId", false));
+
+						Group group = GroupServiceUtil.getGroup(groupId);
+
+						manageableSites.add(group);
+					}
 				}
 				else {
 					manageableSites = GroupServiceUtil.getManageableSites(categoryPortlets, PropsValues.CONTROL_PANEL_NAVIGATION_MAX_SITES);

@@ -341,7 +341,7 @@ public class LayoutSetLocalServiceUtil {
 	* <code>layoutSetPrototypeLinkEnabled</code> to <code>true</code> and
 	* <code>layoutSetPrototypeUuid</code> to <code>null</code> when the layout
 	* set prototype's current uuid is <code>null</code> will result in an
-	* <code>java.lang.IllegalStateException</code>.
+	* <code>IllegalStateException</code>.
 	* </p>
 	*
 	* @param groupId the primary key of the group

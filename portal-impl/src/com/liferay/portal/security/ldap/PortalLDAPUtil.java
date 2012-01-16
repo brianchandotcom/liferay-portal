@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.util.PrefsPropsUtil;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
@@ -85,31 +86,30 @@ public class PortalLDAPUtil {
 			String credentials)
 		throws Exception {
 
-		Properties env = new Properties();
+		Properties environmentProperties = new Properties();
 
-		env.put(
+		environmentProperties.put(
 			Context.INITIAL_CONTEXT_FACTORY,
 			PrefsPropsUtil.getString(
 				companyId, PropsKeys.LDAP_FACTORY_INITIAL));
-		env.put(Context.PROVIDER_URL, providerURL);
-		env.put(Context.SECURITY_PRINCIPAL, principal);
-		env.put(Context.SECURITY_CREDENTIALS, credentials);
-		env.put(
+		environmentProperties.put(Context.PROVIDER_URL, providerURL);
+		environmentProperties.put(Context.SECURITY_PRINCIPAL, principal);
+		environmentProperties.put(Context.SECURITY_CREDENTIALS, credentials);
+		environmentProperties.put(
 			Context.REFERRAL,
 			PrefsPropsUtil.getString(companyId, PropsKeys.LDAP_REFERRAL));
 
-		// Enable pooling
+		Properties ldapConnectionProperties = PropsUtil.getProperties(
+			PropsKeys.LDAP_CONNECTION_PROPERTY_PREFIX, true);
 
-		env.put("com.sun.jndi.ldap.connect.pool", "true");
-		env.put("com.sun.jndi.ldap.connect.pool.maxsize","50");
-		env.put("com.sun.jndi.ldap.connect.pool.timeout", "10000");
+		PropertiesUtil.merge(environmentProperties, ldapConnectionProperties);
 
-		LogUtil.debug(_log, env);
+		LogUtil.debug(_log, environmentProperties);
 
 		LdapContext ldapContext = null;
 
 		try {
-			ldapContext = new InitialLdapContext(env, null);
+			ldapContext = new InitialLdapContext(environmentProperties, null);
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {

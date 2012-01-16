@@ -463,9 +463,11 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 			<c:when test='<%= selectionStyle.equals("dynamic") %>'>
 				<liferay-ui:panel-container extended="<%= true %>" id="assetPublisherDynamicSelectionStylePanelContainer" persistState="<%= true %>">
 					<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="assetPublisherSourcePanel" persistState="<%= true %>" title="source">
-						<aui:fieldset label="scope">
-							<%= selectScope %>
-						</aui:fieldset>
+						<c:if test="<%= !rootPortletId.equals(PortletKeys.RELATED_ASSETS) %>">
+							<aui:fieldset label="scope">
+								<%= selectScope %>
+							</aui:fieldset>
+						</c:if>
 
 						<aui:fieldset label="asset-entry-type">
 							<%= selectAssetTypeInput %>

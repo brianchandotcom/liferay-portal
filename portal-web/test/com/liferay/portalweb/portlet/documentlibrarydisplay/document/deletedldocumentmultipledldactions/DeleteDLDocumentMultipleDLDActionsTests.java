@@ -12,12 +12,9 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.documentlibrarydisplay.document;
+package com.liferay.portalweb.portlet.documentlibrarydisplay.document.deletedldocumentmultipledldactions;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portlet.documentlibrarydisplay.document.deletedldocumentmultipledldactions.DeleteDLDocumentMultipleDLDActionsTests;
-import com.liferay.portalweb.portlet.documentlibrarydisplay.document.searchfolderdocument.SearchFolderDocumentTests;
-import com.liferay.portalweb.portlet.documentlibrarydisplay.document.viewfolderdocument.ViewFolderDocumentTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -25,16 +22,21 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DocumentTestPlan extends BaseTestSuite {
-
+public class DeleteDLDocumentMultipleDLDActionsTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(DeleteDLDocumentMultipleDLDActionsTests.suite());
-		testSuite.addTest(SearchFolderDocumentTests.suite());
-		testSuite.addTest(ViewFolderDocumentTests.suite());
+		testSuite.addTestSuite(AddPageDLTest.class);
+		testSuite.addTestSuite(AddPortletDLTest.class);
+		testSuite.addTestSuite(AddPageDLDTest.class);
+		testSuite.addTestSuite(AddPortletDLDTest.class);
+		testSuite.addTestSuite(AddDLDocument1Test.class);
+		testSuite.addTestSuite(AddDLDocument2Test.class);
+		testSuite.addTestSuite(AddDLDocument3Test.class);
+		testSuite.addTestSuite(ConfigurePortletDLDShowActionsTest.class);
+		testSuite.addTestSuite(DeleteDLDocumentMultipleDLDActionsTest.class);
+		testSuite.addTestSuite(TearDownDLDocumentTest.class);
+		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;
 	}
-
 }

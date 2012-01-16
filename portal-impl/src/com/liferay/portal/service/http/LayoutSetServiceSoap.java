@@ -64,6 +64,26 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class LayoutSetServiceSoap {
+	/**
+	* Updates the state of the layout set prototype link.
+	*
+	* <p>
+	* <strong>Important:</strong> Setting
+	* <code>layoutSetPrototypeLinkEnabled</code> to <code>true</code> and
+	* <code>layoutSetPrototypeUuid</code> to <code>null</code> when the layout
+	* set prototype's current uuid is <code>null</code> will result in an
+	* <code>java.lang.IllegalStateException</code>.
+	* </p>
+	*
+	* @param groupId the primary key of the group
+	* @param privateLayout whether the layout set is private to the group
+	* @param layoutSetPrototypeLinkEnabled whether the layout set prototype is
+	link enabled
+	* @param layoutSetPrototypeUuid the uuid of the layout set prototype to
+	link with
+	* @throws PortalException if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
 	public static void updateLayoutSetPrototypeLinkEnabled(long groupId,
 		boolean privateLayout, boolean layoutSetPrototypeLinkEnabled,
 		java.lang.String layoutSetPrototypeUuid) throws RemoteException {

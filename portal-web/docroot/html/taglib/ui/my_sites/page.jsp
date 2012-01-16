@@ -88,14 +88,6 @@ List<Group> mySites = user.getMySites(true, max);
 				privateAddPageURL.setParameter("groupId", String.valueOf(mySite.getGroupId()));
 
 				privateAddPageHREF = privateAddPageURL.toString();
-
-				if (!PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_MODIFIABLE) {
-					publicAddPageHREF = null;
-				}
-
-				if (!PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_MODIFIABLE) {
-					privateAddPageHREF = null;
-				}
 			}
 
 			boolean showPublicSite = true;
@@ -115,7 +107,7 @@ List<Group> mySites = user.getMySites(true, max);
 				else if (mySite.isUser()) {
 					showPublicSite = PropsValues.MY_SITES_SHOW_USER_PUBLIC_SITES_WITH_NO_LAYOUTS;
 
-					if (!PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_MODIFIABLE || (PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_POWER_USER_REQUIRED && !hasPowerUserRole)) {
+					if (PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_POWER_USER_REQUIRED && !hasPowerUserRole) {
 						showPublicSite = false;
 					}
 				}
@@ -137,7 +129,7 @@ List<Group> mySites = user.getMySites(true, max);
 				else if (mySite.isUser()) {
 					showPrivateSite = PropsValues.MY_SITES_SHOW_USER_PRIVATE_SITES_WITH_NO_LAYOUTS;
 
-					if (!PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_MODIFIABLE || (PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_POWER_USER_REQUIRED && !hasPowerUserRole)) {
+					if (PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_POWER_USER_REQUIRED && !hasPowerUserRole) {
 						showPrivateSite = false;
 					}
 				}

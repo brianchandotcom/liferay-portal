@@ -170,21 +170,6 @@ public class LayoutPermissionImpl implements LayoutPermission {
 			layout = virtualLayout.getWrappedModel();
 		}
 
-		if ((layout.isPrivateLayout() &&
-			 !PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_MODIFIABLE) ||
-			(layout.isPublicLayout() &&
-			 !PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_MODIFIABLE)) {
-
-			if (actionId.equals(ActionKeys.UPDATE)) {
-				Group group = GroupLocalServiceUtil.getGroup(
-					layout.getGroupId());
-
-				if (group.isUser()) {
-					return false;
-				}
-			}
-		}
-
 		Group group = layout.getGroup();
 
 		if (!group.isLayoutSetPrototype() &&

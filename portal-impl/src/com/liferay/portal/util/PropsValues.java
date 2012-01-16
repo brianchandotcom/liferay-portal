@@ -788,15 +788,11 @@ public class PropsValues {
 
 	public static boolean LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED));
 
-	public static boolean LAYOUT_USER_PRIVATE_LAYOUTS_MODIFIABLE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.LAYOUT_USER_PRIVATE_LAYOUTS_MODIFIABLE));
-
 	public static boolean LAYOUT_USER_PRIVATE_LAYOUTS_POWER_USER_REQUIRED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.LAYOUT_USER_PRIVATE_LAYOUTS_POWER_USER_REQUIRED));
 
 	public static boolean LAYOUT_USER_PUBLIC_LAYOUTS_AUTO_CREATE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.LAYOUT_USER_PUBLIC_LAYOUTS_AUTO_CREATE));
 
 	public static boolean LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED));
-
-	public static boolean LAYOUT_USER_PUBLIC_LAYOUTS_MODIFIABLE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.LAYOUT_USER_PUBLIC_LAYOUTS_MODIFIABLE));
 
 	public static boolean LAYOUT_USER_PUBLIC_LAYOUTS_POWER_USER_REQUIRED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.LAYOUT_USER_PUBLIC_LAYOUTS_POWER_USER_REQUIRED));
 
@@ -1563,12 +1559,10 @@ public class PropsValues {
 	static {
 		if (!LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED) {
 			LAYOUT_USER_PRIVATE_LAYOUTS_AUTO_CREATE = false;
-			LAYOUT_USER_PRIVATE_LAYOUTS_MODIFIABLE = false;
 		}
 
 		if (!LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED) {
 			LAYOUT_USER_PUBLIC_LAYOUTS_AUTO_CREATE = false;
-			LAYOUT_USER_PUBLIC_LAYOUTS_MODIFIABLE = false;
 		}
 	}
 

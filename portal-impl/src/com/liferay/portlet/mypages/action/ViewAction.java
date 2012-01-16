@@ -70,9 +70,8 @@ public class ViewAction extends PortletAction {
 			user.getUserId(), user.getCompanyId(), RoleConstants.POWER_USER,
 			true);
 
-		if (!PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_MODIFIABLE ||
-			(PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_POWER_USER_REQUIRED &&
-			 !hasPowerUserRole)) {
+		if (PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_POWER_USER_REQUIRED &&
+			!hasPowerUserRole) {
 
 			tabs1 = "private-pages";
 		}

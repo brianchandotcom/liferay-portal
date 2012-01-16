@@ -58,7 +58,7 @@ long userId = user2.getUserId();
 		/>
 	</c:if>
 
-	<c:if test="<%= UserPermissionUtil.contains(permissionChecker, userId, ActionKeys.UPDATE) && (PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_MODIFIABLE || PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_MODIFIABLE) %>">
+	<c:if test="<%= UserPermissionUtil.contains(permissionChecker, userId, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="managePagesURL">
 			<portlet:param name="struts_action" value="/users_admin/edit_layouts" />
 			<portlet:param name="redirect" value="<%= redirect %>" />

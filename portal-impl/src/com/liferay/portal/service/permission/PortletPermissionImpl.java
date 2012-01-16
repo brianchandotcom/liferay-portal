@@ -273,16 +273,6 @@ public class PortletPermissionImpl implements PortletPermission {
 			return hasPermission.booleanValue();
 		}
 
-		if ((layout.isPrivateLayout() &&
-			 !PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_MODIFIABLE) ||
-			(layout.isPublicLayout() &&
-			 !PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_MODIFIABLE)) {
-
-			if (actionId.equals(ActionKeys.CONFIGURATION) && group.isUser()) {
-				return false;
-			}
-		}
-
 		if (actionId.equals(ActionKeys.VIEW) && group.isControlPanel()) {
 			return true;
 		}

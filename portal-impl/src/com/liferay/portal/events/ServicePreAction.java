@@ -939,18 +939,6 @@ public class ServicePreAction extends Action {
 				}
 			}
 
-			if (signedIn) {
-				if (group.isUser()) {
-					if ((layout.isPrivateLayout() &&
-						 !PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_MODIFIABLE) ||
-						(layout.isPublicLayout() &&
-						 !PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_MODIFIABLE)) {
-
-						hasUpdateLayoutPermission = false;
-					}
-				}
-			}
-
 			if (hasUpdateLayoutPermission) {
 				themeDisplay.setShowPageSettingsIcon(true);
 

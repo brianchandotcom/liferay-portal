@@ -97,13 +97,24 @@ if (folder != null) {
 			fileEntriesCount = DLAppServiceUtil.getFoldersFileEntriesCount(curFolder.getRepositoryId(), subfolderIds, WorkflowConstants.STATUS_APPROVED);
 		}
 		catch (com.liferay.portal.kernel.repository.RepositoryException re) {
+			rowURL = null;
 		}
 
-		if ((foldersCount + fileEntriesCount) > 0) {
-			sb.append("/common/folder_full_document.png\">");
+		if (curFolder.isMountPoint()) {
+			if (rowURL != null) {
+				sb.append("/common/drive.png\">");
+			}
+			else {
+				sb.append("/common/drive_error.png\">");
+			}
 		}
 		else {
-			sb.append("/common/folder_empty.png\">");
+			if ((foldersCount + fileEntriesCount) > 0) {
+				sb.append("/common/folder_full_document.png\">");
+			}
+			else {
+				sb.append("/common/folder_empty.png\">");
+			}
 		}
 
 		sb.append(curFolder.getName());
@@ -117,21 +128,26 @@ if (folder != null) {
 
 		// Action
 
-		sb.setIndex(0);
+		if (rowURL != null) {
+			sb.setIndex(0);
 
-		sb.append("opener.");
-		sb.append(renderResponse.getNamespace());
-		sb.append("selectFolder('");
-		sb.append(curFolder.getFolderId());
-		sb.append("', '");
-		sb.append(UnicodeFormatter.toString(curFolder.getName()));
-		sb.append("', ");
-		sb.append(curFolder.isSupportsMetadata());
-		sb.append(", ");
-		sb.append(curFolder.isSupportsSocial());
-		sb.append("); window.close();");
+			sb.append("opener.");
+			sb.append(renderResponse.getNamespace());
+			sb.append("selectFolder('");
+			sb.append(curFolder.getFolderId());
+			sb.append("', '");
+			sb.append(UnicodeFormatter.toString(curFolder.getName()));
+			sb.append("', ");
+			sb.append(curFolder.isSupportsMetadata());
+			sb.append(", ");
+			sb.append(curFolder.isSupportsSocial());
+			sb.append("); window.close();");
 
-		row.addButton("right", SearchEntry.DEFAULT_VALIGN, LanguageUtil.get(pageContext, "choose"), sb.toString());
+			row.addButton("right", SearchEntry.DEFAULT_VALIGN, LanguageUtil.get(pageContext, "choose"), sb.toString());
+		}
+		else {
+			row.addText(StringPool.BLANK);
+		}
 
 		// Add result row
 

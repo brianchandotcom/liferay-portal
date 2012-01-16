@@ -160,15 +160,15 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 			String[] mediaGalleryMimeTypes = DLUtil.getMediaGalleryMimeTypes(preferences, renderRequest);
 
-			int foldersCount = DLAppServiceUtil.getFoldersCount(repositoryId, folderId, false);
+			int foldersCount = DLAppServiceUtil.getFoldersCount(repositoryId, folderId, true);
 
-			int total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, mediaGalleryMimeTypes, false);
+			int total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, mediaGalleryMimeTypes, true);
 
 			int imagesCount = total - foldersCount;
 
 			searchContainer.setTotal(total);
 
-			List results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, mediaGalleryMimeTypes, false, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+			List results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, mediaGalleryMimeTypes, true, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 
 			searchContainer.setResults(results);
 

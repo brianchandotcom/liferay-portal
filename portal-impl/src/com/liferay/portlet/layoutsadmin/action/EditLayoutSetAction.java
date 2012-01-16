@@ -297,11 +297,6 @@ public class EditLayoutSetAction extends EditLayoutsAction {
 
 		settingsProperties.putAll(typeSettingsProperties);
 
-		boolean showSiteName = ParamUtil.getBoolean(
-			actionRequest, "showSiteName");
-
-		settingsProperties.put("showSiteName", Boolean.toString(showSiteName));
-
 		LayoutSetServiceUtil.updateSettings(
 			liveGroupId, privateLayout, settingsProperties.toString());
 

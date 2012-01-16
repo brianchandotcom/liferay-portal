@@ -77,7 +77,7 @@ LayoutSet selLayoutSet = ((LayoutSet)request.getAttribute("edit_pages.jsp-selLay
 		boolean showSiteName = GetterUtil.getBoolean(selLayoutSet.getSettingsProperty("showSiteName"), true);
 		%>
 
-		<aui:input label="show-site-name" name="showSiteName" type="checkbox" checked='<%= showSiteName %>' />
+		<aui:input label="show-site-name" name="TypeSettingsProperties--showSiteName--" type="checkbox" checked='<%= showSiteName %>' />
 	</c:if>
 
 </aui:fieldset>

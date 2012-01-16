@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,7 +14,7 @@
 
 package com.liferay.portalweb.portlet.dynamicdatalistdisplay.record.editrecordddld;
 
-import com.liferay.portalweb.portal.BaseTests;
+import com.liferay.portalweb.portal.BaseTestSuite;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -22,11 +22,9 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class EditRecordDDLDTests extends BaseTests {
-
+public class EditRecordDDLDTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
 		testSuite.addTestSuite(AddPageDDLDTest.class);
 		testSuite.addTestSuite(AddPortletDDLDTest.class);
 		testSuite.addTestSuite(AddDataDefinitionTest.class);
@@ -44,5 +42,4 @@ public class EditRecordDDLDTests extends BaseTests {
 
 		return testSuite;
 	}
-
 }

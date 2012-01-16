@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -24,6 +24,7 @@ public class ViewRecordDDLDTest extends BaseTestCase {
 	public void testViewRecordDDLD() throws Exception {
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,6 +46,7 @@ public class ViewRecordDDLDTest extends BaseTestCase {
 		selenium.clickAt("link=Dynamic Data List Display Test Page",
 			RuntimeVariables.replace("Dynamic Data List Display Test Page"));
 		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Boolean"),
 			selenium.getText("//tr[1]/th[1]"));
 		assertEquals(RuntimeVariables.replace("true"),
@@ -57,7 +59,7 @@ public class ViewRecordDDLDTest extends BaseTestCase {
 			selenium.getText("//tr[1]/th[3]"));
 		assertEquals(RuntimeVariables.replace("1.23"),
 			selenium.getText("//tr[3]/td[3]"));
-		assertEquals(RuntimeVariables.replace("Document Library"),
+		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText("//tr[1]/th[4]"));
 		assertEquals(RuntimeVariables.replace("document.txt"),
 			selenium.getText("//tr[3]/td[4]"));
@@ -71,7 +73,7 @@ public class ViewRecordDDLDTest extends BaseTestCase {
 			selenium.getText("//tr[3]/td[6]"));
 		assertEquals(RuntimeVariables.replace("Number"),
 			selenium.getText("//tr[1]/th[7]"));
-		assertEquals(RuntimeVariables.replace("456.0"),
+		assertEquals(RuntimeVariables.replace("456"),
 			selenium.getText("//tr[3]/td[7]"));
 		assertEquals(RuntimeVariables.replace("Radio"),
 			selenium.getText("//tr[1]/th[8]"));
@@ -117,19 +119,21 @@ public class ViewRecordDDLDTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Boolean true"),
 			selenium.getText("//div[@class='aui-fieldset-content ']/div[1]"));
 		assertEquals(RuntimeVariables.replace("Date 1/2/03"),
 			selenium.getText("//div[@class='aui-fieldset-content ']/div[2]"));
 		assertEquals(RuntimeVariables.replace("Decimal 1.23"),
 			selenium.getText("//div[@class='aui-fieldset-content ']/div[3]"));
-		assertEquals(RuntimeVariables.replace("Document Library document.txt"),
+		assertEquals(RuntimeVariables.replace(
+				"Documents and Media document.txt"),
 			selenium.getText("//div[@class='aui-fieldset-content ']/div[4]"));
 		assertEquals(RuntimeVariables.replace("File Upload document2.txt"),
 			selenium.getText("//div[@class='aui-fieldset-content ']/div[5]"));
 		assertEquals(RuntimeVariables.replace("Integer 123"),
 			selenium.getText("//div[@class='aui-fieldset-content ']/div[6]"));
-		assertEquals(RuntimeVariables.replace("Number 456.0"),
+		assertEquals(RuntimeVariables.replace("Number 456"),
 			selenium.getText("//div[@class='aui-fieldset-content ']/div[7]"));
 		assertEquals(RuntimeVariables.replace("Radio option 2"),
 			selenium.getText("//div[@class='aui-fieldset-content ']/div[8]"));

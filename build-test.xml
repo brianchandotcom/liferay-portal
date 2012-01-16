@@ -275,7 +275,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="5" />
+		<property name="build-test-ant-scripts.version" value="6" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -1778,11 +1778,6 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
-			<param name="test.ant.script.command" value="staging-community-user" />
-			<param name="test.ant.script.suite" value="StagingCommunityUserTestSuite" />
-		</antcall>
-
-		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="staging-community-web-content-display" />
 			<param name="test.ant.script.suite" value="StagingCommunityWebContentDisplayTestSuite" />
 		</antcall>
@@ -1912,6 +1907,11 @@
 		</for>
 	</target>
 
+	<target name="clean-up-logs">
+		<delete file="log" />
+		<delete file="portal-web/test-ant-scripts/log" />
+	</target>
+
 	<target name="clean-up-vms">
 		<if>
 			<available file="${vm.drive}\${vm.host}\${vm.host}.vmdk.lck" />
@@ -1953,7 +1953,7 @@
 		<if>
 			<available file="portal-web/test-ant-scripts/log" />
 			<then>
-				<move file="portal-web/test-ant-scripts/log" todir="."/>
+				<move file="portal-web/test-ant-scripts/log" todir="." />
 			</then>
 		</if>
 
@@ -1981,7 +1981,7 @@
 			</then>
 		</if>
 
-		<delete file="log" />
+		<antcall target="clean-up-logs" />
 	</target>
 
 	<target name="execute-remote-command">

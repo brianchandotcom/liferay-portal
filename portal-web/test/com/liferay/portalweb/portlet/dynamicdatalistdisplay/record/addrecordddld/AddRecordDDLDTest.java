@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -24,6 +24,7 @@ public class AddRecordDDLDTest extends BaseTestCase {
 	public void testAddRecordDDLD() throws Exception {
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,11 +46,13 @@ public class AddRecordDDLDTest extends BaseTestCase {
 		selenium.clickAt("link=Dynamic Data List Display Test Page",
 			RuntimeVariables.replace("Dynamic Data List Display Test Page"));
 		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("List Name"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		selenium.clickAt("//input[@value='Add Record']",
 			RuntimeVariables.replace("Add Record"));
 		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Boolean"),
 			selenium.getText(
 				"//div[@class='aui-fieldset-content ']/div[1]/span/span/label"));
@@ -65,10 +68,10 @@ public class AddRecordDDLDTest extends BaseTestCase {
 				"//div[@class='aui-fieldset-content ']/div[3]/span/span/label"));
 		selenium.type("//div[@class='aui-fieldset-content ']/div[3]/span/span/span/input",
 			RuntimeVariables.replace("1.23"));
-		assertEquals(RuntimeVariables.replace("Document Library"),
+		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText(
-				"//div[@class='aui-fieldset-content ']/div[4]/div/label"));
-		selenium.clickAt("//div[@class='aui-fieldset-content ']/div[4]/div/span/span/input",
+				"//div[@class='aui-fieldset-content ']/div[4]/div/span/span/label"));
+		selenium.clickAt("//input[@value='Select']",
 			RuntimeVariables.replace("Select"));
 
 		for (int second = 0;; second++) {
@@ -165,6 +168,7 @@ public class AddRecordDDLDTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewRecordTest extends BaseTestCase {
 	public void testViewRecord() throws Exception {
 		selenium.open("/web/guest/home/");
+		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,19 +44,23 @@ public class ViewRecordTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Dynamic Data Lists",
 			RuntimeVariables.replace("Dynamic Data Lists"));
 		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 		selenium.type("//input[@name='_167_keywords']",
 			RuntimeVariables.replace("List Name"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("List Name"),
 			selenium.getText("//tr[3]/td[2]/a"));
 		selenium.clickAt("//tr[3]/td[2]/a",
 			RuntimeVariables.replace("List Name"));
 		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Boolean"),
 			selenium.getText("//tr[1]/th[1]"));
 		assertEquals(RuntimeVariables.replace("true"),
@@ -68,7 +73,7 @@ public class ViewRecordTest extends BaseTestCase {
 			selenium.getText("//tr[1]/th[3]"));
 		assertEquals(RuntimeVariables.replace("1.23"),
 			selenium.getText("//tr[3]/td[3]"));
-		assertEquals(RuntimeVariables.replace("Document Library"),
+		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText("//tr[1]/th[4]"));
 		assertEquals(RuntimeVariables.replace("document.txt"),
 			selenium.getText("//tr[3]/td[4]"));
@@ -82,7 +87,7 @@ public class ViewRecordTest extends BaseTestCase {
 			selenium.getText("//tr[3]/td[6]"));
 		assertEquals(RuntimeVariables.replace("Number"),
 			selenium.getText("//tr[1]/th[7]"));
-		assertEquals(RuntimeVariables.replace("456.0"),
+		assertEquals(RuntimeVariables.replace("456"),
 			selenium.getText("//tr[3]/td[7]"));
 		assertEquals(RuntimeVariables.replace("Radio"),
 			selenium.getText("//tr[1]/th[8]"));
@@ -128,19 +133,21 @@ public class ViewRecordTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Boolean true"),
 			selenium.getText("//div[@class='aui-fieldset-content ']/div[1]"));
 		assertEquals(RuntimeVariables.replace("Date 1/2/03"),
 			selenium.getText("//div[@class='aui-fieldset-content ']/div[2]"));
 		assertEquals(RuntimeVariables.replace("Decimal 1.23"),
 			selenium.getText("//div[@class='aui-fieldset-content ']/div[3]"));
-		assertEquals(RuntimeVariables.replace("Document Library document.txt"),
+		assertEquals(RuntimeVariables.replace(
+				"Documents and Media document.txt"),
 			selenium.getText("//div[@class='aui-fieldset-content ']/div[4]"));
 		assertEquals(RuntimeVariables.replace("File Upload document2.txt"),
 			selenium.getText("//div[@class='aui-fieldset-content ']/div[5]"));
 		assertEquals(RuntimeVariables.replace("Integer 123"),
 			selenium.getText("//div[@class='aui-fieldset-content ']/div[6]"));
-		assertEquals(RuntimeVariables.replace("Number 456.0"),
+		assertEquals(RuntimeVariables.replace("Number 456"),
 			selenium.getText("//div[@class='aui-fieldset-content ']/div[7]"));
 		assertEquals(RuntimeVariables.replace("Radio option 2"),
 			selenium.getText("//div[@class='aui-fieldset-content ']/div[8]"));
@@ -151,6 +158,7 @@ public class ViewRecordTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Text Box Text Box"),
 			selenium.getText("//div[@class='aui-fieldset-content ']/div[11]"));
 		selenium.open("/web/guest/home/");
+		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -171,14 +179,17 @@ public class ViewRecordTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Dynamic Data Lists",
 			RuntimeVariables.replace("Dynamic Data Lists"));
 		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 		selenium.type("//input[@name='_167_keywords']",
 			RuntimeVariables.replace("List Name"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("List Name"),
 			selenium.getText("//tr[3]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
@@ -209,6 +220,7 @@ public class ViewRecordTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("True"),
 			selenium.getText("//td[1]/div"));
 		assertEquals(RuntimeVariables.replace("1903-01-02"),
@@ -221,7 +233,7 @@ public class ViewRecordTest extends BaseTestCase {
 			selenium.getText("//td[5]/div"));
 		assertEquals(RuntimeVariables.replace("123"),
 			selenium.getText("//td[6]/div"));
-		assertEquals(RuntimeVariables.replace("456.0"),
+		assertEquals(RuntimeVariables.replace("456"),
 			selenium.getText("//td[7]/div"));
 		assertEquals(RuntimeVariables.replace("option 2"),
 			selenium.getText("//td[8]/div"));

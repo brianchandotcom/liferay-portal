@@ -35,18 +35,23 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/div/div/div/ul/li/span/a</td>
+	<td>//div[@class='portlet-body']/div/ul[contains(@class,'breadcrumbs-horizontal')]/li[1]/span/a</td>
 	<td>Liferay</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/ul/li[2]/span/a</td>
+	<td>//div[@class='portlet-body']/div/ul[contains(@class,'breadcrumbs-horizontal')]/li[2]/span/a</td>
 	<td>Community Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/div/div/div/ul/li[3]/span/a</td>
+	<td>//div[@class='portlet-body']/div/ul[contains(@class,'breadcrumbs-horizontal')]/li[3]/span/a</td>
 	<td>Public Page</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>This was modified by the Sample Application Adapter.</td>
+	<td></td>
 </tr>
 </tbody></table>
 </body>

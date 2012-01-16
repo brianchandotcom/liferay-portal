@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,7 +14,7 @@
 
 package com.liferay.portalweb.portal;
 
-import com.liferay.portalweb.plugins.sampleapplicationadapter.SampleApplicationAdapterTests;
+import com.liferay.portalweb.plugins.sampleapplicationadapter.SampleApplicationAdapterTestPlan;
 import com.liferay.portalweb.portal.login.LoginTests;
 
 import junit.framework.Test;
@@ -23,13 +23,13 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class PluginsSampleApplicationAdapterTestSuite extends BaseTests {
+public class PluginsSampleApplicationAdapterTestSuite extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(LoginTests.suite());
-		testSuite.addTest(SampleApplicationAdapterTests.suite());
+		testSuite.addTest(SampleApplicationAdapterTestPlan.suite());
 
 		testSuite.addTestSuite(StopSeleniumTest.class);
 

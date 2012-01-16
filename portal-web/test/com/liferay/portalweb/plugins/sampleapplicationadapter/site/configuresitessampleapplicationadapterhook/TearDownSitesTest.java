@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -28,6 +28,7 @@ public class TearDownSitesTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
+				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -48,16 +49,19 @@ public class TearDownSitesTest extends BaseTestCase {
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
 				selenium.type("//input[@id='_134_name']",
 					RuntimeVariables.replace("Community Name"));
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
 
 				boolean community1Present = selenium.isElementPresent(
-						"//td[7]/span/ul/li/strong/a/span");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!community1Present) {
 					label = 2;
@@ -66,8 +70,9 @@ public class TearDownSitesTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[7]/span/ul/li/strong/a/span"));
-				selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -93,13 +98,14 @@ public class TearDownSitesTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[@class='last']/a"));
 				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
 			case 2:
 
 				boolean community2Present = selenium.isElementPresent(
-						"//td[7]/span/ul/li/strong/a/span");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!community2Present) {
 					label = 3;
@@ -108,8 +114,9 @@ public class TearDownSitesTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[7]/span/ul/li/strong/a/span"));
-				selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -135,13 +142,14 @@ public class TearDownSitesTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[@class='last']/a"));
 				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
 			case 3:
 
 				boolean community3Present = selenium.isElementPresent(
-						"//td[7]/span/ul/li/strong/a/span");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!community3Present) {
 					label = 4;
@@ -150,8 +158,9 @@ public class TearDownSitesTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[7]/span/ul/li/strong/a/span"));
-				selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -177,13 +186,14 @@ public class TearDownSitesTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[@class='last']/a"));
 				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
 			case 4:
 
 				boolean community4Present = selenium.isElementPresent(
-						"//td[7]/span/ul/li/strong/a/span");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!community4Present) {
 					label = 5;
@@ -192,8 +202,9 @@ public class TearDownSitesTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[7]/span/ul/li/strong/a/span"));
-				selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -219,13 +230,14 @@ public class TearDownSitesTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[@class='last']/a"));
 				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
 			case 5:
 
 				boolean community5Present = selenium.isElementPresent(
-						"//td[7]/span/ul/li/strong/a/span");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!community5Present) {
 					label = 6;
@@ -234,8 +246,9 @@ public class TearDownSitesTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[7]/span/ul/li/strong/a/span"));
-				selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -261,6 +274,7 @@ public class TearDownSitesTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[@class='last']/a"));
 				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 

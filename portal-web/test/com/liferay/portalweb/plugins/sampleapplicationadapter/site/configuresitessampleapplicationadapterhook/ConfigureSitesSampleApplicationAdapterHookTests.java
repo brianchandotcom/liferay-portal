@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,7 +14,7 @@
 
 package com.liferay.portalweb.plugins.sampleapplicationadapter.site.configuresitessampleapplicationadapterhook;
 
-import com.liferay.portalweb.portal.BaseTests;
+import com.liferay.portalweb.portal.BaseTestSuite;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -22,22 +22,18 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ConfigureSitesSampleApplicationAdapterHookTests extends BaseTests {
-
+public class ConfigureSitesSampleApplicationAdapterHookTests
+	extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
 		testSuite.addTestSuite(AddSitesTest.class);
-		testSuite.addTestSuite(
-			ConfigureSitesSampleApplicationAdapterHookTest.class);
+		testSuite.addTestSuite(ConfigureSitesSampleApplicationAdapterHookTest.class);
 		testSuite.addTestSuite(AddSitesPublicPageTest.class);
 		testSuite.addTestSuite(AddSitesPublicPagePortletNavigationTest.class);
-		testSuite.addTestSuite(
-			ViewPortletSampleApplicationAdapterHookTest.class);
+		testSuite.addTestSuite(ViewPortletSampleApplicationAdapterHookTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 		testSuite.addTestSuite(TearDownSitesTest.class);
 
 		return testSuite;
 	}
-
 }

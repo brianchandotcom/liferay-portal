@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -24,6 +24,7 @@ public class ConfigureSitesSampleApplicationAdapterHookTest extends BaseTestCase
 	public void testConfigureSitesSampleApplicationAdapterHook()
 		throws Exception {
 		selenium.open("/web/guest/home/");
+		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,13 +45,16 @@ public class ConfigureSitesSampleApplicationAdapterHookTest extends BaseTestCase
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_134_name']",
 			RuntimeVariables.replace("Community Name"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Community Name"),
 			selenium.getText("//tr[3]/td[1]"));
 		assertEquals(RuntimeVariables.replace("Actions"),
@@ -81,37 +85,20 @@ public class ConfigureSitesSampleApplicationAdapterHookTest extends BaseTestCase
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isPartialText("//a[@id='_165_pagesLink']", "Pages"));
-		selenium.clickAt("//a[@id='_165_pagesLink']",
-			RuntimeVariables.replace("Pages"));
-		assertTrue(selenium.isPartialText("//fieldset[3]/div/span/span/label",
-				"Application Adapter"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isPartialText(
-							"//select[@id='_165_customJspServletContextName']",
-							"Sample Application Adapter Hook")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Configuration"),
+			selenium.getText("//span[@class='aui-legend']"));
 		selenium.select("//select[@id='_165_customJspServletContextName']",
 			RuntimeVariables.replace("Sample Application Adapter Hook"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals("Sample Application Adapter Hook",
+			selenium.getSelectedLabel(
+				"//select[@id='_165_customJspServletContextName']"));
 	}
 }

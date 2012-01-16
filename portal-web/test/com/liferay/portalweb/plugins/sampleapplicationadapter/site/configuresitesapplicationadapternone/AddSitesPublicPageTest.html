@@ -40,12 +40,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[7]/span/ul/li/strong/a/span</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[7]/span/ul/li/strong/a/span</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -99,9 +99,24 @@
 	<td></td>
 </tr>
 <tr>
+	<td>storeElementPresent</td>
+	<td>//li[@id='layoutsTree_layoutId_0_plid_0']/div[contains(@class,'aui-tree-expanded')]</td>
+	<td>treeExpanded</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${treeExpanded}</td>
+	<td>TreeExpanded</td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>//div[@class='aui-tree-hitarea']</td>
 	<td>Drop Down Arrow</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>TreeExpanded</td>
+	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -113,7 +128,6 @@
 	<td>//li/ul/li/div/div[3]/a</td>
 	<td>Public Page</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

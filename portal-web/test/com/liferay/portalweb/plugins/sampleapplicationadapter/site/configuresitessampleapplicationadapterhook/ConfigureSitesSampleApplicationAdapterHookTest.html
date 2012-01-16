@@ -69,24 +69,9 @@
 	<td>Edit Settings</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
-	<td>//a[@id='_165_pagesLink']</td>
-	<td>Pages</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//a[@id='_165_pagesLink']</td>
-	<td>Pages</td>
-</tr>
-<tr>
-	<td>assertPartialText</td>
-	<td>//fieldset[3]/div/span/span/label</td>
-	<td>Application Adapter</td>
-</tr>
-<tr>
-	<td>waitForPartialText</td>
-	<td>//select[@id='_165_customJspServletContextName']</td>
-	<td>Sample Application Adapter Hook</td>
+	<td>assertText</td>
+	<td>//span[@class='aui-legend']</td>
+	<td>Configuration</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -102,6 +87,11 @@
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_165_customJspServletContextName']</td>
+	<td>Sample Application Adapter Hook</td>
 </tr>
 </tbody></table>
 </body>

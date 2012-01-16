@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -24,6 +24,7 @@ public class AddSitesPublicPagePortletNavigationTest extends BaseTestCase {
 	public void testAddSitesPublicPagePortletNavigation()
 		throws Exception {
 		selenium.open("/web/community-name/public-page");
+		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,6 +45,7 @@ public class AddSitesPublicPagePortletNavigationTest extends BaseTestCase {
 		selenium.clickAt("link=Public Page",
 			RuntimeVariables.replace("Public Page"));
 		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",

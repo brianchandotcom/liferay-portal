@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddSitesTest extends BaseTestCase {
 	public void testAddSites() throws Exception {
 		selenium.open("/web/guest/home/");
+		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,8 +44,10 @@ public class AddSitesTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
@@ -64,22 +67,25 @@ public class AddSitesTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Site"),
+		assertEquals(RuntimeVariables.replace("Blank Site"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
 		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_134_name']",
 			RuntimeVariables.replace("Community Name"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Community Name"),
 			selenium.getText("//td[1]/a"));
 	}

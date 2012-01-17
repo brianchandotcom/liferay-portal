@@ -67,6 +67,7 @@ MBThread thread = message.getThread();
 			<%
 			rssURL.setParameter("p_l_id", String.valueOf(plid));
 			rssURL.setParameter("threadId", String.valueOf(message.getThreadId()));
+			rssURL.setParameter("mbCategoryId", "");
 			%>
 
 			<liferay-ui:icon

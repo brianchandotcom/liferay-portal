@@ -201,8 +201,15 @@ public class LockMethodImpl implements Method {
 		sb.append("<D:owner>");
 		sb.append(lock.getOwner());
 		sb.append("</D:owner>");
-		sb.append("<D:timeout>Second-");
-		sb.append(timeoutSecs);
+		sb.append("<D:timeout>");
+
+		if (timeoutSecs > 0) {
+			sb.append("Second-" + timeoutSecs);
+		}
+		else {
+			sb.append("Infinite");
+		}
+
 		sb.append("</D:timeout>");
 		sb.append("<D:locktoken><D:href>");
 		sb.append(WebDAVUtil.TOKEN_PREFIX);

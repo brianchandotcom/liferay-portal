@@ -121,7 +121,7 @@ public class TearDownDLDocumentTypeTest extends BaseTestCase {
 				Thread.sleep(5000);
 
 				boolean documentType1Present = selenium.isElementPresent(
-						"//a/span");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!documentType1Present) {
 					label = 2;
@@ -130,8 +130,10 @@ public class TearDownDLDocumentTypeTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//a/span"));
-				selenium.clickAt("//a/span", RuntimeVariables.replace("Actions"));
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -161,7 +163,7 @@ public class TearDownDLDocumentTypeTest extends BaseTestCase {
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
 				boolean documentType2Present = selenium.isElementPresent(
-						"//a/span");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!documentType2Present) {
 					label = 3;
@@ -170,8 +172,10 @@ public class TearDownDLDocumentTypeTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//a/span"));
-				selenium.clickAt("//a/span", RuntimeVariables.replace("Actions"));
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -201,7 +205,7 @@ public class TearDownDLDocumentTypeTest extends BaseTestCase {
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
 				boolean documentType3Present = selenium.isElementPresent(
-						"//a/span");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!documentType3Present) {
 					label = 4;
@@ -210,8 +214,10 @@ public class TearDownDLDocumentTypeTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//a/span"));
-				selenium.clickAt("//a/span", RuntimeVariables.replace("Actions"));
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -241,7 +247,7 @@ public class TearDownDLDocumentTypeTest extends BaseTestCase {
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
 				boolean documentType4Present = selenium.isElementPresent(
-						"//a/span");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!documentType4Present) {
 					label = 5;
@@ -250,8 +256,10 @@ public class TearDownDLDocumentTypeTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//a/span"));
-				selenium.clickAt("//a/span", RuntimeVariables.replace("Actions"));
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -281,7 +289,7 @@ public class TearDownDLDocumentTypeTest extends BaseTestCase {
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
 				boolean documentType5Present = selenium.isElementPresent(
-						"//a/span");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!documentType5Present) {
 					label = 6;
@@ -290,8 +298,10 @@ public class TearDownDLDocumentTypeTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//a/span"));
-				selenium.clickAt("//a/span", RuntimeVariables.replace("Actions"));
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {

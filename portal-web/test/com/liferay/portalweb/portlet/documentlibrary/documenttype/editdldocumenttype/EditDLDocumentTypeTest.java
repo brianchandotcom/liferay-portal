@@ -114,8 +114,9 @@ public class EditDLDocumentTypeTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//a/span"));
-		selenium.clickAt("//a/span", RuntimeVariables.replace("Actions"));
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

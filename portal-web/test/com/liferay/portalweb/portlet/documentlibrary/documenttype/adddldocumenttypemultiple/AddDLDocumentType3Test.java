@@ -80,7 +80,7 @@ public class AddDLDocumentType3Test extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//span[@class='lfr-toolbar-button add-button ']/a")) {
+							"//span[contains(@class,'add-button')]/a")) {
 					break;
 				}
 			}
@@ -91,9 +91,8 @@ public class AddDLDocumentType3Test extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Add"),
-			selenium.getText(
-				"//span[@class='lfr-toolbar-button add-button ']/a"));
-		selenium.clickAt("//span[@class='lfr-toolbar-button add-button ']/a",
+			selenium.getText("//span[contains(@class,'add-button')]/a"));
+		selenium.clickAt("//span[contains(@class,'add-button')]/a",
 			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {

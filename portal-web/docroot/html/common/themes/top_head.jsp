@@ -31,7 +31,7 @@
 if (!themeDisplay.isSignedIn() && layout.isPublicLayout()) {
 	String completeURL = PortalUtil.getCurrentCompleteURL(request);
 
-	String canonicalURL = PortalUtil.getCanonicalURL(completeURL, themeDisplay);
+	String canonicalURL = PortalUtil.getCanonicalURL(completeURL, themeDisplay, layout);
 %>
 
 	<link href="<%= canonicalURL %>" rel="canonical" />
@@ -46,14 +46,14 @@ if (!themeDisplay.isSignedIn() && layout.isPublicLayout()) {
 		boolean showAlternateLinks = GetterUtil.getBoolean(layout.getTypeSettingsProperty("show-alternate-links"), true);
 
 		if (showAlternateLinks) {
-			Locale[] availableLocales = LanguageUtil.getAvailableLocales();
+			Locale[] availableLocales = PortalUtil.getAlternateLocales(request);
 
 			if (availableLocales.length > 1) {
 				for (Locale curLocale : availableLocales) {
 					if (!curLocale.equals(defaultLocale)) {
 		%>
 
-						<link href="<%= PortalUtil.getAlternateURL(request, canonicalURL, curLocale) %>" hreflang="<%= LocaleUtil.toW3cLanguageId(curLocale) %>" rel="alternate" />
+						<link href="<%= PortalUtil.getAlternateURL(canonicalURL, themeDisplay, curLocale) %>" hreflang="<%= LocaleUtil.toW3cLanguageId(curLocale) %>" rel="alternate" />
 
 		<%
 					}

@@ -821,11 +821,48 @@ public class PortalImpl implements Portal {
 		return actualURL;
 	}
 
-	public String getAlternateURL(
-		HttpServletRequest request, String canonicalURL, Locale locale) {
+	public Locale[] getAlternateLocales(HttpServletRequest request)
+		throws SystemException, PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		Locale[] availableLocales = LanguageUtil.getAvailableLocales();
+
+		long mainJournalArticleId = ParamUtil.getLong(request, "p_j_a_id");
+
+		if (mainJournalArticleId > 0) {
+			JournalArticle mainJournalArticle =
+				JournalArticleLocalServiceUtil.getJournalArticle(
+					mainJournalArticleId);
+
+			if (mainJournalArticle != null) {
+				String[] articleLocales =
+					mainJournalArticle.getAvailableLocales();
+
+				if (articleLocales.length > 1) {
+					Locale[] alternateLocales = new Locale[
+						availableLocales.length - articleLocales.length];
+
+					int i = 0;
+
+					for (Locale locale : availableLocales) {
+						if (!ArrayUtil.contains(
+							articleLocales, LocaleUtil.toLanguageId(locale))) {
+
+							alternateLocales[i] = locale;
+
+							i++;
+						}
+					}
+
+					return alternateLocales;
+				}
+			}
+		}
+
+		return availableLocales;
+	}
+
+	public String getAlternateURL(
+		String canonicalURL, ThemeDisplay themeDisplay, Locale locale) {
 
 		LayoutSet layoutSet = themeDisplay.getLayoutSet();
 
@@ -1010,7 +1047,8 @@ public class PortalImpl implements Portal {
 		return userId;
 	}
 
-	public String getCanonicalURL(String completeURL, ThemeDisplay themeDisplay)
+	public String getCanonicalURL(
+			String completeURL, ThemeDisplay themeDisplay, Layout layout)
 		throws PortalException, SystemException {
 
 		completeURL = removeRedirectParameter(completeURL);
@@ -1031,7 +1069,9 @@ public class PortalImpl implements Portal {
 			parametersURL = completeURL.substring(pos);
 		}
 
-		Layout layout = themeDisplay.getLayout();
+		if (layout == null) {
+			layout = themeDisplay.getLayout();
+		}
 
 		String layoutFriendlyURL = StringPool.BLANK;
 

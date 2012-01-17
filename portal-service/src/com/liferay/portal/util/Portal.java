@@ -243,17 +243,26 @@ public interface Portal {
 		throws PortalException, SystemException;
 
 	/**
+	 * Returns an array with the alternate locales, considering if the page is
+	 * showing just a content and the translations of this content.
+	 *
+	 * @param  request the servlet request for the page
+	 * @return the array of alternate locales
+	 */
+	public Locale[] getAlternateLocales(HttpServletRequest request)
+			throws SystemException, PortalException;
+
+	/**
 	 * Returns the alternate URL of the page, to distinguish it from its
 	 * canonical URL.
 	 *
-	 * @param  request the servlet request to retrieve its parameters and remove
-	 *         those which are not relevant
 	 * @param  canonicalURL the canonical URL previously obtained
+	 * @param  themeDisplay the theme display
 	 * @param  locale the locale of the translated page
 	 * @return the alternate URL
 	 */
 	public String getAlternateURL(
-		HttpServletRequest request, String canonicalURL, Locale locale);
+		String canonicalURL, ThemeDisplay themeDisplay, Locale locale);
 
 	/**
 	 * Returns the set of struts actions that should not be checked for an
@@ -347,13 +356,17 @@ public interface Portal {
 	 * Returns the canonical URL of the page, to distinguish it among its
 	 * translations.
 	 *
+	 * @param  completeURL the complete URL of the page
 	 * @param  themeDisplay the current theme display
+	 * @param  layout the layout. If it is null, then it is generated for the
+	 * 		   current layout
 	 * @return the canonical URL
 	 * @throws PortalException if a friendly URL or the group could not be
 	 *         retrieved
 	 * @throws SystemException if a system exception occurred
 	 */
-	public String getCanonicalURL(String completeURL, ThemeDisplay themeDisplay)
+	public String getCanonicalURL(
+			String completeURL, ThemeDisplay themeDisplay, Layout layout)
 		throws PortalException, SystemException;
 
 	/**

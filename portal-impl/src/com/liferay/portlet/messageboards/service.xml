@@ -218,10 +218,10 @@
 
 		<!-- Finder methods -->
 
-		<finder name="GroupId" return-type="Collection">
+		<finder name="GroupId" return-type="Collection" where="categoryId != -1">
 			<finder-column name="groupId" />
 		</finder>
-		<finder name="CompanyId" return-type="Collection">
+		<finder name="CompanyId" return-type="Collection" where="categoryId != -1">
 			<finder-column name="companyId" />
 		</finder>
 		<finder name="ThreadId" return-type="Collection">
@@ -230,7 +230,7 @@
 		<finder name="ThreadReplies" return-type="Collection" where="parentMessageId != 0" db-index="false">
 			<finder-column name="threadId" />
 		</finder>
-		<finder name="UserId" return-type="Collection">
+		<finder name="UserId" return-type="Collection" where="categoryId != -1">
 			<finder-column name="userId" />
 		</finder>
 		<finder name="G_U" return-type="Collection" where="(categoryId != -1) AND (anonymous = [$FALSE$])">
@@ -245,7 +245,7 @@
 			<finder-column name="groupId" />
 			<finder-column name="status" />
 		</finder>
-		<finder name="C_S" return-type="Collection">
+		<finder name="C_S" return-type="Collection" where="categoryId != -1">
 			<finder-column name="companyId" />
 			<finder-column name="status" />
 		</finder>
@@ -273,7 +273,7 @@
 			<finder-column name="threadId" />
 			<finder-column name="status" />
 		</finder>
-		<finder name="G_U_S" return-type="Collection">
+		<finder name="G_U_S" return-type="Collection" where="categoryId != -1">
 			<finder-column name="groupId" />
 			<finder-column name="userId" />
 			<finder-column name="status" />
@@ -426,7 +426,7 @@
 
 		<!-- Finder methods -->
 
-		<finder name="GroupId" return-type="Collection">
+		<finder name="GroupId" return-type="Collection" where="categoryId != -1">
 			<finder-column name="groupId" />
 		</finder>
 		<finder name="RootMessageId" return-type="MBMessage">
@@ -448,7 +448,7 @@
 			<finder-column name="categoryId" />
 			<finder-column name="priority" />
 		</finder>
-		<finder name="L_P" return-type="Collection">
+		<finder name="L_P" return-type="Collection" where="categoryId != -1">
 			<finder-column name="lastPostDate" />
 			<finder-column name="priority" />
 		</finder>

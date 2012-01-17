@@ -300,7 +300,7 @@ public class WebServerServlet extends HttpServlet {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-			String url = DLUtil.getRelativePreviewURL(
+			String url = DLUtil.getPreviewURL(
 				new LiferayFileEntry(dlFileEntry),
 				new LiferayFileVersion(dlFileEntry.getFileVersion()),
 				themeDisplay, queryString, true);

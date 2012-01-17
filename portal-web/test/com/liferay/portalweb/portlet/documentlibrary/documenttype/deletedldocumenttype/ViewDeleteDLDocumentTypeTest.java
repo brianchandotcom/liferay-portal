@@ -46,6 +46,32 @@ public class ViewDeleteDLDocumentTypeTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
+		assertFalse(selenium.isElementPresent(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[10]/a"));
+		selenium.open("/web/guest/home/");
+		loadRequiredJavaScriptModules();
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=Documents and Media Test Page")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.clickAt("link=Documents and Media Test Page",
+			RuntimeVariables.replace("Documents and Media Test Page"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Manage"),
 			selenium.getText("//span[@title='Manage']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Manage']/ul/li/strong/a/span",
@@ -94,7 +120,8 @@ public class ViewDeleteDLDocumentTypeTest extends BaseTestCase {
 			RuntimeVariables.replace("Name"));
 		selenium.clickAt("//input[@class='aui-button-input aui-button-input-submit']",
 			RuntimeVariables.replace("Search"));
-		Thread.sleep(5000);
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("There are no results."),
 			selenium.getText(
 				"//div[@class='portlet-body']/div[@class='portlet-msg-info']"));

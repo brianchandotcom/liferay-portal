@@ -38,11 +38,12 @@ public class DocumentLibraryTestPlan extends BaseTestSuite {
 		testSuite.addTest(BreadcrumbTestPlan.suite());
 		testSuite.addTest(CommentTestPlan.suite());
 		testSuite.addTest(DocumentTestPlan.suite());
+		testSuite.addTest(DocumentTypeTestPlan.suite());
 		testSuite.addTest(FolderTestPlan.suite());
 		testSuite.addTest(ImageTestPlan.suite());
 		testSuite.addTest(LARTestPlan.suite());
 		testSuite.addTest(PortletTestPlan.suite());
-		testSuite.addTest(DocumentTypeTestPlan.suite());
+
 		return testSuite;
 	}
 

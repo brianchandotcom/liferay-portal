@@ -30,7 +30,7 @@ public class EditDLDocumentTypeTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddDLDocumentTypeTest.class);
 		testSuite.addTestSuite(EditDLDocumentTypeTest.class);
 		testSuite.addTestSuite(ViewEditDLDocumentTypeTest.class);
-		testSuite.addTestSuite(DeleteDLDocumentTypeTest.class);
+		testSuite.addTestSuite(TearDownDLDocumentTypeTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

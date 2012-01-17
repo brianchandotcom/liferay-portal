@@ -29,7 +29,7 @@ public class AddDLDocumentTypeTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPortletDLTest.class);
 		testSuite.addTestSuite(AddDLDocumentTypeTest.class);
 		testSuite.addTestSuite(ViewDLDocumentTypeTest.class);
-		testSuite.addTestSuite(DeleteDLDocumentTypeTest.class);
+		testSuite.addTestSuite(TearDownDLDocumentTypeTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

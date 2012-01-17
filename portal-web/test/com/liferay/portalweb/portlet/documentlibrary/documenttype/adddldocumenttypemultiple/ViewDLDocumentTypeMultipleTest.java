@@ -46,6 +46,61 @@ public class ViewDLDocumentTypeMultipleTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
+			RuntimeVariables.replace("Add"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[10]/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("DL Document Type1 Name"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[10]/a"));
+		assertEquals(RuntimeVariables.replace("DL Document Type2 Name"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[11]/a"));
+		assertEquals(RuntimeVariables.replace("DL Document Type3 Name"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[12]/a"));
+		selenium.open("/web/guest/home/");
+		loadRequiredJavaScriptModules();
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=Documents and Media Test Page")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.clickAt("link=Documents and Media Test Page",
+			RuntimeVariables.replace("Documents and Media Test Page"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Manage"),
 			selenium.getText("//span[@title='Manage']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Manage']/ul/li/strong/a/span",
@@ -91,10 +146,11 @@ public class ViewDLDocumentTypeMultipleTest extends BaseTestCase {
 		}
 
 		selenium.type("//input[@title='Search Entries']",
-			RuntimeVariables.replace("1"));
+			RuntimeVariables.replace("Type1"));
 		selenium.clickAt("//input[@class='aui-button-input aui-button-input-submit']",
 			RuntimeVariables.replace("Search"));
-		Thread.sleep(5000);
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -113,7 +169,7 @@ public class ViewDLDocumentTypeMultipleTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Document Type 1 Name"),
+		assertEquals(RuntimeVariables.replace("DL Document Type1 Name"),
 			selenium.getText(
 				"//tr[@class='portlet-section-body results-row last']/td"));
 
@@ -134,10 +190,11 @@ public class ViewDLDocumentTypeMultipleTest extends BaseTestCase {
 		}
 
 		selenium.type("//input[@title='Search Entries']",
-			RuntimeVariables.replace("2"));
+			RuntimeVariables.replace("Type2"));
 		selenium.clickAt("//input[@class='aui-button-input aui-button-input-submit']",
 			RuntimeVariables.replace("Search"));
-		Thread.sleep(5000);
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -156,7 +213,7 @@ public class ViewDLDocumentTypeMultipleTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Document Type 2 Name"),
+		assertEquals(RuntimeVariables.replace("DL Document Type2 Name"),
 			selenium.getText(
 				"//tr[@class='portlet-section-body results-row last']/td"));
 
@@ -177,10 +234,11 @@ public class ViewDLDocumentTypeMultipleTest extends BaseTestCase {
 		}
 
 		selenium.type("//input[@title='Search Entries']",
-			RuntimeVariables.replace("3"));
+			RuntimeVariables.replace("Type3"));
 		selenium.clickAt("//input[@class='aui-button-input aui-button-input-submit']",
 			RuntimeVariables.replace("Search"));
-		Thread.sleep(5000);
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -199,7 +257,7 @@ public class ViewDLDocumentTypeMultipleTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Document Type 3 Name"),
+		assertEquals(RuntimeVariables.replace("DL Document Type3 Name"),
 			selenium.getText(
 				"//tr[@class='portlet-section-body results-row last']/td"));
 	}

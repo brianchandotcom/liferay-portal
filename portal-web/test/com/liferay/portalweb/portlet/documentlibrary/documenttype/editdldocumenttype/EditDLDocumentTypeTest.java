@@ -143,7 +143,7 @@ public class EditDLDocumentTypeTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
 		selenium.type("//input[@id='_20_name']",
-			RuntimeVariables.replace("Document Type Name Edit"));
+			RuntimeVariables.replace("DL Document Type Name Edit"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

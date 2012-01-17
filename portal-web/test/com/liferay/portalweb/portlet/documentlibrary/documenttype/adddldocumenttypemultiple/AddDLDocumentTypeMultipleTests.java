@@ -15,6 +15,7 @@
 package com.liferay.portalweb.portlet.documentlibrary.documenttype.adddldocumenttypemultiple;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portlet.documentlibrary.documenttype.adddldocumenttype.TearDownDLDocumentTypeTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -31,7 +32,7 @@ public class AddDLDocumentTypeMultipleTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddDLDocumentType2Test.class);
 		testSuite.addTestSuite(AddDLDocumentType3Test.class);
 		testSuite.addTestSuite(ViewDLDocumentTypeMultipleTest.class);
-		testSuite.addTestSuite(DeleteDLDocumentTypeTest.class);
+		testSuite.addTestSuite(TearDownDLDocumentTypeTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

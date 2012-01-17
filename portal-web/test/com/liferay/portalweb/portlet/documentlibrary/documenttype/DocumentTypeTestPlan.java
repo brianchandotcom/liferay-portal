@@ -32,9 +32,9 @@ public class DocumentTypeTestPlan extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(AddDLDocumentTypeTests.suite());
+		testSuite.addTest(AddDLDocumentTypeMultipleTests.suite());
 		testSuite.addTest(DeleteDLDocumentTypeTests.suite());
 		testSuite.addTest(EditDLDocumentTypeTests.suite());
-		testSuite.addTest(AddDLDocumentTypeMultipleTests.suite());
 
 		return testSuite;
 	}

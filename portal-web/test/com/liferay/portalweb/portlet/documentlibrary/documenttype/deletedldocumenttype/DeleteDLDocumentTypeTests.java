@@ -30,6 +30,7 @@ public class DeleteDLDocumentTypeTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddDLDocumentTypeTest.class);
 		testSuite.addTestSuite(DeleteDLDocumentTypeTest.class);
 		testSuite.addTestSuite(ViewDeleteDLDocumentTypeTest.class);
+		testSuite.addTestSuite(TearDownDLDocumentTypeTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

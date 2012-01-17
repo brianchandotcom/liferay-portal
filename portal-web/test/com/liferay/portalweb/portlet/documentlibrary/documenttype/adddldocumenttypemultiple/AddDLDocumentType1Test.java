@@ -90,6 +90,9 @@ public class AddDLDocumentType1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText(
+				"//span[@class='lfr-toolbar-button add-button ']/a"));
 		selenium.clickAt("//span[@class='lfr-toolbar-button add-button ']/a",
 			RuntimeVariables.replace("Add"));
 
@@ -110,7 +113,7 @@ public class AddDLDocumentType1Test extends BaseTestCase {
 		}
 
 		selenium.type("//input[@id='_20_name']",
-			RuntimeVariables.replace("Document Type 1 Name"));
+			RuntimeVariables.replace("DL Document Type1 Name"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -119,7 +122,7 @@ public class AddDLDocumentType1Test extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"xPath=(//div[@class='aui-diagram-builder-field-label'])[5]")) {
+							"xPath=(//div[@class='aui-diagram-builder-field-label'])[11]")) {
 					break;
 				}
 			}

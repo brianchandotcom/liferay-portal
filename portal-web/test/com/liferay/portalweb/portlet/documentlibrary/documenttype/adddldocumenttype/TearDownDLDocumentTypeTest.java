@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.documentlibrary.documenttype.adddldocumenttypetest;
+package com.liferay.portalweb.portlet.documentlibrary.documenttype.adddldocumenttype;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DeleteDLDocumentTypeTest extends BaseTestCase {
-	public void testDeleteDLDocumentType() throws Exception {
+public class TearDownDLDocumentTypeTest extends BaseTestCase {
+	public void testTearDownDLDocumentType() throws Exception {
 		int label = 1;
 
 		while (label >= 1) {
@@ -53,8 +53,8 @@ public class DeleteDLDocumentTypeTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("Manage"),
-					selenium.getText("//span[5]/span/ul/li/strong/a/span"));
-				selenium.clickAt("//span[5]/span/ul/li/strong/a/span",
+					selenium.getText("//span[@title='Manage']/ul/li/strong/a"));
+				selenium.clickAt("//span[@title='Manage']/ul/li/strong/a",
 					RuntimeVariables.replace("Manage"));
 
 				for (int second = 0;; second++) {
@@ -160,8 +160,6 @@ public class DeleteDLDocumentTypeTest extends BaseTestCase {
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
-			case 2:
-
 				boolean documentType2Present = selenium.isElementPresent(
 						"//a/span");
 
@@ -201,8 +199,6 @@ public class DeleteDLDocumentTypeTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-
-			case 3:
 
 				boolean documentType3Present = selenium.isElementPresent(
 						"//a/span");
@@ -244,8 +240,6 @@ public class DeleteDLDocumentTypeTest extends BaseTestCase {
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
-			case 4:
-
 				boolean documentType4Present = selenium.isElementPresent(
 						"//a/span");
 
@@ -285,8 +279,6 @@ public class DeleteDLDocumentTypeTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-
-			case 5:
 
 				boolean documentType5Present = selenium.isElementPresent(
 						"//a/span");
@@ -328,7 +320,13 @@ public class DeleteDLDocumentTypeTest extends BaseTestCase {
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
+			case 2:
+			case 3:
+			case 4:
+			case 5:
 			case 6:
+				assertEquals(RuntimeVariables.replace("There are no results."),
+					selenium.getText("//div[@class='portlet-msg-info']"));
 				selenium.selectFrame("relative=top");
 
 			case 100:

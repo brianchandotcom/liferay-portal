@@ -191,10 +191,7 @@ if (folder != null) {
 		sb.append(renderResponse.getNamespace());
 		sb.append("selectDocumentLibrary('");
 		sb.append(themeDisplay.getPathContext());
-	 	sb.append(
-			 DLUtil.getRelativePreviewURL(
-				 fileEntry, fileEntry.getFileVersion(), themeDisplay,
-				 StringPool.BLANK, false));
+		sb.append(DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, false, false));
 		sb.append("', '");
 		sb.append(fileEntry.getUuid());
 		sb.append("', '");

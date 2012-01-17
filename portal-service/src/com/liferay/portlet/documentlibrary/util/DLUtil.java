@@ -392,23 +392,21 @@ public class DLUtil {
 		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
 		String queryString, boolean appendVersion) {
 
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(themeDisplay.getPortalURL());
-		sb.append(themeDisplay.getPathContext());
-		sb.append(
-			getRelativePreviewURL(
-				fileEntry, fileVersion, themeDisplay, queryString,
-				appendVersion));
-
-		return sb.toString();
+		return getPreviewURL(
+			fileEntry, fileVersion, themeDisplay, queryString, appendVersion,
+			true);
 	}
 
-	public static String getRelativePreviewURL(
+	public static String getPreviewURL(
 		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
-		String queryString, boolean appendVersion) {
+		String queryString, boolean appendVersion, boolean absoluteURL) {
 
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
+
+		if (absoluteURL) {
+			sb.append(themeDisplay.getPortalURL());
+			sb.append(themeDisplay.getPathContext());
+		}
 
 		sb.append("/documents/");
 		sb.append(fileEntry.getRepositoryId());
@@ -424,9 +422,7 @@ public class DLUtil {
 			sb.append(fileVersion.getVersion());
 		}
 
-		Set<String> imageMimeTypes = ImageProcessorUtil.getImageMimeTypes();
-
-		if (imageMimeTypes.contains(fileEntry.getMimeType())) {
+		if (ImageProcessorUtil.isImageSupported(fileVersion)) {
 			if (appendVersion) {
 				sb.append("&t=");
 			}

@@ -177,9 +177,9 @@ public class DocumentCommandReceiver extends BaseCommandReceiver {
 
 			ThemeDisplay themeDisplay = commandArgument.getThemeDisplay();
 
-			String url = DLUtil.getRelativePreviewURL(
+			String url = DLUtil.getPreviewURL(
 				fileEntry, fileEntry.getFileVersion(), themeDisplay,
-				StringPool.BLANK, false);
+				StringPool.BLANK, false, false);
 
 			fileElement.setAttribute("url", url);
 		}

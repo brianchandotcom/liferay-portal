@@ -1971,9 +1971,9 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 
 			String dlReference = "[$dl-reference=" + dlReferencePath + "$]";
 
-			String url = DLUtil.getRelativePreviewURL(
+			String url = DLUtil.getPreviewURL(
 				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
-				false);
+				false, false);
 
 			content = StringUtil.replace(content, dlReference, url);
 		}

@@ -93,7 +93,8 @@
 						AssetEntry
 					WHERE
 						classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTLET.MESSAGEBOARDS.MODEL.MBMESSAGE$]
-				))
+				)) AND
+				(categoryId != -1)
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.messageboards.service.persistence.MBMessageFinder.findByG_U_C_S">
@@ -159,7 +160,8 @@
 					(MBThread.threadId = MBMessage.threadId)
 			WHERE
 				(MBThread.groupId = ?) AND
-				(MBMessage.userId = ?)
+				(MBMessage.userId = ?) AND
+				(MBMessage.categoryId != -1)
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.messageboards.service.persistence.MBThreadFinder.countByG_U_A_S">
@@ -174,6 +176,7 @@
 			WHERE
 				(MBThread.groupId = ?) AND
 				(MBMessage.userId = ?) AND
+				(MBMessage.categoryId != -1) AND
 				(MBMessage.anonymous = ?)
 		]]>
 	</sql>
@@ -225,7 +228,7 @@
 					WHERE
 						classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTLET.MESSAGEBOARDS.MODEL.MBTHREAD$]
 				)) AND
-				(categoryId >= 0)
+				(categoryId != -1)
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.messageboards.service.persistence.MBThreadFinder.findByG_C">
@@ -253,7 +256,8 @@
 					(MBThread.threadId = MBMessage.threadId)
 			WHERE
 				(MBThread.groupId = ?) AND
-				(MBMessage.userId = ?)
+				(MBMessage.userId = ?) AND
+				(MBMessage.categoryId != -1)
 			ORDER BY
 				MBThread.priority DESC,
 				MBThread.lastPostDate DESC
@@ -271,6 +275,7 @@
 			WHERE
 				(MBThread.groupId = ?) AND
 				(MBMessage.userId = ?) AND
+				(MBMessage.categoryId != -1) AND
 				(MBMessage.anonymous = ?)
 			ORDER BY
 				MBThread.priority DESC,

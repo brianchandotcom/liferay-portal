@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.PortalSessionContext;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.UserTracker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -134,6 +135,10 @@ public class LiveUsers {
 			Map<Long, Map<Long, Set<String>>> clusterUsers)
 		throws SystemException {
 
+		if (Validator.isNull(clusterNodeId)) {
+			return;
+		}
+
 		for (Map.Entry<Long, Map<Long, Set<String>>> companyUsers :
 				clusterUsers.entrySet()) {
 
@@ -156,6 +161,10 @@ public class LiveUsers {
 
 	private void _addClusterUser(
 		String clusterNodeId, long companyId, long userId, String sessionId) {
+
+		if (Validator.isNull(clusterNodeId)) {
+			return;
+		}
 
 		Map<Long, Map<Long, Set<String>>> clusterUsers = _clusterUsers.get(
 			clusterNodeId);
@@ -243,6 +252,10 @@ public class LiveUsers {
 
 		ClusterNode clusterNode = ClusterExecutorUtil.getLocalClusterNode();
 
+		if (clusterNode == null) {
+			return null;
+		}
+
 		return _clusterUsers.get(clusterNode.getClusterNodeId());
 	}
 
@@ -327,6 +340,10 @@ public class LiveUsers {
 	private void _removeClusterNode(String clusterNodeId)
 		throws SystemException {
 
+		if (Validator.isNull(clusterNodeId)) {
+			return;
+		}
+
 		Map<Long, Map<Long, Set<String>>> clusterUsers = _clusterUsers.remove(
 			clusterNodeId);
 
@@ -354,6 +371,10 @@ public class LiveUsers {
 
 	private void _removeClusterUser(
 		String clusterNodeId, long companyId, long userId, String sessionId) {
+
+		if (Validator.isNull(clusterNodeId)) {
+			return;
+		}
 
 		Map<Long, Map<Long, Set<String>>> clusterUsers = _clusterUsers.get(
 			clusterNodeId);

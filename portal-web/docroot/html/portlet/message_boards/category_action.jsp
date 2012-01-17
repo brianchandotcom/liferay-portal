@@ -21,6 +21,8 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 
 MBCategory category = (MBCategory)row.getObject();
 
+long categoryId = category.getCategoryId();
+
 Set<Long> categorySubscriptionClassPKs = (Set<Long>)row.getParameter("categorySubscriptionClassPKs");
 %>
 
@@ -29,7 +31,7 @@ Set<Long> categorySubscriptionClassPKs = (Set<Long>)row.getParameter("categorySu
 		<portlet:renderURL var="editURL">
 			<portlet:param name="struts_action" value="/message_boards/edit_category" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />
+			<portlet:param name="mbCategoryId" value="<%= String.valueOf(categoryId) %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon
@@ -42,7 +44,7 @@ Set<Long> categorySubscriptionClassPKs = (Set<Long>)row.getParameter("categorySu
 		<liferay-security:permissionsURL
 			modelResource="<%= MBCategory.class.getName() %>"
 			modelResourceDescription="<%= category.getName() %>"
-			resourcePrimKey="<%= String.valueOf(category.getCategoryId()) %>"
+			resourcePrimKey="<%= String.valueOf(categoryId) %>"
 			var="permissionsURL"
 		/>
 
@@ -56,7 +58,13 @@ Set<Long> categorySubscriptionClassPKs = (Set<Long>)row.getParameter("categorySu
 
 		<%
 		rssURL.setParameter("p_l_id", String.valueOf(plid));
-		rssURL.setParameter("mbCategoryId", String.valueOf(category.getCategoryId()));
+
+		if (categoryId > 0) {
+			rssURL.setParameter("mbCategoryId", String.valueOf(category.getCategoryId()));
+		}
+		else {
+			rssURL.setParameter("groupId", String.valueOf(scopeGroupId));
+		}
 		%>
 
 		<liferay-ui:icon
@@ -68,12 +76,12 @@ Set<Long> categorySubscriptionClassPKs = (Set<Long>)row.getParameter("categorySu
 
 		<c:if test="<%= MBCategoryPermission.contains(permissionChecker, category, ActionKeys.SUBSCRIBE) %>">
 			<c:choose>
-				<c:when test="<%= (categorySubscriptionClassPKs != null) && categorySubscriptionClassPKs.contains(category.getCategoryId()) %>">
+				<c:when test="<%= (categorySubscriptionClassPKs != null) && categorySubscriptionClassPKs.contains(categoryId) %>">
 					<portlet:actionURL var="unsubscribeURL">
 						<portlet:param name="struts_action" value="/message_boards/edit_category" />
 						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />
+						<portlet:param name="mbCategoryId" value="<%= String.valueOf(categoryId) %>" />
 					</portlet:actionURL>
 
 					<liferay-ui:icon
@@ -86,7 +94,7 @@ Set<Long> categorySubscriptionClassPKs = (Set<Long>)row.getParameter("categorySu
 						<portlet:param name="struts_action" value="/message_boards/edit_category" />
 						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />
+						<portlet:param name="mbCategoryId" value="<%= String.valueOf(categoryId) %>" />
 					</portlet:actionURL>
 
 					<liferay-ui:icon
@@ -103,7 +111,7 @@ Set<Long> categorySubscriptionClassPKs = (Set<Long>)row.getParameter("categorySu
 			<portlet:param name="struts_action" value="/message_boards/edit_category" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />
+			<portlet:param name="mbCategoryId" value="<%= String.valueOf(categoryId) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete

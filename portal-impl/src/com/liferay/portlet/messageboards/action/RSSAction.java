@@ -79,6 +79,7 @@ public class RSSAction extends Action {
 		String displayStyle = ParamUtil.getString(
 			request, "displayStyle", RSSUtil.DISPLAY_STYLE_FULL_CONTENT);
 
+		String feedURL = StringPool.BLANK;
 		String entryURL =
 			themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
 				"/message_boards/find_message?p_l_id=" + plid;
@@ -86,16 +87,24 @@ public class RSSAction extends Action {
 		String rss = StringPool.BLANK;
 
 		if (companyId > 0) {
-			String feedURL = StringPool.BLANK;
-
 			rss = MBMessageServiceUtil.getCompanyMessagesRSS(
 				companyId, WorkflowConstants.STATUS_APPROVED, max, type,
 				version, displayStyle, feedURL, entryURL, themeDisplay);
 		}
 		else if (groupId > 0) {
-			String feedURL =
-				themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
-					"/message_boards/find_recent_posts?p_l_id=" + plid;
+			String topLink = ParamUtil.getString(request, "topLink");
+
+			if (topLink.equals("recent-posts")) {
+				feedURL =
+					themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
+						"/message_boards/find_recent_posts?p_l_id=" + plid;
+			}
+			else {
+				feedURL =
+					themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
+						"/message_boards/find_category?p_l_id=" + plid +
+							"&mbCategoryId=" + categoryId;
+			}
 
 			if (userId > 0) {
 				rss = MBMessageServiceUtil.getGroupMessagesRSS(
@@ -110,7 +119,7 @@ public class RSSAction extends Action {
 			}
 		}
 		else if (categoryId > 0) {
-			String feedURL =
+			feedURL =
 				themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
 					"/message_boards/find_category?p_l_id=" + plid +
 						"&mbCategoryId=" + categoryId;
@@ -120,7 +129,7 @@ public class RSSAction extends Action {
 				type, version, displayStyle, feedURL, entryURL, themeDisplay);
 		}
 		else if (threadId > 0) {
-			String feedURL =
+			feedURL =
 				themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
 					"/message_boards/find_thread?p_l_id=" + plid +
 						"&threadId=" + threadId;

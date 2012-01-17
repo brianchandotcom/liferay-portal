@@ -65,6 +65,8 @@
 			var DDM = A.DD.DDM;
 			var Layout = Liferay.Layout;
 
+			var CSS_REPAINT = '_repaint_';
+
 			A.mix(
 				LayoutConfiguration,
 				{
@@ -140,6 +142,18 @@
 												instance.categoryContainers.show();
 
 												instance.portlets.show();
+											}
+
+											if (A.UA.ie === 9) {
+												var body = A.getBody();
+
+												var action = body.addClass;
+
+												if (body.hasClass(CSS_REPAINT)) {
+													action = body.removeClass;
+												}
+
+												action.call(body, CSS_REPAINT);
 											}
 										}
 									},

@@ -565,8 +565,6 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 		long classNameId = PortalUtil.getClassNameId(className);
-
-		title = StringUtil.shorten(title, 300, StringPool.BLANK);
 		Date now = new Date();
 
 		validate(groupId, className, categoryIds, tagNames);

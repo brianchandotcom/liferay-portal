@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -55,6 +54,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.lar.DLPortletDataHandlerImpl;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.journal.FeedTargetLayoutFriendlyUrlException;
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.NoSuchStructureException;
@@ -1414,7 +1414,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 					if (pathArray.length == 4) {
 						map.put("uuid", new String[] {pathArray[3]});
 					}
-					else if (pathArray.length > 4) {
+					else if (pathArray.length == 5) {
 						map.put("folderId", new String[] {pathArray[3]});
 
 						String name = HttpUtil.decodeURL(pathArray[4]);
@@ -1426,6 +1426,9 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 						}
 
 						map.put("name", new String[] {name});
+					}
+					else if (pathArray.length > 5) {
+						map.put("uuid", new String[] {pathArray[5]});
 					}
 				}
 				else {
@@ -1968,18 +1971,11 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 
 			String dlReference = "[$dl-reference=" + dlReferencePath + "$]";
 
-			StringBundler sb = new StringBundler(6);
+			String url = DLUtil.getPreviewURL(
+				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
+				false, false);
 
-			sb.append("/documents/");
-			sb.append(portletDataContext.getScopeGroupId());
-			sb.append(StringPool.SLASH);
-			sb.append(fileEntry.getFolderId());
-			sb.append(StringPool.SLASH);
-			sb.append(
-				HttpUtil.encodeURL(
-					HtmlUtil.unescape(fileEntry.getTitle()), true));
-
-			content = StringUtil.replace(content, dlReference, sb.toString());
+			content = StringUtil.replace(content, dlReference, url);
 		}
 
 		return content;

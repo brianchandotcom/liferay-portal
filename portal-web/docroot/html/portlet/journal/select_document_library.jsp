@@ -146,7 +146,7 @@ if (folder != null) {
 
 		ResultRow row = new ResultRow(fileEntry, fileEntry.getFileEntryId(), i);
 
-		String rowHREF = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + folderId + StringPool.SLASH + HttpUtil.encodeURL(fileEntry.getTitle(), true);
+		String rowHREF = DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, false);
 
 		// Title
 
@@ -191,20 +191,7 @@ if (folder != null) {
 		sb.append(renderResponse.getNamespace());
 		sb.append("selectDocumentLibrary('");
 		sb.append(themeDisplay.getPathContext());
-		sb.append("/documents/");
-		sb.append(groupId);
-		sb.append(StringPool.SLASH);
-		sb.append(fileEntry.getFolderId());
-		sb.append(StringPool.SLASH);
-		sb.append(HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())));
-
-		Set<String> imageMimeTypes = ImageProcessorUtil.getImageMimeTypes();
-
-		if (imageMimeTypes.contains(fileEntry.getMimeType())) {
-			sb.append("?t=");
-			sb.append(WebServerServletTokenUtil.getToken(fileEntry.getFileEntryId()));
-		}
-
+		sb.append(DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, false, false));
 		sb.append("', '");
 		sb.append(fileEntry.getUuid());
 		sb.append("', '");

@@ -37,12 +37,10 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -54,6 +52,8 @@ import com.liferay.portal.model.Image;
 import com.liferay.portal.model.ImageConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.ImageImpl;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -64,9 +64,11 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.ImageServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -283,30 +285,27 @@ public class WebServerServlet extends HttpServlet {
 				return false;
 			}
 
-			StringBundler sb = new StringBundler(9);
-
-			sb.append("/documents/");
-			sb.append(dlFileEntry.getGroupId());
-			sb.append(StringPool.SLASH);
-			sb.append(dlFileEntry.getFolderId());
-			sb.append(StringPool.SLASH);
-			sb.append(
-				HttpUtil.encodeURL(
-					HtmlUtil.unescape(dlFileEntry.getTitle()), true));
-			sb.append("?version=");
-			sb.append(dlFileEntry.getVersion());
+			String queryString = StringPool.BLANK;
 
 			if (imageId == dlFileEntry.getSmallImageId()) {
-				sb.append("&imageThumbnail=1");
+				queryString = "&imageThumbnail=1";
 			}
 			else if (imageId == dlFileEntry.getSmallImageId()) {
-				sb.append("&imageThumbnail=2");
+				queryString = "&imageThumbnail=2";
 			}
 			else if (imageId == dlFileEntry.getSmallImageId()) {
-				sb.append("&imageThumbnail=3");
+				queryString = "&imageThumbnail=3";
 			}
 
-			response.setHeader(HttpHeaders.LOCATION, sb.toString());
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			String url = DLUtil.getPreviewURL(
+				new LiferayFileEntry(dlFileEntry),
+				new LiferayFileVersion(dlFileEntry.getFileVersion()),
+				themeDisplay, queryString, true);
+
+			response.setHeader(HttpHeaders.LOCATION, url);
 			response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
 
 			return true;
@@ -358,7 +357,7 @@ public class WebServerServlet extends HttpServlet {
 			return DLAppServiceUtil.getFileEntryByUuidAndGroupId(
 				pathArray[1], groupId);
 		}
-		else {
+		else if (pathArray.length == 3) {
 			long groupId = GetterUtil.getLong(pathArray[0]);
 			long folderId = GetterUtil.getLong(pathArray[1]);
 
@@ -370,6 +369,13 @@ public class WebServerServlet extends HttpServlet {
 			}
 
 			return DLAppServiceUtil.getFileEntry(groupId, folderId, fileName);
+		}
+		else {
+			long groupId = GetterUtil.getLong(pathArray[0]);
+
+			String uuid = pathArray[3];
+
+			return DLAppServiceUtil.getFileEntryByUuidAndGroupId(uuid, groupId);
 		}
 	}
 
@@ -1075,13 +1081,25 @@ public class WebServerServlet extends HttpServlet {
 			// Unable to check with UUID because of multiple repositories
 
 		}
-		else {
+		else if (pathArray.length == 3) {
 			long groupId = GetterUtil.getLong(pathArray[0]);
 			long folderId = GetterUtil.getLong(pathArray[1]);
 			String fileName = pathArray[2];
 
 			try {
 				DLAppLocalServiceUtil.getFileEntry(groupId, folderId, fileName);
+			}
+			catch (RepositoryException re) {
+			}
+		}
+		else {
+			long groupId = GetterUtil.getLong(pathArray[0]);
+
+			String uuid = pathArray[3];
+
+			try {
+				DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+					uuid, groupId);
 			}
 			catch (RepositoryException re) {
 			}

@@ -76,7 +76,6 @@ else {
 	assetClassPK = fileEntry.getFileEntryId();
 }
 
-String fileUrl = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + folderId + StringPool.SLASH + HttpUtil.encodeURL(fileEntry.getTitle(), true);
 String webDavUrl = StringPool.BLANK;
 
 if (portletDisplay.isWebDAVEnabled()) {
@@ -476,7 +475,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						<label><liferay-ui:message key="url" /></label>
 
 						<liferay-ui:input-resource
-							url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getUuid() %>'
+							url="<%= DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, false) %>"
 						/>
 					</div>
 

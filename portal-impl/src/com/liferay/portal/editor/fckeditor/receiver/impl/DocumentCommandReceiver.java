@@ -19,28 +19,24 @@ import com.liferay.portal.editor.fckeditor.exception.FCKException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.webserver.WebServerServletTokenUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.model.impl.DLFolderImpl;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
-import com.liferay.portlet.documentlibrary.util.ImageProcessorUtil;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.io.InputStream;
 
 import java.util.List;
-import java.util.Set;
 import java.util.StringTokenizer;
 
 import org.w3c.dom.Document;
@@ -179,28 +175,13 @@ public class DocumentCommandReceiver extends BaseCommandReceiver {
 			fileElement.setAttribute("desc", fileEntry.getTitle());
 			fileElement.setAttribute("size", getSize(fileEntry.getSize()));
 
-			StringBundler sb = new StringBundler(8);
+			ThemeDisplay themeDisplay = commandArgument.getThemeDisplay();
 
-			sb.append("/documents/");
-			sb.append(group.getGroupId());
-			sb.append(StringPool.SLASH);
-			sb.append(fileEntry.getFolderId());
-			sb.append(StringPool.SLASH);
-			sb.append(HttpUtil.encodeURL(fileEntry.getTitle(), true));
+			String url = DLUtil.getPreviewURL(
+				fileEntry, fileEntry.getFileVersion(), themeDisplay,
+				StringPool.BLANK, false, false);
 
-			Set<String> imageMimeTypes = ImageProcessorUtil.getImageMimeTypes();
-
-			if (imageMimeTypes.contains(fileEntry.getMimeType())) {
-				sb.append("?t=");
-
-				FileVersion fileVersion = fileEntry.getFileVersion();
-
-				sb.append(
-					WebServerServletTokenUtil.getToken(
-						fileVersion.getFileVersionId()));
-			}
-
-			fileElement.setAttribute("url", sb.toString());
+			fileElement.setAttribute("url", url);
 		}
 	}
 

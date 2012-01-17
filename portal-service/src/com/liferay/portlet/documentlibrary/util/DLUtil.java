@@ -390,24 +390,45 @@ public class DLUtil {
 
 	public static String getPreviewURL(
 		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
-		String queryString, boolean appendToken) {
+		String queryString, boolean appendVersion) {
 
-		StringBundler sb = new StringBundler(13);
+		return getPreviewURL(
+			fileEntry, fileVersion, themeDisplay, queryString, appendVersion,
+			true);
+	}
 
-		sb.append(themeDisplay.getPortalURL());
-		sb.append(themeDisplay.getPathContext());
+	public static String getPreviewURL(
+		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
+		String queryString, boolean appendVersion, boolean absoluteURL) {
+
+		StringBundler sb = new StringBundler(15);
+
+		if (absoluteURL) {
+			sb.append(themeDisplay.getPortalURL());
+			sb.append(themeDisplay.getPathContext());
+		}
+
 		sb.append("/documents/");
 		sb.append(fileEntry.getRepositoryId());
 		sb.append(StringPool.SLASH);
 		sb.append(fileEntry.getFolderId());
 		sb.append(StringPool.SLASH);
-		sb.append(
-			HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle()), true));
-		sb.append("?version=");
-		sb.append(fileVersion.getVersion());
+		sb.append(HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())));
+		sb.append(StringPool.SLASH);
+		sb.append(fileEntry.getUuid());
 
-		if (appendToken) {
-			sb.append("&t=");
+		if (appendVersion) {
+			sb.append("?version=");
+			sb.append(fileVersion.getVersion());
+		}
+
+		if (ImageProcessorUtil.isImageSupported(fileVersion)) {
+			if (appendVersion) {
+				sb.append("&t=");
+			}
+			else {
+				sb.append("?t=");
+			}
 
 			Date modifiedDate = fileVersion.getModifiedDate();
 
@@ -418,7 +439,7 @@ public class DLUtil {
 
 		String previewURL = sb.toString();
 
-		if (themeDisplay.isAddSessionIdToURL()) {
+		if ((themeDisplay != null) && (themeDisplay.isAddSessionIdToURL())) {
 			return PortalUtil.getURLWithSessionId(
 				previewURL, themeDisplay.getSessionId());
 		}

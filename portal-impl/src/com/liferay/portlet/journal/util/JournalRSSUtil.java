@@ -160,12 +160,33 @@ public class JournalRSSUtil {
 			String[] pathArray = StringUtil.split(url, CharPool.SLASH);
 
 			long groupId = GetterUtil.getLong(pathArray[2]);
-			long folderId = GetterUtil.getLong(pathArray[3]);
-			String title = HttpUtil.decodeURL(pathArray[4], true);
+
+			long folderId = 0;
+			String title = null;
+			String uuid = null;
+
+			if (pathArray.length == 4) {
+				uuid = pathArray[3];
+			}
+			else if (pathArray.length == 5) {
+				folderId = GetterUtil.getLong(pathArray[3]);
+
+				title = HttpUtil.decodeURL(pathArray[4], true);
+			}
+			else if (pathArray.length > 5) {
+				uuid = pathArray[5];
+			}
 
 			try {
-				fileEntry = DLAppLocalServiceUtil.getFileEntry(
-					groupId, folderId, title);
+				if (Validator.isNotNull(uuid)) {
+					fileEntry =
+						DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+							uuid, groupId);
+				}
+				else {
+					fileEntry = DLAppLocalServiceUtil.getFileEntry(
+						groupId, folderId, title);
+				}
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {

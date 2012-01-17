@@ -760,6 +760,8 @@ Liferay.Service.registerClass(
 		getFileEntryType: true,
 		getFileEntryTypes: true,
 		getFileEntryTypesCount: true,
+		search: true,
+		searchCount: true,
 		updateFileEntryType: true
 	}
 );

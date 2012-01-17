@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
@@ -69,6 +70,26 @@ public class DLFileEntryTypeServiceImpl extends DLFileEntryTypeServiceBaseImpl {
 
 	public int getFileEntryTypesCount(long[] groupIds) throws SystemException {
 		return dlFileEntryTypePersistence.filterCountByGroupId(groupIds);
+	}
+
+	public List<DLFileEntryType> search(
+			long companyId, long[] groupIds, String keywords,
+			boolean includeBasicFileEntryType, int start, int end,
+			OrderByComparator orderByComparator)
+		throws SystemException {
+
+		return dlFileEntryTypeFinder.filterFindByKeywords(
+			companyId, groupIds, keywords, includeBasicFileEntryType, start,
+			end, orderByComparator);
+	}
+
+	public int searchCount(
+		long companyId, long[] groupIds, String keywords,
+		boolean includeBasicFileEntryType)
+		throws SystemException {
+
+		return dlFileEntryTypeFinder.filterCountByKeywords(
+			companyId, groupIds, keywords, includeBasicFileEntryType);
 	}
 
 	public void updateFileEntryType(

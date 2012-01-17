@@ -274,7 +274,9 @@ if (row == null && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || 
 							message='<%= (folder != null) ? "add-subfolder" : "add-folder" %>'
 							url="<%= addFolderURL %>"
 						/>
+					</c:if>
 
+					<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_REPOSITORY) %>">
 						<portlet:renderURL var="addRepositoryURL">
 							<portlet:param name="struts_action" value="/document_library/edit_repository" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />

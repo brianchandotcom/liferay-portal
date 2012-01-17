@@ -1182,12 +1182,12 @@ public class DataFactory {
 		_userNames[1] = lastNames;
 	}
 
-	protected Date newCreateDate() {
-		return new Date(_baseCreateTime + (_dlDateCounter.get() * Time.SECOND));
+	public IntegerWrapper newInteger() {
+		return new IntegerWrapper();
 	}
 
-	protected IntegerWrapper newInteger() {
-		return new IntegerWrapper();
+	protected Date newCreateDate() {
+		return new Date(_baseCreateTime + (_dlDateCounter.get() * Time.SECOND));
 	}
 
 	protected ResourceCode newResourceCode() {

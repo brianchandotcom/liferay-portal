@@ -50,4 +50,11 @@ public class MBDiscussionAssetRendererFactory
 		return TYPE;
 	}
 
+	@Override
+	public boolean isSelectable() {
+		return _SELECTABLE;
+	}
+
+	private static final boolean _SELECTABLE = false;
+
 }

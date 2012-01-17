@@ -78,10 +78,12 @@ long[] groupIds = AssetPublisherUtil.getGroupIds(preferences, scopeGroupId, layo
 
 long[] availableClassNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds();
 
-long layoutRevisionClassNameId = PortalUtil.getClassNameId(LayoutRevision.class);
+for (long classNameId : availableClassNameIds) {
+	AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(PortalUtil.getClassName(classNameId));
 
-if (ArrayUtil.contains(availableClassNameIds, layoutRevisionClassNameId)) {
-	availableClassNameIds = ArrayUtil.remove(availableClassNameIds, layoutRevisionClassNameId);
+	if (!assetRendererFactory.isSelectable()) {
+		availableClassNameIds = ArrayUtil.remove(availableClassNameIds, classNameId);
+	}
 }
 
 boolean anyAssetType = GetterUtil.getBoolean(preferences.getValue("anyAssetType", Boolean.TRUE.toString()));

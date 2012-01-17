@@ -109,8 +109,15 @@ public class LayoutRevisionAssetRendererFactory
 	}
 
 	@Override
+	public boolean isSelectable() {
+		return _SELECTABLE;
+	}
+
+	@Override
 	protected String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/common/pages.png";
 	}
+
+	private static final boolean _SELECTABLE = false;
 
 }

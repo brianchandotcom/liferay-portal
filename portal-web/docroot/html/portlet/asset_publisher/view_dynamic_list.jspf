@@ -34,9 +34,7 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 
 		List<AssetCategory> assetCategories = AssetCategoryLocalServiceUtil.getVocabularyRootCategories(assetVocabulary.getVocabularyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		if (!anyAssetType) {
-			assetEntryQuery.setClassNameIds(classNameIds);
-		}
+		assetEntryQuery.setClassNameIds(classNameIds);
 
 		for (AssetCategory assetCategory : assetCategories) {
 			assetCategory = assetCategory.toEscapedModel();
@@ -93,9 +91,7 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 		searchContainer.setTotal(total);
 	}
 	else if (!groupByClass) {
-		if (!anyAssetType) {
-			assetEntryQuery.setClassNameIds(classNameIds);
-		}
+		assetEntryQuery.setClassNameIds(classNameIds);
 
 		total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
 

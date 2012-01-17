@@ -423,9 +423,13 @@ AUI.add(
 							}
 							else if (type === 'ddm-date') {
 								config.inputFormatter = function(value) {
-									var date = A.DataType.Date.parse(value) || new Date();
+									var date = A.DataType.Date.parse(value);
 
-									return date.getTime();
+									if (date) {
+										return date.getTime();
+									}
+
+									return STR_EMPTY;
 								};
 
 								item.formatter = function(obj) {

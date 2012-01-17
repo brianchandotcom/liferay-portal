@@ -61,7 +61,9 @@ public class DeleteDLDocumentMultipleDLDActionsTest extends BaseTestCase {
 			RuntimeVariables.replace("DL Document 3 Checkbox"));
 		assertTrue(selenium.isChecked("//tr[5]/td[1]/input"));
 		selenium.clickAt("//input[@value='Delete']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Delete"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
 

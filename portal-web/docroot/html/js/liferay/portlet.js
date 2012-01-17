@@ -283,7 +283,7 @@
 				{
 					after: {
 						success: function() {
-							if (!data.preventNotification) {
+							if (!data || !data.preventNotification) {
 								Liferay.fire('updatedLayout');
 							}
 						}

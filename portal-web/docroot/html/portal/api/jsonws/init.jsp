@@ -14,8 +14,7 @@
  */
 --%>
 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<%@ include file="/html/portal/init.jsp" %>
 <%@ page import="com.liferay.portal.kernel.javadoc.JavadocManagerUtil" %><%@
 page import="com.liferay.portal.kernel.javadoc.JavadocMethod" %><%@
 page import="com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionMapping" %><%@

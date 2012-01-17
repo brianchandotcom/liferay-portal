@@ -14,24 +14,28 @@
  */
 --%>
 
-* {
-	margin: 0;
-	padding: 0;
-}
-
 body {
-	background-color: #FFF;
-	font-family: Tahoma, Arial, sans-serif;
-	font-size: 14px;
-	text-align: center;
+	background: #EEF0F2 !important;
+	margin: 0 auto;
+	padding: 0 !important;
 }
 
-#header {
-	background-color: #003e7e;
-	border-bottom: 15px solid #5780AA;
-	height: 80px;
-	line-height: 80px;
-	margin: 20px 0 0;
+#wrapper {
+	margin: auto;
+	min-width: 0;
+	width: 960px;
+}
+
+#banner {
+	min-height: 100px;
+}
+
+#banner:after {
+	clear: both;
+	content: ".";
+	display: block;
+	height: 0;
+	visibility: hidden;
 }
 
 #header-content {
@@ -40,162 +44,231 @@ body {
 	width: 760px;
 }
 
-#content {
+#footer {
+	clear: both;
+	padding-top: 2em;
+}
+
+h2, h3 {
+	color: #333;
+	font-size: 2em;
+	font-weight: bold;
+	margin: 0;
+}
+
+h3 {
+	font-size: 1.6em;
+	line-height: 1;
+	margin-bottom: 0.2em;
+}
+
+.loading-results {
+	background: url(<%= themeDisplay.getPathThemeImages() %>/aui/loading_indicator.gif) no-repeat 50%;
+	min-height: 2em;
+}
+
+.lfr-api-navigation-content {
+	padding: 0;
+}
+
+.lfr-api-navigation .lfr-panel-titlebar {
+	margin-bottom: 0;
+}
+
+.lfr-api-navigation .lfr-panel-title {
+	padding-left: 5px;
+	text-shadow: #FFF 1px 1px;
+}
+
+.lfr-api-navigation .lfr-panel-titlebar .lfr-panel-button {
+	display: none;
+}
+
+.lfr-api-navigation .lfr-panel-content {
 	background-color: #FFF;
-	margin: 0 auto;
-	padding: 20px 30px;
-	text-align: left;
-	width: 760px;
+	padding: 5px 0;
 }
 
-h1 {
-	color: #FFF;
-	font-size: 2.5em;
-	font-weight: normal;
-	margin: 0 auto;
-	width: 760px;
+.lfr-api-navigation .lfr-panel-content li a {
+	display: block;
+	padding: 3px 15px;
 }
 
-h1 a {
+.lfr-api-navigation .lfr-panel-content li a:hover {
+	background-color: #EBF0F5;
+}
+
+.lfr-api-navigation .lfr-panel-content li.selected a {
+	background-color: #5B677D;
 	color: #FFF;
 	text-decoration: none;
 }
 
-h1 a:visited {
+.lfr-api-details-content {
+	padding-left: 25px;
+}
+
+.lfr-action-label {
 	color: #FFF;
+	margin: 0 0.5em;
+	padding: 0.1em 0.5em;
 }
 
-h1 a:hover {
-	color: #FFF
-}
-
-h2 {
-	color: #003e73;
-	font-size: 2.0em;
-	font-weight: normal;
-	margin-bottom:5px;
-	margin-top: 20px;
-}
-
-h3 {
-	color: #003e73;
-	font-size: 1.6em;
-	font-weight: normal;
-	margin: 20px 0 0 0;
-}
-
-.signature {
+.lfr-api-signature {
 	font-size: 1.1em;
 	padding: 2px;
 }
 
-.signature a {
-	color: #047;
+.lfr-api-signature:hover {
+	background-color: #F5F5F5;
 }
 
-.signature a:visited {
-	color: #047;
+.lfr-api-section {
+	padding-left: 25px;
+	position: relative;
 }
 
-.signature span.params {
-	color: #777;
-	display: none;
-	font-size: 0.7em;
-	padding-left: 6px;
-}
-
-div.actionmethod {
-	color: #555;
-	font-size: 1.3em;
-}
-
-div.actionmethod span.classname {
+.lfr-api-section h3, .lfr-api-section h2 {
+	background: none no-repeat 0 50%;
 	font-weight: bold;
+	margin-left: -25px;
+	padding-left: 25px;
 }
 
-div.actionmethod span.methodname {
-	color: #b00;
-	font-weight: bold;
+.lfr-api-method h2 {
+	background-image: url(<%= themeDisplay.getPathThemeImages() %>/api/method.png);
 }
 
-div.comment {
-	background-color: #fafaf0;
-	border: 1px dotted #aaa;
-	color: #888;
-	font-size: 1.2em;
-	font-style: italic;
-	margin: 3px 0;
-	padding: 6px;
+.lfr-api-parameters h3 {
+	background-image: url(<%= themeDisplay.getPathThemeImages() %>/api/property.png);
 }
 
-div.comment-param {
-	background-color: #fafaf0;
-	border: 1px dotted #ccc;
-	color: #888;
-	font-size: 0.8em;
-	font-style: italic;
-	margin: 3px 50px 10px 10px;
-	padding: 3px 6px;
+.lfr-api-return-type h3 {
+	background-image: url(<%= themeDisplay.getPathThemeImages() %>/api/return_type.png);
 }
 
-div.method {
-	color: #0A0;
-	font-size: 1.2em;
-	font-weight: bold;
+.lfr-api-exception h3 {
+	background-image: url(<%= themeDisplay.getPathThemeImages() %>/api/exception.png);
 }
 
-div.param {
-	color: #696;
-	font-size: 1.2em;
-	margin-left: 10px;
+.lfr-api-execute h3 {
+	background-image: url(<%= themeDisplay.getPathThemeImages() %>/api/execute.png);
 }
 
-div.param span {
-	color: #888;
-	font-size: 0.7em;
-	padding-left: 4px;
+.lfr-api-section {
+	margin-bottom: 1.5em;
 }
 
-#footer {
-	background-color: #ddd;
-	border-top: 20px solid #eee;
-	color: #777;
-	margin-top: 20px;
-	padding: 40px;
+.lfr-api-method .lfr-api-param-name {
+	color: #333;
 }
 
-#footer-content {
-	margin: 0 auto;
-	text-align: left;
-	width: 760px;
+.lfr-api-method .class-name {
+	color: #00A2EA;
 }
 
-form#execute {
-	margin-left: 20px;
+.lfr-api-method .method-name {
+	color: #B00;
 }
 
-form#execute input {
-	padding: 4px;
-}
-
-form#execute input[type="text"] {
-	border: 1px solid #aaa;
-}
-
-form#execute label {
-	color: #666;
-}
-
-form#execute label span {
-	color: #777;
-	font-size: 0.7em;
-}
-
-form#execute #submit {
-	background-color: #f90;
-	border: 2px solid #a60;
-	color: #444;
-	cursor: pointer;
+.lfr-api-http-method {
 	font-size: 1.1em;
+	font-weight: normal;
+	margin: 0;
+	position: absolute;
+	right: 0;
+	top: -1.5em;
+}
+
+.lfr-api-http-method dt, .lfr-api-http-method dd {
+	display: inline-block;
+	margin-right: 0.5em;
+	vertical-align: middle;
+}
+
+.lfr-api-http-method dt {
+	color: #555;
+}
+
+.lfr-api-http-method dd {
+	background-color: #0A0;
+	font-size: 0.7em;
 	font-weight: bold;
+}
+
+.lfr-api-param {
+	padding: 0.5em 0;
+}
+
+.lfr-api-param-comment {
+	color: #444;
+	margin: 0 0 1em;
+}
+
+.lfr-api-param-name {
+	color: #003E73;
+	font-size: 1.2em;
+	font-weight: bold;
+	word-wrap: break-word;
+}
+
+.lfr-api-param-type {
+	color: #999;
+}
+
+.lfr-api-service-search .aui-field-content {
+	margin-top: 2px;
+}
+
+.lfr-api-service-search .aui-field-input {
+	width: 100%;
+}
+
+.no-matches {
+	color: #999;
+	padding: 1em 0;
+}
+
+.yui3-highlight {
+	background-color: #C1D8F4;
+	font-weight: bold;
+}
+
+.lfr-api-results {
+	background-color: #EEE;
+	padding: 0.5em;
+}
+
+.lfr-code-block {
+	font-size: 1.3em;
+	height: 200px;
+	overflow: auto;
+	padding: 0 0.5em 1em;
+}
+
+.aui-field-content, .aui-field-inline .aui-field-content {
+	margin-bottom: 10px;
+	margin-top: 5px;
+}
+
+.aui-suffix {
+	color: #777;
+	display: block;
+	font-size: 0.9em;
+	font-style: italic;
+}
+
+.lfr-inline-code {
+	background: #FF9;
+	color: #555;
+	font-family: monospace;
+	font-size: 1.2em;
+	font-style: normal;
+	font-weight: bold;
+	padding: 3px;
+}
+
+.portlet-msg-alert .lfr-inline-code {
+	background-color: #EEB;
+	color: #333;
 }

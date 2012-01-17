@@ -16,45 +16,45 @@
 
 <%@ include file="/html/portal/api/jsonws/init.jsp" %>
 
-<style type="text/css">
+<%
+String signature = ParamUtil.getString(request, "signature");
+%>
+
+<style>
 	<%@ include file="/html/portal/api/jsonws/css.jspf" %>
 </style>
 
-<div id="header">
-	<div id="header-content">
-		<h1><a href="jsonws">JSON Web Services API</a></h1>
+<div id="wrapper">
+	<header id="banner" role="banner">
+		<hgroup id="heading">
+			<h1 class="site-title">
+				<a class="logo" href="./" title="JSONWS API">
+					<img alt="JSONWS API" height="<%= themeDisplay.getCompanyLogoHeight() %>" src="<%= HtmlUtil.escape(themeDisplay.getCompanyLogo()) %>" width="<%= themeDisplay.getCompanyLogoWidth() %>" />
+				</a>
+
+				<span class="site-name">
+					JSONWS API
+				</span>
+			</h1>
+		</hgroup>
+	</header>
+
+	<div id="content">
+		<div id="main-content">
+			<aui:layout>
+				<aui:column columnWidth="25" cssClass="lfr-api-navigation">
+					<liferay-util:include page="/html/portal/api/jsonws/actions.jsp" />
+				</aui:column>
+				<aui:column columnWidth="75" cssClass="lfr-api-details">
+					<liferay-util:include page="/html/portal/api/jsonws/action.jsp" />
+				</aui:column>
+			</aui:layout>
+		</div>
 	</div>
-</div>
 
-<div id="content">
-	<c:choose>
-		<c:when test="<%= PropsValues.JSON_WEB_SERVICE_ENABLED %>">
-			<%
-			String signature = ParamUtil.getString(request, "signature");
-			%>
-
-			<c:choose>
-				<c:when test="<%= Validator.isNull(signature) %>">
-					<%@ include file="/html/portal/api/jsonws/actions.jspf" %>
-				</c:when>
-				<c:otherwise>
-					<%@ include file="/html/portal/api/jsonws/action.jspf" %>
-				</c:otherwise>
-			</c:choose>
-		</c:when>
-		<c:otherwise>
-			JSON web services are disabled.
-		</c:otherwise>
-	</c:choose>
-</div>
-
-<div id="footer">
-	<div id="footer-content">
-
-		<%
-		Calendar calendar = CalendarFactoryUtil.getCalendar();
-		%>
-
-		Copyright (c) 2000-<%= calendar.get(Calendar.YEAR) %> Liferay, Inc. All rights reserved.
-	</div>
+	<footer id="footer" role="contentinfo">
+		<p class="powered-by">
+			<liferay-ui:message key="powered-by" /> <a href="http://www.liferay.com" rel="external">Liferay</a>
+		</p>
+	</footer>
 </div>

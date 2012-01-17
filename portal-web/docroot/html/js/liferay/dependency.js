@@ -1,8 +1,8 @@
-(function(){
+(function() {
 	var A = AUI().use('oop');
 
 	var usedModules = {};
-	var emptyFn = function(){};
+	var emptyFn = function() {};
 
 	var Dependency = {
 		provide: function(obj, methodName, methodFn, modules) {
@@ -82,8 +82,8 @@
 			Dependency._replaceMethod(obj, methodName, methodFn);
 
 			while ((args = queue.next())) {
-		        methodFn.apply(obj, args);
-		    }
+				methodFn.apply(obj, args);
+			}
 
 			for (var i = modules.length - 1; i >= 0; i--) {
 				usedModules[modules[i]] = true;
@@ -95,12 +95,18 @@
 
 			var AOP = Dependency._getAOP(obj, methodName);
 
+			var proxy = obj[methodName];
+
 			if (AOP) {
+				proxy = AOP.method;
+
 				AOP.method = methodFn;
 			}
 			else {
 				obj[methodName] = methodFn;
 			}
+
+			A.mix(methodFn, proxy);
 		},
 
 		_proxyLoaders: {}

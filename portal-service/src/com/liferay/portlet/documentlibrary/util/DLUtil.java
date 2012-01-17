@@ -486,10 +486,8 @@ public class DLUtil {
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
-		FileVersion fileVersion = fileEntry.getFileVersion();
-
 		return getThumbnailSrc(
-			fileEntry, fileVersion, fileShortcut, themeDisplay);
+			fileEntry, fileEntry.getFileVersion(), fileShortcut, themeDisplay);
 	}
 
 	public static String getThumbnailSrc(

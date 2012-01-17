@@ -194,7 +194,7 @@ public class UserFinderImpl
 		String[] firstNames = CustomSQLUtil.keywords(firstName);
 		String[] middleNames = CustomSQLUtil.keywords(middleName);
 		String[] lastNames = CustomSQLUtil.keywords(lastName);
-		String[] screenNames = CustomSQLUtil.keywords(lastName);
+		String[] screenNames = CustomSQLUtil.keywords(screenName);
 		String[] emailAddresses = CustomSQLUtil.keywords(emailAddress);
 
 		return countByC_FN_MN_LN_SN_EA_S(

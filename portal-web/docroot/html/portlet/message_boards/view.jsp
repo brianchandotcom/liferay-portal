@@ -318,7 +318,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				rssURL.setParameter("userId", String.valueOf(groupThreadsUserId));
 			}
 
-			rssURL.setParameter("mbCategoryId", "");
+			rssURL.setParameter("mbCategoryId", StringPool.BLANK);
 			%>
 
 			<br />

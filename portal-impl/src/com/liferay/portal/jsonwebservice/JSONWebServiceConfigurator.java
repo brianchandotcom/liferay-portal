@@ -130,7 +130,8 @@ public class JSONWebServiceConfigurator extends ClassFinder {
 
 			classPathFiles[0] = classPathFile;
 
-			FindFile findFile = new RegExpFindFile(".*-(portlet|hook|web)-service.*\\.jar");
+			FindFile findFile =
+				new RegExpFindFile(".*-(portlet|hook|web)-service.*\\.jar");
 
 			findFile.searchPath(libDir);
 

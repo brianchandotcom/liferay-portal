@@ -95,10 +95,6 @@ public class Member_AssertAccessConfigurationTest extends BaseTestCase {
 
 		assertTrue(selenium.isVisible("link=Email From"));
 		assertTrue(selenium.isVisible("link=Web Content Added Email"));
-		assertTrue(selenium.isVisible("link=Web Content Denied Email"));
-		assertTrue(selenium.isVisible("link=Web Content Granted Email"));
-		assertTrue(selenium.isVisible("link=Web Content Requested Email"));
-		assertTrue(selenium.isVisible("link=Web Content Review Email"));
 		assertTrue(selenium.isVisible("link=Web Content Updated Email"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

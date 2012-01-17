@@ -17,6 +17,7 @@ package com.liferay.portal.service;
 import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -422,6 +423,25 @@ public class ServiceContextFactory {
 				ExpandoBridgeFactoryUtil.getExpandoBridge(
 					serviceContext.getCompanyId(), className),
 				portletRequest);
+
+		serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
+
+		return serviceContext;
+	}
+
+	public static ServiceContext getInstance(
+			String className, UploadPortletRequest uploadPortletRequest)
+		throws PortalException, SystemException {
+
+		ServiceContext serviceContext = getInstance(uploadPortletRequest);
+
+		// Expando
+
+		Map<String, Serializable> expandoBridgeAttributes =
+			PortalUtil.getExpandoBridgeAttributes(
+				ExpandoBridgeFactoryUtil.getExpandoBridge(
+					serviceContext.getCompanyId(), className),
+				uploadPortletRequest);
 
 		serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
 

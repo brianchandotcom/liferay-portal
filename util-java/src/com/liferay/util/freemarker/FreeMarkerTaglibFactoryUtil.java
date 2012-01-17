@@ -51,12 +51,6 @@ public class FreeMarkerTaglibFactoryUtil implements CacheRegistryItem {
 		_templateModels.clear();
 	}
 
-	private FreeMarkerTaglibFactoryUtil(String contextPath) {
-		_contextPath = contextPath;
-		_registryName = FreeMarkerTaglibFactoryUtil.class.getName().concat(
-			StringPool.AT).concat(_contextPath);
-	}
-
 	private static FreeMarkerTaglibFactoryUtil getInstance(
 		ServletContext servletContext) {
 
@@ -100,6 +94,12 @@ public class FreeMarkerTaglibFactoryUtil implements CacheRegistryItem {
 		}
 
 		return _instance;
+	}
+
+	private FreeMarkerTaglibFactoryUtil(String contextPath) {
+		_contextPath = contextPath;
+		_registryName = FreeMarkerTaglibFactoryUtil.class.getName().concat(
+			StringPool.AT).concat(_contextPath);
 	}
 
 	private static volatile FreeMarkerTaglibFactoryUtil _instance;

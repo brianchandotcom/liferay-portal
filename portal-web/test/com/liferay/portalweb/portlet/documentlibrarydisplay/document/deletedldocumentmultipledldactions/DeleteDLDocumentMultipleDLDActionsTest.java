@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class DeleteDLDocumentMultipleDLDActionsTest extends BaseTestCase {
 	public void testDeleteDLDocumentMultipleDLDActions()
 		throws Exception {
-		selenium.open("/web/guest/home");
+		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -47,6 +47,12 @@ public class DeleteDLDocumentMultipleDLDActionsTest extends BaseTestCase {
 			RuntimeVariables.replace("Documents and Media Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("DL Document1 Title"),
+			selenium.getText("xPath=(//span[@class='entry-title'])[1]"));
+		assertEquals(RuntimeVariables.replace("DL Document2 Title"),
+			selenium.getText("xPath=(//span[@class='entry-title'])[2]"));
+		assertEquals(RuntimeVariables.replace("DL Document3 Title"),
+			selenium.getText("xPath=(//span[@class='entry-title'])[3]"));
 		Thread.sleep(5000);
 		assertFalse(selenium.isChecked("//tr[3]/td[1]/input"));
 		selenium.clickAt("//tr[3]/td[1]/input",

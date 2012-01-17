@@ -7,7 +7,7 @@
 <table cellpadding="1" cellspacing="1" border="1"><thead><tr><td rowspan="1" colspan="3">DeleteDLDocumentMultipleDLDActionsTest</td></tr></thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/web/guest/home</td>
+	<td>/web/guest/home/</td>
 	<td></td>
 </tr>
 <tr>
@@ -19,6 +19,21 @@
 	<td>clickAtAndWait</td>
 	<td>link=Documents and Media Display Test Page</td>
 	<td>Documents and Media Display Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//span[@class='entry-title'])[1]</td>
+	<td>DL Document1 Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//span[@class='entry-title'])[2]</td>
+	<td>DL Document2 Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//span[@class='entry-title'])[3]</td>
+	<td>DL Document3 Title</td>
 </tr>
 <tr>
 	<td>pause</td>

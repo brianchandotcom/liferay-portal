@@ -66,6 +66,7 @@ MBThread thread = message.getThread();
 
 			<%
 			rssURL.setParameter("p_l_id", String.valueOf(plid));
+			rssURL.setParameter("mbCategoryId", StringPool.BLANK);
 			rssURL.setParameter("threadId", String.valueOf(message.getThreadId()));
 			%>
 

@@ -137,7 +137,7 @@ private String _buildTagsNavigation(long groupId, String selectedTagName, Portle
 		sb.append("\"><span>");
 
 		if (tagName.equals(selectedTagName)) {
-			portletURL.setParameter("tag", "");
+			portletURL.setParameter("tag", StringPool.BLANK);
 
 			sb.append("<a class=\"tag-selected\" href=\"");
 		}

@@ -31,38 +31,44 @@ boolean editable = GetterUtil.getBoolean((String)row.getParameter("editable"));
 %>
 
 <liferay-ui:icon-menu>
-	<portlet:renderURL var="viewRecordURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
-		<portlet:param name="struts_action" value="/dynamic_data_lists/view_record" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="recordId" value="<%= String.valueOf(record.getRecordId()) %>" />
-		<portlet:param name="detailDDMTemplateId" value="<%= String.valueOf(detailDDMTemplateId) %>" />
-		<portlet:param name="editable" value="<%= String.valueOf(editable) %>" />
-	</portlet:renderURL>
+	<c:if test="<%= DDLRecordSetPermission.contains(permissionChecker, record.getRecordSet(), ActionKeys.VIEW) %>">
+		<portlet:renderURL var="viewRecordURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+			<portlet:param name="struts_action" value="/dynamic_data_lists/view_record" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="recordId" value="<%= String.valueOf(record.getRecordId()) %>" />
+			<portlet:param name="detailDDMTemplateId" value="<%= String.valueOf(detailDDMTemplateId) %>" />
+			<portlet:param name="editable" value="<%= String.valueOf(editable) %>" />
+		</portlet:renderURL>
 
-	<liferay-ui:icon
-		image="view"
-		url="<%= viewRecordURL %>"
-	/>
+		<liferay-ui:icon
+			image="view"
+			url="<%= viewRecordURL %>"
+		/>
+	</c:if>
 
-	<portlet:renderURL var="editRecordURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
-		<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record" />
-		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="recordId" value="<%= String.valueOf(record.getRecordId()) %>" />
-		<portlet:param name="detailDDMTemplateId" value="<%= String.valueOf(detailDDMTemplateId) %>" />
-	</portlet:renderURL>
+	<c:if test="<%= DDLRecordSetPermission.contains(permissionChecker, record.getRecordSet(), ActionKeys.UPDATE) %>">
+		<portlet:renderURL var="editRecordURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+			<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record" />
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="recordId" value="<%= String.valueOf(record.getRecordId()) %>" />
+			<portlet:param name="detailDDMTemplateId" value="<%= String.valueOf(detailDDMTemplateId) %>" />
+		</portlet:renderURL>
 
-	<liferay-ui:icon
-		image="edit"
-		url="<%= editRecordURL %>"
-	/>
+		<liferay-ui:icon
+			image="edit"
+			url="<%= editRecordURL %>"
+		/>
+	</c:if>
 
-	<portlet:actionURL var="deleteRecordURL">
-		<portlet:param name="struts_action" value="/dynamic_data_mapping_list/edit_record" />
-		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="recordId" value="<%= String.valueOf(record.getRecordId()) %>" />
-	</portlet:actionURL>
+	<c:if test="<%= DDLRecordSetPermission.contains(permissionChecker, record.getRecordSet(), ActionKeys.DELETE) %>">
+		<portlet:actionURL var="deleteRecordURL">
+			<portlet:param name="struts_action" value="/dynamic_data_mapping_list/edit_record" />
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="recordId" value="<%= String.valueOf(record.getRecordId()) %>" />
+		</portlet:actionURL>
 
-	<liferay-ui:icon-delete url="<%= deleteRecordURL %>" />
+		<liferay-ui:icon-delete url="<%= deleteRecordURL %>" />
+	</c:if>
 </liferay-ui:icon-menu>

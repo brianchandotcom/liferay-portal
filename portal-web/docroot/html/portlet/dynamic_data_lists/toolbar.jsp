@@ -46,19 +46,21 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 	</c:if>
 </div>
 
-<aui:script use="aui-base">
-	A.one('#<portlet:namespace />manageDDMStructuresLink').on('click', function() {
-		Liferay.Util.openDDMPortlet(
-			{
-				ddmResource: '<%= ddmResource %>',
-				dialog: {
-					width:820
-				},
-				storageType: '<%= PropsValues.DYNAMIC_DATA_LISTS_STORAGE_TYPE %>',
-				structureName: 'data-definition',
-				structureType: 'com.liferay.portlet.dynamicdatalists.model.DDLRecordSet',
-				title: '<%= UnicodeLanguageUtil.get(pageContext, "data-definitions") %>'
-			}
-		);
-	});
-</aui:script>
+<c:if test="<%= DDLPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_RECORD_SET) %>">
+	<aui:script use="aui-base">
+			A.one('#<portlet:namespace />manageDDMStructuresLink').on('click', function() {
+				Liferay.Util.openDDMPortlet(
+					{
+						ddmResource: '<%= ddmResource %>',
+						dialog: {
+							width:820
+						},
+						storageType: '<%= PropsValues.DYNAMIC_DATA_LISTS_STORAGE_TYPE %>',
+						structureName: 'data-definition',
+						structureType: 'com.liferay.portlet.dynamicdatalists.model.DDLRecordSet',
+						title: '<%= UnicodeLanguageUtil.get(pageContext, "data-definitions") %>'
+					}
+				);
+			});
+	</aui:script>
+</c:if>

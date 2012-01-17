@@ -59,6 +59,12 @@ portletURL.setParameter("struts_action", "/dynamic_data_lists/view");
 				<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
 			</liferay-portlet:renderURL>
 
+			<%
+			if (!DDLRecordSetPermission.contains(permissionChecker, recordSet, ActionKeys.VIEW)) {
+				rowURL = null;
+			}
+			%>
+
 			<%@ include file="/html/portlet/dynamic_data_lists/search_columns.jspf" %>
 
 			<liferay-ui:search-container-column-jsp

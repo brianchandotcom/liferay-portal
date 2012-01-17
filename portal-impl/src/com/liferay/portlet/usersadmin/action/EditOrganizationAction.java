@@ -258,10 +258,18 @@ public class EditOrganizationAction extends PortletAction {
 			actionRequest, "publicLayoutSetPrototypeId");
 		long privateLayoutSetPrototypeId = ParamUtil.getLong(
 			actionRequest, "privateLayoutSetPrototypeId");
+		boolean privateLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
+			actionRequest, "privateLayoutSetPrototypeLinkEnabled",
+			(privateLayoutSetPrototypeId > 0));
+		boolean publicLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
+			actionRequest, "publicLayoutSetPrototypeLinkEnabled",
+			(publicLayoutSetPrototypeId > 0));
 
 		SitesUtil.updateLayoutSetPrototypesLinks(
 			organization.getGroup(), publicLayoutSetPrototypeId,
-			privateLayoutSetPrototypeId, serviceContext);
+			privateLayoutSetPrototypeId,
+			privateLayoutSetPrototypeLinkEnabled,
+			publicLayoutSetPrototypeLinkEnabled);
 
 		// Reminder queries
 

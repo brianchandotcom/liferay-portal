@@ -21,6 +21,7 @@ import com.liferay.portal.model.Plugin;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.base.LayoutSetServiceBaseImpl;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
+import com.liferay.portal.service.permission.PortalPermissionUtil;
 
 import java.io.InputStream;
 
@@ -53,6 +54,15 @@ public class LayoutSetServiceImpl extends LayoutSetServiceBaseImpl {
 			boolean layoutSetPrototypeLinkEnabled,
 			String layoutSetPrototypeUuid)
 		throws PortalException, SystemException {
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), groupId, ActionKeys.UPDATE);
+
+		if (!layoutSetPrototypeLinkEnabled) {
+			PortalPermissionUtil.check(
+				getPermissionChecker(),
+				ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE);
+		}
 
 		layoutSetLocalService.updateLayoutSetPrototypeLinkEnabled(
 			groupId, privateLayout, layoutSetPrototypeLinkEnabled,

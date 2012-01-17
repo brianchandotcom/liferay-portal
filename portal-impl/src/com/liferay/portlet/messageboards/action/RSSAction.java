@@ -80,6 +80,7 @@ public class RSSAction extends Action {
 			request, "displayStyle", RSSUtil.DISPLAY_STYLE_FULL_CONTENT);
 
 		String feedURL = StringPool.BLANK;
+
 		String entryURL =
 			themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
 				"/message_boards/find_message?p_l_id=" + plid;

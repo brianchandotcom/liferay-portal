@@ -56,7 +56,13 @@ Set<Long> categorySubscriptionClassPKs = (Set<Long>)row.getParameter("categorySu
 
 		<%
 		rssURL.setParameter("p_l_id", String.valueOf(plid));
-		rssURL.setParameter("mbCategoryId", String.valueOf(category.getCategoryId()));
+
+		if (category.getCategoryId() > 0) {
+			rssURL.setParameter("mbCategoryId", String.valueOf(category.getCategoryId()));
+		}
+		else {
+			rssURL.setParameter("groupId", String.valueOf(scopeGroupId));
+		}
 		%>
 
 		<liferay-ui:icon

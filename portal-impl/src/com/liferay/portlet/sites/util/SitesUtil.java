@@ -780,6 +780,22 @@ public class SitesUtil {
 			serviceContext);
 	}
 
+	public static void resetPrototype(Layout layout)
+		throws PortalException, SystemException {
+
+		layout.setModifiedDate(null);
+
+		LayoutLocalServiceUtil.updateLayout(layout, false);
+
+		LayoutSet layoutSet = layout.getLayoutSet();
+		UnicodeProperties settingsProperties =
+			layoutSet.getSettingsProperties();
+
+		settingsProperties.remove("last-merge-time");
+
+		LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet, false);
+	}
+
 	protected static void copyLayoutPrototypePermissions(
 			Layout targetLayout,
 			LayoutPrototype sourceLayoutPrototype)
@@ -814,22 +830,6 @@ public class SitesUtil {
 				String.valueOf(targetLayout.getPlid()), role.getRoleId(),
 				actions.toArray(new String[actions.size()]));
 		}
-	}
-
-	public static void resetPrototype(Layout layout)
-		throws PortalException, SystemException {
-
-		layout.setModifiedDate(null);
-
-		LayoutLocalServiceUtil.updateLayout(layout, false);
-
-		LayoutSet layoutSet = layout.getLayoutSet();
-		UnicodeProperties settingsProperties =
-			layoutSet.getSettingsProperties();
-
-		settingsProperties.remove("last-merge-time");
-
-		LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet, false);
 	}
 
 	protected static void setLayoutSetPrototypeLinkEnabledParameter(

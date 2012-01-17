@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -1073,6 +1074,27 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 				List<${entity.name}> list = (List<${entity.name}>)FinderCacheUtil.getResult(finderPath, finderArgs, this);
 
+				if ((list != null) && !list.isEmpty()) {
+					for (${entity.name} ${entity.varName} : list) {
+						if (
+						<#list finderColsList as finderCol>
+							<#if finderCol.isPrimitiveType(false)>
+								${finderCol.name} != ${entity.varName}.get${finderCol.methodName}()
+							<#else>
+								!Validator.equals(${finderCol.name}, ${entity.varName}.get${finderCol.methodName}())
+							</#if>
+
+							<#if finderCol_has_next>
+								||
+							</#if>
+						</#list>
+						) {
+							list = null;
+							break;
+						}
+					}
+				}
+
 				if (list == null) {
 					<#include "persistence_impl_find_by_query.ftl">
 
@@ -1482,6 +1504,31 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					}
 
 					List<${entity.name}> list = (List<${entity.name}>)FinderCacheUtil.getResult(finderPath, finderArgs, this);
+
+					if ((list != null) && !list.isEmpty()) {
+						for (${entity.name} ${entity.varName} : list) {
+							if (
+							<#list finderColsList as finderCol>
+								<#if finderCol.hasArrayableOperator()>
+									!ArrayUtil.contains(${finderCol.names}, ${entity.varName}.get${finderCol.methodName}())
+								<#else>
+									<#if finderCol.isPrimitiveType(false)>
+										${finderCol.name} != ${entity.varName}.get${finderCol.methodName}()
+									<#else>
+										!Validator.equals(${finderCol.name}, ${entity.varName}.get${finderCol.methodName}())
+									</#if>
+								</#if>
+
+								<#if finderCol_has_next>
+									||
+								</#if>
+							</#list>
+							) {
+								list = null;
+								break;
+							}
+						}
+					}
 
 					if (list == null) {
 						<#include "persistence_impl_find_by_arrayable_query.ftl">
@@ -2330,6 +2377,25 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_${finder.name?upper_case}, finderArgs, this);
 				}
 
+				if (result instanceof ${entity.name}) {
+					${entity.name} ${entity.varName} = (${entity.name})result;
+
+					if (
+					<#list finderColsList as finderCol>
+						<#if finderCol.isPrimitiveType(false)>
+							${finderCol.name} != ${entity.varName}.get${finderCol.methodName}()
+						<#else>
+							!Validator.equals(${finderCol.name}, ${entity.varName}.get${finderCol.methodName}())
+						</#if>
+						<#if finderCol_has_next>
+							||
+						</#if>
+					</#list>
+					) {
+						result = null;
+					}
+				}
+
 				if (result == null) {
 					StringBundler query = new StringBundler(<#if entity.getOrder()??>${finderColsList?size + 2}<#else>${finderColsList?size + 1}</#if>);
 
@@ -3061,10 +3127,12 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				<#if column.mappingTable??>
 					${entity.name}ModelImpl.FINDER_CACHE_ENABLED_${stringUtil.upperCase(column.mappingTable)},
 					${tempEntity.packagePath}.model.impl.${tempEntity.name}Impl.class,
+					false,
 					${entity.name}ModelImpl.MAPPING_TABLE_${stringUtil.upperCase(column.mappingTable)}_NAME,
 				<#else>
 					${tempEntity.packagePath}.model.impl.${tempEntity.name}ModelImpl.FINDER_CACHE_ENABLED,
 					${tempEntity.packagePath}.model.impl.${tempEntity.name}Impl.class,
+					false,
 					${tempEntity.packagePath}.service.persistence.${tempEntity.name}PersistenceImpl.FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				</#if>
 
@@ -3155,10 +3223,12 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				<#if column.mappingTable??>
 					${entity.name}ModelImpl.FINDER_CACHE_ENABLED_${stringUtil.upperCase(column.mappingTable)},
 					Long.class,
+					false,
 					${entity.name}ModelImpl.MAPPING_TABLE_${stringUtil.upperCase(column.mappingTable)}_NAME,
 				<#else>
 					${tempEntity.packagePath}.model.impl.${tempEntity.name}ModelImpl.FINDER_CACHE_ENABLED,
 					${tempEntity.packagePath}.model.impl.${tempEntity.name}Impl.class,
+					false,
 					${tempEntity.packagePath}.service.persistence.${tempEntity.name}PersistenceImpl.FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				</#if>
 

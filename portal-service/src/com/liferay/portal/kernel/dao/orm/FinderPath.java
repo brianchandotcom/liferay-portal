@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.BaseModel;
 
 import java.io.Serializable;
 
@@ -35,14 +36,34 @@ public class FinderPath {
 		String[] params) {
 
 		this(
-			entityCacheEnabled, finderCacheEnabled, resultClass, cacheName,
-			methodName, params, -1);
+			entityCacheEnabled, finderCacheEnabled, resultClass, true,
+			cacheName, methodName, params, -1);
+	}
+
+	public FinderPath(
+		boolean entityCacheEnabled, boolean finderCacheEnabled,
+		Class<?> resultClass, boolean useModelCacheKeyGenerator,
+		String cacheName, String methodName, String[] params) {
+
+		this(
+			entityCacheEnabled, finderCacheEnabled, resultClass,
+			useModelCacheKeyGenerator, cacheName, methodName, params, -1);
 	}
 
 	public FinderPath(
 		boolean entityCacheEnabled, boolean finderCacheEnabled,
 		Class<?> resultClass, String cacheName, String methodName,
 		String[] params, long columnBitmask) {
+
+		this(entityCacheEnabled, finderCacheEnabled, resultClass, true,
+			cacheName, methodName, params, columnBitmask);
+	}
+
+	public FinderPath(
+		boolean entityCacheEnabled, boolean finderCacheEnabled,
+		Class<?> resultClass, boolean useModelCacheKeyGenerator,
+		String cacheName, String methodName, String[] params,
+		long columnBitmask) {
 
 		_entityCacheEnabled = entityCacheEnabled;
 		_finderCacheEnabled = finderCacheEnabled;
@@ -51,6 +72,9 @@ public class FinderPath {
 		_methodName = methodName;
 		_params = params;
 		_columnBitmask = columnBitmask;
+
+		_isModelResult = useModelCacheKeyGenerator &&
+			BaseModel.class.isAssignableFrom(_resultClass);
 
 		_initCacheKeyPrefix();
 		_initLocalCacheKeyPrefix();
@@ -66,6 +90,10 @@ public class FinderPath {
 		for (Object arg : args) {
 			sb.append(StringPool.PERIOD);
 			sb.append(StringUtil.toHexString(arg));
+		}
+
+		if (_isModelResult) {
+			return _modelCacheKeyGenerator.getCacheKey(sb);
 		}
 
 		CacheKeyGenerator cacheKeyGenerator =
@@ -85,6 +113,10 @@ public class FinderPath {
 		for (Object arg : args) {
 			sb.append(StringPool.PERIOD);
 			sb.append(StringUtil.toHexString(arg));
+		}
+
+		if (_isModelResult) {
+			return _modelCacheKeyGenerator.getCacheKey(sb);
 		}
 
 		CacheKeyGenerator cacheKeyGenerator =
@@ -122,6 +154,16 @@ public class FinderPath {
 		return _finderCacheEnabled;
 	}
 
+	public static FinderPath setModelCacheKeyGenerator(
+		CacheKeyGenerator modelCacheKeyGenerator) {
+		_modelCacheKeyGenerator = modelCacheKeyGenerator;
+
+		return new FinderPath();
+	}
+
+	private FinderPath() {
+	}
+
 	private void _initCacheKeyPrefix() {
 		StringBundler sb = new StringBundler(_params.length * 2 + 3);
 
@@ -147,11 +189,14 @@ public class FinderPath {
 
 	private static final String _PARAMS_SEPARATOR = "_P_";
 
+	private static CacheKeyGenerator _modelCacheKeyGenerator;
+
 	private String _cacheKeyPrefix;
 	private String _cacheName;
 	private long _columnBitmask;
 	private boolean _entityCacheEnabled;
 	private boolean _finderCacheEnabled;
+	private boolean _isModelResult;
 	private String _localCacheKeyPrefix;
 	private String _methodName;
 	private String[] _params;

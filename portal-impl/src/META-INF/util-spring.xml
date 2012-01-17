@@ -65,6 +65,11 @@
 		<property name="MBeanServer" ref="registryAwareMBeanServer" />
 	</bean>
 	<!--<bean id="com.liferay.kernel.portal.cache.SingleVMPortalCacheManager" class="com.liferay.portal.cache.memory.MemoryPortalCacheManager" />-->
+	<bean class="com.liferay.portal.kernel.dao.orm.FinderPath" factory-method="setModelCacheKeyGenerator">
+		<constructor-arg>
+			<bean class="com.liferay.portal.cache.key.HashCodeCacheKeyGenerator" />
+		</constructor-arg>
+	</bean>
 	<bean id="com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil" class="com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil">
 		<property name="cacheKeyGenerators">
 			<map>
@@ -72,7 +77,7 @@
 					<bean class="com.liferay.portal.cache.key.HashCodeCacheKeyGenerator" />
 				</entry>
 				<entry key="com.liferay.portal.kernel.dao.orm.FinderCache">
-					<bean class="com.liferay.portal.cache.key.HashCodeCacheKeyGenerator" />
+					<bean class="com.liferay.portal.cache.key.SimpleCacheKeyGenerator" />
 				</entry>
 				<entry key="com.liferay.portal.language.LanguageResources">
 					<bean class="com.liferay.portal.cache.key.HashCodeCacheKeyGenerator" />

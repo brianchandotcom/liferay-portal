@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Permission;
 import com.liferay.portal.model.Role;
@@ -708,6 +709,18 @@ public class PermissionFinderImpl
 
 		List<Permission> list = (List<Permission>)FinderCacheUtil.getResult(
 			FINDER_PATH_FIND_BY_A_R, finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (Permission permission : list) {
+				if (!Validator.equals(actionId, permission.getActionId()) ||
+					!ArrayUtil.contains(
+						resourceIds, permission.getResourceId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
 
 		if (list != null) {
 			return list;

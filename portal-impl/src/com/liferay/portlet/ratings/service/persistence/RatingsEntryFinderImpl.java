@@ -61,6 +61,18 @@ public class RatingsEntryFinderImpl
 		List<RatingsEntry> list = (List<RatingsEntry>)FinderCacheUtil.getResult(
 			FINDER_PATH_FIND_BY_U_C_C, finderArgs, this);
 
+		if ((list != null) && !list.isEmpty()) {
+			for (RatingsEntry ratingsEntry : list) {
+				if (userId != ratingsEntry.getUserId() ||
+					classNameId != ratingsEntry.getClassNameId() ||
+					!classPKs.contains(ratingsEntry.getClassPK())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
 		if (list != null) {
 			return list;
 		}

@@ -22,9 +22,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
@@ -403,10 +405,45 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		return false;
 	}
 
-	protected boolean isCustomThumbnailsEnabled(int thumbnailIndex)
+	protected boolean hasThumbnails(FileVersion fileVersion) {
+		try {
+			if (isThumbnailEnabled(THUMBNAIL_INDEX_DEFAULT)) {
+				if (!hasThumbnail(fileVersion, THUMBNAIL_INDEX_DEFAULT)) {
+					return false;
+				}
+			}
+
+			if (isThumbnailEnabled(THUMBNAIL_INDEX_CUSTOM_1)) {
+				if (!hasThumbnail(fileVersion, THUMBNAIL_INDEX_CUSTOM_1)) {
+					return false;
+				}
+			}
+
+			if (isThumbnailEnabled(THUMBNAIL_INDEX_CUSTOM_2)) {
+				if (!hasThumbnail(fileVersion, THUMBNAIL_INDEX_CUSTOM_2)) {
+					return false;
+				}
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return true;
+	}
+
+	protected boolean isThumbnailEnabled(int thumbnailIndex)
 		throws Exception {
 
-		if (thumbnailIndex == 1) {
+		if (thumbnailIndex == THUMBNAIL_INDEX_DEFAULT) {
+			if (GetterUtil.getBoolean(
+					PropsUtil.get(
+						PropsKeys.DL_FILE_ENTRY_THUMBNAIL_ENABLED))) {
+
+				return true;
+			}
+		}
+		else if (thumbnailIndex == THUMBNAIL_INDEX_CUSTOM_1) {
 			if ((PrefsPropsUtil.getInteger(
 					PropsKeys.
 						DL_FILE_ENTRY_THUMBNAIL_CUSTOM_1_MAX_HEIGHT) > 0) ||
@@ -417,7 +454,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 				return true;
 			}
 		}
-		else if (thumbnailIndex == 2) {
+		else if (thumbnailIndex == THUMBNAIL_INDEX_CUSTOM_2) {
 			if ((PrefsPropsUtil.getInteger(
 					PropsKeys.
 						DL_FILE_ENTRY_THUMBNAIL_CUSTOM_2_MAX_HEIGHT) > 0) ||
@@ -458,8 +495,8 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			int thumbnailIndex)
 		throws Exception {
 
-		if ((thumbnailIndex > 0) &&
-			!isCustomThumbnailsEnabled(thumbnailIndex)) {
+		if (!isThumbnailEnabled(thumbnailIndex) ||
+			hasThumbnail(fileVersion, thumbnailIndex)) {
 
 			return;
 		}
@@ -467,23 +504,17 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		String type = getThumbnailType(fileVersion);
 
 		String maxHeightPropsKey = PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT;
+		String maxWidthPropsKey = PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH;
 
 		if (thumbnailIndex == THUMBNAIL_INDEX_CUSTOM_1) {
 			maxHeightPropsKey =
 				PropsKeys.DL_FILE_ENTRY_THUMBNAIL_CUSTOM_1_MAX_HEIGHT;
-		}
-		else if (thumbnailIndex == THUMBNAIL_INDEX_CUSTOM_2) {
-			maxHeightPropsKey =
-				PropsKeys.DL_FILE_ENTRY_THUMBNAIL_CUSTOM_2_MAX_HEIGHT;
-		}
-
-		String maxWidthPropsKey = PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH;
-
-		if (thumbnailIndex == THUMBNAIL_INDEX_CUSTOM_1) {
 			maxWidthPropsKey =
 				PropsKeys.DL_FILE_ENTRY_THUMBNAIL_CUSTOM_1_MAX_WIDTH;
 		}
 		else if (thumbnailIndex == THUMBNAIL_INDEX_CUSTOM_2) {
+			maxHeightPropsKey =
+				PropsKeys.DL_FILE_ENTRY_THUMBNAIL_CUSTOM_2_MAX_HEIGHT;
 			maxWidthPropsKey =
 				PropsKeys.DL_FILE_ENTRY_THUMBNAIL_CUSTOM_2_MAX_WIDTH;
 		}

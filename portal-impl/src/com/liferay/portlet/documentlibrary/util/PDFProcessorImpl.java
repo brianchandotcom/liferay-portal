@@ -614,30 +614,7 @@ public class PDFProcessorImpl
 			}
 		}
 
-		if (PropsValues.DL_FILE_ENTRY_THUMBNAIL_ENABLED) {
-			if (!hasThumbnail(fileVersion, THUMBNAIL_INDEX_DEFAULT)) {
-				return false;
-			}
-		}
-
-		try {
-			if (isCustomThumbnailsEnabled(1)) {
-				if (!hasThumbnail(fileVersion, THUMBNAIL_INDEX_CUSTOM_1)) {
-					return false;
-				}
-			}
-
-			if (isCustomThumbnailsEnabled(2)) {
-				if (!hasThumbnail(fileVersion, THUMBNAIL_INDEX_CUSTOM_2)) {
-					return false;
-				}
-			}
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return true;
+		return hasThumbnails(fileVersion);
 	}
 
 	private boolean _isGeneratePreview(FileVersion fileVersion)

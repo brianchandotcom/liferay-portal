@@ -22,9 +22,7 @@ import com.liferay.portal.kernel.io.delta.DeltaUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
-import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portlet.documentlibrary.model.DLSync;
 import com.liferay.portlet.documentlibrary.model.DLSyncUpdate;
 import com.liferay.portlet.documentlibrary.service.base.DLSyncServiceBaseImpl;
@@ -52,8 +50,7 @@ public class DLSyncServiceImpl extends DLSyncServiceBaseImpl {
 			long companyId, long repositoryId, Date lastAccessDate)
 		throws PortalException, SystemException {
 
-		GroupPermissionUtil.check(
-			getPermissionChecker(), repositoryId, ActionKeys.VIEW);
+		repositoryService.checkRepository(repositoryId);
 
 		Date now = new Date();
 

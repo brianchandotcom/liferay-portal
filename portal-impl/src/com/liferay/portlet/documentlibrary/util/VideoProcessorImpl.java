@@ -183,11 +183,16 @@ public class VideoProcessorImpl
 	protected void storeThumbnailImages(FileVersion fileVersion, File file)
 		throws Exception {
 
-		addFileToStore(
-			fileVersion.getCompanyId(), THUMBNAIL_PATH,
-			getThumbnailFilePath(fileVersion, THUMBNAIL_INDEX_DEFAULT), file);
+		if (!hasThumbnail(fileVersion, THUMBNAIL_INDEX_DEFAULT)) {
+			addFileToStore(
+				fileVersion.getCompanyId(), THUMBNAIL_PATH,
+				getThumbnailFilePath(fileVersion, THUMBNAIL_INDEX_DEFAULT),
+				file);
+		}
 
-		if (isCustomThumbnailsEnabled(1) || isCustomThumbnailsEnabled(2)) {
+		if (isThumbnailEnabled(THUMBNAIL_INDEX_CUSTOM_1) ||
+			isThumbnailEnabled(THUMBNAIL_INDEX_CUSTOM_2)) {
+
 			ImageBag imageBag = ImageToolUtil.read(file);
 
 			RenderedImage renderedImage = imageBag.getRenderedImage();
@@ -319,9 +324,7 @@ public class VideoProcessorImpl
 
 			File file = null;
 
-			if (_isGeneratePreview(fileVersion) ||
-				_isGenerateThumbnail(fileVersion)) {
-
+			if (!_hasPreviews(fileVersion) || !hasThumbnails(fileVersion)) {
 				if (fileVersion instanceof LiferayFileVersion) {
 					try {
 						LiferayFileVersion liferayFileVersion =
@@ -343,7 +346,7 @@ public class VideoProcessorImpl
 				}
 			}
 
-			if (_isGeneratePreview(fileVersion)) {
+			if (!_hasPreviews(fileVersion)) {
 				try {
 					_generateVideoXuggler(
 						fileVersion, file, previewTempFiles,
@@ -355,7 +358,7 @@ public class VideoProcessorImpl
 				}
 			}
 
-			if (_isGenerateThumbnail(fileVersion)) {
+			if (!hasThumbnails(fileVersion)) {
 				try {
 					_generateThumbnailXuggler(
 						fileVersion, file,
@@ -385,7 +388,7 @@ public class VideoProcessorImpl
 			String containerType)
 		throws Exception {
 
-		if (!_isGeneratePreview(fileVersion, containerType)) {
+		if (_hasPreview(fileVersion, containerType)) {
 			return;
 		}
 
@@ -478,105 +481,44 @@ public class VideoProcessorImpl
 		return sb.toString();
 	}
 
+	private boolean _hasPreview(FileVersion fileVersion, String containerType)
+		throws Exception {
+
+		String previewFilePath = getPreviewFilePath(fileVersion, containerType);
+
+		if (DLStoreUtil.hasFile(
+				fileVersion.getCompanyId(), REPOSITORY_ID, previewFilePath)) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	private boolean _hasPreviews(FileVersion fileVersion) throws Exception {
+		int previewsCount = 0;
+
+		for (int i = 0; i < _PREVIEW_TYPES.length; i++) {
+			if (_hasPreview(fileVersion, _PREVIEW_TYPES[i])) {
+				previewsCount++;
+			}
+		}
+
+		if (previewsCount == _PREVIEW_TYPES.length) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	private boolean _hasVideo(FileVersion fileVersion) throws Exception {
 		if (!isSupported(fileVersion)) {
 			return false;
 		}
 
-		int previewsCount = 0;
-
-		for (int i = 0; i < _PREVIEW_TYPES.length; i++) {
-			String previewFilePath = getPreviewFilePath(
-				fileVersion, _PREVIEW_TYPES[i]);
-
-			if (DLStoreUtil.hasFile(
-					fileVersion.getCompanyId(), REPOSITORY_ID,
-					previewFilePath)) {
-
-				previewsCount++;
-			}
-		}
-
-		if (previewsCount != _PREVIEW_TYPES.length) {
-			return false;
-		}
-
-		if (PropsValues.DL_FILE_ENTRY_THUMBNAIL_ENABLED) {
-			if (!hasThumbnail(fileVersion, THUMBNAIL_INDEX_DEFAULT)) {
-				return false;
-			}
-		}
-
-		try {
-			if (isCustomThumbnailsEnabled(1)) {
-				if (!hasThumbnail(fileVersion, THUMBNAIL_INDEX_CUSTOM_1)) {
-					return false;
-				}
-			}
-
-			if (isCustomThumbnailsEnabled(2)) {
-				if (!hasThumbnail(fileVersion, THUMBNAIL_INDEX_CUSTOM_2)) {
-					return false;
-				}
-			}
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return true;
-	}
-
-	private boolean _isGeneratePreview(FileVersion fileVersion)
-		throws Exception {
-
-		int contPreviewsCreated = 0;
-
-		for (int i = 0; i < _PREVIEW_TYPES.length; i++) {
-			if (!_isGeneratePreview(fileVersion, _PREVIEW_TYPES[i])) {
-				contPreviewsCreated++;
-			}
-		}
-
-		if (contPreviewsCreated < _PREVIEW_TYPES.length) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	private boolean _isGeneratePreview(
-			FileVersion fileVersion, String previewType)
-		throws Exception {
-
-		String previewFilePath = getPreviewFilePath(fileVersion, previewType);
-
-		if (PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED &&
-			!DLStoreUtil.hasFile(
-				fileVersion.getCompanyId(), REPOSITORY_ID, previewFilePath)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	private boolean _isGenerateThumbnail(FileVersion fileVersion)
-		throws Exception {
-
-		String thumbnailFilePath = getThumbnailFilePath(
-			fileVersion, THUMBNAIL_INDEX_DEFAULT);
-
-		if (PropsValues.DL_FILE_ENTRY_THUMBNAIL_ENABLED &&
-			!DLStoreUtil.hasFile(
-				fileVersion.getCompanyId(), REPOSITORY_ID, thumbnailFilePath)) {
-
-			return true;
-		}
-		else {
-			return false;
-		}
+		return _hasPreviews(fileVersion) && hasThumbnails(fileVersion);
 	}
 
 	private void _queueGeneration(FileVersion fileVersion) {

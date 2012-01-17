@@ -92,7 +92,7 @@ public class ImageProcessorImpl
 		boolean hasImages = false;
 
 		try {
-			hasImages = _instance._hasImages(fileVersion);
+			hasImages = _instance.hasThumbnails(fileVersion);
 
 			if (!hasImages && _instance.isSupported(fileVersion)) {
 				_instance._queueGeneration(fileVersion);
@@ -185,36 +185,9 @@ public class ImageProcessorImpl
 		}
 	}
 
-	private boolean _hasImages(FileVersion fileVersion) {
-		if (PropsValues.DL_FILE_ENTRY_THUMBNAIL_ENABLED) {
-			if (!hasThumbnail(fileVersion, THUMBNAIL_INDEX_DEFAULT)) {
-				return false;
-			}
-		}
-
-		try {
-			if (isCustomThumbnailsEnabled(1)) {
-				if (!hasThumbnail(fileVersion, THUMBNAIL_INDEX_CUSTOM_1)) {
-					return false;
-				}
-			}
-
-			if (isCustomThumbnailsEnabled(2)) {
-				if (!hasThumbnail(fileVersion, THUMBNAIL_INDEX_CUSTOM_2)) {
-					return false;
-				}
-			}
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return true;
-	}
-
 	private void _queueGeneration(FileVersion fileVersion) {
 		if (!_fileVersionIds.contains(fileVersion.getFileVersionId()) &&
-			isSupported(fileVersion) && !_hasImages(fileVersion)) {
+			isSupported(fileVersion) && !hasThumbnails(fileVersion)) {
 			_fileVersionIds.add(fileVersion.getFileVersionId());
 
 			if (PropsValues.DL_FILE_ENTRY_PROCESSORS_TRIGGER_SYNCHRONOUSLY) {

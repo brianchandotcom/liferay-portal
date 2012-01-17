@@ -985,42 +985,6 @@ public class SitesUtil {
 			publicLayoutSetPrototypeLinkEnabled);
 	}
 
-	protected static void copyLayoutPrototypePermissions(
-			Layout targetLayout,
-			LayoutPrototype sourceLayoutPrototype)
-		throws Exception {
-
-		List<Role> roles = RoleLocalServiceUtil.getRoles(
-			targetLayout.getCompanyId());
-
-		for (Role role : roles) {
-			String roleName = role.getName();
-
-			if (roleName.equals(RoleConstants.ADMINISTRATOR)) {
-				continue;
-			}
-
-			List<String> actionIds = ResourceActionsUtil.getResourceActions(
-				LayoutPrototype.class.getName());
-
-			List<String> actions =
-				ResourcePermissionLocalServiceUtil.
-					getAvailableResourcePermissionActionIds(
-						targetLayout.getCompanyId(),
-						LayoutPrototype.class.getName(),
-						ResourceConstants.SCOPE_INDIVIDUAL,
-						String.valueOf(
-							sourceLayoutPrototype.getLayoutPrototypeId()),
-						role.getRoleId(), actionIds);
-
-			ResourcePermissionLocalServiceUtil.setResourcePermissions(
-				targetLayout.getCompanyId(), Layout.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(targetLayout.getPlid()), role.getRoleId(),
-				actions.toArray(new String[actions.size()]));
-		}
-	}
-
 	protected static Map<String, String[]> getLayoutSetPrototypesParameters(
 		boolean firstTime) {
 
@@ -1157,42 +1121,6 @@ public class SitesUtil {
 		}
 	}
 
-	protected static void copyLayoutPrototypePermissions(
-			Layout targetLayout,
-			LayoutPrototype sourceLayoutPrototype)
-		throws Exception {
-
-		List<Role> roles = RoleLocalServiceUtil.getRoles(
-			targetLayout.getCompanyId());
-
-		for (Role role : roles) {
-			String roleName = role.getName();
-
-			if (roleName.equals(RoleConstants.ADMINISTRATOR)) {
-				continue;
-			}
-
-			List<String> actionIds = ResourceActionsUtil.getResourceActions(
-				LayoutPrototype.class.getName());
-
-			List<String> actions =
-				ResourcePermissionLocalServiceUtil.
-					getAvailableResourcePermissionActionIds(
-						targetLayout.getCompanyId(),
-						LayoutPrototype.class.getName(),
-						ResourceConstants.SCOPE_INDIVIDUAL,
-						String.valueOf(
-							sourceLayoutPrototype.getLayoutPrototypeId()),
-						role.getRoleId(), actionIds);
-
-			ResourcePermissionLocalServiceUtil.setResourcePermissions(
-				targetLayout.getCompanyId(), Layout.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(targetLayout.getPlid()), role.getRoleId(),
-				actions.toArray(new String[actions.size()]));
-		}
-	}
-
 	public static void resetPrototype(Layout layout)
 		throws PortalException, SystemException {
 
@@ -1269,6 +1197,16 @@ public class SitesUtil {
 
 			if (layoutSetPrototype != null) {
 				layoutSetPrototypeUuid = layoutSetPrototype.getUuid();
+
+				// This means merge without creating a link
+
+				if (!layoutSetPrototypeLinkEnabled && (layoutSetPrototypeId > 0)) {
+					Map<String, String[]> parameterMap =
+						getLayoutSetPrototypesParameters(true);
+
+					importLayoutSetPrototype(
+						layoutSetPrototype, groupId, privateLayout, parameterMap);
+				}
 			}
 		}
 

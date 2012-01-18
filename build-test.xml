@@ -3202,12 +3202,19 @@ file.
 	<target name="run-simple-server">
 		<antcall target="rebuild-database" inheritAll="false" />
 
-		<delete includeemptydirs="true" failonerror="false">
-			<fileset
-				dir="${simple.server.deploy.dir}"
-				excludes=",*.dodeploy,*.rar,*.sar/**,*.xml,.autodeploystatus/**,liferay-portal.war/**,security/**,root/**,ROOT/**,ROOT.war/**,tunnel-web/**,tunnel-web.war/**"
-			/>
-		</delete>
+		<if>
+			<not>
+				<equals arg1="${skip.clean-server-deploy-dir}" arg2="true" />
+			</not>
+			<then>
+				<delete includeemptydirs="true" failonerror="false">
+					<fileset
+						dir="${simple.server.deploy.dir}"
+						excludes=",*.dodeploy,*.rar,*.sar/**,*.xml,.autodeploystatus/**,liferay-portal.war/**,security/**,root/**,ROOT/**,ROOT.war/**,tunnel-web/**,tunnel-web.war/**"
+					/>
+				</delete>
+			</then>
+		</if>
 
 		<if>
 			<and>

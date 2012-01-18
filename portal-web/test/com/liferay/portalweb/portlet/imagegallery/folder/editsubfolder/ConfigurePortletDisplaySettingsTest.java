@@ -196,7 +196,7 @@ public class ConfigurePortletDisplaySettingsTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isVisible("//input[@id='_31_keywords1']"));
 				assertTrue(selenium.isVisible(
-						"//div[@class='top-links-navigation']"));
+						"//ul[@class='top-links-navigation']"));
 				assertTrue(selenium.isVisible(
 						"//div[@class='lfr-asset-summary']"));
 				assertTrue(selenium.isVisible(

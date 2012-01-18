@@ -21,13 +21,13 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class LayoutParentLayoutIdException extends PortalException {
 
-	public static final int NOT_PARENTABLE = 1;
-
-	public static final int SELF_DESCENDANT = 2;
+	public static final int FIRST_LAYOUT_HIDDEN = 4;
 
 	public static final int FIRST_LAYOUT_TYPE = 3;
 
-	public static final int FIRST_LAYOUT_HIDDEN = 4;
+	public static final int NOT_PARENTABLE = 1;
+
+	public static final int SELF_DESCENDANT = 2;
 
 	public LayoutParentLayoutIdException(int type) {
 		_type = type;

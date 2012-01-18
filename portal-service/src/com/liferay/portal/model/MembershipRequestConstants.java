@@ -19,10 +19,10 @@ package com.liferay.portal.model;
  */
 public class MembershipRequestConstants {
 
-	public static final int STATUS_PENDING = 0;
-
 	public static final int STATUS_APPROVED = 1;
 
 	public static final int STATUS_DENIED = 2;
+
+	public static final int STATUS_PENDING = 0;
 
 }

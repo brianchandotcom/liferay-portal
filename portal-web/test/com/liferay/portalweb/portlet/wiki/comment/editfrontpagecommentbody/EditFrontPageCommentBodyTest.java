@@ -48,8 +48,9 @@ public class EditFrontPageCommentBodyTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Wiki Front Page Comment Body"),
 			selenium.getText("//div/div[3]/div/div[1]"));
 		assertEquals(RuntimeVariables.replace("Edit"),
-			selenium.getText("//li[3]/span/a/span"));
-		selenium.clickAt("//li[3]/span/a/span", RuntimeVariables.replace("Edit"));
+			selenium.getText("//li[contains(.,'Edit')]/span/a/span"));
+		selenium.clickAt("//li[contains(.,'Edit')]/span/a/span",
+			RuntimeVariables.replace("Edit"));
 		selenium.type("//textarea[@name='_36_editReplyBody1']",
 			RuntimeVariables.replace("Wiki Front Page Comment Body Edit"));
 		selenium.clickAt("//input[@value='Publish']",

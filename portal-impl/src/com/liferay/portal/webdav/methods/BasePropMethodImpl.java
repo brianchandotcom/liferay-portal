@@ -61,6 +61,8 @@ public abstract class BasePropMethodImpl implements Method {
 
 	public static final QName GETLASTMODIFIED = createQName("getlastmodified");
 
+	public static final QName ISREADONLY = createQName("isreadonly");
+
 	public static final QName LOCKDISCOVERY = createQName("lockdiscovery");
 
 	public static final QName RESOURCETYPE = createQName("resourcetype");
@@ -178,6 +180,21 @@ public abstract class BasePropMethodImpl implements Method {
 
 				hasFailure = true;
 			}
+		}
+
+		if (props.contains(ISREADONLY)) {
+			props.remove(ISREADONLY);
+
+			Lock lock = resource.getLock();
+
+			if (lock == null || resource.isLocked()) {
+				DocUtil.add(successPropElement, ISREADONLY, "false");
+			}
+			else {
+				DocUtil.add(successPropElement, ISREADONLY, "true");
+			}
+
+			hasSuccess = true;
 		}
 
 		if (props.contains(LOCKDISCOVERY)) {
@@ -406,7 +423,7 @@ public abstract class BasePropMethodImpl implements Method {
 	private static final List<QName> _ALL_SIMPLE_PROPS = Arrays.asList(
 		new QName[] {
 			CREATIONDATE, DISPLAYNAME, GETLASTMODIFIED,
-			GETCONTENTTYPE, GETCONTENTLENGTH, LOCKDISCOVERY,
+			GETCONTENTTYPE, GETCONTENTLENGTH, ISREADONLY, LOCKDISCOVERY,
 			RESOURCETYPE
 		});
 

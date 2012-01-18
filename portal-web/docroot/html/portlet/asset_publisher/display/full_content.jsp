@@ -92,10 +92,15 @@ request.setAttribute("view.jsp-showIconLabel", true);
 	</c:if>
 
 	<%
-	AssetEntry incrementAssetEntry = AssetEntryServiceUtil.incrementViewCounter(assetEntry.getClassName(), assetEntry.getClassPK());
 
-	if (incrementAssetEntry != null) {
-		assetEntry = incrementAssetEntry;
+	// Dynamically created asset entries are never persisted so incrementing the view counter breaks
+
+	if (!assetEntry.isNew()) {
+		AssetEntry incrementAssetEntry = AssetEntryServiceUtil.incrementViewCounter(assetEntry.getClassName(), assetEntry.getClassPK());
+
+		if (incrementAssetEntry != null) {
+			assetEntry = incrementAssetEntry;
+		}
 	}
 
 	if (showContextLink) {

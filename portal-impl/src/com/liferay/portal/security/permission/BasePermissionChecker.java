@@ -155,12 +155,12 @@ public abstract class BasePermissionChecker implements PermissionChecker {
 	public void setValues(PortletRequest portletRequest) {
 	}
 
-	protected User user;
-	protected long defaultUserId;
-	protected boolean signedIn;
 	protected boolean checkGuest;
+	protected long defaultUserId;
 	protected Boolean omniadmin;
 	protected Role ownerRole;
+	protected boolean signedIn;
+	protected User user;
 
 	private static Log _log = LogFactoryUtil.getLog(
 		BasePermissionChecker.class);

@@ -254,6 +254,7 @@ public class StrutsPortlet extends LiferayPortlet {
 
 	protected String aboutAction;
 	protected String configAction;
+	protected boolean copyRequestParameters;
 	protected String editAction;
 	protected String editDefaultsAction;
 	protected String editGuestAction;
@@ -261,7 +262,6 @@ public class StrutsPortlet extends LiferayPortlet {
 	protected String previewAction;
 	protected String printAction;
 	protected String viewAction;
-	protected boolean copyRequestParameters;
 
 	private PortletRequestProcessor _getPortletRequestProcessor(
 		PortletRequest portletRequest) {

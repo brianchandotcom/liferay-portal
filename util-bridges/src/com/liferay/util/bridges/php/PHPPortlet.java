@@ -220,12 +220,12 @@ public class PHPPortlet extends GenericPortlet {
 		return scriptPostProcess.getFinalizedPage();
 	}
 
+	protected boolean addPortletParams;
 	protected String editUri;
 	protected String helpUri;
-	protected String viewUri;
-	protected boolean addPortletParams;
-	protected ServletObjectsFactory servletObjectsFactory;
 	protected HttpServlet quercusServlet;
+	protected ServletObjectsFactory servletObjectsFactory;
+	protected String viewUri;
 
 	private static final String _PHP_URI_PARAM = "phpURI";
 

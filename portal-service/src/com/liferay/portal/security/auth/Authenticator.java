@@ -21,11 +21,11 @@ import java.util.Map;
  */
 public interface Authenticator {
 
-	public static final int SUCCESS = 1;
+	public static final int DNE = 0;
 
 	public static final int FAILURE = -1;
 
-	public static final int DNE = 0;
+	public static final int SUCCESS = 1;
 
 	public int authenticateByEmailAddress(
 			long companyId, String emailAddress, String password,

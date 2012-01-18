@@ -218,9 +218,9 @@ public class ActionKeys {
 
 	public static final String SIGNAL = "SIGNAL";
 
-	public static final String SUBSCRIBE = "SUBSCRIBE";
-
 	public static final String SUBMIT = "SUBMIT";
+
+	public static final String SUBSCRIBE = "SUBSCRIBE";
 
 	public static final String UNLINK_LAYOUT_SET_PROTOTYPE =
 		"UNLINK_LAYOUT_SET_PROTOTYPE";

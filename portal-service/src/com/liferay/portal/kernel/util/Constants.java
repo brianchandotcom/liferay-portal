@@ -23,9 +23,9 @@ public interface Constants {
 
 	public static final String ADD = "add";
 
-	public static final String ADD_TEMP = "add_temp";
-
 	public static final String ADD_MULTIPLE = "add_multiple";
+
+	public static final String ADD_TEMP = "add_temp";
 
 	public static final String APPROVE = "approve";
 
@@ -81,9 +81,9 @@ public interface Constants {
 
 	public static final String PUBLISH = "publish";
 
-	public static final String REJECT = "reject";
-
 	public static final String READ = "read";
+
+	public static final String REJECT = "reject";
 
 	public static final String RESET = "reset";
 

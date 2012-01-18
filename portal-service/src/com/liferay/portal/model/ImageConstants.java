@@ -27,11 +27,11 @@ public class ImageConstants {
 
 	public static final String TYPE_JPEG = ImageTool.TYPE_JPEG;
 
+	public static final String TYPE_NOT_AVAILABLE =
+		ImageTool.TYPE_NOT_AVAILABLE;
+
 	public static final String TYPE_PNG = ImageTool.TYPE_PNG;
 
 	public static final String TYPE_TIFF = ImageTool.TYPE_TIFF;
-
-	public static final String TYPE_NOT_AVAILABLE =
-		ImageTool.TYPE_NOT_AVAILABLE;
 
 }

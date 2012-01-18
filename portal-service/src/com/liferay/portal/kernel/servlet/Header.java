@@ -21,9 +21,9 @@ import java.io.Serializable;
  */
 public class Header implements Serializable {
 
-	public static final int INTEGER_TYPE = 1;
-
 	public static final int DATE_TYPE = 2;
+
+	public static final int INTEGER_TYPE = 1;
 
 	public static final int STRING_TYPE = 3;
 

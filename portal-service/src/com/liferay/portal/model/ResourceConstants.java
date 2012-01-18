@@ -23,13 +23,13 @@ public class ResourceConstants {
 
 	public static final long PRIMKEY_DNE = -1;
 
-	public static final int SCOPE_INDIVIDUAL = 4;
+	public static final int SCOPE_COMPANY = 1;
 
 	public static final int SCOPE_GROUP = 2;
 
 	public static final int SCOPE_GROUP_TEMPLATE = 3;
 
-	public static final int SCOPE_COMPANY = 1;
+	public static final int SCOPE_INDIVIDUAL = 4;
 
 	public static int[] SCOPES = {
 		ResourceConstants.SCOPE_COMPANY, ResourceConstants.SCOPE_GROUP,

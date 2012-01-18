@@ -105,7 +105,7 @@
 					portletURL.setParameter('ddmStructureId', <%= ddmStructure.getStructureId() %>);
 					portletURL.setParameter('fieldName', elementName);
 					portletURL.setParameter('groupId', themeDisplay.getScopeGroupId());
-					portletURL.setParameter('recordId', recordData.recordId);
+					portletURL.setParameter('recordId', recordData.classPK);
 					portletURL.setParameter('struts_action', '/dynamic_data_list_display/edit_record_file');
 
 					portletURL.setPortletId('<%= PortletKeys.DYNAMIC_DATA_LIST_DISPLAY %>');
@@ -167,8 +167,10 @@
 					var data = SpreadSheet.Util.parseJSON(value);
 
 					var url = [
-						'/documents/ddl/',
-						data.recordId,
+						'/documents/ddm/',
+						data.className,
+						'/',
+						data.classPK,
 						'/',
 						instance.get('elementName')
 					];
@@ -206,7 +208,7 @@
 						validator.formEvent.halt();
 					}
 
-					if (!recordData.recordId) {
+					if (!recordData.classPK) {
 						SpreadSheet.addRecord(
 							recordsetId,
 							displayIndex,
@@ -219,7 +221,7 @@
 								}
 								else {
 									if (response.recordId > 0) {
-										recordData.recordId = response.recordId;
+										recordData.classPK = response.recordId;
 
 										instance.uploadFile(instance._handleSaveEvent);
 									}
@@ -266,7 +268,7 @@
 					if (toolbar) {
 						var value = SpreadSheet.Util.parseJSON(val);
 
-						if (!value.recordId) {
+						if (!value.classPK) {
 							toolbar.remove('deleteEvent');
 							toolbar.remove('downloadEvent');
 						}

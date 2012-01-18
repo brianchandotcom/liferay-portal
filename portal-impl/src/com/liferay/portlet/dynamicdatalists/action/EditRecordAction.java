@@ -149,13 +149,15 @@ public class EditRecordAction extends PortletAction {
 		UploadPortletRequest uploadPortletRequest =
 			PortalUtil.getUploadPortletRequest(actionRequest);
 
-		long recordId = ParamUtil.getLong(uploadPortletRequest, "recordId");
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			DDLRecord.class.getName(), uploadPortletRequest);
 
-		long recordSetId = ParamUtil.getLong(
-			uploadPortletRequest, "recordSetId");
+		long recordId = ParamUtil.getLong(serviceContext, "recordId");
+
+		long recordSetId = ParamUtil.getLong(serviceContext, "recordSetId");
 
 		return DDLUtil.updateRecord(
-			uploadPortletRequest, recordId, recordSetId, false);
+			recordId, recordSetId, false, serviceContext);
 	}
 
 }

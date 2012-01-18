@@ -14,19 +14,13 @@
 
 package com.liferay.portlet.dynamicdatalists.util;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
-import com.liferay.portlet.dynamicdatamapping.storage.Fields;
-
-import java.io.InputStream;
 
 import java.util.List;
 import java.util.Map;
@@ -53,32 +47,12 @@ public class DDLUtil {
 		return _ddl;
 	}
 
-	public static Fields getFields(
-			UploadPortletRequest uploadPortletRequest, long ddmStructureId)
-		throws PortalException, SystemException {
-
-		return getDDL().getFields(uploadPortletRequest, ddmStructureId);
-	}
-
-	public static Fields getFields(
-			UploadPortletRequest uploadPortletRequest, long ddmStructureId,
-			long ddmTemplateId)
-		throws PortalException, SystemException {
-
-		return getDDL().getFields(
-			uploadPortletRequest, ddmStructureId, ddmTemplateId);
-	}
-
 	public static void getRecordFileUpload(
 			HttpServletRequest request, HttpServletResponse response,
 			DDLRecord record, String fieldName)
 		throws Exception {
 
 		getDDL().sendRecordFileUpload(request, response, record, fieldName);
-	}
-
-	public static String getRecordFileUploadPath(DDLRecord record) {
-		return getDDL().getRecordFileUploadPath(record);
 	}
 
 	public static JSONObject getRecordJSONObject(DDLRecord record)
@@ -126,55 +100,45 @@ public class DDLUtil {
 
 	public static void sendRecordFileUpload(
 			HttpServletRequest request, HttpServletResponse response,
+			DDLRecord record, String fieldName)
+		throws Exception {
+
+		getDDL().sendRecordFileUpload(request, response, record, fieldName);
+	}
+
+	public static void sendRecordFileUpload(
+			HttpServletRequest request, HttpServletResponse response,
 			long recordId, String fieldName)
 		throws Exception {
 
 		getDDL().sendRecordFileUpload(request, response, recordId, fieldName);
 	}
 
-	public static String storeRecordFieldFile(
-			DDLRecord record, String fieldName, InputStream inputStream)
-		throws Exception {
-
-		return getDDL().storeRecordFieldFile(record, fieldName, inputStream);
-	}
-
 	public static DDLRecord updateRecord(
-			UploadPortletRequest uploadPortletRequest, long recordId,
-			long recordSetId, boolean mergeFields)
+			long recordId, long recordSetId, boolean mergeFields,
+			boolean checkPermission, ServiceContext serviceContext)
 		throws Exception {
 
 		return getDDL().updateRecord(
-			uploadPortletRequest, recordId, recordSetId, mergeFields);
+			recordId, recordSetId, mergeFields, checkPermission,
+			serviceContext);
 	}
 
 	public static DDLRecord updateRecord(
-			UploadPortletRequest uploadPortletRequest, long recordId,
-			long recordSetId, boolean mergeFields, boolean checkPermission)
+			long recordId, long recordSetId, boolean mergeFields,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		return getDDL().updateRecord(
-			uploadPortletRequest, recordId, recordSetId, mergeFields,
-			checkPermission);
+			recordId, recordSetId, mergeFields, serviceContext);
 	}
 
-	public static void uploadRecordFieldFile(
-			DDLRecord record, String fieldName,
-			UploadPortletRequest uploadPortletRequest,
-			ServiceContext serviceContext)
+	public static String uploadRecordFieldFile(
+			DDLRecord record, String fieldName, ServiceContext serviceContext)
 		throws Exception {
 
-		getDDL().uploadRecordFieldFile(
-			record, fieldName, uploadPortletRequest, serviceContext);
-	}
-
-	public static void uploadRecordFieldFiles(
-			DDLRecord record, UploadPortletRequest uploadPortletRequest,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		getDDL().uploadRecordFieldFiles(
-			record, uploadPortletRequest, serviceContext);
+		return getDDL().uploadRecordFieldFile(
+			record, fieldName, serviceContext);
 	}
 
 	public void setDDL(DDL ddl) {

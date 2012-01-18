@@ -657,6 +657,11 @@
 			<bean class="com.liferay.portlet.dynamicdatamapping.util.DDMIndexerImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.dynamicdatamapping.util.DDMUtil" class="com.liferay.portlet.dynamicdatamapping.util.DDMUtil">
+		<property name="DDM">
+			<bean class="com.liferay.portlet.dynamicdatamapping.util.DDMImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil" class="com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil">
 		<property name="DDMXML">
 			<bean class="com.liferay.portlet.dynamicdatamapping.util.DDMXMLImpl" />

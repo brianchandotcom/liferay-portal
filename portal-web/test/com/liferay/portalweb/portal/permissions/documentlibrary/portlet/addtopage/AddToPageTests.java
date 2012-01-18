@@ -37,6 +37,7 @@ public class AddToPageTests extends BaseTestSuite {
 		testSuite.addTestSuite(Member_AssertCannotAddToPageTest.class);
 		testSuite.addTestSuite(LogoutTest.class);
 		testSuite.addTestSuite(SA_LoginTest.class);
+		testSuite.addTestSuite(AddPermissionSitePageUpdateTest.class);
 		testSuite.addTestSuite(AddPermissionAddToPageTest.class);
 		testSuite.addTestSuite(LogoutTest.class);
 		testSuite.addTestSuite(Member_LoginTest.class);

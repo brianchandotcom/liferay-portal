@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddPermissionAddToPageTest extends BaseTestCase {
-	public void testAddPermissionAddToPage() throws Exception {
+public class AddPermissionSitePageUpdateTest extends BaseTestCase {
+	public void testAddPermissionSitePageUpdate() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -64,14 +64,14 @@ public class AddPermissionAddToPageTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.typeKeys("//select[@id='_128_add-permissions']",
-			RuntimeVariables.replace("ddddddd"));
+			RuntimeVariables.replace("S"));
 		selenium.keyPress("//select[@id='_128_add-permissions']",
 			RuntimeVariables.replace("\\13"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Documents and Media"),
-			selenium.getText("//h3"));
-		selenium.check("//input[@value='20ADD_TO_PAGE']");
+		assertEquals(RuntimeVariables.replace("Page"), selenium.getText("//h3"));
+		selenium.check(
+			"//input[@ value='com.liferay.portal.model.LayoutUPDATE']");
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

@@ -81,12 +81,12 @@ public class ShoppingPreferences {
 		}
 	}
 
-	public static final double[] SHIPPING_RANGE = {
+	public static final double[] INSURANCE_RANGE = {
 		0.01, 9.99, 10.00, 49.99, 50.00, 99.99, 100.00, 199.99, 200.00,
 		Double.POSITIVE_INFINITY
 	};
 
-	public static final double[] INSURANCE_RANGE = {
+	public static final double[] SHIPPING_RANGE = {
 		0.01, 9.99, 10.00, 49.99, 50.00, 99.99, 100.00, 199.99, 200.00,
 		Double.POSITIVE_INFINITY
 	};

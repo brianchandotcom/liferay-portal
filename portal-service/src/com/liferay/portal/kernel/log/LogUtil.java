@@ -30,9 +30,9 @@ import javax.servlet.jsp.JspException;
  */
 public class LogUtil {
 
-	public static final int STACK_TRACE_LENGTH = 20;
-
 	public static final boolean REMOVE_UNKNOWN_SOURCE = true;
+
+	public static final int STACK_TRACE_LENGTH = 20;
 
 	public static void debug(Log log, Properties props) {
 		if (log.isDebugEnabled()) {

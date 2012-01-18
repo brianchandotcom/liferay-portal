@@ -20,9 +20,19 @@ package com.liferay.portal.model;
 public class PortletConstants {
 
 	/**
-	 * War file separator.
+	 * Default preferences.
 	 */
-	public static final String WAR_SEPARATOR = "_WAR_";
+	public static final String DEFAULT_PREFERENCES = "<portlet-preferences />";
+
+	/**
+	 * Facebook integration method for FBML.
+	 */
+	public static final String FACEBOOK_INTEGRATION_FBML = "fbml";
+
+	/**
+	 * Facebook integration method for IFrame.
+	 */
+	public static final String FACEBOOK_INTEGRATION_IFRAME = "iframe";
 
 	/**
 	 * Instance separator.
@@ -33,11 +43,6 @@ public class PortletConstants {
 	 * Layout separator.
 	 */
 	public static final String LAYOUT_SEPARATOR = "_LAYOUT_";
-
-	/**
-	 * Default preferences.
-	 */
-	public static final String DEFAULT_PREFERENCES = "<portlet-preferences />";
 
 	/**
 	 * User principal strategy for screen name.
@@ -51,14 +56,9 @@ public class PortletConstants {
 	public static final String USER_PRINCIPAL_STRATEGY_USER_ID = "userId";
 
 	/**
-	 * Facebook integration method for FBML.
+	 * War file separator.
 	 */
-	public static final String FACEBOOK_INTEGRATION_FBML = "fbml";
-
-	/**
-	 * Facebook integration method for IFrame.
-	 */
-	public static final String FACEBOOK_INTEGRATION_IFRAME = "iframe";
+	public static final String WAR_SEPARATOR = "_WAR_";
 
 	/**
 	 * Returns the root portlet ID of the portlet.

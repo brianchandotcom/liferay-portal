@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portalweb.stagingcommunity.user.accessstaging;
+package com.liferay.portalweb.stagingcommunity.sites.site.useraccessstaging;
 
-import com.liferay.portalweb.portal.BaseTests;
+import com.liferay.portalweb.portal.BaseTestSuite;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -22,11 +22,9 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AccessStagingTests extends BaseTests {
-
+public class User_AccessStagingTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
 		testSuite.addTestSuite(AddSiteTest.class);
 		testSuite.addTestSuite(ActivateStagingTest.class);
 		testSuite.addTestSuite(AddPageSiteTest.class);
@@ -38,8 +36,8 @@ public class AccessStagingTests extends BaseTests {
 		testSuite.addTestSuite(AssignMembersTest.class);
 		testSuite.addTestSuite(LogOutTest.class);
 		testSuite.addTestSuite(LoginUsersTest.class);
-		testSuite.addTestSuite(Member_LoginTest.class);
-		testSuite.addTestSuite(Member_AccessStagingTest.class);
+		testSuite.addTestSuite(User_LoginTest.class);
+		testSuite.addTestSuite(User_AccessStagingTest.class);
 		testSuite.addTestSuite(LogOutTest.class);
 		testSuite.addTestSuite(SA_LoginTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
@@ -48,5 +46,4 @@ public class AccessStagingTests extends BaseTests {
 
 		return testSuite;
 	}
-
 }

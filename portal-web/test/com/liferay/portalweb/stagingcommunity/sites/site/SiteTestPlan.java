@@ -17,6 +17,7 @@ package com.liferay.portalweb.stagingcommunity.sites.site;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.stagingcommunity.sites.site.activatestaging.ActivateStagingTests;
 import com.liferay.portalweb.stagingcommunity.sites.site.deactivatestaging.DeactivateStagingTests;
+import com.liferay.portalweb.stagingcommunity.sites.site.useraccessstaging.User_AccessStagingTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -31,6 +32,7 @@ public class SiteTestPlan extends BaseTestSuite {
 
 		testSuite.addTest(ActivateStagingTests.suite());
 		testSuite.addTest(DeactivateStagingTests.suite());
+		testSuite.addTest(User_AccessStagingTests.suite());
 
 		return testSuite;
 	}

@@ -114,8 +114,8 @@ public abstract class BaseTranslator {
 		return content;
 	}
 
-	protected Map<String, String> regexps = new LinkedHashMap<String, String>();
 	protected List<String> nowikiRegexps = new LinkedList<String>();
+	protected Map<String, String> regexps = new LinkedHashMap<String, String>();
 
 	private String _normalizeLineBreaks(String content) {
 		content = StringUtil.replace(

@@ -641,8 +641,8 @@ public class SubscriptionSender implements Serializable {
 	protected String mailId;
 	protected String portletId;
 	protected String replyToAddress;
-	protected ServiceContext serviceContext;
 	protected long scopeGroupId;
+	protected ServiceContext serviceContext;
 	protected SMTPAccount smtpAccount;
 	protected String subject;
 	protected long userId;

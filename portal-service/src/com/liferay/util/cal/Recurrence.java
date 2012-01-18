@@ -1072,6 +1072,31 @@ public class Recurrence implements Serializable {
 	}
 
 	/**
+	 * Field byDay
+	 */
+	protected DayAndPosition[] byDay;
+
+	/**
+	 * Field byMonth
+	 */
+	protected int[] byMonth;
+
+	/**
+	 * Field byMonthDay
+	 */
+	protected int[] byMonthDay;
+
+	/**
+	 * Field byWeekNo
+	 */
+	protected int[] byWeekNo;
+
+	/**
+	 * Field byYearDay
+	 */
+	protected int[] byYearDay;
+
+	/**
 	 * Field dtStart
 	 */
 	protected Calendar dtStart;
@@ -1100,30 +1125,5 @@ public class Recurrence implements Serializable {
 	 * Field until
 	 */
 	protected Calendar until;
-
-	/**
-	 * Field byDay
-	 */
-	protected DayAndPosition[] byDay;
-
-	/**
-	 * Field byMonthDay
-	 */
-	protected int[] byMonthDay;
-
-	/**
-	 * Field byYearDay
-	 */
-	protected int[] byYearDay;
-
-	/**
-	 * Field byWeekNo
-	 */
-	protected int[] byWeekNo;
-
-	/**
-	 * Field byMonth
-	 */
-	protected int[] byMonth;
 
 }

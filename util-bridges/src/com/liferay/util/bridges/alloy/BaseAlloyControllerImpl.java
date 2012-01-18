@@ -521,8 +521,8 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 	protected ServletConfig servletConfig;
 	protected ServletContext servletContext;
 	protected ThemeDisplay themeDisplay;
-	protected String viewPath;
 	protected User user;
+	protected String viewPath;
 
 	private static final String _VIEW_PATH_ERROR = "VIEW_PATH_ERROR";
 

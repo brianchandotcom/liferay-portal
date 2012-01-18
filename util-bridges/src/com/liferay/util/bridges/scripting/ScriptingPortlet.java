@@ -295,11 +295,11 @@ public class ScriptingPortlet extends GenericPortlet {
 
 	protected String actionFile;
 	protected String editFile;
-	protected String helpFile;
 	protected String[] globalFiles;
 	protected String globalScript;
-	protected String resourceFile;
+	protected String helpFile;
 	protected String language;
+	protected String resourceFile;
 	protected String viewFile;
 
 	private static final String _ERROR = ScriptingPortlet.class + ".ERROR";

@@ -401,9 +401,9 @@ public class MVCPortlet extends LiferayPortlet {
 	protected String editGuestTemplate;
 	protected String editTemplate;
 	protected String helpTemplate;
-	protected String templatePath;
 	protected String previewTemplate;
 	protected String printTemplate;
+	protected String templatePath;
 	protected String viewTemplate;
 
 	private String _getInitParameter(String name) {

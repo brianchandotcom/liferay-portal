@@ -147,8 +147,8 @@ public class UnsyncStringReader extends Reader {
 	}
 
 	protected int index;
-	protected int stringLength;
 	protected int markIndex;
 	protected String string;
+	protected int stringLength;
 
 }

@@ -76,7 +76,7 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 			return new ArrayList<AssetEntry>();
 		}
 
-		Object[] results = filterQuery(entryQuery);
+		Object[] results = filterQuery(filteredEntryQuery);
 
 		return (List<AssetEntry>)results[0];
 	}
@@ -90,7 +90,7 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 			return 0;
 		}
 
-		Object[] results = filterQuery(entryQuery);
+		Object[] results = filterQuery(filteredEntryQuery);
 
 		return (Integer)results[1];
 	}
@@ -282,10 +282,10 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 	protected boolean isRemovedFilters(
 		AssetEntryQuery entryQuery, AssetEntryQuery filteredEntryQuery) {
 
-		if (((entryQuery.getAllCategoryIds().length > 0) &&
-			 (filteredEntryQuery.getAllCategoryIds().length == 0)) ||
-			((entryQuery.getAllTagIds().length > 0) &&
-			 (filteredEntryQuery.getAllTagIds().length == 0)) ||
+		if ((entryQuery.getAllCategoryIds().length >
+			filteredEntryQuery.getAllCategoryIds().length) ||
+			(entryQuery.getAllTagIds().length >
+			filteredEntryQuery.getAllTagIds().length) ||
 			((entryQuery.getAnyCategoryIds().length > 0) &&
 			 (filteredEntryQuery.getAnyCategoryIds().length == 0)) ||
 			((entryQuery.getAnyTagIds().length > 0) &&

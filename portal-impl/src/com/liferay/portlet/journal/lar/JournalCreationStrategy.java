@@ -30,17 +30,17 @@ import com.liferay.portlet.journal.model.JournalArticle;
 public interface JournalCreationStrategy {
 
 	/**
+	 * Constant returned by getTransformedContent() to indicate that the article
+	 * text should remained unchanged.
+	 */
+	public static final String ARTICLE_CONTENT_UNCHANGED = null;
+
+	/**
 	 * Constant returned by getAuthorUserId() that indicates the default portlet
 	 * data import user ID strategy that should be used to determine the user
 	 * ID.
 	 */
 	public static final long USE_DEFAULT_USER_ID_STRATEGY = 0;
-
-	/**
-	 * Constant returned by getTransformedContent() to indicate that the article
-	 * text should remained unchanged.
-	 */
-	public static final String ARTICLE_CONTENT_UNCHANGED = null;
 
 	/**
 	 * Returns <code>true</code> if the default group permissions should be

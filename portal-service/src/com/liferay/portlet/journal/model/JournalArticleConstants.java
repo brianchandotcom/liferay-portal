@@ -33,9 +33,9 @@ public class JournalArticleConstants {
 
 	public static final String STAND_ALONE = "stand-alone";
 
-	public static final double VERSION_DEFAULT = 1.0;
-
 	public static final String[] TYPES =
 		PropsUtil.getArray(PropsKeys.JOURNAL_ARTICLE_TYPES);
+
+	public static final double VERSION_DEFAULT = 1.0;
 
 }

@@ -55,9 +55,9 @@ public class WebDAVUtil {
 	public static final Namespace DAV_URI = SAXReaderUtil.createNamespace(
 		"D", "DAV:");
 
-	public static final int SC_MULTI_STATUS = 207;
-
 	public static final int SC_LOCKED = 423;
+
+	public static final int SC_MULTI_STATUS = 207;
 
 	public static final String TOKEN_PREFIX = "opaquelocktoken:";
 

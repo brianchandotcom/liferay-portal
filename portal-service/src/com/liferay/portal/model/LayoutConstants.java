@@ -19,24 +19,24 @@ package com.liferay.portal.model;
  */
 public class LayoutConstants {
 
-	public static final long DEFAULT_PLID = 0;
-
 	public static final long DEFAULT_PARENT_LAYOUT_ID = 0;
+
+	public static final long DEFAULT_PLID = 0;
 
 	public static final int FRIENDLY_URL_MAX_LENGTH = 255;
 
-	public static final String TYPE_PORTLET = "portlet";
-
-	public static final String TYPE_PANEL = "panel";
+	public static final String TYPE_ARTICLE = "article";
 
 	public static final String TYPE_CONTROL_PANEL = "control_panel";
 
 	public static final String TYPE_EMBEDDED = "embedded";
 
-	public static final String TYPE_ARTICLE = "article";
+	public static final String TYPE_LINK_TO_LAYOUT = "link_to_layout";
+
+	public static final String TYPE_PANEL = "panel";
+
+	public static final String TYPE_PORTLET = "portlet";
 
 	public static final String TYPE_URL = "url";
-
-	public static final String TYPE_LINK_TO_LAYOUT = "link_to_layout";
 
 }

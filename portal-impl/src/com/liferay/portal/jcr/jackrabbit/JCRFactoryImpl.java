@@ -39,21 +39,21 @@ import org.apache.jackrabbit.core.TransientRepository;
  */
 public class JCRFactoryImpl implements JCRFactory {
 
-	public static final String REPOSITORY_ROOT = PropsUtil.get(
-		PropsKeys.JCR_JACKRABBIT_REPOSITORY_ROOT);
-
 	public static final String CONFIG_FILE_PATH = PropsUtil.get(
 		PropsKeys.JCR_JACKRABBIT_CONFIG_FILE_PATH);
-
-	public static final String REPOSITORY_HOME = PropsUtil.get(
-		PropsKeys.JCR_JACKRABBIT_REPOSITORY_HOME);
-
-	public static final String CREDENTIALS_USERNAME = PropsUtil.get(
-		PropsKeys.JCR_JACKRABBIT_CREDENTIALS_USERNAME);
 
 	public static final char[] CREDENTIALS_PASSWORD = GetterUtil.getString(
 		PropsUtil.get(PropsKeys.JCR_JACKRABBIT_CREDENTIALS_PASSWORD)).
 			toCharArray();
+
+	public static final String CREDENTIALS_USERNAME = PropsUtil.get(
+		PropsKeys.JCR_JACKRABBIT_CREDENTIALS_USERNAME);
+
+	public static final String REPOSITORY_HOME = PropsUtil.get(
+		PropsKeys.JCR_JACKRABBIT_REPOSITORY_HOME);
+
+	public static final String REPOSITORY_ROOT = PropsUtil.get(
+		PropsKeys.JCR_JACKRABBIT_REPOSITORY_ROOT);
 
 	public Session createSession(String workspaceName)
 		throws RepositoryException {

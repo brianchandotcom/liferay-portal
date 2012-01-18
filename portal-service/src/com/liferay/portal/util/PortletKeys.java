@@ -81,8 +81,6 @@ public class PortletKeys {
 
 	public static final String IFRAME = "48";
 
-	public static final String MEDIA_GALLERY_DISPLAY = "31";
-
 	public static final String INVITATION = "100";
 
 	public static final String JOURNAL = "15";
@@ -107,6 +105,8 @@ public class PortletKeys {
 	public static final String LOGIN = "58";
 
 	public static final String MAIL = "1_WAR_mailportlet";
+
+	public static final String MEDIA_GALLERY_DISPLAY = "31";
 
 	public static final String MESSAGE_BOARDS = "19";
 

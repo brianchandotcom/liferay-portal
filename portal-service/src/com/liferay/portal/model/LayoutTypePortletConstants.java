@@ -25,12 +25,6 @@ public class LayoutTypePortletConstants {
 
 	public static final String LAYOUT_TEMPLATE_ID = "layout-template-id";
 
-	public static final String NESTED_COLUMN_IDS = "nested-column-ids";
-
-	public static final String STATE_MAX = "state-max";
-
-	public static final String STATE_MIN = "state-min";
-
 	public static final String MODE_ABOUT = "mode-about";
 
 	public static final String MODE_CONFIG = "mode-config";
@@ -46,6 +40,12 @@ public class LayoutTypePortletConstants {
 	public static final String MODE_PREVIEW = "mode-preview";
 
 	public static final String MODE_PRINT = "mode-print";
+
+	public static final String NESTED_COLUMN_IDS = "nested-column-ids";
+
+	public static final String STATE_MAX = "state-max";
+
+	public static final String STATE_MIN = "state-min";
 
 	public static final String STATIC_PORTLET_ORGANIZATION_SELECTOR =
 		"organization";

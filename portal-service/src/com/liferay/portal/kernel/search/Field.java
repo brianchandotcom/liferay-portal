@@ -100,6 +100,13 @@ public class Field implements Serializable {
 
 	public static final String UID = "uid";
 
+	public static final String[] UNSCORED_FIELD_NAMES = {
+		Field.ASSET_CATEGORY_IDS, Field.COMPANY_ID, Field.ENTRY_CLASS_NAME,
+		Field.ENTRY_CLASS_PK, Field.FOLDER_ID, Field.GROUP_ID,
+		Field.GROUP_ROLE_ID, Field.PORTLET_ID, Field.ROLE_ID,
+		Field.SCOPE_GROUP_ID, Field.USER_ID
+	};
+
 	public static final String URL = "url";
 
 	public static final String USER_ID = "userId";
@@ -107,12 +114,6 @@ public class Field implements Serializable {
 	public static final String USER_NAME = "userName";
 
 	public static final String VERSION = "version";
-
-	public static final String[] UNSCORED_FIELD_NAMES = {
-		ASSET_CATEGORY_IDS, COMPANY_ID, ENTRY_CLASS_NAME, ENTRY_CLASS_PK,
-		FOLDER_ID, GROUP_ID, GROUP_ROLE_ID, PORTLET_ID, ROLE_ID,
-		SCOPE_GROUP_ID, USER_ID
-	};
 
 	public Field(String name, Map<Locale, String> localizedValues) {
 		_name = name;

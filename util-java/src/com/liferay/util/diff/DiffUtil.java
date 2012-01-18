@@ -42,15 +42,15 @@ import org.incava.util.diff.Difference;
  */
 public class DiffUtil {
 
-	public static final String OPEN_INS = "<ins>";
+	public static final String CLOSE_DEL = "</del>";
 
 	public static final String CLOSE_INS = "</ins>";
 
+	public static final String CONTEXT_LINE = "#context#line#";
+
 	public static final String OPEN_DEL = "<del>";
 
-	public static final String CLOSE_DEL = "</del>";
-
-	public static final String CONTEXT_LINE = "#context#line#";
+	public static final String OPEN_INS = "<ins>";
 
 	/**
 	 * This is a diff method with default values.

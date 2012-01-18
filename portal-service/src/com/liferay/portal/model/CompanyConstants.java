@@ -21,9 +21,9 @@ public class CompanyConstants {
 
 	public static final String AUTH_TYPE_EA = "emailAddress";
 
-	public static final String AUTH_TYPE_SN = "screenName";
-
 	public static final String AUTH_TYPE_ID = "userId";
+
+	public static final String AUTH_TYPE_SN = "screenName";
 
 	public static final long SYSTEM = 0;
 

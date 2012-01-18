@@ -25,11 +25,11 @@ import javax.jcr.Session;
  */
 public interface JCRFactory {
 
-	public static final String WORKSPACE_NAME =
-		PropsUtil.get(PropsKeys.JCR_WORKSPACE_NAME);
-
 	public static final String NODE_DOCUMENTLIBRARY =
 		PropsUtil.get(PropsKeys.JCR_NODE_DOCUMENTLIBRARY);
+
+	public static final String WORKSPACE_NAME =
+		PropsUtil.get(PropsKeys.JCR_WORKSPACE_NAME);
 
 	public Session createSession(String workspaceName)
 		throws RepositoryException;

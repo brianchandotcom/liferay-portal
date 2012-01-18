@@ -32,11 +32,11 @@ public interface ImageTool {
 
 	public static final String TYPE_JPEG = "jpg";
 
+	public static final String TYPE_NOT_AVAILABLE = "na";
+
 	public static final String TYPE_PNG = "png";
 
 	public static final String TYPE_TIFF = "tiff";
-
-	public static final String TYPE_NOT_AVAILABLE = "na";
 
 	public BufferedImage convertImageType(BufferedImage sourceImage, int type);
 

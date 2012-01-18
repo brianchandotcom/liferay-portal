@@ -24,8 +24,8 @@ package com.liferay.util.bridges.jsf.common;
  */
 public class ActionOutcomes {
 
-	public static final String SUCCESS = "Success";
-
 	public static final String FAILURE = "Failure";
+
+	public static final String SUCCESS = "Success";
 
 }

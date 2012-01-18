@@ -23,18 +23,6 @@ import java.io.Serializable;
  */
 public abstract class Account implements Serializable {
 
-	public static final String PROTOCOL_IMAP = "imap";
-
-	public static final String PROTOCOL_IMAPS = "imaps";
-
-	public static final String PROTOCOL_POP = "pop3";
-
-	public static final String PROTOCOL_POPS = "pop3s";
-
-	public static final String PROTOCOL_SMTP = "smtp";
-
-	public static final String PROTOCOL_SMTPS = "smtps";
-
 	public static final int PORT_IMAP = 143;
 
 	public static final int PORT_IMAPS = 993;
@@ -46,6 +34,18 @@ public abstract class Account implements Serializable {
 	public static final int PORT_SMTP = 25;
 
 	public static final int PORT_SMTPS = 465;
+
+	public static final String PROTOCOL_IMAP = "imap";
+
+	public static final String PROTOCOL_IMAPS = "imaps";
+
+	public static final String PROTOCOL_POP = "pop3";
+
+	public static final String PROTOCOL_POPS = "pop3s";
+
+	public static final String PROTOCOL_SMTP = "smtp";
+
+	public static final String PROTOCOL_SMTPS = "smtps";
 
 	public static Account getInstance(String protocol) {
 		return getInstance(protocol, 0);

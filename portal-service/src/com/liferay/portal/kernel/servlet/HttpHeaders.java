@@ -31,8 +31,6 @@ public interface HttpHeaders {
 
 	public static final String CACHE_CONTROL = "Cache-Control";
 
-	public static final String COOKIE = "Cookie";
-
 	public static final String CONNECTION = "Connection";
 
 	public static final String CONTENT_DISPOSITION = "Content-Disposition";
@@ -47,9 +45,11 @@ public interface HttpHeaders {
 
 	public static final String CONTENT_TYPE = "Content-Type";
 
-	public static final String EXPIRES = "Expires";
+	public static final String COOKIE = "Cookie";
 
 	public static final String ETAG = "ETag";
+
+	public static final String EXPIRES = "Expires";
 
 	public static final String IF_MODIFIED_SINCE = "If-Modified-Since";
 

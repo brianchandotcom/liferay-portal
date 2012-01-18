@@ -43,9 +43,9 @@ public class CharPool {
 
 	public static final char EXCLAMATION = '!';
 
-	public static final char GREATER_THAN = '>';
-
 	public static final char FORWARD_SLASH = '/';
+
+	public static final char GREATER_THAN = '>';
 
 	public static final char LESS_THAN = '<';
 

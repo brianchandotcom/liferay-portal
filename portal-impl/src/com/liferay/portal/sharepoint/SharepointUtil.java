@@ -15,6 +15,8 @@
 package com.liferay.portal.sharepoint;
 
 import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstancePool;
@@ -22,6 +24,9 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.webdav.WebDAVException;
+import com.liferay.portal.kernel.webdav.WebDAVUtil;
+import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.util.PropsUtil;
 
 import java.util.Collection;
@@ -69,6 +74,16 @@ public class SharepointUtil {
 				 groupId = GetterUtil.getLong(
 					groupFolderName.substring(
 						pos, groupFolderName.length() - 1));
+			}
+			else {
+				long companyId = CompanyThreadLocal.getCompanyId();
+
+				try {
+					groupId = WebDAVUtil.getGroupId(companyId, path);
+				}
+				catch (WebDAVException wde) {
+					_log.warn("Unable to get groupId for path " + path);
+				}
 			}
 
 		}
@@ -155,6 +170,8 @@ public class SharepointUtil {
 	private Collection<String> _getStorageTokens() {
 		return _storageMap.values();
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(SharepointUtil.class);
 
 	private static SharepointUtil _instance = new SharepointUtil();
 

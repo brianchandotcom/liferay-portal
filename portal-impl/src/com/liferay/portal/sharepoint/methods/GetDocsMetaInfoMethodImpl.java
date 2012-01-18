@@ -37,15 +37,7 @@ public class GetDocsMetaInfoMethodImpl extends BaseMethodImpl {
 	public String getRootPath(SharepointRequest sharepointRequest) {
 		String urlList = sharepointRequest.getParameterValue("url_list");
 
-		urlList = urlList.substring(1, urlList.length() - 1);
-
-		int pos = urlList.lastIndexOf("sharepoint/");
-
-		if (pos != -1) {
-			urlList = urlList.substring(pos + 11);
-		}
-
-		return urlList;
+		return urlList.substring(1, urlList.length() - 1);
 	}
 
 	@Override

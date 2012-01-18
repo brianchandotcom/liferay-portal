@@ -949,9 +949,9 @@ public abstract class BaseDB implements DB {
 
 	protected abstract String reword(String data) throws IOException;
 
-	protected static String ALTER_COLUMN_TYPE = "alter_column_type ";
-
 	protected static String ALTER_COLUMN_NAME = "alter_column_name ";
+
+	protected static String ALTER_COLUMN_TYPE = "alter_column_type ";
 
 	protected static String DROP_INDEX = "drop index";
 

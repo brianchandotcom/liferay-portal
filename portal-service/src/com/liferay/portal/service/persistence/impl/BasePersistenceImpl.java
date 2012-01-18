@@ -359,13 +359,13 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 	protected static final String WHERE_AND = " AND ";
 
-	protected static final String WHERE_LESSER_THAN = " <= ? ";
-
-	protected static final String WHERE_LESSER_THAN_HAS_NEXT = " <= ? AND ";
-
 	protected static final String WHERE_GREATER_THAN = " >= ? ";
 
 	protected static final String WHERE_GREATER_THAN_HAS_NEXT = " >= ? AND ";
+
+	protected static final String WHERE_LESSER_THAN = " <= ? ";
+
+	protected static final String WHERE_LESSER_THAN_HAS_NEXT = " <= ? AND ";
 
 	protected static final String WHERE_OR = " OR ";
 

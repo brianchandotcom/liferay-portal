@@ -1156,7 +1156,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	private PortletPreferencesIds _portletPreferencesIds;
 	private String _remoteAddr;
 	private String _remoteHost;
-	private volatile javax.servlet.http.HttpServletRequest _request;
+	private transient javax.servlet.http.HttpServletRequest _request;
 	private long _scopeGroupId;
 	private boolean _signedIn;
 	private String _userDisplayURL;

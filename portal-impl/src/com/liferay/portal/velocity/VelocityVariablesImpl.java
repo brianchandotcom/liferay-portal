@@ -16,6 +16,7 @@ package com.liferay.portal.velocity;
 
 import com.liferay.portal.kernel.audit.AuditMessageFactoryUtil;
 import com.liferay.portal.kernel.audit.AuditRouterUtil;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.language.UnicodeLanguageUtil;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
@@ -187,6 +188,11 @@ public class VelocityVariablesImpl implements VelocityVariables {
 
 		velocityContext.put(
 			"journalContentUtil", JournalContentUtil.getJournalContent());
+
+		// JSON factory util
+
+		velocityContext.put(
+			"jsonFactoryUtil", JSONFactoryUtil.getJSONFactory());
 
 		// Language util
 

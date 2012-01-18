@@ -16,6 +16,7 @@ package com.liferay.portal.freemarker;
 
 import com.liferay.portal.kernel.freemarker.FreeMarkerContext;
 import com.liferay.portal.kernel.freemarker.FreeMarkerVariables;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.language.UnicodeLanguageUtil;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
@@ -168,6 +169,11 @@ public class FreeMarkerVariablesImpl implements FreeMarkerVariables {
 
 		freeMarkerContext.put(
 			"journalContentUtil", JournalContentUtil.getJournalContent());
+
+		// JSON factory util
+
+		freeMarkerContext.put(
+			"jsonFactoryUtil", JSONFactoryUtil.getJSONFactory());
 
 		// Language util
 

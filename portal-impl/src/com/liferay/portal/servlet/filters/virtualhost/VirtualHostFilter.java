@@ -71,7 +71,9 @@ public class VirtualHostFilter extends BasePortalFilter {
 			String keyword = PropsValues.LAYOUT_FRIENDLY_URL_KEYWORDS[i];
 
 			if (keyword.contains(StringPool.PERIOD) ||
-				keyword.equals("_vti_") || keyword.equals("display_chart") ||
+				keyword.equals("_vti_") || keyword.equals("api") ||
+				keyword.equals("display_chart") ||
+				keyword.equals("sharepoint") ||
 				keyword.equals("software_catalog")) {
 
 				keyword = StringPool.SLASH + keyword;

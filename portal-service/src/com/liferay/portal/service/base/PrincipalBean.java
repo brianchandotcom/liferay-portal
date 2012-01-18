@@ -31,6 +31,11 @@ import com.liferay.portal.service.UserLocalServiceUtil;
  */
 public class PrincipalBean {
 
+	public static final String[] ANONYMOUS_NAMES = {
+		PrincipalBean.JRUN_ANONYMOUS, PrincipalBean.ORACLE_ANONYMOUS,
+		PrincipalBean.SUN_ANONYMOUS, PrincipalBean.WEBLOGIC_ANONYMOUS
+	};
+
 	public static final String JRUN_ANONYMOUS = "anonymous-guest";
 
 	public static final String ORACLE_ANONYMOUS = "guest";
@@ -38,10 +43,6 @@ public class PrincipalBean {
 	public static final String SUN_ANONYMOUS = "ANONYMOUS";
 
 	public static final String WEBLOGIC_ANONYMOUS = "<anonymous>";
-
-	public static final String[] ANONYMOUS_NAMES = {
-		JRUN_ANONYMOUS, ORACLE_ANONYMOUS, SUN_ANONYMOUS, WEBLOGIC_ANONYMOUS
-	};
 
 	public User getGuestOrUser() throws PortalException, SystemException {
 		try {

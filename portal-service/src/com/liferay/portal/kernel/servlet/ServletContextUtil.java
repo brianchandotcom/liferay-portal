@@ -38,15 +38,16 @@ import javax.servlet.ServletContext;
  */
 public class ServletContextUtil {
 
+	public static final String LOG_INFO_LAST_MODIFIED =
+		ServletContextUtil.LOG_INFO_PREFIX + "retrieval of the most recent " +
+			"last modified date of a WAR for best performance";
+
 	public static final String LOG_INFO_PREFIX =
 		"Please configure Tomcat to unpack WARs to enable ";
 
-	public static final String LOG_INFO_LAST_MODIFIED =
-		LOG_INFO_PREFIX + "retrieval of the most recent last modified date " +
-			"of a WAR for best performance";
-
 	public static final String LOG_INFO_SPRITES =
-		LOG_INFO_PREFIX + "enable sprites for best performance";
+		ServletContextUtil.LOG_INFO_PREFIX + "enable sprites for best " +
+			"performance";
 
 	public static Set<String> getClassNames(ServletContext servletContext)
 		throws IOException {

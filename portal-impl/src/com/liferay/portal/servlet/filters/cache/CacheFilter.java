@@ -215,7 +215,14 @@ public class CacheFilter extends BasePortalFilter {
 		}
 
 		if (Validator.isNull(friendlyURL)) {
-			return 0;
+			try { 
+				return LayoutLocalServiceUtil.getDefaultPlid(
+					groupId, privateLayout);
+			} catch (SystemException se) {
+				_log.warn(se);
+
+				return 0;
+			}
 		}
 
 		// If there is no layout path take the first from the group or user

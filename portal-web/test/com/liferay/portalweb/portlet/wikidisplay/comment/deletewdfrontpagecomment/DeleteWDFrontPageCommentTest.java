@@ -48,8 +48,8 @@ public class DeleteWDFrontPageCommentTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Wiki Front Page Comment Body"),
 			selenium.getText("//div/div[3]/div/div[1]"));
 		assertEquals(RuntimeVariables.replace("Delete"),
-			selenium.getText("//li[4]/span/a"));
-		selenium.click("//li[4]/span/a");
+			selenium.getText("//li[contains(.,'Delete')]/span/a/span"));
+		selenium.click("//li[contains(.,'Delete')]/span/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

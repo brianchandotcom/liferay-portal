@@ -53,8 +53,8 @@ public class EditWikiFrontPageMinorChangeTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Wiki Front Page Content"),
 					selenium.getText("//div[@class='wiki-body']/p"));
 				assertEquals(RuntimeVariables.replace("Edit"),
-					selenium.getText("//span[1]/a/span"));
-				selenium.clickAt("//span[1]/a/span",
+					selenium.getText("//span[contains(.,'Edit')]/a/span"));
+				selenium.clickAt("//span[contains(.,'Edit')]/a/span",
 					RuntimeVariables.replace("Edit"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();

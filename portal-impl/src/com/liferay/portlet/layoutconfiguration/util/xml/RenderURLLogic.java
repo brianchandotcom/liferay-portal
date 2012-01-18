@@ -22,11 +22,11 @@ import javax.portlet.RenderResponse;
  */
 public class RenderURLLogic extends ActionURLLogic {
 
-	public static final String OPEN_TAG = "<runtime-render-url";
-
 	public static final String CLOSE_1_TAG = "</runtime-render-url>";
 
 	public static final String CLOSE_2_TAG = "/>";
+
+	public static final String OPEN_TAG = "<runtime-render-url";
 
 	public RenderURLLogic(RenderResponse renderResponse) {
 		super(renderResponse);

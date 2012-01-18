@@ -46,6 +46,10 @@ public class PwdEncryptor {
 		GetterUtil.getString(PropsUtil.get(
 			PropsKeys.PASSWORDS_ENCRYPTION_ALGORITHM)).toUpperCase();
 
+	public static final char[] SALT_CHARS =
+		"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789./"
+			.toCharArray();
+
 	public static final String TYPE_BCRYPT = "BCRYPT";
 
 	/**
@@ -68,10 +72,6 @@ public class PwdEncryptor {
 	public static final String TYPE_SSHA = "SSHA";
 
 	public static final String TYPE_UFC_CRYPT = "UFC-CRYPT";
-
-	public static final char[] saltChars =
-		"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789./"
-			.toCharArray();
 
 	public static String encrypt(String clearTextPassword)
 		throws PwdEncryptorException {
@@ -224,15 +224,15 @@ public class PwdEncryptor {
 
 				Random random = new Random();
 
-				int numSaltChars = saltChars.length;
+				int numSaltChars = SALT_CHARS.length;
 
 				StringBuilder sb = new StringBuilder();
 
 				int x = random.nextInt(Integer.MAX_VALUE) % numSaltChars;
 				int y = random.nextInt(Integer.MAX_VALUE) % numSaltChars;
 
-				sb.append(saltChars[x]);
-				sb.append(saltChars[y]);
+				sb.append(SALT_CHARS[x]);
+				sb.append(SALT_CHARS[y]);
 
 				String salt = sb.toString();
 

@@ -70,13 +70,13 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 	public List<AssetEntry> getEntries(AssetEntryQuery entryQuery)
 		throws PortalException, SystemException {
 
-		AssetEntryQuery filteredEntryQuery = setupQuery(entryQuery);
+		AssetEntryQuery filteredEntryQuery = filterByCategoryAndTag(entryQuery);
 
 		if (isRemovedFilters(entryQuery, filteredEntryQuery)) {
 			return new ArrayList<AssetEntry>();
 		}
 
-		Object[] results = filterQuery(entryQuery);
+		Object[] results = filterByClass(filteredEntryQuery);
 
 		return (List<AssetEntry>)results[0];
 	}
@@ -84,13 +84,13 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 	public int getEntriesCount(AssetEntryQuery entryQuery)
 		throws PortalException, SystemException {
 
-		AssetEntryQuery filteredEntryQuery = setupQuery(entryQuery);
+		AssetEntryQuery filteredEntryQuery = filterByCategoryAndTag(entryQuery);
 
 		if (isRemovedFilters(entryQuery, filteredEntryQuery)) {
 			return 0;
 		}
 
-		Object[] results = filterQuery(entryQuery);
+		Object[] results = filterByClass(filteredEntryQuery);
 
 		return (Integer)results[1];
 	}
@@ -193,7 +193,7 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 			viewableTagIds.toArray(new Long[viewableTagIds.size()]));
 	}
 
-	protected Object[] filterQuery(AssetEntryQuery entryQuery)
+	protected Object[] filterByClass(AssetEntryQuery entryQuery)
 		throws PortalException, SystemException {
 
 		ThreadLocalCache<Object[]> threadLocalCache =
@@ -282,10 +282,10 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 	protected boolean isRemovedFilters(
 		AssetEntryQuery entryQuery, AssetEntryQuery filteredEntryQuery) {
 
-		if (((entryQuery.getAllCategoryIds().length > 0) &&
-			 (filteredEntryQuery.getAllCategoryIds().length == 0)) ||
-			((entryQuery.getAllTagIds().length > 0) &&
-			 (filteredEntryQuery.getAllTagIds().length == 0)) ||
+		if ((entryQuery.getAllCategoryIds().length >
+				filteredEntryQuery.getAllCategoryIds().length) ||
+			(entryQuery.getAllTagIds().length >
+				filteredEntryQuery.getAllTagIds().length) ||
 			((entryQuery.getAnyCategoryIds().length > 0) &&
 			 (filteredEntryQuery.getAnyCategoryIds().length == 0)) ||
 			((entryQuery.getAnyTagIds().length > 0) &&
@@ -298,7 +298,7 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 		}
 	}
 
-	protected AssetEntryQuery setupQuery(AssetEntryQuery entryQuery)
+	protected AssetEntryQuery filterByCategoryAndTag(AssetEntryQuery entryQuery)
 		throws PortalException, SystemException {
 
 		AssetEntryQuery filteredEntryQuery = new AssetEntryQuery(entryQuery);

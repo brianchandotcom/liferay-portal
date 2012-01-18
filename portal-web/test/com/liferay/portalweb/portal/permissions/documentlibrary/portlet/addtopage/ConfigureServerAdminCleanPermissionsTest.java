@@ -20,8 +20,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class Member_AddPortletDLTest extends BaseTestCase {
-	public void testMember_AddPortletDL() throws Exception {
+public class ConfigureServerAdminCleanPermissionsTest extends BaseTestCase {
+	public void testConfigureServerAdminCleanPermissions()
+		throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -31,7 +32,7 @@ public class Member_AddPortletDLTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Document Library Permissions Page")) {
+				if (selenium.isElementPresent("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,51 +42,20 @@ public class Member_AddPortletDLTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Document Library Permissions Page",
-			RuntimeVariables.replace("Document Library Permissions Page"));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
-				"More"));
-		selenium.clickAt("//a[@id='_145_addApplication']",
-			RuntimeVariables.replace("More"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//div[@title='Documents and Media']/p/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("//div[@title='Documents and Media']/p/a",
-			RuntimeVariables.replace("Add"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("//section")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertTrue(selenium.isElementPresent("//section"));
+		selenium.clickAt("link=Server Administration",
+			RuntimeVariables.replace("Server Administration"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		selenium.clickAt("xpath=(//input[@value='Execute'])[9]",
+			RuntimeVariables.replace("Clean Up Permissions"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 	}
 }

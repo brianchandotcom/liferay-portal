@@ -23,6 +23,7 @@ import org.jabsorb.serializer.MarshallException;
 import org.jabsorb.serializer.ObjectMatch;
 import org.jabsorb.serializer.SerializerState;
 import org.jabsorb.serializer.UnmarshallException;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -222,7 +223,9 @@ public class LocaleSerializer extends AbstractSerializer {
 
 			localeObject = new Locale(language, country, variant);
 		}
-		else if (Validator.isNotNull(language) && Validator.isNotNull(country)) {
+		else if (Validator.isNotNull(language) &&
+				 Validator.isNotNull(country)) {
+
 			localeObject = new Locale(language, country);
 		}
 		else {

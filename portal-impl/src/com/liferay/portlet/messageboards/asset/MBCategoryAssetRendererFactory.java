@@ -70,8 +70,15 @@ public class MBCategoryAssetRendererFactory extends BaseAssetRendererFactory {
 	}
 
 	@Override
+	public boolean isSelectable() {
+		return _SELECTABLE;
+	}
+
+	@Override
 	protected String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/common/conversation.png";
 	}
+
+	private static final boolean _SELECTABLE = false;
 
 }

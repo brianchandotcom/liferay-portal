@@ -85,8 +85,15 @@ public class UserAssetRendererFactory extends BaseAssetRendererFactory {
 	}
 
 	@Override
+	public boolean isSelectable() {
+		return _SELECTABLE;
+	}
+
+	@Override
 	protected String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/common/user_icon.png";
 	}
+
+	private static final boolean _SELECTABLE = false;
 
 }

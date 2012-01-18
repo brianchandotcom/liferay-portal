@@ -1916,8 +1916,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		if ((classNameId <= 0) || className.equals(Group.class.getName())) {
 			validateName(group.getGroupId(), group.getCompanyId(), name);
 		}
-		else {
-			name = String.valueOf(classPK+_ORGANIZATION_NAME_DELIMETER+name);
+		else if (className.equals(Organization.class.getName())) {
+			name = getOrgGroupName(classPK, name);
+		}
+		else if (!GroupConstants.USER_PERSONAL_SITE.equals(name)) {
+			name = String.valueOf(classPK);
 		}
 
 		if (PortalUtil.isSystemGroup(group.getName()) &&

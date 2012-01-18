@@ -224,7 +224,7 @@ public class UploadPortletRequestImpl
 		return parameterValues;
 	}
 
-	public long getSize(String name) {
+	public Long getSize(String name) {
 		Long size = _uploadServletRequest.getSize(_namespace.concat(name));
 
 		if (size == null) {
@@ -232,13 +232,13 @@ public class UploadPortletRequestImpl
 		}
 
 		if (size == null) {
-			return 0;
+			return new Long(0);
 		}
 
 		return size;
 	}
 
-	public boolean isFormField(String name) {
+	public Boolean isFormField(String name) {
 		Boolean formField = _uploadServletRequest.isFormField(
 			_namespace.concat(name));
 

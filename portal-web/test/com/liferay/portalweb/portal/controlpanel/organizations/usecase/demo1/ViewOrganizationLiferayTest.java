@@ -62,10 +62,10 @@ public class ViewOrganizationLiferayTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("selen01"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//td[2]/a[.='selen01']"));
 		assertEquals(RuntimeVariables.replace("nium01"),
-			selenium.getText("//td[3]/a"));
+			selenium.getText("//td[3]/a[.='nium01']"));
 		assertEquals(RuntimeVariables.replace("selenium01"),
-			selenium.getText("//td[4]/a"));
+			selenium.getText("//td[4]/a[.='selenium01']"));
 	}
 }

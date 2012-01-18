@@ -40,8 +40,11 @@ public class MethodFactory {
 	private MethodFactory() {
 		_methods = new HashMap<String, Object>();
 
-		Method method = (Method)InstancePool.get(
-			_CREATE_URL_DIRECTORIES_METHOD_IMPL);
+		Method method = (Method)InstancePool.get(_CHECKOUT_METHOD_IMPL);
+
+		_methods.put(method.getMethodName(), method);
+
+		method = (Method)InstancePool.get(_CREATE_URL_DIRECTORIES_METHOD_IMPL);
 
 		_methods.put(method.getMethodName(), method);
 
@@ -113,6 +116,12 @@ public class MethodFactory {
 
 		return methodImpl;
 	}
+
+	private static final String _CHECKOUT_METHOD_IMPL =
+		GetterUtil.getString(
+			PropsUtil.get(
+				MethodFactory.class.getName() + ".CHECKOUT"),
+			CheckoutMethodImpl.class.getName());
 
 	private static final String _CREATE_URL_DIRECTORIES_METHOD_IMPL =
 		GetterUtil.getString(

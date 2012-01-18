@@ -50,6 +50,9 @@ public class ConfigureServerAdminCleanPermissionsTest extends BaseTestCase {
 			RuntimeVariables.replace("Server Administration"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace(
+				"Clean Up Permissions This process removes the assignment of some permissions on the Guest, User and Power User roles in order to simplify the management of \"User Customizable Pages\". Notably, \"Add To Page\" permissions is removed from the Guest, and User role for all portlets. Likewise the same permission is reduced in scope for Power Users from portal wide to scoped to \"User Personal Site\"."),
+			selenium.getText("//tr[9]/td"));
 		selenium.clickAt("xpath=(//input[@value='Execute'])[9]",
 			RuntimeVariables.replace("Clean Up Permissions"));
 		selenium.waitForPageToLoad("30000");

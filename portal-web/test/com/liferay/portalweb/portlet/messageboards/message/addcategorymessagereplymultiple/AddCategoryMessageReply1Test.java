@@ -59,8 +59,8 @@ public class AddCategoryMessageReply1Test extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Reply"),
-			selenium.getText("//li[2]/span/a/span"));
-		selenium.clickAt("//li[2]/span/a/span",
+			selenium.getText("//li[contains(.,'Reply')]/span/a/span"));
+		selenium.clickAt("//li[contains(.,'Reply')]/span/a/span",
 			RuntimeVariables.replace("Reply"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();

@@ -127,7 +127,8 @@ public class UploadServletRequestImpl
 					liferayFileItems = newLiferayFileItems;
 				}
 
-				_fileParams.put(liferayFileItem.getFieldName(), liferayFileItems);
+				_fileParams.put(
+					liferayFileItem.getFieldName(), liferayFileItems);
 			}
 		}
 		catch (Exception e) {

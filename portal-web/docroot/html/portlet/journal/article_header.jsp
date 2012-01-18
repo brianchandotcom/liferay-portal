@@ -48,7 +48,13 @@ if (classNameId > 0) {
 }
 else if (article != null) {
 	localizeTitle = false;
-	title = article.getTitle(locale);
+
+	if (Validator.isNotNull(toLanguageId)) {
+		title = article.getTitle(toLanguageId);
+	}
+	else {
+		title = article.getTitle(locale);
+	}
 }
 %>
 

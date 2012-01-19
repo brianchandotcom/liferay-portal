@@ -29,6 +29,53 @@ import java.net.URLEncoder;
  */
 public class JS {
 
+	public static String decodeURIComponent(String s) {
+
+		// Get rid of all unicode
+
+		s = s.replaceAll("%u[0-9a-fA-F]{4}", StringPool.BLANK);
+
+		// Adjust for JavaScript specific annoyances
+
+		s = StringUtil.replace(s, "+", "%2B");
+		s = StringUtil.replace(s, "%20", "+");
+
+		// Decode URL
+
+		try {
+			s = URLDecoder.decode(s, StringPool.UTF8);
+		}
+		catch (Exception e) {
+		}
+
+		return s;
+	}
+
+	public static String encodeURIComponent(String s) {
+
+		// Encode URL
+
+		try {
+			s = URLEncoder.encode(s, StringPool.UTF8);
+		}
+		catch (Exception e) {
+		}
+
+		// Adjust for JavaScript specific annoyances
+
+		s = StringUtil.replace(s, "+", "%20");
+		s = StringUtil.replace(s, "%2B", "+");
+
+		return s;
+	}
+
+	/**
+	 * @deprecated Use <code>encodeURIComponent</code>.
+	 */
+	public static String escape(String s) {
+		return encodeURIComponent(s);
+	}
+
 	public static String getSafeName(String name) {
 		if (name == null) {
 			return null;
@@ -70,60 +117,6 @@ public class JS {
 		}
 	}
 
-	/**
-	 * @deprecated Use <code>encodeURIComponent</code>.
-	 */
-	public static String escape(String s) {
-		return encodeURIComponent(s);
-	}
-
-	/**
-	 * @deprecated Use <code>decodeURIComponent</code>.
-	 */
-	public static String unescape(String s) {
-		return decodeURIComponent(s);
-	}
-
-	public static String encodeURIComponent(String s) {
-
-		// Encode URL
-
-		try {
-			s = URLEncoder.encode(s, StringPool.UTF8);
-		}
-		catch (Exception e) {
-		}
-
-		// Adjust for JavaScript specific annoyances
-
-		s = StringUtil.replace(s, "+", "%20");
-		s = StringUtil.replace(s, "%2B", "+");
-
-		return s;
-	}
-
-	public static String decodeURIComponent(String s) {
-
-		// Get rid of all unicode
-
-		s = s.replaceAll("%u[0-9a-fA-F]{4}", StringPool.BLANK);
-
-		// Adjust for JavaScript specific annoyances
-
-		s = StringUtil.replace(s, "+", "%2B");
-		s = StringUtil.replace(s, "%20", "+");
-
-		// Decode URL
-
-		try {
-			s = URLDecoder.decode(s, StringPool.UTF8);
-		}
-		catch (Exception e) {
-		}
-
-		return s;
-	}
-
 	public static String toScript(String[] array) {
 		StringBundler sb = new StringBundler(array.length * 4 + 2);
 
@@ -142,6 +135,13 @@ public class JS {
 		sb.append(StringPool.CLOSE_BRACKET);
 
 		return sb.toString();
+	}
+
+	/**
+	 * @deprecated Use <code>decodeURIComponent</code>.
+	 */
+	public static String unescape(String s) {
+		return decodeURIComponent(s);
 	}
 
 }

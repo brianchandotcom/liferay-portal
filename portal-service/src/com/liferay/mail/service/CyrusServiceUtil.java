@@ -31,6 +31,16 @@ public class CyrusServiceUtil {
 		getService().addUser(userId, emailAddress, password);
 	}
 
+	public static void deleteEmailAddress(long companyId, long userId)
+		throws SystemException {
+
+		getService().deleteEmailAddress(companyId, userId);
+	}
+
+	public static void deleteUser(long userId) throws SystemException {
+		getService().deleteUser(userId);
+	}
+
 	public static CyrusService getService() {
 		if (_service == null) {
 			_service = (CyrusService)PortalBeanLocatorUtil.locate(
@@ -43,16 +53,6 @@ public class CyrusServiceUtil {
 		}
 
 		return _service;
-	}
-
-	public static void deleteEmailAddress(long companyId, long userId)
-		throws SystemException {
-
-		getService().deleteEmailAddress(companyId, userId);
-	}
-
-	public static void deleteUser(long userId) throws SystemException {
-		getService().deleteUser(userId);
 	}
 
 	public static void updateEmailAddress(

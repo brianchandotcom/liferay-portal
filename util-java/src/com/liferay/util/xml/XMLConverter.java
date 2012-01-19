@@ -19,6 +19,16 @@ package com.liferay.util.xml;
  */
 public class XMLConverter {
 
+	public static javax.xml.namespace.QName toJavaxQName(
+		org.dom4j.QName dom4jQName) {
+
+		javax.xml.namespace.QName javaxQName = new javax.xml.namespace.QName(
+			dom4jQName.getNamespaceURI(), dom4jQName.getName(),
+			dom4jQName.getNamespacePrefix());
+
+		return javaxQName;
+	}
+
 	public static org.w3c.dom.Document toW3CDocument(
 			org.dom4j.Document dom4jDoc)
 		throws org.dom4j.DocumentException {
@@ -41,16 +51,6 @@ public class XMLConverter {
 		org.w3c.dom.Document w3cDoc = toW3CDocument(dom4jDoc);
 
 		return w3cDoc.getDocumentElement();
-	}
-
-	public static javax.xml.namespace.QName toJavaxQName(
-		org.dom4j.QName dom4jQName) {
-
-		javax.xml.namespace.QName javaxQName = new javax.xml.namespace.QName(
-			dom4jQName.getNamespaceURI(), dom4jQName.getName(),
-			dom4jQName.getNamespacePrefix());
-
-		return javaxQName;
 	}
 
 }

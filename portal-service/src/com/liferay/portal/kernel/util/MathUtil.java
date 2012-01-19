@@ -73,18 +73,6 @@ public class MathUtil {
 		return x;
 	}
 
-	public static boolean isEven(int x) {
-		if ((x % 2) == 0) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public static boolean isOdd(int x) {
-		return !isEven(x);
-	}
-
 	public static int[] generatePrimes(int max) {
 		if (max < 2) {
 			return new int[0];
@@ -126,6 +114,18 @@ public class MathUtil {
 
 			return result;
 		}
+	}
+
+	public static boolean isEven(int x) {
+		if ((x % 2) == 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isOdd(int x) {
+		return !isEven(x);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(MathUtil.class);

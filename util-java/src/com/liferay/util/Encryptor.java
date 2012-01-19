@@ -61,67 +61,6 @@ public class Encryptor {
 	public static final String SUN_PROVIDER_CLASS =
 		"com.sun.crypto.provider.SunJCE";
 
-	public static Key generateKey() throws EncryptorException {
-		return generateKey(KEY_ALGORITHM);
-	}
-
-	public static Key generateKey(String algorithm) throws EncryptorException {
-		try {
-			Security.addProvider(getProvider());
-
-			KeyGenerator keyGenerator = KeyGenerator.getInstance(algorithm);
-
-			keyGenerator.init(KEY_SIZE, new SecureRandom());
-
-			Key key = keyGenerator.generateKey();
-
-			return key;
-		}
-		catch (Exception e) {
-			throw new EncryptorException(e);
-		}
-	}
-
-	public static Provider getProvider()
-		throws ClassNotFoundException, IllegalAccessException,
-			   InstantiationException {
-
-		Class<?> providerClass = null;
-
-		try {
-			providerClass = Class.forName(PROVIDER_CLASS);
-		}
-		catch (ClassNotFoundException cnfe) {
-			if ((ServerDetector.isWebSphere()) &&
-				(PROVIDER_CLASS.equals(SUN_PROVIDER_CLASS))) {
-
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"WebSphere does not have " + SUN_PROVIDER_CLASS +
-							", using " + IBM_PROVIDER_CLASS + " instead");
-				}
-
-				providerClass = Class.forName(IBM_PROVIDER_CLASS);
-			}
-			else if (System.getProperty("java.vm.vendor").equals(
-						"IBM Corporation")) {
-
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"IBM JVM does not have " + SUN_PROVIDER_CLASS +
-							", using " + IBM_PROVIDER_CLASS + " instead");
-				}
-
-				providerClass = Class.forName(IBM_PROVIDER_CLASS);
-			}
-			else {
-				throw cnfe;
-			}
-		}
-
-		return (Provider)providerClass.newInstance();
-	}
-
 	public static String decrypt(Key key, String encryptedString)
 		throws EncryptorException {
 
@@ -232,6 +171,67 @@ public class Encryptor {
 		catch (Exception e) {
 			throw new EncryptorException(e);
 		}
+	}
+
+	public static Key generateKey() throws EncryptorException {
+		return generateKey(KEY_ALGORITHM);
+	}
+
+	public static Key generateKey(String algorithm) throws EncryptorException {
+		try {
+			Security.addProvider(getProvider());
+
+			KeyGenerator keyGenerator = KeyGenerator.getInstance(algorithm);
+
+			keyGenerator.init(KEY_SIZE, new SecureRandom());
+
+			Key key = keyGenerator.generateKey();
+
+			return key;
+		}
+		catch (Exception e) {
+			throw new EncryptorException(e);
+		}
+	}
+
+	public static Provider getProvider()
+		throws ClassNotFoundException, IllegalAccessException,
+			   InstantiationException {
+
+		Class<?> providerClass = null;
+
+		try {
+			providerClass = Class.forName(PROVIDER_CLASS);
+		}
+		catch (ClassNotFoundException cnfe) {
+			if ((ServerDetector.isWebSphere()) &&
+				(PROVIDER_CLASS.equals(SUN_PROVIDER_CLASS))) {
+
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"WebSphere does not have " + SUN_PROVIDER_CLASS +
+							", using " + IBM_PROVIDER_CLASS + " instead");
+				}
+
+				providerClass = Class.forName(IBM_PROVIDER_CLASS);
+			}
+			else if (System.getProperty("java.vm.vendor").equals(
+						"IBM Corporation")) {
+
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"IBM JVM does not have " + SUN_PROVIDER_CLASS +
+							", using " + IBM_PROVIDER_CLASS + " instead");
+				}
+
+				providerClass = Class.forName(IBM_PROVIDER_CLASS);
+			}
+			else {
+				throw cnfe;
+			}
+		}
+
+		return (Provider)providerClass.newInstance();
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(Encryptor.class);

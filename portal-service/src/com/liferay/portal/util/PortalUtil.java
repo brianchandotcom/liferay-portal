@@ -459,6 +459,15 @@ public class PortalUtil {
 			expandoBridge, portletRequest);
 	}
 
+	public static Map<String, Serializable> getExpandoBridgeAttributes(
+			ExpandoBridge expandoBridge,
+			UploadPortletRequest uploadPortletRequest)
+		throws PortalException, SystemException {
+
+		return getPortal().getExpandoBridgeAttributes(
+			expandoBridge, uploadPortletRequest);
+	}
+
 	public static Serializable getExpandoValue(
 			PortletRequest portletRequest, String name, int type,
 			String displayType)
@@ -466,6 +475,15 @@ public class PortalUtil {
 
 		return getPortal().getExpandoValue(
 			portletRequest, name, type, displayType);
+	}
+
+	public static Serializable getExpandoValue(
+			UploadPortletRequest uploadPortletRequest, String name, int type,
+			String displayType)
+		throws PortalException, SystemException {
+
+		return getPortal().getExpandoValue(
+			uploadPortletRequest, name, type, displayType);
 	}
 
 	public static String getFacebookURL(

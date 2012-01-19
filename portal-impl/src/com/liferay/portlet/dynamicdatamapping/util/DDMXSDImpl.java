@@ -248,6 +248,14 @@ public class DDMXSDImpl implements DDMXSD {
 			JSONObject localizationMapJSONObject =
 				JSONFactoryUtil.createJSONObject();
 
+			for (Attribute attribute : dynamicElementElement.attributes()) {
+				jsonObject.put(attribute.getName(), attribute.getValue());
+			}
+
+			String type = jsonObject.getString("type");
+
+			jsonObject.put("id", dynamicElementElement.attributeValue("name"));
+
 			List<Element> metadataElements = dynamicElementElement.elements(
 				"meta-data");
 
@@ -260,8 +268,6 @@ public class DDMXSDImpl implements DDMXSD {
 
 				JSONObject localeMap = JSONFactoryUtil.createJSONObject();
 
-				localizationMapJSONObject.put(locale, localeMap);
-
 				for (Element metadataEntryElement :
 						metadataElement.elements()) {
 
@@ -269,32 +275,28 @@ public class DDMXSDImpl implements DDMXSD {
 						"name");
 					String attributeValue = metadataEntryElement.getText();
 
-					localeMap.put(attributeName, attributeValue);
+					putMetadataValue(
+						localeMap, attributeName, attributeValue, type);
 
 					if (defaultLocale.equals(locale)) {
-						jsonObject.put(attributeName, attributeValue);
+						putMetadataValue(
+							jsonObject, attributeName, attributeValue, type);
 					}
 				}
+
+				localizationMapJSONObject.put(locale, localeMap);
 			}
 
 			jsonObject.put("localizationMap", localizationMapJSONObject);
 
-			for (Attribute attribute : dynamicElementElement.attributes()) {
-				jsonObject.put(attribute.getName(), attribute.getValue());
-			}
-
-			jsonObject.put("id", dynamicElementElement.attributeValue("name"));
-
 			JSONArray hiddenAttributesJSONArray =
 				JSONFactoryUtil.createJSONArray();
 
-			String type = jsonObject.getString("type");
-
-			if (type.equals(_TYPE_CHECKBOX)) {
+			if (type.equals(DDMImpl.TYPE_CHECKBOX)) {
 				hiddenAttributesJSONArray.put("required");
 			}
 
-			if (type.equals(_TYPE_DDM_FILEUPLOAD)) {
+			if (type.equals(DDMImpl.TYPE_DDM_FILEUPLOAD)) {
 				hiddenAttributesJSONArray.put("predefinedValue");
 			}
 
@@ -304,15 +306,10 @@ public class DDMXSDImpl implements DDMXSD {
 
 			String key = "fields";
 
-			if (type.equals(_TYPE_RADIO) || type.equals(_TYPE_SELECT)) {
+			if (type.equals(DDMImpl.TYPE_RADIO) ||
+				type.equals(DDMImpl.TYPE_SELECT)) {
+
 				key = "options";
-
-				String predefinedValue = jsonObject.getString(
-					"predefinedValue");
-
-				jsonObject.put(
-					"predefinedValue",
-					JSONFactoryUtil.createJSONArray(predefinedValue));
 			}
 
 			jsonObject.put(key, getJSONArray(dynamicElementElement));
@@ -469,6 +466,29 @@ public class DDMXSDImpl implements DDMXSD {
 		return writer.toString();
 	}
 
+	protected void putMetadataValue(
+		JSONObject jsonObject, String attributeName, String attributeValue,
+		String type) {
+
+		if (type.equals(DDMImpl.TYPE_RADIO) ||
+			type.equals(DDMImpl.TYPE_SELECT)) {
+
+			if (attributeName.equals("predefinedValue")) {
+				try {
+					jsonObject.put(
+						attributeName,
+						JSONFactoryUtil.createJSONArray(attributeValue));
+				}
+				catch(Exception e) {
+				}
+
+				return;
+			}
+		}
+
+		jsonObject.put(attributeName, attributeValue);
+	}
+
 	private static final String _DEFAULT_NAMESPACE = "alloy";
 
 	private static final String _DEFAULT_READ_ONLY_NAMESPACE = "readonly";
@@ -484,13 +504,5 @@ public class DDMXSDImpl implements DDMXSD {
 
 	private static final String _TPL_PATH =
 		"com/liferay/portlet/dynamicdatamapping/dependencies/";
-
-	private static final String _TYPE_CHECKBOX = "checkbox";
-
-	private static final String _TYPE_DDM_FILEUPLOAD = "ddm-fileupload";
-
-	private static final String _TYPE_RADIO = "radio";
-
-	private static final String _TYPE_SELECT = "select";
 
 }

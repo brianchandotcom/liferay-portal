@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.util.DDMImpl;
 
 import java.util.Map;
 
@@ -43,7 +44,9 @@ public class StringFieldRenderer extends BaseFieldRenderer {
 
 		String fieldType = ddmStructure.getFieldType(field.getName());
 
-		if (!fieldType.equals("radio") && !fieldType.equals("select")) {
+		if (!fieldType.equals(DDMImpl.TYPE_RADIO) &&
+			!fieldType.equals(DDMImpl.TYPE_SELECT)) {
+
 			return value;
 		}
 

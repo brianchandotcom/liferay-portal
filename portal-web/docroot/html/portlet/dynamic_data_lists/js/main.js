@@ -465,7 +465,7 @@ AUI.add(
 									if (value !== STR_EMPTY) {
 										var fileData = SpreadSheet.Util.parseJSON(value);
 
-										if (fileData.recordId) {
+										if (fileData.classPK) {
 											label = fileData.name;
 										}
 									}

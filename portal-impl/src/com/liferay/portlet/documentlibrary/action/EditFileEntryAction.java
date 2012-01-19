@@ -710,7 +710,7 @@ public class EditFileEntryAction extends PortletAction {
 			inputStream = uploadPortletRequest.getFileAsStream("file");
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				DLFileEntry.class.getName(), actionRequest);
+				DLFileEntry.class.getName(), uploadPortletRequest);
 
 			FileEntry fileEntry = null;
 

@@ -39,12 +39,12 @@ import com.liferay.portlet.dynamicdatalists.model.DDLRecordConstants;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
 import com.liferay.portlet.dynamicdatalists.service.base.DDLRecordLocalServiceBaseImpl;
-import com.liferay.portlet.dynamicdatalists.util.DDLUtil;
 import com.liferay.portlet.dynamicdatalists.util.comparator.DDLRecordVersionVersionComparator;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 
 import java.io.Serializable;
 
@@ -171,7 +171,7 @@ public class DDLRecordLocalServiceImpl
 		try {
 			DLStoreUtil.deleteDirectory(
 				record.getCompanyId(), CompanyConstants.SYSTEM,
-				DDLUtil.getRecordFileUploadPath(record));
+				DDMUtil.getFileUploadPath(record));
 		}
 		catch (NoSuchDirectoryException nsde) {
 			if (_log.isDebugEnabled()) {

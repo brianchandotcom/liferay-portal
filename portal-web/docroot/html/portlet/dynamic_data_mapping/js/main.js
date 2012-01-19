@@ -375,7 +375,7 @@ AUI.add(
 
 											var attributeValue = instance.getFieldLocalizedValue(field, attributeName, item1);
 
-											if (attributeName === 'predefinedValue' && instanceOf(field, A.FormBuilderMultipleChoiceField)) {
+											if ((attributeName === 'predefinedValue') && instanceOf(field, A.FormBuilderMultipleChoiceField)) {
 												attributeValue = A.JSON.stringify(AArray(attributeValue));
 											}
 

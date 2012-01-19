@@ -458,7 +458,9 @@ public class EditGroupAction extends PortletAction {
 			}
 
 			if ((privateLayoutSetPrototypeId == 0) &&
-				(publicLayoutSetPrototypeId == 0)) {
+				(publicLayoutSetPrototypeId == 0) &&
+				!privateLayoutSetPrototypeLinkEnabled &&
+				!publicLayoutSetPrototypeLinkEnabled) {
 
 				long layoutSetPrototypeId = ParamUtil.getLong(
 					actionRequest, "layoutSetPrototypeId");

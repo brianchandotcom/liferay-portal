@@ -932,42 +932,6 @@ public class Recurrence implements Serializable {
 	}
 
 	/**
-	 * Method matchesIndividualByDay
-	 *
-	 * @return boolean
-	 */
-	protected boolean matchesIndividualByDay(Calendar candidate,
-											 DayAndPosition pos) {
-		if (pos.getDayOfWeek() != candidate.get(Calendar.DAY_OF_WEEK)) {
-			return false;
-		}
-
-		int position = pos.getDayPosition();
-
-		if (position == 0) {
-			return true;
-		}
-
-		int field = Calendar.DAY_OF_MONTH;
-
-		if (position > 0) {
-			int candidatePosition = ((candidate.get(field) - 1) / 7) + 1;
-
-			return (position == candidatePosition);
-		}
-		else {
-
-			/* position < 0 */
-
-			int negativeCandidatePosition =
-				((candidate.getActualMaximum(field) - candidate.get(field)) / 7)
-				+ 1;
-
-			return (-position == negativeCandidatePosition);
-		}
-	}
-
-	/**
 	 * Method matchesByField
 	 *
 	 * @return boolean
@@ -1008,21 +972,21 @@ public class Recurrence implements Serializable {
 	}
 
 	/**
+	 * Method matchesByMonth
+	 *
+	 * @return boolean
+	 */
+	protected boolean matchesByMonth(Calendar candidate) {
+		return matchesByField(byMonth, Calendar.MONTH, candidate, false);
+	}
+
+	/**
 	 * Method matchesByMonthDay
 	 *
 	 * @return boolean
 	 */
 	protected boolean matchesByMonthDay(Calendar candidate) {
 		return matchesByField(byMonthDay, Calendar.DATE, candidate, true);
-	}
-
-	/**
-	 * Method matchesByYearDay
-	 *
-	 * @return boolean
-	 */
-	protected boolean matchesByYearDay(Calendar candidate) {
-		return matchesByField(byYearDay, Calendar.DAY_OF_YEAR, candidate, true);
 	}
 
 	/**
@@ -1035,12 +999,48 @@ public class Recurrence implements Serializable {
 	}
 
 	/**
-	 * Method matchesByMonth
+	 * Method matchesByYearDay
 	 *
 	 * @return boolean
 	 */
-	protected boolean matchesByMonth(Calendar candidate) {
-		return matchesByField(byMonth, Calendar.MONTH, candidate, false);
+	protected boolean matchesByYearDay(Calendar candidate) {
+		return matchesByField(byYearDay, Calendar.DAY_OF_YEAR, candidate, true);
+	}
+
+	/**
+	 * Method matchesIndividualByDay
+	 *
+	 * @return boolean
+	 */
+	protected boolean matchesIndividualByDay(Calendar candidate,
+											 DayAndPosition pos) {
+		if (pos.getDayOfWeek() != candidate.get(Calendar.DAY_OF_WEEK)) {
+			return false;
+		}
+
+		int position = pos.getDayPosition();
+
+		if (position == 0) {
+			return true;
+		}
+
+		int field = Calendar.DAY_OF_MONTH;
+
+		if (position > 0) {
+			int candidatePosition = ((candidate.get(field) - 1) / 7) + 1;
+
+			return (position == candidatePosition);
+		}
+		else {
+
+			/* position < 0 */
+
+			int negativeCandidatePosition =
+				((candidate.getActualMaximum(field) - candidate.get(field)) / 7)
+				+ 1;
+
+			return (-position == negativeCandidatePosition);
+		}
 	}
 
 	/**

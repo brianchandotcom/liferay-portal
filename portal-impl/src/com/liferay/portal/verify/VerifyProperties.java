@@ -77,6 +77,22 @@ public class VerifyProperties extends VerifyProcess {
 		}
 	}
 
+	protected void verifyObsoletePortalProperty(String key) throws Exception {
+		String value = PropsUtil.get(key);
+
+		if (value != null) {
+			_log.error("Portal property \"" + key + "\" is obsolete");
+		}
+	}
+
+	protected void verifyObsoleteSystemProperty(String key) throws Exception {
+		String value = SystemProperties.get(key);
+
+		if (value != null) {
+			_log.error("System property \"" + key + "\" is obsolete");
+		}
+	}
+
 	protected void verifyRenamedPortalProperty(String oldKey, String newKey)
 		throws Exception {
 
@@ -98,22 +114,6 @@ public class VerifyProperties extends VerifyProcess {
 			_log.error(
 				"System property \"" + oldKey + "\" was renamed to \"" +
 					newKey + "\"");
-		}
-	}
-
-	protected void verifyObsoletePortalProperty(String key) throws Exception {
-		String value = PropsUtil.get(key);
-
-		if (value != null) {
-			_log.error("Portal property \"" + key + "\" is obsolete");
-		}
-	}
-
-	protected void verifyObsoleteSystemProperty(String key) throws Exception {
-		String value = SystemProperties.get(key);
-
-		if (value != null) {
-			_log.error("System property \"" + key + "\" is obsolete");
 		}
 	}
 

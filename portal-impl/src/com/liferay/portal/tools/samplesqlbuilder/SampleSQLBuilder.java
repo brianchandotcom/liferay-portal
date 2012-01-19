@@ -665,10 +665,10 @@ public class SampleSQLBuilder {
 
 	private static final int _PIPE_BUFFER_SIZE = 16 * 1024 * 1024;
 
-	private static final int _WRITER_BUFFER_SIZE = 16 * 1024;
-
 	private static final String _TPL_ROOT =
 		"com/liferay/portal/tools/samplesqlbuilder/dependencies/";
+
+	private static final int _WRITER_BUFFER_SIZE = 16 * 1024;
 
 	private SimpleCounter _counter;
 	private DataFactory _dataFactory;

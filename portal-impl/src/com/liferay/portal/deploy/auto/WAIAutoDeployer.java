@@ -142,12 +142,12 @@ public class WAIAutoDeployer extends PortletAutoDeployer {
 		}
 	}
 
-	private static String[] _INIT_PARAM_NAMES = new String[] {
-		"wai.connector.iframe.height.default"
-	};
-
 	private static String[] _INIT_PARAM_DEFAULT_VALUES = new String[] {
 		"500"
+	};
+
+	private static String[] _INIT_PARAM_NAMES = new String[] {
+		"wai.connector.iframe.height.default"
 	};
 
 }

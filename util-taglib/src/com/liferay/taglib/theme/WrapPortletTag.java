@@ -129,10 +129,10 @@ public class WrapPortletTag
 		return _page;
 	}
 
+	private static final String _CONTENT_WRAPPER_POST = "</div>";
+
 	private static final String _CONTENT_WRAPPER_PRE =
 		"<div class=\"column-1\" id=\"main-content\" role=\"main\">";
-
-	private static final String _CONTENT_WRAPPER_POST = "</div>";
 
 	private String _page;
 

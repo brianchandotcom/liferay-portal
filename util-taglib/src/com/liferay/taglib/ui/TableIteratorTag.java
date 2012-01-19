@@ -192,14 +192,14 @@ public class TableIteratorTag extends TagSupport {
 		}
 	}
 
-	private static final String _START_PAGE =
-		"/html/taglib/ui/table_iterator/start.jsp";
-
 	private static final String _BODY_PAGE =
 		"/html/taglib/ui/table_iterator/body.jsp";
 
 	private static final String _END_PAGE =
 		"/html/taglib/ui/table_iterator/end.jsp";
+
+	private static final String _START_PAGE =
+		"/html/taglib/ui/table_iterator/start.jsp";
 
 	private String _startPage;
 	private String _bodyPage;

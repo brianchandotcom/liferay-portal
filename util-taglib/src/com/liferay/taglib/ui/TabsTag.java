@@ -354,9 +354,9 @@ public class TabsTag extends IncludeTag {
 		}
 	}
 
-	private static final String _START_PAGE = "/html/taglib/ui/tabs/start.jsp";
-
 	private static final String _END_PAGE = "/html/taglib/ui/tabs/end.jsp";
+
+	private static final String _START_PAGE = "/html/taglib/ui/tabs/start.jsp";
 
 	private String _startPage;
 	private String _endPage;

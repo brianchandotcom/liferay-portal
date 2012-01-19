@@ -48,14 +48,14 @@ public class WindowStateFactory {
 		return windowState;
 	}
 
-	private static final String _NORMAL = WindowState.NORMAL.toString();
+	private static final String _EXCLUSIVE =
+		LiferayWindowState.EXCLUSIVE.toString();
 
 	private static final String _MAXIMIZED = WindowState.MAXIMIZED.toString();
 
 	private static final String _MINIMIZED = WindowState.MINIMIZED.toString();
 
-	private static final String _EXCLUSIVE =
-		LiferayWindowState.EXCLUSIVE.toString();
+	private static final String _NORMAL = WindowState.NORMAL.toString();
 
 	private static final String _POP_UP = LiferayWindowState.POP_UP.toString();
 

@@ -258,37 +258,32 @@ public class LDAPAuth implements Authenticator {
 				Attributes attributes = PortalLDAPUtil.getUserAttributes(
 					ldapServerId, companyId, ldapContext, fullUserDN);
 
-				LDAPAuthResult ldapAuthResult = null;
+				LDAPAuthResult ldapAuthResult = authenticate(
+					ldapContext, companyId, attributes, fullUserDN, password);
 
-				if (PropsValues.LDAP_IMPORT_USER_PASSWORD_ENABLED) {
-					ldapAuthResult = authenticate(
-						ldapContext, companyId, attributes, fullUserDN,
-						password);
+				// Process LDAP failure codes
 
-					// Process LDAP failure codes
+				String errorMessage = ldapAuthResult.getErrorMessage();
 
-					String errorMessage = ldapAuthResult.getErrorMessage();
-
-					if (errorMessage != null) {
-						if (errorMessage.indexOf(PrefsPropsUtil.getString(
-								companyId, PropsKeys.LDAP_ERROR_USER_LOCKOUT))
-									!= -1) {
-
-							throw new UserLockoutException();
-						}
-						else if (errorMessage.indexOf(PrefsPropsUtil.getString(
-							companyId, PropsKeys.LDAP_ERROR_PASSWORD_EXPIRED))
+				if (errorMessage != null) {
+					if (errorMessage.indexOf(PrefsPropsUtil.getString(
+							companyId, PropsKeys.LDAP_ERROR_USER_LOCKOUT))
 								!= -1) {
 
-							throw new PasswordExpiredException();
-						}
+						throw new UserLockoutException();
 					}
+					else if (errorMessage.indexOf(PrefsPropsUtil.getString(
+						companyId, PropsKeys.LDAP_ERROR_PASSWORD_EXPIRED))
+							!= -1) {
 
-					if (!ldapAuthResult.isAuthenticated() &&
-						PropsValues.LDAP_IMPORT_USER_PASSWORD_ENABLED) {
-
-						return FAILURE;
+						throw new PasswordExpiredException();
 					}
+				}
+
+				if (!ldapAuthResult.isAuthenticated() &&
+					PropsValues.LDAP_IMPORT_USER_PASSWORD_ENABLED) {
+
+					return FAILURE;
 				}
 
 				// Get user or create from LDAP
@@ -298,13 +293,11 @@ public class LDAPAuth implements Authenticator {
 
 				// Process LDAP success codes
 
-				if (ldapAuthResult != null) {
-					String resultCode = ldapAuthResult.getResponseControl();
+				String resultCode = ldapAuthResult.getResponseControl();
 
-					if (resultCode.equals(LDAPAuth.RESULT_PASSWORD_RESET)) {
-						UserLocalServiceUtil.updatePasswordReset(
-							user.getUserId(), true);
-					}
+				if (resultCode.equals(LDAPAuth.RESULT_PASSWORD_RESET)) {
+					UserLocalServiceUtil.updatePasswordReset(
+						user.getUserId(), true);
 				}
 			}
 			else {

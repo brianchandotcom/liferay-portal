@@ -61,16 +61,14 @@ AUI.add(
 					_handleChooseEvent: function() {
 						var instance = this;
 
-						var uri = themeDisplay.getURLControlPanel();
-
-						uri = Liferay.Util.addParams(
+						var uri = Liferay.Util.addParams(
 							{
 								groupId: themeDisplay.getScopeGroupId(),
 								p_p_id: '15',
 								p_p_state: 'pop_up',
 								struts_action: '/journal/select_document_library'
 							},
-							uri
+							themeDisplay.getURLControlPanel()
 						);
 
 						Liferay.Util.openWindow(

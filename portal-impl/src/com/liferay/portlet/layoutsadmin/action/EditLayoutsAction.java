@@ -645,8 +645,7 @@ public class EditLayoutsAction extends PortletAction {
 		for (String key : configurableSettings.keySet()) {
 			ThemeSetting themeSetting = configurableSettings.get(key);
 
-			String type = GetterUtil.getString(
-				themeSetting.getType(), "text");
+			String type = GetterUtil.getString(themeSetting.getType(), "text");
 
 			String property =
 				device + "ThemeSettingsProperties--" + key +

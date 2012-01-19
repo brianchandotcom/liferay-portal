@@ -215,6 +215,10 @@ public class LayoutExporter {
 			parameterMap, PortletDataHandlerKeys.THEME);
 		boolean exportThemeSettings = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.THEME_REFERENCE);
+		boolean exportLogo = MapUtil.getBoolean(
+			parameterMap, PortletDataHandlerKeys.LOGO);
+		boolean exportLayoutSetSettings = MapUtil.getBoolean(
+			parameterMap, PortletDataHandlerKeys.LAYOUT_SET_SETTINGS);
 		boolean publishToRemote = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.PUBLISH_TO_REMOTE);
 		boolean updateLastPublishDate = MapUtil.getBoolean(
@@ -349,6 +353,24 @@ public class LayoutExporter {
 			headerElement.addAttribute("theme-id", layoutSet.getThemeId());
 			headerElement.addAttribute(
 				"color-scheme-id", layoutSet.getColorSchemeId());
+		}
+
+		if (exportLogo) {
+			Image image = ImageLocalServiceUtil.getImage(layoutSet.getLogoId());
+
+			if (image != null) {
+				String logoPath = getLayoutSetLogoPath(portletDataContext);
+
+				headerElement.addAttribute("logo-path", logoPath);
+
+				portletDataContext.addZipEntry(logoPath, image.getTextObj());
+			}
+		}
+
+		if (exportLayoutSetSettings) {
+			Element settingsElement = headerElement.addElement("settings");
+
+			settingsElement.addCDATA(layoutSet.getSettings());
 		}
 
 		Element cssElement = headerElement.addElement("css");
@@ -1071,6 +1093,12 @@ public class LayoutExporter {
 		sb.append(image.getType());
 
 		return sb.toString();
+	}
+
+	protected String getLayoutSetLogoPath(
+		PortletDataContext portletDataContext) {
+
+		return portletDataContext.getRootPath().concat("/logo/");
 	}
 
 	protected String getLayoutSetPrototype(

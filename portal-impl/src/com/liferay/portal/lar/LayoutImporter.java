@@ -229,6 +229,10 @@ public class LayoutImporter {
 			parameterMap, PortletDataHandlerKeys.THEME);
 		boolean importThemeSettings = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.THEME_REFERENCE);
+		boolean importLogo = MapUtil.getBoolean(
+			parameterMap, PortletDataHandlerKeys.LOGO);
+		boolean importLayoutSetSettings = MapUtil.getBoolean(
+			parameterMap, PortletDataHandlerKeys.LAYOUT_SET_SETTINGS);
 		boolean layoutSetPrototypeLinkEnabled = MapUtil.getBoolean(
 			parameterMap,
 			PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_LINK_ENABLED, true);
@@ -391,6 +395,32 @@ public class LayoutImporter {
 			if (colorSchemeIdAttribute != null) {
 				colorSchemeId = colorSchemeIdAttribute.getValue();
 			}
+		}
+		
+		if (importLogo) {
+			String logoPath = headerElement.attributeValue("logo-path");
+			
+			byte[] iconBytes = portletDataContext.getZipEntryAsByteArray(
+				logoPath);
+			
+			if ((iconBytes != null) && (iconBytes.length > 0)) {
+				File logo = FileUtil.createTempFile(iconBytes);
+
+				LayoutSetLocalServiceUtil.updateLogo(
+					groupId, privateLayout, true, logo);
+			}
+			else {
+				LayoutSetLocalServiceUtil.updateLogo(
+					groupId, privateLayout, false, (File) null);
+			}
+		}
+		
+		if (importLayoutSetSettings) {
+			String settings = GetterUtil.getString(
+				headerElement.elementText("settings"));
+			
+			LayoutSetLocalServiceUtil.updateSettings(
+				groupId, privateLayout, settings);
 		}
 
 		String css = GetterUtil.getString(headerElement.elementText("css"));

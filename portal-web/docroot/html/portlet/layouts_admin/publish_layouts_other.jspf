@@ -37,12 +37,23 @@
 				</c:choose>
 			</ul>
 		</li>
+
 		<li class="tree-item">
 			<aui:input helpMessage="export-import-theme-help" inlineLabel="right" label="theme" name="<%= PortletDataHandlerKeys.THEME %>" type="checkbox" value="<%= true %>" />
 		</li>
+
 		<li class="tree-item">
 			<aui:input helpMessage="export-import-theme-settings-help" inlineLabel="right" label="theme-settings" name="<%= PortletDataHandlerKeys.THEME_REFERENCE %>" type="checkbox" value="<%= true %>" />
 		</li>
+
+		<li class="tree-item">
+			<aui:input inlineLabel="right" label="logo" name="<%= PortletDataHandlerKeys.LOGO %>" type="checkbox" value="<%= true %>" />
+		</li>
+
+		<li class="tree-item">
+			<aui:input inlineLabel="right" label="site-pages-settings" name="<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>" type="checkbox" value="<%= true %>" />
+		</li>
+
 		<li class="tree-item">
 			<aui:input helpMessage="export-import-categories-help" inlineLabel="right" label="categories" name="<%= PortletDataHandlerKeys.CATEGORIES %>" type="checkbox" value="<%= false %>" />
 		</li>

@@ -42,6 +42,8 @@ public class PortletDataHandlerKeys {
 	public static final String LAYOUT_SET_PROTOTYPE_LINK_ENABLED =
 		"LAYOUT_SET_PROTOTYPE_LINK_ENABLED";
 
+	public static final String LAYOUT_SET_SETTINGS = "LAYOUT_SET_SETTINGS";
+
 	public static final String LAYOUTS_IMPORT_MODE = "LAYOUTS_IMPORT_MODE";
 
 	public static final String LAYOUTS_IMPORT_MODE_ADD_AS_NEW = "ADD_AS_NEW";
@@ -54,6 +56,8 @@ public class PortletDataHandlerKeys {
 
 	public static final String LAYOUTS_IMPORT_MODE_MERGE_BY_LAYOUT_UUID =
 		"MERGE_BY_LAYOUT_UUID";
+
+	public static final String LOGO = "LOGO";
 
 	public static final String PERFORM_DIRECT_BINARY_IMPORT =
 		"PERFORM_DIRECT_BINARY_IMPORT";

@@ -214,17 +214,18 @@ public class EditLayoutSetAction extends EditLayoutsAction {
 				inputStream.mark(0);
 			}
 
-			LayoutSetServiceUtil.updateLogo(
-				liveGroupId, privateLayout, useLogo, inputStream, false);
+			long groupId = liveGroupId;
+
+			if (stagingGroupId > 0) {
+				groupId = stagingGroupId;
+			}
 
 			if (inputStream != null) {
 				inputStream.reset();
 			}
 
-			if (stagingGroupId > 0) {
-				LayoutSetServiceUtil.updateLogo(
-					stagingGroupId, privateLayout, useLogo, inputStream, false);
-			}
+			LayoutSetServiceUtil.updateLogo(
+				groupId, privateLayout, useLogo, inputStream, false);
 		}
 		finally {
 			StreamUtil.cleanUp(inputStream);
@@ -297,14 +298,14 @@ public class EditLayoutSetAction extends EditLayoutsAction {
 
 		settingsProperties.putAll(typeSettingsProperties);
 
-		LayoutSetServiceUtil.updateSettings(
-			liveGroupId, privateLayout, settingsProperties.toString());
+		long groupId = liveGroupId;
 
 		if (stagingGroupId > 0) {
-			LayoutSetServiceUtil.updateSettings(
-				stagingGroupId, privateLayout,
-				typeSettingsProperties.toString());
+			groupId = stagingGroupId;
 		}
+
+		LayoutSetServiceUtil.updateSettings(
+			groupId, privateLayout, settingsProperties.toString());
 	}
 
 }

@@ -62,8 +62,16 @@ LayoutSet selLayoutSet = ((LayoutSet)request.getAttribute("edit_pages.jsp-selLay
 			url="javascript:;"
 		/>
 
+		<%
+		long logoId = selLayoutSet.getLogoId();
+
+		if (logoId == 0) {
+			logoId = selLayoutSet.getStagingLogoId();
+		}
+		%>
+
 		<div class="lfr-change-logo" id="<portlet:namespace />logoContainer">
-			<img alt="<liferay-ui:message key="logo" />" src="<%= themeDisplay.getPathImage() %>/layout_set_logo?img_id=<%= selLayoutSet.getLogoId() %>&t=<%= WebServerServletTokenUtil.getToken(selLayoutSet.getLogoId()) %>" />
+			<img alt="<liferay-ui:message key="logo" />" src="<%= themeDisplay.getPathImage() %>/layout_set_logo?img_id=<%= logoId %>&t=<%= WebServerServletTokenUtil.getToken(selLayoutSet.getLogoId()) %>" />
 		</div>
 	</c:if>
 

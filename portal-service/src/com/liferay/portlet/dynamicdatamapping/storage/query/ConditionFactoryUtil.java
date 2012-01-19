@@ -47,16 +47,16 @@ public class ConditionFactoryUtil {
 		return getConditionFactory().in(name, value);
 	}
 
+	public static Condition like(String name, Object value) {
+		return getConditionFactory().like(name, value);
+	}
+
 	public static Condition lt(String name, Object value) {
 		return getConditionFactory().lt(name, value);
 	}
 
 	public static Condition lte(String name, Object value) {
 		return getConditionFactory().lte(name, value);
-	}
-
-	public static Condition like(String name, Object value) {
-		return getConditionFactory().like(name, value);
 	}
 
 	public static Condition ne(String name, Object value) {

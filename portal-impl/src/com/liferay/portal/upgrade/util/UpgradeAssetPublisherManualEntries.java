@@ -37,6 +37,36 @@ import javax.portlet.PortletPreferences;
 public class UpgradeAssetPublisherManualEntries
 	extends BaseUpgradePortletPreferences {
 
+	public static void upgradeToAssetEntryIdElement(Element rootElement) {
+		Element assetIdElement = rootElement.element("asset-id");
+
+		if (Validator.isNotNull(assetIdElement)) {
+			String assetEntryId = assetIdElement.getText();
+
+			Element assetEntryIdElement = rootElement.addElement(
+				"assetEntryId");
+
+			assetEntryIdElement.addText(assetEntryId);
+
+			rootElement.remove(assetIdElement);
+		}
+	}
+
+	public static void upgradeToAssetEntryTypeElement(Element rootElement) {
+		Element assetTypeElement = rootElement.element("asset-type");
+
+		if (Validator.isNotNull(assetTypeElement)) {
+			String assetEntryType = assetTypeElement.getText();
+
+			Element assetEntryTypeElement = rootElement.addElement(
+				"assetEntryType");
+
+			assetEntryTypeElement.addText(assetEntryType);
+
+			rootElement.remove(assetTypeElement);
+		}
+	}
+
 	public static void upgradeToAssetEntryUuidElement(Element rootElement)
 		throws Exception {
 
@@ -71,36 +101,6 @@ public class UpgradeAssetPublisherManualEntries
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
-		}
-	}
-
-	public static void upgradeToAssetEntryIdElement(Element rootElement) {
-		Element assetIdElement = rootElement.element("asset-id");
-
-		if (Validator.isNotNull(assetIdElement)) {
-			String assetEntryId = assetIdElement.getText();
-
-			Element assetEntryIdElement = rootElement.addElement(
-				"assetEntryId");
-
-			assetEntryIdElement.addText(assetEntryId);
-
-			rootElement.remove(assetIdElement);
-		}
-	}
-
-	public static void upgradeToAssetEntryTypeElement(Element rootElement) {
-		Element assetTypeElement = rootElement.element("asset-type");
-
-		if (Validator.isNotNull(assetTypeElement)) {
-			String assetEntryType = assetTypeElement.getText();
-
-			Element assetEntryTypeElement = rootElement.addElement(
-				"assetEntryType");
-
-			assetEntryTypeElement.addText(assetEntryType);
-
-			rootElement.remove(assetTypeElement);
 		}
 	}
 

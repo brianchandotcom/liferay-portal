@@ -119,14 +119,6 @@ public class OSGiServiceUtil {
 		_instance._startBundle(bundleId, options);
 	}
 
-	public static void stopFramework() throws Exception {
-		_instance._stopFramework();
-	}
-
-	public static void stopRuntime() throws Exception {
-		_instance._stopRuntime();
-	}
-
 	public static void stopBundle(long bundleId) throws PortalException {
 		_instance._stopBundle(bundleId);
 	}
@@ -135,6 +127,14 @@ public class OSGiServiceUtil {
 		throws PortalException {
 
 		_instance._stopBundle(bundleId, options);
+	}
+
+	public static void stopFramework() throws Exception {
+		_instance._stopFramework();
+	}
+
+	public static void stopRuntime() throws Exception {
+		_instance._stopRuntime();
 	}
 
 	public static void uninstallBundle(long bundleId) throws PortalException {

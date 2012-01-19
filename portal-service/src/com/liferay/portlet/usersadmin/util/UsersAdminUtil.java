@@ -191,6 +191,10 @@ public class UsersAdminUtil {
 		return getUsersAdmin().getUsers(hits);
 	}
 
+	public static UsersAdmin getUsersAdmin() {
+		return _usersAdmin;
+	}
+
 	public static List<Website> getWebsites(ActionRequest actionRequest) {
 		return getUsersAdmin().getWebsites(actionRequest);
 	}
@@ -254,10 +258,6 @@ public class UsersAdminUtil {
 		throws PortalException, SystemException {
 
 		getUsersAdmin().updateWebsites(className, classPK, websites);
-	}
-
-	public static UsersAdmin getUsersAdmin() {
-		return _usersAdmin;
 	}
 
 	public void setUsersAdmin(UsersAdmin usersAdmin) {

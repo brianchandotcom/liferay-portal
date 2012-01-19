@@ -419,6 +419,10 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 				servletContext, this, portletId, path);
 		}
 
+		if (Validator.isNull(path)) {
+			return false;
+		}
+
 		String key = path;
 
 		if (Validator.isNotNull(portletId)) {

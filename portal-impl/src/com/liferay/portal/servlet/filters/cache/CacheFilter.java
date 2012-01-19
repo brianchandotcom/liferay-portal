@@ -216,10 +216,13 @@ public class CacheFilter extends BasePortalFilter {
 
 		if (Validator.isNull(friendlyURL)) {
 			try {
-				return LayoutLocalServiceUtil.getDefaultPlid(
+				long plid = LayoutLocalServiceUtil.getDefaultPlid(
 					groupId, privateLayout);
-			} catch (SystemException se) {
-				_log.warn(se);
+
+				return plid;
+			}
+			catch (Exception e) {
+				_log.warn(e);
 
 				return 0;
 			}

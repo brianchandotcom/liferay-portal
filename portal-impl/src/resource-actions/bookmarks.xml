@@ -36,6 +36,7 @@
 				<action-key>VIEW</action-key>
 			</supports>
 			<site-member-defaults>
+				<action-key>ADD_ENTRY</action-key>
 				<action-key>VIEW</action-key>
 			</site-member-defaults>
 			<guest-defaults>

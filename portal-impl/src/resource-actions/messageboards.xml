@@ -61,6 +61,10 @@
 				<action-key>VIEW</action-key>
 			</supports>
 			<site-member-defaults>
+				<action-key>ADD_FILE</action-key>
+				<action-key>ADD_MESSAGE</action-key>
+				<action-key>REPLY_TO_MESSAGE</action-key>
+				<action-key>SUBSCRIBE</action-key>
 				<action-key>VIEW</action-key>
 			</site-member-defaults>
 			<guest-defaults>

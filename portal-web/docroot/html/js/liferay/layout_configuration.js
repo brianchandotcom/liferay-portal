@@ -65,7 +65,9 @@
 			var DDM = A.DD.DDM;
 			var Layout = Liferay.Layout;
 
-			var CSS_REPAINT = '_repaint_';
+			var CSS_REPAINT = 'lfr-helper-repaint';
+
+			var FORCE_REPAINT = (Liferay.Browser.isIe() && Liferay.Browser.getMajorVersion() === 9);
 
 			A.mix(
 				LayoutConfiguration,
@@ -126,6 +128,10 @@
 								}
 							);
 
+							var body = A.getBody();
+
+							var repaintTask = A.debounce(body.toggleClass, 10, body, CSS_REPAINT);
+
 							new A.LiveSearch(
 								{
 									after: {
@@ -144,16 +150,8 @@
 												instance.portlets.show();
 											}
 
-											if (A.UA.ie === 9) {
-												var body = A.getBody();
-
-												var action = body.addClass;
-
-												if (body.hasClass(CSS_REPAINT)) {
-													action = body.removeClass;
-												}
-
-												action.call(body, CSS_REPAINT);
+											if (FORCE_REPAINT) {
+												repaintTask();
 											}
 										}
 									},

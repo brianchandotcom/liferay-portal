@@ -37,16 +37,17 @@ public class AudioProcessorUtil {
 		return _audioProcessor;
 	}
 
-	public static InputStream getPreviewAsStream(FileVersion fileVersion)
+	public static InputStream getPreviewAsStream(
+			FileVersion fileVersion, String type)
 		throws Exception {
 
-		return getAudioProcessor().getPreviewAsStream(fileVersion);
+		return getAudioProcessor().getPreviewAsStream(fileVersion, type);
 	}
 
-	public static long getPreviewFileSize(FileVersion fileVersion)
+	public static long getPreviewFileSize(FileVersion fileVersion, String type)
 		throws Exception {
 
-		return getAudioProcessor().getPreviewFileSize(fileVersion);
+		return getAudioProcessor().getPreviewFileSize(fileVersion, type);
 	}
 
 	public static boolean hasAudio(FileVersion fileVersion) {

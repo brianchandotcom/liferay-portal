@@ -52,10 +52,14 @@
 					String src = themeDisplay.getPathThemeImages() + "/file_system/large/" + DLUtil.getGenericName(fileEntry.getExtension()) + ".png";
 
 					int playerHeight = 500;
-					String videoDataOptions = StringPool.BLANK;
+					String dataOptions = StringPool.BLANK;
 
 					if (hasAudio) {
 						href = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, HtmlUtil.escapeURL("&audioPreview=1") + "&supportedAudio=1&mediaGallery=1");
+
+						for (String audioContainer : PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS) {
+							dataOptions += "&" + audioContainer + "PreviewURL=" + HtmlUtil.escapeURL(DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&supportedAudio=1&audioPreview=1&type=" + audioContainer));
+						}
 
 						playerHeight = 43;
 					}
@@ -72,12 +76,12 @@
 						src = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1");
 
 						for (String videoContainer : PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS) {
-							videoDataOptions += "&" + videoContainer + "PreviewURL=" + HtmlUtil.escapeURL(DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&supportedVideo=1&videoPreview=1&type=" + videoContainer));
+							dataOptions += "&" + videoContainer + "PreviewURL=" + HtmlUtil.escapeURL(DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&supportedVideo=1&videoPreview=1&type=" + videoContainer));
 						}
 					}
 					%>
 
-					<a class="image-thumbnail preview" <%= (hasAudio || hasVideo) ? "data-options=\"height=" + playerHeight + "&thumbnailURL=" + HtmlUtil.escapeURL(DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1")) + "&width=640" + videoDataOptions + "\"" : StringPool.BLANK %> href="<%= href %>" fileEntryId="<%= fileEntry.getFileEntryId() %>" title="<%= HtmlUtil.escape(fileEntry.getTitle()) + " - " + HtmlUtil.escape(fileEntry.getDescription()) %>">
+					<a class="image-thumbnail preview" <%= (hasAudio || hasVideo) ? "data-options=\"height=" + playerHeight + "&thumbnailURL=" + HtmlUtil.escapeURL(DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1")) + "&width=640" + dataOptions + "\"" : StringPool.BLANK %> href="<%= href %>" fileEntryId="<%= fileEntry.getFileEntryId() %>" title="<%= HtmlUtil.escape(fileEntry.getTitle()) + " - " + HtmlUtil.escape(fileEntry.getDescription()) %>">
 						<img alt="<%= HtmlUtil.escape(fileEntry.getTitle()) + " - " + HtmlUtil.escape(fileEntry.getDescription()) %>" border="no" src="<%= src %>" style="max-height: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT %>px; max-width: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH %>px;" />
 
 						<span class="image-title"><%= HtmlUtil.escape(fileVersion.getTitle()) %></span>
@@ -259,13 +263,15 @@ embeddedPlayerURL.setParameter("struts_action", "/image_gallery_display/embedded
 				{
 					cfg: {
 						'providers.liferay': {
-							container: '<iframe frameborder="0" width="{width}" height="{height}" scrolling="no" src="<%= embeddedPlayerURL.toString() %>&<portlet:namespace />audio={media}&<portlet:namespace />thumbnailURL={thumbnailURL}&<portlet:namespace />mp4PreviewURL={mp4PreviewURL}&<portlet:namespace />ogvPreviewURL={ogvPreviewURL}"></iframe>',
+							container: '<iframe frameborder="0" width="{width}" height="{height}" scrolling="no" src="<%= embeddedPlayerURL.toString() %>&<portlet:namespace />thumbnailURL={thumbnailURL}&<portlet:namespace />mp3PreviewURL={mp3PreviewURL}&<portlet:namespace />mp4PreviewURL={mp4PreviewURL}&<portlet:namespace />oggPreviewURL={oggPreviewURL}&<portlet:namespace />ogvPreviewURL={ogvPreviewURL}"></iframe>',
 							matcher: /(.+)&mediaGallery=1/,
 							options: A.merge(
 								A.MediaViewerPlugin.DEFAULT_OPTIONS,
 								{
 									'thumbnailURL': '',
+									'mp3PreviewURL': '',
 									'mp4PreviewURL': '',
+									'oggPreviewURL': '',
 									'ogvPreviewURL': ''
 								}
 							),

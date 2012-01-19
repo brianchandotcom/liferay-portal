@@ -26,6 +26,7 @@ import com.xuggle.xuggler.IAudioSamples.Format;
 import com.xuggle.xuggler.IAudioSamples;
 import com.xuggle.xuggler.ICodec;
 import com.xuggle.xuggler.IContainer;
+import com.xuggle.xuggler.IContainerFormat;
 import com.xuggle.xuggler.IPacket;
 import com.xuggle.xuggler.IPixelFormat;
 import com.xuggle.xuggler.IRational;
@@ -415,6 +416,15 @@ public abstract class LiferayConverter {
 	protected int getAudioEncodingChannels(
 		IContainer outputIContainer, int channels) {
 
+		IContainerFormat iContainerFormat =
+			outputIContainer.getContainerFormat();
+
+		String outputFormat = iContainerFormat.getOutputFormatShortName();
+
+		if (outputFormat.equals("ogg")) {
+			return 2;
+		}
+
 		if ((channels == 0) || (channels > 2)) {
 			channels = 2;
 		}
@@ -423,6 +433,15 @@ public abstract class LiferayConverter {
 	}
 
 	protected ICodec getAudioEncodingICodec(IContainer outputIContainer) {
+		IContainerFormat iContainerFormat =
+			outputIContainer.getContainerFormat();
+
+		String outputFormat = iContainerFormat.getOutputFormatShortName();
+
+		if (outputFormat.equals("ogg")) {
+			return ICodec.findEncodingCodec(ICodec.ID.CODEC_ID_VORBIS);
+		}
+
 		return null;
 	}
 

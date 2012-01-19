@@ -17,40 +17,59 @@
 <%@ include file="/html/portlet/image_gallery_display/init.jsp" %>
 
 <%
-boolean supportedAudio = ParamUtil.getBoolean(request, "supportedAudio");
-boolean supportedVideo = ParamUtil.getBoolean(request, "supportedVideo");
+boolean supportedAudio = false;
+boolean supportedVideo = false;
 
-String audioPreviewURL = ParamUtil.getString(request, "audio");
+String mp3PreviewURL = ParamUtil.getString(request, "mp3PreviewURL");
 String mp4PreviewURL = ParamUtil.getString(request, "mp4PreviewURL");
+String oggPreviewURL = ParamUtil.getString(request, "oggPreviewURL");
 String ogvPreviewURL = ParamUtil.getString(request, "ogvPreviewURL");
 String videoThumbnailURL = ParamUtil.getString(request, "thumbnailURL");
 
-String[] previewFileURLs = null;
+List<String> previewFileURLs = new ArrayList<String>(4);
 
-if (Validator.isNotNull(mp4PreviewURL) && Validator.isNotNull(ogvPreviewURL)){
-	previewFileURLs = new String[] {mp4PreviewURL, ogvPreviewURL};
+if (Validator.isNotNull(mp3PreviewURL)) {
+	previewFileURLs.add(mp3PreviewURL);
+
+	supportedAudio = true;
 }
-else if (Validator.isNotNull(mp4PreviewURL) || Validator.isNotNull(ogvPreviewURL)){
-	if (mp4PreviewURL != null) {
-		previewFileURLs = new String[] {mp4PreviewURL};
-	}
-	else {
-		previewFileURLs = new String[] {ogvPreviewURL};
-	}
+
+if (Validator.isNotNull(mp4PreviewURL)) {
+	previewFileURLs.add(mp4PreviewURL);
+
+	supportedVideo = true;
 }
-else {
-	previewFileURLs = new String[] {audioPreviewURL};
+
+if (Validator.isNotNull(oggPreviewURL)) {
+	previewFileURLs.add(oggPreviewURL);
+
+	supportedAudio = true;
+}
+
+if (Validator.isNotNull(ogvPreviewURL)) {
+	previewFileURLs.add(ogvPreviewURL);
+
+	supportedVideo = true;
 }
 
 request.setAttribute("view_file_entry.jsp-supportedAudio", String.valueOf(supportedAudio));
 request.setAttribute("view_file_entry.jsp-supportedVideo", String.valueOf(supportedVideo));
 
-request.setAttribute("view_file_entry.jsp-previewFileURLs", previewFileURLs);
+request.setAttribute("view_file_entry.jsp-previewFileURLs", previewFileURLs.toArray(new String[0]));
 request.setAttribute("view_file_entry.jsp-videoThumbnailURL", videoThumbnailURL);
 %>
 
-<div class="lfr-preview-file lfr-preview-video" id="<portlet:namespace />previewFile">
-	<div class="lfr-preview-file-content lfr-preview-video-content" id="<portlet:namespace />previewFileContent"></div>
-</div>
+<c:choose>
+	<c:when test="<%= supportedAudio %>">
+		<div class="lfr-preview-audio" id="<portlet:namespace />previewFile">
+			<div class="lfr-preview-audio-content" id="<portlet:namespace />previewFileContent"></div>
+		</div>
+	</c:when>
+	<c:when test="<%= supportedVideo %>">
+		<div class="lfr-preview-video" id="<portlet:namespace />previewFile">
+			<div class="lfr-preview-video-content" id="<portlet:namespace />previewFileContent"></div>
+		</div>
+	</c:when>
+</c:choose>
 
 <liferay-util:include page="/html/portlet/document_library/player.jsp" />

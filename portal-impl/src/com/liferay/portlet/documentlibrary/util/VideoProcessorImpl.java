@@ -44,7 +44,6 @@ import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
-import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.util.log4j.Log4JUtil;
 
 import java.awt.image.RenderedImage;
@@ -185,7 +184,7 @@ public class VideoProcessorImpl
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
 
-		if (!isSupported(fileVersion) || !_hasPreviews(fileVersion)) {
+		if (!isSupported(fileVersion) || !hasPreviews(fileVersion)) {
 			return;
 		}
 
@@ -364,8 +363,8 @@ public class VideoProcessorImpl
 		String tempFileId = DLUtil.getTempFileId(
 			fileVersion.getFileEntryId(), fileVersion.getVersion());
 
-		File videoTempFile = _getVideoTempFile(
-			tempFileId, fileVersion.getExtension());
+		File videoTempFile = FileUtil.createTempFile(
+			fileVersion.getExtension());
 
 		File[] previewTempFiles = new File[_PREVIEW_TYPES.length];
 
@@ -384,7 +383,7 @@ public class VideoProcessorImpl
 
 			File file = null;
 
-			if (!_hasPreviews(fileVersion) || !hasThumbnails(fileVersion)) {
+			if (!hasPreviews(fileVersion) || !hasThumbnails(fileVersion)) {
 				if (fileVersion instanceof LiferayFileVersion) {
 					try {
 						LiferayFileVersion liferayFileVersion =
@@ -406,7 +405,7 @@ public class VideoProcessorImpl
 				}
 			}
 
-			if (!_hasPreviews(fileVersion)) {
+			if (!hasPreviews(fileVersion)) {
 				try {
 					_generateVideoXuggler(
 						fileVersion, file, previewTempFiles,
@@ -448,7 +447,7 @@ public class VideoProcessorImpl
 			String containerType)
 		throws Exception {
 
-		if (_hasPreview(fileVersion, containerType)) {
+		if (hasPreview(fileVersion, containerType)) {
 			return;
 		}
 
@@ -514,73 +513,12 @@ public class VideoProcessorImpl
 		}
 	}
 
-	private File _getVideoTempFile(String tempFileId, String targetExtension) {
-		String videoTempFilePath = _getVideoTempFilePath(
-			tempFileId, targetExtension);
-
-		return new File(videoTempFilePath);
-	}
-
-	private String _getVideoTempFilePath(
-		String tempFileId, String targetExtension) {
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(PREVIEW_TMP_PATH);
-		sb.append(tempFileId);
-
-		for (int i = 0; i < _PREVIEW_TYPES.length; i++) {
-			if (_PREVIEW_TYPES[i].equals(targetExtension)) {
-				sb.append("_tmp");
-
-				break;
-			}
-		}
-
-		sb.append(StringPool.PERIOD);
-		sb.append(targetExtension);
-
-		return sb.toString();
-	}
-
-	private boolean _hasPreview(FileVersion fileVersion, String containerType)
-		throws Exception {
-
-		String previewFilePath = getPreviewFilePath(fileVersion, containerType);
-
-		if (DLStoreUtil.hasFile(
-				fileVersion.getCompanyId(), REPOSITORY_ID, previewFilePath)) {
-
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	private boolean _hasPreviews(FileVersion fileVersion) throws Exception {
-		int previewsCount = 0;
-
-		for (int i = 0; i < _PREVIEW_TYPES.length; i++) {
-			if (_hasPreview(fileVersion, _PREVIEW_TYPES[i])) {
-				previewsCount++;
-			}
-		}
-
-		if (previewsCount == _PREVIEW_TYPES.length) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
 	private boolean _hasVideo(FileVersion fileVersion) throws Exception {
 		if (!isSupported(fileVersion)) {
 			return false;
 		}
 
-		return _hasPreviews(fileVersion) && hasThumbnails(fileVersion);
+		return hasPreviews(fileVersion) && hasThumbnails(fileVersion);
 	}
 
 	private void _queueGeneration(FileVersion fileVersion) {

@@ -306,8 +306,8 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 		AssetEntryQuery originalEntryQuery,
 		AssetEntryQuery filteredEntryQuery) {
 
-		if ((originalEntryQuery.getAllCategoryIds().length >
-				filteredEntryQuery.getAllCategoryIds().length)) {
+		if (originalEntryQuery.getAllCategoryIds().length >
+				filteredEntryQuery.getAllCategoryIds().length) {
 
 			// No results will be available if the user must have access to all
 			// category ids, but the user has access to fewer category ids in
@@ -327,8 +327,8 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 			return true;
 		}
 
-		if (((originalEntryQuery.getAnyCategoryIds().length > 0) &&
-			 (filteredEntryQuery.getAnyCategoryIds().length == 0))) {
+		if ((originalEntryQuery.getAnyCategoryIds().length > 0) &&
+			(filteredEntryQuery.getAnyCategoryIds().length == 0)) {
 
 			// No results will be available if the original entry query
 			// specified at least one category id, but the filtered entry query

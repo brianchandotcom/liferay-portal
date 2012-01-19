@@ -84,7 +84,7 @@ public class DirectServletRegistry {
 			long lastModified = _getFileLastModified(path, servlet);
 
 			if ((lastModified == 0) ||
-				(lastModified > servletInfo.getLastModified())) {
+				(lastModified != servletInfo.getLastModified())) {
 
 				_servletInfos.remove(path);
 
@@ -154,24 +154,34 @@ public class DirectServletRegistry {
 				return servlet;
 			}
 
+			boolean reloadServlet = false;
+
 			for (String dependant : dependants) {
 				long lastModified = _getFileLastModified(dependant, servlet);
 
+				Long previousLastModified = _dependantTimestamps.get(dependant);
+
+				if (previousLastModified == null) {
+					previousLastModified = lastModified;
+				}
+
 				if ((lastModified == 0) ||
-					(lastModified > servletInfo.getLastModified())) {
+					(lastModified != previousLastModified.longValue())) {
 
-					_servletInfos.remove(path);
+					reloadServlet = true;
 
-					_updateFileLastModified(path, servlet);
-
-					servlet = null;
+					_dependantTimestamps.put(dependant, lastModified);
 
 					if (_log.isDebugEnabled()) {
 						_log.debug("Reload dependent " + dependant);
 					}
-
-					break;
 				}
+			}
+
+			if (reloadServlet) {
+				_servletInfos.remove(path);
+
+				servlet = null;
 			}
 		}
 		catch (NoSuchMethodException nsme) {
@@ -190,21 +200,12 @@ public class DirectServletRegistry {
 		return servlet;
 	}
 
-	private void _updateFileLastModified(String path, Servlet servlet) {
-		ServletConfig servletConfig = servlet.getServletConfig();
-
-		ServletContext servletContext = servletConfig.getServletContext();
-
-		String rootPath = servletContext.getRealPath(StringPool.BLANK);
-
-		File file = new File(rootPath, path);
-
-		file.setLastModified(System.currentTimeMillis());
-	}
-
 	private static final boolean _DIRECT_SERVLET_CONTEXT_RELOAD =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.DIRECT_SERVLET_CONTEXT_RELOAD));
+
+	private Map<String, Long> _dependantTimestamps =
+		new ConcurrentHashMap<String, Long>();
 
 	private static Log _log = LogFactoryUtil.getLog(
 		DirectServletRegistry.class);

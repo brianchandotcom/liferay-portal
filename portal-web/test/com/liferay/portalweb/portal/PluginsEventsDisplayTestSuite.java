@@ -14,7 +14,7 @@
 
 package com.liferay.portalweb.portal;
 
-import com.liferay.portalweb.plugins.todaysevents.TodaysEventsTestPlan;
+import com.liferay.portalweb.plugins.eventsdisplay.EventsDisplayTestPlan;
 import com.liferay.portalweb.portal.login.LoginTests;
 
 import junit.framework.Test;
@@ -23,13 +23,13 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class PluginsTodaysEventsTestSuite extends BaseTestSuite {
+public class PluginsEventsDisplayTestSuite extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(LoginTests.suite());
-		testSuite.addTest(TodaysEventsTestPlan.suite());
+		testSuite.addTest(EventsDisplayTestPlan.suite());
 
 		testSuite.addTestSuite(StopSeleniumTest.class);
 

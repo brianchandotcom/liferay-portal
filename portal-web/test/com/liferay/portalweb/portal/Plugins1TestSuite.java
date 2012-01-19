@@ -18,6 +18,7 @@ import com.liferay.portalweb.plugins.analogclock.AnalogClockTests;
 import com.liferay.portalweb.plugins.assetmanagementsystem.AssetManagementSystemTestPlan;
 import com.liferay.portalweb.plugins.biblegateway.BibleGatewayTests;
 import com.liferay.portalweb.plugins.chat.ChatTests;
+import com.liferay.portalweb.plugins.eventsdisplay.EventsDisplayTestPlan;
 import com.liferay.portalweb.plugins.flash.FlashTests;
 import com.liferay.portalweb.plugins.googleadsense.GoogleAdSenseTests;
 import com.liferay.portalweb.plugins.googlemaps.GoogleMapsTests;
@@ -67,6 +68,7 @@ public class Plugins1TestSuite extends BaseTestSuite {
 		testSuite.addTest(AssetManagementSystemTestPlan.suite());
 		testSuite.addTest(BibleGatewayTests.suite());
 		testSuite.addTest(ChatTests.suite());
+		testSuite.addTest(EventsDisplayTestPlan.suite());
 		testSuite.addTest(FlashTests.suite());
 		testSuite.addTest(GoogleAdSenseTests.suite());
 		testSuite.addTest(GoogleMapsTests.suite());

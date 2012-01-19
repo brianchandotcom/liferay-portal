@@ -40,7 +40,6 @@ import com.liferay.portalweb.plugins.testlocalized.TestLocalizedTests;
 import com.liferay.portalweb.plugins.testmisc.TestMiscTests;
 import com.liferay.portalweb.plugins.testworkflow.TestWorkflowTests;
 import com.liferay.portalweb.plugins.todayinchristianhistory.TodayinChristianHistoryTests;
-import com.liferay.portalweb.plugins.todaysevents.TodaysEventsTestPlan;
 import com.liferay.portalweb.plugins.twitter.TwitterTests;
 import com.liferay.portalweb.plugins.weather.WeatherTests;
 import com.liferay.portalweb.plugins.webform.WebFormTests;
@@ -89,7 +88,6 @@ public class Plugins2TestSuite extends BaseTestSuite {
 		testSuite.addTest(TestMiscTests.suite());
 		testSuite.addTest(TestWorkflowTests.suite());
 		testSuite.addTest(TodayinChristianHistoryTests.suite());
-		testSuite.addTest(TodaysEventsTestPlan.suite());
 		testSuite.addTest(TwitterTests.suite());
 		testSuite.addTest(WeatherTests.suite());
 		testSuite.addTest(WebFormTests.suite());

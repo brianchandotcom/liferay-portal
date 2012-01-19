@@ -35,7 +35,7 @@
 .taglib-discussion .lfr-discussion-details .taglib-user-display {
 	padding-bottom: 0;
 	padding-top: 0;
-	overflow: auto;
+	word-wrap: break-word;
 }
 
 .taglib-discussion .lfr-discussion-details .taglib-user-display .user-details .user-name, .taglib-discussion .lfr-discussion-details .taglib-user-display .user-profile-image {

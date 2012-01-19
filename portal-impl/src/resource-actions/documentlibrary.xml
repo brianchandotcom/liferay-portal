@@ -43,6 +43,9 @@
 				<action-key>VIEW</action-key>
 			</supports>
 			<site-member-defaults>
+				<action-key>ADD_DOCUMENT</action-key>
+				<action-key>ADD_FOLDER</action-key>
+				<action-key>ADD_SHORTCUT</action-key>
 				<action-key>VIEW</action-key>
 			</site-member-defaults>
 			<guest-defaults>

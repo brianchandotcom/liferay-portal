@@ -487,11 +487,11 @@ public class MinifierFilter extends BasePortalFilter {
 
 	private static final String _CSS_COMMENT_END = "*/";
 
+	private static final String _CSS_EXTENSION = ".css";
+
 	private static final String _CSS_IMPORT_BEGIN = "@import url(";
 
 	private static final String _CSS_IMPORT_END = ");";
-
-	private static final String _CSS_EXTENSION = ".css";
 
 	private static final String _JAVASCRIPT_EXTENSION = ".js";
 

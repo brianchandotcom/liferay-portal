@@ -212,20 +212,20 @@ public class FuseMailHook implements Hook {
 		return post;
 	}
 
-	private static final String _URL = PropsUtil.get(
-		PropsKeys.MAIL_HOOK_FUSEMAIL_URL);
-
-	private static final String _USERNAME = PropsUtil.get(
-		PropsKeys.MAIL_HOOK_FUSEMAIL_USERNAME);
-
-	private static final String _PASSWORD = PropsUtil.get(
-		PropsKeys.MAIL_HOOK_FUSEMAIL_PASSWORD);
-
 	private static final String _ACCOUNT_TYPE = PropsUtil.get(
 		PropsKeys.MAIL_HOOK_FUSEMAIL_ACCOUNT_TYPE);
 
 	private static final String _GROUP_PARENT = PropsUtil.get(
 		PropsKeys.MAIL_HOOK_FUSEMAIL_GROUP_PARENT);
+
+	private static final String _PASSWORD = PropsUtil.get(
+		PropsKeys.MAIL_HOOK_FUSEMAIL_PASSWORD);
+
+	private static final String _URL = PropsUtil.get(
+		PropsKeys.MAIL_HOOK_FUSEMAIL_URL);
+
+	private static final String _USERNAME = PropsUtil.get(
+		PropsKeys.MAIL_HOOK_FUSEMAIL_USERNAME);
 
 	private static Log _log = LogFactoryUtil.getLog(FuseMailHook.class);
 

@@ -157,8 +157,8 @@ public class LuceneFields {
 		return getText(field, sb.toString());
 	}
 
-	private static final String _UID_PORTLET = "_PORTLET_";
-
 	private static final String _UID_FIELD = "_FIELD_";
+
+	private static final String _UID_PORTLET = "_PORTLET_";
 
 }

@@ -158,11 +158,11 @@ public class PanelContainerTag extends BaseBodyTagSupport implements BodyTag {
 		}
 	}
 
-	private static final String _START_PAGE =
-		"/html/taglib/ui/panel_container/start.jsp";
-
 	private static final String _END_PAGE =
 		"/html/taglib/ui/panel_container/end.jsp";
+
+	private static final String _START_PAGE =
+		"/html/taglib/ui/panel_container/start.jsp";
 
 	private String _startPage;
 	private String _endPage;

@@ -52,15 +52,11 @@ public class PortletModeFactory {
 		return portletMode;
 	}
 
-	private static final String _EDIT = PortletMode.EDIT.toString();
-
-	private static final String _HELP = PortletMode.HELP.toString();
-
-	private static final String _VIEW = PortletMode.VIEW.toString();
-
 	private static final String _ABOUT = LiferayPortletMode.ABOUT.toString();
 
 	private static final String _CONFIG = LiferayPortletMode.CONFIG.toString();
+
+	private static final String _EDIT = PortletMode.EDIT.toString();
 
 	private static final String _EDIT_DEFAULTS =
 		LiferayPortletMode.EDIT_DEFAULTS.toString();
@@ -68,10 +64,14 @@ public class PortletModeFactory {
 	private static final String _EDIT_GUEST =
 		LiferayPortletMode.EDIT_GUEST.toString();
 
+	private static final String _HELP = PortletMode.HELP.toString();
+
 	private static final String _PREVIEW =
 		LiferayPortletMode.PREVIEW.toString();
 
 	private static final String _PRINT = LiferayPortletMode.PRINT.toString();
+
+	private static final String _VIEW = PortletMode.VIEW.toString();
 
 	private static PortletModeFactory _instance = new PortletModeFactory();
 

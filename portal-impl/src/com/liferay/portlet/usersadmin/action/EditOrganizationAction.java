@@ -189,9 +189,9 @@ public class EditOrganizationAction extends PortletAction {
 		long[] deleteOrganizationIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "deleteOrganizationIds"), 0L);
 
-		for (int i = 0; i < deleteOrganizationIds.length; i++) {
+		for (long deleteOrganizationId : deleteOrganizationIds) {
 			OrganizationServiceUtil.deleteOrganization(
-				deleteOrganizationIds[i]);
+				deleteOrganizationId);
 		}
 	}
 
@@ -254,21 +254,27 @@ public class EditOrganizationAction extends PortletAction {
 
 		// Layout set prototypes
 
-		long publicLayoutSetPrototypeId = ParamUtil.getLong(
-			actionRequest, "publicLayoutSetPrototypeId");
 		long privateLayoutSetPrototypeId = ParamUtil.getLong(
 			actionRequest, "privateLayoutSetPrototypeId");
+		long publicLayoutSetPrototypeId = ParamUtil.getLong(
+			actionRequest, "publicLayoutSetPrototypeId");
 		boolean privateLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
-			actionRequest, "privateLayoutSetPrototypeLinkEnabled",
-			(privateLayoutSetPrototypeId > 0));
+			actionRequest, "privateLayoutSetPrototypeLinkEnabled");
 		boolean publicLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
-			actionRequest, "publicLayoutSetPrototypeLinkEnabled",
-			(publicLayoutSetPrototypeId > 0));
+			actionRequest, "publicLayoutSetPrototypeLinkEnabled");
+
+		if (privateLayoutSetPrototypeId <= 0) {
+			privateLayoutSetPrototypeLinkEnabled = false;
+		}
+
+		if (publicLayoutSetPrototypeId <= 0) {
+			publicLayoutSetPrototypeLinkEnabled = false;
+		}
 
 		SitesUtil.updateLayoutSetPrototypesLinks(
 			organization.getGroup(), publicLayoutSetPrototypeId,
-			privateLayoutSetPrototypeId, privateLayoutSetPrototypeLinkEnabled,
-			publicLayoutSetPrototypeLinkEnabled);
+			privateLayoutSetPrototypeId, publicLayoutSetPrototypeLinkEnabled,
+			privateLayoutSetPrototypeLinkEnabled);
 
 		// Reminder queries
 

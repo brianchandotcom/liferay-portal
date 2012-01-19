@@ -27,6 +27,11 @@ if (organization != null) {
 	Group organizationGroup = organization.getGroup();
 
 	site = organizationGroup.isSite();
+
+	if (site) {
+		LayoutLocalServiceUtil.getLayouts(organizationGroup.getGroupId(), false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+		LayoutLocalServiceUtil.getLayouts(organizationGroup.getGroupId(), true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+	}
 }
 %>
 

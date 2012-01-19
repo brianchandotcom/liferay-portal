@@ -269,12 +269,8 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			layoutSetPrototypeUuid = layoutSet.getLayoutSetPrototypeUuid();
 		}
 
-		if (Validator.isNull(layoutSetPrototypeUuid) &&
-			layoutSetPrototypeLinkEnabled) {
-
-			throw new IllegalStateException(
-				"Cannot set layoutSetPrototypeLinkEnabled to true when " +
-					"layoutSetPrototypeUuid is null");
+		if (Validator.isNull(layoutSetPrototypeUuid)) {
+			layoutSetPrototypeLinkEnabled = false;
 		}
 
 		layoutSet.setLayoutSetPrototypeLinkEnabled(

@@ -49,6 +49,32 @@ public class PortletApplicationContext extends XmlWebApplicationContext {
 		return new String[0];
 	}
 
+	protected String[] getPortletConfigLocations() {
+		String[] configLocations = getConfigLocations();
+
+		ClassLoader classLoader = PortletClassLoaderUtil.getClassLoader();
+
+		Configuration serviceBuilderPropertiesConfiguration = null;
+
+		try {
+			serviceBuilderPropertiesConfiguration =
+				ConfigurationFactoryUtil.getConfiguration(
+					classLoader, "service");
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to read service.properties");
+			}
+
+			return configLocations;
+		}
+
+		return ArrayUtil.append(
+			configLocations,
+			serviceBuilderPropertiesConfiguration.getArray(
+				PropsKeys.SPRING_CONFIGS));
+	}
+
 	@Override
 	protected void initBeanDefinitionReader(XmlBeanDefinitionReader reader) {
 		ClassLoader beanClassLoader =
@@ -88,32 +114,6 @@ public class PortletApplicationContext extends XmlWebApplicationContext {
 				}
 			}
 		}
-	}
-
-	protected String[] getPortletConfigLocations() {
-		String[] configLocations = getConfigLocations();
-
-		ClassLoader classLoader = PortletClassLoaderUtil.getClassLoader();
-
-		Configuration serviceBuilderPropertiesConfiguration = null;
-
-		try {
-			serviceBuilderPropertiesConfiguration =
-				ConfigurationFactoryUtil.getConfiguration(
-					classLoader, "service");
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to read service.properties");
-			}
-
-			return configLocations;
-		}
-
-		return ArrayUtil.append(
-			configLocations,
-			serviceBuilderPropertiesConfiguration.getArray(
-				PropsKeys.SPRING_CONFIGS));
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

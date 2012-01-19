@@ -130,20 +130,6 @@ public class JMXMessageListener extends BaseDestinationEventListener {
 		_messageBus = messageBus;
 	}
 
-	protected void unregisterDestination(Destination destination)
-		throws Exception {
-
-		String destinationName = destination.getName();
-
-		_mBeanRegistry.unregister(
-			destinationName,
-			DestinationManager.createObjectName(destinationName));
-
-		_mBeanRegistry.unregister(
-			_getStatisticsObjectNameCacheKey(destinationName),
-			DestinationStatisticsManager.createObjectName(destinationName));
-	}
-
 	protected void registerDestination(Destination destination)
 		throws Exception {
 
@@ -156,6 +142,20 @@ public class JMXMessageListener extends BaseDestinationEventListener {
 		_mBeanRegistry.replace(
 			_getStatisticsObjectNameCacheKey(destinationName),
 			new DestinationStatisticsManager(destination),
+			DestinationStatisticsManager.createObjectName(destinationName));
+	}
+
+	protected void unregisterDestination(Destination destination)
+		throws Exception {
+
+		String destinationName = destination.getName();
+
+		_mBeanRegistry.unregister(
+			destinationName,
+			DestinationManager.createObjectName(destinationName));
+
+		_mBeanRegistry.unregister(
+			_getStatisticsObjectNameCacheKey(destinationName),
 			DestinationStatisticsManager.createObjectName(destinationName));
 	}
 

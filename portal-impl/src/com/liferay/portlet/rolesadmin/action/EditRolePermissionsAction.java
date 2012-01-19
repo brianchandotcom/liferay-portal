@@ -288,42 +288,6 @@ public class EditRolePermissionsAction extends PortletAction {
 		}
 	}
 
-	protected void updateActions_6Blocks(
-			Role role, long scopeGroupId, String selResource, String actionId,
-			boolean selected, int scope, String[] groupIds)
-		throws Exception {
-
-		long companyId = role.getCompanyId();
-		long roleId = role.getRoleId();
-
-		if (selected) {
-			if (scope == ResourceConstants.SCOPE_GROUP) {
-				ResourceBlockServiceUtil.removeAllGroupScopePermissions(
-					scopeGroupId, companyId, selResource, roleId, actionId);
-				ResourceBlockServiceUtil.removeCompanyScopePermission(
-					scopeGroupId, companyId, selResource, roleId, actionId);
-
-				for (String groupId : groupIds) {
-					ResourceBlockServiceUtil.addGroupScopePermission(
-						scopeGroupId, companyId, GetterUtil.getLong(groupId),
-						selResource, roleId, actionId);
-				}
-			}
-			else {
-				ResourceBlockServiceUtil.removeAllGroupScopePermissions(
-					scopeGroupId, companyId, selResource, roleId, actionId);
-				ResourceBlockServiceUtil.addCompanyScopePermission(
-					scopeGroupId, companyId, selResource, roleId, actionId);
-			}
-		}
-		else {
-			ResourceBlockServiceUtil.removeAllGroupScopePermissions(
-				scopeGroupId, companyId, selResource, roleId, actionId);
-			ResourceBlockServiceUtil.removeCompanyScopePermission(
-				scopeGroupId, companyId, selResource, roleId, actionId);
-		}
-	}
-
 	protected void updateActions(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -440,6 +404,42 @@ public class EditRolePermissionsAction extends PortletAction {
 			redirect = redirect + "&" + Constants.CMD + "=" + Constants.VIEW;
 
 			actionResponse.sendRedirect(redirect);
+		}
+	}
+
+	protected void updateActions_6Blocks(
+			Role role, long scopeGroupId, String selResource, String actionId,
+			boolean selected, int scope, String[] groupIds)
+		throws Exception {
+
+		long companyId = role.getCompanyId();
+		long roleId = role.getRoleId();
+
+		if (selected) {
+			if (scope == ResourceConstants.SCOPE_GROUP) {
+				ResourceBlockServiceUtil.removeAllGroupScopePermissions(
+					scopeGroupId, companyId, selResource, roleId, actionId);
+				ResourceBlockServiceUtil.removeCompanyScopePermission(
+					scopeGroupId, companyId, selResource, roleId, actionId);
+
+				for (String groupId : groupIds) {
+					ResourceBlockServiceUtil.addGroupScopePermission(
+						scopeGroupId, companyId, GetterUtil.getLong(groupId),
+						selResource, roleId, actionId);
+				}
+			}
+			else {
+				ResourceBlockServiceUtil.removeAllGroupScopePermissions(
+					scopeGroupId, companyId, selResource, roleId, actionId);
+				ResourceBlockServiceUtil.addCompanyScopePermission(
+					scopeGroupId, companyId, selResource, roleId, actionId);
+			}
+		}
+		else {
+			ResourceBlockServiceUtil.removeAllGroupScopePermissions(
+				scopeGroupId, companyId, selResource, roleId, actionId);
+			ResourceBlockServiceUtil.removeCompanyScopePermission(
+				scopeGroupId, companyId, selResource, roleId, actionId);
 		}
 	}
 

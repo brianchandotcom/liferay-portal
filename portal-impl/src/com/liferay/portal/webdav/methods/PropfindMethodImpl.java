@@ -57,6 +57,23 @@ public class PropfindMethodImpl extends BasePropMethodImpl implements Method {
 		}
 	}
 
+	protected Set<QName> generateProps(Set<QName> props) {
+		props.add(DISPLAYNAME);
+		props.add(RESOURCETYPE);
+		props.add(GETCONTENTTYPE);
+		props.add(GETCONTENTLENGTH);
+		props.add(GETLASTMODIFIED);
+		props.add(LOCKDISCOVERY);
+
+		// RFC 3253 Currently Unsupported
+
+		//props.add(new Tuple("checked-in", WebDAVUtil.DAV_URI));
+		//props.add(new Tuple("checked-out", WebDAVUtil.DAV_URI));
+		//props.add(new Tuple("version-name", WebDAVUtil.DAV_URI));
+
+		return props;
+	}
+
 	protected Set<QName> getProps(WebDAVRequest webDavRequest)
 		throws InvalidRequestException {
 
@@ -113,23 +130,6 @@ public class PropfindMethodImpl extends BasePropMethodImpl implements Method {
 		catch (Exception e) {
 			throw new InvalidRequestException(e);
 		}
-	}
-
-	protected Set<QName> generateProps(Set<QName> props) {
-		props.add(DISPLAYNAME);
-		props.add(RESOURCETYPE);
-		props.add(GETCONTENTTYPE);
-		props.add(GETCONTENTLENGTH);
-		props.add(GETLASTMODIFIED);
-		props.add(LOCKDISCOVERY);
-
-		// RFC 3253 Currently Unsupported
-
-		//props.add(new Tuple("checked-in", WebDAVUtil.DAV_URI));
-		//props.add(new Tuple("checked-out", WebDAVUtil.DAV_URI));
-		//props.add(new Tuple("version-name", WebDAVUtil.DAV_URI));
-
-		return props;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(PropfindMethodImpl.class);

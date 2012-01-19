@@ -58,7 +58,7 @@ public class AddWSRPProducerDPTest extends BaseTestCase {
 		selenium.type("//input[@id='_1_WAR_wsrpportlet_name']",
 			RuntimeVariables.replace("Producer"));
 		selenium.addSelection("//select[@id='_1_WAR_wsrpportlet_availablePortletIds']",
-			RuntimeVariables.replace("label=Demo Portlet"));
+			RuntimeVariables.replace("Demo Portlet"));
 		selenium.clickAt("//button[@title='Move selected items from Available to Current.']",
 			RuntimeVariables.replace("Move Left Arrow"));
 

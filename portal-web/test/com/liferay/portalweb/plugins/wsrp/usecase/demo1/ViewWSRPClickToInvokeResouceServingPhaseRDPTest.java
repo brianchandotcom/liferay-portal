@@ -49,10 +49,10 @@ public class ViewWSRPClickToInvokeResouceServingPhaseRDPTest
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Click to invoke Resource Serving Phase"),
-			selenium.getText("link=Click to invoke Resource Serving Phase"));
-		selenium.clickAt("link=Click to invoke Resource Serving Phase",
+			selenium.getText("xPath=(//div[@class='portlet-body']/p[4]/a)[1]"));
+		selenium.clickAt("xPath=(//div[@class='portlet-body']/p[4]/a)[1]",
 			RuntimeVariables.replace("Click to invoke Resource Serving Phase"));
-		selenium.downloadFile("vcard1(1).vcf");
+		selenium.downloadFile("vcard1RDP.vcf");
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -77,8 +77,8 @@ public class ViewWSRPClickToInvokeResouceServingPhaseRDPTest
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Add"),
-			selenium.getText("//span[3]/span/ul/li/strong/a/span"));
-		selenium.clickAt("//span[3]/span/ul/li/strong/a/span",
+			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
@@ -106,7 +106,7 @@ public class ViewWSRPClickToInvokeResouceServingPhaseRDPTest
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.uploadFile("//input[@id='_20_file']",
-			RuntimeVariables.replace("vcard1(1).vcf"));
+			RuntimeVariables.replace("vcard1RDP.vcf"));
 		selenium.type("//input[@id='_20_title']",
 			RuntimeVariables.replace("Remote Demo Portlet"));
 		selenium.clickAt("//input[@value='Publish']",
@@ -137,8 +137,8 @@ public class ViewWSRPClickToInvokeResouceServingPhaseRDPTest
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Remote Demo Portlet"),
-			selenium.getText("link=Remote Demo Portlet"));
-		selenium.clickAt("link=Remote Demo Portlet",
+			selenium.getText("xPath=(//a[@class='document-link']/span[2])[2]"));
+		selenium.clickAt("xPath=(//a[@class='document-link']/span[2])[2]",
 			RuntimeVariables.replace("Remote Demo Portlet"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();

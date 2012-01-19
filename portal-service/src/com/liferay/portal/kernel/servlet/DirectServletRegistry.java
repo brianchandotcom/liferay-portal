@@ -210,10 +210,10 @@ public class DirectServletRegistry {
 	private static DirectServletRegistry _instance =
 		new DirectServletRegistry();
 
-	private Map<String, Long> _dependantTimestamps =
-		new ConcurrentHashMap<String, Long>();
 	private static boolean _reloadDependents = true;
 
+	private Map<String, Long> _dependantTimestamps =
+		new ConcurrentHashMap<String, Long>();
 	private Map<String, ServletInfo> _servletInfos =
 		new ConcurrentHashMap<String, ServletInfo>();
 

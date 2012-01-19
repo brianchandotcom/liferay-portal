@@ -69,7 +69,7 @@ int defaultSpeed = 3000;
 		if (!fileEntries.isEmpty()) {
 			FileEntry fileEntry = (FileEntry)fileEntries.get(0);
 
-			String largeSrc = DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, true, true);
+			String largeSrc = DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK);
 		%>
 
 			<img border="0" name="<portlet:namespace />slideShow" src="<%= largeSrc %>" />
@@ -89,7 +89,7 @@ int defaultSpeed = 3000;
 	for (int i = 0; i < fileEntries.size(); i++) {
 		FileEntry fileEntry = (FileEntry)fileEntries.get(i);
 
-		String largeSrc = DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, true, true);
+		String largeSrc = DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK);
 	%>
 
 		<portlet:namespace />imgArray[<%= i %>] = "<%= largeSrc %>";

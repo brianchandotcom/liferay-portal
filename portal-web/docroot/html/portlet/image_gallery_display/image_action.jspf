@@ -21,7 +21,7 @@ boolean view = GetterUtil.getBoolean((String)request.getAttribute("view_image.js
 <c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) %>">
 
 	<%
-	String downloadURL = DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, true, true);
+	String downloadURL = DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK);
 	%>
 
 	<liferay-ui:icon

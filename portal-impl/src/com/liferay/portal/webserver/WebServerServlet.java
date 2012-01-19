@@ -309,7 +309,7 @@ public class WebServerServlet extends HttpServlet {
 			String url = DLUtil.getPreviewURL(
 				new LiferayFileEntry(dlFileEntry),
 				new LiferayFileVersion(dlFileEntry.getFileVersion()),
-				themeDisplay, queryString, true, true);
+				themeDisplay, queryString);
 
 			response.setHeader(HttpHeaders.LOCATION, url);
 			response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);

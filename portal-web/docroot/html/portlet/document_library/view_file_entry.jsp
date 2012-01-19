@@ -263,12 +263,12 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 							previewQueryString = "&previewFileIndex=";
 
-							previewFileURL = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, previewQueryString, true, true);
+							previewFileURL = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, previewQueryString);
 						}
 						else if (hasVideo) {
 							previewQueryString = "&videoPreview=1";
 
-							videoThumbnailURL = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1", true, true);
+							videoThumbnailURL = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1");
 						}
 
 						if (Validator.isNotNull(previewQueryString)) {
@@ -277,7 +277,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 									previewFileURLs = new String[PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS.length];
 
 									for (int i = 0; i < PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS.length; i++) {
-										previewFileURLs[i] = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, previewQueryString + "&type=" + PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS[i], true, true);
+										previewFileURLs[i] = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, previewQueryString + "&type=" + PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS[i]);
 									}
 								}
 								else {
@@ -289,7 +289,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							else {
 								previewFileURLs = new String[1];
 
-								previewFileURLs[0] = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, previewQueryString, true, true);
+								previewFileURLs[0] = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, previewQueryString);
 							}
 
 							previewFileURL = previewFileURLs[0];
@@ -434,7 +434,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 								image="download"
 								label="<%= true %>"
 								message='<%= LanguageUtil.get(pageContext, "download") + " (" + TextFormatter.formatKB(fileVersion.getSize(), locale) + "k)" %>'
-								url="<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, true, true) %>"
+								url="<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>"
 							/>
 						</c:if>
 					</span>
@@ -450,7 +450,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 								image='<%= "../file_system/small/" + conversion %>'
 								label="<%= true %>"
 								message="<%= conversion.toUpperCase() %>"
-								url='<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&targetExtension=" + conversion, true, true) %>'
+								url='<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&targetExtension=" + conversion) %>'
 							/>
 
 						<%
@@ -801,7 +801,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 		fileEntryToolbarChildren.push(
 			{
 				handler: function(event) {
-					location.href = '<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, true, true) %>';
+					location.href = '<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>';
 				},
 				icon: 'download',
 				label: '<%= UnicodeLanguageUtil.get(pageContext, "download") %>'

@@ -380,10 +380,6 @@ public class DLUtil {
 		return mimeTypesArray;
 	}
 
-	/**
-	 * @deprecated {@link #getPreviewURL(FileEntry, FileVersion, ThemeDisplay,
-	 *             String, boolean, boolean)}
-	 */
 	public static String getPreviewURL(
 		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
 		String queryString) {

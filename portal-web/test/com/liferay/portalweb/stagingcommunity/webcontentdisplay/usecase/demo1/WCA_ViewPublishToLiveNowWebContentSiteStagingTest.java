@@ -26,53 +26,7 @@ public class WCA_ViewPublishToLiveNowWebContentSiteStagingTest
 		throws Exception {
 		selenium.open("/web/community-site-test/home");
 		loadRequiredJavaScriptModules();
-		assertTrue(selenium.isTextPresent("This is a Web Content article"));
-		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("link=Control Panel",
-			RuntimeVariables.replace("Control Panel"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		selenium.click(RuntimeVariables.replace("link=My Workflow Tasks"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		selenium.clickAt("link=Completed", RuntimeVariables.replace("Completed"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("This is a Web Content article"),
-			selenium.getText("//td[2]/a"));
-		assertEquals(RuntimeVariables.replace("Web Content"),
-			selenium.getText("//td[3]/a"));
-		assertTrue(selenium.isElementPresent("//td[4]/a"));
-		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//td[5]/a"));
-		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//tr[4]/td[1]/a"));
-		assertEquals(RuntimeVariables.replace("Home [main-variation]"),
-			selenium.getText("//tr[4]/td[2]/a"));
-		assertEquals(RuntimeVariables.replace("Page Revision"),
-			selenium.getText("//tr[4]/td[3]/a"));
-		assertTrue(selenium.isElementPresent("//tr[4]/td[4]/a"));
-		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//tr[4]/td[5]/a"));
+			selenium.getText("//div[@class='journal-content-article']/p"));
 	}
 }

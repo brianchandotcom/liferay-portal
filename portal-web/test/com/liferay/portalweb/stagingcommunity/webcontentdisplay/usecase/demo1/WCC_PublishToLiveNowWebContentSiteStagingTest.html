@@ -10,7 +10,7 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/web/community-site-test/home</td>
+	<td>/web/community-site-test/home/</td>
 	<td></td>
 </tr>
 <tr>
@@ -30,22 +30,22 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
+	<td>//span[@class='staging-icon-menu-container']/span/ul/li/strong/a</td>
 	<td>Staging Drop Down</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
 	<td>Publish to Live Now</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
 	<td>Publish to Live Now</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
 	<td>Publish to Live Now</td>
 </tr>
 <tr>
@@ -54,7 +54,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>waitForVisible</td>
 	<td>//input[@value='Publish']</td>
 	<td>Publish</td>
 </tr>
@@ -68,7 +68,6 @@
 	<td>Are you sure you want to publish these pages?</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

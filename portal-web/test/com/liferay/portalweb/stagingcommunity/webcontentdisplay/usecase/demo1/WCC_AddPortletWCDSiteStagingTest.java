@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class WCC_AddPortletWCDSiteStagingTest extends BaseTestCase {
 	public void testWCC_AddPortletWCDSiteStaging() throws Exception {
-		selenium.open("/web/community-site-test/home");
+		selenium.open("/web/community-site-test/home/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {

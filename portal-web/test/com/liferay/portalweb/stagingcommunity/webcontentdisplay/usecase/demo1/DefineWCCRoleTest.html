@@ -56,52 +56,82 @@
 <tr>
 	<td>selectAndWait</td>
 	<td>//select[@id='_128_add-permissions']</td>
-	<td>label=Web Content</td>
+	<td>Web Content</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>xPath=(//input[@name='_128_allRowIds'])[1]</td>
+	<td>WC Permissions Select All</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>xPath=(//input[@name='_128_allRowIds'])[1]</td>
-	<td>Select All</td>
+	<td>WC Permissions Select All</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>xPath=(//input[@name='_128_allRowIds'])[1]</td>
+	<td>WC Permissions Select All</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>xPath=(//input[@name='_128_allRowIds'])[2]</td>
+	<td>WC Feed Permissions Select All</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>xPath=(//input[@name='_128_allRowIds'])[2]</td>
-	<td>Select All</td>
+	<td>WC Feed Permissions Select All</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>xPath=(//input[@name='_128_allRowIds'])[2]</td>
+	<td>WC Feed Permissions Select All</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>xPath=(//input[@name='_128_allRowIds'])[3]</td>
+	<td>WC Management Permissions Select All</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>xPath=(//input[@name='_128_allRowIds'])[3]</td>
-	<td>Select All</td>
+	<td>WC Management Permissions Select All</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>xPath=(//input[@name='_128_allRowIds'])[3]</td>
+	<td>WC Management Permissions Select All</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>xPath=(//input[@name='_128_allRowIds'])[4]</td>
+	<td>WC Structure Permissions Select All</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>xPath=(//input[@name='_128_allRowIds'])[4]</td>
-	<td>Select All</td>
+	<td>WC Structure Permissions Select All</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>xPath=(//input[@name='_128_allRowIds'])[4]</td>
+	<td>WC Structure Permissions Select All</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>xPath=(//input[@name='_128_allRowIds'])[5]</td>
+	<td>WC Template Permissions Select All</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>xPath=(//input[@name='_128_allRowIds'])[5]</td>
-	<td>Select All</td>
+	<td>WC Template Permissions Select All</td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>assertChecked</td>
 	<td>xPath=(//input[@name='_128_allRowIds'])[5]</td>
-	<td>Select All</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@value='Save']</td>
-	<td>Save</td>
-</tr>
-<tr>
-	<td>selectAndWait</td>
-	<td>//select[@id='_128_add-permissions']</td>
-	<td>label=Web Content Display</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@name='_128_allRowIds']</td>
-	<td>Select All</td>
+	<td>WC Template Permissions Select All</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -113,7 +143,36 @@
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>The role permissions were updated.</td>
 </tr>
-
+<tr>
+	<td>selectAndWait</td>
+	<td>//select[@id='_128_add-permissions']</td>
+	<td>Web Content Display</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@name='_128_allRowIds']</td>
+	<td>WCD Permissions Select All</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@name='_128_allRowIds']</td>
+	<td>WCD Permissions Select All</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@name='_128_allRowIds']</td>
+	<td>WCD Permissions Select All</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Save']</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>The role permissions were updated.</td>
+</tr>
 </tbody></table>
 </body>
 </html>

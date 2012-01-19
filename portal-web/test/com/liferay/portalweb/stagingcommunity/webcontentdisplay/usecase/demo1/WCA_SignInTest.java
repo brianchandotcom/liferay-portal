@@ -51,5 +51,8 @@ public class WCA_SignInTest extends BaseTestCase {
 			RuntimeVariables.replace("Sign In"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace(
+				"You are signed in as Content Approver."),
+			selenium.getText("//div[@class='portlet-content']/div/div"));
 	}
 }

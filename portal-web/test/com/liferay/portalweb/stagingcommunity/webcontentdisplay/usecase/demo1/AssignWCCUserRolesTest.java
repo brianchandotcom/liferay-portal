@@ -71,7 +71,7 @@ public class AssignWCCUserRolesTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[6]/span[2]/a/span")) {
+				if (selenium.isVisible("//div[@id='_125_roles']/span[2]/a/span")) {
 					break;
 				}
 			}
@@ -82,8 +82,8 @@ public class AssignWCCUserRolesTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Select"),
-			selenium.getText("//div[6]/span[2]/a/span"));
-		selenium.clickAt("//div[6]/span[2]/a/span",
+			selenium.getText("//div[@id='_125_roles']/span[2]/a/span"));
+		selenium.clickAt("//div[@id='_125_roles']/span[2]/a/span",
 			RuntimeVariables.replace("Select"));
 		Thread.sleep(5000);
 		selenium.selectWindow("title=Users and Organizations");
@@ -122,9 +122,9 @@ public class AssignWCCUserRolesTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isPartialText(
-							"//div[@id='_125_communityRolesSearchContainerSearchContainer']",
-							"Staging Admin")) {
+				if (RuntimeVariables.replace("Staging Admin")
+										.equals(selenium.getText(
+								"//div[@id='_125_roles']/div[3]/div/div/table/tr[1]/td"))) {
 					break;
 				}
 			}
@@ -134,9 +134,9 @@ public class AssignWCCUserRolesTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertTrue(selenium.isPartialText(
-				"//div[@id='_125_communityRolesSearchContainerSearchContainer']",
-				"Staging Admin"));
+		assertEquals(RuntimeVariables.replace("Staging Admin"),
+			selenium.getText(
+				"//div[@id='_125_roles']/div[3]/div/div/table/tr[1]/td"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -144,7 +144,7 @@ public class AssignWCCUserRolesTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[6]/span[2]/a/span")) {
+				if (selenium.isVisible("//div[@id='_125_roles']/span[2]/a/span")) {
 					break;
 				}
 			}
@@ -155,8 +155,8 @@ public class AssignWCCUserRolesTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Select"),
-			selenium.getText("//div[6]/span[2]/a/span"));
-		selenium.clickAt("//div[6]/span[2]/a/span",
+			selenium.getText("//div[@id='_125_roles']/span[2]/a/span"));
+		selenium.clickAt("//div[@id='_125_roles']/span[2]/a/span",
 			RuntimeVariables.replace("Select"));
 		Thread.sleep(5000);
 		selenium.selectWindow("title=Users and Organizations");
@@ -195,9 +195,9 @@ public class AssignWCCUserRolesTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isPartialText(
-							"//div[@id='_125_communityRolesSearchContainerSearchContainer']",
-							"Web Content Creator")) {
+				if (RuntimeVariables.replace("Web Content Creator")
+										.equals(selenium.getText(
+								"//div[@id='_125_roles']/div[3]/div/div/table/tr[2]/td"))) {
 					break;
 				}
 			}
@@ -207,9 +207,9 @@ public class AssignWCCUserRolesTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertTrue(selenium.isPartialText(
-				"//div[@id='_125_communityRolesSearchContainerSearchContainer']",
-				"Web Content Creator"));
+		assertEquals(RuntimeVariables.replace("Web Content Creator"),
+			selenium.getText(
+				"//div[@id='_125_roles']/div[3]/div/div/table/tr[2]/td"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

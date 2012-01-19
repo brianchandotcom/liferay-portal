@@ -56,15 +56,15 @@ public class WCA_ApproveTaskMainVariationActionsSiteStagingTest
 			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Page Revision"),
 			selenium.getText("//td[3]/a"));
-		assertTrue(selenium.isElementPresent("//td[4]/a"));
+		assertTrue(selenium.isVisible("//td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
 			selenium.getText("//td[5]/a"));
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending tasks assigned to your roles."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//td[6]/span/ul/li/strong/a/span"));
-		selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
@@ -156,16 +156,22 @@ public class WCA_ApproveTaskMainVariationActionsSiteStagingTest
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Review"),
+			selenium.getText("//tr[3]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace("This is a Web Content article"),
+			selenium.getText("//tr[3]/td[2]/a"));
+		assertEquals(RuntimeVariables.replace("Web Content"),
+			selenium.getText("//tr[3]/td[3]/a"));
+		assertTrue(selenium.isVisible("//tr[3]/td[4]/a"));
+		assertEquals(RuntimeVariables.replace("Never"),
+			selenium.getText("//tr[3]/td[5]/a"));
+		assertEquals(RuntimeVariables.replace("Review"),
 			selenium.getText("//tr[4]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Home [main-variation]"),
 			selenium.getText("//tr[4]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Page Revision"),
 			selenium.getText("//tr[4]/td[3]/a"));
-		assertTrue(selenium.isElementPresent("//tr[4]/td[4]/a"));
+		assertTrue(selenium.isVisible("//tr[4]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
 			selenium.getText("//tr[4]/td[5]/a"));
-		selenium.open("/web/community-site-test/home");
-		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isTextPresent("This is a Web Content article"));
 	}
 }

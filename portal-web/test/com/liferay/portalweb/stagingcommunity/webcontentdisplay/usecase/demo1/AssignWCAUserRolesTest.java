@@ -71,7 +71,7 @@ public class AssignWCAUserRolesTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[6]/span[2]/a/span")) {
+				if (selenium.isVisible("//div[@id='_125_roles']/span[2]/a/span")) {
 					break;
 				}
 			}
@@ -82,8 +82,8 @@ public class AssignWCAUserRolesTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Select"),
-			selenium.getText("//div[6]/span[2]/a/span"));
-		selenium.clickAt("//div[6]/span[2]/a/span",
+			selenium.getText("//div[@id='_125_roles']/span[2]/a/span"));
+		selenium.clickAt("//div[@id='_125_roles']/span[2]/a/span",
 			RuntimeVariables.replace("Select"));
 		Thread.sleep(5000);
 		selenium.selectWindow("title=Users and Organizations");
@@ -122,9 +122,9 @@ public class AssignWCAUserRolesTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isPartialText(
-							"//div[@id='_125_communityRolesSearchContainerSearchContainer']",
-							"Site Content Reviewer")) {
+				if (RuntimeVariables.replace("Site Content Reviewer")
+										.equals(selenium.getText(
+								"//div[@id='_125_roles']/div[3]/div/div/table/tr[1]/td"))) {
 					break;
 				}
 			}
@@ -134,9 +134,9 @@ public class AssignWCAUserRolesTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertTrue(selenium.isPartialText(
-				"//div[@id='_125_communityRolesSearchContainerSearchContainer']",
-				"Site Content Reviewer"));
+		assertEquals(RuntimeVariables.replace("Site Content Reviewer"),
+			selenium.getText(
+				"//div[@id='_125_roles']/div[3]/div/div/table/tr[1]/td"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

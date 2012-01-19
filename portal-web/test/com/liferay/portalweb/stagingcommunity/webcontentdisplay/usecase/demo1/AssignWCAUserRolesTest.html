@@ -60,17 +60,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[6]/span[2]/a/span</td>
+	<td>//div[@id='_125_roles']/span[2]/a/span</td>
 	<td>Select</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[6]/span[2]/a/span</td>
+	<td>//div[@id='_125_roles']/span[2]/a/span</td>
 	<td>Select</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[6]/span[2]/a/span</td>
+	<td>//div[@id='_125_roles']/span[2]/a/span</td>
 	<td>Select</td>
 </tr>
 <tr>
@@ -81,7 +81,7 @@
 <tr>
 	<td>selectWindow</td>
 	<td>title=Users and Organizations</td>
-	<td></td>
+	<td>Users and Organizations</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -114,13 +114,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForPartialText</td>
-	<td>//div[@id='_125_communityRolesSearchContainerSearchContainer']</td>
+	<td>waitForText</td>
+	<td>//div[@id='_125_roles']/div[3]/div/div/table/tr[1]/td</td>
 	<td>Site Content Reviewer</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
-	<td>//div[@id='_125_communityRolesSearchContainerSearchContainer']</td>
+	<td>assertText</td>
+	<td>//div[@id='_125_roles']/div[3]/div/div/table/tr[1]/td</td>
 	<td>Site Content Reviewer</td>
 </tr>
 <tr>
@@ -133,7 +133,6 @@
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

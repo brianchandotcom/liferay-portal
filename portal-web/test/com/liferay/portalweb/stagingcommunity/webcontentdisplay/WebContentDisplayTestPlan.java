@@ -15,9 +15,8 @@
 package com.liferay.portalweb.stagingcommunity.webcontentdisplay;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.stagingcommunity.webcontentdisplay.assertcannoteditwcwebcontentwcd.AssertCannotEditWCWebContentWCDTests;
-import com.liferay.portalweb.stagingcommunity.webcontentdisplay.asserteditwcwebcontentwcd.AssertEditWCWebContentWCDTests;
 import com.liferay.portalweb.stagingcommunity.webcontentdisplay.usecase.UseCaseTestPlan;
+import com.liferay.portalweb.stagingcommunity.webcontentdisplay.wcwebcontent.WCWebContentTestPlan;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -30,9 +29,8 @@ public class WebContentDisplayTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(AssertCannotEditWCWebContentWCDTests.suite());
-		testSuite.addTest(AssertEditWCWebContentWCDTests.suite());
 		testSuite.addTest(UseCaseTestPlan.suite());
+		/*testSuite.addTest(WCWebContentTestPlan.suite());*/
 
 		return testSuite;
 	}

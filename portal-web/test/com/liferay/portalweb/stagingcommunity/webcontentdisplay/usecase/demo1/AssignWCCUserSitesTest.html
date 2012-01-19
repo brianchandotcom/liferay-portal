@@ -60,17 +60,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[4]/span/a/span</td>
+	<td>//div[@id='_125_sites']/span/a/span</td>
 	<td>Select</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[4]/span/a/span</td>
+	<td>//div[@id='_125_sites']/span/a/span</td>
 	<td>Select</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[4]/span/a/span</td>
+	<td>//div[@id='_125_sites']/span/a/span</td>
 	<td>Select</td>
 </tr>
 <tr>
@@ -81,7 +81,7 @@
 <tr>
 	<td>selectWindow</td>
 	<td>title=Users and Organizations</td>
-	<td></td>
+	<td>Users and Organizations</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -114,13 +114,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForPartialText</td>
-	<td>//div[@id='_125_groupsSearchContainer']</td>
+	<td>waitForText</td>
+	<td>//div[@id='_125_sites']/div/div/div/table/tr/td</td>
 	<td>Community Site Test</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
-	<td>//div[@id='_125_groupsSearchContainer']</td>
+	<td>assertText</td>
+	<td>//div[@id='_125_sites']/div/div/div/table/tr/td</td>
 	<td>Community Site Test</td>
 </tr>
 <tr>
@@ -133,7 +133,6 @@
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

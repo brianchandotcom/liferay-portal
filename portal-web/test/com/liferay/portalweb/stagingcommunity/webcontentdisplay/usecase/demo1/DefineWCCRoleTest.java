@@ -65,31 +65,54 @@ public class DefineWCCRoleTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.select("//select[@id='_128_add-permissions']",
-			RuntimeVariables.replace("label=Web Content"));
+			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
+		assertFalse(selenium.isChecked(
+				"xPath=(//input[@name='_128_allRowIds'])[1]"));
 		selenium.clickAt("xPath=(//input[@name='_128_allRowIds'])[1]",
-			RuntimeVariables.replace("Select All"));
+			RuntimeVariables.replace("WC Permissions Select All"));
+		assertTrue(selenium.isChecked(
+				"xPath=(//input[@name='_128_allRowIds'])[1]"));
+		assertFalse(selenium.isChecked(
+				"xPath=(//input[@name='_128_allRowIds'])[2]"));
 		selenium.clickAt("xPath=(//input[@name='_128_allRowIds'])[2]",
-			RuntimeVariables.replace("Select All"));
+			RuntimeVariables.replace("WC Feed Permissions Select All"));
+		assertTrue(selenium.isChecked(
+				"xPath=(//input[@name='_128_allRowIds'])[2]"));
+		assertFalse(selenium.isChecked(
+				"xPath=(//input[@name='_128_allRowIds'])[3]"));
 		selenium.clickAt("xPath=(//input[@name='_128_allRowIds'])[3]",
-			RuntimeVariables.replace("Select All"));
+			RuntimeVariables.replace("WC Management Permissions Select All"));
+		assertTrue(selenium.isChecked(
+				"xPath=(//input[@name='_128_allRowIds'])[3]"));
+		assertFalse(selenium.isChecked(
+				"xPath=(//input[@name='_128_allRowIds'])[4]"));
 		selenium.clickAt("xPath=(//input[@name='_128_allRowIds'])[4]",
-			RuntimeVariables.replace("Select All"));
+			RuntimeVariables.replace("WC Structure Permissions Select All"));
+		assertTrue(selenium.isChecked(
+				"xPath=(//input[@name='_128_allRowIds'])[4]"));
+		assertFalse(selenium.isChecked(
+				"xPath=(//input[@name='_128_allRowIds'])[5]"));
 		selenium.clickAt("xPath=(//input[@name='_128_allRowIds'])[5]",
-			RuntimeVariables.replace("Select All"));
-		selenium.clickAt("xPath=(//input[@name='_128_allRowIds'])[5]",
-			RuntimeVariables.replace("Select All"));
+			RuntimeVariables.replace("WC Template Permissions Select All"));
+		assertTrue(selenium.isChecked(
+				"xPath=(//input[@name='_128_allRowIds'])[5]"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace(
+				"The role permissions were updated."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.select("//select[@id='_128_add-permissions']",
-			RuntimeVariables.replace("label=Web Content Display"));
+			RuntimeVariables.replace("Web Content Display"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
+		assertFalse(selenium.isChecked("//input[@name='_128_allRowIds']"));
 		selenium.clickAt("//input[@name='_128_allRowIds']",
-			RuntimeVariables.replace("Select All"));
+			RuntimeVariables.replace("WCD Permissions Select All"));
+		assertTrue(selenium.isChecked("//input[@name='_128_allRowIds']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

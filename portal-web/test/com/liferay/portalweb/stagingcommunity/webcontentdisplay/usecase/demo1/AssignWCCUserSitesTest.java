@@ -71,7 +71,7 @@ public class AssignWCCUserSitesTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[4]/span/a/span")) {
+				if (selenium.isVisible("//div[@id='_125_sites']/span/a/span")) {
 					break;
 				}
 			}
@@ -82,8 +82,8 @@ public class AssignWCCUserSitesTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Select"),
-			selenium.getText("//div[4]/span/a/span"));
-		selenium.clickAt("//div[4]/span/a/span",
+			selenium.getText("//div[@id='_125_sites']/span/a/span"));
+		selenium.clickAt("//div[@id='_125_sites']/span/a/span",
 			RuntimeVariables.replace("Select"));
 		Thread.sleep(5000);
 		selenium.selectWindow("title=Users and Organizations");
@@ -122,9 +122,9 @@ public class AssignWCCUserSitesTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isPartialText(
-							"//div[@id='_125_groupsSearchContainer']",
-							"Community Site Test")) {
+				if (RuntimeVariables.replace("Community Site Test")
+										.equals(selenium.getText(
+								"//div[@id='_125_sites']/div/div/div/table/tr/td"))) {
 					break;
 				}
 			}
@@ -134,8 +134,8 @@ public class AssignWCCUserSitesTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertTrue(selenium.isPartialText(
-				"//div[@id='_125_groupsSearchContainer']", "Community Site Test"));
+		assertEquals(RuntimeVariables.replace("Community Site Test"),
+			selenium.getText("//div[@id='_125_sites']/div/div/div/table/tr/td"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

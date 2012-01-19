@@ -14,7 +14,7 @@
 
 package com.liferay.portalweb.stagingcommunity.webcontentdisplay.usecase.demo1;
 
-import com.liferay.portalweb.portal.BaseTests;
+import com.liferay.portalweb.portal.BaseTestSuite;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -22,14 +22,12 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class Demo1Tests extends BaseTests {
-
+public class Demo1Tests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
 		testSuite.addTestSuite(AddCommunitySiteTest.class);
 		testSuite.addTestSuite(ActivateStagingSitesTest.class);
-		testSuite.addTestSuite(EditSettingsSitePageVersioningEnabledTest.class);
+		testSuite.addTestSuite(EditSettingsSitePageVersioningPublicPagesEnabledTest.class);
 		testSuite.addTestSuite(ConfigurePageRevisionSingleApproverTest.class);
 		testSuite.addTestSuite(ConfigureWebContentSingleApproverTest.class);
 		testSuite.addTestSuite(AddSARoleTest.class);
@@ -45,51 +43,43 @@ public class Demo1Tests extends BaseTests {
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(WCC_SignInTest.class);
 		testSuite.addTestSuite(WCC_AddPortletWCDSiteStagingTest.class);
-		testSuite.addTestSuite(WCC_AddWebContentSiteStagingTest.class);
-		testSuite.addTestSuite(WCC_SignOutTest.class);
+		testSuite.addTestSuite(WCC_AddWCWebContentWCDSiteStagingTest.class);
+		testSuite.addTestSuite(WCC_ViewWCWebContentNullWCDSiteStagingTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(WCA_SignInTest.class);
-		testSuite.addTestSuite(
-			WCA_AssignToMeWebContentActionsSiteStagingTest.class);
-		testSuite.addTestSuite(
-			WCA_ApproveTaskWebContentDetailsSiteStagingTest.class);
-		testSuite.addTestSuite(WCA_SignOutTest.class);
+		testSuite.addTestSuite(WCA_AssignToMeWebContentActionsSiteStagingTest.class);
+		testSuite.addTestSuite(WCA_ApproveTaskWebContentDetailsSiteStagingTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(WCC_SignInTest.class);
-		testSuite.addTestSuite(
-			WCC_SubmitForPublicationMainVariationHomeSiteStagingTest.class);
-		testSuite.addTestSuite(
-			WCC_PublishToLiveNowWebContentSiteStagingTest.class);
-		testSuite.addTestSuite(
-			WCC_ViewPublishToLiveNowWebContentNullSiteStagingTest.class);
-		testSuite.addTestSuite(WCC_SignOutTest.class);
+		testSuite.addTestSuite(WCC_ViewApproveTaskWebContentDetailsSiteStagingTest.class);
+		testSuite.addTestSuite(WCC_SubmitForPublicationMainVariationHomeSiteStagingTest.class);
+		testSuite.addTestSuite(WCC_PublishToLiveNowWebContentSiteStagingTest.class);
+		testSuite.addTestSuite(WCC_ViewPublishToLiveNowWebContentNullSiteStagingTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(WCA_SignInTest.class);
-		testSuite.addTestSuite(
-			WCA_AssignToMeMainVariationActionsSiteStagingTest.class);
-		testSuite.addTestSuite(
-			WCA_ApproveTaskMainVariationActionsSiteStagingTest.class);
-		testSuite.addTestSuite(WCA_SignOutTest.class);
+		testSuite.addTestSuite(WCA_AssignToMeMainVariationActionsSiteStagingTest.class);
+		testSuite.addTestSuite(WCA_ApproveTaskMainVariationActionsSiteStagingTest.class);
+		testSuite.addTestSuite(WCA_ViewApproveTaskMainVariationActionsSiteStagingTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(WCC_SignInTest.class);
-		testSuite.addTestSuite(
-			WCC_PublishToLiveNowWebContentSiteStagingTest.class);
-		testSuite.addTestSuite(
-			WCC_ViewPublishToLiveNowWebContentSiteStagingTest.class);
+		testSuite.addTestSuite(WCC_ViewApproveTaskMainVariationActionsSiteStagingTest.class);
+		testSuite.addTestSuite(WCC_PublishToLiveNowWebContentSiteStagingTest.class);
+		testSuite.addTestSuite(WCC_ViewPublishToLiveNowWebContentSiteStagingTest.class);
 		testSuite.addTestSuite(WCC_ViewStagedWebContentSiteStagingTest.class);
-		testSuite.addTestSuite(WCC_SignOutTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(WCA_SignInTest.class);
-		testSuite.addTestSuite(
-			WCA_ViewPublishToLiveNowWebContentSiteStagingTest.class);
-		testSuite.addTestSuite(WCA_SignOutTest.class);
+		testSuite.addTestSuite(WCA_ViewPublishToLiveNowWebContentSiteStagingTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SignInTest.class);
-		testSuite.addTestSuite(
-			ViewPublishToLiveNowWebContentSiteStagingTest.class);
+		testSuite.addTestSuite(ViewPublishToLiveNowWebContentSiteStagingTest.class);
 		testSuite.addTestSuite(ViewStagedWebContentSiteStagingTest.class);
-		testSuite.addTestSuite(DeactivateStagingTest.class);
-		testSuite.addTestSuite(TearDownUserTest.class);
 		testSuite.addTestSuite(TearDownWebContentTest.class);
+		testSuite.addTestSuite(TearDownUserTest.class);
 		testSuite.addTestSuite(TearDownStagingWorkflowRolesTest.class);
 		testSuite.addTestSuite(TearDownWorkflowConfigurationTest.class);
+		testSuite.addTestSuite(DeactivateStagingTest.class);
 		testSuite.addTestSuite(TearDownSitesTest.class);
 
 		return testSuite;
 	}
-
 }

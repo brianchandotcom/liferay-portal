@@ -44,6 +44,7 @@ public class ViewStagedWebContentSiteStagingTest extends BaseTestCase {
 		selenium.clickAt("link=Staging", RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertTrue(selenium.isTextPresent("This is a Web Content article"));
+		assertEquals(RuntimeVariables.replace("This is a Web Content article"),
+			selenium.getText("//div[@class='journal-content-article']/p"));
 	}
 }

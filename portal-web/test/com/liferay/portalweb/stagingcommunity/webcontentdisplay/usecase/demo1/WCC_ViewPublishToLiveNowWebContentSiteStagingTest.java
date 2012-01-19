@@ -15,6 +15,7 @@
 package com.liferay.portalweb.stagingcommunity.webcontentdisplay.usecase.demo1;
 
 import com.liferay.portalweb.portal.BaseTestCase;
+import com.liferay.portalweb.portal.util.RuntimeVariables;
 
 /**
  * @author Brian Wing Shun Chan
@@ -25,6 +26,7 @@ public class WCC_ViewPublishToLiveNowWebContentSiteStagingTest
 		throws Exception {
 		selenium.open("/web/community-site-test/home");
 		loadRequiredJavaScriptModules();
-		assertTrue(selenium.isTextPresent("This is a Web Content article"));
+		assertEquals(RuntimeVariables.replace("This is a Web Content article"),
+			selenium.getText("//div[@class='journal-content-article']/p"));
 	}
 }

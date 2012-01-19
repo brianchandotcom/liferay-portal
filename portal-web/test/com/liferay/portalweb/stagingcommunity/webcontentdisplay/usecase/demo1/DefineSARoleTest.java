@@ -65,17 +65,34 @@ public class DefineSARoleTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.select("//select[@id='_128_add-permissions']",
-			RuntimeVariables.replace("label=Site administration"));
+			RuntimeVariables.replace("Site administration"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
+		assertFalse(selenium.isChecked(
+				"xPath=(//input[@name='_128_allRowIds'])[1]"));
 		selenium.clickAt("xPath=(//input[@name='_128_allRowIds'])[1]",
-			RuntimeVariables.replace("Select All"));
+			RuntimeVariables.replace("Page Permissions Select All"));
+		assertTrue(selenium.isChecked(
+				"xPath=(//input[@name='_128_allRowIds'])[1]"));
+		assertFalse(selenium.isChecked(
+				"xPath=(//input[@name='_128_allRowIds'])[2]"));
 		selenium.clickAt("xPath=(//input[@name='_128_allRowIds'])[2]",
-			RuntimeVariables.replace("Select All"));
+			RuntimeVariables.replace("Page Variation Permissions Select All"));
+		assertTrue(selenium.isChecked(
+				"xPath=(//input[@name='_128_allRowIds'])[2]"));
+		assertFalse(selenium.isChecked(
+				"xPath=(//input[@name='_128_allRowIds'])[3]"));
 		selenium.clickAt("xPath=(//input[@name='_128_allRowIds'])[3]",
-			RuntimeVariables.replace("Select All"));
+			RuntimeVariables.replace("Site Permissions Select All"));
+		assertTrue(selenium.isChecked(
+				"xPath=(//input[@name='_128_allRowIds'])[3]"));
+		assertFalse(selenium.isChecked(
+				"xPath=(//input[@name='_128_allRowIds'])[4]"));
 		selenium.clickAt("xPath=(//input[@name='_128_allRowIds'])[4]",
-			RuntimeVariables.replace("Select All"));
+			RuntimeVariables.replace(
+				"Site Pages Variation Permissions Select All"));
+		assertTrue(selenium.isChecked(
+				"xPath=(//input[@name='_128_allRowIds'])[4]"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

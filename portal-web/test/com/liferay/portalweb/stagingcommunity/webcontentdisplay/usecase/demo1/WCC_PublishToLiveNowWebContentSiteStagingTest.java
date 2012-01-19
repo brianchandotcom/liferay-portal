@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class WCC_PublishToLiveNowWebContentSiteStagingTest extends BaseTestCase {
 	public void testWCC_PublishToLiveNowWebContentSiteStaging()
 		throws Exception {
-		selenium.open("/web/community-site-test/home");
+		selenium.open("/web/community-site-test/home/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -46,7 +46,7 @@ public class WCC_PublishToLiveNowWebContentSiteStagingTest extends BaseTestCase 
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
-		selenium.clickAt("//strong/a",
+		selenium.clickAt("//span[@class='staging-icon-menu-container']/span/ul/li/strong/a",
 			RuntimeVariables.replace("Staging Drop Down"));
 
 		for (int second = 0;; second++) {
@@ -56,7 +56,7 @@ public class WCC_PublishToLiveNowWebContentSiteStagingTest extends BaseTestCase 
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
 					break;
 				}
 			}
@@ -68,10 +68,26 @@ public class WCC_PublishToLiveNowWebContentSiteStagingTest extends BaseTestCase 
 
 		assertEquals(RuntimeVariables.replace("Publish to Live Now"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li/a");
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
 		Thread.sleep(5000);
-		assertTrue(selenium.isElementPresent("//input[@value='Publish']"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//input[@value='Publish']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");

@@ -24,7 +24,7 @@ public class WCC_SubmitForPublicationMainVariationHomeSiteStagingTest
 	extends BaseTestCase {
 	public void testWCC_SubmitForPublicationMainVariationHomeSiteStaging()
 		throws Exception {
-		selenium.open("/web/community-site-test/home");
+		selenium.open("/web/community-site-test/home/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -46,16 +46,31 @@ public class WCC_SubmitForPublicationMainVariationHomeSiteStagingTest
 		selenium.clickAt("link=Staging", RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertTrue(selenium.isTextPresent("This is a Web Content article"));
-		assertEquals(RuntimeVariables.replace("Draft"),
-			selenium.getText("//strong[@class='workflow-status-draft']"));
 		assertEquals(RuntimeVariables.replace("Submit for Publication"),
 			selenium.getText("//button[3]"));
 		selenium.clickAt("//button[3]",
 			RuntimeVariables.replace("Submit for Publication"));
-		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Pending (Review)")
+										.equals(selenium.getText(
+								"//span[@class='workflow-status']/strong"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("Pending (Review)"),
-			selenium.getText("//strong[@class='workflow-status-pending']"));
+			selenium.getText("//span[@class='workflow-status']/strong"));
 		selenium.open("/web/community-site-test/home");
 		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isTextPresent("This is a Web Content article"));

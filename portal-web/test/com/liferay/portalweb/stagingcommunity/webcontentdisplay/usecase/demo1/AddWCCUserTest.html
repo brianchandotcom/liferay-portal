@@ -14,7 +14,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
 </tr>
@@ -51,7 +51,7 @@
 <tr>
 	<td>select</td>
 	<td>//select[@id='_125_prefixId']</td>
-	<td>label=Mr.</td>
+	<td>Mr.</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -76,7 +76,7 @@
 <tr>
 	<td>select</td>
 	<td>//select[@id='_125_male']</td>
-	<td>label=Male</td>
+	<td>Male</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -126,7 +126,7 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>//input[@id='_125_password1']</td>
-	<td></td>
+	<td>New Password</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -363,7 +363,11 @@
 	<td>//input[@value='Sign In']</td>
 	<td>Sign In</td>
 </tr>
-
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-content']/div/div</td>
+	<td>You are signed in as Joe Bloggs.</td>
+</tr>
 </tbody></table>
 </body>
 </html>

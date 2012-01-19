@@ -15,7 +15,6 @@
 package com.liferay.portalweb.stagingcommunity.webcontentdisplay.usecase.demo1;
 
 import com.liferay.portalweb.portal.BaseTestCase;
-import com.liferay.portalweb.portal.util.RuntimeVariables;
 
 /**
  * @author Brian Wing Shun Chan
@@ -26,29 +25,7 @@ public class WCC_ViewPublishToLiveNowWebContentNullSiteStagingTest
 		throws Exception {
 		selenium.open("/web/community-site-test/home");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Staging")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("link=Staging", RuntimeVariables.replace("Staging"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		assertTrue(selenium.isTextPresent("This is a Web Content article"));
-		selenium.open("/web/community-site-test/home");
-		loadRequiredJavaScriptModules();
+		assertFalse(selenium.isTextPresent("Web Content Display"));
 		assertFalse(selenium.isTextPresent("This is a Web Content article"));
 	}
 }

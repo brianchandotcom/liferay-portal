@@ -42,10 +42,14 @@ public class ConfigurePageRevisionSingleApproverTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.click(RuntimeVariables.replace("link=Control Panel"));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("liferay.com"));
+		assertEquals(RuntimeVariables.replace("Liferay"),
+			selenium.getText("//ul[@id='_160_groupSelector']/li/strong/a/span"));
+		selenium.clickAt("//ul[@id='_160_groupSelector']/li/strong/a/span",
+			RuntimeVariables.replace("Liferay"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -71,23 +75,6 @@ public class ConfigurePageRevisionSingleApproverTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Workflow Configuration")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.clickAt("link=Workflow Configuration",
 			RuntimeVariables.replace("Workflow Configuration"));
 		selenium.waitForPageToLoad("30000");

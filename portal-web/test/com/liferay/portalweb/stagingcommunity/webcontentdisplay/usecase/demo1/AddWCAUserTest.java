@@ -36,7 +36,7 @@ public class AddWCAUserTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("link=Control Panel")) {
+						if (selenium.isElementPresent("link=Control Panel")) {
 							break;
 						}
 					}
@@ -81,7 +81,7 @@ public class AddWCAUserTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				selenium.select("//select[@id='_125_prefixId']",
-					RuntimeVariables.replace("label=Mr."));
+					RuntimeVariables.replace("Mr."));
 				selenium.type("//input[@id='_125_screenName']",
 					RuntimeVariables.replace("contentapprover"));
 				selenium.type("//input[@id='_125_emailAddress']",
@@ -91,7 +91,7 @@ public class AddWCAUserTest extends BaseTestCase {
 				selenium.type("//input[@id='_125_lastName']",
 					RuntimeVariables.replace("Approver"));
 				selenium.select("//select[@id='_125_male']",
-					RuntimeVariables.replace("label=Male"));
+					RuntimeVariables.replace("Male"));
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
@@ -360,6 +360,9 @@ public class AddWCAUserTest extends BaseTestCase {
 					RuntimeVariables.replace("Sign In"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
+				assertEquals(RuntimeVariables.replace(
+						"You are signed in as Joe Bloggs."),
+					selenium.getText("//div[@class='portlet-content']/div/div"));
 
 			case 100:
 				label = -1;

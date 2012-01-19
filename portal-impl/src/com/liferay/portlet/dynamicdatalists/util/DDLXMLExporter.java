@@ -37,6 +37,20 @@ import java.util.Map;
  */
 public class DDLXMLExporter extends BaseDDLExporter {
 
+	protected void addFieldElement(
+		Element fieldsElement, String label, Serializable value) {
+
+		Element fieldElement = fieldsElement.addElement("field");
+
+		Element labelElement = fieldElement.addElement("label");
+
+		labelElement.addText(label);
+
+		Element valueElement = fieldElement.addElement("value");
+
+		valueElement.addText(String.valueOf(value));
+	}
+
 	@Override
 	protected byte[] doExport(
 			long recordSetId, int status, int start, int end,
@@ -78,20 +92,6 @@ public class DDLXMLExporter extends BaseDDLExporter {
 		String xml = document.asXML();
 
 		return xml.getBytes();
-	}
-
-	protected void addFieldElement(
-		Element fieldsElement, String label, Serializable value) {
-
-		Element fieldElement = fieldsElement.addElement("field");
-
-		Element labelElement = fieldElement.addElement("label");
-
-		labelElement.addText(label);
-
-		Element valueElement = fieldElement.addElement("value");
-
-		valueElement.addText(String.valueOf(value));
 	}
 
 }

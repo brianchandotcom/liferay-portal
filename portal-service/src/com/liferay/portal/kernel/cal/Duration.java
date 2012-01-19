@@ -291,15 +291,13 @@ public class Duration implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Method normalize
+	 * Method checkNonWeeksOkay
 	 */
-	protected void normalize() {
-		minutes += seconds / SECONDS_PER_MINUTE;
-		seconds %= SECONDS_PER_MINUTE;
-		hours += minutes / MINUTES_PER_HOUR;
-		minutes %= MINUTES_PER_HOUR;
-		days += hours / HOURS_PER_DAY;
-		hours %= HOURS_PER_DAY;
+	protected void checkNonWeeksOkay(int f) {
+		if ((f != 0) && (weeks != 0)) {
+			throw new IllegalStateException(
+				"Weeks and non-weeks are incompatible");
+		}
 	}
 
 	/**
@@ -315,13 +313,15 @@ public class Duration implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Method checkNonWeeksOkay
+	 * Method normalize
 	 */
-	protected void checkNonWeeksOkay(int f) {
-		if ((f != 0) && (weeks != 0)) {
-			throw new IllegalStateException(
-				"Weeks and non-weeks are incompatible");
-		}
+	protected void normalize() {
+		minutes += seconds / SECONDS_PER_MINUTE;
+		seconds %= SECONDS_PER_MINUTE;
+		hours += minutes / MINUTES_PER_HOUR;
+		minutes %= MINUTES_PER_HOUR;
+		days += hours / HOURS_PER_DAY;
+		hours %= HOURS_PER_DAY;
 	}
 
 	/**

@@ -492,10 +492,6 @@ public abstract class BaseDB implements DB {
 		}
 	}
 
-	protected abstract String buildCreateFileContent(
-			String sqlDir, String databaseName, int population)
-		throws IOException;
-
 	protected String[] buildColumnNameTokens(String line) {
 		String[] words = StringUtil.split(line, ' ');
 
@@ -535,6 +531,10 @@ public abstract class BaseDB implements DB {
 
 		return template;
 	}
+
+	protected abstract String buildCreateFileContent(
+			String sqlDir, String databaseName, int population)
+		throws IOException;
 
 	protected String buildTemplate(String sqlDir, String fileName)
 		throws IOException {

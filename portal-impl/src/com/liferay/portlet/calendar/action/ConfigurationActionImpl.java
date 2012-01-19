@@ -47,21 +47,6 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}
 
-	protected void validateEmailFrom(ActionRequest actionRequest)
-		throws Exception {
-
-		String emailFromName = getParameter(actionRequest, "emailFromName");
-		String emailFromAddress = getParameter(
-			actionRequest, "emailFromAddress");
-
-		if (Validator.isNull(emailFromName)) {
-			SessionErrors.add(actionRequest, "emailFromName");
-		}
-		else if (!Validator.isEmailAddress(emailFromAddress)) {
-			SessionErrors.add(actionRequest, "emailFromAddress");
-		}
-	}
-
 	protected void validateEmailEventReminder(ActionRequest actionRequest)
 		throws Exception {
 
@@ -75,6 +60,21 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		}
 		else if (Validator.isNull(emailEventReminderBody)) {
 			SessionErrors.add(actionRequest, "emailEventReminderBody");
+		}
+	}
+
+	protected void validateEmailFrom(ActionRequest actionRequest)
+		throws Exception {
+
+		String emailFromName = getParameter(actionRequest, "emailFromName");
+		String emailFromAddress = getParameter(
+			actionRequest, "emailFromAddress");
+
+		if (Validator.isNull(emailFromName)) {
+			SessionErrors.add(actionRequest, "emailFromName");
+		}
+		else if (!Validator.isEmailAddress(emailFromAddress)) {
+			SessionErrors.add(actionRequest, "emailFromAddress");
 		}
 	}
 

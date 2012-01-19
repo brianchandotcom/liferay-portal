@@ -75,17 +75,6 @@ public abstract class BaseTranslator {
 		return sb.toString();
 	}
 
-	protected String runRegexps(String content) {
-		for (Map.Entry<String, String> entry : regexps.entrySet()) {
-			String regexp = entry.getKey();
-			String replacement = entry.getValue();
-
-			content = runRegexp(content, regexp, replacement);
-		}
-
-		return content;
-	}
-
 	protected String runRegexp(
 		String content, String regexp, String replacement) {
 
@@ -101,6 +90,17 @@ public abstract class BaseTranslator {
 		matcher.appendTail(sb);
 
 		return sb.toString();
+	}
+
+	protected String runRegexps(String content) {
+		for (Map.Entry<String, String> entry : regexps.entrySet()) {
+			String regexp = entry.getKey();
+			String replacement = entry.getValue();
+
+			content = runRegexp(content, regexp, replacement);
+		}
+
+		return content;
 	}
 
 	protected String unprotectNowikiText(String content) {

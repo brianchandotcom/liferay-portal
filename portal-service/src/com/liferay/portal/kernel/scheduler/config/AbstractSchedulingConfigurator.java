@@ -94,8 +94,6 @@ public abstract class AbstractSchedulingConfigurator
 		_schedulerEntries = schedulerEntries;
 	}
 
-	protected abstract ClassLoader getOperatingClassloader();
-
 	protected void destroySchedulerEntry(SchedulerEntry schedulerEntry)
 		throws Exception {
 
@@ -104,6 +102,8 @@ public abstract class AbstractSchedulingConfigurator
 		_schedulerEngine.unschedule(
 			trigger.getJobName(), trigger.getGroupName());
 	}
+
+	protected abstract ClassLoader getOperatingClassloader();
 
 	protected void initSchedulerEntry(
 			String destinationName, SchedulerEntry schedulerEntry)

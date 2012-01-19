@@ -117,150 +117,6 @@ public class ConvertPermissionAlgorithm extends ConvertProcess {
 		return enabled;
 	}
 
-	protected void convertToBitwise() throws Exception {
-
-		// ResourceAction and ResourcePermission
-
-		MaintenanceUtil.appendStatus(
-			"Generating ResourceAction and ResourcePermission data");
-
-		Table table = new Table(
-			ResourceCodeModelImpl.TABLE_NAME,
-			new Object[][] {
-				{"name", new Integer(Types.VARCHAR)}
-			});
-
-		table.setSelectSQL(
-			"SELECT name FROM " + ResourceCodeModelImpl.TABLE_NAME +
-				" GROUP BY name");
-
-		String tempFile = table.generateTempFile();
-
-		UnsyncBufferedReader resourceNameReader = new UnsyncBufferedReader(
-			new FileReader(tempFile));
-
-		Writer resourcePermissionWriter = new UnsyncBufferedWriter(
-			new FileWriter(tempFile + _EXT_RESOURCE_PERMISSION));
-
-		PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM = 6;
-
-		try {
-			String line = null;
-
-			while (Validator.isNotNull(line = resourceNameReader.readLine())) {
-				String[] values = StringUtil.split(line);
-
-				if (values.length == 0) {
-					continue;
-				}
-
-				String name = values[0];
-
-				List<String> defaultActionIds =
-					ResourceActionsUtil.getResourceActions(name);
-
-				ResourceActionLocalServiceUtil.checkResourceActions(
-					name, defaultActionIds);
-
-				convertResourcePermission(resourcePermissionWriter, name);
-			}
-
-			resourcePermissionWriter.close();
-
-			MaintenanceUtil.appendStatus("Updating ResourcePermission table");
-
-			Table resourcePermissionTable = new Table(
-				ResourcePermissionModelImpl.TABLE_NAME,
-				ResourcePermissionModelImpl.TABLE_COLUMNS);
-
-			resourcePermissionTable.populateTable(
-				tempFile + _EXT_RESOURCE_PERMISSION);
-		}
-		catch (Exception e) {
-			PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM = 5;
-
-			throw e;
-		}
-		finally {
-			resourceNameReader.close();
-
-			resourcePermissionWriter.close();
-
-			FileUtil.delete(tempFile);
-			FileUtil.delete(tempFile + _EXT_RESOURCE_PERMISSION);
-		}
-
-		// Clean up
-
-		MaintenanceUtil.appendStatus("Cleaning up legacy tables");
-
-		DB db = DBFactoryUtil.getDB();
-
-		db.runSQL("DELETE FROM " + ResourceCodeModelImpl.TABLE_NAME);
-		db.runSQL("DELETE FROM " + PermissionModelImpl.TABLE_NAME);
-		db.runSQL("DELETE FROM " + ResourceModelImpl.TABLE_NAME);
-		db.runSQL("DELETE FROM Roles_Permissions");
-
-		Release release = null;
-
-		try {
-			release = ReleaseLocalServiceUtil.getRelease(
-				ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME,
-				ReleaseInfo.getBuildNumber());
-		}
-		catch (PortalException pe) {
-			release = ReleaseLocalServiceUtil.addRelease(
-				ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME,
-				ReleaseInfo.getBuildNumber());
-		}
-
-		ReleaseLocalServiceUtil.updateRelease(
-			release.getReleaseId(), ReleaseInfo.getBuildNumber(),
-			ReleaseInfo.getBuildDate(), false);
-
-		MaintenanceUtil.appendStatus("Converted to bitwise permission");
-	}
-
-	protected void convertToRBAC() throws Exception {
-		initializeRBAC();
-
-		// Groups_Permissions
-
-		convertPermissions(
-			RoleConstants.TYPE_SITE, "Groups_Permissions",
-			new String[] {"groupId"}, "Groups_Roles",
-			new Object[][] {
-				{"groupId", Types.BIGINT}, {"roleId", Types.BIGINT}
-			});
-
-		// OrgGroupPermission
-
-		convertPermissions(
-			RoleConstants.TYPE_ORGANIZATION, "OrgGroupPermission",
-			new String[] {"organizationId", "groupId"}, "OrgGroupRole",
-			new Object[][] {
-				{"organizationId", Types.BIGINT}, {"groupId", Types.BIGINT},
-				{"roleId", Types.BIGINT}
-			});
-
-		// Users_Permissions
-
-		convertPermissions(
-			RoleConstants.TYPE_REGULAR, "Users_Permissions",
-			new String[] {"userId"}, "Users_Roles",
-			new Object[][] {
-				{"userId", Types.BIGINT}, {"roleId", Types.BIGINT}
-			});
-
-		// Clean up
-
-		PermissionCacheUtil.clearCache();
-
-		PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM = 5;
-
-		MaintenanceUtil.appendStatus("Converted to RBAC permission");
-	}
-
 	protected String convertGuestUsers(String legacyFile) throws Exception {
 		UnsyncBufferedReader legacyFileReader = new UnsyncBufferedReader(
 			new FileReader(legacyFile));
@@ -677,6 +533,150 @@ public class ConvertPermissionAlgorithm extends ConvertProcess {
 		FileUtil.delete(legacyFile + _EXT_ROLE);
 		FileUtil.delete(legacyFile + _EXT_ROLES_PERMIMISSIONS);
 		FileUtil.delete(legacyFile + _EXT_OTHER_ROLES);
+	}
+
+	protected void convertToBitwise() throws Exception {
+
+		// ResourceAction and ResourcePermission
+
+		MaintenanceUtil.appendStatus(
+			"Generating ResourceAction and ResourcePermission data");
+
+		Table table = new Table(
+			ResourceCodeModelImpl.TABLE_NAME,
+			new Object[][] {
+				{"name", new Integer(Types.VARCHAR)}
+			});
+
+		table.setSelectSQL(
+			"SELECT name FROM " + ResourceCodeModelImpl.TABLE_NAME +
+				" GROUP BY name");
+
+		String tempFile = table.generateTempFile();
+
+		UnsyncBufferedReader resourceNameReader = new UnsyncBufferedReader(
+			new FileReader(tempFile));
+
+		Writer resourcePermissionWriter = new UnsyncBufferedWriter(
+			new FileWriter(tempFile + _EXT_RESOURCE_PERMISSION));
+
+		PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM = 6;
+
+		try {
+			String line = null;
+
+			while (Validator.isNotNull(line = resourceNameReader.readLine())) {
+				String[] values = StringUtil.split(line);
+
+				if (values.length == 0) {
+					continue;
+				}
+
+				String name = values[0];
+
+				List<String> defaultActionIds =
+					ResourceActionsUtil.getResourceActions(name);
+
+				ResourceActionLocalServiceUtil.checkResourceActions(
+					name, defaultActionIds);
+
+				convertResourcePermission(resourcePermissionWriter, name);
+			}
+
+			resourcePermissionWriter.close();
+
+			MaintenanceUtil.appendStatus("Updating ResourcePermission table");
+
+			Table resourcePermissionTable = new Table(
+				ResourcePermissionModelImpl.TABLE_NAME,
+				ResourcePermissionModelImpl.TABLE_COLUMNS);
+
+			resourcePermissionTable.populateTable(
+				tempFile + _EXT_RESOURCE_PERMISSION);
+		}
+		catch (Exception e) {
+			PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM = 5;
+
+			throw e;
+		}
+		finally {
+			resourceNameReader.close();
+
+			resourcePermissionWriter.close();
+
+			FileUtil.delete(tempFile);
+			FileUtil.delete(tempFile + _EXT_RESOURCE_PERMISSION);
+		}
+
+		// Clean up
+
+		MaintenanceUtil.appendStatus("Cleaning up legacy tables");
+
+		DB db = DBFactoryUtil.getDB();
+
+		db.runSQL("DELETE FROM " + ResourceCodeModelImpl.TABLE_NAME);
+		db.runSQL("DELETE FROM " + PermissionModelImpl.TABLE_NAME);
+		db.runSQL("DELETE FROM " + ResourceModelImpl.TABLE_NAME);
+		db.runSQL("DELETE FROM Roles_Permissions");
+
+		Release release = null;
+
+		try {
+			release = ReleaseLocalServiceUtil.getRelease(
+				ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME,
+				ReleaseInfo.getBuildNumber());
+		}
+		catch (PortalException pe) {
+			release = ReleaseLocalServiceUtil.addRelease(
+				ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME,
+				ReleaseInfo.getBuildNumber());
+		}
+
+		ReleaseLocalServiceUtil.updateRelease(
+			release.getReleaseId(), ReleaseInfo.getBuildNumber(),
+			ReleaseInfo.getBuildDate(), false);
+
+		MaintenanceUtil.appendStatus("Converted to bitwise permission");
+	}
+
+	protected void convertToRBAC() throws Exception {
+		initializeRBAC();
+
+		// Groups_Permissions
+
+		convertPermissions(
+			RoleConstants.TYPE_SITE, "Groups_Permissions",
+			new String[] {"groupId"}, "Groups_Roles",
+			new Object[][] {
+				{"groupId", Types.BIGINT}, {"roleId", Types.BIGINT}
+			});
+
+		// OrgGroupPermission
+
+		convertPermissions(
+			RoleConstants.TYPE_ORGANIZATION, "OrgGroupPermission",
+			new String[] {"organizationId", "groupId"}, "OrgGroupRole",
+			new Object[][] {
+				{"organizationId", Types.BIGINT}, {"groupId", Types.BIGINT},
+				{"roleId", Types.BIGINT}
+			});
+
+		// Users_Permissions
+
+		convertPermissions(
+			RoleConstants.TYPE_REGULAR, "Users_Permissions",
+			new String[] {"userId"}, "Users_Roles",
+			new Object[][] {
+				{"userId", Types.BIGINT}, {"roleId", Types.BIGINT}
+			});
+
+		// Clean up
+
+		PermissionCacheUtil.clearCache();
+
+		PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM = 5;
+
+		MaintenanceUtil.appendStatus("Converted to RBAC permission");
 	}
 
 	@Override

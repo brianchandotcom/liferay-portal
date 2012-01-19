@@ -57,7 +57,7 @@ public class Member_AddPortletDLTest extends BaseTestCase {
 
 			try {
 				if (selenium.isElementPresent(
-							"//div[@title='Web Content Display']/p/a")) {
+							"//div[@title='Documents and Media']/p/a")) {
 					break;
 				}
 			}
@@ -67,7 +67,7 @@ public class Member_AddPortletDLTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//div[@title='Web Content Display']/p/a",
+		selenium.clickAt("//div[@title='Documents and Media']/p/a",
 			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {

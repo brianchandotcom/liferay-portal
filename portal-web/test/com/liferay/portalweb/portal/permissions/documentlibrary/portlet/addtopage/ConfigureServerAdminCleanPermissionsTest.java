@@ -20,8 +20,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddPermissionAddToPageTest extends BaseTestCase {
-	public void testAddPermissionAddToPage() throws Exception {
+public class ConfigureServerAdminCleanPermissionsTest extends BaseTestCase {
+	public void testConfigureServerAdminCleanPermissions()
+		throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -45,39 +46,19 @@ public class AddPermissionAddToPageTest extends BaseTestCase {
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.clickAt("link=Roles", RuntimeVariables.replace("Roles"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		selenium.type("//input[@id='_128_keywords']",
-			RuntimeVariables.replace("Member"));
-		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace("Search"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Member"),
-			selenium.getText("//tr[3]/td/a"));
-		selenium.clickAt("//tr[3]/td/a", RuntimeVariables.replace("Member"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		selenium.clickAt("link=Define Permissions",
-			RuntimeVariables.replace("Define Permissions"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		selenium.typeKeys("//select[@id='_128_add-permissions']",
-			RuntimeVariables.replace("ddddddd"));
-		selenium.keyPress("//select[@id='_128_add-permissions']",
-			RuntimeVariables.replace("\\13"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Documents and Media"),
-			selenium.getText("//h3"));
-		selenium.check("//input[@value='20ADD_TO_PAGE']");
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
+		selenium.clickAt("link=Server Administration",
+			RuntimeVariables.replace("Server Administration"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
-				"The role permissions were updated."),
+				"Clean Up Permissions This process removes the assignment of some permissions on the Guest, User and Power User roles in order to simplify the management of \"User Customizable Pages\". Notably, \"Add To Page\" permissions is removed from the Guest, and User role for all portlets. Likewise the same permission is reduced in scope for Power Users from portal wide to scoped to \"User Personal Site\"."),
+			selenium.getText("//tr[9]/td"));
+		selenium.clickAt("xpath=(//input[@value='Execute'])[9]",
+			RuntimeVariables.replace("Clean Up Permissions"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 	}
 }

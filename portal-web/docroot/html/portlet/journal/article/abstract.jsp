@@ -54,7 +54,7 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 	<aui:input label="summary" languageId="<%= Validator.isNotNull(toLanguageId) ? toLanguageId : defaultLanguageId %>" name="description" />
 
 	<c:if test="<%= Validator.isNull(toLanguageId) %>">
-		<aui:input inlineLabel="left" label="use-small-image" name="smallImage" />
+		<aui:input inlineLabel="right" label="use-small-image" name="smallImage" />
 
 		<aui:input label="small-image-url" name="smallImageURL" />
 

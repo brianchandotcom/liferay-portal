@@ -91,7 +91,7 @@ else {
 
 				<aui:select label="type" name='<%= "websiteTypeId" + websitesIndex %>' listType="<%= className + ListTypeConstants.WEBSITE %>" />
 
-				<aui:input checked="<%= website.isPrimary() %>" cssClass="primary-ctrl" id='<%= "websitePrimary" + websitesIndex %>' inlineLabel="left" label="primary" name="websitePrimary" type="radio" value="<%= websitesIndex %>" />
+				<aui:input checked="<%= website.isPrimary() %>" cssClass="primary-ctrl" id='<%= "websitePrimary" + websitesIndex %>' inlineLabel="right" label="primary" name="websitePrimary" type="radio" value="<%= websitesIndex %>" />
 			</div>
 		</div>
 

@@ -569,7 +569,7 @@ if (Validator.isNotNull(content)) {
 			</c:choose>
 
 			<c:if test="<%= Validator.isNull(toLanguageId) %>">
-				<aui:input inlineLabel="left" label="searchable" name="indexable" />
+				<aui:input inlineLabel="right" label="searchable" name="indexable" />
 			</c:if>
 		</div>
 	</td>

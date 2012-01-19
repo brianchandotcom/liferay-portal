@@ -157,9 +157,9 @@ int secondReminder = BeanParamUtil.getInteger(event, request, "secondReminder", 
 			</aui:select>
 		</aui:field-wrapper>
 
-		<aui:input inlineLabel="left" label="all-day-event" name="allDay" type="checkbox" value="<%= event == null ? false : event.isAllDay() %>" />
+		<aui:input inlineLabel="right" label="all-day-event" name="allDay" type="checkbox" value="<%= event == null ? false : event.isAllDay() %>" />
 
-		<aui:input inlineLabel="left" name="timeZoneSensitive" type="checkbox" value="<%= event == null ? true : event.isTimeZoneSensitive() %>" />
+		<aui:input inlineLabel="right" name="timeZoneSensitive" type="checkbox" value="<%= event == null ? true : event.isTimeZoneSensitive() %>" />
 
 		<aui:input name="title" />
 

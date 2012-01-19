@@ -101,7 +101,7 @@ catch (NoSuchMailingListException nsmle) {
 
 			<aui:button id="removeCategoryButton" onClick='<%= renderResponse.getNamespace() + "removeCategory();" %>' value="remove" />
 
-			<aui:input inlineLabel="left" label="merge-with-parent-category" name="mergeWithParentCategory" type="checkbox" />
+			<aui:input inlineLabel="right" label="merge-with-parent-category" name="mergeWithParentCategory" type="checkbox" />
 		</aui:field-wrapper>
 
 		<aui:input name="name" />
@@ -148,7 +148,7 @@ catch (NoSuchMailingListException nsmle) {
 
 				<aui:input fieldParam="mailingListActive" name="active" />
 
-				<aui:input inlineLabel="left" label="allow-anonymous-emails" name="allowAnonymous" />
+				<aui:input inlineLabel="right" label="allow-anonymous-emails" name="allowAnonymous" />
 
 				<div id="<portlet:namespace />mailingListSettings">
 					<aui:input name="emailAddress" />
@@ -162,15 +162,15 @@ catch (NoSuchMailingListException nsmle) {
 						%>
 
 						<aui:field-wrapper label="protocol">
-							<aui:input checked='<%= protocol.startsWith("pop3") %>' inlineLabel="left" label="pop" name="inProtocol" type="radio" value="pop3" />
-							<aui:input checked='<%= protocol.startsWith("imap") %>' inlineLabel="left" label="imap" name="inProtocol" type="radio" value="imap" />
+							<aui:input checked='<%= protocol.startsWith("pop3") %>' inlineLabel="right" label="pop" name="inProtocol" type="radio" value="pop3" />
+							<aui:input checked='<%= protocol.startsWith("imap") %>' inlineLabel="right" label="imap" name="inProtocol" type="radio" value="imap" />
 						</aui:field-wrapper>
 
 						<aui:input label="server-name" name="inServerName" />
 
 						<aui:input label="server-port" name="inServerPort" value="110" />
 
-						<aui:input inlineLabel="left" label="use-a-secure-network-connection" name="inUseSSL" />
+						<aui:input inlineLabel="right" label="use-a-secure-network-connection" name="inUseSSL" />
 
 						<aui:input label="user-name" name="inUserName" />
 
@@ -182,14 +182,14 @@ catch (NoSuchMailingListException nsmle) {
 					<aui:fieldset label="outgoing">
 						<aui:input label="email-address" name="outEmailAddress" />
 
-						<aui:input inlineLabel="left" label="use-custom-outgoing-server" name="outCustom" />
+						<aui:input inlineLabel="right" label="use-custom-outgoing-server" name="outCustom" />
 
 						<div id="<portlet:namespace />outCustomSettings">
 							<aui:input label="server-name" name="outServerName" />
 
 							<aui:input label="server-port" name="outServerPort" value="25" />
 
-							<aui:input inlineLabel="left" label="use-a-secure-network-connection" name="outUseSSL" />
+							<aui:input inlineLabel="right" label="use-a-secure-network-connection" name="outUseSSL" />
 
 							<aui:input label="user-name" name="outUserName" />
 

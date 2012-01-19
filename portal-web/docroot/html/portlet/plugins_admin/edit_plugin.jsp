@@ -65,7 +65,7 @@ if (pluginType.equals(Plugin.TYPE_PORTLET)) {
 			<%= HtmlUtil.escape(pluginId) %>
 		</aui:field-wrapper>
 
-		<aui:input inlineLabel="left" name="active" type="checkbox" value="<%= active %>" />
+		<aui:input inlineLabel="right" name="active" type="checkbox" value="<%= active %>" />
 
 		<c:choose>
 			<c:when test="<%= pluginType.equals(Plugin.TYPE_PORTLET) %>">

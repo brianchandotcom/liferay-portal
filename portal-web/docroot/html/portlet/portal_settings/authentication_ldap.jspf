@@ -95,9 +95,9 @@ if (ldapAuthEnabled && (ldapServerIds.length <= 0) && Validator.isNull(PrefsProp
 %>
 
 <aui:fieldset>
-	<aui:input inlineLabel="left" label="enabled" name='<%= "settings--" + PropsKeys.LDAP_AUTH_ENABLED + "--" %>' type="checkbox" value="<%= ldapAuthEnabled %>" />
+	<aui:input inlineLabel="right" label="enabled" name='<%= "settings--" + PropsKeys.LDAP_AUTH_ENABLED + "--" %>' type="checkbox" value="<%= ldapAuthEnabled %>" />
 
-	<aui:input inlineLabel="left" label="required" name='<%= "settings--" + PropsKeys.LDAP_AUTH_REQUIRED + "--" %>' type="checkbox" value="<%= ldapAuthRequired %>" />
+	<aui:input inlineLabel="right" label="required" name='<%= "settings--" + PropsKeys.LDAP_AUTH_REQUIRED + "--" %>' type="checkbox" value="<%= ldapAuthRequired %>" />
 </aui:fieldset>
 
 <h3><liferay-ui:message key="ldap-servers" /></h3>
@@ -206,19 +206,19 @@ if (ldapAuthEnabled && (ldapServerIds.length <= 0) && Validator.isNull(PrefsProp
 <h3><liferay-ui:message key="import-export" /></h3>
 
 <aui:fieldset>
-	<aui:input id="ldapImportEnabled" inlineLabel="left" label="import-enabled" name='<%= "settings--" + PropsKeys.LDAP_IMPORT_ENABLED + "--" %>' type="checkbox" value="<%= ldapImportEnabled %>" />
+	<aui:input id="ldapImportEnabled" inlineLabel="right" label="import-enabled" name='<%= "settings--" + PropsKeys.LDAP_IMPORT_ENABLED + "--" %>' type="checkbox" value="<%= ldapImportEnabled %>" />
 
 	<div id="<portlet:namespace />importEnabledSettings">
-		<aui:input inlineLabel="left" label="import-on-startup-enabled" name='<%= "settings--" + PropsKeys.LDAP_IMPORT_ON_STARTUP + "--" %>' type="checkbox" value="<%= ldapImportOnStartup %>" />
+		<aui:input inlineLabel="right" label="import-on-startup-enabled" name='<%= "settings--" + PropsKeys.LDAP_IMPORT_ON_STARTUP + "--" %>' type="checkbox" value="<%= ldapImportOnStartup %>" />
 	</div>
 
-	<aui:input id="ldapExportEnabled" inlineLabel="left" label="export-enabled" name='<%= "settings--" + PropsKeys.LDAP_EXPORT_ENABLED + "--" %>' type="checkbox" value="<%= ldapExportEnabled %>" />
+	<aui:input id="ldapExportEnabled" inlineLabel="right" label="export-enabled" name='<%= "settings--" + PropsKeys.LDAP_EXPORT_ENABLED + "--" %>' type="checkbox" value="<%= ldapExportEnabled %>" />
 </aui:fieldset>
 
 <h3><liferay-ui:message key="password-policy" /></h3>
 
 <aui:fieldset>
-	<aui:input inlineLabel="left" label="use-ldap-password-policy" name='<%= "settings--" + PropsKeys.LDAP_PASSWORD_POLICY_ENABLED + "--" %>' type="checkbox" value="<%= ldapPasswordPolicyEnabled %>" />
+	<aui:input inlineLabel="right" label="use-ldap-password-policy" name='<%= "settings--" + PropsKeys.LDAP_PASSWORD_POLICY_ENABLED + "--" %>' type="checkbox" value="<%= ldapPasswordPolicyEnabled %>" />
 </aui:fieldset>
 
 <aui:script>

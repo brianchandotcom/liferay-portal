@@ -253,10 +253,10 @@ else if (tabs3.equals("shipping-email")) {
 					<aui:fieldset>
 						<c:choose>
 							<c:when test='<%= tabs3.equals("confirmation-email") %>'>
-								<aui:input inlineLabel="left" label="enabled" name="emailOrderConfirmationEnabled" type="checkbox" value="<%= shoppingPrefs.getEmailOrderConfirmationEnabled() %>" />
+								<aui:input inlineLabel="right" label="enabled" name="emailOrderConfirmationEnabled" type="checkbox" value="<%= shoppingPrefs.getEmailOrderConfirmationEnabled() %>" />
 							</c:when>
 							<c:when test='<%= tabs3.equals("shipping-email") %>'>
-								<aui:input inlineLabel="left" label="enabled" name="emailOrderShippingEnabled" type="checkbox" value="<%= shoppingPrefs.getEmailOrderShippingEnabled() %>" />
+								<aui:input inlineLabel="right" label="enabled" name="emailOrderShippingEnabled" type="checkbox" value="<%= shoppingPrefs.getEmailOrderShippingEnabled() %>" />
 							</c:when>
 						</c:choose>
 						<c:choose>

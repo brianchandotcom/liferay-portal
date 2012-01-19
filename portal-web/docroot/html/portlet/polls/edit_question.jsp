@@ -94,7 +94,7 @@ if (choiceName > 0) {
 		String taglibNeverExpireOnClick = renderResponse.getNamespace() + "disableInputDate('expirationDate', this.checked);";
 		%>
 
-		<aui:input inlineLabel="left" name="neverExpire" onClick="<%= taglibNeverExpireOnClick %>" type="checkbox" value="<%= neverExpire %>" />
+		<aui:input inlineLabel="right" name="neverExpire" onClick="<%= taglibNeverExpireOnClick %>" type="checkbox" value="<%= neverExpire %>" />
 
 		<aui:field-wrapper label="choices">
 

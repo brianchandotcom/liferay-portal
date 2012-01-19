@@ -58,10 +58,10 @@ boolean defaultPolicy = BeanParamUtil.getBoolean(passwordPolicy, request, "defau
 
 				<aui:input name="description" />
 
-				<aui:input helpMessage="changeable-help" inlineLabel="left" name="changeable" />
+				<aui:input helpMessage="changeable-help" inlineLabel="right" name="changeable" />
 
 				<div id="<portlet:namespace />changeableSettings">
-					<aui:input helpMessage="change-required-help" inlineLabel="left" name="changeRequired" />
+					<aui:input helpMessage="change-required-help" inlineLabel="right" name="changeRequired" />
 
 					<aui:select helpMessage="minimum-age-help" label="minimum-age" name="minAge">
 						<aui:option label="none" value="0" />
@@ -99,10 +99,10 @@ boolean defaultPolicy = BeanParamUtil.getBoolean(passwordPolicy, request, "defau
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="passwordPoliciesAdminPasswordPolicySyntaxPanel" persistState="<%= true %>" title="password-syntax-checking">
 			<aui:fieldset>
 
-				<aui:input helpMessage="syntax-checking-enabled-help" inlineLabel="left" label="syntax-checking-enabled" name="checkSyntax" />
+				<aui:input helpMessage="syntax-checking-enabled-help" inlineLabel="right" label="syntax-checking-enabled" name="checkSyntax" />
 
 				<div id="<portlet:namespace />syntaxSettings">
-					<aui:input helpMessage="allow-dictionary-words-help" inlineLabel="left" name="allowDictionaryWords" />
+					<aui:input helpMessage="allow-dictionary-words-help" inlineLabel="right" name="allowDictionaryWords" />
 
 					<aui:input helpMessage="minimum-alpha-numeric-help" label="minimum-alpha-numeric" name="minAlphanumeric" />
 
@@ -122,7 +122,7 @@ boolean defaultPolicy = BeanParamUtil.getBoolean(passwordPolicy, request, "defau
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="passwordPoliciesAdminPasswordPolicyHistoryPanel" persistState="<%= true %>" title="password-history">
 			<aui:fieldset>
 
-				<aui:input helpMessage="history-enabled-help" inlineLabel="left" label="history-enabled" name="history" />
+				<aui:input helpMessage="history-enabled-help" inlineLabel="right" label="history-enabled" name="history" />
 
 				<div id="<portlet:namespace />historySettings">
 					<aui:select helpMessage="history-count-help" name="historyCount">
@@ -145,7 +145,7 @@ boolean defaultPolicy = BeanParamUtil.getBoolean(passwordPolicy, request, "defau
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="passwordPoliciesAdminPasswordPolicyExpirationPanel" persistState="<%= true %>" title="password-expiration">
 			<aui:fieldset>
 
-				<aui:input helpMessage="expiration-enabled-help" inlineLabel="left" label="expiration-enabled" name="expireable" />
+				<aui:input helpMessage="expiration-enabled-help" inlineLabel="right" label="expiration-enabled" name="expireable" />
 
 				<div id="<portlet:namespace />expirationSettings">
 					<aui:select helpMessage="maximum-age-help" label="maximum-age" name="maxAge">
@@ -183,7 +183,7 @@ boolean defaultPolicy = BeanParamUtil.getBoolean(passwordPolicy, request, "defau
 
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="passwordPoliciesAdminPasswordPolicyLockoutPanel" persistState="<%= true %>" title="lockout">
 			<aui:fieldset>
-				<aui:input helpMessage="lockout-enabled-help" inlineLabel="left" label="lockout-enabled" name="lockout" />
+				<aui:input helpMessage="lockout-enabled-help" inlineLabel="right" label="lockout-enabled" name="lockout" />
 
 				<div id="<portlet:namespace />lockoutSettings">
 					<aui:input helpMessage="maximum-failure-help" label="maximum-failure" name="maxFailure" />

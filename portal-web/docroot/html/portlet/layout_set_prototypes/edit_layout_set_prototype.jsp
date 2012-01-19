@@ -61,7 +61,7 @@ Locale[] locales = LanguageUtil.getAvailableLocales();
 
 		<aui:input name="description" />
 
-		<aui:input inlineLabel="left" name="active" />
+		<aui:input inlineLabel="right" name="active" />
 
 		<aui:input helpMessage="allow-site-administrators-to-modify-pages-associated-with-this-site-template-help" label="allow-site-administrators-to-modify-pages-associated-with-this-site-template" name="layoutsUpdateable" type="checkbox" value="<%= layoutsUpdateable %>" />
 

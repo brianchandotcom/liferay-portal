@@ -128,7 +128,7 @@
 				<span id="<portlet:namespace />passwordCapsLockSpan" style="display: none;"><liferay-ui:message key="caps-lock-is-on" /></span>
 
 				<c:if test="<%= company.isAutoLogin() && !PropsValues.SESSION_DISABLED %>">
-					<aui:input checked="<%= rememberMe %>" inlineLabel="left" name="rememberMe" type="checkbox" />
+					<aui:input checked="<%= rememberMe %>" inlineLabel="right" name="rememberMe" type="checkbox" />
 				</c:if>
 			</aui:fieldset>
 

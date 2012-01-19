@@ -60,7 +60,7 @@ boolean adminSyncDefaultAssociations = PrefsPropsUtil.getBoolean(company.getComp
 	</liferay-ui:section>
 	<liferay-ui:section>
 		<aui:fieldset>
-			<aui:input helpMessage="check-to-apply-the-changes-to-existing-users" inlineLabel="left" label="apply-to-existing-users" name='<%= "settings--" + PropsKeys.ADMIN_SYNC_DEFAULT_ASSOCIATIONS + "--" %>' type="checkbox" value="<%= adminSyncDefaultAssociations %>" />
+			<aui:input helpMessage="check-to-apply-the-changes-to-existing-users" inlineLabel="right" label="apply-to-existing-users" name='<%= "settings--" + PropsKeys.ADMIN_SYNC_DEFAULT_ASSOCIATIONS + "--" %>' type="checkbox" value="<%= adminSyncDefaultAssociations %>" />
 
 			<aui:input helpMessage="enter-the-default-site-names-per-line-that-are-associated-with-newly-created-users" label="sites" name='<%= "settings--" + PropsKeys.ADMIN_DEFAULT_GROUP_NAMES + "--" %>' type="textarea" value="<%= adminDefaultGroupNames %>" />
 

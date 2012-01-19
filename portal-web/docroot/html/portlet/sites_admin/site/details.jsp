@@ -98,7 +98,7 @@ if (showPrototypes && (group != null)) {
 		<aui:option label="private" value="<%= GroupConstants.TYPE_SITE_PRIVATE %>" />
 	</aui:select>
 
-	<aui:input inlineLabel="left" name="active" value="<%= true %>" />
+	<aui:input inlineLabel="right" name="active" value="<%= true %>" />
 
 	<c:if test="<%= liveGroup != null %>">
 		<aui:field-wrapper label="site-id">

@@ -339,7 +339,7 @@ if (Validator.isNull(redirect)) {
 				<aui:input label="description-of-the-changes" name="summary" />
 
 				<c:if test="<%= !newPage %>">
-					<aui:input inlineLabel="true" label="this-is-a-minor-edit" name="minorEdit" />
+					<aui:input inlineLabel="right" label="this-is-a-minor-edit" name="minorEdit" />
 				</c:if>
 
 				<c:if test="<%= newPage %>">

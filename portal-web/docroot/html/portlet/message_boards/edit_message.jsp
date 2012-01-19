@@ -295,15 +295,15 @@ if (Validator.isNull(redirect)) {
 			}
 			%>
 
-			<aui:input disabled="<%= disabled %>" helpMessage="message-boards-message-question-help" inlineLabel="left" label="mark-as-a-question" name="question" type="checkbox" value="<%= question %>" />
+			<aui:input disabled="<%= disabled %>" helpMessage="message-boards-message-question-help" inlineLabel="right" label="mark-as-a-question" name="question" type="checkbox" value="<%= question %>" />
 		</c:if>
 
 		<c:if test="<%= (message == null) && themeDisplay.isSignedIn() && allowAnonymousPosting %>">
-			<aui:input helpMessage="message-boards-message-anonymous-help" inlineLabel="left" name="anonymous" type="checkbox" />
+			<aui:input helpMessage="message-boards-message-anonymous-help" inlineLabel="right" name="anonymous" type="checkbox" />
 		</c:if>
 
 		<c:if test="<%= (message == null) && themeDisplay.isSignedIn() && !SubscriptionLocalServiceUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), MBThread.class.getName(), threadId) && !SubscriptionLocalServiceUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), MBCategory.class.getName(), categoryId) %>">
-			<aui:input helpMessage="message-boards-message-subscribe-me-help" inlineLabel="left" label="subscribe-me" name="subscribe" type="checkbox" value="<%= subscribeByDefault %>" />
+			<aui:input helpMessage="message-boards-message-subscribe-me-help" inlineLabel="right" label="subscribe-me" name="subscribe" type="checkbox" value="<%= subscribeByDefault %>" />
 		</c:if>
 
 		<c:if test="<%= (priorities.length > 0) && MBCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.UPDATE_THREAD_PRIORITY) %>">
@@ -341,7 +341,7 @@ if (Validator.isNull(redirect)) {
 		</c:if>
 
 		<c:if test="<%= PropsValues.MESSAGE_BOARDS_PINGBACK_ENABLED %>">
-			<aui:input helpMessage="to-allow-pingbacks,-please-also-ensure-the-entry's-guest-view-permission-is-enabled" inlineLabel="left" label="allow-pingbacks" name="allowPingbacks" value="<%= allowPingbacks %>" />
+			<aui:input helpMessage="to-allow-pingbacks,-please-also-ensure-the-entry's-guest-view-permission-is-enabled" inlineLabel="right" label="allow-pingbacks" name="allowPingbacks" value="<%= allowPingbacks %>" />
 		</c:if>
 
 		<c:if test="<%= message == null %>">

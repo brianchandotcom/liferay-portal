@@ -100,7 +100,7 @@ else {
 	</aui:input>
 
 	<c:if test="<%= user.getUserId() != selUser.getUserId() %>">
-		<aui:input disabled="<%= passwordResetDisabled %>" inlineLabel="left" label="password-reset-required" name="passwordReset" type="checkbox" value="<%= passwordReset %>" />
+		<aui:input disabled="<%= passwordResetDisabled %>" inlineLabel="right" label="password-reset-required" name="passwordReset" type="checkbox" value="<%= passwordReset %>" />
 	</c:if>
 </aui:fieldset>
 

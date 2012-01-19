@@ -90,7 +90,7 @@ boolean mergeWithParentFolderDisabled = ParamUtil.getBoolean(request, "mergeWith
 
 				<aui:button name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
 
-				<aui:input disabled="<%= mergeWithParentFolderDisabled %>" inlineLabel="left" label="merge-with-parent-folder" name="mergeWithParentFolder" type="checkbox" />
+				<aui:input disabled="<%= mergeWithParentFolderDisabled %>" inlineLabel="right" label="merge-with-parent-folder" name="mergeWithParentFolder" type="checkbox" />
 			</aui:field-wrapper>
 		</c:if>
 

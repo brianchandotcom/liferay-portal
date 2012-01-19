@@ -90,7 +90,7 @@ else {
 
 				<aui:select label="type" name='<%= "emailAddressTypeId" + emailAddressesIndex %>' listType="<%= className + ListTypeConstants.EMAIL_ADDRESS %>" />
 
-				<aui:input checked="<%= emailAddress.isPrimary() %>" cssClass="primary-ctrl" id='<%= "emailAddressPrimary" + emailAddressesIndex %>' inlineLabel="left" label="primary" name="emailAddressPrimary" type="radio" value="<%= emailAddressesIndex %>" />
+				<aui:input checked="<%= emailAddress.isPrimary() %>" cssClass="primary-ctrl" id='<%= "emailAddressPrimary" + emailAddressesIndex %>' inlineLabel="right" label="primary" name="emailAddressPrimary" type="radio" value="<%= emailAddressesIndex %>" />
 			</div>
 		</div>
 

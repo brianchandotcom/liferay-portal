@@ -56,7 +56,7 @@ String adminEmailVerificationBody = PrefsPropsUtil.getContent(company.getCompany
 	</liferay-ui:section>
 	<liferay-ui:section>
 		<aui:fieldset>
-			<aui:input inlineLabel="left" label="enabled" name='<%= "settings--" + PropsKeys.ADMIN_EMAIL_USER_ADDED_ENABLED + "--" %>' type="checkbox" value="<%= adminEmailUserAddedEnable %>" />
+			<aui:input inlineLabel="right" label="enabled" name='<%= "settings--" + PropsKeys.ADMIN_EMAIL_USER_ADDED_ENABLED + "--" %>' type="checkbox" value="<%= adminEmailUserAddedEnable %>" />
 
 			<liferay-ui:error key="emailUserAddedSubject" message="please-enter-a-valid-subject" />
 

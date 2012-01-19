@@ -168,7 +168,7 @@ boolean allowTrackbacks = PropsValues.BLOGS_TRACKBACK_ENABLED && BeanParamUtil.g
 			<aui:fieldset>
 				<aui:input label="description" name="description" />
 
-				<aui:input inlineLabel="left" label="use-small-image" name="smallImage" />
+				<aui:input inlineLabel="right" label="use-small-image" name="smallImage" />
 
 				<aui:input label="small-image-url" name="smallImageURL" />
 

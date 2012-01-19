@@ -45,7 +45,7 @@
 				<isset property="test.ant.script.social.office" />
 				<then>
 					<property name="test.ant.script.plugin.hooks" value="so-hook" />
-					<property name="test.ant.script.plugin.portlets" value="chat-portlet,contacts-portlet,microblogs-portlet,private-messaging-portlet,so-portlet,tasks-portlet,todays-events-portlet,weather-portlet,wysiwyg-portlet" />
+					<property name="test.ant.script.plugin.portlets" value="chat-portlet,contacts-portlet,events-display-portlet,microblogs-portlet,private-messaging-portlet,so-portlet,tasks-portlet,weather-portlet,wysiwyg-portlet" />
 					<property name="test.ant.script.plugin.themes" value="so-theme" />
 				</then>
 			</elseif>
@@ -901,6 +901,12 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="plugins-events-display" />
+			<param name="test.ant.script.plugin.portlets" value="events-display-portlet" />
+			<param name="test.ant.script.suite" value="PluginsEventsDisplayTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="plugins-flash" />
 			<param name="test.ant.script.plugin.portlets" value="flash-portlet" />
 			<param name="test.ant.script.suite" value="PluginsFlashTestSuite" />
@@ -1278,12 +1284,6 @@
 			<param name="test.ant.script.command" value="plugins-today-in-christian-history" />
 			<param name="test.ant.script.plugin.portlets" value="tich-portlet" />
 			<param name="test.ant.script.suite" value="PluginsTodayinChristianHistoryTestSuite" />
-		</antcall>
-
-		<antcall target="build-test-ant-script">
-			<param name="test.ant.script.command" value="plugins-todays-events" />
-			<param name="test.ant.script.plugin.portlets" value="todays-events-portlet" />
-			<param name="test.ant.script.suite" value="PluginsTodaysEventsTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">

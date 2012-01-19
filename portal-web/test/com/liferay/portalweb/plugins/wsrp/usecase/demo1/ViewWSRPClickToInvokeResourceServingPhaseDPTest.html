@@ -25,17 +25,17 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//section/div/div/div/p[4]/a</td>
+	<td>xPath=(//div[@class='portlet-body']/p[4]/a)[2]</td>
 	<td>Click to invoke Resource Serving Phase</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//section/div/div/div/p[4]/a</td>
+	<td>xPath=(//div[@class='portlet-body']/p[4]/a)[2]</td>
 	<td>Click to invoke Resource Serving Phase</td>
 </tr>
 <tr>
 	<td>downloadFile</td>
-	<td>vcard1.vcf</td>
+	<td>vcard1DP.vcf</td>
 	<td></td>
 </tr>
 <tr>
@@ -55,12 +55,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[3]/span/ul/li/strong/a/span</td>
+	<td>//span[@title='Add']/ul/li/strong/a/span</td>
 	<td>Add</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[3]/span/ul/li/strong/a/span</td>
+	<td>//span[@title='Add']/ul/li/strong/a/span</td>
 	<td>Add</td>
 </tr>
 <tr>
@@ -81,7 +81,7 @@
 <tr>
 	<td>uploadFile</td>
 	<td>//input[@id='_20_file']</td>
-	<td>vcard1.vcf</td>
+	<td>vcard1DP.vcf</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -105,12 +105,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>link=Demo Portlet</td>
+	<td>//a[@class='document-link']/span[2]</td>
 	<td>Demo Portlet</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Demo Portlet</td>
+	<td>//a[@class='document-link']/span[2]</td>
 	<td>Demo Portlet</td>
 </tr>
 <tr>

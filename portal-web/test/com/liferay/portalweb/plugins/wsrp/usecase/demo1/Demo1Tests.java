@@ -14,7 +14,7 @@
 
 package com.liferay.portalweb.plugins.wsrp.usecase.demo1;
 
-import com.liferay.portalweb.portal.BaseTests;
+import com.liferay.portalweb.portal.BaseTestSuite;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -22,11 +22,9 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class Demo1Tests extends BaseTests {
-
+public class Demo1Tests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
 		testSuite.addTestSuite(AddPageWSRPTest.class);
 		testSuite.addTestSuite(AddPortletDPTest.class);
 		testSuite.addTestSuite(AddPageDLTest.class);
@@ -36,18 +34,15 @@ public class Demo1Tests extends BaseTests {
 		testSuite.addTestSuite(AddWSRPConsumerDPTest.class);
 		testSuite.addTestSuite(AddWSRPConsumerRemoteDPTest.class);
 		testSuite.addTestSuite(AddPortletWSRPRemoteDPTest.class);
-		testSuite.addTestSuite(
-			ViewWSRPClickToInvokeResourceServingPhaseDPTest.class);
-		testSuite.addTestSuite(
-			ViewWSRPClickToInvokeResouceServingPhaseRDPTest.class);
+		testSuite.addTestSuite(ViewWSRPClickToInvokeResourceServingPhaseDPTest.class);
+		testSuite.addTestSuite(ViewWSRPClickToInvokeResouceServingPhaseRDPTest.class);
+		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownWSRPConsumerDPTest.class);
 		testSuite.addTestSuite(TearDownWSRPProducerDPTest.class);
-		testSuite.addTestSuite(TearDownDocumentTest.class);
 		testSuite.addTestSuite(RemovePortletWSRPRemoteDPTest.class);
 		testSuite.addTestSuite(RemovePortletDPTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;
 	}
-
 }

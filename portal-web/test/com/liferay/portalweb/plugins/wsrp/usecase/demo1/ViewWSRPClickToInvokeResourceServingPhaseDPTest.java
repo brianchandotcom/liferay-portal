@@ -49,10 +49,10 @@ public class ViewWSRPClickToInvokeResourceServingPhaseDPTest
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Click to invoke Resource Serving Phase"),
-			selenium.getText("//section/div/div/div/p[4]/a"));
-		selenium.clickAt("//section/div/div/div/p[4]/a",
+			selenium.getText("xPath=(//div[@class='portlet-body']/p[4]/a)[2]"));
+		selenium.clickAt("xPath=(//div[@class='portlet-body']/p[4]/a)[2]",
 			RuntimeVariables.replace("Click to invoke Resource Serving Phase"));
-		selenium.downloadFile("vcard1.vcf");
+		selenium.downloadFile("vcard1DP.vcf");
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -77,8 +77,8 @@ public class ViewWSRPClickToInvokeResourceServingPhaseDPTest
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Add"),
-			selenium.getText("//span[3]/span/ul/li/strong/a/span"));
-		selenium.clickAt("//span[3]/span/ul/li/strong/a/span",
+			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
@@ -106,7 +106,7 @@ public class ViewWSRPClickToInvokeResourceServingPhaseDPTest
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.uploadFile("//input[@id='_20_file']",
-			RuntimeVariables.replace("vcard1.vcf"));
+			RuntimeVariables.replace("vcard1DP.vcf"));
 		selenium.type("//input[@id='_20_title']",
 			RuntimeVariables.replace("Demo Portlet"));
 		selenium.clickAt("//input[@value='Publish']",
@@ -137,8 +137,8 @@ public class ViewWSRPClickToInvokeResourceServingPhaseDPTest
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Demo Portlet"),
-			selenium.getText("link=Demo Portlet"));
-		selenium.clickAt("link=Demo Portlet",
+			selenium.getText("//a[@class='document-link']/span[2]"));
+		selenium.clickAt("//a[@class='document-link']/span[2]",
 			RuntimeVariables.replace("Demo Portlet"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();

@@ -45,6 +45,8 @@ public interface LayoutSet extends LayoutSetModel, PersistedModel {
 
 	public java.lang.String getSettingsProperty(java.lang.String key);
 
+	public long getStagingLogoId();
+
 	public java.lang.String getThemeSetting(java.lang.String key,
 		java.lang.String device)
 		throws com.liferay.portal.kernel.exception.SystemException;

@@ -341,26 +341,29 @@ public class LayoutSetLocalServiceWrapper implements LayoutSetLocalService,
 			privateLayout, layoutSetPrototypeLinkEnabled, layoutSetPrototypeUuid);
 	}
 
-	public void updateLogo(long groupId, boolean privateLayout, boolean logo,
-		java.io.File file)
+	public com.liferay.portal.model.LayoutSet updateLogo(long groupId,
+		boolean privateLayout, boolean logo, java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_layoutSetLocalService.updateLogo(groupId, privateLayout, logo, file);
+		return _layoutSetLocalService.updateLogo(groupId, privateLayout, logo,
+			file);
 	}
 
-	public void updateLogo(long groupId, boolean privateLayout, boolean logo,
-		java.io.InputStream is)
+	public com.liferay.portal.model.LayoutSet updateLogo(long groupId,
+		boolean privateLayout, boolean logo, java.io.InputStream is)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_layoutSetLocalService.updateLogo(groupId, privateLayout, logo, is);
+		return _layoutSetLocalService.updateLogo(groupId, privateLayout, logo,
+			is);
 	}
 
-	public void updateLogo(long groupId, boolean privateLayout, boolean logo,
-		java.io.InputStream is, boolean cleanUpStream)
+	public com.liferay.portal.model.LayoutSet updateLogo(long groupId,
+		boolean privateLayout, boolean logo, java.io.InputStream is,
+		boolean cleanUpStream)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_layoutSetLocalService.updateLogo(groupId, privateLayout, logo, is,
-			cleanUpStream);
+		return _layoutSetLocalService.updateLogo(groupId, privateLayout, logo,
+			is, cleanUpStream);
 	}
 
 	public com.liferay.portal.model.LayoutSet updateLookAndFeel(long groupId,

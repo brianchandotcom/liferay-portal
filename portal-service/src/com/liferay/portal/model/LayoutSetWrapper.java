@@ -486,6 +486,10 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 		return _layoutSet.getSettingsProperty(key);
 	}
 
+	public long getStagingLogoId() {
+		return _layoutSet.getStagingLogoId();
+	}
+
 	public java.lang.String getThemeSetting(java.lang.String key,
 		java.lang.String device)
 		throws com.liferay.portal.kernel.exception.SystemException {

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
@@ -32,6 +33,7 @@ import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.portlet.bookmarks.service.base.BookmarksEntryLocalServiceBaseImpl;
+import com.liferay.portlet.bookmarks.social.BookmarksActivityKeys;
 import com.liferay.portlet.bookmarks.util.comparator.EntryModifiedDateComparator;
 
 import java.util.Date;
@@ -91,6 +93,12 @@ public class BookmarksEntryLocalServiceImpl
 			userId, entry, serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames(),
 			serviceContext.getAssetLinkEntryIds());
+
+		// Social
+
+		socialActivityLocalService.addActivity(
+			userId, groupId, BookmarksEntry.class.getName(), entryId,
+			BookmarksActivityKeys.ADD_ENTRY, StringPool.BLANK, 0);
 
 		// Indexer
 
@@ -296,6 +304,12 @@ public class BookmarksEntryLocalServiceImpl
 			userId, entry, serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames(),
 			serviceContext.getAssetLinkEntryIds());
+
+		// Social
+
+		socialActivityLocalService.addActivity(
+			userId, entry.getGroupId(), BookmarksEntry.class.getName(), entryId,
+			BookmarksActivityKeys.UPDATE_ENTRY, StringPool.BLANK, 0);
 
 		// Indexer
 

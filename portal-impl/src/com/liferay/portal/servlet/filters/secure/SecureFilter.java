@@ -87,6 +87,94 @@ public class SecureFilter extends BasePortalFilter {
 		}
 	}
 
+	protected HttpServletRequest basicAuth(
+			HttpServletRequest request, HttpServletResponse response)
+		throws Exception {
+
+		HttpSession session = request.getSession();
+
+		session.setAttribute(WebKeys.BASIC_AUTH_ENABLED, Boolean.TRUE);
+
+		long userId = GetterUtil.getLong(
+			(String)session.getAttribute(_AUTHENTICATED_USER));
+
+		if (userId > 0) {
+			request = new ProtectedServletRequest(
+				request, String.valueOf(userId));
+		}
+		else {
+			try {
+				userId = PortalUtil.getBasicAuthUserId(request);
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+
+			if (userId > 0) {
+				request = setCredentials(request, session, userId);
+			}
+			else {
+				response.setHeader(HttpHeaders.WWW_AUTHENTICATE, _BASIC_REALM);
+				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+
+				return null;
+			}
+		}
+
+		return request;
+	}
+
+	protected HttpServletRequest digestAuth(
+			HttpServletRequest request, HttpServletResponse response)
+		throws Exception {
+
+		HttpSession session = request.getSession();
+
+		long userId = GetterUtil.getLong(
+			(String)session.getAttribute(_AUTHENTICATED_USER));
+
+		if (userId > 0) {
+			request = new ProtectedServletRequest(
+				request, String.valueOf(userId));
+		}
+		else {
+			try {
+				userId = PortalUtil.getDigestAuthUserId(request);
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+
+			if (userId > 0) {
+				request = setCredentials(request, session, userId);
+			}
+			else {
+
+				// Must generate a new nonce for each 401 (RFC2617, 3.2.1)
+
+				long companyId = PortalInstances.getCompanyId(request);
+
+				String remoteAddress = request.getRemoteAddr();
+
+				String nonce = NonceUtil.generate(companyId, remoteAddress);
+
+				StringBundler sb = new StringBundler(4);
+
+				sb.append(_DIGEST_REALM);
+				sb.append(", nonce=\"");
+				sb.append(nonce);
+				sb.append("\"");
+
+				response.setHeader(HttpHeaders.WWW_AUTHENTICATE, sb.toString());
+				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+
+				return null;
+			}
+		}
+
+		return request;
+	}
+
 	protected boolean isAccessAllowed(HttpServletRequest request) {
 		if (_hostsAllowed.isEmpty()) {
 			return true;
@@ -201,94 +289,6 @@ public class SecureFilter extends BasePortalFilter {
 				processFilter(getClass(), request, response, filterChain);
 			}
 		}
-	}
-
-	protected HttpServletRequest basicAuth(
-			HttpServletRequest request, HttpServletResponse response)
-		throws Exception {
-
-		HttpSession session = request.getSession();
-
-		session.setAttribute(WebKeys.BASIC_AUTH_ENABLED, Boolean.TRUE);
-
-		long userId = GetterUtil.getLong(
-			(String)session.getAttribute(_AUTHENTICATED_USER));
-
-		if (userId > 0) {
-			request = new ProtectedServletRequest(
-				request, String.valueOf(userId));
-		}
-		else {
-			try {
-				userId = PortalUtil.getBasicAuthUserId(request);
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-
-			if (userId > 0) {
-				request = setCredentials(request, session, userId);
-			}
-			else {
-				response.setHeader(HttpHeaders.WWW_AUTHENTICATE, _BASIC_REALM);
-				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-
-				return null;
-			}
-		}
-
-		return request;
-	}
-
-	protected HttpServletRequest digestAuth(
-			HttpServletRequest request, HttpServletResponse response)
-		throws Exception {
-
-		HttpSession session = request.getSession();
-
-		long userId = GetterUtil.getLong(
-			(String)session.getAttribute(_AUTHENTICATED_USER));
-
-		if (userId > 0) {
-			request = new ProtectedServletRequest(
-				request, String.valueOf(userId));
-		}
-		else {
-			try {
-				userId = PortalUtil.getDigestAuthUserId(request);
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-
-			if (userId > 0) {
-				request = setCredentials(request, session, userId);
-			}
-			else {
-
-				// Must generate a new nonce for each 401 (RFC2617, 3.2.1)
-
-				long companyId = PortalInstances.getCompanyId(request);
-
-				String remoteAddress = request.getRemoteAddr();
-
-				String nonce = NonceUtil.generate(companyId, remoteAddress);
-
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_DIGEST_REALM);
-				sb.append(", nonce=\"");
-				sb.append(nonce);
-				sb.append("\"");
-
-				response.setHeader(HttpHeaders.WWW_AUTHENTICATE, sb.toString());
-				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-
-				return null;
-			}
-		}
-
-		return request;
 	}
 
 	protected HttpServletRequest setCredentials(

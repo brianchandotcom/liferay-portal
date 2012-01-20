@@ -47,6 +47,32 @@ public class UpgradeGroup extends UpgradeProcess {
 		updateSite();
 	}
 
+	protected long getClassNameId(String className) throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getConnection();
+
+			ps = con.prepareStatement(
+				"select classNameId from ClassName_ where value = ?");
+
+			ps.setString(1, className);
+
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				return rs.getLong("classNameId");
+			}
+
+			return 0;
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
 	protected void updateName() throws Exception {
 		long organizationClassNameId = getClassNameId(
 			Organization.class.getName());
@@ -123,32 +149,6 @@ public class UpgradeGroup extends UpgradeProcess {
 				runSQL(
 					"update Group_ set site = TRUE where groupId = " + groupId);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
-	}
-
-	protected long getClassNameId(String className) throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getConnection();
-
-			ps = con.prepareStatement(
-				"select classNameId from ClassName_ where value = ?");
-
-			ps.setString(1, className);
-
-			rs = ps.executeQuery();
-
-			if (rs.next()) {
-				return rs.getLong("classNameId");
-			}
-
-			return 0;
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);

@@ -274,52 +274,42 @@ public class WebServerServlet extends HttpServlet {
 		}
 	}
 
-	protected boolean isLegacyImageGalleryImageId(
-		HttpServletRequest request, HttpServletResponse response) {
+	protected Image convertFileEntry(boolean smallImage, FileEntry fileEntry)
+		throws PortalException, SystemException {
 
 		try {
-			long imageId = getImageId(request);
+			Image image = new ImageImpl();
 
-			if (imageId == 0) {
-				return false;
+			image.setModifiedDate(fileEntry.getModifiedDate());
+
+			InputStream is = null;
+
+			if (smallImage) {
+				is = ImageProcessorUtil.getThumbnailAsStream(
+					fileEntry.getFileVersion(),
+					ImageProcessorImpl.THUMBNAIL_INDEX_DEFAULT);
+			}
+			else {
+				is = fileEntry.getContentStream();
 			}
 
-			DLFileEntry dlFileEntry =
-				DLFileEntryServiceUtil.fetchFileEntryByImageId(imageId);
+			byte[] bytes = FileUtil.getBytes(is);
 
-			if (dlFileEntry == null) {
-				return false;
-			}
+			image.setTextObj(bytes);
 
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			image.setType(fileEntry.getExtension());
 
-			String queryString = StringPool.BLANK;
-
-			if (imageId == dlFileEntry.getSmallImageId()) {
-				queryString = "&imageThumbnail=1";
-			}
-			else if (imageId == dlFileEntry.getSmallImageId()) {
-				queryString = "&imageThumbnail=2";
-			}
-			else if (imageId == dlFileEntry.getSmallImageId()) {
-				queryString = "&imageThumbnail=3";
-			}
-
-			String url = DLUtil.getPreviewURL(
-				new LiferayFileEntry(dlFileEntry),
-				new LiferayFileVersion(dlFileEntry.getFileVersion()),
-				themeDisplay, queryString);
-
-			response.setHeader(HttpHeaders.LOCATION, url);
-			response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
-
-			return true;
+			return image;
+		}
+		catch (PortalException pe) {
+			throw pe;
+		}
+		catch (SystemException se) {
+			throw se;
 		}
 		catch (Exception e) {
+			throw new SystemException(e);
 		}
-
-		return false;
 	}
 
 	protected Image getDefaultImage(HttpServletRequest request, long imageId) {
@@ -434,44 +424,6 @@ public class WebServerServlet extends HttpServlet {
 		}
 
 		return image;
-	}
-
-	protected Image convertFileEntry(boolean smallImage, FileEntry fileEntry)
-		throws PortalException, SystemException {
-
-		try {
-			Image image = new ImageImpl();
-
-			image.setModifiedDate(fileEntry.getModifiedDate());
-
-			InputStream is = null;
-
-			if (smallImage) {
-				is = ImageProcessorUtil.getThumbnailAsStream(
-					fileEntry.getFileVersion(),
-					ImageProcessorImpl.THUMBNAIL_INDEX_DEFAULT);
-			}
-			else {
-				is = fileEntry.getContentStream();
-			}
-
-			byte[] bytes = FileUtil.getBytes(is);
-
-			image.setTextObj(bytes);
-
-			image.setType(fileEntry.getExtension());
-
-			return image;
-		}
-		catch (PortalException pe) {
-			throw pe;
-		}
-		catch (SystemException se) {
-			throw se;
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
 	}
 
 	protected byte[] getImageBytes(HttpServletRequest request, Image image) {
@@ -639,6 +591,54 @@ public class WebServerServlet extends HttpServlet {
 		}
 
 		return image;
+	}
+
+	protected boolean isLegacyImageGalleryImageId(
+		HttpServletRequest request, HttpServletResponse response) {
+
+		try {
+			long imageId = getImageId(request);
+
+			if (imageId == 0) {
+				return false;
+			}
+
+			DLFileEntry dlFileEntry =
+				DLFileEntryServiceUtil.fetchFileEntryByImageId(imageId);
+
+			if (dlFileEntry == null) {
+				return false;
+			}
+
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			String queryString = StringPool.BLANK;
+
+			if (imageId == dlFileEntry.getSmallImageId()) {
+				queryString = "&imageThumbnail=1";
+			}
+			else if (imageId == dlFileEntry.getSmallImageId()) {
+				queryString = "&imageThumbnail=2";
+			}
+			else if (imageId == dlFileEntry.getSmallImageId()) {
+				queryString = "&imageThumbnail=3";
+			}
+
+			String url = DLUtil.getPreviewURL(
+				new LiferayFileEntry(dlFileEntry),
+				new LiferayFileVersion(dlFileEntry.getFileVersion()),
+				themeDisplay, queryString);
+
+			response.setHeader(HttpHeaders.LOCATION, url);
+			response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
+
+			return true;
+		}
+		catch (Exception e) {
+		}
+
+		return false;
 	}
 
 	protected void processPrincipalException(

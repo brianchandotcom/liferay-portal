@@ -655,6 +655,70 @@ public class Recurrence implements Serializable {
 	}
 
 	/**
+	 * Method getDayNumber
+	 *
+	 * @return long
+	 */
+	protected static long getDayNumber(Calendar cal) {
+		Calendar tempCal = (Calendar)cal.clone();
+
+		// Set to midnight, GMT
+
+		tempCal.set(Calendar.MILLISECOND, 0);
+		tempCal.set(Calendar.SECOND, 0);
+		tempCal.set(Calendar.MINUTE, 0);
+		tempCal.set(Calendar.HOUR_OF_DAY, 0);
+
+		return tempCal.getTime().getTime() / (24 * 60 * 60 * 1000);
+	}
+
+	/**
+	 * Method getMonthNumber
+	 *
+	 * @return long
+	 */
+	protected static long getMonthNumber(Calendar cal) {
+		return (cal.get(Calendar.YEAR) - 1970) * 12L
+			   + (cal.get(Calendar.MONTH) - Calendar.JANUARY);
+	}
+
+	/**
+	 * Method getWeekNumber
+	 *
+	 * @return long
+	 */
+	protected static long getWeekNumber(Calendar cal) {
+		Calendar tempCal = (Calendar)cal.clone();
+
+		// Set to midnight, GMT
+
+		tempCal.set(Calendar.MILLISECOND, 0);
+		tempCal.set(Calendar.SECOND, 0);
+		tempCal.set(Calendar.MINUTE, 0);
+		tempCal.set(Calendar.HOUR_OF_DAY, 0);
+
+		// Roll back to the first day of the week
+
+		int delta = tempCal.getFirstDayOfWeek()
+					- tempCal.get(Calendar.DAY_OF_WEEK);
+
+		if (delta > 0) {
+			delta -= 7;
+		}
+
+		// tempCal now points to the first instant of this week.
+
+		// Calculate the "week epoch" -- the weekstart day closest to January 1,
+		// 1970 (which was a Thursday)
+
+		long weekEpoch = (tempCal.getFirstDayOfWeek() - Calendar.THURSDAY) * 24L
+						 * 60 * 60 * 1000L;
+
+		return (tempCal.getTime().getTime() - weekEpoch)
+			   / (7 * 24 * 60 * 60 * 1000);
+	}
+
+	/**
 	 * Method reduce_constant_length_field
 	 */
 	protected static void reduce_constant_length_field(int field,
@@ -722,70 +786,6 @@ public class Recurrence implements Serializable {
 			candidate.set(Calendar.MONTH, start.get(Calendar.MONTH));
 			candidate.set(Calendar.DATE, start.get(Calendar.DATE));
 		}
-	}
-
-	/**
-	 * Method getDayNumber
-	 *
-	 * @return long
-	 */
-	protected static long getDayNumber(Calendar cal) {
-		Calendar tempCal = (Calendar)cal.clone();
-
-		// Set to midnight, GMT
-
-		tempCal.set(Calendar.MILLISECOND, 0);
-		tempCal.set(Calendar.SECOND, 0);
-		tempCal.set(Calendar.MINUTE, 0);
-		tempCal.set(Calendar.HOUR_OF_DAY, 0);
-
-		return tempCal.getTime().getTime() / (24 * 60 * 60 * 1000);
-	}
-
-	/**
-	 * Method getWeekNumber
-	 *
-	 * @return long
-	 */
-	protected static long getWeekNumber(Calendar cal) {
-		Calendar tempCal = (Calendar)cal.clone();
-
-		// Set to midnight, GMT
-
-		tempCal.set(Calendar.MILLISECOND, 0);
-		tempCal.set(Calendar.SECOND, 0);
-		tempCal.set(Calendar.MINUTE, 0);
-		tempCal.set(Calendar.HOUR_OF_DAY, 0);
-
-		// Roll back to the first day of the week
-
-		int delta = tempCal.getFirstDayOfWeek()
-					- tempCal.get(Calendar.DAY_OF_WEEK);
-
-		if (delta > 0) {
-			delta -= 7;
-		}
-
-		// tempCal now points to the first instant of this week.
-
-		// Calculate the "week epoch" -- the weekstart day closest to January 1,
-		// 1970 (which was a Thursday)
-
-		long weekEpoch = (tempCal.getFirstDayOfWeek() - Calendar.THURSDAY) * 24L
-						 * 60 * 60 * 1000L;
-
-		return (tempCal.getTime().getTime() - weekEpoch)
-			   / (7 * 24 * 60 * 60 * 1000);
-	}
-
-	/**
-	 * Method getMonthNumber
-	 *
-	 * @return long
-	 */
-	protected static long getMonthNumber(Calendar cal) {
-		return (cal.get(Calendar.YEAR) - 1970) * 12L
-			   + (cal.get(Calendar.MONTH) - Calendar.JANUARY);
 	}
 
 	/**
@@ -933,42 +933,6 @@ public class Recurrence implements Serializable {
 	}
 
 	/**
-	 * Method matchesIndividualByDay
-	 *
-	 * @return boolean
-	 */
-	protected boolean matchesIndividualByDay(Calendar candidate,
-											 DayAndPosition pos) {
-		if (pos.getDayOfWeek() != candidate.get(Calendar.DAY_OF_WEEK)) {
-			return false;
-		}
-
-		int position = pos.getDayPosition();
-
-		if (position == 0) {
-			return true;
-		}
-
-		int field = Calendar.DAY_OF_MONTH;
-
-		if (position > 0) {
-			int candidatePosition = ((candidate.get(field) - 1) / 7) + 1;
-
-			return (position == candidatePosition);
-		}
-		else {
-
-			/* position < 0 */
-
-			int negativeCandidatePosition =
-				((candidate.getActualMaximum(field) - candidate.get(field)) / 7)
-				+ 1;
-
-			return (-position == negativeCandidatePosition);
-		}
-	}
-
-	/**
 	 * Method matchesByField
 	 *
 	 * @return boolean
@@ -1009,21 +973,21 @@ public class Recurrence implements Serializable {
 	}
 
 	/**
+	 * Method matchesByMonth
+	 *
+	 * @return boolean
+	 */
+	protected boolean matchesByMonth(Calendar candidate) {
+		return matchesByField(byMonth, Calendar.MONTH, candidate, false);
+	}
+
+	/**
 	 * Method matchesByMonthDay
 	 *
 	 * @return boolean
 	 */
 	protected boolean matchesByMonthDay(Calendar candidate) {
 		return matchesByField(byMonthDay, Calendar.DATE, candidate, true);
-	}
-
-	/**
-	 * Method matchesByYearDay
-	 *
-	 * @return boolean
-	 */
-	protected boolean matchesByYearDay(Calendar candidate) {
-		return matchesByField(byYearDay, Calendar.DAY_OF_YEAR, candidate, true);
 	}
 
 	/**
@@ -1036,12 +1000,48 @@ public class Recurrence implements Serializable {
 	}
 
 	/**
-	 * Method matchesByMonth
+	 * Method matchesByYearDay
 	 *
 	 * @return boolean
 	 */
-	protected boolean matchesByMonth(Calendar candidate) {
-		return matchesByField(byMonth, Calendar.MONTH, candidate, false);
+	protected boolean matchesByYearDay(Calendar candidate) {
+		return matchesByField(byYearDay, Calendar.DAY_OF_YEAR, candidate, true);
+	}
+
+	/**
+	 * Method matchesIndividualByDay
+	 *
+	 * @return boolean
+	 */
+	protected boolean matchesIndividualByDay(Calendar candidate,
+											 DayAndPosition pos) {
+		if (pos.getDayOfWeek() != candidate.get(Calendar.DAY_OF_WEEK)) {
+			return false;
+		}
+
+		int position = pos.getDayPosition();
+
+		if (position == 0) {
+			return true;
+		}
+
+		int field = Calendar.DAY_OF_MONTH;
+
+		if (position > 0) {
+			int candidatePosition = ((candidate.get(field) - 1) / 7) + 1;
+
+			return (position == candidatePosition);
+		}
+		else {
+
+			/* position < 0 */
+
+			int negativeCandidatePosition =
+				((candidate.getActualMaximum(field) - candidate.get(field)) / 7)
+				+ 1;
+
+			return (-position == negativeCandidatePosition);
+		}
 	}
 
 	/**

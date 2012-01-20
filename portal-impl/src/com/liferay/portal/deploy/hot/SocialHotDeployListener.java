@@ -62,12 +62,6 @@ public class SocialHotDeployListener extends BaseHotDeployListener {
 		}
 	}
 
-	protected void logRegistration(String servletContextName) {
-		if (_log.isInfoEnabled()) {
-			_log.info("Registering social for " + servletContextName);
-		}
-	}
-
 	protected void doInvokeDeploy(HotDeployEvent hotDeployEvent)
 		throws Exception {
 
@@ -153,6 +147,12 @@ public class SocialHotDeployListener extends BaseHotDeployListener {
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Social for " + servletContextName + " was unregistered");
+		}
+	}
+
+	protected void logRegistration(String servletContextName) {
+		if (_log.isInfoEnabled()) {
+			_log.info("Registering social for " + servletContextName);
 		}
 	}
 

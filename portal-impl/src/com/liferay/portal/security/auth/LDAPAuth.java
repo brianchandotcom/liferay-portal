@@ -276,7 +276,7 @@ public class LDAPAuth implements Authenticator {
 
 					pos = errorMessage.indexOf(
 						PrefsPropsUtil.getString(
-							companyId, PropsKeys.LDAP_ERROR_USER_LOCKOUT));
+							companyId, PropsKeys.LDAP_ERROR_PASSWORD_EXPIRED));
 
 					if (pos != -1) {
 						throw new PasswordExpiredException();

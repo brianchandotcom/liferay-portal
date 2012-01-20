@@ -106,7 +106,11 @@ Map<String, String> hints = ModelHintsUtil.getHints(model, field);
 
 			int month = -1;
 
-			if (cal != null) {
+			if (!ignoreRequestValue) {
+				month = ParamUtil.getInteger(request, fieldParam + "Month", month);
+			}
+
+			if ((month == -1) && (cal != null)) {
 				month = cal.get(Calendar.MONTH);
 
 				if (checkDefaultDelta && (hints != null)) {
@@ -118,10 +122,6 @@ Map<String, String> hints = ModelHintsUtil.getHints(model, field);
 				}
 			}
 
-			if (!ignoreRequestValue) {
-				month = ParamUtil.getInteger(request, fieldParam + "Month", month);
-			}
-
 			boolean monthNullable = false;
 
 			if (hints != null) {
@@ -130,7 +130,11 @@ Map<String, String> hints = ModelHintsUtil.getHints(model, field);
 
 			int day = -1;
 
-			if (cal != null) {
+			if (!ignoreRequestValue) {
+				day = ParamUtil.getInteger(request, fieldParam + "Day", day);
+			}
+
+			if ((day == -1) && (cal != null)) {
 				day = cal.get(Calendar.DATE);
 
 				if (checkDefaultDelta && (hints != null)) {
@@ -142,10 +146,6 @@ Map<String, String> hints = ModelHintsUtil.getHints(model, field);
 				}
 			}
 
-			if (!ignoreRequestValue) {
-				day = ParamUtil.getInteger(request, fieldParam + "Day", day);
-			}
-
 			boolean dayNullable = false;
 
 			if (hints != null) {
@@ -154,7 +154,11 @@ Map<String, String> hints = ModelHintsUtil.getHints(model, field);
 
 			int year = -1;
 
-			if (cal != null) {
+			if (!ignoreRequestValue) {
+				year = ParamUtil.getInteger(request, fieldParam + "Year", year);
+			}
+
+			if ((year == -1) && (cal != null)) {
 				year = cal.get(Calendar.YEAR);
 
 				if (checkDefaultDelta && (hints != null)) {
@@ -164,10 +168,6 @@ Map<String, String> hints = ModelHintsUtil.getHints(model, field);
 
 					updateFromDefaultDelta = true;
 				}
-			}
-
-			if (!ignoreRequestValue) {
-				year = ParamUtil.getInteger(request, fieldParam + "Year", year);
 			}
 
 			if (updateFromDefaultDelta) {
@@ -236,7 +236,11 @@ Map<String, String> hints = ModelHintsUtil.getHints(model, field);
 
 			int hour = -1;
 
-			if (cal != null) {
+			if (!ignoreRequestValue) {
+				hour = ParamUtil.getInteger(request, fieldParam + "Hour", hour);
+			}
+
+			if ((hour == -1) && (cal != null)) {
 				hour = cal.get(Calendar.HOUR_OF_DAY);
 
 				if (timeFormatAmPm) {
@@ -244,32 +248,28 @@ Map<String, String> hints = ModelHintsUtil.getHints(model, field);
 				}
 			}
 
-			if (!ignoreRequestValue) {
-				hour = ParamUtil.getInteger(request, fieldParam + "Hour", hour);
-			}
-
 			int minute = -1;
-
-			if (cal != null) {
-				minute = cal.get(Calendar.MINUTE);
-			}
 
 			if (!ignoreRequestValue) {
 				minute = ParamUtil.getInteger(request, fieldParam + "Minute", minute);
 			}
 
+			if ((minute == -1) && (cal != null)) {
+				minute = cal.get(Calendar.MINUTE);
+			}
+
 			int amPm = -1;
 
-			if (cal != null) {
+			if (!ignoreRequestValue) {
+				amPm = ParamUtil.getInteger(request, fieldParam + "AmPm", amPm);
+			}
+
+			if ((amPm == -1) && (cal != null)) {
 				amPm = Calendar.AM;
 
 				if (timeFormatAmPm) {
 					amPm = cal.get(Calendar.AM_PM);
 				}
-			}
-
-			if (!ignoreRequestValue) {
-				amPm = ParamUtil.getInteger(request, fieldParam + "AmPm", amPm);
 			}
 
 			boolean showTime = true;

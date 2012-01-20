@@ -89,6 +89,10 @@ public abstract class OrderByComparator implements Comparator, Serializable {
 		}
 	}
 
+	public boolean isAscending(String field) {
+		return isAscending();
+	}
+
 	@Override
 	public String toString() {
 		return getOrderBy();

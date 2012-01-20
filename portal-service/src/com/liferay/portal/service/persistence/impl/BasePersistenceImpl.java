@@ -296,7 +296,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 			query.append(orderByFields[i]);
 
 			if ((i + 1) < orderByFields.length) {
-				if (orderByComparator.isAscending()) {
+				if (orderByComparator.isAscending(orderByFields[i])) {
 					query.append(ORDER_BY_ASC_HAS_NEXT);
 				}
 				else {
@@ -304,7 +304,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 				}
 			}
 			else {
-				if (orderByComparator.isAscending()) {
+				if (orderByComparator.isAscending(orderByFields[i])) {
 					query.append(ORDER_BY_ASC);
 				}
 				else {

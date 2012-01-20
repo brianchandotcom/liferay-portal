@@ -175,6 +175,26 @@ public class BeanPropertiesUtil {
 		return getBeanProperties().getObjectSilent(bean, param, defaultValue);
 	}
 
+	public static Class<?> getObjectType(Object bean, String param) {
+		return getBeanProperties().getObjectType(bean, param);
+	}
+
+	public static Class<?> getObjectType(
+		Object bean, String param, Class<?> defaultValue) {
+
+		return getBeanProperties().getObjectType(bean, param, defaultValue);
+	}
+
+	public static Class<?> getObjectTypeSilent(Object bean, String param) {
+		return getBeanProperties().getObjectType(bean, param);
+	}
+
+	public static Class<?> getObjectTypeSilent(
+		Object bean, String param, Class<?> defaultValue) {
+
+		return getBeanProperties().getObjectType(bean, param, defaultValue);
+	}
+
 	public static short getShort(Object bean, String param) {
 		return getBeanProperties().getShort(bean, param);
 	}

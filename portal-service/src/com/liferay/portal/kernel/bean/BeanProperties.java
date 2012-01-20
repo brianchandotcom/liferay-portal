@@ -87,6 +87,16 @@ public interface BeanProperties {
 	public Object getObjectSilent(
 		Object bean, String param, Object defaultValue);
 
+	public Class<?> getObjectType(Object bean, String param);
+
+	public Class<?> getObjectType(
+		Object bean, String param, Class<?> defaultValue);
+
+	public Class<?> getObjectTypeSilent(Object bean, String param);
+
+	public Class<?> getObjectTypeSilent(
+		Object bean, String param, Class<?> defaultValue);
+
 	public short getShort(Object bean, String param);
 
 	public short getShort(Object bean, String param, short defaultValue);

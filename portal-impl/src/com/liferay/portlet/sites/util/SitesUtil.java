@@ -1198,7 +1198,7 @@ public class SitesUtil {
 			if (layoutSetPrototype != null) {
 				layoutSetPrototypeUuid = layoutSetPrototype.getUuid();
 
-				// Merge without creating a link
+				// Merge without enabling the link
 
 				if (!layoutSetPrototypeLinkEnabled &&
 					(layoutSetPrototypeId > 0)) {

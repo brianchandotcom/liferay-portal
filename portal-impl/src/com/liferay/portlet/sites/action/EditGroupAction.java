@@ -445,14 +445,14 @@ public class EditGroupAction extends PortletAction {
 			long publicLayoutSetPrototypeId = ParamUtil.getLong(
 				actionRequest, "publicLayoutSetPrototypeId");
 			boolean privateLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
-				actionRequest, "privateLayoutSetPrototypeLinkEnabled",
-				(privateLayoutSetPrototypeId > 0));
+				actionRequest, "privateLayoutSetPrototypeLinkEnabled");
 			boolean publicLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
-				actionRequest, "publicLayoutSetPrototypeLinkEnabled",
-				(publicLayoutSetPrototypeId > 0));
+				actionRequest, "publicLayoutSetPrototypeLinkEnabled");
 
 			if ((privateLayoutSetPrototypeId == 0) &&
-				(publicLayoutSetPrototypeId == 0)) {
+				(publicLayoutSetPrototypeId == 0) &&
+				!privateLayoutSetPrototypeLinkEnabled &&
+				!publicLayoutSetPrototypeLinkEnabled) {
 
 				long layoutSetPrototypeId = ParamUtil.getLong(
 					actionRequest, "layoutSetPrototypeId");

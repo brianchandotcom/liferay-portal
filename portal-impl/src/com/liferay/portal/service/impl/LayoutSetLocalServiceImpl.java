@@ -213,8 +213,8 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 	 * However, this method can only enable the layout set prototype's link if
 	 * the layout set prototype's current uuid is not <code>null</code>. Setting
 	 * the <code>layoutSetPrototypeLinkEnabled</code> to <code>true</code> when
-	 * the layout set prototype's current uuid is <code>null</code> will result
-	 * in an <code>IllegalStateException</code>.
+	 * the layout set prototype's current uuid is <code>null</code> will have
+	 * no effect.
 	 * </p>
 	 *
 	 * @param      groupId the primary key of the group
@@ -239,14 +239,6 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 	/**
 	 * Updates the state of the layout set prototype link.
 	 *
-	 * <p>
-	 * <strong>Important:</strong> Setting
-	 * <code>layoutSetPrototypeLinkEnabled</code> to <code>true</code> and
-	 * <code>layoutSetPrototypeUuid</code> to <code>null</code> when the layout
-	 * set prototype's current uuid is <code>null</code> will result in an
-	 * <code>IllegalStateException</code>.
-	 * </p>
-	 *
 	 * @param  groupId the primary key of the group
 	 * @param  privateLayout whether the layout set is private to the group
 	 * @param  layoutSetPrototypeLinkEnabled whether the layout set prototype is
@@ -269,12 +261,8 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			layoutSetPrototypeUuid = layoutSet.getLayoutSetPrototypeUuid();
 		}
 
-		if (Validator.isNull(layoutSetPrototypeUuid) &&
-			layoutSetPrototypeLinkEnabled) {
-
-			throw new IllegalStateException(
-				"Cannot set layoutSetPrototypeLinkEnabled to true when " +
-					"layoutSetPrototypeUuid is null");
+		if (Validator.isNull(layoutSetPrototypeUuid)) {
+			layoutSetPrototypeLinkEnabled = false;
 		}
 
 		layoutSet.setLayoutSetPrototypeLinkEnabled(

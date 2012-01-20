@@ -20,6 +20,52 @@
 User selUser = (User)request.getAttribute("user.selUser");
 
 List<LayoutSetPrototype> layoutSetPrototypes = LayoutSetPrototypeServiceUtil.search(company.getCompanyId(), Boolean.TRUE, null);
+
+LayoutSet privateLayoutSet = null;
+LayoutSetPrototype privateLayoutSetPrototype = null;
+boolean privateLayoutSetPrototypeLinkEnabled = true;
+
+LayoutSet publicLayoutSet = null;
+LayoutSetPrototype publicLayoutSetPrototype = null;
+boolean publicLayoutSetPrototypeLinkEnabled = true;
+
+if (selUser != null) {
+	Group userGroup = selUser.getGroup();
+
+	if (userGroup != null) {
+		try {
+			LayoutLocalServiceUtil.getLayouts(userGroup.getGroupId(), false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+			privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(userGroup.getGroupId(), true);
+
+			privateLayoutSetPrototypeLinkEnabled = privateLayoutSet.isLayoutSetPrototypeLinkEnabled();
+
+			String layoutSetPrototypeUuid = privateLayoutSet.getLayoutSetPrototypeUuid();
+
+			if (Validator.isNotNull(layoutSetPrototypeUuid)) {
+				privateLayoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuid(layoutSetPrototypeUuid);
+			}
+		}
+		catch (Exception e) {
+		}
+
+		try {
+			LayoutLocalServiceUtil.getLayouts(userGroup.getGroupId(), true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+			publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(userGroup.getGroupId(), false);
+
+			publicLayoutSetPrototypeLinkEnabled = publicLayoutSet.isLayoutSetPrototypeLinkEnabled();
+
+			String layoutSetPrototypeUuid = publicLayoutSet.getLayoutSetPrototypeUuid();
+
+			if (Validator.isNotNull(layoutSetPrototypeUuid)) {
+				publicLayoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuid(layoutSetPrototypeUuid);
+			}
+		}
+		catch (Exception e) {
+		}
+	}
+}
 %>
 
 <h3><liferay-ui:message key="personal-site" /></h3>
@@ -41,6 +87,17 @@ List<LayoutSetPrototype> layoutSetPrototypes = LayoutSetPrototypeServiceUtil.sea
 				%>
 
 			</aui:select>
+
+			<c:choose>
+				<c:when test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE) %>">
+					<div class="aui-helper-hidden" id="<portlet:namespace />publicLayoutSetPrototypeIdOptions">
+						<aui:input helpMessage="enable-propagation-of-changes-from-the-site-template-help" label="enable-propagation-of-changes-from-the-site-template" name="publicLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= publicLayoutSetPrototypeLinkEnabled %>" />
+					</div>
+				</c:when>
+				<c:otherwise>
+					<aui:input name="publicLayoutSetPrototypeLinkEnabled" type="hidden" value="<%= true %>" />
+				</c:otherwise>
+			</c:choose>
 		</c:when>
 		<c:otherwise>
 			<aui:field-wrapper label="public-pages">
@@ -60,6 +117,17 @@ List<LayoutSetPrototype> layoutSetPrototypes = LayoutSetPrototypeServiceUtil.sea
 							target="_blank"
 							url="<%= publicPagesURL.toString() %>"
 						/>
+
+						<c:choose>
+							<c:when test="<%= (publicLayoutSetPrototype != null) && PortalPermissionUtil.contains(permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE) %>">
+								<aui:input label='<%= LanguageUtil.format(pageContext, "enable-propagation-of-changes-from-the-site-template-x", publicLayoutSetPrototype.getName(user.getLanguageId())) %>' name="publicLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= publicLayoutSetPrototypeLinkEnabled %>" />
+							</c:when>
+							<c:when test="<%= publicLayoutSetPrototype != null %>">
+								<liferay-ui:message arguments="<%= new Object[] {privateLayoutSetPrototype.getName(locale)} %>" key="these-pages-are-linked-to-site-template-x" />
+
+								<aui:input name="layoutSetPrototypeLinkEnabled" type="hidden" value="<%= true %>" />
+							</c:when>
+						</c:choose>
 					</c:when>
 					<c:otherwise>
 						<liferay-ui:message key="this-user-does-not-have-any-public-pages" />
@@ -85,6 +153,17 @@ List<LayoutSetPrototype> layoutSetPrototypes = LayoutSetPrototypeServiceUtil.sea
 				%>
 
 			</aui:select>
+
+			<c:choose>
+				<c:when test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE) %>">
+					<div class="aui-helper-hidden" id="<portlet:namespace />privateLayoutSetPrototypeIdOptions">
+						<aui:input helpMessage="enable-propagation-of-changes-from-the-site-template-help" label="enable-propagation-of-changes-from-the-site-template" name="privateLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
+					</div>
+				</c:when>
+				<c:otherwise>
+					<aui:input name="privateLayoutSetPrototypeLinkEnabled" type="hidden" value="<%= true %>" />
+				</c:otherwise>
+			</c:choose>
 		</c:when>
 		<c:otherwise>
 			<aui:field-wrapper label="private-pages">
@@ -104,6 +183,17 @@ List<LayoutSetPrototype> layoutSetPrototypes = LayoutSetPrototypeServiceUtil.sea
 							target="_blank"
 							url="<%= privatePagesURL.toString() %>"
 						/>
+
+						<c:choose>
+							<c:when test="<%= (privateLayoutSetPrototype != null) && PortalPermissionUtil.contains(permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE) %>">
+								<aui:input label='<%= LanguageUtil.format(pageContext, "enable-propagation-of-changes-from-the-site-template-x", privateLayoutSetPrototype.getName(user.getLanguageId())) %>' name="privateLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
+							</c:when>
+							<c:when test="<%= privateLayoutSetPrototype != null %>">
+								<liferay-ui:message arguments="<%= new Object[] {privateLayoutSetPrototype.getName(locale)} %>" key="these-pages-are-linked-to-site-template-x" />
+
+								<aui:input name="layoutSetPrototypeLinkEnabled" type="hidden" value="<%= true %>" />
+							</c:when>
+						</c:choose>
 					</c:when>
 					<c:otherwise>
 						<liferay-ui:message key="this-user-does-not-have-any-private-pages" />
@@ -119,3 +209,12 @@ if ((selUser == null) && layoutSetPrototypes.isEmpty()) {
 	request.setAttribute(WebKeys.FORM_NAVIGATOR_SECTION_SHOW + "pages", Boolean.FALSE);
 }
 %>
+
+<aui:script>
+function <portlet:namespace />testVisibility(currentValue, value) {
+	return currentValue != '';
+}
+
+Liferay.Util.toggleSelectBox('<portlet:namespace />publicLayoutSetPrototypeId', <portlet:namespace />testVisibility, '<portlet:namespace />publicLayoutSetPrototypeIdOptions');
+Liferay.Util.toggleSelectBox('<portlet:namespace />privateLayoutSetPrototypeId', <portlet:namespace />testVisibility, '<portlet:namespace />privateLayoutSetPrototypeIdOptions');
+</aui:script>

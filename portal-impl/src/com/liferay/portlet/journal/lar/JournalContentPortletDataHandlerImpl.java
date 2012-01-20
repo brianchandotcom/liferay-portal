@@ -316,6 +316,9 @@ public class JournalContentPortletDataHandlerImpl
 
 	private static final boolean _PUBLISH_TO_LIVE_BY_DEFAULT = true;
 
+	private static Log _log = LogFactoryUtil.getLog(
+		JournalContentPortletDataHandlerImpl.class);
+
 	private static PortletDataHandlerBoolean _comments =
 		new PortletDataHandlerBoolean(_NAMESPACE, "comments");
 
@@ -324,9 +327,6 @@ public class JournalContentPortletDataHandlerImpl
 
 	private static PortletDataHandlerBoolean _images =
 		new PortletDataHandlerBoolean(_NAMESPACE, "images");
-
-	private static Log _log = LogFactoryUtil.getLog(
-		JournalContentPortletDataHandlerImpl.class);
 
 	private static PortletDataHandlerBoolean _ratings =
 		new PortletDataHandlerBoolean(_NAMESPACE, "ratings");

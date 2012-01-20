@@ -1904,8 +1904,8 @@ public class StringUtil {
 		'e', 'f'
 	};
 
-	private static String[] _emptyStringArray = new String[0];
-
 	private static Log _log = LogFactoryUtil.getLog(StringUtil.class);
+
+	private static String[] _emptyStringArray = new String[0];
 
 }

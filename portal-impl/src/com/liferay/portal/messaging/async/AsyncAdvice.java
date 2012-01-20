@@ -107,6 +107,8 @@ public class AsyncAdvice extends AnnotationChainableMethodAdvice<Async> {
 		_destinationNames = destinationNames;
 	}
 
+	private static Log _log = LogFactoryUtil.getLog(AsyncAdvice.class);
+
 	private static Async _nullAsync =
 		new Async() {
 
@@ -115,8 +117,6 @@ public class AsyncAdvice extends AnnotationChainableMethodAdvice<Async> {
 			}
 
 		};
-
-	private static Log _log = LogFactoryUtil.getLog(AsyncAdvice.class);
 
 	private String _defaultDestinationName;
 	private Map<Class<?>, String> _destinationNames;

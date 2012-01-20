@@ -333,9 +333,9 @@ public class StringBundler {
 			StringBundler.class.getName() + ".unsafe.create.limit"));
 
 	private static ThreadLocal<StringBuilder> _stringBuilderThreadLocal;
+	private static Constructor<String> _stringConstructor;
 	private static int _threadLocalBufferLimit;
 	private static int _unsafeCreateLimit;
-	private static Constructor<String> _stringConstructor;
 
 	static {
 		if (_THREADLOCAL_BUFFER_LIMIT > 0) {

@@ -81,6 +81,9 @@ public class ShardSessionFactoryTargetSource implements TargetSource {
 		}
 	}
 
+	private static Map<String, SessionFactory> _sessionFactories =
+		new HashMap<String, SessionFactory>();
+
 	private static ThreadLocal<SessionFactory> _sessionFactory =
 		new ThreadLocal<SessionFactory>() {
 
@@ -90,8 +93,5 @@ public class ShardSessionFactoryTargetSource implements TargetSource {
 		}
 
 	};
-
-	private static Map<String, SessionFactory> _sessionFactories =
-		new HashMap<String, SessionFactory>();
 
 }

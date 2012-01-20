@@ -31,11 +31,11 @@ public class PhoneNumberUtil {
 		return _format.strip(phoneNumber);
 	}
 
+	private static PhoneNumberFormat _format =
+		(PhoneNumberFormat)InstancePool.get(PhoneNumberUtil._formatClass);
+
 	private static String _formatClass = GetterUtil.getString(
 		SystemProperties.get(PhoneNumberFormat.class.getName()),
 		USAPhoneNumberFormat.class.getName());
-
-	private static PhoneNumberFormat _format =
-		(PhoneNumberFormat)InstancePool.get(_formatClass);
 
 }

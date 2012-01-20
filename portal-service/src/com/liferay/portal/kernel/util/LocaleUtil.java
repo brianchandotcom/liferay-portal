@@ -280,9 +280,9 @@ public class LocaleUtil {
 
 	private static final int _MAX_LOCALES = 1000;
 
-	private static LocaleUtil _instance = new LocaleUtil();
-
 	private static Log _log = LogFactoryUtil.getLog(LocaleUtil.class);
+
+	private static LocaleUtil _instance = new LocaleUtil();
 
 	private Locale _locale;
 	private Map<String, Locale> _locales = new HashMap<String, Locale>();

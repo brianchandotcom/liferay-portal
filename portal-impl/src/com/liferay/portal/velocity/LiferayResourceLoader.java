@@ -142,10 +142,10 @@ public class LiferayResourceLoader extends ResourceLoader {
 		return is;
 	}
 
+	private static Log _log = LogFactoryUtil.getLog(
+			LiferayResourceLoader.class);
+
 	private static VelocityResourceListener[] _velocityResourceListeners =
 		new VelocityResourceListener[0];
-
-	private static Log _log = LogFactoryUtil.getLog(
-		LiferayResourceLoader.class);
 
 }

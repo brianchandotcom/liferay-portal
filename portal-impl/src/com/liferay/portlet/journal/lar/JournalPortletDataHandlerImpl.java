@@ -2239,6 +2239,15 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 	private static Log _log = LogFactoryUtil.getLog(
 		JournalPortletDataHandlerImpl.class);
 
+	private static PortletDataHandlerBoolean _articles =
+		new PortletDataHandlerBoolean(_NAMESPACE, "articles", true, false,
+		new PortletDataHandlerControl[] {
+			JournalPortletDataHandlerImpl._images,
+			JournalPortletDataHandlerImpl._comments,
+			JournalPortletDataHandlerImpl._ratings,
+			JournalPortletDataHandlerImpl._tags
+		});
+
 	private static PortletDataHandlerBoolean _categories =
 		new PortletDataHandlerBoolean(_NAMESPACE, "categories");
 
@@ -2248,8 +2257,15 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 	private static PortletDataHandlerBoolean _embeddedAssets =
 		new PortletDataHandlerBoolean(_NAMESPACE, "embedded-assets");
 
+	private static Pattern _exportLinksToLayoutPattern = Pattern.compile(
+		"\\[([0-9]+)@(public|private\\-[a-z]*)\\]");
+
 	private static PortletDataHandlerBoolean _images =
 		new PortletDataHandlerBoolean(_NAMESPACE, "images");
+
+	private static Pattern _importLinksToLayoutPattern = Pattern.compile(
+		"\\[([0-9]+)@(public|private\\-[a-z]*)@(\\p{XDigit}{8}\\-" +
+		"(?:\\p{XDigit}{4}\\-){3}\\p{XDigit}{12})@([^\\]]*)\\]");
 
 	private static PortletDataHandlerBoolean _ratings =
 		new PortletDataHandlerBoolean(_NAMESPACE, "ratings");
@@ -2260,15 +2276,5 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 
 	private static PortletDataHandlerBoolean _tags =
 		new PortletDataHandlerBoolean(_NAMESPACE, "tags");
-
-	private static PortletDataHandlerBoolean _articles =
-		new PortletDataHandlerBoolean(_NAMESPACE, "articles", true, false,
-		new PortletDataHandlerControl[] {_images, _comments, _ratings, _tags});
-
-	private static Pattern _exportLinksToLayoutPattern = Pattern.compile(
-		"\\[([0-9]+)@(public|private\\-[a-z]*)\\]");
-	private static Pattern _importLinksToLayoutPattern = Pattern.compile(
-		"\\[([0-9]+)@(public|private\\-[a-z]*)@(\\p{XDigit}{8}\\-" +
-		"(?:\\p{XDigit}{4}\\-){3}\\p{XDigit}{12})@([^\\]]*)\\]");
 
 }

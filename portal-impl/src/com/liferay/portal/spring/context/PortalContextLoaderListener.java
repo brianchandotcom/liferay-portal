@@ -231,10 +231,10 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		}
 	}
 
-	private static Field _filteredPropertyDescriptorsCacheField;
-
 	private static Log _log = LogFactoryUtil.getLog(
 		PortalContextLoaderListener.class);
+
+	private static Field _filteredPropertyDescriptorsCacheField;
 
 	static {
 		try {

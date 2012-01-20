@@ -10,6 +10,16 @@
 		<typeMapping xmlns:ns="http://service.portal.liferay.com" qname="ns:ServiceContext" type="java:com.liferay.portal.service.ServiceContext" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
 		<typeMapping xmlns:ns="http://util.kernel.portal.liferay.com" qname="ns:OrderByComparator" type="java:com.liferay.portal.kernel.util.OrderByComparator" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
 		<typeMapping xmlns:ns="http://xml.apache.org/xml-soap" qname="ns:mapItem" type="java:org.apache.xml.xml_soap.MapItem" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
+		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" xmlns:rtns="http://model.asset.portlet.liferay.com" name="addCategory" qname="operNS:addCategory" returnQName="addCategoryReturn" returnType="rtns:AssetCategorySoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="parentCategoryId" type="tns:long"></parameter>
+			<parameter xmlns:tns="urn:http.service.asset.portlet.liferay.com" qname="titleMapLanguageIds" type="tns:ArrayOf_xsd_string"></parameter>
+			<parameter xmlns:tns="urn:http.service.asset.portlet.liferay.com" qname="titleMapValues" type="tns:ArrayOf_xsd_string"></parameter>
+			<parameter xmlns:tns="urn:http.service.asset.portlet.liferay.com" qname="descriptionMapLanguageIds" type="tns:ArrayOf_xsd_string"></parameter>
+			<parameter xmlns:tns="urn:http.service.asset.portlet.liferay.com" qname="descriptionMapValues" type="tns:ArrayOf_xsd_string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="vocabularyId" type="tns:long"></parameter>
+			<parameter xmlns:tns="urn:http.service.asset.portlet.liferay.com" qname="categoryProperties" type="tns:ArrayOf_xsd_string"></parameter>
+			<parameter xmlns:tns="http://service.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
+		</operation>
 		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" name="deleteCategories" qname="operNS:deleteCategories" soapAction="">
 			<parameter xmlns:tns="urn:http.service.asset.portlet.liferay.com" qname="categoryIds" type="tns:ArrayOf_xsd_long"></parameter>
 		</operation>
@@ -97,7 +107,18 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://util.kernel.portal.liferay.com" qname="obc" type="tns:OrderByComparator"></parameter>
 		</operation>
-		<parameter name="allowedMethods" value="deleteCategories deleteCategory getCategories getCategory getChildCategories getJSONVocabularyCategories getVocabularyCategories getVocabularyCategoriesCount getVocabularyRootCategories moveCategory search" />
+		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" xmlns:rtns="http://model.asset.portlet.liferay.com" name="updateCategory" qname="operNS:updateCategory" returnQName="updateCategoryReturn" returnType="rtns:AssetCategorySoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="categoryId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="parentCategoryId" type="tns:long"></parameter>
+			<parameter xmlns:tns="urn:http.service.asset.portlet.liferay.com" qname="titleMapLanguageIds" type="tns:ArrayOf_xsd_string"></parameter>
+			<parameter xmlns:tns="urn:http.service.asset.portlet.liferay.com" qname="titleMapValues" type="tns:ArrayOf_xsd_string"></parameter>
+			<parameter xmlns:tns="urn:http.service.asset.portlet.liferay.com" qname="descriptionMapLanguageIds" type="tns:ArrayOf_xsd_string"></parameter>
+			<parameter xmlns:tns="urn:http.service.asset.portlet.liferay.com" qname="descriptionMapValues" type="tns:ArrayOf_xsd_string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="vocabularyId" type="tns:long"></parameter>
+			<parameter xmlns:tns="urn:http.service.asset.portlet.liferay.com" qname="categoryProperties" type="tns:ArrayOf_xsd_string"></parameter>
+			<parameter xmlns:tns="http://service.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
+		</operation>
+		<parameter name="allowedMethods" value="addCategory deleteCategories deleteCategory getCategories getCategory getChildCategories getJSONVocabularyCategories getVocabularyCategories getVocabularyCategoriesCount getVocabularyRootCategories moveCategory search updateCategory" />
 		<parameter name="className" value="com.liferay.portlet.asset.service.http.AssetCategoryServiceSoap" />
 		<parameter name="schemaUnqualified" value="http://model.asset.portlet.liferay.com,http://model.portal.liferay.com,http://service.portal.liferay.com,http://util.kernel.portal.liferay.com,http://xml.apache.org/xml-soap,urn:http.service.asset.portlet.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />

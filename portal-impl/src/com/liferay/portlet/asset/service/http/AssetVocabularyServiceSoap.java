@@ -16,10 +16,14 @@ package com.liferay.portlet.asset.service.http;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 
 import com.liferay.portlet.asset.service.AssetVocabularyServiceUtil;
 
 import java.rmi.RemoteException;
+
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * <p>
@@ -65,6 +69,59 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class AssetVocabularyServiceSoap {
+	/**
+	* @deprecated
+	*/
+	public static com.liferay.portlet.asset.model.AssetVocabularySoap addVocabulary(
+		java.lang.String[] titleMapLanguageIds,
+		java.lang.String[] titleMapValues,
+		java.lang.String[] descriptionMapLanguageIds,
+		java.lang.String[] descriptionMapValues, java.lang.String settings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
+					titleMapValues);
+			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
+					descriptionMapValues);
+
+			com.liferay.portlet.asset.model.AssetVocabulary returnValue = AssetVocabularyServiceUtil.addVocabulary(titleMap,
+					descriptionMap, settings, serviceContext);
+
+			return com.liferay.portlet.asset.model.AssetVocabularySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.asset.model.AssetVocabularySoap addVocabulary(
+		java.lang.String title, java.lang.String[] titleMapLanguageIds,
+		java.lang.String[] titleMapValues,
+		java.lang.String[] descriptionMapLanguageIds,
+		java.lang.String[] descriptionMapValues, java.lang.String settings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
+					titleMapValues);
+			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
+					descriptionMapValues);
+
+			com.liferay.portlet.asset.model.AssetVocabulary returnValue = AssetVocabularyServiceUtil.addVocabulary(title,
+					titleMap, descriptionMap, settings, serviceContext);
+
+			return com.liferay.portlet.asset.model.AssetVocabularySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void deleteVocabularies(long[] vocabularyIds)
 		throws RemoteException {
 		try {
@@ -251,6 +308,60 @@ public class AssetVocabularyServiceSoap {
 		long vocabularyId) throws RemoteException {
 		try {
 			com.liferay.portlet.asset.model.AssetVocabulary returnValue = AssetVocabularyServiceUtil.getVocabulary(vocabularyId);
+
+			return com.liferay.portlet.asset.model.AssetVocabularySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* @deprecated
+	*/
+	public static com.liferay.portlet.asset.model.AssetVocabularySoap updateVocabulary(
+		long vocabularyId, java.lang.String[] titleMapLanguageIds,
+		java.lang.String[] titleMapValues,
+		java.lang.String[] descriptionMapLanguageIds,
+		java.lang.String[] descriptionMapValues, java.lang.String settings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
+					titleMapValues);
+			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
+					descriptionMapValues);
+
+			com.liferay.portlet.asset.model.AssetVocabulary returnValue = AssetVocabularyServiceUtil.updateVocabulary(vocabularyId,
+					titleMap, descriptionMap, settings, serviceContext);
+
+			return com.liferay.portlet.asset.model.AssetVocabularySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.asset.model.AssetVocabularySoap updateVocabulary(
+		long vocabularyId, java.lang.String title,
+		java.lang.String[] titleMapLanguageIds,
+		java.lang.String[] titleMapValues,
+		java.lang.String[] descriptionMapLanguageIds,
+		java.lang.String[] descriptionMapValues, java.lang.String settings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
+					titleMapValues);
+			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
+					descriptionMapValues);
+
+			com.liferay.portlet.asset.model.AssetVocabulary returnValue = AssetVocabularyServiceUtil.updateVocabulary(vocabularyId,
+					title, titleMap, descriptionMap, settings, serviceContext);
 
 			return com.liferay.portlet.asset.model.AssetVocabularySoap.toSoapModel(returnValue);
 		}

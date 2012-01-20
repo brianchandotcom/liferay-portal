@@ -16,10 +16,14 @@ package com.liferay.portlet.mobiledevicerules.service.http;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 
 import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupServiceUtil;
 
 import java.rmi.RemoteException;
+
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * <p>
@@ -65,6 +69,32 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class MDRRuleGroupServiceSoap {
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupSoap addRuleGroup(
+		long groupId, java.lang.String[] nameMapLanguageIds,
+		java.lang.String[] nameMapValues,
+		java.lang.String[] descriptionMapLanguageIds,
+		java.lang.String[] descriptionMapValues,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
+			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
+					descriptionMapValues);
+
+			com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup returnValue =
+				MDRRuleGroupServiceUtil.addRuleGroup(groupId, nameMap,
+					descriptionMap, serviceContext);
+
+			return com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupSoap copyRuleGroup(
 		long ruleGroupId, long groupId,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -115,6 +145,32 @@ public class MDRRuleGroupServiceSoap {
 		try {
 			com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup returnValue =
 				MDRRuleGroupServiceUtil.getRuleGroup(ruleGroupId);
+
+			return com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupSoap updateRuleGroup(
+		long ruleGroupId, java.lang.String[] nameMapLanguageIds,
+		java.lang.String[] nameMapValues,
+		java.lang.String[] descriptionMapLanguageIds,
+		java.lang.String[] descriptionMapValues,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
+			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
+					descriptionMapValues);
+
+			com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup returnValue =
+				MDRRuleGroupServiceUtil.updateRuleGroup(ruleGroupId, nameMap,
+					descriptionMap, serviceContext);
 
 			return com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupSoap.toSoapModel(returnValue);
 		}

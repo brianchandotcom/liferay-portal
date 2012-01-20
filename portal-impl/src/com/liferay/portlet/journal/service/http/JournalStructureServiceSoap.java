@@ -16,10 +16,14 @@ package com.liferay.portlet.journal.service.http;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 
 import com.liferay.portlet.journal.service.JournalStructureServiceUtil;
 
 import java.rmi.RemoteException;
+
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * <p>
@@ -65,6 +69,34 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class JournalStructureServiceSoap {
+	public static com.liferay.portlet.journal.model.JournalStructureSoap addStructure(
+		long groupId, java.lang.String structureId, boolean autoStructureId,
+		java.lang.String parentStructureId,
+		java.lang.String[] nameMapLanguageIds,
+		java.lang.String[] nameMapValues,
+		java.lang.String[] descriptionMapLanguageIds,
+		java.lang.String[] descriptionMapValues, java.lang.String xsd,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
+			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
+					descriptionMapValues);
+
+			com.liferay.portlet.journal.model.JournalStructure returnValue = JournalStructureServiceUtil.addStructure(groupId,
+					structureId, autoStructureId, parentStructureId, nameMap,
+					descriptionMap, xsd, serviceContext);
+
+			return com.liferay.portlet.journal.model.JournalStructureSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.journal.model.JournalStructureSoap copyStructure(
 		long groupId, java.lang.String oldStructureId,
 		java.lang.String newStructureId, boolean autoStructureId)
@@ -186,6 +218,34 @@ public class JournalStructureServiceSoap {
 					groupIds, structureId, name, description, andOperator);
 
 			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.journal.model.JournalStructureSoap updateStructure(
+		long groupId, java.lang.String structureId,
+		java.lang.String parentStructureId,
+		java.lang.String[] nameMapLanguageIds,
+		java.lang.String[] nameMapValues,
+		java.lang.String[] descriptionMapLanguageIds,
+		java.lang.String[] descriptionMapValues, java.lang.String xsd,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
+			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
+					descriptionMapValues);
+
+			com.liferay.portlet.journal.model.JournalStructure returnValue = JournalStructureServiceUtil.updateStructure(groupId,
+					structureId, parentStructureId, nameMap, descriptionMap,
+					xsd, serviceContext);
+
+			return com.liferay.portlet.journal.model.JournalStructureSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

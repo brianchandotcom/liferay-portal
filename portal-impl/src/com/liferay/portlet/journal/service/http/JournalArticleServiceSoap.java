@@ -16,10 +16,14 @@ package com.liferay.portlet.journal.service.http;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 
 import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 
 import java.rmi.RemoteException;
+
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * <p>
@@ -65,6 +69,50 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class JournalArticleServiceSoap {
+	public static com.liferay.portlet.journal.model.JournalArticleSoap addArticle(
+		long groupId, long classNameId, long classPK,
+		java.lang.String articleId, boolean autoArticleId,
+		java.lang.String[] titleMapLanguageIds,
+		java.lang.String[] titleMapValues,
+		java.lang.String[] descriptionMapLanguageIds,
+		java.lang.String[] descriptionMapValues, java.lang.String content,
+		java.lang.String type, java.lang.String structureId,
+		java.lang.String templateId, java.lang.String layoutUuid,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire, int reviewDateMonth,
+		int reviewDateDay, int reviewDateYear, int reviewDateHour,
+		int reviewDateMinute, boolean neverReview, boolean indexable,
+		java.lang.String articleURL,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
+					titleMapValues);
+			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
+					descriptionMapValues);
+
+			com.liferay.portlet.journal.model.JournalArticle returnValue = JournalArticleServiceUtil.addArticle(groupId,
+					classNameId, classPK, articleId, autoArticleId, titleMap,
+					descriptionMap, content, type, structureId, templateId,
+					layoutUuid, displayDateMonth, displayDateDay,
+					displayDateYear, displayDateHour, displayDateMinute,
+					expirationDateMonth, expirationDateDay, expirationDateYear,
+					expirationDateHour, expirationDateMinute, neverExpire,
+					reviewDateMonth, reviewDateDay, reviewDateYear,
+					reviewDateHour, reviewDateMinute, neverReview, indexable,
+					articleURL, serviceContext);
+
+			return com.liferay.portlet.journal.model.JournalArticleSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.journal.model.JournalArticleSoap copyArticle(
 		long groupId, java.lang.String oldArticleId,
 		java.lang.String newArticleId, boolean autoArticleId, double version)
@@ -519,6 +567,34 @@ public class JournalArticleServiceSoap {
 	public static void unsubscribe(long groupId) throws RemoteException {
 		try {
 			JournalArticleServiceUtil.unsubscribe(groupId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.journal.model.JournalArticleSoap updateArticle(
+		long userId, long groupId, java.lang.String articleId, double version,
+		java.lang.String[] titleMapLanguageIds,
+		java.lang.String[] titleMapValues,
+		java.lang.String[] descriptionMapLanguageIds,
+		java.lang.String[] descriptionMapValues, java.lang.String content,
+		java.lang.String layoutUuid,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
+					titleMapValues);
+			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
+					descriptionMapValues);
+
+			com.liferay.portlet.journal.model.JournalArticle returnValue = JournalArticleServiceUtil.updateArticle(userId,
+					groupId, articleId, version, titleMap, descriptionMap,
+					content, layoutUuid, serviceContext);
+
+			return com.liferay.portlet.journal.model.JournalArticleSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

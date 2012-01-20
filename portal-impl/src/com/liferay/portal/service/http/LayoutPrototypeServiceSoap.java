@@ -16,9 +16,13 @@ package com.liferay.portal.service.http;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.service.LayoutPrototypeServiceUtil;
 
 import java.rmi.RemoteException;
+
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * <p>
@@ -64,6 +68,26 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class LayoutPrototypeServiceSoap {
+	public static com.liferay.portal.model.LayoutPrototypeSoap addLayoutPrototype(
+		java.lang.String[] nameMapLanguageIds,
+		java.lang.String[] nameMapValues, java.lang.String description,
+		boolean active) throws RemoteException {
+		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
+
+			com.liferay.portal.model.LayoutPrototype returnValue = LayoutPrototypeServiceUtil.addLayoutPrototype(nameMap,
+					description, active);
+
+			return com.liferay.portal.model.LayoutPrototypeSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void deleteLayoutPrototype(long layoutPrototypeId)
 		throws RemoteException {
 		try {
@@ -99,6 +123,26 @@ public class LayoutPrototypeServiceSoap {
 				LayoutPrototypeServiceUtil.search(companyId, active, obc);
 
 			return com.liferay.portal.model.LayoutPrototypeSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portal.model.LayoutPrototypeSoap updateLayoutPrototype(
+		long layoutPrototypeId, java.lang.String[] nameMapLanguageIds,
+		java.lang.String[] nameMapValues, java.lang.String description,
+		boolean active) throws RemoteException {
+		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
+
+			com.liferay.portal.model.LayoutPrototype returnValue = LayoutPrototypeServiceUtil.updateLayoutPrototype(layoutPrototypeId,
+					nameMap, description, active);
+
+			return com.liferay.portal.model.LayoutPrototypeSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

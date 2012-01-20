@@ -86,6 +86,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -1505,7 +1506,8 @@ public class ServiceBuilder {
 				parameterTypeName.startsWith("java.io") ||
 				//parameterTypeName.startsWith("java.util.List") ||
 				//parameterTypeName.startsWith("java.util.Locale") ||
-				parameterTypeName.startsWith("java.util.Map") ||
+				(parameterTypeName.startsWith("java.util.Map") &&
+					!_isStringLocaleMap(javaParameter)) ||
 				parameterTypeName.startsWith("java.util.Properties") ||
 				parameterTypeName.startsWith("javax")) {
 
@@ -4366,6 +4368,19 @@ public class ServiceBuilder {
 
 				return true;
 			}
+		}
+
+		return false;
+	}
+
+	private boolean _isStringLocaleMap(JavaParameter javaParameter) {
+		Type[] typeArguments = javaParameter.getType().getActualTypeArguments();
+
+		if ((typeArguments.length == 2) &&
+			typeArguments[1].getValue().equals(String.class.getName()) &&
+			typeArguments[0].getValue().equals(Locale.class.getName())) {
+
+			return true;
 		}
 
 		return false;

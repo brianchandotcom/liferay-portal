@@ -32,11 +32,14 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portlet.polls.model.PollsChoice;
 import com.liferay.portlet.polls.model.PollsChoiceModel;
+import com.liferay.portlet.polls.model.PollsChoiceSoap;
 
 import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -53,6 +56,7 @@ import java.util.Map;
  * @see com.liferay.portlet.polls.model.PollsChoiceModel
  * @generated
  */
+@JSON(strict = true)
 public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 	implements PollsChoiceModel {
 	/*
@@ -87,6 +91,41 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 	public static long NAME_COLUMN_BITMASK = 1L;
 	public static long QUESTIONID_COLUMN_BITMASK = 2L;
 	public static long UUID_COLUMN_BITMASK = 4L;
+
+	/**
+	 * Converts the soap model instance into a normal model instance.
+	 *
+	 * @param soapModel the soap model instance to convert
+	 * @return the normal model instance
+	 */
+	public static PollsChoice toModel(PollsChoiceSoap soapModel) {
+		PollsChoice model = new PollsChoiceImpl();
+
+		model.setUuid(soapModel.getUuid());
+		model.setChoiceId(soapModel.getChoiceId());
+		model.setQuestionId(soapModel.getQuestionId());
+		model.setName(soapModel.getName());
+		model.setDescription(soapModel.getDescription());
+
+		return model;
+	}
+
+	/**
+	 * Converts the soap model instances into normal model instances.
+	 *
+	 * @param soapModels the soap model instances to convert
+	 * @return the normal model instances
+	 */
+	public static List<PollsChoice> toModels(PollsChoiceSoap[] soapModels) {
+		List<PollsChoice> models = new ArrayList<PollsChoice>(soapModels.length);
+
+		for (PollsChoiceSoap soapModel : soapModels) {
+			models.add(toModel(soapModel));
+		}
+
+		return models;
+	}
+
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.polls.model.PollsChoice"));
 
@@ -117,6 +156,7 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 		return PollsChoice.class.getName();
 	}
 
+	@JSON
 	public String getUuid() {
 		if (_uuid == null) {
 			return StringPool.BLANK;
@@ -138,6 +178,7 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 		return GetterUtil.getString(_originalUuid);
 	}
 
+	@JSON
 	public long getChoiceId() {
 		return _choiceId;
 	}
@@ -146,6 +187,7 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 		_choiceId = choiceId;
 	}
 
+	@JSON
 	public long getQuestionId() {
 		return _questionId;
 	}
@@ -166,6 +208,7 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 		return _originalQuestionId;
 	}
 
+	@JSON
 	public String getName() {
 		if (_name == null) {
 			return StringPool.BLANK;
@@ -189,6 +232,7 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 		return GetterUtil.getString(_originalName);
 	}
 
+	@JSON
 	public String getDescription() {
 		if (_description == null) {
 			return StringPool.BLANK;

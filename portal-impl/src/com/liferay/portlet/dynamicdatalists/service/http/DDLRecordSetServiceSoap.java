@@ -16,10 +16,14 @@ package com.liferay.portlet.dynamicdatalists.service.http;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetServiceUtil;
 
 import java.rmi.RemoteException;
+
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * <p>
@@ -65,6 +69,33 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class DDLRecordSetServiceSoap {
+	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSetSoap addRecordSet(
+		long groupId, long ddmStructureId, java.lang.String recordSetKey,
+		java.lang.String[] nameMapLanguageIds,
+		java.lang.String[] nameMapValues,
+		java.lang.String[] descriptionMapLanguageIds,
+		java.lang.String[] descriptionMapValues, int minDisplayRows, int scope,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
+			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
+					descriptionMapValues);
+
+			com.liferay.portlet.dynamicdatalists.model.DDLRecordSet returnValue = DDLRecordSetServiceUtil.addRecordSet(groupId,
+					ddmStructureId, recordSetKey, nameMap, descriptionMap,
+					minDisplayRows, scope, serviceContext);
+
+			return com.liferay.portlet.dynamicdatalists.model.DDLRecordSetSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void deleteRecordSet(long recordSetId)
 		throws RemoteException {
 		try {
@@ -97,6 +128,60 @@ public class DDLRecordSetServiceSoap {
 		throws RemoteException {
 		try {
 			com.liferay.portlet.dynamicdatalists.model.DDLRecordSet returnValue = DDLRecordSetServiceUtil.updateMinDisplayRows(recordSetId,
+					minDisplayRows, serviceContext);
+
+			return com.liferay.portlet.dynamicdatalists.model.DDLRecordSetSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSetSoap updateRecordSet(
+		long recordSetId, long ddmStructureId,
+		java.lang.String[] nameMapLanguageIds,
+		java.lang.String[] nameMapValues,
+		java.lang.String[] descriptionMapLanguageIds,
+		java.lang.String[] descriptionMapValues, int minDisplayRows,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
+			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
+					descriptionMapValues);
+
+			com.liferay.portlet.dynamicdatalists.model.DDLRecordSet returnValue = DDLRecordSetServiceUtil.updateRecordSet(recordSetId,
+					ddmStructureId, nameMap, descriptionMap, minDisplayRows,
+					serviceContext);
+
+			return com.liferay.portlet.dynamicdatalists.model.DDLRecordSetSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSetSoap updateRecordSet(
+		long groupId, long ddmStructureId, java.lang.String recordSetKey,
+		java.lang.String[] nameMapLanguageIds,
+		java.lang.String[] nameMapValues,
+		java.lang.String[] descriptionMapLanguageIds,
+		java.lang.String[] descriptionMapValues, int minDisplayRows,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
+			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
+					descriptionMapValues);
+
+			com.liferay.portlet.dynamicdatalists.model.DDLRecordSet returnValue = DDLRecordSetServiceUtil.updateRecordSet(groupId,
+					ddmStructureId, recordSetKey, nameMap, descriptionMap,
 					minDisplayRows, serviceContext);
 
 			return com.liferay.portlet.dynamicdatalists.model.DDLRecordSetSoap.toSoapModel(returnValue);

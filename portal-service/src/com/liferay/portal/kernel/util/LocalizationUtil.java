@@ -81,6 +81,12 @@ public class LocalizationUtil {
 		return getLocalization().getLocalizationMap(xml);
 	}
 
+	public static Map<Locale, String> getLocalizationMap(
+		String[] languageIds, String[] values) {
+
+		return getLocalization().getLocalizationMap(languageIds, values);
+	}
+
 	public static String getLocalizationXmlFromPreferences(
 		PortletPreferences preferences, PortletRequest portletRequest,
 		String parameter) {

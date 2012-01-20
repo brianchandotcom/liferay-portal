@@ -300,6 +300,20 @@ public class LocalizationImpl implements Localization {
 		return map;
 	}
 
+	public Map<Locale, String> getLocalizationMap(
+		String[] languageIds, String[] values) {
+
+		Map<Locale, String> map = new HashMap<Locale, String>();
+
+		for (int i = 0; i < values.length; i++) {
+			Locale locale = LocaleUtil.fromLanguageId(languageIds[i]);
+
+			map.put(locale, values[i]);
+		}
+
+		return map;
+	}
+
 	public String getLocalizationXmlFromPreferences(
 		PortletPreferences preferences, PortletRequest portletRequest,
 		String parameter) {

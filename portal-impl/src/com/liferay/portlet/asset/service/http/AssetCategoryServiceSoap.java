@@ -16,10 +16,14 @@ package com.liferay.portlet.asset.service.http;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 
 import com.liferay.portlet.asset.service.AssetCategoryServiceUtil;
 
 import java.rmi.RemoteException;
+
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * <p>
@@ -65,6 +69,33 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class AssetCategoryServiceSoap {
+	public static com.liferay.portlet.asset.model.AssetCategorySoap addCategory(
+		long parentCategoryId, java.lang.String[] titleMapLanguageIds,
+		java.lang.String[] titleMapValues,
+		java.lang.String[] descriptionMapLanguageIds,
+		java.lang.String[] descriptionMapValues, long vocabularyId,
+		java.lang.String[] categoryProperties,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
+					titleMapValues);
+			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
+					descriptionMapValues);
+
+			com.liferay.portlet.asset.model.AssetCategory returnValue = AssetCategoryServiceUtil.addCategory(parentCategoryId,
+					titleMap, descriptionMap, vocabularyId, categoryProperties,
+					serviceContext);
+
+			return com.liferay.portlet.asset.model.AssetCategorySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void deleteCategories(long[] categoryIds)
 		throws RemoteException {
 		try {
@@ -313,6 +344,34 @@ public class AssetCategoryServiceSoap {
 					name, categoryProperties, start, end);
 
 			return returnValue.toString();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.asset.model.AssetCategorySoap updateCategory(
+		long categoryId, long parentCategoryId,
+		java.lang.String[] titleMapLanguageIds,
+		java.lang.String[] titleMapValues,
+		java.lang.String[] descriptionMapLanguageIds,
+		java.lang.String[] descriptionMapValues, long vocabularyId,
+		java.lang.String[] categoryProperties,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
+					titleMapValues);
+			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
+					descriptionMapValues);
+
+			com.liferay.portlet.asset.model.AssetCategory returnValue = AssetCategoryServiceUtil.updateCategory(categoryId,
+					parentCategoryId, titleMap, descriptionMap, vocabularyId,
+					categoryProperties, serviceContext);
+
+			return com.liferay.portlet.asset.model.AssetCategorySoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

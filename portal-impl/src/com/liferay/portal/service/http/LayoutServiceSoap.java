@@ -16,9 +16,13 @@ package com.liferay.portal.service.http;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
 
 import java.rmi.RemoteException;
+
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * <p>
@@ -64,6 +68,95 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class LayoutServiceSoap {
+	/**
+	* Adds a layout with additional parameters.
+	*
+	* <p>
+	* This method handles the creation of the layout including its resources,
+	* metadata, and internal data structures. It is not necessary to make
+	* subsequent calls to any methods to setup default groups, resources, ...
+	* etc.
+	* </p>
+	*
+	* @param groupId the primary key of the group
+	* @param privateLayout whether the layout is private to the group
+	* @param parentLayoutId the primary key of the parent layout (optionally
+	{@link
+	com.liferay.portal.model.LayoutConstants#DEFAULT_PARENT_LAYOUT_ID})
+	* @param localeNamesMap the layout's locales and localized names
+	* @param localeTitlesMap the layout's locales and localized titles
+	* @param descriptionMap the layout's locales and localized descriptions
+	* @param keywordsMap the layout's locales and localized keywords
+	* @param robotsMap the layout's locales and localized robots
+	* @param type the layout's type (optionally {@link
+	com.liferay.portal.model.LayoutConstants#TYPE_PORTLET}). The
+	possible types can be found in {@link
+	com.liferay.portal.model.LayoutConstants}.
+	* @param hidden whether the layout is hidden
+	* @param friendlyURL the layout's friendly URL (optionally {@link
+	com.liferay.portal.util.PropsValues#DEFAULT_USER_PRIVATE_LAYOUT_FRIENDLY_URL}
+	or {@link
+	com.liferay.portal.util.PropsValues#DEFAULT_USER_PUBLIC_LAYOUT_FRIENDLY_URL}).
+	The default values can be overridden in
+	<code>portal-ext.properties</code> by specifying new values for
+	the corresponding properties defined in {@link
+	com.liferay.portal.util.PropsValues}. To see how the URL is
+	normalized when accessed see {@link
+	com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
+	String)}.
+	* @param serviceContext the service context. Must set the universally
+	unique identifier (UUID) for the layout. Can set the creation
+	date, modification date and the expando bridge attributes for the
+	layout. For layouts that belong to a layout set prototype, an
+	attribute named 'layoutUpdateable' can be used to specify whether
+	site administrators can modify this page within their site.
+	* @return the layout
+	* @throws PortalException if a group with the primary key could not be
+	found, if the group did not have permission to manage the layouts
+	involved, or if layout values were invalid
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.LayoutSoap addLayout(long groupId,
+		boolean privateLayout, long parentLayoutId,
+		java.lang.String[] localeNamesMapLanguageIds,
+		java.lang.String[] localeNamesMapValues,
+		java.lang.String[] localeTitlesMapLanguageIds,
+		java.lang.String[] localeTitlesMapValues,
+		java.lang.String[] descriptionMapLanguageIds,
+		java.lang.String[] descriptionMapValues,
+		java.lang.String[] keywordsMapLanguageIds,
+		java.lang.String[] keywordsMapValues,
+		java.lang.String[] robotsMapLanguageIds,
+		java.lang.String[] robotsMapValues, java.lang.String type,
+		boolean hidden, java.lang.String friendlyURL,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> localeNamesMap = LocalizationUtil.getLocalizationMap(localeNamesMapLanguageIds,
+					localeNamesMapValues);
+			Map<Locale, String> localeTitlesMap = LocalizationUtil.getLocalizationMap(localeTitlesMapLanguageIds,
+					localeTitlesMapValues);
+			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
+					descriptionMapValues);
+			Map<Locale, String> keywordsMap = LocalizationUtil.getLocalizationMap(keywordsMapLanguageIds,
+					keywordsMapValues);
+			Map<Locale, String> robotsMap = LocalizationUtil.getLocalizationMap(robotsMapLanguageIds,
+					robotsMapValues);
+
+			com.liferay.portal.model.Layout returnValue = LayoutServiceUtil.addLayout(groupId,
+					privateLayout, parentLayoutId, localeNamesMap,
+					localeTitlesMap, descriptionMap, keywordsMap, robotsMap,
+					type, hidden, friendlyURL, serviceContext);
+
+			return com.liferay.portal.model.LayoutSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	* Adds a layout with empty maps for descriptions, keywords, and titles ,
 	* and a names map containing a mapping for the default locale as its only
@@ -359,6 +452,90 @@ public class LayoutServiceSoap {
 		try {
 			LayoutServiceUtil.unschedulePublishToRemote(groupId, jobName,
 				groupName);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Updates the layout.
+	*
+	* @param groupId the primary key of the group
+	* @param privateLayout whether the layout is private to the group
+	* @param layoutId the primary key of the layout
+	* @param parentLayoutId the primary key of the layout's new parent layout
+	* @param localeNamesMap the layout's locales and localized names
+	* @param localeTitlesMap the layout's locales and localized titles
+	* @param descriptionMap the locales and localized descriptions to merge
+	(optionally <code>null</code>)
+	* @param keywordsMap the locales and localized keywords to merge
+	(optionally <code>null</code>)
+	* @param robotsMap the locales and localized robots to merge (optionally
+	<code>null</code>)
+	* @param type the layout's new type (optionally {@link
+	com.liferay.portal.model.LayoutConstants#TYPE_PORTLET})
+	* @param hidden whether the layout is hidden
+	* @param friendlyURL the layout's new friendly URL (optionally {@link
+	com.liferay.portal.util.PropsValues#DEFAULT_USER_PRIVATE_LAYOUT_FRIENDLY_URL}
+	or {@link
+	com.liferay.portal.util.PropsValues#DEFAULT_USER_PRIVATE_LAYOUT_FRIENDLY_URL}).
+	The default values can be overridden in
+	<code>portal-ext.properties</code> by specifying new values for
+	the corresponding properties defined in {@link
+	com.liferay.portal.util.PropsValues}. To see how the URL is
+	normalized when accessed see {@link
+	com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
+	String)}.
+	* @param iconImage whether the icon image will be updated
+	* @param iconBytes the byte array of the layout's new icon image
+	* @param serviceContext the service context. Can set the modification date
+	and expando bridge attributes for the layout.
+	* @return the updated layout
+	* @throws PortalException if a group or layout with the primary key could
+	not be found, if the user did not have permission to update the
+	layout, if a unique friendly URL could not be generated, if a
+	valid parent layout ID to use could not be found, or if the
+	layout parameters were invalid
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.LayoutSoap updateLayout(
+		long groupId, boolean privateLayout, long layoutId,
+		long parentLayoutId, java.lang.String[] localeNamesMapLanguageIds,
+		java.lang.String[] localeNamesMapValues,
+		java.lang.String[] localeTitlesMapLanguageIds,
+		java.lang.String[] localeTitlesMapValues,
+		java.lang.String[] descriptionMapLanguageIds,
+		java.lang.String[] descriptionMapValues,
+		java.lang.String[] keywordsMapLanguageIds,
+		java.lang.String[] keywordsMapValues,
+		java.lang.String[] robotsMapLanguageIds,
+		java.lang.String[] robotsMapValues, java.lang.String type,
+		boolean hidden, java.lang.String friendlyURL,
+		java.lang.Boolean iconImage, byte[] iconBytes,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> localeNamesMap = LocalizationUtil.getLocalizationMap(localeNamesMapLanguageIds,
+					localeNamesMapValues);
+			Map<Locale, String> localeTitlesMap = LocalizationUtil.getLocalizationMap(localeTitlesMapLanguageIds,
+					localeTitlesMapValues);
+			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
+					descriptionMapValues);
+			Map<Locale, String> keywordsMap = LocalizationUtil.getLocalizationMap(keywordsMapLanguageIds,
+					keywordsMapValues);
+			Map<Locale, String> robotsMap = LocalizationUtil.getLocalizationMap(robotsMapLanguageIds,
+					robotsMapValues);
+
+			com.liferay.portal.model.Layout returnValue = LayoutServiceUtil.updateLayout(groupId,
+					privateLayout, layoutId, parentLayoutId, localeNamesMap,
+					localeTitlesMap, descriptionMap, keywordsMap, robotsMap,
+					type, hidden, friendlyURL, iconImage, iconBytes,
+					serviceContext);
+
+			return com.liferay.portal.model.LayoutSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

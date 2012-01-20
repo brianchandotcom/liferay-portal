@@ -133,6 +133,17 @@ public interface Localization {
 	public Map<Locale, String> getLocalizationMap(String xml);
 
 	/**
+	 * Returns a map of locales and localized strings for the given languageIds
+	 * and values.
+	 *
+	 * @param  languageIds the languageIds of the localized Strings
+	 * @param  values the localized strings for the different languageId
+	 * @return the map of locales and values for the given parameters
+	 */
+	public Map<Locale, String> getLocalizationMap(
+		String[] languageIds, String[] values);
+
+	/**
 	 * Returns the localizations XML for the parameter in the portlet request,
 	 * attempting to get data from the preferences container when it is not
 	 * available in the portlet request.

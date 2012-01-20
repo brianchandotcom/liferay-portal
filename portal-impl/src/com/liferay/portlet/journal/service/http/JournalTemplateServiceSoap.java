@@ -16,10 +16,14 @@ package com.liferay.portlet.journal.service.http;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 
 import com.liferay.portlet.journal.service.JournalTemplateServiceUtil;
 
 import java.rmi.RemoteException;
+
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * <p>
@@ -65,6 +69,35 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class JournalTemplateServiceSoap {
+	public static com.liferay.portlet.journal.model.JournalTemplateSoap addTemplate(
+		long groupId, java.lang.String templateId, boolean autoTemplateId,
+		java.lang.String structureId, java.lang.String[] nameMapLanguageIds,
+		java.lang.String[] nameMapValues,
+		java.lang.String[] descriptionMapLanguageIds,
+		java.lang.String[] descriptionMapValues, java.lang.String xsl,
+		boolean formatXsl, java.lang.String langType, boolean cacheable,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
+			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
+					descriptionMapValues);
+
+			com.liferay.portlet.journal.model.JournalTemplate returnValue = JournalTemplateServiceUtil.addTemplate(groupId,
+					templateId, autoTemplateId, structureId, nameMap,
+					descriptionMap, xsl, formatXsl, langType, cacheable,
+					serviceContext);
+
+			return com.liferay.portlet.journal.model.JournalTemplateSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.journal.model.JournalTemplateSoap copyTemplate(
 		long groupId, java.lang.String oldTemplateId,
 		java.lang.String newTemplateId, boolean autoTemplateId)
@@ -194,6 +227,34 @@ public class JournalTemplateServiceSoap {
 					name, description, andOperator);
 
 			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.journal.model.JournalTemplateSoap updateTemplate(
+		long groupId, java.lang.String templateId,
+		java.lang.String structureId, java.lang.String[] nameMapLanguageIds,
+		java.lang.String[] nameMapValues,
+		java.lang.String[] descriptionMapLanguageIds,
+		java.lang.String[] descriptionMapValues, java.lang.String xsl,
+		boolean formatXsl, java.lang.String langType, boolean cacheable,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
+			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
+					descriptionMapValues);
+
+			com.liferay.portlet.journal.model.JournalTemplate returnValue = JournalTemplateServiceUtil.updateTemplate(groupId,
+					templateId, structureId, nameMap, descriptionMap, xsl,
+					formatXsl, langType, cacheable, serviceContext);
+
+			return com.liferay.portlet.journal.model.JournalTemplateSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

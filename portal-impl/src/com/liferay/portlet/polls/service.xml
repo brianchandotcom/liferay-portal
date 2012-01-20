@@ -3,7 +3,7 @@
 
 <service-builder package-path="com.liferay.portlet.polls">
 	<namespace>Polls</namespace>
-	<entity name="PollsChoice" uuid="true" local-service="true" remote-service="false">
+	<entity name="PollsChoice" uuid="true" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
 

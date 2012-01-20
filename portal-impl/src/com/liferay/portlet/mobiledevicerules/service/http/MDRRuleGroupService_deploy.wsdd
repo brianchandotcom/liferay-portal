@@ -8,6 +8,14 @@
 		<typeMapping xmlns:ns="http://model.portal.liferay.com" qname="ns:PortletPreferencesIds" type="java:com.liferay.portal.model.PortletPreferencesIds" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
 		<typeMapping xmlns:ns="http://service.portal.liferay.com" qname="ns:ServiceContext" type="java:com.liferay.portal.service.ServiceContext" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
 		<typeMapping xmlns:ns="http://xml.apache.org/xml-soap" qname="ns:mapItem" type="java:org.apache.xml.xml_soap.MapItem" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
+		<operation xmlns:operNS="urn:http.service.mobiledevicerules.portlet.liferay.com" xmlns:rtns="http://model.mobiledevicerules.portlet.liferay.com" name="addRuleGroup" qname="operNS:addRuleGroup" returnQName="addRuleGroupReturn" returnType="rtns:MDRRuleGroupSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
+			<parameter xmlns:tns="urn:http.service.mobiledevicerules.portlet.liferay.com" qname="nameMapLanguageIds" type="tns:ArrayOf_xsd_string"></parameter>
+			<parameter xmlns:tns="urn:http.service.mobiledevicerules.portlet.liferay.com" qname="nameMapValues" type="tns:ArrayOf_xsd_string"></parameter>
+			<parameter xmlns:tns="urn:http.service.mobiledevicerules.portlet.liferay.com" qname="descriptionMapLanguageIds" type="tns:ArrayOf_xsd_string"></parameter>
+			<parameter xmlns:tns="urn:http.service.mobiledevicerules.portlet.liferay.com" qname="descriptionMapValues" type="tns:ArrayOf_xsd_string"></parameter>
+			<parameter xmlns:tns="http://service.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
+		</operation>
 		<operation xmlns:operNS="urn:http.service.mobiledevicerules.portlet.liferay.com" xmlns:rtns="http://model.mobiledevicerules.portlet.liferay.com" name="copyRuleGroup" qname="operNS:copyRuleGroup" returnQName="copyRuleGroupReturn" returnType="rtns:MDRRuleGroupSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="ruleGroupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
@@ -22,7 +30,15 @@
 		<operation xmlns:operNS="urn:http.service.mobiledevicerules.portlet.liferay.com" xmlns:rtns="http://model.mobiledevicerules.portlet.liferay.com" name="getRuleGroup" qname="operNS:getRuleGroup" returnQName="getRuleGroupReturn" returnType="rtns:MDRRuleGroupSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="ruleGroupId" type="tns:long"></parameter>
 		</operation>
-		<parameter name="allowedMethods" value="copyRuleGroup deleteRuleGroup fetchRuleGroup getRuleGroup" />
+		<operation xmlns:operNS="urn:http.service.mobiledevicerules.portlet.liferay.com" xmlns:rtns="http://model.mobiledevicerules.portlet.liferay.com" name="updateRuleGroup" qname="operNS:updateRuleGroup" returnQName="updateRuleGroupReturn" returnType="rtns:MDRRuleGroupSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="ruleGroupId" type="tns:long"></parameter>
+			<parameter xmlns:tns="urn:http.service.mobiledevicerules.portlet.liferay.com" qname="nameMapLanguageIds" type="tns:ArrayOf_xsd_string"></parameter>
+			<parameter xmlns:tns="urn:http.service.mobiledevicerules.portlet.liferay.com" qname="nameMapValues" type="tns:ArrayOf_xsd_string"></parameter>
+			<parameter xmlns:tns="urn:http.service.mobiledevicerules.portlet.liferay.com" qname="descriptionMapLanguageIds" type="tns:ArrayOf_xsd_string"></parameter>
+			<parameter xmlns:tns="urn:http.service.mobiledevicerules.portlet.liferay.com" qname="descriptionMapValues" type="tns:ArrayOf_xsd_string"></parameter>
+			<parameter xmlns:tns="http://service.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
+		</operation>
+		<parameter name="allowedMethods" value="addRuleGroup copyRuleGroup deleteRuleGroup fetchRuleGroup getRuleGroup updateRuleGroup" />
 		<parameter name="className" value="com.liferay.portlet.mobiledevicerules.service.http.MDRRuleGroupServiceSoap" />
 		<parameter name="schemaUnqualified" value="http://model.mobiledevicerules.portlet.liferay.com,http://model.portal.liferay.com,http://service.portal.liferay.com,http://xml.apache.org/xml-soap,urn:http.service.mobiledevicerules.portlet.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />

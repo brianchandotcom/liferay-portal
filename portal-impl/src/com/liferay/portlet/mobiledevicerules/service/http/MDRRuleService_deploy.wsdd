@@ -2,7 +2,22 @@
 
 <deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
 	<service name="Portlet_MDR_MDRRuleService" provider="java:RPC" style="rpc" use="encoded">
+		<arrayMapping xmlns:ns="urn:http.service.mobiledevicerules.portlet.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_long" type="java:long[]" innerType="cmp-ns:long" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<arrayMapping xmlns:ns="urn:http.service.mobiledevicerules.portlet.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_string" type="java:java.lang.String[]" innerType="cmp-ns:string" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<typeMapping xmlns:ns="http://model.mobiledevicerules.portlet.liferay.com" qname="ns:MDRRuleSoap" type="java:com.liferay.portlet.mobiledevicerules.model.MDRRuleSoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
+		<typeMapping xmlns:ns="http://model.portal.liferay.com" qname="ns:PortletPreferencesIds" type="java:com.liferay.portal.model.PortletPreferencesIds" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
+		<typeMapping xmlns:ns="http://service.portal.liferay.com" qname="ns:ServiceContext" type="java:com.liferay.portal.service.ServiceContext" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
+		<typeMapping xmlns:ns="http://xml.apache.org/xml-soap" qname="ns:mapItem" type="java:org.apache.xml.xml_soap.MapItem" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
+		<operation xmlns:operNS="urn:http.service.mobiledevicerules.portlet.liferay.com" xmlns:rtns="http://model.mobiledevicerules.portlet.liferay.com" name="addRule" qname="operNS:addRule" returnQName="addRuleReturn" returnType="rtns:MDRRuleSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="ruleGroupId" type="tns:long"></parameter>
+			<parameter xmlns:tns="urn:http.service.mobiledevicerules.portlet.liferay.com" qname="nameMapLanguageIds" type="tns:ArrayOf_xsd_string"></parameter>
+			<parameter xmlns:tns="urn:http.service.mobiledevicerules.portlet.liferay.com" qname="nameMapValues" type="tns:ArrayOf_xsd_string"></parameter>
+			<parameter xmlns:tns="urn:http.service.mobiledevicerules.portlet.liferay.com" qname="descriptionMapLanguageIds" type="tns:ArrayOf_xsd_string"></parameter>
+			<parameter xmlns:tns="urn:http.service.mobiledevicerules.portlet.liferay.com" qname="descriptionMapValues" type="tns:ArrayOf_xsd_string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="type" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="typeSettings" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://service.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
+		</operation>
 		<operation xmlns:operNS="urn:http.service.mobiledevicerules.portlet.liferay.com" name="deleteRule" qname="operNS:deleteRule" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="ruleId" type="tns:long"></parameter>
 		</operation>
@@ -12,9 +27,19 @@
 		<operation xmlns:operNS="urn:http.service.mobiledevicerules.portlet.liferay.com" xmlns:rtns="http://model.mobiledevicerules.portlet.liferay.com" name="getRule" qname="operNS:getRule" returnQName="getRuleReturn" returnType="rtns:MDRRuleSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="ruleId" type="tns:long"></parameter>
 		</operation>
-		<parameter name="allowedMethods" value="deleteRule fetchRule getRule" />
+		<operation xmlns:operNS="urn:http.service.mobiledevicerules.portlet.liferay.com" xmlns:rtns="http://model.mobiledevicerules.portlet.liferay.com" name="updateRule" qname="operNS:updateRule" returnQName="updateRuleReturn" returnType="rtns:MDRRuleSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="ruleId" type="tns:long"></parameter>
+			<parameter xmlns:tns="urn:http.service.mobiledevicerules.portlet.liferay.com" qname="nameMapLanguageIds" type="tns:ArrayOf_xsd_string"></parameter>
+			<parameter xmlns:tns="urn:http.service.mobiledevicerules.portlet.liferay.com" qname="nameMapValues" type="tns:ArrayOf_xsd_string"></parameter>
+			<parameter xmlns:tns="urn:http.service.mobiledevicerules.portlet.liferay.com" qname="descriptionMapLanguageIds" type="tns:ArrayOf_xsd_string"></parameter>
+			<parameter xmlns:tns="urn:http.service.mobiledevicerules.portlet.liferay.com" qname="descriptionMapValues" type="tns:ArrayOf_xsd_string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="type" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="typeSettings" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://service.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
+		</operation>
+		<parameter name="allowedMethods" value="addRule deleteRule fetchRule getRule updateRule" />
 		<parameter name="className" value="com.liferay.portlet.mobiledevicerules.service.http.MDRRuleServiceSoap" />
-		<parameter name="schemaUnqualified" value="http://model.mobiledevicerules.portlet.liferay.com" />
+		<parameter name="schemaUnqualified" value="http://model.mobiledevicerules.portlet.liferay.com,http://model.portal.liferay.com,http://service.portal.liferay.com,http://xml.apache.org/xml-soap,urn:http.service.mobiledevicerules.portlet.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />
 		<parameter name="wsdlPortType" value="MDRRuleServiceSoap" />
 		<parameter name="wsdlServiceElement" value="MDRRuleServiceSoapService" />

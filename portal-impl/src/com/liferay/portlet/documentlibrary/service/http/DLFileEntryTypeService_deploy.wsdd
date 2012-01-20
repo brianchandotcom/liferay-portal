@@ -2,12 +2,13 @@
 
 <deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
 	<service name="Portlet_DL_DLFileEntryTypeService" provider="java:RPC" style="rpc" use="encoded">
-		<arrayMapping xmlns:ns="urn:http.service.documentlibrary.portlet.liferay.com" xmlns:cmp-ns="http://model.documentlibrary.portlet.liferay.com" qname="ns:ArrayOf_tns5_DLFileEntryTypeSoap" type="java:com.liferay.portlet.documentlibrary.model.DLFileEntryTypeSoap[]" innerType="cmp-ns:DLFileEntryTypeSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<arrayMapping xmlns:ns="urn:http.service.documentlibrary.portlet.liferay.com" xmlns:cmp-ns="http://model.documentlibrary.portlet.liferay.com" qname="ns:ArrayOf_tns3_DLFileEntryTypeSoap" type="java:com.liferay.portlet.documentlibrary.model.DLFileEntryTypeSoap[]" innerType="cmp-ns:DLFileEntryTypeSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.documentlibrary.portlet.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_long" type="java:long[]" innerType="cmp-ns:long" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.documentlibrary.portlet.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_string" type="java:java.lang.String[]" innerType="cmp-ns:string" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<typeMapping xmlns:ns="http://model.documentlibrary.portlet.liferay.com" qname="ns:DLFileEntryTypeSoap" type="java:com.liferay.portlet.documentlibrary.model.DLFileEntryTypeSoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
 		<typeMapping xmlns:ns="http://model.portal.liferay.com" qname="ns:PortletPreferencesIds" type="java:com.liferay.portal.model.PortletPreferencesIds" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
 		<typeMapping xmlns:ns="http://service.portal.liferay.com" qname="ns:ServiceContext" type="java:com.liferay.portal.service.ServiceContext" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
+		<typeMapping xmlns:ns="http://util.kernel.portal.liferay.com" qname="ns:OrderByComparator" type="java:com.liferay.portal.kernel.util.OrderByComparator" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
 		<typeMapping xmlns:ns="http://xml.apache.org/xml-soap" qname="ns:mapItem" type="java:org.apache.xml.xml_soap.MapItem" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
 		<operation xmlns:operNS="urn:http.service.documentlibrary.portlet.liferay.com" xmlns:rtns="http://model.documentlibrary.portlet.liferay.com" name="addFileEntryType" qname="operNS:addFileEntryType" returnQName="addFileEntryTypeReturn" returnType="rtns:DLFileEntryTypeSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
@@ -25,8 +26,23 @@
 		<operation xmlns:operNS="urn:http.service.documentlibrary.portlet.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getFileEntryTypesCount" qname="operNS:getFileEntryTypesCount" returnQName="getFileEntryTypesCountReturn" returnType="rtns:int" soapAction="">
 			<parameter xmlns:tns="urn:http.service.documentlibrary.portlet.liferay.com" qname="groupIds" type="tns:ArrayOf_xsd_long"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.documentlibrary.portlet.liferay.com" xmlns:rtns="urn:http.service.documentlibrary.portlet.liferay.com" xmlns:tns2="http://model.documentlibrary.portlet.liferay.com" name="getFileEntryTypes" qname="operNS:getFileEntryTypes" returnQName="getFileEntryTypesReturn" returnType="rtns:ArrayOf_tns5_DLFileEntryTypeSoap" returnItemType="tns2:DLFileEntryTypeSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.documentlibrary.portlet.liferay.com" xmlns:rtns="urn:http.service.documentlibrary.portlet.liferay.com" xmlns:tns2="http://model.documentlibrary.portlet.liferay.com" name="getFileEntryTypes" qname="operNS:getFileEntryTypes" returnQName="getFileEntryTypesReturn" returnType="rtns:ArrayOf_tns3_DLFileEntryTypeSoap" returnItemType="tns2:DLFileEntryTypeSoap" soapAction="">
 			<parameter xmlns:tns="urn:http.service.documentlibrary.portlet.liferay.com" qname="groupIds" type="tns:ArrayOf_xsd_long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.documentlibrary.portlet.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="searchCount" qname="operNS:searchCount" returnQName="searchCountReturn" returnType="rtns:int" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
+			<parameter xmlns:tns="urn:http.service.documentlibrary.portlet.liferay.com" qname="groupIds" type="tns:ArrayOf_xsd_long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="keywords" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="includeBasicFileEntryType" type="tns:boolean"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.documentlibrary.portlet.liferay.com" xmlns:rtns="urn:http.service.documentlibrary.portlet.liferay.com" xmlns:tns2="http://model.documentlibrary.portlet.liferay.com" name="search" qname="operNS:search" returnQName="searchReturn" returnType="rtns:ArrayOf_tns3_DLFileEntryTypeSoap" returnItemType="tns2:DLFileEntryTypeSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
+			<parameter xmlns:tns="urn:http.service.documentlibrary.portlet.liferay.com" qname="groupIds" type="tns:ArrayOf_xsd_long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="keywords" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="includeBasicFileEntryType" type="tns:boolean"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
+			<parameter xmlns:tns="http://util.kernel.portal.liferay.com" qname="orderByComparator" type="tns:OrderByComparator"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.documentlibrary.portlet.liferay.com" name="updateFileEntryType" qname="operNS:updateFileEntryType" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="fileEntryTypeId" type="tns:long"></parameter>
@@ -35,9 +51,9 @@
 			<parameter xmlns:tns="urn:http.service.documentlibrary.portlet.liferay.com" qname="ddmStructureIds" type="tns:ArrayOf_xsd_long"></parameter>
 			<parameter xmlns:tns="http://service.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
 		</operation>
-		<parameter name="allowedMethods" value="addFileEntryType deleteFileEntryType getFileEntryType getFileEntryTypes getFileEntryTypesCount updateFileEntryType" />
+		<parameter name="allowedMethods" value="addFileEntryType deleteFileEntryType getFileEntryType getFileEntryTypes getFileEntryTypesCount search searchCount updateFileEntryType" />
 		<parameter name="className" value="com.liferay.portlet.documentlibrary.service.http.DLFileEntryTypeServiceSoap" />
-		<parameter name="schemaUnqualified" value="http://model.documentlibrary.portlet.liferay.com,http://model.portal.liferay.com,http://service.portal.liferay.com,http://xml.apache.org/xml-soap,urn:http.service.documentlibrary.portlet.liferay.com" />
+		<parameter name="schemaUnqualified" value="http://model.documentlibrary.portlet.liferay.com,http://model.portal.liferay.com,http://service.portal.liferay.com,http://util.kernel.portal.liferay.com,http://xml.apache.org/xml-soap,urn:http.service.documentlibrary.portlet.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />
 		<parameter name="wsdlPortType" value="DLFileEntryTypeServiceSoap" />
 		<parameter name="wsdlServiceElement" value="DLFileEntryTypeServiceSoapService" />

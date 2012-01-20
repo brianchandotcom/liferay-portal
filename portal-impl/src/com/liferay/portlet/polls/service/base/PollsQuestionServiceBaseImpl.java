@@ -33,6 +33,7 @@ import com.liferay.portal.service.persistence.UserPersistence;
 
 import com.liferay.portlet.polls.model.PollsQuestion;
 import com.liferay.portlet.polls.service.PollsChoiceLocalService;
+import com.liferay.portlet.polls.service.PollsChoiceService;
 import com.liferay.portlet.polls.service.PollsQuestionLocalService;
 import com.liferay.portlet.polls.service.PollsQuestionService;
 import com.liferay.portlet.polls.service.PollsVoteLocalService;
@@ -81,6 +82,24 @@ public abstract class PollsQuestionServiceBaseImpl extends PrincipalBean
 	public void setPollsChoiceLocalService(
 		PollsChoiceLocalService pollsChoiceLocalService) {
 		this.pollsChoiceLocalService = pollsChoiceLocalService;
+	}
+
+	/**
+	 * Returns the polls choice remote service.
+	 *
+	 * @return the polls choice remote service
+	 */
+	public PollsChoiceService getPollsChoiceService() {
+		return pollsChoiceService;
+	}
+
+	/**
+	 * Sets the polls choice remote service.
+	 *
+	 * @param pollsChoiceService the polls choice remote service
+	 */
+	public void setPollsChoiceService(PollsChoiceService pollsChoiceService) {
+		this.pollsChoiceService = pollsChoiceService;
 	}
 
 	/**
@@ -449,6 +468,8 @@ public abstract class PollsQuestionServiceBaseImpl extends PrincipalBean
 
 	@BeanReference(type = PollsChoiceLocalService.class)
 	protected PollsChoiceLocalService pollsChoiceLocalService;
+	@BeanReference(type = PollsChoiceService.class)
+	protected PollsChoiceService pollsChoiceService;
 	@BeanReference(type = PollsChoicePersistence.class)
 	protected PollsChoicePersistence pollsChoicePersistence;
 	@BeanReference(type = PollsChoiceFinder.class)

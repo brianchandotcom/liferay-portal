@@ -374,7 +374,17 @@ create table LayoutSetBranch (
 	privateLayout BOOLEAN,
 	name VARCHAR(75) null,
 	description STRING null,
-	master BOOLEAN
+	master BOOLEAN,
+	logo BOOLEAN,
+	logoId LONG,
+	themeId VARCHAR(75) null,
+	colorSchemeId VARCHAR(75) null,
+	wapThemeId VARCHAR(75) null,
+	wapColorSchemeId VARCHAR(75) null,
+	css VARCHAR(75) null,
+	settings_ VARCHAR(75) null,
+	layoutSetPrototypeUuid VARCHAR(75) null,
+	layoutSetPrototypeLinkEnabled BOOLEAN
 );
 
 alter table LayoutSetPrototype add createDate DATE null;

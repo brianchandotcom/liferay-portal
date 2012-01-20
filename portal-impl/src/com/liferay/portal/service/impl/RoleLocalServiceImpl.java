@@ -1234,7 +1234,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			setRolePermissions(
 				role, portletId,
 				new String[] {
-					ActionKeys.ACCESS_IN_CONTROL_PANEL, ActionKeys.VIEW
+					ActionKeys.ACCESS_IN_CONTROL_PANEL
 				});
 		}
 	}
@@ -1252,15 +1252,13 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			else {
 				resourcePermissionLocalService.setResourcePermissions(
 					role.getCompanyId(), name, ResourceConstants.SCOPE_COMPANY,
-					String.valueOf(role.getCompanyId()), role.getRoleId(),
-					actionIds);
+					"0", role.getRoleId(), actionIds);
 			}
 		}
 		else {
 			permissionLocalService.setRolePermissions(
 				role.getRoleId(), role.getCompanyId(), name,
-				ResourceConstants.SCOPE_COMPANY,
-				String.valueOf(role.getCompanyId()), actionIds);
+				ResourceConstants.SCOPE_COMPANY, "0", actionIds);
 		}
 	}
 

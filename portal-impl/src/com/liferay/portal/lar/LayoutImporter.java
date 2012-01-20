@@ -396,13 +396,13 @@ public class LayoutImporter {
 				colorSchemeId = colorSchemeIdAttribute.getValue();
 			}
 		}
-		
+
 		if (importLogo) {
 			String logoPath = headerElement.attributeValue("logo-path");
-			
+
 			byte[] iconBytes = portletDataContext.getZipEntryAsByteArray(
 				logoPath);
-			
+
 			if ((iconBytes != null) && (iconBytes.length > 0)) {
 				File logo = FileUtil.createTempFile(iconBytes);
 
@@ -414,11 +414,11 @@ public class LayoutImporter {
 					groupId, privateLayout, false, (File) null);
 			}
 		}
-		
+
 		if (importLayoutSetSettings) {
 			String settings = GetterUtil.getString(
 				headerElement.elementText("settings"));
-			
+
 			LayoutSetLocalServiceUtil.updateSettings(
 				groupId, privateLayout, settings);
 		}

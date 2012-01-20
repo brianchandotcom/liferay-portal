@@ -307,6 +307,7 @@ public class LocalizationImpl implements Localization {
 
 		for (int i = 0; i < values.length; i++) {
 			Locale locale = LocaleUtil.fromLanguageId(languageIds[i]);
+
 			map.put(locale, values[i]);
 		}
 

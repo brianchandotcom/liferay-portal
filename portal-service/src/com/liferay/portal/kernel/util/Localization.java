@@ -133,10 +133,11 @@ public interface Localization {
 	public Map<Locale, String> getLocalizationMap(String xml);
 
 	/**
-	 * Returns a map of locales and values for the given languageIds and values.
+	 * Returns a map of locales and localized strings for the given languageIds
+	 * and values.
 	 *
-	 * @param  languageIds the languageIds of the values
-	 * @param  values the values for the different languageId
+	 * @param  languageIds the languageIds of the localized Strings
+	 * @param  values the localized strings for the different languageId
 	 * @return the map of locales and values for the given parameters
 	 */
 	public Map<Locale, String> getLocalizationMap(

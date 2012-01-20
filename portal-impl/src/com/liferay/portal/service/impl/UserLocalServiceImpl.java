@@ -5009,15 +5009,21 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		// Authenticate against the User_ table
 
 		if (authResult == Authenticator.SUCCESS) {
-			if (PropsValues.AUTH_PIPELINE_ENABLE_LIFERAY_CHECK) {
-				boolean authenticated = PwdAuthenticator.authenticate(
-					login, password, user.getPassword());
-
-				if (authenticated) {
-					authResult = Authenticator.SUCCESS;
+			if (PropsValues.AUTH_PIPELINE_ENABLE_LIFERAY_CHECK) { 
+				if (PrefsPropsUtil.getBoolean(
+						companyId, PropsKeys.LDAP_AUTH_ENABLED) &&
+					!PropsValues.LDAP_IMPORT_USER_PASSWORD_ENABLED) {
 				}
 				else {
-					authResult = Authenticator.FAILURE;
+					boolean authenticated = PwdAuthenticator.authenticate(
+						login, password, user.getPassword());
+
+					if (authenticated) {
+						authResult = Authenticator.SUCCESS;
+					}
+					else {
+						authResult = Authenticator.FAILURE;
+					}
 				}
 			}
 		}

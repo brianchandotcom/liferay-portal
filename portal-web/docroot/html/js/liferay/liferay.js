@@ -37,10 +37,12 @@ Liferay = window.Liferay || {};
 
 		var lastArg = arguments[argLength - 1];
 
+		var method;
+
 		if (argLength >= 1 && Lang.isObject(lastArg, true)) {
 			methodType = lastArg.method || null;
 
-			config.method = methodType;
+			method = methodType;
 		}
 
 		if (service) {
@@ -80,7 +82,7 @@ Liferay = window.Liferay || {};
 			}
 
 			if (Liferay.PropsValues.NTLM_AUTH_ENABLED && Liferay.Browser.isIe()) {
-				config.method = 'GET';
+				method = 'GET';
 			}
 
 			var callbackConfig = A.namespace.call(config, 'on');
@@ -116,6 +118,12 @@ Liferay = window.Liferay || {};
 		if (!service) {
 			throw 'You must specify a service.';
 		}
+
+		if (String(method).toUpperCase() == 'GET') {
+			config.cache = false;
+		}
+
+		config.method = method;
 
 		return A.io.request(Service.URL_BASE + service, config);
 	};

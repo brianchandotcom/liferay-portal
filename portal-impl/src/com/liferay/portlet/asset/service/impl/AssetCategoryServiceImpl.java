@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -127,7 +128,7 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 	}
 
 	public JSONArray getJSONSearch(long groupId, String keywords,
-			long vocabularyId, int start, int end, OrderByComparator obc) 
+			long vocabularyId, int start, int end, OrderByComparator obc)
 		throws PortalException, SystemException {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
@@ -139,13 +140,14 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 				JSONFactoryUtil.looseSerialize(category));
 
-			AssetVocabulary vocabulary = assetVocabularyService
-				.getVocabulary(category.getVocabularyId());
+			AssetVocabulary vocabulary =
+				assetVocabularyService.getVocabulary(
+					category.getVocabularyId());
+
+			List<String> names = new ArrayList<String>();
 
 			AssetCategory parentCategory = null;
 			AssetCategory tempCategory = category;
-
-			List<String> names = new ArrayList<String>();
 
 			while (tempCategory.getParentCategoryId() > 0) {
 				parentCategory =

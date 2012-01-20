@@ -266,16 +266,19 @@ public class LDAPAuth implements Authenticator {
 				String errorMessage = ldapAuthResult.getErrorMessage();
 
 				if (errorMessage != null) {
-					if (errorMessage.indexOf(PrefsPropsUtil.getString(
-							companyId, PropsKeys.LDAP_ERROR_USER_LOCKOUT))
-								!= -1) {
+					int pos = errorMessage.indexOf(
+						PrefsPropsUtil.getString(
+							companyId, PropsKeys.LDAP_ERROR_USER_LOCKOUT));
 
+					if (pos != -1) {
 						throw new UserLockoutException();
 					}
-					else if (errorMessage.indexOf(PrefsPropsUtil.getString(
-						companyId, PropsKeys.LDAP_ERROR_PASSWORD_EXPIRED))
-							!= -1) {
 
+					pos = errorMessage.indexOf(
+						PrefsPropsUtil.getString(
+							companyId, PropsKeys.LDAP_ERROR_USER_LOCKOUT));
+
+					if (pos != -1) {
 						throw new PasswordExpiredException();
 					}
 				}

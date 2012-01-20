@@ -3,6 +3,10 @@ Liferay = window.Liferay || {};
 ;(function(A, Liferay) {
 	var Lang = A.Lang;
 
+	var REGEX_SELECTOR_ID = /^#/;
+
+	var REGEX_TRIM_SLASH = /^\/|\/$/g;
+
 	Liferay.namespace = A.namespace;
 
 	A.mix(
@@ -37,50 +41,67 @@ Liferay = window.Liferay || {};
 
 		var lastArg = arguments[argLength - 1];
 
+		var method;
+
 		if (argLength >= 1 && Lang.isObject(lastArg, true)) {
 			methodType = lastArg.method || null;
 
-			config.method = methodType;
+			method = methodType;
 		}
 
 		if (service) {
-			if (argLength === 1 && Lang.isObject(service, true)) {
-				if (service.service) {
-					A.mix(config, service, true);
+			var serviceData = data;
 
-					service = config.service;
+			if (Lang.isObject(service, true)) {
+				var serviceConfig = service;
+
+				var ioConfig = serviceConfig.io;
+
+				if (ioConfig) {
+					A.mix(config, ioConfig, true);
+
+					delete serviceConfig.io;
 				}
-				else {
-					service = null;
-				}
-			}
-			else {
-				if (data) {
-					if (Lang.isFunction(data)) {
-						if (Lang.isFunction(successCallback)) {
-							exceptionCallback = successCallback;
-						}
 
-						successCallback = data;
+				for (var i in serviceConfig) {
+					if (A.Object.owns(serviceConfig, i)) {
+						service = i;
+						serviceData = serviceConfig[i];
 
-						data = null;
-					}
-					else {
-						if (Lang.isString(data) || (data.nodeType || data._node)) {
-							var formConfig = A.namespace.call(config, 'form');
-
-							formConfig.id = data._node || data;
-
-							data = null;
-						}
+						break;
 					}
 				}
-
-				config.data = data;
 			}
+
+			if (data) {
+				var typeString = Lang.isString(data);
+
+				if (!typeString && Lang.isFunction(data)) {
+					if (Lang.isFunction(successCallback)) {
+						exceptionCallback = successCallback;
+					}
+
+					successCallback = data;
+
+					serviceData = null;
+				}
+				else if (typeString || (data.nodeType || data._node)) {
+					var formConfig = A.namespace.call(config, 'form');
+
+					if (typeString) {
+						data = data.replace(REGEX_SELECTOR_ID, '');
+					}
+
+					formConfig.id = data._node || data;
+
+					serviceData = null;
+				}
+			}
+
+			config.data = serviceData;
 
 			if (Liferay.PropsValues.NTLM_AUTH_ENABLED && Liferay.Browser.isIe()) {
-				config.method = 'GET';
+				method = 'GET';
 			}
 
 			var callbackConfig = A.namespace.call(config, 'on');
@@ -110,12 +131,18 @@ Liferay = window.Liferay || {};
 		}
 
 		if (service) {
-			service = service.replace(/^\/|\/$/g, '');
+			service = service.replace(REGEX_TRIM_SLASH, '');
 		}
 
 		if (!service) {
 			throw 'You must specify a service.';
 		}
+
+		if (String(method).toUpperCase() == 'GET') {
+			config.cache = false;
+		}
+
+		config.method = method;
 
 		return A.io.request(Service.URL_BASE + service, config);
 	};

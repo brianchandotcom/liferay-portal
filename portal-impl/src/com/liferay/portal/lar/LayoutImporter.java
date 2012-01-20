@@ -945,12 +945,6 @@ public class LayoutImporter {
 			importedLayout.setPrivateLayout(privateLayout);
 			importedLayout.setLayoutId(layoutId);
 
-			if (layout.isIconImage()) {
-				long iconImageId = CounterLocalServiceUtil.increment();
-
-				importedLayout.setIconImageId(iconImageId);
-			}
-
 			// Resources
 
 			boolean addGroupPermissions = true;
@@ -1131,8 +1125,9 @@ public class LayoutImporter {
 			if ((iconBytes != null) && (iconBytes.length > 0)) {
 				importedLayout.setIconImage(true);
 
-				if (Validator.isNull(importedLayout.getIconImageId())) {
+				if (importedLayout.getIconImageId() == 0) {
 					long iconImageId = CounterLocalServiceUtil.increment();
+
 					importedLayout.setIconImageId(iconImageId);
 				}
 

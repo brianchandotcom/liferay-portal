@@ -60,6 +60,14 @@ public class Table {
 	public static final int BATCH_SIZE = GetterUtil.getInteger(
 		PropsUtil.get("hibernate.jdbc.batch_size"));
 
+	public static final String[][] SAFE_CHARS = {
+		{StringPool.RETURN, StringPool.COMMA, StringPool.NEW_LINE},
+		{
+			Table.SAFE_RETURN_CHARACTER, Table.SAFE_COMMA_CHARACTER,
+			Table.SAFE_NEWLINE_CHARACTER
+		}
+	};
+
 	public static final String SAFE_COMMA_CHARACTER = "_SAFE_COMMA_CHARACTER_";
 
 	public static final String SAFE_NEWLINE_CHARACTER =
@@ -67,11 +75,6 @@ public class Table {
 
 	public static final String SAFE_RETURN_CHARACTER =
 		"_SAFE_RETURN_CHARACTER_";
-
-	public static final String[][] SAFE_CHARS = {
-		{StringPool.RETURN, StringPool.COMMA, StringPool.NEW_LINE},
-		{SAFE_RETURN_CHARACTER, SAFE_COMMA_CHARACTER, SAFE_NEWLINE_CHARACTER}
-	};
 
 	public Table(String tableName) {
 		_tableName = tableName;

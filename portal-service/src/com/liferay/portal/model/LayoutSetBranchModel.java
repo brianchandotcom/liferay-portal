@@ -245,6 +245,168 @@ public interface LayoutSetBranchModel extends BaseModel<LayoutSetBranch>,
 	 */
 	public void setMaster(boolean master);
 
+	/**
+	 * Returns the logo of this layout set branch.
+	 *
+	 * @return the logo of this layout set branch
+	 */
+	public boolean getLogo();
+
+	/**
+	 * Returns <code>true</code> if this layout set branch is logo.
+	 *
+	 * @return <code>true</code> if this layout set branch is logo; <code>false</code> otherwise
+	 */
+	public boolean isLogo();
+
+	/**
+	 * Sets whether this layout set branch is logo.
+	 *
+	 * @param logo the logo of this layout set branch
+	 */
+	public void setLogo(boolean logo);
+
+	/**
+	 * Returns the logo ID of this layout set branch.
+	 *
+	 * @return the logo ID of this layout set branch
+	 */
+	public long getLogoId();
+
+	/**
+	 * Sets the logo ID of this layout set branch.
+	 *
+	 * @param logoId the logo ID of this layout set branch
+	 */
+	public void setLogoId(long logoId);
+
+	/**
+	 * Returns the theme ID of this layout set branch.
+	 *
+	 * @return the theme ID of this layout set branch
+	 */
+	@AutoEscape
+	public String getThemeId();
+
+	/**
+	 * Sets the theme ID of this layout set branch.
+	 *
+	 * @param themeId the theme ID of this layout set branch
+	 */
+	public void setThemeId(String themeId);
+
+	/**
+	 * Returns the color scheme ID of this layout set branch.
+	 *
+	 * @return the color scheme ID of this layout set branch
+	 */
+	@AutoEscape
+	public String getColorSchemeId();
+
+	/**
+	 * Sets the color scheme ID of this layout set branch.
+	 *
+	 * @param colorSchemeId the color scheme ID of this layout set branch
+	 */
+	public void setColorSchemeId(String colorSchemeId);
+
+	/**
+	 * Returns the wap theme ID of this layout set branch.
+	 *
+	 * @return the wap theme ID of this layout set branch
+	 */
+	@AutoEscape
+	public String getWapThemeId();
+
+	/**
+	 * Sets the wap theme ID of this layout set branch.
+	 *
+	 * @param wapThemeId the wap theme ID of this layout set branch
+	 */
+	public void setWapThemeId(String wapThemeId);
+
+	/**
+	 * Returns the wap color scheme ID of this layout set branch.
+	 *
+	 * @return the wap color scheme ID of this layout set branch
+	 */
+	@AutoEscape
+	public String getWapColorSchemeId();
+
+	/**
+	 * Sets the wap color scheme ID of this layout set branch.
+	 *
+	 * @param wapColorSchemeId the wap color scheme ID of this layout set branch
+	 */
+	public void setWapColorSchemeId(String wapColorSchemeId);
+
+	/**
+	 * Returns the css of this layout set branch.
+	 *
+	 * @return the css of this layout set branch
+	 */
+	@AutoEscape
+	public String getCss();
+
+	/**
+	 * Sets the css of this layout set branch.
+	 *
+	 * @param css the css of this layout set branch
+	 */
+	public void setCss(String css);
+
+	/**
+	 * Returns the settings of this layout set branch.
+	 *
+	 * @return the settings of this layout set branch
+	 */
+	@AutoEscape
+	public String getSettings();
+
+	/**
+	 * Sets the settings of this layout set branch.
+	 *
+	 * @param settings the settings of this layout set branch
+	 */
+	public void setSettings(String settings);
+
+	/**
+	 * Returns the layout set prototype uuid of this layout set branch.
+	 *
+	 * @return the layout set prototype uuid of this layout set branch
+	 */
+	@AutoEscape
+	public String getLayoutSetPrototypeUuid();
+
+	/**
+	 * Sets the layout set prototype uuid of this layout set branch.
+	 *
+	 * @param layoutSetPrototypeUuid the layout set prototype uuid of this layout set branch
+	 */
+	public void setLayoutSetPrototypeUuid(String layoutSetPrototypeUuid);
+
+	/**
+	 * Returns the layout set prototype link enabled of this layout set branch.
+	 *
+	 * @return the layout set prototype link enabled of this layout set branch
+	 */
+	public boolean getLayoutSetPrototypeLinkEnabled();
+
+	/**
+	 * Returns <code>true</code> if this layout set branch is layout set prototype link enabled.
+	 *
+	 * @return <code>true</code> if this layout set branch is layout set prototype link enabled; <code>false</code> otherwise
+	 */
+	public boolean isLayoutSetPrototypeLinkEnabled();
+
+	/**
+	 * Sets whether this layout set branch is layout set prototype link enabled.
+	 *
+	 * @param layoutSetPrototypeLinkEnabled the layout set prototype link enabled of this layout set branch
+	 */
+	public void setLayoutSetPrototypeLinkEnabled(
+		boolean layoutSetPrototypeLinkEnabled);
+
 	public boolean isNew();
 
 	public void setNew(boolean n);

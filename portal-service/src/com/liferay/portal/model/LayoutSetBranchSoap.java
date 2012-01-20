@@ -42,6 +42,16 @@ public class LayoutSetBranchSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setMaster(model.getMaster());
+		soapModel.setLogo(model.getLogo());
+		soapModel.setLogoId(model.getLogoId());
+		soapModel.setThemeId(model.getThemeId());
+		soapModel.setColorSchemeId(model.getColorSchemeId());
+		soapModel.setWapThemeId(model.getWapThemeId());
+		soapModel.setWapColorSchemeId(model.getWapColorSchemeId());
+		soapModel.setCss(model.getCss());
+		soapModel.setSettings(model.getSettings());
+		soapModel.setLayoutSetPrototypeUuid(model.getLayoutSetPrototypeUuid());
+		soapModel.setLayoutSetPrototypeLinkEnabled(model.getLayoutSetPrototypeLinkEnabled());
 
 		return soapModel;
 	}
@@ -192,6 +202,95 @@ public class LayoutSetBranchSoap implements Serializable {
 		_master = master;
 	}
 
+	public boolean getLogo() {
+		return _logo;
+	}
+
+	public boolean isLogo() {
+		return _logo;
+	}
+
+	public void setLogo(boolean logo) {
+		_logo = logo;
+	}
+
+	public long getLogoId() {
+		return _logoId;
+	}
+
+	public void setLogoId(long logoId) {
+		_logoId = logoId;
+	}
+
+	public String getThemeId() {
+		return _themeId;
+	}
+
+	public void setThemeId(String themeId) {
+		_themeId = themeId;
+	}
+
+	public String getColorSchemeId() {
+		return _colorSchemeId;
+	}
+
+	public void setColorSchemeId(String colorSchemeId) {
+		_colorSchemeId = colorSchemeId;
+	}
+
+	public String getWapThemeId() {
+		return _wapThemeId;
+	}
+
+	public void setWapThemeId(String wapThemeId) {
+		_wapThemeId = wapThemeId;
+	}
+
+	public String getWapColorSchemeId() {
+		return _wapColorSchemeId;
+	}
+
+	public void setWapColorSchemeId(String wapColorSchemeId) {
+		_wapColorSchemeId = wapColorSchemeId;
+	}
+
+	public String getCss() {
+		return _css;
+	}
+
+	public void setCss(String css) {
+		_css = css;
+	}
+
+	public String getSettings() {
+		return _settings;
+	}
+
+	public void setSettings(String settings) {
+		_settings = settings;
+	}
+
+	public String getLayoutSetPrototypeUuid() {
+		return _layoutSetPrototypeUuid;
+	}
+
+	public void setLayoutSetPrototypeUuid(String layoutSetPrototypeUuid) {
+		_layoutSetPrototypeUuid = layoutSetPrototypeUuid;
+	}
+
+	public boolean getLayoutSetPrototypeLinkEnabled() {
+		return _layoutSetPrototypeLinkEnabled;
+	}
+
+	public boolean isLayoutSetPrototypeLinkEnabled() {
+		return _layoutSetPrototypeLinkEnabled;
+	}
+
+	public void setLayoutSetPrototypeLinkEnabled(
+		boolean layoutSetPrototypeLinkEnabled) {
+		_layoutSetPrototypeLinkEnabled = layoutSetPrototypeLinkEnabled;
+	}
+
 	private long _layoutSetBranchId;
 	private long _groupId;
 	private long _companyId;
@@ -203,4 +302,14 @@ public class LayoutSetBranchSoap implements Serializable {
 	private String _name;
 	private String _description;
 	private boolean _master;
+	private boolean _logo;
+	private long _logoId;
+	private String _themeId;
+	private String _colorSchemeId;
+	private String _wapThemeId;
+	private String _wapColorSchemeId;
+	private String _css;
+	private String _settings;
+	private String _layoutSetPrototypeUuid;
+	private boolean _layoutSetPrototypeLinkEnabled;
 }

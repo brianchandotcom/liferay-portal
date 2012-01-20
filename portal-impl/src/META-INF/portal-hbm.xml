@@ -482,6 +482,16 @@
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="master" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="logo" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="logoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="themeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="colorSchemeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="wapThemeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="wapColorSchemeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="css" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="settings" type="com.liferay.portal.dao.orm.hibernate.StringType" column="settings_" />
+		<property name="layoutSetPrototypeUuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="layoutSetPrototypeLinkEnabled" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.LayoutSetPrototypeImpl" table="LayoutSetPrototype">
 		<cache usage="read-write" />

@@ -453,6 +453,18 @@
 			<basic name="name" />
 			<basic name="description" />
 			<basic name="master" />
+			<basic name="logo" />
+			<basic name="logoId" />
+			<basic name="themeId" />
+			<basic name="colorSchemeId" />
+			<basic name="wapThemeId" />
+			<basic name="wapColorSchemeId" />
+			<basic name="css" />
+			<basic name="settings">
+				<column name="SETTINGS_" />
+			</basic>
+			<basic name="layoutSetPrototypeUuid" />
+			<basic name="layoutSetPrototypeLinkEnabled" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 			<transient name="userUuid" />
@@ -3487,7 +3499,9 @@
 	</entity>
 	<entity class="com.liferay.portal.model.impl.LayoutSetBranchImpl" name="LayoutSetBranch">
 		<table name="LayoutSetBranch" />
-		<attributes />
+		<attributes>
+			<transient name="settingsProperties" />
+		</attributes>
 	</entity>
 	<entity class="com.liferay.portal.model.impl.LayoutSetPrototypeImpl" name="LayoutSetPrototype">
 		<table name="LayoutSetPrototype" />

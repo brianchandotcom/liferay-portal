@@ -72,9 +72,19 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 			{ "privateLayout", Types.BOOLEAN },
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
-			{ "master", Types.BOOLEAN }
+			{ "master", Types.BOOLEAN },
+			{ "logo", Types.BOOLEAN },
+			{ "logoId", Types.BIGINT },
+			{ "themeId", Types.VARCHAR },
+			{ "colorSchemeId", Types.VARCHAR },
+			{ "wapThemeId", Types.VARCHAR },
+			{ "wapColorSchemeId", Types.VARCHAR },
+			{ "css", Types.VARCHAR },
+			{ "settings_", Types.VARCHAR },
+			{ "layoutSetPrototypeUuid", Types.VARCHAR },
+			{ "layoutSetPrototypeLinkEnabled", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LayoutSetBranch (layoutSetBranchId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,name VARCHAR(75) null,description STRING null,master BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table LayoutSetBranch (layoutSetBranchId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,name VARCHAR(75) null,description STRING null,master BOOLEAN,logo BOOLEAN,logoId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css VARCHAR(75) null,settings_ VARCHAR(75) null,layoutSetPrototypeUuid VARCHAR(75) null,layoutSetPrototypeLinkEnabled BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table LayoutSetBranch";
 	public static final String ORDER_BY_JPQL = " ORDER BY layoutSetBranch.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LayoutSetBranch.name ASC";
@@ -114,6 +124,16 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
 		model.setMaster(soapModel.getMaster());
+		model.setLogo(soapModel.getLogo());
+		model.setLogoId(soapModel.getLogoId());
+		model.setThemeId(soapModel.getThemeId());
+		model.setColorSchemeId(soapModel.getColorSchemeId());
+		model.setWapThemeId(soapModel.getWapThemeId());
+		model.setWapColorSchemeId(soapModel.getWapColorSchemeId());
+		model.setCss(soapModel.getCss());
+		model.setSettings(soapModel.getSettings());
+		model.setLayoutSetPrototypeUuid(soapModel.getLayoutSetPrototypeUuid());
+		model.setLayoutSetPrototypeLinkEnabled(soapModel.getLayoutSetPrototypeLinkEnabled());
 
 		return model;
 	}
@@ -329,6 +349,140 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		_master = master;
 	}
 
+	@JSON
+	public boolean getLogo() {
+		return _logo;
+	}
+
+	public boolean isLogo() {
+		return _logo;
+	}
+
+	public void setLogo(boolean logo) {
+		_logo = logo;
+	}
+
+	@JSON
+	public long getLogoId() {
+		return _logoId;
+	}
+
+	public void setLogoId(long logoId) {
+		_logoId = logoId;
+	}
+
+	@JSON
+	public String getThemeId() {
+		if (_themeId == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _themeId;
+		}
+	}
+
+	public void setThemeId(String themeId) {
+		_themeId = themeId;
+	}
+
+	@JSON
+	public String getColorSchemeId() {
+		if (_colorSchemeId == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _colorSchemeId;
+		}
+	}
+
+	public void setColorSchemeId(String colorSchemeId) {
+		_colorSchemeId = colorSchemeId;
+	}
+
+	@JSON
+	public String getWapThemeId() {
+		if (_wapThemeId == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _wapThemeId;
+		}
+	}
+
+	public void setWapThemeId(String wapThemeId) {
+		_wapThemeId = wapThemeId;
+	}
+
+	@JSON
+	public String getWapColorSchemeId() {
+		if (_wapColorSchemeId == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _wapColorSchemeId;
+		}
+	}
+
+	public void setWapColorSchemeId(String wapColorSchemeId) {
+		_wapColorSchemeId = wapColorSchemeId;
+	}
+
+	@JSON
+	public String getCss() {
+		if (_css == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _css;
+		}
+	}
+
+	public void setCss(String css) {
+		_css = css;
+	}
+
+	@JSON
+	public String getSettings() {
+		if (_settings == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _settings;
+		}
+	}
+
+	public void setSettings(String settings) {
+		_settings = settings;
+	}
+
+	@JSON
+	public String getLayoutSetPrototypeUuid() {
+		if (_layoutSetPrototypeUuid == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _layoutSetPrototypeUuid;
+		}
+	}
+
+	public void setLayoutSetPrototypeUuid(String layoutSetPrototypeUuid) {
+		_layoutSetPrototypeUuid = layoutSetPrototypeUuid;
+	}
+
+	@JSON
+	public boolean getLayoutSetPrototypeLinkEnabled() {
+		return _layoutSetPrototypeLinkEnabled;
+	}
+
+	public boolean isLayoutSetPrototypeLinkEnabled() {
+		return _layoutSetPrototypeLinkEnabled;
+	}
+
+	public void setLayoutSetPrototypeLinkEnabled(
+		boolean layoutSetPrototypeLinkEnabled) {
+		_layoutSetPrototypeLinkEnabled = layoutSetPrototypeLinkEnabled;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -374,6 +528,16 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		layoutSetBranchImpl.setName(getName());
 		layoutSetBranchImpl.setDescription(getDescription());
 		layoutSetBranchImpl.setMaster(getMaster());
+		layoutSetBranchImpl.setLogo(getLogo());
+		layoutSetBranchImpl.setLogoId(getLogoId());
+		layoutSetBranchImpl.setThemeId(getThemeId());
+		layoutSetBranchImpl.setColorSchemeId(getColorSchemeId());
+		layoutSetBranchImpl.setWapThemeId(getWapThemeId());
+		layoutSetBranchImpl.setWapColorSchemeId(getWapColorSchemeId());
+		layoutSetBranchImpl.setCss(getCss());
+		layoutSetBranchImpl.setSettings(getSettings());
+		layoutSetBranchImpl.setLayoutSetPrototypeUuid(getLayoutSetPrototypeUuid());
+		layoutSetBranchImpl.setLayoutSetPrototypeLinkEnabled(getLayoutSetPrototypeLinkEnabled());
 
 		layoutSetBranchImpl.resetOriginalValues();
 
@@ -497,12 +661,75 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 
 		layoutSetBranchCacheModel.master = getMaster();
 
+		layoutSetBranchCacheModel.logo = getLogo();
+
+		layoutSetBranchCacheModel.logoId = getLogoId();
+
+		layoutSetBranchCacheModel.themeId = getThemeId();
+
+		String themeId = layoutSetBranchCacheModel.themeId;
+
+		if ((themeId != null) && (themeId.length() == 0)) {
+			layoutSetBranchCacheModel.themeId = null;
+		}
+
+		layoutSetBranchCacheModel.colorSchemeId = getColorSchemeId();
+
+		String colorSchemeId = layoutSetBranchCacheModel.colorSchemeId;
+
+		if ((colorSchemeId != null) && (colorSchemeId.length() == 0)) {
+			layoutSetBranchCacheModel.colorSchemeId = null;
+		}
+
+		layoutSetBranchCacheModel.wapThemeId = getWapThemeId();
+
+		String wapThemeId = layoutSetBranchCacheModel.wapThemeId;
+
+		if ((wapThemeId != null) && (wapThemeId.length() == 0)) {
+			layoutSetBranchCacheModel.wapThemeId = null;
+		}
+
+		layoutSetBranchCacheModel.wapColorSchemeId = getWapColorSchemeId();
+
+		String wapColorSchemeId = layoutSetBranchCacheModel.wapColorSchemeId;
+
+		if ((wapColorSchemeId != null) && (wapColorSchemeId.length() == 0)) {
+			layoutSetBranchCacheModel.wapColorSchemeId = null;
+		}
+
+		layoutSetBranchCacheModel.css = getCss();
+
+		String css = layoutSetBranchCacheModel.css;
+
+		if ((css != null) && (css.length() == 0)) {
+			layoutSetBranchCacheModel.css = null;
+		}
+
+		layoutSetBranchCacheModel.settings = getSettings();
+
+		String settings = layoutSetBranchCacheModel.settings;
+
+		if ((settings != null) && (settings.length() == 0)) {
+			layoutSetBranchCacheModel.settings = null;
+		}
+
+		layoutSetBranchCacheModel.layoutSetPrototypeUuid = getLayoutSetPrototypeUuid();
+
+		String layoutSetPrototypeUuid = layoutSetBranchCacheModel.layoutSetPrototypeUuid;
+
+		if ((layoutSetPrototypeUuid != null) &&
+				(layoutSetPrototypeUuid.length() == 0)) {
+			layoutSetBranchCacheModel.layoutSetPrototypeUuid = null;
+		}
+
+		layoutSetBranchCacheModel.layoutSetPrototypeLinkEnabled = getLayoutSetPrototypeLinkEnabled();
+
 		return layoutSetBranchCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{layoutSetBranchId=");
 		sb.append(getLayoutSetBranchId());
@@ -526,13 +753,33 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		sb.append(getDescription());
 		sb.append(", master=");
 		sb.append(getMaster());
+		sb.append(", logo=");
+		sb.append(getLogo());
+		sb.append(", logoId=");
+		sb.append(getLogoId());
+		sb.append(", themeId=");
+		sb.append(getThemeId());
+		sb.append(", colorSchemeId=");
+		sb.append(getColorSchemeId());
+		sb.append(", wapThemeId=");
+		sb.append(getWapThemeId());
+		sb.append(", wapColorSchemeId=");
+		sb.append(getWapColorSchemeId());
+		sb.append(", css=");
+		sb.append(getCss());
+		sb.append(", settings=");
+		sb.append(getSettings());
+		sb.append(", layoutSetPrototypeUuid=");
+		sb.append(getLayoutSetPrototypeUuid());
+		sb.append(", layoutSetPrototypeLinkEnabled=");
+		sb.append(getLayoutSetPrototypeLinkEnabled());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(67);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.LayoutSetBranch");
@@ -582,6 +829,46 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 			"<column><column-name>master</column-name><column-value><![CDATA[");
 		sb.append(getMaster());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>logo</column-name><column-value><![CDATA[");
+		sb.append(getLogo());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>logoId</column-name><column-value><![CDATA[");
+		sb.append(getLogoId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>themeId</column-name><column-value><![CDATA[");
+		sb.append(getThemeId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>colorSchemeId</column-name><column-value><![CDATA[");
+		sb.append(getColorSchemeId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>wapThemeId</column-name><column-value><![CDATA[");
+		sb.append(getWapThemeId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>wapColorSchemeId</column-name><column-value><![CDATA[");
+		sb.append(getWapColorSchemeId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>css</column-name><column-value><![CDATA[");
+		sb.append(getCss());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>settings</column-name><column-value><![CDATA[");
+		sb.append(getSettings());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>layoutSetPrototypeUuid</column-name><column-value><![CDATA[");
+		sb.append(getLayoutSetPrototypeUuid());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>layoutSetPrototypeLinkEnabled</column-name><column-value><![CDATA[");
+		sb.append(getLayoutSetPrototypeLinkEnabled());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -609,6 +896,16 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 	private String _originalName;
 	private String _description;
 	private boolean _master;
+	private boolean _logo;
+	private long _logoId;
+	private String _themeId;
+	private String _colorSchemeId;
+	private String _wapThemeId;
+	private String _wapColorSchemeId;
+	private String _css;
+	private String _settings;
+	private String _layoutSetPrototypeUuid;
+	private boolean _layoutSetPrototypeLinkEnabled;
 	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private LayoutSetBranch _escapedModelProxy;

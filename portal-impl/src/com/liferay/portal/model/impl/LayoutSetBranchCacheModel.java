@@ -34,7 +34,7 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 	Serializable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{layoutSetBranchId=");
 		sb.append(layoutSetBranchId);
@@ -58,6 +58,26 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 		sb.append(description);
 		sb.append(", master=");
 		sb.append(master);
+		sb.append(", logo=");
+		sb.append(logo);
+		sb.append(", logoId=");
+		sb.append(logoId);
+		sb.append(", themeId=");
+		sb.append(themeId);
+		sb.append(", colorSchemeId=");
+		sb.append(colorSchemeId);
+		sb.append(", wapThemeId=");
+		sb.append(wapThemeId);
+		sb.append(", wapColorSchemeId=");
+		sb.append(wapColorSchemeId);
+		sb.append(", css=");
+		sb.append(css);
+		sb.append(", settings=");
+		sb.append(settings);
+		sb.append(", layoutSetPrototypeUuid=");
+		sb.append(layoutSetPrototypeUuid);
+		sb.append(", layoutSetPrototypeLinkEnabled=");
+		sb.append(layoutSetPrototypeLinkEnabled);
 		sb.append("}");
 
 		return sb.toString();
@@ -109,6 +129,59 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 		}
 
 		layoutSetBranchImpl.setMaster(master);
+		layoutSetBranchImpl.setLogo(logo);
+		layoutSetBranchImpl.setLogoId(logoId);
+
+		if (themeId == null) {
+			layoutSetBranchImpl.setThemeId(StringPool.BLANK);
+		}
+		else {
+			layoutSetBranchImpl.setThemeId(themeId);
+		}
+
+		if (colorSchemeId == null) {
+			layoutSetBranchImpl.setColorSchemeId(StringPool.BLANK);
+		}
+		else {
+			layoutSetBranchImpl.setColorSchemeId(colorSchemeId);
+		}
+
+		if (wapThemeId == null) {
+			layoutSetBranchImpl.setWapThemeId(StringPool.BLANK);
+		}
+		else {
+			layoutSetBranchImpl.setWapThemeId(wapThemeId);
+		}
+
+		if (wapColorSchemeId == null) {
+			layoutSetBranchImpl.setWapColorSchemeId(StringPool.BLANK);
+		}
+		else {
+			layoutSetBranchImpl.setWapColorSchemeId(wapColorSchemeId);
+		}
+
+		if (css == null) {
+			layoutSetBranchImpl.setCss(StringPool.BLANK);
+		}
+		else {
+			layoutSetBranchImpl.setCss(css);
+		}
+
+		if (settings == null) {
+			layoutSetBranchImpl.setSettings(StringPool.BLANK);
+		}
+		else {
+			layoutSetBranchImpl.setSettings(settings);
+		}
+
+		if (layoutSetPrototypeUuid == null) {
+			layoutSetBranchImpl.setLayoutSetPrototypeUuid(StringPool.BLANK);
+		}
+		else {
+			layoutSetBranchImpl.setLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
+		}
+
+		layoutSetBranchImpl.setLayoutSetPrototypeLinkEnabled(layoutSetPrototypeLinkEnabled);
 
 		layoutSetBranchImpl.resetOriginalValues();
 
@@ -126,4 +199,14 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 	public String name;
 	public String description;
 	public boolean master;
+	public boolean logo;
+	public long logoId;
+	public String themeId;
+	public String colorSchemeId;
+	public String wapThemeId;
+	public String wapColorSchemeId;
+	public String css;
+	public String settings;
+	public String layoutSetPrototypeUuid;
+	public boolean layoutSetPrototypeLinkEnabled;
 }

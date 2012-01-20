@@ -89,6 +89,26 @@ public class LayoutSetBranchPersistenceTest extends BasePersistenceTestCase {
 
 		newLayoutSetBranch.setMaster(randomBoolean());
 
+		newLayoutSetBranch.setLogo(randomBoolean());
+
+		newLayoutSetBranch.setLogoId(nextLong());
+
+		newLayoutSetBranch.setThemeId(randomString());
+
+		newLayoutSetBranch.setColorSchemeId(randomString());
+
+		newLayoutSetBranch.setWapThemeId(randomString());
+
+		newLayoutSetBranch.setWapColorSchemeId(randomString());
+
+		newLayoutSetBranch.setCss(randomString());
+
+		newLayoutSetBranch.setSettings(randomString());
+
+		newLayoutSetBranch.setLayoutSetPrototypeUuid(randomString());
+
+		newLayoutSetBranch.setLayoutSetPrototypeLinkEnabled(randomBoolean());
+
 		_persistence.update(newLayoutSetBranch, false);
 
 		LayoutSetBranch existingLayoutSetBranch = _persistence.findByPrimaryKey(newLayoutSetBranch.getPrimaryKey());
@@ -117,6 +137,26 @@ public class LayoutSetBranchPersistenceTest extends BasePersistenceTestCase {
 			newLayoutSetBranch.getDescription());
 		assertEquals(existingLayoutSetBranch.getMaster(),
 			newLayoutSetBranch.getMaster());
+		assertEquals(existingLayoutSetBranch.getLogo(),
+			newLayoutSetBranch.getLogo());
+		assertEquals(existingLayoutSetBranch.getLogoId(),
+			newLayoutSetBranch.getLogoId());
+		assertEquals(existingLayoutSetBranch.getThemeId(),
+			newLayoutSetBranch.getThemeId());
+		assertEquals(existingLayoutSetBranch.getColorSchemeId(),
+			newLayoutSetBranch.getColorSchemeId());
+		assertEquals(existingLayoutSetBranch.getWapThemeId(),
+			newLayoutSetBranch.getWapThemeId());
+		assertEquals(existingLayoutSetBranch.getWapColorSchemeId(),
+			newLayoutSetBranch.getWapColorSchemeId());
+		assertEquals(existingLayoutSetBranch.getCss(),
+			newLayoutSetBranch.getCss());
+		assertEquals(existingLayoutSetBranch.getSettings(),
+			newLayoutSetBranch.getSettings());
+		assertEquals(existingLayoutSetBranch.getLayoutSetPrototypeUuid(),
+			newLayoutSetBranch.getLayoutSetPrototypeUuid());
+		assertEquals(existingLayoutSetBranch.getLayoutSetPrototypeLinkEnabled(),
+			newLayoutSetBranch.getLayoutSetPrototypeLinkEnabled());
 	}
 
 	public void testFindByPrimaryKeyExisting() throws Exception {
@@ -269,6 +309,26 @@ public class LayoutSetBranchPersistenceTest extends BasePersistenceTestCase {
 		layoutSetBranch.setDescription(randomString());
 
 		layoutSetBranch.setMaster(randomBoolean());
+
+		layoutSetBranch.setLogo(randomBoolean());
+
+		layoutSetBranch.setLogoId(nextLong());
+
+		layoutSetBranch.setThemeId(randomString());
+
+		layoutSetBranch.setColorSchemeId(randomString());
+
+		layoutSetBranch.setWapThemeId(randomString());
+
+		layoutSetBranch.setWapColorSchemeId(randomString());
+
+		layoutSetBranch.setCss(randomString());
+
+		layoutSetBranch.setSettings(randomString());
+
+		layoutSetBranch.setLayoutSetPrototypeUuid(randomString());
+
+		layoutSetBranch.setLayoutSetPrototypeLinkEnabled(randomBoolean());
 
 		_persistence.update(layoutSetBranch, false);
 

@@ -474,6 +474,16 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 		layoutSetBranchImpl.setName(layoutSetBranch.getName());
 		layoutSetBranchImpl.setDescription(layoutSetBranch.getDescription());
 		layoutSetBranchImpl.setMaster(layoutSetBranch.isMaster());
+		layoutSetBranchImpl.setLogo(layoutSetBranch.isLogo());
+		layoutSetBranchImpl.setLogoId(layoutSetBranch.getLogoId());
+		layoutSetBranchImpl.setThemeId(layoutSetBranch.getThemeId());
+		layoutSetBranchImpl.setColorSchemeId(layoutSetBranch.getColorSchemeId());
+		layoutSetBranchImpl.setWapThemeId(layoutSetBranch.getWapThemeId());
+		layoutSetBranchImpl.setWapColorSchemeId(layoutSetBranch.getWapColorSchemeId());
+		layoutSetBranchImpl.setCss(layoutSetBranch.getCss());
+		layoutSetBranchImpl.setSettings(layoutSetBranch.getSettings());
+		layoutSetBranchImpl.setLayoutSetPrototypeUuid(layoutSetBranch.getLayoutSetPrototypeUuid());
+		layoutSetBranchImpl.setLayoutSetPrototypeLinkEnabled(layoutSetBranch.isLayoutSetPrototypeLinkEnabled());
 
 		return layoutSetBranchImpl;
 	}

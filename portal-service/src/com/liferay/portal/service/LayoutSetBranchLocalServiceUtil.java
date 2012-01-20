@@ -318,12 +318,13 @@ public class LayoutSetBranchLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.model.LayoutSetBranch getUserLayoutSetBranch(
-		long userId, long groupId, boolean privateLayout, long layoutSetBranchId)
+		long userId, long groupId, boolean privateLayout, long layoutSetId,
+		long layoutSetBranchId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .getUserLayoutSetBranch(userId, groupId, privateLayout,
-			layoutSetBranchId);
+			layoutSetId, layoutSetBranchId);
 	}
 
 	public static com.liferay.portal.model.LayoutSetBranch mergeLayoutSetBranch(

@@ -278,7 +278,8 @@ public interface LayoutSetBranchLocalService extends PersistedModelLocalService 
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.LayoutSetBranch getUserLayoutSetBranch(
-		long userId, long groupId, boolean privateLayout, long layoutSetBranchId)
+		long userId, long groupId, boolean privateLayout, long layoutSetId,
+		long layoutSetBranchId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

@@ -383,6 +383,16 @@
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="master" type="boolean" />
+		<field name="logo" type="boolean" />
+		<field name="logoId" type="long" />
+		<field name="themeId" type="String" />
+		<field name="colorSchemeId" type="String" />
+		<field name="wapThemeId" type="String" />
+		<field name="wapColorSchemeId" type="String" />
+		<field name="css" type="String" />
+		<field name="settings" type="String" />
+		<field name="layoutSetPrototypeUuid" type="String" />
+		<field name="layoutSetPrototypeLinkEnabled" type="boolean" />
 	</model>
 	<model name="com.liferay.portal.model.LayoutSetPrototype">
 		<field name="uuid" type="String" />

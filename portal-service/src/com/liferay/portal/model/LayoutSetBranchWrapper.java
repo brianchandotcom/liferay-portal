@@ -291,6 +291,206 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 		_layoutSetBranch.setMaster(master);
 	}
 
+	/**
+	* Returns the logo of this layout set branch.
+	*
+	* @return the logo of this layout set branch
+	*/
+	public boolean getLogo() {
+		return _layoutSetBranch.getLogo();
+	}
+
+	/**
+	* Returns <code>true</code> if this layout set branch is logo.
+	*
+	* @return <code>true</code> if this layout set branch is logo; <code>false</code> otherwise
+	*/
+	public boolean isLogo() {
+		return _layoutSetBranch.isLogo();
+	}
+
+	/**
+	* Sets whether this layout set branch is logo.
+	*
+	* @param logo the logo of this layout set branch
+	*/
+	public void setLogo(boolean logo) {
+		_layoutSetBranch.setLogo(logo);
+	}
+
+	/**
+	* Returns the logo ID of this layout set branch.
+	*
+	* @return the logo ID of this layout set branch
+	*/
+	public long getLogoId() {
+		return _layoutSetBranch.getLogoId();
+	}
+
+	/**
+	* Sets the logo ID of this layout set branch.
+	*
+	* @param logoId the logo ID of this layout set branch
+	*/
+	public void setLogoId(long logoId) {
+		_layoutSetBranch.setLogoId(logoId);
+	}
+
+	/**
+	* Returns the theme ID of this layout set branch.
+	*
+	* @return the theme ID of this layout set branch
+	*/
+	public java.lang.String getThemeId() {
+		return _layoutSetBranch.getThemeId();
+	}
+
+	/**
+	* Sets the theme ID of this layout set branch.
+	*
+	* @param themeId the theme ID of this layout set branch
+	*/
+	public void setThemeId(java.lang.String themeId) {
+		_layoutSetBranch.setThemeId(themeId);
+	}
+
+	/**
+	* Returns the color scheme ID of this layout set branch.
+	*
+	* @return the color scheme ID of this layout set branch
+	*/
+	public java.lang.String getColorSchemeId() {
+		return _layoutSetBranch.getColorSchemeId();
+	}
+
+	/**
+	* Sets the color scheme ID of this layout set branch.
+	*
+	* @param colorSchemeId the color scheme ID of this layout set branch
+	*/
+	public void setColorSchemeId(java.lang.String colorSchemeId) {
+		_layoutSetBranch.setColorSchemeId(colorSchemeId);
+	}
+
+	/**
+	* Returns the wap theme ID of this layout set branch.
+	*
+	* @return the wap theme ID of this layout set branch
+	*/
+	public java.lang.String getWapThemeId() {
+		return _layoutSetBranch.getWapThemeId();
+	}
+
+	/**
+	* Sets the wap theme ID of this layout set branch.
+	*
+	* @param wapThemeId the wap theme ID of this layout set branch
+	*/
+	public void setWapThemeId(java.lang.String wapThemeId) {
+		_layoutSetBranch.setWapThemeId(wapThemeId);
+	}
+
+	/**
+	* Returns the wap color scheme ID of this layout set branch.
+	*
+	* @return the wap color scheme ID of this layout set branch
+	*/
+	public java.lang.String getWapColorSchemeId() {
+		return _layoutSetBranch.getWapColorSchemeId();
+	}
+
+	/**
+	* Sets the wap color scheme ID of this layout set branch.
+	*
+	* @param wapColorSchemeId the wap color scheme ID of this layout set branch
+	*/
+	public void setWapColorSchemeId(java.lang.String wapColorSchemeId) {
+		_layoutSetBranch.setWapColorSchemeId(wapColorSchemeId);
+	}
+
+	/**
+	* Returns the css of this layout set branch.
+	*
+	* @return the css of this layout set branch
+	*/
+	public java.lang.String getCss() {
+		return _layoutSetBranch.getCss();
+	}
+
+	/**
+	* Sets the css of this layout set branch.
+	*
+	* @param css the css of this layout set branch
+	*/
+	public void setCss(java.lang.String css) {
+		_layoutSetBranch.setCss(css);
+	}
+
+	/**
+	* Returns the settings of this layout set branch.
+	*
+	* @return the settings of this layout set branch
+	*/
+	public java.lang.String getSettings() {
+		return _layoutSetBranch.getSettings();
+	}
+
+	/**
+	* Sets the settings of this layout set branch.
+	*
+	* @param settings the settings of this layout set branch
+	*/
+	public void setSettings(java.lang.String settings) {
+		_layoutSetBranch.setSettings(settings);
+	}
+
+	/**
+	* Returns the layout set prototype uuid of this layout set branch.
+	*
+	* @return the layout set prototype uuid of this layout set branch
+	*/
+	public java.lang.String getLayoutSetPrototypeUuid() {
+		return _layoutSetBranch.getLayoutSetPrototypeUuid();
+	}
+
+	/**
+	* Sets the layout set prototype uuid of this layout set branch.
+	*
+	* @param layoutSetPrototypeUuid the layout set prototype uuid of this layout set branch
+	*/
+	public void setLayoutSetPrototypeUuid(
+		java.lang.String layoutSetPrototypeUuid) {
+		_layoutSetBranch.setLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
+	}
+
+	/**
+	* Returns the layout set prototype link enabled of this layout set branch.
+	*
+	* @return the layout set prototype link enabled of this layout set branch
+	*/
+	public boolean getLayoutSetPrototypeLinkEnabled() {
+		return _layoutSetBranch.getLayoutSetPrototypeLinkEnabled();
+	}
+
+	/**
+	* Returns <code>true</code> if this layout set branch is layout set prototype link enabled.
+	*
+	* @return <code>true</code> if this layout set branch is layout set prototype link enabled; <code>false</code> otherwise
+	*/
+	public boolean isLayoutSetPrototypeLinkEnabled() {
+		return _layoutSetBranch.isLayoutSetPrototypeLinkEnabled();
+	}
+
+	/**
+	* Sets whether this layout set branch is layout set prototype link enabled.
+	*
+	* @param layoutSetPrototypeLinkEnabled the layout set prototype link enabled of this layout set branch
+	*/
+	public void setLayoutSetPrototypeLinkEnabled(
+		boolean layoutSetPrototypeLinkEnabled) {
+		_layoutSetBranch.setLayoutSetPrototypeLinkEnabled(layoutSetPrototypeLinkEnabled);
+	}
+
 	public boolean isNew() {
 		return _layoutSetBranch.isNew();
 	}
@@ -363,6 +563,55 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_layoutSetBranch.persist();
+	}
+
+	public com.liferay.portal.model.ColorScheme getColorScheme()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _layoutSetBranch.getColorScheme();
+	}
+
+	public com.liferay.portal.model.Group getGroup()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutSetBranch.getGroup();
+	}
+
+	public com.liferay.portal.kernel.util.UnicodeProperties getSettingsProperties() {
+		return _layoutSetBranch.getSettingsProperties();
+	}
+
+	public java.lang.String getSettingsProperty(java.lang.String key) {
+		return _layoutSetBranch.getSettingsProperty(key);
+	}
+
+	public com.liferay.portal.model.Theme getTheme()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _layoutSetBranch.getTheme();
+	}
+
+	public java.lang.String getThemeSetting(java.lang.String key,
+		java.lang.String device)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _layoutSetBranch.getThemeSetting(key, device);
+	}
+
+	public com.liferay.portal.model.ColorScheme getWapColorScheme()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _layoutSetBranch.getWapColorScheme();
+	}
+
+	public com.liferay.portal.model.Theme getWapTheme()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _layoutSetBranch.getWapTheme();
+	}
+
+	public boolean isLayoutSetPrototypeLinkActive() {
+		return _layoutSetBranch.isLayoutSetPrototypeLinkActive();
+	}
+
+	public void setSettingsProperties(
+		com.liferay.portal.kernel.util.UnicodeProperties settingsProperties) {
+		_layoutSetBranch.setSettingsProperties(settingsProperties);
 	}
 
 	/**

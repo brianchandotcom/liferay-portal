@@ -46,13 +46,13 @@ public interface Method {
 
 	public static final String PUT = "PUT";
 
-	public static final String SUPPORTED_METHODS =
-		StringUtil.merge(Method.SUPPORTED_METHODS_ARRAY);
-
-	public static final String[] SUPPORTED_METHODS_ARRAY = new String[] {
+	public static final String[] SUPPORTED_METHODS_ARRAY = {
 		COPY, DELETE, GET, HEAD, LOCK, MKCOL, MOVE, OPTIONS, PROPFIND,
 		PROPPATCH, PUT, Method.UNLOCK
 	};
+
+	public static final String SUPPORTED_METHODS =
+		StringUtil.merge(SUPPORTED_METHODS_ARRAY);
 
 	public static final String UNLOCK = "UNLOCK";
 

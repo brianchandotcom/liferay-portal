@@ -52,6 +52,7 @@ import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.impl.BookmarksEntryImpl;
 import com.liferay.portlet.bookmarks.model.impl.BookmarksEntryModelImpl;
 import com.liferay.portlet.expando.service.persistence.ExpandoValuePersistence;
+import com.liferay.portlet.social.service.persistence.SocialActivityPersistence;
 
 import java.io.Serializable;
 
@@ -4789,6 +4790,8 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 	protected AssetTagPersistence assetTagPersistence;
 	@BeanReference(type = ExpandoValuePersistence.class)
 	protected ExpandoValuePersistence expandoValuePersistence;
+	@BeanReference(type = SocialActivityPersistence.class)
+	protected SocialActivityPersistence socialActivityPersistence;
 	private static final String _SQL_SELECT_BOOKMARKSENTRY = "SELECT bookmarksEntry FROM BookmarksEntry bookmarksEntry";
 	private static final String _SQL_SELECT_BOOKMARKSENTRY_WHERE = "SELECT bookmarksEntry FROM BookmarksEntry bookmarksEntry WHERE ";
 	private static final String _SQL_COUNT_BOOKMARKSENTRY = "SELECT COUNT(bookmarksEntry) FROM BookmarksEntry bookmarksEntry";

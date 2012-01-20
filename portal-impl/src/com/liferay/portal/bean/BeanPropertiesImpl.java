@@ -371,6 +371,57 @@ public class BeanPropertiesImpl implements BeanProperties {
 		}
 	}
 
+	public Class<?> getObjectType(Object bean, String param) {
+		return getObjectType(bean, param, null);
+	}
+
+	public Class<?> getObjectType(
+		Object bean, String param, Class<?> defaultValue) {
+
+		Class<?> beanType = null;
+
+		if (bean != null) {
+			try {
+				beanType = BeanUtil.getPropertyType(bean, param);
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+		}
+
+		if (beanType == null) {
+			return defaultValue;
+		}
+		else {
+			return beanType;
+		}
+	}
+
+	public Class<?> getObjectTypeSilent(Object bean, String param) {
+		return getObjectTypeSilent(bean, param, null);
+	}
+
+	public Class<?> getObjectTypeSilent(
+		Object bean, String param, Class<?> defaultValue) {
+
+		Class<?> beanType = null;
+
+		if (bean != null) {
+			try {
+				beanType = BeanUtil.getPropertyType(bean, param);
+			}
+			catch (Exception e) {
+			}
+		}
+
+		if (beanType == null) {
+			return defaultValue;
+		}
+		else {
+			return beanType;
+		}
+	}
+
 	public short getShort(Object bean, String param) {
 		return getShort(bean, param, GetterUtil.DEFAULT_SHORT);
 	}

@@ -1103,6 +1103,14 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			passwordReset = user.isPasswordReset();
 		}
 
+		if (!PropsValues.LDAP_IMPORT_USER_PASSWORD_ENABLED) {
+			password = PropsValues.LDAP_IMPORT_USER_PASSWORD_DEFAULT;
+
+			if (password.equalsIgnoreCase(_USER_PASSWORD_SCREEN_NAME)) {
+				password = ldapUser.getScreenName();
+			}
+		}
+
 		if (Validator.isNull(ldapUser.getScreenName())) {
 			ldapUser.setAutoScreenName(true);
 		}
@@ -1124,7 +1132,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 		int birthdayDay = birthdayCal.get(Calendar.DAY_OF_MONTH);
 		int birthdayYear = birthdayCal.get(Calendar.YEAR);
 
-		if (PropsValues.LDAP_IMPORT_USER_PASSWORD_ENABLED) {
+		if (ldapUser.isUpdatePassword()) {
 			UserLocalServiceUtil.updatePassword(
 				user.getUserId(), password, password, passwordReset, true);
 		}

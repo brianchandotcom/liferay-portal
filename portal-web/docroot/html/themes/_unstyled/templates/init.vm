@@ -313,7 +313,10 @@
 #if ($is_guest_group)
 	#set ($show_site_name = false)
 #else
-	#set ($show_site_name = $getterUtil.getBoolean($layout.layoutSet.getSettingsProperty("showSiteName"), true))
+	#set ($show_site_name_supported = $getterUtil.getBoolean($theme_settings.getProperty("show-site-name-supported"), true))
+	#set ($show_site_name_default = $getterUtil.getBoolean($theme_settings.getProperty("show-site-name-default"), $show_site_name_supported))
+
+	#set ($show_site_name = $getterUtil.getBoolean($layout.layoutSet.getSettingsProperty("showSiteName"), $show_site_name_default))
 #end
 
 #set($site_logo = $company_logo)

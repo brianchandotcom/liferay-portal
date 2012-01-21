@@ -73,7 +73,8 @@ public class DefinePermissionsWebContentStagingAdminTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//th[1]/input")) {
+				if (selenium.isVisible(
+							"xPath=(//input[@name='_128_allRowIds'])[1]")) {
 					break;
 				}
 			}
@@ -83,16 +84,36 @@ public class DefinePermissionsWebContentStagingAdminTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//th[1]/input",
+		assertFalse(selenium.isChecked(
+				"xPath=(//input[@name='_128_allRowIds'])[1]"));
+		selenium.clickAt("xPath=(//input[@name='_128_allRowIds'])[1]",
 			RuntimeVariables.replace("Web Content"));
-		selenium.clickAt("//div[2]/div/div/table/tbody/tr[1]/th[1]/input",
+		assertTrue(selenium.isChecked(
+				"xPath=(//input[@name='_128_allRowIds'])[1]"));
+		assertFalse(selenium.isChecked(
+				"xPath=(//input[@name='_128_allRowIds'])[2]"));
+		selenium.clickAt("xPath=(//input[@name='_128_allRowIds'])[2]",
 			RuntimeVariables.replace("Web Content Feed"));
-		selenium.clickAt("//div[3]/div/div/table/tbody/tr[1]/th[1]/input",
+		assertTrue(selenium.isChecked(
+				"xPath=(//input[@name='_128_allRowIds'])[2]"));
+		assertFalse(selenium.isChecked(
+				"xPath=(//input[@name='_128_allRowIds'])[3]"));
+		selenium.clickAt("xPath=(//input[@name='_128_allRowIds'])[3]",
 			RuntimeVariables.replace("Web Content Management"));
-		selenium.clickAt("//div[4]/div/div/table/tbody/tr[1]/th[1]/input",
+		assertTrue(selenium.isChecked(
+				"xPath=(//input[@name='_128_allRowIds'])[3]"));
+		assertFalse(selenium.isChecked(
+				"xPath=(//input[@name='_128_allRowIds'])[4]"));
+		selenium.clickAt("xPath=(//input[@name='_128_allRowIds'])[4]",
 			RuntimeVariables.replace("Web Content Structure"));
-		selenium.clickAt("//div[5]/div/div/table/tbody/tr[1]/th[1]/input",
+		assertTrue(selenium.isChecked(
+				"xPath=(//input[@name='_128_allRowIds'])[4]"));
+		assertFalse(selenium.isChecked(
+				"xPath=(//input[@name='_128_allRowIds'])[5]"));
+		selenium.clickAt("xPath=(//input[@name='_128_allRowIds'])[5]",
 			RuntimeVariables.replace("Web Content Template"));
+		assertTrue(selenium.isChecked(
+				"xPath=(//input[@name='_128_allRowIds'])[5]"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

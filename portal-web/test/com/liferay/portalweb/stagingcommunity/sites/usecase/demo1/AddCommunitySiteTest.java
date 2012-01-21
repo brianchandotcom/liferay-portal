@@ -54,8 +54,8 @@ public class AddCommunitySiteTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Add"),
-					selenium.getText("//span[2]/ul/li/strong/a/span"));
-				selenium.clickAt("//span[2]/ul/li/strong/a/span",
+					selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Add"));
 
 				for (int second = 0;; second++) {
@@ -101,28 +101,8 @@ public class AddCommunitySiteTest extends BaseTestCase {
 						"Enable propagation of changes from the site template."));
 
 			case 2:
-				selenium.clickAt("//input[@value='Save']",
-					RuntimeVariables.replace("Save"));
-				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
-
-				boolean enablePropagation2Checked = selenium.isChecked(
-						"_134_publicLayoutSetPrototypeLinkEnabledCheckbox");
-
-				if (!enablePropagation2Checked) {
-					label = 3;
-
-					continue;
-				}
-
-				selenium.clickAt("//input[@id='_134_publicLayoutSetPrototypeLinkEnabledCheckbox']",
-					RuntimeVariables.replace(
-						"Enable propagation of changes from the site template."));
-
-			case 3:
+				assertFalse(selenium.isChecked(
+						"//input[@id='_134_layoutSetPrototypeLinkEnabledCheckbox']"));
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");

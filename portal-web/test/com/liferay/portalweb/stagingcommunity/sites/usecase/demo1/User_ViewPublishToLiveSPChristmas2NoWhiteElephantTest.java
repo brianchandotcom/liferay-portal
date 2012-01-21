@@ -89,11 +89,11 @@ public class User_ViewPublishToLiveSPChristmas2NoWhiteElephantTest
 			case 2:
 				assertEquals(RuntimeVariables.replace(
 						"MB Category Thread Message2 Subject"),
-					selenium.getText("//td[1]/a"));
+					selenium.getText("//tr[3]/td[1]/a"));
 				assertEquals(RuntimeVariables.replace(
 						"MB Category Thread Message1 Subject"),
 					selenium.getText("//tr[4]/td[1]/a"));
-				selenium.clickAt("//td[1]/a",
+				selenium.clickAt("//tr[3]/td[1]/a",
 					RuntimeVariables.replace(
 						"MB Category Thread Message2 Subject"));
 				selenium.waitForPageToLoad("30000");
@@ -123,7 +123,7 @@ public class User_ViewPublishToLiveSPChristmas2NoWhiteElephantTest
 			case 3:
 				assertEquals(RuntimeVariables.replace(
 						"MB Category Thread Message2 Subject"),
-					selenium.getText("//td[1]/a"));
+					selenium.getText("//tr[3]/td[1]/a"));
 				assertEquals(RuntimeVariables.replace(
 						"MB Category Thread Message1 Subject"),
 					selenium.getText("//tr[4]/td[1]/a"));

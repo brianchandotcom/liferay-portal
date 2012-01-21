@@ -9,6 +9,11 @@
 <tr><td rowspan="1" colspan="3">User_SignOutTest</td></tr>
 </thead><tbody>
 <tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
 	<td>link=Sign Out</td>
 	<td>Sign Out</td>
@@ -23,7 +28,11 @@
 	<td>//input[@id='_58_login']</td>
 	<td>Email Address</td>
 </tr>
-
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@id='_58_login']</td>
+	<td>Email Address</td>
+</tr>
 </tbody></table>
 </body>
 </html>

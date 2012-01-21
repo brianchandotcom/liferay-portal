@@ -48,8 +48,10 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 				"//body[contains(@class,'live-view')]"));
 		assertFalse(selenium.isElementPresent(
 				"//body[contains(@class,'live-staging')]"));
-		assertTrue(selenium.isPartialText("//li[2]/span/a", "Staging"));
-		selenium.clickAt("//li[2]/span/a", RuntimeVariables.replace("Staging"));
+		assertEquals(RuntimeVariables.replace("Staging"),
+			selenium.getText("//div[@class='staging-bar']/ul/li[2]/span/a"));
+		selenium.clickAt("//div[@class='staging-bar']/ul/li[2]/span/a",
+			RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
@@ -69,7 +71,7 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//span/span/span")) {
+				if (selenium.isVisible("//tr[3]/td[2]/span/span/span")) {
 					break;
 				}
 			}
@@ -80,11 +82,11 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Draft"),
-			selenium.getText("//span/span/span"));
+			selenium.getText("//tr[3]/td[2]/span/span/span"));
 		assertEquals(RuntimeVariables.replace("Current Version"),
-			selenium.getText("//td[3]/span[2]"));
+			selenium.getText("//tr[3]/td[3]/span[2]"));
 		assertEquals(RuntimeVariables.replace("selen01 lenn nium01"),
-			selenium.getText("//a"));
+			selenium.getText("//tr[3]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Draft"),
 			selenium.getText("//tr[4]/td[2]/span/span/span"));
 		assertEquals(RuntimeVariables.replace("selen01 lenn nium01"),
@@ -94,10 +96,10 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("selen01 lenn nium01"),
 			selenium.getText("//tr[5]/td[4]/a"));
 
-		String versionNumberDraft1 = selenium.getText("//td[3]/span[1]");
+		String versionNumberDraft1 = selenium.getText("//tr[3]/td[3]/span[1]");
 		RuntimeVariables.setValue("versionNumberDraft1", versionNumberDraft1);
 
-		String versionNumberDraft2 = selenium.getText("//td[3]/a");
+		String versionNumberDraft2 = selenium.getText("//tr[4]/td[3]/a");
 		RuntimeVariables.setValue("versionNumberDraft2", versionNumberDraft2);
 
 		String versionNumberPublication3 = selenium.getText("//tr[5]/td[3]/a");
@@ -129,8 +131,10 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 				"//body[contains(@class,'live-view')]"));
 		assertFalse(selenium.isElementPresent(
 				"//body[contains(@class,'live-staging')]"));
-		assertTrue(selenium.isPartialText("//li[2]/span/a", "Staging"));
-		selenium.clickAt("//li[2]/span/a", RuntimeVariables.replace("Staging"));
+		assertEquals(RuntimeVariables.replace("Staging"),
+			selenium.getText("//div[@class='staging-bar']/ul/li[2]/span/a"));
+		selenium.clickAt("//div[@class='staging-bar']/ul/li[2]/span/a",
+			RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
@@ -204,8 +208,10 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 				"//body[contains(@class,'live-view')]"));
 		assertFalse(selenium.isElementPresent(
 				"//body[contains(@class,'live-staging')]"));
-		assertTrue(selenium.isPartialText("//li[2]/span/a", "Staging"));
-		selenium.clickAt("//li[2]/span/a", RuntimeVariables.replace("Staging"));
+		assertEquals(RuntimeVariables.replace("Staging"),
+			selenium.getText("//div[@class='staging-bar']/ul/li[2]/span/a"));
+		selenium.clickAt("//div[@class='staging-bar']/ul/li[2]/span/a",
+			RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
@@ -225,7 +231,7 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//span/span/span")) {
+				if (selenium.isVisible("//tr[3]/td[2]/span/span/span")) {
 					break;
 				}
 			}
@@ -236,19 +242,19 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Draft"),
-			selenium.getText("//span/span/span"));
+			selenium.getText("//tr[3]/td[2]/span/span/span"));
 		assertEquals(RuntimeVariables.replace("Current Version"),
-			selenium.getText("//td[3]/span[2]"));
+			selenium.getText("//tr[3]/td[3]/span[2]"));
 		assertEquals(RuntimeVariables.replace("selen01 lenn nium01"),
-			selenium.getText("//a"));
+			selenium.getText("//tr[3]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Ready for Publication"),
 			selenium.getText("//tr[4]/td[2]/span/span/span"));
 		assertEquals(RuntimeVariables.replace("selen01 lenn nium01"),
 			selenium.getText("//tr[4]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("${versionNumberDraft2}"),
-			selenium.getText("//td[3]/span[1]"));
+			selenium.getText("//tr[3]/td[3]/span[1]"));
 		assertEquals(RuntimeVariables.replace("${versionNumberPublication3}"),
-			selenium.getText("//td[3]/a"));
+			selenium.getText("//tr[4]/td[3]/a"));
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -275,8 +281,10 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 				"//body[contains(@class,'live-view')]"));
 		assertFalse(selenium.isElementPresent(
 				"//body[contains(@class,'live-staging')]"));
-		assertTrue(selenium.isPartialText("//li[2]/span/a", "Staging"));
-		selenium.clickAt("//li[2]/span/a", RuntimeVariables.replace("Staging"));
+		assertEquals(RuntimeVariables.replace("Staging"),
+			selenium.getText("//div[@class='staging-bar']/ul/li[2]/span/a"));
+		selenium.clickAt("//div[@class='staging-bar']/ul/li[2]/span/a",
+			RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
@@ -352,8 +360,10 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 				"//body[contains(@class,'live-view')]"));
 		assertFalse(selenium.isElementPresent(
 				"//body[contains(@class,'live-staging')]"));
-		assertTrue(selenium.isPartialText("//li[2]/span/a", "Staging"));
-		selenium.clickAt("//li[2]/span/a", RuntimeVariables.replace("Staging"));
+		assertEquals(RuntimeVariables.replace("Staging"),
+			selenium.getText("//div[@class='staging-bar']/ul/li[2]/span/a"));
+		selenium.clickAt("//div[@class='staging-bar']/ul/li[2]/span/a",
+			RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
@@ -373,7 +383,7 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//span/span/span")) {
+				if (selenium.isVisible("//tr[3]/td[2]/span/span/span")) {
 					break;
 				}
 			}
@@ -384,11 +394,11 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Draft"),
-			selenium.getText("//span/span/span"));
+			selenium.getText("//tr[3]/td[2]/span/span/span"));
 		assertEquals(RuntimeVariables.replace("Current Version"),
-			selenium.getText("//td[3]/span[2]"));
+			selenium.getText("//tr[3]/td[3]/span[2]"));
 		assertEquals(RuntimeVariables.replace("selen01 lenn nium01"),
-			selenium.getText("//a"));
+			selenium.getText("//tr[3]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Draft"),
 			selenium.getText("//tr[4]/td[2]/span/span/span"));
 		assertEquals(RuntimeVariables.replace("selen01 lenn nium01"),
@@ -398,9 +408,9 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("selen01 lenn nium01"),
 			selenium.getText("//tr[5]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("${versionNumberDraft1}"),
-			selenium.getText("//td[3]/span[1]"));
+			selenium.getText("//tr[3]/td[3]/span[1]"));
 		assertEquals(RuntimeVariables.replace("${versionNumberDraft2}"),
-			selenium.getText("//td[3]/a"));
+			selenium.getText("//tr[4]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("${versionNumberPublication3}"),
 			selenium.getText("//tr[5]/td[3]/a"));
 		selenium.open("/web/guest/home/");
@@ -429,8 +439,10 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 				"//body[contains(@class,'live-view')]"));
 		assertFalse(selenium.isElementPresent(
 				"//body[contains(@class,'live-staging')]"));
-		assertTrue(selenium.isPartialText("//li[2]/span/a", "Staging"));
-		selenium.clickAt("//li[2]/span/a", RuntimeVariables.replace("Staging"));
+		assertEquals(RuntimeVariables.replace("Staging"),
+			selenium.getText("//div[@class='staging-bar']/ul/li[2]/span/a"));
+		selenium.clickAt("//div[@class='staging-bar']/ul/li[2]/span/a",
+			RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
@@ -534,8 +546,10 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 				"//body[contains(@class,'live-view')]"));
 		assertFalse(selenium.isElementPresent(
 				"//body[contains(@class,'live-staging')]"));
-		assertTrue(selenium.isPartialText("//li[2]/span/a", "Staging"));
-		selenium.clickAt("//li[2]/span/a", RuntimeVariables.replace("Staging"));
+		assertEquals(RuntimeVariables.replace("Staging"),
+			selenium.getText("//div[@class='staging-bar']/ul/li[2]/span/a"));
+		selenium.clickAt("//div[@class='staging-bar']/ul/li[2]/span/a",
+			RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
@@ -590,8 +604,10 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 				"//body[contains(@class,'live-view')]"));
 		assertFalse(selenium.isElementPresent(
 				"//body[contains(@class,'live-staging')]"));
-		assertTrue(selenium.isPartialText("//li[2]/span/a", "Staging"));
-		selenium.clickAt("//li[2]/span/a", RuntimeVariables.replace("Staging"));
+		assertEquals(RuntimeVariables.replace("Staging"),
+			selenium.getText("//div[@class='staging-bar']/ul/li[2]/span/a"));
+		selenium.clickAt("//div[@class='staging-bar']/ul/li[2]/span/a",
+			RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
@@ -611,7 +627,7 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//span/span/span")) {
+				if (selenium.isVisible("//tr[3]/td[2]/span/span/span")) {
 					break;
 				}
 			}
@@ -622,11 +638,11 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Draft"),
-			selenium.getText("//span/span/span"));
+			selenium.getText("//tr[3]/td[2]/span/span/span"));
 		assertEquals(RuntimeVariables.replace("Current Version"),
-			selenium.getText("//td[3]/span[2]"));
+			selenium.getText("//tr[3]/td[3]/span[2]"));
 		assertEquals(RuntimeVariables.replace("selen01 lenn nium01"),
-			selenium.getText("//a"));
+			selenium.getText("//tr[3]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Draft"),
 			selenium.getText("//tr[4]/td[2]/span/span/span"));
 		assertEquals(RuntimeVariables.replace("selen01 lenn nium01"),
@@ -640,13 +656,13 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("selen01 lenn nium01"),
 			selenium.getText("//tr[6]/td[4]/a"));
 		assertNotEquals(RuntimeVariables.replace("${versionNumberDraft1}"),
-			selenium.getText("//td[3]/span[1]"));
+			selenium.getText("//tr[3]/td[3]/span[1]"));
 		assertNotEquals(RuntimeVariables.replace("${versionNumberDraft2}"),
-			selenium.getText("//td[3]/span[1]"));
+			selenium.getText("//tr[3]/td[3]/span[1]"));
 		assertNotEquals(RuntimeVariables.replace("${versionNumberPublication3}"),
-			selenium.getText("//td[3]/span[1]"));
+			selenium.getText("//tr[3]/td[3]/span[1]"));
 		assertEquals(RuntimeVariables.replace("${versionNumberDraft1}"),
-			selenium.getText("//td[3]/a"));
+			selenium.getText("//tr[4]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("${versionNumberDraft2}"),
 			selenium.getText("//tr[5]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("${versionNumberPublication3}"),

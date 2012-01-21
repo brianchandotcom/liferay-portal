@@ -56,8 +56,10 @@ public class User_ViewSPVariationChristmasCopyFromSeasonTest
 						"//body[contains(@class,'live-view')]"));
 				assertFalse(selenium.isElementPresent(
 						"//body[contains(@class,'local-staging')]"));
-				assertTrue(selenium.isPartialText("//li[2]/span/a", "Staging"));
-				selenium.clickAt("//li[2]/span/a",
+				assertEquals(RuntimeVariables.replace("Staging"),
+					selenium.getText(
+						"//div[@class='staging-bar']/ul/li[2]/span/a"));
+				selenium.clickAt("//div[@class='staging-bar']/ul/li[2]/span/a",
 					RuntimeVariables.replace("Staging"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
@@ -117,11 +119,11 @@ public class User_ViewSPVariationChristmasCopyFromSeasonTest
 			case 3:
 				assertEquals(RuntimeVariables.replace(
 						"MB Category Thread Message2 Subject"),
-					selenium.getText("//td[1]/a"));
+					selenium.getText("//tr[3]/td[1]/a"));
 				assertEquals(RuntimeVariables.replace(
 						"MB Category Thread Message1 Subject"),
 					selenium.getText("//tr[4]/td[1]/a"));
-				selenium.clickAt("//td[1]/a",
+				selenium.clickAt("//tr[3]/td[1]/a",
 					RuntimeVariables.replace(
 						"MB Category Thread Message2 Subject"));
 				selenium.waitForPageToLoad("30000");
@@ -151,7 +153,7 @@ public class User_ViewSPVariationChristmasCopyFromSeasonTest
 			case 4:
 				assertEquals(RuntimeVariables.replace(
 						"MB Category Thread Message2 Subject"),
-					selenium.getText("//td[1]/a"));
+					selenium.getText("//tr[3]/td[1]/a"));
 				assertEquals(RuntimeVariables.replace(
 						"MB Category Thread Message1 Subject"),
 					selenium.getText("//tr[4]/td[1]/a"));

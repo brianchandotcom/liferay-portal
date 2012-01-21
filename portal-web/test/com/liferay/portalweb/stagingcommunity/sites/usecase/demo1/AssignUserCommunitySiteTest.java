@@ -20,9 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DefinePermissionsWCDStagingAdminTest extends BaseTestCase {
-	public void testDefinePermissionsWCDStagingAdmin()
-		throws Exception {
+public class AssignUserCommunitySiteTest extends BaseTestCase {
+	public void testAssignUserCommunitySite() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -46,26 +45,24 @@ public class DefinePermissionsWCDStagingAdminTest extends BaseTestCase {
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.clickAt("link=Roles", RuntimeVariables.replace("Roles"));
+		selenium.clickAt("link=Users and Organizations",
+			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.type("//input[@id='_128_keywords']",
-			RuntimeVariables.replace("Staging"));
+		selenium.type("//input[@id='_125_keywords']",
+			RuntimeVariables.replace("selen01"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Staging Admin"),
-			selenium.getText("//td[1]/a"));
-		selenium.clickAt("//td[1]/a", RuntimeVariables.replace("Staging Admin"));
+		assertEquals(RuntimeVariables.replace("selen01"),
+			selenium.getText("//td[2]/a"));
+		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("selen01"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.clickAt("link=Define Permissions",
-			RuntimeVariables.replace("Define Permissions"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		selenium.select("//select[@id='_128_add-permissions']",
-			RuntimeVariables.replace("Web Content Display"));
+		assertTrue(selenium.isPartialText("//a[@id='_125_sitesLink']", "Sites"));
+		selenium.clickAt("//a[@id='_125_sitesLink']",
+			RuntimeVariables.replace("Sites"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -73,7 +70,7 @@ public class DefinePermissionsWCDStagingAdminTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//input[@name='_128_allRowIds']")) {
+				if (selenium.isVisible("//div[@id='_125_sites']/span/a/span")) {
 					break;
 				}
 			}
@@ -83,16 +80,60 @@ public class DefinePermissionsWCDStagingAdminTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertFalse(selenium.isChecked("//input[@name='_128_allRowIds']"));
-		selenium.clickAt("//input[@name='_128_allRowIds']",
-			RuntimeVariables.replace("Web Content Display"));
-		assertTrue(selenium.isChecked("//input[@name='_128_allRowIds']"));
+		assertEquals(RuntimeVariables.replace("Select"),
+			selenium.getText("//div[@id='_125_sites']/span/a/span"));
+		selenium.clickAt("//div[@id='_125_sites']/span/a/span",
+			RuntimeVariables.replace("Select"));
+		Thread.sleep(5000);
+		selenium.selectWindow("name=group");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//tr[4]/td[1]/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Site Name"),
+			selenium.getText("//tr[4]/td[1]/a"));
+		selenium.clickAt("//tr[4]/td[1]/a",
+			RuntimeVariables.replace("Site Name"));
+		Thread.sleep(5000);
+		selenium.selectWindow("null");
+		assertEquals(RuntimeVariables.replace("Site Name"),
+			selenium.getText("//table/tr/td[1]"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace(
-				"The role permissions were updated."),
+				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 	}
 }

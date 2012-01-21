@@ -56,8 +56,10 @@ public class User_AddPageVariationFrostySPVariationSeasonTest
 						"//body[contains(@class,'live-view')]"));
 				assertFalse(selenium.isElementPresent(
 						"//body[contains(@class,'local-staging')]"));
-				assertTrue(selenium.isPartialText("//li[2]/span/a", "Staging"));
-				selenium.clickAt("//li[2]/span/a",
+				assertEquals(RuntimeVariables.replace("Staging"),
+					selenium.getText(
+						"//div[@class='staging-bar']/ul/li[2]/span/a"));
+				selenium.clickAt("//div[@class='staging-bar']/ul/li[2]/span/a",
 					RuntimeVariables.replace("Staging"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
@@ -135,6 +137,10 @@ public class User_AddPageVariationFrostySPVariationSeasonTest
 					RuntimeVariables.replace("Add"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
+				assertEquals(RuntimeVariables.replace("Frosty"),
+					selenium.getText("//tr[5]/td[1]"));
+				assertEquals(RuntimeVariables.replace("Frosty Description"),
+					selenium.getText("//tr[5]/td[2]"));
 				assertEquals(RuntimeVariables.replace(
 						"Page variation was added."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
@@ -165,8 +171,10 @@ public class User_AddPageVariationFrostySPVariationSeasonTest
 						"//body[contains(@class,'live-view')]"));
 				assertFalse(selenium.isElementPresent(
 						"//body[contains(@class,'local-staging')]"));
-				assertTrue(selenium.isPartialText("//li[2]/span/a", "Staging"));
-				selenium.clickAt("//li[2]/span/a",
+				assertEquals(RuntimeVariables.replace("Staging"),
+					selenium.getText(
+						"//div[@class='staging-bar']/ul/li[2]/span/a"));
+				selenium.clickAt("//div[@class='staging-bar']/ul/li[2]/span/a",
 					RuntimeVariables.replace("Staging"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();

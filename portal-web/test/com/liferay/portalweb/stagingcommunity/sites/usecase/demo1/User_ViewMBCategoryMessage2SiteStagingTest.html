@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>User_ViewMBCategoryMessage2LiveTest</title>
+<title>User_ViewMBCategoryMessage2SiteStagingTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">User_ViewMBCategoryMessage2LiveTest</td></tr>
+<tr><td rowspan="1" colspan="3">User_ViewMBCategoryMessage2SiteStagingTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -32,6 +32,31 @@
 	<td>assertElementNotPresent</td>
 	<td>//body[contains(@class,'live-staging')]</td>
 	<td>Staging View</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='staging-bar']/ul/li[2]/span/a</td>
+	<td>Staging</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='staging-bar']/ul/li[2]/span/a</td>
+	<td>Staging</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//body[contains(@class,'local-staging')]</td>
+	<td>Staging View</td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>//body[contains(@class,'live-view')]</td>
+	<td>Live View</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-alert']</td>
+	<td>The data of this portlet is not staged. Any data changes are immediately available to the Local Live site. The portlet's own workflow is still honored. Portlet setup is still managed from staging.</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -70,7 +95,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
+	<td>//tr[3]/td[1]/a</td>
 	<td>MB Category Thread Message2 Subject</td>
 </tr>
 <tr>
@@ -80,7 +105,7 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//td[1]/a</td>
+	<td>//tr[3]/td[1]/a</td>
 	<td>MB Category Thread Message2 Subject</td>
 </tr>
 <tr>
@@ -93,7 +118,6 @@
 	<td>//div[@class='thread-body']</td>
 	<td>MB Category Thread Message2 Body</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

@@ -56,8 +56,10 @@ public class User_AddPageVariationSantaSPVariationSeasonTest
 						"//body[contains(@class,'live-view')]"));
 				assertFalse(selenium.isElementPresent(
 						"//body[contains(@class,'local-staging')]"));
-				assertTrue(selenium.isPartialText("//li[2]/span/a", "Staging"));
-				selenium.clickAt("//li[2]/span/a",
+				assertEquals(RuntimeVariables.replace("Staging"),
+					selenium.getText(
+						"//div[@class='staging-bar']/ul/li[2]/span/a"));
+				selenium.clickAt("//div[@class='staging-bar']/ul/li[2]/span/a",
 					RuntimeVariables.replace("Staging"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
@@ -138,6 +140,10 @@ public class User_AddPageVariationSantaSPVariationSeasonTest
 				assertEquals(RuntimeVariables.replace(
 						"Page variation was added."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
+				assertEquals(RuntimeVariables.replace("Santa"),
+					selenium.getText("//tr[4]/td[1]"));
+				assertEquals(RuntimeVariables.replace("Santa Description"),
+					selenium.getText("//tr[4]/td[2]"));
 				selenium.open("/web/guest/home/");
 				loadRequiredJavaScriptModules();
 
@@ -165,8 +171,10 @@ public class User_AddPageVariationSantaSPVariationSeasonTest
 						"//body[contains(@class,'live-view')]"));
 				assertFalse(selenium.isElementPresent(
 						"//body[contains(@class,'local-staging')]"));
-				assertTrue(selenium.isPartialText("//li[2]/span/a", "Staging"));
-				selenium.clickAt("//li[2]/span/a",
+				assertEquals(RuntimeVariables.replace("Staging"),
+					selenium.getText(
+						"//div[@class='staging-bar']/ul/li[2]/span/a"));
+				selenium.clickAt("//div[@class='staging-bar']/ul/li[2]/span/a",
 					RuntimeVariables.replace("Staging"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();

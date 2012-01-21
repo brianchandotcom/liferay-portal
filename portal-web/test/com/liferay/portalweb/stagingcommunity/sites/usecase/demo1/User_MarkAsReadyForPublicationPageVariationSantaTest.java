@@ -56,8 +56,10 @@ public class User_MarkAsReadyForPublicationPageVariationSantaTest
 						"//body[contains(@class,'live-view')]"));
 				assertFalse(selenium.isElementPresent(
 						"//body[contains(@class,'local-staging')]"));
-				assertTrue(selenium.isPartialText("//li[2]/span/a", "Staging"));
-				selenium.clickAt("//li[2]/span/a",
+				assertEquals(RuntimeVariables.replace("Staging"),
+					selenium.getText(
+						"//div[@class='staging-bar']/ul/li[2]/span/a"));
+				selenium.clickAt("//div[@class='staging-bar']/ul/li[2]/span/a",
 					RuntimeVariables.replace("Staging"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();

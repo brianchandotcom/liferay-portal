@@ -27,7 +27,7 @@ public class User_SignInTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
-				selenium.open("/web/guest/home");
+				selenium.open("/web/guest/home/");
 				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {

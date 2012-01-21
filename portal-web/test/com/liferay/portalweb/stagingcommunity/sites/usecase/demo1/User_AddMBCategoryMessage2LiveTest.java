@@ -20,9 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class User_AddMBCategoryMessage2SiteStagingTest extends BaseTestCase {
-	public void testUser_AddMBCategoryMessage2SiteStaging()
-		throws Exception {
+public class User_AddMBCategoryMessage2LiveTest extends BaseTestCase {
+	public void testUser_AddMBCategoryMessage2Live() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -49,17 +48,6 @@ public class User_AddMBCategoryMessage2SiteStagingTest extends BaseTestCase {
 				"//body[contains(@class,'live-view')]"));
 		assertFalse(selenium.isElementPresent(
 				"//body[contains(@class,'live-staging')]"));
-		assertTrue(selenium.isPartialText("//li[2]/span/a", "Staging"));
-		selenium.clickAt("//li[2]/span/a", RuntimeVariables.replace("Staging"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		assertTrue(selenium.isElementPresent(
-				"//body[contains(@class,'local-staging')]"));
-		assertFalse(selenium.isElementPresent(
-				"//body[contains(@class,'live-view')]"));
-		assertEquals(RuntimeVariables.replace(
-				"The data of this portlet is not staged. Any data changes are immediately available to the Local Live site. The portlet's own workflow is still honored. Portlet setup is still managed from staging."),
-			selenium.getText("//div[@class='portlet-msg-alert']"));
 		assertEquals(RuntimeVariables.replace("MB Category Name"),
 			selenium.getText("//td[1]/a/strong"));
 		selenium.clickAt("//td[1]/a/strong",

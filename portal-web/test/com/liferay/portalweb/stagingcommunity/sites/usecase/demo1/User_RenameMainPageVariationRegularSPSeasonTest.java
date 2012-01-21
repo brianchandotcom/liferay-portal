@@ -56,8 +56,10 @@ public class User_RenameMainPageVariationRegularSPSeasonTest
 						"//body[contains(@class,'live-view')]"));
 				assertFalse(selenium.isElementPresent(
 						"//body[contains(@class,'local-staging')]"));
-				assertTrue(selenium.isPartialText("//li[2]/span/a", "Staging"));
-				selenium.clickAt("//li[2]/span/a",
+				assertEquals(RuntimeVariables.replace("Staging"),
+					selenium.getText(
+						"//div[@class='staging-bar']/ul/li[2]/span/a"));
+				selenium.clickAt("//div[@class='staging-bar']/ul/li[2]/span/a",
 					RuntimeVariables.replace("Staging"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
@@ -92,10 +94,12 @@ public class User_RenameMainPageVariationRegularSPSeasonTest
 				Thread.sleep(5000);
 				selenium.selectFrame(
 					"//div[@class='yui3-widget-bd aui-panel-bd aui-dialog-bd aui-dialog-iframe-bd']/iframe");
-				assertTrue(selenium.isPartialText("//strong", "Main Variation"));
+				assertTrue(selenium.isPartialText("//td[1]/strong",
+						"Main Variation"));
 				assertEquals(RuntimeVariables.replace("Edit"),
-					selenium.getText("//a/span"));
-				selenium.clickAt("//a/span", RuntimeVariables.replace("Edit"));
+					selenium.getText("//td[3]/span/a/span"));
+				selenium.clickAt("//td[3]/span/a/span",
+					RuntimeVariables.replace("Edit"));
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -140,6 +144,7 @@ public class User_RenameMainPageVariationRegularSPSeasonTest
 				assertEquals(RuntimeVariables.replace(
 						"Page variation was updated."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
+				assertTrue(selenium.isPartialText("//td[1]/strong", "Regular"));
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
 				loadRequiredJavaScriptModules();
@@ -168,8 +173,10 @@ public class User_RenameMainPageVariationRegularSPSeasonTest
 						"//body[contains(@class,'live-view')]"));
 				assertFalse(selenium.isElementPresent(
 						"//body[contains(@class,'local-staging')]"));
-				assertTrue(selenium.isPartialText("//li[2]/span/a", "Staging"));
-				selenium.clickAt("//li[2]/span/a",
+				assertEquals(RuntimeVariables.replace("Staging"),
+					selenium.getText(
+						"//div[@class='staging-bar']/ul/li[2]/span/a"));
+				selenium.clickAt("//div[@class='staging-bar']/ul/li[2]/span/a",
 					RuntimeVariables.replace("Staging"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
@@ -192,7 +199,7 @@ public class User_RenameMainPageVariationRegularSPSeasonTest
 				Thread.sleep(5000);
 				selenium.selectFrame(
 					"//div[@class='yui3-widget-bd aui-panel-bd aui-dialog-bd aui-dialog-iframe-bd']/iframe");
-				assertTrue(selenium.isPartialText("//strong", "Regular"));
+				assertTrue(selenium.isPartialText("//td[1]/strong", "Regular"));
 				selenium.selectFrame("relative=top");
 
 			case 100:

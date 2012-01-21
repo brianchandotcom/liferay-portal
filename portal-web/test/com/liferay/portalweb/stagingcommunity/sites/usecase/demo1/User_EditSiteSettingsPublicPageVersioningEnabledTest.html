@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>User_EnablePublicPageVersioningTest</title>
+<title>User_EditSiteSettingsPublicPageVersioningEnabledTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">User_EnablePublicPageVersioningTest</td></tr>
+<tr><td rowspan="1" colspan="3">User_EditSiteSettingsPublicPageVersioningEnabledTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -34,13 +34,13 @@
 	<td>Staging View</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
-	<td>//li[2]/span/a</td>
+	<td>assertText</td>
+	<td>//div[@class='staging-bar']/ul/li[2]/span/a</td>
 	<td>Staging</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//li[2]/span/a</td>
+	<td>//div[@class='staging-bar']/ul/li[2]/span/a</td>
 	<td>Staging</td>
 </tr>
 <tr>
@@ -123,7 +123,6 @@
 	<td>//h1[@class='header-title']/span</td>
 	<td>Site Name (Staging)</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

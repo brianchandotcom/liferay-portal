@@ -20,8 +20,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ActivateStagingTest extends BaseTestCase {
-	public void testActivateStaging() throws Exception {
+public class User_EditSiteSettingsPublicPageVersioningEnabledTest
+	extends BaseTestCase {
+	public void testUser_EditSiteSettingsPublicPageVersioningEnabled()
+		throws Exception {
 		int label = 1;
 
 		while (label >= 1) {
@@ -36,7 +38,7 @@ public class ActivateStagingTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("link=Control Panel")) {
+						if (selenium.isElementPresent("link=Site Name")) {
 							break;
 						}
 					}
@@ -46,23 +48,27 @@ public class ActivateStagingTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.clickAt("link=Control Panel",
-					RuntimeVariables.replace("Control Panel"));
-				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
-				selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
-				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
-				selenium.type("//input[@id='_134_name']",
+				selenium.clickAt("link=Site Name",
 					RuntimeVariables.replace("Site Name"));
-				selenium.clickAt("//input[@value='Search']",
-					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-				assertEquals(RuntimeVariables.replace("Actions"),
+				assertTrue(selenium.isElementPresent(
+						"//body[contains(@class,'live-view')]"));
+				assertFalse(selenium.isElementPresent(
+						"//body[contains(@class,'local-staging')]"));
+				assertEquals(RuntimeVariables.replace("Staging"),
 					selenium.getText(
-						"//span[@title='Actions']/ul/li/strong/a/span"));
-				selenium.click("//span[@title='Actions']/ul/li/strong/a/span");
+						"//div[@class='staging-bar']/ul/li[2]/span/a"));
+				selenium.clickAt("//div[@class='staging-bar']/ul/li[2]/span/a",
+					RuntimeVariables.replace("Staging"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+				assertTrue(selenium.isElementPresent(
+						"//body[contains(@class,'local-staging')]"));
+				assertFalse(selenium.isElementPresent(
+						"//body[contains(@class,'live-view')]"));
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -70,8 +76,8 @@ public class ActivateStagingTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
+						if (selenium.isElementPresent(
+									"//li[contains(@class,'settings')]/a")) {
 							break;
 						}
 					}
@@ -81,13 +87,25 @@ public class ActivateStagingTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				assertEquals(RuntimeVariables.replace("Edit Settings"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
-					RuntimeVariables.replace("Edit Settings"));
-				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
+				selenium.clickAt("//li[contains(@class,'settings')]/a",
+					RuntimeVariables.replace("Site Settings"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("//a[@id='_165_stagingLink']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
 				assertTrue(selenium.isPartialText(
 						"//a[@id='_165_stagingLink']", "Staging"));
 				selenium.clickAt("//a[@id='_165_stagingLink']",
@@ -99,7 +117,8 @@ public class ActivateStagingTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//input[@id='_165_local']")) {
+						if (selenium.isVisible(
+									"//input[@id='_165_branchingPublicCheckbox']")) {
 							break;
 						}
 					}
@@ -109,56 +128,25 @@ public class ActivateStagingTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.clickAt("//input[@id='_165_local']",
-					RuntimeVariables.replace("Local Live"));
+				boolean enabledOnPublicPagesChecked = selenium.isChecked(
+						"_165_branchingPublicCheckbox");
 
-				boolean documentLibraryDisplayChecked = selenium.isChecked(
-						"_165_staged-portlet_20Checkbox");
-
-				if (documentLibraryDisplayChecked) {
+				if (enabledOnPublicPagesChecked) {
 					label = 2;
 
 					continue;
 				}
 
-				selenium.clickAt("//input[@id='_165_staged-portlet_20Checkbox']",
-					RuntimeVariables.replace("DocumentLibraryDisplay"));
+				selenium.clickAt("//input[@id='_165_branchingPublicCheckbox']",
+					RuntimeVariables.replace("Enabled on Public Pages"));
 
 			case 2:
-
-				boolean messageBoardsChecked = selenium.isChecked(
-						"_165_staged-portlet_19Checkbox");
-
-				if (!messageBoardsChecked) {
-					label = 3;
-
-					continue;
-				}
-
-				selenium.clickAt("//input[@id='_165_staged-portlet_19Checkbox']",
-					RuntimeVariables.replace("Message Boards"));
-
-			case 3:
-
-				boolean webContentChecked = selenium.isChecked(
-						"_165_staged-portlet_15Checkbox");
-
-				if (webContentChecked) {
-					label = 4;
-
-					continue;
-				}
-
-				selenium.clickAt("//input[@id='_165_staged-portlet_15Checkbox']",
-					RuntimeVariables.replace("Web Content"));
-
-			case 4:
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
+						"Your request completed successfully. The page will be refreshed when you close this dialog. Alternatively you can hide this dialog."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				assertEquals(RuntimeVariables.replace("Site Name (Staging)"),
 					selenium.getText("//h1[@class='header-title']/span"));

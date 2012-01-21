@@ -20,8 +20,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class User_ViewMBCategoryMessage2LiveTest extends BaseTestCase {
-	public void testUser_ViewMBCategoryMessage2Live() throws Exception {
+public class User_ViewMBCategoryMessage2SiteStagingTest extends BaseTestCase {
+	public void testUser_ViewMBCategoryMessage2SiteStaging()
+		throws Exception {
 		int label = 1;
 
 		while (label >= 1) {
@@ -54,6 +55,20 @@ public class User_ViewMBCategoryMessage2LiveTest extends BaseTestCase {
 						"//body[contains(@class,'live-view')]"));
 				assertFalse(selenium.isElementPresent(
 						"//body[contains(@class,'live-staging')]"));
+				assertEquals(RuntimeVariables.replace("Staging"),
+					selenium.getText(
+						"//div[@class='staging-bar']/ul/li[2]/span/a"));
+				selenium.clickAt("//div[@class='staging-bar']/ul/li[2]/span/a",
+					RuntimeVariables.replace("Staging"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+				assertTrue(selenium.isElementPresent(
+						"//body[contains(@class,'local-staging')]"));
+				assertFalse(selenium.isElementPresent(
+						"//body[contains(@class,'live-view')]"));
+				assertEquals(RuntimeVariables.replace(
+						"The data of this portlet is not staged. Any data changes are immediately available to the Local Live site. The portlet's own workflow is still honored. Portlet setup is still managed from staging."),
+					selenium.getText("//div[@class='portlet-msg-alert']"));
 				assertEquals(RuntimeVariables.replace("MB Category Name"),
 					selenium.getText("//td[1]/a/strong"));
 				selenium.clickAt("//td[1]/a/strong",
@@ -77,11 +92,11 @@ public class User_ViewMBCategoryMessage2LiveTest extends BaseTestCase {
 			case 2:
 				assertEquals(RuntimeVariables.replace(
 						"MB Category Thread Message2 Subject"),
-					selenium.getText("//td[1]/a"));
+					selenium.getText("//tr[3]/td[1]/a"));
 				assertEquals(RuntimeVariables.replace(
 						"MB Category Thread Message1 Subject"),
 					selenium.getText("//tr[4]/td[1]/a"));
-				selenium.clickAt("//td[1]/a",
+				selenium.clickAt("//tr[3]/td[1]/a",
 					RuntimeVariables.replace(
 						"MB Category Thread Message2 Subject"));
 				selenium.waitForPageToLoad("30000");

@@ -69,7 +69,7 @@ public class AssignRoleStagingAdminUserTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[6]/span[2]/a/span")) {
+				if (selenium.isVisible("//div[@id='_125_roles']/span[2]/a/span")) {
 					break;
 				}
 			}
@@ -80,8 +80,8 @@ public class AssignRoleStagingAdminUserTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Select"),
-			selenium.getText("//div[6]/span[2]/a/span"));
-		selenium.clickAt("//div[6]/span[2]/a/span",
+			selenium.getText("//div[@id='_125_roles']/span[2]/a/span"));
+		selenium.clickAt("//div[@id='_125_roles']/span[2]/a/span",
 			RuntimeVariables.replace("Select"));
 		Thread.sleep(5000);
 		selenium.selectWindow("name=role");

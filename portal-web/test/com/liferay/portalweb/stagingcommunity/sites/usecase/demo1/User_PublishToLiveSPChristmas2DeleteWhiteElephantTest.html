@@ -34,13 +34,13 @@
 	<td>Staging View</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
-	<td>//li[2]/span/a</td>
+	<td>assertText</td>
+	<td>//div[@class='staging-bar']/ul/li[2]/span/a</td>
 	<td>Staging</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//li[2]/span/a</td>
+	<td>//div[@class='staging-bar']/ul/li[2]/span/a</td>
 	<td>Staging</td>
 </tr>
 <tr>
@@ -324,6 +324,11 @@
 	<td>Prices</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>store</td>
 	<td>eval(selenium.isVisible('_88_rangeAll'))</td>
 	<td>allVisible</td>
@@ -368,7 +373,6 @@
 	<td>Are you sure you want to publish these pages?</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

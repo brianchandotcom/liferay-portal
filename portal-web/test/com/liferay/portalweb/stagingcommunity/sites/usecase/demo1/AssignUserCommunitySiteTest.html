@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>AssignRoleStagingAdminUserTest</title>
+<title>AssignUserCommunitySiteTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">AssignRoleStagingAdminUserTest</td></tr>
+<tr><td rowspan="1" colspan="3">AssignUserCommunitySiteTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -14,7 +14,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
 </tr>
@@ -49,23 +49,28 @@
 	<td>selen01</td>
 </tr>
 <tr>
+	<td>assertPartialText</td>
+	<td>//a[@id='_125_sitesLink']</td>
+	<td>Sites</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//a[@id='_125_rolesLink']</td>
-	<td>Roles</td>
+	<td>//a[@id='_125_sitesLink']</td>
+	<td>Sites</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@id='_125_roles']/span[2]/a/span</td>
+	<td>//div[@id='_125_sites']/span/a/span</td>
 	<td>Select</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='_125_roles']/span[2]/a/span</td>
+	<td>//div[@id='_125_sites']/span/a/span</td>
 	<td>Select</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[@id='_125_roles']/span[2]/a/span</td>
+	<td>//div[@id='_125_sites']/span/a/span</td>
 	<td>Select</td>
 </tr>
 <tr>
@@ -75,23 +80,23 @@
 </tr>
 <tr>
 	<td>selectWindow</td>
-	<td>name=role</td>
+	<td>name=group</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//tr[5]/td/a</td>
-	<td>Staging Admin</td>
+	<td>//tr[4]/td[1]/a</td>
+	<td>Site Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[5]/td/a</td>
-	<td>Staging Admin</td>
+	<td>//tr[4]/td[1]/a</td>
+	<td>Site Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//tr[5]/td/a</td>
-	<td>Staging Admin</td>
+	<td>//tr[4]/td[1]/a</td>
+	<td>Site Name</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -106,7 +111,7 @@
 <tr>
 	<td>assertText</td>
 	<td>//table/tr/td[1]</td>
-	<td>Staging Admin</td>
+	<td>Site Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -114,15 +119,16 @@
 	<td>Save</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>waitForVisible</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[3]/div/div/table/tbody/tr[3]/td[1]</td>
-	<td>Staging Admin</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
+
 </tbody></table>
 </body>
 </html>

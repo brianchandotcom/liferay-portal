@@ -120,6 +120,73 @@ public class PortalLDAPExporterImpl implements PortalLDAPExporter {
 		}
 	}
 
+	public void exportToLDAP(long userId, long userGroupId) throws Exception {
+		User user = UserLocalServiceUtil.getUser(userId);
+
+		long companyId = user.getCompanyId();
+
+		if (!AuthSettingsUtil.isLDAPAuthEnabled(companyId) ||
+			!LDAPSettingsUtil.isExportEnabled(companyId) ||
+			!LDAPSettingsUtil.isExportGroupEnabled(companyId)) {
+
+			return;
+		}
+
+		long ldapServerId = PortalLDAPUtil.getLdapServerId(
+			companyId, user.getScreenName(), user.getEmailAddress());
+
+		LdapContext ldapContext = PortalLDAPUtil.getContext(
+			ldapServerId, companyId);
+
+		try {
+			if (ldapContext == null) {
+				return;
+			}
+
+			UserGroup userGroup = UserGroupLocalServiceUtil.getUserGroup(
+				userGroupId);
+
+			Properties groupMappings = LDAPSettingsUtil.getGroupMappings(
+				ldapServerId, companyId);
+
+			Properties userMappings = LDAPSettingsUtil.getUserMappings(
+				ldapServerId, companyId);
+
+			Binding binding = PortalLDAPUtil.getGroup(
+				ldapServerId, companyId, userGroup.getName());
+
+			if (binding == null) {
+				addGroup(
+					ldapServerId, ldapContext, userGroup, user, groupMappings,
+					userMappings);
+
+				return;
+			}
+
+			Name name = new CompositeName();
+
+			name.add(
+				PortalLDAPUtil.getNameInNamespace(
+					ldapServerId, companyId, binding));
+
+			Modifications modifications =
+				_portalToLDAPConverter.getLDAPGroupModifications(
+					ldapServerId, userGroup, user, groupMappings, userMappings);
+
+			ModificationItem[] modificationItems = modifications.getItems();
+
+			ldapContext.modifyAttributes(name, modificationItems);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+		finally {
+			if (ldapContext != null) {
+				ldapContext.close();
+			}
+		}
+	}
+
 	public void exportToLDAP(
 			User user, Map<String, Serializable> userExpandoAttributes)
 		throws Exception {
@@ -210,73 +277,6 @@ public class PortalLDAPExporterImpl implements PortalLDAPExporter {
 		}
 		catch (Exception e) {
 			throw e;
-		}
-		finally {
-			if (ldapContext != null) {
-				ldapContext.close();
-			}
-		}
-	}
-
-	public void exportToLDAP(long userId, long userGroupId) throws Exception {
-		User user = UserLocalServiceUtil.getUser(userId);
-
-		long companyId = user.getCompanyId();
-
-		if (!AuthSettingsUtil.isLDAPAuthEnabled(companyId) ||
-			!LDAPSettingsUtil.isExportEnabled(companyId) ||
-			!LDAPSettingsUtil.isExportGroupEnabled(companyId)) {
-
-			return;
-		}
-
-		long ldapServerId = PortalLDAPUtil.getLdapServerId(
-			companyId, user.getScreenName(), user.getEmailAddress());
-
-		LdapContext ldapContext = PortalLDAPUtil.getContext(
-			ldapServerId, companyId);
-
-		try {
-			if (ldapContext == null) {
-				return;
-			}
-
-			UserGroup userGroup = UserGroupLocalServiceUtil.getUserGroup(
-				userGroupId);
-
-			Properties groupMappings = LDAPSettingsUtil.getGroupMappings(
-				ldapServerId, companyId);
-
-			Properties userMappings = LDAPSettingsUtil.getUserMappings(
-				ldapServerId, companyId);
-
-			Binding binding = PortalLDAPUtil.getGroup(
-				ldapServerId, companyId, userGroup.getName());
-
-			if (binding == null) {
-				addGroup(
-					ldapServerId, ldapContext, userGroup, user, groupMappings,
-					userMappings);
-
-				return;
-			}
-
-			Name name = new CompositeName();
-
-			name.add(
-				PortalLDAPUtil.getNameInNamespace(
-					ldapServerId, companyId, binding));
-
-			Modifications modifications =
-				_portalToLDAPConverter.getLDAPGroupModifications(
-					ldapServerId, userGroup, user, groupMappings, userMappings);
-
-			ModificationItem[] modificationItems = modifications.getItems();
-
-			ldapContext.modifyAttributes(name, modificationItems);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
 		}
 		finally {
 			if (ldapContext != null) {

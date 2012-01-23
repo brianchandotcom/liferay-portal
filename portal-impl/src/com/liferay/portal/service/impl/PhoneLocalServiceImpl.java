@@ -145,6 +145,30 @@ public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 
 	protected void validate(
 			long phoneId, long companyId, long classNameId, long classPK,
+			boolean primary)
+		throws SystemException {
+
+		// Check to make sure there isn't another phone with the same company
+		// id, class name, and class pk that also has primary set to true
+
+		if (primary) {
+			Iterator<Phone> itr = phonePersistence.findByC_C_C_P(
+				companyId, classNameId, classPK, primary).iterator();
+
+			while (itr.hasNext()) {
+				Phone phone = itr.next();
+
+				if ((phoneId <= 0) || (phone.getPhoneId() != phoneId)) {
+					phone.setPrimary(false);
+
+					phonePersistence.update(phone, false);
+				}
+			}
+		}
+	}
+
+	protected void validate(
+			long phoneId, long companyId, long classNameId, long classPK,
 			String number, int typeId, boolean primary)
 		throws PortalException, SystemException {
 
@@ -169,30 +193,6 @@ public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 		}
 
 		validate(phoneId, companyId, classNameId, classPK, primary);
-	}
-
-	protected void validate(
-			long phoneId, long companyId, long classNameId, long classPK,
-			boolean primary)
-		throws SystemException {
-
-		// Check to make sure there isn't another phone with the same company
-		// id, class name, and class pk that also has primary set to true
-
-		if (primary) {
-			Iterator<Phone> itr = phonePersistence.findByC_C_C_P(
-				companyId, classNameId, classPK, primary).iterator();
-
-			while (itr.hasNext()) {
-				Phone phone = itr.next();
-
-				if ((phoneId <= 0) || (phone.getPhoneId() != phoneId)) {
-					phone.setPrimary(false);
-
-					phonePersistence.update(phone, false);
-				}
-			}
-		}
 	}
 
 }

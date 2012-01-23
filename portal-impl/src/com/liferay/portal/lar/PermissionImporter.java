@@ -520,41 +520,6 @@ public class PermissionImporter {
 
 	protected void importPortletRoles(
 			LayoutCache layoutCache, long companyId, long groupId,
-			String portletId, Element rolesElement)
-		throws Exception {
-
-		String resourceName = PortletConstants.getRootPortletId(portletId);
-
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			companyId, resourceName);
-
-		if (portlet == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Do not import portlet roles for " + portletId +
-						" because the portlet does not exist");
-			}
-		}
-		else {
-			importGroupRoles(
-				layoutCache, companyId, groupId, resourceName, "community",
-				rolesElement);
-
-			importUserRoles(
-				layoutCache, companyId, groupId, resourceName, rolesElement);
-
-			importInheritedRoles(
-				layoutCache, companyId, groupId, resourceName,
-				"organization", rolesElement);
-
-			importInheritedRoles(
-				layoutCache, companyId, groupId, resourceName, "user-group",
-				rolesElement);
-		}
-	}
-
-	protected void importPortletRoles(
-			LayoutCache layoutCache, long companyId, long groupId,
 			Element rolesElement)
 		throws Exception {
 
@@ -592,6 +557,41 @@ public class PermissionImporter {
 					layoutCache, companyId, groupId, resourceName, "user-group",
 					portletElement);
 			}
+		}
+	}
+
+	protected void importPortletRoles(
+			LayoutCache layoutCache, long companyId, long groupId,
+			String portletId, Element rolesElement)
+		throws Exception {
+
+		String resourceName = PortletConstants.getRootPortletId(portletId);
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			companyId, resourceName);
+
+		if (portlet == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Do not import portlet roles for " + portletId +
+						" because the portlet does not exist");
+			}
+		}
+		else {
+			importGroupRoles(
+				layoutCache, companyId, groupId, resourceName, "community",
+				rolesElement);
+
+			importUserRoles(
+				layoutCache, companyId, groupId, resourceName, rolesElement);
+
+			importInheritedRoles(
+				layoutCache, companyId, groupId, resourceName,
+				"organization", rolesElement);
+
+			importInheritedRoles(
+				layoutCache, companyId, groupId, resourceName, "user-group",
+				rolesElement);
 		}
 	}
 

@@ -119,14 +119,6 @@ public class PortletCategory implements Serializable {
 		_merge(this, newPortletCategory);
 	}
 
-	public void separate(String portletId) {
-		Set<String> portletIds = new HashSet<String>(1);
-
-		portletIds.add(portletId);
-
-		separate(portletIds);
-	}
-
 	public void separate(Set<String> portletIds) {
 		Iterator<PortletCategory> categoriesItr =
 			_categories.values().iterator();
@@ -146,6 +138,14 @@ public class PortletCategory implements Serializable {
 				portletIdsItr.remove();
 			}
 		}
+	}
+
+	public void separate(String portletId) {
+		Set<String> portletIds = new HashSet<String>(1);
+
+		portletIds.add(portletId);
+
+		separate(portletIds);
 	}
 
 	public void setPortletIds(Set<String> portletIds) {

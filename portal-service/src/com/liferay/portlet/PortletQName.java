@@ -36,10 +36,10 @@ public interface PortletQName {
 
 	public String getPublicRenderParameterName(QName qName);
 
-	public QName getQName(String publicRenderParameterName);
-
 	public QName getQName(
 		Element qNameEl, Element nameEl, String defaultNamespace);
+
+	public QName getQName(String publicRenderParameterName);
 
 	public String getRemovePublicRenderParameterName(QName qName);
 

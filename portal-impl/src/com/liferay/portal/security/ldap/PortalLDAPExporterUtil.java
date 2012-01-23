@@ -36,17 +36,17 @@ public class PortalLDAPExporterUtil {
 		_portalLDAPExporter.exportToLDAP(contact, contactExpandoAttributes);
 	}
 
+	public static void exportToLDAP(long userId, long userGroupId)
+		throws Exception {
+
+		_portalLDAPExporter.exportToLDAP(userId, userGroupId);
+	}
+
 	public static void exportToLDAP(
 			User user, Map<String, Serializable> userExpandoAttributes)
 		throws Exception {
 
 		_portalLDAPExporter.exportToLDAP(user, userExpandoAttributes);
-	}
-
-	public static void exportToLDAP(long userId, long userGroupId)
-		throws Exception {
-
-		_portalLDAPExporter.exportToLDAP(userId, userGroupId);
 	}
 
 	public void setPortalLDAPExporter(PortalLDAPExporter portalLDAPExporter) {

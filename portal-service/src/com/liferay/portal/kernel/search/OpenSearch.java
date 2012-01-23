@@ -23,7 +23,9 @@ public interface OpenSearch {
 
 	public boolean isEnabled();
 
-	public String search(HttpServletRequest request, String url)
+	public String search(
+			HttpServletRequest request, long groupId, long userId,
+			String keywords, int startPage, int itemsPerPage, String format)
 		throws SearchException;
 
 	public String search(
@@ -31,9 +33,7 @@ public interface OpenSearch {
 			int startPage, int itemsPerPage, String format)
 		throws SearchException;
 
-	public String search(
-			HttpServletRequest request, long groupId, long userId,
-			String keywords, int startPage, int itemsPerPage, String format)
+	public String search(HttpServletRequest request, String url)
 		throws SearchException;
 
 }

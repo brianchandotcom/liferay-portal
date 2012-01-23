@@ -24,19 +24,6 @@ import java.util.Map;
  */
 public class MethodCache {
 
-	public static Method get(String className, String methodName)
-		throws ClassNotFoundException, NoSuchMethodException {
-
-		return get(null, null, className, methodName);
-	}
-
-	public static Method get(
-			String className, String methodName, Class<?>[] parameterTypes)
-		throws ClassNotFoundException, NoSuchMethodException {
-
-		return get(null, null, className, methodName, parameterTypes);
-	}
-
 	public static Method get(
 			Map<String, Class<?>> classesMap, Map<MethodKey, Method> methodsMap,
 			String className, String methodName)
@@ -60,6 +47,19 @@ public class MethodCache {
 		throws ClassNotFoundException, NoSuchMethodException {
 
 		return _instance._get(null, null, methodKey);
+	}
+
+	public static Method get(String className, String methodName)
+		throws ClassNotFoundException, NoSuchMethodException {
+
+		return get(null, null, className, methodName);
+	}
+
+	public static Method get(
+			String className, String methodName, Class<?>[] parameterTypes)
+		throws ClassNotFoundException, NoSuchMethodException {
+
+		return get(null, null, className, methodName, parameterTypes);
 	}
 
 	public static Method put(MethodKey methodKey, Method method) {

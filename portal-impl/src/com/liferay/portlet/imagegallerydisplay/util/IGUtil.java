@@ -37,20 +37,6 @@ import javax.servlet.http.HttpServletRequest;
 public class IGUtil {
 
 	public static void addPortletBreadcrumbEntries(
-			long folderId, HttpServletRequest request,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			return;
-		}
-
-		Folder folder = DLAppLocalServiceUtil.getFolder(folderId);
-
-		addPortletBreadcrumbEntries(folder, request, renderResponse);
-	}
-
-	public static void addPortletBreadcrumbEntries(
 			Folder folder, HttpServletRequest request,
 			RenderResponse renderResponse)
 		throws Exception {
@@ -97,6 +83,20 @@ public class IGUtil {
 
 		PortalUtil.addPortletBreadcrumbEntry(
 			request, folder.getName(), portletURL.toString());
+	}
+
+	public static void addPortletBreadcrumbEntries(
+			long folderId, HttpServletRequest request,
+			RenderResponse renderResponse)
+		throws Exception {
+
+		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			return;
+		}
+
+		Folder folder = DLAppLocalServiceUtil.getFolder(folderId);
+
+		addPortletBreadcrumbEntries(folder, request, renderResponse);
 	}
 
 }

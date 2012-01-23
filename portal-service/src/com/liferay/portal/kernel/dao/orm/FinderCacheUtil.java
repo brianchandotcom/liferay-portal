@@ -38,6 +38,12 @@ public class FinderCacheUtil {
 		return _finderCache;
 	}
 
+	public static Object getResult(
+		FinderPath finderPath, Object[] args, SessionFactory sessionFactory) {
+
+		return getFinderCache().getResult(finderPath, args, sessionFactory);
+	}
+
 	/**
 	 * @deprecated
 	 */
@@ -50,12 +56,6 @@ public class FinderCacheUtil {
 				" via \"ant build-service\" or else caching will not work");
 
 		return null;
-	}
-
-	public static Object getResult(
-		FinderPath finderPath, Object[] args, SessionFactory sessionFactory) {
-
-		return getFinderCache().getResult(finderPath, args, sessionFactory);
 	}
 
 	public static void invalidate() {

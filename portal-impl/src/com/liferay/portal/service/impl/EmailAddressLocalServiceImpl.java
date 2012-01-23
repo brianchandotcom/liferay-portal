@@ -141,30 +141,6 @@ public class EmailAddressLocalServiceImpl
 	}
 
 	protected void validate(
-			long emailAddressId, long companyId, long classNameId,
-			long classPK, String address, int typeId, boolean primary)
-		throws PortalException, SystemException {
-
-		if (!Validator.isEmailAddress(address)) {
-			throw new EmailAddressException();
-		}
-
-		if (emailAddressId > 0) {
-			EmailAddress emailAddress =
-				emailAddressPersistence.findByPrimaryKey(emailAddressId);
-
-			companyId = emailAddress.getCompanyId();
-			classNameId = emailAddress.getClassNameId();
-			classPK = emailAddress.getClassPK();
-		}
-
-		listTypeService.validate(
-			typeId, classNameId, ListTypeConstants.EMAIL_ADDRESS);
-
-		validate(emailAddressId, companyId, classNameId, classPK, primary);
-	}
-
-	protected void validate(
 			long emailAddressId, long companyId, long classNameId, long classPK,
 			boolean primary)
 		throws SystemException {
@@ -189,6 +165,30 @@ public class EmailAddressLocalServiceImpl
 				}
 			}
 		}
+	}
+
+	protected void validate(
+			long emailAddressId, long companyId, long classNameId,
+			long classPK, String address, int typeId, boolean primary)
+		throws PortalException, SystemException {
+
+		if (!Validator.isEmailAddress(address)) {
+			throw new EmailAddressException();
+		}
+
+		if (emailAddressId > 0) {
+			EmailAddress emailAddress =
+				emailAddressPersistence.findByPrimaryKey(emailAddressId);
+
+			companyId = emailAddress.getCompanyId();
+			classNameId = emailAddress.getClassNameId();
+			classPK = emailAddress.getClassPK();
+		}
+
+		listTypeService.validate(
+			typeId, classNameId, ListTypeConstants.EMAIL_ADDRESS);
+
+		validate(emailAddressId, companyId, classNameId, classPK, primary);
 	}
 
 }

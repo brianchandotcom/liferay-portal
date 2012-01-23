@@ -46,6 +46,16 @@ public class EhcachePortalCache implements PortalCache {
 	public void destroy() {
 	}
 
+	public Collection<Object> get(Collection<Serializable> keys) {
+		List<Object> values = new ArrayList<Object>(keys.size());
+
+		for (Serializable key : keys) {
+			values.add(get(key));
+		}
+
+		return values;
+	}
+
 	public Object get(Serializable key) {
 		Element element = _ehcache.get(key);
 
@@ -55,16 +65,6 @@ public class EhcachePortalCache implements PortalCache {
 		else {
 			return element.getObjectValue();
 		}
-	}
-
-	public Collection<Object> get(Collection<Serializable> keys) {
-		List<Object> values = new ArrayList<Object>(keys.size());
-
-		for (Serializable key : keys) {
-			values.add(get(key));
-		}
-
-		return values;
 	}
 
 	public String getName() {

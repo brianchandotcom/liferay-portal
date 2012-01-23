@@ -130,9 +130,9 @@ public interface Document extends Serializable {
 
 	public void addNumber(String name, int value);
 
-	public void addNumber(String name, Integer value);
-
 	public void addNumber(String name, int[] values);
+
+	public void addNumber(String name, Integer value);
 
 	public void addNumber(String name, Integer[] values);
 

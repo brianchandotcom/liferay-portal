@@ -54,12 +54,6 @@ public class ETagUtil {
 	}
 
 	public static boolean processETag(
-		HttpServletRequest request, HttpServletResponse response, String s) {
-
-		return _processETag(request, response, s.hashCode());
-	}
-
-	public static boolean processETag(
 		HttpServletRequest request, HttpServletResponse response,
 		ByteBufferServletResponse byteBufferResponse) {
 
@@ -68,6 +62,12 @@ public class ETagUtil {
 		return processETag(
 			request, response, byteBuffer.array(), byteBuffer.position(),
 			byteBuffer.limit());
+	}
+
+	public static boolean processETag(
+		HttpServletRequest request, HttpServletResponse response, String s) {
+
+		return _processETag(request, response, s.hashCode());
 	}
 
 	private static int _hashCode(byte[] data, int offset, int length) {

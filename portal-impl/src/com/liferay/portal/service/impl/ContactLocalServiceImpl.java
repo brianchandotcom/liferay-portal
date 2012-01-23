@@ -25,15 +25,6 @@ import com.liferay.portal.service.base.ContactLocalServiceBaseImpl;
 public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 
 	@Override
-	public void deleteContact(long contactId) throws SystemException {
-		Contact contact = contactPersistence.fetchByPrimaryKey(contactId);
-
-		if (contact != null) {
-			deleteContact(contact);
-		}
-	}
-
-	@Override
 	public void deleteContact(Contact contact) throws SystemException {
 
 		// Addresses
@@ -63,6 +54,15 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 		// Contact
 
 		contactPersistence.remove(contact);
+	}
+
+	@Override
+	public void deleteContact(long contactId) throws SystemException {
+		Contact contact = contactPersistence.fetchByPrimaryKey(contactId);
+
+		if (contact != null) {
+			deleteContact(contact);
+		}
 	}
 
 	@Override

@@ -29,14 +29,6 @@ import java.util.Map;
  */
 public class ContentUtil {
 
-	public static String get(String location) {
-		return _instance._get(location, false);
-	}
-
-	public static String get(String location, boolean all) {
-		return _instance._get(location, all);
-	}
-
 	public static String get(ClassLoader classLoader, String location) {
 		return _instance._get(classLoader, location, false);
 	}
@@ -47,12 +39,16 @@ public class ContentUtil {
 		return _instance._get(classLoader, location, all);
 	}
 
-	private ContentUtil() {
-		_contentPool = new HashMap<String, String>();
+	public static String get(String location) {
+		return _instance._get(location, false);
 	}
 
-	private String _get(String location, boolean all) {
-		return _get(getClass().getClassLoader(), location, all);
+	public static String get(String location, boolean all) {
+		return _instance._get(location, all);
+	}
+
+	private ContentUtil() {
+		_contentPool = new HashMap<String, String>();
 	}
 
 	private String _get(ClassLoader classLoader, String location, boolean all) {
@@ -70,6 +66,10 @@ public class ContentUtil {
 		}
 
 		return content;
+	}
+
+	private String _get(String location, boolean all) {
+		return _get(getClass().getClassLoader(), location, all);
 	}
 
 	private void _put(String location, String content) {

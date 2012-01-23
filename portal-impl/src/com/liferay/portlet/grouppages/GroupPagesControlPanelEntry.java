@@ -29,6 +29,13 @@ import com.liferay.portlet.BaseControlPanelEntry;
  */
 public class GroupPagesControlPanelEntry extends BaseControlPanelEntry {
 
+	public boolean isVisible(
+			PermissionChecker permissionChecker, Portlet portlet)
+		throws Exception {
+
+		return false;
+	}
+
 	@Override
 	public boolean isVisible(
 			Portlet portlet, String category, ThemeDisplay themeDisplay)
@@ -57,13 +64,6 @@ public class GroupPagesControlPanelEntry extends BaseControlPanelEntry {
 		}
 
 		return visible;
-	}
-
-	public boolean isVisible(
-			PermissionChecker permissionChecker, Portlet portlet)
-		throws Exception {
-
-		return false;
 	}
 
 }

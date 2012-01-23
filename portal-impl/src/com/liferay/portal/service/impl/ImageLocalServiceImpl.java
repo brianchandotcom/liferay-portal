@@ -196,23 +196,6 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 		return _defaultUserMalePortrait;
 	}
 
-	@Override
-	public Image getImage(long imageId) {
-		try {
-			if (imageId > 0) {
-				return imagePersistence.findByPrimaryKey(imageId);
-			}
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to get image " + imageId + ": " + e.getMessage());
-			}
-		}
-
-		return null;
-	}
-
 	public Image getImage(byte[] bytes)
 		throws PortalException, SystemException {
 
@@ -238,6 +221,23 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		return getImage(is, null, cleanUpStream);
+	}
+
+	@Override
+	public Image getImage(long imageId) {
+		try {
+			if (imageId > 0) {
+				return imagePersistence.findByPrimaryKey(imageId);
+			}
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get image " + imageId + ": " + e.getMessage());
+			}
+		}
+
+		return null;
 	}
 
 	public Image getImageOrDefault(long imageId) {
@@ -284,6 +284,34 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 			image.getWidth(), image.getSize());
 	}
 
+	public Image updateImage(
+			long imageId, byte[] bytes, String type, int height, int width,
+			int size)
+		throws PortalException, SystemException {
+
+		Image image = imagePersistence.fetchByPrimaryKey(imageId);
+
+		if (image == null) {
+			image = imagePersistence.create(imageId);
+		}
+
+		image.setModifiedDate(new Date());
+		image.setType(type);
+		image.setHeight(height);
+		image.setWidth(width);
+		image.setSize(size);
+
+		Hook hook = HookFactory.getInstance();
+
+		hook.updateImage(image, type, bytes);
+
+		imagePersistence.update(image, false);
+
+		WebServerServletTokenUtil.resetToken(imageId);
+
+		return image;
+	}
+
 	public Image updateImage(long imageId, File file)
 		throws PortalException, SystemException {
 
@@ -313,34 +341,6 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 		return updateImage(
 			imageId, image.getTextObj(), image.getType(), image.getHeight(),
 			image.getWidth(), image.getSize());
-	}
-
-	public Image updateImage(
-			long imageId, byte[] bytes, String type, int height, int width,
-			int size)
-		throws PortalException, SystemException {
-
-		Image image = imagePersistence.fetchByPrimaryKey(imageId);
-
-		if (image == null) {
-			image = imagePersistence.create(imageId);
-		}
-
-		image.setModifiedDate(new Date());
-		image.setType(type);
-		image.setHeight(height);
-		image.setWidth(width);
-		image.setSize(size);
-
-		Hook hook = HookFactory.getInstance();
-
-		hook.updateImage(image, type, bytes);
-
-		imagePersistence.update(image, false);
-
-		WebServerServletTokenUtil.resetToken(imageId);
-
-		return image;
 	}
 
 	protected Image getImage(InputStream is, byte[] bytes)

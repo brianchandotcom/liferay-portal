@@ -142,6 +142,7 @@ public class DLUtil {
 		Map<String, Object> data = new HashMap<String, Object>();
 
 		data.put("folder-id", _getDefaultFolderId(request));
+		data.put("direction-right", Boolean.TRUE.toString());
 
 		PortalUtil.addPortletBreadcrumbEntry(
 			request, themeDisplay.translate("home"), portletURL.toString(),
@@ -185,6 +186,7 @@ public class DLUtil {
 			Map<String, Object> data = new HashMap<String, Object>();
 
 			data.put("folder-id", ancestorFolder.getFolderId());
+			data.put("direction-right", Boolean.TRUE.toString());
 
 			PortalUtil.addPortletBreadcrumbEntry(
 				request, ancestorFolder.getName(), portletURL.toString(), data);
@@ -204,6 +206,7 @@ public class DLUtil {
 			Map<String, Object> data = new HashMap<String, Object>();
 
 			data.put("folder-id", folderId);
+			data.put("direction-right", Boolean.TRUE.toString());
 
 			PortalUtil.addPortletBreadcrumbEntry(
 				request, folder.getName(), portletURL.toString(), data);
@@ -240,6 +243,7 @@ public class DLUtil {
 			data.put("folder-id", _getDefaultFolderId(request));
 			data.put("view-entries", Boolean.TRUE.toString());
 			data.put("view-folders", Boolean.TRUE.toString());
+			data.put("direction-right", Boolean.TRUE.toString());
 
 			PortalUtil.addPortletBreadcrumbEntry(
 				request, themeDisplay.translate("home"), portletURL.toString(),

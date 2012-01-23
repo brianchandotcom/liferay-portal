@@ -31,6 +31,8 @@ AUI.add(
 
 		var CSS_SELECTED = 'selected';
 
+		var DATA_DIRECTION_RIGHT = 'data-direction-right';
+
 		var DATA_FOLDER_ID = 'data-folder-id';
 
 		var DATA_VIEW_ENTRIES = 'data-view-entries';
@@ -430,7 +432,7 @@ AUI.add(
 
 						var direction = 'left';
 
-						if (item.attr('data-direction-right')) {
+						if (item.attr(DATA_DIRECTION_RIGHT)) {
 							direction = 'right';
 						}
 
@@ -762,7 +764,13 @@ AUI.add(
 							requestParams[instance.ns(VIEW_FOLDERS)] = viewFolders;
 						}
 
-						instance._listView.set('direction', 'left');
+						var direction = 'left';
+
+						if (event.currentTarget.attr(DATA_DIRECTION_RIGHT)) {
+							direction = 'right';
+						}
+
+						instance._listView.set('direction', direction);
 
 						Liferay.fire(
 							instance._eventDataRequest,

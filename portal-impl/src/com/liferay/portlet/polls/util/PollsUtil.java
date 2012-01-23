@@ -98,18 +98,18 @@ public class PollsUtil {
 		saveVote(request, questionId);
 	}
 
-	public static void saveVote(RenderRequest renderRequest, long questionId) {
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			renderRequest);
-
-		saveVote(request, questionId);
-	}
-
 	public static void saveVote(HttpServletRequest request, long questionId) {
 		HttpSession session = request.getSession();
 
 		session.setAttribute(
 			PollsQuestion.class.getName() + "." + questionId, Boolean.TRUE);
+	}
+
+	public static void saveVote(RenderRequest renderRequest, long questionId) {
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			renderRequest);
+
+		saveVote(request, questionId);
 	}
 
 }

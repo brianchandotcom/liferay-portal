@@ -31,10 +31,10 @@ public interface PortalLDAPExporter {
 			Contact contact, Map<String, Serializable> contactExpandoAttributes)
 		throws Exception;
 
+	public void exportToLDAP(long userId, long userGroupId) throws Exception;
+
 	public void exportToLDAP(
 			User user, Map<String, Serializable> userExpandoAttributes)
 		throws Exception;
-
-	public void exportToLDAP(long userId, long userGroupId) throws Exception;
 
 }

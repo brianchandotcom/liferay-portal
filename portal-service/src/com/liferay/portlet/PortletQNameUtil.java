@@ -45,14 +45,14 @@ public class PortletQNameUtil {
 		return getPortletQName().getPublicRenderParameterName(qName);
 	}
 
-	public static QName getQName(String publicRenderParameterName) {
-		return getPortletQName().getQName(publicRenderParameterName);
-	}
-
 	public static QName getQName(
 		Element qNameEl, Element nameEl, String defaultNamespace) {
 
 		return getPortletQName().getQName(qNameEl, nameEl, defaultNamespace);
+	}
+
+	public static QName getQName(String publicRenderParameterName) {
+		return getPortletQName().getQName(publicRenderParameterName);
 	}
 
 	public static String getRemovePublicRenderParameterName(QName qName) {

@@ -85,19 +85,6 @@ public class POPServerUtil {
 		}
 	}
 
-	private void _deleteListener(MessageListenerWrapper listener) {
-		Iterator<MessageListener> itr = _listeners.iterator();
-
-		while (itr.hasNext()) {
-			MessageListenerWrapper curListener =
-				(MessageListenerWrapper)itr.next();
-
-			if (curListener.equals(listener)) {
-				itr.remove();
-			}
-		}
-	}
-
 	private void _deleteListener(MessageListener listener) {
 		if (listener == null) {
 			if (_log.isDebugEnabled()) {
@@ -118,6 +105,19 @@ public class POPServerUtil {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Listeners size " + _listeners.size());
+		}
+	}
+
+	private void _deleteListener(MessageListenerWrapper listener) {
+		Iterator<MessageListener> itr = _listeners.iterator();
+
+		while (itr.hasNext()) {
+			MessageListenerWrapper curListener =
+				(MessageListenerWrapper)itr.next();
+
+			if (curListener.equals(listener)) {
+				itr.remove();
+			}
 		}
 	}
 

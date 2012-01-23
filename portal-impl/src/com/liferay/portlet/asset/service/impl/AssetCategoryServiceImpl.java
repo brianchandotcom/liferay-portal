@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -127,44 +126,46 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 				parentCategoryId, start, end, obc));
 	}
 
-	public JSONArray getJSONSearch(long groupId, String keywords,
-			long vocabularyId, int start, int end, OrderByComparator obc)
+	public JSONArray getJSONSearch(
+			long groupId, String keywords, long vocabularyId, int start,
+			int end, OrderByComparator obc)
 		throws PortalException, SystemException {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		List<AssetCategory> categories =
-			search(groupId, keywords, vocabularyId, start, end, obc);
+		List<AssetCategory> categories = search(
+			groupId, keywords, vocabularyId, start, end, obc);
 
 		for (AssetCategory category : categories) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				JSONFactoryUtil.looseSerialize(category));
+			String categoryJSON = JSONFactoryUtil.looseSerialize(category);
 
-			AssetVocabulary vocabulary =
-				assetVocabularyService.getVocabulary(
-					category.getVocabularyId());
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				categoryJSON);
 
 			List<String> names = new ArrayList<String>();
 
-			AssetCategory parentCategory = null;
-			AssetCategory tempCategory = category;
+			AssetCategory curCategory = category;
 
-			while (tempCategory.getParentCategoryId() > 0) {
-				parentCategory =
-					getCategory(tempCategory.getParentCategoryId());
+			while (curCategory.getParentCategoryId() > 0) {
+				AssetCategory parentCategory = getCategory(
+					curCategory.getParentCategoryId());
 
 				names.add(parentCategory.getName());
 				names.add(StringPool.SLASH);
 
-				tempCategory = parentCategory;
+				curCategory = parentCategory;
 			}
 
 			Collections.reverse(names);
 
-			StringBundler path = new StringBundler();
+			AssetVocabulary vocabulary = assetVocabularyService.getVocabulary(
+				category.getVocabularyId());
 
+			StringBundler path = new StringBundler(3);
+
+			path.append(" - ");
 			path.append(vocabulary.getName());
-			path.append(names.toArray(new String[0]));
+			path.append(names.toArray(new String[names.size()]));
 
 			jsonObject.put("path", path.toString());
 

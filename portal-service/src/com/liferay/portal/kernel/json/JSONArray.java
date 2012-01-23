@@ -47,11 +47,11 @@ public interface JSONArray {
 
 	public JSONArray put(int value);
 
-	public JSONArray put(long value);
-
 	public JSONArray put(JSONArray value);
 
 	public JSONArray put(JSONObject value);
+
+	public JSONArray put(long value);
 
 	public JSONArray put(String value);
 

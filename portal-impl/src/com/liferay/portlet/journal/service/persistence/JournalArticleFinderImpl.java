@@ -474,27 +474,6 @@ public class JournalArticleFinderImpl
 	public List<JournalArticle> findByC_G_C_A_V_T_D_C_T_S_T_D_S_R(
 			long companyId, long groupId, long classNameId, String articleId,
 			Double version, String title, String description, String content,
-			String type, String[] structureIds, String[] templateIds,
-			Date displayDateGT, Date displayDateLT, int status, Date reviewDate,
-			boolean andOperator, int start, int end,
-			OrderByComparator orderByComparator)
-		throws SystemException {
-
-		String[] articleIds = CustomSQLUtil.keywords(articleId, false);
-		String[] titles = CustomSQLUtil.keywords(title);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
-		String[] contents = CustomSQLUtil.keywords(content, false);
-
-		return findByC_G_C_A_V_T_D_C_T_S_T_D_S_R(
-			companyId, groupId, classNameId, articleIds, version, titles,
-			descriptions, contents, type, structureIds, templateIds,
-			displayDateGT, displayDateLT, status, reviewDate, andOperator,
-			start, end, orderByComparator);
-	}
-
-	public List<JournalArticle> findByC_G_C_A_V_T_D_C_T_S_T_D_S_R(
-			long companyId, long groupId, long classNameId, String articleId,
-			Double version, String title, String description, String content,
 			String type, String structureId, String templateId,
 			Date displayDateGT, Date displayDateLT, int status, Date reviewDate,
 			boolean andOperator, int start, int end,
@@ -507,6 +486,27 @@ public class JournalArticleFinderImpl
 		String[] contents = CustomSQLUtil.keywords(content, false);
 		String[] structureIds = CustomSQLUtil.keywords(structureId, false);
 		String[] templateIds = CustomSQLUtil.keywords(templateId, false);
+
+		return findByC_G_C_A_V_T_D_C_T_S_T_D_S_R(
+			companyId, groupId, classNameId, articleIds, version, titles,
+			descriptions, contents, type, structureIds, templateIds,
+			displayDateGT, displayDateLT, status, reviewDate, andOperator,
+			start, end, orderByComparator);
+	}
+
+	public List<JournalArticle> findByC_G_C_A_V_T_D_C_T_S_T_D_S_R(
+			long companyId, long groupId, long classNameId, String articleId,
+			Double version, String title, String description, String content,
+			String type, String[] structureIds, String[] templateIds,
+			Date displayDateGT, Date displayDateLT, int status, Date reviewDate,
+			boolean andOperator, int start, int end,
+			OrderByComparator orderByComparator)
+		throws SystemException {
+
+		String[] articleIds = CustomSQLUtil.keywords(articleId, false);
+		String[] titles = CustomSQLUtil.keywords(title);
+		String[] descriptions = CustomSQLUtil.keywords(description, false);
+		String[] contents = CustomSQLUtil.keywords(content, false);
 
 		return findByC_G_C_A_V_T_D_C_T_S_T_D_S_R(
 			companyId, groupId, classNameId, articleIds, version, titles,

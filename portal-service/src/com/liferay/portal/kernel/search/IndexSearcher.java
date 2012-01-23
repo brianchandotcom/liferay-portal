@@ -24,12 +24,12 @@ import com.liferay.portal.kernel.messaging.proxy.ProxyMode;
 @MessagingProxy(mode = ProxyMode.SYNC)
 public interface IndexSearcher {
 
+	public Hits search(SearchContext searchContext, Query query)
+		throws SearchException;
+
 	public Hits search(
 			String searchEngineId, long companyId, Query query, Sort[] sort,
 			int start, int end)
-		throws SearchException;
-
-	public Hits search(SearchContext searchContext, Query query)
 		throws SearchException;
 
 }

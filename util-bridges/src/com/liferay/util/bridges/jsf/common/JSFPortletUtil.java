@@ -120,16 +120,16 @@ public class JSFPortletUtil {
 	}
 
 	public static String getPreferenceValue(
-		PortletPreferences portletPreferences, String preferenceName) {
-
-		return getPreferenceValue(portletPreferences, preferenceName, null);
-	}
-
-	public static String getPreferenceValue(
 		FacesContext facesContext, String preferenceName, String defaultValue) {
 
 		return getPreferenceValue(
 			getPortletPreferences(facesContext), preferenceName, defaultValue);
+	}
+
+	public static String getPreferenceValue(
+		PortletPreferences portletPreferences, String preferenceName) {
+
+		return getPreferenceValue(portletPreferences, preferenceName, null);
 	}
 
 	public static String getPreferenceValue(

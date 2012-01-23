@@ -179,10 +179,6 @@ public class ImageToolImpl implements ImageTool {
 		return baos.toByteArray();
 	}
 
-	public ImageBag read(File file) throws IOException {
-		return read(_fileUtil.getBytes(file));
-	}
-
 	public ImageBag read(byte[] bytes) {
 		RenderedImage renderedImage = null;
 		String type = TYPE_NOT_AVAILABLE;
@@ -216,6 +212,10 @@ public class ImageToolImpl implements ImageTool {
 		}
 
 		return new ImageBag(renderedImage, type);
+	}
+
+	public ImageBag read(File file) throws IOException {
+		return read(_fileUtil.getBytes(file));
 	}
 
 	public RenderedImage scale(RenderedImage renderedImage, int width) {

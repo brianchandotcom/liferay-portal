@@ -280,23 +280,6 @@ public class JournalWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 	}
 
 	protected Resource toResource(
-		WebDAVRequest webDavRequest, String type, boolean appendPath) {
-
-		String parentPath = getRootPath() + webDavRequest.getPath();
-		String name = StringPool.BLANK;
-
-		if (appendPath) {
-			name = type;
-		}
-
-		Resource resource = new BaseResourceImpl(parentPath, name, type);
-
-		resource.setModel(type);
-
-		return resource;
-	}
-
-	protected Resource toResource(
 		WebDAVRequest webDavRequest, JournalStructure structure,
 		boolean appendPath) {
 
@@ -322,6 +305,23 @@ public class JournalWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		}
 
 		return new JournalTemplateResourceImpl(template, parentPath, name);
+	}
+
+	protected Resource toResource(
+		WebDAVRequest webDavRequest, String type, boolean appendPath) {
+
+		String parentPath = getRootPath() + webDavRequest.getPath();
+		String name = StringPool.BLANK;
+
+		if (appendPath) {
+			name = type;
+		}
+
+		Resource resource = new BaseResourceImpl(parentPath, name, type);
+
+		resource.setModel(type);
+
+		return resource;
 	}
 
 	//private static final String _TYPE_ARTICLES = "Articles";

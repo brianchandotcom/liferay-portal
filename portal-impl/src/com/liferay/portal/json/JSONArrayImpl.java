@@ -130,12 +130,6 @@ public class JSONArrayImpl implements JSONArray {
 		return this;
 	}
 
-	public JSONArray put(long value) {
-		_jsonArray.put(value);
-
-		return this;
-	}
-
 	public JSONArray put(JSONArray value) {
 		_jsonArray.put(((JSONArrayImpl)value).getJSONArray());
 
@@ -144,6 +138,12 @@ public class JSONArrayImpl implements JSONArray {
 
 	public JSONArray put(JSONObject value) {
 		_jsonArray.put(((JSONObjectImpl)value).getJSONObject());
+
+		return this;
+	}
+
+	public JSONArray put(long value) {
+		_jsonArray.put(value);
 
 		return this;
 	}

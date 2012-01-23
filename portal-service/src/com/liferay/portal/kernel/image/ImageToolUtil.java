@@ -59,12 +59,12 @@ public class ImageToolUtil {
 		return _imageProcessor;
 	}
 
-	public static ImageBag read(File file) throws IOException {
-		return getImageProcessor().read(file);
-	}
-
 	public static ImageBag read(byte[] bytes) throws IOException {
 		return getImageProcessor().read(bytes);
+	}
+
+	public static ImageBag read(File file) throws IOException {
+		return getImageProcessor().read(file);
 	}
 
 	public static RenderedImage scale(RenderedImage renderedImage, int width) {

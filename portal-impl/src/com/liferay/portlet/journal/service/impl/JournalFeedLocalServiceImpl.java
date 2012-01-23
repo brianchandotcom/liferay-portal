@@ -135,16 +135,6 @@ public class JournalFeedLocalServiceImpl
 	}
 
 	public void addFeedResources(
-			long feedId, boolean addGroupPermissions,
-			boolean addGuestPermissions)
-		throws PortalException, SystemException {
-
-		JournalFeed feed = journalFeedPersistence.findByPrimaryKey(feedId);
-
-		addFeedResources(feed, addGroupPermissions, addGuestPermissions);
-	}
-
-	public void addFeedResources(
 			JournalFeed feed, boolean addGroupPermissions,
 			boolean addGuestPermissions)
 		throws PortalException, SystemException {
@@ -153,15 +143,6 @@ public class JournalFeedLocalServiceImpl
 			feed.getCompanyId(), feed.getGroupId(), feed.getUserId(),
 			JournalFeed.class.getName(), feed.getId(), false,
 			addGroupPermissions, addGuestPermissions);
-	}
-
-	public void addFeedResources(
-			long feedId, String[] groupPermissions, String[] guestPermissions)
-		throws PortalException, SystemException {
-
-		JournalFeed feed = journalFeedPersistence.findByPrimaryKey(feedId);
-
-		addFeedResources(feed, groupPermissions, guestPermissions);
 	}
 
 	public void addFeedResources(
@@ -175,20 +156,23 @@ public class JournalFeedLocalServiceImpl
 			guestPermissions);
 	}
 
-	public void deleteFeed(long feedId)
+	public void addFeedResources(
+			long feedId, boolean addGroupPermissions,
+			boolean addGuestPermissions)
 		throws PortalException, SystemException {
 
 		JournalFeed feed = journalFeedPersistence.findByPrimaryKey(feedId);
 
-		deleteFeed(feed);
+		addFeedResources(feed, addGroupPermissions, addGuestPermissions);
 	}
 
-	public void deleteFeed(long groupId, String feedId)
+	public void addFeedResources(
+			long feedId, String[] groupPermissions, String[] guestPermissions)
 		throws PortalException, SystemException {
 
-		JournalFeed feed = journalFeedPersistence.findByG_F(groupId, feedId);
+		JournalFeed feed = journalFeedPersistence.findByPrimaryKey(feedId);
 
-		deleteFeed(feed);
+		addFeedResources(feed, groupPermissions, guestPermissions);
 	}
 
 	public void deleteFeed(JournalFeed feed)
@@ -208,6 +192,22 @@ public class JournalFeedLocalServiceImpl
 		// Feed
 
 		journalFeedPersistence.remove(feed);
+	}
+
+	public void deleteFeed(long feedId)
+		throws PortalException, SystemException {
+
+		JournalFeed feed = journalFeedPersistence.findByPrimaryKey(feedId);
+
+		deleteFeed(feed);
+	}
+
+	public void deleteFeed(long groupId, String feedId)
+		throws PortalException, SystemException {
+
+		JournalFeed feed = journalFeedPersistence.findByG_F(groupId, feedId);
+
+		deleteFeed(feed);
 	}
 
 	public JournalFeed getFeed(long feedId)

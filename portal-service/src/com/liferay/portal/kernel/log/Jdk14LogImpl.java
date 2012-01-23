@@ -30,48 +30,48 @@ public class Jdk14LogImpl implements Log {
 		_log.log(Level.FINE, msg.toString());
 	}
 
-	public void debug(Throwable t) {
-		_log.log(Level.FINE, t.getMessage(), t);
-	}
-
 	public void debug(Object msg, Throwable t) {
 		_log.log(Level.FINE, msg.toString(), t);
+	}
+
+	public void debug(Throwable t) {
+		_log.log(Level.FINE, t.getMessage(), t);
 	}
 
 	public void error(Object msg) {
 		_log.log(Level.SEVERE, msg.toString());
 	}
 
-	public void error(Throwable t) {
-		_log.log(Level.SEVERE, t.getMessage(), t);
-	}
-
 	public void error(Object msg, Throwable t) {
 		_log.log(Level.SEVERE, msg.toString(), t);
+	}
+
+	public void error(Throwable t) {
+		_log.log(Level.SEVERE, t.getMessage(), t);
 	}
 
 	public void fatal(Object msg) {
 		_log.log(Level.SEVERE, msg.toString());
 	}
 
-	public void fatal(Throwable t) {
-		_log.log(Level.SEVERE, t.getMessage(), t);
-	}
-
 	public void fatal(Object msg, Throwable t) {
 		_log.log(Level.SEVERE, msg.toString(), t);
+	}
+
+	public void fatal(Throwable t) {
+		_log.log(Level.SEVERE, t.getMessage(), t);
 	}
 
 	public void info(Object msg) {
 		_log.log(Level.INFO, msg.toString());
 	}
 
-	public void info(Throwable t) {
-		_log.log(Level.INFO, t.getMessage(), t);
-	}
-
 	public void info(Object msg, Throwable t) {
 		_log.log(Level.INFO, msg.toString(), t);
+	}
+
+	public void info(Throwable t) {
+		_log.log(Level.INFO, t.getMessage(), t);
 	}
 
 	public boolean isDebugEnabled() {
@@ -102,24 +102,24 @@ public class Jdk14LogImpl implements Log {
 		_log.log(Level.FINEST, msg.toString());
 	}
 
-	public void trace(Throwable t) {
-		_log.log(Level.FINEST, t.getMessage(), t);
-	}
-
 	public void trace(Object msg, Throwable t) {
 		_log.log(Level.FINEST, msg.toString(), t);
+	}
+
+	public void trace(Throwable t) {
+		_log.log(Level.FINEST, t.getMessage(), t);
 	}
 
 	public void warn(Object msg) {
 		_log.log(Level.WARNING, msg.toString());
 	}
 
-	public void warn(Throwable t) {
-		_log.log(Level.WARNING, t.getMessage(), t);
-	}
-
 	public void warn(Object msg, Throwable t) {
 		_log.log(Level.WARNING, msg.toString(), t);
+	}
+
+	public void warn(Throwable t) {
+		_log.log(Level.WARNING, t.getMessage(), t);
 	}
 
 	private Logger _log;

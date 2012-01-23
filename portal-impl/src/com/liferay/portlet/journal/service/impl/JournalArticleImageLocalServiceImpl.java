@@ -63,17 +63,6 @@ public class JournalArticleImageLocalServiceImpl
 		}
 	}
 
-	public void deleteArticleImage(long articleImageId) throws SystemException {
-		try {
-			JournalArticleImage articleImage =
-				journalArticleImagePersistence.findByPrimaryKey(articleImageId);
-
-			deleteArticleImage(articleImage);
-		}
-		catch (NoSuchArticleImageException nsaie) {
-		}
-	}
-
 	public void deleteArticleImage(JournalArticleImage articleImage)
 		throws SystemException {
 
@@ -84,6 +73,17 @@ public class JournalArticleImageLocalServiceImpl
 		}
 
 		journalArticleImagePersistence.remove(articleImage);
+	}
+
+	public void deleteArticleImage(long articleImageId) throws SystemException {
+		try {
+			JournalArticleImage articleImage =
+				journalArticleImagePersistence.findByPrimaryKey(articleImageId);
+
+			deleteArticleImage(articleImage);
+		}
+		catch (NoSuchArticleImageException nsaie) {
+		}
 	}
 
 	public void deleteArticleImage(

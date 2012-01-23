@@ -133,13 +133,18 @@ public class InvokerPortletImpl implements InvokerPortlet {
 
 	public InvokerPortlet create(
 			com.liferay.portal.model.Portlet portletModel, Portlet portlet,
-			PortletContext portletContext)
+			PortletConfig portletConfig, PortletContext portletContext,
+			boolean checkAuthToken, boolean facesPortlet, boolean strutsPortlet,
+			boolean strutsBridgePortlet)
 		throws PortletException {
 
 		try {
 			InvokerPortlet invokerPortlet = (InvokerPortlet)clone();
 
-			invokerPortlet.prepare(portletModel, portlet, portletContext);
+			invokerPortlet.prepare(
+				portletModel, portlet, portletConfig, portletContext,
+				checkAuthToken, facesPortlet, strutsPortlet,
+				strutsBridgePortlet);
 
 			return invokerPortlet;
 		}
@@ -153,18 +158,13 @@ public class InvokerPortletImpl implements InvokerPortlet {
 
 	public InvokerPortlet create(
 			com.liferay.portal.model.Portlet portletModel, Portlet portlet,
-			PortletConfig portletConfig, PortletContext portletContext,
-			boolean checkAuthToken, boolean facesPortlet, boolean strutsPortlet,
-			boolean strutsBridgePortlet)
+			PortletContext portletContext)
 		throws PortletException {
 
 		try {
 			InvokerPortlet invokerPortlet = (InvokerPortlet)clone();
 
-			invokerPortlet.prepare(
-				portletModel, portlet, portletConfig, portletContext,
-				checkAuthToken, facesPortlet, strutsPortlet,
-				strutsBridgePortlet);
+			invokerPortlet.prepare(portletModel, portlet, portletContext);
 
 			return invokerPortlet;
 		}
@@ -276,6 +276,37 @@ public class InvokerPortletImpl implements InvokerPortlet {
 
 	public void prepare(
 			com.liferay.portal.model.Portlet portletModel, Portlet portlet,
+			PortletConfig portletConfig, PortletContext portletContext,
+			boolean checkAuthToken, boolean facesPortlet, boolean strutsPortlet,
+			boolean strutsBridgePortlet)
+		throws PortletException {
+
+ 		// From prepare
+
+		_portletModel = portletModel;
+		_portlet = portlet;
+		_portletId = _portletModel.getPortletId();
+		_portletContextImpl = (PortletContextImpl)portletContext;
+		_checkAuthToken = checkAuthToken;
+		_facesPortlet = facesPortlet;
+		_strutsPortlet = strutsPortlet;
+		_strutsBridgePortlet = strutsBridgePortlet;
+		_expCache = portletModel.getExpCache();
+		setPortletFilters();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Create instance cache wrapper for " +
+					_portletContextImpl.getPortlet().getPortletId());
+		}
+
+		// From init
+
+		_portletConfigImpl = (PortletConfigImpl)portletConfig;
+	}
+
+	public void prepare(
+			com.liferay.portal.model.Portlet portletModel, Portlet portlet,
 			PortletContext portletContext)
 		throws PortletException {
 
@@ -312,37 +343,6 @@ public class InvokerPortletImpl implements InvokerPortlet {
 			"org.apache.portals.bridges.struts.StrutsPortlet");
 		_expCache = portletModel.getExpCache();
 		setPortletFilters();
-	}
-
-	public void prepare(
-			com.liferay.portal.model.Portlet portletModel, Portlet portlet,
-			PortletConfig portletConfig, PortletContext portletContext,
-			boolean checkAuthToken, boolean facesPortlet, boolean strutsPortlet,
-			boolean strutsBridgePortlet)
-		throws PortletException {
-
- 		// From prepare
-
-		_portletModel = portletModel;
-		_portlet = portlet;
-		_portletId = _portletModel.getPortletId();
-		_portletContextImpl = (PortletContextImpl)portletContext;
-		_checkAuthToken = checkAuthToken;
-		_facesPortlet = facesPortlet;
-		_strutsPortlet = strutsPortlet;
-		_strutsBridgePortlet = strutsBridgePortlet;
-		_expCache = portletModel.getExpCache();
-		setPortletFilters();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Create instance cache wrapper for " +
-					_portletContextImpl.getPortlet().getPortletId());
-		}
-
-		// From init
-
-		_portletConfigImpl = (PortletConfigImpl)portletConfig;
 	}
 
 	public void processAction(

@@ -91,6 +91,7 @@ AUI.add(
 								{
 									groupId: themeDisplay.getScopeGroupId(),
 									uuid: uuid,
+									title: title,
 									version: version
 								}
 							)
@@ -449,7 +450,11 @@ AUI.add(
 									var value = data[name];
 
 									if (value !== STR_EMPTY) {
-										label = '(' + Liferay.Language.get('file') + ')';
+										var fileData = SpreadSheet.Util.parseJSON(value);
+
+										if (fileData.title) {
+											label = fileData.title;
+										}
 									}
 
 									return label;

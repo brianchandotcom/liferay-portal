@@ -18,8 +18,10 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.templateparser.Transformer;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -28,6 +30,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordConstants;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
@@ -127,6 +130,20 @@ public class DDLImpl implements DDL {
 
 			if (fieldValue instanceof Date) {
 				jsonObject.put(fieldName, ((Date)fieldValue).getTime());
+			}
+			else if (fieldType.equals(DDMImpl.TYPE_DDM_DOCUMENTLIBRARY) &&
+					 Validator.isNotNull(fieldValue)) {
+
+				JSONObject jsonValueObject = JSONFactoryUtil.createJSONObject(
+				      String.valueOf(fieldValue));
+
+				String uuid = jsonValueObject.getString("uuid");
+
+				long groupId = jsonValueObject.getLong("groupId");
+
+				jsonValueObject.put("title", getFileEntryTitle(uuid, groupId));
+
+				jsonObject.put(fieldName, jsonValueObject.toString());
 			}
 			else if ((fieldType.equals(DDMImpl.TYPE_RADIO) ||
 					  fieldType.equals(DDMImpl.TYPE_SELECT)) &&
@@ -369,6 +386,21 @@ public class DDLImpl implements DDL {
 		return DDMUtil.uploadFieldFile(
 			ddmStructure.getStructureId(), recordVersion.getDDMStorageId(),
 			record, fieldName, serviceContext);
+	}
+
+	protected String getFileEntryTitle(String uuid, long groupId) {
+		try {
+			FileEntry fileEntry =
+				DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+					uuid, groupId);
+
+			return fileEntry.getTitle();
+		}
+		catch (Exception e) {
+			return LanguageUtil.format(
+				LocaleUtil.getDefault(), "is-temporarily-unavailable",
+				"content");
+		}
 	}
 
 	protected void uploadRecordFieldFiles(

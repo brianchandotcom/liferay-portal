@@ -131,6 +131,13 @@ public class ViewAction extends PortletAction {
 		return mapping.findForward("portlet.my_sites.view");
 	}
 
+	protected List<Layout> getLayouts(long groupId, boolean privateLayout)
+		throws Exception {
+
+		return LayoutLocalServiceUtil.getLayouts(
+			groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+	}
+
 	protected List<Layout> getLayouts(long groupId, String privateLayoutParam)
 		throws Exception {
 
@@ -152,13 +159,6 @@ public class ViewAction extends PortletAction {
 		}
 
 		return layouts;
-	}
-
-	protected List<Layout> getLayouts(long groupId, boolean privateLayout)
-		throws Exception {
-
-		return LayoutLocalServiceUtil.getLayouts(
-			groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 	}
 
 	protected String getRedirect(

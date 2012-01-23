@@ -22,13 +22,6 @@ import com.liferay.portal.security.permission.PermissionChecker;
  */
 public class UserPermissionUtil {
 
-	public static void check(
-			PermissionChecker permissionChecker, long userId, String actionId)
-		throws PrincipalException {
-
-		getUserPermission().check(permissionChecker, userId, actionId);
-	}
-
 	/**
 	 * @deprecated
 	 */
@@ -51,11 +44,11 @@ public class UserPermissionUtil {
 			permissionChecker, userId, organizationIds, actionId);
 	}
 
-	public static boolean contains(
-		PermissionChecker permissionChecker, long userId, String actionId) {
+	public static void check(
+			PermissionChecker permissionChecker, long userId, String actionId)
+		throws PrincipalException {
 
-		return getUserPermission().contains(
-			permissionChecker, userId, actionId);
+		getUserPermission().check(permissionChecker, userId, actionId);
 	}
 
 	/**
@@ -76,6 +69,13 @@ public class UserPermissionUtil {
 
 		return getUserPermission().contains(
 			permissionChecker, userId, organizationIds, actionId);
+	}
+
+	public static boolean contains(
+		PermissionChecker permissionChecker, long userId, String actionId) {
+
+		return getUserPermission().contains(
+			permissionChecker, userId, actionId);
 	}
 
 	public static UserPermission getUserPermission() {

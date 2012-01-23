@@ -55,15 +55,6 @@ public class XMLMergerRunner {
 		}
 	}
 
-	public void mergeAndSave(
-			String masterFile, String slaveFile, String mergedFile)
-		throws ClassNotFoundException, DocumentException,
-			   IllegalAccessException, InstantiationException, IOException {
-
-		mergeAndSave(
-			new File(masterFile), new File(slaveFile), new File(mergedFile));
-	}
-
 	public void mergeAndSave(File masterFile, File slaveFile, File mergedFile)
 		throws ClassNotFoundException, DocumentException,
 			   IllegalAccessException, InstantiationException, IOException {
@@ -74,6 +65,15 @@ public class XMLMergerRunner {
 		String mergedXml = _merge(xml1, xml2);
 
 		FileUtil.write(mergedFile, mergedXml);
+	}
+
+	public void mergeAndSave(
+			String masterFile, String slaveFile, String mergedFile)
+		throws ClassNotFoundException, DocumentException,
+			   IllegalAccessException, InstantiationException, IOException {
+
+		mergeAndSave(
+			new File(masterFile), new File(slaveFile), new File(mergedFile));
 	}
 
 	private String _documentToString(Document doc, String docType)

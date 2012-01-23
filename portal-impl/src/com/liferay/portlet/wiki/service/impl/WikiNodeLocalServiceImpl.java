@@ -137,6 +137,15 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 	}
 
 	public void addNodeResources(
+			long nodeId, String[] groupPermissions, String[] guestPermissions)
+		throws PortalException, SystemException {
+
+		WikiNode node = wikiNodePersistence.findByPrimaryKey(nodeId);
+
+		addNodeResources(node, groupPermissions, guestPermissions);
+	}
+
+	public void addNodeResources(
 			WikiNode node, boolean addGroupPermissions,
 			boolean addGuestPermissions)
 		throws PortalException, SystemException {
@@ -145,15 +154,6 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 			node.getCompanyId(), node.getGroupId(), node.getUserId(),
 			WikiNode.class.getName(), node.getNodeId(), false,
 			addGroupPermissions, addGuestPermissions);
-	}
-
-	public void addNodeResources(
-			long nodeId, String[] groupPermissions, String[] guestPermissions)
-		throws PortalException, SystemException {
-
-		WikiNode node = wikiNodePersistence.findByPrimaryKey(nodeId);
-
-		addNodeResources(node, groupPermissions, guestPermissions);
 	}
 
 	public void addNodeResources(
@@ -361,12 +361,6 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		return wikiImporter;
 	}
 
-	protected void validate(long groupId, String name)
-		throws PortalException, SystemException {
-
-		validate(0, groupId, name);
-	}
-
 	protected void validate(long nodeId, long groupId, String name)
 		throws PortalException, SystemException {
 
@@ -383,6 +377,12 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		if ((node != null) && (node.getNodeId() != nodeId)) {
 			throw new DuplicateNodeNameException();
 		}
+	}
+
+	protected void validate(long groupId, String name)
+		throws PortalException, SystemException {
+
+		validate(0, groupId, name);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

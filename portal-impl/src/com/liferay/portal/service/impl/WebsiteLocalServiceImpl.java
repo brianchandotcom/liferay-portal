@@ -133,29 +133,6 @@ public class WebsiteLocalServiceImpl extends WebsiteLocalServiceBaseImpl {
 
 	protected void validate(
 			long websiteId, long companyId, long classNameId, long classPK,
-			String url, int typeId, boolean primary)
-		throws PortalException, SystemException {
-
-		if (!Validator.isUrl(url)) {
-			throw new WebsiteURLException();
-		}
-
-		if (websiteId > 0) {
-			Website website = websitePersistence.findByPrimaryKey(websiteId);
-
-			companyId = website.getCompanyId();
-			classNameId = website.getClassNameId();
-			classPK = website.getClassPK();
-		}
-
-		listTypeService.validate(
-			typeId, classNameId, ListTypeConstants.WEBSITE);
-
-		validate(websiteId, companyId, classNameId, classPK, primary);
-	}
-
-	protected void validate(
-			long websiteId, long companyId, long classNameId, long classPK,
 			boolean primary)
 		throws SystemException {
 
@@ -176,6 +153,29 @@ public class WebsiteLocalServiceImpl extends WebsiteLocalServiceBaseImpl {
 				}
 			}
 		}
+	}
+
+	protected void validate(
+			long websiteId, long companyId, long classNameId, long classPK,
+			String url, int typeId, boolean primary)
+		throws PortalException, SystemException {
+
+		if (!Validator.isUrl(url)) {
+			throw new WebsiteURLException();
+		}
+
+		if (websiteId > 0) {
+			Website website = websitePersistence.findByPrimaryKey(websiteId);
+
+			companyId = website.getCompanyId();
+			classNameId = website.getClassNameId();
+			classPK = website.getClassPK();
+		}
+
+		listTypeService.validate(
+			typeId, classNameId, ListTypeConstants.WEBSITE);
+
+		validate(websiteId, companyId, classNameId, classPK, primary);
 	}
 
 }

@@ -25,6 +25,13 @@ import com.liferay.portlet.BaseControlPanelEntry;
  */
 public class WorkflowControlPanelEntry extends BaseControlPanelEntry {
 
+	public boolean isVisible(
+			PermissionChecker permissionChecker, Portlet portlet)
+		throws Exception {
+
+		return false;
+	}
+
 	@Override
 	public boolean isVisible(
 			Portlet portlet, String category, ThemeDisplay themeDisplay)
@@ -36,13 +43,6 @@ public class WorkflowControlPanelEntry extends BaseControlPanelEntry {
 		else {
 			return false;
 		}
-	}
-
-	public boolean isVisible(
-			PermissionChecker permissionChecker, Portlet portlet)
-		throws Exception {
-
-		return false;
 	}
 
 }

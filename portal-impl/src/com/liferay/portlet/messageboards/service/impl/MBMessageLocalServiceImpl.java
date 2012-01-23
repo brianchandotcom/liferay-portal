@@ -1310,7 +1310,14 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		if (Validator.isNull(subject)) {
-			subject = body.substring(0, Math.min(body.length(), 50)) + "...";
+			if (Validator.isNotNull(body)) {
+				int pos = Math.min(body.length(), 50);
+
+				subject = body.substring(0, pos) + "...";
+			}
+			else {
+				throw new MessageBodyException();
+			}
 		}
 
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =

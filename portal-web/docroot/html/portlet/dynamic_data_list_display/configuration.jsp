@@ -62,7 +62,7 @@ request.setAttribute("record_set_action.jsp-selRecordSet", selRecordSet);
 				<%
 				long ddmStructureId = selRecordSet.getDDMStructureId();
 
-				List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.getTemplates(ddmStructureId, DDMTemplateConstants.TEMPLATE_TYPE_LIST, DDMTemplateConstants.TEMPLATE_MODE_CREATE);
+				List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.getTemplates(ddmStructureId, DDMTemplateConstants.TEMPLATE_TYPE_LIST);
 
 				for (DDMTemplate template : templates) {
 					boolean selected = false;

@@ -56,6 +56,7 @@ import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutReference;
 import com.liferay.portal.model.LayoutSet;
+import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
@@ -67,6 +68,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.model.impl.PortletPreferencesImpl;
+import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.LayoutLocalServiceBaseImpl;
 import com.liferay.portal.util.PortalUtil;
@@ -1247,6 +1249,28 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		return layoutFinder.findByScopeGroup(groupId, privateLayout);
 	}
 
+	public boolean hasLayoutSetPrototypeLayout(
+			long layoutSetPrototypeId, String layoutUuid)
+		throws PortalException, SystemException {
+
+		LayoutSetPrototype layoutSetPrototype =
+			LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototype(
+				layoutSetPrototypeId);
+
+		return hasLayoutSetPrototypeLayout(layoutSetPrototype, layoutUuid);
+	}
+
+	public boolean hasLayoutSetPrototypeLayout(
+			String layoutSetPrototypeUuid, String layoutUuid)
+		throws PortalException, SystemException {
+
+		LayoutSetPrototype layoutSetPrototype =
+			LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuid(
+				layoutSetPrototypeUuid);
+
+		return hasLayoutSetPrototypeLayout(layoutSetPrototype, layoutUuid);
+	}
+
 	public boolean hasLayouts(Group group, boolean privateLayout)
 		throws PortalException, SystemException {
 
@@ -2321,6 +2345,22 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		}
 
 		return parentLayoutId;
+	}
+
+	protected boolean hasLayoutSetPrototypeLayout(
+			LayoutSetPrototype layoutSetPrototype, String layoutUuid)
+		throws PortalException, SystemException {
+
+		Group layoutSetPrototypeGroup = layoutSetPrototype.getGroup();
+
+		Layout layout = layoutPersistence.fetchByUUID_G(
+			layoutUuid, layoutSetPrototypeGroup.getGroupId());
+
+		if (layout != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected void validate(

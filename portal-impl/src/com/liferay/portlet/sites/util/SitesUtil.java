@@ -681,6 +681,39 @@ public class SitesUtil {
 		return false;
 	}
 
+	public static boolean isLayoutDeleteable(Layout layout) {
+		try {
+			if (layout instanceof VirtualLayout) {
+				return false;
+			}
+
+			String sourceLayoutUuid = layout.getSourcePrototypeLayoutUuid();
+
+			if (Validator.isNull(sourceLayoutUuid)) {
+				return true;
+			}
+
+			LayoutSet layoutSet = layout.getLayoutSet();
+
+			if (!layoutSet.isLayoutSetPrototypeLinkActive()) {
+				return true;
+			}
+
+			if (LayoutLocalServiceUtil.hasLayoutSetPrototypeLayout(
+					layoutSet.getLayoutSetPrototypeUuid(),
+					sourceLayoutUuid)) {
+				return false;
+			}
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+		}
+
+		return true;
+	}
+
 	public static boolean isLayoutUpdateable(Layout layout) {
 		try {
 			if (layout instanceof VirtualLayout) {

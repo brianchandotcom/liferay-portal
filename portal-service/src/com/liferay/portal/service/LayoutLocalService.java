@@ -834,6 +834,18 @@ public interface LayoutLocalService extends PersistedModelLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasLayoutSetPrototypeLayout(long layoutSetPrototypeId,
+		java.lang.String layoutUuid)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasLayoutSetPrototypeLayout(
+		java.lang.String layoutSetPrototypeUuid, java.lang.String layoutUuid)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasLayouts(com.liferay.portal.model.Group group,
 		boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.PortalException,

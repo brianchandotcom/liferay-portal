@@ -170,6 +170,12 @@ public class LayoutPermissionImpl implements LayoutPermission {
 			layout = virtualLayout.getWrappedModel();
 		}
 
+		if (actionId.equals(ActionKeys.DELETE) &&
+			!SitesUtil.isLayoutDeleteable(layout)) {
+
+			return false;
+		}
+
 		Group group = layout.getGroup();
 
 		if (!group.isLayoutSetPrototype() &&

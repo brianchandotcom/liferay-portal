@@ -908,6 +908,22 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 		return _layoutLocalService.getScopeGroupLayouts(groupId, privateLayout);
 	}
 
+	public boolean hasLayoutSetPrototypeLayout(long layoutSetPrototypeId,
+		java.lang.String layoutUuid)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutLocalService.hasLayoutSetPrototypeLayout(layoutSetPrototypeId,
+			layoutUuid);
+	}
+
+	public boolean hasLayoutSetPrototypeLayout(
+		java.lang.String layoutSetPrototypeUuid, java.lang.String layoutUuid)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutLocalService.hasLayoutSetPrototypeLayout(layoutSetPrototypeUuid,
+			layoutUuid);
+	}
+
 	public boolean hasLayouts(com.liferay.portal.model.Group group,
 		boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.PortalException,

@@ -192,6 +192,12 @@ String[][] categorySections = {mainSections};
 						</div>
 					</c:when>
 					<c:otherwise>
+						<c:if test="<%= !SitesUtil.isLayoutDeleteable(selLayout) %>">
+							<div class="portlet-msg-alert">
+								<liferay-ui:message key="this-page-cannot-be-deleted-because-it-is-associated-to-a-site-template" />
+							</div>
+						</c:if>
+
 						<aui:script use="aui-dialog,aui-dialog-iframe,aui-toolbar">
 							var buttonRow = A.one('#<portlet:namespace />layoutToolbar');
 

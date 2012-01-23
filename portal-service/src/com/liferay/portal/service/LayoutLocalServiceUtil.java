@@ -924,6 +924,23 @@ public class LayoutLocalServiceUtil {
 		return getService().getScopeGroupLayouts(groupId, privateLayout);
 	}
 
+	public static boolean hasLayoutSetPrototypeLayout(
+		long layoutSetPrototypeId, java.lang.String layoutUuid)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .hasLayoutSetPrototypeLayout(layoutSetPrototypeId, layoutUuid);
+	}
+
+	public static boolean hasLayoutSetPrototypeLayout(
+		java.lang.String layoutSetPrototypeUuid, java.lang.String layoutUuid)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .hasLayoutSetPrototypeLayout(layoutSetPrototypeUuid,
+			layoutUuid);
+	}
+
 	public static boolean hasLayouts(com.liferay.portal.model.Group group,
 		boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.PortalException,

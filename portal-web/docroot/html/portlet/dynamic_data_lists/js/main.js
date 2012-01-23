@@ -425,11 +425,13 @@ AUI.add(
 								config.inputFormatter = function(value) {
 									var date = A.DataType.Date.parse(value);
 
+									var dateValue = STR_EMPTY;
+
 									if (date) {
-										return date.getTime();
+										dateValue = date.getTime();
 									}
 
-									return STR_EMPTY;
+									return dateValue;
 								};
 
 								item.formatter = function(obj) {

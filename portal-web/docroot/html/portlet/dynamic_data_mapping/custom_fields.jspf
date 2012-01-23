@@ -22,7 +22,7 @@
 	var trim = A.Lang.trim;
 
 	var TPL_BUTTON = '<div class="aui-field-labels-inline">' +
-						'<input type="button" value="<liferay-ui:message key="select" />" />' +
+						'<input type="button" value="<%= UnicodeLanguageUtil.get(pageContext, "select") %>" />' +
 					'<div>';
 
 	var TPL_PARAGRAPH = '<p></p>';
@@ -194,7 +194,7 @@
 
 			ATTRS: {
 				acceptFiles: {
-					value: '<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>'
+					value: '<%= UnicodeFormatter.toString(StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA))) %>'
 				},
 				dataType: {
 					value: 'file-upload'
@@ -216,7 +216,7 @@
 					}
 				},
 				tip: {
-					value: '<%= LanguageUtil.format(locale, "upload-documents-no-larger-than-x-k", PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) / 1024, false) %>'
+					value: '<%= UnicodeLanguageUtil.format(locale, "upload-documents-no-larger-than-x-k", PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) / 1024, false) %>'
 				}
 			},
 

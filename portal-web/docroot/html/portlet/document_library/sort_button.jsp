@@ -97,9 +97,12 @@ if (orderByType.equals("asc")) {
 					requestParams: {
 						'<portlet:namespace />folderId': folderId,
 						'<portlet:namespace />struts_action': '/document_library/view',
-						'<portlet:namespace />viewEntries': <%= Boolean.TRUE.toString() %>,
+						'<portlet:namespace />viewEntries': <%= Boolean.FALSE.toString() %>,
+						'<portlet:namespace />viewEntriesPage': <%= Boolean.TRUE.toString() %>,
+						'<portlet:namespace />viewFolders': <%= Boolean.FALSE.toString() %>,
 						'<portlet:namespace />orderByCol': orderByCol,
-						'<portlet:namespace />orderByType': reverseOrderByType
+						'<portlet:namespace />orderByType': reverseOrderByType,
+						'<portlet:namespace />saveSortBy': <%= Boolean.TRUE.toString() %>
 					}
 				}
 			);

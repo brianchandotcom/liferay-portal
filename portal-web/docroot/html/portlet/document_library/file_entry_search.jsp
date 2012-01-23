@@ -63,8 +63,7 @@ List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(repositoryId, DLFol
 					'<portlet:namespace />folderId': '<%= folderId %>',
 					'<portlet:namespace />searchFolderId': '<%= folderId %>',
 					'<portlet:namespace />keywords': document.<portlet:namespace />fm1.<portlet:namespace />keywords.value,
-					'<portlet:namespace />searchType': <%= ((repositoryId == scopeGroupId) && (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) ? DLSearchConstants.MULTIPLE : DLSearchConstants.SINGLE %>,
-					'<portlet:namespace />viewDisplayStyleButtons': <%= Boolean.TRUE.toString() %>
+					'<portlet:namespace />searchType': <%= ((repositoryId == scopeGroupId) && (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) ? DLSearchConstants.MULTIPLE : DLSearchConstants.SINGLE %>
 				},
 				src: Liferay.DL_SEARCH
 			}
@@ -85,9 +84,7 @@ List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(repositoryId, DLFol
 							'<portlet:namespace />folderId': '<%= mountFolder.getFolderId() %>',
 							'<portlet:namespace />searchFolderId': '<%= mountFolder.getFolderId() %>',
 							'<portlet:namespace />keywords': document.<portlet:namespace />fm1.<portlet:namespace />keywords.value,
-							'<portlet:namespace />searchType': <%= DLSearchConstants.MULTIPLE %>,
-							'<portlet:namespace />viewDisplayStyleButtons': <%= Boolean.TRUE.toString() %>
-
+							'<portlet:namespace />searchType': <%= DLSearchConstants.MULTIPLE %>
 						},
 						src: Liferay.DL_SEARCH
 					}

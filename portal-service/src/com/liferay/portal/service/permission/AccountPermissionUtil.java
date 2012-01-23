@@ -25,14 +25,6 @@ import com.liferay.portal.security.permission.PermissionChecker;
 public class AccountPermissionUtil {
 
 	public static void check(
-			PermissionChecker permissionChecker, long accountId,
-			String actionId)
-		throws PortalException, SystemException {
-
-		getAccountPermission().check(permissionChecker, accountId, actionId);
-	}
-
-	public static void check(
 			PermissionChecker permissionChecker, Account account,
 			String actionId)
 		throws PortalException, SystemException {
@@ -40,13 +32,12 @@ public class AccountPermissionUtil {
 		getAccountPermission().check(permissionChecker, account, actionId);
 	}
 
-	public static boolean contains(
+	public static void check(
 			PermissionChecker permissionChecker, long accountId,
 			String actionId)
 		throws PortalException, SystemException {
 
-		return getAccountPermission().contains(
-			permissionChecker, accountId, actionId);
+		getAccountPermission().check(permissionChecker, accountId, actionId);
 	}
 
 	public static boolean contains(
@@ -56,6 +47,15 @@ public class AccountPermissionUtil {
 
 		return getAccountPermission().contains(
 			permissionChecker, account, actionId);
+	}
+
+	public static boolean contains(
+			PermissionChecker permissionChecker, long accountId,
+			String actionId)
+		throws PortalException, SystemException {
+
+		return getAccountPermission().contains(
+			permissionChecker, accountId, actionId);
 	}
 
 	public static AccountPermission getAccountPermission() {

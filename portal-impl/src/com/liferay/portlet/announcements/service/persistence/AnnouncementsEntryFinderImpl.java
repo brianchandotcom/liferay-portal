@@ -324,29 +324,6 @@ public class AnnouncementsEntryFinderImpl
 		}
 	}
 
-	protected String getClassPKs(long classNameId, long[] classPKs) {
-		if (classPKs.length == 0) {
-			return "(AnnouncementsEntry.classNameId = ?) AND (";
-		}
-
-		StringBundler sb = new StringBundler(classPKs.length * 2 + 1);
-
-		sb.append("(AnnouncementsEntry.classNameId = ?) AND (");
-
-		for (int i = 0; i < classPKs.length; i++) {
-			sb.append("(AnnouncementsEntry.classPK = ?)");
-
-			if ((i + 1) < classPKs.length) {
-				sb.append(" OR ");
-			}
-			else {
-				sb.append(")");
-			}
-		}
-
-		return sb.toString();
-	}
-
 	protected String getClassPKs(LinkedHashMap<Long, long[]> scopes) {
 		if ((scopes == null) || scopes.isEmpty()) {
 			return StringPool.BLANK;
@@ -374,14 +351,27 @@ public class AnnouncementsEntryFinderImpl
 		return sb.toString();
 	}
 
-	protected void setClassPKs(
-		QueryPos qPos, long classNameId, long[] classPKs) {
+	protected String getClassPKs(long classNameId, long[] classPKs) {
+		if (classPKs.length == 0) {
+			return "(AnnouncementsEntry.classNameId = ?) AND (";
+		}
 
-		qPos.add(classNameId);
+		StringBundler sb = new StringBundler(classPKs.length * 2 + 1);
+
+		sb.append("(AnnouncementsEntry.classNameId = ?) AND (");
 
 		for (int i = 0; i < classPKs.length; i++) {
-			qPos.add(classPKs[i]);
+			sb.append("(AnnouncementsEntry.classPK = ?)");
+
+			if ((i + 1) < classPKs.length) {
+				sb.append(" OR ");
+			}
+			else {
+				sb.append(")");
+			}
 		}
+
+		return sb.toString();
 	}
 
 	protected void setClassPKs(
@@ -400,6 +390,16 @@ public class AnnouncementsEntryFinderImpl
 			long[] classPKs = entry.getValue();
 
 			setClassPKs(qPos, classNameId.longValue(), classPKs);
+		}
+	}
+
+	protected void setClassPKs(
+		QueryPos qPos, long classNameId, long[] classPKs) {
+
+		qPos.add(classNameId);
+
+		for (int i = 0; i < classPKs.length; i++) {
+			qPos.add(classPKs[i]);
 		}
 	}
 

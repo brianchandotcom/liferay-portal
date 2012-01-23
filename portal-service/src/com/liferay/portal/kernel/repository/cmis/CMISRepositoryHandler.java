@@ -322,16 +322,16 @@ public abstract class CMISRepositoryHandler extends BaseRepositoryImpl {
 	public abstract Session getSession()
 		throws PortalException, SystemException;
 
-	public List<Long> getSubfolderIds(long folderId, boolean recurse)
-		throws SystemException {
-
-		return _baseCmisRepository.getSubfolderIds(folderId, recurse);
-	}
-
 	public void getSubfolderIds(List<Long> folderIds, long folderId)
 		throws SystemException {
 
 		_baseCmisRepository.getSubfolderIds(folderIds, folderId);
+	}
+
+	public List<Long> getSubfolderIds(long folderId, boolean recurse)
+		throws SystemException {
+
+		return _baseCmisRepository.getSubfolderIds(folderId, recurse);
 	}
 
 	@Override

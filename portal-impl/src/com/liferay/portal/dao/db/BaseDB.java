@@ -187,25 +187,10 @@ public abstract class BaseDB implements DB {
 		return _SUPPORTS_UPDATE_WITH_INNER_JOIN;
 	}
 
-	public void runSQL(String sql) throws IOException, SQLException {
-		runSQL(new String[] {sql});
-	}
-
 	public void runSQL(Connection con, String sql)
 		throws IOException, SQLException {
 
 		runSQL(con, new String[] {sql});
-	}
-
-	public void runSQL(String[] sqls) throws IOException, SQLException {
-		Connection con = DataAccess.getConnection();
-
-		try {
-			runSQL(con, sqls);
-		}
-		finally {
-			DataAccess.cleanUp(con);
-		}
 	}
 
 	public void runSQL(Connection con, String[] sqls)
@@ -243,6 +228,21 @@ public abstract class BaseDB implements DB {
 		}
 		finally {
 			DataAccess.cleanUp(s);
+		}
+	}
+
+	public void runSQL(String sql) throws IOException, SQLException {
+		runSQL(new String[] {sql});
+	}
+
+	public void runSQL(String[] sqls) throws IOException, SQLException {
+		Connection con = DataAccess.getConnection();
+
+		try {
+			runSQL(con, sqls);
+		}
+		finally {
+			DataAccess.cleanUp(con);
 		}
 	}
 

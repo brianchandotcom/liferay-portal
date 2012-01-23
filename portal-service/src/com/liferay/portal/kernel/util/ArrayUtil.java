@@ -1124,42 +1124,6 @@ public class ArrayUtil {
 	}
 
 	/**
-	 * @see {@link ListUtil#toString(List, Accessor)}
-	 */
-	public static <T, V> String toString(T[] list, Accessor<T, V> accessor) {
-		return toString(list, accessor, StringPool.COMMA);
-	}
-
-	/**
-	 * @see {@link ListUtil#toString(List, Accessor, String)}
-	 */
-	public static <T, V> String toString(
-		T[] list, Accessor<T, V> accessor, String delimiter) {
-
-		if ((list == null) || (list.length == 0)) {
-			return StringPool.BLANK;
-		}
-
-		StringBundler sb = new StringBundler(2 * list.length - 1);
-
-		for (int i = 0; i < list.length; i++) {
-			T bean = list[i];
-
-			V value = accessor.get(bean);
-
-			if (value != null) {
-				sb.append(value);
-			}
-
-			if ((i + 1) != list.length) {
-				sb.append(delimiter);
-			}
-		}
-
-		return sb.toString();
-	}
-
-	/**
 	 * @see {@link ListUtil#toString(List, String)}
 	 */
 	public static String toString(Object[] array, String param) {
@@ -1188,6 +1152,42 @@ public class ArrayUtil {
 			}
 
 			if ((i + 1) != array.length) {
+				sb.append(delimiter);
+			}
+		}
+
+		return sb.toString();
+	}
+
+	/**
+	 * @see {@link ListUtil#toString(List, Accessor)}
+	 */
+	public static <T, V> String toString(T[] list, Accessor<T, V> accessor) {
+		return toString(list, accessor, StringPool.COMMA);
+	}
+
+	/**
+	 * @see {@link ListUtil#toString(List, Accessor, String)}
+	 */
+	public static <T, V> String toString(
+		T[] list, Accessor<T, V> accessor, String delimiter) {
+
+		if ((list == null) || (list.length == 0)) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler(2 * list.length - 1);
+
+		for (int i = 0; i < list.length; i++) {
+			T bean = list[i];
+
+			V value = accessor.get(bean);
+
+			if (value != null) {
+				sb.append(value);
+			}
+
+			if ((i + 1) != list.length) {
 				sb.append(delimiter);
 			}
 		}

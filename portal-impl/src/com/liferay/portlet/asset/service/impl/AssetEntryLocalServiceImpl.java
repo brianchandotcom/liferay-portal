@@ -371,14 +371,6 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	}
 
 	public Hits search(
-			long companyId, long[] groupIds, String className, String keywords,
-			int start, int end)
-		throws SystemException {
-
-		return search(companyId, groupIds, 0, className, keywords, start, end);
-	}
-
-	public Hits search(
 			long companyId, long[] groupIds, long userId, String className,
 			String keywords, int start, int end)
 		throws SystemException {
@@ -479,6 +471,14 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		catch (Exception e) {
 			throw new SystemException(e);
 		}
+	}
+
+	public Hits search(
+			long companyId, long[] groupIds, String className, String keywords,
+			int start, int end)
+		throws SystemException {
+
+		return search(companyId, groupIds, 0, className, keywords, start, end);
 	}
 
 	public AssetEntryDisplay[] searchEntryDisplays(

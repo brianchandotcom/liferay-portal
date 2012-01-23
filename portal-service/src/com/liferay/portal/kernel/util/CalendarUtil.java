@@ -81,10 +81,6 @@ public class CalendarUtil {
 		}
 	}
 
-	public static int getAge(Date date, TimeZone tz) {
-		return getAge(date, CalendarFactoryUtil.getCalendar(tz));
-	}
-
 	public static int getAge(Date date, Calendar today) {
 		Calendar birthday = CalendarFactoryUtil.getCalendar();
 
@@ -102,6 +98,10 @@ public class CalendarUtil {
 		}
 
 		return yearDiff;
+	}
+
+	public static int getAge(Date date, TimeZone tz) {
+		return getAge(date, CalendarFactoryUtil.getCalendar(tz));
 	}
 
 	public static String[] getDays(Locale locale) {
@@ -299,11 +299,9 @@ public class CalendarUtil {
 		}
 	}
 
-	public static boolean isAfter(int month1, int day1, int year1,
-								  int hour1, int minute1, int amPm1,
-								  int month2, int day2, int year2,
-								  int hour2, int minute2, int amPm2,
-								  TimeZone timeZone, Locale locale) {
+	public static boolean isAfter(int month1, int day1, int year1, int hour1,
+		int minute1, int amPm1, int month2, int day2, int year2, int hour2,
+		int minute2, int amPm2, TimeZone timeZone, Locale locale) {
 
 		Calendar cal1 = CalendarFactoryUtil.getCalendar(timeZone, locale);
 
@@ -364,52 +362,23 @@ public class CalendarUtil {
 			month, year, TimeZoneUtil.getDefault(), LocaleUtil.getDefault());
 	}
 
-	public static boolean isFuture(int month, int year, TimeZone timeZone,
-								   Locale locale) {
-
-		Calendar curCal = CalendarFactoryUtil.getCalendar(timeZone, locale);
-
-		curCal.set(Calendar.DATE, 1);
-
-		Calendar cal = (Calendar)curCal.clone();
-
-		cal.set(Calendar.MONTH, month);
-		cal.set(Calendar.YEAR, year);
-
-		return cal.after(curCal);
-	}
-
 	public static boolean isFuture(int month, int day, int year) {
 		return isFuture(
 			month, day, year, TimeZoneUtil.getDefault(),
 			LocaleUtil.getDefault());
 	}
 
-	public static boolean isFuture(int month, int day, int year,
-								   TimeZone timeZone, Locale locale) {
-
-		Calendar curCal = CalendarFactoryUtil.getCalendar(timeZone, locale);
-
-		Calendar cal = (Calendar)curCal.clone();
-
-		cal.set(Calendar.MONTH, month);
-		cal.set(Calendar.DATE, day);
-		cal.set(Calendar.YEAR, year);
-
-		return cal.after(curCal);
-	}
-
-	public static boolean isFuture(int month, int day, int year, int hour,
-								   int minute, int amPm) {
+	public static boolean isFuture(
+		int month, int day, int year, int hour, int minute, int amPm) {
 
 		return isFuture(
 			month, day, year, hour, minute, amPm, TimeZoneUtil.getDefault(),
 			LocaleUtil.getDefault());
 	}
 
-	public static boolean isFuture(int month, int day, int year,
-								   int hour, int minute, int amPm,
-								   TimeZone timeZone, Locale locale) {
+	public static boolean isFuture(
+		int month, int day, int year, int hour, int minute, int amPm,
+		TimeZone timeZone, Locale locale) {
 
 		Calendar curCal = CalendarFactoryUtil.getCalendar(timeZone, locale);
 
@@ -421,6 +390,35 @@ public class CalendarUtil {
 		cal.set(Calendar.HOUR, hour);
 		cal.set(Calendar.MINUTE, minute);
 		cal.set(Calendar.AM_PM, amPm);
+
+		return cal.after(curCal);
+	}
+
+	public static boolean isFuture(
+		int month, int day, int year, TimeZone timeZone, Locale locale) {
+
+		Calendar curCal = CalendarFactoryUtil.getCalendar(timeZone, locale);
+
+		Calendar cal = (Calendar)curCal.clone();
+
+		cal.set(Calendar.MONTH, month);
+		cal.set(Calendar.DATE, day);
+		cal.set(Calendar.YEAR, year);
+
+		return cal.after(curCal);
+	}
+
+	public static boolean isFuture(
+		int month, int year, TimeZone timeZone, Locale locale) {
+
+		Calendar curCal = CalendarFactoryUtil.getCalendar(timeZone, locale);
+
+		curCal.set(Calendar.DATE, 1);
+
+		Calendar cal = (Calendar)curCal.clone();
+
+		cal.set(Calendar.MONTH, month);
+		cal.set(Calendar.YEAR, year);
 
 		return cal.after(curCal);
 	}

@@ -67,21 +67,6 @@ public class BookmarksUtil {
 	}
 
 	public static void addPortletBreadcrumbEntries(
-			long folderId, HttpServletRequest request,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		if (folderId == BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			return;
-		}
-
-		BookmarksFolder folder = BookmarksFolderLocalServiceUtil.getFolder(
-			folderId);
-
-		addPortletBreadcrumbEntries(folder, request, renderResponse);
-	}
-
-	public static void addPortletBreadcrumbEntries(
 			BookmarksFolder folder, HttpServletRequest request,
 			RenderResponse renderResponse)
 		throws Exception {
@@ -128,6 +113,21 @@ public class BookmarksUtil {
 			PortalUtil.addPortletBreadcrumbEntry(
 				request, folder.getName(), portletURL.toString());
 		}
+	}
+
+	public static void addPortletBreadcrumbEntries(
+			long folderId, HttpServletRequest request,
+			RenderResponse renderResponse)
+		throws Exception {
+
+		if (folderId == BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			return;
+		}
+
+		BookmarksFolder folder = BookmarksFolderLocalServiceUtil.getFolder(
+			folderId);
+
+		addPortletBreadcrumbEntries(folder, request, renderResponse);
 	}
 
 	public static OrderByComparator getEntriesOrderByComparator(

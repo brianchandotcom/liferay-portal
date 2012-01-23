@@ -39,6 +39,15 @@ import javax.servlet.http.HttpServletRequest;
 public class AdminUtil {
 
 	public static String getUpdateUserPassword(
+		ActionRequest actionRequest, long userId) {
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			actionRequest);
+
+		return getUpdateUserPassword(request, userId);
+	}
+
+	public static String getUpdateUserPassword(
 		HttpServletRequest request, long userId) {
 
 		String password = PortalUtil.getUserPassword(request);
@@ -54,13 +63,23 @@ public class AdminUtil {
 		return password;
 	}
 
-	public static String getUpdateUserPassword(
-		ActionRequest actionRequest, long userId) {
+	public static User updateUser(
+			ActionRequest actionRequest, long userId, String screenName,
+			String emailAddress, long facebookId, String openId,
+			String languageId, String timeZoneId, String greeting,
+			String comments, String smsSn, String aimSn, String facebookSn,
+			String icqSn, String jabberSn, String msnSn, String mySpaceSn,
+			String skypeSn, String twitterSn, String ymSn)
+		throws PortalException, SystemException {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			actionRequest);
 
-		return getUpdateUserPassword(request, userId);
+		return updateUser(
+			request, userId, screenName, emailAddress, facebookId, openId,
+			languageId, timeZoneId, greeting, comments, smsSn, aimSn,
+			facebookSn, icqSn, jabberSn, msnSn, mySpaceSn, skypeSn, twitterSn,
+			ymSn);
 	}
 
 	public static User updateUser(
@@ -104,25 +123,6 @@ public class AdminUtil {
 			aimSn, facebookSn, icqSn, jabberSn, msnSn, mySpaceSn, skypeSn,
 			twitterSn, ymSn, contact.getJobTitle(), groupIds, organizationIds,
 			roleIds, userGroupRoles, userGroupIds, serviceContext);
-	}
-
-	public static User updateUser(
-			ActionRequest actionRequest, long userId, String screenName,
-			String emailAddress, long facebookId, String openId,
-			String languageId, String timeZoneId, String greeting,
-			String comments, String smsSn, String aimSn, String facebookSn,
-			String icqSn, String jabberSn, String msnSn, String mySpaceSn,
-			String skypeSn, String twitterSn, String ymSn)
-		throws PortalException, SystemException {
-
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			actionRequest);
-
-		return updateUser(
-			request, userId, screenName, emailAddress, facebookId, openId,
-			languageId, timeZoneId, greeting, comments, smsSn, aimSn,
-			facebookSn, icqSn, jabberSn, msnSn, mySpaceSn, skypeSn, twitterSn,
-			ymSn);
 	}
 
 }

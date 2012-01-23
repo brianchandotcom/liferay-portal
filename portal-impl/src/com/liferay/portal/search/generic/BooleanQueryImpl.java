@@ -291,24 +291,6 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 	}
 
 	public void addTerm(
-		String field, String value, boolean like,
-		BooleanClauseOccur booleanClauseOccur) {
-
-		Query query = null;
-
-		if (like) {
-			query = new WildcardQueryImpl(
-				new QueryTermImpl(field, String.valueOf(value)));
-		}
-		else {
-			query = new TermQueryImpl(
-				new QueryTermImpl(field, String.valueOf(value)));
-		}
-
-		add(query, booleanClauseOccur);
-	}
-
-	public void addTerm(
 		String field, String value, boolean like, boolean parseKeywords) {
 
 		if (like) {
@@ -326,6 +308,24 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 		else {
 			addTerm(field, value, like);
 		}
+	}
+
+	public void addTerm(
+		String field, String value, boolean like,
+		BooleanClauseOccur booleanClauseOccur) {
+
+		Query query = null;
+
+		if (like) {
+			query = new WildcardQueryImpl(
+				new QueryTermImpl(field, String.valueOf(value)));
+		}
+		else {
+			query = new TermQueryImpl(
+				new QueryTermImpl(field, String.valueOf(value)));
+		}
+
+		add(query, booleanClauseOccur);
 	}
 
 	public List<BooleanClause> clauses() {

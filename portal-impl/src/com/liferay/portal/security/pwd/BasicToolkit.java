@@ -25,16 +25,16 @@ public abstract class BasicToolkit {
 
 	public abstract String generate(PasswordPolicy passwordPolicy);
 
+	public abstract void validate(
+			long userId, String password1, String password2,
+			PasswordPolicy passwordPolicy)
+		throws PortalException, SystemException;
+
 	public void validate(
 			String password1, String password2, PasswordPolicy passwordPolicy)
 		throws PortalException, SystemException {
 
 		validate(0, password1, password2, passwordPolicy);
 	}
-
-	public abstract void validate(
-			long userId, String password1, String password2,
-			PasswordPolicy passwordPolicy)
-		throws PortalException, SystemException;
 
 }

@@ -64,10 +64,10 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	public void clearCache() {
 	}
 
-	public void clearCache(T model) {
+	public void clearCache(List<T> model) {
 	}
 
-	public void clearCache(List<T> model) {
+	public void clearCache(T model) {
 	}
 
 	public void closeSession(Session session) {

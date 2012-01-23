@@ -59,16 +59,16 @@ public class Time {
 		return adjustedCal.getTime();
 	}
 
-	public static Date getDate(TimeZone tz) {
-		Calendar cal = CalendarFactoryUtil.getCalendar(tz);
-
-		return getDate(cal);
-	}
-
 	public static Date getDate(Date date, TimeZone tz) {
 		Calendar cal = CalendarFactoryUtil.getCalendar(tz);
 
 		cal.setTime(date);
+
+		return getDate(cal);
+	}
+
+	public static Date getDate(TimeZone tz) {
+		Calendar cal = CalendarFactoryUtil.getCalendar(tz);
 
 		return getDate(cal);
 	}

@@ -36,28 +36,6 @@ import javax.servlet.http.HttpServletRequest;
 public class UserInfoFactory {
 
 	public static LinkedHashMap<String, String> getUserInfo(
-		long userId, Portlet portlet) {
-
-		if (userId <= 0) {
-			return null;
-		}
-
-		LinkedHashMap<String, String> userInfo =
-			new LinkedHashMap<String, String>();
-
-		try {
-			User user = UserLocalServiceUtil.getUserById(userId);
-
-			userInfo = getUserInfo(user, userInfo, portlet);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return userInfo;
-	}
-
-	public static LinkedHashMap<String, String> getUserInfo(
 		HttpServletRequest request, Portlet portlet) {
 
 		if (request.getRemoteUser() == null) {
@@ -69,6 +47,28 @@ public class UserInfoFactory {
 
 		try {
 			User user = PortalUtil.getUser(request);
+
+			userInfo = getUserInfo(user, userInfo, portlet);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return userInfo;
+	}
+
+	public static LinkedHashMap<String, String> getUserInfo(
+		long userId, Portlet portlet) {
+
+		if (userId <= 0) {
+			return null;
+		}
+
+		LinkedHashMap<String, String> userInfo =
+			new LinkedHashMap<String, String>();
+
+		try {
+			User user = UserLocalServiceUtil.getUserById(userId);
 
 			userInfo = getUserInfo(user, userInfo, portlet);
 		}

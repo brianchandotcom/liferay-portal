@@ -398,6 +398,20 @@ public class RoleFinderImpl
 		throw new NoSuchRoleException(sb.toString());
 	}
 
+	public List<Role> findByU_G(long userId, List<Group> groups)
+		throws SystemException {
+
+		long[] groupIds = new long[groups.size()];
+
+		for (int i = 0; i < groups.size(); i++) {
+			Group group = groups.get(i);
+
+			groupIds[i] = group.getGroupId();
+		}
+
+		return findByU_G(userId, groupIds);
+	}
+
 	public List<Role> findByU_G(long userId, long groupId)
 		throws SystemException {
 
@@ -434,20 +448,6 @@ public class RoleFinderImpl
 		finally {
 			closeSession(session);
 		}
-	}
-
-	public List<Role> findByU_G(long userId, List<Group> groups)
-		throws SystemException {
-
-		long[] groupIds = new long[groups.size()];
-
-		for (int i = 0; i < groups.size(); i++) {
-			Group group = groups.get(i);
-
-			groupIds[i] = group.getGroupId();
-		}
-
-		return findByU_G(userId, groupIds);
 	}
 
 	public List<Role> findByC_N_D_T(

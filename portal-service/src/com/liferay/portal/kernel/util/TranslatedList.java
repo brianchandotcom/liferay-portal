@@ -62,17 +62,17 @@ public abstract class TranslatedList<E, F> extends ListWrapper<E> {
 	}
 
 	@Override
-	public boolean remove(Object o) {
-		_oldList.remove(toOldObject((E)o));
-
-		return super.remove(o);
-	}
-
-	@Override
 	public E remove(int index) {
 		_oldList.remove(index);
 
 		return super.remove(index);
+	}
+
+	@Override
+	public boolean remove(Object o) {
+		_oldList.remove(toOldObject((E)o));
+
+		return super.remove(o);
 	}
 
 	@Override

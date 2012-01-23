@@ -41,21 +41,6 @@ public interface RuntimePortlet {
 
 	public String processPortlet(
 			ServletContext servletContext, HttpServletRequest request,
-			HttpServletResponse response, RenderRequest renderRequest,
-			RenderResponse renderResponse, String portletId, String queryString,
-			boolean writeOutput)
-		throws Exception;
-
-	public String processPortlet(
-			ServletContext servletContext, HttpServletRequest request,
-			HttpServletResponse response, RenderRequest renderRequest,
-			RenderResponse renderResponse, String portletId, String queryString,
-			String columnId, Integer columnPos, Integer columnCount,
-			boolean writeOutput)
-		throws Exception;
-
-	public String processPortlet(
-			ServletContext servletContext, HttpServletRequest request,
 			HttpServletResponse response, Portlet portlet, String queryString,
 			String columnId, Integer columnPos, Integer columnCount,
 			String path, boolean writeOutput)
@@ -67,6 +52,21 @@ public interface RuntimePortlet {
 			RenderResponse renderResponse, Portlet portlet, String portletId,
 			String queryString, String columnId, Integer columnPos,
 			Integer columnCount, String path, boolean writeOutput)
+		throws Exception;
+
+	public String processPortlet(
+			ServletContext servletContext, HttpServletRequest request,
+			HttpServletResponse response, RenderRequest renderRequest,
+			RenderResponse renderResponse, String portletId, String queryString,
+			boolean writeOutput)
+		throws Exception;
+
+	public String processPortlet(
+			ServletContext servletContext, HttpServletRequest request,
+			HttpServletResponse response, RenderRequest renderRequest,
+			RenderResponse renderResponse, String portletId, String queryString,
+			String columnId, Integer columnPos, Integer columnCount,
+			boolean writeOutput)
 		throws Exception;
 
 	public void processTemplate(

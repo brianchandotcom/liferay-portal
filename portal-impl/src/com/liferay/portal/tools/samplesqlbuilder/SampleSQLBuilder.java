@@ -436,18 +436,18 @@ public class SampleSQLBuilder {
 		unsyncBufferedReader.close();
 	}
 
-	protected Writer createFileWriter(String fileName) throws IOException {
-		File file = new File(fileName);
-
-		return createFileWriter(file);
-	}
-
 	protected Writer createFileWriter(File file) throws IOException {
 		FileOutputStream fileOutputStream = new FileOutputStream(file);
 
 		Writer writer = new OutputStreamWriter(fileOutputStream);
 
 		return createUnsyncBufferedWriter(writer);
+	}
+
+	protected Writer createFileWriter(String fileName) throws IOException {
+		File file = new File(fileName);
+
+		return createFileWriter(file);
 	}
 
 	protected Writer createUnsyncBufferedWriter(Writer writer) {

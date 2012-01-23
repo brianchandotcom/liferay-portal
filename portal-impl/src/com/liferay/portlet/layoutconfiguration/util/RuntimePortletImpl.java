@@ -114,32 +114,6 @@ public class RuntimePortletImpl implements RuntimePortlet {
 
 	public String processPortlet(
 			ServletContext servletContext, HttpServletRequest request,
-			HttpServletResponse response, RenderRequest renderRequest,
-			RenderResponse renderResponse, String portletId, String queryString,
-			boolean writeOutput)
-		throws Exception {
-
-		return processPortlet(
-			servletContext, request, response, renderRequest, renderResponse,
-			portletId, queryString, null, null, null, writeOutput);
-	}
-
-	public String processPortlet(
-			ServletContext servletContext, HttpServletRequest request,
-			HttpServletResponse response, RenderRequest renderRequest,
-			RenderResponse renderResponse, String portletId, String queryString,
-			String columnId, Integer columnPos, Integer columnCount,
-			boolean writeOutput)
-		throws Exception {
-
-		return processPortlet(
-			servletContext, request, response, renderRequest, renderResponse,
-			null, portletId, queryString, columnId, columnPos, columnCount,
-			null, writeOutput);
-	}
-
-	public String processPortlet(
-			ServletContext servletContext, HttpServletRequest request,
 			HttpServletResponse response, Portlet portlet, String queryString,
 			String columnId, Integer columnPos, Integer columnCount,
 			String path, boolean writeOutput)
@@ -222,6 +196,32 @@ public class RuntimePortletImpl implements RuntimePortlet {
 			_defineObjects(
 				request, portletConfig, renderRequest, renderResponse);
 		}
+	}
+
+	public String processPortlet(
+			ServletContext servletContext, HttpServletRequest request,
+			HttpServletResponse response, RenderRequest renderRequest,
+			RenderResponse renderResponse, String portletId, String queryString,
+			boolean writeOutput)
+		throws Exception {
+
+		return processPortlet(
+			servletContext, request, response, renderRequest, renderResponse,
+			portletId, queryString, null, null, null, writeOutput);
+	}
+
+	public String processPortlet(
+			ServletContext servletContext, HttpServletRequest request,
+			HttpServletResponse response, RenderRequest renderRequest,
+			RenderResponse renderResponse, String portletId, String queryString,
+			String columnId, Integer columnPos, Integer columnCount,
+			boolean writeOutput)
+		throws Exception {
+
+		return processPortlet(
+			servletContext, request, response, renderRequest, renderResponse,
+			null, portletId, queryString, columnId, columnPos, columnCount,
+			null, writeOutput);
 	}
 
 	public void processTemplate(

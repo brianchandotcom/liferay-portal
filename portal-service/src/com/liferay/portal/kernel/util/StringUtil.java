@@ -444,18 +444,6 @@ public class StringUtil {
 		return sb.toString();
 	}
 
-	public static String merge(Collection<?> col) {
-		return merge(col, StringPool.COMMA);
-	}
-
-	public static String merge(Collection<?> col, String delimiter) {
-		if (col == null) {
-			return null;
-		}
-
-		return merge(col.toArray(new Object[col.size()]), delimiter);
-	}
-
 	public static String merge(char[] array) {
 		return merge(array, StringPool.COMMA);
 	}
@@ -480,6 +468,18 @@ public class StringUtil {
 		}
 
 		return sb.toString();
+	}
+
+	public static String merge(Collection<?> col) {
+		return merge(col, StringPool.COMMA);
+	}
+
+	public static String merge(Collection<?> col, String delimiter) {
+		if (col == null) {
+			return null;
+		}
+
+		return merge(col.toArray(new Object[col.size()]), delimiter);
 	}
 
 	public static String merge(double[] array) {
@@ -1170,26 +1170,6 @@ public class StringUtil {
 		return split(s, StringPool.COMMA, x);
 	}
 
-	public static double[] split(String s, double x) {
-		return split(s, StringPool.COMMA, x);
-	}
-
-	public static float[] split(String s, float x) {
-		return split(s, StringPool.COMMA, x);
-	}
-
-	public static int[] split(String s, int x) {
-		return split(s, StringPool.COMMA, x);
-	}
-
-	public static long[] split(String s, long x) {
-		return split(s, StringPool.COMMA, x);
-	}
-
-	public static short[] split(String s, short x) {
-		return split(s, StringPool.COMMA, x);
-	}
-
 	public static String[] split(String s, char delimiter) {
 		if (Validator.isNull(s)) {
 			return _emptyStringArray;
@@ -1224,6 +1204,26 @@ public class StringUtil {
 		}
 
 		return nodeValues.toArray(new String[nodeValues.size()]);
+	}
+
+	public static double[] split(String s, double x) {
+		return split(s, StringPool.COMMA, x);
+	}
+
+	public static float[] split(String s, float x) {
+		return split(s, StringPool.COMMA, x);
+	}
+
+	public static int[] split(String s, int x) {
+		return split(s, StringPool.COMMA, x);
+	}
+
+	public static long[] split(String s, long x) {
+		return split(s, StringPool.COMMA, x);
+	}
+
+	public static short[] split(String s, short x) {
+		return split(s, StringPool.COMMA, x);
 	}
 
 	public static String[] split(String s, String delimiter) {

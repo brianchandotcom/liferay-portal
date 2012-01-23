@@ -152,6 +152,17 @@ public class PropertiesUtil {
 		return unsyncByteArrayOutputStream.toString();
 	}
 
+	public static Properties load(InputStream is, String charsetName)
+		throws IOException {
+
+		if (JavaProps.isJDK6()) {
+			return loadJDK6(new InputStreamReader(is, charsetName));
+		}
+		else {
+			return loadJDK5(is, charsetName);
+		}
+	}
+
 	public static void load(Properties properties, String s)
 		throws IOException {
 
@@ -205,17 +216,6 @@ public class PropertiesUtil {
 				byteBuffer.array(), byteBuffer.arrayOffset(),
 				byteBuffer.limit());
 
-			return loadJDK5(is, charsetName);
-		}
-	}
-
-	public static Properties load(InputStream is, String charsetName)
-		throws IOException {
-
-		if (JavaProps.isJDK6()) {
-			return loadJDK6(new InputStreamReader(is, charsetName));
-		}
-		else {
 			return loadJDK5(is, charsetName);
 		}
 	}

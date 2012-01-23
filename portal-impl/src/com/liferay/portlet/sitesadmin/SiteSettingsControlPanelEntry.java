@@ -28,6 +28,13 @@ import com.liferay.portlet.BaseControlPanelEntry;
  */
 public class SiteSettingsControlPanelEntry extends BaseControlPanelEntry {
 
+	public boolean isVisible(
+			PermissionChecker permissionChecker, Portlet portlet)
+		throws Exception {
+
+		return false;
+	}
+
 	@Override
 	public boolean isVisible(
 			Portlet portlet, String category, ThemeDisplay themeDisplay)
@@ -50,13 +57,6 @@ public class SiteSettingsControlPanelEntry extends BaseControlPanelEntry {
 		}
 
 		return super.isVisible(portlet, category, themeDisplay);
-	}
-
-	public boolean isVisible(
-			PermissionChecker permissionChecker, Portlet portlet)
-		throws Exception {
-
-		return false;
 	}
 
 }

@@ -356,6 +356,14 @@ public class UpgradeImageGallery extends UpgradeProcess {
 				else {
 					InputStream is = _sourceHook.getImageAsStream(image);
 
+					if (custom1ImageId != imageId) {
+						custom1ImageId = 0;
+					}
+
+					if (custom2ImageId != imageId) {
+						custom2ImageId = 0;
+					}
+
 					ImageProcessorUtil.storeThumbnail(
 						companyId, groupId, fileEntryId, fileVersionId,
 						custom1ImageId, custom2ImageId, is, image.getType());

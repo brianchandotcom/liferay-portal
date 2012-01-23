@@ -95,7 +95,20 @@ orderableHeaders.put("modified-date", "modifiedDate");
 orderableHeaders.put("downloads", "downloads");
 
 String orderByCol = ParamUtil.getString(request, "orderByCol");
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+String orderByType = ParamUtil.getString(request, "orderByType");
+
+if (Validator.isNull(orderByCol)) {
+	orderByCol = portalPreferences.getValue(PortletKeys.DOCUMENT_LIBRARY, "order-by-col", StringPool.BLANK);
+	orderByType = portalPreferences.getValue(PortletKeys.DOCUMENT_LIBRARY, "order-by-type", "asc");
+}
+else {
+	boolean saveSortBy = ParamUtil.getBoolean(request, "saveSortBy");
+
+	if (saveSortBy) {
+		portalPreferences.setValue(PortletKeys.DOCUMENT_LIBRARY, "order-by-col", orderByCol);
+		portalPreferences.setValue(PortletKeys.DOCUMENT_LIBRARY, "order-by-type", orderByType);
+	}
+}
 
 OrderByComparator orderByComparator = DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType);
 

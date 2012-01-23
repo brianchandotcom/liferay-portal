@@ -525,6 +525,7 @@ Liferay.Service.registerClass(
 		getCategories: true,
 		getCategory: true,
 		getChildCategories: true,
+		getJSONSearch: true,
 		getJSONVocabularyCategories: true,
 		getVocabularyCategories: true,
 		getVocabularyCategoriesCount: true,

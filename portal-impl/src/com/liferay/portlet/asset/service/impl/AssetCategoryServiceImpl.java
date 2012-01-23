@@ -21,16 +21,21 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.asset.model.AssetCategory;
+import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.base.AssetCategoryServiceBaseImpl;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 import com.liferay.util.Autocomplete;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -119,6 +124,55 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 		return filterCategories(
 			assetCategoryLocalService.getChildCategories(
 				parentCategoryId, start, end, obc));
+	}
+
+	public JSONArray getJSONSearch(
+			long groupId, String keywords, long vocabularyId, int start,
+			int end, OrderByComparator obc)
+		throws PortalException, SystemException {
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		List<AssetCategory> categories = search(
+			groupId, keywords, vocabularyId, start, end, obc);
+
+		for (AssetCategory category : categories) {
+			String categoryJSON = JSONFactoryUtil.looseSerialize(category);
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				categoryJSON);
+
+			List<String> names = new ArrayList<String>();
+
+			AssetCategory curCategory = category;
+
+			while (curCategory.getParentCategoryId() > 0) {
+				AssetCategory parentCategory = getCategory(
+					curCategory.getParentCategoryId());
+
+				names.add(parentCategory.getName());
+				names.add(StringPool.SLASH);
+
+				curCategory = parentCategory;
+			}
+
+			Collections.reverse(names);
+
+			AssetVocabulary vocabulary = assetVocabularyService.getVocabulary(
+				category.getVocabularyId());
+
+			StringBundler path = new StringBundler(3);
+
+			path.append(" - ");
+			path.append(vocabulary.getName());
+			path.append(names.toArray(new String[names.size()]));
+
+			jsonObject.put("path", path.toString());
+
+			jsonArray.put(jsonObject);
+		}
+
+		return jsonArray;
 	}
 
 	public JSONObject getJSONVocabularyCategories(

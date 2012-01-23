@@ -172,6 +172,19 @@ public class JSONObjectImpl implements JSONObject {
 		return this;
 	}
 
+	public JSONObject put(String key, Date value) {
+		try {
+			_jsonObject.put(key, value);
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
+		}
+
+		return this;
+	}
+
 	public JSONObject put(String key, double value) {
 		try {
 			_jsonObject.put(key, value);
@@ -186,32 +199,6 @@ public class JSONObjectImpl implements JSONObject {
 	}
 
 	public JSONObject put(String key, int value) {
-		try {
-			_jsonObject.put(key, value);
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
-			}
-		}
-
-		return this;
-	}
-
-	public JSONObject put(String key, long value) {
-		try {
-			_jsonObject.put(key, value);
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
-			}
-		}
-
-		return this;
-	}
-
-	public JSONObject put(String key, Date value) {
 		try {
 			_jsonObject.put(key, value);
 		}
@@ -240,6 +227,19 @@ public class JSONObjectImpl implements JSONObject {
 	public JSONObject put(String key, JSONObject value) {
 		try {
 			_jsonObject.put(key, ((JSONObjectImpl)value).getJSONObject());
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
+		}
+
+		return this;
+	}
+
+	public JSONObject put(String key, long value) {
+		try {
+			_jsonObject.put(key, value);
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {

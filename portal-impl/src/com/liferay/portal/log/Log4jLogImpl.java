@@ -33,48 +33,48 @@ public class Log4jLogImpl implements Log {
 		_logger.log(_FQCN, Level.DEBUG, msg, null);
 	}
 
-	public void debug(Throwable t) {
-		_logger.log(_FQCN, Level.DEBUG, null, t);
-	}
-
 	public void debug(Object msg, Throwable t) {
 		_logger.log(_FQCN, Level.DEBUG, msg, t);
+	}
+
+	public void debug(Throwable t) {
+		_logger.log(_FQCN, Level.DEBUG, null, t);
 	}
 
 	public void error(Object msg) {
 		_logger.log(_FQCN, Level.ERROR, msg, null);
 	}
 
-	public void error(Throwable t) {
-		_logger.log(_FQCN, Level.ERROR, null, t);
-	}
-
 	public void error(Object msg, Throwable t) {
 		_logger.log(_FQCN, Level.ERROR, msg, t);
+	}
+
+	public void error(Throwable t) {
+		_logger.log(_FQCN, Level.ERROR, null, t);
 	}
 
 	public void fatal(Object msg) {
 		_logger.log(_FQCN, Level.FATAL, msg, null);
 	}
 
-	public void fatal(Throwable t) {
-		_logger.log(_FQCN, Level.FATAL, null, t);
-	}
-
 	public void fatal(Object msg, Throwable t) {
 		_logger.log(_FQCN, Level.FATAL, msg, t);
+	}
+
+	public void fatal(Throwable t) {
+		_logger.log(_FQCN, Level.FATAL, null, t);
 	}
 
 	public void info(Object msg) {
 		_logger.log(_FQCN, Level.INFO, msg, null);
 	}
 
-	public void info(Throwable t) {
-		_logger.log(_FQCN, Level.INFO, null, t);
-	}
-
 	public void info(Object msg, Throwable t) {
 		_logger.log(_FQCN, Level.INFO, msg, t);
+	}
+
+	public void info(Throwable t) {
+		_logger.log(_FQCN, Level.INFO, null, t);
 	}
 
 	public boolean isDebugEnabled() {
@@ -105,24 +105,24 @@ public class Log4jLogImpl implements Log {
 		_logger.log(_FQCN, Level.TRACE, msg, null);
 	}
 
-	public void trace(Throwable t) {
-		_logger.log(_FQCN, Level.TRACE, null, t);
-	}
-
 	public void trace(Object msg, Throwable t) {
 		_logger.log(_FQCN, Level.TRACE, msg, t);
+	}
+
+	public void trace(Throwable t) {
+		_logger.log(_FQCN, Level.TRACE, null, t);
 	}
 
 	public void warn(Object msg) {
 		_logger.log(_FQCN, Level.WARN, msg, null);
 	}
 
-	public void warn(Throwable t) {
-		_logger.log(_FQCN, Level.WARN, null, t);
-	}
-
 	public void warn(Object msg, Throwable t) {
 		_logger.log(_FQCN, Level.WARN, msg, t);
+	}
+
+	public void warn(Throwable t) {
+		_logger.log(_FQCN, Level.WARN, null, t);
 	}
 
 	private static final String _FQCN = LogWrapper.class.getName();

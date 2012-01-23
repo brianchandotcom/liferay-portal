@@ -45,25 +45,6 @@ public class LogUtil {
 		}
 	}
 
-	public static void log(Log log, Throwable t) {
-		if (t instanceof JspException) {
-			log(log, (JspException)t);
-		}
-		else if (t instanceof ServletException) {
-			log(log, (ServletException)t);
-		}
-		else {
-			Throwable cause = t.getCause();
-
-			if (cause != null) {
-				log(log, cause);
-			}
-			else {
-				_log(log, t);
-			}
-		}
-	}
-
 	public static void log(Log log, JspException jspe) {
 		Throwable cause = jspe.getCause();
 
@@ -97,6 +78,25 @@ public class LogUtil {
 		}
 		else {
 			_log(log, cause);
+		}
+	}
+
+	public static void log(Log log, Throwable t) {
+		if (t instanceof JspException) {
+			log(log, (JspException)t);
+		}
+		else if (t instanceof ServletException) {
+			log(log, (ServletException)t);
+		}
+		else {
+			Throwable cause = t.getCause();
+
+			if (cause != null) {
+				log(log, cause);
+			}
+			else {
+				_log(log, t);
+			}
 		}
 	}
 

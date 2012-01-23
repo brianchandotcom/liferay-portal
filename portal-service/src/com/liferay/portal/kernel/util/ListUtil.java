@@ -323,6 +323,42 @@ public class ListUtil {
 	}
 
 	/**
+	 * @see {@link ArrayUtil#toString(Object[], String)}
+	 */
+	public static String toString(List<?> list, String param) {
+		return toString(list, param, StringPool.COMMA);
+	}
+
+	/**
+	 * @see {@link ArrayUtil#toString(Object[], String, String)}
+	 */
+	public static String toString(
+		List<?> list, String param, String delimiter) {
+
+		if ((list == null) || list.isEmpty()) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler(2 * list.size() - 1);
+
+		for (int i = 0; i < list.size(); i++) {
+			Object bean = list.get(i);
+
+			Object value = BeanPropertiesUtil.getObject(bean, param);
+
+			if (value != null) {
+				sb.append(value);
+			}
+
+			if ((i + 1) != list.size()) {
+				sb.append(delimiter);
+			}
+		}
+
+		return sb.toString();
+	}
+
+	/**
 	 * @see {@link ArrayUtil#toString(Object[], Accessor)}
 	 */
 	public static <T, V> String toString(
@@ -347,42 +383,6 @@ public class ListUtil {
 			T bean = list.get(i);
 
 			V value = accessor.get(bean);
-
-			if (value != null) {
-				sb.append(value);
-			}
-
-			if ((i + 1) != list.size()) {
-				sb.append(delimiter);
-			}
-		}
-
-		return sb.toString();
-	}
-
-	/**
-	 * @see {@link ArrayUtil#toString(Object[], String)}
-	 */
-	public static String toString(List<?> list, String param) {
-		return toString(list, param, StringPool.COMMA);
-	}
-
-	/**
-	 * @see {@link ArrayUtil#toString(Object[], String, String)}
-	 */
-	public static String toString(
-		List<?> list, String param, String delimiter) {
-
-		if ((list == null) || list.isEmpty()) {
-			return StringPool.BLANK;
-		}
-
-		StringBundler sb = new StringBundler(2 * list.size() - 1);
-
-		for (int i = 0; i < list.size(); i++) {
-			Object bean = list.get(i);
-
-			Object value = BeanPropertiesUtil.getObject(bean, param);
 
 			if (value != null) {
 				sb.append(value);

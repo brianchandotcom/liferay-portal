@@ -41,16 +41,16 @@ public class LuceneFields {
 		return getUID(portletId, field1.longValue());
 	}
 
-	public static String getUID(String portletId, String field1) {
-		return getUID(portletId, field1, null);
-	}
-
 	public static String getUID(String portletId, long field1, String field2) {
 		return getUID(portletId, String.valueOf(field1), field2);
 	}
 
 	public static String getUID(String portletId, Long field1, String field2) {
 		return getUID(portletId, field1.longValue(), field2);
+	}
+
+	public static String getUID(String portletId, String field1) {
+		return getUID(portletId, field1, null);
 	}
 
 	public static String getUID(
@@ -91,14 +91,6 @@ public class LuceneFields {
 		}
 	}
 
-	public static Field getFile(String field, InputStream is, String fileExt) {
-		LuceneFileExtractor fileExtractor =
-			(LuceneFileExtractor)InstancePool.get(
-				PropsValues.LUCENE_FILE_EXTRACTOR);
-
-		return fileExtractor.getFile(field, is, fileExt);
-	}
-
 	public static Field getFile(String field, byte[] bytes, String fileExt) {
 		LuceneFileExtractor fileExtractor =
 			(LuceneFileExtractor)InstancePool.get(
@@ -115,6 +107,14 @@ public class LuceneFields {
 				PropsValues.LUCENE_FILE_EXTRACTOR);
 
 		return fileExtractor.getFile(field, file, fileExt);
+	}
+
+	public static Field getFile(String field, InputStream is, String fileExt) {
+		LuceneFileExtractor fileExtractor =
+			(LuceneFileExtractor)InstancePool.get(
+				PropsValues.LUCENE_FILE_EXTRACTOR);
+
+		return fileExtractor.getFile(field, is, fileExt);
 	}
 
 	public static Field getKeyword(String field, double keyword) {

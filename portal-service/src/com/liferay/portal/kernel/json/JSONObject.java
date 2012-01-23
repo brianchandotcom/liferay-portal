@@ -60,17 +60,17 @@ public interface JSONObject {
 
 	public JSONObject put(String key, boolean value);
 
+	public JSONObject put(String key, Date value);
+
 	public JSONObject put(String key, double value);
 
 	public JSONObject put(String key, int value);
 
-	public JSONObject put(String key, long value);
-
-	public JSONObject put(String key, Date value);
-
 	public JSONObject put(String key, JSONArray value);
 
 	public JSONObject put(String key, JSONObject value);
+
+	public JSONObject put(String key, long value);
 
 	public JSONObject put(String key, String value);
 

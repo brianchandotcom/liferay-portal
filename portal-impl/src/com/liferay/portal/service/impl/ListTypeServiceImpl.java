@@ -38,6 +38,14 @@ public class ListTypeServiceImpl extends ListTypeServiceBaseImpl {
 		return listTypePersistence.findByType(type);
 	}
 
+	public void validate(int listTypeId, long classNameId, String type)
+		throws PortalException, SystemException {
+
+		ClassName className = classNameLocalService.getClassName(classNameId);
+
+		validate(listTypeId, className.getValue() + type);
+	}
+
 	public void validate(int listTypeId, String type)
 		throws PortalException, SystemException {
 
@@ -50,14 +58,6 @@ public class ListTypeServiceImpl extends ListTypeServiceBaseImpl {
 
 			throw nslte;
 		}
-	}
-
-	public void validate(int listTypeId, long classNameId, String type)
-		throws PortalException, SystemException {
-
-		ClassName className = classNameLocalService.getClassName(classNameId);
-
-		validate(listTypeId, className.getValue() + type);
 	}
 
 }

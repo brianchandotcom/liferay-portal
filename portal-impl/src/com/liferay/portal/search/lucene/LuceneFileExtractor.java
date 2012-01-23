@@ -32,18 +32,6 @@ import org.apache.lucene.document.Field;
  */
 public class LuceneFileExtractor {
 
-	public Field getFile(String field, InputStream is, String fileExt) {
-		String text = FileUtil.extractText(is, fileExt);
-
-		if (Validator.isNotNull(
-				PropsValues.LUCENE_FILE_EXTRACTOR_REGEXP_STRIP)) {
-
-			text = regexpStrip(text);
-		}
-
-		return LuceneFields.getText(field, text);
-	}
-
 	public Field getFile(String field, byte[] bytes, String fileExt) {
 		InputStream is = new UnsyncByteArrayInputStream(bytes);
 
@@ -56,6 +44,18 @@ public class LuceneFileExtractor {
 		InputStream is = new FileInputStream(file);
 
 		return getFile(field, is, fileExt);
+	}
+
+	public Field getFile(String field, InputStream is, String fileExt) {
+		String text = FileUtil.extractText(is, fileExt);
+
+		if (Validator.isNotNull(
+				PropsValues.LUCENE_FILE_EXTRACTOR_REGEXP_STRIP)) {
+
+			text = regexpStrip(text);
+		}
+
+		return LuceneFields.getText(field, text);
 	}
 
 	protected String regexpStrip(String text) {

@@ -58,6 +58,8 @@ import com.liferay.portal.model.PublicRenderParameter;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.AuthTokenUtil;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
@@ -738,8 +740,9 @@ public class LayoutAction extends Action {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		themeDisplay.setScopeGroupId(
-			PortalUtil.getScopeGroupId(request, portletId));
+		long scopeGroupId = PortalUtil.getScopeGroupId(request, portletId);
+
+		themeDisplay.setScopeGroupId(scopeGroupId);
 
 		ServletContext servletContext = (ServletContext)request.getAttribute(
 			WebKeys.CTX);
@@ -788,6 +791,9 @@ public class LayoutAction extends Action {
 		}
 
 		processPublicRenderParameters(request, layout, portlet);
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
 
 		if (lifecycle.equals(PortletRequest.ACTION_PHASE)) {
 			String contentType = request.getHeader(HttpHeaders.CONTENT_TYPE);
@@ -842,10 +848,16 @@ public class LayoutAction extends Action {
 
 				ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-				invokerPortlet.processAction(
-					actionRequestImpl, actionResponseImpl);
+				boolean access = PortletPermissionUtil.hasAccessPermission(
+					permissionChecker, scopeGroupId, layout, portlet,
+					portletMode);
 
-				actionResponseImpl.transferHeaders(response);
+				if (access) {
+					invokerPortlet.processAction(
+						actionRequestImpl, actionResponseImpl);
+
+					actionResponseImpl.transferHeaders(response);
+				}
 
 				RenderParametersPool.put(
 					request, layout.getPlid(), portletId,
@@ -938,8 +950,14 @@ public class LayoutAction extends Action {
 
 				ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-				invokerPortlet.serveResource(
-					resourceRequestImpl, resourceResponseImpl);
+				boolean access = PortletPermissionUtil.hasAccessPermission(
+					permissionChecker, scopeGroupId, layout, portlet,
+					portletMode);
+
+				if (access) {
+					invokerPortlet.serveResource(
+						resourceRequestImpl, resourceResponseImpl);
+				}
 			}
 			finally {
 				ServiceContextThreadLocal.popServiceContext();

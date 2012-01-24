@@ -189,8 +189,8 @@ public class BasePortalToLDAPConverter implements PortalToLDAPConverter {
 		attributes.put(objectClass);
 
 		addAttributeMapping(
-			userMappings.getProperty(UserConverterKeys.UUID),
-			user.getUuid(), attributes);
+			userMappings.getProperty(UserConverterKeys.UUID), user.getUuid(),
+			attributes);
 		addAttributeMapping(
 			userMappings.getProperty(UserConverterKeys.SCREEN_NAME),
 			user.getScreenName(), attributes);

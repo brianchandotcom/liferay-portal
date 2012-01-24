@@ -66,9 +66,9 @@ public class IGFolderNameColumnImpl extends BaseUpgradeColumnImpl {
 		return sb.toString();
 	}
 
-	private UpgradeColumn _groupIdColumn;
-	private UpgradeColumn _parentFolderIdColumn;
 	private int _counter = 0;
 	private Set<String> _distinctNames = new HashSet<String>();
+	private UpgradeColumn _groupIdColumn;
+	private UpgradeColumn _parentFolderIdColumn;
 
 }

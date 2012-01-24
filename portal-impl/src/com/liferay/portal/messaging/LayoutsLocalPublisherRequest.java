@@ -139,14 +139,14 @@ public class LayoutsLocalPublisherRequest implements Serializable {
 
 	private String _command;
 	private String _cronText;
-	private long _userId;
-	private long _sourceGroupId;
-	private long _targetGroupId;
-	private boolean _privateLayout;
+	private Date _endDate;
 	private Map<Long, Boolean> _layoutIdMap;
 	private Map<String, String[]> _parameterMap;
-	private Date _startDate;
-	private Date _endDate;
+	private boolean _privateLayout;
 	private Date _scheduledFireTime;
+	private long _sourceGroupId;
+	private Date _startDate;
+	private long _targetGroupId;
+	private long _userId;
 
 }

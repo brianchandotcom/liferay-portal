@@ -72,8 +72,8 @@ public class Header implements Serializable {
 		}
 	}
 
-	private int _intValue;
 	private long _dateValue;
+	private int _intValue;
 	private String _stringValue;
 	private int _type;
 

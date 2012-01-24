@@ -96,8 +96,8 @@ public class ICQConnector implements Observer {
 
 	private static ICQConnector _instance = new ICQConnector();
 
+	private boolean _connecting;
 	private OscarConnection _icq;
 	private List<KeyValuePair> _messages;
-	private boolean _connecting;
 
 }

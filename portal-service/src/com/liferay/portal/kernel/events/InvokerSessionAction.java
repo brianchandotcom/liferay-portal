@@ -48,7 +48,7 @@ public class InvokerSessionAction extends SessionAction {
 		}
 	}
 
-	private SessionAction _sessionAction;
 	private ClassLoader _classLoader;
+	private SessionAction _sessionAction;
 
 }

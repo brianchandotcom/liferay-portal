@@ -77,7 +77,7 @@ public class LastPath implements Serializable {
 	}
 
 	private String _contextPath;
-	private String _path;
 	private Map<String, String[]> _parameterMap;
+	private String _path;
 
 }

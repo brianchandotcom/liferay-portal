@@ -134,13 +134,13 @@ public class LuceneHelperImpl implements LuceneHelper {
 
 		boolean includesLower = true;
 
-		if (startValue.equals(StringPool.STAR)) {
+		if (startValue != null && startValue.equals(StringPool.STAR)) {
 			includesLower = false;
 		}
 
 		boolean includesUpper = true;
 
-		if (endValue.equals(StringPool.STAR)) {
+		if (endValue != null && endValue.equals(StringPool.STAR)) {
 			includesUpper = false;
 		}
 

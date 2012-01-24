@@ -36,16 +36,8 @@ Boolean renderPortletResource = (Boolean)request.getAttribute(WebKeys.RENDER_POR
 boolean allowAddPortletDefaultResource = PortalUtil.isAllowAddPortletDefaultResource(request, portlet);
 boolean runtimePortlet = (renderPortletResource != null) && renderPortletResource.booleanValue();
 
-boolean access = false;
-
 if (allowAddPortletDefaultResource && !portlet.isUndeployedPortlet()) {
 	PortalUtil.addPortletDefaultResource(request, portlet);
-
-	access = PortletPermissionUtil.contains(permissionChecker, layout, portlet, ActionKeys.VIEW);
-}
-
-if (portlet.isUndeployedPortlet()) {
-	access = true;
 }
 
 boolean stateMax = layoutTypePortlet.hasStateMaxPortletId(portletId);
@@ -139,6 +131,15 @@ else if (modePreview) {
 }
 else if (modePrint) {
 	portletMode = LiferayPortletMode.PRINT;
+}
+
+boolean access = false;
+
+if (portlet.isUndeployedPortlet()) {
+	access = true;
+}
+else if (allowAddPortletDefaultResource) {
+	access = PortletPermissionUtil.hasAccessPermission(permissionChecker, themeDisplay.getScopeGroupId(), layout, portlet, portletMode);
 }
 
 HttpServletRequest originalRequest = PortalUtil.getOriginalServletRequest(request);
@@ -317,21 +318,6 @@ if (Validator.isNotNull(layout.getLayoutPrototypeUuid()) && layout.getLayoutProt
 	showConfigurationIcon = false;
 	showMoveIcon = false;
 	showPortletCssIcon = false;
-}
-
-// Deny access to edit mode if you do not have permission
-
-if (access && !PropsValues.TCK_URL && portletMode.equals(PortletMode.EDIT)) {
-	if (group.isControlPanel()) {
-		if (!PortletPermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroupId(), null, portletId, ActionKeys.PREFERENCES)) {
-			access = false;
-		}
-	}
-	else {
-		if (!PortletPermissionUtil.contains(permissionChecker, layout, portletId, ActionKeys.PREFERENCES)) {
-			access = false;
-		}
-	}
 }
 
 // Deny access

@@ -22,6 +22,8 @@ import com.liferay.portal.security.permission.PermissionChecker;
 
 import java.util.Collection;
 
+import javax.portlet.PortletMode;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
@@ -153,6 +155,11 @@ public interface PortletPermission {
 		throws PortalException, SystemException;
 
 	public String getPrimaryKey(long plid, String portletId);
+
+	public boolean hasAccessPermission(
+			PermissionChecker permissionChecker, long scopeGroupId,
+			Layout layout, Portlet portlet, PortletMode portletMode)
+		throws PortalException, SystemException;
 
 	public boolean hasLayoutManagerPermission(
 		String portletId, String actionId);

@@ -93,9 +93,11 @@ import org.apache.chemistry.opencmis.commons.PropertyIds;
 import org.apache.chemistry.opencmis.commons.data.AllowableActions;
 import org.apache.chemistry.opencmis.commons.data.ContentStream;
 import org.apache.chemistry.opencmis.commons.data.PropertyData;
+import org.apache.chemistry.opencmis.commons.data.RepositoryCapabilities;
 import org.apache.chemistry.opencmis.commons.data.RepositoryInfo;
 import org.apache.chemistry.opencmis.commons.enums.Action;
 import org.apache.chemistry.opencmis.commons.enums.BaseTypeId;
+import org.apache.chemistry.opencmis.commons.enums.CapabilityQuery;
 import org.apache.chemistry.opencmis.commons.enums.UnfileObject;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisPermissionDeniedException;
@@ -1613,6 +1615,18 @@ public class CMISRepository extends BaseCmisRepository {
 
 		Session session = getSession();
 
+		RepositoryInfo repositoryInfo = session.getRepositoryInfo();
+
+		RepositoryCapabilities repositoryCapabilities =
+			repositoryInfo.getCapabilities();
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		CapabilityQuery capabilityQuery =
+			repositoryCapabilities.getQueryCapability();
+
+		queryConfig.setAttribute("capabilityQuery", capabilityQuery.value());
+
 		String queryString = CMISSearchQueryBuilderUtil.buildQuery(
 			searchContext, query);
 
@@ -1636,8 +1650,6 @@ public class CMISRepository extends BaseCmisRepository {
 			new ArrayList<com.liferay.portal.kernel.search.Document>();
 		List<String> snippets = new ArrayList<String>();
 		List<Float> scores = new ArrayList<Float>();
-
-		QueryConfig queryConfig = query.getQueryConfig();
 
 		Iterator<QueryResult> itr = queryResults.iterator();
 

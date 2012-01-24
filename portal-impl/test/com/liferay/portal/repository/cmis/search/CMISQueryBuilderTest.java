@@ -17,9 +17,12 @@ package com.liferay.portal.repository.cmis.search;
 import com.liferay.portal.kernel.repository.cmis.search.CMISSearchQueryBuilderUtil;
 import com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilderUtil;
 import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.test.TestCase;
+
+import org.apache.chemistry.opencmis.commons.enums.CapabilityQuery;
 
 /**
  * @author Mika Koivisto
@@ -42,6 +45,47 @@ public class CMISQueryBuilderTest extends TestCase {
 				"(cmis:createdBy LIKE 'test%' AND NOT(cmis:createdBy = " +
 					"'test.doc'))",
 			cmisQuery);
+	}
+
+	public void testContainsCombinedSupportedQuery() throws Exception {
+		SearchContext searchContext = getSearchContext();
+
+		searchContext.setKeywords("test");
+
+		BooleanQuery searchQuery =
+			RepositorySearchQueryBuilderUtil.getFullQuery(searchContext);
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setAttribute(
+			"capabilityQuery", CapabilityQuery.BOTHCOMBINED.value());
+
+		String cmisQuery = CMISSearchQueryBuilderUtil.buildQuery(
+			searchContext, searchQuery);
+
+		assertQueryEquals(
+			"(cmis:name = 'test') OR (cmis:createdBy = 'test') OR " +
+				"(CONTAINS('test'))",
+			cmisQuery);
+	}
+
+	public void testContainsOnlySupportedQuery() throws Exception {
+		SearchContext searchContext = getSearchContext();
+
+		searchContext.setKeywords("test");
+
+		BooleanQuery searchQuery =
+			RepositorySearchQueryBuilderUtil.getFullQuery(searchContext);
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setAttribute(
+			"capabilityQuery", CapabilityQuery.FULLTEXTONLY.value());
+
+		String cmisQuery = CMISSearchQueryBuilderUtil.buildQuery(
+			searchContext, searchQuery);
+
+		assertQueryEquals("(CONTAINS('test'))", cmisQuery);
 	}
 
 	public void testExactFilenameQuery() throws Exception {

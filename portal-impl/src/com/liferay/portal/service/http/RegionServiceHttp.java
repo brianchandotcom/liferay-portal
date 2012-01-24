@@ -158,13 +158,13 @@ public class RegionServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.portal.model.Region> getRegions(
-		HttpPrincipal httpPrincipal, long countryId)
+		HttpPrincipal httpPrincipal, boolean active)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(RegionServiceUtil.class.getName(),
 					"getRegions", _getRegionsParameterTypes3);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, countryId);
+			MethodHandler methodHandler = new MethodHandler(methodKey, active);
 
 			Object returnObj = null;
 
@@ -189,13 +189,13 @@ public class RegionServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.portal.model.Region> getRegions(
-		HttpPrincipal httpPrincipal, boolean active)
+		HttpPrincipal httpPrincipal, long countryId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(RegionServiceUtil.class.getName(),
 					"getRegions", _getRegionsParameterTypes4);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, active);
+			MethodHandler methodHandler = new MethodHandler(methodKey, countryId);
 
 			Object returnObj = null;
 
@@ -261,10 +261,10 @@ public class RegionServiceHttp {
 		};
 	private static final Class<?>[] _getRegionsParameterTypes2 = new Class[] {  };
 	private static final Class<?>[] _getRegionsParameterTypes3 = new Class[] {
-			long.class
+			boolean.class
 		};
 	private static final Class<?>[] _getRegionsParameterTypes4 = new Class[] {
-			boolean.class
+			long.class
 		};
 	private static final Class<?>[] _getRegionsParameterTypes5 = new Class[] {
 			long.class, boolean.class

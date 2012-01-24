@@ -478,16 +478,16 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 		return _layoutSet.getGroup();
 	}
 
+	public long getLiveLogoId() {
+		return _layoutSet.getLiveLogoId();
+	}
+
 	public com.liferay.portal.kernel.util.UnicodeProperties getSettingsProperties() {
 		return _layoutSet.getSettingsProperties();
 	}
 
 	public java.lang.String getSettingsProperty(java.lang.String key) {
 		return _layoutSet.getSettingsProperty(key);
-	}
-
-	public long getStagingLogoId() {
-		return _layoutSet.getStagingLogoId();
 	}
 
 	public java.lang.String getThemeSetting(java.lang.String key,

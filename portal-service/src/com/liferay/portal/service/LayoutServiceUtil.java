@@ -164,24 +164,6 @@ public class LayoutServiceUtil {
 	}
 
 	/**
-	* Deletes the layout with the plid, also deleting the layout's child
-	* layouts, and associated resources.
-	*
-	* @param plid the primary key of the layout
-	* @param serviceContext the service context
-	* @throws PortalException if the user did not have permission to delete the
-	layout, if a layout with the primary key could not be found , or
-	if some other portal exception occurred
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void deleteLayout(long plid,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteLayout(plid, serviceContext);
-	}
-
-	/**
 	* Deletes the layout with the primary key, also deleting the layout's child
 	* layouts, and associated resources.
 	*
@@ -200,6 +182,24 @@ public class LayoutServiceUtil {
 			com.liferay.portal.kernel.exception.SystemException {
 		getService()
 			.deleteLayout(groupId, privateLayout, layoutId, serviceContext);
+	}
+
+	/**
+	* Deletes the layout with the plid, also deleting the layout's child
+	* layouts, and associated resources.
+	*
+	* @param plid the primary key of the layout
+	* @param serviceContext the service context
+	* @throws PortalException if the user did not have permission to delete the
+	layout, if a layout with the primary key could not be found , or
+	if some other portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void deleteLayout(long plid,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteLayout(plid, serviceContext);
 	}
 
 	/**

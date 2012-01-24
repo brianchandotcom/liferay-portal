@@ -36,6 +36,10 @@ public interface LayoutSetBranch extends LayoutSetBranchModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public com.liferay.portal.model.LayoutSet getLayoutSet();
+
+	public long getLiveLogoId();
+
 	public java.lang.String getSettings();
 
 	public com.liferay.portal.kernel.util.UnicodeProperties getSettingsProperties();

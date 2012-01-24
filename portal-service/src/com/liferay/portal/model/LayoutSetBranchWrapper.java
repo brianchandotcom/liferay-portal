@@ -576,6 +576,14 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 		return _layoutSetBranch.getGroup();
 	}
 
+	public com.liferay.portal.model.LayoutSet getLayoutSet() {
+		return _layoutSetBranch.getLayoutSet();
+	}
+
+	public long getLiveLogoId() {
+		return _layoutSetBranch.getLiveLogoId();
+	}
+
 	public com.liferay.portal.kernel.util.UnicodeProperties getSettingsProperties() {
 		return _layoutSetBranch.getSettingsProperties();
 	}

@@ -226,30 +226,6 @@ public class LayoutServiceSoap {
 	}
 
 	/**
-	* Deletes the layout with the plid, also deleting the layout's child
-	* layouts, and associated resources.
-	*
-	* @param plid the primary key of the layout
-	* @param serviceContext the service context
-	* @throws PortalException if the user did not have permission to delete the
-	layout, if a layout with the primary key could not be found , or
-	if some other portal exception occurred
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void deleteLayout(long plid,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws RemoteException {
-		try {
-			LayoutServiceUtil.deleteLayout(plid, serviceContext);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	/**
 	* Deletes the layout with the primary key, also deleting the layout's child
 	* layouts, and associated resources.
 	*
@@ -268,6 +244,30 @@ public class LayoutServiceSoap {
 		try {
 			LayoutServiceUtil.deleteLayout(groupId, privateLayout, layoutId,
 				serviceContext);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Deletes the layout with the plid, also deleting the layout's child
+	* layouts, and associated resources.
+	*
+	* @param plid the primary key of the layout
+	* @param serviceContext the service context
+	* @throws PortalException if the user did not have permission to delete the
+	layout, if a layout with the primary key could not be found , or
+	if some other portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void deleteLayout(long plid,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			LayoutServiceUtil.deleteLayout(plid, serviceContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

@@ -320,6 +320,14 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 	}
 
 	public com.liferay.portal.model.Image updateImage(long imageId,
+		byte[] bytes, java.lang.String type, int height, int width, int size)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _imageLocalService.updateImage(imageId, bytes, type, height,
+			width, size);
+	}
+
+	public com.liferay.portal.model.Image updateImage(long imageId,
 		java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -338,14 +346,6 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _imageLocalService.updateImage(imageId, is, cleanUpStream);
-	}
-
-	public com.liferay.portal.model.Image updateImage(long imageId,
-		byte[] bytes, java.lang.String type, int height, int width, int size)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _imageLocalService.updateImage(imageId, bytes, type, height,
-			width, size);
 	}
 
 	/**

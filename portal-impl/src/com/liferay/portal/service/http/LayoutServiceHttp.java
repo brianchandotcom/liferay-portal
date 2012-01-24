@@ -141,7 +141,8 @@ public class LayoutServiceHttp {
 		}
 	}
 
-	public static void deleteLayout(HttpPrincipal httpPrincipal, long plid,
+	public static void deleteLayout(HttpPrincipal httpPrincipal, long groupId,
+		boolean privateLayout, long layoutId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -149,8 +150,8 @@ public class LayoutServiceHttp {
 			MethodKey methodKey = new MethodKey(LayoutServiceUtil.class.getName(),
 					"deleteLayout", _deleteLayoutParameterTypes2);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, plid,
-					serviceContext);
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					privateLayout, layoutId, serviceContext);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -174,8 +175,7 @@ public class LayoutServiceHttp {
 		}
 	}
 
-	public static void deleteLayout(HttpPrincipal httpPrincipal, long groupId,
-		boolean privateLayout, long layoutId,
+	public static void deleteLayout(HttpPrincipal httpPrincipal, long plid,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -183,8 +183,8 @@ public class LayoutServiceHttp {
 			MethodKey methodKey = new MethodKey(LayoutServiceUtil.class.getName(),
 					"deleteLayout", _deleteLayoutParameterTypes3);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					privateLayout, layoutId, serviceContext);
+			MethodHandler methodHandler = new MethodHandler(methodKey, plid,
+					serviceContext);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -1287,11 +1287,11 @@ public class LayoutServiceHttp {
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteLayoutParameterTypes2 = new Class[] {
-			long.class, com.liferay.portal.service.ServiceContext.class
-		};
-	private static final Class<?>[] _deleteLayoutParameterTypes3 = new Class[] {
 			long.class, boolean.class, long.class,
 			com.liferay.portal.service.ServiceContext.class
+		};
+	private static final Class<?>[] _deleteLayoutParameterTypes3 = new Class[] {
+			long.class, com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _exportLayoutsParameterTypes4 = new Class[] {
 			long.class, boolean.class, long[].class, java.util.Map.class,

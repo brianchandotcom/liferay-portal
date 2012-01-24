@@ -117,6 +117,69 @@ public interface UserService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Adds a user.
+	*
+	* <p>
+	* This method handles the creation and bookkeeping of the user including
+	* its resources, metadata, and internal data structures. It is not
+	* necessary to make subsequent calls to any methods to setup default
+	* groups, resources, etc.
+	* </p>
+	*
+	* @param companyId the primary key of the user's company
+	* @param autoPassword whether a password should be automatically generated
+	for the user
+	* @param password1 the user's password
+	* @param password2 the user's password confirmation
+	* @param autoScreenName whether a screen name should be automatically
+	generated for the user
+	* @param screenName the user's screen name
+	* @param emailAddress the user's email address
+	* @param facebookId the user's facebook ID
+	* @param openId the user's OpenID
+	* @param locale the user's locale
+	* @param firstName the user's first name
+	* @param middleName the user's middle name
+	* @param lastName the user's last name
+	* @param prefixId the user's name prefix ID
+	* @param suffixId the user's name suffix ID
+	* @param male whether the user is male
+	* @param birthdayMonth the user's birthday month (0-based, meaning 0 for
+	January)
+	* @param birthdayDay the user's birthday day
+	* @param birthdayYear the user's birthday year
+	* @param jobTitle the user's job title
+	* @param groupIds the primary keys of the user's groups
+	* @param organizationIds the primary keys of the user's organizations
+	* @param roleIds the primary keys of the roles this user possesses
+	* @param userGroupIds the primary keys of the user's user groups
+	* @param sendEmail whether to send the user an email notification about
+	their new account
+	* @param serviceContext the user's service context (optionally
+	<code>null</code>). Can set the universally unique identifier
+	(with the <code>uuid</code> attribute), asset category IDs, asset
+	tag names, and expando bridge attributes for the user.
+	* @return the new user
+	* @throws PortalException if the user's information was invalid, if the
+	creator did not have permission to add users, or if the email
+	address was reserved
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.User addUser(long companyId,
+		boolean autoPassword, java.lang.String password1,
+		java.lang.String password2, boolean autoScreenName,
+		java.lang.String screenName, java.lang.String emailAddress,
+		long facebookId, java.lang.String openId, java.util.Locale locale,
+		java.lang.String firstName, java.lang.String middleName,
+		java.lang.String lastName, int prefixId, int suffixId, boolean male,
+		int birthdayMonth, int birthdayDay, int birthdayYear,
+		java.lang.String jobTitle, long[] groupIds, long[] organizationIds,
+		long[] roleIds, long[] userGroupIds, boolean sendEmail,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Adds a user with additional parameters.
 	*
 	* <p>
@@ -191,7 +254,21 @@ public interface UserService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Adds a user.
+	* Adds the users to the user group.
+	*
+	* @param userGroupId the primary key of the user group
+	* @param userIds the primary keys of the users
+	* @throws PortalException if a user group or user with the primary could
+	could not be found, or if the current user did not have
+	permission to assign group members
+	* @throws SystemException if a system exception occurred
+	*/
+	public void addUserGroupUsers(long userGroupId, long[] userIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Adds a user with workflow.
 	*
 	* <p>
 	* This method handles the creation and bookkeeping of the user including
@@ -239,7 +316,7 @@ public interface UserService {
 	address was reserved
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.User addUser(long companyId,
+	public com.liferay.portal.model.User addUserWithWorkflow(long companyId,
 		boolean autoPassword, java.lang.String password1,
 		java.lang.String password2, boolean autoScreenName,
 		java.lang.String screenName, java.lang.String emailAddress,
@@ -250,20 +327,6 @@ public interface UserService {
 		java.lang.String jobTitle, long[] groupIds, long[] organizationIds,
 		long[] roleIds, long[] userGroupIds, boolean sendEmail,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Adds the users to the user group.
-	*
-	* @param userGroupId the primary key of the user group
-	* @param userIds the primary keys of the users
-	* @throws PortalException if a user group or user with the primary could
-	could not be found, or if the current user did not have
-	permission to assign group members
-	* @throws SystemException if a system exception occurred
-	*/
-	public void addUserGroupUsers(long userGroupId, long[] userIds)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -337,69 +400,6 @@ public interface UserService {
 		java.util.List<com.liferay.portal.model.Website> websites,
 		java.util.List<com.liferay.portlet.announcements.model.AnnouncementsDelivery> announcementsDelivers,
 		boolean sendEmail,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Adds a user with workflow.
-	*
-	* <p>
-	* This method handles the creation and bookkeeping of the user including
-	* its resources, metadata, and internal data structures. It is not
-	* necessary to make subsequent calls to any methods to setup default
-	* groups, resources, etc.
-	* </p>
-	*
-	* @param companyId the primary key of the user's company
-	* @param autoPassword whether a password should be automatically generated
-	for the user
-	* @param password1 the user's password
-	* @param password2 the user's password confirmation
-	* @param autoScreenName whether a screen name should be automatically
-	generated for the user
-	* @param screenName the user's screen name
-	* @param emailAddress the user's email address
-	* @param facebookId the user's facebook ID
-	* @param openId the user's OpenID
-	* @param locale the user's locale
-	* @param firstName the user's first name
-	* @param middleName the user's middle name
-	* @param lastName the user's last name
-	* @param prefixId the user's name prefix ID
-	* @param suffixId the user's name suffix ID
-	* @param male whether the user is male
-	* @param birthdayMonth the user's birthday month (0-based, meaning 0 for
-	January)
-	* @param birthdayDay the user's birthday day
-	* @param birthdayYear the user's birthday year
-	* @param jobTitle the user's job title
-	* @param groupIds the primary keys of the user's groups
-	* @param organizationIds the primary keys of the user's organizations
-	* @param roleIds the primary keys of the roles this user possesses
-	* @param userGroupIds the primary keys of the user's user groups
-	* @param sendEmail whether to send the user an email notification about
-	their new account
-	* @param serviceContext the user's service context (optionally
-	<code>null</code>). Can set the universally unique identifier
-	(with the <code>uuid</code> attribute), asset category IDs, asset
-	tag names, and expando bridge attributes for the user.
-	* @return the new user
-	* @throws PortalException if the user's information was invalid, if the
-	creator did not have permission to add users, or if the email
-	address was reserved
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.User addUserWithWorkflow(long companyId,
-		boolean autoPassword, java.lang.String password1,
-		java.lang.String password2, boolean autoScreenName,
-		java.lang.String screenName, java.lang.String emailAddress,
-		long facebookId, java.lang.String openId, java.util.Locale locale,
-		java.lang.String firstName, java.lang.String middleName,
-		java.lang.String lastName, int prefixId, int suffixId, boolean male,
-		int birthdayMonth, int birthdayDay, int birthdayYear,
-		java.lang.String jobTitle, long[] groupIds, long[] organizationIds,
-		long[] roleIds, long[] userGroupIds, boolean sendEmail,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

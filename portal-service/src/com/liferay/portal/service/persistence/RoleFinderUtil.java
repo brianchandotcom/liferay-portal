@@ -90,6 +90,12 @@ public class RoleFinderUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.model.Role> findByU_G(
+		long userId, java.util.List<com.liferay.portal.model.Group> groups)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().findByU_G(userId, groups);
+	}
+
+	public static java.util.List<com.liferay.portal.model.Role> findByU_G(
 		long userId, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder().findByU_G(userId, groupId);
@@ -99,12 +105,6 @@ public class RoleFinderUtil {
 		long userId, long[] groupIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder().findByU_G(userId, groupIds);
-	}
-
-	public static java.util.List<com.liferay.portal.model.Role> findByU_G(
-		long userId, java.util.List<com.liferay.portal.model.Group> groups)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder().findByU_G(userId, groups);
 	}
 
 	public static java.util.List<com.liferay.portal.model.Role> findByC_N_D_T(

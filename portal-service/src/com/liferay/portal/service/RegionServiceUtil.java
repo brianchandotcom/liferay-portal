@@ -56,15 +56,15 @@ public class RegionServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.model.Region> getRegions(
-		long countryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getRegions(countryId);
-	}
-
-	public static java.util.List<com.liferay.portal.model.Region> getRegions(
 		boolean active)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getRegions(active);
+	}
+
+	public static java.util.List<com.liferay.portal.model.Region> getRegions(
+		long countryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getRegions(countryId);
 	}
 
 	public static java.util.List<com.liferay.portal.model.Region> getRegions(

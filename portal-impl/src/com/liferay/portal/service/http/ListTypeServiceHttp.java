@@ -121,7 +121,7 @@ public class ListTypeServiceHttp {
 	}
 
 	public static void validate(HttpPrincipal httpPrincipal, int listTypeId,
-		java.lang.String type)
+		long classNameId, java.lang.String type)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -129,7 +129,7 @@ public class ListTypeServiceHttp {
 					"validate", _validateParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					listTypeId, type);
+					listTypeId, classNameId, type);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -154,7 +154,7 @@ public class ListTypeServiceHttp {
 	}
 
 	public static void validate(HttpPrincipal httpPrincipal, int listTypeId,
-		long classNameId, java.lang.String type)
+		java.lang.String type)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -162,7 +162,7 @@ public class ListTypeServiceHttp {
 					"validate", _validateParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					listTypeId, classNameId, type);
+					listTypeId, type);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -194,9 +194,9 @@ public class ListTypeServiceHttp {
 			java.lang.String.class
 		};
 	private static final Class<?>[] _validateParameterTypes2 = new Class[] {
-			int.class, java.lang.String.class
+			int.class, long.class, java.lang.String.class
 		};
 	private static final Class<?>[] _validateParameterTypes3 = new Class[] {
-			int.class, long.class, java.lang.String.class
+			int.class, java.lang.String.class
 		};
 }

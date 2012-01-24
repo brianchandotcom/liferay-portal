@@ -92,10 +92,10 @@ public class ListTypeServiceSoap {
 		}
 	}
 
-	public static void validate(int listTypeId, java.lang.String type)
-		throws RemoteException {
+	public static void validate(int listTypeId, long classNameId,
+		java.lang.String type) throws RemoteException {
 		try {
-			ListTypeServiceUtil.validate(listTypeId, type);
+			ListTypeServiceUtil.validate(listTypeId, classNameId, type);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -104,10 +104,10 @@ public class ListTypeServiceSoap {
 		}
 	}
 
-	public static void validate(int listTypeId, long classNameId,
-		java.lang.String type) throws RemoteException {
+	public static void validate(int listTypeId, java.lang.String type)
+		throws RemoteException {
 		try {
-			ListTypeServiceUtil.validate(listTypeId, classNameId, type);
+			ListTypeServiceUtil.validate(listTypeId, type);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

@@ -49,17 +49,17 @@ public class ListTypeServiceUtil {
 		return getService().getListTypes(type);
 	}
 
-	public static void validate(int listTypeId, java.lang.String type)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		getService().validate(listTypeId, type);
-	}
-
 	public static void validate(int listTypeId, long classNameId,
 		java.lang.String type)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().validate(listTypeId, classNameId, type);
+	}
+
+	public static void validate(int listTypeId, java.lang.String type)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().validate(listTypeId, type);
 	}
 
 	public static ListTypeService getService() {

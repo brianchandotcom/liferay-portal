@@ -109,9 +109,9 @@ public class RegionServiceSoap {
 	}
 
 	public static com.liferay.portal.model.RegionSoap[] getRegions(
-		long countryId) throws RemoteException {
+		boolean active) throws RemoteException {
 		try {
-			java.util.List<com.liferay.portal.model.Region> returnValue = RegionServiceUtil.getRegions(countryId);
+			java.util.List<com.liferay.portal.model.Region> returnValue = RegionServiceUtil.getRegions(active);
 
 			return com.liferay.portal.model.RegionSoap.toSoapModels(returnValue);
 		}
@@ -123,9 +123,9 @@ public class RegionServiceSoap {
 	}
 
 	public static com.liferay.portal.model.RegionSoap[] getRegions(
-		boolean active) throws RemoteException {
+		long countryId) throws RemoteException {
 		try {
-			java.util.List<com.liferay.portal.model.Region> returnValue = RegionServiceUtil.getRegions(active);
+			java.util.List<com.liferay.portal.model.Region> returnValue = RegionServiceUtil.getRegions(countryId);
 
 			return com.liferay.portal.model.RegionSoap.toSoapModels(returnValue);
 		}

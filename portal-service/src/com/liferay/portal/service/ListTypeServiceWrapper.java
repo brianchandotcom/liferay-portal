@@ -41,16 +41,16 @@ public class ListTypeServiceWrapper implements ListTypeService,
 		return _listTypeService.getListTypes(type);
 	}
 
-	public void validate(int listTypeId, java.lang.String type)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_listTypeService.validate(listTypeId, type);
-	}
-
 	public void validate(int listTypeId, long classNameId, java.lang.String type)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_listTypeService.validate(listTypeId, classNameId, type);
+	}
+
+	public void validate(int listTypeId, java.lang.String type)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_listTypeService.validate(listTypeId, type);
 	}
 
 	/**

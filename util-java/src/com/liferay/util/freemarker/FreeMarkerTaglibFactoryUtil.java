@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.memory.FinalizeAction;
 import com.liferay.portal.kernel.memory.FinalizeManager;
+import com.liferay.portal.kernel.util.ContextPathUtil;
 
 import freemarker.ext.jsp.TaglibFactory;
 
@@ -57,7 +58,8 @@ public class FreeMarkerTaglibFactoryUtil implements CacheRegistryItem {
 		if (_instance == null) {
 			synchronized(FreeMarkerTaglibFactoryUtil.class) {
 				if (_instance == null) {
-					String contextPath = servletContext.getContextPath();
+					String contextPath = ContextPathUtil.getContextPath(
+						servletContext);
 
 					// First call within current class loader
 

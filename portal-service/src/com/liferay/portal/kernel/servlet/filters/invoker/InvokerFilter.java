@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.concurrent.ConcurrentLRUCache;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
+import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -75,7 +76,7 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 
 		ServletContext servletContext = _filterConfig.getServletContext();
 
-		_contextPath = servletContext.getContextPath();
+		_contextPath = ContextPathUtil.getContextPath(servletContext);
 
 		boolean registerPortalLifecycle = GetterUtil.getBoolean(
 			_filterConfig.getInitParameter("register-portal-lifecycle"), true);

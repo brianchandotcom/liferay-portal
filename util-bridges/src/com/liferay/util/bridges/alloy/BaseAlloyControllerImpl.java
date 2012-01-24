@@ -108,8 +108,38 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		}
 	}
 
+	public ThemeDisplay getThemeDisplay() {
+		return themeDisplay;
+	}
+
+	public long increment() throws Exception {
+		return CounterLocalServiceUtil.increment();
+	}
+
 	public void setPageContext(PageContext pageContext) {
 		this.pageContext = pageContext;
+	}
+
+	public void updateModel(BaseModel<?> baseModel) throws Exception {
+		BeanPropertiesUtil.setProperties(baseModel, request);
+
+		if (baseModel.isNew()) {
+			baseModel.setPrimaryKeyObj(increment());
+		}
+
+		updateAuditedModel(baseModel);
+		updateGroupedModel(baseModel);
+		updateAttachedModel(baseModel);
+
+		if (baseModel instanceof PersistedModel) {
+			PersistedModel persistedModel = (PersistedModel)baseModel;
+
+			persistedModel.persist();
+		}
+
+		if (indexer != null) {
+			indexer.reindex(baseModel);
+		}
 	}
 
 	protected void addSuccessMessage() {
@@ -214,10 +244,6 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		}
 
 		return sb.toString();
-	}
-
-	protected long increment() throws Exception {
-		return CounterLocalServiceUtil.increment();
 	}
 
 	protected long increment(String name) throws Exception {
@@ -441,28 +467,6 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		GroupedModel groupedModel = (GroupedModel)baseModel;
 
 		groupedModel.setGroupId(themeDisplay.getScopeGroupId());
-	}
-
-	protected void updateModel(BaseModel<?> baseModel) throws Exception {
-		BeanPropertiesUtil.setProperties(baseModel, request);
-
-		if (baseModel.isNew()) {
-			baseModel.setPrimaryKeyObj(increment());
-		}
-
-		updateAuditedModel(baseModel);
-		updateGroupedModel(baseModel);
-		updateAttachedModel(baseModel);
-
-		if (baseModel instanceof PersistedModel) {
-			PersistedModel persistedModel = (PersistedModel)baseModel;
-
-			persistedModel.persist();
-		}
-
-		if (indexer != null) {
-			indexer.reindex(baseModel);
-		}
 	}
 
 	protected void writeJSON(Object json) throws Exception {

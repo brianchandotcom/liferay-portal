@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-menu',
 	function(A) {
 		var Lang = A.Lang;
@@ -216,7 +216,7 @@ AUI().add(
 					}
 				}
 
-				instance._getFocusManager().refresh();
+				instance._getFocusManager();
 
 				return menu;
 			},
@@ -384,7 +384,7 @@ AUI().add(
 								next: 'down:40',
 								previous: 'down:38'
 							}
-						 }
+						}
 					);
 
 					bodyNode.on(
@@ -429,7 +429,8 @@ AUI().add(
 
 				focusManager.refresh();
 			},
-			['node-focusmanager']
+			['node-focusmanager'],
+			true
 		);
 
 		Liferay.provide(
@@ -485,7 +486,8 @@ AUI().add(
 					menu._liveSearch = liveSearch;
 				}
 			},
-			['aui-live-search']
+			['aui-live-search'],
+			true
 		);
 
 		Liferay.provide(

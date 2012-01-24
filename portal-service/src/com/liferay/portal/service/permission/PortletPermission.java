@@ -21,6 +21,7 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.PermissionChecker;
 
 import java.util.Collection;
+
 import javax.portlet.PortletMode;
 
 /**

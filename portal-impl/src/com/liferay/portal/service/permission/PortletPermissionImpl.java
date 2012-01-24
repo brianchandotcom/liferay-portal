@@ -32,13 +32,13 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletCategoryKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.util.Collection;
 import java.util.List;
+
 import javax.portlet.PortletMode;
 
 /**
@@ -444,12 +444,7 @@ public class PortletPermissionImpl implements PortletPermission {
 				ActionKeys.PREFERENCES);
 		}
 
-		if (access) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return access;
 	}
 
 	public boolean hasLayoutManagerPermission(

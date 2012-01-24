@@ -1549,6 +1549,8 @@ public interface PropsKeys {
 
 	public static final String PERMISSIONS_INLINE_SQL_CHECK_ENABLED = "permissions.inline.sql.check.enabled";
 
+	public static final String PERMISSIONS_LAYOUT_PUBLIC_CHECK_GUEST_ENABLED = "permissions.layout.check.guest.enabled";
+
 	public static final String PERMISSIONS_LIST_FILTER = "permissions.list.filter";
 
 	public static final String PERMISSIONS_OBJECT_BLOCKING_CACHE = "permissions.object.blocking.cache";

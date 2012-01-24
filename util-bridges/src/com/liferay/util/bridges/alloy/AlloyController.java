@@ -14,6 +14,9 @@
 
 package com.liferay.util.bridges.alloy;
 
+import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.theme.ThemeDisplay;
+
 import javax.servlet.jsp.PageContext;
 
 /**
@@ -25,6 +28,12 @@ public interface AlloyController {
 
 	public void execute() throws Exception;
 
+	public ThemeDisplay getThemeDisplay();
+
+	public long increment() throws Exception;
+
 	public void setPageContext(PageContext pageContext);
+
+	public void updateModel(BaseModel<?> baseModel) throws Exception;
 
 }

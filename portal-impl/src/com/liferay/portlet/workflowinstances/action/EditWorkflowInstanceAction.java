@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.WorkflowInstanceLinkLocalServiceUtil;
 import com.liferay.portal.struts.PortletAction;
@@ -60,18 +58,14 @@ public class EditWorkflowInstanceAction extends PortletAction {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
-			String redirect = null;
-
 			if (cmd.equals(Constants.DELETE)) {
-				redirect = deleteInstance(actionRequest);
+				deleteInstance(actionRequest);
 			}
 			else if (cmd.equals(Constants.SIGNAL)) {
 				signalInstance(actionRequest);
 			}
 
-			if (redirect == null) {
-				redirect = ParamUtil.getString(actionRequest, "redirect");
-			}
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 			sendRedirect(actionRequest, actionResponse, redirect);
 		}
@@ -116,7 +110,7 @@ public class EditWorkflowInstanceAction extends PortletAction {
 		return mapping.findForward(forward);
 	}
 
-	protected String deleteInstance(ActionRequest actionRequest)
+	protected void deleteInstance(ActionRequest actionRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -134,8 +128,6 @@ public class EditWorkflowInstanceAction extends PortletAction {
 
 		long companyId = GetterUtil.getLong(
 			workflowContext.get(WorkflowConstants.CONTEXT_COMPANY_ID));
-		long userId = GetterUtil.getLong(
-			workflowContext.get(WorkflowConstants.CONTEXT_USER_ID));
 		long groupId = GetterUtil.getLong(
 			workflowContext.get(WorkflowConstants.CONTEXT_GROUP_ID));
 		String className = GetterUtil.getString(
@@ -151,19 +143,6 @@ public class EditWorkflowInstanceAction extends PortletAction {
 
 		WorkflowInstanceLinkLocalServiceUtil.deleteWorkflowInstanceLink(
 			companyId, groupId, className, classPK);
-
-		Layout layout = themeDisplay.getLayout();
-
-		Group layoutGroup = layout.getGroup();
-
-		if (layoutGroup.isControlPanel() &&
-			(WorkflowInstanceManagerUtil.getWorkflowInstanceCount(
-				companyId, userId, null, null, Boolean.FALSE) == 0)) {
-
-			return themeDisplay.getURLControlPanel();
-		}
-
-		return null;
 	}
 
 	@Override

@@ -177,15 +177,15 @@ public class EditEntryAction extends PortletAction {
 		long[] folderIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "folderIds"), 0L);
 
-		for (int i = 0; i < folderIds.length; i++) {
-			DLAppServiceUtil.lockFolder(repositoryId, folderIds[i]);
+		for (long folderId : folderIds) {
+			DLAppServiceUtil.lockFolder(repositoryId, folderId);
 		}
 
 		long[] fileEntryIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "fileEntryIds"), 0L);
 
-		for (int i = 0; i < fileEntryIds.length; i++) {
-			DLAppServiceUtil.cancelCheckOut(fileEntryIds[i]);
+		for (long fileEntryId : fileEntryIds) {
+			DLAppServiceUtil.cancelCheckOut(fileEntryId);
 		}
 	}
 
@@ -197,8 +197,8 @@ public class EditEntryAction extends PortletAction {
 		long[] folderIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "folderIds"), 0L);
 
-		for (int i = 0; i < folderIds.length; i++) {
-			DLAppServiceUtil.unlockFolder(repositoryId, folderIds[i], null);
+		for (long folderId : folderIds) {
+			DLAppServiceUtil.unlockFolder(repositoryId, folderId, null);
 		}
 
 		long[] fileEntryIds = StringUtil.split(
@@ -207,9 +207,9 @@ public class EditEntryAction extends PortletAction {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		for (int i = 0; i < fileEntryIds.length; i++) {
+		for (long fileEntryId : fileEntryIds) {
 			DLAppServiceUtil.checkInFileEntry(
-				fileEntryIds[i], false, StringPool.BLANK, serviceContext);
+				fileEntryId, false, StringPool.BLANK, serviceContext);
 		}
 	}
 
@@ -221,15 +221,15 @@ public class EditEntryAction extends PortletAction {
 		long[] folderIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "folderIds"), 0L);
 
-		for (int i = 0; i < folderIds.length; i++) {
-			DLAppServiceUtil.lockFolder(repositoryId, folderIds[i]);
+		for (long folderId : folderIds) {
+			DLAppServiceUtil.lockFolder(repositoryId, folderId);
 		}
 
 		long[] fileEntryIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "fileEntryIds"), 0L);
 
-		for (int i = 0; i < fileEntryIds.length; i++) {
-			DLAppServiceUtil.checkOutFileEntry(fileEntryIds[i]);
+		for (long fileEntryId : fileEntryIds) {
+			DLAppServiceUtil.checkOutFileEntry(fileEntryId);
 		}
 	}
 
@@ -239,8 +239,8 @@ public class EditEntryAction extends PortletAction {
 		long[] deleteFolderIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "folderIds"), 0L);
 
-		for (int i = 0; i < deleteFolderIds.length; i++) {
-			DLAppServiceUtil.deleteFolder(deleteFolderIds[i]);
+		for (long deleteFolderId : deleteFolderIds) {
+			DLAppServiceUtil.deleteFolder(deleteFolderId);
 		}
 
 		// Delete file shortcuts before file entries. See LPS-21348.
@@ -248,15 +248,15 @@ public class EditEntryAction extends PortletAction {
 		long[] deleteFileShortcutIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "fileShortcutIds"), 0L);
 
-		for (int i = 0; i < deleteFileShortcutIds.length; i++) {
-			DLAppServiceUtil.deleteFileShortcut(deleteFileShortcutIds[i]);
+		for (long deleteFileShortcutId : deleteFileShortcutIds) {
+			DLAppServiceUtil.deleteFileShortcut(deleteFileShortcutId);
 		}
 
 		long[] deleteFileEntryIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "fileEntryIds"), 0L);
 
-		for (int i = 0; i < deleteFileEntryIds.length; i++) {
-			DLAppServiceUtil.deleteFileEntry(deleteFileEntryIds[i]);
+		for (long deleteFileEntryId : deleteFileEntryIds) {
+			DLAppServiceUtil.deleteFileEntry(deleteFileEntryId);
 		}
 	}
 
@@ -271,31 +271,32 @@ public class EditEntryAction extends PortletAction {
 		long[] folderIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "folderIds"), 0L);
 
-		for (int i = 0; i < folderIds.length; i++) {
-			DLAppServiceUtil.moveFolder(
-				folderIds[i], newFolderId, serviceContext);
+		for (long folderId : folderIds) {
+			DLAppServiceUtil.moveFolder(folderId, newFolderId, serviceContext);
 		}
 
 		long[] fileEntryIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "fileEntryIds"), 0L);
 
-		for (int i = 0; i < fileEntryIds.length; i++) {
+		for (long fileEntryId : fileEntryIds) {
 			DLAppServiceUtil.moveFileEntry(
-				fileEntryIds[i], newFolderId, serviceContext);
+				fileEntryId, newFolderId, serviceContext);
 		}
 
 		long[] fileShortcutIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "fileShortcutIds"), 0L);
 
-		for (int i = 0; i < fileShortcutIds.length; i++) {
-			if (fileShortcutIds[i] > 0) {
-				DLFileShortcut fileShortcut =
-					DLAppServiceUtil.getFileShortcut(fileShortcutIds[i]);
-
-				DLAppServiceUtil.updateFileShortcut(
-					fileShortcutIds[i], newFolderId,
-					fileShortcut.getToFileEntryId(), serviceContext);
+		for (long fileShortcutId : fileShortcutIds) {
+			if (fileShortcutId == 0) {
+				continue;
 			}
+
+			DLFileShortcut fileShortcut = DLAppServiceUtil.getFileShortcut(
+				fileShortcutId);
+
+			DLAppServiceUtil.updateFileShortcut(
+				fileShortcutId, newFolderId, fileShortcut.getToFileEntryId(),
+				serviceContext);
 		}
 	}
 

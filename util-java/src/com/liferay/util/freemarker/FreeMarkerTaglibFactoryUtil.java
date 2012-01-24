@@ -58,8 +58,8 @@ public class FreeMarkerTaglibFactoryUtil implements CacheRegistryItem {
 		if (_instance == null) {
 			synchronized(FreeMarkerTaglibFactoryUtil.class) {
 				if (_instance == null) {
-					String contextPath =
-						ContextPathUtil.getContextPath(servletContext);
+					String contextPath = ContextPathUtil.getContextPath(
+						servletContext);
 
 					// First call within current class loader
 

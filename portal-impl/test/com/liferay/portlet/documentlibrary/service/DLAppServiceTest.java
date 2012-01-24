@@ -160,6 +160,8 @@ public class DLAppServiceTest extends BaseServiceTestCase {
 
 		try {
 			addFileEntry(true);
+
+			DLAppServiceUtil.deleteFileEntry(_fileEntry.getFileEntryId());
 		}
 		catch (DuplicateFileException dfe) {
 			fail(
@@ -167,7 +169,41 @@ public class DLAppServiceTest extends BaseServiceTestCase {
 					"folders");
 		}
 
-		DLAppServiceUtil.deleteFileEntry(_fileEntry.getFileEntryId());
+		try {
+			addFileEntry(false, "Title.txt", "Title");
+
+			fail(
+				"Able to add two files with the same title (without " +
+					"considering the extension)");
+		}
+		catch (DuplicateFileException dfe) {
+		}
+
+		try {
+			addFileEntry(false, "Title", "Title.txt");
+
+			fail(
+				"Able to add two files with the same title (without " +
+					"considering the extension)");
+		}
+		catch (DuplicateFileException dfe) {
+		}
+
+		FileEntry fileEntry = null;
+
+		try {
+			fileEntry = addFileEntry(true, "Title.txt", "Title");
+
+			addFileEntry(true, "Title.txt", "Title.txt");
+
+			fail(
+				"Able to add two files with the same title (without " +
+					"considering the extension)");
+		}
+		catch (DuplicateFileException dfe) {
+		}
+
+		DLAppServiceUtil.deleteFileEntry(fileEntry.getFileEntryId());
 
 		_fileEntry = null;
 	}
@@ -388,6 +424,13 @@ public class DLAppServiceTest extends BaseServiceTestCase {
 	protected FileEntry addFileEntry(boolean rootFolder, String fileName)
 		throws Exception {
 
+		return addFileEntry(rootFolder, fileName, fileName);
+	}
+
+	protected FileEntry addFileEntry(
+			boolean rootFolder, String fileName, String title)
+		throws Exception {
+
 		long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
 		if (!rootFolder) {
@@ -406,7 +449,7 @@ public class DLAppServiceTest extends BaseServiceTestCase {
 
 		return DLAppServiceUtil.addFileEntry(
 			TestPropsValues.getGroupId(), folderId, fileName,
-			ContentTypes.TEXT_PLAIN, fileName, description, changeLog, bytes,
+			ContentTypes.TEXT_PLAIN, title, description, changeLog, bytes,
 			serviceContext);
 	}
 

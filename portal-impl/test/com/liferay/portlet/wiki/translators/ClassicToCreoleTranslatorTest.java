@@ -242,7 +242,7 @@ public class ClassicToCreoleTranslatorTest extends BaseTestCase {
 		assertEquals(expected, actual);
 	}
 
-	public String _translate(String content) {
+	private String _translate(String content) {
 		return _translator.translate(content);
 	}
 

@@ -86,7 +86,7 @@ public class HtmlEngine implements WikiEngine {
 		return true;
 	}
 
-	protected Map<String, Boolean> _getOutgoingLinks(WikiPage page)
+	private Map<String, Boolean> _getOutgoingLinks(WikiPage page)
 		throws Exception {
 
 		if (Validator.isNull(page.getContent())) {

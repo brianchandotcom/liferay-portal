@@ -717,6 +717,13 @@ public class SeleneseToJavaBuilder {
 				sb.append(param3);
 				sb.append(");");
 			}
+			else if (param1.equals("storeChecked")) {
+				sb.append("boolean ");
+				sb.append(param3);
+				sb.append(" = selenium.isChecked(\"");
+				sb.append(param2);
+				sb.append("\");");
+			}
 			else if (param1.equals("storeCurrentDay")) {
 				sb.append("String ");
 				sb.append(param2);

@@ -29,7 +29,7 @@ WikiPage wikiPage = (WikiPage)row.getObject();
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.REVERT %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
-			<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
+			<portlet:param name="title" value="<%= HtmlUtil.unescape(wikiPage.getTitle()) %>" />
 			<portlet:param name="version" value="<%= String.valueOf(wikiPage.getVersion()) %>" />
 		</portlet:actionURL>
 

@@ -80,6 +80,16 @@ public class LayoutSetBranchImpl extends LayoutSetBranchBaseImpl {
 		return _layoutSet;
 	}
 
+	public long getLiveLogoId() {
+		long logoId = getLayoutSet().getLogoId();
+
+		if (logoId == 0) {
+			logoId = getLayoutSet().getLiveLogoId();
+		}
+
+		return logoId;
+	}
+
 	@Override
 	public String getSettings() {
 		if (_settingsProperties == null) {
@@ -109,16 +119,6 @@ public class LayoutSetBranchImpl extends LayoutSetBranchBaseImpl {
 		UnicodeProperties settingsProperties = getSettingsProperties();
 
 		return settingsProperties.getProperty(key);
-	}
-
-	public long getStagingLogoId() {
-		long logoId = getLayoutSet().getLogoId();
-
-		if (logoId == 0) {
-			logoId = getLayoutSet().getStagingLogoId();
-		}
-
-		return logoId;
 	}
 
 	public Theme getTheme() throws SystemException {

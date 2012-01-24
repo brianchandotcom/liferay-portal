@@ -66,7 +66,7 @@ LayoutSet selLayoutSet = ((LayoutSet)request.getAttribute("edit_pages.jsp-selLay
 		long logoId = selLayoutSet.getLogoId();
 
 		if (logoId == 0) {
-			logoId = selLayoutSet.getStagingLogoId();
+			logoId = selLayoutSet.getLiveLogoId();
 		}
 		%>
 

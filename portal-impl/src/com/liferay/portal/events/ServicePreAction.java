@@ -537,7 +537,7 @@ public class ServicePreAction extends Action {
 					logoId = layoutSet.getLogoId();
 
 					if (logoId == 0) {
-						logoId = layoutSet.getStagingLogoId();
+						logoId = layoutSet.getLiveLogoId();
 					}
 				}
 				else {

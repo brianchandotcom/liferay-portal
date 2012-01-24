@@ -57,6 +57,36 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 		return GroupLocalServiceUtil.getGroup(getGroupId());
 	}
 
+	public long getLiveLogoId() {
+		long logoId = 0;
+
+		Group group = null;
+
+		try {
+			group = getGroup();
+
+			if (!group.isStagingGroup()) {
+				return logoId;
+			}
+		}
+		catch (Exception e) {
+			return logoId;
+		}
+
+		Group liveGroup = group.getLiveGroup();
+
+		LayoutSet liveLayoutSet = null;
+
+		if (isPrivateLayout()) {
+			liveLayoutSet = liveGroup.getPrivateLayoutSet();
+		}
+		else {
+			liveLayoutSet = liveGroup.getPublicLayoutSet();
+		}
+
+		return liveLayoutSet.getLogoId();
+	}
+
 	@Override
 	public String getSettings() {
 		if (_settingsProperties == null) {
@@ -86,36 +116,6 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 		UnicodeProperties settingsProperties = getSettingsProperties();
 
 		return settingsProperties.getProperty(key);
-	}
-
-	public long getStagingLogoId() {
-		long logoId = 0;
-
-		Group group = null;
-
-		try {
-			group = getGroup();
-
-			if (!group.isStagingGroup()) {
-				return logoId;
-			}
-		}
-		catch (Exception e) {
-			return logoId;
-		}
-
-		Group liveGroup = group.getLiveGroup();
-
-		LayoutSet liveLayoutSet = null;
-
-		if (isPrivateLayout()) {
-			liveLayoutSet = liveGroup.getPrivateLayoutSet();
-		}
-		else {
-			liveLayoutSet = liveGroup.getPublicLayoutSet();
-		}
-
-		return liveLayoutSet.getLogoId();
 	}
 
 	public String getThemeSetting(String key, String device)

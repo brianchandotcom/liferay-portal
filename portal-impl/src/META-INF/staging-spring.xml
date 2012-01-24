@@ -9,9 +9,11 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
 	<bean id="com.liferay.portal.service.impl.LayoutLocalServiceStagingAdvice" class="com.liferay.portal.service.impl.LayoutLocalServiceStagingAdvice" />
+	<bean id="com.liferay.portal.service.impl.LayoutSetLocalServiceStagingAdvice" class="com.liferay.portal.service.impl.LayoutSetLocalServiceStagingAdvice" />
 	<bean id="com.liferay.portal.service.impl.PortletPreferencesLocalServiceStagingAdvice" class="com.liferay.portal.service.impl.PortletPreferencesLocalServiceStagingAdvice" />
 	<aop:config proxy-target-class="false">
 		<aop:advisor advice-ref="com.liferay.portal.service.impl.LayoutLocalServiceStagingAdvice" pointcut="bean(com.liferay.portal.service.LayoutLocalService)" />
+		<aop:advisor advice-ref="com.liferay.portal.service.impl.LayoutSetLocalServiceStagingAdvice" pointcut="bean(com.liferay.portal.service.LayoutSetLocalService)" />
 		<aop:advisor advice-ref="com.liferay.portal.service.impl.PortletPreferencesLocalServiceStagingAdvice" pointcut="bean(com.liferay.portal.service.PortletPreferencesLocalService)" />
 	</aop:config>
 </beans>

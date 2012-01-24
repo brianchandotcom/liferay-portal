@@ -21,6 +21,9 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutRevision;
+import com.liferay.portal.model.LayoutSet;
+import com.liferay.portal.model.LayoutSetBranch;
+import com.liferay.portal.model.LayoutSetStagingHandler;
 import com.liferay.portal.model.LayoutStagingHandler;
 
 import java.lang.reflect.InvocationHandler;
@@ -41,6 +44,17 @@ public class LayoutStagingImpl implements LayoutStaging {
 		return layoutStagingHandler.getLayoutRevision();
 	}
 
+	public LayoutSetBranch getLayoutSetBranch(LayoutSet layoutSet) {
+		LayoutSetStagingHandler layoutSetStagingHandler =
+			getLayoutSetStagingHandler(layoutSet);
+
+		if (layoutSetStagingHandler == null) {
+			return null;
+		}
+
+		return layoutSetStagingHandler.getLayoutSetBranch();
+	}
+
 	public LayoutStagingHandler getLayoutStagingHandler(Layout layout) {
 		if (!ProxyUtil.isProxyClass(layout.getClass())) {
 			return null;
@@ -54,6 +68,23 @@ public class LayoutStagingImpl implements LayoutStaging {
 		}
 
 		return (LayoutStagingHandler)invocationHandler;
+	}
+
+	public LayoutSetStagingHandler getLayoutSetStagingHandler(
+		LayoutSet layoutSet) {
+
+		if (!ProxyUtil.isProxyClass(layoutSet.getClass())) {
+			return null;
+		}
+
+		InvocationHandler invocationHandler = ProxyUtil.getInvocationHandler(
+			layoutSet);
+
+		if (!(invocationHandler instanceof LayoutSetStagingHandler)) {
+			return null;
+		}
+
+		return (LayoutSetStagingHandler)invocationHandler;
 	}
 
 	public boolean isBranchingLayout(Layout layout) {

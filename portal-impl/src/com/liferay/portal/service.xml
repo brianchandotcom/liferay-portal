@@ -785,6 +785,16 @@
 		<column name="name" type="String" />
 		<column name="description" type="String" />
 		<column name="master" type="boolean" />
+		<column name="logo" type="boolean" />
+		<column name="logoId" type="long" />
+		<column name="themeId" type="String" />
+		<column name="colorSchemeId" type="String" />
+		<column name="wapThemeId" type="String" />
+		<column name="wapColorSchemeId" type="String" />
+		<column name="css" type="String" />
+		<column name="settings" type="String" />
+		<column name="layoutSetPrototypeUuid" type="String" />
+		<column name="layoutSetPrototypeLinkEnabled" type="boolean" />
 
 		<!-- Order -->
 

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.Image;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutBranch;
 import com.liferay.portal.model.LayoutBranchConstants;
@@ -42,6 +43,7 @@ import java.util.List;
 /**
  * @author Raymond Augé
  * @author Brian Wing Shun Chan
+ * @author Julio Camarero
  */
 public class LayoutSetBranchLocalServiceImpl
 	extends LayoutSetBranchLocalServiceBaseImpl {
@@ -59,6 +61,42 @@ public class LayoutSetBranchLocalServiceImpl
 
 		validate(0, groupId, privateLayout, name, master);
 
+		boolean logo = false;
+		long logoId = 0;
+		String themeId = null;
+		String colorSchemeId = null;
+		String wapThemeId = null;
+		String wapColorSchemeId = null;
+		String css = null;
+		String settings = null;
+
+		if (copyLayoutSetBranchId > 0) {
+			LayoutSetBranch copyLayoutSetBranch = getLayoutSetBranch(
+				copyLayoutSetBranchId);
+
+			logo = copyLayoutSetBranch.getLogo();
+			logoId = copyLayoutSetBranch.getLogoId();
+			themeId = copyLayoutSetBranch.getThemeId();
+			colorSchemeId = copyLayoutSetBranch.getColorSchemeId();
+			wapThemeId = copyLayoutSetBranch.getWapThemeId();
+			wapColorSchemeId = copyLayoutSetBranch.getWapColorSchemeId();
+			css = copyLayoutSetBranch.getCss();
+			settings = copyLayoutSetBranch.getSettings();
+		}
+		else {
+			LayoutSet layoutSet = layoutSetLocalService.getLayoutSet(
+				groupId, privateLayout);
+
+			logo = layoutSet.getLogo();
+			logoId = layoutSet.getLogoId();
+			themeId = layoutSet.getThemeId();
+			colorSchemeId = layoutSet.getColorSchemeId();
+			wapThemeId = layoutSet.getWapThemeId();
+			wapColorSchemeId = layoutSet.getWapColorSchemeId();
+			css = layoutSet.getCss();
+			settings = layoutSet.getSettings();
+		}
+
 		long layoutSetBranchId = counterLocalService.increment();
 
 		LayoutSetBranch layoutSetBranch = layoutSetBranchPersistence.create(
@@ -74,6 +112,29 @@ public class LayoutSetBranchLocalServiceImpl
 		layoutSetBranch.setName(name);
 		layoutSetBranch.setDescription(description);
 		layoutSetBranch.setMaster(master);
+
+		layoutSetBranch.setLogo(logo);
+		layoutSetBranch.setLogoId(logoId);
+
+		if (logo) {
+			Image originalLogo = imageLocalService.getImage(logoId);
+
+			long layoutSetBranchLogoId = counterLocalService.increment();
+
+			imageLocalService.updateImage(
+				layoutSetBranchLogoId, originalLogo.getTextObj(),
+				originalLogo.getType(), originalLogo.getHeight(),
+				originalLogo.getWidth(), originalLogo.getSize());
+
+			layoutSetBranch.setLogoId(layoutSetBranchLogoId);
+		}
+
+		layoutSetBranch.setThemeId(themeId);
+		layoutSetBranch.setColorSchemeId(colorSchemeId);
+		layoutSetBranch.setWapThemeId(wapThemeId);
+		layoutSetBranch.setWapColorSchemeId(wapColorSchemeId);
+		layoutSetBranch.setCss(css);
+		layoutSetBranch.setSettings(settings);
 
 		layoutSetBranchPersistence.update(layoutSetBranch, false);
 
@@ -270,18 +331,22 @@ public class LayoutSetBranchLocalServiceImpl
 	}
 
 	public LayoutSetBranch getUserLayoutSetBranch(
-			long userId, long groupId, boolean privateLayout,
+			long userId, long groupId, boolean privateLayout, long layoutSetId,
 			long layoutSetBranchId)
 		throws PortalException, SystemException {
 
 		if (layoutSetBranchId <= 0) {
 			User user = userPersistence.findByPrimaryKey(userId);
 
-			LayoutSet layoutSet = layoutSetLocalService.getLayoutSet(
-				groupId, privateLayout);
+			if (layoutSetId <= 0) {
+				LayoutSet layoutSet = layoutSetLocalService.getLayoutSet(
+					groupId, privateLayout);
+
+				layoutSetId = layoutSet.getLayoutSetId();
+			}
 
 			layoutSetBranchId = StagingUtil.getRecentLayoutSetBranchId(
-				user, layoutSet.getLayoutSetId());
+				user, layoutSetId);
 		}
 
 		if (layoutSetBranchId > 0) {

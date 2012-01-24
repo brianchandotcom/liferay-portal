@@ -150,10 +150,13 @@ public class LayoutStagingHandler implements InvocationHandler {
 		long layoutSetBranchId = ParamUtil.getLong(
 			serviceContext, "layoutSetBranchId");
 
+		LayoutSet layoutSet = layout.getLayoutSet();
+
 		LayoutSetBranch layoutSetBranch =
 			LayoutSetBranchLocalServiceUtil.getUserLayoutSetBranch(
 				serviceContext.getUserId(), layout.getGroupId(),
-				layout.isPrivateLayout(), layoutSetBranchId);
+				layout.isPrivateLayout(), layoutSet.getLayoutSetId(),
+				layoutSetBranchId);
 
 		layoutSetBranchId = layoutSetBranch.getLayoutSetBranchId();
 

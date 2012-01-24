@@ -31,7 +31,6 @@ import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.VirtualHost;
 import com.liferay.portal.model.impl.ColorSchemeImpl;
 import com.liferay.portal.model.impl.ThemeImpl;
-import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.LayoutSetLocalServiceBaseImpl;
 import com.liferay.portal.util.PrefsPropsUtil;
@@ -85,12 +84,12 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			layoutSet.setLogoId(liveLayoutSet.getLogoId());
 
 			if (liveLayoutSet.isLogo()) {
-				Image liveLogo = ImageLocalServiceUtil.getImage(
+				Image liveLogo = imageLocalService.getImage(
 					liveLayoutSet.getLogoId());
 
 				long logoId = counterLocalService.increment();
 
-				ImageLocalServiceUtil.updateImage(
+				imageLocalService.updateImage(
 					logoId, liveLogo.getTextObj(), liveLogo.getType(),
 					liveLogo.getHeight(), liveLogo.getWidth(),
 					liveLogo.getSize());
@@ -340,8 +339,6 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			layoutSet.setLogoId(0);
 		}
 
-		layoutSetPersistence.update(layoutSet, false);
-
 		if (logo) {
 			imageLocalService.updateImage(
 				layoutSet.getLogoId(), is, cleanUpStream);
@@ -350,7 +347,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			imageLocalService.deleteImage(layoutSet.getLogoId());
 		}
 
-		return layoutSet;
+		return layoutSetPersistence.update(layoutSet, false);
 	}
 
 	public LayoutSet updateLookAndFeel(

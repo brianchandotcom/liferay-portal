@@ -91,7 +91,7 @@ public class EventTimeComparator implements Comparator<CalEvent> {
 		}
 	}
 
-	private TimeZone _timeZone;
 	private Locale _locale;
+	private TimeZone _timeZone;
 
 }

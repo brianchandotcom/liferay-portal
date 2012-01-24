@@ -108,9 +108,9 @@ public class DynamicQueryImpl implements DynamicQuery {
 		return this;
 	}
 
-	private DetachedCriteria _detachedCriteria;
 	private Criteria _criteria;
-	private Integer _start;
+	private DetachedCriteria _detachedCriteria;
 	private Integer _end;
+	private Integer _start;
 
 }

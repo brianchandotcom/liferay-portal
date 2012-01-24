@@ -66,8 +66,8 @@ public class DynamicFilterConfig implements FilterConfig {
 	}
 
 	private String _filterName;
-	private ServletContext _servletContext;
 	private Map<String, String> _parameters =
 		new LinkedHashMap<String, String>();
+	private ServletContext _servletContext;
 
 }

@@ -153,9 +153,9 @@ public class FileUploadManagedBean implements Renderable {
 	private static Log _log = LogFactoryUtil.getLog(
 		FileUploadManagedBean.class);
 
-	private PersistentFacesState _state;
-	private RenderManager _renderManager;
 	private InputFile _inputFile;
 	private int _percent;
+	private RenderManager _renderManager;
+	private PersistentFacesState _state;
 
 }

@@ -56,7 +56,7 @@ public class FilterConfigImpl implements FilterConfig {
 	}
 
 	private String _filterName;
-	private PortletContext _portletContext;
 	private Map<String, String> _params;
+	private PortletContext _portletContext;
 
 }

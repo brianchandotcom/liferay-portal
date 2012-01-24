@@ -65,8 +65,8 @@ public class GetUrlTag extends TagSupport {
 		_var = var;
 	}
 
-	private String _url;
 	private long _expires = Time.WEEK;
+	private String _url;
 	private String _var;
 
 }

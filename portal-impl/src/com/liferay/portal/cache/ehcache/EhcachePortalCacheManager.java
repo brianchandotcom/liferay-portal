@@ -251,16 +251,16 @@ public class EhcachePortalCacheManager implements PortalCacheManager {
 	private static Log _log = LogFactoryUtil.getLog(
 		EhcachePortalCacheManager.class);
 
-	private String _configPropertyKey;
 	private CacheManager _cacheManager;
 	private boolean _clusterAware;
+	private String _configPropertyKey;
 	private Map<String, EhcachePortalCache> _ehcachePortalCaches =
 		new HashMap<String, EhcachePortalCache>();
 	private ManagementService _managementService;
 	private MBeanServer _mBeanServer;
+	private boolean _registerCacheConfigurations = true;
 	private boolean _registerCacheManager = true;
 	private boolean _registerCaches = true;
-	private boolean _registerCacheConfigurations = true;
 	private boolean _registerCacheStatistics = true;
 
 }

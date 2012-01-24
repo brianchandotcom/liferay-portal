@@ -136,8 +136,6 @@ public class DLUtil {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter("struts_action", "/document_library/view");
-		portletURL.setParameter("viewEntries", Boolean.TRUE.toString());
-		portletURL.setParameter("viewFolders", Boolean.TRUE.toString());
 
 		Map<String, Object> data = new HashMap<String, Object>();
 
@@ -238,16 +236,8 @@ public class DLUtil {
 			portletURL.setParameter("struts_action", strutsAction);
 			portletURL.setParameter("groupId", String.valueOf(groupId));
 
-			Map<String, Object> data = new HashMap<String, Object>();
-
-			data.put("folder-id", _getDefaultFolderId(request));
-			data.put("view-entries", Boolean.TRUE.toString());
-			data.put("view-folders", Boolean.TRUE.toString());
-			data.put("direction-right", Boolean.TRUE.toString());
-
 			PortalUtil.addPortletBreadcrumbEntry(
-				request, themeDisplay.translate("home"), portletURL.toString(),
-				data);
+				request, themeDisplay.translate("home"), portletURL.toString());
 		}
 		else {
 			portletURL.setParameter("struts_action", "/document_library/view");

@@ -391,7 +391,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				<isset property="test.suite.classes.available" />
 			</not>
 			<then>
-				<junit dir="${project.dir}" fork="on" forkmode="once" printsummary="on">
+				<junit dir="${project.dir}" fork="on" forkmode="once" haltonfailure="${junit.halt.on.failure}" printsummary="on">
 					<sysproperty key="net.sourceforge.cobertura.datafile" file="test-coverage/cobertura.ser" />
 					<jvmarg line="${junit.debug.jpda}" />
 					<jvmarg value="-Xmx512m" />
@@ -407,7 +407,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				</junit>
 			</then>
 			<else>
-				<junit dir="${project.dir}" fork="on" forkmode="once" printsummary="on">
+				<junit dir="${project.dir}" fork="on" forkmode="once" haltonfailure="${junit.halt.on.failure}" printsummary="on">
 					<sysproperty key="net.sourceforge.cobertura.datafile" file="test-coverage/cobertura.ser" />
 					<jvmarg line="${junit.debug.jpda}" />
 					<jvmarg value="-Xmx512m" />
@@ -427,7 +427,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		<if>
 			<equals arg1="${junit.code.coverage}" arg2="true" />
 			<then>
-				<cobertura-report format="html" datafile="test-coverage/cobertura.ser" destdir="test-coverage" >
+				<cobertura-report format="{$junit.cobertura.report.format}" datafile="test-coverage/cobertura.ser" destdir="test-coverage" >
 					<fileset dir="${project.dir}/portal-impl/src">
 						<include name="**/*.java" />
 					</fileset>
@@ -465,7 +465,52 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		<if>
 			<equals arg1="${junit.code.coverage}" arg2="true" />
 			<then>
-				<cobertura-report format="html" datafile="test-coverage/cobertura.ser" destdir="test-coverage" >
+				<cobertura-report format="${junit.cobertura.report.format}" datafile="test-coverage/cobertura.ser" destdir="test-coverage" >
+					<fileset dir="${project.dir}/portal-impl/src">
+						<include name="**/*.java" />
+					</fileset>
+					<fileset dir="${project.dir}/portal-service/src">
+						<include name="**/*.java" />
+					</fileset>
+					<fileset dir="${project.dir}/util-java/src">
+						<include name="**/*.java" />
+					</fileset>
+					<fileset dir="${project.dir}/util-taglib/src">
+						<include name="**/*.java" />
+					</fileset>
+				</cobertura-report>
+			</then>
+		</if>
+	</target>
+
+	<target name="test-unit">
+		<delete dir="test-classes" />
+		<delete dir="test-results" />
+
+		<antcall target="compile" />
+		<antcall target="instrument" />
+		<antcall target="compile-test" />
+
+		<junit dir="${project.dir}" fork="on" forkmode="once" printsummary="on">
+			<sysproperty key="net.sourceforge.cobertura.datafile" file="test-coverage/cobertura.ser" />
+			<jvmarg line="${junit.debug.jpda}" />
+			<jvmarg value="-Xmx1024m" />
+            <jvmarg value="-XX:MaxPermSize=256m" />
+            <jvmarg value="-Duser.timezone=GMT" />
+			<jvmarg value="-Dexternal-properties=${test.properties}" />
+			<classpath location="test-coverage" />
+			<classpath refid="test.classpath" />
+			<formatter type="brief" usefile="false" />
+			<formatter type="xml" />
+			<batchtest todir="test-results">
+				<fileset dir="test-classes" includes="**/*Test.class" />
+			</batchtest>
+		</junit>
+
+		<if>
+			<equals arg1="${junit.code.coverage}" arg2="true" />
+			<then>
+				<cobertura-report format="${junit.cobertura.report.format}" datafile="test-coverage/cobertura.ser" destdir="test-coverage" >
 					<fileset dir="${project.dir}/portal-impl/src">
 						<include name="**/*.java" />
 					</fileset>

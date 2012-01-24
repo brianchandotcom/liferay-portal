@@ -161,14 +161,14 @@ public class MA_AssertActionsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("RSS"),
 			selenium.getText("//div[2]/div/span/a/span[1]"));
 		assertEquals(RuntimeVariables.replace("Banned Users"),
-			selenium.getText("//div[@class='top-links-navigation']/span[6]/a"));
-		selenium.clickAt("//div[@class='top-links-navigation']/span[6]/a",
+			selenium.getText("//ul[@class='top-links-navigation']/li[6]/span/a"));
+		selenium.clickAt("//ul[@class='top-links-navigation']/li[6]/span/a",
 			RuntimeVariables.replace("Banned Users"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("There are no banned users."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
-		selenium.clickAt("//div[@class='top-links-navigation']/span[1]/a",
+		selenium.clickAt("//ul[@class='top-links-navigation']/li/span/a/span",
 			RuntimeVariables.replace("Message Boards Home"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();

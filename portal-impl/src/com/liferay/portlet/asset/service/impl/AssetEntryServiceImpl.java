@@ -178,6 +178,8 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 			filterCategoryIds(entryQuery.getAnyCategoryIds()));
 		filteredEntryQuery.setAnyTagIds(
 			filterTagIds(entryQuery.getAnyTagIds()));
+		filteredEntryQuery.setLinkedAssetEntryId(
+			entryQuery.getLinkedAssetEntryId());
 
 		return filteredEntryQuery;
 	}

@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.RepositoryEntryLocalServiceUtil;
@@ -63,7 +64,7 @@ public class BaseCmisSearchQueryBuilder implements CMISSearchQueryBuilder {
 
 		CMISConjunction cmisConjunction = new CMISConjunction();
 
-		traverseQuery(cmisConjunction, query);
+		traverseQuery(cmisConjunction, query, queryConfig);
 
 		if (!cmisConjunction.isEmpty()) {
 			sb.append(" WHERE ");
@@ -191,7 +192,41 @@ public class BaseCmisSearchQueryBuilder implements CMISSearchQueryBuilder {
 		return _supportedFields.contains(field);
 	}
 
-	protected void traverseQuery(CMISJunction criterion, Query query)
+	protected boolean isSupportsFullText(QueryConfig queryConfig) {
+		String capabilityQuery =
+			(String)queryConfig.getAttribute("capabilityQuery");
+
+		if (Validator.isNull(capabilityQuery)) {
+			return false;
+		}
+
+		if (capabilityQuery.equals("bothcombined") ||
+			capabilityQuery.equals("fulltextonly")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isSupportsOnlyFullText(QueryConfig queryConfig) {
+		String capabilityQuery =
+			(String)queryConfig.getAttribute("capabilityQuery");
+
+		if (Validator.isNull(capabilityQuery)) {
+			return false;
+		}
+
+		if (capabilityQuery.equals("fulltextonly")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	protected void traverseQuery(
+			CMISJunction criterion, Query query, QueryConfig queryConfig)
 		throws SearchException {
 
 		if (query instanceof BooleanQuery) {
@@ -220,7 +255,7 @@ public class BaseCmisSearchQueryBuilder implements CMISSearchQueryBuilder {
 
 				Query booleanClauseQuery = booleanClause.getQuery();
 
-				traverseQuery(cmisJunction, booleanClauseQuery);
+				traverseQuery(cmisJunction, booleanClauseQuery, queryConfig);
 			}
 
 			if (!anyCMISConjunction.isEmpty()) {
@@ -249,7 +284,24 @@ public class BaseCmisSearchQueryBuilder implements CMISSearchQueryBuilder {
 				CMISSimpleExpressionOperator.EQ);
 
 			if (cmisExpression != null) {
-				criterion.add(cmisExpression);
+				boolean add = true;
+
+				if ((cmisExpression instanceof CMISContainsExpression) &&
+					!isSupportsFullText(queryConfig)) {
+
+					add = false;
+				}
+				else if (!((cmisExpression instanceof CMISContainsExpression) ||
+						(cmisExpression instanceof CMISInFolderExpression) ||
+						(cmisExpression instanceof CMISInTreeExpression)) &&
+						isSupportsOnlyFullText(queryConfig)) {
+
+					add = false;
+				}
+
+				if (add) {
+					criterion.add(cmisExpression);
+				}
 			}
 		}
 		else if (query instanceof TermRangeQuery) {
@@ -287,7 +339,24 @@ public class BaseCmisSearchQueryBuilder implements CMISSearchQueryBuilder {
 				CMISSimpleExpressionOperator.LIKE);
 
 			if (cmisCriterion != null) {
-				criterion.add(cmisCriterion);
+				boolean add = true;
+
+				if ((cmisCriterion instanceof CMISContainsExpression) &&
+					!isSupportsFullText(queryConfig)) {
+
+					add = false;
+				}
+				else if (!((cmisCriterion instanceof CMISContainsExpression) ||
+							(cmisCriterion instanceof CMISInFolderExpression) ||
+							(cmisCriterion instanceof CMISInTreeExpression)) &&
+							isSupportsOnlyFullText(queryConfig)) {
+
+							add = false;
+						}
+
+				if (add) {
+					criterion.add(cmisCriterion);
+				}
 			}
 		}
 	}
@@ -307,6 +376,7 @@ public class BaseCmisSearchQueryBuilder implements CMISSearchQueryBuilder {
 
 		_supportedFields = new HashSet<String>();
 
+		_supportedFields.add(Field.CONTENT);
 		_supportedFields.add(Field.CREATE_DATE);
 		_supportedFields.add(Field.FOLDER_ID);
 		_supportedFields.add(Field.MODIFIED_DATE);

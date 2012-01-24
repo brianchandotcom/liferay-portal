@@ -517,9 +517,9 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 
 	private static Log _log = LogFactoryUtil.getLog(CMISFileEntry.class);
 
+	private List<Document> _allVersions;
 	private CMISRepository _cmisRepository;
 	private Document _document;
-	private List<Document> _allVersions;
 	private long _fileEntryId;
 	private FileVersion _latestFileVersion;
 	private String _uuid;

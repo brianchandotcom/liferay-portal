@@ -53,8 +53,8 @@ public class AssetEntryType implements Serializable {
 		_portletTitle = portletTitle;
 	}
 
-	private long _classNameId;
 	private String _className;
+	private long _classNameId;
 	private String _portletId;
 	private String _portletTitle;
 

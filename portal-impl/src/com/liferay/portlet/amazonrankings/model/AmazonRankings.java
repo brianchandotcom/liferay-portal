@@ -214,23 +214,23 @@ public class AmazonRankings
 		_availability = availability;
 	}
 
-	private String _isbn;
-	private String _productName;
-	private String _catalog;
 	private String[] _authors;
-	private Date _releaseDate;
-	private String _releaseDateAsString;
-	private String _manufacturer;
-	private String _smallImageURL;
-	private String _mediumImageURL;
+	private String _availability;
+	private String _catalog;
+	private double _collectiblePrice;
+	private String _isbn;
 	private String _largeImageURL;
 	private double _listPrice;
-	private double _ourPrice;
-	private double _usedPrice;
-	private double _collectiblePrice;
-	private double _thirdPartyNewPrice;
-	private int _salesRank;
+	private String _manufacturer;
 	private String _media;
-	private String _availability;
+	private String _mediumImageURL;
+	private double _ourPrice;
+	private String _productName;
+	private Date _releaseDate;
+	private String _releaseDateAsString;
+	private int _salesRank;
+	private String _smallImageURL;
+	private double _thirdPartyNewPrice;
+	private double _usedPrice;
 
 }

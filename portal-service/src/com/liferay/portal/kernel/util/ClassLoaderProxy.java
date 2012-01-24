@@ -253,8 +253,8 @@ public class ClassLoaderProxy {
 
 	private static Log _log = LogFactoryUtil.getLog(ClassLoaderProxy.class);
 
-	private Object _obj;
 	private ClassLoader _classLoader;
 	private String _className;
+	private Object _obj;
 
 }

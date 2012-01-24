@@ -54,7 +54,7 @@ public class Currency implements Serializable {
 		return _rate;
 	}
 
-	private String _symbol;
 	private double _rate;
+	private String _symbol;
 
 }

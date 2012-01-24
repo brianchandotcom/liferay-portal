@@ -80,7 +80,7 @@ public class AuthenticatingHttpInvokerRequestExecutor
 		}
 	}
 
-	private long _userId;
 	private String _password;
+	private long _userId;
 
 }

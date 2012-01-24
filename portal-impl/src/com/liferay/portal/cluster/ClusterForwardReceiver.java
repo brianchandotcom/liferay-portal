@@ -63,7 +63,7 @@ public class ClusterForwardReceiver extends BaseReceiver {
 	private static Log _log = LogFactoryUtil.getLog(
 		ClusterForwardReceiver.class);
 
-	private List<org.jgroups.Address> _localTransportAddresses;
 	private ClusterForwardMessageListener _clusterForwardMessageListener;
+	private List<org.jgroups.Address> _localTransportAddresses;
 
 }

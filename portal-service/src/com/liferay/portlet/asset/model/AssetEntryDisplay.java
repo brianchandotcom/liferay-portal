@@ -235,31 +235,31 @@ public class AssetEntryDisplay implements Serializable {
 		_tagNames = tagNames;
 	}
 
-	private long _entryId;
-	private long _companyId;
-	private long _userId;
-	private String _userName;
-	private Date _createDate;
-	private Date _modifiedDate;
-	private long _classNameId;
+	private long[] _categoryIds;
 	private String _className;
+	private long _classNameId;
 	private long _classPK;
+	private long _companyId;
+	private Date _createDate;
+	private String _description;
+	private Date _endDate;
+	private long _entryId;
+	private Date _expirationDate;
+	private int _height;
+	private String _mimeType;
+	private Date _modifiedDate;
 	private String _portletId;
 	private String _portletTitle;
-	private Date _startDate;
-	private Date _endDate;
-	private Date _publishDate;
-	private Date _expirationDate;
-	private String _mimeType;
-	private String _title;
-	private String _description;
-	private String _summary;
-	private String _url;
-	private int _height;
-	private int _width;
 	private double _priority;
-	private int _viewCount;
-	private long[] _categoryIds;
+	private Date _publishDate;
+	private Date _startDate;
+	private String _summary;
 	private String _tagNames;
+	private String _title;
+	private String _url;
+	private long _userId;
+	private String _userName;
+	private int _viewCount;
+	private int _width;
 
 }

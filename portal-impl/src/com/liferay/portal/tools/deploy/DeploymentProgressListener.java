@@ -109,7 +109,7 @@ public class DeploymentProgressListener implements ProgressListener {
 		DeploymentProgressListener.class);
 
 	private DeploymentHandler _deploymentHandler;
-	private String _warContext;
 	private DeploymentManager _deploymentManager;
+	private String _warContext;
 
 }

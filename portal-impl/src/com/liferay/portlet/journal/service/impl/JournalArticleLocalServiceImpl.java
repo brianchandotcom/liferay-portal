@@ -94,6 +94,7 @@ import com.liferay.portlet.journal.StructureXsdException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalArticleDisplay;
+import com.liferay.portlet.journal.model.JournalArticleImage;
 import com.liferay.portlet.journal.model.JournalArticleResource;
 import com.liferay.portlet.journal.model.JournalStructure;
 import com.liferay.portlet.journal.model.JournalTemplate;
@@ -213,8 +214,8 @@ public class JournalArticleLocalServiceImpl
 		String title = titleMap.get(locale);
 
 		content = format(
-			user, groupId, articleId, version, false, content, structureId,
-			images);
+			user, groupId, articleId, null, version, false, content,
+			structureId, images);
 
 		article.setResourcePrimKey(resourcePrimKey);
 		article.setGroupId(groupId);
@@ -1997,7 +1998,11 @@ public class JournalArticleLocalServiceImpl
 			article.setSmallImageId(oldArticle.getSmallImageId());
 		}
 		else {
+			double newVersion = MathUtil.format(oldVersion + 0.1, 1, 1);
+
 			article = oldArticle;
+
+			article.setVersion(newVersion);
 		}
 
 		Locale locale = LocaleUtil.getDefault();
@@ -2012,8 +2017,8 @@ public class JournalArticleLocalServiceImpl
 		String title = titleMap.get(locale);
 
 		content = format(
-			user, groupId, articleId, article.getVersion(), incrementVersion,
-			content, structureId, images);
+			user, groupId, articleId, oldVersion, article.getVersion(),
+			incrementVersion, content, structureId, images);
 
 		article.setModifiedDate(serviceContext.getModifiedDate(now));
 		article.setTitleMap(titleMap, locale);
@@ -2178,7 +2183,11 @@ public class JournalArticleLocalServiceImpl
 			article.setStatusDate(new Date());
 		}
 		else {
+			double newVersion = MathUtil.format(oldVersion + 0.1, 1, 1);
+
 			article = oldArticle;
+
+			article.setVersion(newVersion);
 		}
 
 		Map<Locale, String> titleMap = article.getTitleMap();
@@ -2194,8 +2203,9 @@ public class JournalArticleLocalServiceImpl
 		article.setDescriptionMap(descriptionMap);
 
 		content = format(
-			user, groupId, articleId, version, !oldArticle.isDraft(), content,
-			oldArticle.getStructureId(), images);
+			user, groupId, articleId, oldVersion, version,
+			!oldArticle.isDraft(), content, oldArticle.getStructureId(),
+			images);
 
 		article.setContent(content);
 
@@ -2659,8 +2669,9 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected void format(
-			User user, long groupId, String articleId, double version,
-			boolean incrementVersion, Element root, Map<String, byte[]> images)
+			User user, long groupId, String articleId, Double previousVersion,
+			double version, boolean incrementVersion, Element root,
+			Map<String, byte[]> images)
 		throws PortalException, SystemException {
 
 		for (Element element : root.elements()) {
@@ -2671,8 +2682,8 @@ public class JournalArticleLocalServiceImpl
 
 			if (elType.equals("image")) {
 				formatImage(
-					groupId, articleId, version, incrementVersion, element,
-					elInstanceId, elName, images);
+					groupId, articleId, previousVersion, version,
+					incrementVersion, element, elInstanceId, elName, images);
 			}
 			else if (elType.equals("text_area") || elType.equals("text") ||
 					 elType.equals("text_box")) {
@@ -2695,15 +2706,15 @@ public class JournalArticleLocalServiceImpl
 			}
 
 			format(
-				user, groupId, articleId, version, incrementVersion, element,
-				images);
+				user, groupId, articleId, previousVersion, version,
+				incrementVersion, element, images);
 		}
 	}
 
 	protected String format(
-			User user, long groupId, String articleId, double version,
-			boolean incrementVersion, String content, String structureId,
-			Map<String, byte[]> images)
+			User user, long groupId, String articleId, Double previousVersion,
+			double version, boolean incrementVersion, String content,
+			String structureId, Map<String, byte[]> images)
 		throws PortalException, SystemException {
 
 		Document document = null;
@@ -2715,8 +2726,8 @@ public class JournalArticleLocalServiceImpl
 
 			if (Validator.isNotNull(structureId)) {
 				format(
-					user, groupId, articleId, version, incrementVersion,
-					rootElement, images);
+					user, groupId, articleId, previousVersion, version,
+					incrementVersion, rootElement, images);
 			}
 			else {
 				List<Element> staticContentElements = rootElement.elements(
@@ -2749,9 +2760,9 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected void formatImage(
-			long groupId, String articleId, double version,
-			boolean incrementVersion, Element el, String elInstanceId,
-			String elName, Map<String, byte[]> images)
+			long groupId, String articleId, Double previousVersion,
+			double version, boolean incrementVersion, Element el,
+			String elInstanceId, String elName, Map<String, byte[]> images)
 		throws PortalException, SystemException {
 
 		List<Element> imageContents = el.elements("dynamic-content");
@@ -2764,20 +2775,51 @@ public class JournalArticleLocalServiceImpl
 				elLanguage = "_" + elLanguage;
 			}
 
-			long imageId =
-				journalArticleImageLocalService.getArticleImageId(
+			long imageId = 0;
+
+			if (incrementVersion) {
+				// Make a copy of the article image with the new version
+
+				imageId = journalArticleImageLocalService.getArticleImageId(
 					groupId, articleId, version, elInstanceId, elName,
 					elLanguage);
 
-			double oldVersion = MathUtil.format(version - 0.1, 1, 1);
+				// The actual image is copied below
+
+			} else if (previousVersion != null) {
+				// Only increase the version of the article image
+
+				JournalArticleImage journalArticleImage =
+					journalArticleImageLocalService.getArticleImage(
+						groupId, articleId, previousVersion, elInstanceId,
+						elName, elLanguage, false);
+
+				if (journalArticleImage != null) {
+					if (previousVersion != version) {
+						journalArticleImage.setVersion(version);
+
+						journalArticleImageLocalService.updateArticleImage(
+							journalArticleImage);
+					}
+
+					imageId = journalArticleImage.getArticleImageId();
+				}
+			} else {
+				// The article image doesn't exist in either the current or
+				// the previous version, so just create it
+
+				imageId = journalArticleImageLocalService.getArticleImageId(
+					groupId, articleId, version, elInstanceId, elName,
+					elLanguage);
+			}
 
 			long oldImageId = 0;
 
-			if ((oldVersion >= 1) && incrementVersion) {
+			if ((previousVersion != null) && incrementVersion) {
 				oldImageId =
 					journalArticleImageLocalService.getArticleImageId(
-						groupId, articleId, oldVersion, elInstanceId, elName,
-						elLanguage);
+						groupId, articleId, previousVersion, elInstanceId,
+						elName, elLanguage);
 			}
 
 			String elContent =

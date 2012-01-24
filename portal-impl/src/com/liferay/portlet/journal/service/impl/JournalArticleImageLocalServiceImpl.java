@@ -119,6 +119,15 @@ public class JournalArticleImageLocalServiceImpl
 		return journalArticleImagePersistence.findByPrimaryKey(articleImageId);
 	}
 
+	public JournalArticleImage getArticleImage(
+			long groupId, String articleId, double version, String elInstanceId,
+			String elName, String languageId, boolean tempImage)
+		throws SystemException {
+
+		return journalArticleImagePersistence.fetchByG_A_V_E_E_L(groupId,
+			articleId, version, elInstanceId, elName, languageId);
+	}
+
 	public long getArticleImageId(
 			long groupId, String articleId, double version, String elInstanceId,
 			String elName, String languageId)
@@ -162,6 +171,12 @@ public class JournalArticleImageLocalServiceImpl
 		throws SystemException {
 
 		return journalArticleImagePersistence.findByGroupId(groupId);
+	}
+
+	public void updateArticleImage(JournalArticleImage journalArticleImage)
+		throws PortalException, SystemException {
+
+		journalArticleImagePersistence.update(journalArticleImage, false);
 	}
 
 }

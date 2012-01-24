@@ -121,6 +121,7 @@ public class ExportLARCommunityWikiUseCaseTest extends BaseTestCase {
 			RuntimeVariables.replace("Wiki"));
 		assertTrue(selenium.isChecked(
 				"//input[@id='_156_PORTLET_DATA_36Checkbox']"));
+		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Export']",
 			RuntimeVariables.replace("Export"));
 		selenium.downloadFile("Wiki_Use_Case.Community.lar");

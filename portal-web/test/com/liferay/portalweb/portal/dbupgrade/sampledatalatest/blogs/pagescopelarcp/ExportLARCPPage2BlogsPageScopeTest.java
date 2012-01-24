@@ -161,6 +161,7 @@ public class ExportLARCPPage2BlogsPageScopeTest extends BaseTestCase {
 		selenium.clickAt("//input[@id='_86_CATEGORIESCheckbox']",
 			RuntimeVariables.replace("Categories"));
 		assertTrue(selenium.isChecked("//input[@id='_86_CATEGORIESCheckbox']"));
+		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Export']",
 			RuntimeVariables.replace("Export"));
 		selenium.downloadFile("Blogs_Page_Scope.Page2.CP.lar");

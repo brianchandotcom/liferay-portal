@@ -116,6 +116,7 @@ public class ExportLARPortletPage2DLPageScopeTest extends BaseTestCase {
 		selenium.clickAt("//input[@id='_86_CATEGORIESCheckbox']",
 			RuntimeVariables.replace("Categories"));
 		assertTrue(selenium.isChecked("//input[@id='_86_CATEGORIESCheckbox']"));
+		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Export']",
 			RuntimeVariables.replace("Export"));
 		selenium.downloadFile("DL_Page_Scope.Page2.Portlet.lar");

@@ -122,6 +122,7 @@ public class ExportLARCommunityBlogsPageScopeTest extends BaseTestCase {
 			RuntimeVariables.replace("Blogs"));
 		assertTrue(selenium.isChecked(
 				"//input[@id='_156_PORTLET_DATA_33Checkbox']"));
+		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Export']",
 			RuntimeVariables.replace("Export"));
 		selenium.downloadFile("Blogs_Page_Scope.Community.lar");

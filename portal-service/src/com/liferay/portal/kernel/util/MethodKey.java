@@ -56,7 +56,7 @@ public class MethodKey implements Serializable {
 		}
 
 		for (int i = 0; i < parameterTypeNames.length; i++) {
-			String parameterTypeName = parameterTypeNames[i];
+			String parameterTypeName = getWrapperType(parameterTypeNames[i]);
 
 			_parameterTypes[i] = Class.forName(
 				parameterTypeName, true, classLoader);
@@ -99,6 +99,37 @@ public class MethodKey implements Serializable {
 	@Override
 	public String toString() {
 		return _toString();
+	}
+
+	protected String getWrapperType(String parameterTypeName) {
+		String wrapperTypeName = parameterTypeName;
+
+		if (parameterTypeName.equals("byte")) {
+			wrapperTypeName = "Byte";
+		}
+		else if (parameterTypeName.equals("boolean")) {
+			wrapperTypeName = "Boolean";
+		}
+		else if (parameterTypeName.equalsIgnoreCase("char")) {
+			wrapperTypeName = "Character";
+		}
+		else if (parameterTypeName.equals("double")) {
+			wrapperTypeName = "Double";
+		}
+		else if (parameterTypeName.equals("float")) {
+			wrapperTypeName = "Float";
+		}
+		else if (parameterTypeName.equals("int")) {
+			wrapperTypeName = "Integer";
+		}
+		else if (parameterTypeName.equals("long")) {
+			wrapperTypeName = "Long";
+		}
+		else if (parameterTypeName.equals("short")) {
+			wrapperTypeName = "Short";
+		}
+
+		return wrapperTypeName;
 	}
 
 	private String _toString() {

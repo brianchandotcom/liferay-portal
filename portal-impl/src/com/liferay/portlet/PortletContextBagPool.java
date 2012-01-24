@@ -62,6 +62,6 @@ public class PortletContextBagPool {
 	private static PortletContextBagPool _instance =
 		new PortletContextBagPool();
 
-	private Map<String, PortletContextBag>_portletContextBagPool;
+	private Map<String, PortletContextBag> _portletContextBagPool;
 
 }

@@ -132,14 +132,14 @@ public class TempFileUtil {
 	public static File getTempFile(
 		long userId, String fileName, String tempPathName) {
 
-		String absoluteFilePath = getTempAbsolutePath(
+		String absoluteFilePath = _getTempAbsolutePath(
 			userId, fileName, tempPathName);
 
 		return new File(absoluteFilePath);
 	}
 
 	public static File getTempFile(String fileName, String tempPathName) {
-		String absoluteFilePath = getTempAbsolutePath(fileName, tempPathName);
+		String absoluteFilePath = _getTempAbsolutePath(fileName, tempPathName);
 
 		return new File(absoluteFilePath);
 	}
@@ -147,7 +147,7 @@ public class TempFileUtil {
 	public static String[] getTempFileEntryNames(
 		long userId, String tempPathName) {
 
-		File dir = new File(getTempAbsolutePath(tempPathName));
+		File dir = new File(_getTempAbsolutePath(tempPathName));
 
 		StringBundler sb = new StringBundler(5);
 
@@ -184,7 +184,7 @@ public class TempFileUtil {
 	}
 
 	public static String[] getTempFileEntryNames(String tempPathName) {
-		File dir = new File(getTempAbsolutePath(tempPathName));
+		File dir = new File(_getTempAbsolutePath(tempPathName));
 
 		File[] files = dir.listFiles(
 			new FileFilter(_SUFFIX_TEMP_FILENAME_REGEX));
@@ -203,7 +203,7 @@ public class TempFileUtil {
 		return fileNames;
 	}
 
-	private static String getTempAbsolutePath(
+	private static String _getTempAbsolutePath(
 		long userId, String fileName, String tempPathName) {
 
 		StringBundler sb = new StringBundler(5);
@@ -212,12 +212,12 @@ public class TempFileUtil {
 		sb.append(_BASE_TEMP_PATHNAME);
 		sb.append(tempPathName);
 		sb.append(StringPool.SLASH);
-		sb.append(getTempFileName(userId, fileName));
+		sb.append(_getTempFileName(userId, fileName));
 
 		return sb.toString();
 	}
 
-	private static String getTempAbsolutePath(String tempPathName) {
+	private static String _getTempAbsolutePath(String tempPathName) {
 		StringBundler sb = new StringBundler(4);
 
 		sb.append(SystemProperties.get(SystemProperties.TMP_DIR));
@@ -228,7 +228,7 @@ public class TempFileUtil {
 		return sb.toString();
 	}
 
-	private static String getTempAbsolutePath(
+	private static String _getTempAbsolutePath(
 		String fileName, String tempPathName) {
 
 		StringBundler sb = new StringBundler(5);
@@ -237,12 +237,12 @@ public class TempFileUtil {
 		sb.append(_BASE_TEMP_PATHNAME);
 		sb.append(tempPathName);
 		sb.append(StringPool.SLASH);
-		sb.append(getTempFileName(fileName));
+		sb.append(_getTempFileName(fileName));
 
 		return sb.toString();
 	}
 
-	private static String getTempFileName(long userId, String fileName) {
+	private static String _getTempFileName(long userId, String fileName) {
 		StringBundler sb = new StringBundler(4);
 
 		sb.append(fileName);
@@ -253,7 +253,7 @@ public class TempFileUtil {
 		return sb.toString();
 	}
 
-	private static String getTempFileName(String fileName) {
+	private static String _getTempFileName(String fileName) {
 		return fileName + _SUFFIX_TEMP_FILENAME;
 	}
 

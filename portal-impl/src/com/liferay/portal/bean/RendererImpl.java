@@ -87,7 +87,7 @@ public class RendererImpl implements Renderer {
 
 		long companyId = PortalUtil.getCompanyId(request);
 
-		String className = _normalizeClassName(bean.getClass().getName());
+		String className = normalizeClassName(bean.getClass().getName());
 
 		if (Validator.isNotNull(varientSuffix)) {
 			className = varientSuffix;
@@ -95,7 +95,7 @@ public class RendererImpl implements Renderer {
 
 		String velocityTemplateContent = null;
 
-		PortletPreferences preferences = _getPortletPreferences(request);
+		PortletPreferences preferences = getPortletPreferences(request);
 
 		if (preferences != null) {
 			velocityTemplateContent = preferences.getValue(
@@ -242,7 +242,7 @@ public class RendererImpl implements Renderer {
 			return null;
 		}
 
-		className = _normalizeClassName(className);
+		className = normalizeClassName(className);
 
 		String[] beanNameParts = StringUtil.split(className, _MODEL);
 
@@ -288,7 +288,7 @@ public class RendererImpl implements Renderer {
 				try {
 					getMethod = serviceBean.getClass().getDeclaredMethod(
 						"get" + beanNameParts[1],
-						_mapToPrimitive(classPK.getClass()));
+						mapToPrimitive(classPK.getClass()));
 				}
 				catch (Exception e) {
 				}
@@ -353,7 +353,7 @@ public class RendererImpl implements Renderer {
 			varientSuffix);
 	}
 
-	protected PortletPreferences _getPortletPreferences(
+	protected PortletPreferences getPortletPreferences(
 		HttpServletRequest request) {
 
 		PortletPreferences preferences = PortalUtil.getPreferences(request);
@@ -375,7 +375,7 @@ public class RendererImpl implements Renderer {
 		return preferences;
 	}
 
-	protected Class<?> _mapToPrimitive(Class<?> clazz) {
+	protected Class<?> mapToPrimitive(Class<?> clazz) {
 		Class<?> mapping = clazz;
 
 		if (clazz == Integer.class) {
@@ -388,7 +388,7 @@ public class RendererImpl implements Renderer {
 		return mapping;
 	}
 
-	protected String _normalizeClassName(String className) {
+	protected String normalizeClassName(String className) {
 		className = StringUtil.replace(
 			className,
 			new String[] {

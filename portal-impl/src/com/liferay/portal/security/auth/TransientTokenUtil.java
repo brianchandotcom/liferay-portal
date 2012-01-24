@@ -31,7 +31,7 @@ public class TransientTokenUtil {
 	public static boolean checkToken(String token) {
 		long currentTime = System.currentTimeMillis();
 
-		expungeExpiredToken(currentTime);
+		_expungeExpiredToken(currentTime);
 
 		Set<Map.Entry<Long, String>> tokens = _tokens.entrySet();
 
@@ -61,7 +61,7 @@ public class TransientTokenUtil {
 
 		long expireTime = currentTime + timeTolive;
 
-		expungeExpiredToken(currentTime);
+		_expungeExpiredToken(currentTime);
 
 		String token = PortalUUIDUtil.generate();
 
@@ -70,7 +70,7 @@ public class TransientTokenUtil {
 		return token;
 	}
 
-	private static void expungeExpiredToken(long currentTime) {
+	private static void _expungeExpiredToken(long currentTime) {
 		SortedMap<Long, String> headMap = _tokens.headMap(currentTime);
 
 		headMap.clear();

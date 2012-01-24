@@ -52,7 +52,7 @@ public class FreeMarkerTaglibFactoryUtil implements CacheRegistryItem {
 		_templateModels.clear();
 	}
 
-	private static FreeMarkerTaglibFactoryUtil getInstance(
+	private static FreeMarkerTaglibFactoryUtil _getInstance(
 		ServletContext servletContext) {
 
 		if (_instance == null) {
@@ -116,7 +116,7 @@ public class FreeMarkerTaglibFactoryUtil implements CacheRegistryItem {
 
 		public TaglibFactoryCacheWrapper(ServletContext servletContext) {
 			FreeMarkerTaglibFactoryUtil freeMarkerTaglibFactoryUtil =
-				getInstance(servletContext);
+				_getInstance(servletContext);
 
 			_templateModels = freeMarkerTaglibFactoryUtil._templateModels;
 			_taglibFactory = new TaglibFactory(servletContext);

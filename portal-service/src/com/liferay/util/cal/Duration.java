@@ -67,10 +67,10 @@ public class Duration implements Cloneable, Serializable {
 	 * Constructor Duration
 	 */
 	public Duration(int d, int h, int m, int s) {
-		days = d;
-		hours = h;
-		minutes = m;
-		seconds = s;
+		_days = d;
+		_hours = h;
+		_minutes = m;
+		_seconds = s;
 	}
 
 	/**
@@ -84,18 +84,18 @@ public class Duration implements Cloneable, Serializable {
 	 * Constructor Duration
 	 */
 	public Duration(int w) {
-		weeks = w;
+		_weeks = w;
 	}
 
 	/**
 	 * Method clear
 	 */
 	public void clear() {
-		weeks = 0;
-		days = 0;
-		hours = 0;
-		minutes = 0;
-		seconds = 0;
+		_weeks = 0;
+		_days = 0;
+		_hours = 0;
+		_minutes = 0;
+		_seconds = 0;
 	}
 
 	/**
@@ -108,11 +108,11 @@ public class Duration implements Cloneable, Serializable {
 		try {
 			Duration other = (Duration)super.clone();
 
-			other.weeks = weeks;
-			other.days = days;
-			other.hours = hours;
-			other.minutes = minutes;
-			other.seconds = seconds;
+			other._weeks = _weeks;
+			other._days = _days;
+			other._hours = _hours;
+			other._minutes = _minutes;
+			other._seconds = _seconds;
 
 			return other;
 		}
@@ -127,7 +127,7 @@ public class Duration implements Cloneable, Serializable {
 	 * @return int
 	 */
 	public int getWeeks() {
-		return weeks;
+		return _weeks;
 	}
 
 	/**
@@ -140,7 +140,7 @@ public class Duration implements Cloneable, Serializable {
 
 		checkWeeksOkay(w);
 
-		weeks = w;
+		_weeks = w;
 	}
 
 	/**
@@ -149,7 +149,7 @@ public class Duration implements Cloneable, Serializable {
 	 * @return int
 	 */
 	public int getDays() {
-		return days;
+		return _days;
 	}
 
 	/**
@@ -162,7 +162,7 @@ public class Duration implements Cloneable, Serializable {
 
 		checkNonWeeksOkay(d);
 
-		days = d;
+		_days = d;
 
 		normalize();
 	}
@@ -173,7 +173,7 @@ public class Duration implements Cloneable, Serializable {
 	 * @return int
 	 */
 	public int getHours() {
-		return hours;
+		return _hours;
 	}
 
 	/**
@@ -186,7 +186,7 @@ public class Duration implements Cloneable, Serializable {
 
 		checkNonWeeksOkay(h);
 
-		hours = h;
+		_hours = h;
 
 		normalize();
 	}
@@ -197,7 +197,7 @@ public class Duration implements Cloneable, Serializable {
 	 * @return int
 	 */
 	public int getMinutes() {
-		return minutes;
+		return _minutes;
 	}
 
 	/**
@@ -210,7 +210,7 @@ public class Duration implements Cloneable, Serializable {
 
 		checkNonWeeksOkay(m);
 
-		minutes = m;
+		_minutes = m;
 
 		normalize();
 	}
@@ -221,7 +221,7 @@ public class Duration implements Cloneable, Serializable {
 	 * @return int
 	 */
 	public int getSeconds() {
-		return seconds;
+		return _seconds;
 	}
 
 	/**
@@ -234,7 +234,7 @@ public class Duration implements Cloneable, Serializable {
 
 		checkNonWeeksOkay(s);
 
-		seconds = s;
+		_seconds = s;
 
 		normalize();
 	}
@@ -245,9 +245,9 @@ public class Duration implements Cloneable, Serializable {
 	 * @return long
 	 */
 	public long getInterval() {
-		return seconds * MILLIS_PER_SECOND + minutes * MILLIS_PER_MINUTE
-			   + hours * MILLIS_PER_HOUR + days * MILLIS_PER_DAY
-			   + weeks * MILLIS_PER_WEEK;
+		return _seconds * _MILLIS_PER_SECOND + _minutes * _MILLIS_PER_MINUTE
+			   + _hours * _MILLIS_PER_HOUR + _days * _MILLIS_PER_DAY
+			   + _weeks * _MILLIS_PER_WEEK;
 	}
 
 	/**
@@ -260,8 +260,8 @@ public class Duration implements Cloneable, Serializable {
 
 		clear();
 
-		days = (int)(millis / MILLIS_PER_DAY);
-		seconds = (int)((millis % MILLIS_PER_DAY) / MILLIS_PER_SECOND);
+		_days = (int)(millis / _MILLIS_PER_DAY);
+		_seconds = (int)((millis % _MILLIS_PER_DAY) / _MILLIS_PER_SECOND);
 
 		normalize();
 	}
@@ -277,15 +277,15 @@ public class Duration implements Cloneable, Serializable {
 
 		sb.append(getClass().getName());
 		sb.append("[weeks=");
-		sb.append(weeks);
+		sb.append(_weeks);
 		sb.append(",days=");
-		sb.append(days);
+		sb.append(_days);
 		sb.append(",hours=");
-		sb.append(hours);
+		sb.append(_hours);
 		sb.append(",minutes=");
-		sb.append(minutes);
+		sb.append(_minutes);
 		sb.append(",seconds=");
-		sb.append(seconds);
+		sb.append(_seconds);
 		sb.append("]");
 
 		return sb.toString();
@@ -295,7 +295,7 @@ public class Duration implements Cloneable, Serializable {
 	 * Method checkNonWeeksOkay
 	 */
 	protected void checkNonWeeksOkay(int f) {
-		if ((f != 0) && (weeks != 0)) {
+		if ((f != 0) && (_weeks != 0)) {
 			throw new IllegalStateException(
 				"Weeks and non-weeks are incompatible");
 		}
@@ -306,8 +306,8 @@ public class Duration implements Cloneable, Serializable {
 	 */
 	protected void checkWeeksOkay(int f) {
 		if ((f != 0)
-			&& ((days != 0) || (hours != 0) || (minutes != 0)
-				|| (seconds != 0))) {
+			&& ((_days != 0) || (_hours != 0) || (_minutes != 0)
+				|| (_seconds != 0))) {
 			throw new IllegalStateException(
 				"Weeks and non-weeks are incompatible");
 		}
@@ -317,86 +317,86 @@ public class Duration implements Cloneable, Serializable {
 	 * Method normalize
 	 */
 	protected void normalize() {
-		minutes += seconds / SECONDS_PER_MINUTE;
-		seconds %= SECONDS_PER_MINUTE;
-		hours += minutes / MINUTES_PER_HOUR;
-		minutes %= MINUTES_PER_HOUR;
-		days += hours / HOURS_PER_DAY;
-		hours %= HOURS_PER_DAY;
+		_minutes += _seconds / _SECONDS_PER_MINUTE;
+		_seconds %= _SECONDS_PER_MINUTE;
+		_hours += _minutes / _MINUTES_PER_HOUR;
+		_minutes %= _MINUTES_PER_HOUR;
+		_days += _hours / _HOURS_PER_DAY;
+		_hours %= _HOURS_PER_DAY;
 	}
 
 	/**
 	 * Field DAYS_PER_WEEK
 	 */
-	private static final int DAYS_PER_WEEK = 7;
+	private static final int _DAYS_PER_WEEK = 7;
 
 	/**
 	 * Field HOURS_PER_DAY
 	 */
-	private static final int HOURS_PER_DAY = 24;
+	private static final int _HOURS_PER_DAY = 24;
 
 	/**
 	 * Field MILLIS_PER_DAY
 	 */
-	private static final int MILLIS_PER_DAY =
-		Duration.HOURS_PER_DAY * Duration.MILLIS_PER_HOUR;
+	private static final int _MILLIS_PER_DAY =
+		Duration._HOURS_PER_DAY * Duration._MILLIS_PER_HOUR;
 
 	/**
 	 * Field MILLIS_PER_HOUR
 	 */
-	private static final int MILLIS_PER_HOUR =
-		Duration.MINUTES_PER_HOUR * Duration.MILLIS_PER_MINUTE;
+	private static final int _MILLIS_PER_HOUR =
+		Duration._MINUTES_PER_HOUR * Duration._MILLIS_PER_MINUTE;
 
 	/**
 	 * Field MILLIS_PER_MINUTE
 	 */
-	private static final int MILLIS_PER_MINUTE =
-		Duration.SECONDS_PER_MINUTE * Duration.MILLIS_PER_SECOND;
+	private static final int _MILLIS_PER_MINUTE =
+		Duration._SECONDS_PER_MINUTE * Duration._MILLIS_PER_SECOND;
 
 	/**
 	 * Field MILLIS_PER_SECOND
 	 */
-	private static final int MILLIS_PER_SECOND = 1000;
+	private static final int _MILLIS_PER_SECOND = 1000;
 
 	/**
 	 * Field MILLIS_PER_WEEK
 	 */
-	private static final int MILLIS_PER_WEEK =
-		Duration.DAYS_PER_WEEK * Duration.MILLIS_PER_DAY;
+	private static final int _MILLIS_PER_WEEK =
+		Duration._DAYS_PER_WEEK * Duration._MILLIS_PER_DAY;
 
 	/**
 	 * Field MINUTES_PER_HOUR
 	 */
-	private static final int MINUTES_PER_HOUR = 60;
+	private static final int _MINUTES_PER_HOUR = 60;
 
 	/**
 	 * Field SECONDS_PER_MINUTE
 	 */
-	private static final int SECONDS_PER_MINUTE = 60;
+	private static final int _SECONDS_PER_MINUTE = 60;
 
 	/**
 	 * Field weeks
 	 */
-	private int weeks;
+	private int _weeks;
 
 	/**
 	 * Field days
 	 */
-	private int days;
+	private int _days;
 
 	/**
 	 * Field hours
 	 */
-	private int hours;
+	private int _hours;
 
 	/**
 	 * Field minutes
 	 */
-	private int minutes;
+	private int _minutes;
 
 	/**
 	 * Field seconds
 	 */
-	private int seconds;
+	private int _seconds;
 
 }

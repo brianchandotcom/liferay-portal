@@ -42,8 +42,8 @@ public class JMXMessageListener extends BaseDestinationEventListener {
 				MessageBusManager.createObjectName());
 		}
 		catch (Exception e) {
-			if (log.isWarnEnabled()) {
-				log.warn("Unable to register message bus manager", e);
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to register message bus manager", e);
 			}
 		}
 
@@ -54,8 +54,8 @@ public class JMXMessageListener extends BaseDestinationEventListener {
 				registerDestination(destination);
 			}
 			catch (Exception e) {
-				if (log.isWarnEnabled()) {
-					log.warn(
+				if (_log.isWarnEnabled()) {
+					_log.warn(
 						"Unable to register destination " +
 							destination.getName(),
 					e);
@@ -70,7 +70,7 @@ public class JMXMessageListener extends BaseDestinationEventListener {
 			registerDestination(destination);
 		}
 		catch (Exception e) {
-			log.error(
+			_log.error(
 				"Unable to register destination " + destination.getName(), e);
 		}
 	}
@@ -81,7 +81,7 @@ public class JMXMessageListener extends BaseDestinationEventListener {
 			unregisterDestination(destination);
 		}
 		catch (Exception e) {
-			log.error(
+			_log.error(
 				"Unable to unregister destination " + destination.getName(), e);
 		}
 	}
@@ -94,8 +94,8 @@ public class JMXMessageListener extends BaseDestinationEventListener {
 				unregisterDestination(destination);
 			}
 			catch (Exception e) {
-				if (log.isWarnEnabled()) {
-					log.warn(
+				if (_log.isWarnEnabled()) {
+					_log.warn(
 						"Unable to unregister destination " +
 							destination.getName(),
 						e);
@@ -109,8 +109,8 @@ public class JMXMessageListener extends BaseDestinationEventListener {
 				MessageBusManager.createObjectName());
 		}
 		catch (Exception e) {
-			if (log.isWarnEnabled()) {
-				log.warn("Unable to unregister message bus manager", e);
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to unregister message bus manager", e);
 			}
 		}
 	}
@@ -166,7 +166,7 @@ public class JMXMessageListener extends BaseDestinationEventListener {
 	private static final String _MESSAGE_BUS_MANAGER_OBJECT_NAME_CACHE_KEY =
 		"messageBusManager";
 
-	private static Log log = LogFactoryUtil.getLog(JMXMessageListener.class);
+	private static Log _log = LogFactoryUtil.getLog(JMXMessageListener.class);
 
 	private MBeanRegistry _mBeanRegistry;
 	private MessageBus _messageBus;

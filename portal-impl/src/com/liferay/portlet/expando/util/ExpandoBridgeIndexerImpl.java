@@ -58,7 +58,7 @@ public class ExpandoBridgeIndexerImpl implements ExpandoBridgeIndexer {
 	public String encodeFieldName(String columnName) {
 		StringBundler sb = new StringBundler(3);
 
-		sb.append(_FIELD_NAMESPACE);
+		sb.append(FIELD_NAMESPACE);
 		sb.append(StringPool.FORWARD_SLASH);
 		sb.append(ExpandoTableConstants.DEFAULT_TABLE_NAME.toLowerCase());
 		sb.append(StringPool.FORWARD_SLASH);
@@ -248,7 +248,7 @@ public class ExpandoBridgeIndexerImpl implements ExpandoBridgeIndexer {
 		}
 	}
 
-	protected static final String _FIELD_NAMESPACE = "expando";
+	protected static final String FIELD_NAMESPACE = "expando";
 
 	private static Log _log = LogFactoryUtil.getLog(
 		ExpandoBridgeIndexerImpl.class);

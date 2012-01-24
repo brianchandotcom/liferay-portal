@@ -36,9 +36,9 @@ public class SequentialUUID {
 		StringBundler sb = new StringBundler(4);
 
 		sb.append(_UUID_PREFIX);
-		sb.append(toHexString(high, 4));
+		sb.append(_toHexString(high, 4));
 		sb.append(StringPool.MINUS);
-		sb.append(toHexString(low, 8));
+		sb.append(_toHexString(low, 8));
 
 		return sb.toString();
 	}
@@ -47,7 +47,7 @@ public class SequentialUUID {
 		return _instance;
 	}
 
-	private static String toHexString(long number, int digits) {
+	private static String _toHexString(long number, int digits) {
 		char[] buffer = new char[digits];
 
 		for (int i = 0; i < digits; i++) {

@@ -96,7 +96,7 @@ public class AtomProvider extends AbstractWorkspaceProvider {
 
 		RegexTargetResolver targetResolver = new RegexTargetResolver();
 
-		for (String base : BASES) {
+		for (String base : _BASES) {
 
 			targetResolver.setPattern(
 				base + "?(\\?[^#]*)?", TargetType.TYPE_SERVICE);
@@ -125,7 +125,7 @@ public class AtomProvider extends AbstractWorkspaceProvider {
 		addWorkspace(_workspace);
 	}
 
-	private static final String[] BASES = {"/secure/atom", "/atom"};
+	private static final String[] _BASES = {"/secure/atom", "/atom"};
 
 	private SimpleWorkspaceInfo _workspace;
 

@@ -99,8 +99,8 @@ public class DayAndPosition implements Cloneable, Serializable {
 	 * Constructor DayAndPosition
 	 */
 	public DayAndPosition() {
-		day = NO_WEEKDAY;
-		position = 0;
+		_day = NO_WEEKDAY;
+		_position = 0;
 	}
 
 	/**
@@ -115,8 +115,8 @@ public class DayAndPosition implements Cloneable, Serializable {
 			throw new IllegalArgumentException("Invalid day position");
 		}
 
-		day = d;
-		position = p;
+		_day = d;
+		_position = p;
 	}
 
 	/**
@@ -129,8 +129,8 @@ public class DayAndPosition implements Cloneable, Serializable {
 		try {
 			DayAndPosition other = (DayAndPosition)super.clone();
 
-			other.day = day;
-			other.position = position;
+			other._day = _day;
+			other._position = _position;
 
 			return other;
 		}
@@ -170,7 +170,7 @@ public class DayAndPosition implements Cloneable, Serializable {
 	 * @return int
 	 */
 	public int getDayOfWeek() {
-		return day;
+		return _day;
 	}
 
 	/**
@@ -179,15 +179,15 @@ public class DayAndPosition implements Cloneable, Serializable {
 	 * @return int
 	 */
 	public int getDayPosition() {
-		return position;
+		return _position;
 	}
 
 	@Override
 	public int hashCode() {
 		HashCode hashCode = HashCodeFactoryUtil.getHashCode();
 
-		hashCode.append(day);
-		hashCode.append(position);
+		hashCode.append(_day);
+		hashCode.append(_position);
 
 		return hashCode.toHashCode();
 	}
@@ -200,7 +200,7 @@ public class DayAndPosition implements Cloneable, Serializable {
 			throw new IllegalArgumentException("Invalid day of week");
 		}
 
-		day = d;
+		_day = d;
 	}
 
 	/**
@@ -211,7 +211,7 @@ public class DayAndPosition implements Cloneable, Serializable {
 			throw new IllegalArgumentException();
 		}
 
-		position = p;
+		_position = p;
 	}
 
 	/**
@@ -225,9 +225,9 @@ public class DayAndPosition implements Cloneable, Serializable {
 
 		sb.append(getClass().getName());
 		sb.append("[day=");
-		sb.append(day);
+		sb.append(_day);
 		sb.append(",position=");
-		sb.append(position);
+		sb.append(_position);
 		sb.append("]");
 
 		return sb.toString();
@@ -236,11 +236,11 @@ public class DayAndPosition implements Cloneable, Serializable {
 	/**
 	 * Field day
 	 */
-	private int day;
+	private int _day;
 
 	/**
 	 * Field position
 	 */
-	private int position;
+	private int _position;
 
 }

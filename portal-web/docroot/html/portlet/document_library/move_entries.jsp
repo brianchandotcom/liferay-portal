@@ -23,6 +23,8 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 
 long newFolderId = ParamUtil.getLong(request, "newFolderId");
 
+String fileShortcutIds = ParamUtil.getString(request, "fileShortcutIds");
+
 List<Folder> folders = (List<Folder>)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDERS);
 
 List<Folder> validMoveFolders = new ArrayList<Folder>();
@@ -83,6 +85,7 @@ if (!fileEntries.isEmpty()) {
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.MOVE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="newFolderId" type="hidden" value="<%= newFolderId %>" />
+	<aui:input name="fileShortcutIds" type="hidden" value="<%= fileShortcutIds %>" />
 
 	<liferay-ui:header
 		backURL="<%= redirect %>"

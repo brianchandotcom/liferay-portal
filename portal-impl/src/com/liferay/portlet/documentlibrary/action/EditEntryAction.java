@@ -36,6 +36,7 @@ import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.SourceFileNameException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 
 import javax.portlet.ActionRequest;
@@ -281,6 +282,20 @@ public class EditEntryAction extends PortletAction {
 		for (int i = 0; i < fileEntryIds.length; i++) {
 			DLAppServiceUtil.moveFileEntry(
 				fileEntryIds[i], newFolderId, serviceContext);
+		}
+
+		long[] fileShortcutIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "fileShortcutIds"), 0L);
+
+		for (int i = 0; i < fileShortcutIds.length; i++) {
+			if (fileShortcutIds[i] > 0) {
+				DLFileShortcut fileShortcut =
+					DLAppServiceUtil.getFileShortcut(fileShortcutIds[i]);
+
+				DLAppServiceUtil.updateFileShortcut(
+					fileShortcutIds[i], newFolderId,
+					fileShortcut.getToFileEntryId(), serviceContext);
+			}
 		}
 	}
 

@@ -156,6 +156,6 @@ public abstract class JSONAction extends Action {
 		return true;
 	}
 
-	protected ServletContext _servletContext;
+	private ServletContext _servletContext;
 
 }

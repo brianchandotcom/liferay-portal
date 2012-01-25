@@ -26,6 +26,7 @@ public class ExecuteGenerateCustomRolesTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(ExecuteGenerateCustomRolesTest.class);
+		testSuite.addTestSuite(WaitForSystemShutdownTest.class);
 
 		return testSuite;
 	}

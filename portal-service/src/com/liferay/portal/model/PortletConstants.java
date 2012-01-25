@@ -61,22 +61,6 @@ public class PortletConstants {
 	public static final String WAR_SEPARATOR = "_WAR_";
 
 	/**
-	 * Returns the root portlet ID of the portlet.
-	 *
-	 * @return the root portlet ID of the portlet
-	 */
-	public static String getRootPortletId(String portletId) {
-		int pos = portletId.indexOf(INSTANCE_SEPARATOR);
-
-		if (pos == -1) {
-			return portletId;
-		}
-		else {
-			return portletId.substring(0, pos);
-		}
-	}
-
-	/**
 	 * Returns the instance ID of the portlet.
 	 *
 	 * @return the instance ID of the portlet
@@ -90,6 +74,22 @@ public class PortletConstants {
 		else {
 			return portletId.substring(
 				pos + INSTANCE_SEPARATOR.length(), portletId.length());
+		}
+	}
+
+	/**
+	 * Returns the root portlet ID of the portlet.
+	 *
+	 * @return the root portlet ID of the portlet
+	 */
+	public static String getRootPortletId(String portletId) {
+		int pos = portletId.indexOf(INSTANCE_SEPARATOR);
+
+		if (pos == -1) {
+			return portletId;
+		}
+		else {
+			return portletId.substring(0, pos);
 		}
 	}
 

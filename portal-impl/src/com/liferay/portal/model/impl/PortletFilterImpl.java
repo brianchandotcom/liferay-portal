@@ -36,50 +36,50 @@ public class PortletFilterImpl implements PortletFilter {
 		_portletApp = portletApp;
 	}
 
-	public String getFilterName() {
-		return _filterName;
-	}
-
-	public void setFilterName(String filterName) {
-		_filterName = filterName;
-	}
-
 	public String getFilterClass() {
 		return _filterClass;
 	}
 
-	public void setFilterClass(String filterClass) {
-		_filterClass = filterClass;
-	}
-
-	public Set<String> getLifecycles() {
-		return _lifecycles;
-	}
-
-	public void setLifecycles(Set<String> lifecycles) {
-		_lifecycles = lifecycles;
+	public String getFilterName() {
+		return _filterName;
 	}
 
 	public Map<String, String> getInitParams() {
 		return _initParams;
 	}
 
-	public void setInitParams(Map<String, String> initParams) {
-		_initParams = initParams;
+	public Set<String> getLifecycles() {
+		return _lifecycles;
 	}
 
 	public PortletApp getPortletApp() {
 		return _portletApp;
 	}
 
+	public void setFilterClass(String filterClass) {
+		_filterClass = filterClass;
+	}
+
+	public void setFilterName(String filterName) {
+		_filterName = filterName;
+	}
+
+	public void setInitParams(Map<String, String> initParams) {
+		_initParams = initParams;
+	}
+
+	public void setLifecycles(Set<String> lifecycles) {
+		_lifecycles = lifecycles;
+	}
+
 	public void setPortletApp(PortletApp portletApp) {
 		_portletApp = portletApp;
 	}
 
-	private String _filterName;
 	private String _filterClass;
-	private Set<String> _lifecycles;
+	private String _filterName;
 	private Map<String, String> _initParams;
+	private Set<String> _lifecycles;
 	private PortletApp _portletApp;
 
 }

@@ -151,16 +151,16 @@ public class PortletBagImpl implements PortletBag {
 		return _openSearchInstance;
 	}
 
+	public PermissionPropagator getPermissionPropagatorInstance() {
+		return _permissionPropagatorInstance;
+	}
+
 	public PollerProcessor getPollerProcessorInstance() {
 		return _pollerProcessorInstance;
 	}
 
 	public MessageListener getPopMessageListenerInstance() {
 		return _popMessageListenerInstance;
-	}
-
-	public PermissionPropagator getPermissionPropagatorInstance() {
-		return _permissionPropagatorInstance;
 	}
 
 	public PortletDataHandler getPortletDataHandlerInstance() {

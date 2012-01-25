@@ -78,36 +78,36 @@ public class PermissionDisplay
 		}
 	}
 
-	public Permission getPermission() {
-		return _permission;
-	}
-
-	public Resource getResource() {
-		return _resource;
-	}
-
-	public String getPortletName() {
-		return _portletName;
-	}
-
-	public String getPortletLabel() {
-		return _portletLabel;
-	}
-
-	public String getModelName() {
-		return _modelName;
-	}
-
-	public String getModelLabel() {
-		return _modelLabel;
-	}
-
 	public String getActionId() {
 		return _actionId;
 	}
 
 	public String getActionLabel() {
 		return _actionLabel;
+	}
+
+	public String getModelLabel() {
+		return _modelLabel;
+	}
+
+	public String getModelName() {
+		return _modelName;
+	}
+
+	public Permission getPermission() {
+		return _permission;
+	}
+
+	public String getPortletLabel() {
+		return _portletLabel;
+	}
+
+	public String getPortletName() {
+		return _portletName;
+	}
+
+	public Resource getResource() {
+		return _resource;
 	}
 
 	@Override

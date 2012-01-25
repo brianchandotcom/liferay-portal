@@ -155,9 +155,9 @@ public class PermissionsURLTag extends TagSupport {
 		_windowState = windowState;
 	}
 
-	private String _redirect;
 	private String _modelResource;
 	private String _modelResourceDescription;
+	private String _redirect;
 	private String _resourcePrimKey;
 	private int[] _roleTypes;
 	private String _var;

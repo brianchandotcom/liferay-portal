@@ -62,8 +62,8 @@ public class PortletDataHandlerControl {
 		return _disabled;
 	}
 
-	private String _namespace;
 	private String _controlName;
 	private boolean _disabled;
+	private String _namespace;
 
 }

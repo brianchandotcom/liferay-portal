@@ -261,7 +261,7 @@ public class PortletBagImpl implements PortletBag {
 	private SocialRequestInterpreter _socialRequestInterpreterInstance;
 	private URLEncoder _urlEncoderInstance;
 	private WebDAVStorage _webDAVStorageInstance;
-	private Method _xmlRpcMethodInstance;
 	private List<WorkflowHandler> _workflowHandlerInstances;
+	private Method _xmlRpcMethodInstance;
 
 }

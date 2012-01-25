@@ -138,7 +138,7 @@ public class QueryPos {
 		_query = query;
 	}
 
-	private Query _query;
 	private int _pos;
+	private Query _query;
 
 }

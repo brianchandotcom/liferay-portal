@@ -531,11 +531,11 @@ public class PortalInstances {
 
 	private static PortalInstances _instance = new PortalInstances();
 
-	private long[] _companyIds;
-	private String[] _webIds;
 	private Set<String> _autoLoginIgnoreHosts;
 	private Set<String> _autoLoginIgnorePaths;
+	private long[] _companyIds;
 	private Set<String> _virtualHostsIgnoreHosts;
 	private Set<String> _virtualHostsIgnorePaths;
+	private String[] _webIds;
 
 }

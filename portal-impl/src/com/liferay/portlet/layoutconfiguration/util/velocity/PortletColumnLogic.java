@@ -160,11 +160,11 @@ public class PortletColumnLogic extends RuntimeLogic {
 
 	private static Log _log = LogFactoryUtil.getLog(PortletColumnLogic.class);
 
-	private ServletContext _servletContext;
+	private boolean _parallelRenderEnable;
+	private Map<Portlet, Object[]> _portletsMap;
 	private HttpServletRequest _request;
 	private HttpServletResponse _response;
+	private ServletContext _servletContext;
 	private ThemeDisplay _themeDisplay;
-	private Map<Portlet, Object[]> _portletsMap;
-	private boolean _parallelRenderEnable;
 
 }

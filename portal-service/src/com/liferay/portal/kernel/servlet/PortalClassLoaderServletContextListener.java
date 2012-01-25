@@ -97,9 +97,9 @@ public abstract class PortalClassLoaderServletContextListener
 
 	protected abstract ServletContextListener getInstance() throws Exception;
 
+	private ClassLoader _portletClassLoader;
 	private ServletContextEvent _servletContextEvent;
 	private ServletContextListener _servletContextListener;
-	private ClassLoader _portletClassLoader;
 	private String _servletContextName;
 
 }

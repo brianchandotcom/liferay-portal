@@ -82,10 +82,10 @@ public class PortletLogic extends RuntimeLogic {
 			_renderResponse, portletId, queryString, false);
 	}
 
-	private ServletContext _servletContext;
-	private HttpServletRequest _request;
-	private HttpServletResponse _response;
 	private RenderRequest _renderRequest;
 	private RenderResponse _renderResponse;
+	private HttpServletRequest _request;
+	private HttpServletResponse _response;
+	private ServletContext _servletContext;
 
 }

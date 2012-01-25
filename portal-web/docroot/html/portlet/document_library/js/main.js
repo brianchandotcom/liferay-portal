@@ -1123,7 +1123,9 @@ AUI.add(
 							if (portalBreadcrumb) {
 								breadcrumbContainer = A.one('#breadcrumbs ul');
 
-								breadcrumbContainer.setContent(portalBreadcrumb.html());
+								if (breadcrumbContainer) {
+									breadcrumbContainer.setContent(portalBreadcrumb.html());
+								}
 							}
 						}
 					},

@@ -75,9 +75,9 @@ public class HttpPrincipal implements Serializable {
 
 	private static Log _log = LogFactoryUtil.getLog(HttpPrincipal.class);
 
-	private String _url;
 	private long _companyId;
 	private String _login;
 	private String _password;
+	private String _url;
 
 }

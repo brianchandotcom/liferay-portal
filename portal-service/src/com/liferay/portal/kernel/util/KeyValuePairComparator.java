@@ -59,7 +59,7 @@ public class KeyValuePairComparator implements Comparator<KeyValuePair> {
 		}
 	}
 
-	private boolean _byKey;
 	private boolean _ascending;
+	private boolean _byKey;
 
 }

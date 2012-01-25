@@ -41,7 +41,7 @@ public class LayoutView implements Serializable {
 		return _depth;
 	}
 
-	private List<String> _list;
 	private int _depth;
+	private List<String> _list;
 
 }

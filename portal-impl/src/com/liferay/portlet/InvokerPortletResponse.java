@@ -51,8 +51,8 @@ public class InvokerPortletResponse implements Serializable {
 		_time = time;
 	}
 
-	private String _title;
 	private String _content;
 	private long _time;
+	private String _title;
 
 }

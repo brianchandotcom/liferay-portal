@@ -180,18 +180,18 @@ public class LayoutsRemotePublisherRequest
 	private static final long serialVersionUID = -8270092763766057207L;
 
 	private String _cronText;
-	private long _userId;
-	private long _sourceGroupId;
-	private boolean _privateLayout;
+	private Date _endDate;
 	private Map<Long, Boolean> _layoutIdMap;
 	private Map<String, String[]> _parameterMap;
+	private boolean _privateLayout;
 	private String _remoteAddress;
-	private int _remotePort;
-	private boolean _secureConnection;
 	private long _remoteGroupId;
+	private int _remotePort;
 	private boolean _remotePrivateLayout;
-	private Date _startDate;
-	private Date _endDate;
 	private Date _scheduledFireTime;
+	private boolean _secureConnection;
+	private long _sourceGroupId;
+	private Date _startDate;
+	private long _userId;
 
 }

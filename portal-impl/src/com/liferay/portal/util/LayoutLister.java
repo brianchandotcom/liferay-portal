@@ -98,11 +98,11 @@ public class LayoutLister {
 		}
 	}
 
+	private int _depth;
 	private long _groupId;
-	private boolean _privateLayout;
+	private List<String> _list;
 	private Locale _locale;
 	private int _nodeId;
-	private List<String> _list;
-	private int _depth;
+	private boolean _privateLayout;
 
 }

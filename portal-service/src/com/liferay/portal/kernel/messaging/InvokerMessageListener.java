@@ -69,7 +69,7 @@ public class InvokerMessageListener implements MessageListener {
 		}
 	}
 
-	private MessageListener _messageListener;
 	private ClassLoader _classLoader;
+	private MessageListener _messageListener;
 
 }

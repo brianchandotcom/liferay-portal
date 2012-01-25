@@ -1221,9 +1221,9 @@ public class GroupFinderImpl
 
 	private LinkedHashMap<String, Object> _emptyLinkedHashMap =
 		new LinkedHashMap<String, Object>(0);
-	private Map<String, String> _findByCompanyIdSQLCache =
-		new ConcurrentHashMap<String, String>();
 	private Map<String, String> _findByC_C_N_DSQLCache =
+		new ConcurrentHashMap<String, String>();
+	private Map<String, String> _findByCompanyIdSQLCache =
 		new ConcurrentHashMap<String, String>();
 	private volatile long[] _groupOrganizationClassNameIds;
 	private volatile Map<String, String> _joinMap;

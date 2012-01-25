@@ -60,8 +60,8 @@ public class GroupPermissionChecker extends RowChecker {
 	private static Log _log = LogFactoryUtil.getLog(
 		GroupPermissionChecker.class);
 
-	private Role _role;
-	private String _resourceName;
 	private String _actionId;
+	private String _resourceName;
+	private Role _role;
 
 }

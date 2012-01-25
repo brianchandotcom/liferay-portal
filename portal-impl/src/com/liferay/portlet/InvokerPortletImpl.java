@@ -767,24 +767,24 @@ public class InvokerPortletImpl implements InvokerPortlet {
 
 	private static Log _log = LogFactoryUtil.getLog(InvokerPortletImpl.class);
 
-	private com.liferay.portal.model.Portlet _portletModel;
-	private String _portletId;
+	private Map<String, List<ActionFilter>> _actionFiltersMap =
+		new HashMap<String, List<ActionFilter>>();
+	private boolean _checkAuthToken;
+	private boolean _destroyable;
+	private Map<String, List<EventFilter>> _eventFiltersMap =
+		new HashMap<String, List<EventFilter>>();
+	private Integer _expCache;
+	private boolean _facesPortlet;
 	private Portlet _portlet;
 	private PortletConfigImpl _portletConfigImpl;
 	private PortletContextImpl _portletContextImpl;
-	private Integer _expCache;
-	private boolean _checkAuthToken;
-	private boolean _destroyable;
-	private boolean _facesPortlet;
-	private boolean _strutsPortlet;
-	private boolean _strutsBridgePortlet;
-	private Map<String, List<ActionFilter>> _actionFiltersMap =
-		new HashMap<String, List<ActionFilter>>();
-	private Map<String, List<EventFilter>> _eventFiltersMap =
-		new HashMap<String, List<EventFilter>>();
+	private String _portletId;
+	private com.liferay.portal.model.Portlet _portletModel;
 	private Map<String, List<RenderFilter>> _renderFiltersMap =
 		new HashMap<String, List<RenderFilter>>();
 	private Map<String, List<ResourceFilter>> _resourceFiltersMap =
 		new HashMap<String, List<ResourceFilter>>();
+	private boolean _strutsBridgePortlet;
+	private boolean _strutsPortlet;
 
 }

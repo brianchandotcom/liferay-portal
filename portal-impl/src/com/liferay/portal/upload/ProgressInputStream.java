@@ -158,10 +158,10 @@ public class ProgressInputStream extends InputStream {
 
 	private static Log _log = LogFactoryUtil.getLog(ProgressInputStream.class);
 
-	private PortletSession _portletSession;
 	private InputStream _is;
+	private PortletSession _portletSession;
+	private String _progressId;
 	private long _totalRead;
 	private long _totalSize;
-	private String _progressId;
 
 }

@@ -54,7 +54,7 @@ public class Property implements ResponseElement {
 	}
 
 	private String _key;
-	private String _value;
 	private boolean _newLine;
+	private String _value;
 
 }

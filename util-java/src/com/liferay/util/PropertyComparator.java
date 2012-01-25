@@ -108,8 +108,8 @@ public class PropertyComparator implements Comparator<Object> {
 
 	private static Log _log = LogFactoryUtil.getLog(PropertyComparator.class);
 
-	private String[] _propertyNames;
 	private boolean _ascending;
 	private boolean _caseSensitive;
+	private String[] _propertyNames;
 
 }

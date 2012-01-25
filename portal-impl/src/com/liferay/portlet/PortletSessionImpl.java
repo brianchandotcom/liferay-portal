@@ -305,15 +305,15 @@ public class PortletSessionImpl implements LiferayPortletSession {
 		return getPortletScopeName(_portletName, _plid, name);
 	}
 
-	private HttpSession _session;
-	private String _portletName;
-	private PortletContext _portletContext;
 	private long _creationTime;
-	private long _lastAccessedTime;
 	private int _interval;
-	private boolean _new;
 	private boolean _invalid;
-	private String _portalSessionId;
+	private long _lastAccessedTime;
+	private boolean _new;
 	private long _plid;
+	private String _portalSessionId;
+	private PortletContext _portletContext;
+	private String _portletName;
+	private HttpSession _session;
 
 }

@@ -827,27 +827,27 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 	private static Log _log = LogFactoryUtil.getLog(PortletRequestImpl.class);
 
-	private HttpServletRequest _request;
-	private HttpServletRequest _originalRequest;
-	private HttpServletRequest _portletRequestDispatcherRequest;
-	private boolean _wapTheme;
-	private Portlet _portlet;
-	private String _portletName;
-	private PortalContext _portalContext;
-	private PortletContext _portletContext;
-	private WindowState _windowState;
-	private PortletMode _portletMode;
-	private PortletPreferences _preferences;
-	private PortletSessionImpl _session;
-	private String _portalSessionId;
 	private boolean _invalidSession;
+	private Locale _locale;
+	private HttpServletRequest _originalRequest;
+	private long _plid;
+	private PortalContext _portalContext;
+	private String _portalSessionId;
+	private Portlet _portlet;
+	private PortletContext _portletContext;
+	private PortletMode _portletMode;
+	private String _portletName;
+	private HttpServletRequest _portletRequestDispatcherRequest;
+	private PortletPreferences _preferences;
+	private Profile _profile;
+	private Map<String, String[]> _publicRenderParameters;
 	private String _remoteUser;
 	private long _remoteUserId;
-	private Principal _userPrincipal;
-	private Profile _profile;
-	private Locale _locale;
-	private long _plid;
-	private Map<String, String[]> _publicRenderParameters;
+	private HttpServletRequest _request;
+	private PortletSessionImpl _session;
 	private boolean _triggeredByActionURL;
+	private Principal _userPrincipal;
+	private boolean _wapTheme;
+	private WindowState _windowState;
 
 }

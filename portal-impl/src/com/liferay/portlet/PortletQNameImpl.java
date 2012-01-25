@@ -160,7 +160,7 @@ public class PortletQNameImpl implements PortletQName {
 
 	private static Log _log = LogFactoryUtil.getLog(PortletQNameImpl.class);
 
-	private Map<String, QName> _qNames;
 	private Map<String, String> _identifiers;
+	private Map<String, QName> _qNames;
 
 }

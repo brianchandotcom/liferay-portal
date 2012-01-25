@@ -325,10 +325,10 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher {
 	private static Log _log = LogFactoryUtil.getLog(
 		PortletRequestDispatcherImpl.class);
 
-	private RequestDispatcher _requestDispatcher;
 	private boolean _named;
+	private String _path;
 	private Portlet _portlet;
 	private PortletContextImpl _portletContextImpl;
-	private String _path;
+	private RequestDispatcher _requestDispatcher;
 
 }

@@ -85,8 +85,8 @@ public class ProgressTracker {
 		}
 	}
 
-	private HttpServletRequest _request;
 	private PortletRequest _portletRequest;
 	private String _progressId;
+	private HttpServletRequest _request;
 
 }

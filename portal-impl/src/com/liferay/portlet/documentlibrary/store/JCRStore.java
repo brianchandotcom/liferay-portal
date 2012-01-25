@@ -392,7 +392,22 @@ public class JCRStore extends BaseStore {
 
 			Version version = versionHistory.getVersionByLabel(versionLabel);
 
-			versionManager.restore(version.getPredecessors()[0], true);
+			String predecessorName = version.getLinearPredecessor().getName();
+
+			if (version.getLinearSuccessor() == null) {
+				Version restoreVersion = version.getLinearPredecessor();
+
+				if (Validator.equals(
+						JCRConstants.JCR_ROOT_VERSION, predecessorName)) {
+
+					versionManager.checkout(contentNode.getPath());
+
+					restoreVersion =
+						versionManager.checkin(contentNode.getPath());
+				}
+
+				versionManager.restore(restoreVersion, true);
+			}
 
 			versionHistory.removeVersion(version.getName());
 

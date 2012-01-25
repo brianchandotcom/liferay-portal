@@ -2682,7 +2682,8 @@
 			</license>
 		</licenses>
 		<comments>
-			This includes a public patch from ROME-145.
+			This includes a public patch from
+			https://rometools.jira.com/browse/ROME-145.
 		</comments>
 	</library>
 	<library>

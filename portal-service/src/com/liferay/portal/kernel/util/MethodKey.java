@@ -18,6 +18,9 @@ import java.io.Serializable;
 
 import java.lang.reflect.Method;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
@@ -56,10 +59,9 @@ public class MethodKey implements Serializable {
 		}
 
 		for (int i = 0; i < parameterTypeNames.length; i++) {
-			String parameterTypeName = getWrapperType(parameterTypeNames[i]);
+			String parameterTypeName = parameterTypeNames[i];
 
-			_parameterTypes[i] = Class.forName(
-				parameterTypeName, true, classLoader);
+			_parameterTypes[i] = _getClassType(parameterTypeName, classLoader);
 		}
 	}
 
@@ -101,35 +103,34 @@ public class MethodKey implements Serializable {
 		return _toString();
 	}
 
-	protected String getWrapperType(String parameterTypeName) {
-		String wrapperTypeName = parameterTypeName;
+	private Class _getClassType(String typeName, ClassLoader classLoader)
+		throws ClassNotFoundException {
 
-		if (parameterTypeName.equals("byte")) {
-			wrapperTypeName = "Byte";
+		Map<String, Class> primitiveClasses = _getPrimitiveClassesMap();
+
+		if (primitiveClasses.containsKey(typeName)) {
+			return primitiveClasses.get(typeName);
 		}
-		else if (parameterTypeName.equals("boolean")) {
-			wrapperTypeName = "Boolean";
+		else {
+			return Class.forName(typeName, true, classLoader);
 		}
-		else if (parameterTypeName.equalsIgnoreCase("char")) {
-			wrapperTypeName = "Character";
-		}
-		else if (parameterTypeName.equals("double")) {
-			wrapperTypeName = "Double";
-		}
-		else if (parameterTypeName.equals("float")) {
-			wrapperTypeName = "Float";
-		}
-		else if (parameterTypeName.equals("int")) {
-			wrapperTypeName = "Integer";
-		}
-		else if (parameterTypeName.equals("long")) {
-			wrapperTypeName = "Long";
-		}
-		else if (parameterTypeName.equals("short")) {
-			wrapperTypeName = "Short";
+	}
+
+	private Map<String, Class> _getPrimitiveClassesMap() {
+		if (_primitiveClasses == null) {
+			_primitiveClasses = new HashMap<String, Class>();
+
+			_primitiveClasses.put("byte", byte.class);
+			_primitiveClasses.put("boolean", boolean.class);
+			_primitiveClasses.put("char", char.class);
+			_primitiveClasses.put("double", double.class);
+			_primitiveClasses.put("float", float.class);
+			_primitiveClasses.put("int", int.class);
+			_primitiveClasses.put("long", long.class);
+			_primitiveClasses.put("short", short.class);
 		}
 
-		return wrapperTypeName;
+		return _primitiveClasses;
 	}
 
 	private String _toString() {
@@ -155,6 +156,8 @@ public class MethodKey implements Serializable {
 
 		return _toString;
 	}
+
+	private static Map<String, Class> _primitiveClasses;
 
 	private String _className;
 	private String _methodName;

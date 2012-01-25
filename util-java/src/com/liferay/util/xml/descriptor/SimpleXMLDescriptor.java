@@ -80,10 +80,6 @@ public abstract class SimpleXMLDescriptor implements XMLDescriptor {
 		return _isIncluded(element, getJoinableElements());
 	}
 
-	public String[] getRootChildrenOrder() {
-		return new String[0];
-	}
-
 	public String[] getChildrenOrder(Element parentElement) {
 		return new String[0];
 	}
@@ -96,11 +92,15 @@ public abstract class SimpleXMLDescriptor implements XMLDescriptor {
 		return new ElementIdentifier[0];
 	}
 
-	public String[] getUniqueElements() {
+	public String[] getJoinableElements() {
 		return new String[0];
 	}
 
-	public String[] getJoinableElements() {
+	public String[] getRootChildrenOrder() {
+		return new String[0];
+	}
+
+	public String[] getUniqueElements() {
 		return new String[0];
 	}
 

@@ -46,12 +46,12 @@ public class StrictXMLDescriptor implements XMLDescriptor {
 		return false;
 	}
 
-	public String[] getRootChildrenOrder() {
-		return _ROOT_ORDERED_CHILDREN;
-	}
-
 	public String[] getChildrenOrder(Element parentElement) {
 		return new String[0];
+	}
+
+	public String[] getRootChildrenOrder() {
+		return _ROOT_ORDERED_CHILDREN;
 	}
 
 	private int _compare(Object obj1, Object obj2) {

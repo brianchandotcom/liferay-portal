@@ -30,23 +30,23 @@ public class ServiceComponentImpl extends ServiceComponentBaseImpl {
 	public ServiceComponentImpl() {
 	}
 
-	@Override
-	public void setData(String data) {
-		super.setData(data);
-
-		_dataEl = null;
-	}
-
-	public String getTablesSQL() {
-		return _getData("tables-sql");
+	public String getIndexesSQL() {
+		return _getData("indexes-sql");
 	}
 
 	public String getSequencesSQL() {
 		return _getData("sequences-sql");
 	}
 
-	public String getIndexesSQL() {
-		return _getData("indexes-sql");
+	public String getTablesSQL() {
+		return _getData("tables-sql");
+	}
+
+	@Override
+	public void setData(String data) {
+		super.setData(data);
+
+		_dataEl = null;
 	}
 
 	private String _getData(String name) {

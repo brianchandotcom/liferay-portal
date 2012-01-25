@@ -32,36 +32,36 @@ public class SocialActivityFeedEntry {
 		setBody(body);
 	}
 
-	public String getPortletId() {
-		return _portletId;
-	}
-
-	public void setPortletId(String portletId) {
-		_portletId = GetterUtil.getString(portletId);
+	public String getBody() {
+		return _body;
 	}
 
 	public String getLink() {
 		return _link;
 	}
 
-	public void setLink(String link) {
-		_link = GetterUtil.getString(link);
+	public String getPortletId() {
+		return _portletId;
 	}
 
 	public String getTitle() {
 		return _title;
 	}
 
-	public void setTitle(String title) {
-		_title = GetterUtil.getString(title);
-	}
-
-	public String getBody() {
-		return _body;
-	}
-
 	public void setBody(String body) {
 		_body = GetterUtil.getString(body);
+	}
+
+	public void setLink(String link) {
+		_link = GetterUtil.getString(link);
+	}
+
+	public void setPortletId(String portletId) {
+		_portletId = GetterUtil.getString(portletId);
+	}
+
+	public void setTitle(String title) {
+		_title = GetterUtil.getString(title);
 	}
 
 	private String _body = StringPool.BLANK;

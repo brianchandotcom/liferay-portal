@@ -24,28 +24,28 @@ public class SocialRequestFeedEntry {
 		_body = body;
 	}
 
-	public String getPortletId() {
-		return _portletId;
+	public String getBody() {
+		return _body;
 	}
 
-	public void setPortletId(String portletId) {
-		_portletId = portletId;
+	public String getPortletId() {
+		return _portletId;
 	}
 
 	public String getTitle() {
 		return _title;
 	}
 
-	public void setTitle(String title) {
-		_title = title;
-	}
-
-	public String getBody() {
-		return _body;
-	}
-
 	public void setBody(String body) {
 		_body = body;
+	}
+
+	public void setPortletId(String portletId) {
+		_portletId = portletId;
+	}
+
+	public void setTitle(String title) {
+		_title = title;
 	}
 
 	private String _body;

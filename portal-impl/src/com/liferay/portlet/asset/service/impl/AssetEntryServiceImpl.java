@@ -92,6 +92,9 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 			return 0;
 		}
 
+		filteredEntryQuery.setStart(0);
+		filteredEntryQuery.setEnd(QueryUtil.ALL_POS);
+
 		Object[] results = filterEntryQuery(filteredEntryQuery);
 
 		return (Integer)results[1];

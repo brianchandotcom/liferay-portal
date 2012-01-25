@@ -184,6 +184,10 @@ public class FuseMailHook implements Hook {
 		return status;
 	}
 
+	protected HttpClient getHttpClient() {
+		return _client;
+	}
+
 	protected String getMailUserId(long companyId, long userId)
 		throws Exception {
 
@@ -197,10 +201,6 @@ public class FuseMailHook implements Hook {
 		}
 
 		return mailUserId;
-	}
-
-	protected HttpClient getHttpClient() {
-		return _client;
 	}
 
 	protected PostMethod getPostMethod() {

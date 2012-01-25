@@ -45,13 +45,13 @@ public class FacetedSearcher extends BaseIndexer {
 		return null;
 	}
 
-	public String getPortletId() {
-		return null;
-	}
-
 	@Override
 	public IndexerPostProcessor[] getIndexerPostProcessors() {
 		throw new UnsupportedOperationException();
+	}
+
+	public String getPortletId() {
+		return null;
 	}
 
 	@Override

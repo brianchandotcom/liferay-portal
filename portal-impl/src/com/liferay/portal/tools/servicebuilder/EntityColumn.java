@@ -117,6 +117,10 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		return _dbName;
 	}
 
+	public String getEJBName() {
+		return _ejbName;
+	}
+
 	public String getHumanCondition(boolean arrayable) {
 		StringBundler sb = new StringBundler();
 
@@ -145,10 +149,6 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 
 	public String getHumanNames() {
 		return TextFormatter.formatPlural(getHumanName());
-	}
-
-	public String getEJBName() {
-		return _ejbName;
 	}
 
 	public String getIdParam() {

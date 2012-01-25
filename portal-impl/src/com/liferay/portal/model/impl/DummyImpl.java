@@ -48,11 +48,11 @@ public class DummyImpl extends BaseModelImpl<Dummy> implements Dummy {
 		return StringPool.BLANK;
 	}
 
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-	}
-
 	@Override
 	public void resetOriginalValues() {
+	}
+
+	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 	}
 
 	public String toXmlString() {

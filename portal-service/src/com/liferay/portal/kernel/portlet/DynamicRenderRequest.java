@@ -89,6 +89,10 @@ public class DynamicRenderRequest extends RenderRequestWrapper {
 		}
 	}
 
+	public Map<String, String[]> getDynamicParameterMap() {
+		return _params;
+	}
+
 	@Override
 	public String getParameter(String name) {
 		String[] values = _params.get(name);
@@ -154,10 +158,6 @@ public class DynamicRenderRequest extends RenderRequestWrapper {
 
 	public void setParameterValues(String name, String[] values) {
 		_params.put(name, values);
-	}
-
-	public Map<String, String[]> getDynamicParameterMap() {
-		return _params;
 	}
 
 	private boolean _inherit;

@@ -23,16 +23,16 @@ import java.io.Serializable;
  */
 public interface EventDefinition extends Serializable {
 
-	public QName getQName();
+	public PortletApp getPortletApp();
 
-	public void setQName(QName qName);
+	public QName getQName();
 
 	public String getValueType();
 
-	public void setValueType(String valueType);
-
-	public PortletApp getPortletApp();
-
 	public void setPortletApp(PortletApp portletApp);
+
+	public void setQName(QName qName);
+
+	public void setValueType(String valueType);
 
 }

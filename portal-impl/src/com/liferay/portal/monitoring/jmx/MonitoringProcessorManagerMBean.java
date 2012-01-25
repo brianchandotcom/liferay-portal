@@ -20,9 +20,9 @@ package com.liferay.portal.monitoring.jmx;
  */
 public interface MonitoringProcessorManagerMBean {
 
-	public String[] getNamespaces();
-
 	public String getLevel(String namespace);
+
+	public String[] getNamespaces();
 
 	public void setLevel(String namespace, String levelName);
 

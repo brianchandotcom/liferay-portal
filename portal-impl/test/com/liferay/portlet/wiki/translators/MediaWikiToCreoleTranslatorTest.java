@@ -26,6 +26,33 @@ public class MediaWikiToCreoleTranslatorTest extends BaseTestCase {
 		_translator = new MediaWikiToCreoleTranslator();
 	}
 
+	public void testAngleBracketsUnscape() throws Exception {
+		String content = "&lt;div&gt;";
+
+		String expected = "<div>";
+		String actual = _translate(content);
+
+		assertEquals(expected, actual);
+	}
+
+	public void testBold() throws Exception {
+		String content = "This is '''bold'''.";
+
+		String expected = "This is **bold**.";
+		String actual = _translate(content);
+
+		assertEquals(expected, actual);
+	}
+
+	public void testBoldItalics() throws Exception {
+		String content = "This is ''''bold and italics''''.";
+
+		String expected = "This is **//bold and italics//**.";
+		String actual = _translate(content);
+
+		assertEquals(expected, actual);
+	}
+
 	public void testCleanUnnecessaryHeaderEmphasis1() throws Exception {
 		String content = "== '''title''' ==";
 
@@ -53,6 +80,15 @@ public class MediaWikiToCreoleTranslatorTest extends BaseTestCase {
 		assertEquals(expected, actual);
 	}
 
+	public void testHeader1() throws Exception {
+		String content = "= Header 1 =";
+
+		String expected = content;
+		String actual = _translate(content);
+
+		assertEquals(expected, actual);
+	}
+
 	public void testHeader1WithoutSpaces() throws Exception {
 		String content = "=Header 1=";
 
@@ -62,56 +98,66 @@ public class MediaWikiToCreoleTranslatorTest extends BaseTestCase {
 		assertEquals(expected, actual);
 	}
 
-	public void testAngleBracketsUnscape() throws Exception {
-		String content = "&lt;div&gt;";
+	public void testHeaders1() throws Exception {
+		String content = "= Header 1 =\n== Header 2 ==";
 
-		String expected = "<div>";
+		String expected =
+			MediaWikiToCreoleTranslator.TABLE_OF_CONTENTS +
+				"== Header 1 ==\n=== Header 2 ===";
+		String actual = _translator.postProcess(_translate(content));
+
+		assertEquals(expected, actual);
+	}
+
+	public void testHeaders2() throws Exception {
+		String content = "== Header 1 ==\n=== Header 2 ===";
+
+		String expected =
+			MediaWikiToCreoleTranslator.TABLE_OF_CONTENTS + content;
+		String actual = _translator.postProcess(_translate(content));
+
+		assertEquals(expected, actual);
+	}
+
+	public void testHorizontalRule() throws Exception {
+		String content = "\n----";
+
+		String expected = content;
 		String actual = _translate(content);
 
 		assertEquals(expected, actual);
 	}
 
-	public void testRemoveCategories() throws Exception {
+	public void testHtmlPre() throws Exception {
 		String content =
-			"[[Category:My category]]\n[[category:Other category]]";
+			"previous line\n<pre>\nmonospace\nsecond line\n</pre>\nnext line";
 
-		String expected = "";
+		String expected =
+			"previous line\n{{{\nmonospace\nsecond line\n}}}\nnext line";
 		String actual = _translate(content);
 
 		assertEquals(expected, actual);
 	}
 
-	public void testRemoveDisambiguation() throws Exception {
-		String content = "{{OtherTopics|Upgrade Instructions}}\ntest";
+	public void testImage() throws Exception {
+		String content =
+			"test1 [[Image:Sample1.png]] test2 [[Image:Sample2.png]] test3 " +
+				"[[Image:Sample3.png]] test4";
 
-		String expected ="\ntest";
-		String actual = _translate(content);
-
-		assertEquals(expected, actual);
-	}
-
-	public void testRemoveWorkInProgress() throws Exception {
-		String content = "{{Work in progress}}\ntest";
-
-		String expected = "\ntest";
-		String actual = _translate(content);
+		String expected =
+			MediaWikiToCreoleTranslator.TABLE_OF_CONTENTS +
+				"test1 {{SharedImages/sample1.png}} test2 " +
+					"{{SharedImages/sample2.png}} test3 " +
+						"{{SharedImages/sample3.png}} test4";
+		String actual = _translator.postProcess(_translate(content));
 
 		assertEquals(expected, actual);
 	}
 
-	public void testBoldItalics() throws Exception {
-		String content = "This is ''''bold and italics''''.";
+	public void testIndentedParagraph() throws Exception {
+		String content = "\t:\tparagraph";
 
-		String expected = "This is **//bold and italics//**.";
-		String actual = _translate(content);
-
-		assertEquals(expected, actual);
-	}
-
-	public void testBold() throws Exception {
-		String content = "This is '''bold'''.";
-
-		String expected = "This is **bold**.";
+		String expected = "paragraph";
 		String actual = _translate(content);
 
 		assertEquals(expected, actual);
@@ -135,115 +181,13 @@ public class MediaWikiToCreoleTranslatorTest extends BaseTestCase {
 		assertEquals(expected, actual);
 	}
 
-	public void testURL() throws Exception {
-		String content = "text[http://www.liferay.com]text";
-
-		String expected = "text[[http://www.liferay.com]]text";
-		String actual = _translate(content);
-
-		assertEquals(expected, actual);
-	}
-
-	public void testURLWithText1() throws Exception {
-		String content = "text [http://www.liferay.com link text] text";
-
-		String expected = "text [[http://www.liferay.com|link text]] text";
-		String actual = _translate(content);
-
-		assertEquals(expected, actual);
-	}
-
-	public void testURLWithText2() throws Exception {
-		String content = "text [[http://www.liferay.com link text]] text";
-
-		String expected = "text [[http://www.liferay.com|link text]] text";
-		String actual = _translate(content);
-
-		assertEquals(expected, actual);
-	}
-
-	public void testURLWithLabel() throws Exception {
-		String content = "[http://www.liferay.com This is the label]";
-
-		String expected = "[[http://www.liferay.com|This is the label]]";
-		String actual = _translate(content);
-
-		assertEquals(expected, actual);
-	}
-
-	public void testTermDefinition() throws Exception {
-		String content = "\tterm:\tdefinition";
-
-		String expected = "**term**:\ndefinition";
-		String actual = _translate(content);
-
-		assertEquals(expected, actual);
-	}
-
-	public void testIndentedParagraph() throws Exception {
-		String content = "\t:\tparagraph";
-
-		String expected = "paragraph";
-		String actual = _translate(content);
-
-		assertEquals(expected, actual);
-	}
-
-	public void testMonospace() throws Exception {
-		String content = "previous line\n monospace\nnext line";
-
-		String expected = "previous line\n{{{\n monospace\n}}}\nnext line";
-		String actual = _translate(content);
-
-		assertEquals(expected, actual);
-	}
-
-	public void testMultilinePre() throws Exception {
-		String content = "previous line\n monospace\n second line\nnext line";
+	public void testLinkWithUnderscores() throws Exception {
+		String content = "[[Link_With_Underscores]]";
 
 		String expected =
-			"previous line\n{{{\n monospace\n second line\n}}}\nnext line";
-		String actual = _translate(content);
-
-		assertEquals(expected, actual);
-	}
-
-	public void testNowiki() throws Exception {
-		String content =
-			"previous line\n<pre>\nmonospace\nsecond line\n</pre>\nnext line";
-
-		String expected =
-			"previous line\n{{{\nmonospace\nsecond line\n}}}\nnext line";
-		String actual = _translate(content);
-
-		assertEquals(expected, actual);
-	}
-
-	public void testHtmlPre() throws Exception {
-		String content =
-			"previous line\n<pre>\nmonospace\nsecond line\n</pre>\nnext line";
-
-		String expected =
-			"previous line\n{{{\nmonospace\nsecond line\n}}}\nnext line";
-		String actual = _translate(content);
-
-		assertEquals(expected, actual);
-	}
-
-	public void testUserReference() throws Exception {
-		String content = "--[[User:User name]]";
-
-		String expected = "User name";
-		String actual = _translate(content);
-
-		assertEquals(expected, actual);
-	}
-
-	public void testNotListItem() throws Exception {
-		String content = "\t*item";
-
-		String expected = content;
-		String actual = _translate(content);
+			MediaWikiToCreoleTranslator.TABLE_OF_CONTENTS +
+				"[[Link With Underscores]]";
+		String actual = _translator.postProcess(_translate(content));
 
 		assertEquals(expected, actual);
 	}
@@ -275,6 +219,59 @@ public class MediaWikiToCreoleTranslatorTest extends BaseTestCase {
 		assertEquals(expected, actual);
 	}
 
+	public void testMonospace() throws Exception {
+		String content = "previous line\n monospace\nnext line";
+
+		String expected = "previous line\n{{{\n monospace\n}}}\nnext line";
+		String actual = _translate(content);
+
+		assertEquals(expected, actual);
+	}
+
+	public void testMultilinePre() throws Exception {
+		String content = "previous line\n monospace\n second line\nnext line";
+
+		String expected =
+			"previous line\n{{{\n monospace\n second line\n}}}\nnext line";
+		String actual = _translate(content);
+
+		assertEquals(expected, actual);
+	}
+
+	public void testNotListItem() throws Exception {
+		String content = "\t*item";
+
+		String expected = content;
+		String actual = _translate(content);
+
+		assertEquals(expected, actual);
+	}
+
+	public void testNowiki() throws Exception {
+		String content =
+			"previous line\n<pre>\nmonospace\nsecond line\n</pre>\nnext line";
+
+		String expected =
+			"previous line\n{{{\nmonospace\nsecond line\n}}}\nnext line";
+		String actual = _translate(content);
+
+		assertEquals(expected, actual);
+	}
+
+	public void testNowikiWithFormat() throws Exception {
+		String content =
+			"previous line\n<nowiki>\nmonospace\n''second'' " +
+				"line\n</nowiki>\nnext line";
+
+		String expected =
+			MediaWikiToCreoleTranslator.TABLE_OF_CONTENTS +
+				"previous line\n{{{\nmonospace\n''second'' line\n}}}\nnext" +
+					" line";
+		String actual = _translator.translate(content);
+
+		assertEquals(expected, actual);
+	}
+
 	public void testOrderedListItem() throws Exception {
 		String content = "# item";
 
@@ -302,25 +299,21 @@ public class MediaWikiToCreoleTranslatorTest extends BaseTestCase {
 		assertEquals(expected, actual);
 	}
 
-	public void testHorizontalRule() throws Exception {
-		String content = "\n----";
+	public void testRemoveCategories() throws Exception {
+		String content =
+			"[[Category:My category]]\n[[category:Other category]]";
 
-		String expected = content;
+		String expected = "";
 		String actual = _translate(content);
 
 		assertEquals(expected, actual);
 	}
 
-	public void testNowikiWithFormat() throws Exception {
-		String content =
-			"previous line\n<nowiki>\nmonospace\n''second'' " +
-				"line\n</nowiki>\nnext line";
+	public void testRemoveDisambiguation() throws Exception {
+		String content = "{{OtherTopics|Upgrade Instructions}}\ntest";
 
-		String expected =
-			MediaWikiToCreoleTranslator.TABLE_OF_CONTENTS +
-				"previous line\n{{{\nmonospace\n''second'' line\n}}}\nnext" +
-					" line";
-		String actual = _translator.translate(content);
+		String expected ="\ntest";
+		String actual = _translate(content);
 
 		assertEquals(expected, actual);
 	}
@@ -335,57 +328,64 @@ public class MediaWikiToCreoleTranslatorTest extends BaseTestCase {
 		assertEquals(expected, actual);
 	}
 
-	public void testImage() throws Exception {
-		String content =
-			"test1 [[Image:Sample1.png]] test2 [[Image:Sample2.png]] test3 " +
-				"[[Image:Sample3.png]] test4";
+	public void testRemoveWorkInProgress() throws Exception {
+		String content = "{{Work in progress}}\ntest";
 
-		String expected =
-			MediaWikiToCreoleTranslator.TABLE_OF_CONTENTS +
-				"test1 {{SharedImages/sample1.png}} test2 " +
-					"{{SharedImages/sample2.png}} test3 " +
-						"{{SharedImages/sample3.png}} test4";
-		String actual = _translator.postProcess(_translate(content));
+		String expected = "\ntest";
+		String actual = _translate(content);
 
 		assertEquals(expected, actual);
 	}
 
-	public void testLinkWithUnderscores() throws Exception {
-		String content = "[[Link_With_Underscores]]";
+	public void testTermDefinition() throws Exception {
+		String content = "\tterm:\tdefinition";
 
-		String expected =
-			MediaWikiToCreoleTranslator.TABLE_OF_CONTENTS +
-				"[[Link With Underscores]]";
-		String actual = _translator.postProcess(_translate(content));
+		String expected = "**term**:\ndefinition";
+		String actual = _translate(content);
 
 		assertEquals(expected, actual);
 	}
 
-	public void testHeaders1() throws Exception {
-		String content = "= Header 1 =\n== Header 2 ==";
+	public void testURL() throws Exception {
+		String content = "text[http://www.liferay.com]text";
 
-		String expected =
-			MediaWikiToCreoleTranslator.TABLE_OF_CONTENTS +
-				"== Header 1 ==\n=== Header 2 ===";
-		String actual = _translator.postProcess(_translate(content));
+		String expected = "text[[http://www.liferay.com]]text";
+		String actual = _translate(content);
 
 		assertEquals(expected, actual);
 	}
 
-	public void testHeaders2() throws Exception {
-		String content = "== Header 1 ==\n=== Header 2 ===";
+	public void testURLWithLabel() throws Exception {
+		String content = "[http://www.liferay.com This is the label]";
 
-		String expected =
-			MediaWikiToCreoleTranslator.TABLE_OF_CONTENTS + content;
-		String actual = _translator.postProcess(_translate(content));
+		String expected = "[[http://www.liferay.com|This is the label]]";
+		String actual = _translate(content);
 
 		assertEquals(expected, actual);
 	}
 
-	public void testHeader1() throws Exception {
-		String content = "= Header 1 =";
+	public void testURLWithText1() throws Exception {
+		String content = "text [http://www.liferay.com link text] text";
 
-		String expected = content;
+		String expected = "text [[http://www.liferay.com|link text]] text";
+		String actual = _translate(content);
+
+		assertEquals(expected, actual);
+	}
+
+	public void testURLWithText2() throws Exception {
+		String content = "text [[http://www.liferay.com link text]] text";
+
+		String expected = "text [[http://www.liferay.com|link text]] text";
+		String actual = _translate(content);
+
+		assertEquals(expected, actual);
+	}
+
+	public void testUserReference() throws Exception {
+		String content = "--[[User:User name]]";
+
+		String expected = "User name";
 		String actual = _translate(content);
 
 		assertEquals(expected, actual);

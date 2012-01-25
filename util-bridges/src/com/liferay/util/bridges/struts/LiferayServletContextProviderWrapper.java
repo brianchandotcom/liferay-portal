@@ -31,12 +31,6 @@ import javax.servlet.http.HttpServletResponse;
 public class LiferayServletContextProviderWrapper
 	implements org.apache.portals.bridges.common.ServletContextProvider {
 
-	public ServletContext getServletContext(GenericPortlet portlet) {
-		ServletContextProvider provider = _getProvider(portlet);
-
-		return provider.getServletContext(portlet);
-	}
-
 	public HttpServletRequest getHttpServletRequest(
 		GenericPortlet portlet, PortletRequest portletRequest) {
 
@@ -51,6 +45,12 @@ public class LiferayServletContextProviderWrapper
 		ServletContextProvider provider = _getProvider(portlet);
 
 		return provider.getHttpServletResponse(portlet, portletResponse);
+	}
+
+	public ServletContext getServletContext(GenericPortlet portlet) {
+		ServletContextProvider provider = _getProvider(portlet);
+
+		return provider.getServletContext(portlet);
 	}
 
 	private ServletContextProvider _getProvider(GenericPortlet portlet) {

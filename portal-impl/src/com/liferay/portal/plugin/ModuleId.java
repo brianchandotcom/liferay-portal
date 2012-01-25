@@ -58,24 +58,8 @@ public class ModuleId implements Serializable {
 		return toString().equals(moduleId.toString());
 	}
 
-	public String getGroupId() {
-		return _groupId;
-	}
-
 	public String getArtifactId() {
 		return _artifactId;
-	}
-
-	public String getPackageId() {
-		return _groupId + StringPool.SLASH + _artifactId;
-	}
-
-	public String getVersion() {
-		return _pluginVersion.toString();
-	}
-
-	public String getType() {
-		return _type;
 	}
 
 	public String getArtifactPath() {
@@ -87,6 +71,22 @@ public class ModuleId implements Serializable {
 	public String getArtifactWARName() {
 		return _artifactId + StringPool.DASH + _pluginVersion +
 			StringPool.PERIOD + _type;
+	}
+
+	public String getGroupId() {
+		return _groupId;
+	}
+
+	public String getPackageId() {
+		return _groupId + StringPool.SLASH + _artifactId;
+	}
+
+	public String getType() {
+		return _type;
+	}
+
+	public String getVersion() {
+		return _pluginVersion.toString();
 	}
 
 	@Override

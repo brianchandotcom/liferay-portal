@@ -33,12 +33,12 @@ public class LayoutView implements Serializable {
 		_depth = depth;
 	}
 
-	public List<String> getList() {
-		return _list;
-	}
-
 	public int getDepth() {
 		return _depth;
+	}
+
+	public List<String> getList() {
+		return _list;
 	}
 
 	private int _depth;

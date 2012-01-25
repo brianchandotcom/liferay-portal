@@ -56,6 +56,15 @@ public interface LiferayPortletURL
 	public String getParameter(String name);
 
 	/**
+	 * Returns the parameters that are included in the friendly URL path and do
+	 * not need to appear in the query string.
+	 *
+	 * @return the names of the parameters that are included in the friendly URL
+	 *         path and do not need to appear in the query string
+	 */
+	public Set<String> getParametersIncludedInPath();
+
+	/**
 	 * Returns the ID of this URL's target portlet.
 	 *
 	 * @return the ID of this URL's target portlet
@@ -137,62 +146,6 @@ public interface LiferayPortletURL
 	 *         otherwise
 	 */
 	public boolean isSecure();
-
-	/**
-	 * Sets the portlet lifecycle of this URL's target portlet.
-	 *
-	 * <p>
-	 * Valid lifecycles are:
-	 * </p>
-	 *
-	 * <ul>
-	 * <li>
-	 * {@link javax.portlet.PortletRequest#ACTION_PHASE}
-	 * </li>
-	 * <li>
-	 * {@link javax.portlet.PortletRequest#RENDER_PHASE}
-	 * </li>
-	 * <li>
-	 * {@link javax.portlet.PortletRequest#RESOURCE_PHASE}
-	 * </li>
-	 * </ul>
-	 *
-	 * @param lifecycle the portlet lifecycle
-	 */
-	public void setLifecycle(String lifecycle);
-
-	/**
-	 * Sets the URL parameter to the value.
-	 *
-	 * @param name the name of the URL parameter
-	 * @param value the value of the URL parameter
-	 * @param append whether the new value should be appended to any existing
-	 *        values for the parameter. If <code>append</code> is
-	 *        <code>false</code> any existing values will be overwritten with
-	 *        the new value.
-	 */
-	public void setParameter(String name, String value, boolean append);
-
-	/**
-	 * Sets the URL parameter the values.
-	 *
-	 * @param name the name of the URL parameter
-	 * @param values the values of the URL parameter
-	 * @param append whether the new values should be appended to any existing
-	 *        values for the parameter. If <code>append</code> is
-	 *        <code>false</code> any existing values will be overwritten with
-	 *        the new values.
-	 */
-	public void setParameter(String name, String[] values, boolean append);
-
-	/**
-	 * Returns the parameters that are included in the friendly URL path and do
-	 * not need to appear in the query string.
-	 *
-	 * @return the names of the parameters that are included in the friendly URL
-	 *         path and do not need to appear in the query string
-	 */
-	public Set<String> getParametersIncludedInPath();
 
 	/**
 	 * Sets whether this URL is an anchor pointing to the specified portlet on
@@ -282,6 +235,53 @@ public interface LiferayPortletURL
 	 * @param escapeXml whether this URL should be XML escaped
 	 */
 	public void setEscapeXml(boolean escapeXml);
+
+	/**
+	 * Sets the portlet lifecycle of this URL's target portlet.
+	 *
+	 * <p>
+	 * Valid lifecycles are:
+	 * </p>
+	 *
+	 * <ul>
+	 * <li>
+	 * {@link javax.portlet.PortletRequest#ACTION_PHASE}
+	 * </li>
+	 * <li>
+	 * {@link javax.portlet.PortletRequest#RENDER_PHASE}
+	 * </li>
+	 * <li>
+	 * {@link javax.portlet.PortletRequest#RESOURCE_PHASE}
+	 * </li>
+	 * </ul>
+	 *
+	 * @param lifecycle the portlet lifecycle
+	 */
+	public void setLifecycle(String lifecycle);
+
+	/**
+	 * Sets the URL parameter to the value.
+	 *
+	 * @param name the name of the URL parameter
+	 * @param value the value of the URL parameter
+	 * @param append whether the new value should be appended to any existing
+	 *        values for the parameter. If <code>append</code> is
+	 *        <code>false</code> any existing values will be overwritten with
+	 *        the new value.
+	 */
+	public void setParameter(String name, String value, boolean append);
+
+	/**
+	 * Sets the URL parameter the values.
+	 *
+	 * @param name the name of the URL parameter
+	 * @param values the values of the URL parameter
+	 * @param append whether the new values should be appended to any existing
+	 *        values for the parameter. If <code>append</code> is
+	 *        <code>false</code> any existing values will be overwritten with
+	 *        the new values.
+	 */
+	public void setParameter(String name, String[] values, boolean append);
 
 	/**
 	 * Sets the portlet layout ID.

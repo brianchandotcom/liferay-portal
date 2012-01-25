@@ -23,6 +23,14 @@ import javax.naming.ldap.Control;
  */
 public class LDAPAuthResult {
 
+	public String getErrorMessage() {
+		return _errorMessage;
+	}
+
+	public String getResponseControl() {
+		return _responseControl;
+	}
+
 	public boolean isAuthenticated() {
 		return _authenticated;
 	}
@@ -31,16 +39,8 @@ public class LDAPAuthResult {
 		_authenticated = authenticated;
 	}
 
-	public String getErrorMessage() {
-		return _errorMessage;
-	}
-
 	public void setErrorMessage(String errorMessage) {
 		_errorMessage = errorMessage;
-	}
-
-	public String getResponseControl() {
-		return _responseControl;
 	}
 
 	public void setResponseControl(Control[] response) {

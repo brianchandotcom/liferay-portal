@@ -106,6 +106,21 @@ public class NamespaceServletRequest extends DynamicServletRequest {
 	}
 
 	@Override
+	public String getParameter(String name) {
+		if (name == null) {
+			throw new IllegalArgumentException();
+		}
+
+		String value = super.getParameter(name);
+
+		if (value == null) {
+			value = super.getParameter(_paramNamespace + name);
+		}
+
+		return value;
+	}
+
+	@Override
 	public void removeAttribute(String name) {
 		if (_isReservedParam(name)) {
 			super.removeAttribute(name);
@@ -134,21 +149,6 @@ public class NamespaceServletRequest extends DynamicServletRequest {
 		else {
 			setAttribute(name, value);
 		}
-	}
-
-	@Override
-	public String getParameter(String name) {
-		if (name == null) {
-			throw new IllegalArgumentException();
-		}
-
-		String value = super.getParameter(name);
-
-		if (value == null) {
-			value = super.getParameter(_paramNamespace + name);
-		}
-
-		return value;
 	}
 
 	private boolean _isReservedParam(String name) {

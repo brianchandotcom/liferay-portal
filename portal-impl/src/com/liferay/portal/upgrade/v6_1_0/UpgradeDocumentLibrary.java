@@ -422,8 +422,8 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			con = DataAccess.getConnection();
 
 			ps = con.prepareStatement(
-				"select fileVersionId, userId, extension, version from " +
-					"DLFileVersion where fileEntryId = " + fileEntryId +
+				"select fileVersionId, userId, extension, mimeType, version " +
+					"from DLFileVersion where fileEntryId = " + fileEntryId +
 						" order by version asc");
 
 			rs = ps.executeQuery();
@@ -432,20 +432,19 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 				long fileVersionId = rs.getLong("fileVersionId");
 				long userId = rs.getLong("userId");
 				String extension = rs.getString("extension");
+				String mimeType = rs.getString("mimeType");
 				String version = rs.getString("version");
 
-				String mimeType = MimeTypesUtil.getContentType(
-					"A." + extension);
-
-				DLFileVersion dlFileVersion = new DLFileVersionImpl();
-
-				dlFileVersion.setFileVersionId(fileVersionId);
-				dlFileVersion.setUserId(userId);
-				dlFileVersion.setFileEntryId(fileEntryId);
-				dlFileVersion.setMimeType(mimeType);
-				dlFileVersion.setVersion(version);
-
 				if (_imageMimeTypes.contains(mimeType)) {
+					DLFileVersion dlFileVersion = new DLFileVersionImpl();
+
+					dlFileVersion.setFileVersionId(fileVersionId);
+					dlFileVersion.setUserId(userId);
+					dlFileVersion.setFileEntryId(fileEntryId);
+					dlFileVersion.setExtension(extension);
+					dlFileVersion.setMimeType(mimeType);
+					dlFileVersion.setVersion(version);
+
 					FileVersion fileVersion = new LiferayFileVersion(
 						dlFileVersion);
 

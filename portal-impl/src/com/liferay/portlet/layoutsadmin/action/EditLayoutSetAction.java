@@ -210,18 +210,10 @@ public class EditLayoutSetAction extends EditLayoutsAction {
 				inputStream = new ByteArrayFileInputStream(file, 1024);
 			}
 
-			if (inputStream != null) {
-				inputStream.mark(0);
-			}
-
 			long groupId = liveGroupId;
 
 			if (stagingGroupId > 0) {
 				groupId = stagingGroupId;
-			}
-
-			if (inputStream != null) {
-				inputStream.reset();
 			}
 
 			LayoutSetServiceUtil.updateLogo(

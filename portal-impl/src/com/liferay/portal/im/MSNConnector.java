@@ -100,7 +100,7 @@ public class MSNConnector {
 	private static MSNConnector _instance = new MSNConnector();
 
 	private String _login;
-	private String _password;
 	private MSNMessenger _msn;
+	private String _password;
 
 }

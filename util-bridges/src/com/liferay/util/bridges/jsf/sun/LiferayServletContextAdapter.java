@@ -208,7 +208,7 @@ public class LiferayServletContextAdapter extends ExternalContext {
 	public void redirect(String string) {
 	}
 
-	private ServletContext _servletContext;
 	private LiferayApplicationMap _applicationMap;
+	private ServletContext _servletContext;
 
 }

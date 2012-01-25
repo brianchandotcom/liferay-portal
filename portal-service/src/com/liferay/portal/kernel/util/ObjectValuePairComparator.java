@@ -60,7 +60,7 @@ public class ObjectValuePairComparator<K, V>
 		}
 	}
 
-	private boolean _byKey;
 	private boolean _ascending;
+	private boolean _byKey;
 
 }

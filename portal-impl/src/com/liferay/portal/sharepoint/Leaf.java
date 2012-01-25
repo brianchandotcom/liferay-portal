@@ -69,8 +69,8 @@ public class Leaf implements ResponseElement {
 	}
 
 	private String _key;
-	private String _value;
-	private boolean _useEqualSymbol;
 	private boolean _newLine;
+	private boolean _useEqualSymbol;
+	private String _value;
 
 }

@@ -166,8 +166,8 @@ public class NavItem implements Serializable {
 		"com.liferay.taglib.util.VelocityTaglib", "layoutIcon",
 		new Class[] {Layout.class});
 
-	private RequestVars _vars;
-	private Layout _layout;
 	private List<NavItem> _children;
+	private Layout _layout;
+	private RequestVars _vars;
 
 }

@@ -91,10 +91,10 @@ public class LiferayInputStream extends ServletInputStreamWrapper {
 
 	private static Log _log = LogFactoryUtil.getLog(LiferayInputStream.class);
 
+	private UnsyncByteArrayOutputStream _cachedBytes =
+		new UnsyncByteArrayOutputStream();
 	private HttpSession _session;
 	private int _totalRead;
 	private int _totalSize;
-	private UnsyncByteArrayOutputStream _cachedBytes =
-		new UnsyncByteArrayOutputStream();
 
 }

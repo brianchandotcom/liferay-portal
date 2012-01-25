@@ -102,9 +102,9 @@ public class MethodWrapper implements Serializable {
 		return sb.toString();
 	}
 
-	private String _className;
-	private String _methodName;
 	private String[] _argumentClassNames;
 	private Object[] _arguments;
+	private String _className;
+	private String _methodName;
 
 }

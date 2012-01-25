@@ -216,17 +216,17 @@ public class PanelFloatingContainerTag
 	private static final String _START_PAGE =
 		"/html/taglib/ui/panel_floating_container/start.jsp";
 
-	private String _startPage;
-	private String _endPage;
-	private String _id;
-	private String _trigger;
 	private boolean _accordion;
-	private boolean _persistState;
+	private String _cssClass = StringPool.BLANK;
+	private String _endPage;
+	private Boolean _extended;
+	private String _id;
 	private boolean _paging;
 	private String _pagingElements = "ul";
+	private boolean _persistState;
 	private int _resultsPerPage = 1;
+	private String _startPage;
+	private String _trigger;
 	private int _width = 300;
-	private Boolean _extended;
- 	private String _cssClass = StringPool.BLANK;
 
 }

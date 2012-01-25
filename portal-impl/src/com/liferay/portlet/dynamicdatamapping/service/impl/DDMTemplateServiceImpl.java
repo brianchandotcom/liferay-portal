@@ -17,6 +17,7 @@ package com.liferay.portlet.dynamicdatamapping.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
@@ -31,6 +32,7 @@ import java.util.Map;
 /**
  * @author Brian Wing Shun Chan
  * @author Eduardo Lundgren
+ * @author Marcellus Tavares
  */
 public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 
@@ -91,6 +93,49 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		throws SystemException {
 
 		return ddmTemplatePersistence.findByS_T_M(structureId, type, mode);
+	}
+
+	public List<DDMTemplate> search(
+			long companyId, long groupId, long structureId, String keywords,
+			String type, String mode, int start, int end,
+			OrderByComparator orderByComparator)
+		throws SystemException {
+
+		return ddmTemplateFinder.filterFindByKeywords(
+			companyId, groupId, structureId, keywords, type, mode, start, end,
+			orderByComparator);
+	}
+
+	public List<DDMTemplate> search(
+			long companyId, long groupId, long structureId, String name,
+			String description, String type, String mode, String language,
+			boolean andOperator, int start, int end,
+			OrderByComparator orderByComparator)
+		throws SystemException {
+
+		return ddmTemplateFinder.filterFindByC_G_S_N_D_T_M_L(
+			companyId, groupId, structureId, name, description, type, mode,
+			language, andOperator, start, end, orderByComparator);
+	}
+
+	public int searchCount(
+			long companyId, long groupId, long structureId, String keywords,
+			String type, String mode)
+		throws SystemException {
+
+		return ddmTemplateFinder.filterCountByKeywords(
+			companyId, groupId, structureId, keywords, type, mode);
+	}
+
+	public int searchCount(
+			long companyId, long groupId, long structureId, String name,
+			String description, String type, String mode, String language,
+			boolean andOperator)
+		throws SystemException {
+
+		return ddmTemplateFinder.filterCountByC_G_S_N_D_T_M_L(
+			companyId, groupId, structureId, name, description, type, mode,
+			language, andOperator);
 	}
 
 	public DDMTemplate updateTemplate(

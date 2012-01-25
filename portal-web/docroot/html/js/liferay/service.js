@@ -851,6 +851,8 @@ Liferay.Service.registerClass(
 		deleteStructure: true,
 		fetchStructure: true,
 		getStructure: true,
+		search: true,
+		searchCount: true,
 		updateStructure: true
 	}
 );
@@ -863,6 +865,8 @@ Liferay.Service.registerClass(
 		deleteTemplate: true,
 		getTemplate: true,
 		getTemplates: true,
+		search: true,
+		searchCount: true,
 		updateTemplate: true
 	}
 );

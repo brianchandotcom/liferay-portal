@@ -35,6 +35,47 @@ public interface DDMTemplateFinder {
 		boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public int filterCountByKeywords(long companyId, long groupId,
+		long structureId, java.lang.String keywords, java.lang.String type,
+		java.lang.String mode)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public int filterCountByC_G_S_N_D_T_M_L(long companyId, long groupId,
+		long structureId, java.lang.String name, java.lang.String description,
+		java.lang.String type, java.lang.String mode,
+		java.lang.String language, boolean andOperator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public int filterCountByC_G_S_N_D_T_M_L(long companyId, long groupId,
+		long structureId, java.lang.String[] names,
+		java.lang.String[] descriptions, java.lang.String[] types,
+		java.lang.String[] modes, java.lang.String[] languages,
+		boolean andOperator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByKeywords(
+		long companyId, long groupId, long structureId,
+		java.lang.String keywords, java.lang.String type,
+		java.lang.String mode, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByC_G_S_N_D_T_M_L(
+		long companyId, long groupId, long structureId, java.lang.String name,
+		java.lang.String description, java.lang.String type,
+		java.lang.String mode, java.lang.String language, boolean andOperator,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByC_G_S_N_D_T_M_L(
+		long companyId, long groupId, long structureId,
+		java.lang.String[] names, java.lang.String[] descriptions,
+		java.lang.String[] types, java.lang.String[] modes,
+		java.lang.String[] languages, boolean andOperator, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByKeywords(
 		long companyId, long groupId, long structureId,
 		java.lang.String keywords, java.lang.String type,

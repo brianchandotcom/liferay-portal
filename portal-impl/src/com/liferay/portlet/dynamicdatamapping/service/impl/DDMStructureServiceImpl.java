@@ -17,6 +17,7 @@ package com.liferay.portlet.dynamicdatamapping.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -24,12 +25,14 @@ import com.liferay.portlet.dynamicdatamapping.service.base.DDMStructureServiceBa
 import com.liferay.portlet.dynamicdatamapping.service.permission.DDMPermission;
 import com.liferay.portlet.dynamicdatamapping.service.permission.DDMStructurePermission;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Bruno Basto
+ * @author Marcellus Tavares
  */
 public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 
@@ -98,6 +101,49 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			getPermissionChecker(), structureId, ActionKeys.VIEW);
 
 		return ddmStructurePersistence.findByPrimaryKey(structureId);
+	}
+
+	public List<DDMStructure> search(
+			long companyId, long[] groupIds, long[] classNameIds,
+			String keywords, int start, int end,
+			OrderByComparator orderByComparator)
+		throws SystemException {
+
+		return ddmStructureFinder.filterFindByKeywords(
+			companyId, groupIds, classNameIds, keywords, start, end,
+			orderByComparator);
+	}
+
+	public List<DDMStructure> search(
+			long companyId, long[] groupIds, long[] classNameIds, String name,
+			String description, String storageType, int type,
+			boolean andOperator, int start, int end,
+			OrderByComparator orderByComparator)
+		throws SystemException {
+
+		return ddmStructureFinder.filterFindByC_G_C_N_D_S_T(
+			companyId, groupIds, classNameIds, name, description, storageType,
+			type, andOperator, start, end, orderByComparator);
+	}
+
+	public int searchCount(
+			long companyId, long[] groupIds, long[] classNameIds,
+			String keywords)
+		throws SystemException {
+
+		return ddmStructureFinder.filterCountByKeywords(
+			companyId, groupIds, classNameIds, keywords);
+	}
+
+	public int searchCount(
+			long companyId, long[] groupIds, long[] classNameIds, String name,
+			String description, String storageType, int type,
+			boolean andOperator)
+		throws SystemException {
+
+		return ddmStructureFinder.filterCountByC_G_C_N_D_S_T(
+			companyId, groupIds, classNameIds, name, description, storageType,
+			type, andOperator);
 	}
 
 	public DDMStructure updateStructure(

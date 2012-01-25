@@ -51,88 +51,88 @@ public class LayoutsLocalPublisherRequest implements Serializable {
 		return _command;
 	}
 
-	public void setCommand(String command) {
-		_command = command;
-	}
-
 	public String getCronText() {
 		return _cronText;
-	}
-
-	public void setCronText(String cronText) {
-		_cronText = cronText;
-	}
-
-	public long getUserId() {
-		return _userId;
-	}
-
-	public void setUserId(long userId) {
-		_userId = userId;
-	}
-
-	public long getSourceGroupId() {
-		return _sourceGroupId;
-	}
-
-	public void setSourceGroupId(long sourceGroupId) {
-		_sourceGroupId = sourceGroupId;
-	}
-
-	public long getTargetGroupId() {
-		return _targetGroupId;
-	}
-
-	public void setTargetGroupId(long targetGroupId) {
-		_targetGroupId = targetGroupId;
-	}
-
-	public boolean isPrivateLayout() {
-		return _privateLayout;
-	}
-
-	public void setPrivateLayout(boolean privateLayout) {
-		_privateLayout = privateLayout;
-	}
-
-	public Map<Long, Boolean> getLayoutIdMap() {
-		return _layoutIdMap;
-	}
-
-	public void setLayoutIdMap(Map<Long, Boolean> layoutIdMap) {
-		_layoutIdMap = layoutIdMap;
-	}
-
-	public Map<String, String[]> getParameterMap() {
-		return _parameterMap;
-	}
-
-	public void setParameterMap(Map<String, String[]> parameterMap) {
-		_parameterMap = parameterMap;
-	}
-
-	public Date getStartDate() {
-		return _startDate;
-	}
-
-	public void setStartDate(Date startDate) {
-		_startDate = startDate;
 	}
 
 	public Date getEndDate() {
 		return _endDate;
 	}
 
-	public void setEndDate(Date endDate) {
-		_endDate = endDate;
+	public Map<Long, Boolean> getLayoutIdMap() {
+		return _layoutIdMap;
+	}
+
+	public Map<String, String[]> getParameterMap() {
+		return _parameterMap;
 	}
 
 	public Date getScheduledFireTime() {
 		return _scheduledFireTime;
 	}
 
+	public long getSourceGroupId() {
+		return _sourceGroupId;
+	}
+
+	public Date getStartDate() {
+		return _startDate;
+	}
+
+	public long getTargetGroupId() {
+		return _targetGroupId;
+	}
+
+	public long getUserId() {
+		return _userId;
+	}
+
+	public boolean isPrivateLayout() {
+		return _privateLayout;
+	}
+
+	public void setCommand(String command) {
+		_command = command;
+	}
+
+	public void setCronText(String cronText) {
+		_cronText = cronText;
+	}
+
+	public void setEndDate(Date endDate) {
+		_endDate = endDate;
+	}
+
+	public void setLayoutIdMap(Map<Long, Boolean> layoutIdMap) {
+		_layoutIdMap = layoutIdMap;
+	}
+
+	public void setParameterMap(Map<String, String[]> parameterMap) {
+		_parameterMap = parameterMap;
+	}
+
+	public void setPrivateLayout(boolean privateLayout) {
+		_privateLayout = privateLayout;
+	}
+
 	public void setScheduledFireTime(Date scheduledFireTime) {
 		_scheduledFireTime = scheduledFireTime;
+	}
+
+	public void setSourceGroupId(long sourceGroupId) {
+		_sourceGroupId = sourceGroupId;
+	}
+
+	public void setStartDate(Date startDate) {
+		_startDate = startDate;
+	}
+
+	public void setTargetGroupId(long targetGroupId) {
+		_targetGroupId = targetGroupId;
+	}
+
+	public void setUserId(long userId) {
+		_userId = userId;
 	}
 
 	private static final long serialVersionUID = 5924338343434811142L;

@@ -55,155 +55,155 @@ public class JournalArticleDisplayImpl implements JournalArticleDisplay {
 		_cacheable = cacheable;
 	}
 
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public long getId() {
-		return _id;
-	}
-
-	public long getResourcePrimKey() {
-		return _resourcePrimKey;
-	}
-
-	public long getGroupId() {
-		return _groupId;
-	}
-
-	public long getUserId() {
-		return _userId;
-	}
-
 	public String getArticleId() {
 		return _articleId;
-	}
-
-	public double getVersion() {
-		return _version;
-	}
-
-	public String getTitle() {
-		return _title;
-	}
-
-	public String getUrlTitle() {
-		return _urlTitle;
-	}
-
-	public String getDescription() {
-		return _description;
 	}
 
 	public String[] getAvailableLocales() {
 		return _availableLocales;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
 	public String getContent() {
 		return _content;
-	}
-
-	public void setContent(String content) {
-		_content = content;
-	}
-
-	public String getType() {
-		return _type;
-	}
-
-	public String getStructureId() {
-		return _structureId;
-	}
-
-	public void setStructureId(String structureId) {
-		_structureId = structureId;
-	}
-
-	public String getTemplateId() {
-		return _templateId;
-	}
-
-	public void setTemplateId(String templateId) {
-		_templateId = templateId;
-	}
-
-	public boolean isSmallImage() {
-		return _smallImage;
-	}
-
-	public void setSmallImage(boolean smallImage) {
-		_smallImage = smallImage;
-	}
-
-	public long getSmallImageId() {
-		return _smallImageId;
-	}
-
-	public void setSmallImageId(long smallImageId) {
-		_smallImageId = smallImageId;
-	}
-
-	public String getSmallImageURL() {
-		return _smallImageURL;
-	}
-
-	public void setSmallImageURL(String smallImageURL) {
-		_smallImageURL = smallImageURL;
-	}
-
-	public int getNumberOfPages() {
-		return _numberOfPages;
-	}
-
-	public void setNumberOfPages(int numberOfPages) {
-		_numberOfPages = numberOfPages;
 	}
 
 	public int getCurrentPage() {
 		return _currentPage;
 	}
 
-	public void setCurrentPage(int currentPage) {
-		_currentPage = currentPage;
+	public String getDescription() {
+		return _description;
 	}
 
-	public boolean isPaginate() {
-		return _paginate;
+	public long getGroupId() {
+		return _groupId;
 	}
 
-	public void setPaginate(boolean paginate) {
-		_paginate = paginate;
+	public long getId() {
+		return _id;
+	}
+
+	public int getNumberOfPages() {
+		return _numberOfPages;
+	}
+
+	public long getResourcePrimKey() {
+		return _resourcePrimKey;
+	}
+
+	public long getSmallImageId() {
+		return _smallImageId;
+	}
+
+	public String getSmallImageURL() {
+		return _smallImageURL;
+	}
+
+	public String getStructureId() {
+		return _structureId;
+	}
+
+	public String getTemplateId() {
+		return _templateId;
+	}
+
+	public String getTitle() {
+		return _title;
+	}
+
+	public String getType() {
+		return _type;
+	}
+
+	public String getUrlTitle() {
+		return _urlTitle;
+	}
+
+	public long getUserId() {
+		return _userId;
+	}
+
+	public double getVersion() {
+		return _version;
 	}
 
 	public boolean isCacheable() {
 		return _cacheable;
 	}
 
+	public boolean isPaginate() {
+		return _paginate;
+	}
+
+	public boolean isSmallImage() {
+		return _smallImage;
+	}
+
 	public void setCacheable(boolean cacheable) {
 		_cacheable = cacheable;
 	}
 
-	private long _companyId;
-	private long _id;
-	private long _resourcePrimKey;
-	private long _groupId;
-	private long _userId;
+	public void setContent(String content) {
+		_content = content;
+	}
+
+	public void setCurrentPage(int currentPage) {
+		_currentPage = currentPage;
+	}
+
+	public void setNumberOfPages(int numberOfPages) {
+		_numberOfPages = numberOfPages;
+	}
+
+	public void setPaginate(boolean paginate) {
+		_paginate = paginate;
+	}
+
+	public void setSmallImage(boolean smallImage) {
+		_smallImage = smallImage;
+	}
+
+	public void setSmallImageId(long smallImageId) {
+		_smallImageId = smallImageId;
+	}
+
+	public void setSmallImageURL(String smallImageURL) {
+		_smallImageURL = smallImageURL;
+	}
+
+	public void setStructureId(String structureId) {
+		_structureId = structureId;
+	}
+
+	public void setTemplateId(String templateId) {
+		_templateId = templateId;
+	}
+
 	private String _articleId;
-	private double _version;
-	private String _title;
-	private String _urlTitle;
-	private String _description;
 	private String[] _availableLocales;
+	private boolean _cacheable;
+	private long _companyId;
 	private String _content;
-	private String _type;
-	private String _structureId;
-	private String _templateId;
+	private int _currentPage;
+	private String _description;
+	private long _groupId;
+	private long _id;
+	private int _numberOfPages;
+	private boolean _paginate;
+	private long _resourcePrimKey;
 	private boolean _smallImage;
 	private long _smallImageId;
 	private String _smallImageURL;
-	private int _numberOfPages;
-	private int _currentPage;
-	private boolean _paginate;
-	private boolean _cacheable;
+	private String _structureId;
+	private String _templateId;
+	private String _title;
+	private String _type;
+	private String _urlTitle;
+	private long _userId;
+	private double _version;
 
 }

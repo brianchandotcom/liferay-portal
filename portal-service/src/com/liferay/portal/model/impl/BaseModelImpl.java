@@ -34,38 +34,38 @@ public abstract class BaseModelImpl<T> implements BaseModel<T> {
 	public BaseModelImpl() {
 	}
 
-	public boolean isNew() {
-		return _new;
-	}
+	@Override
+	public abstract Object clone();
 
-	public void setNew(boolean n) {
-		_new = n;
+	public ExpandoBridge getExpandoBridge() {
+		throw new UnsupportedOperationException();
 	}
 
 	public boolean isCachedModel() {
 		return _cachedModel;
 	}
 
-	public void setCachedModel(boolean cachedModel) {
-		_cachedModel = cachedModel;
-	}
-
 	public boolean isEscapedModel() {
 		return _ESCAPED_MODEL;
 	}
 
-	public ExpandoBridge getExpandoBridge() {
-		throw new UnsupportedOperationException();
+	public boolean isNew() {
+		return _new;
+	}
+
+	public void resetOriginalValues() {
+	}
+
+	public void setCachedModel(boolean cachedModel) {
+		_cachedModel = cachedModel;
 	}
 
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
-	public abstract Object clone();
-
-	public void resetOriginalValues() {
+	public void setNew(boolean n) {
+		_new = n;
 	}
 
 	public CacheModel<T> toCacheModel() {
@@ -96,7 +96,7 @@ public abstract class BaseModelImpl<T> implements BaseModel<T> {
 
 	private static final boolean _ESCAPED_MODEL = false;
 
-	private boolean _new;
 	private boolean _cachedModel;
+	private boolean _new;
 
 }

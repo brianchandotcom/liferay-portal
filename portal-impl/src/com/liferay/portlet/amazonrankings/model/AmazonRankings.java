@@ -70,148 +70,148 @@ public class AmazonRankings
 		}
 	}
 
-	public String getISBN() {
-		return _isbn;
-	}
-
-	public void setISBN(String isbn) {
-		_isbn = isbn;
-	}
-
-	public String getProductName() {
-		return _productName;
-	}
-
-	public void setProductName(String productName) {
-		_productName = productName;
-	}
-
-	public String getCatalog() {
-		return _catalog;
-	}
-
-	public void setCatalog(String catalog) {
-		_catalog = catalog;
-	}
-
 	public String[] getAuthors() {
 		return _authors;
-	}
-
-	public void setAuthors(String[] authors) {
-		_authors = authors;
-	}
-
-	public Date getReleaseDate() {
-		return _releaseDate;
-	}
-
-	public void setReleaseDate(Date releaseDate) {
-		_releaseDate = releaseDate;
-	}
-
-	public String getReleaseDateAsString() {
-		return _releaseDateAsString;
-	}
-
-	public void setReleaseDateAsString(String releaseDateAsString) {
-		_releaseDateAsString = releaseDateAsString;
-	}
-
-	public String getManufacturer() {
-		return _manufacturer;
-	}
-
-	public void setManufacturer(String manufacturer) {
-		_manufacturer = manufacturer;
-	}
-
-	public String getSmallImageURL() {
-		return _smallImageURL;
-	}
-
-	public void setSmallImageURL(String smallImageURL) {
-		_smallImageURL = smallImageURL;
-	}
-
-	public String getMediumImageURL() {
-		return _mediumImageURL;
-	}
-
-	public void setMediumImageURL(String mediumImageURL) {
-		_mediumImageURL = mediumImageURL;
-	}
-
-	public String getLargeImageURL() {
-		return _largeImageURL;
-	}
-
-	public void setLargeImageURL(String largeImageURL) {
-		_largeImageURL = largeImageURL;
-	}
-
-	public double getListPrice() {
-		return _listPrice;
-	}
-
-	public void setListPrice(double listPrice) {
-		_listPrice = listPrice;
-	}
-
-	public double getOurPrice() {
-		return _ourPrice;
-	}
-
-	public void setOurPrice(double ourPrice) {
-		_ourPrice = ourPrice;
-	}
-
-	public double getUsedPrice() {
-		return _usedPrice;
-	}
-
-	public void setUsedPrice(double usedPrice) {
-		_usedPrice = usedPrice;
-	}
-
-	public double getCollectiblePrice() {
-		return _collectiblePrice;
-	}
-
-	public void setCollectiblePrice(double collectiblePrice) {
-		_collectiblePrice = collectiblePrice;
-	}
-
-	public double getThirdPartyNewPrice() {
-		return _thirdPartyNewPrice;
-	}
-
-	public void setThirdPartyNewPrice(double thirdPartyNewPrice) {
-		_thirdPartyNewPrice = thirdPartyNewPrice;
-	}
-
-	public int getSalesRank() {
-		return _salesRank;
-	}
-
-	public void setSalesRank(int salesRank) {
-		_salesRank = salesRank;
-	}
-
-	public String getMedia() {
-		return _media;
-	}
-
-	public void setMedia(String media) {
-		_media = media;
 	}
 
 	public String getAvailability() {
 		return _availability;
 	}
 
+	public String getCatalog() {
+		return _catalog;
+	}
+
+	public double getCollectiblePrice() {
+		return _collectiblePrice;
+	}
+
+	public String getISBN() {
+		return _isbn;
+	}
+
+	public String getLargeImageURL() {
+		return _largeImageURL;
+	}
+
+	public double getListPrice() {
+		return _listPrice;
+	}
+
+	public String getManufacturer() {
+		return _manufacturer;
+	}
+
+	public String getMedia() {
+		return _media;
+	}
+
+	public String getMediumImageURL() {
+		return _mediumImageURL;
+	}
+
+	public double getOurPrice() {
+		return _ourPrice;
+	}
+
+	public String getProductName() {
+		return _productName;
+	}
+
+	public Date getReleaseDate() {
+		return _releaseDate;
+	}
+
+	public String getReleaseDateAsString() {
+		return _releaseDateAsString;
+	}
+
+	public int getSalesRank() {
+		return _salesRank;
+	}
+
+	public String getSmallImageURL() {
+		return _smallImageURL;
+	}
+
+	public double getThirdPartyNewPrice() {
+		return _thirdPartyNewPrice;
+	}
+
+	public double getUsedPrice() {
+		return _usedPrice;
+	}
+
+	public void setAuthors(String[] authors) {
+		_authors = authors;
+	}
+
 	public void setAvailability(String availability) {
 		_availability = availability;
+	}
+
+	public void setCatalog(String catalog) {
+		_catalog = catalog;
+	}
+
+	public void setCollectiblePrice(double collectiblePrice) {
+		_collectiblePrice = collectiblePrice;
+	}
+
+	public void setISBN(String isbn) {
+		_isbn = isbn;
+	}
+
+	public void setLargeImageURL(String largeImageURL) {
+		_largeImageURL = largeImageURL;
+	}
+
+	public void setListPrice(double listPrice) {
+		_listPrice = listPrice;
+	}
+
+	public void setManufacturer(String manufacturer) {
+		_manufacturer = manufacturer;
+	}
+
+	public void setMedia(String media) {
+		_media = media;
+	}
+
+	public void setMediumImageURL(String mediumImageURL) {
+		_mediumImageURL = mediumImageURL;
+	}
+
+	public void setOurPrice(double ourPrice) {
+		_ourPrice = ourPrice;
+	}
+
+	public void setProductName(String productName) {
+		_productName = productName;
+	}
+
+	public void setReleaseDate(Date releaseDate) {
+		_releaseDate = releaseDate;
+	}
+
+	public void setReleaseDateAsString(String releaseDateAsString) {
+		_releaseDateAsString = releaseDateAsString;
+	}
+
+	public void setSalesRank(int salesRank) {
+		_salesRank = salesRank;
+	}
+
+	public void setSmallImageURL(String smallImageURL) {
+		_smallImageURL = smallImageURL;
+	}
+
+	public void setThirdPartyNewPrice(double thirdPartyNewPrice) {
+		_thirdPartyNewPrice = thirdPartyNewPrice;
+	}
+
+	public void setUsedPrice(double usedPrice) {
+		_usedPrice = usedPrice;
 	}
 
 	private String[] _authors;

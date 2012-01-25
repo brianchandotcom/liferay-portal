@@ -112,190 +112,6 @@ public class Recurrence implements Serializable {
 	/* Accessors */
 
 	/**
-	 * Method getDtStart
-	 *
-	 * @return Calendar
-	 */
-	public Calendar getDtStart() {
-		return (Calendar)dtStart.clone();
-	}
-
-	/**
-	 * Method setDtStart
-	 */
-	public void setDtStart(Calendar start) {
-		int oldStart;
-
-		if (dtStart != null) {
-			oldStart = dtStart.getFirstDayOfWeek();
-		}
-		else {
-			oldStart = Calendar.MONDAY;
-		}
-
-		if (start == null) {
-			dtStart = CalendarFactoryUtil.getCalendar(
-				TimeZoneUtil.getTimeZone(StringPool.UTC));
-
-			dtStart.setTime(new Date(0L));
-		}
-		else {
-			dtStart = (Calendar)start.clone();
-
-			dtStart.clear(Calendar.ZONE_OFFSET);
-			dtStart.clear(Calendar.DST_OFFSET);
-			dtStart.setTimeZone(TimeZoneUtil.getTimeZone(StringPool.UTC));
-		}
-
-		dtStart.setMinimalDaysInFirstWeek(4);
-		dtStart.setFirstDayOfWeek(oldStart);
-	}
-
-	/**
-	 * Method getDuration
-	 *
-	 * @return Duration
-	 */
-	public Duration getDuration() {
-		return (Duration)duration.clone();
-	}
-
-	/**
-	 * Method setDuration
-	 */
-	public void setDuration(Duration d) {
-		duration = (Duration)d.clone();
-	}
-
-	/**
-	 * Method getDtEnd
-	 *
-	 * @return Calendar
-	 */
-	public Calendar getDtEnd() {
-
-		/*
-		 * Make dtEnd a cloned dtStart, so non-time fields of the Calendar
-		 * are accurate.
-		 */
-		Calendar tempEnd = (Calendar)dtStart.clone();
-
-		tempEnd.setTime(new Date(dtStart.getTime().getTime()
-								 + duration.getInterval()));
-
-		return tempEnd;
-	}
-
-	/**
-	 * Method setDtEnd
-	 */
-	public void setDtEnd(Calendar end) {
-		Calendar tempEnd = (Calendar)end.clone();
-
-		tempEnd.clear(Calendar.ZONE_OFFSET);
-		tempEnd.clear(Calendar.DST_OFFSET);
-		tempEnd.setTimeZone(TimeZoneUtil.getTimeZone(StringPool.UTC));
-		duration.setInterval(tempEnd.getTime().getTime()
-							 - dtStart.getTime().getTime());
-	}
-
-	/**
-	 * Method getFrequency
-	 *
-	 * @return int
-	 */
-	public int getFrequency() {
-		return frequency;
-	}
-
-	/**
-	 * Method setFrequency
-	 */
-	public void setFrequency(int freq) {
-		if ((frequency != DAILY) && (frequency != WEEKLY)
-			&& (frequency != MONTHLY) && (frequency != YEARLY)
-			&& (frequency != NO_RECURRENCE)) {
-			throw new IllegalArgumentException("Invalid frequency");
-		}
-
-		frequency = freq;
-	}
-
-	/**
-	 * Method getInterval
-	 *
-	 * @return int
-	 */
-	public int getInterval() {
-		return interval;
-	}
-
-	/**
-	 * Method setInterval
-	 */
-	public void setInterval(int intr) {
-		interval = (intr > 0) ? intr : 1;
-	}
-
-	/**
-	 * Method getOccurrence
-	 *
-	 * @return int
-	 */
-	public int getOccurrence() {
-		return occurrence;
-	}
-
-	/**
-	 * Method setOccurrence
-	 */
-	public void setOccurrence(int occur) {
-		occurrence = occur;
-	}
-
-	/**
-	 * Method getUntil
-	 *
-	 * @return Calendar
-	 */
-	public Calendar getUntil() {
-		return ((until != null) ? (Calendar)until.clone() : null);
-	}
-
-	/**
-	 * Method setUntil
-	 */
-	public void setUntil(Calendar u) {
-		if (u == null) {
-			until = null;
-
-			return;
-		}
-
-		until = (Calendar)u.clone();
-
-		until.clear(Calendar.ZONE_OFFSET);
-		until.clear(Calendar.DST_OFFSET);
-		until.setTimeZone(TimeZoneUtil.getTimeZone(StringPool.UTC));
-	}
-
-	/**
-	 * Method getWeekStart
-	 *
-	 * @return int
-	 */
-	public int getWeekStart() {
-		return dtStart.getFirstDayOfWeek();
-	}
-
-	/**
-	 * Method setWeekStart
-	 */
-	public void setWeekStart(int weekstart) {
-		dtStart.setFirstDayOfWeek(weekstart);
-	}
-
-	/**
 	 * Method getByDay
 	 *
 	 * @return DayAndPosition[]
@@ -319,24 +135,20 @@ public class Recurrence implements Serializable {
 	}
 
 	/**
-	 * Method setByDay
+	 * Method getByMonth
+	 *
+	 * @return int[]
 	 */
-	public void setByDay(DayAndPosition[] b) {
-		if (b == null) {
-			byDay = null;
-
-			return;
+	public int[] getByMonth() {
+		if (byMonth == null) {
+			return null;
 		}
 
-		byDay = new DayAndPosition[b.length];
+		int[] b = new int[byMonth.length];
 
-		/*
-		 * System.arraycopy isn't good enough -- we want to clone each
-		 * individual element.
-		 */
-		for (int i = 0; i < b.length; i++) {
-			byDay[i] = (DayAndPosition)b[i].clone();
-		}
+		System.arraycopy(byMonth, 0, b, 0, byMonth.length);
+
+		return b;
 	}
 
 	/**
@@ -357,53 +169,6 @@ public class Recurrence implements Serializable {
 	}
 
 	/**
-	 * Method setByMonthDay
-	 */
-	public void setByMonthDay(int[] b) {
-		if (b == null) {
-			byMonthDay = null;
-
-			return;
-		}
-
-		byMonthDay = new int[b.length];
-
-		System.arraycopy(b, 0, byMonthDay, 0, b.length);
-	}
-
-	/**
-	 * Method getByYearDay
-	 *
-	 * @return int[]
-	 */
-	public int[] getByYearDay() {
-		if (byYearDay == null) {
-			return null;
-		}
-
-		int[] b = new int[byYearDay.length];
-
-		System.arraycopy(byYearDay, 0, b, 0, byYearDay.length);
-
-		return b;
-	}
-
-	/**
-	 * Method setByYearDay
-	 */
-	public void setByYearDay(int[] b) {
-		if (b == null) {
-			byYearDay = null;
-
-			return;
-		}
-
-		byYearDay = new int[b.length];
-
-		System.arraycopy(b, 0, byYearDay, 0, b.length);
-	}
-
-	/**
 	 * Method getByWeekNo
 	 *
 	 * @return int[]
@@ -421,50 +186,20 @@ public class Recurrence implements Serializable {
 	}
 
 	/**
-	 * Method setByWeekNo
-	 */
-	public void setByWeekNo(int[] b) {
-		if (b == null) {
-			byWeekNo = null;
-
-			return;
-		}
-
-		byWeekNo = new int[b.length];
-
-		System.arraycopy(b, 0, byWeekNo, 0, b.length);
-	}
-
-	/**
-	 * Method getByMonth
+	 * Method getByYearDay
 	 *
 	 * @return int[]
 	 */
-	public int[] getByMonth() {
-		if (byMonth == null) {
+	public int[] getByYearDay() {
+		if (byYearDay == null) {
 			return null;
 		}
 
-		int[] b = new int[byMonth.length];
+		int[] b = new int[byYearDay.length];
 
-		System.arraycopy(byMonth, 0, b, 0, byMonth.length);
+		System.arraycopy(byYearDay, 0, b, 0, byYearDay.length);
 
 		return b;
-	}
-
-	/**
-	 * Method setByMonth
-	 */
-	public void setByMonth(int[] b) {
-		if (b == null) {
-			byMonth = null;
-
-			return;
-		}
-
-		byMonth = new int[b.length];
-
-		System.arraycopy(b, 0, byMonth, 0, b.length);
 	}
 
 	/**
@@ -524,6 +259,88 @@ public class Recurrence implements Serializable {
 		}
 
 		return candidate;
+	}
+
+	/**
+	 * Method getDtEnd
+	 *
+	 * @return Calendar
+	 */
+	public Calendar getDtEnd() {
+
+		/*
+		 * Make dtEnd a cloned dtStart, so non-time fields of the Calendar
+		 * are accurate.
+		 */
+		Calendar tempEnd = (Calendar)dtStart.clone();
+
+		tempEnd.setTime(new Date(dtStart.getTime().getTime()
+								 + duration.getInterval()));
+
+		return tempEnd;
+	}
+
+	/**
+	 * Method getDtStart
+	 *
+	 * @return Calendar
+	 */
+	public Calendar getDtStart() {
+		return (Calendar)dtStart.clone();
+	}
+
+	/**
+	 * Method getDuration
+	 *
+	 * @return Duration
+	 */
+	public Duration getDuration() {
+		return (Duration)duration.clone();
+	}
+
+	/**
+	 * Method getFrequency
+	 *
+	 * @return int
+	 */
+	public int getFrequency() {
+		return frequency;
+	}
+
+	/**
+	 * Method getInterval
+	 *
+	 * @return int
+	 */
+	public int getInterval() {
+		return interval;
+	}
+
+	/**
+	 * Method getOccurrence
+	 *
+	 * @return int
+	 */
+	public int getOccurrence() {
+		return occurrence;
+	}
+
+	/**
+	 * Method getUntil
+	 *
+	 * @return Calendar
+	 */
+	public Calendar getUntil() {
+		return ((until != null) ? (Calendar)until.clone() : null);
+	}
+
+	/**
+	 * Method getWeekStart
+	 *
+	 * @return int
+	 */
+	public int getWeekStart() {
+		return dtStart.getFirstDayOfWeek();
 	}
 
 	/**
@@ -594,6 +411,189 @@ public class Recurrence implements Serializable {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Method setByDay
+	 */
+	public void setByDay(DayAndPosition[] b) {
+		if (b == null) {
+			byDay = null;
+
+			return;
+		}
+
+		byDay = new DayAndPosition[b.length];
+
+		/*
+		 * System.arraycopy isn't good enough -- we want to clone each
+		 * individual element.
+		 */
+		for (int i = 0; i < b.length; i++) {
+			byDay[i] = (DayAndPosition)b[i].clone();
+		}
+	}
+
+	/**
+	 * Method setByMonth
+	 */
+	public void setByMonth(int[] b) {
+		if (b == null) {
+			byMonth = null;
+
+			return;
+		}
+
+		byMonth = new int[b.length];
+
+		System.arraycopy(b, 0, byMonth, 0, b.length);
+	}
+
+	/**
+	 * Method setByMonthDay
+	 */
+	public void setByMonthDay(int[] b) {
+		if (b == null) {
+			byMonthDay = null;
+
+			return;
+		}
+
+		byMonthDay = new int[b.length];
+
+		System.arraycopy(b, 0, byMonthDay, 0, b.length);
+	}
+
+	/**
+	 * Method setByWeekNo
+	 */
+	public void setByWeekNo(int[] b) {
+		if (b == null) {
+			byWeekNo = null;
+
+			return;
+		}
+
+		byWeekNo = new int[b.length];
+
+		System.arraycopy(b, 0, byWeekNo, 0, b.length);
+	}
+
+	/**
+	 * Method setByYearDay
+	 */
+	public void setByYearDay(int[] b) {
+		if (b == null) {
+			byYearDay = null;
+
+			return;
+		}
+
+		byYearDay = new int[b.length];
+
+		System.arraycopy(b, 0, byYearDay, 0, b.length);
+	}
+
+	/**
+	 * Method setDtEnd
+	 */
+	public void setDtEnd(Calendar end) {
+		Calendar tempEnd = (Calendar)end.clone();
+
+		tempEnd.clear(Calendar.ZONE_OFFSET);
+		tempEnd.clear(Calendar.DST_OFFSET);
+		tempEnd.setTimeZone(TimeZoneUtil.getTimeZone(StringPool.UTC));
+		duration.setInterval(tempEnd.getTime().getTime()
+							 - dtStart.getTime().getTime());
+	}
+
+	/**
+	 * Method setDtStart
+	 */
+	public void setDtStart(Calendar start) {
+		int oldStart;
+
+		if (dtStart != null) {
+			oldStart = dtStart.getFirstDayOfWeek();
+		}
+		else {
+			oldStart = Calendar.MONDAY;
+		}
+
+		if (start == null) {
+			dtStart = CalendarFactoryUtil.getCalendar(
+				TimeZoneUtil.getTimeZone(StringPool.UTC));
+
+			dtStart.setTime(new Date(0L));
+		}
+		else {
+			dtStart = (Calendar)start.clone();
+
+			dtStart.clear(Calendar.ZONE_OFFSET);
+			dtStart.clear(Calendar.DST_OFFSET);
+			dtStart.setTimeZone(TimeZoneUtil.getTimeZone(StringPool.UTC));
+		}
+
+		dtStart.setMinimalDaysInFirstWeek(4);
+		dtStart.setFirstDayOfWeek(oldStart);
+	}
+
+	/**
+	 * Method setDuration
+	 */
+	public void setDuration(Duration d) {
+		duration = (Duration)d.clone();
+	}
+
+	/**
+	 * Method setFrequency
+	 */
+	public void setFrequency(int freq) {
+		if ((frequency != DAILY) && (frequency != WEEKLY)
+			&& (frequency != MONTHLY) && (frequency != YEARLY)
+			&& (frequency != NO_RECURRENCE)) {
+			throw new IllegalArgumentException("Invalid frequency");
+		}
+
+		frequency = freq;
+	}
+
+	/**
+	 * Method setInterval
+	 */
+	public void setInterval(int intr) {
+		interval = (intr > 0) ? intr : 1;
+	}
+
+	/**
+	 * Method setOccurrence
+	 */
+	public void setOccurrence(int occur) {
+		occurrence = occur;
+	}
+
+	/**
+	 * Method setUntil
+	 */
+	public void setUntil(Calendar u) {
+		if (u == null) {
+			until = null;
+
+			return;
+		}
+
+		until = (Calendar)u.clone();
+
+		until.clear(Calendar.ZONE_OFFSET);
+		until.clear(Calendar.DST_OFFSET);
+		until.setTimeZone(TimeZoneUtil.getTimeZone(StringPool.UTC));
+	}
+
+	/**
+	 * Method setWeekStart
+	 */
+	public void setWeekStart(int weekstart) {
+		dtStart.setFirstDayOfWeek(weekstart);
 	}
 
 	/**

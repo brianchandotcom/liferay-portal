@@ -114,17 +114,17 @@ public class MulticastTransport extends Thread implements Transport {
 
 	private static Log _log = LogFactory.getLog(MulticastTransport.class);
 
+	private InetAddress _address;
+	private boolean _connected;
+	private DatagramHandler _handler;
+	private String _host;
 	private byte[] _inboundBuffer = new byte[4096];
 	private DatagramPacket _inboundPacket =
 		new DatagramPacket(_inboundBuffer, _inboundBuffer.length);
 	private byte[] _outboundBuffer = new byte[4096];
 	private DatagramPacket _outboundPacket =
 		new DatagramPacket(_outboundBuffer, _outboundBuffer.length);
-	private String _host;
-	private DatagramHandler _handler;
 	private int _port;
-	private boolean _connected;
 	private MulticastSocket _socket;
-	private InetAddress _address;
 
 }

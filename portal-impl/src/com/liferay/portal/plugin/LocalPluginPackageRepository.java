@@ -170,9 +170,9 @@ public class LocalPluginPackageRepository {
 	private static Log _log = LogFactoryUtil.getLog(
 		LocalPluginPackageRepository.class);
 
-	private Map<String, PluginPackage> _pluginPackages =
-		new HashMap<String, PluginPackage>();
 	private Map<String, PluginPackage> _pendingPackages =
+		new HashMap<String, PluginPackage>();
+	private Map<String, PluginPackage> _pluginPackages =
 		new HashMap<String, PluginPackage>();
 
 }

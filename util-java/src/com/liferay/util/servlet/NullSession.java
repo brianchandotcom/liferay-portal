@@ -122,7 +122,7 @@ public class NullSession implements HttpSession {
 	private String _id;
 	private long _lastAccessedTime;
 	private int _maxInactiveInterval;
-	private ServletContext _servletContext;
 	private boolean _new;
+	private ServletContext _servletContext;
 
 }

@@ -49,12 +49,12 @@ public class MemberResponseElement implements ResponseElement {
 		el.addElement("IsSiteAdmin").setText(String.valueOf(_siteAdmin));
 	}
 
-	private String _id;
-	private String _name;
-	private String _loginName;
-	private String _email;
 	private boolean _domainGroup;
+	private String _email;
+	private String _id;
+	private String _loginName;
 	private boolean _member;
+	private String _name;
 	private boolean _siteAdmin;
 
 }

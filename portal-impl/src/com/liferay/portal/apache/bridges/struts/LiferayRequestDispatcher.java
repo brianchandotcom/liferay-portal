@@ -228,7 +228,7 @@ public class LiferayRequestDispatcher implements RequestDispatcher {
 		return portletApp.getServletURLPatterns();
 	}
 
-	private RequestDispatcher _requestDispatcher;
 	private String _path;
+	private RequestDispatcher _requestDispatcher;
 
 }

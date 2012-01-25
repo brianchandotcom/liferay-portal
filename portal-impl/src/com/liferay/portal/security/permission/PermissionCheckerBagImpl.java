@@ -292,15 +292,15 @@ public class PermissionCheckerBagImpl implements PermissionCheckerBag {
 		return false;
 	}
 
-	private long _userId;
-	private List<Group> _userGroups;
-	private List<Organization> _userOrgs;
-	private List<Group> _userOrgGroups;
-	private List<Group> _userUserGroupGroups;
+	private Map<Long, Boolean> _groupAdmins = new HashMap<Long, Boolean>();
+	private Map<Long, Boolean> _groupOwners = new HashMap<Long, Boolean>();
 	private List<Group> _groups;
 	private long[] _roleIds;
 	private List<Role> _roles;
-	private Map<Long, Boolean> _groupAdmins = new HashMap<Long, Boolean>();
-	private Map<Long, Boolean> _groupOwners = new HashMap<Long, Boolean>();
+	private List<Group> _userGroups;
+	private long _userId;
+	private List<Group> _userOrgGroups;
+	private List<Organization> _userOrgs;
+	private List<Group> _userUserGroupGroups;
 
 }

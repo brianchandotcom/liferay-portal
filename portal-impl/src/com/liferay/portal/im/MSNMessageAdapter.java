@@ -51,8 +51,8 @@ public class MSNMessageAdapter extends MsnAdapter {
 
 	private static Log _log = LogFactoryUtil.getLog(MSNConnector.class);
 
+	private String _msg;
 	private MSNMessenger _msn;
 	private String _to;
-	private String _msg;
 
 }

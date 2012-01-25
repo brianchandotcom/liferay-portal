@@ -49,7 +49,7 @@ public class LiferayServletRequest extends HttpServletRequestWrapper {
 		}
 	}
 
-	private HttpServletRequest _request;
 	private LiferayInputStream _lis = null;
+	private HttpServletRequest _request;
 
 }

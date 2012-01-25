@@ -139,15 +139,15 @@ public class PanelTag extends IncludeTag {
 
 	private static final String _START_PAGE = "/html/taglib/ui/panel/start.jsp";
 
-	private String _startPage;
-	private String _endPage;
-	private String _helpMessage;
- 	private String _id;
- 	private String _title;
 	private boolean _collapsible = true;
- 	private String _defaultState = "open";
-	private boolean _persistState = true;
+	private String _cssClass = StringPool.BLANK;
+	private String _defaultState = "open";
+	private String _endPage;
 	private boolean _extended;
- 	private String _cssClass = StringPool.BLANK;
+	private String _helpMessage;
+	private String _id;
+	private boolean _persistState = true;
+	private String _startPage;
+	private String _title;
 
 }

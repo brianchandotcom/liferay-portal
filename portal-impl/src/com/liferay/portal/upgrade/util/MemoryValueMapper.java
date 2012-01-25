@@ -73,7 +73,7 @@ public class MemoryValueMapper implements ValueMapper {
 		return _map.size();
 	}
 
-	private Map<Object, Object> _map;
 	private Set<Object> _exceptions;
+	private Map<Object, Object> _map;
 
 }

@@ -143,6 +143,35 @@ public class ActionUtil {
 		getFileShortcut(request);
 	}
 
+	public static void getFileShortcuts(HttpServletRequest request)
+		throws Exception {
+
+		long[] fileShortcutIds = StringUtil.split(
+			ParamUtil.getString(request, "fileShortcutIds"), 0L);
+
+		List<DLFileShortcut> fileShortcuts = new ArrayList<DLFileShortcut>();
+
+		for (long fileShortcutId : fileShortcutIds) {
+			if (fileShortcutId == 0) {
+				continue;
+			}
+
+			fileShortcuts.add(DLAppServiceUtil.getFileShortcut(fileShortcutId));
+		}
+
+		request.setAttribute(
+			WebKeys.DOCUMENT_LIBRARY_FILE_SHORTCUTS, fileShortcuts);
+	}
+
+	public static void getFileShortcuts(PortletRequest portletRequest)
+		throws Exception {
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			portletRequest);
+
+		getFileShortcuts(request);
+	}
+
 	public static void getFolder(HttpServletRequest request) throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);

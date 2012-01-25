@@ -102,12 +102,12 @@ public class SharepointRequest {
 		_storage = storage;
 	}
 
-	private SharepointStorage _storage;
+	private byte[] _bytes;
+	private Map<String, String[]> _params = new HashMap<String, String[]>();
 	private HttpServletRequest _request;
 	private HttpServletResponse _response;
 	private String _rootPath = StringPool.BLANK;
+	private SharepointStorage _storage;
 	private User _user;
-	private byte[] _bytes;
-	private Map<String, String[]> _params = new HashMap<String, String[]>();
 
 }

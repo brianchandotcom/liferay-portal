@@ -61,8 +61,8 @@ public class RegExpToolkit extends BasicToolkit {
 
 	private static Log _log = LogFactoryUtil.getLog(RegExpToolkit.class);
 
-	private String _pattern;
 	private String _charset;
 	private int _length;
+	private String _pattern;
 
 }

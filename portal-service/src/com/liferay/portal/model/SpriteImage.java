@@ -52,10 +52,10 @@ public class SpriteImage implements Serializable {
 		return _width;
 	}
 
-	private String _spriteFileName;
+	private int _height;
 	private String _imageFileName;
 	private int _offset;
-	private int _height;
+	private String _spriteFileName;
 	private int _width;
 
 }

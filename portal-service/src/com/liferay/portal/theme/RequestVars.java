@@ -47,9 +47,9 @@ public class RequestVars {
 		return _ancestorLayoutId;
 	}
 
+	private long _ancestorLayoutId;
+	private long _ancestorPlid;
 	private HttpServletRequest _request;
 	private ThemeDisplay _themeDisplay;
-	private long _ancestorPlid;
-	private long _ancestorLayoutId;
 
 }

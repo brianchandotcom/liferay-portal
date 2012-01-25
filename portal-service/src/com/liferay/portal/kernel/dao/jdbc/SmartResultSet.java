@@ -180,9 +180,9 @@ public class SmartResultSet {
 		return _rs.previous();
 	}
 
-	private final ResultSet _rs;
-	private final ResultSetMetaData _metaData;
 	private final int _columnCount;
 	private final Map<String, Integer> _columnIndexCache;
+	private final ResultSetMetaData _metaData;
+	private final ResultSet _rs;
 
 }

@@ -251,9 +251,9 @@ public class StringParser {
 	private static Pattern _fragmentPattern = Pattern.compile("\\{.+?\\}");
 
 	private String _builder;
+	private Pattern _pattern;
 	private StringEncoder _stringEncoder;
 	private List<StringParserFragment> _stringParserFragments =
 		new ArrayList<StringParserFragment>();
-	private Pattern _pattern;
 
 }

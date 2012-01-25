@@ -53,8 +53,8 @@ public class RemoteExportException extends PortalException {
 		_url = url;
 	}
 
-	private int _type;
 	private long _groupId;
+	private int _type;
 	private String _url;
 
 }

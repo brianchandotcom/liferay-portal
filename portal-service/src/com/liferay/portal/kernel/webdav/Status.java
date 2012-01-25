@@ -36,7 +36,7 @@ public class Status {
 		return _code;
 	}
 
-	private Object _object;
 	private int _code;
+	private Object _object;
 
 }

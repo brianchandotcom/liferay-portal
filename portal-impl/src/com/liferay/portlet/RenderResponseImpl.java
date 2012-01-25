@@ -87,8 +87,8 @@ public class RenderResponseImpl
 	}
 
 	private PortletRequestImpl _portletRequestImpl;
+	private String _resourceName;
 	private String _title;
  	private Boolean _useDefaultTemplate;
-	private String _resourceName;
 
 }

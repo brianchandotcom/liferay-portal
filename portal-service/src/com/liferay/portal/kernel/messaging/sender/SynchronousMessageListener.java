@@ -79,10 +79,10 @@ public class SynchronousMessageListener implements MessageListener {
 		}
 	}
 
-	private MessageBus _messageBus;
 	private Message _message;
-	private long _timeout;
+	private MessageBus _messageBus;
 	private String _responseId;
 	private Object _results;
+	private long _timeout;
 
 }

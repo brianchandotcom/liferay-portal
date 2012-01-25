@@ -36,8 +36,8 @@ public class RoleResponseElement implements ResponseElement {
 		el.addAttribute("Type", _type);
 	}
 
-	private String _name;
 	private String _description;
+	private String _name;
 	private String _type;
 
 }

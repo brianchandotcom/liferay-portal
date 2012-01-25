@@ -112,7 +112,7 @@ public class SectionTag extends IncludeTag {
 	private static final String _START_PAGE =
 		"/html/taglib/ui/section/start.jsp";
 
-	private TabsTag _tabsTag = null;
 	private Boolean _sectionSelected = Boolean.FALSE;
+	private TabsTag _tabsTag = null;
 
 }

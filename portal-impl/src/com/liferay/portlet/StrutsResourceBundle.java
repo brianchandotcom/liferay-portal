@@ -69,7 +69,7 @@ public class StrutsResourceBundle extends ResourceBundle {
 		return value;
 	}
 
-	private String _portletName;
 	private Locale _locale;
+	private String _portletName;
 
 }

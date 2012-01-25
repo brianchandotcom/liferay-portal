@@ -296,10 +296,10 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 	private boolean _hover = true;
 	private String _id;
 	private PortletURL _iteratorURL;
-	private OrderByComparator _orderByComparator;
 	private String _orderByCol;
 	private String _orderByColParam =
 		SearchContainer.DEFAULT_ORDER_BY_COL_PARAM;
+	private OrderByComparator _orderByComparator;
 	private String _orderByType;
 	private String _orderByTypeParam =
 		SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM;

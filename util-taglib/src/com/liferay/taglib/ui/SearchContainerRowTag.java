@@ -309,11 +309,11 @@ public class SearchContainerRowTag<R>
 	private String _keyProperty;
 	private String _modelVar = DEFAULT_MODEL_VAR;
 	private Map<String, String> _orderableHeaders;
-	private List<R> _results;
 	private List<ResultRow> _resultRows;
+	private List<R> _results;
+	private ResultRow _row;
 	private int _rowIndex;
 	private String _rowVar = DEFAULT_ROW_VAR;
-	private ResultRow _row;
 	private boolean _stringKey;
 
 }

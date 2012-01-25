@@ -174,8 +174,8 @@ public class RuntimeTag extends TagSupport {
 
 	private static Log _log = LogFactoryUtil.getLog(RuntimeTag.class);
 
+	private String _defaultPreferences;
 	private String _portletName;
 	private String _queryString;
-	private String _defaultPreferences;
 
 }

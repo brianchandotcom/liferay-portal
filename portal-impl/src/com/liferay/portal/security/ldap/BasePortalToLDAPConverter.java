@@ -493,12 +493,11 @@ public class BasePortalToLDAPConverter implements PortalToLDAPConverter {
 	private static Log _log = LogFactoryUtil.getLog(
 		BasePortalToLDAPConverter.class);
 
+	private String _groupDNFieldName = GroupConverterKeys.GROUP_NAME;
 	private Map<String, String> _reservedContactFieldNames =
 		new HashMap<String, String>();
 	private Map<String, String> _reservedUserFieldNames =
 		new HashMap<String, String>();
-
-	private String _groupDNFieldName = GroupConverterKeys.GROUP_NAME;
 	private String _userDNFieldName = UserConverterKeys.SCREEN_NAME;
 
 }

@@ -127,10 +127,10 @@ public class DefaultWorkflowLog implements Serializable, WorkflowLog {
 	private long _previousRoleId;
 	private String _previousState;
 	private long _previousUserId;
+	private long _roleId;
 	private String _state;
 	private int _type;
 	private long _userId;
-	private long _roleId;
 	private long _workflowLogId;
 	private long _workflowTaskId;
 

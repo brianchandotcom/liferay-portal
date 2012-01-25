@@ -84,7 +84,7 @@ public class ActionURLLogic extends RuntimeLogic {
 		return liferayPortletURL.toString();
 	}
 
-	private RenderResponseImpl _renderResponseImpl;
 	private String _lifecycle = PortletRequest.ACTION_PHASE;
+	private RenderResponseImpl _renderResponseImpl;
 
 }

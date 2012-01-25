@@ -122,10 +122,10 @@ public class CommandArgument {
 	}
 
 	private String _command;
-	private String _type;
 	private String _currentFolder;
 	private String _newFolder;
-	private ThemeDisplay _themeDisplay;
 	private HttpServletRequest _request;
+	private ThemeDisplay _themeDisplay;
+	private String _type;
 
 }

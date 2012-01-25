@@ -159,13 +159,13 @@ public class BaseResourceImpl implements Resource {
 		FastDateFormatFactoryUtil.getSimpleDateFormat(
 			"EEE, dd MMM yyyy HH:mm:ss zzz", Locale.US);
 
-	private String _href;
-	private String _displayName;
-	private Date _createDate;
-	private Date _modifiedDate;
-	private long _size;
-	private Object _model;
 	private String _className;
+	private Date _createDate;
+	private String _displayName;
+	private String _href;
+	private Object _model;
+	private Date _modifiedDate;
 	private long _primaryKey = -1;
+	private long _size;
 
 }

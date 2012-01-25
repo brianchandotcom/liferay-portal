@@ -48,8 +48,8 @@ public class SocialRequestFeedEntry {
 		_body = body;
 	}
 
+	private String _body;
 	private String _portletId;
 	private String _title;
-	private String _body;
 
 }

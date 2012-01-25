@@ -422,12 +422,12 @@ public class ResultRow {
 	private String _classHoverName;
 	private String _className;
 	private Map<String, Object> _data;
-	private List<SearchEntry> _searchEntries;
 	private Object _obj;
 	private Map<String, Object> _params;
 	private int _pos;
 	private String _primaryKey;
 	private boolean _restricted;
+	private List<SearchEntry> _searchEntries;
 	private boolean _skip;
 
 }

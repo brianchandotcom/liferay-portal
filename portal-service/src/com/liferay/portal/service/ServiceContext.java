@@ -1148,6 +1148,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	private String _layoutURL;
 	private Date _modifiedDate;
 	private String _pathMain;
+	private long _plid;
 	private String _portalURL;
 	private PortletPreferencesIds _portletPreferencesIds;
 	private String _remoteAddr;
@@ -1156,9 +1157,8 @@ public class ServiceContext implements Cloneable, Serializable {
 	private long _scopeGroupId;
 	private boolean _signedIn;
 	private String _userDisplayURL;
-	private long _plid;
-	private int _workflowAction = WorkflowConstants.ACTION_PUBLISH;
 	private long _userId;
 	private String _uuid;
+	private int _workflowAction = WorkflowConstants.ACTION_PUBLISH;
 
 }

@@ -86,7 +86,7 @@ public class ThemeCompanyLimit implements Serializable {
 		return false;
 	}
 
-	private List<ThemeCompanyId> _includes;
 	private List<ThemeCompanyId> _excludes;
+	private List<ThemeCompanyId> _includes;
 
 }

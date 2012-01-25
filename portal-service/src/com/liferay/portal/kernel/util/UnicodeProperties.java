@@ -260,7 +260,7 @@ public class UnicodeProperties extends HashMap<String, String> {
 
 	private static Log _log = LogFactoryUtil.getLog(UnicodeProperties.class);
 
-	private boolean _safe = false;
 	private int _length;
+	private boolean _safe = false;
 
 }

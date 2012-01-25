@@ -63,8 +63,8 @@ public class Translation implements Serializable {
 		}
 	}
 
-	private String _translationId;
 	private String _fromText;
 	private String _toText;
+	private String _translationId;
 
 }

@@ -454,8 +454,8 @@ public class UploadServletRequestImpl
 
 	private static File _tempDir;
 
-	private LiferayServletRequest _liferayServletRequest;
 	private Map<String, LiferayFileItem[]> _fileParams;
+	private LiferayServletRequest _liferayServletRequest;
 	private Map<String, List<String>> _regularParams;
 
 }

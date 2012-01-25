@@ -559,9 +559,9 @@ public class VideoProcessorImpl
 		InstancePool.put(VideoProcessorImpl.class.getName(), _instance);
 	}
 
+	private List<Long> _fileVersionIds = new Vector<Long>();
 	private Set<String> _videoMimeTypes = SetUtil.fromArray(
 		PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_MIME_TYPES);
-	private List<Long> _fileVersionIds = new Vector<Long>();
 
 	private static class LiferayVideoProcessCallable
 		implements ProcessCallable<String> {

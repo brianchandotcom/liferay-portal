@@ -270,10 +270,10 @@ public class VelocityPortlet extends GenericPortlet {
 
 	private static SimplePool _writerPool = new SimplePool(40);
 
-	private String _portletContextName;
 	private String _actionTemplateId;
 	private String _editTemplateId;
 	private String _helpTemplateId;
+	private String _portletContextName;
 	private String _resourceTemplateId;
 	private String _viewTemplateId;
 

@@ -70,7 +70,7 @@ public class URIResolver implements javax.xml.transform.URIResolver {
 
 	private static Log _log = LogFactoryUtil.getLog(URIResolver.class);
 
-	private Map<String, String> _tokens;
 	private String _languageId;
+	private Map<String, String> _tokens;
 
 }

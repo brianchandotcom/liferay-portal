@@ -315,10 +315,10 @@ public class TaskQueue<E> {
 	private final int _capacity;
 	private final AtomicInteger _count = new AtomicInteger();
 	private Node<E> _headNode;
+	private final Condition _notEmptyCondition = getTakeLock().newCondition();
 	private final ReentrantLock _putLock = new ReentrantLock();
 	private Node<E> _tailNode;
 	private final ReentrantLock _takeLock = new ReentrantLock();
-	private final Condition _notEmptyCondition = _takeLock.newCondition();
 
 	private static class Node<E> {
 

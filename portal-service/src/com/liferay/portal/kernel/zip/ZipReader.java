@@ -27,13 +27,13 @@ public interface ZipReader {
 
 	public void close();
 
+	public List<String> getEntries();
+
 	public byte[] getEntryAsByteArray(String name);
 
 	public InputStream getEntryAsInputStream(String name);
 
 	public String getEntryAsString(String name);
-
-	public List<String> getEntries();
 
 	public List<String> getFolderEntries(String path);
 

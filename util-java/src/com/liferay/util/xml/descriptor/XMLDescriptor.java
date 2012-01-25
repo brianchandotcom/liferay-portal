@@ -28,8 +28,8 @@ public interface XMLDescriptor {
 
 	public boolean canJoinChildren(Element element);
 
-	public String[] getRootChildrenOrder();
-
 	public String[] getChildrenOrder(Element parentElement);
+
+	public String[] getRootChildrenOrder();
 
 }

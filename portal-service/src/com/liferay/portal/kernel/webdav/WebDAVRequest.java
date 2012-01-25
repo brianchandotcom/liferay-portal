@@ -24,27 +24,27 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface WebDAVRequest {
 
-	public WebDAVStorage getWebDAVStorage();
+	public long getCompanyId();
+
+	public long getGroupId() ;
 
 	public HttpServletRequest getHttpServletRequest();
 
 	public HttpServletResponse getHttpServletResponse();
 
-	public String getRootPath();
+	public String getLockUuid();
 
 	public String getPath();
 
 	public String[] getPathArray();
 
-	public long getCompanyId();
+	public PermissionChecker getPermissionChecker();
 
-	public long getGroupId() ;
+	public String getRootPath();
 
 	public long getUserId();
 
-	public String getLockUuid();
-
-	public PermissionChecker getPermissionChecker();
+	public WebDAVStorage getWebDAVStorage();
 
 	public boolean isAppleDoubleRequest();
 

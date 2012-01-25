@@ -369,8 +369,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 										<div class="lfr-preview-file lfr-preview-video" id="<portlet:namespace />previewFile">
 											<div class="lfr-preview-file-content lfr-preview-video-content">
 												<div class="lfr-preview-file-video-current-column">
-													<div id="<portlet:namespace />previewFileContent">
-													</div>
+													<div id="<portlet:namespace />previewFileContent"></div>
 												</div>
 											</div>
 										</div>

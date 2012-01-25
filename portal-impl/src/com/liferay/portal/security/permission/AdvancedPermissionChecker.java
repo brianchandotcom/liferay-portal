@@ -79,43 +79,6 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	}
 
 	@Override
-	public long[] getRoleIds(long userId, long groupId) {
-		PermissionCheckerBag bag = null;
-
-		try {
-			bag = getUserBag(userId, groupId);
-		}
-		catch (Exception e) {
-		}
-
-		if (bag != null) {
-			if (checkGuest) {
-				Set<Long> roleIds = SetUtil.fromArray(bag.getRoleIds());
-
-				try {
-					PermissionCheckerBag guestBag = getGuestUserBag();
-
-					if (guestBag != null) {
-						for (long roleId : guestBag.getRoleIds()) {
-							roleIds.add(roleId);
-						}
-					}
-				}
-				catch (Exception e) {
-				}
-
-				return ArrayUtil.toArray(
-					roleIds.toArray(new Long[roleIds.size()]));
-			}
-			else {
-				return bag.getRoleIds();
-			}
-		}
-
-		return PermissionChecker.DEFAULT_ROLE_IDS;
-	}
-
-	@Override
 	public List<Long> getGuestResourceBlockIds(
 		long companyId, long groupId, String name, String actionId) {
 
@@ -324,6 +287,43 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 				companyId, userId, groupId, name, checkGuest,
 				resourceBlockIdsBag);
 		}
+	}
+
+	@Override
+	public long[] getRoleIds(long userId, long groupId) {
+		PermissionCheckerBag bag = null;
+
+		try {
+			bag = getUserBag(userId, groupId);
+		}
+		catch (Exception e) {
+		}
+
+		if (bag != null) {
+			if (checkGuest) {
+				Set<Long> roleIds = SetUtil.fromArray(bag.getRoleIds());
+
+				try {
+					PermissionCheckerBag guestBag = getGuestUserBag();
+
+					if (guestBag != null) {
+						for (long roleId : guestBag.getRoleIds()) {
+							roleIds.add(roleId);
+						}
+					}
+				}
+				catch (Exception e) {
+				}
+
+				return ArrayUtil.toArray(
+					roleIds.toArray(new Long[roleIds.size()]));
+			}
+			else {
+				return bag.getRoleIds();
+			}
+		}
+
+		return PermissionChecker.DEFAULT_ROLE_IDS;
 	}
 
 	/**

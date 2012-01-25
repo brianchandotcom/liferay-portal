@@ -30,10 +30,6 @@ public class Currency implements Serializable {
 		_rate = rate;
 	}
 
-	public String getSymbol() {
-		return _symbol;
-	}
-
 	public String getFromSymbol() {
 		if ((_symbol != null) && (_symbol.length() == 6)) {
 			return _symbol.substring(0, 3);
@@ -42,16 +38,20 @@ public class Currency implements Serializable {
 		return DEFAULT_FROM;
 	}
 
+	public double getRate() {
+		return _rate;
+	}
+
+	public String getSymbol() {
+		return _symbol;
+	}
+
 	public String getToSymbol() {
 		if ((_symbol != null) && (_symbol.length() == 6)) {
 			return _symbol.substring(3, 6);
 		}
 
 		return DEFAULT_TO;
-	}
-
-	public double getRate() {
-		return _rate;
 	}
 
 	private double _rate;

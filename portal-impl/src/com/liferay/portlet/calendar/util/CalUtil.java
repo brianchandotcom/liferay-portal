@@ -41,20 +41,19 @@ import javax.portlet.PortletPreferences;
  */
 public class CalUtil {
 
-	public static String getEmailFromAddress(
-			PortletPreferences preferences, long companyId)
-		throws SystemException {
+	public static String getEmailEventReminderBody(
+		PortletPreferences preferences) {
 
-		return PortalUtil.getEmailFromAddress(
-			preferences, companyId, PropsValues.CALENDAR_EMAIL_FROM_ADDRESS);
-	}
+		String emailEventReminderBody = preferences.getValue(
+			"emailEventReminderBody", StringPool.BLANK);
 
-	public static String getEmailFromName(
-			PortletPreferences preferences, long companyId)
-		throws SystemException {
-
-		return PortalUtil.getEmailFromName(
-			preferences, companyId, PropsValues.CALENDAR_EMAIL_FROM_NAME);
+		if (Validator.isNotNull(emailEventReminderBody)) {
+			return emailEventReminderBody;
+		}
+		else {
+			return ContentUtil.get(PropsUtil.get(
+				PropsKeys.CALENDAR_EMAIL_EVENT_REMINDER_BODY));
+		}
 	}
 
 	public static boolean getEmailEventReminderEnabled(
@@ -72,21 +71,6 @@ public class CalUtil {
 		}
 	}
 
-	public static String getEmailEventReminderBody(
-		PortletPreferences preferences) {
-
-		String emailEventReminderBody = preferences.getValue(
-			"emailEventReminderBody", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailEventReminderBody)) {
-			return emailEventReminderBody;
-		}
-		else {
-			return ContentUtil.get(PropsUtil.get(
-				PropsKeys.CALENDAR_EMAIL_EVENT_REMINDER_BODY));
-		}
-	}
-
 	public static String getEmailEventReminderSubject(
 		PortletPreferences preferences) {
 
@@ -100,6 +84,22 @@ public class CalUtil {
 			return ContentUtil.get(PropsUtil.get(
 				PropsKeys.CALENDAR_EMAIL_EVENT_REMINDER_SUBJECT));
 		}
+	}
+
+	public static String getEmailFromAddress(
+			PortletPreferences preferences, long companyId)
+		throws SystemException {
+
+		return PortalUtil.getEmailFromAddress(
+			preferences, companyId, PropsValues.CALENDAR_EMAIL_FROM_ADDRESS);
+	}
+
+	public static String getEmailFromName(
+			PortletPreferences preferences, long companyId)
+		throws SystemException {
+
+		return PortalUtil.getEmailFromName(
+			preferences, companyId, PropsValues.CALENDAR_EMAIL_FROM_NAME);
 	}
 
 	public static Date getEndTime(CalEvent event) {

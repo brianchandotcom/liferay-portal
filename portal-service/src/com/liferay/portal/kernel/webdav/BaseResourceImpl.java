@@ -86,61 +86,49 @@ public class BaseResourceImpl implements Resource {
 		_size = size;
 	}
 
- 	public String getHREF() {
-		return _href;
+	public String getClassName() {
+		return _className;
 	}
 
-	public String getDisplayName() {
-		return _displayName;
-	}
-
-	public Lock getLock() {
+	@SuppressWarnings("unused")
+	public InputStream getContentAsStream() throws WebDAVException {
 		return null;
+	}
+
+	public String getContentType() {
+		return ContentTypes.HTTPD_UNIX_DIRECTORY;
 	}
 
 	public String getCreateDate() {
 		return _createDateFormatter.format(_createDate);
 	}
 
- 	public String getModifiedDate() {
-		return _modifiedDateFormatter.format(_modifiedDate);
+	public String getDisplayName() {
+		return _displayName;
 	}
 
-	public long getSize() {
-		return _size;
+	public String getHREF() {
+		return _href;
+	}
+
+	public Lock getLock() {
+		return null;
 	}
 
 	public Object getModel() {
 		return _model;
 	}
 
-	public void setModel(Object model) {
-		_model = model;
+	public String getModifiedDate() {
+		return _modifiedDateFormatter.format(_modifiedDate);
 	}
 
- 	public String getClassName() {
- 		return _className;
- 	}
-
- 	public void setClassName(String className) {
- 		_className = className;
- 	}
-
- 	public long getPrimaryKey() {
- 		return _primaryKey;
- 	}
-
- 	public void setPrimaryKey(long primaryKey) {
- 		_primaryKey = primaryKey;
- 	}
-
-	public String getContentType() {
-		return ContentTypes.HTTPD_UNIX_DIRECTORY;
+	public long getPrimaryKey() {
+		return _primaryKey;
 	}
 
-	@SuppressWarnings("unused")
-	public InputStream getContentAsStream() throws WebDAVException {
-		return null;
+	public long getSize() {
+		return _size;
 	}
 
 	public boolean isCollection() {
@@ -149,6 +137,18 @@ public class BaseResourceImpl implements Resource {
 
 	public boolean isLocked() {
 		return false;
+	}
+
+	public void setClassName(String className) {
+		_className = className;
+	}
+
+	public void setModel(Object model) {
+		_model = model;
+	}
+
+	public void setPrimaryKey(long primaryKey) {
+		_primaryKey = primaryKey;
 	}
 
 	private static Format _createDateFormatter =

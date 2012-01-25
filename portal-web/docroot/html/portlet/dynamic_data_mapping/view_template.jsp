@@ -26,7 +26,7 @@ long structureId = ParamUtil.getLong(request, "structureId");
 DDMStructure structure = null;
 
 if (structureId > 0) {
-	structure = DDMStructureLocalServiceUtil.getStructure(structureId);
+	structure = DDMStructureServiceUtil.getStructure(structureId);
 }
 
 PortletURL portletURL = renderResponse.createRenderURL();

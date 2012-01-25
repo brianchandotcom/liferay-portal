@@ -102,10 +102,10 @@ public class TemplateProcessor implements ColumnProcessor {
 		}
 	}
 
-	private ServletContext _servletContext;
-	private HttpServletRequest _request;
-	private HttpServletResponse _response;
 	private String _portletId;
 	private Map<Portlet, Object[]> _portletsMap;
+	private HttpServletRequest _request;
+	private HttpServletResponse _response;
+	private ServletContext _servletContext;
 
 }

@@ -358,15 +358,18 @@ public class TabsTag extends IncludeTag {
 
 	private static final String _START_PAGE = "/html/taglib/ui/tabs/start.jsp";
 
-	private String _startPage;
+	private String _backLabel;
+	private String _backURL;
 	private String _endPage;
+	private String _formName;
 	private String[] _names;
 	private int _namesPos;
-	private String[] _tabsValues;
-	private String _formName;
+	private String _onClick;
 	private String _param = "tabs1";
-	private String _value;
 	private PortletURL _portletURL;
+	private boolean _refresh = true;
+	private String _startPage;
+	private String[] _tabsValues;
 	private String _url;
 	private String _url0;
 	private String _url1;
@@ -378,9 +381,6 @@ public class TabsTag extends IncludeTag {
 	private String _url7;
 	private String _url8;
 	private String _url9;
-	private String _backLabel;
-	private String _backURL;
-	private boolean _refresh = true;
-	private String _onClick;
+	private String _value;
 
 }

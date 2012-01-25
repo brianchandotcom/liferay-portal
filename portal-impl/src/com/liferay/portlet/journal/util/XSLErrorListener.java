@@ -141,10 +141,10 @@ public class XSLErrorListener implements ErrorListener {
 		throw exception;
 	}
 
+	private int _columnNumber;
+	private int _lineNumber;
 	private Locale _locale;
 	private String _location;
 	private String _message;
-	private int _lineNumber;
-	private int _columnNumber;
 
 }

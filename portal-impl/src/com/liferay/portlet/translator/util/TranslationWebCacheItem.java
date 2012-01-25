@@ -77,7 +77,7 @@ public class TranslationWebCacheItem implements WebCacheItem {
 
 	private static final long _REFRESH_TIME = Time.DAY * 90;
 
-	private String _translationId;
 	private String _fromText;
+	private String _translationId;
 
 }

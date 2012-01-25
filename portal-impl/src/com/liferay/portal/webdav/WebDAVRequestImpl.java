@@ -122,15 +122,15 @@ public class WebDAVRequestImpl implements WebDAVRequest {
 
 	private static final String _APPLE_DOUBLE_PREFIX = "._";
 
-	private WebDAVStorage _storage;
-	private HttpServletRequest _request;
-	private HttpServletResponse _response;
-	private String _userAgent;
-	private String _path = StringPool.BLANK;
 	private long _companyId;
 	private long _groupId;
-	private long _userId;
 	private String _lockUuid;
+	private String _path = StringPool.BLANK;
 	private PermissionChecker _permissionChecker;
+	private HttpServletRequest _request;
+	private HttpServletResponse _response;
+	private WebDAVStorage _storage;
+	private String _userAgent;
+	private long _userId;
 
 }

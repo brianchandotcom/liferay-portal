@@ -157,15 +157,15 @@ public class ToggleAreaTag extends IncludeTag {
 	private static final String _START_PAGE =
 		"/html/taglib/ui/toggle_area/start.jsp";
 
-	private String _startPage;
+	private String _align = "left";
+	private boolean _defaultShowContent = true;
 	private String _endPage;
+	private String _hideImage;
+	private String _hideMessage;
 	private String _id;
 	private String _showImage;
-	private String _hideImage;
 	private String _showMessage;
-	private String _hideMessage;
-	private boolean _defaultShowContent = true;
+	private String _startPage;
 	private String _stateVar;
-	private String _align = "left";
 
 }

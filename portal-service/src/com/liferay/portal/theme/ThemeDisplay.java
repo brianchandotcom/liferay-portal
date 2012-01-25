@@ -1266,8 +1266,8 @@ public class ThemeDisplay implements Serializable {
 	private String _languageId;
 	private Layout _layout;
 	private List<Layout> _layouts;
-	private String _layoutSetLogo = StringPool.BLANK;
 	private LayoutSet _layoutSet;
+	private String _layoutSetLogo = StringPool.BLANK;
 	private LayoutTypePortlet _layoutTypePortlet;
 	private String _lifecycle;
 	private boolean _lifecycleAction;

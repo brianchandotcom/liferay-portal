@@ -35,6 +35,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * The String utility class.
+ * 
  * @author Brian Wing Shun Chan
  * @author Sandeep Soni
  * @author Ganesh Ram
@@ -43,73 +45,67 @@ import java.util.regex.Pattern;
 public class StringUtil {
 
 	/**
-	 * Adds a word to a string representing a comma delimited list of words,
-	 * disallowing duplicate words.
-	 * 
+	 * Adds string <code>add</code> to string <code>s</code> resulting in a
+	 * comma delimited list of strings, disallowing duplicate strings in the
+	 * list.
+	 *
 	 * <p>
 	 * The resulting string ends with a comma even if the original string does
 	 * not.
 	 * </p>
-	 * 
-	 * @param s
-	 *            the original string, representing a comma delimited list of
-	 *            strings
-	 * @param add
-	 *            the string to add to the original, representing the string to
-	 *            add to the list
+	 *
+	 * @param  s the original string, representing a comma delimited list of
+	 *         strings
+	 * @param  add the string to add to the original, representing the string to
+	 *         add to the list
 	 * @return a string that represents the original string and the added string
 	 *         separated by a comma, or <code>null</code> if the string to add
-	 *         is <code>null</code>.
+	 *         is <code>null</code>
 	 */
 	public static String add(String s, String add) {
 		return add(s, add, StringPool.COMMA);
 	}
 
 	/**
-	 * Adds a word to a string representing a delimited list of words, using a
-	 * specified delimiter and disallowing duplicate words.
-	 * 
+	 * Adds string <code>add</code> to string <code>s</code> that represents a
+	 * delimited list of strings, using a specified delimiter and disallowing
+	 * duplicate words.
+	 *
 	 * <p>
 	 * The returned string ends with the delimiter even if the original string
 	 * does not.
 	 * </p>
-	 * 
-	 * @param s
-	 *            the original string, representing a delimited list of strings
-	 * @param add
-	 *            the string to add to the original, representing the string to
-	 *            add to the list
-	 * @param delimiter
-	 *            the delimiter used to separate strings in the list
+	 *
+	 * @param  s the original string, representing a delimited list of strings
+	 * @param  add the string to add to the original, representing the string to
+	 *         add to the list
+	 * @param  delimiter the delimiter used to separate strings in the list
 	 * @return a string that represents the original string and the added string
 	 *         separated by the delimiter, or <code>null</code> if the string to
-	 *         add or the delimiter string is <code>null</code>.
+	 *         add or the delimiter string is <code>null</code>
 	 */
 	public static String add(String s, String add, String delimiter) {
 		return add(s, add, delimiter, false);
 	}
 
 	/**
-	 * Adds a word to a string representing a delimited list of words, using a
-	 * specified delimiter and optionally allowing duplicate words.
-	 * 
+	 * Adds string <code>add</code> to string <code>s</code> that represents a
+	 * delimited list of strings, using a specified delimiter and optionally
+	 * allowing duplicate words.
+	 *
 	 * <p>
 	 * The returned string ends with the delimiter even if the original string
 	 * does not.
 	 * </p>
-	 * 
-	 * @param s
-	 *            the original string, representing a delimited list of words
-	 * @param add
-	 *            the string to add to the original, representing the string to
-	 *            add to the list
-	 * @param delimiter
-	 *            the delimiter used to separate strings in the list
-	 * @param allowDuplicates
-	 *            whether to allow duplicate strings
+	 *
+	 * @param  s the original string, representing a delimited list of strings
+	 * @param  add the string to add to the original, representing the string to
+	 *         add to the list
+	 * @param  delimiter the delimiter used to separate strings in the list
+	 * @param  allowDuplicates whether to allow duplicate strings
 	 * @return a string that represents the original string and the added string
 	 *         separated by the delimiter, or <code>null</code> if the string to
-	 *         add or the delimiter string is <code>null</code>.
+	 *         add or the delimiter string is <code>null</code>
 	 */
 	public static String add(
 		String s, String add, String delimiter, boolean allowDuplicates) {
@@ -146,31 +142,33 @@ public class StringUtil {
 	/**
 	 * Returns the original string with an appended space followed by the string
 	 * value of the suffix surrounded by parentheses.
-	 * 
+	 *
 	 * <p>
 	 * If the original string ends with a numerical parenthetical suffix having
 	 * an integer value equal to <code>suffix - 1</code>, then the existing
 	 * parenthetical suffix is replaced by the new one.
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * Examples:
-	 * 
+	 * </p>
+	 *
+	 * <pre>
+	 * <code>
 	 * appendParentheticalSuffix("file", 0) returns "file (0)"
 	 * appendParentheticalSuffix("file (0)", 0) returns "file (0) (0)"
 	 * appendParentheticalSuffix("file (0)", 1) returns "file (1)"
 	 * appendParentheticalSuffix("file (0)", 2) returns "file (0) (2)"
+	 * </code>
 	 * </p>
-	 * 
-	 * @param s
-	 *            the original string
-	 * @param suffix
-	 *            the suffix to be appended
+	 *
+	 * @param  s the original string
+	 * @param  suffix the suffix to be appended
 	 * @return the resultant string whose characters equal those of the original
 	 *         string, followed by a space, followed by the specified suffix
 	 *         enclosed in parentheses, or, if the difference between the
 	 *         provided suffix and the existing suffix is 1, the existing suffix
-	 *         is incremented by 1.
+	 *         is incremented by 1
 	 */
 	public static String appendParentheticalSuffix(String s, int suffix) {
 		if (Pattern.matches(".* \\(" + String.valueOf(suffix - 1) + "\\)", s)) {
@@ -185,17 +183,19 @@ public class StringUtil {
 	/**
 	 * Returns the original string with an appended space followed by the suffix
 	 * surrounded by parentheses.
-	 * 
+	 *
 	 * <p>
 	 * Example:
-	 * 
-	 * appendParentheticalSuffix("Java", "EE") returns "Java (EE)"
 	 * </p>
-	 * 
-	 * @param s
-	 *            the original string
-	 * @param suffix
-	 *            the suffix to be appended
+	 *
+	 * <pre>
+	 * <code>
+	 * appendParentheticalSuffix("Java", "EE") returns "Java (EE)"
+	 * </code>
+	 * </pre>
+	 *
+	 * @param  s the original string
+	 * @param  suffix the suffix to be appended
 	 * @return a string that represents the original string, followed by a
 	 *         space, followed by the suffix enclosed in parentheses
 	 */
@@ -214,9 +214,8 @@ public class StringUtil {
 	/**
 	 * Converts an array of bytes to a string representing the bytes in
 	 * hexadecimal form.
-	 * 
-	 * @param bytes
-	 *            the array of bytes to be converted
+	 *
+	 * @param  bytes the array of bytes to be converted
 	 * @return the string representing the bytes in hexadecimal form
 	 */
 	public static String bytesToHexString(byte[] bytes) {
@@ -237,43 +236,48 @@ public class StringUtil {
 	}
 
 	/**
-	 * Returns <code>true</code> if the given string contains the given text.
-	 * 
+	 * Returns <code>true</code> if the string contains the text as a comma
+	 * delimited list entry.
+	 *
 	 * <p>
 	 * Example:
-	 * 
-	 * contains("application", "app") returns <code>true</code>
 	 * </p>
-	 * 
-	 * @param s
-	 *            the string in which to search
-	 * @param text
-	 *            the text to search for in the string
-	 * @return <code>true</code> if the given string contains the given text
+	 *
+	 * <pre>
+	 * <code>
+	 * contains("application", "app") returns true
+	 * </code>
+	 * </pre>
+	 *
+	 * @param  s the string in which to search
+	 * @param  text the text to search for in the string
+	 * @return <code>true</code> if the string contains the text as a comma
+	 *         delimited list entry; <code>false</code> otherwise
 	 */
 	public static boolean contains(String s, String text) {
 		return contains(s, text, StringPool.COMMA);
 	}
 
 	/**
-	 * Uses the specified delimiter to check if the given string contains the
-	 * given text and, if so, returns <code>true</code>.
-	 * 
+	 * Returns <code>true</code> if the string contains the text as a delimited
+	 * list entry.
+	 *
 	 * <p>
 	 * Examples:
-	 * 
-	 * contains("three...two...one", "two", "...") returns <code>true</code>
-	 * contains("three...two...one", "thr", "...") returns <code>false</code>
-	 * 
 	 * </p>
-	 * 
-	 * @param s
-	 *            the string in which to search
-	 * @param text
-	 *            the text to search for in the string
-	 * @param delimiter
-	 *            the delimiter
-	 * @return <code>true</code> if the given string contains the given text
+	 *
+	 * <pre>
+	 * <code>
+	 * contains("three...two...one", "two", "...") returns true
+	 * contains("three...two...one", "thr", "...") returns false
+	 * </code>
+	 * </pre>
+	 *
+	 * @param  s the string in which to search
+	 * @param  text the text to search for in the string
+	 * @param  delimiter the delimiter
+	 * @return <code>true</code> if the string contains the text as a delimited
+	 *         list entry; <code>false</code> otherwise
 	 */
 	public static boolean contains(String s, String text, String delimiter) {
 		if ((s == null) || (text == null) || (delimiter == null)) {
@@ -303,11 +307,9 @@ public class StringUtil {
 
 	/**
 	 * Returns the number of times the text appears in the string.
-	 * 
-	 * @param s
-	 *            the string in which to search
-	 * @param text
-	 *            the text to search for in the string
+	 *
+	 * @param  s the string in which to search
+	 * @param  text the text to search for in the string
 	 * @return the number of times the text appears in the string
 	 */
 	public static int count(String s, String text) {
@@ -331,26 +333,24 @@ public class StringUtil {
 	/**
 	 * Returns <code>true</code> if the string ends with the specified
 	 * character.
-	 * 
-	 * @param s
-	 *            the string in which to search
-	 * @param end
-	 *            the character to search for at the end of the string
-	 * @return <code>true</code> if the string ends with the specified character
+	 *
+	 * @param  s the string in which to search
+	 * @param  end the character to search for at the end of the string
+	 * @return <code>true</code> if the string ends with the specified
+	 *         character; <code>false</code> otherwise
 	 */
 	public static boolean endsWith(String s, char end) {
 		return endsWith(s, (new Character(end)).toString());
 	}
 
 	/**
-	 * Returns <code>true</code> if the larger string ends with the specified
-	 * substring.
-	 * 
-	 * @param s
-	 *            the string in which to search
-	 * @param end
-	 *            the string to check for at the end of the string
-	 * @return
+	 * Returns <code>true</code> if the string ends with the string
+	 * <code>end</code>.
+	 *
+	 * @param  s the string in which to search
+	 * @param  end the string to check for at the end of the string
+	 * @return <code>true</code> if the string ends with the string
+	 *         <code>end</code>; <code>false</code> otherwise
 	 */
 	public static boolean endsWith(String s, String end) {
 		if ((s == null) || (end == null)) {
@@ -372,15 +372,15 @@ public class StringUtil {
 	}
 
 	/**
-	 * Merges the elements of the character array into a string representing the
-	 * extracted characters of the string in their original order.
-	 * 
-	 * @param s
-	 *            the string from which to extract characters
-	 * @param chars
-	 *            the characters to extract from the string
-	 * @return a new string consisting of the extracted characters in their
-	 *         original order
+	 * Returns the substring of each character instance in string <code>s</code>
+	 * that is found in the character array <code>chars</code>. The substring of
+	 * characters returned maintain their original order.
+	 *
+	 * @param  s the string from which to extract characters
+	 * @param  chars the characters to extract from the string
+	 * @return the substring of each character instance in string <code>s</code>
+	 *         that is found in the character array <code>chars</code>, or an
+	 *         empty string if the given string is <code>null</code>
 	 */
 	public static String extract(String s, char[] chars) {
 		if (s == null) {
@@ -404,9 +404,8 @@ public class StringUtil {
 
 	/**
 	 * Returns the substring of English characters from the string.
-	 * 
-	 * @param s
-	 *            the string from which to extract characters
+	 *
+	 * @param  s the string from which to extract characters
 	 * @return the substring of English characters from the string, or an empty
 	 *         string if the given string is <code>null</code>
 	 */
@@ -429,12 +428,11 @@ public class StringUtil {
 	}
 
 	/**
-	 * Extracts the substring of the string consisting of all the digits of the
+	 * Returns a string consisting of all of the digits extracted from the
 	 * string.
-	 * 
-	 * @param s
-	 *            the string from which to extract digits
-	 * @return the substring of the string consisting of all digits of the
+	 *
+	 * @param  s the string from which to extract digits
+	 * @return a string consisting of all of the digits extracted from the
 	 *         string
 	 */
 	public static String extractDigits(String s) {
@@ -456,17 +454,15 @@ public class StringUtil {
 	}
 
 	/**
-	 * Returns the string found before the first occurrence of the delimiter.
-	 * 
-	 * @param s
-	 *            the string from which to extract a substring
-	 * @param delimiter
-	 *            the character whose index in the string marks where to end the
-	 *            substring
-	 * @return the substring of the string that reaches from the beginning of
-	 *         the string to the first occurrence of the specified delimiter
-	 *         character, <code>null</code> if the string is <code>null</code>
-	 *         or the delimiter does not occur in the string
+	 * Returns the substring of <code>s</code> up to but not including the first
+	 * occurrence of the delimiter.
+	 *
+	 * @param  s the string from which to extract a substring
+	 * @param  delimiter the character whose index in the string marks where to
+	 *         end the substring
+	 * @return the substring of <code>s</code> up to but not including the first
+	 *         occurrence of the delimiter, <code>null</code> if the string is
+	 *         <code>null</code> or the delimiter does not occur in the string
 	 */
 	public static String extractFirst(String s, char delimiter) {
 		if (s == null) {
@@ -485,18 +481,15 @@ public class StringUtil {
 	}
 
 	/**
-	 * Extracts the substring of the string that reaches from the beginning of
-	 * the string to the first occurrence of the delimiter string.
-	 * 
-	 * @param s
-	 *            the string from which to extract a substring
-	 * @param delimiter
-	 *            the smaller string whose index in the larger string marks
-	 *            where to end the substring
-	 * @return the substring of the string that reaches from the beginning of
-	 *         the string to the first occurrence of the specified delimiter
-	 *         string, <code>null</code> if the string is <code>null</code> or
-	 *         the delimiter does not occur in the string
+	 * Returns the substring of <code>s</code> up to but not including the first
+	 * occurrence of the delimiter.
+	 *
+	 * @param  s the string from which to extract a substring
+	 * @param  delimiter the smaller string whose index in the larger string
+	 *         marks where to end the substring
+	 * @return the substring of <code>s</code> up to but not including the first
+	 *         occurrence of the delimiter, <code>null</code> if the string is
+	 *         <code>null</code> or the delimiter does not occur in the string
 	 */
 	public static String extractFirst(String s, String delimiter) {
 		if (s == null) {
@@ -515,18 +508,15 @@ public class StringUtil {
 	}
 
 	/**
-	 * Extracts the substring of the string that reaches from the last
-	 * occurrence of the delimiter character to the end of the string.
-	 * 
-	 * @param s
-	 *            the string from which to extract the substring
-	 * @param delimiter
-	 *            the character whose last index in the string marks where to
-	 *            begin the substring
-	 * @return the substring of the string that reaches from the last occurrence
-	 *         of the specified delimiter character to the end of the string,
-	 *         <code>null</code> if the string is <code>null</code> or the
-	 *         delimiter does not occur in the string
+	 * Returns the substring of <code>s</code> after but not including the last
+	 * occurrence of the delimiter.
+	 *
+	 * @param  s the string from which to extract the substring
+	 * @param  delimiter the character whose last index in the string marks
+	 *         where to begin the substring
+	 * @return the substring of <code>s</code> after but not including the last
+	 *         occurrence of the delimiter, <code>null</code> if the string is
+	 *         <code>null</code> or the delimiter does not occur in the string
 	 */
 	public static String extractLast(String s, char delimiter) {
 		if (s == null) {
@@ -545,17 +535,15 @@ public class StringUtil {
 	}
 
 	/**
-	 * Returns the string found after the last occurrence of the delimiter.
-	 * 
-	 * @param s
-	 *            the string from which to extract the substring
-	 * @param delimiter
-	 *            the string whose last index in the string marks where to begin
-	 *            the substring
-	 * @return the substring of the string that reaches from the last occurrence
-	 *         of the specified delimiter string to the end of the string,
-	 *         <code>null</code> if the string is <code>null</code> or the
-	 *         delimiter does not occur in the string
+	 * Returns the substring of <code>s</code> after but not including the last
+	 * occurrence of the delimiter.
+	 *
+	 * @param  s the string from which to extract the substring
+	 * @param  delimiter the string whose last index in the string marks where
+	 *         to begin the substring
+	 * @return the substring of <code>s</code> after but not including the last
+	 *         occurrence of the delimiter, <code>null</code> if the string is
+	 *         <code>null</code> or the delimiter does not occur in the string
 	 */
 	public static String extractLast(String s, String delimiter) {
 		if (s == null) {
@@ -631,18 +619,15 @@ public class StringUtil {
 	}
 
 	/**
-	 * Inserts one string into the other at the specified index.
-	 * 
-	 * @param s
-	 *            the original string
-	 * @param insert
-	 *            the string to be inserted into the original string
-	 * @param offset
-	 *            the index of the original string where the insertion should
-	 *            take place
+	 * Inserts one string into the other at the specified offset index.
+	 *
+	 * @param  s the original string
+	 * @param  insert the string to be inserted into the original string
+	 * @param  offset the index of the original string where the insertion
+	 *         should take place
 	 * @return a string representing the original string with the other string
-	 *         inserted at the specified index, or <code>null</code> if the
-	 *         original string is <code>null</code>
+	 *         inserted at the specified offset index, or <code>null</code> if
+	 *         the original string is <code>null</code>
 	 */
 	public static String insert(String s, String insert, int offset) {
 		if (s == null) {
@@ -666,11 +651,11 @@ public class StringUtil {
 
 	/**
 	 * Converts all of the characters in the string to lower case.
-	 * 
-	 * @param s
-	 *            the string to convert
-	 * @return the string, converted to lowercase, or <code>null</code>
-	 * @see {@link String#toLowerCase()}
+	 *
+	 * @param  s the string to convert
+	 * @return the string, converted to lowercase, or <code>null</code> if the
+	 *         string is <code>null</code>
+	 * @see    {@link String#toLowerCase()}
 	 */
 	public static String lowerCase(String s) {
 		if (s == null) {
@@ -684,11 +669,9 @@ public class StringUtil {
 	/**
 	 * Returns <code>true</code> if the specified pattern occurs at any position
 	 * in the string.
-	 * 
-	 * @param s
-	 *            the string
-	 * @param pattern
-	 *            the pattern to search for in the string
+	 *
+	 * @param  s the string
+	 * @param  pattern the pattern to search for in the string
 	 * @return <code>true</code> if the specified pattern occurs at any position
 	 *         in the string
 	 */
@@ -711,11 +694,9 @@ public class StringUtil {
 	/**
 	 * Returns <code>true</code> if the specified pattern occurs at any position
 	 * in the string, ignoring case.
-	 * 
-	 * @param s
-	 *            the string
-	 * @param pattern
-	 *            the pattern to search for in the string
+	 *
+	 * @param  s the string
+	 * @param  pattern the pattern to search for in the string
 	 * @return <code>true</code> if the specified pattern occurs at any position
 	 *         in the string
 	 */
@@ -724,32 +705,27 @@ public class StringUtil {
 	}
 
 	/**
-	 * Merges the elements of a boolean array into a string representing a comma
-	 * delimited list of its values.
-	 * 
-	 * @param array
-	 *            the boolean values to merge
+	 * Merges the elements of the boolean array into a string representing a
+	 * comma delimited list of its values.
+	 *
+	 * @param  array the boolean values to merge
 	 * @return a string representing a comma delimited list of the values of the
-	 *         boolean array, a blank string if the array's length is
-	 *         <code>0</code>, <code>null</code> if the array is
-	 *         <code>null</code>
+	 *         boolean array, an empty string if the array is empty, or
+	 *         <code>null</code> if the array is <code>null</code>
 	 */
 	public static String merge(boolean[] array) {
 		return merge(array, StringPool.COMMA);
 	}
 
 	/**
-	 * Merges the elements of a boolean array into a string representing a
+	 * Merges the elements of the boolean array into a string representing a
 	 * delimited list of its values.
-	 * 
-	 * @param array
-	 *            the boolean values to merge
-	 * @param delimiter
-	 *            the delimiter
-	 * @return a string representing a delimited list of the values of the
-	 *         boolean array, a blank string if the array's length is
-	 *         <code>0</code>, <code>null</code> if the array is
-	 *         <code>null</code>
+	 *
+	 * @param  array the boolean values to merge
+	 * @param  delimiter the delimiter
+	 * @return a string representing a comma delimited list of the values of the
+	 *         boolean array, an empty string if the array is empty, or
+	 *         <code>null</code> if the array is <code>null</code>
 	 */
 	public static String merge(boolean[] array, String delimiter) {
 		if (array == null) {
@@ -774,32 +750,27 @@ public class StringUtil {
 	}
 
 	/**
-	 * Merges the elements of a character array into a string representing a
+	 * Merges the elements of the character array into a string representing a
 	 * comma delimited list of its values.
-	 * 
-	 * @param array
-	 *            the characters to merge
+	 *
+	 * @param  array the characters to merge
 	 * @return a string representing a comma delimited list of the values of the
-	 *         character array, a blank string if the array's length is
-	 *         <code>0</code>, <code>null</code> if the array is
-	 *         <code>null</code>
+	 *         character array, an empty string if the array is empty, or
+	 *         <code>null</code> if the array is <code>null</code>
 	 */
 	public static String merge(char[] array) {
 		return merge(array, StringPool.COMMA);
 	}
 
 	/**
-	 * Merges the elements of a character array into a string representing a
+	 * Merges the elements of the character array into a string representing a
 	 * delimited list of its values.
-	 * 
-	 * @param array
-	 *            the characters to merge
-	 * @param delimiter
-	 *            the delimiter
+	 *
+	 * @param  array the characters to merge
+	 * @param  delimiter the delimiter
 	 * @return a string representing a delimited list of the values of the
-	 *         character array, a blank string if the array's length is
-	 *         <code>0</code>, <code>null</code> if the array is
-	 *         <code>null</code>
+	 *         character array, an empty string if the array is empty, or
+	 *         <code>null</code> if the array is <code>null</code>
 	 */
 	public static String merge(char[] array, String delimiter) {
 		if (array == null) {
@@ -838,15 +809,13 @@ public class StringUtil {
 	/**
 	 * Merges the elements of an array of double-precision decimal numbers by
 	 * returning a string representing a comma delimited list of its values.
-	 * 
-	 * @param array
-	 *            the numbers to merge
+	 *
+	 * @param  array the doubles to merge
 	 * @return a string representing a comma delimited list of the values of the
-	 *         array of double-precision decimal numbers, a blank string if the
-	 *         array's length is <code>0</code>, <code>null</code> if the array
-	 *         is <code>null</code>
+	 *         array of double-precision decimal numbers, an empty string if the
+	 *         array is empty, or <code>null</code> if the array is
+	 *         <code>null</code>
 	 */
-
 	public static String merge(double[] array) {
 		return merge(array, StringPool.COMMA);
 	}
@@ -854,15 +823,12 @@ public class StringUtil {
 	/**
 	 * Merges the elements of an array of double-precision decimal numbers by
 	 * returning a string representing a delimited list of its values.
-	 * 
-	 * @param array
-	 *            the numbers to merge
-	 * @param delimiter
-	 *            the delimiter
+	 *
+	 * @param  array the doubles to merge
+	 * @param  delimiter the delimiter
 	 * @return a string representing a delimited list of the values of the array
-	 *         of double-precision decimal numbers, a blank string if the
-	 *         array's length is <code>0</code>, <code>null</code> if the array
-	 *         is <code>null</code>
+	 *         of double-precision decimal numbers, an empty string if the array
+	 *         is empty, or <code>null</code> if the array is <code>null</code>
 	 */
 	public static String merge(double[] array, String delimiter) {
 		if (array == null) {
@@ -889,13 +855,11 @@ public class StringUtil {
 	/**
 	 * Merges the elements of an array of decimal numbers into a string
 	 * representing a comma delimited list of its values.
-	 * 
-	 * @param array
-	 *            the numbers to merge
+	 *
+	 * @param  array the floats to merge
 	 * @return a string representing a comma delimited list of the values of the
-	 *         array of decimal numbers, a blank string if the array's length is
-	 *         <code>0</code>, <code>null</code> if the array is
-	 *         <code>null</code>
+	 *         array of decimal numbers, an empty string if the array is empty,
+	 *         or <code>null</code> if the array is <code>null</code>
 	 */
 	public static String merge(float[] array) {
 		return merge(array, StringPool.COMMA);
@@ -904,15 +868,12 @@ public class StringUtil {
 	/**
 	 * Merges the elements of an array of decimal numbers into a string
 	 * representing a delimited list of its values.
-	 * 
-	 * @param array
-	 *            the numbers to merge
-	 * @param delimiter
-	 *            the delimiter
+	 *
+	 * @param  array the floats to merge
+	 * @param  delimiter the delimiter
 	 * @return a string representing a delimited list of the values of the array
-	 *         of decimal numbers, a blank string if the array's length is
-	 *         <code>0</code>, <code>null</code> if the array is
-	 *         <code>null</code>
+	 *         of decimal numbers, an empty string if the array is empty, or
+	 *         <code>null</code> if the array is <code>null</code>
 	 */
 	public static String merge(float[] array, String delimiter) {
 		if (array == null) {
@@ -939,13 +900,11 @@ public class StringUtil {
 	/**
 	 * Merges the elements of an array of integers into a string representing a
 	 * comma delimited list of its values.
-	 * 
-	 * @param array
-	 *            the integers to merge
+	 *
+	 * @param  array the integers to merge
 	 * @return a string representing a comma delimited list of the values of the
-	 *         array of integers, a blank string if the array's length is
-	 *         <code>0</code>, <code>null</code> if the array is
-	 *         <code>null</code>
+	 *         array of integers, an empty string if the array is empty, or
+	 *         <code>null</code> if the array is <code>null</code>
 	 */
 	public static String merge(int[] array) {
 		return merge(array, StringPool.COMMA);
@@ -954,15 +913,12 @@ public class StringUtil {
 	/**
 	 * Merges the elements of an array of integers into a string representing a
 	 * delimited list of its values.
-	 * 
-	 * @param array
-	 *            the integers to merge
-	 * @param delimiter
-	 *            the delimiter
+	 *
+	 * @param  array the integers to merge
+	 * @param  delimiter the delimiter
 	 * @return a string representing a delimited list of the values of the array
-	 *         of integers, a blank string if the array's length is
-	 *         <code>0</code>, <code>null</code> if the array is
-	 *         <code>null</code>
+	 *         of integers, an empty string if the array is empty, or
+	 *         <code>null</code> if the array is <code>null</code>
 	 */
 	public static String merge(int[] array, String delimiter) {
 		if (array == null) {
@@ -989,13 +945,11 @@ public class StringUtil {
 	/**
 	 * Merges the elements of an array of long integers by returning a string
 	 * representing a comma delimited list of its values.
-	 * 
-	 * @param array
-	 *            the integers to merge
+	 *
+	 * @param  array the long integers to merge
 	 * @return a string representing a comma delimited list of the values of the
-	 *         array of long integers, a blank string if the array's length is
-	 *         <code>0</code>, <code>null</code> if the array is
-	 *         <code>null</code>
+	 *         array of long integers, an empty string if the array is empty, or
+	 *         <code>null</code> if the array is <code>null</code>
 	 */
 	public static String merge(long[] array) {
 		return merge(array, StringPool.COMMA);
@@ -1004,15 +958,12 @@ public class StringUtil {
 	/**
 	 * Merges the elements of an array of long integers by returning a string
 	 * representing a delimited list of its values.
-	 * 
-	 * @param array
-	 *            the integers to merge
-	 * @param delimiter
-	 *            the delimiter
+	 *
+	 * @param  array the long integers to merge
+	 * @param  delimiter the delimiter
 	 * @return a string representing a delimited list of the values of the array
-	 *         of long integers, a blank string if the array's length is
-	 *         <code>0</code>, <code>null</code> if the array is
-	 *         <code>null</code>
+	 *         of long integers, an empty string if the array is empty, or
+	 *         <code>null</code> if the array is <code>null</code>
 	 */
 	public static String merge(long[] array, String delimiter) {
 		if (array == null) {
@@ -1039,12 +990,11 @@ public class StringUtil {
 	/**
 	 * Merges the elements of an array of objects into a string representing a
 	 * comma delimited list of the objects.
-	 * 
-	 * @param array
-	 *            the objects to merge
-	 * @return a string representing a comma delimited list of the objects, a
-	 *         blank string if the array's length is <code>0</code>,
-	 *         <code>null</code> if the array is <code>null</code>
+	 *
+	 * @param  array the objects to merge
+	 * @return a string representing a comma delimited list of the objects, an
+	 *         empty string if the array is empty, or <code>null</code> if the
+	 *         array is <code>null</code>
 	 */
 	public static String merge(Object[] array) {
 		return merge(array, StringPool.COMMA);
@@ -1053,14 +1003,12 @@ public class StringUtil {
 	/**
 	 * Merges the elements of an array of objects into a string representing a
 	 * delimited list of the objects.
-	 * 
-	 * @param array
-	 *            the objects to merge
-	 * @param delimiter
-	 *            the delimiter
-	 * @return a string representing a delimited list of the objects, a blank
-	 *         string if the array's length is <code>0</code>, <code>null</code>
-	 *         if the array is <code>null</code>
+	 *
+	 * @param  array the objects to merge
+	 * @param  delimiter the delimiter
+	 * @return a string representing a delimited list of the objects, an empty
+	 *         string if the array is empty, or <code>null</code> if the array
+	 *         is <code>null</code>
 	 */
 	public static String merge(Object[] array, String delimiter) {
 		if (array == null) {
@@ -1087,13 +1035,11 @@ public class StringUtil {
 	/**
 	 * Merges the elements of an array of short integers by returning a string
 	 * representing a comma delimited list of its values.
-	 * 
-	 * @param array
-	 *            the integers to merge
+	 *
+	 * @param  array the short integers to merge
 	 * @return a string representing a comma delimited list of the values of the
-	 *         array of short integers, a blank string if the array's length is
-	 *         <code>0</code>, <code>null</code> if the array is
-	 *         <code>null</code>
+	 *         array of short integers, an empty string if the array is empty,
+	 *         or <code>null</code> if the array is <code>null</code>
 	 */
 	public static String merge(short[] array) {
 		return merge(array, StringPool.COMMA);
@@ -1102,15 +1048,12 @@ public class StringUtil {
 	/**
 	 * Merges the elements of an array of short integers by returning a string
 	 * representing a delimited list of its values.
-	 * 
-	 * @param array
-	 *            the integers to merge
-	 * @param delimiter
-	 *            the delimiter
+	 *
+	 * @param  array the short integers to merge
+	 * @param  delimiter the delimiter
 	 * @return a string representing a delimited list of the values of the array
-	 *         of short integers, a blank string if the array's length is
-	 *         <code>0</code>, <code>null</code> if the array is
-	 *         <code>null</code>
+	 *         of short integers, an empty string if the array is empty, or
+	 *         <code>null</code> if the array is <code>null</code>
 	 */
 	public static String merge(short[] array, String delimiter) {
 		if (array == null) {
@@ -1135,17 +1078,20 @@ public class StringUtil {
 	}
 
 	/**
-	 * Returns the string enclosed by single quotes.
-	 * 
+	 * Returns the string enclosed by apostrophes.
+	 *
 	 * <p>
 	 * Example:
-	 * 
-	 * quote("Hello, World!") returns "'Hello, World!'"
 	 * </p>
-	 * 
-	 * @param s
-	 *            the string to enclose in apostrophes
-	 * @return the string enclosed by apostrophes, <code>null</code> if the
+	 *
+	 * <pre>
+	 * <code>
+	 * quote("Hello, World!") returns "'Hello, World!'"
+	 * </code>
+	 * </pre>
+	 *
+	 * @param  s the string to enclose in apostrophes
+	 * @return the string enclosed by apostrophes, or <code>null</code> if the
 	 *         string is <code>null</code>
 	 */
 	public static String quote(String s) {
@@ -1154,20 +1100,22 @@ public class StringUtil {
 
 	/**
 	 * Returns the string enclosed by the quote character.
-	 * 
+	 *
 	 * <p>
 	 * Example:
-	 * 
-	 * quote("PATH", '%') returns "%PATH%"
 	 * </p>
-	 * 
-	 * @param s
-	 *            the string to enclose in quotes
-	 * @param quote
-	 *            the character to insert to insert to the beginning of and
-	 *            append to the end of the string
-	 * @return the string enclosed in the quote characters, <code>null</code> if
-	 *         the string is null
+	 *
+	 * <pre>
+	 * <code>
+	 * quote("PATH", '%') returns "%PATH%"
+	 * </code>
+	 * </pre>
+	 *
+	 * @param  s the string to enclose in quotes
+	 * @param  quote the character to insert to insert to the beginning of and
+	 *         append to the end of the string
+	 * @return the string enclosed in the quote characters, or <code>null</code>
+	 *         if the string is <code>null</code>
 	 */
 	public static String quote(String s, char quote) {
 		if (s == null) {
@@ -1178,23 +1126,24 @@ public class StringUtil {
 	}
 
 	/**
-	 * Returns the string enclosed by the quote string.
-	 * 
+	 * Returns the string enclosed by the quote strings.
+	 *
 	 * <p>
 	 * Example:
-	 * 
-	 * quote("WARNING", "!!!") returns "!!!WARNING!!!"
 	 * </p>
-	 * 
-	 * @param s
-	 *            the string to enclose in quotes
-	 * @param quote
-	 *            the quote string to insert to insert to the beginning of and
-	 *            append to the end of the string
-	 * @return the string enclosed in the quote strings, <code>null</code> if
+	 *
+	 * <pre>
+	 * <code>
+	 * quote("WARNING", "!!!") returns "!!!WARNING!!!"
+	 * </code>
+	 * </pre>
+	 *
+	 * @param  s the string to enclose in quotes
+	 * @param  quote the quote string to insert to insert to the beginning of
+	 *         and append to the end of the string
+	 * @return the string enclosed in the quote strings, or <code>null</code> if
 	 *         the string is <code>null</code>
 	 */
-
 	public static String quote(String s, String quote) {
 		if (s == null) {
 			return null;
@@ -1205,9 +1154,8 @@ public class StringUtil {
 
 	/**
 	 * Pseudorandomly permutes the characters of the string.
-	 * 
-	 * @param s
-	 *            the string whose characters are to be randomized
+	 *
+	 * @param  s the string whose characters are to be randomized
 	 * @return a string of the same length as the string whose characters
 	 *         represent a pseudorandom permutation of the characters of the
 	 *         string
@@ -1302,54 +1250,61 @@ public class StringUtil {
 	}
 
 	/**
-	 * Removes a word from a string representing a comma delimited list of
-	 * words.
-	 * 
+	 * Removes the <code>remove</code> string from string <code>s</code> that
+	 * represents a list of comma delimited strings.
+	 *
 	 * <p>
 	 * Examples:
-	 * 
-	 * remove("red,blue,green,yellow", "blue") returns "red,green,yellow,"
-	 * remove("blue", "blue") returns "" remove("blue,", "blue") returns ""
 	 * </p>
-	 * 
+	 *
+	 * <pre>
+	 * <code>
+	 * remove("red,blue,green,yellow", "blue") returns "red,green,yellow,"
+	 * remove("blue", "blue") returns ""
+	 * remove("blue,", "blue") returns ""
+	 * </code>
+	 * </pre>
+	 *
 	 * <p>
 	 * The resulting string ends with a comma even if the original string does
 	 * not.
 	 * </p>
-	 * 
-	 * @param s
-	 *            the string representing the list of comma delimited strings
-	 * @param remove
-	 *            the string to remove
+	 *
+	 * @param  s the string representing the list of comma delimited strings
+	 * @param  remove the string to remove
 	 * @return a string representing the list of comma delimited strings with
 	 *         the <code>remove</code> string removed, or <code>null</code> if
-	 *         the original string or the string to remove is <code>null</code>
+	 *         the original string, the string to remove, or the delimiter is
+	 *         <code>null</code>
 	 */
 	public static String remove(String s, String remove) {
 		return remove(s, remove, StringPool.COMMA);
 	}
 
 	/**
-	 * Removes a word from a string representing a delimited list of words.
-	 * 
+	 * Removes the <code>remove</code> string from string <code>s</code> that
+	 * represents a list of delimited strings.
+	 *
 	 * <p>
 	 * The resulting string ends with the delimiter even if the original string
 	 * does not.
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * Examples:
-	 * 
-	 * remove("red;blue;green;yellow", "blue") returns "red,green,yellow;"
-	 * remove("blue", "blue") returns "" remove("blue;", "blue") returns ""
 	 * </p>
-	 * 
-	 * @param s
-	 *            the string representing the list of delimited strings
-	 * @param remove
-	 *            the string to remove
-	 * @param delimiter
-	 *            the delimiter
+	 *
+	 * <pre>
+	 * <code>
+	 * remove("red;blue;green;yellow", "blue") returns "red,green,yellow;"
+	 * remove("blue", "blue") returns ""
+	 * remove("blue;", "blue") returns ""
+	 * </code>
+	 * </pre>
+	 *
+	 * @param  s the string representing the list of delimited strings
+	 * @param  remove the string to remove
+	 * @param  delimiter the delimiter
 	 * @return a string representing the list of delimited strings with the
 	 *         <code>remove</code> string removed, or <code>null</code> if the
 	 *         original string, the string to remove, or the delimiter is
@@ -1394,15 +1349,12 @@ public class StringUtil {
 
 	/**
 	 * Replaces all occurrences of the character with the new character.
-	 * 
-	 * @param s
-	 *            the original string
-	 * @param oldSub
-	 *            the character to be searched for and replaced in the original
-	 *            string
-	 * @param newSub
-	 *            the character with which to replace the <code>oldSub</code>
-	 *            character
+	 *
+	 * @param  s the original string
+	 * @param  oldSub the character to be searched for and replaced in the
+	 *         original string
+	 * @param  newSub the character with which to replace the
+	 *         <code>oldSub</code> character
 	 * @return a string representing the original string with all occurrences of
 	 *         the <code>oldSub</code> character replaced with the
 	 *         <code>newSub</code> character, or <code>null</code> if the
@@ -1418,15 +1370,12 @@ public class StringUtil {
 
 	/**
 	 * Replaces all occurrences of the character with the new string.
-	 * 
-	 * @param s
-	 *            the original string
-	 * @param oldSub
-	 *            the character to be searched for and replaced in the original
-	 *            string
-	 * @param newSub
-	 *            the string with which to replace the <code>oldSub</code>
-	 *            character
+	 *
+	 * @param  s the original string
+	 * @param  oldSub the character to be searched for and replaced in the
+	 *         original string
+	 * @param  newSub the string with which to replace the <code>oldSub</code>
+	 *         character
 	 * @return a string representing the original string with all occurrences of
 	 *         the <code>oldSub</code> character replaced with the string
 	 *         <code>newSub</code>, or <code>null</code> if the original string
@@ -1458,15 +1407,12 @@ public class StringUtil {
 
 	/**
 	 * Replaces all occurrences of the string with the new string.
-	 * 
-	 * @param s
-	 *            the original string
-	 * @param oldSub
-	 *            the string to be searched for and replaced in the original
-	 *            string
-	 * @param newSub
-	 *            the string with which to replace the <code>oldSub</code>
-	 *            string
+	 *
+	 * @param  s the original string
+	 * @param  oldSub the string to be searched for and replaced in the original
+	 *         string
+	 * @param  newSub the string with which to replace the <code>oldSub</code>
+	 *         string
 	 * @return a string representing the original string with all occurrences of
 	 *         the <code>oldSub</code> string replaced with the string
 	 *         <code>newSub</code>, or <code>null</code> if the original string
@@ -1479,17 +1425,14 @@ public class StringUtil {
 	/**
 	 * Replaces all occurrences of the string with the new string, starting from
 	 * the specified index.
-	 * 
-	 * @param s
-	 *            the original string
-	 * @param oldSub
-	 *            the string to be searched for and replaced in the original
-	 *            string
-	 * @param newSub
-	 *            the string with which to replace the <code>oldSub</code>
-	 *            string
-	 * @param fromIndex
-	 *            the index of the original string from which to begin searching
+	 *
+	 * @param  s the original string
+	 * @param  oldSub the string to be searched for and replaced in the original
+	 *         string
+	 * @param  newSub the string with which to replace the <code>oldSub</code>
+	 *         string
+	 * @param  fromIndex the index of the original string from which to begin
+	 *         searching
 	 * @return a string representing the original string with all occurrences of
 	 *         the <code>oldSub</code> string occurring after the specified
 	 *         index replaced with the string <code>newSub</code>, or
@@ -1546,20 +1489,17 @@ public class StringUtil {
 	/**
 	 * Replaces all occurrences of the elements of the string array with the
 	 * corresponding elements of the new string array.
-	 * 
-	 * @param s
-	 *            the original string
-	 * @param oldSubs
-	 *            the strings to be searched for and replaced in the original
-	 *            string
-	 * @param newSubs
-	 *            the strings with which to replace the <code>oldSubs</code>
-	 *            strings
+	 *
+	 * @param  s the original string
+	 * @param  oldSubs the strings to be searched for and replaced in the
+	 *         original string
+	 * @param  newSubs the strings with which to replace the
+	 *         <code>oldSubs</code> strings
 	 * @return a string representing the original string with all occurrences of
 	 *         the <code>oldSubs</code> strings replaced with the corresponding
 	 *         <code>newSubs</code> strings, or <code>null</code> if the
 	 *         original string, the <code>oldSubs</code> array, or the
-	 *         <code>newSubs</code is <code>null</code>
+	 *         <code>newSubs</code> is <code>null</code>
 	 */
 	public static String replace(String s, String[] oldSubs, String[] newSubs) {
 		if ((s == null) || (oldSubs == null) || (newSubs == null)) {
@@ -1581,40 +1521,29 @@ public class StringUtil {
 	 * Replaces all occurrences of the elements of the string array with the
 	 * corresponding elements of the new string array, optionally replacing only
 	 * substrings that are surrounded by word boundaries.
-	 * 
+	 *
 	 * <p>
 	 * Examples:
-	 * 
-	 * replace("redorangeyellow", {"red", "orange", "yellow"}, {"RED","ORANGE",
-	 * "YELLOW"}, false) returns "REDORANGEYELLOW"
-	 * 
-	 * replace("redorangeyellow", {"red", "orange", "yellow"}, {"RED","ORANGE",
-	 * "YELLOW"}, true) returns "redorangeyellow"
-	 * 
-	 * replace("redorange yellow", {"red", "orange", "yellow"}, {"RED","ORANGE",
-	 * "YELLOW"}, false) returns "REDORANGE YELLOW"
-	 * 
-	 * replace("redorange yellow", {"red", "orange", "yellow"}, {"RED","ORANGE",
-	 * "YELLOW"}, true) returns "redorange YELLOW"
-	 * 
-	 * replace("red orange yellow", {"red", "orange", "yellow"},
-	 * {"RED","ORANGE", "YELLOW"}, false) returns "RED ORANGE YELLOW"
-	 * 
-	 * replace("redorange.yellow", {"red", "orange", "yellow"}, {"RED","ORANGE",
-	 * * "YELLOW"}, true) returns "redorange.YELLOW"
 	 * </p>
-	 * 
-	 * @param s
-	 *            the original string
-	 * @param oldSubs
-	 *            the strings to be searched for and replaced in the original
-	 *            string
-	 * @param newSubs
-	 *            the strings with which to replace the <code>oldSubs</code>
-	 *            strings
-	 * @param exactMatch
-	 *            whether or not to replace only substrings of <code>s</code>
-	 *            that are surrounded by word boundaries
+	 *
+	 * <pre>
+	 * <code>
+	 * replace("redorangeyellow", {"red", "orange", "yellow"}, {"RED","ORANGE", "YELLOW"}, false) returns "REDORANGEYELLOW"
+	 * replace("redorangeyellow", {"red", "orange", "yellow"}, {"RED","ORANGE", "YELLOW"}, true) returns "redorangeyellow"
+	 * replace("redorange yellow", {"red", "orange", "yellow"}, {"RED","ORANGE", "YELLOW"}, false) returns "REDORANGE YELLOW"
+	 * replace("redorange yellow", {"red", "orange", "yellow"}, {"RED","ORANGE", "YELLOW"}, true) returns "redorange YELLOW"
+	 * replace("red orange yellow", {"red", "orange", "yellow"}, {"RED","ORANGE", "YELLOW"}, false) returns "RED ORANGE YELLOW"
+	 * replace("redorange.yellow", {"red", "orange", "yellow"}, {"RED","ORANGE", * "YELLOW"}, true) returns "redorange.YELLOW"
+	 * </code>
+	 * </pre>
+	 *
+	 * @param  s the original string
+	 * @param  oldSubs the strings to be searched for and replaced in the
+	 *         original string
+	 * @param  newSubs the strings with which to replace the
+	 *         <code>oldSubs</code> strings
+	 * @param  exactMatch whether or not to replace only substrings of
+	 *         <code>s</code> that are surrounded by word boundaries
 	 * @return if <code>exactMatch</code> is <code>true</code>, a string
 	 *         representing the original string with all occurrences of the
 	 *         <code>oldSubs</code> strings that are surrounded by word
@@ -1650,15 +1579,12 @@ public class StringUtil {
 
 	/**
 	 * Replaces the first occurrence of the character with the new character.
-	 * 
-	 * @param s
-	 *            the original string
-	 * @param oldSub
-	 *            the character whose first occurrence in the original string is
-	 *            to be searched for and replaced
-	 * @param newSub
-	 *            the character with which to replace the first occurrence of
-	 *            the <code>oldSub</code> character
+	 *
+	 * @param  s the original string
+	 * @param  oldSub the character whose first occurrence in the original
+	 *         string is to be searched for and replaced
+	 * @param  newSub the character with which to replace the first occurrence
+	 *         of the <code>oldSub</code> character
 	 * @return a string representing the original string except with the first
 	 *         occurrence of the character <code>oldSub</code> replaced with the
 	 *         character <code>newSub</code>
@@ -1673,15 +1599,12 @@ public class StringUtil {
 
 	/**
 	 * Replaces the first occurrence of the character with the new string.
-	 * 
-	 * @param s
-	 *            the original string
-	 * @param oldSub
-	 *            the character whose first occurrence in the original string is
-	 *            to be searched for and replaced
-	 * @param newSub
-	 *            the string with which to replace the first occurrence of the
-	 *            <code>oldSub</code> character
+	 *
+	 * @param  s the original string
+	 * @param  oldSub the character whose first occurrence in the original
+	 *         string is to be searched for and replaced
+	 * @param  newSub the string with which to replace the first occurrence of
+	 *         the <code>oldSub</code> character
 	 * @return a string representing the original string except with the first
 	 *         occurrence of the character <code>oldSub</code> replaced with the
 	 *         string <code>newSub</code>
@@ -1696,15 +1619,12 @@ public class StringUtil {
 
 	/**
 	 * Replaces the first occurrence of the string with the new string.
-	 * 
-	 * @param s
-	 *            the original string
-	 * @param oldSub
-	 *            the string whose first occurrence in the original string is to
-	 *            be searched for and replaced
-	 * @param newSub
-	 *            the string with which to replace the first occurrence of the
-	 *            <code>oldSub</code> string
+	 *
+	 * @param  s the original string
+	 * @param  oldSub the string whose first occurrence in the original string
+	 *         is to be searched for and replaced
+	 * @param  newSub the string with which to replace the first occurrence of
+	 *         the <code>oldSub</code> string
 	 * @return a string representing the original string except with the first
 	 *         occurrence of the string <code>oldSub</code> replaced with the
 	 *         string <code>newSub</code>
@@ -1732,15 +1652,12 @@ public class StringUtil {
 	/**
 	 * Replaces the first occurrences of the elements of the string array with
 	 * the corresponding elements of the new string array.
-	 * 
-	 * @param s
-	 *            the original string
-	 * @param oldSubs
-	 *            the strings whose first occurrences are to be searched for and
-	 *            replaced in the original string
-	 * @param newSubs
-	 *            the strings with which to replace the first occurrences of the
-	 *            <code>oldSubs</code> strings
+	 *
+	 * @param  s the original string
+	 * @param  oldSubs the strings whose first occurrences are to be searched
+	 *         for and replaced in the original string
+	 * @param  newSubs the strings with which to replace the first occurrences
+	 *         of the <code>oldSubs</code> strings
 	 * @return a string representing the original string with the first
 	 *         occurrences of the <code>oldSubs</code> strings replaced with the
 	 *         corresponding <code>newSubs</code> strings, or <code>null</code>
@@ -1767,15 +1684,12 @@ public class StringUtil {
 
 	/**
 	 * Replaces the last occurrence of the character with the new character.
-	 * 
-	 * @param s
-	 *            the original string
-	 * @param oldSub
-	 *            the character whose last occurrence in the original string is
-	 *            to be searched for and replaced
-	 * @param newSub
-	 *            the character with which to replace the last occurrence of the
-	 *            <code>oldSub</code> character
+	 *
+	 * @param  s the original string
+	 * @param  oldSub the character whose last occurrence in the original string
+	 *         is to be searched for and replaced
+	 * @param  newSub the character with which to replace the last occurrence of
+	 *         the <code>oldSub</code> character
 	 * @return a string representing the original string except with the first
 	 *         occurrence of the character <code>oldSub</code> replaced with the
 	 *         character <code>newSub</code>
@@ -1790,15 +1704,12 @@ public class StringUtil {
 
 	/**
 	 * Replaces the last occurrence of the character with the new string.
-	 * 
-	 * @param s
-	 *            the original string
-	 * @param oldSub
-	 *            the character whose last occurrence in the original string is
-	 *            to be searched for and replaced
-	 * @param newSub
-	 *            the string with which to replace the last occurrence of the
-	 *            <code>oldSub</code> character
+	 *
+	 * @param  s the original string
+	 * @param  oldSub the character whose last occurrence in the original string
+	 *         is to be searched for and replaced
+	 * @param  newSub the string with which to replace the last occurrence of
+	 *         the <code>oldSub</code> character
 	 * @return a string representing the original string except with the last
 	 *         occurrence of the character <code>oldSub</code> replaced with the
 	 *         string <code>newSub</code>
@@ -1814,15 +1725,12 @@ public class StringUtil {
 	/**
 	 * Replaces the last occurrence of the string <code>oldSub</code> in the
 	 * string <code>s</code> with the string <code>newSub</code>.
-	 * 
-	 * @param s
-	 *            the original string
-	 * @param oldSub
-	 *            the string whose last occurrence in the original string is to
-	 *            be searched for and replaced
-	 * @param newSub
-	 *            the string with which to replace the last occurrence of the
-	 *            <code>oldSub</code> string
+	 *
+	 * @param  s the original string
+	 * @param  oldSub the string whose last occurrence in the original string is
+	 *         to be searched for and replaced
+	 * @param  newSub the string with which to replace the last occurrence of
+	 *         the <code>oldSub</code> string
 	 * @return a string representing the original string except with the last
 	 *         occurrence of the string <code>oldSub</code> replaced with the
 	 *         string <code>newSub</code>
@@ -1850,15 +1758,12 @@ public class StringUtil {
 	/**
 	 * Replaces the last occurrences of the elements of the string array with
 	 * the corresponding elements of the new string array.
-	 * 
-	 * @param s
-	 *            the original string
-	 * @param oldSubs
-	 *            the strings whose last occurrences are to be searched for and
-	 *            replaced in the original string
-	 * @param newSubs
-	 *            the strings with which to replace the last occurrences of the
-	 *            <code>oldSubs</code> strings
+	 *
+	 * @param  s the original string
+	 * @param  oldSubs the strings whose last occurrences are to be searched for
+	 *         and replaced in the original string
+	 * @param  newSubs the strings with which to replace the last occurrences of
+	 *         the <code>oldSubs</code> strings
 	 * @return a string representing the original string with the last
 	 *         occurrences of the <code>oldSubs</code> strings replaced with the
 	 *         corresponding <code>newSubs</code> strings, or <code>null</code>
@@ -1976,9 +1881,8 @@ public class StringUtil {
 
 	/**
 	 * Reverses the order of the characters of the string.
-	 * 
-	 * @param s
-	 *            the original string
+	 *
+	 * @param  s the original string
 	 * @return a string representing the original string with characters in
 	 *         reverse order
 	 */
@@ -1999,95 +1903,121 @@ public class StringUtil {
 
 	/**
 	 * Replaces all double slashes of the string with single slashes.
-	 * 
+	 *
 	 * <p>
 	 * Example:
-	 * 
-	 * safePath("http://www.liferay.com") returns "http:/www.liferay.com"
 	 * </p>
 	 * 
-	 * @param path
-	 *            the original string
-	 * @return a string representing the original string except with all double
-	 *         slashes replaces with single slashes.
+	 * <pre>
+	 * <code>
+	 * safePath("http://www.liferay.com") returns "http:/www.liferay.com"
+	 * </code>
+	 * </pre>
+	 *
+	 * @param  path the original string
+	 * @return a string representing the original string with all double
+	 *         slashes replaced with single slashes
 	 */
 	public static String safePath(String path) {
 		return replace(path, StringPool.DOUBLE_SLASH, StringPool.SLASH);
 	}
 
 	/**
-	 * Shortens the string by replacing it with a substring of length 20
-	 * starting at the beginning of the string with the suffix "..." appended to
-	 * it.
-	 * 
-	 * @param s
-	 *            the original string
-	 * @return a substring of the original string of length 20 with the suffix
-	 *         "..." appended to it
+	 * Returns a string representing the original string shortened to 20 characters,
+	 * with suffix "..." appended to it.
+	 *
+	 * <p>
+	 * The suffix is only added if the original string exceeds 20 characters.
+	 * If the original string exceeds 20 characters and it contains whitespace,
+	 * the string is shortened at the first whitespace character.
+	 * </p>
+	 *
+	 * <p>
+	 * Examples:
+	 * </p>
+	 *
+	 * <pre>
+	 * <code>
+	 * shorten("12345678901234567890xyz") returns "12345678901234567890..."
+	 * shorten("1 345678901234567890xyz") returns "1..."
+	 * shorten(" 2345678901234567890xyz") returns "..."
+	 * shorten("12345678901234567890") returns "12345678901234567890"
+	 * shorten(" 2345678901234567890") returns " 2345678901234567890"
+	 * </code>
+	 * </pre>
+	 *
+	 * @param  s the original string
+	 * @return a string representing the original string shortened to 20 characters,
+	 * with suffix "..." appended to it
 	 */
 	public static String shorten(String s) {
 		return shorten(s, 20);
 	}
 
 	/**
-	 * Shortens the string by replacing it with a substring of the specified
-	 * length starting at the beginning of the string with the suffix "..."
-	 * appended to it.
-	 * 
+	 * Returns a string representing the original string shortened to the specified length,
+	 * with suffix "..." appended to it.
+	 *
 	 * <p>
-	 * If the string contains any whitespace characters at indexes whose values
-	 * are less than the value of the <code>length</code> parameter, the length
-	 * of the substring to extract from the original string is replaced by the
-	 * index of the last occurring whitespace character.
+	 * The suffix is only added if the original string exceeds the specified length.
+	 * If the original string exceeds the specified length and it contains whitespace,
+	 * the string is shortened at the first whitespace character.
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * Examples:
-	 * 
-	 * shorten("123456", 6) returns "123456" shorten("123456", 5) returns
-	 * "12345..."
 	 * </p>
 	 * 
-	 * @param s
-	 *            the original string
-	 * @param length
-	 *            the length of the substring to extract from of the original
-	 *            string
-	 * @return a substring of the original string of the specified length with
-	 *         the suffix "..." appended to it
+	 * <pre>
+	 * <code>
+	 * shorten("123456", 5) returns "12345..."
+	 * shorten("1 3456", 5) returns "1..."
+	 * shorten(" 23456", 5) returns "..."
+	 * shorten("12345", 5) returns "12345"
+	 * shorten(" 1234", 5) returns " 1234"
+	 * </code>
+	 * </pre>
+	 *
+	 * @param  s the original string
+	 * @param  length the number of characters to limit from the
+	 *         original string
+	 * @return a string representing the original string shortened to the specified length,
+	 * with suffix "..." appended to it
 	 */
 	public static String shorten(String s, int length) {
 		return shorten(s, length, "...");
 	}
 
 	/**
-	 * Shortens the string by replacing it with a substring of the specified
-	 * length starting at the beginning of the string with the specified suffix
-	 * appended to it.
-	 * 
+	 * Returns a string representing the original string shortened to the specified length,
+	 * with the specified suffix appended to it.
+	 *
 	 * <p>
-	 * If the string contains any whitespace characters at indexes whose values
-	 * are less than the value of the <code>length</code> parameter, the length
-	 * of the substring to extract from the original string is replaced by the
-	 * index of the last occurring whitespace character.
+	 * The suffix is only added if the original string exceeds the specified length.
+	 * If the original string exceeds the specified length and it contains whitespace,
+	 * the string is shortened at the first whitespace character.
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * Examples:
-	 * 
-	 * shorten("123456", 6, "..., etc.") returns "123456" shorten("123456", 5,
-	 * "..., etc.") returns "12345..., etc."
 	 * </p>
 	 * 
-	 * @param s
-	 *            the original string
-	 * @param length
-	 *            the length of the substring to extract from of the original
-	 *            string
-	 * @param suffix
-	 *            the suffix to append to the substring of the original string
-	 * @return a substring of the original string of the specified length with
-	 *         the suffix appended to it
+	 * <pre>
+	 * <code>
+	 * shorten("123456", 5, "... etc.") returns "12345... etc."
+	 * shorten("1 3456", 5, "... etc.") returns "1... etc."
+	 * shorten(" 23456", 5, "... etc.") returns "... etc."
+	 * shorten("12345", 5, "... etc.") returns "12345"
+	 * shorten(" 1234", 5, "... etc.") returns " 1234"
+	 * </code>
+	 * </pre>
+	 *
+	 * @param  s the original string
+	 * @param  length the number of characters to limit from the
+	 *         original string
+	 * @param  suffix the suffix to append
+	 * @return a string representing the original string shortened to the specified length,
+	 * with the specified suffix appended to it
 	 */
 	public static String shorten(String s, int length, String suffix) {
 		if ((s == null) || (suffix == null)) {
@@ -2112,69 +2042,94 @@ public class StringUtil {
 	}
 
 	/**
-	 * Shortens the string by replacing it with a substring of length 20
-	 * starting at the beginning of the string with the specified suffix
-	 * appended to it.
-	 * 
+	 * Returns a string representing the original string shortened to 20 characters,
+	 * with the specified suffix appended to it.
+	 *
 	 * <p>
-	 * If the string contains any whitespace characters at indexes whose values
-	 * are less than the value of the <code>length</code> parameter, the length
-	 * of the substring to extract from the original string is replaced by the
-	 * index of the last occurring whitespace character.
+	 * The suffix is only added if the original string exceeds 20 characters.
+	 * If the original string exceeds 20 characters and it contains whitespace,
+	 * the string is shortened at the first whitespace character.
 	 * </p>
-	 * 
-	 * @param s
-	 *            the original string
-	 * @param suffix
-	 *            the suffix to append to the substring of the original string
-	 * @return a substring of the original string of length 20 with the suffix
-	 *         appended to it
+	 *
+	 * <p>
+	 * Examples:
+	 * </p>
+	 *
+	 * <pre>
+	 * <code>
+	 * shorten("12345678901234567890xyz", "... etc.") returns "12345678901234567890... etc."
+	 * shorten("1 345678901234567890xyz", "... etc.") returns "1... etc."
+	 * shorten(" 2345678901234567890xyz", "... etc.") returns "... etc."
+	 * shorten("12345678901234567890", "... etc.") returns "12345678901234567890"
+	 * shorten(" 2345678901234567890", "... etc.") returns " 2345678901234567890"
+	 * </code>
+	 * </pre>
+	 *
+	 * @param  s the original string
+	 * @param  suffix the suffix to append
+	 * @return a string representing the original string shortened to 20 characters,
+	 * with the specified suffix appended to it
 	 */
 	public static String shorten(String s, String suffix) {
 		return shorten(s, 20, suffix);
 	}
 
 	/**
-	 * Splits the string <code>s</code> by returning the substrings of
-	 * <code>s</code> that are separated commas.
-	 * 
+	 * Splits string <code>s</code> around comma characters.
+	 *
 	 * <p>
 	 * Example:
-	 * 
-	 * split("Alice,Bob,Charlie") = {"Alice", "Bob", "Charlie"}
 	 * </p>
-	 * 
-	 * @param s
-	 *            the string to split
-	 * @return the substrings of <code>s</code> that are separated by commas, or
-	 *         an empty string array if <code>s</code> is <code>null</code> or
-	 *         has length <code>0</code>
+	 *
+	 * <pre>
+	 * <code>
+	 * split("Alice,Bob,Charlie") returns {"Alice", "Bob", "Charlie"}
+	 * split("Alice, Bob, Charlie") returns {"Alice", " Bob", " Charlie"}
+	 * </code>
+	 * </pre>
+	 *
+	 * @param  s the string to split
+	 * @return the array of strings resulting from splitting string <code>s</code>
+	 * around comma characters, or an empty string array if
+	 *         <code>s</code> is <code>null</code> or <code>s</code> is empty
 	 */
 	public static String[] split(String s) {
 		return split(s, CharPool.COMMA);
 	}
 
+	/**
+	 * Splits the string <code>s</code> around comma characters returning
+	 * the boolean values of the substrings.
+	 *
+	 * @param s
+	 * @param  x the default value to use for a substring in case an exception
+	 * occurs in getting the boolean value for that substring
+	 * @return the array of boolean values resulting from splitting
+	 * string <code>s</code> around comma characters, or an empty array if
+	 * <code>s</code> is <code>null</code>
+	 */
 	public static boolean[] split(String s, boolean x) {
 		return split(s, StringPool.COMMA, x);
 	}
 
 	/**
-	 * Splits the string <code>s</code> by returning the substrings of
-	 * <code>s</code> that are separated by the specified delimiter character.
-	 * 
+	 * Splits the string <code>s</code> around the specified delimiter.
+	 *
 	 * <p>
 	 * Example:
-	 * 
-	 * splitLines("First;Second;Third", ';') returns {"First","Second","Third"}
 	 * </p>
-	 * 
-	 * @param s
-	 *            the string to split
-	 * @param delimiter
-	 *            the delimiter
-	 * @return the substrings of <code>s</code> that are separated by the
-	 *         specified delimiter character, or an empty string array if
-	 *         <code>s</code> is <code>null</code> or has length <code>0</code>
+	 *
+	 * <pre>
+	 * <code>
+	 * splitLines("First;Second;Third", ';') returns {"First","Second","Third"}
+	 * </code>
+	 * </pre>
+	 *
+	 * @param  s the string to split
+	 * @param  delimiter the delimiter
+	 * @return the array of strings resulting from splitting string <code>s</code>
+	 * around the specified delimiter character, or an empty string array if
+	 *         <code>s</code> is <code>null</code> or if <code>s</code> is empty
 	 */
 	public static String[] split(String s, char delimiter) {
 		if (Validator.isNull(s)) {
@@ -2212,43 +2167,98 @@ public class StringUtil {
 		return nodeValues.toArray(new String[nodeValues.size()]);
 	}
 
+	/**
+	 * Splits the string <code>s</code> around comma characters returning
+	 * the double-precision decimal values of the substrings.
+	 *
+	 * @param s
+	 * @param  x the default value to use for a substring in case an exception
+	 * occurs in getting the double-precision decimal value for that substring
+	 * @return the array of double-precision decimal values resulting from splitting
+	 * string <code>s</code> around comma characters, or an empty array if
+	 * <code>s</code> is <code>null</code>
+	 */
 	public static double[] split(String s, double x) {
 		return split(s, StringPool.COMMA, x);
 	}
 
+	/**
+	 * Splits the string <code>s</code> around comma characters returning
+	 * the decimal values of the substrings.
+	 *
+	 * @param s
+	 * @param  x the default value to use for a substring in case an exception
+	 * occurs in getting the decimal value for that substring
+	 * @return the array of decimal values resulting from splitting
+	 * string <code>s</code> around comma characters, or an empty array if
+	 * <code>s</code> is <code>null</code>
+	 */
 	public static float[] split(String s, float x) {
 		return split(s, StringPool.COMMA, x);
 	}
 
+	/**
+	 * Splits the string <code>s</code> around comma characters returning
+	 * the integer values of the substrings.
+	 *
+	 * @param s
+	 * @param  x the default value to use for a substring in case an exception
+	 * occurs in getting the integer value for that substring
+	 * @return the array of integer values resulting from splitting
+	 * string <code>s</code> around comma characters, or an empty array if
+	 * <code>s</code> is <code>null</code>
+	 */
 	public static int[] split(String s, int x) {
 		return split(s, StringPool.COMMA, x);
 	}
 
+	/**
+	 * Splits the string <code>s</code> around comma characters returning
+	 * the long integer values of the substrings.
+	 *
+	 * @param s
+	 * @param  x the default value to use for a substring in case an exception
+	 * occurs in getting the long integer value for that substring
+	 * @return the array of long integer values resulting from splitting
+	 * string <code>s</code> around comma characters, or an empty array if
+	 * <code>s</code> is <code>null</code>
+	 */
 	public static long[] split(String s, long x) {
 		return split(s, StringPool.COMMA, x);
 	}
 
+	/**
+	 * Splits the string <code>s</code> around comma characters returning
+	 * the short integer values of the substrings.
+	 *
+	 * @param s
+	 * @param  x the default value to use for a substring in case an exception
+	 * occurs in getting the short integer value for that substring
+	 * @return the array of short integer values resulting from splitting
+	 * string <code>s</code> around comma characters, or an empty array if
+	 * <code>s</code> is <code>null</code>
+	 */
 	public static short[] split(String s, short x) {
 		return split(s, StringPool.COMMA, x);
 	}
 
 	/**
-	 * Splits the string <code>s</code> by returning the substrings of
-	 * <code>s</code> that are separated by the specified delimiter string.
-	 * 
+	 * Splits the string <code>s</code> around the specified delimiter string.
+	 *
 	 * <p>
 	 * Example:
-	 * 
-	 * splitLines("oneandtwoandthreeandfour", 'and') returns
-	 * {"one","two","three","four"}
 	 * </p>
-	 * 
-	 * @param s
-	 *            the string to split
-	 * @param delimiter
-	 *            the delimiter
-	 * @return the substrings of <code>s</code> that are separated by the
-	 *         specified delimiter string, or an empty string array if
+	 *
+	 * <pre>
+	 * <code>
+	 * splitLines("oneandtwoandthreeandfour", "and") returns {"one","two","three","four"}
+	 * </code>
+	 * </pre>
+	 *
+	 * @param  s the string to split
+	 * @param  delimiter the delimiter
+	 * @return the array of strings resulting from splitting string <code>s</code>
+	 * around the specified delimiter string, or an empty string array if
 	 *         <code>s</code> is <code>null</code> or equals the delimiter
 	 */
 	public static String[] split(String s, String delimiter) {
@@ -2288,19 +2298,15 @@ public class StringUtil {
 	}
 
 	/**
-	 * Splits the string <code>s</code> by returning the boolean values of the
-	 * substrings of <code>s</code> that are separated by the specified
-	 * delimiter string.
-	 * 
-	 * @param s
-	 *            the string to split
-	 * @param delimiter
-	 *            the delimiter
-	 * @param x
-	 *            determines the method's return type and serves as a default
-	 *            value for the elements of the array to be returned
-	 * @return the boolean values of the substrings of <code>s</code> that are
-	 *         separated by the specified delimiter string
+	 * Splits the string <code>s</code> around the specified delimiter returning the boolean values of the
+	 * substrings.
+	 *
+	 * @param  s the string to split
+	 * @param  delimiter the delimiter
+	 * @param  x the default value to use for a substring in case an exception occurs in getting the boolean value for that substring
+	 * @return the array of booleans resulting from splitting string <code>s</code>
+	 * around the specified delimiter string, or an empty array if
+	 *         <code>s</code> is <code>null</code>
 	 */
 	public static boolean[] split(String s, String delimiter, boolean x) {
 		String[] array = split(s, delimiter);
@@ -2322,19 +2328,16 @@ public class StringUtil {
 	}
 
 	/**
-	 * Splits the string <code>s</code> by returning the parsed <double> values
-	 * of the substrings of <code>s</code> that are separated by the specified
-	 * delimiter string.
-	 * 
-	 * @param s
-	 *            the string to split
-	 * @param delimiter
-	 *            the delimiter
-	 * @param x
-	 *            determines the method's return type and serves as a default
-	 *            value for the elements of the array to be returned
-	 * @return the parsed <double> values of the substrings of <code>s</code>
-	 *         that are separated by the specified delimiter string
+	 * Splits the string <code>s</code> around the specified delimiter returning
+	 * the double-precision decimal values of the substrings.
+	 *
+	 * @param  s the string to split
+	 * @param  delimiter the delimiter
+	 * @param  x the default value to use for a substring in case an exception
+	 * occurs in getting the double-precision decimal value for that substring
+	 * @return the array of double-precision decimal values resulting from splitting
+	 * string <code>s</code> around the specified delimiter string, or an empty array if
+	 * <code>s</code> is <code>null</code>
 	 */
 	public static double[] split(String s, String delimiter, double x) {
 		String[] array = split(s, delimiter);
@@ -2356,19 +2359,16 @@ public class StringUtil {
 	}
 
 	/**
-	 * Splits the string <code>s</code> by returning the parsed <float> values
-	 * of the substrings of <code>s</code> that are separated by the specified
-	 * delimiter string.
-	 * 
-	 * @param s
-	 *            the string to split
-	 * @param delimiter
-	 *            the delimiter
-	 * @param x
-	 *            determines the method's return type and serves as a default
-	 *            value for the elements of the array to be returned
-	 * @return the parsed <float> values of the substrings of <code>s</code>
-	 *         that are separated by the specified delimiter string
+	 * Splits the string <code>s</code> around the specified delimiter returning
+	 * the decimal values of the substrings.
+	 *
+	 * @param  s the string to split
+	 * @param  delimiter the delimiter
+	 * @param  x the default value to use for a substring in case an exception
+	 * occurs in getting the decimal value for that substring
+	 * @return the array of decimal values resulting from splitting
+	 * string <code>s</code> around the specified delimiter string, or an empty array if
+	 * <code>s</code> is <code>null</code>
 	 */
 	public static float[] split(String s, String delimiter, float x) {
 		String[] array = split(s, delimiter);
@@ -2390,19 +2390,16 @@ public class StringUtil {
 	}
 
 	/**
-	 * Splits the string <code>s</code> by returning the parsed <int> values of
-	 * the substrings of <code>s</code> that are separated by the specified
-	 * delimiter string.
-	 * 
-	 * @param s
-	 *            the string to split
-	 * @param delimiter
-	 *            the delimiter
-	 * @param x
-	 *            determines the method's return type and serves as a default
-	 *            value for the elements of the array to be returned
-	 * @return the parsed <int> values of the substrings of <code>s</code> that
-	 *         are separated by the specified delimiter string
+	 * Splits the string <code>s</code> around the specified delimiter returning
+	 * the integer values of the substrings.
+	 *
+	 * @param  s the string to split
+	 * @param  delimiter the delimiter
+	 * @param  x the default value to use for a substring in case an exception
+	 * occurs in getting the integer value for that substring
+	 * @return the array of integer values resulting from splitting
+	 * string <code>s</code> around the specified delimiter string, or an empty array if
+	 * <code>s</code> is <code>null</code>
 	 */
 	public static int[] split(String s, String delimiter, int x) {
 		String[] array = split(s, delimiter);
@@ -2424,21 +2421,17 @@ public class StringUtil {
 	}
 
 	/**
-	 * Splits the string <code>s</code> by returning the parsed <long> values of
-	 * the substrings of <code>s</code> that are separated by the specified
-	 * delimiter string.
-	 * 
-	 * @param s
-	 *            the string to split
-	 * @param delimiter
-	 *            the delimiter
-	 * @param x
-	 *            determines the method's return type and serves as a default
-	 *            value for the elements of the array to be returned
-	 * @return the parsed <long> values of the substrings of <code>s</code> that
-	 *         are separated by the specified delimiter string
+	 * Splits the string <code>s</code> around the specified delimiter returning
+	 * the long integer values of the substrings.
+	 *
+	 * @param  s the string to split
+	 * @param  delimiter the delimiter
+	 * @param  x the default value to use for a substring in case an exception
+	 * occurs in getting the long integer value for that substring
+	 * @return the array of long integer values resulting from splitting
+	 * string <code>s</code> around the specified delimiter string, or an empty array if
+	 * <code>s</code> is <code>null</code>
 	 */
-
 	public static long[] split(String s, String delimiter, long x) {
 		String[] array = split(s, delimiter);
 		long[] newArray = new long[array.length];
@@ -2459,19 +2452,16 @@ public class StringUtil {
 	}
 
 	/**
-	 * Splits the string <code>s</code> by returning the parsed <short> values
-	 * of the substrings of <code>s</code> that are separated by the specified
-	 * delimiter string.
-	 * 
-	 * @param s
-	 *            the string to split
-	 * @param delimiter
-	 *            the delimiter
-	 * @param x
-	 *            determines the method's return type and serves as a default
-	 *            value for the elements of the array to be returned
-	 * @return the parsed <short> values of the substrings of <code>s</code>
-	 *         that are separated by the specified delimiter string
+	 * Splits the string <code>s</code> around the specified delimiter returning
+	 * the short integer values of the substrings.
+	 *
+	 * @param  s the string to split
+	 * @param  delimiter the delimiter
+	 * @param  x the default value to use for a substring in case an exception
+	 * occurs in getting the short integer value for that substring
+	 * @return the array of short integer values resulting from splitting
+	 * string <code>s</code> around the specified delimiter string, or an empty array if
+	 * <code>s</code> is <code>null</code>
 	 */
 	public static short[] split(String s, String delimiter, short x) {
 		String[] array = split(s, delimiter);
@@ -2493,22 +2483,22 @@ public class StringUtil {
 	}
 
 	/**
-	 * Splits the string <code>s</code> into separate lines by returning the
-	 * substrings of <code>s</code> that are separated by return and newline
-	 * characters.
-	 * 
+	 * Splits string <code>s</code> around return and newline characters.
+	 *
 	 * <p>
 	 * Example:
-	 * 
-	 * splitLines("Red\rBlue\nGreen\rYellow\nWhite") returns
-	 * {"Red","Blue","Green","Yellow","White"}
 	 * </p>
-	 * 
-	 * @param s
-	 *            the string to split into an array of separate lines
-	 * @return the substrings of <code>s</code> that are separated by return and
-	 *         newline characters, or an empty string array if <code>s</code> is
-	 *         <code>null</code>.
+	 *
+	 * <pre>
+	 * <code>
+	 * splitLines("Red\rBlue\nGreen") returns {"Red","Blue","Green"}
+	 * </code>
+	 * </pre>
+	 *
+	 * @param  s the string to split
+	 * @return the array of strings resulting from splitting string <code>s</code>
+	 * around return and newline characters, or an empty string array if string
+	 * <code>s</code> is <code>null</code>
 	 */
 	public static String[] splitLines(String s) {
 		if (Validator.isNull(s)) {
@@ -2564,14 +2554,13 @@ public class StringUtil {
 
 	/**
 	 * Returns <code>true</code> if, ignoring case, the string starts with the
-	 * specified character, returns <code>false</code> otherwise.
-	 * 
-	 * @param s
-	 *            the string
-	 * @param begin
-	 *            the character against which the initial character of the
-	 *            string is to be compared
-	 * @return
+	 * specified character.
+	 *
+	 * @param  s the string
+	 * @param  begin the character against which the initial character of the
+	 *         string is to be compared
+	 * @return <code>true</code> if, ignoring case, the string starts with the
+	 *         specified character; <code>false</code> otherwise
 	 */
 	public static boolean startsWith(String s, char begin) {
 		return startsWith(s, (new Character(begin)).toString());
@@ -2579,15 +2568,13 @@ public class StringUtil {
 
 	/**
 	 * Returns <code>true</code> if, ignoring case, the string starts with the
-	 * specified string, returns <code>false</code> otherwise.
-	 * 
-	 * @param s
-	 *            the original string
-	 * @param start
-	 *            the string against which the initial characters of the string
-	 *            are to be compared
+	 * specified start string.
+	 *
+	 * @param  s the original string
+	 * @param  start the string against which the beginning of
+	 *         string <code>s</code> are to be compared
 	 * @return <code>true</code> if, ignoring case, the string starts with the
-	 *         specified string, returns <code>false</code> otherwise
+	 *         specified start string; <code>false</code> otherwise
 	 */
 	public static boolean startsWith(String s, String start) {
 		if ((s == null) || (start == null)) {
@@ -2609,11 +2596,13 @@ public class StringUtil {
 	}
 
 	/**
-	 * Returns the number of starting letters that <code>s1</code> and
-	 * <code>s2</code> have in common before they deviate.
-	 * 
-	 * @return the number of starting letters that <code>s1</code> and
-	 *         <code>s2</code> have in common before they deviate
+	 * Returns the number of starting characters that <code>s1</code> and
+	 * <code>s2</code> have in common before their characters deviate.
+	 *
+	 * @param  s1 string 1
+	 * @param  s2 string 2
+	 * @return the number of starting characters that <code>s1</code> and
+	 *         <code>s2</code> have in common before their characters deviate
 	 */
 	public static int startsWithWeight(String s1, String s2) {
 		if ((s1 == null) || (s2 == null)) {
@@ -2635,21 +2624,23 @@ public class StringUtil {
 	}
 
 	/**
-	 * Returns a string representing the string <code>s</code> except with all
+	 * Returns a string representing the string <code>s</code> with all
 	 * occurrences of the specified character removed.
-	 * 
+	 *
 	 * <p>
 	 * Example:
-	 * 
-	 * strip("Mississipi", 'i') returns "Mssssp"
 	 * </p>
-	 * 
-	 * @param s
-	 *            the string from which to strip all occurrences of a character
-	 * @param remove
-	 *            the character to strip from the string
-	 * @return a string representing the string <code>s</code> except with all
-	 *         occurrences of the specified character removed, <code>null</code>
+	 *
+	 * <pre>
+	 * <code>
+	 * strip("Mississipi", 'i') returns "Mssssp"
+	 * </code>
+	 * </pre>
+	 *
+	 * @param  s the string from which to strip all occurrences the character
+	 * @param  remove the character to strip from the string
+	 * @return a string representing the string <code>s</code> with all
+	 *         occurrences of the specified character removed, or <code>null</code>
 	 *         if <code>s</code> is <code>null</code>
 	 */
 	public static String strip(String s, char remove) {
@@ -2681,25 +2672,27 @@ public class StringUtil {
 	}
 
 	/**
-	 * Returns a string representing the string <code>s</code> except with the
-	 * substring beginning and ending with the specified substrings removed
-	 * 
+	 * Returns a string representing the combination of the substring of <code>s</code> up to but not including
+	 * the string <code>begin</code> concatenated with the substring of <code>s</code> after but
+	 * not including the string <code>end</code>.
+	 *
 	 * <p>
 	 * Example:
-	 * 
-	 * stripBetween("One small step for man, one giant leap for mankind",
-	 * "step", "giant ") returns "One small leap for mankind"
-	 * </p>
-	 * 
-	 * @param s
-	 *            the from which to strip a substring
-	 * @param begin
-	 *            the beginning characters of the substring to be removed
-	 * @param end
-	 *            the ending characters of the substring to be removed
-	 * @return a string representing the string <code>s</code> except with the
-	 *         substring beginning and ending with the specified substrings
-	 *         removed
+	 * <p>
+	 *
+	 * <pre>
+	 * <code>
+	 * stripBetween("One small step for man, one giant leap for mankind", "step", "giant ") returns "One small leap for mankind"
+	 * </code>
+	 * </pre>
+	 *
+	 * @param  s the from which to strip a substring
+	 * @param  begin the beginning characters of the substring to be removed
+	 * @param  end the ending characters of the substring to be removed
+	 * @return a string representing the combination of the substring of <code>s</code> up to but not including
+	 * the string <code>begin</code> concatenated with the substring of <code>s</code> after but
+	 * not including the string <code>end</code>, or the original string if the value of
+	 * <code>s</code>, <code>begin</code>, or <code>end</code> are <code>null</code>
 	 */
 	public static String stripBetween(String s, String begin, String end) {
 		if ((s == null) || (begin == null) || (end == null)) {
@@ -2732,17 +2725,21 @@ public class StringUtil {
 	/**
 	 * Returns a string representing the Unicode character codes of the
 	 * characters comprising the string <code>s</code>.
-	 * 
+	 *
 	 * <p>
-	 * Examples:
-	 * 
-	 * toCharCode("a") returns "97" toCharCode("b") returns "98" toCharCode("c")
-	 * returns "99" toCharCode("What's for lunch?") returns
-	 * "87104971163911532102111114321081171109910463"
+	 * Example:
 	 * </p>
-	 * 
-	 * @param s
-	 *            the string whose character codes are to be represented
+	 *
+	 * <pre>
+	 * <code>
+	 * toCharCode("a") returns "97"
+	 * toCharCode("b") returns "98"
+	 * toCharCode("c") returns "99"
+	 * toCharCode("What's for lunch?") returns "87104971163911532102111114321081171109910463"
+	 * </code>
+	 * </p>
+	 *
+	 * @param  s the string whose character codes are to be represented
 	 * @return a string representing the Unicode character codes of the
 	 *         characters comprising the string <code>s</code>
 	 */
@@ -2799,51 +2796,50 @@ public class StringUtil {
 	}
 
 	/**
-	 * Trims leading and trailing whitespace by replacing the original string
-	 * with the substring that begins with the first non-whitespace character
-	 * and ends with the last non-whitespace character.
-	 * 
-	 * @param s
-	 *            the original string
-	 * @return the substring of the original string that begins with the first
-	 *         nonwhitespace character and ends with the last nonwhitespace
-	 *         character
+	 * Trims all leading and trailing whitespace from the string.
+	 *
+	 * @param  s the original string
+	 * @return a string representing the original string with
+	 * all leading and trailing whitespace removed
 	 */
 	public static String trim(String s) {
 		return trim(s, null);
 	}
 
 	/**
-	 * Trims leading and trailing whitespace by replacing the original string
-	 * with the substring that begins with the first non-whitespace character
-	 * and ends with the last non-whitespace character.
-	 * 
-	 * @param s
-	 *            the original string
-	 * @param c
-	 *            the whitespace character which is not to be treated as a
-	 *            whitespace character for the trimability test
-	 * @return the substring of the original string that begins with the first
-	 *         nonwhitespace character and ends with the last nonwhitespace
-	 *         character
+	 * Trims leading and trailing whitespace from the string, up to but not including the
+	 * whitespace character specified by <code>c</code>.
+	 *
+	 * <p>
+	 * Examples:
+	 * </p>
+	 *
+	 * <pre>
+	 * <code>
+	 * trim(" \tHey\t ", '\t') returns "\tHey\t"
+	 * trim(" \t Hey \t ", '\t') returns "\t Hey \t"
+	 * </code>
+	 * </pre>
+	 *
+	 * @param  s the original string
+	 * @param  c the whitespace character to limit trimming
+	 * @return a string representing the original string with leading and trailing
+	 * whitespace removed, up to but not including the
+	 * whitespace character specified by <code>c</code>
 	 */
 	public static String trim(String s, char c) {
 		return trim(s, new char[] {c});
 	}
 
 	/**
-	 * Trims leading and trailing whitespace by replacing the original string
-	 * with the substring that begins with the first non-whitespace character
-	 * and ends with the last non-whitespace character.
-	 * 
-	 * @param s
-	 *            the original string
-	 * @param exceptions
-	 *            the whitespace characters which are not to be treated as
-	 *            whitespace characters for the trimability test
-	 * @return the substring of the original string that begins with the first
-	 *         nonwhitespace character and ends with the last nonwhitespace
-	 *         character
+	 * Trims leading and trailing whitespace from the string, up to but not including the
+	 * whitespace characters specified by <code>exceptions</code>.
+	 *
+	 * @param  s the original string
+	 * @param  exceptions the whitespace characters to limit trimming
+	 * @return a string representing the original string with leading and trailing
+	 * whitespace removed, up to but not including the
+	 * whitespace characters specified by <code>exceptions</code>
 	 */
 	public static String trim(String s, char[] exceptions) {
 		if (s == null) {
@@ -2888,45 +2884,39 @@ public class StringUtil {
 	}
 
 	/**
-	 * Trims leading whitespace by replacing the original string with the
-	 * substring that begins with the first non-whitespace character.
-	 * 
-	 * @param s
-	 *            the original string
-	 * @return the substring of the original string that begins with the first
-	 *         nonwhitespace character
+	 * Trims all leading whitespace from the string.
+	 *
+	 * @param  s the original string
+	 * @return a string representing the original string with
+	 * all leading whitespace removed
 	 */
 	public static String trimLeading(String s) {
 		return trimLeading(s, null);
 	}
 
 	/**
-	 * Trims leading whitespace by replacing the original string with the
-	 * substring that begins with the first non-whitespace character.
-	 * 
-	 * @param s
-	 *            the original string
-	 * @param c
-	 *            the whitespace character which is not to be treated as a
-	 *            whitespace character for the trimability test
-	 * @return the substring of the original string that begins with the first
-	 *         nonwhitespace character
+	 * Trims leading whitespace from the string, up to but not including the
+	 * whitespace character specified by <code>c</code>.
+	 *
+	 * @param  s the original string
+	 * @param  c the whitespace character to limit trimming
+	 * @return a string representing the original string with leading
+	 * whitespace removed, up to but not including the
+	 * whitespace character specified by <code>c</code>
 	 */
 	public static String trimLeading(String s, char c) {
 		return trimLeading(s, new char[] {c});
 	}
 
 	/**
-	 * Trims leading whitespace by replacing the original string with the
-	 * substring that begins with the first non-whitespace character.
-	 * 
-	 * @param s
-	 *            the original string
-	 * @param exceptions
-	 *            the whitespace characters which are not to be treated as
-	 *            whitespace characters for the trimability test
-	 * @return the substring of the original string that begins with the first
-	 *         nonwhitespace character
+	 * Trims leading whitespace from the string, up to but not including the
+	 * whitespace characters specified by <code>exceptions</code>.
+	 *
+	 * @param  s the original string
+	 * @param  exceptions the whitespace characters to limit trimming
+	 * @return a string representing the original string with leading
+	 * whitespace removed, up to but not including the
+	 * whitespace characters specified by <code>exceptions</code>
 	 */
 	public static String trimLeading(String s, char[] exceptions) {
 		if (s == null) {
@@ -2960,45 +2950,39 @@ public class StringUtil {
 	}
 
 	/**
-	 * Trims trailing whitespace by replacing the original string with the
-	 * substring that ends with the last non-whitespace character.
-	 * 
-	 * @param s
-	 *            the original string
-	 * @return the substring of the original string that ends with the last
-	 *         nonwhitespace character
+	 * Trims all trailing whitespace from the string.
+	 *
+	 * @param  s the original string
+	 * @return a string representing the original string with
+	 * all trailing whitespace removed
 	 */
 	public static String trimTrailing(String s) {
 		return trimTrailing(s, null);
 	}
 
 	/**
-	 * Trims trailing whitespace by replacing the original string with the
-	 * substring that ends with the last non-whitespace character.
-	 * 
-	 * @param s
-	 *            the original string
-	 * @param c
-	 *            the whitespace character which is not to be treated as a
-	 *            whitespace character for the trimability test
-	 * @return the substring of the original string that ends with the last
-	 *         nonwhitespace character
+	 * Trims trailing whitespace from the string, up to but not including the
+	 * whitespace character specified by <code>c</code>.
+	 *
+	 * @param  s the original string
+	 * @param  c the whitespace character to limit trimming
+	 * @return a string representing the original string with trailing
+	 * whitespace removed, up to but not including the
+	 * whitespace character specified by <code>c</code>
 	 */
 	public static String trimTrailing(String s, char c) {
 		return trimTrailing(s, new char[] {c});
 	}
 
 	/**
-	 * Trims trailing whitespace by replacing the original string with the
-	 * substring that ends with the last non-whitespace character.
-	 * 
-	 * @param s
-	 *            the original string
-	 * @param exceptions
-	 *            the whitespace characters which are not to be treated as
-	 *            whitespace characters for the trimability test
-	 * @return the substring of the original string that ends with the last
-	 *         nonwhitespace character
+	 * Trims trailing whitespace from the string, up to but not including the
+	 * whitespace characters specified by <code>exceptions</code>.
+	 *
+	 * @param  s the original string
+	 * @param  exceptions the whitespace characters to limit trimming
+	 * @return a string representing the original string with trailing
+	 * whitespace removed, up to but not including the
+	 * whitespace characters specified by <code>exceptions</code>
 	 */
 	public static String trimTrailing(String s, char[] exceptions) {
 		if (s == null) {
@@ -3032,16 +3016,13 @@ public class StringUtil {
 	}
 
 	/**
-	 * Removes leading and trailing double or single quotation marks from the
+	 * Removes leading and trailing double and single quotation marks from the
 	 * string.
-	 * 
-	 * @param s
-	 *            the original string
-	 * @return the substring of the original string two characters shorter than
-	 *         the original with leading and trailing double or single quotation
-	 *         marks removed, or the original string if the original string is a
-	 *         <code>null</code> reference, nothing but spaces, or the string
-	 *         <code>null</code>.
+	 *
+	 * @param  s the original string
+	 * @return a string representing the original string with leading and trailing
+	 * double and single quotation marks removed, or the original string if the original string is a
+	 * <code>null</code> or empty
 	 */
 	public static String unquote(String s) {
 		if (Validator.isNull(s)) {
@@ -3064,11 +3045,11 @@ public class StringUtil {
 
 	/**
 	 * Converts all of the characters in the string to upper case.
-	 * 
-	 * @param s
-	 *            the string to convert
-	 * @return the string, converted to uppercase, or <code>null</code>
-	 * @see {@link String#toUpperCase()}
+	 *
+	 * @param  s the string to convert
+	 * @return the string, converted to upper-case, or <code>null</code> if the
+	 *         string is <code>null</code>
+	 * @see    {@link String#toUpperCase()}
 	 */
 	public static String upperCase(String s) {
 		if (s == null) {
@@ -3081,10 +3062,9 @@ public class StringUtil {
 
 	/**
 	 * Converts the first character of the string to upper case.
-	 * 
-	 * @param s
-	 *            the string whose first character is to be converted
-	 * @return the string, with its first character converted to uppercase
+	 *
+	 * @param  s the string whose first character is to be converted
+	 * @return the string, with its first character converted to upper-case
 	 */
 	public static String upperCaseFirstLetter(String s) {
 		char[] chars = s.toCharArray();
@@ -3098,11 +3078,10 @@ public class StringUtil {
 
 	/**
 	 * Returns the string value of the object.
-	 * 
-	 * @param obj
-	 *            the object whose string value is to be returned
+	 *
+	 * @param  obj the object whose string value is to be returned
 	 * @return the string value of the object
-	 * @see {@link String#valueOf(Object obj)}
+	 * @see    {@link String#valueOf(Object obj)}
 	 */
 	public static String valueOf(Object obj) {
 		return String.valueOf(obj);
@@ -3166,18 +3145,13 @@ public class StringUtil {
 	}
 
 	/**
-	 * Returns <code>false</code> if <code>c</code> is not whitespace or if the
-	 * value of <code>c</code> equals any of the values of the
-	 * <code>exceptions</code> array, <code>true</code> otherwise.
-	 * 
-	 * @param c
-	 *            the character whose trimability is to be determined
-	 * @param exceptions
-	 *            the whitespace characters which are not to be treated as
-	 *            whitespace characters for the trimability test
-	 * @return <code>false</code> if <code>c</code> is not whitespace or if the
-	 *         value of <code>c</code> equals any of the values of the
-	 *         <code>exceptions</code> array, <code>true</code> otherwise
+	 * Returns <code>false</code> if the character is not whitespace
+	 * or is equal to any of the exception characters.
+	 *
+	 * @param  c the character whose trim-ability is to be determined
+	 * @param  exceptions the whitespace characters to exclude from trimming
+	 * @return <code>false</code> if the character is not whitespace
+	 * or is equal to any of the exception characters; <code>true</code> otherwise
 	 */
 	private static boolean _isTrimable(char c, char[] exceptions) {
 		if ((exceptions != null) && (exceptions.length > 0)) {

@@ -175,9 +175,9 @@ long assetClassPK = 0;
 							function(event) {
 								event.preventDefault();
 
-								var documentTypePanel = A.one('#<portlet:namespace />fm2');
+								var documentTypeForm = A.one('#<portlet:namespace />fm2');
 
-								documentTypePanel.load(
+								documentTypeForm.load(
 									event.currentTarget.attr('href'),
 									{
 										where: 'outer'

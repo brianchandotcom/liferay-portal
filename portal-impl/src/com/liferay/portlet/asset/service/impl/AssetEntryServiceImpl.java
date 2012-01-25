@@ -92,7 +92,12 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 			return 0;
 		}
 
-		return assetEntryFinder.countEntries(filteredEntryQuery);
+		filteredEntryQuery.setStart(0);
+		filteredEntryQuery.setEnd(QueryUtil.ALL_POS);
+
+		Object[] results = filterEntryQuery(filteredEntryQuery);
+
+		return (Integer)results[1];
 	}
 
 	public AssetEntry getEntry(long entryId)

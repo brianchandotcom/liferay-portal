@@ -74,8 +74,13 @@
 	<td>Local Live</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isChecked('_165_staged-portlet_161Checkbox'))</td>
+	<td>waitForVisible</td>
+	<td>//span/span[contains(.,'Blogs')]/span/input[2]</td>
+	<td>Blogs</td>
+</tr>
+<tr>
+	<td>storeChecked</td>
+	<td>//span/span[contains(.,'Blogs')]/span/input[2]</td>
 	<td>blogsChecked</td>
 </tr>
 <tr>
@@ -85,7 +90,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@id='_165_staged-portlet_161Checkbox']</td>
+	<td>//span/span[contains(.,'Blogs')]/span/input[2]</td>
 	<td>Blogs</td>
 </tr>
 <tr>
@@ -94,8 +99,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isChecked('_165_staged-portlet_28Checkbox'))</td>
+	<td>storeChecked</td>
+	<td>//span/span[contains(.,'Bookmarks')]/span/input[2]</td>
 	<td>bookmarksChecked</td>
 </tr>
 <tr>
@@ -105,7 +110,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@id='_165_staged-portlet_28Checkbox']</td>
+	<td>//span/span[contains(.,'Bookmarks')]/span/input[2]</td>
 	<td>Bookmarks</td>
 </tr>
 <tr>
@@ -114,8 +119,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isChecked('_165_staged-portlet_8Checkbox'))</td>
+	<td>storeChecked</td>
+	<td>//span/span[contains(.,'Calendar')]/span/input[2]</td>
 	<td>calendarChecked</td>
 </tr>
 <tr>
@@ -125,7 +130,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@id='_165_staged-portlet_8Checkbox']</td>
+	<td>//span/span[contains(.,'Calendar')]/span/input[2]</td>
 	<td>Calendar</td>
 </tr>
 <tr>
@@ -134,8 +139,28 @@
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isChecked('_165_staged-portlet_20Checkbox'))</td>
+	<td>storeChecked</td>
+	<td>//span/span[contains(.,'Documents and Media')]/span/input[2]</td>
+	<td>documentLibraryChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${documentLibraryChecked}</td>
+	<td>DocumentLibraryChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span/span[contains(.,'Documents and Media')]/span/input[2]</td>
+	<td>DocumentLibrary</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>DocumentLibraryChecked</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeChecked</td>
+	<td>//span/span[contains(.,'Documents and Media Display')]/span/input[2]</td>
 	<td>documentLibraryDisplayChecked</td>
 </tr>
 <tr>
@@ -145,7 +170,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@id='_165_staged-portlet_20Checkbox']</td>
+	<td>//span/span[contains(.,'Documents and Media Display')]/span/input[2]</td>
 	<td>DocumentLibraryDisplay</td>
 </tr>
 <tr>
@@ -154,8 +179,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isChecked('_165_staged-portlet_166Checkbox'))</td>
+	<td>storeChecked</td>
+	<td>//span/span[contains(.,'Dynamic Data Mapping')]/span/input[2]</td>
 	<td>dynamicDataMappingChecked</td>
 </tr>
 <tr>
@@ -165,7 +190,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@id='_165_staged-portlet_166Checkbox']</td>
+	<td>//span/span[contains(.,'Dynamic Data Mapping')]/span/input[2]</td>
 	<td>Dynamic Data Mapping</td>
 </tr>
 <tr>
@@ -174,8 +199,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isChecked('_165_staged-portlet_19Checkbox'))</td>
+	<td>storeChecked</td>
+	<td>//span/span[contains(.,'Message Boards')]/span/input[2]</td>
 	<td>messageBoardsChecked</td>
 </tr>
 <tr>
@@ -185,7 +210,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@id='_165_staged-portlet_19Checkbox']</td>
+	<td>//span/span[contains(.,'Message Boards')]/span/input[2]</td>
 	<td>Message Boards</td>
 </tr>
 <tr>
@@ -194,8 +219,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isChecked('_165_staged-portlet_107Checkbox'))</td>
+	<td>storeChecked</td>
+	<td>//span/span[contains(.,'Page Comments')]/span/input[2]</td>
 	<td>pageCommentsChecked</td>
 </tr>
 <tr>
@@ -205,7 +230,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@id='_165_staged-portlet_107Checkbox']</td>
+	<td>//span/span[contains(.,'Page Comments')]/span/input[2]</td>
 	<td>Page Comments</td>
 </tr>
 <tr>
@@ -214,8 +239,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isChecked('_165_staged-portlet_108Checkbox'))</td>
+	<td>storeChecked</td>
+	<td>//span/span[contains(.,'Page Ratings')]/span/input[2]</td>
 	<td>pageRatingsChecked</td>
 </tr>
 <tr>
@@ -225,7 +250,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@id='_165_staged-portlet_108Checkbox']</td>
+	<td>//span/span[contains(.,'Page Ratings')]/span/input[2]</td>
 	<td>Page Ratings</td>
 </tr>
 <tr>
@@ -234,8 +259,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isChecked('_165_staged-portlet_25Checkbox'))</td>
+	<td>storeChecked</td>
+	<td>//span/span[contains(.,'Polls')]/span/input[2]</td>
 	<td>pollsChecked</td>
 </tr>
 <tr>
@@ -245,7 +270,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@id='_165_staged-portlet_25Checkbox']</td>
+	<td>//span/span[contains(.,'Polls')]/span/input[2]</td>
 	<td>Polls</td>
 </tr>
 <tr>
@@ -254,8 +279,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isChecked('_165_staged-portlet_59Checkbox'))</td>
+	<td>storeChecked</td>
+	<td>//span/span[contains(.,'Polls Display')]/span/input[2]</td>
 	<td>pollsDisplayChecked</td>
 </tr>
 <tr>
@@ -265,7 +290,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@id='_165_staged-portlet_59Checkbox']</td>
+	<td>//span/span[contains(.,'Polls Display')]/span/input[2]</td>
 	<td>Polls Display</td>
 </tr>
 <tr>
@@ -274,8 +299,28 @@
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isChecked('_165_staged-portlet_56Checkbox'))</td>
+	<td>storeChecked</td>
+	<td>//span/span[contains(.,'Web Content')]/span/input[2]</td>
+	<td>webContentChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${webContentChecked}</td>
+	<td>WebContentChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span/span[contains(.,'Web Content')]/span/input[2]</td>
+	<td>Web Content</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>WebContentChecked</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeChecked</td>
+	<td>//span/span[contains(.,'Web Content Display')]/span/input[2]</td>
 	<td>webContentDisplayChecked</td>
 </tr>
 <tr>
@@ -285,7 +330,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@id='_165_staged-portlet_56Checkbox']</td>
+	<td>//span/span[contains(.,'Web Content Display')]/span/input[2]</td>
 	<td>Web Content Display</td>
 </tr>
 <tr>
@@ -294,8 +339,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isChecked('_165_staged-portlet_36Checkbox'))</td>
+	<td>storeChecked</td>
+	<td>//span/span[contains(.,'Wiki')]/span/input[2]</td>
 	<td>wikiChecked</td>
 </tr>
 <tr>
@@ -305,7 +350,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@id='_165_staged-portlet_36Checkbox']</td>
+	<td>//span/span[contains(.,'Wiki')]/span/input[2]</td>
 	<td>Wiki</td>
 </tr>
 <tr>
@@ -314,8 +359,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isChecked('_165_staged-portlet_54Checkbox'))</td>
+	<td>storeChecked</td>
+	<td>//span/span[contains(.,'Wiki Display')]/span/input[2]</td>
 	<td>wikiDisplayChecked</td>
 </tr>
 <tr>
@@ -325,7 +370,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@id='_165_staged-portlet_54Checkbox']</td>
+	<td>//span/span[contains(.,'Wiki Display')]/span/input[2]</td>
 	<td>Wiki Display Checked</td>
 </tr>
 <tr>

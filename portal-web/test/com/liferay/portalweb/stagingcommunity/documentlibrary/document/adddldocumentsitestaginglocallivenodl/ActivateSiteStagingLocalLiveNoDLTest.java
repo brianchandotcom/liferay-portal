@@ -123,7 +123,7 @@ public class ActivateSiteStagingLocalLiveNoDLTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//input[@id='_165_staged-portlet_20Checkbox']")) {
+									"//span/span[contains(.,'Documents and Media')]/span/input[2]")) {
 							break;
 						}
 					}
@@ -134,7 +134,7 @@ public class ActivateSiteStagingLocalLiveNoDLTest extends BaseTestCase {
 				}
 
 				boolean documentLibraryChecked = selenium.isChecked(
-						"_165_staged-portlet_20Checkbox");
+						"//span/span[contains(.,'Documents and Media')]/span/input[2]");
 
 				if (!documentLibraryChecked) {
 					label = 2;
@@ -142,12 +142,8 @@ public class ActivateSiteStagingLocalLiveNoDLTest extends BaseTestCase {
 					continue;
 				}
 
-				assertTrue(selenium.isChecked(
-						"//input[@id='_165_staged-portlet_20Checkbox']"));
-				selenium.clickAt("//input[@id='_165_staged-portlet_20Checkbox']",
-					RuntimeVariables.replace("Document Library"));
-				assertFalse(selenium.isChecked(
-						"//input[@id='_165_staged-portlet_20Checkbox']"));
+				selenium.clickAt("//span/span[contains(.,'Documents and Media')]/span/input[2]",
+					RuntimeVariables.replace("DocumentLibrary"));
 
 			case 2:
 				selenium.clickAt("//input[@value='Save']",

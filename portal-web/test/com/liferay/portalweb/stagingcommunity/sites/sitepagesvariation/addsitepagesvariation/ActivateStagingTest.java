@@ -140,8 +140,25 @@ public class ActivateStagingTest extends BaseTestCase {
 
 			case 3:
 
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//span/span[contains(.,'Blogs')]/span/input[2]")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
 				boolean blogsChecked = selenium.isChecked(
-						"_165_staged-portlet_161Checkbox");
+						"//span/span[contains(.,'Blogs')]/span/input[2]");
 
 				if (blogsChecked) {
 					label = 4;
@@ -149,13 +166,13 @@ public class ActivateStagingTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//input[@id='_165_staged-portlet_161Checkbox']",
+				selenium.clickAt("//span/span[contains(.,'Blogs')]/span/input[2]",
 					RuntimeVariables.replace("Blogs"));
 
 			case 4:
 
 				boolean bookmarksChecked = selenium.isChecked(
-						"_165_staged-portlet_28Checkbox");
+						"//span/span[contains(.,'Bookmarks')]/span/input[2]");
 
 				if (bookmarksChecked) {
 					label = 5;
@@ -163,13 +180,13 @@ public class ActivateStagingTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//input[@id='_165_staged-portlet_28Checkbox']",
+				selenium.clickAt("//span/span[contains(.,'Bookmarks')]/span/input[2]",
 					RuntimeVariables.replace("Bookmarks"));
 
 			case 5:
 
 				boolean calendarChecked = selenium.isChecked(
-						"_165_staged-portlet_8Checkbox");
+						"//span/span[contains(.,'Calendar')]/span/input[2]");
 
 				if (calendarChecked) {
 					label = 6;
@@ -177,150 +194,178 @@ public class ActivateStagingTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//input[@id='_165_staged-portlet_8Checkbox']",
+				selenium.clickAt("//span/span[contains(.,'Calendar')]/span/input[2]",
 					RuntimeVariables.replace("Calendar"));
 
 			case 6:
 
-				boolean documentLibraryDisplayChecked = selenium.isChecked(
-						"_165_staged-portlet_20Checkbox");
+				boolean documentLibraryChecked = selenium.isChecked(
+						"//span/span[contains(.,'Documents and Media')]/span/input[2]");
 
-				if (documentLibraryDisplayChecked) {
+				if (documentLibraryChecked) {
 					label = 7;
 
 					continue;
 				}
 
-				selenium.clickAt("//input[@id='_165_staged-portlet_20Checkbox']",
-					RuntimeVariables.replace("DocumentLibraryDisplay"));
+				selenium.clickAt("//span/span[contains(.,'Documents and Media')]/span/input[2]",
+					RuntimeVariables.replace("DocumentLibrary"));
 
 			case 7:
 
-				boolean dynamicDataMappingChecked = selenium.isChecked(
-						"_165_staged-portlet_166Checkbox");
+				boolean documentLibraryDisplayChecked = selenium.isChecked(
+						"//span/span[contains(.,'Documents and Media Display')]/span/input[2]");
 
-				if (dynamicDataMappingChecked) {
+				if (documentLibraryDisplayChecked) {
 					label = 8;
 
 					continue;
 				}
 
-				selenium.clickAt("//input[@id='_165_staged-portlet_166Checkbox']",
-					RuntimeVariables.replace("Dynamic Data Mapping"));
+				selenium.clickAt("//span/span[contains(.,'Documents and Media Display')]/span/input[2]",
+					RuntimeVariables.replace("DocumentLibraryDisplay"));
 
 			case 8:
 
-				boolean messageBoardsChecked = selenium.isChecked(
-						"_165_staged-portlet_19Checkbox");
+				boolean dynamicDataMappingChecked = selenium.isChecked(
+						"//span/span[contains(.,'Dynamic Data Mapping')]/span/input[2]");
 
-				if (messageBoardsChecked) {
+				if (dynamicDataMappingChecked) {
 					label = 9;
 
 					continue;
 				}
 
-				selenium.clickAt("//input[@id='_165_staged-portlet_19Checkbox']",
-					RuntimeVariables.replace("Message Boards"));
+				selenium.clickAt("//span/span[contains(.,'Dynamic Data Mapping')]/span/input[2]",
+					RuntimeVariables.replace("Dynamic Data Mapping"));
 
 			case 9:
 
-				boolean pageCommentsChecked = selenium.isChecked(
-						"_165_staged-portlet_107Checkbox");
+				boolean messageBoardsChecked = selenium.isChecked(
+						"//span/span[contains(.,'Message Boards')]/span/input[2]");
 
-				if (pageCommentsChecked) {
+				if (messageBoardsChecked) {
 					label = 10;
 
 					continue;
 				}
 
-				selenium.clickAt("//input[@id='_165_staged-portlet_107Checkbox']",
-					RuntimeVariables.replace("Page Comments"));
+				selenium.clickAt("//span/span[contains(.,'Message Boards')]/span/input[2]",
+					RuntimeVariables.replace("Message Boards"));
 
 			case 10:
 
-				boolean pageRatingsChecked = selenium.isChecked(
-						"_165_staged-portlet_108Checkbox");
+				boolean pageCommentsChecked = selenium.isChecked(
+						"//span/span[contains(.,'Page Comments')]/span/input[2]");
 
-				if (pageRatingsChecked) {
+				if (pageCommentsChecked) {
 					label = 11;
 
 					continue;
 				}
 
-				selenium.clickAt("//input[@id='_165_staged-portlet_108Checkbox']",
-					RuntimeVariables.replace("Page Ratings"));
+				selenium.clickAt("//span/span[contains(.,'Page Comments')]/span/input[2]",
+					RuntimeVariables.replace("Page Comments"));
 
 			case 11:
 
-				boolean pollsChecked = selenium.isChecked(
-						"_165_staged-portlet_25Checkbox");
+				boolean pageRatingsChecked = selenium.isChecked(
+						"//span/span[contains(.,'Page Ratings')]/span/input[2]");
 
-				if (pollsChecked) {
+				if (pageRatingsChecked) {
 					label = 12;
 
 					continue;
 				}
 
-				selenium.clickAt("//input[@id='_165_staged-portlet_25Checkbox']",
-					RuntimeVariables.replace("Polls"));
+				selenium.clickAt("//span/span[contains(.,'Page Ratings')]/span/input[2]",
+					RuntimeVariables.replace("Page Ratings"));
 
 			case 12:
 
-				boolean pollsDisplayChecked = selenium.isChecked(
-						"_165_staged-portlet_59Checkbox");
+				boolean pollsChecked = selenium.isChecked(
+						"//span/span[contains(.,'Polls')]/span/input[2]");
 
-				if (pollsDisplayChecked) {
+				if (pollsChecked) {
 					label = 13;
 
 					continue;
 				}
 
-				selenium.clickAt("//input[@id='_165_staged-portlet_59Checkbox']",
-					RuntimeVariables.replace("Polls Display"));
+				selenium.clickAt("//span/span[contains(.,'Polls')]/span/input[2]",
+					RuntimeVariables.replace("Polls"));
 
 			case 13:
 
-				boolean webContentDisplayChecked = selenium.isChecked(
-						"_165_staged-portlet_56Checkbox");
+				boolean pollsDisplayChecked = selenium.isChecked(
+						"//span/span[contains(.,'Polls Display')]/span/input[2]");
 
-				if (webContentDisplayChecked) {
+				if (pollsDisplayChecked) {
 					label = 14;
 
 					continue;
 				}
 
-				selenium.clickAt("//input[@id='_165_staged-portlet_56Checkbox']",
-					RuntimeVariables.replace("Web Content Display"));
+				selenium.clickAt("//span/span[contains(.,'Polls Display')]/span/input[2]",
+					RuntimeVariables.replace("Polls Display"));
 
 			case 14:
 
-				boolean wikiChecked = selenium.isChecked(
-						"_165_staged-portlet_36Checkbox");
+				boolean webContentChecked = selenium.isChecked(
+						"//span/span[contains(.,'Web Content')]/span/input[2]");
 
-				if (wikiChecked) {
+				if (webContentChecked) {
 					label = 15;
 
 					continue;
 				}
 
-				selenium.clickAt("//input[@id='_165_staged-portlet_36Checkbox']",
-					RuntimeVariables.replace("Wiki"));
+				selenium.clickAt("//span/span[contains(.,'Web Content')]/span/input[2]",
+					RuntimeVariables.replace("Web Content"));
 
 			case 15:
 
-				boolean wikiDisplayChecked = selenium.isChecked(
-						"_165_staged-portlet_54Checkbox");
+				boolean webContentDisplayChecked = selenium.isChecked(
+						"//span/span[contains(.,'Web Content Display')]/span/input[2]");
 
-				if (wikiDisplayChecked) {
+				if (webContentDisplayChecked) {
 					label = 16;
 
 					continue;
 				}
 
-				selenium.clickAt("//input[@id='_165_staged-portlet_54Checkbox']",
-					RuntimeVariables.replace("Wiki Display Checked"));
+				selenium.clickAt("//span/span[contains(.,'Web Content Display')]/span/input[2]",
+					RuntimeVariables.replace("Web Content Display"));
 
 			case 16:
+
+				boolean wikiChecked = selenium.isChecked(
+						"//span/span[contains(.,'Wiki')]/span/input[2]");
+
+				if (wikiChecked) {
+					label = 17;
+
+					continue;
+				}
+
+				selenium.clickAt("//span/span[contains(.,'Wiki')]/span/input[2]",
+					RuntimeVariables.replace("Wiki"));
+
+			case 17:
+
+				boolean wikiDisplayChecked = selenium.isChecked(
+						"//span/span[contains(.,'Wiki Display')]/span/input[2]");
+
+				if (wikiDisplayChecked) {
+					label = 18;
+
+					continue;
+				}
+
+				selenium.clickAt("//span/span[contains(.,'Wiki Display')]/span/input[2]",
+					RuntimeVariables.replace("Wiki Display Checked"));
+
+			case 18:
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");

@@ -195,10 +195,10 @@ public class EncryptTag extends TagSupport {
 	private static Log _log = LogFactoryUtil.getLog(EncryptTag.class);
 
 	private String _className;
-	private String _style;
 	private String _protocol;
+	private String _style;
+	private String _target;
 	private Set<String> _unencryptedParamsSet = new HashSet<String>();
 	private String _url;
-	private String _target;
 
 }

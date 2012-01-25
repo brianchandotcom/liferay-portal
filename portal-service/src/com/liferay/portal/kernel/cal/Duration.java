@@ -374,11 +374,6 @@ public class Duration implements Cloneable, Serializable {
 	private static final int _SECONDS_PER_MINUTE = 60;
 
 	/**
-	 * Field weeks
-	 */
-	private int _weeks;
-
-	/**
 	 * Field days
 	 */
 	private int _days;
@@ -397,5 +392,10 @@ public class Duration implements Cloneable, Serializable {
 	 * Field seconds
 	 */
 	private int _seconds;
+
+	/**
+	 * Field weeks
+	 */
+	private int _weeks;
 
 }

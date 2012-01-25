@@ -107,7 +107,7 @@ public class DiffResult {
 		return sb.toString();
 	}
 
-	private int _lineNumber;
 	private List<String> _changedLines;
+	private int _lineNumber;
 
 }

@@ -160,7 +160,7 @@ public class DynamicRenderRequest extends RenderRequestWrapper {
 		return _params;
 	}
 
-	private Map<String, String[]> _params;
 	private boolean _inherit;
+	private Map<String, String[]> _params;
 
 }

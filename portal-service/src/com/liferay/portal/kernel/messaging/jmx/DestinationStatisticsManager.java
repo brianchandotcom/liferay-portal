@@ -120,7 +120,7 @@ public class DestinationStatisticsManager
 
 	private boolean _autoRefresh;
 	private Destination _destination;
-	private long _lastRefresh;
 	private DestinationStatistics _destinationStatistics;
+	private long _lastRefresh;
 
 }

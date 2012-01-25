@@ -47,7 +47,7 @@ public class GetUrlWebCacheItem implements WebCacheItem {
 		return _refreshTime;
 	}
 
-	private String _url;
 	private long _refreshTime;
+	private String _url;
 
 }

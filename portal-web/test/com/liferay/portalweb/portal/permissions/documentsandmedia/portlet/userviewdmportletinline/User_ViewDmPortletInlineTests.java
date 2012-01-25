@@ -15,22 +15,6 @@
 package com.liferay.portalweb.portal.permissions.documentsandmedia.portlet.userviewdmportletinline;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.permissions.documentsandmedia.utils.AddPageDmTest;
-import com.liferay.portalweb.portal.permissions.documentsandmedia.utils.AddPortletDmTest;
-import com.liferay.portalweb.portal.permissions.documentsandmedia.utils.AddRegularRoleTest;
-import com.liferay.portalweb.portal.permissions.documentsandmedia.utils.AddUserPasswordTest;
-import com.liferay.portalweb.portal.permissions.documentsandmedia.utils.AddUserTest;
-import com.liferay.portalweb.portal.permissions.documentsandmedia.utils.AssignMembersRegularRoleUserTest;
-import com.liferay.portalweb.portal.permissions.documentsandmedia.utils.SignInTest;
-import com.liferay.portalweb.portal.permissions.documentsandmedia.utils.SignOutTest;
-import com.liferay.portalweb.portal.permissions.documentsandmedia.utils.User_NoViewDmPortletTest;
-import com.liferay.portalweb.portal.permissions.documentsandmedia.utils.User_SignInTest;
-import com.liferay.portalweb.portal.permissions.documentsandmedia.utils.User_SignOutTest;
-import com.liferay.portalweb.portal.permissions.documentsandmedia.utils.User_ViewDmPortletTest;
-import com.liferay.portalweb.utils.TearDownDLDocumentTest;
-import com.liferay.portalweb.utils.TearDownPageTest;
-import com.liferay.portalweb.utils.TearDownRoleTest;
-import com.liferay.portalweb.utils.TearDownUserTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

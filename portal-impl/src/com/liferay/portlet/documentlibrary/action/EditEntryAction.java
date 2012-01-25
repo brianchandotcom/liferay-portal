@@ -148,9 +148,9 @@ public class EditEntryAction extends PortletAction {
 		throws Exception {
 
 		try {
-			ActionUtil.getFolders(renderRequest);
 			ActionUtil.getFileEntries(renderRequest);
 			ActionUtil.getFileShortcuts(renderRequest);
+			ActionUtil.getFolders(renderRequest);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchFileEntryException ||

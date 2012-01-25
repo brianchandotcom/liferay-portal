@@ -152,11 +152,10 @@ public class ActionUtil {
 		List<DLFileShortcut> fileShortcuts = new ArrayList<DLFileShortcut>();
 
 		for (long fileShortcutId : fileShortcutIds) {
-			if (fileShortcutId == 0) {
-				continue;
+			if (fileShortcutId > 0) {
+				fileShortcuts.add(
+					DLAppServiceUtil.getFileShortcut(fileShortcutId));
 			}
-
-			fileShortcuts.add(DLAppServiceUtil.getFileShortcut(fileShortcutId));
 		}
 
 		request.setAttribute(

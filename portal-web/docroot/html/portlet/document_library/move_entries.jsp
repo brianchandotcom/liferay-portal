@@ -27,19 +27,17 @@ String fileShortcutIds = ParamUtil.getString(request, "fileShortcutIds");
 
 List<Folder> folders = (List<Folder>)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDERS);
 
-List<Folder> validMoveFolders = new ArrayList<Folder>();
 List<Folder> invalidMoveFolders = new ArrayList<Folder>();
+List<Folder> validMoveFolders = new ArrayList<Folder>();
 
-if (!folders.isEmpty()) {
-	for (Folder curFolder : folders) {
-		boolean movePermission = DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE) && (!curFolder.isLocked() || curFolder.hasLock());
+for (Folder curFolder : folders) {
+	boolean movePermission = DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE) && (!curFolder.isLocked() || curFolder.hasLock());
 
-		if (movePermission) {
-			validMoveFolders.add(curFolder);
-		}
-		else {
-			invalidMoveFolders.add(curFolder);
-		}
+	if (movePermission) {
+		validMoveFolders.add(curFolder);
+	}
+	else {
+		invalidMoveFolders.add(curFolder);
 	}
 }
 
@@ -59,16 +57,14 @@ else {
 List<FileEntry> validMoveFileEntries = new ArrayList<FileEntry>();
 List<FileEntry> invalidMoveFileEntries = new ArrayList<FileEntry>();
 
-if (!fileEntries.isEmpty()) {
-	for (FileEntry curFileEntry : fileEntries) {
-		boolean movePermission = DLFileEntryPermission.contains(permissionChecker, curFileEntry, ActionKeys.UPDATE) && (!curFileEntry.isCheckedOut() || curFileEntry.hasLock());
+for (FileEntry curFileEntry : fileEntries) {
+	boolean movePermission = DLFileEntryPermission.contains(permissionChecker, curFileEntry, ActionKeys.UPDATE) && (!curFileEntry.isCheckedOut() || curFileEntry.hasLock());
 
-		if (movePermission) {
-			validMoveFileEntries.add(curFileEntry);
-		}
-		else {
-			invalidMoveFileEntries.add(curFileEntry);
-		}
+	if (movePermission) {
+		validMoveFileEntries.add(curFileEntry);
+	}
+	else {
+		invalidMoveFileEntries.add(curFileEntry);
 	}
 }
 
@@ -77,16 +73,14 @@ List<DLFileShortcut> fileShortcuts = (List<DLFileShortcut>)request.getAttribute(
 List<DLFileShortcut> validShortcutEntries = new ArrayList<DLFileShortcut>();
 List<DLFileShortcut> invalidShortcutEntries = new ArrayList<DLFileShortcut>();
 
-if (!fileShortcuts.isEmpty()) {
-	for (DLFileShortcut curFileShortcut : fileShortcuts) {
-		boolean movePermission = DLFileShortcutPermission.contains(permissionChecker, curFileShortcut, ActionKeys.UPDATE);
+for (DLFileShortcut curFileShortcut : fileShortcuts) {
+	boolean movePermission = DLFileShortcutPermission.contains(permissionChecker, curFileShortcut, ActionKeys.UPDATE);
 
-		if (movePermission) {
-			validShortcutEntries.add(curFileShortcut);
-		}
-		else {
-			invalidShortcutEntries.add(curFileShortcut);
-		}
+	if (movePermission) {
+		validShortcutEntries.add(curFileShortcut);
+	}
+	else {
+		invalidShortcutEntries.add(curFileShortcut);
 	}
 }
 %>
@@ -122,8 +116,7 @@ if (!fileShortcuts.isEmpty()) {
 			<ul class="lfr-component">
 
 				<%
-				for (int i = 0; i < validMoveFolders.size(); i++) {
-					Folder folder = validMoveFolders.get(i);
+				for (Folder folder : validMoveFolders) {
 				%>
 
 					<li class="move-folder">
@@ -188,8 +181,7 @@ if (!fileShortcuts.isEmpty()) {
 			<ul class="lfr-component">
 
 				<%
-				for (int i = 0; i < validMoveFileEntries.size(); i++) {
-					FileEntry validMoveFileEntry = validMoveFileEntries.get(i);
+				for (FileEntry validMoveFileEntry : validMoveFileEntries) {
 				%>
 
 					<li class="move-file">
@@ -255,8 +247,7 @@ if (!fileShortcuts.isEmpty()) {
 			<ul class="lfr-component">
 
 				<%
-				for (int i = 0; i < validShortcutEntries.size(); i++) {
-					DLFileShortcut fileShortcut = validShortcutEntries.get(i);
+				for (DLFileShortcut fileShortcut : validShortcutEntries) {
 				%>
 
 					<li class="move-file">

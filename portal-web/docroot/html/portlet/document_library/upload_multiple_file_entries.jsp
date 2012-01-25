@@ -100,20 +100,9 @@ long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 		</aui:script>
 	</aui:column>
 	<aui:column columnWidth="50">
-		<portlet:actionURL var="editMultipleFileEntriesURL">
-			<portlet:param name="struts_action" value="document_library/edit_file_entry" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_MULTIPLE %>" />
-		</portlet:actionURL>
-
-		<aui:form action="<%= editMultipleFileEntriesURL %>" method="post" name="fm2" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "updateMultipleFiles();" %>'>
-			<div class="no-files-selected-info portlet-msg-info aui-helper-hidden" id="<portlet:namespace />metadataExplanationContainer">
-				<liferay-ui:message key="select-documents-from-the-left-to-add-them-to-the-document-library" />
-			</div>
-
-			<div class="common-file-metadata-container aui-helper-hidden selected" id="<portlet:namespace />commonFileMetadataContainer">
-				<liferay-util:include page="/html/portlet/document_library/upload_multiple_file_entries_resources.jsp" />
-			</div>
-		</aui:form>
+		<div class="common-file-metadata-container aui-helper-hidden selected" id="<portlet:namespace />commonFileMetadataContainer">
+			<liferay-util:include page="/html/portlet/document_library/upload_multiple_file_entries_resources.jsp" />
+		</div>
 
 		<%
 		DLUtil.addPortletBreadcrumbEntries(folderId, request, renderResponse);

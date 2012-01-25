@@ -76,7 +76,11 @@ public class DefineSiteAdminRoleTest extends BaseTestCase {
 		selenium.check(
 			"//input[@name='_128_rowIds' and @value='com.liferay.portlet.documentlibraryADD_FOLDER']");
 		selenium.check(
+			"//input[@name='_128_rowIds' and @value='com.liferay.portlet.documentlibraryADD_REPOSITORY']");
+		selenium.check(
 			"//input[@name='_128_rowIds' and @value='com.liferay.portlet.documentlibraryADD_SHORTCUT']");
+		selenium.check(
+			"//input[@name='_128_rowIds' and @value='com.liferay.portlet.documentlibraryADD_STRUCTURE']");
 		selenium.check(
 			"//input[@name='_128_rowIds' and @value='com.liferay.portlet.documentlibraryPERMISSIONS']");
 		selenium.check(
@@ -97,7 +101,9 @@ public class DefineSiteAdminRoleTest extends BaseTestCase {
 		assertTrue(selenium.isChecked("//tr[3]/td/input"));
 		assertTrue(selenium.isChecked("//tr[4]/td/input"));
 		assertTrue(selenium.isChecked("//tr[5]/td/input"));
+		assertTrue(selenium.isChecked("//tr[6]/td/input"));
 		assertTrue(selenium.isChecked("//tr[7]/td/input"));
+		assertTrue(selenium.isChecked("//tr[8]/td/input"));
 		assertTrue(selenium.isChecked("//tr[9]/td/input"));
 		assertTrue(selenium.isChecked("//tr[10]/td/input"));
 		assertTrue(selenium.isChecked("//tr[11]/td/input"));

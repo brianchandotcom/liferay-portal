@@ -283,9 +283,7 @@ public class LDAPAuth implements Authenticator {
 					}
 				}
 
-				if (!ldapAuthResult.isAuthenticated() &&
-					PropsValues.LDAP_IMPORT_USER_PASSWORD_ENABLED) {
-
+				if (!ldapAuthResult.isAuthenticated()) {
 					return FAILURE;
 				}
 

@@ -25,6 +25,13 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class JSONWebServiceActionsManagerUtil {
 
+	public static JSONWebServiceAction getJSONWebServiceAction(
+		HttpServletRequest request) {
+
+		return getJSONWebServiceActionsManager().getJSONWebServiceAction(
+			request);
+	}
+
 	public static JSONWebServiceActionMapping getJSONWebServiceActionMapping(
 		String signature) {
 
@@ -43,13 +50,6 @@ public class JSONWebServiceActionsManagerUtil {
 		getJSONWebServiceActionsManager() {
 
 		return _jsonWebServiceActionsManager;
-	}
-
-	public static JSONWebServiceAction getJSONWebServiceAction(
-		HttpServletRequest request) {
-
-		return getJSONWebServiceActionsManager().getJSONWebServiceAction(
-			request);
 	}
 
 	public static void registerJSONWebServiceAction(

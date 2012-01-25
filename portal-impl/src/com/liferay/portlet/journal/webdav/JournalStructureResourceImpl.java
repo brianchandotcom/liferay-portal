@@ -44,11 +44,6 @@ public class JournalStructureResourceImpl extends BaseResourceImpl {
 	}
 
 	@Override
-	public String getContentType() {
-		return ContentTypes.TEXT_XML;
-	}
-
-	@Override
 	public InputStream getContentAsStream() throws WebDAVException {
 		try {
 			return new UnsyncByteArrayInputStream(
@@ -57,6 +52,11 @@ public class JournalStructureResourceImpl extends BaseResourceImpl {
 		catch (Exception e) {
 			throw new WebDAVException(e);
 		}
+	}
+
+	@Override
+	public String getContentType() {
+		return ContentTypes.TEXT_XML;
 	}
 
 	@Override

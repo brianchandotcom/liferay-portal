@@ -42,6 +42,8 @@ public interface InvokerPortlet
 			PortletContext portletContext)
 		throws PortletException;
 
+	public Integer getExpCache();
+
 	public Portlet getPortlet();
 
 	public ClassLoader getPortletClassLoader();
@@ -51,8 +53,6 @@ public interface InvokerPortlet
 	public PortletContext getPortletContext();
 
 	public Portlet getPortletInstance();
-
-	public Integer getExpCache();
 
 	public boolean isCheckAuthToken();
 

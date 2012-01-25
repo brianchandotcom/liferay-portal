@@ -204,6 +204,10 @@ public class InvokerPortletImpl implements InvokerPortlet {
 		_destroyable = false;
 	}
 
+	public Integer getExpCache() {
+		return _expCache;
+	}
+
 	public Portlet getPortlet() {
 		return _portlet;
 	}
@@ -223,10 +227,6 @@ public class InvokerPortletImpl implements InvokerPortlet {
 
 	public Portlet getPortletInstance() {
 		return _portlet;
-	}
-
-	public Integer getExpCache() {
-		return _expCache;
 	}
 
 	public void init(PortletConfig portletConfig) throws PortletException {

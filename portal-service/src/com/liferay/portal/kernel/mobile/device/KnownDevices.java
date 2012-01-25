@@ -23,13 +23,13 @@ import java.util.Set;
  */
 public interface KnownDevices {
 
-	public Map<Capability, Set<String>> getDeviceIds();
-
 	public Set<VersionableName> getBrands();
 
-	public Set<VersionableName> getOperatingSystems();
-
 	public Set<VersionableName> getBrowsers();
+
+	public Map<Capability, Set<String>> getDeviceIds();
+
+	public Set<VersionableName> getOperatingSystems();
 
 	public Set<String> getPointingMethods();
 

@@ -75,6 +75,43 @@ public class DDMStructureServiceWrapper implements DDMStructureService,
 		return _ddmStructureService.getStructure(structureId);
 	}
 
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> search(
+		long companyId, long[] groupIds, long[] classNameIds,
+		java.lang.String keywords, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _ddmStructureService.search(companyId, groupIds, classNameIds,
+			keywords, start, end, orderByComparator);
+	}
+
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> search(
+		long companyId, long[] groupIds, long[] classNameIds,
+		java.lang.String name, java.lang.String description,
+		java.lang.String storageType, int type, boolean andOperator, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _ddmStructureService.search(companyId, groupIds, classNameIds,
+			name, description, storageType, type, andOperator, start, end,
+			orderByComparator);
+	}
+
+	public int searchCount(long companyId, long[] groupIds,
+		long[] classNameIds, java.lang.String keywords)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _ddmStructureService.searchCount(companyId, groupIds,
+			classNameIds, keywords);
+	}
+
+	public int searchCount(long companyId, long[] groupIds,
+		long[] classNameIds, java.lang.String name,
+		java.lang.String description, java.lang.String storageType, int type,
+		boolean andOperator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _ddmStructureService.searchCount(companyId, groupIds,
+			classNameIds, name, description, storageType, type, andOperator);
+	}
+
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure updateStructure(
 		long structureId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,

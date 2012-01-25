@@ -23,9 +23,9 @@ public interface PortletURLListener extends Serializable {
 
 	public String getListenerClass();
 
-	public void setListenerClass(String listenerClass);
-
 	public PortletApp getPortletApp();
+
+	public void setListenerClass(String listenerClass);
 
 	public void setPortletApp(PortletApp portletApp);
 

@@ -31,10 +31,6 @@ public class PwdGenerator {
 
 	public static String KEY3 = "abcdefghijklmnopqrstuvwxyz";
 
-	public static String getPinNumber() {
-		return _getPassword(KEY1, 4, true);
-	}
-
 	public static String getPassword() {
 		return getPassword(8);
 	}
@@ -51,6 +47,10 @@ public class PwdGenerator {
 		String key, int length, boolean useAllKeys) {
 
 		return _getPassword(key, length, useAllKeys);
+	}
+
+	public static String getPinNumber() {
+		return _getPassword(KEY1, 4, true);
 	}
 
 	private static String _getPassword(

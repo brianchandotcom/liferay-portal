@@ -31,12 +31,12 @@ public class PortletURLListenerImpl implements PortletURLListener {
 		return _listenerClass;
 	}
 
-	public void setListenerClass(String listenerClass) {
-		_listenerClass = listenerClass;
-	}
-
 	public PortletApp getPortletApp() {
 		return _portletApp;
+	}
+
+	public void setListenerClass(String listenerClass) {
+		_listenerClass = listenerClass;
 	}
 
 	public void setPortletApp(PortletApp portletApp) {

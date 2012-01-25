@@ -31,20 +31,20 @@ public class RequestVars {
 		_ancestorLayoutId = ancestorLayoutId;
 	}
 
-	public HttpServletRequest getRequest() {
-		return _request;
-	}
-
-	public ThemeDisplay getThemeDisplay() {
-		return _themeDisplay;
+	public long getAncestorLayoutId() {
+		return _ancestorLayoutId;
 	}
 
 	public long getAncestorPlid() {
 		return _ancestorPlid;
 	}
 
-	public long getAncestorLayoutId() {
-		return _ancestorLayoutId;
+	public HttpServletRequest getRequest() {
+		return _request;
+	}
+
+	public ThemeDisplay getThemeDisplay() {
+		return _themeDisplay;
 	}
 
 	private long _ancestorLayoutId;

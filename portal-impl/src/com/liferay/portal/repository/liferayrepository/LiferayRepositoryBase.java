@@ -197,6 +197,15 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 
 	protected abstract void initByRepositoryId(long repositoryId);
 
+	protected boolean isDefaultRepository() {
+		if (_groupId == _repositoryId) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	protected void setDlFolderId(long dlFolderId) {
 		_dlFolderId = dlFolderId;
 	}
@@ -207,15 +216,6 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 
 	protected void setRepositoryId(long repositoryId) {
 		_repositoryId = repositoryId;
-	}
-
-	protected boolean isDefaultRepository() {
-		if (_groupId == _repositoryId) {
-			return true;
-		}
-		else {
-			return false;
-		}
 	}
 
 	protected long toFolderId(long folderId) {

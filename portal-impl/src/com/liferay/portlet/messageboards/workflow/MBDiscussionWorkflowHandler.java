@@ -29,14 +29,14 @@ public class MBDiscussionWorkflowHandler extends MBMessageWorkflowHandler {
 	public static final String CLASS_NAME = MBDiscussion.class.getName();
 
 	@Override
-	public String getClassName() {
-		return CLASS_NAME;
-	}
-
-	@Override
 	public AssetRendererFactory getAssetRendererFactory() {
 		return AssetRendererFactoryRegistryUtil.
 			getAssetRendererFactoryByClassName(MBDiscussion.class.getName());
+	}
+
+	@Override
+	public String getClassName() {
+		return CLASS_NAME;
 	}
 
 	@Override

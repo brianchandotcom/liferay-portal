@@ -42,11 +42,6 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	public LayoutSetImpl() {
 	}
 
-	public Theme getTheme() throws SystemException {
-		return ThemeLocalServiceUtil.getTheme(
-			getCompanyId(), getThemeId(), false);
-	}
-
 	public ColorScheme getColorScheme() throws SystemException {
 		return ThemeLocalServiceUtil.getColorScheme(
 			getCompanyId(), getTheme().getThemeId(), getColorSchemeId(), false);
@@ -85,6 +80,11 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 		UnicodeProperties settingsProperties = getSettingsProperties();
 
 		return settingsProperties.getProperty(key);
+	}
+
+	public Theme getTheme() throws SystemException {
+		return ThemeLocalServiceUtil.getTheme(
+			getCompanyId(), getThemeId(), false);
 	}
 
 	public String getThemeSetting(String key, String device)
@@ -149,15 +149,15 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 		}
 	}
 
-	public Theme getWapTheme() throws SystemException {
-		return ThemeLocalServiceUtil.getTheme(
-			getCompanyId(), getWapThemeId(), true);
-	}
-
 	public ColorScheme getWapColorScheme() throws SystemException {
 		return ThemeLocalServiceUtil.getColorScheme(
 			getCompanyId(), getWapTheme().getThemeId(), getWapColorSchemeId(),
 			true);
+	}
+
+	public Theme getWapTheme() throws SystemException {
+		return ThemeLocalServiceUtil.getTheme(
+			getCompanyId(), getWapThemeId(), true);
 	}
 
 	public boolean isLayoutSetPrototypeLinkActive() {

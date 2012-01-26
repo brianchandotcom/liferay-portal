@@ -33,48 +33,6 @@ import org.apache.lucene.document.NumericField;
  */
 public class LuceneFields {
 
-	public static String getUID(String portletId, long field1) {
-		return getUID(portletId, String.valueOf(field1));
-	}
-
-	public static String getUID(String portletId, Long field1) {
-		return getUID(portletId, field1.longValue());
-	}
-
-	public static String getUID(String portletId, long field1, String field2) {
-		return getUID(portletId, String.valueOf(field1), field2);
-	}
-
-	public static String getUID(String portletId, Long field1, String field2) {
-		return getUID(portletId, field1.longValue(), field2);
-	}
-
-	public static String getUID(String portletId, String field1) {
-		return getUID(portletId, field1, null);
-	}
-
-	public static String getUID(
-		String portletId, String field1, String field2) {
-
-		return getUID(portletId, field1, field2, null);
-	}
-
-	public static String getUID(
-		String portletId, String field1, String field2, String field3) {
-
-		String uid = portletId + _UID_PORTLET + field1;
-
-		if (field2 != null) {
-			uid += _UID_FIELD + field2;
-		}
-
-		if (field3 != null) {
-			uid += _UID_FIELD + field3;
-		}
-
-		return uid;
-	}
-
 	public static Field getDate(String field) {
 		return getDate(field, new Date());
 	}
@@ -155,6 +113,48 @@ public class LuceneFields {
 
 	public static Field getText(String field, StringBuilder sb) {
 		return getText(field, sb.toString());
+	}
+
+	public static String getUID(String portletId, long field1) {
+		return getUID(portletId, String.valueOf(field1));
+	}
+
+	public static String getUID(String portletId, Long field1) {
+		return getUID(portletId, field1.longValue());
+	}
+
+	public static String getUID(String portletId, long field1, String field2) {
+		return getUID(portletId, String.valueOf(field1), field2);
+	}
+
+	public static String getUID(String portletId, Long field1, String field2) {
+		return getUID(portletId, field1.longValue(), field2);
+	}
+
+	public static String getUID(String portletId, String field1) {
+		return getUID(portletId, field1, null);
+	}
+
+	public static String getUID(
+		String portletId, String field1, String field2) {
+
+		return getUID(portletId, field1, field2, null);
+	}
+
+	public static String getUID(
+		String portletId, String field1, String field2, String field3) {
+
+		String uid = portletId + _UID_PORTLET + field1;
+
+		if (field2 != null) {
+			uid += _UID_FIELD + field2;
+		}
+
+		if (field3 != null) {
+			uid += _UID_FIELD + field3;
+		}
+
+		return uid;
 	}
 
 	private static final String _UID_FIELD = "_FIELD_";

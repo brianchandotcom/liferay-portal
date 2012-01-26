@@ -75,6 +75,12 @@ public class EvaluateLogTest extends BaseTestCase {
 
 					continue;
 				}
+
+				if (line.contains(
+					"[org.python.google.common.base.internal.Finalizer]")) {
+
+					continue;
+				}
 			}
 
 			// LPS-17639

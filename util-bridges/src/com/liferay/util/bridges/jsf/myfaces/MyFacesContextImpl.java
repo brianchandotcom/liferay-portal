@@ -36,15 +36,6 @@ public class MyFacesContextImpl extends ServletFacesContextImpl {
 	}
 
 	@Override
-	public void setResponseWriter(ResponseWriter responseWriter) {
-		if (responseWriter == null) {
-			throw new NullPointerException("responseWriter");
-		}
-
-		_responseWriter = responseWriter;
-	}
-
-	@Override
 	public ResponseWriter getResponseWriter() {
 		return _responseWriter;
 	}
@@ -61,6 +52,15 @@ public class MyFacesContextImpl extends ServletFacesContextImpl {
 		_responseWriter = null;
 
 		super.setExternalContext(extContext);
+	}
+
+	@Override
+	public void setResponseWriter(ResponseWriter responseWriter) {
+		if (responseWriter == null) {
+			throw new NullPointerException("responseWriter");
+		}
+
+		_responseWriter = responseWriter;
 	}
 
 	private ResponseWriter _responseWriter = null;

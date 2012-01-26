@@ -51,36 +51,56 @@ public class LayoutTemplateImpl
 		_name = name;
 	}
 
+	public int compareTo(LayoutTemplate layoutTemplate) {
+		if (layoutTemplate == null) {
+			return -1;
+		}
+
+		return getName().compareTo(layoutTemplate.getName());
+	}
+
+	public boolean equals(LayoutTemplate layoutTemplate) {
+		if (layoutTemplate == null) {
+			return false;
+		}
+
+		String layoutTemplateId = layoutTemplate.getLayoutTemplateId();
+
+		if (getLayoutTemplateId().equals(layoutTemplateId)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public List<String> getColumns() {
+		return _columns;
+	}
+
+	public String getContent() {
+		return _content;
+	}
+
+	public String getContextPath() {
+		if (!isWARFile()) {
+			return PortalUtil.getPathContext();
+		}
+
+		String servletContextName = getServletContextName();
+
+		if (ServletContextPool.containsKey(servletContextName)) {
+			ServletContext servletContext = ServletContextPool.get(
+				servletContextName);
+
+			return ContextPathUtil.getContextPath(servletContext);
+		}
+
+		return StringPool.SLASH.concat(servletContextName);
+	}
+
 	public String getLayoutTemplateId() {
 		return _layoutTemplateId;
-	}
-
-	public String getPluginId() {
-		return getLayoutTemplateId();
-	}
-
-	public String getPluginType() {
-		return Plugin.TYPE_LAYOUT_TEMPLATE;
-	}
-
-	public boolean getStandard() {
-		return _standard;
-	}
-
-	public boolean isStandard() {
-		return _standard;
-	}
-
-	public void setStandard(boolean standard) {
-		_standard = standard;
-	}
-
-	public String getThemeId() {
-		return _themeId;
-	}
-
-	public void setThemeId(String themeId) {
-		_themeId = themeId;
 	}
 
 	public String getName() {
@@ -92,46 +112,44 @@ public class LayoutTemplateImpl
 		}
 	}
 
-	public void setName(String name) {
-		_name = name;
+	public String getPluginId() {
+		return getLayoutTemplateId();
+	}
+
+	public String getPluginType() {
+		return Plugin.TYPE_LAYOUT_TEMPLATE;
+	}
+
+	public String getServletContextName() {
+		return _servletContextName;
+	}
+
+	public boolean getStandard() {
+		return _standard;
+	}
+
+	public String getStaticResourcePath() {
+		String proxyPath = PortalUtil.getPathProxy();
+
+		String contextPath = getContextPath();
+
+		if (!isWARFile()) {
+			return contextPath;
+		}
+
+		return proxyPath.concat(contextPath);
 	}
 
 	public String getTemplatePath() {
 		return _templatePath;
 	}
 
-	public void setTemplatePath(String templatePath) {
-		_templatePath = templatePath;
-	}
-
-	public String getWapTemplatePath() {
-		return _wapTemplatePath;
-	}
-
-	public void setWapTemplatePath(String wapTemplatePath) {
-		_wapTemplatePath = wapTemplatePath;
+	public String getThemeId() {
+		return _themeId;
 	}
 
 	public String getThumbnailPath() {
 		return _thumbnailPath;
-	}
-
-	public void setThumbnailPath(String thumbnailPath) {
-		_thumbnailPath = thumbnailPath;
-	}
-
-	public String getContent() {
-		return _content;
-	}
-
-	public void setContent(String content) {
-		_setContent = true;
-
-		_content = content;
-	}
-
-	public boolean hasSetContent() {
-		return _setContent;
 	}
 
 	public String getUncachedContent() throws IOException {
@@ -199,30 +217,46 @@ public class LayoutTemplateImpl
 		return _wapContent;
 	}
 
-	public void setWapContent(String wapContent) {
-		_setWapContent = true;
+	public String getWapTemplatePath() {
+		return _wapTemplatePath;
+	}
 
-		_wapContent = wapContent;
+	public boolean getWARFile() {
+		return _warFile;
+	}
+
+	public boolean hasSetContent() {
+		return _setContent;
 	}
 
 	public boolean hasSetWapContent() {
 		return _setWapContent;
 	}
 
-	public List<String> getColumns() {
-		return _columns;
+	public boolean isStandard() {
+		return _standard;
+	}
+
+	public boolean isWARFile() {
+		return _warFile;
 	}
 
 	public void setColumns(List<String> columns) {
 		_columns = columns;
 	}
 
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
+	public void setContent(String content) {
+		_setContent = true;
+
+		_content = content;
 	}
 
-	public String getServletContextName() {
-		return _servletContextName;
+	public void setName(String name) {
+		_name = name;
+	}
+
+	public void setServletContext(ServletContext servletContext) {
+		_servletContext = servletContext;
 	}
 
 	public void setServletContextName(String servletContextName) {
@@ -236,82 +270,48 @@ public class LayoutTemplateImpl
 		}
 	}
 
-	public boolean getWARFile() {
-		return _warFile;
+	public void setStandard(boolean standard) {
+		_standard = standard;
 	}
 
-	public boolean isWARFile() {
-		return _warFile;
+	public void setTemplatePath(String templatePath) {
+		_templatePath = templatePath;
 	}
 
-	public String getContextPath() {
-		if (!isWARFile()) {
-			return PortalUtil.getPathContext();
-		}
-
-		String servletContextName = getServletContextName();
-
-		if (ServletContextPool.containsKey(servletContextName)) {
-			ServletContext servletContext = ServletContextPool.get(
-				servletContextName);
-
-			return ContextPathUtil.getContextPath(servletContext);
-		}
-
-		return StringPool.SLASH.concat(servletContextName);
+	public void setThemeId(String themeId) {
+		_themeId = themeId;
 	}
 
-	public String getStaticResourcePath() {
-		String proxyPath = PortalUtil.getPathProxy();
-
-		String contextPath = getContextPath();
-
-		if (!isWARFile()) {
-			return contextPath;
-		}
-
-		return proxyPath.concat(contextPath);
+	public void setThumbnailPath(String thumbnailPath) {
+		_thumbnailPath = thumbnailPath;
 	}
 
-	public int compareTo(LayoutTemplate layoutTemplate) {
-		if (layoutTemplate == null) {
-			return -1;
-		}
+	public void setWapContent(String wapContent) {
+		_setWapContent = true;
 
-		return getName().compareTo(layoutTemplate.getName());
+		_wapContent = wapContent;
 	}
 
-	public boolean equals(LayoutTemplate layoutTemplate) {
-		if (layoutTemplate == null) {
-			return false;
-		}
-
-		String layoutTemplateId = layoutTemplate.getLayoutTemplateId();
-
-		if (getLayoutTemplateId().equals(layoutTemplateId)) {
-			return true;
-		}
-		else {
-			return false;
-		}
+	public void setWapTemplatePath(String wapTemplatePath) {
+		_wapTemplatePath = wapTemplatePath;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(LayoutTemplateImpl.class);
 
-	private String _layoutTemplateId;
-	private boolean _standard;
-	private String _themeId;
-	private String _name;
-	private String _templatePath;
-	private String _wapTemplatePath;
-	private String _thumbnailPath;
-	private String _content;
-	private boolean _setContent;
-	private String _wapContent;
-	private boolean _setWapContent;
 	private List<String> _columns = new ArrayList<String>();
+	private String _content;
+	private String _layoutTemplateId;
+	private String _name;
 	private transient ServletContext _servletContext;
 	private String _servletContextName = StringPool.BLANK;
+	private boolean _setContent;
+	private boolean _setWapContent;
+	private boolean _standard;
+	private String _templatePath;
+	private String _themeId;
+	private String _thumbnailPath;
+	private String _wapContent;
+	private String _wapTemplatePath;
 	private boolean _warFile;
 
 }

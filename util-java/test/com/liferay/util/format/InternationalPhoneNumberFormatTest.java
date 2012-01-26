@@ -14,16 +14,32 @@
 
 package com.liferay.util.format;
 
+import com.liferay.portal.kernel.test.TestCase;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Manuel de la Peña
  */
-public interface PhoneNumberFormat {
+public class InternationalPhoneNumberFormatTest extends TestCase {
 
-	public String format(String phoneNumber);
+	public void testValidate() {
+		String phoneNumbers[] = {"+34 91 733 63 43",
+			"+55 81 3033 1405", "+49 (0) 6196 773 0680",
+			"+36 (1) 786 4575", "+86 (0411) 8812-0855",
+			"1-123-456-7890", "1.123.456.7890"};
 
-	public String strip(String phoneNumber);
+		for (String phoneNumber : phoneNumbers) {
+			testValidate(phoneNumber);
+		}
+	}
 
-	public boolean validate(String phoneNumber);
+	private void testValidate(String phoneNumber) {
+		InternationalPhoneNumberFormat format =
+			new InternationalPhoneNumberFormat();
+
+		if (!format.validate(phoneNumber)) {
+			fail("Validation for [" + phoneNumber + "] failed");
+		}
+	}
 
 }

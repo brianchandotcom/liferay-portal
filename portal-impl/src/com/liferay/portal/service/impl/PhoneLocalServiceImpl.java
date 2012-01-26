@@ -46,12 +46,9 @@ public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 		long classNameId = PortalUtil.getClassNameId(className);
 		Date now = new Date();
 
-		number = PhoneNumberUtil.strip(number);
-		extension = PhoneNumberUtil.strip(extension);
-
 		validate(
-			0, user.getCompanyId(), classNameId, classPK, number, typeId,
-			primary);
+			0, user.getCompanyId(), classNameId, classPK, number, extension,
+			typeId, primary);
 
 		long phoneId = counterLocalService.increment();
 
@@ -125,10 +122,7 @@ public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 			boolean primary)
 		throws PortalException, SystemException {
 
-		number = PhoneNumberUtil.strip(number);
-		extension = PhoneNumberUtil.strip(extension);
-
-		validate(phoneId, 0, 0, 0, number, typeId, primary);
+		validate(phoneId, 0, 0, 0, number, extension, typeId, primary);
 
 		Phone phone = phonePersistence.findByPrimaryKey(phoneId);
 
@@ -169,10 +163,10 @@ public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 
 	protected void validate(
 			long phoneId, long companyId, long classNameId, long classPK,
-			String number, int typeId, boolean primary)
+			String number, String extension, int typeId, boolean primary)
 		throws PortalException, SystemException {
 
-		if (Validator.isNull(number)) {
+		if (!validatePhoneNumber(number) || !validateExtension(extension)) {
 			throw new PhoneNumberException();
 		}
 
@@ -193,6 +187,27 @@ public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 		}
 
 		validate(phoneId, companyId, classNameId, classPK, primary);
+	}
+
+	protected boolean validateExtension(String extension) {
+
+		// Extension is not required
+
+		if (Validator.isNull(extension)) {
+			return true;
+		}
+
+		for (int i = 0;i < extension.length();i++) {
+			if (!Character.isDigit(extension.charAt(i))) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	protected boolean validatePhoneNumber(String phoneNumber) {
+		return PhoneNumberUtil.validate(phoneNumber);
 	}
 
 }

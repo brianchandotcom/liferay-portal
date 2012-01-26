@@ -14,28 +14,35 @@
 
 package com.liferay.util.format;
 
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.test.TestCase;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Manuel de la Peña
  */
-public class IdenticalPhoneNumberFormat implements PhoneNumberFormat {
+public class USAPhoneNumberFormatTest extends TestCase {
 
-	public String format(String phoneNumber) {
-		return phoneNumber;
+	public void testFormat() {
+		fail("Not yet implemented");
 	}
 
-	public String strip(String phoneNumber) {
-		return phoneNumber;
-	}
+	public void testValidate() {
+		String phoneNumbers[] = {"1234567890", "123-456-7890", "123.456.7890",
+			"123 456 7890", "(123) 456 7890", "(012) 345-6789",
+			"(123) 456-7890", "012-3456", "+1 (123) 456-7890",
+			"1-123-456-7890", "1.123.456.7890"};
 
-	public boolean validate(String phoneNumber) {
-		if (Validator.isNull(phoneNumber)) {
-			return false;
+		for (String phoneNumber : phoneNumbers) {
+			testValidate(phoneNumber);
 		}
+	}
 
-		return true;
+	private void testValidate(String phoneNumber) {
+		USAPhoneNumberFormat format = new USAPhoneNumberFormat();
+
+		if (!format.validate(phoneNumber)) {
+			fail("Validation for [" + phoneNumber + "] failed");
+		}
 	}
 
 }

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.SystemProperties;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Manuel de la Peña
  */
 public class PhoneNumberUtil {
 
@@ -37,6 +38,12 @@ public class PhoneNumberUtil {
 		return phoneNumberFormat.strip(phoneNumber);
 	}
 
+	public static boolean validate(String phoneNumber) {
+		PhoneNumberFormat phoneNumberFormat = _getPhoneNumberFormat();
+
+		return phoneNumberFormat.validate(phoneNumber);
+	}
+
 	private static PhoneNumberFormat _getPhoneNumberFormat() {
 		if (_phoneNumberFormat == null) {
 			try {
@@ -45,7 +52,7 @@ public class PhoneNumberUtil {
 					USAPhoneNumberFormat.class.getName());
 
 				_phoneNumberFormat =
-					(PhoneNumberFormat)InstanceFactory.newInstance(className);
+					(PhoneNumberFormat) InstanceFactory.newInstance(className);
 			}
 			catch (Exception e) {
 				_log.error(e, e);

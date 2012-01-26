@@ -14,12 +14,16 @@
 
 package com.liferay.util.format;
 
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Manuel de la Peña
  */
 public class USAPhoneNumberFormat implements PhoneNumberFormat {
 
@@ -65,6 +69,15 @@ public class USAPhoneNumberFormat implements PhoneNumberFormat {
 
 	public String strip(String phoneNumber) {
 		return StringUtil.extractDigits(phoneNumber);
+	}
+
+	public boolean validate(String phoneNumber) {
+		if (Validator.isNull(phoneNumber)) {
+			return false;
+		}
+
+		return phoneNumber.matches(
+			PropsUtil.get(PropsKeys.PHONE_VALIDATOR_REGEXP_USA));
 	}
 
 }

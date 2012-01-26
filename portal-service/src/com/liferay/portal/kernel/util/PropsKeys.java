@@ -1566,6 +1566,10 @@ public interface PropsKeys {
 	public static final String PERMISSIONS_VIEW_DYNAMIC_INHERITANCE = "permissions.view.dynamic.inheritance";
 
 	public static final String PERSISTENCE_PROVIDER = "persistence.provider";
+	
+	public static final String PHONE_VALIDATOR_REGEXP_INTERNATIONAL = "phone.validator.regexp.international";
+	
+	public static final String PHONE_VALIDATOR_REGEXP_USA = "phone.validator.regexp.usa";
 
 	public static final String PLUGIN_NOTIFICATIONS_ENABLED = "plugin.notifications.enabled";
 

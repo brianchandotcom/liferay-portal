@@ -142,7 +142,14 @@ else {
 								{
 									after: {
 										success: function() {
-											Liferay.fire('updatedLayout');
+											<c:choose>
+												<c:when test="<%= layoutRevision.getStatus() == WorkflowConstants.STATUS_INCOMPLETE %>">
+													location.href = '<%= currentURL %>';
+												</c:when>
+												<c:otherwise>
+													Liferay.fire('updatedLayout');
+												</c:otherwise>
+											</c:choose>
 										}
 									}
 								}

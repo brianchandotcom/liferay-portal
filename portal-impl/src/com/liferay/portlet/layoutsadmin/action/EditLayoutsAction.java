@@ -233,7 +233,7 @@ public class EditLayoutsAction extends PortletAction {
 				StagingUtil.unschedulePublishToRemote(actionRequest);
 			}
 			else if (cmd.equals("update_layout_revision")) {
-				updateLayoutRevision(actionRequest);
+				updateLayoutRevision(actionRequest, themeDisplay);
 			}
 
 			if (Validator.isNotNull(closeRedirect)) {
@@ -957,7 +957,8 @@ public class EditLayoutsAction extends PortletAction {
 		return new Object[] {layout, oldFriendlyURL};
 	}
 
-	protected void updateLayoutRevision(ActionRequest actionRequest)
+	protected void updateLayoutRevision(
+			ActionRequest actionRequest, ThemeDisplay themeDisplay)
 		throws Exception {
 
 		long layoutRevisionId = ParamUtil.getLong(
@@ -969,7 +970,8 @@ public class EditLayoutsAction extends PortletAction {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		LayoutRevisionLocalServiceUtil.updateLayoutRevision(
+		LayoutRevision enableLayoutRevision = 
+			LayoutRevisionLocalServiceUtil.updateLayoutRevision(
 			serviceContext.getUserId(), layoutRevisionId,
 			layoutRevision.getLayoutBranchId(), layoutRevision.getName(),
 			layoutRevision.getTitle(), layoutRevision.getDescription(),
@@ -979,6 +981,43 @@ public class EditLayoutsAction extends PortletAction {
 			layoutRevision.getColorSchemeId(), layoutRevision.getWapThemeId(),
 			layoutRevision.getWapColorSchemeId(), layoutRevision.getCss(),
 			serviceContext);
+		
+		if (layoutRevision.getStatus() == WorkflowConstants.STATUS_INCOMPLETE) {
+			LayoutRevision lastLayoutRevision =
+				LayoutRevisionLocalServiceUtil.fetchLastLayoutRevision(
+					enableLayoutRevision.getPlid(), true);
+
+			if (lastLayoutRevision != null) {
+				LayoutRevision newLayoutRevision =
+					LayoutRevisionLocalServiceUtil.addLayoutRevision(
+						serviceContext.getUserId(),
+						layoutRevision.getLayoutSetBranchId(),
+						layoutRevision.getLayoutBranchId(),
+						enableLayoutRevision.getLayoutRevisionId(),
+						false, layoutRevision.getPlid(),
+						lastLayoutRevision.getLayoutRevisionId(),
+						lastLayoutRevision.getPrivateLayout(),
+						lastLayoutRevision.getName(),
+						lastLayoutRevision.getTitle(),
+						lastLayoutRevision.getDescription(),
+						lastLayoutRevision.getKeywords(),
+						lastLayoutRevision.getRobots(),
+						lastLayoutRevision.getTypeSettings(),
+						lastLayoutRevision.isIconImage(),
+						lastLayoutRevision.getIconImageId(),
+						lastLayoutRevision.getThemeId(),
+						lastLayoutRevision.getColorSchemeId(),
+						lastLayoutRevision.getWapThemeId(),
+						lastLayoutRevision.getWapColorSchemeId(),
+						lastLayoutRevision.getCss(), serviceContext);
+				
+				StagingUtil.setRecentLayoutRevisionId(
+					themeDisplay.getUser(),
+					newLayoutRevision.getLayoutSetBranchId(),
+					newLayoutRevision.getPlid(),
+					newLayoutRevision.getLayoutRevisionId());
+			}
+		}
 	}
 
 	protected void updateLookAndFeel(

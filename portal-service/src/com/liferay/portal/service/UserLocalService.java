@@ -1957,8 +1957,7 @@ public interface UserLocalService extends PersistedModelLocalService {
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
-	public void unsetGroupUsers(long groupId, long[] userIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public void unsetGroupUsers(long groupId, long[] userIds)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -2138,6 +2137,11 @@ public interface UserLocalService extends PersistedModelLocalService {
 	*/
 	public com.liferay.portal.model.User updateFacebookId(long userId,
 		long facebookId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void updateGroups(long userId, long[] newGroupIds,
+		boolean isIndexingEnabled)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -2321,6 +2325,11 @@ public interface UserLocalService extends PersistedModelLocalService {
 	*/
 	public com.liferay.portal.model.User updateOpenId(long userId,
 		java.lang.String openId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void updateOrganizations(long userId, long[] newOrganizationIds,
+		boolean indexingEnabled)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

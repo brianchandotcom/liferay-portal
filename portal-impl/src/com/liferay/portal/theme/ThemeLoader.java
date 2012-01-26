@@ -37,16 +37,16 @@ import javax.servlet.ServletContext;
  */
 public class ThemeLoader {
 
+	public File getFileStorage() {
+		return _fileStorage;
+	}
+
 	public String getServletContextName() {
 		return _servletContextName;
 	}
 
 	public String getThemesPath() {
 		return _themesPath;
-	}
-
-	public File getFileStorage() {
-		return _fileStorage;
 	}
 
 	public synchronized void loadThemes() {

@@ -59,6 +59,16 @@ public class ViewAction extends PortletAction {
 		return mapping.findForward("portlet.iframe.view");
 	}
 
+	protected String getPassword(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortalException, SystemException {
+
+		PortletPreferences preferences = renderRequest.getPreferences();
+		String password = preferences.getValue("password", StringPool.BLANK);
+
+		return IFrameUtil.getPassword(renderRequest, password);
+	}
+
 	protected String getSrc(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
@@ -79,16 +89,6 @@ public class ViewAction extends PortletAction {
 		String userName = preferences.getValue("user-name", StringPool.BLANK);
 
 		return IFrameUtil.getUserName(renderRequest, userName);
-	}
-
-	protected String getPassword(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortalException, SystemException {
-
-		PortletPreferences preferences = renderRequest.getPreferences();
-		String password = preferences.getValue("password", StringPool.BLANK);
-
-		return IFrameUtil.getPassword(renderRequest, password);
 	}
 
 	protected String transformSrc(

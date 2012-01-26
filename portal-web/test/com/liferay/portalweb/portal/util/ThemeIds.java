@@ -81,7 +81,7 @@ public class ThemeIds {
 
 	private static ThemeIds _instance = new ThemeIds();
 
-	private String[] _themeIds = new String[0];
 	private int _pos;
+	private String[] _themeIds = new String[0];
 
 }

@@ -345,14 +345,14 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 			HttpServletResponse.SC_NO_CONTENT, serviceUnlock(fileName, lock));
 	}
 
-	private static final String _OFFICE_TEST_FILE_PREFIX =
-		"portal-impl/test/com/liferay/portal/webdav/dependencies/";
-
 	private static final String _OFFICE_TEST_DELTA_DOCX =
-		_OFFICE_TEST_FILE_PREFIX + "OSX_Test_Delta.docx";
+		WebDAVOSXTest._OFFICE_TEST_FILE_PREFIX + "OSX_Test_Delta.docx";
 
 	private static final String _OFFICE_TEST_DOCX =
-		_OFFICE_TEST_FILE_PREFIX + "OSX_Test.docx";
+		WebDAVOSXTest._OFFICE_TEST_FILE_PREFIX + "OSX_Test.docx";
+
+	private static final String _OFFICE_TEST_FILE_PREFIX =
+		"portal-impl/test/com/liferay/portal/webdav/dependencies/";
 
 	private static final String _OFFICE_TEST_META_DOCX =
 		_OFFICE_TEST_FILE_PREFIX + "OSX_Test_Meta.docx";

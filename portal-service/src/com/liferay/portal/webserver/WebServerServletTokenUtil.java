@@ -19,12 +19,12 @@ package com.liferay.portal.webserver;
  */
 public class WebServerServletTokenUtil {
 
-	public static WebServerServletToken getWebServerServletToken() {
-		return _webServerServletToken;
-	}
-
 	public static String getToken(long imageId) {
 		return getWebServerServletToken().getToken(imageId);
+	}
+
+	public static WebServerServletToken getWebServerServletToken() {
+		return _webServerServletToken;
 	}
 
 	public static void resetToken(long imageId) {

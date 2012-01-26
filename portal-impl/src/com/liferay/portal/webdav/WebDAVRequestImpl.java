@@ -50,8 +50,12 @@ public class WebDAVRequestImpl implements WebDAVRequest {
 		_permissionChecker = permissionChecker;
 	}
 
-	public WebDAVStorage getWebDAVStorage() {
-		return _storage;
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public long getGroupId() {
+		return _groupId;
 	}
 
 	public HttpServletRequest getHttpServletRequest() {
@@ -62,8 +66,8 @@ public class WebDAVRequestImpl implements WebDAVRequest {
 		return _response;
 	}
 
-	public String getRootPath() {
-		return _storage.getRootPath();
+	public String getLockUuid() {
+		return _lockUuid;
 	}
 
 	public String getPath() {
@@ -74,24 +78,20 @@ public class WebDAVRequestImpl implements WebDAVRequest {
 		return WebDAVUtil.getPathArray(_path);
 	}
 
-	public long getCompanyId() {
-		return _companyId;
+	public PermissionChecker getPermissionChecker() {
+		return _permissionChecker;
 	}
 
-	public long getGroupId() {
-		return _groupId;
+	public String getRootPath() {
+		return _storage.getRootPath();
 	}
 
 	public long getUserId() {
 		return _userId;
 	}
 
-	public String getLockUuid() {
-		return _lockUuid;
-	}
-
-	public PermissionChecker getPermissionChecker() {
-		return _permissionChecker;
+	public WebDAVStorage getWebDAVStorage() {
+		return _storage;
 	}
 
 	public boolean isAppleDoubleRequest() {

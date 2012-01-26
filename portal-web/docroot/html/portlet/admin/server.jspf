@@ -319,7 +319,7 @@ numberFormat.setMinimumIntegerDigits(2);
 				<liferay-ui:error key="reCaptchaPublicKey" message="the-recaptcha-public-key-is-not-valid" />
 
 				<aui:fieldset>
-					<aui:input inlineLabel="right" label="enable-recaptcha" name="reCaptchaEnabled" type="checkbox" value="<%= PrefsPropsUtil.getString(PropsKeys.CAPTCHA_ENGINE_IMPL, PropsValues.CAPTCHA_ENGINE_IMPL).equals(ReCaptchaImpl.class.getName()) %>" />
+					<aui:input label="enable-recaptcha" name="reCaptchaEnabled" type="checkbox" value="<%= PrefsPropsUtil.getString(PropsKeys.CAPTCHA_ENGINE_IMPL, PropsValues.CAPTCHA_ENGINE_IMPL).equals(ReCaptchaImpl.class.getName()) %>" />
 
 					<aui:input cssClass="lfr-input-text-container" label="recaptcha-public-key" name="reCaptchaPublicKey" type="text" value="<%= PrefsPropsUtil.getString(PropsKeys.CAPTCHA_ENGINE_RECAPTCHA_KEY_PUBLIC, PropsValues.CAPTCHA_ENGINE_RECAPTCHA_KEY_PUBLIC) %>" />
 
@@ -513,7 +513,7 @@ numberFormat.setMinimumIntegerDigits(2);
 
 							<aui:input cssClass="lfr-input-text-container" label="incoming-port" name="pop3Port" type="text" value="<%= PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_POP3_PORT) %>" />
 
-							<aui:input inlineLabel="right" label="use-a-secure-network-connection" name="pop3Secure" type="checkbox" value='<%= PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_STORE_PROTOCOL).equals("pop3s") %>' />
+							<aui:input label="use-a-secure-network-connection" name="pop3Secure" type="checkbox" value='<%= PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_STORE_PROTOCOL).equals("pop3s") %>' />
 
 							<aui:input cssClass="lfr-input-text-container" label="user-name" name="pop3User" type="text" value="<%= PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_POP3_USER) %>" />
 
@@ -523,7 +523,7 @@ numberFormat.setMinimumIntegerDigits(2);
 
 							<aui:input cssClass="lfr-input-text-container" label="outgoing-port" name="smtpPort" type="text" value="<%= PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_SMTP_PORT) %>" />
 
-							<aui:input inlineLabel="right" label="use-a-secure-network-connection" name="smtpSecure" type="checkbox" value='<%= PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_TRANSPORT_PROTOCOL).equals("smtps") %>' />
+							<aui:input label="use-a-secure-network-connection" name="smtpSecure" type="checkbox" value='<%= PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_TRANSPORT_PROTOCOL).equals("smtps") %>' />
 
 							<aui:input cssClass="lfr-input-text-container" label="user-name" name="smtpUser" type="text" value="<%= PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_SMTP_USER) %>" />
 
@@ -547,19 +547,19 @@ numberFormat.setMinimumIntegerDigits(2);
 				<aui:fieldset>
 					<liferay-ui:panel-container extended="<%= true %>" id="adminExternalServicesPanelContainer" persistState="<%= true %>">
 						<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="adminImageMagickConversionPanel" persistState="<%= true %>" title="enabling-imagemagick-provides-document-preview-functionality">
-							<aui:input inlineLabel="right" label="enabled" name="imageMagickEnabled" type="checkbox" value="<%= PrefsPropsUtil.getBoolean(PropsKeys.IMAGEMAGICK_ENABLED) %>" />
+							<aui:input label="enabled" name="imageMagickEnabled" type="checkbox" value="<%= PrefsPropsUtil.getBoolean(PropsKeys.IMAGEMAGICK_ENABLED) %>" />
 
 							<aui:input cssClass="lfr-input-text-container" label="path" name="imageMagickPath" type="text" value="<%= PDFProcessorUtil.getGlobalSearchPath() %>" />
 						</liferay-ui:panel>
 
 						<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="adminOpenOfficeConversionPanel" persistState="<%= true %>" title="enabling-openoffice-integration-provides-document-conversion-functionality">
-							<aui:input inlineLabel="right" label="enabled" name="openOfficeEnabled" type="checkbox" value="<%= PrefsPropsUtil.getBoolean(PropsKeys.OPENOFFICE_SERVER_ENABLED) %>" />
+							<aui:input label="enabled" name="openOfficeEnabled" type="checkbox" value="<%= PrefsPropsUtil.getBoolean(PropsKeys.OPENOFFICE_SERVER_ENABLED) %>" />
 
 							<aui:input cssClass="lfr-input-text-container" label="port" name="openOfficePort" type="text" value="<%= PrefsPropsUtil.getString(PropsKeys.OPENOFFICE_SERVER_PORT) %>" />
 						</liferay-ui:panel>
 
 						<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="adminXugglerPanel" persistState="<%= true %>" title="enabling-xuggler-provides-video-conversion-functionality">
-							<aui:input inlineLabel="right" label="enabled" name="xugglerEnabled" type="checkbox" value="<%= PrefsPropsUtil.getBoolean(PropsKeys.XUGGLER_ENABLED) %>" />
+							<aui:input label="enabled" name="xugglerEnabled" type="checkbox" value="<%= PrefsPropsUtil.getBoolean(PropsKeys.XUGGLER_ENABLED) %>" />
 						</liferay-ui:panel>
 					</liferay-ui:panel-container>
 				</aui:fieldset>

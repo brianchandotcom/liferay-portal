@@ -43,7 +43,7 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 		<div class="lfr-spreadsheet-add-rows-buttons">
 			<aui:button inlineField="<%= true %>" name="addRecords" value="add" />
 
-			<aui:select inlineField="<%= true %>" inlineLabel="right" label="more-rows-at-bottom" name="numberOfRecords">
+			<aui:select inlineField="<%= true %>" label="more-rows-at-bottom" name="numberOfRecords">
 				<aui:option label="1" />
 				<aui:option label="5" />
 				<aui:option label="10" />

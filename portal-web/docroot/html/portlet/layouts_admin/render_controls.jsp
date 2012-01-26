@@ -31,7 +31,7 @@ for (int i = 0; i < controls.length; i++) {
 				PortletDataHandlerControl[] children = control.getChildren();
 				%>
 
-				<aui:input disabled="<%= controls[i].isDisabled() %>" inlineLabel="right" label="<%= controls[i].getControlName() %>" name="<%= control.getNamespacedControlName() %>" type="checkbox" value="<%= control.getDefaultState() %>" />
+				<aui:input disabled="<%= controls[i].isDisabled() %>" label="<%= controls[i].getControlName() %>" name="<%= control.getNamespacedControlName() %>" type="checkbox" value="<%= control.getDefaultState() %>" />
 
 				<c:if test="<%= children != null %>">
 					<ul id="<portlet:namespace /><%= control.getNamespacedControlName() %>Controls">
@@ -58,7 +58,7 @@ for (int i = 0; i < controls.length; i++) {
 					for (int j = 0; j < choices.length; j++) {
 						String choice = choices[j];
 					%>
-						<aui:input checked="<%= control.getDefaultChoiceIndex() == j %>" inlineLabel="right" label="<%= choice %>" name="<%= control.getNamespacedControlName() %>" type="radio" value="<%= choices[j] %>" />
+						<aui:input checked="<%= control.getDefaultChoiceIndex() == j %>" label="<%= choice %>" name="<%= control.getNamespacedControlName() %>" type="radio" value="<%= choices[j] %>" />
 
 					<%
 					}

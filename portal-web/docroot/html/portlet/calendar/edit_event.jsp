@@ -157,9 +157,9 @@ int secondReminder = BeanParamUtil.getInteger(event, request, "secondReminder", 
 			</aui:select>
 		</aui:field-wrapper>
 
-		<aui:input inlineLabel="right" label="all-day-event" name="allDay" type="checkbox" value="<%= event == null ? false : event.isAllDay() %>" />
+		<aui:input label="all-day-event" name="allDay" type="checkbox" value="<%= event == null ? false : event.isAllDay() %>" />
 
-		<aui:input inlineLabel="right" name="timeZoneSensitive" type="checkbox" value="<%= event == null ? true : event.isTimeZoneSensitive() %>" />
+		<aui:input name="timeZoneSensitive" type="checkbox" value="<%= event == null ? true : event.isTimeZoneSensitive() %>" />
 
 		<aui:input name="title" />
 
@@ -232,7 +232,7 @@ int secondReminder = BeanParamUtil.getInteger(event, request, "secondReminder", 
 
 					<%--<aui:input checked="<%= endDateType == 1 %>" cssClass="input-container" inlineField="<%= true %>" label="end-after" name="endDateType" type="radio" value="1" />--%>
 
-					<%--<aui:input inlineLabel="right" label="occurrence-s" maxlength="3" name="endDateOccurrence" size="3" type="text" value="<%= endDateOccurrence %>" />--%>
+					<%--<aui:input label="occurrence-s" maxlength="3" name="endDateOccurrence" size="3" type="text" value="<%= endDateOccurrence %>" />--%>
 
 					<aui:input checked="<%= endDateType == 2 %>" cssClass="input-container" inlineField="<%= true %>" label="end-by" name="endDateType" type="radio" value="2" />
 

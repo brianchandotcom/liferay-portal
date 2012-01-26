@@ -59,7 +59,7 @@ Locale[] locales = LanguageUtil.getAvailableLocales();
 
 		<aui:input name="description" />
 
-		<aui:input inlineLabel="right" name="active" />
+		<aui:input name="active" />
 
 		<c:if test="<%= !layoutPrototype.isNew() %>">
 			<aui:field-wrapper label="configuration">

@@ -33,11 +33,6 @@ public class RenderURLLogic extends ActionURLLogic {
 	}
 
 	@Override
-	public String getOpenTag() {
-		return OPEN_TAG;
-	}
-
-	@Override
 	public String getClose1Tag() {
 		return CLOSE_1_TAG;
 	}
@@ -45,6 +40,11 @@ public class RenderURLLogic extends ActionURLLogic {
 	@Override
 	public String getLifecycle() {
 		return _lifecycle;
+	}
+
+	@Override
+	public String getOpenTag() {
+		return OPEN_TAG;
 	}
 
 	private String _lifecycle = PortletRequest.RENDER_PHASE;

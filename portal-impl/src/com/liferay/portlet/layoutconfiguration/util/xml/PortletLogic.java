@@ -52,13 +52,13 @@ public class PortletLogic extends RuntimeLogic {
 	}
 
 	@Override
-	public String getOpenTag() {
-		return OPEN_TAG;
+	public String getClose1Tag() {
+		return CLOSE_1_TAG;
 	}
 
 	@Override
-	public String getClose1Tag() {
-		return CLOSE_1_TAG;
+	public String getOpenTag() {
+		return OPEN_TAG;
 	}
 
 	@Override

@@ -34,20 +34,20 @@ public class PortletInfo implements Serializable {
 		_description = description;
 	}
 
-	public String getTitle() {
-		return _title;
-	}
-
-	public String getShortTitle() {
-		return _shortTitle;
+	public String getDescription() {
+		return _description;
 	}
 
 	public String getKeywords() {
 		return _keywords;
 	}
 
-	public String getDescription() {
-		return _description;
+	public String getShortTitle() {
+		return _shortTitle;
+	}
+
+	public String getTitle() {
+		return _title;
 	}
 
 	private String _description;

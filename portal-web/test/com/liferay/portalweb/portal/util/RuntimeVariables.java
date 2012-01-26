@@ -117,9 +117,9 @@ public class RuntimeVariables {
 
 	private static RuntimeVariables _instance = new RuntimeVariables();
 
-	private String _sourceDir;
 	private ContextReplace _contextReplace;
 	private Map<String, String> _runtimeVariables =
 		new HashMap<String, String>();
+	private String _sourceDir;
 
 }

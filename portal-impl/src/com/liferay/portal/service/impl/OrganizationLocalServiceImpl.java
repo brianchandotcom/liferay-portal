@@ -195,23 +195,24 @@ public class OrganizationLocalServiceImpl
 
 		addOrganizationResources(userId, organization);
 
-		// Asset
-
 		if (serviceContext != null) {
+
+			// Asset
+
 			updateAsset(
 				userId, organization, serviceContext.getAssetCategoryIds(),
 				serviceContext.getAssetTagNames());
+
+			// Expando
+
+			ExpandoBridge expandoBridge = organization.getExpandoBridge();
+
+			expandoBridge.setAttributes(serviceContext);
 		}
-
-		// Expando
-
-		ExpandoBridge expandoBridge = organization.getExpandoBridge();
-
-		expandoBridge.setAttributes(serviceContext);
 
 		// Indexer
 
-		if ((serviceContext != null) && serviceContext.isIndexingEnabled()) {
+		if ((serviceContext == null) || serviceContext.isIndexingEnabled()) {
 			Indexer indexer = IndexerRegistryUtil.getIndexer(
 				Organization.class);
 
@@ -1597,20 +1598,21 @@ public class OrganizationLocalServiceImpl
 			groupLocalService.updateSite(group.getGroupId(), site);
 		}
 
-		// Asset
-
 		if (serviceContext != null) {
+
+			// Asset
+
 			updateAsset(
 				serviceContext.getUserId(), organization,
 				serviceContext.getAssetCategoryIds(),
 				serviceContext.getAssetTagNames());
+
+			// Expando
+
+			ExpandoBridge expandoBridge = organization.getExpandoBridge();
+
+			expandoBridge.setAttributes(serviceContext);
 		}
-
-		// Expando
-
-		ExpandoBridge expandoBridge = organization.getExpandoBridge();
-
-		expandoBridge.setAttributes(serviceContext);
 
 		// Indexer
 

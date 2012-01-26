@@ -12,14 +12,10 @@
  * details.
  */
 
-package com.liferay.portalweb.stagingcommunity.sites;
+package com.liferay.portalweb.stagingcommunity.sites.usecase;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.stagingcommunity.sites.event.EventTestPlan;
-import com.liferay.portalweb.stagingcommunity.sites.pagevariation.PageVariationTestPlan;
-import com.liferay.portalweb.stagingcommunity.sites.site.SiteTestPlan;
-import com.liferay.portalweb.stagingcommunity.sites.sitepagesvariation.SitePagesVariationTestPlan;
-import com.liferay.portalweb.stagingcommunity.sites.usecase.UseCaseTestPlan;
+import com.liferay.portalweb.stagingcommunity.sites.usecase.demo1.Demo1Tests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -27,16 +23,12 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SitesTestPlan extends BaseTestSuite {
+public class UseCaseTestPlan extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(EventTestPlan.suite());
-		testSuite.addTest(PageVariationTestPlan.suite());
-		testSuite.addTest(SiteTestPlan.suite());
-		testSuite.addTest(SitePagesVariationTestPlan.suite());
-		testSuite.addTest(UseCaseTestPlan.suite());
+		testSuite.addTest(Demo1Tests.suite());
 
 		return testSuite;
 	}

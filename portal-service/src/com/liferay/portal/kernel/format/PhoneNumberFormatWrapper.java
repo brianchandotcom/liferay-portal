@@ -29,14 +29,6 @@ public class PhoneNumberFormatWrapper implements PhoneNumberFormat {
 		return _phoneNumberFormat.format(phoneNumber);
 	}
 
-	public String strip(String phoneNumber) {
-		return _phoneNumberFormat.strip(phoneNumber);
-	}
-
-	public boolean validate(String phoneNumber) {
-		return _phoneNumberFormat.validate(phoneNumber);
-	}
-
 	public void setPhoneNumberFormat(PhoneNumberFormat phoneNumberFormat) {
 		if (phoneNumberFormat == null) {
 			_phoneNumberFormat = _originalPhoneNumberFormat;
@@ -44,6 +36,14 @@ public class PhoneNumberFormatWrapper implements PhoneNumberFormat {
 		else {
 			_phoneNumberFormat = phoneNumberFormat;
 		}
+	}
+
+	public String strip(String phoneNumber) {
+		return _phoneNumberFormat.strip(phoneNumber);
+	}
+
+	public boolean validate(String phoneNumber) {
+		return _phoneNumberFormat.validate(phoneNumber);
 	}
 
 	private PhoneNumberFormat _originalPhoneNumberFormat;

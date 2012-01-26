@@ -120,14 +120,6 @@ public class PortletAction extends Action {
 		}
 	}
 
-	public ActionForward strutsExecute(
-			ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response)
-		throws Exception {
-
-		return super.execute(mapping, form, request, response);
-	}
-
 	public void processAction(
 			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -167,6 +159,14 @@ public class PortletAction extends Action {
 		}
 
 		portletRequestDispatcher.forward(resourceRequest, resourceResponse);
+	}
+
+	public ActionForward strutsExecute(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response)
+		throws Exception {
+
+		return super.execute(mapping, form, request, response);
 	}
 
 	protected void addSuccessMessage(

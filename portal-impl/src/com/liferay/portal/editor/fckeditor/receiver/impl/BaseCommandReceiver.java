@@ -289,6 +289,10 @@ public abstract class BaseCommandReceiver implements CommandReceiver {
 	protected abstract void getFoldersAndFiles(
 		CommandArgument commandArgument, Document document, Node rootNode);
 
+	protected String getPath(CommandArgument commandArgument) {
+		return StringPool.BLANK;
+	}
+
 	protected void getRootFolders(
 			CommandArgument commandArgument, Document document,
 			Element foldersElement)
@@ -363,10 +367,6 @@ public abstract class BaseCommandReceiver implements CommandReceiver {
 						HtmlUtil.escape(group.getDescriptiveName()));
 			}
 		}
-	}
-
-	protected String getPath(CommandArgument commandArgument) {
-		return StringPool.BLANK;
 	}
 
 	protected String getSize() {

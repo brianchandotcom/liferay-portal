@@ -42,20 +42,20 @@ public class AuthenticatingHttpInvokerRequestExecutor
 		super();
 	}
 
-	public long getUserId() {
-		return _userId;
-	}
-
-	public void setUserId(long userId) {
-		_userId = userId;
-	}
-
 	public String getPassword() {
 		return _password;
 	}
 
+	public long getUserId() {
+		return _userId;
+	}
+
 	public void setPassword(String password) throws PwdEncryptorException {
 		_password = PwdEncryptor.encrypt(password);
+	}
+
+	public void setUserId(long userId) {
+		_userId = userId;
 	}
 
 	/**

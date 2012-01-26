@@ -31,21 +31,6 @@ public class AddressImpl extends AddressBaseImpl {
 	public AddressImpl() {
 	}
 
-	public Region getRegion() {
-		Region region = null;
-
-		try {
-			region = RegionServiceUtil.getRegion(getRegionId());
-		}
-		catch (Exception e) {
-			region = new RegionImpl();
-
-			_log.warn(e);
-		}
-
-		return region;
-	}
-
 	public Country getCountry() {
 		Country country = null;
 
@@ -59,6 +44,21 @@ public class AddressImpl extends AddressBaseImpl {
 		}
 
 		return country;
+	}
+
+	public Region getRegion() {
+		Region region = null;
+
+		try {
+			region = RegionServiceUtil.getRegion(getRegionId());
+		}
+		catch (Exception e) {
+			region = new RegionImpl();
+
+			_log.warn(e);
+		}
+
+		return region;
 	}
 
 	public ListType getType() {

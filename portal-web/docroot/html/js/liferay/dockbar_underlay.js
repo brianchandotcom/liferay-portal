@@ -1,7 +1,9 @@
 AUI().add(
 	'liferay-dockbar-underlay',
 	function(A) {
-		Liferay.Dockbar._addUnderlay = function(options) {
+		var Dockbar = Liferay.Dockbar;
+
+		Dockbar._addUnderlay = function(options) {
 			var instance = this;
 
 			var autoShow = true;
@@ -24,7 +26,7 @@ AUI().add(
 						points: ['tl', 'bl']
 					};
 
-					underlay = new Liferay.Dockbar.Underlay(options);
+					underlay = new Dockbar.Underlay(options);
 
 					underlay.render(instance.dockBar);
 
@@ -74,7 +76,7 @@ AUI().add(
 					initializer: function() {
 						var instance = this;
 
-						Liferay.Dockbar.UnderlayManager.register(instance);
+						Dockbar.UnderlayManager.register(instance);
 					},
 
 					renderUI: function() {
@@ -104,7 +106,7 @@ AUI().add(
 			}
 		);
 
-		Liferay.Dockbar.Underlay = Underlay;
+		Dockbar.Underlay = Underlay;
 	},
 	'',
 	{

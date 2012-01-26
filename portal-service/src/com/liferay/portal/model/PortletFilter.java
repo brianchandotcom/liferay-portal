@@ -24,23 +24,23 @@ import java.util.Set;
  */
 public interface PortletFilter extends Serializable {
 
-	public String getFilterName();
-
-	public void setFilterName(String filterName);
-
 	public String getFilterClass();
 
-	public void setFilterClass(String filterClass);
-
-	public Set<String> getLifecycles();
-
-	public void setLifecycles(Set<String> lifecycles);
+	public String getFilterName();
 
 	public Map<String, String> getInitParams();
 
-	public void setInitParams(Map<String, String> initParams);
+	public Set<String> getLifecycles();
 
 	public PortletApp getPortletApp();
+
+	public void setFilterClass(String filterClass);
+
+	public void setFilterName(String filterName);
+
+	public void setInitParams(Map<String, String> initParams);
+
+	public void setLifecycles(Set<String> lifecycles);
 
 	public void setPortletApp(PortletApp portletApp);
 

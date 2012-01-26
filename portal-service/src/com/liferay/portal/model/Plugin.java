@@ -33,18 +33,18 @@ public interface Plugin {
 
 	public static final String TYPE_WEB = "web";
 
-	public PluginPackage getPluginPackage();
-
-	public void setPluginPackage(PluginPackage pluginPackage);
-
-	public String getPluginId();
-
-	public String getPluginType();
-
 	public PluginSetting getDefaultPluginSetting();
 
 	public PluginSetting getDefaultPluginSetting(long companyId);
 
+	public String getPluginId();
+
+	public PluginPackage getPluginPackage();
+
+	public String getPluginType();
+
 	public void setDefaultPluginSetting(PluginSetting pluginSetting);
+
+	public void setPluginPackage(PluginPackage pluginPackage);
 
 }

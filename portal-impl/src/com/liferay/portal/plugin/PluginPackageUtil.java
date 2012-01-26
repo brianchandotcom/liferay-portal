@@ -154,14 +154,14 @@ public class PluginPackageUtil {
 		return _instance._getRepository(repositoryURL);
 	}
 
+	public static String[] getRepositoryURLs() throws SystemException {
+		return _instance._getRepositoryURLs();
+	}
+
 	public static String[] getStatusAndInstalledVersion(
 		PluginPackage pluginPackage) {
 
 		return _instance._getStatusAndInstalledVersion(pluginPackage);
-	}
-
-	public static String[] getRepositoryURLs() throws SystemException {
-		return _instance._getRepositoryURLs();
 	}
 
 	public static String[] getSupportedTypes() {

@@ -29,10 +29,6 @@ public class PortletContextBag {
 		_servletContextName = servletContextName;
 	}
 
-	public String getServletContextName() {
-		return _servletContextName;
-	}
-
 	public Map<String, CustomUserAttributes> getCustomUserAttributes() {
 		return _customUserAttributes;
 	}
@@ -43,6 +39,10 @@ public class PortletContextBag {
 
 	public Map<String, PortletURLGenerationListener> getPortletURLListeners() {
 		return _urlListeners;
+	}
+
+	public String getServletContextName() {
+		return _servletContextName;
 	}
 
 	private Map<String, CustomUserAttributes> _customUserAttributes =

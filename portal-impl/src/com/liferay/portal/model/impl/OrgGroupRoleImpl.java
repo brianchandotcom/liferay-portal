@@ -27,13 +27,13 @@ public class OrgGroupRoleImpl extends OrgGroupRoleBaseImpl {
 	public OrgGroupRoleImpl() {
 	}
 
-	public boolean containsOrganization(List<Organization> organizations) {
-		if (organizations == null) {
+	public boolean containsGroup(List<Group> groups) {
+		if (groups == null) {
 			return false;
 		}
 		else {
-			for (Organization organization : organizations) {
-				if (organization.getOrganizationId() == getOrganizationId()) {
+			for (Group group : groups) {
+				if (group.getGroupId() == getGroupId()) {
 					return true;
 				}
 			}
@@ -42,13 +42,13 @@ public class OrgGroupRoleImpl extends OrgGroupRoleBaseImpl {
 		return false;
 	}
 
-	public boolean containsGroup(List<Group> groups) {
-		if (groups == null) {
+	public boolean containsOrganization(List<Organization> organizations) {
+		if (organizations == null) {
 			return false;
 		}
 		else {
-			for (Group group : groups) {
-				if (group.getGroupId() == getGroupId()) {
+			for (Organization organization : organizations) {
+				if (organization.getOrganizationId() == getOrganizationId()) {
 					return true;
 				}
 			}

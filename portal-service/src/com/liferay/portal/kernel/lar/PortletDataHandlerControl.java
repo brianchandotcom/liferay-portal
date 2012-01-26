@@ -46,12 +46,12 @@ public class PortletDataHandlerControl {
 		_disabled = disabled;
 	}
 
-	public String getNamespace() {
-		return _namespace;
-	}
-
 	public String getControlName() {
 		return _controlName;
+	}
+
+	public String getNamespace() {
+		return _namespace;
 	}
 
 	public String getNamespacedControlName() {

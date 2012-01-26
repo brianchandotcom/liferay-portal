@@ -21,15 +21,15 @@ import com.liferay.portal.kernel.util.OrderByComparator;
  */
 public class PasswordPoliciesAdminUtil {
 
+	public static PasswordPoliciesAdmin getPasswordPoliciesAdmin() {
+		return _passwordPoliciesAdmin;
+	}
+
 	public static OrderByComparator getPasswordPolicyOrderByComparator(
 		String orderByCol, String orderByType) {
 
 		return getPasswordPoliciesAdmin().getPasswordPolicyOrderByComparator(
 			orderByCol, orderByType);
-	}
-
-	public static PasswordPoliciesAdmin getPasswordPoliciesAdmin() {
-		return _passwordPoliciesAdmin;
 	}
 
 	public void setPasswordPoliciesAdmin(

@@ -207,10 +207,6 @@ public class PortletAction extends Action {
 		}
 	}
 
-	protected void setForward(PortletRequest portletRequest, String forward) {
-		portletRequest.setAttribute(getForwardKey(portletRequest), forward);
-	}
-
 	protected ModuleConfig getModuleConfig(PortletRequest portletRequest) {
 		return (ModuleConfig)portletRequest.getAttribute(Globals.MODULE_KEY);
 	}
@@ -329,6 +325,10 @@ public class PortletAction extends Action {
 				actionResponse.sendRedirect(redirect);
 			}
 		}
+	}
+
+	protected void setForward(PortletRequest portletRequest, String forward) {
+		portletRequest.setAttribute(getForwardKey(portletRequest), forward);
 	}
 
 	protected void writeJSON(

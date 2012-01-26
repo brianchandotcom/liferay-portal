@@ -48,48 +48,12 @@ public class PluginSettingImpl extends PluginSettingBaseImpl {
 	}
 
 	/**
-	 * Sets a string of ordered comma delimited plugin IDs.
-	 */
-	@Override
-	public void setRoles(String roles) {
-		_rolesArray = StringUtil.split(roles);
-
-		super.setRoles(roles);
-	}
-
-	/**
 	 * Returns an array of required roles of the plugin.
 	 *
 	 * @return an array of required roles of the plugin
 	 */
 	public String[] getRolesArray() {
 		return _rolesArray;
-	}
-
-	/**
-	 * Sets an array of required roles of the plugin.
-	 */
-	public void setRolesArray(String[] rolesArray) {
-		_rolesArray = rolesArray;
-
-		super.setRoles(StringUtil.merge(rolesArray));
-	}
-
-	/**
-	 * Returns <code>true</code> if the plugin has a role with the specified
-	 * name.
-	 *
-	 * @return <code>true</code> if the plugin has a role with the specified
-	 *         name
-	 */
-	public boolean hasRoleWithName(String roleName) {
-		for (int i = 0; i < _rolesArray.length; i++) {
-			if (_rolesArray[i].equalsIgnoreCase(roleName)) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	/**
@@ -128,6 +92,42 @@ public class PluginSettingImpl extends PluginSettingBaseImpl {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Returns <code>true</code> if the plugin has a role with the specified
+	 * name.
+	 *
+	 * @return <code>true</code> if the plugin has a role with the specified
+	 *         name
+	 */
+	public boolean hasRoleWithName(String roleName) {
+		for (int i = 0; i < _rolesArray.length; i++) {
+			if (_rolesArray[i].equalsIgnoreCase(roleName)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Sets a string of ordered comma delimited plugin IDs.
+	 */
+	@Override
+	public void setRoles(String roles) {
+		_rolesArray = StringUtil.split(roles);
+
+		super.setRoles(roles);
+	}
+
+	/**
+	 * Sets an array of required roles of the plugin.
+	 */
+	public void setRolesArray(String[] rolesArray) {
+		_rolesArray = rolesArray;
+
+		super.setRoles(StringUtil.merge(rolesArray));
 	}
 
 	/**

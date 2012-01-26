@@ -53,38 +53,8 @@ public class LayoutsRemotePublisherRequest
 	}
 
 	@Override
-	public void setCronText(String cronText) {
-		_cronText = cronText;
-	}
-
-	@Override
-	public long getUserId() {
-		return _userId;
-	}
-
-	@Override
-	public void setUserId(long userId) {
-		_userId = userId;
-	}
-
-	@Override
-	public long getSourceGroupId() {
-		return _sourceGroupId;
-	}
-
-	@Override
-	public void setSourceGroupId(long sourceGroupId) {
-		_sourceGroupId = sourceGroupId;
-	}
-
-	@Override
-	public boolean isPrivateLayout() {
-		return _privateLayout;
-	}
-
-	@Override
-	public void setPrivateLayout(boolean privateLayout) {
-		_privateLayout = privateLayout;
+	public Date getEndDate() {
+		return _endDate;
 	}
 
 	@Override
@@ -93,78 +63,20 @@ public class LayoutsRemotePublisherRequest
 	}
 
 	@Override
-	public void setLayoutIdMap(Map<Long, Boolean> layoutIdMap) {
-		_layoutIdMap = layoutIdMap;
-	}
-
-	@Override
 	public Map<String, String[]> getParameterMap() {
 		return _parameterMap;
-	}
-
-	@Override
-	public void setParameterMap(Map<String, String[]> parameterMap) {
-		_parameterMap = parameterMap;
 	}
 
 	public String getRemoteAddress() {
 		return _remoteAddress;
 	}
 
-	public void setRemoteAddress(String remoteAddress) {
-		_remoteAddress = remoteAddress;
-	}
-
-	public int getRemotePort() {
-		return _remotePort;
-	}
-
-	public void setRemotePort(int remotePort) {
-		_remotePort = remotePort;
-	}
-
-	public boolean isSecureConnection() {
-		return _secureConnection;
-	}
-
-	public void setSecureConnection(boolean secureConnection) {
-		_secureConnection = secureConnection;
-	}
-
 	public long getRemoteGroupId() {
 		return _remoteGroupId;
 	}
 
-	public void setRemoteGroupId(long remoteGroupId) {
-		_remoteGroupId = remoteGroupId;
-	}
-
-	public boolean isRemotePrivateLayout() {
-		return _remotePrivateLayout;
-	}
-
-	public void setRemotePrivateLayout(boolean remotePrivateLayout) {
-		_remotePrivateLayout = remotePrivateLayout;
-	}
-
-	@Override
-	public Date getStartDate() {
-		return _startDate;
-	}
-
-	@Override
-	public void setStartDate(Date startDate) {
-		_startDate = startDate;
-	}
-
-	@Override
-	public Date getEndDate() {
-		return _endDate;
-	}
-
-	@Override
-	public void setEndDate(Date endDate) {
-		_endDate = endDate;
+	public int getRemotePort() {
+		return _remotePort;
 	}
 
 	@Override
@@ -173,8 +85,96 @@ public class LayoutsRemotePublisherRequest
 	}
 
 	@Override
+	public long getSourceGroupId() {
+		return _sourceGroupId;
+	}
+
+	@Override
+	public Date getStartDate() {
+		return _startDate;
+	}
+
+	@Override
+	public long getUserId() {
+		return _userId;
+	}
+
+	@Override
+	public boolean isPrivateLayout() {
+		return _privateLayout;
+	}
+
+	public boolean isRemotePrivateLayout() {
+		return _remotePrivateLayout;
+	}
+
+	public boolean isSecureConnection() {
+		return _secureConnection;
+	}
+
+	@Override
+	public void setCronText(String cronText) {
+		_cronText = cronText;
+	}
+
+	@Override
+	public void setEndDate(Date endDate) {
+		_endDate = endDate;
+	}
+
+	@Override
+	public void setLayoutIdMap(Map<Long, Boolean> layoutIdMap) {
+		_layoutIdMap = layoutIdMap;
+	}
+
+	@Override
+	public void setParameterMap(Map<String, String[]> parameterMap) {
+		_parameterMap = parameterMap;
+	}
+
+	@Override
+	public void setPrivateLayout(boolean privateLayout) {
+		_privateLayout = privateLayout;
+	}
+
+	public void setRemoteAddress(String remoteAddress) {
+		_remoteAddress = remoteAddress;
+	}
+
+	public void setRemoteGroupId(long remoteGroupId) {
+		_remoteGroupId = remoteGroupId;
+	}
+
+	public void setRemotePort(int remotePort) {
+		_remotePort = remotePort;
+	}
+
+	public void setRemotePrivateLayout(boolean remotePrivateLayout) {
+		_remotePrivateLayout = remotePrivateLayout;
+	}
+
+	@Override
 	public void setScheduledFireTime(Date scheduledFireTime) {
 		_scheduledFireTime = scheduledFireTime;
+	}
+
+	public void setSecureConnection(boolean secureConnection) {
+		_secureConnection = secureConnection;
+	}
+
+	@Override
+	public void setSourceGroupId(long sourceGroupId) {
+		_sourceGroupId = sourceGroupId;
+	}
+
+	@Override
+	public void setStartDate(Date startDate) {
+		_startDate = startDate;
+	}
+
+	@Override
+	public void setUserId(long userId) {
+		_userId = userId;
 	}
 
 	private static final long serialVersionUID = -8270092763766057207L;

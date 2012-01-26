@@ -22,68 +22,68 @@ import java.io.Serializable;
  */
 public interface JournalArticleDisplay extends Serializable {
 
-	public long getCompanyId();
-
-	public long getId();
-
-	public long getResourcePrimKey();
-
-	public long getGroupId();
-
-	public long getUserId();
-
 	public String getArticleId();
-
-	public double getVersion();
-
-	public String getTitle();
-
-	public String getUrlTitle();
-
-	public String getDescription();
 
 	public String[] getAvailableLocales();
 
+	public long getCompanyId();
+
 	public String getContent();
-
-	public void setContent(String content);
-
-	public String getType();
-
-	public String getStructureId();
-
-	public void setStructureId(String structureId);
-
-	public String getTemplateId();
-
-	public void setTemplateId(String templateId);
-
-	public boolean isSmallImage();
-
-	public void setSmallImage(boolean smallImage);
-
-	public long getSmallImageId();
-
-	public void setSmallImageId(long smallImageId);
-
-	public String getSmallImageURL();
-
-	public void setSmallImageURL(String smallImageURL);
-
-	public int getNumberOfPages();
-
-	public void setNumberOfPages(int numberOfPages);
 
 	public int getCurrentPage();
 
-	public void setCurrentPage(int currentPage);
+	public String getDescription();
 
-	public boolean isPaginate();
+	public long getGroupId();
 
-	public void setPaginate(boolean paginate);
+	public long getId();
+
+	public int getNumberOfPages();
+
+	public long getResourcePrimKey();
+
+	public long getSmallImageId();
+
+	public String getSmallImageURL();
+
+	public String getStructureId();
+
+	public String getTemplateId();
+
+	public String getTitle();
+
+	public String getType();
+
+	public String getUrlTitle();
+
+	public long getUserId();
+
+	public double getVersion();
 
 	public boolean isCacheable();
 
+	public boolean isPaginate();
+
+	public boolean isSmallImage();
+
 	public void setCacheable(boolean cacheable);
+
+	public void setContent(String content);
+
+	public void setCurrentPage(int currentPage);
+
+	public void setNumberOfPages(int numberOfPages);
+
+	public void setPaginate(boolean paginate);
+
+	public void setSmallImage(boolean smallImage);
+
+	public void setSmallImageId(long smallImageId);
+
+	public void setSmallImageURL(String smallImageURL);
+
+	public void setStructureId(String structureId);
+
+	public void setTemplateId(String templateId);
 
 }

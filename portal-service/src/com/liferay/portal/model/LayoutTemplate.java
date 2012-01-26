@@ -27,37 +27,27 @@ import javax.servlet.ServletContext;
 public interface LayoutTemplate
 	extends Comparable<LayoutTemplate>, Plugin, Serializable {
 
-	public String getLayoutTemplateId();
-
-	public boolean getStandard();
-
-	public boolean isStandard();
-
-	public void setStandard(boolean standard);
-
-	public String getThemeId();
-
-	public void setThemeId(String themeId);
-
-	public String getName();
-
-	public void setName(String name);
-
-	public String getTemplatePath();
-
-	public void setTemplatePath(String templatePath);
-
-	public String getWapTemplatePath();
-
-	public void setWapTemplatePath(String wapWapTemplatePath);
-
-	public String getThumbnailPath();
-
-	public void setThumbnailPath(String thumbnailPath);
+	public List<String> getColumns();
 
 	public String getContent();
 
-	public void setContent(String content);
+	public String getContextPath();
+
+	public String getLayoutTemplateId();
+
+	public String getName();
+
+	public String getServletContextName();
+
+	public boolean getStandard();
+
+	public String getStaticResourcePath();
+
+	public String getTemplatePath();
+
+	public String getThemeId();
+
+	public String getThumbnailPath();
 
 	public String getUncachedContent() throws IOException;
 
@@ -65,28 +55,38 @@ public interface LayoutTemplate
 
 	public String getWapContent();
 
-	public void setWapContent(String wapContent);
-
-	public List<String> getColumns();
-
-	public void setColumns(List<String> columns);
-
-	public void setServletContext(ServletContext servletContext);
-
-	public String getServletContextName();
-
-	public void setServletContextName(String servletContextName);
+	public String getWapTemplatePath();
 
 	public boolean getWARFile();
-
-	public String getContextPath();
-
-	public String getStaticResourcePath();
 
 	public boolean hasSetContent();
 
 	public boolean hasSetWapContent();
 
+	public boolean isStandard();
+
 	public boolean isWARFile();
+
+	public void setColumns(List<String> columns);
+
+	public void setContent(String content);
+
+	public void setName(String name);
+
+	public void setServletContext(ServletContext servletContext);
+
+	public void setServletContextName(String servletContextName);
+
+	public void setStandard(boolean standard);
+
+	public void setTemplatePath(String templatePath);
+
+	public void setThemeId(String themeId);
+
+	public void setThumbnailPath(String thumbnailPath);
+
+	public void setWapContent(String wapContent);
+
+	public void setWapTemplatePath(String wapWapTemplatePath);
 
 }

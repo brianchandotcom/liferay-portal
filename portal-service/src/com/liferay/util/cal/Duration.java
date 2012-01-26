@@ -122,34 +122,59 @@ public class Duration implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Method getWeeks
-	 *
-	 * @return int
-	 */
-	public int getWeeks() {
-		return _weeks;
-	}
-
-	/**
-	 * Method setWeeks
-	 */
-	public void setWeeks(int w) {
-		if (w < 0) {
-			throw new IllegalArgumentException("Week value out of range");
-		}
-
-		checkWeeksOkay(w);
-
-		_weeks = w;
-	}
-
-	/**
 	 * Method getDays
 	 *
 	 * @return int
 	 */
 	public int getDays() {
 		return _days;
+	}
+
+	/**
+	 * Method getHours
+	 *
+	 * @return int
+	 */
+	public int getHours() {
+		return _hours;
+	}
+
+	/**
+	 * Method getInterval
+	 *
+	 * @return long
+	 */
+	public long getInterval() {
+		return _seconds * _MILLIS_PER_SECOND + _minutes * _MILLIS_PER_MINUTE
+			   + _hours * _MILLIS_PER_HOUR + _days * _MILLIS_PER_DAY
+			   + _weeks * _MILLIS_PER_WEEK;
+	}
+
+	/**
+	 * Method getMinutes
+	 *
+	 * @return int
+	 */
+	public int getMinutes() {
+		return _minutes;
+	}
+
+	/**
+	 * Method getSeconds
+	 *
+	 * @return int
+	 */
+	public int getSeconds() {
+		return _seconds;
+	}
+
+	/**
+	 * Method getWeeks
+	 *
+	 * @return int
+	 */
+	public int getWeeks() {
+		return _weeks;
 	}
 
 	/**
@@ -168,15 +193,6 @@ public class Duration implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Method getHours
-	 *
-	 * @return int
-	 */
-	public int getHours() {
-		return _hours;
-	}
-
-	/**
 	 * Method setHours
 	 */
 	public void setHours(int h) {
@@ -192,12 +208,19 @@ public class Duration implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Method getMinutes
-	 *
-	 * @return int
+	 * Method setInterval
 	 */
-	public int getMinutes() {
-		return _minutes;
+	public void setInterval(long millis) {
+		if (millis < 0) {
+			throw new IllegalArgumentException("Negative-length interval");
+		}
+
+		clear();
+
+		_days = (int)(millis / _MILLIS_PER_DAY);
+		_seconds = (int)((millis % _MILLIS_PER_DAY) / _MILLIS_PER_SECOND);
+
+		normalize();
 	}
 
 	/**
@@ -216,15 +239,6 @@ public class Duration implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Method getSeconds
-	 *
-	 * @return int
-	 */
-	public int getSeconds() {
-		return _seconds;
-	}
-
-	/**
 	 * Method setSeconds
 	 */
 	public void setSeconds(int s) {
@@ -240,30 +254,16 @@ public class Duration implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Method getInterval
-	 *
-	 * @return long
+	 * Method setWeeks
 	 */
-	public long getInterval() {
-		return _seconds * _MILLIS_PER_SECOND + _minutes * _MILLIS_PER_MINUTE
-			   + _hours * _MILLIS_PER_HOUR + _days * _MILLIS_PER_DAY
-			   + _weeks * _MILLIS_PER_WEEK;
-	}
-
-	/**
-	 * Method setInterval
-	 */
-	public void setInterval(long millis) {
-		if (millis < 0) {
-			throw new IllegalArgumentException("Negative-length interval");
+	public void setWeeks(int w) {
+		if (w < 0) {
+			throw new IllegalArgumentException("Week value out of range");
 		}
 
-		clear();
+		checkWeeksOkay(w);
 
-		_days = (int)(millis / _MILLIS_PER_DAY);
-		_seconds = (int)((millis % _MILLIS_PER_DAY) / _MILLIS_PER_SECOND);
-
-		normalize();
+		_weeks = w;
 	}
 
 	/**

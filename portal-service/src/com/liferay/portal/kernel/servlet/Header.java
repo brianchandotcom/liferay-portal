@@ -31,28 +31,28 @@ public class Header implements Serializable {
 		return _dateValue;
 	}
 
-	public void setDateValue(long dateValue) {
-		_dateValue = dateValue;
-	}
-
 	public int getIntValue() {
 		return _intValue;
-	}
-
-	public void setIntValue(int intValue) {
-		_intValue = intValue;
 	}
 
 	public String getStringValue() {
 		return _stringValue;
 	}
 
-	public void setStringValue(String stringValue) {
-		_stringValue = stringValue;
-	}
-
 	public int getType() {
 		return _type;
+	}
+
+	public void setDateValue(long dateValue) {
+		_dateValue = dateValue;
+	}
+
+	public void setIntValue(int intValue) {
+		_intValue = intValue;
+	}
+
+	public void setStringValue(String stringValue) {
+		_stringValue = stringValue;
 	}
 
 	public void setType(int type) {

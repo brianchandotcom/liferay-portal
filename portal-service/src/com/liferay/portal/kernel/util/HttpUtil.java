@@ -101,12 +101,12 @@ public class HttpUtil {
 		return getHttp().getDomain(url);
 	}
 
-	public static String getIpAddress(String url) {
-		return getHttp().getIpAddress(url);
-	}
-
 	public static Http getHttp() {
 		return _http;
+	}
+
+	public static String getIpAddress(String url) {
+		return getHttp().getIpAddress(url);
 	}
 
 	public static String getParameter(String url, String name) {

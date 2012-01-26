@@ -53,16 +53,8 @@ public class HttpPrincipal implements Serializable {
 		}
 	}
 
-	public String getUrl() {
-		return _url;
-	}
-
 	public long getCompanyId() {
 		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public String getLogin() {
@@ -71,6 +63,14 @@ public class HttpPrincipal implements Serializable {
 
 	public String getPassword() {
 		return _password;
+	}
+
+	public String getUrl() {
+		return _url;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(HttpPrincipal.class);

@@ -42,13 +42,6 @@ public class IconPortletTag extends IconTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		super.setAttributes(request);
-
-		request.setAttribute("liferay-portlet:icon_portlet:portlet", _portlet);
-	}
-
-	@Override
 	protected String getPage() {
 		if (FileAvailabilityUtil.isAvailable(getServletContext(), _PAGE)) {
 			return _PAGE;
@@ -82,6 +75,13 @@ public class IconPortletTag extends IconTag {
 		setSrc(src);
 
 		return super.getPage();
+	}
+
+	@Override
+	protected void setAttributes(HttpServletRequest request) {
+		super.setAttributes(request);
+
+		request.setAttribute("liferay-portlet:icon_portlet:portlet", _portlet);
 	}
 
 	private static final String _PAGE =

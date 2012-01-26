@@ -34,19 +34,8 @@ public class GenericServletResponse extends HttpServletResponseWrapper {
 		_ubaos = new UnsyncByteArrayOutputStream();
 	}
 
-	public byte[] getData() {
-		return _ubaos.toByteArray();
-	}
-
 	public int getContentLength() {
 		return _contentLength;
-	}
-
-	@Override
-	public void setContentLength(int length) {
-		super.setContentLength(length);
-
-		_contentLength = length;
 	}
 
 	@Override
@@ -54,11 +43,8 @@ public class GenericServletResponse extends HttpServletResponseWrapper {
 		return _contentType;
 	}
 
-	@Override
-	public void setContentType(String type) {
-		super.setContentType(type);
-
-		_contentType = type;
+	public byte[] getData() {
+		return _ubaos.toByteArray();
 	}
 
 	@Override
@@ -69,6 +55,20 @@ public class GenericServletResponse extends HttpServletResponseWrapper {
 	@Override
 	public PrintWriter getWriter() {
 		return UnsyncPrintWriterPool.borrow(getOutputStream());
+	}
+
+	@Override
+	public void setContentLength(int length) {
+		super.setContentLength(length);
+
+		_contentLength = length;
+	}
+
+	@Override
+	public void setContentType(String type) {
+		super.setContentType(type);
+
+		_contentType = type;
 	}
 
 	private int _contentLength;

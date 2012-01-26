@@ -33,12 +33,12 @@ public class LayoutReference implements Serializable {
 		return _layoutSoap;
 	}
 
-	public void setLayoutSoap(LayoutSoap layoutSoap) {
-		_layoutSoap = layoutSoap;
-	}
-
 	public String getPortletId() {
 		return _portletId;
+	}
+
+	public void setLayoutSoap(LayoutSoap layoutSoap) {
+		_layoutSoap = layoutSoap;
 	}
 
 	public void setPortletId(String portletId) {

@@ -369,12 +369,12 @@ public class ElementImpl extends BranchImpl implements Element {
 		return _element.getNamespacePrefix();
 	}
 
-	public String getNamespaceURI() {
-		return _element.getNamespaceURI();
-	}
-
 	public List<Namespace> getNamespacesForURI(String uri) {
 		return SAXReaderImpl.toNewNamespaces(_element.getNamespacesForURI(uri));
+	}
+
+	public String getNamespaceURI() {
+		return _element.getNamespaceURI();
 	}
 
 	public QName getQName() {

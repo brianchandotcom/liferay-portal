@@ -33,12 +33,12 @@ public class DNSLookup implements Serializable {
 		return _domain;
 	}
 
-	public void setDomain(String domain) {
-		_domain = domain;
-	}
-
 	public String getResults() {
 		return _results;
+	}
+
+	public void setDomain(String domain) {
+		_domain = domain;
 	}
 
 	public void setResults(String results) {

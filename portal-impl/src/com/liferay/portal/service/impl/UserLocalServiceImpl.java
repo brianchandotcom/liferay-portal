@@ -4744,7 +4744,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		// Groups and organizations
 
 		updateGroups(userId, groupIds, false);
-		updateOrganizations(userId, groupIds, false);
+		updateOrganizations(userId, organizationIds, false);
 
 		// Roles
 

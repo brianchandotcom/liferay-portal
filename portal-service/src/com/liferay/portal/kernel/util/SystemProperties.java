@@ -48,12 +48,6 @@ public class SystemProperties {
 		return value;
 	}
 
-	public static void set(String key, String value) {
-		System.setProperty(key, value);
-
-		_instance._properties.put(key, value);
-	}
-
 	public static String[] getArray(String key) {
 		String value = get(key);
 
@@ -67,6 +61,12 @@ public class SystemProperties {
 
 	public static Properties getProperties() {
 		return PropertiesUtil.fromMap(_instance._properties);
+	}
+
+	public static void set(String key, String value) {
+		System.setProperty(key, value);
+
+		_instance._properties.put(key, value);
 	}
 
 	private SystemProperties() {

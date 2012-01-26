@@ -64,8 +64,8 @@ public class SocialActivityInterpreterImpl
 		return _activityInterpreter.interpret(activity, themeDisplay);
 	}
 
-	private String _portletId;
 	private SocialActivityInterpreter _activityInterpreter;
 	private Set<String> _classNames = new HashSet<String>();
+	private String _portletId;
 
 }

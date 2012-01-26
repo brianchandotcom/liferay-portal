@@ -28,11 +28,6 @@ import javax.portlet.PortletPreferences;
  */
 public class InvitationUtil {
 
-	public static int getEmailMessageMaxRecipients() {
-		return GetterUtil.getInteger(PropsUtil.get(
-			PropsKeys.INVITATION_EMAIL_MAX_RECIPIENTS));
-	}
-
 	public static String getEmailMessageBody(PortletPreferences preferences) {
 		String emailMessageBody = preferences.getValue(
 			"emailMessageBody", StringPool.BLANK);
@@ -44,6 +39,11 @@ public class InvitationUtil {
 			return ContentUtil.get(PropsUtil.get(
 				PropsKeys.INVITATION_EMAIL_MESSAGE_BODY));
 		}
+	}
+
+	public static int getEmailMessageMaxRecipients() {
+		return GetterUtil.getInteger(PropsUtil.get(
+			PropsKeys.INVITATION_EMAIL_MAX_RECIPIENTS));
 	}
 
 	public static String getEmailMessageSubject(

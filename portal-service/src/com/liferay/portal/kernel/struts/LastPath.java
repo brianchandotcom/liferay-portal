@@ -43,24 +43,24 @@ public class LastPath implements Serializable {
 		return _contextPath;
 	}
 
-	public void setContextPath(String contextPath) {
-		_contextPath = contextPath;
+	public Map<String, String[]> getParameterMap() {
+		return _parameterMap;
 	}
 
 	public String getPath() {
 		return _path;
 	}
 
-	public void setPath(String path) {
-		_path = path;
-	}
-
-	public Map<String, String[]> getParameterMap() {
-		return _parameterMap;
+	public void setContextPath(String contextPath) {
+		_contextPath = contextPath;
 	}
 
 	public void setParameterMap(Map<String, String[]> parameterMap) {
 		_parameterMap = parameterMap;
+	}
+
+	public void setPath(String path) {
+		_path = path;
 	}
 
 	@Override

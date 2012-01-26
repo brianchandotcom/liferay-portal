@@ -3348,10 +3348,7 @@ file.
 					<or>
 						<contains string="${simple.server.dir}" substring="glassfish" />
 						<contains string="${simple.server.dir}" substring="jonas" />
-						<isset property="hook.plugins.includes" />
-						<isset property="portlet.plugins.includes" />
-						<isset property="theme.plugins.includes" />
-						<isset property="web.plugins.includes" />
+						<isset property="plugins.deployed" />
 					</or>
 					<then>
 						<sleep seconds="60" />

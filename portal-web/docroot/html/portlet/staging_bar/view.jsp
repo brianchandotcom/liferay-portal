@@ -613,7 +613,8 @@ if (layout != null) {
 		<aui:script use="liferay-staging">
 			Liferay.StagingBar.init(
 				{
-					namespace: '<portlet:namespace />'
+					namespace: '<portlet:namespace />',
+					portletId: '<%= portletDisplay.getId() %>'
 				}
 			);
 		</aui:script>

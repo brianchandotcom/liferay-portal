@@ -18,6 +18,14 @@ AUI.add(
 		A.mix(
 			StagingBar,
 			{
+				destructor: function() {
+					var instance = this;
+
+					instance._destroyToolbarContent();
+
+					A.Array.invoke(instance._eventHandles, 'detach');
+				},
+
 				_onInit: function(event) {
 					var instance = this;
 
@@ -70,37 +78,45 @@ AUI.add(
 						}
 					);
 
+					var eventHandles = [];
+
 					var layoutRevisionDetails = A.byIdNS(namespace, 'layoutRevisionDetails');
 
 					if (layoutRevisionDetails) {
-						Liferay.onceAfter(
-							'updatedLayout',
-							function(event) {
-								A.io.request(
-									themeDisplay.getPathMain() + '/staging_bar/view_layout_revision_details',
-									{
-										data: {
-											p_l_id: themeDisplay.getPlid()
-										},
-										on: {
-											failure: function(event, id, obj) {
-												layoutRevisionDetails.setContent(Liferay.Language.get('there-was-an-unexpected-error-please-refresh-the-current-page'));
+						eventHandles.push(
+							Liferay.onceAfter(
+								'updatedLayout',
+								function(event) {
+									A.io.request(
+										themeDisplay.getPathMain() + '/staging_bar/view_layout_revision_details',
+										{
+											data: {
+												p_l_id: themeDisplay.getPlid()
 											},
-											success: function(event, id, obj) {
-												instance._destroyToolbarContent();
+											on: {
+												failure: function(event, id, obj) {
+													layoutRevisionDetails.setContent(Liferay.Language.get('there-was-an-unexpected-error-please-refresh-the-current-page'));
+												},
+												success: function(event, id, obj) {
+													instance._destroyToolbarContent();
 
-												var response = this.get('responseData');
+													var response = this.get('responseData');
 
-												layoutRevisionDetails.plug(A.Plugin.ParseContent);
+													layoutRevisionDetails.plug(A.Plugin.ParseContent);
 
-												layoutRevisionDetails.setContent(response);
+													layoutRevisionDetails.setContent(response);
+												}
 											}
 										}
-									}
-								);
-							}
+									);
+								}
+							)
 						);
 					}
+
+					eventHandles.push(Liferay.on(event.portletId + ':portletRefreshed', A.bind(instance.destructor, instance)));
+
+					instance._eventHandles = eventHandles;
 				},
 
 				_destroyToolbarContent: function() {

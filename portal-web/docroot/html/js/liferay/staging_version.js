@@ -18,6 +18,14 @@ AUI.add(
 		A.mix(
 			StagingBar,
 			{
+				destructor: function() {
+					var instance = this;
+
+					instance._destroyToolbarContent();
+
+					A.Array.invoke(instance._eventHandles, 'detach');
+				},
+
 				_onInit: function(event) {
 					var instance = this;
 
@@ -75,7 +83,7 @@ AUI.add(
 					var layoutRevisionDetails = A.byIdNS(namespace, 'layoutRevisionDetails');
 
 					if (layoutRevisionDetails) {
-						eventHandles = [
+						eventHandles.push(
 							Liferay.onceAfter(
 								'updatedLayout',
 								function(event) {
@@ -103,7 +111,7 @@ AUI.add(
 									);
 								}
 							)
-						];
+						);
 					}
 
 					eventHandles.push(Liferay.on(event.portletId + ':portletRefreshed', A.bind(instance.destructor, instance)));
@@ -128,16 +136,6 @@ AUI.add(
 						StagingBar.undoButton.destroy();
 
 						StagingBar.undoButton = null;
-					}
-				},
-
-				destructor: function() {
-					var instance = this;
-
-					instance._destroyToolbarContent();
-
-					if (instance._eventHandles) {
-						A.Array.invoke(instance._eventHandles, 'detach');
 					}
 				},
 

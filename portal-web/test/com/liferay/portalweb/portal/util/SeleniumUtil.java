@@ -78,7 +78,7 @@ public class SeleniumUtil {
 
 	private static SeleniumUtil _instance = new SeleniumUtil();
 
-	private String _timestamp;
 	private LiferaySelenium _selenium;
+	private String _timestamp;
 
 }

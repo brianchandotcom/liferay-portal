@@ -24,10 +24,10 @@ public interface ShoppingCartItem
 
 	public String getCartItemId();
 
-	public ShoppingItem getItem();
-
 	public String getFields();
 
 	public String[] getFieldsArray();
+
+	public ShoppingItem getItem();
 
 }

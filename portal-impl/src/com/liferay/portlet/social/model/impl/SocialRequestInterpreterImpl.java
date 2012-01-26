@@ -76,8 +76,8 @@ public class SocialRequestInterpreterImpl
 		return _requestInterpreter.processRejection(request, themeDisplay);
 	}
 
+	private Set<String> _classNames = new HashSet<String>();
 	private String _portletId;
 	private SocialRequestInterpreter _requestInterpreter;
-	private Set<String> _classNames = new HashSet<String>();
 
 }

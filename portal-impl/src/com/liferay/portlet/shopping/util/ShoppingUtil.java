@@ -811,16 +811,6 @@ public class ShoppingUtil {
 		return rowPos;
 	}
 
-	public static long getItemId(String itemId) {
-		int pos = itemId.indexOf(CharPool.PIPE);
-
-		if (pos != -1) {
-			itemId = itemId.substring(0, pos);
-		}
-
-		return GetterUtil.getLong(itemId);
-	}
-
 	public static String getItemFields(String itemId) {
 		int pos = itemId.indexOf(CharPool.PIPE);
 
@@ -830,6 +820,16 @@ public class ShoppingUtil {
 		else {
 			return itemId.substring(pos + 1, itemId.length());
 		}
+	}
+
+	public static long getItemId(String itemId) {
+		int pos = itemId.indexOf(CharPool.PIPE);
+
+		if (pos != -1) {
+			itemId = itemId.substring(0, pos);
+		}
+
+		return GetterUtil.getLong(itemId);
 	}
 
 	public static OrderByComparator getItemOrderByComparator(

@@ -739,16 +739,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		// Organizations
 
-		boolean indexingEnabled = serviceContext.isIndexingEnabled();
-
-		serviceContext.setIndexingEnabled(false);
-
-		try {
-			updateOrganizations(userId, organizationIds, serviceContext);
-		}
-		finally {
-			serviceContext.setIndexingEnabled(indexingEnabled);
-		}
+		updateOrganizations(userId, organizationIds, false);
 
 		// Roles
 
@@ -775,17 +766,24 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		addDefaultUserGroups(userId);
 
-		// Asset
-
 		if (serviceContext != null) {
+
+			// Asset
+
 			updateAsset(
 				creatorUserId, user, serviceContext.getAssetCategoryIds(),
 				serviceContext.getAssetTagNames());
+
+			// Expando
+
+			user.setExpandoBridgeAttributes(serviceContext);
 		}
+		else {
+			serviceContext = new ServiceContext();
 
-		// Expando
-
-		user.setExpandoBridgeAttributes(serviceContext);
+			serviceContext.setIndexingEnabled(true);
+			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+		}
 
 		// Indexer
 
@@ -3375,8 +3373,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void unsetGroupUsers(
-			long groupId, long[] userIds, ServiceContext serviceContext)
+	public void unsetGroupUsers(long groupId, long[] userIds)
 		throws PortalException, SystemException {
 
 		userGroupRoleLocalService.deleteUserGroupRoles(userIds, groupId);
@@ -3714,16 +3711,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		return user;
 	}
 
-	/**
-	 * Sets the groups the user is in, removing and adding groups as necessary.
-	 *
-	 * @param  userId the primary key of the user
-	 * @param  newGroupIds the primary keys of the groups
-	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
-	 */
 	public void updateGroups(
-			long userId, long[] newGroupIds, ServiceContext serviceContext)
+			long userId, long[] newGroupIds, boolean isIndexingEnabled)
 		throws PortalException, SystemException {
 
 		if (newGroupIds == null) {
@@ -3740,8 +3729,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			oldGroupIds.add(oldGroupId);
 
 			if (!ArrayUtil.contains(newGroupIds, oldGroupId)) {
-				unsetGroupUsers(
-					oldGroupId, new long[] {userId}, serviceContext);
+				unsetGroupUsers(oldGroupId, new long[] {userId});
 			}
 		}
 
@@ -3751,13 +3739,28 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			}
 		}
 
-		if (serviceContext.isIndexingEnabled()) {
+		if (isIndexingEnabled) {
 			Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
 			indexer.reindex(new long[] {userId});
 		}
 
 		PermissionCacheUtil.clearCache();
+	}
+
+	/**
+	 * Sets the groups the user is in, removing and adding groups as necessary.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  newGroupIds the primary keys of the groups
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void updateGroups(
+			long userId, long[] newGroupIds, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		updateGroups(userId, newGroupIds, serviceContext.isIndexingEnabled());
 	}
 
 	/**
@@ -3925,6 +3928,12 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		userPersistence.update(user, false, serviceContext);
 
 		// Workflow
+
+		if (serviceContext == null) {
+			serviceContext = new ServiceContext();
+
+			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+		}
 
 		long workflowUserId = creatorUserId;
 
@@ -4140,18 +4149,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		return user;
 	}
 
-	/**
-	 * Sets the organizations that the user is in, removing and adding
-	 * organizations as necessary.
-	 *
-	 * @param  userId the primary key of the user
-	 * @param  newOrganizationIds the primary keys of the organizations
-	 * @throws PortalException if a user with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
 	public void updateOrganizations(
-			long userId, long[] newOrganizationIds,
-			ServiceContext serviceContext)
+			long userId, long[] newOrganizationIds, boolean indexingEnabled)
 		throws PortalException, SystemException {
 
 		if (newOrganizationIds == null) {
@@ -4180,13 +4179,31 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			}
 		}
 
-		if (serviceContext.isIndexingEnabled()) {
+		if (indexingEnabled) {
 			Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
 			indexer.reindex(new long[] {userId});
 		}
 
 		PermissionCacheUtil.clearCache();
+	}
+
+	/**
+	 * Sets the organizations that the user is in, removing and adding
+	 * organizations as necessary.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  newOrganizationIds the primary keys of the organizations
+	 * @throws PortalException if a user with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void updateOrganizations(
+			long userId, long[] newOrganizationIds,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		updateOrganizations(
+			userId, newOrganizationIds, serviceContext.isIndexingEnabled());
 	}
 
 	/**
@@ -4726,17 +4743,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		// Groups and organizations
 
-		boolean indexingEnabled = serviceContext.isIndexingEnabled();
-
-		serviceContext.setIndexingEnabled(false);
-
-		try {
-			updateGroups(userId, groupIds, serviceContext);
-			updateOrganizations(userId, organizationIds, serviceContext);
-		}
-		finally {
-			serviceContext.setIndexingEnabled(indexingEnabled);
-		}
+		updateGroups(userId, groupIds, false);
+		updateOrganizations(userId, organizationIds, false);
 
 		// Roles
 
@@ -4765,17 +4773,18 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		announcementsDeliveryLocalService.getUserDeliveries(user.getUserId());
 
-		// Asset
-
 		if (serviceContext != null) {
+
+			// Asset
+
 			updateAsset(
 				userId, user, serviceContext.getAssetCategoryIds(),
 				serviceContext.getAssetTagNames());
+
+			// Expando
+
+			user.setExpandoBridgeAttributes(serviceContext);
 		}
-
-		// Expando
-
-		user.setExpandoBridgeAttributes(serviceContext);
 
 		// Message boards
 
@@ -4788,7 +4797,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		// Indexer
 
-		if (serviceContext.isIndexingEnabled()) {
+		if ((serviceContext == null) || serviceContext.isIndexingEnabled()) {
 			Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
 			indexer.reindex(user);
@@ -4796,7 +4805,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		// Email address verification
 
-		if (sendEmailAddressVerification) {
+		if ((serviceContext != null) && sendEmailAddressVerification) {
 			sendEmailAddressVerification(user, emailAddress, serviceContext);
 		}
 

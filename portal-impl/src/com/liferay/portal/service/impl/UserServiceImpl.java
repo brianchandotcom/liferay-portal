@@ -936,7 +936,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			}
 		}
 
-		userLocalService.unsetGroupUsers(groupId, userIds, serviceContext);
+		userLocalService.unsetGroupUsers(groupId, userIds);
 	}
 
 	/**

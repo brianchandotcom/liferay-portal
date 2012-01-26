@@ -2132,11 +2132,10 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
-	public void unsetGroupUsers(long groupId, long[] userIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public void unsetGroupUsers(long groupId, long[] userIds)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_userLocalService.unsetGroupUsers(groupId, userIds, serviceContext);
+		_userLocalService.unsetGroupUsers(groupId, userIds);
 	}
 
 	/**
@@ -2349,6 +2348,13 @@ public class UserLocalServiceWrapper implements UserLocalService,
 		return _userLocalService.updateFacebookId(userId, facebookId);
 	}
 
+	public void updateGroups(long userId, long[] newGroupIds,
+		boolean isIndexingEnabled)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_userLocalService.updateGroups(userId, newGroupIds, isIndexingEnabled);
+	}
+
 	/**
 	* Sets the groups the user is in, removing and adding groups as necessary.
 	*
@@ -2557,6 +2563,14 @@ public class UserLocalServiceWrapper implements UserLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _userLocalService.updateOpenId(userId, openId);
+	}
+
+	public void updateOrganizations(long userId, long[] newOrganizationIds,
+		boolean indexingEnabled)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_userLocalService.updateOrganizations(userId, newOrganizationIds,
+			indexingEnabled);
 	}
 
 	/**

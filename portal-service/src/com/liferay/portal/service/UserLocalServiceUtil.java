@@ -2159,11 +2159,10 @@ public class UserLocalServiceUtil {
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void unsetGroupUsers(long groupId, long[] userIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public static void unsetGroupUsers(long groupId, long[] userIds)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().unsetGroupUsers(groupId, userIds, serviceContext);
+		getService().unsetGroupUsers(groupId, userIds);
 	}
 
 	/**
@@ -2379,6 +2378,13 @@ public class UserLocalServiceUtil {
 		return getService().updateFacebookId(userId, facebookId);
 	}
 
+	public static void updateGroups(long userId, long[] newGroupIds,
+		boolean isIndexingEnabled)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().updateGroups(userId, newGroupIds, isIndexingEnabled);
+	}
+
 	/**
 	* Sets the groups the user is in, removing and adding groups as necessary.
 	*
@@ -2588,6 +2594,14 @@ public class UserLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().updateOpenId(userId, openId);
+	}
+
+	public static void updateOrganizations(long userId,
+		long[] newOrganizationIds, boolean indexingEnabled)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.updateOrganizations(userId, newOrganizationIds, indexingEnabled);
 	}
 
 	/**

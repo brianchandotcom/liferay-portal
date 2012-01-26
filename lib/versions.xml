@@ -2681,6 +2681,10 @@
 				<copyright-notice>Copyright (c) 2004 Sun Microsystems, Inc.</copyright-notice>
 			</license>
 		</licenses>
+		<comments>
+			This includes a public patch from
+			https://rometools.jira.com/browse/ROME-145.
+		</comments>
 	</library>
 	<library>
 		<file-name>portal/saaj-api.jar</file-name>

@@ -509,6 +509,10 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 		return _request.isSecure();
 	}
 
+	public boolean isTriggeredByActionURL() {
+		return _triggeredByActionURL;
+	}
+
 	public boolean isUserInRole(String role) {
 		if (_remoteUserId <= 0) {
 			return false;
@@ -571,10 +575,6 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 	public void setWindowState(WindowState windowState) {
 		_windowState = windowState;
-	}
-
-	public boolean isTriggeredByActionURL() {
-		return _triggeredByActionURL;
 	}
 
 	protected void init(

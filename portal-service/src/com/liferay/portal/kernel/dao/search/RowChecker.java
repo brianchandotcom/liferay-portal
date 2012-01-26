@@ -51,6 +51,10 @@ public class RowChecker {
 		return _align;
 	}
 
+	public String getAllRowIds() {
+		return _allRowIds;
+	}
+
 	public String getAllRowsCheckBox() {
 		if (Validator.isNull(_allRowIds)) {
 			return StringPool.BLANK;
@@ -70,10 +74,6 @@ public class RowChecker {
 
 			return sb.toString();
 		}
-	}
-
-	public String getAllRowIds() {
-		return _allRowIds;
 	}
 
 	public String getAllRowsId() {

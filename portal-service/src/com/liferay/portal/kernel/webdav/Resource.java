@@ -24,36 +24,36 @@ import java.io.InputStream;
  */
 public interface Resource {
 
- 	public String getHREF();
-
-	public String getDisplayName();
-
-	public Lock getLock();
-
- 	public String getCreateDate();
-
- 	public String getModifiedDate();
-
- 	public long getSize();
-
-	public Object getModel();
-
-	public void setModel(Object model);
-
  	public String getClassName();
-
- 	public void setClassName(String className);
-
- 	public long getPrimaryKey();
-
- 	public void setPrimaryKey(long primaryKey);
-
-	public String getContentType();
 
 	public InputStream getContentAsStream() throws WebDAVException ;
 
-	public boolean isCollection();
+	public String getContentType();
+
+ 	public String getCreateDate();
+
+ 	public String getDisplayName();
+
+ 	public String getHREF();
+
+	public Lock getLock();
+
+	public Object getModel();
+
+ 	public String getModifiedDate();
+
+ 	public long getPrimaryKey();
+
+ 	public long getSize();
+
+ 	public boolean isCollection();
 
 	public boolean isLocked();
+
+	public void setClassName(String className);
+
+	public void setModel(Object model);
+
+	public void setPrimaryKey(long primaryKey);
 
 }

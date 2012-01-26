@@ -86,17 +86,17 @@ public class PortletSandboxHandler extends BaseSandboxHandler {
 		_deployer.copyDependencyXml("service.xml", dir + "/WEB-INF", filterMap);
 	}
 
+	@Override
+	protected String getPluginType() {
+		return _PLUGIN_TYPE;
+	}
+
 	protected Namespace getPortletNamespace(Document document) {
 		Element rootElement = document.getRootElement();
 
 		QName qName = rootElement.getQName();
 
 		return qName.getNamespace();
-	}
-
-	@Override
-	protected String getPluginType() {
-		return _PLUGIN_TYPE;
 	}
 
 	protected void updateLiferayDisplayXML(File dir) throws Exception {

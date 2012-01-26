@@ -21,13 +21,13 @@ public abstract class RuntimeLogic {
 
 	public static final String CLOSE_2_TAG = "/>";
 
-	public abstract String getOpenTag();
-
 	public abstract String getClose1Tag();
 
 	public String getClose2Tag() {
 		return CLOSE_2_TAG;
 	}
+
+	public abstract String getOpenTag();
 
 	public abstract String processXML(String xml) throws Exception;
 

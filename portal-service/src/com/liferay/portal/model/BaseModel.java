@@ -30,20 +30,25 @@ public interface BaseModel<T>
 	extends ClassedModel, Cloneable, Comparable<T>, Serializable {
 
 	/**
-	 * Returns <code>true</code> if this model instance does not yet exist in
-	 * the database.
+	 * Creates a shallow clone of this model instance.
 	 *
-	 * @return <code>true</code> if this model instance does not yet exist in
-	 *         the database; <code>false</code> otherwise
+	 * @return the shallow clone of this model instance
 	 */
-	public boolean isNew();
+	public Object clone();
 
 	/**
-	 * Sets whether this model instance does not yet exist in the database.
+	 * Returns the expando bridge for this model instance.
 	 *
-	 * @param n whether this model instance does not yet exist in the database
+	 * @return the expando bridge for this model instance
 	 */
-	public void setNew(boolean n);
+	public ExpandoBridge getExpandoBridge();
+
+	/**
+	 * Returns the primary key of this model instance.
+	 *
+	 * @return the primary key of this model instance
+	 */
+	public Serializable getPrimaryKeyObj();
 
 	/**
 	 * Returns <code>true</code> if this model instance was retrieved from the
@@ -56,15 +61,6 @@ public interface BaseModel<T>
 	public boolean isCachedModel();
 
 	/**
-	 * Sets whether this model instance was retrieved from the entity cache.
-	 *
-	 * @param cachedModel whether this model instance was retrieved from the
-	 *        entity cache
-	 * @see   com.liferay.portal.kernel.dao.orm.EntityCache
-	 */
-	public void setCachedModel(boolean cachedModel);
-
-	/**
 	 * Returns <code>true</code> if this model instance is escaped.
 	 *
 	 * @return <code>true</code> if this model instance is escaped;
@@ -73,25 +69,27 @@ public interface BaseModel<T>
 	public boolean isEscapedModel();
 
 	/**
-	 * Returns the primary key of this model instance.
+	 * Returns <code>true</code> if this model instance does not yet exist in
+	 * the database.
 	 *
-	 * @return the primary key of this model instance
+	 * @return <code>true</code> if this model instance does not yet exist in
+	 *         the database; <code>false</code> otherwise
 	 */
-	public Serializable getPrimaryKeyObj();
+	public boolean isNew();
 
 	/**
-	 * Sets the primary key of this model instance.
-	 *
-	 * @param primaryKeyObj the primary key of this model instance
+	 * Reset all original fields to current values.
 	 */
-	public void setPrimaryKeyObj(Serializable primaryKeyObj);
+	public void resetOriginalValues();
 
 	/**
-	 * Returns the expando bridge for this model instance.
+	 * Sets whether this model instance was retrieved from the entity cache.
 	 *
-	 * @return the expando bridge for this model instance
+	 * @param cachedModel whether this model instance was retrieved from the
+	 *        entity cache
+	 * @see   com.liferay.portal.kernel.dao.orm.EntityCache
 	 */
-	public ExpandoBridge getExpandoBridge();
+	public void setCachedModel(boolean cachedModel);
 
 	/**
 	 * Sets the expando bridge attributes for this model instance to the
@@ -104,16 +102,18 @@ public interface BaseModel<T>
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext);
 
 	/**
-	 * Creates a shallow clone of this model instance.
+	 * Sets whether this model instance does not yet exist in the database.
 	 *
-	 * @return the shallow clone of this model instance
+	 * @param n whether this model instance does not yet exist in the database
 	 */
-	public Object clone();
+	public void setNew(boolean n);
 
 	/**
-	 * Reset all original fields to current values.
+	 * Sets the primary key of this model instance.
+	 *
+	 * @param primaryKeyObj the primary key of this model instance
 	 */
-	public void resetOriginalValues();
+	public void setPrimaryKeyObj(Serializable primaryKeyObj);
 
 	/**
 	 * Returns a cache model object for this entity used by entity cache.

@@ -191,7 +191,7 @@ public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 
 	protected boolean validateExtension(String extension) {
 
-		// extension is not required
+		// Extension is not required
 
 		if (Validator.isNull(extension)) {
 			return true;
@@ -209,4 +209,5 @@ public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 	protected boolean validatePhoneNumber(String phoneNumber) {
 		return PhoneNumberUtil.validate(phoneNumber);
 	}
+
 }

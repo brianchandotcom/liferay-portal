@@ -67,4 +67,5 @@ public class PhoneNumberUtil {
 	private static Log _log = LogFactoryUtil.getLog(PhoneNumberUtil.class);
 
 	private static PhoneNumberFormat _phoneNumberFormat;
+
 }

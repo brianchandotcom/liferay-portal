@@ -41,4 +41,5 @@ public class InternationalPhoneNumberFormatTest extends TestCase {
 			fail("Validation for [" + phoneNumber + "] failed");
 		}
 	}
+
 }

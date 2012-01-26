@@ -37,4 +37,5 @@ public class IdenticalPhoneNumberFormat implements PhoneNumberFormat {
 
 		return true;
 	}
+
 }

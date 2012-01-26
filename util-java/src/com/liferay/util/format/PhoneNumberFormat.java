@@ -25,4 +25,5 @@ public interface PhoneNumberFormat {
 	public String strip(String phoneNumber);
 
 	public boolean validate(String phoneNumber);
+
 }

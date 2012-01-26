@@ -35,7 +35,7 @@ public class InternationalPhoneNumberFormat implements PhoneNumberFormat {
 		StringBuilder sb = new StringBuilder(phoneNumber);
 		String temporaryPhoneNumber = sb.toString();
 
-		//remove valid characters
+		// Remove valid characters
 
 		for (int i = 0;i < VALID_CHARACTERS.length;i++) {
 			temporaryPhoneNumber = temporaryPhoneNumber.replace(
@@ -80,4 +80,5 @@ public class InternationalPhoneNumberFormat implements PhoneNumberFormat {
 		StringPool.OPEN_PARENTHESIS,
 		StringPool.PERIOD,
 		StringPool.SPACE};
+
 }

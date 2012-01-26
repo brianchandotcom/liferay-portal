@@ -97,6 +97,8 @@ public class User_AddDLImageSiteStagingTest extends BaseTestCase {
 			RuntimeVariables.replace("DL Image Description"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

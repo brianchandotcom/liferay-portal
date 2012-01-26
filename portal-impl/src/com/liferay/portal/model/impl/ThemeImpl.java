@@ -633,8 +633,6 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 		new ConcurrentHashMap<String, String>();
 	private String _rootPath = "/";
 	private String _servletContextName = StringPool.BLANK;
-	private Map<String, ThemeSetting> _themeSettingsMap =
-		new LinkedHashMap<String, ThemeSetting>();
 	private Map<String, SpriteImage> _spriteImagesMap =
 		new HashMap<String, SpriteImage>();
 	private String _templateExtension = "vm";
@@ -642,6 +640,8 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 	private ThemeCompanyLimit _themeCompanyLimit;
 	private ThemeGroupLimit _themeGroupLimit;
 	private String _themeId;
+	private Map<String, ThemeSetting> _themeSettingsMap =
+		new LinkedHashMap<String, ThemeSetting>();
 	private long _timestamp;
 	private String _virtualPath = StringPool.BLANK;
 	private boolean _wapTheme;

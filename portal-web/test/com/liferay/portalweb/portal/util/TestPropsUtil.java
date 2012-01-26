@@ -67,6 +67,10 @@ public class TestPropsUtil {
 		}
 	}
 
+	private String _get(String key) {
+		return _props.getProperty(key);
+	}
+
 	private void _printProperties(boolean update) {
 		List<String> keys = Collections.list(
 			(Enumeration<String>)_props.propertyNames());
@@ -85,10 +89,6 @@ public class TestPropsUtil {
 		}
 
 		System.out.println("");
-	}
-
-	private String _get(String key) {
-		return _props.getProperty(key);
 	}
 
 	private void _set(String key, String value) {

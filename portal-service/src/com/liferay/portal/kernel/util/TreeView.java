@@ -33,12 +33,12 @@ public class TreeView implements Serializable {
 		_depth = depth;
 	}
 
-	public List<TreeNodeView> getList() {
-		return _list;
-	}
-
 	public int getDepth() {
 		return _depth;
+	}
+
+	public List<TreeNodeView> getList() {
+		return _list;
 	}
 
 	private int _depth;

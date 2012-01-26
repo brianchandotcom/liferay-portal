@@ -35,12 +35,16 @@ public class Translation implements Serializable {
 		setToText(toText);
 	}
 
-	public String getTranslationId() {
-		return _translationId;
-	}
-
 	public String getFromText() {
 		return _fromText;
+	}
+
+	public String getToText() {
+		return _toText;
+	}
+
+	public String getTranslationId() {
+		return _translationId;
 	}
 
 	public void setFromText(String fromText) {
@@ -49,10 +53,6 @@ public class Translation implements Serializable {
 		}
 		catch (UnsupportedEncodingException uee) {
 		}
-	}
-
-	public String getToText() {
-		return _toText;
 	}
 
 	public void setToText(String toText) {

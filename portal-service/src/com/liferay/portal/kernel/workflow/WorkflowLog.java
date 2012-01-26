@@ -38,17 +38,17 @@ public interface WorkflowLog {
 
 	public Date getCreateDate();
 
+	public long getPreviousRoleId();
+
 	public String getPreviousState();
 
 	public long getPreviousUserId();
 
-	public long getPreviousRoleId();
+	public long getRoleId();
 
 	public String getState();
 
 	public int getType();
-
-	public long getRoleId();
 
 	public long getUserId();
 

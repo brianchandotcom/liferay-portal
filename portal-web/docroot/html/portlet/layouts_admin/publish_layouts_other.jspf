@@ -17,34 +17,34 @@
 <div>
 	<ul class="lfr-tree lfr-component">
 		<li class="tree-item">
-			<aui:input helpMessage="export-import-permissions-help" inlineLabel="right" label="permissions" name="<%= PortletDataHandlerKeys.PERMISSIONS %>" type="checkbox" />
+			<aui:input helpMessage="export-import-permissions-help" label="permissions" name="<%= PortletDataHandlerKeys.PERMISSIONS %>" type="checkbox" />
 
 			<ul id="<portlet:namespace />permissionsUl">
 				<c:choose>
 					<c:when test="<%= (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) || (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) %>">
 						<li class="tree-item">
-							<aui:input inlineLabel="right" name="permissionsAssignedToRoles" type="checkbox" value="<%= true %>" />
+							<aui:input name="permissionsAssignedToRoles" type="checkbox" value="<%= true %>" />
 						</li>
 					</c:when>
 					<c:otherwise>
 						<li class="tree-item">
-							<aui:input inlineLabel="right" name="permissionsAssignedToOrganizationsUserGroupsRolesAndCommunities" type="checkbox" value="<%= true %>" />
+							<aui:input name="permissionsAssignedToOrganizationsUserGroupsRolesAndCommunities" type="checkbox" value="<%= true %>" />
 						</li>
 						<li class="tree-item">
-							<aui:input helpMessage="export-import-permissions-assigned-to-users-help" inlineLabel="right" label="permissions-assigned-to-users" name="<%= PortletDataHandlerKeys.USER_PERMISSIONS %>" type="checkbox" />
+							<aui:input helpMessage="export-import-permissions-assigned-to-users-help" label="permissions-assigned-to-users" name="<%= PortletDataHandlerKeys.USER_PERMISSIONS %>" type="checkbox" />
 						</li>
 					</c:otherwise>
 				</c:choose>
 			</ul>
 		</li>
 		<li class="tree-item">
-			<aui:input helpMessage="export-import-theme-help" inlineLabel="right" label="theme" name="<%= PortletDataHandlerKeys.THEME %>" type="checkbox" value="<%= true %>" />
+			<aui:input helpMessage="export-import-theme-help" label="theme" name="<%= PortletDataHandlerKeys.THEME %>" type="checkbox" value="<%= true %>" />
 		</li>
 		<li class="tree-item">
-			<aui:input helpMessage="export-import-theme-settings-help" inlineLabel="right" label="theme-settings" name="<%= PortletDataHandlerKeys.THEME_REFERENCE %>" type="checkbox" value="<%= true %>" />
+			<aui:input helpMessage="export-import-theme-settings-help" label="theme-settings" name="<%= PortletDataHandlerKeys.THEME_REFERENCE %>" type="checkbox" value="<%= true %>" />
 		</li>
 		<li class="tree-item">
-			<aui:input helpMessage="export-import-categories-help" inlineLabel="right" label="categories" name="<%= PortletDataHandlerKeys.CATEGORIES %>" type="checkbox" value="<%= false %>" />
+			<aui:input helpMessage="export-import-categories-help" label="categories" name="<%= PortletDataHandlerKeys.CATEGORIES %>" type="checkbox" value="<%= false %>" />
 		</li>
 	</ul>
 </div>

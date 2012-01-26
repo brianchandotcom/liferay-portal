@@ -57,7 +57,7 @@ if (checkboxField) {
 	forLabel += "Checkbox";
 }
 
-if (choiceField) {
+if (choiceField && Validator.isNull(inlineLabel)) {
 	inlineLabel = "right";
 }
 

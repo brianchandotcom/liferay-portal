@@ -167,7 +167,7 @@ if (template == null) {
 
 		<aui:input cssClass="lfr-textarea-container" name="description" />
 
-		<aui:input helpMessage="journal-template-cacheable-help" inlineLabel="right" name="cacheable" value="<%= new Boolean(cacheable) %>" />
+		<aui:input helpMessage="journal-template-cacheable-help" name="cacheable" value="<%= new Boolean(cacheable) %>" />
 
 		<c:if test="<%= template != null %>">
 			<aui:field-wrapper label="url">
@@ -231,7 +231,7 @@ if (template == null) {
 			</c:if>
 		</aui:field-wrapper>
 
-		<aui:input inlineLabel="right" label="format-script" name="formatXsl" type="checkbox" />
+		<aui:input label="format-script" name="formatXsl" type="checkbox" />
 
 		<aui:input cssClass="lfr-input-text-container" label="small-image-url" name="smallImageURL" />
 
@@ -239,7 +239,7 @@ if (template == null) {
 
 		<aui:input cssClass="lfr-input-text-container" label="small-image" name="smallFile" type="file" />
 
-		<aui:input inlineLabel="right" name="smallImage" />
+		<aui:input name="smallImage" />
 
 		<c:if test="<%= template == null %>">
 			<aui:field-wrapper label="permissions">

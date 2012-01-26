@@ -72,18 +72,18 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 <div>
 	<ul class="lfr-tree lfr-component">
 		<li class="tree-item">
-			<aui:input inlineLabel="right" label="setup" name="<%= PortletDataHandlerKeys.PORTLET_SETUP %>" type="checkbox" value="<%= true %>" />
+			<aui:input label="setup" name="<%= PortletDataHandlerKeys.PORTLET_SETUP %>" type="checkbox" value="<%= true %>" />
 		</li>
 		<li class="tree-item">
-			<aui:input helpMessage="import-user-preferences-help" inlineLabel="right" label="user-preferences" name="<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES %>" type="checkbox" value="<%= false %>" />
+			<aui:input helpMessage="import-user-preferences-help" label="user-preferences" name="<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES %>" type="checkbox" value="<%= false %>" />
 		</li>
 		<li id="<portlet:namespace />deleteDataOption" class="tree-item" <%= (!selGroup.isStagingGroup() || !localPublishing) ? "style=\"display: none;\"" : "" %>>
-			<aui:input helpMessage="delete-portlet-data-help" inlineLabel="right" label="delete-portlet-data-before-importing" name="<%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>" type="checkbox" />
+			<aui:input helpMessage="delete-portlet-data-help" label="delete-portlet-data-before-importing" name="<%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>" type="checkbox" />
 		</li>
 		<li class="tree-item">
 			<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>" type="hidden" value="false" />
 
-			<aui:input checked="<%= true %>" inlineLabel="right" label="data" name="<%= PortletDataHandlerKeys.PORTLET_DATA %>" type="checkbox" />
+			<aui:input checked="<%= true %>" label="data" name="<%= PortletDataHandlerKeys.PORTLET_DATA %>" type="checkbox" />
 
 			<ul id="<portlet:namespace />portletDataControls">
 				<li class="tree-item">
@@ -92,7 +92,7 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 
 						<aui:input checked="<%= true %>"  id="rangeLastPublish" label="from-last-publish-date" name="range" type="radio" value="fromLastPublishDate" />
 
-						<aui:input helpMessage="export-date-range-help" id="rangeDateRange" inlineLabel="right" label="date-range" name="range" type="radio" value="dateRange" />
+						<aui:input helpMessage="export-date-range-help" id="rangeDateRange" label="date-range" name="range" type="radio" value="dateRange" />
 
 						<%
 						Calendar today = CalendarFactoryUtil.getCalendar(timeZone, locale);
@@ -217,11 +217,11 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 						%>
 
 									<li class="tree-item">
-										<aui:input inlineLabel="right" label="<%= PortalUtil.getPortletTitle(curPortlet, application, locale) %>" name="<%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + rootPortletId %>" type="checkbox" value="<%= checked %>" />
+										<aui:input label="<%= PortalUtil.getPortletTitle(curPortlet, application, locale) %>" name="<%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + rootPortletId %>" type="checkbox" value="<%= checked %>" />
 
 										<ul id="<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA %>_<%= rootPortletId %>Controls">
 											<li class="<%= renderResponse.getNamespace() %>handler-control">
-												<aui:input disabled="<%= !checked %>" inlineLabel="right" label="setup" name="<%= PortletDataHandlerKeys.PORTLET_SETUP + StringPool.UNDERLINE + rootPortletId %>" type="checkbox" value="<%= true %>" />
+												<aui:input disabled="<%= !checked %>" label="setup" name="<%= PortletDataHandlerKeys.PORTLET_SETUP + StringPool.UNDERLINE + rootPortletId %>" type="checkbox" value="<%= true %>" />
 											</li>
 
 											<c:if test="<%= showRenderControls %>">

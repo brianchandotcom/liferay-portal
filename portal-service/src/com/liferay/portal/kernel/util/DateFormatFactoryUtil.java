@@ -36,6 +36,10 @@ public class DateFormatFactoryUtil {
 		return getDateFormatFactory().getDate(timeZone);
 	}
 
+	public static DateFormatFactory getDateFormatFactory() {
+		return _fastDateFormatFactory;
+	}
+
 	public static DateFormat getDateTime(Locale locale) {
 		return getDateFormatFactory().getDateTime(locale);
 	}
@@ -46,10 +50,6 @@ public class DateFormatFactoryUtil {
 
 	public static DateFormat getDateTime(TimeZone timeZone) {
 		return getDateFormatFactory().getDateTime(timeZone);
-	}
-
-	public static DateFormatFactory getDateFormatFactory() {
-		return _fastDateFormatFactory;
 	}
 
 	public static DateFormat getSimpleDateFormat(String pattern) {

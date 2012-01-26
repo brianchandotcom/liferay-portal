@@ -148,6 +148,10 @@ public class DateUtil {
 		return daysBetween;
 	}
 
+	public static DateFormat getISO8601Format() {
+		return DateFormatFactoryUtil.getSimpleDateFormat(ISO_8601_PATTERN);
+	}
+
 	public static DateFormat getISOFormat() {
 		return getISOFormat(StringPool.BLANK);
 	}
@@ -178,10 +182,6 @@ public class DateUtil {
 		}
 
 		return DateFormatFactoryUtil.getSimpleDateFormat(pattern);
-	}
-
-	public static DateFormat getISO8601Format() {
-		return DateFormatFactoryUtil.getSimpleDateFormat(ISO_8601_PATTERN);
 	}
 
 	public static DateFormat getUTCFormat() {

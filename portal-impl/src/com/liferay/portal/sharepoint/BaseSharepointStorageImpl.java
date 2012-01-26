@@ -48,25 +48,25 @@ public abstract class BaseSharepointStorageImpl implements SharepointStorage {
 		return null;
 	}
 
-	public Tree getDocumentTree(SharepointRequest sharepointRequest)
-		throws Exception {
-
-		return new Tree();
-	}
-
 	public Tree getDocumentsTree(SharepointRequest sharepointRequest)
 		throws Exception {
 
 		return new Tree();
 	}
 
-	public Tree getFolderTree(SharepointRequest sharepointRequest)
+	public Tree getDocumentTree(SharepointRequest sharepointRequest)
 		throws Exception {
 
 		return new Tree();
 	}
 
 	public Tree getFoldersTree(SharepointRequest sharepointRequest)
+		throws Exception {
+
+		return new Tree();
+	}
+
+	public Tree getFolderTree(SharepointRequest sharepointRequest)
 		throws Exception {
 
 		return new Tree();

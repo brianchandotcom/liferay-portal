@@ -88,6 +88,8 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String DOCUMENT_LIBRARY_FILE_SHORTCUT = "DOCUMENT_LIBRARY_FILE_SHORTCUT";
 
+	public static final String DOCUMENT_LIBRARY_FILE_SHORTCUTS = "DOCUMENT_LIBRARY_FILE_SHORTCUTS";
+
 	public static final String DOCUMENT_LIBRARY_FILE_VERSION = "DOCUMENT_LIBRARY_FILE_VERSION";
 
 	public static final String DOCUMENT_LIBRARY_FOLDER = "DOCUMENT_LIBRARY_FOLDER";

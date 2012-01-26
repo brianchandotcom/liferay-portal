@@ -27,19 +27,17 @@ String fileShortcutIds = ParamUtil.getString(request, "fileShortcutIds");
 
 List<Folder> folders = (List<Folder>)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDERS);
 
-List<Folder> validMoveFolders = new ArrayList<Folder>();
 List<Folder> invalidMoveFolders = new ArrayList<Folder>();
+List<Folder> validMoveFolders = new ArrayList<Folder>();
 
-if (!folders.isEmpty()) {
-	for (Folder curFolder : folders) {
-		boolean movePermission = DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE) && (!curFolder.isLocked() || curFolder.hasLock());
+for (Folder curFolder : folders) {
+	boolean movePermission = DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE) && (!curFolder.isLocked() || curFolder.hasLock());
 
-		if (movePermission) {
-			validMoveFolders.add(curFolder);
-		}
-		else {
-			invalidMoveFolders.add(curFolder);
-		}
+	if (movePermission) {
+		validMoveFolders.add(curFolder);
+	}
+	else {
+		invalidMoveFolders.add(curFolder);
 	}
 }
 
@@ -59,16 +57,30 @@ else {
 List<FileEntry> validMoveFileEntries = new ArrayList<FileEntry>();
 List<FileEntry> invalidMoveFileEntries = new ArrayList<FileEntry>();
 
-if (!fileEntries.isEmpty()) {
-	for (FileEntry curFileEntry : fileEntries) {
-		boolean movePermission = DLFileEntryPermission.contains(permissionChecker, curFileEntry, ActionKeys.UPDATE) && (!curFileEntry.isCheckedOut() || curFileEntry.hasLock());
+for (FileEntry curFileEntry : fileEntries) {
+	boolean movePermission = DLFileEntryPermission.contains(permissionChecker, curFileEntry, ActionKeys.UPDATE) && (!curFileEntry.isCheckedOut() || curFileEntry.hasLock());
 
-		if (movePermission) {
-			validMoveFileEntries.add(curFileEntry);
-		}
-		else {
-			invalidMoveFileEntries.add(curFileEntry);
-		}
+	if (movePermission) {
+		validMoveFileEntries.add(curFileEntry);
+	}
+	else {
+		invalidMoveFileEntries.add(curFileEntry);
+	}
+}
+
+List<DLFileShortcut> fileShortcuts = (List<DLFileShortcut>)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_SHORTCUTS);
+
+List<DLFileShortcut> validShortcutEntries = new ArrayList<DLFileShortcut>();
+List<DLFileShortcut> invalidShortcutEntries = new ArrayList<DLFileShortcut>();
+
+for (DLFileShortcut curFileShortcut : fileShortcuts) {
+	boolean movePermission = DLFileShortcutPermission.contains(permissionChecker, curFileShortcut, ActionKeys.UPDATE);
+
+	if (movePermission) {
+		validShortcutEntries.add(curFileShortcut);
+	}
+	else {
+		invalidShortcutEntries.add(curFileShortcut);
 	}
 }
 %>
@@ -85,7 +97,6 @@ if (!fileEntries.isEmpty()) {
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.MOVE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="newFolderId" type="hidden" value="<%= newFolderId %>" />
-	<aui:input name="fileShortcutIds" type="hidden" value="<%= fileShortcutIds %>" />
 
 	<liferay-ui:header
 		backURL="<%= redirect %>"
@@ -105,8 +116,7 @@ if (!fileEntries.isEmpty()) {
 			<ul class="lfr-component">
 
 				<%
-				for (int i = 0; i < validMoveFolders.size(); i++) {
-					Folder folder = validMoveFolders.get(i);
+				for (Folder folder : validMoveFolders) {
 				%>
 
 					<li class="move-folder">
@@ -171,8 +181,7 @@ if (!fileEntries.isEmpty()) {
 			<ul class="lfr-component">
 
 				<%
-				for (int i = 0; i < validMoveFileEntries.size(); i++) {
-					FileEntry validMoveFileEntry = validMoveFileEntries.get(i);
+				for (FileEntry validMoveFileEntry : validMoveFileEntries) {
 				%>
 
 					<li class="move-file">
@@ -228,6 +237,64 @@ if (!fileEntries.isEmpty()) {
 	</c:if>
 
 	<aui:input name="fileEntryIds" type="hidden" value='<%= ListUtil.toString(validMoveFileEntries, FileEntry.FILE_ENTRY_ID_ACCESSOR) %>' />
+
+	<c:if test="<%= !validShortcutEntries.isEmpty() %>">
+		<div class="move-list-info">
+			<h4><%= LanguageUtil.format(pageContext, "x-shortcuts-ready-to-be-moved", validShortcutEntries.size()) %></h4>
+		</div>
+
+		<div class="move-list">
+			<ul class="lfr-component">
+
+				<%
+				for (DLFileShortcut fileShortcut : validShortcutEntries) {
+				%>
+
+					<li class="move-file">
+						<span class=file-title>
+							<%= fileShortcut.getToTitle() + " (" + LanguageUtil.get(themeDisplay.getLocale(), "shortcut") + ")" %>
+						</span>
+					</li>
+
+				<%
+				}
+				%>
+
+			</ul>
+		</div>
+	</c:if>
+
+	<c:if test="<%= !invalidShortcutEntries.isEmpty() %>">
+		<div class="move-list-info">
+			<h4><%= LanguageUtil.format(pageContext, "x-shortcuts-cannot-be-moved", invalidShortcutEntries.size()) %></h4>
+		</div>
+
+		<div class="move-list">
+			<ul class="lfr-component">
+
+				<%
+				for (DLFileShortcut fileShortcut : invalidShortcutEntries) {
+				%>
+
+					<li class="move-file move-error">
+						<span class="file-title">
+							<%= fileShortcut.getToTitle() + " (" + LanguageUtil.get(themeDisplay.getLocale(), "shortcut") + ")" %>
+						</span>
+
+						<span class="error-message">
+							<%= LanguageUtil.get(pageContext, "you-do-not-have-the-required-permissions") %>
+						</span>
+					</li>
+
+				<%
+				}
+				%>
+
+			</ul>
+		</div>
+	</c:if>
+
+	<aui:input name="fileShortcutIds" type="hidden" value="<%= fileShortcutIds %>" />
 
 	<aui:fieldset>
 

@@ -49,6 +49,31 @@ import org.apache.struts.action.ActionMapping;
 public class GetPageAttachmentAction extends PortletAction {
 
 	@Override
+	public void processAction(
+			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		try {
+			long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
+			String title = ParamUtil.getString(actionRequest, "title");
+			String fileName = ParamUtil.getString(actionRequest, "fileName");
+
+			HttpServletRequest request = PortalUtil.getHttpServletRequest(
+				actionRequest);
+			HttpServletResponse response = PortalUtil.getHttpServletResponse(
+				actionResponse);
+
+			getFile(nodeId, title, fileName, request, response);
+
+			setForward(actionRequest, ActionConstants.COMMON_NULL);
+		}
+		catch (Exception e) {
+			PortalUtil.sendError(e, actionRequest, actionResponse);
+		}
+	}
+
+	@Override
 	public ActionForward strutsExecute(
 			ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response)
@@ -76,31 +101,6 @@ public class GetPageAttachmentAction extends PortletAction {
 			}
 
 			return null;
-		}
-	}
-
-	@Override
-	public void processAction(
-			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		try {
-			long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
-			String title = ParamUtil.getString(actionRequest, "title");
-			String fileName = ParamUtil.getString(actionRequest, "fileName");
-
-			HttpServletRequest request = PortalUtil.getHttpServletRequest(
-				actionRequest);
-			HttpServletResponse response = PortalUtil.getHttpServletResponse(
-				actionResponse);
-
-			getFile(nodeId, title, fileName, request, response);
-
-			setForward(actionRequest, ActionConstants.COMMON_NULL);
-		}
-		catch (Exception e) {
-			PortalUtil.sendError(e, actionRequest, actionResponse);
 		}
 	}
 

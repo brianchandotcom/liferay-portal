@@ -65,51 +65,6 @@ import org.apache.struts.action.ActionMapping;
 public class GetFileAction extends PortletAction {
 
 	@Override
-	public ActionForward strutsExecute(
-			ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response)
-		throws Exception {
-
-		try {
-			long fileEntryId = ParamUtil.getLong(request, "fileEntryId");
-
-			long folderId = ParamUtil.getLong(request, "folderId");
-			String title = ParamUtil.getString(request, "title");
-			String version = ParamUtil.getString(request, "version");
-
-			long fileShortcutId = ParamUtil.getLong(request, "fileShortcutId");
-
-			String uuid = ParamUtil.getString(request, "uuid");
-
-			String targetExtension = ParamUtil.getString(
-				request, "targetExtension");
-
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-			long groupId = ParamUtil.getLong(
-				request, "groupId", themeDisplay.getScopeGroupId());
-
-			getFile(
-				fileEntryId, folderId, title, version, fileShortcutId,
-				uuid, groupId, targetExtension, themeDisplay, request,
-				response);
-
-			return null;
-		}
-		catch (PrincipalException pe) {
-			processPrincipalException(pe, request, response);
-
-			return null;
-		}
-		catch (Exception e) {
-			PortalUtil.sendError(e, request, response);
-
-			return null;
-		}
-	}
-
-	@Override
 	public void processAction(
 			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -157,6 +112,51 @@ public class GetFileAction extends PortletAction {
 		}
 		catch (Exception e) {
 			PortalUtil.sendError(e, actionRequest, actionResponse);
+		}
+	}
+
+	@Override
+	public ActionForward strutsExecute(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response)
+		throws Exception {
+
+		try {
+			long fileEntryId = ParamUtil.getLong(request, "fileEntryId");
+
+			long folderId = ParamUtil.getLong(request, "folderId");
+			String title = ParamUtil.getString(request, "title");
+			String version = ParamUtil.getString(request, "version");
+
+			long fileShortcutId = ParamUtil.getLong(request, "fileShortcutId");
+
+			String uuid = ParamUtil.getString(request, "uuid");
+
+			String targetExtension = ParamUtil.getString(
+				request, "targetExtension");
+
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			long groupId = ParamUtil.getLong(
+				request, "groupId", themeDisplay.getScopeGroupId());
+
+			getFile(
+				fileEntryId, folderId, title, version, fileShortcutId,
+				uuid, groupId, targetExtension, themeDisplay, request,
+				response);
+
+			return null;
+		}
+		catch (PrincipalException pe) {
+			processPrincipalException(pe, request, response);
+
+			return null;
+		}
+		catch (Exception e) {
+			PortalUtil.sendError(e, request, response);
+
+			return null;
 		}
 	}
 

@@ -52,26 +52,6 @@ import org.apache.struts.action.ActionMapping;
 public class RSSAction extends PortletAction {
 
 	@Override
-	public ActionForward strutsExecute(
-			ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response)
-		throws Exception {
-
-		try {
-			ServletResponseUtil.sendFile(
-				request, response, null, getRSS(request),
-				ContentTypes.TEXT_XML_UTF8);
-
-			return null;
-		}
-		catch (Exception e) {
-			PortalUtil.sendError(e, request, response);
-
-			return null;
-		}
-	}
-
-	@Override
 	public void processAction(
 			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -91,6 +71,26 @@ public class RSSAction extends PortletAction {
 		}
 		catch (Exception e) {
 			PortalUtil.sendError(e, actionRequest, actionResponse);
+		}
+	}
+
+	@Override
+	public ActionForward strutsExecute(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response)
+		throws Exception {
+
+		try {
+			ServletResponseUtil.sendFile(
+				request, response, null, getRSS(request),
+				ContentTypes.TEXT_XML_UTF8);
+
+			return null;
+		}
+		catch (Exception e) {
+			PortalUtil.sendError(e, request, response);
+
+			return null;
 		}
 	}
 

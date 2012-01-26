@@ -31,32 +31,32 @@ public class EventDefinitionImpl implements EventDefinition {
 		_portletApp = portletApp;
 	}
 
-	public QName getQName() {
-		return _qName;
+	public PortletApp getPortletApp() {
+		return _portletApp;
 	}
 
-	public void setQName(QName qName) {
-		_qName = qName;
+	public QName getQName() {
+		return _qName;
 	}
 
 	public String getValueType() {
 		return _valueType;
 	}
 
-	public void setValueType(String valueType) {
-		_valueType = valueType;
-	}
-
-	public PortletApp getPortletApp() {
-		return _portletApp;
-	}
-
 	public void setPortletApp(PortletApp portletApp) {
 		_portletApp = portletApp;
 	}
 
+	public void setQName(QName qName) {
+		_qName = qName;
+	}
+
+	public void setValueType(String valueType) {
+		_valueType = valueType;
+	}
+
+	private PortletApp _portletApp;
 	private QName _qName;
 	private String _valueType;
-	private PortletApp _portletApp;
 
 }

@@ -67,12 +67,12 @@ public class DiffResult {
 		return _changedLines;
 	}
 
-	public void setChangedLines(List<String> changedLines) {
-		_changedLines = changedLines;
-	}
-
 	public int getLineNumber() {
 		return _lineNumber;
+	}
+
+	public void setChangedLines(List<String> changedLines) {
+		_changedLines = changedLines;
 	}
 
 	public void setLineNumber(int lineNumber) {

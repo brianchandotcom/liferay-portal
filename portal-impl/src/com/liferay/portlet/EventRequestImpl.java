@@ -28,13 +28,13 @@ public class EventRequestImpl
 		return _event;
 	}
 
-	public void setEvent(Event event) {
-		_event = event;
-	}
-
 	@Override
 	public String getLifecycle() {
 		return PortletRequest.EVENT_PHASE;
+	}
+
+	public void setEvent(Event event) {
+		_event = event;
 	}
 
 	private Event _event;

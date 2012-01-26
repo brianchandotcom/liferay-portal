@@ -46,11 +46,6 @@ public class DLFileEntryResourceImpl extends BaseResourceImpl {
 	}
 
 	@Override
-	public String getContentType() {
-		return _fileEntry.getMimeType();
-	}
-
-	@Override
 	public InputStream getContentAsStream() throws WebDAVException {
 		try {
 			String version = StringPool.BLANK;
@@ -60,6 +55,11 @@ public class DLFileEntryResourceImpl extends BaseResourceImpl {
 		catch (Exception e) {
 			throw new WebDAVException(e);
 		}
+	}
+
+	@Override
+	public String getContentType() {
+		return _fileEntry.getMimeType();
 	}
 
 	@Override

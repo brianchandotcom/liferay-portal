@@ -85,11 +85,13 @@ public class AssetEntryQuery {
 		setAnyTagIds(assetEntryQuery.getAnyTagIds());
 		setClassNameIds(assetEntryQuery.getClassNameIds());
 		setClassTypeIds(assetEntryQuery.getClassTypeIds());
+		setEnablePermissions(assetEntryQuery.isEnablePermissions());
 		setEnd(assetEntryQuery.getEnd());
 		setExcludeZeroViewCount(assetEntryQuery.isExcludeZeroViewCount());
 		setExpirationDate(assetEntryQuery.getExpirationDate());
 		setGroupIds(assetEntryQuery.getGroupIds());
 		setLayout(assetEntryQuery.getLayout());
+		setLinkedAssetEntryId(assetEntryQuery.getLinkedAssetEntryId());
 		setNotAllCategoryIds(assetEntryQuery.getNotAllCategoryIds());
 		setNotAllTagIds(assetEntryQuery.getNotAllTagIds());
 		setNotAnyCategoryIds(assetEntryQuery.getNotAnyCategoryIds());

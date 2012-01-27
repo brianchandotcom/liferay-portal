@@ -30,7 +30,7 @@ public class WebContentDisplayTestPlan extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(UseCaseTestPlan.suite());
-		/*testSuite.addTest(WCWebContentTestPlan.suite());*/
+		testSuite.addTest(WCWebContentTestPlan.suite());
 
 		return testSuite;
 	}

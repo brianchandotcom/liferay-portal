@@ -259,7 +259,13 @@ public class MessageListenerImpl implements MessageListener {
 			pos++;
 		}
 
-		String mx = messageId.substring(pos);
+		int endPos = messageId.indexOf(CharPool.GREATER_THAN, pos);
+
+		if(endPos == -1) {
+		    endPos = messageId.length();
+		}
+
+		String mx = messageId.substring(pos, endPos);
 
 		return CompanyLocalServiceUtil.getCompanyByMx(mx);
 	}

@@ -18,6 +18,9 @@ import java.io.Serializable;
 
 import java.lang.reflect.Method;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
@@ -58,8 +61,7 @@ public class MethodKey implements Serializable {
 		for (int i = 0; i < parameterTypeNames.length; i++) {
 			String parameterTypeName = parameterTypeNames[i];
 
-			_parameterTypes[i] = Class.forName(
-				parameterTypeName, true, classLoader);
+			_parameterTypes[i] = _getClassType(parameterTypeName, classLoader);
 		}
 	}
 
@@ -101,6 +103,17 @@ public class MethodKey implements Serializable {
 		return _toString();
 	}
 
+	private Class _getClassType(String typeName, ClassLoader classLoader)
+		throws ClassNotFoundException {
+
+		if (_primitiveClasses.containsKey(typeName)) {
+			return _primitiveClasses.get(typeName);
+		}
+		else {
+			return Class.forName(typeName, true, classLoader);
+		}
+	}
+
 	private String _toString() {
 		if (_toString == null) {
 			if ((_parameterTypes != null) && (_parameterTypes.length > 0)) {
@@ -125,9 +138,23 @@ public class MethodKey implements Serializable {
 		return _toString;
 	}
 
+	private static Map<String, Class> _primitiveClasses =
+		new HashMap<String, Class>();
+
 	private String _className;
 	private String _methodName;
 	private Class<?>[] _parameterTypes;
 	private String _toString;
+
+	static {
+		_primitiveClasses.put("byte", byte.class);
+		_primitiveClasses.put("boolean", boolean.class);
+		_primitiveClasses.put("char", char.class);
+		_primitiveClasses.put("double", double.class);
+		_primitiveClasses.put("float", float.class);
+		_primitiveClasses.put("int", int.class);
+		_primitiveClasses.put("long", long.class);
+		_primitiveClasses.put("short", short.class);
+	}
 
 }

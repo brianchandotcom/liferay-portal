@@ -457,58 +457,58 @@ public class SourceFormatter {
 		}
 	}
 
-	private static void _compareDefinitionNames(
-		String fileName, String previousDefinitionName, String definitionName) {
+	private static void _compareJavaTermNames(
+		String fileName, String previousJavaTermName, String javaTermName) {
 
 		if (fileName.endsWith("DiffImplTest.java")) {
 			return;
 		}
 
-		if (Validator.isNull(previousDefinitionName) ||
-			Validator.isNull(definitionName)) {
+		if (Validator.isNull(previousJavaTermName) ||
+			Validator.isNull(javaTermName)) {
 
 			return;
 		}
 
-		if (definitionName.equals("_log")) {
+		if (javaTermName.equals("_log")) {
 			_sourceFormatterHelper.printError(fileName, "sort: " + fileName);
 
 			return;
 		}
 
-		if (previousDefinitionName.equals("_instance") ||
-			previousDefinitionName.equals("_log")) {
+		if (previousJavaTermName.equals("_instance") ||
+			previousJavaTermName.equals("_log")) {
 
 			return;
 		}
 
-		if (definitionName.equals("_instance")) {
+		if (javaTermName.equals("_instance")) {
 			_sourceFormatterHelper.printError(fileName, "sort: " + fileName);
 
 			return;
 		}
 
-		if (previousDefinitionName.compareToIgnoreCase(definitionName) <= 0) {
+		if (previousJavaTermName.compareToIgnoreCase(javaTermName) <= 0) {
 			return;
 		}
 
-		String definitionNameLowerCase = definitionName.toLowerCase();
-		String previousDefinitionNameLowerCase =
-			previousDefinitionName.toLowerCase();
+		String javaTermNameLowerCase = javaTermName.toLowerCase();
+		String previousJavaTermNameLowerCase =
+			previousJavaTermName.toLowerCase();
 
 		if (fileName.contains("persistence") &&
-			(previousDefinitionName.startsWith("doCount") &&
-			 definitionName.startsWith("doCount")) ||
-			(previousDefinitionName.startsWith("doFind") &&
-			 definitionName.startsWith("doFind")) ||
-			(previousDefinitionNameLowerCase.startsWith("count") &&
-			 definitionNameLowerCase.startsWith("count")) ||
-			(previousDefinitionNameLowerCase.startsWith("filter") &&
-			 definitionNameLowerCase.startsWith("filter")) ||
-			(previousDefinitionNameLowerCase.startsWith("find") &&
-			 definitionNameLowerCase.startsWith("find")) ||
-			(previousDefinitionNameLowerCase.startsWith("join") &&
-			 definitionNameLowerCase.startsWith("join"))) {
+			(previousJavaTermName.startsWith("doCount") &&
+			 javaTermName.startsWith("doCount")) ||
+			(previousJavaTermName.startsWith("doFind") &&
+			 javaTermName.startsWith("doFind")) ||
+			(previousJavaTermNameLowerCase.startsWith("count") &&
+			 javaTermNameLowerCase.startsWith("count")) ||
+			(previousJavaTermNameLowerCase.startsWith("filter") &&
+			 javaTermNameLowerCase.startsWith("filter")) ||
+			(previousJavaTermNameLowerCase.startsWith("find") &&
+			 javaTermNameLowerCase.startsWith("find")) ||
+			(previousJavaTermNameLowerCase.startsWith("join") &&
+			 javaTermNameLowerCase.startsWith("join"))) {
 
 			return;
 		}
@@ -1177,11 +1177,11 @@ public class SourceFormatter {
 
 		int lineToSkipIfEmpty = 0;
 
-		String definitionName = null;
-		int definitionType = 0;
+		String javaTermName = null;
+		int javaTermType = 0;
 
-		String previousDefinitionName = null;
-		int previousDefinitionType = 0;
+		String previousJavaTermName = null;
+		int previousJavaTermType = 0;
 
 		List<String> methodParameterTypes = new ArrayList<String>();
 		List<String> previousMethodParameterTypes = null;
@@ -1218,58 +1218,57 @@ public class SourceFormatter {
 
 				hasSameMethodName = false;
 
-				Tuple tuple = _getDefinitionTuple(line);
+				Tuple tuple = _getJavaTermTuple(line);
 
 				if (tuple != null) {
-					definitionName = (String)tuple.getObject(0);
-					definitionType = (Integer)tuple.getObject(1);
+					javaTermName = (String)tuple.getObject(0);
+					javaTermType = (Integer)tuple.getObject(1);
 
-					boolean isMethod = _isInDefinitionTypeGroup(
-						definitionType, _TYPE_METHOD);
+					boolean isMethod = _isInJavaTermTypeGroup(
+						javaTermType, _TYPE_METHOD);
 					boolean isPrivateMethodOrVariable =
-						_isInDefinitionTypeGroup(
-							definitionType, _TYPE_PRIVATE_METHOD_OR_VARIABLE);
+						_isInJavaTermTypeGroup(
+							javaTermType, _TYPE_PRIVATE_METHOD_OR_VARIABLE);
 
 					if (isMethod) {
 						readMethodParameterTypes = true;
 					}
 
 					if ((isPrivateMethodOrVariable &&
-						 !definitionName.startsWith(StringPool.UNDERLINE) &&
-						 !definitionName.equals("serialVersionUID")) ||
+						 !javaTermName.startsWith(StringPool.UNDERLINE) &&
+						 !javaTermName.equals("serialVersionUID")) ||
 						(!isPrivateMethodOrVariable &&
-						 definitionName.startsWith(StringPool.UNDERLINE))) {
+						 javaTermName.startsWith(StringPool.UNDERLINE))) {
 
 						_sourceFormatterHelper.printError(
 							fileName,
 							"underscore: " + fileName + " " + lineCount);
 					}
 
-					if (Validator.isNotNull(previousDefinitionName)) {
-						if (previousDefinitionType > definitionType) {
+					if (Validator.isNotNull(previousJavaTermName)) {
+						if (previousJavaTermType > javaTermType) {
 							_sourceFormatterHelper.printError(
 								fileName,
 								"order: " + fileName + " " + lineCount);
 						}
-						else if (previousDefinitionType == definitionType) {
+						else if (previousJavaTermType == javaTermType) {
 							if (isMethod &&
-								previousDefinitionName.equals(definitionName)) {
+								previousJavaTermName.equals(javaTermName)) {
 
 								hasSameMethodName = true;
 							}
-							else if (!_isInDefinitionTypeGroup(
-										definitionType,
-										_TYPE_STATIC_VARIABLE)) {
+							else if (!_isInJavaTermTypeGroup(
+										javaTermType, _TYPE_STATIC_VARIABLE)) {
 
-								_compareDefinitionNames(
-									fileName, previousDefinitionName,
-									definitionName);
+								_compareJavaTermNames(
+									fileName, previousJavaTermName,
+									javaTermName);
 							}
 						}
 					}
 
-					previousDefinitionName = definitionName;
-					previousDefinitionType = definitionType;
+					previousJavaTermName = javaTermName;
+					previousJavaTermType = javaTermType;
 				}
 			}
 
@@ -2111,7 +2110,7 @@ public class SourceFormatter {
 		return null;
 	}
 
-	private static Tuple _getDefinitionTuple(String line) {
+	private static Tuple _getJavaTermTuple(String line) {
 		int pos = line.indexOf(StringPool.OPEN_PARENTHESIS);
 
 		if (line.startsWith(StringPool.TAB + "public static ")) {
@@ -2599,11 +2598,11 @@ public class SourceFormatter {
 		return false;
 	}
 
-	private static boolean _isInDefinitionTypeGroup(
-		int definitionType, int[] definitionTypeGroup) {
+	private static boolean _isInJavaTermTypeGroup(
+		int javaTermType, int[] javaTermTypeGroup) {
 
-		for (int type : definitionTypeGroup) {
-			if (definitionType == type) {
+		for (int type : javaTermTypeGroup) {
+			if (javaTermType == type) {
 				return true;
 			}
 		}

@@ -55,21 +55,6 @@ public class LayoutStagingImpl implements LayoutStaging {
 		return layoutSetStagingHandler.getLayoutSetBranch();
 	}
 
-	public LayoutStagingHandler getLayoutStagingHandler(Layout layout) {
-		if (!ProxyUtil.isProxyClass(layout.getClass())) {
-			return null;
-		}
-
-		InvocationHandler invocationHandler = ProxyUtil.getInvocationHandler(
-			layout);
-
-		if (!(invocationHandler instanceof LayoutStagingHandler)) {
-			return null;
-		}
-
-		return (LayoutStagingHandler)invocationHandler;
-	}
-
 	public LayoutSetStagingHandler getLayoutSetStagingHandler(
 		LayoutSet layoutSet) {
 
@@ -85,6 +70,21 @@ public class LayoutStagingImpl implements LayoutStaging {
 		}
 
 		return (LayoutSetStagingHandler)invocationHandler;
+	}
+
+	public LayoutStagingHandler getLayoutStagingHandler(Layout layout) {
+		if (!ProxyUtil.isProxyClass(layout.getClass())) {
+			return null;
+		}
+
+		InvocationHandler invocationHandler = ProxyUtil.getInvocationHandler(
+			layout);
+
+		if (!(invocationHandler instanceof LayoutStagingHandler)) {
+			return null;
+		}
+
+		return (LayoutStagingHandler)invocationHandler;
 	}
 
 	public boolean isBranchingLayout(Layout layout) {

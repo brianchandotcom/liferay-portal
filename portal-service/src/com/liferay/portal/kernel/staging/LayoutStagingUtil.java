@@ -35,18 +35,18 @@ public class LayoutStagingUtil {
 		return getLayoutStaging().getLayoutSetBranch(layoutSet);
 	}
 
+	public static LayoutSetStagingHandler getLayoutSetStagingHandler(
+			LayoutSet layoutSet) {
+
+			return getLayoutStaging().getLayoutSetStagingHandler(layoutSet);
+		}
+
 	public static LayoutStaging getLayoutStaging() {
 		return _layoutStaging;
 	}
 
 	public static LayoutStagingHandler getLayoutStagingHandler(Layout layout) {
 		return getLayoutStaging().getLayoutStagingHandler(layout);
-	}
-
-	public static LayoutSetStagingHandler getLayoutSetStagingHandler(
-		LayoutSet layoutSet) {
-
-		return getLayoutStaging().getLayoutSetStagingHandler(layoutSet);
 	}
 
 	public static boolean isBranchingLayout(Layout layout) {

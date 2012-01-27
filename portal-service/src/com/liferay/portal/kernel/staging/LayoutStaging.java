@@ -31,10 +31,10 @@ public interface LayoutStaging {
 
 	public LayoutSetBranch getLayoutSetBranch(LayoutSet layoutSet);
 
-	public LayoutStagingHandler getLayoutStagingHandler(Layout layout);
-
 	public LayoutSetStagingHandler getLayoutSetStagingHandler(
 		LayoutSet layoutSet);
+
+	public LayoutStagingHandler getLayoutStagingHandler(Layout layout);
 
 	public boolean isBranchingLayout(Layout layout);
 

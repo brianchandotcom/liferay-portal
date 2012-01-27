@@ -123,20 +123,24 @@ public class UpgradePermission extends UpgradeProcess {
 		for (ResourcePermission resourcePermission : resourcePermissions) {
 			int scope = resourcePermission.getScope();
 
-			if ((scope == ResourceConstants.SCOPE_COMPANY) ||
-				(scope == ResourceConstants.SCOPE_GROUP_TEMPLATE)) {
+			if(name.equals(resourcePermission.getName())) {
+			
+				if ((scope == ResourceConstants.SCOPE_COMPANY) ||
+					(scope == ResourceConstants.SCOPE_GROUP_TEMPLATE)) {
 
-				ResourceBlockLocalServiceUtil.setCompanyScopePermissions(
-					resourcePermission.getCompanyId(), name,
-					resourcePermission.getRoleId(),
-					resourcePermission.getActionIds());
-			}
-			else if (scope == ResourceConstants.SCOPE_GROUP) {
-				ResourceBlockLocalServiceUtil.setGroupScopePermissions(
-					resourcePermission.getCompanyId(),
-					GetterUtil.getLong(resourcePermission.getPrimaryKey()),
-					name, resourcePermission.getRoleId(),
-					resourcePermission.getActionIds());
+					ResourceBlockLocalServiceUtil.setCompanyScopePermissions(
+						resourcePermission.getCompanyId(), name,
+						resourcePermission.getRoleId(),
+						resourcePermission.getActionIds());
+				}
+				else if (scope == ResourceConstants.SCOPE_GROUP) {
+					ResourceBlockLocalServiceUtil.setGroupScopePermissions(
+						resourcePermission.getCompanyId(),
+						GetterUtil.getLong(resourcePermission.getPrimaryKey()),
+						name, resourcePermission.getRoleId(),
+						resourcePermission.getActionIds());
+				}
+
 			}
 		}
 	}

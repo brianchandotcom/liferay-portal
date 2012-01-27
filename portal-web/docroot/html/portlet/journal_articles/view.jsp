@@ -211,7 +211,7 @@ double version = ParamUtil.getDouble(request, "version");
 		JournalArticle article = null;
 
 		try {
-			article = JournalArticleLocalServiceUtil.getLatestArticle(scopeGroupId, articleId, WorkflowConstants.STATUS_ANY);
+			article = JournalArticleLocalServiceUtil.getLatestArticle(groupId, articleId, WorkflowConstants.STATUS_ANY);
 
 			boolean expired = article.isExpired();
 

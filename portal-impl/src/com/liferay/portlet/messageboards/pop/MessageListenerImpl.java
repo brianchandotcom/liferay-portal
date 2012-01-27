@@ -259,14 +259,12 @@ public class MessageListenerImpl implements MessageListener {
 			pos++;
 		}
 
-		// josef.sustacek@liferay.com
-		// LPS-25135
-		// 'messageId' may end with '>', which is not part 
-		// of company's mx
 		int endPos = messageId.indexOf(CharPool.GREATER_THAN, pos);
-		if(-1 == endPos) {
+
+		if(endPos == -1) {
 		    endPos = messageId.length();
 		}
+
 		String mx = messageId.substring(pos, endPos);
 
 		return CompanyLocalServiceUtil.getCompanyByMx(mx);

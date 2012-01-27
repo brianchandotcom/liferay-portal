@@ -41,6 +41,7 @@ public class Demo1Tests extends BaseTestSuite {
 		testSuite.addTestSuite(TearDownWSRPProducerDPTest.class);
 		testSuite.addTestSuite(RemovePortletWSRPRemoteDPTest.class);
 		testSuite.addTestSuite(RemovePortletDPTest.class);
+		testSuite.addTestSuite(EvaluateWSRPVCFFileTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

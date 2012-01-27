@@ -376,6 +376,11 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="control-panel-social-activity" />
+			<param name="test.ant.script.suite" value="ControlPanelSocialActivityTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="control-panel-user-group" />
 			<param name="test.ant.script.suite" value="ControlPanelUserGroupTestSuite" />
 		</antcall>

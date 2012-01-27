@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
@@ -285,6 +286,48 @@ public class SourceFormatter {
 		}
 	}
 
+	private static List<String> _addMethodParameterTypes(
+		String line, List<String> methodParameterTypes) {
+
+		int x = line.indexOf(StringPool.OPEN_PARENTHESIS);
+
+		if (x != -1) {
+			line = line.substring(x + 1);
+
+			if (Validator.isNull(line) ||
+				line.startsWith(StringPool.CLOSE_PARENTHESIS)) {
+
+				return methodParameterTypes;
+			}
+		}
+
+		for (x = 0;;) {
+			x = line.indexOf(StringPool.SPACE);
+
+			if (x == -1) {
+				return methodParameterTypes;
+			}
+
+			String parameterType = line.substring(0, x);
+
+			if (parameterType.equals("throws")) {
+				return methodParameterTypes;
+			}
+
+			methodParameterTypes.add(parameterType);
+
+			int y = line.indexOf(StringPool.COMMA);
+			int z = line.indexOf(StringPool.CLOSE_PARENTHESIS);
+
+			if ((y == -1) || ((z != -1) && (z < y))) {
+				return methodParameterTypes;
+			}
+
+			line = line.substring(y + 1);
+			line = line.trim();
+		}
+	}
+
 	private static void _checkPersistenceTestSuite() throws IOException {
 		String basedir = "./portal-impl/test";
 
@@ -410,6 +453,117 @@ public class SourceFormatter {
 			if (xssVulnerable) {
 				_sourceFormatterHelper.printError(
 					fileName, "(xss): " + fileName + " (" + jspVariable + ")");
+			}
+		}
+	}
+
+	private static void _compareDefinitionNames(
+		String fileName, String previousDefinitionName, String definitionName) {
+
+		if (fileName.endsWith("DiffImplTest.java")) {
+			return;
+		}
+
+		if (Validator.isNull(previousDefinitionName) ||
+			Validator.isNull(definitionName)) {
+
+			return;
+		}
+
+		if (definitionName.equals("_log")) {
+			_sourceFormatterHelper.printError(fileName, "sort: " + fileName);
+
+			return;
+		}
+
+		if (previousDefinitionName.equals("_instance") ||
+			previousDefinitionName.equals("_log")) {
+
+			return;
+		}
+
+		if (definitionName.equals("_instance")) {
+			_sourceFormatterHelper.printError(fileName, "sort: " + fileName);
+
+			return;
+		}
+
+		if (previousDefinitionName.compareToIgnoreCase(definitionName) <= 0) {
+			return;
+		}
+
+		if (fileName.contains("persistence") &&
+			(previousDefinitionName.startsWith("doCount") &&
+			 definitionName.startsWith("doCount")) ||
+			(previousDefinitionName.startsWith("doFind") &&
+			 definitionName.startsWith("doFind")) ||
+			(previousDefinitionName.toLowerCase().startsWith("count") &&
+			 definitionName.toLowerCase().startsWith("count")) ||
+			(previousDefinitionName.toLowerCase().startsWith("filter") &&
+			 definitionName.toLowerCase().startsWith("filter")) ||
+			(previousDefinitionName.toLowerCase().startsWith("find") &&
+			 definitionName.toLowerCase().startsWith("find")) ||
+			(previousDefinitionName.toLowerCase().startsWith("join") &&
+			 definitionName.toLowerCase().startsWith("join"))) {
+
+			return;
+		}
+
+		_sourceFormatterHelper.printError(fileName, "sort: " + fileName);
+	}
+
+	private static void _compareMethodParameterTypes(
+		String fileName, List<String> previousMethodParameterTypes,
+		List<String> methodParameterTypes) {
+
+		if (methodParameterTypes.isEmpty()) {
+			_sourceFormatterHelper.printError(fileName, "sort: " + fileName);
+
+			return;
+		}
+
+		for (int i = 0; i < previousMethodParameterTypes.size(); i++) {
+			if (methodParameterTypes.size() < i + 1) {
+				_sourceFormatterHelper.printError(
+					fileName, "sort: " + fileName);
+
+				return;
+			}
+
+			String previousParameterType = previousMethodParameterTypes.get(i);
+
+			if (previousParameterType.endsWith("...")) {
+				previousParameterType = StringUtil.replaceLast(
+					previousParameterType, "...", StringPool.BLANK);
+			}
+
+			String parameterType = methodParameterTypes.get(i);
+
+			if (parameterType.endsWith("...")) {
+				parameterType = StringUtil.replaceLast(
+					parameterType, "...", StringPool.BLANK);
+			}
+
+			if (previousParameterType.compareToIgnoreCase(parameterType) < 0) {
+				return;
+			}
+
+			if (previousParameterType.compareToIgnoreCase(parameterType) > 0) {
+				_sourceFormatterHelper.printError(
+					fileName, "sort: " + fileName);
+
+				return;
+			}
+
+			if (previousParameterType.compareTo(parameterType) > 0) {
+				return;
+			}
+
+			if (previousParameterType.compareTo(parameterType) < 0) {
+				_sourceFormatterHelper.printError(
+					fileName, "sort: " + fileName);
+
+				return;
 			}
 		}
 	}
@@ -1019,6 +1173,18 @@ public class SourceFormatter {
 
 		int lineToSkipIfEmpty = 0;
 
+		String definitionName = null;
+		int definitionType = 0;
+
+		String previousDefinitionName = null;
+		int previousDefinitionType = 0;
+
+		List<String> methodParameterTypes = new ArrayList<String>();
+		List<String> previousMethodParameterTypes = null;
+
+		boolean readMethodParameterTypes = false;
+		boolean hasSameMethodName = false;
+
 		while ((line = unsyncBufferedReader.readLine()) != null) {
 			lineCount++;
 
@@ -1041,6 +1207,87 @@ public class SourceFormatter {
 				fileName, line, lineCount);
 
 			String trimmedLine = StringUtil.trimLeading(line);
+
+			if (line.startsWith(StringPool.TAB + "private ") ||
+				line.startsWith(StringPool.TAB + "protected ") ||
+				line.startsWith(StringPool.TAB + "public ")) {
+
+				hasSameMethodName = false;
+
+				Tuple tuple = _getDefinitionTuple(line);
+
+				if (tuple != null) {
+					definitionName = (String)tuple.getObject(0);
+					definitionType = (Integer)tuple.getObject(1);
+
+					boolean isMethod = _isInDefinitionTypeGroup(
+						definitionType, _TYPE_METHOD);
+					boolean isPrivateMethodOrVariable =
+						_isInDefinitionTypeGroup(
+							definitionType, _TYPE_PRIVATE_METHOD_OR_VARIABLE);
+
+					if (isMethod) {
+						readMethodParameterTypes = true;
+					}
+
+					if ((isPrivateMethodOrVariable &&
+						 !definitionName.startsWith(StringPool.UNDERLINE) &&
+						 !definitionName.equals("serialVersionUID")) ||
+						(!isPrivateMethodOrVariable &&
+						 definitionName.startsWith(StringPool.UNDERLINE))) {
+
+						_sourceFormatterHelper.printError(
+							fileName,
+							"underscore: " + fileName + " " + lineCount);
+					}
+
+					if (Validator.isNotNull(previousDefinitionName)) {
+						if (previousDefinitionType > definitionType) {
+							_sourceFormatterHelper.printError(
+								fileName,
+								"order: " + fileName + " " + lineCount);
+						}
+						else if (previousDefinitionType == definitionType) {
+							if (isMethod &&
+								previousDefinitionName.equals(definitionName)) {
+
+								hasSameMethodName = true;
+							}
+							else if (!_isInDefinitionTypeGroup(
+										definitionType,
+										_TYPE_STATIC_VARIABLE)) {
+
+								_compareDefinitionNames(
+									fileName, previousDefinitionName,
+									definitionName);
+							}
+						}
+					}
+
+					previousDefinitionName = definitionName;
+					previousDefinitionType = definitionType;
+				}
+			}
+
+			if (readMethodParameterTypes) {
+				methodParameterTypes = _addMethodParameterTypes(
+					trimmedLine, methodParameterTypes);
+
+				if (trimmedLine.contains(StringPool.CLOSE_PARENTHESIS)) {
+					if (hasSameMethodName) {
+						_compareMethodParameterTypes(
+							fileName, previousMethodParameterTypes,
+							methodParameterTypes);
+					}
+
+					readMethodParameterTypes = false;
+
+					previousMethodParameterTypes = ListUtil.copy(
+						methodParameterTypes);
+
+					methodParameterTypes.clear();
+				}
+			}
 
 			if (!trimmedLine.contains(StringPool.DOUBLE_SLASH) &&
 				!trimmedLine.startsWith(StringPool.STAR)) {
@@ -1734,6 +1981,28 @@ public class SourceFormatter {
 		}
 	}
 
+	private static String _getClassName(String line) {
+		int pos = line.indexOf(" implements ");
+
+		if (pos == -1) {
+			pos = line.indexOf(" extends ");
+		}
+
+		if (pos == -1) {
+			pos = line.indexOf(StringPool.OPEN_CURLY_BRACE);
+		}
+
+		if (pos != -1) {
+			line = line.substring(0, pos);
+		}
+
+		line = line.trim();
+
+		pos = line.lastIndexOf(StringPool.SPACE);
+
+		return line.substring(pos + 1);
+	}
+
 	private static String _getCombinedLines(String line, String previousLine) {
 		if (Validator.isNull(previousLine)) {
 			return null;
@@ -1791,6 +2060,14 @@ public class SourceFormatter {
 		return null;
 	}
 
+	private static String _getConstructorOrMethodName(String line, int pos) {
+		line = line.substring(0, pos);
+
+		int x = line.lastIndexOf(StringPool.SPACE);
+
+		return line.substring(x + 1);
+	}
+
 	private static String _getCopyright() throws IOException {
 		String copyright = _fileUtil.read("copyright.txt");
 
@@ -1825,6 +2102,152 @@ public class SourceFormatter {
 			}
 
 			x = x - 1;
+		}
+
+		return null;
+	}
+
+	private static Tuple _getDefinitionTuple(String line) {
+		int pos = line.indexOf(StringPool.OPEN_PARENTHESIS);
+
+		if (line.startsWith(StringPool.TAB + "public static ")) {
+			if (line.endsWith(StringPool.SEMICOLON) ||
+				line.contains(StringPool.EQUAL)) {
+
+				String variableName = _getVariableName(line);
+
+				if (Character.isLowerCase(variableName.charAt(0))) {
+					return null;
+				}
+
+				return new Tuple(variableName, _TYPE_VARIABLE_PUBLIC_STATIC);
+			}
+
+			if (pos != -1) {
+				return new Tuple(
+					_getConstructorOrMethodName(line, pos),
+					_TYPE_METHOD_PUBLIC_STATIC);
+			}
+
+			if (line.startsWith(StringPool.TAB + "public static class ")) {
+				return new Tuple(
+					_getClassName(line), _TYPE_CLASS_PUBLIC_STATIC);
+			}
+		}
+		else if (line.startsWith(StringPool.TAB + "public ")) {
+			if (pos != -1) {
+				int spaceCount = StringUtil.count(
+					line.substring(0, pos), StringPool.SPACE);
+
+				if (spaceCount == 1) {
+					return new Tuple(
+						_getConstructorOrMethodName(line, pos),
+						_TYPE_CONSTRUCTOR_PUBLIC);
+				}
+
+				if (spaceCount > 1) {
+					return new Tuple(
+						_getConstructorOrMethodName(line, pos),
+						_TYPE_METHOD_PUBLIC);
+				}
+			}
+			else if (line.startsWith(StringPool.TAB + "public class ")) {
+				return new Tuple(_getClassName(line), _TYPE_CLASS_PUBLIC);
+			}
+		}
+		else if (line.startsWith(StringPool.TAB + "protected static ")) {
+			if (line.endsWith(StringPool.SEMICOLON) ||
+				line.contains(StringPool.EQUAL)) {
+
+				String variableName = _getVariableName(line);
+
+				if (Character.isLowerCase(variableName.charAt(0))) {
+					return null;
+				}
+
+				return new Tuple(variableName, _TYPE_VARIABLE_PROTECTED_STATIC);
+			}
+
+			if (pos != -1) {
+				return new Tuple(
+					_getConstructorOrMethodName(line, pos),
+					_TYPE_METHOD_PROTECTED_STATIC);
+			}
+		}
+		else if (line.startsWith(StringPool.TAB + "protected ")) {
+			if ((pos != -1) && !line.contains(StringPool.EQUAL)) {
+				int spaceCount = StringUtil.count(
+					line.substring(0, pos), StringPool.SPACE);
+
+				if (spaceCount == 1) {
+					return new Tuple(
+						_getConstructorOrMethodName(line, pos),
+						_TYPE_CONSTRUCTOR_PROTECTED);
+				}
+
+				if (spaceCount > 1) {
+					return new Tuple(
+						_getConstructorOrMethodName(line, pos),
+						_TYPE_METHOD_PROTECTED);
+				}
+			}
+
+			return new Tuple(_getVariableName(line), _TYPE_VARIABLE_PROTECTED);
+		}
+		else if (line.startsWith(StringPool.TAB + "private static ")) {
+			if (line.endsWith(StringPool.SEMICOLON) ||
+				line.contains(StringPool.EQUAL)) {
+
+				String variableName = _getVariableName(line);
+
+				char firstChar = variableName.charAt(1);
+
+				if (Character.isUpperCase(firstChar)) {
+					return new Tuple(
+						variableName, _TYPE_VARIABLE_PRIVATE_STATIC_CONSTANT);
+				}
+
+				return new Tuple(variableName, _TYPE_VARIABLE_PRIVATE_STATIC);
+			}
+
+			if (pos != -1) {
+				return new Tuple(
+					_getConstructorOrMethodName(line, pos),
+					_TYPE_METHOD_PRIVATE_STATIC);
+			}
+
+			if (line.startsWith(StringPool.TAB + "private static class ")) {
+				return new Tuple(
+					_getClassName(line), _TYPE_CLASS_PRIVATE_STATIC);
+			}
+		}
+		else if (line.startsWith(StringPool.TAB + "private ")) {
+			if (line.endsWith(StringPool.SEMICOLON) ||
+				line.contains(StringPool.EQUAL)) {
+
+				return new Tuple(
+					_getVariableName(line), _TYPE_VARIABLE_PRIVATE);
+			}
+
+			if (pos != -1) {
+				int spaceCount = StringUtil.count(
+					line.substring(0, pos), StringPool.SPACE);
+
+				if (spaceCount == 1) {
+					return new Tuple(
+						_getConstructorOrMethodName(line, pos),
+						_TYPE_CONSTRUCTOR_PRIVATE);
+				}
+
+				if (spaceCount > 1) {
+					return new Tuple(
+						_getConstructorOrMethodName(line, pos),
+						_TYPE_METHOD_PRIVATE);
+				}
+			}
+			else if (line.startsWith(StringPool.TAB + "private class ")) {
+				return new Tuple(_getClassName(line), _TYPE_CLASS_PRIVATE);
+			}
 		}
 
 		return null;
@@ -2042,6 +2465,26 @@ public class SourceFormatter {
 		return sb.toString();
 	}
 
+	private static String _getVariableName(String line) {
+		int x = line.indexOf(StringPool.EQUAL);
+		int y = line.lastIndexOf(StringPool.SPACE);
+
+		if (x != -1) {
+			line = line.substring(0, x);
+			line = StringUtil.trim(line);
+
+			y = line.lastIndexOf(StringPool.SPACE);
+
+			return line.substring(y + 1);
+		}
+
+		if (line.endsWith(StringPool.SEMICOLON)) {
+			return line.substring(y + 1, line.length() - 1);
+		}
+
+		return StringPool.BLANK;
+	}
+
 	private static boolean _isGenerated(String content) {
 		if (content.contains("* @generated") || content.contains("$ANTLR")) {
 			return true;
@@ -2145,6 +2588,18 @@ public class SourceFormatter {
 					includeFileName, className, includeFileNames,
 					checkedFileNames)) {
 
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private static boolean _isInDefinitionTypeGroup(
+		int definitionType, int[] definitionTypeGroup) {
+
+		for (int type : definitionTypeGroup) {
+			if (definitionType == type) {
 				return true;
 			}
 		}
@@ -2281,6 +2736,68 @@ public class SourceFormatter {
 		"liferay-theme", "liferay-ui", "liferay-util", "portlet", "struts",
 		"tiles"
 	};
+
+	private static final int _TYPE_CLASS_PRIVATE = 19;
+
+	private static final int _TYPE_CLASS_PRIVATE_STATIC = 18;
+
+	private static final int _TYPE_CLASS_PUBLIC = 6;
+
+	private static final int _TYPE_CLASS_PUBLIC_STATIC = 5;
+
+	private static final int _TYPE_CONSTRUCTOR_PRIVATE = 13;
+
+	private static final int _TYPE_CONSTRUCTOR_PROTECTED = 7;
+
+	private static final int _TYPE_CONSTRUCTOR_PUBLIC = 3;
+
+	private static final int[] _TYPE_METHOD = {
+		SourceFormatter._TYPE_METHOD_PRIVATE,
+		SourceFormatter._TYPE_METHOD_PRIVATE_STATIC,
+		SourceFormatter._TYPE_METHOD_PROTECTED,
+		SourceFormatter._TYPE_METHOD_PROTECTED_STATIC,
+		SourceFormatter._TYPE_METHOD_PUBLIC,
+		SourceFormatter._TYPE_METHOD_PUBLIC_STATIC
+	};
+
+	private static final int _TYPE_METHOD_PRIVATE = 14;
+
+	private static final int _TYPE_METHOD_PRIVATE_STATIC = 12;
+
+	private static final int _TYPE_METHOD_PROTECTED = 9;
+
+	private static final int _TYPE_METHOD_PROTECTED_STATIC = 8;
+
+	private static final int _TYPE_METHOD_PUBLIC = 4;
+
+	private static final int _TYPE_METHOD_PUBLIC_STATIC = 2;
+
+	private static final int[] _TYPE_PRIVATE_METHOD_OR_VARIABLE = {
+		SourceFormatter._TYPE_METHOD_PRIVATE,
+		SourceFormatter._TYPE_METHOD_PRIVATE_STATIC,
+		SourceFormatter._TYPE_VARIABLE_PRIVATE,
+		SourceFormatter._TYPE_VARIABLE_PRIVATE_STATIC,
+		SourceFormatter._TYPE_VARIABLE_PRIVATE_STATIC_CONSTANT
+	};
+
+	private static final int[] _TYPE_STATIC_VARIABLE = {
+		SourceFormatter._TYPE_VARIABLE_PRIVATE_STATIC,
+		SourceFormatter._TYPE_VARIABLE_PRIVATE_STATIC_CONSTANT,
+		SourceFormatter._TYPE_VARIABLE_PROTECTED_STATIC,
+		SourceFormatter._TYPE_VARIABLE_PUBLIC_STATIC
+	};
+
+	private static final int _TYPE_VARIABLE_PRIVATE = 17;
+
+	private static final int _TYPE_VARIABLE_PRIVATE_STATIC = 16;
+
+	private static final int _TYPE_VARIABLE_PRIVATE_STATIC_CONSTANT = 15;
+
+	private static final int _TYPE_VARIABLE_PROTECTED = 11;
+
+	private static final int _TYPE_VARIABLE_PROTECTED_STATIC = 10;
+
+	private static final int _TYPE_VARIABLE_PUBLIC_STATIC = 1;
 
 	private static String[] _excludes;
 	private static Properties _exclusionsProperties;

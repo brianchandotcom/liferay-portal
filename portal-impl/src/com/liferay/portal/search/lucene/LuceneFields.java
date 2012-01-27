@@ -119,12 +119,12 @@ public class LuceneFields {
 		return getUID(portletId, String.valueOf(field1));
 	}
 
-	public static String getUID(String portletId, Long field1) {
-		return getUID(portletId, field1.longValue());
-	}
-
 	public static String getUID(String portletId, long field1, String field2) {
 		return getUID(portletId, String.valueOf(field1), field2);
+	}
+
+	public static String getUID(String portletId, Long field1) {
+		return getUID(portletId, field1.longValue());
 	}
 
 	public static String getUID(String portletId, Long field1, String field2) {

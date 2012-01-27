@@ -31,18 +31,18 @@ public class ProjectionListImpl
 		_projectionList = projectionList;
 	}
 
-	public ProjectionList add(Projection projection, String alias) {
-		ProjectionImpl projectionImpl = (ProjectionImpl)projection;
-
-		_projectionList.add(projectionImpl.getWrappedProjection(), alias);
-
-		return this;
-	}
-
 	public ProjectionList add(Projection projection) {
 		ProjectionImpl projectionImpl = (ProjectionImpl)projection;
 
 		_projectionList.add(projectionImpl.getWrappedProjection());
+
+		return this;
+	}
+
+	public ProjectionList add(Projection projection, String alias) {
+		ProjectionImpl projectionImpl = (ProjectionImpl)projection;
+
+		_projectionList.add(projectionImpl.getWrappedProjection(), alias);
 
 		return this;
 	}

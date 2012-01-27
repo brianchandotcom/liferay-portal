@@ -122,6 +122,12 @@ public class UnsyncStringWriter extends Writer {
 	}
 
 	@Override
+	public void write(char[] chars) {
+		write(chars, 0, chars.length);
+
+	}
+
+	@Override
 	public void write(char[] chars, int offset, int length) {
 		if (length <= 0) {
 			return;
@@ -133,12 +139,6 @@ public class UnsyncStringWriter extends Writer {
 		else {
 			stringBuilder.append(chars, offset, length);
 		}
-	}
-
-	@Override
-	public void write(char[] chars) {
-		write(chars, 0, chars.length);
-
 	}
 
 	@Override

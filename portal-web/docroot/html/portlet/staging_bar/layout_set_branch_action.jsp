@@ -26,7 +26,7 @@ long currentLayoutSetBranchId = GetterUtil.getLong((String)request.getAttribute(
 
 <liferay-ui:icon-menu>
 	<c:if test="<%= LayoutSetBranchPermissionUtil.contains(permissionChecker, layoutSetBranch, ActionKeys.UPDATE) %>">
-		<portlet:renderURL var="editURL">
+		<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>" var="editURL">
 			<portlet:param name="struts_action" value="/staging_bar/edit_layout_set_branch" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

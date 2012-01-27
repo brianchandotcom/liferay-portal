@@ -9,16 +9,22 @@
 		</antcall>
 
 		<ant antfile="build-test-geronimo.xml" target="run-selenium-geronimo">
+			${test.ant.script.file.plugin.extras}
 			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite.1}" />
 		</ant>
 
 		<ant antfile="build-test-geronimo.xml" target="run-selenium-geronimo">
+			${test.ant.script.file.plugin.extras}
 			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="skip.delete-selenium-output" value="true" />
@@ -32,16 +38,22 @@
 		</antcall>
 
 		<ant antfile="build-test-glassfish.xml" target="run-selenium-glassfish">
+			${test.ant.script.file.plugin.extras}
 			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite.1}" />
 		</ant>
 
 		<ant antfile="build-test-glassfish.xml" target="run-selenium-glassfish">
+			${test.ant.script.file.plugin.extras}
 			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="skip.delete-selenium-output" value="true" />
@@ -55,16 +67,22 @@
 		</antcall>
 
 		<ant antfile="build-test-jboss.xml" target="run-selenium-jboss">
+			${test.ant.script.file.plugin.extras}
 			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite.1}" />
 		</ant>
 
 		<ant antfile="build-test-jboss.xml" target="run-selenium-jboss">
+			${test.ant.script.file.plugin.extras}
 			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="skip.delete-selenium-output" value="true" />
@@ -78,16 +96,22 @@
 		</antcall>
 
 		<ant antfile="build-test-jetty.xml" target="run-selenium-jetty">
+			${test.ant.script.file.plugin.extras}
 			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite.1}" />
 		</ant>
 
 		<ant antfile="build-test-jetty.xml" target="run-selenium-jetty">
+			${test.ant.script.file.plugin.extras}
 			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="skip.delete-selenium-output" value="true" />
@@ -101,16 +125,22 @@
 		</antcall>
 
 		<ant antfile="build-test-jonas.xml" target="run-selenium-jonas">
+			${test.ant.script.file.plugin.extras}
 			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite.1}" />
 		</ant>
 
 		<ant antfile="build-test-jonas.xml" target="run-selenium-jonas">
+			${test.ant.script.file.plugin.extras}
 			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="skip.delete-selenium-output" value="true" />
@@ -131,16 +161,22 @@
 		</antcall>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.plugin.extras}
 			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite.1}" />
 		</ant>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.plugin.extras}
 			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="skip.delete-selenium-output" value="true" />
@@ -158,16 +194,22 @@
 		</antcall>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.plugin.extras}
 			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite.1}" />
 		</ant>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.plugin.extras}
 			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="skip.delete-selenium-output" value="true" />
@@ -181,16 +223,22 @@
 		</antcall>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.plugin.extras}
 			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite.1}" />
 		</ant>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.plugin.extras}
 			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="skip.delete-selenium-output" value="true" />
@@ -204,8 +252,11 @@
 		</antcall>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.plugin.extras}
 			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.browser" value="googlechrome" />
@@ -213,8 +264,11 @@
 		</ant>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.plugin.extras}
 			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="skip.delete-selenium-output" value="true" />
@@ -229,8 +283,11 @@
 		</antcall>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.plugin.extras}
 			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.browser" value="iehta" />
@@ -238,8 +295,11 @@
 		</ant>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.plugin.extras}
 			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="skip.delete-selenium-output" value="true" />
@@ -261,16 +321,22 @@
 		</antcall>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.plugin.extras}
 			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite.1}" />
 		</ant>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.plugin.extras}
 			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="skip.delete-selenium-output" value="true" />
@@ -295,16 +361,22 @@
 		</antcall>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.plugin.extras}
 			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite.1}" />
 		</ant>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.plugin.extras}
 			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="skip.delete-selenium-output" value="true" />
@@ -329,16 +401,22 @@
 		</antcall>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.plugin.extras}
 			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite.1}" />
 		</ant>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.plugin.extras}
 			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="skip.delete-selenium-output" value="true" />
@@ -363,16 +441,22 @@
 		</antcall>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.plugin.extras}
 			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite.1}" />
 		</ant>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.plugin.extras}
 			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="skip.delete-selenium-output" value="true" />

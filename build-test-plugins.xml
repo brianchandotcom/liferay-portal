@@ -14,11 +14,26 @@
 			</then>
 		</if>
 
-		<exec dir="${lp.plugins.dir}" executable="cmd.exe">
-			<arg line="/c svn --username ${svn.username} --password ${svn.password} update" />
-		</exec>
+		<if>
+			<equals arg1="${plugin.types}" arg2="extra" />
+			<then>
+				<for list="${plugins.includes}" param="plugin">
+					<sequential>
+						<mkdir dir="${user.home}/liferay/deploy" />
 
-		<echo file="${lp.plugins.dir}/build.${user.name}.properties">app.server.dir=${simple.server.dir}
+						<copy
+							file="portal-web/test/com/liferay/portalweb/dependencies/@{plugin}"
+							tofile="${user.home}/liferay/deploy/@{plugin}"
+						/>
+					</sequential>
+				</for>
+			</then>
+			<else>
+				<exec dir="${lp.plugins.dir}" executable="cmd.exe">
+					<arg line="/c svn --username ${svn.username} --password ${svn.password} update" />
+				</exec>
+
+				<echo file="${lp.plugins.dir}/build.${user.name}.properties">app.server.dir=${simple.server.dir}
 app.server.lib.global.dir=${simple.server.lib.global.dir}
 app.server.portal.dir=${simple.server.portal.dir}
 
@@ -26,17 +41,19 @@ auto.deploy.dir=$${user.home}/liferay/deploy
 
 plugins.includes=${plugins.includes}</echo>
 
-		<if>
-			<isset property="plugin.portlets.properties" />
-			<then>
-				<echo file="${lp.plugins.dir}/${plugin.types}/${portlet.plugins.includes}/docroot/WEB-INF/src/portlet-ext.properties">${plugin.portlets.properties}</echo>
-			</then>
-		</if>
+				<if>
+					<isset property="plugin.portlets.properties" />
+					<then>
+						<echo file="${lp.plugins.dir}/${plugin.types}/${portlet.plugins.includes}/docroot/WEB-INF/src/portlet-ext.properties">${plugin.portlets.properties}</echo>
+					</then>
+				</if>
 
-		<ant dir="${lp.plugins.dir}/${plugin.types}" inheritAll="false">
-			<target name="clean" />
-			<target name="deploy" />
-		</ant>
+				<ant dir="${lp.plugins.dir}/${plugin.types}" inheritAll="false">
+					<target name="clean" />
+					<target name="deploy" />
+				</ant>
+			</else>
+		</if>
 
 		<delete dir="${lp.plugins.dir}/dist" />
 		<mkdir dir="${lp.plugins.dir}/dist" />

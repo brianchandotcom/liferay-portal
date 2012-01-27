@@ -11,9 +11,11 @@
 		<antcall target="prepare-sharding-properties" />
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.plugin.extras}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="skip.rebuild-database" value="true" />

@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.announcements;
+package com.liferay.portalweb.portlet.announcements.usecase;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portlet.announcements.announcementsentry.AnnouncementsEntryTestPlan;
-import com.liferay.portalweb.portlet.announcements.usecase.UseCaseTestPlan;
+import com.liferay.portalweb.portlet.announcements.usecase.demo1.Demo1Tests;
+import com.liferay.portalweb.portlet.announcements.usecase.demo2.Demo2Tests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -24,13 +24,13 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AnnouncementsTestPlan extends BaseTestSuite {
+public class UseCaseTestPlan extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(AnnouncementsEntryTestPlan.suite());
-		testSuite.addTest(UseCaseTestPlan.suite());
+		testSuite.addTest(Demo1Tests.suite());
+		testSuite.addTest(Demo2Tests.suite());
 
 		return testSuite;
 	}

@@ -12,11 +12,9 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.announcements;
+package com.liferay.portalweb.portlet.announcements.usecase.demo2;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portlet.announcements.announcementsentry.AnnouncementsEntryTestPlan;
-import com.liferay.portalweb.portlet.announcements.usecase.UseCaseTestPlan;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -24,15 +22,20 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AnnouncementsTestPlan extends BaseTestSuite {
-
+public class Demo2Tests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(AnnouncementsEntryTestPlan.suite());
-		testSuite.addTest(UseCaseTestPlan.suite());
+		testSuite.addTestSuite(AddPageAnnouncementsTest.class);
+		testSuite.addTestSuite(AddPortletAnnouncementsTest.class);
+		testSuite.addTestSuite(AddAnnouncementsEntryTest.class);
+		testSuite.addTestSuite(ViewAnnouncementsEntryTest.class);
+		testSuite.addTestSuite(AddAnnouncementsEntryDisplayDateFutureTest.class);
+		testSuite.addTestSuite(ViewAnnouncementsEntryDisplayDateFutureTest.class);
+		testSuite.addTestSuite(AddAnnouncementsEntryExpirationDateExpiredTest.class);
+		testSuite.addTestSuite(ViewAnnouncementsEntryExpirationDateExpiredTest.class);
+		testSuite.addTestSuite(TearDownAnnouncementsEntryTest.class);
+		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;
 	}
-
 }

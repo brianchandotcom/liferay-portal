@@ -73,7 +73,7 @@ portletURL.setParameter("typeSelection", typeSelection);
 
 			long entryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
 
-			AssetEntry entry = AssetEntryLocalServiceUtil.getEntry(typeSelection, entryId);
+			AssetEntry entry = AssetEntryLocalServiceUtil.fetchEntry(typeSelection, entryId);
 
 			if (entry == null) {
 				continue;

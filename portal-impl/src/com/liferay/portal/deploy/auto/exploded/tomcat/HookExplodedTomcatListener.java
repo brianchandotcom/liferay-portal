@@ -41,6 +41,13 @@ public class HookExplodedTomcatListener extends BaseExplodedTomcatListener {
 			return;
 		}
 
+		boolean isPortlet = 
+		    getDocBaseDir(file, "WEB-INF/liferay-portlet.xml") != null;
+
+		if (isPortlet) {
+			return;
+		}
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Modifying hook for " + file.getPath());
 		}

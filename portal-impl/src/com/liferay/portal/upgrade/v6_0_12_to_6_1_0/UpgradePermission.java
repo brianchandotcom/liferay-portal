@@ -117,8 +117,8 @@ public class UpgradePermission extends UpgradeProcess {
 		for (ResourcePermission resourcePermission : resourcePermissions) {
 			int scope = resourcePermission.getScope();
 
-			if(name.equals(resourcePermission.getName())) {
-				
+			if (name.equals(resourcePermission.getName())) {
+
 				if ((scope == ResourceConstants.SCOPE_COMPANY) ||
 					(scope == ResourceConstants.SCOPE_GROUP_TEMPLATE)) {
 

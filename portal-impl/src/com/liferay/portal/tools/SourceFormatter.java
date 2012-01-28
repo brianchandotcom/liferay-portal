@@ -331,6 +331,72 @@ public class SourceFormatter {
 		}
 	}
 
+	private static void _checkArguments(
+		String fileName, String line, int lineCount) {
+
+		String previousArgument = null;
+
+		for (int x = 0;;) {
+			x = line.indexOf(StringPool.SPACE);
+
+			if (x == -1) {
+				return;
+			}
+
+			line = line.substring(x + 1);
+
+			int y = line.indexOf(StringPool.EQUAL);
+
+			if ((y == -1) || (line.length() <= (y + 1))) {
+				return;
+			}
+
+			String argument = line.substring(0, y);
+
+			if (Validator.isNotNull(previousArgument) &&
+				(previousArgument.compareTo(argument) > 0)) {
+
+				/*
+				_sourceFormatterHelper.printError(
+					fileName, "sort: " + fileName + " " + lineCount);
+				*/
+
+				return;
+			}
+
+			line = line.substring(y + 1);
+
+			char delimeter = line.charAt(0);
+
+			if ((delimeter != CharPool.APOSTROPHE) &&
+				(delimeter != CharPool.QUOTE)) {
+
+				_sourceFormatterHelper.printError(
+					fileName, "delimeter: " + fileName + " " + lineCount);
+			}
+
+			line = line.substring(1);
+
+			int z = line.indexOf(delimeter);
+
+			if (z == -1) {
+				return;
+			}
+
+			line = line.substring(z + 1);
+
+			line = StringUtil.trimTrailing(line);
+
+			if (line.startsWith(StringPool.FORWARD_SLASH) ||
+				line.startsWith(StringPool.GREATER_THAN)) {
+
+				return;
+			}
+
+			previousArgument = argument;
+		}
+	}
+
 	private static void _checkPersistenceTestSuite() throws IOException {
 		String basedir = "./portal-impl/test";
 
@@ -1638,6 +1704,9 @@ public class SourceFormatter {
 
 		String line = null;
 
+		String previousArgument = null;
+		boolean readArguments = false;
+
 		while ((line = unsyncBufferedReader.readLine()) != null) {
 			lineCount++;
 
@@ -1655,6 +1724,47 @@ public class SourceFormatter {
 			}
 
 			String trimmedLine = StringUtil.trimLeading(line);
+
+			if (readArguments) {
+				if (!trimmedLine.startsWith(StringPool.FORWARD_SLASH) &&
+					!trimmedLine.startsWith(StringPool.GREATER_THAN)) {
+
+					int pos = trimmedLine.indexOf(StringPool.EQUAL);
+
+					if (pos != -1) {
+						String argument = trimmedLine.substring(0, pos);
+
+						if (Validator.isNotNull(previousArgument) &&
+							(previousArgument.compareTo(argument) > 0)) {
+
+							/*
+							_sourceFormatterHelper.printError(
+								fileName,
+								"sort: " + fileName + " " + lineCount);
+							*/
+						}
+
+						previousArgument = argument;
+					}
+				}
+				else {
+					previousArgument = null;
+					readArguments = false;
+				}
+			}
+
+			if (trimmedLine.startsWith("<liferay-ui:") ||
+				trimmedLine.startsWith("<aui:")) {
+
+				if (!trimmedLine.contains(StringPool.SPACE) &&
+					!trimmedLine.endsWith(StringPool.GREATER_THAN)) {
+
+					readArguments = true;
+				}
+				else {
+					_checkArguments(fileName, trimmedLine, lineCount);
+				}
+			}
 
 			if (!trimmedLine.contains(StringPool.DOUBLE_SLASH) &&
 				!trimmedLine.startsWith(StringPool.STAR)) {

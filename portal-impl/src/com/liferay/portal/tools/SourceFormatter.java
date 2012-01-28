@@ -73,7 +73,10 @@ public class SourceFormatter {
 
 			_sourceFormatterHelper.init();
 
-			_readExclusions();
+			_javaTermAlphabetizeExclusionsProperties = _getExclusionsProperties(
+				"source_formatter_javaterm_alphabetize_exclusions.properties");
+			_lineLengthExclusionsProperties = _getExclusionsProperties(
+				"source_formatter_line_lenght_exclusions.properties");
 
 			Thread thread1 = new Thread () {
 				@Override
@@ -459,10 +462,6 @@ public class SourceFormatter {
 
 	private static void _compareJavaTermNames(
 		String fileName, String previousJavaTermName, String javaTermName) {
-
-		if (fileName.endsWith("DiffImplTest.java")) {
-			return;
-		}
 
 		if (Validator.isNull(previousJavaTermName) ||
 			Validator.isNull(javaTermName)) {
@@ -1212,6 +1211,16 @@ public class SourceFormatter {
 
 			String trimmedLine = StringUtil.trimLeading(line);
 
+			String excluded = 
+				_javaTermAlphabetizeExclusionsProperties.getProperty(
+					StringUtil.replace(
+						fileName, "\\", "/") + StringPool.AT + lineCount);
+
+			if (excluded == null) {
+				excluded = _javaTermAlphabetizeExclusionsProperties.getProperty(
+					StringUtil.replace(fileName, "\\", "/"));
+			}
+
 			if (line.startsWith(StringPool.TAB + "private ") ||
 				line.startsWith(StringPool.TAB + "protected ") ||
 				line.startsWith(StringPool.TAB + "public ")) {
@@ -1257,9 +1266,7 @@ public class SourceFormatter {
 
 								hasSameMethodName = true;
 							}
-							else if (!_isInJavaTermTypeGroup(
-										javaTermType, _TYPE_STATIC_VARIABLE)) {
-
+							else if (excluded == null) {
 								_compareJavaTermNames(
 									fileName, previousJavaTermName,
 									javaTermName);
@@ -1374,12 +1381,12 @@ public class SourceFormatter {
 				longLogFactoryUtil = true;
 			}
 
-			String excluded = _exclusionsProperties.getProperty(
-				StringUtil.replace(fileName, "\\", "/") + StringPool.AT +
-					lineCount);
+			excluded = _lineLengthExclusionsProperties.getProperty(
+				StringUtil.replace(
+					fileName, "\\", "/") + StringPool.AT + lineCount);
 
 			if (excluded == null) {
-				excluded = _exclusionsProperties.getProperty(
+				excluded = _lineLengthExclusionsProperties.getProperty(
 					StringUtil.replace(fileName, "\\", "/"));
 			}
 
@@ -2110,6 +2117,32 @@ public class SourceFormatter {
 		return null;
 	}
 
+	private static Properties _getExclusionsProperties(String fileName)
+		throws IOException {
+
+		Properties exclusionsProperties = new Properties();
+
+		ClassLoader classLoader = SourceFormatter.class.getClassLoader();
+
+		String sourceFormatterExclusions = System.getProperty(
+			"source-formatter-exclusions",
+			"com/liferay/portal/tools/dependencies/" + fileName);
+
+		URL url = classLoader.getResource(sourceFormatterExclusions);
+
+		if (url == null) {
+			return null;
+		}
+
+		InputStream inputStream = url.openStream();
+
+		exclusionsProperties.load(inputStream);
+
+		inputStream.close();
+
+		return exclusionsProperties;
+	}
+
 	private static Tuple _getJavaTermTuple(String line) {
 		int pos = line.indexOf(StringPool.OPEN_PARENTHESIS);
 
@@ -2610,29 +2643,6 @@ public class SourceFormatter {
 		return false;
 	}
 
-	private static void _readExclusions() throws IOException {
-		_exclusionsProperties = new Properties();
-
-		ClassLoader classLoader = SourceFormatter.class.getClassLoader();
-
-		String sourceFormatterExclusions = System.getProperty(
-			"source-formatter-exclusions",
-			"com/liferay/portal/tools/dependencies/" +
-				"source_formatter_exclusions.properties");
-
-		URL url = classLoader.getResource(sourceFormatterExclusions);
-
-		if (url == null) {
-			return;
-		}
-
-		InputStream inputStream = url.openStream();
-
-		_exclusionsProperties.load(inputStream);
-
-		inputStream.close();
-	}
-
 	private static String _replacePrimitiveWrapperInstantiation(
 		String fileName, String line, int lineCount) {
 
@@ -2783,13 +2793,6 @@ public class SourceFormatter {
 		SourceFormatter._TYPE_VARIABLE_PRIVATE_STATIC_CONSTANT
 	};
 
-	private static final int[] _TYPE_STATIC_VARIABLE = {
-		SourceFormatter._TYPE_VARIABLE_PRIVATE_STATIC,
-		SourceFormatter._TYPE_VARIABLE_PRIVATE_STATIC_CONSTANT,
-		SourceFormatter._TYPE_VARIABLE_PROTECTED_STATIC,
-		SourceFormatter._TYPE_VARIABLE_PUBLIC_STATIC
-	};
-
 	private static final int _TYPE_VARIABLE_PRIVATE = 17;
 
 	private static final int _TYPE_VARIABLE_PRIVATE_STATIC = 16;
@@ -2803,16 +2806,17 @@ public class SourceFormatter {
 	private static final int _TYPE_VARIABLE_PUBLIC_STATIC = 1;
 
 	private static String[] _excludes;
-	private static Properties _exclusionsProperties;
 	private static FileImpl _fileUtil = FileImpl.getInstance();
 	private static Pattern _javaImportPattern = Pattern.compile(
 		"(^[ \t]*import\\s+.*;\n+)+", Pattern.MULTILINE);
+	private static Properties _javaTermAlphabetizeExclusionsProperties;
 	private static Map<String, String> _jspContents =
 		new HashMap<String, String>();
 	private static Pattern _jspImportPattern = Pattern.compile(
 		"(<.*\n*page.import=\".*>\n*)+", Pattern.MULTILINE);
 	private static Pattern _jspIncludeFilePattern = Pattern.compile(
 		"/.*[.]jsp[f]?");
+	private static Properties _lineLengthExclusionsProperties;
 	private static SAXReaderImpl _saxReaderUtil = SAXReaderImpl.getInstance();
 	private static SourceFormatterHelper _sourceFormatterHelper;
 	private static Pattern _xssPattern = Pattern.compile(

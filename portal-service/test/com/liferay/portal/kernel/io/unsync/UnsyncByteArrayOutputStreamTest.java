@@ -162,9 +162,10 @@ public class UnsyncByteArrayOutputStreamTest extends TestCase {
 		assertTrue(Arrays.equals(_BUFFER, byteArrayOutputStream.toByteArray()));
 	}
 
-	private static final int _BUFFER_SIZE = 64;
+	private static final byte[] _BUFFER =
+		new byte[UnsyncByteArrayOutputStreamTest._BUFFER_SIZE];
 
-	private static final byte[] _BUFFER = new byte[_BUFFER_SIZE];
+	private static final int _BUFFER_SIZE = 64;
 
 	static {
 		for (int i = 0; i < _BUFFER_SIZE; i++) {

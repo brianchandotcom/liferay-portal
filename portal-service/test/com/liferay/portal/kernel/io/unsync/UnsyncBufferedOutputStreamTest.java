@@ -100,9 +100,10 @@ public class UnsyncBufferedOutputStreamTest extends TestCase {
 		assertTrue(Arrays.equals(_BUFFER, byteArrayOutputStream.toByteArray()));
 	}
 
-	private static final int _SIZE = 10;
+	private static final byte[] _BUFFER =
+		new byte[UnsyncBufferedOutputStreamTest._SIZE];
 
-	private static final byte[] _BUFFER = new byte[_SIZE];
+	private static final int _SIZE = 10;
 
 	static {
 		for (int i = 0; i < _SIZE; i++) {

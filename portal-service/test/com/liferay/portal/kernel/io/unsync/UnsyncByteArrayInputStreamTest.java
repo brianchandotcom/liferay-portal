@@ -111,9 +111,10 @@ public class UnsyncByteArrayInputStreamTest extends TestCase {
 		assertEquals(0, unsyncByteArrayInputStream.available());
 	}
 
-	private static final int _SIZE = 10;
+	private static final byte[] _BUFFER =
+		new byte[UnsyncByteArrayInputStreamTest._SIZE];
 
-	private static final byte[] _BUFFER = new byte[_SIZE];
+	private static final int _SIZE = 10;
 
 	static {
 		for (int i = 0; i < _SIZE; i++) {

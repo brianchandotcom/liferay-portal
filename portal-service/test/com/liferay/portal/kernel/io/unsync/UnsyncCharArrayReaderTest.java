@@ -225,9 +225,10 @@ public class UnsyncCharArrayReaderTest extends TestCase {
 		assertEquals(_SIZE, unsyncCharArrayReader.index);
 	}
 
-	private static final int _SIZE = 10;
+	private static final char[] _BUFFER =
+		new char[UnsyncCharArrayReaderTest._SIZE];
 
-	private static final char[] _BUFFER = new char[_SIZE];
+	private static final int _SIZE = 10;
 
 	static {
 		for (int i = 0; i < _SIZE; i++) {

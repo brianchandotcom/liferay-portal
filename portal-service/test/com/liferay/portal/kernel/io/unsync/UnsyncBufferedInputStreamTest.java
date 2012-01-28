@@ -433,9 +433,10 @@ public class UnsyncBufferedInputStreamTest extends TestCase {
 		assertEquals(0, unsyncBufferedInputStream.skip(1));
 	}
 
-	private static final int _SIZE = 16 * 1024;
+	private static final byte[] _BUFFER =
+		new byte[UnsyncBufferedInputStreamTest._SIZE];
 
-	private static final byte[] _BUFFER = new byte[_SIZE];
+	private static final int _SIZE = 16 * 1024;
 
 	static {
 		for (int i = 0; i < _SIZE; i++) {

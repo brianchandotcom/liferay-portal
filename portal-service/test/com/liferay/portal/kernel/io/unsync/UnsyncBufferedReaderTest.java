@@ -464,9 +464,10 @@ public class UnsyncBufferedReaderTest extends TestCase {
 		assertEquals(0, unsyncBufferedReader.skip(1));
 	}
 
-	private static final int _SIZE = 16 * 1024;
+	private static final char[] _BUFFER =
+		new char[UnsyncBufferedReaderTest._SIZE];
 
-	private static final char[] _BUFFER = new char[_SIZE];
+	private static final int _SIZE = 16 * 1024;
 
 	static {
 		for (int i = 0; i < _SIZE; i++) {

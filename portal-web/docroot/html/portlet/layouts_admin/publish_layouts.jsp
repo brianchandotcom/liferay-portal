@@ -108,24 +108,24 @@ try {
 catch (NoSuchLayoutException nsle) {
 }
 
-long[] selectedPlids = new long[0];
+long[] selectedLayoutIds = new long[0];
 
 boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout", tabs1.equals("private-pages"));
 
 if (selPlid > 0) {
-	selectedPlids = new long[] {selPlid};
+	selectedLayoutIds = new long[] { selLayout.getLayoutId() };
 }
 else {
 	treeKey = treeKey + privateLayout;
 
-	selectedPlids = GetterUtil.getLongValues(StringUtil.split(SessionTreeJSClicks.getOpenNodes(request, treeKey + "SelectedNode"), ','));
+	selectedLayoutIds = GetterUtil.getLongValues(StringUtil.split(SessionTreeJSClicks.getOpenNodes(request, treeKey + "SelectedNode"), ','));
 }
 
 List results = new ArrayList();
 
-for (int i = 0; i < selectedPlids.length; i++) {
+for (int i = 0; i < selectedLayoutIds.length; i++) {
 	try {
-		results.add(LayoutLocalServiceUtil.getLayout(selectedPlids[i]));
+		results.add(LayoutLocalServiceUtil.getLayout(selGroupId, privateLayout, selectedLayoutIds[i]));
 	}
 	catch (NoSuchLayoutException nsle) {
 	}

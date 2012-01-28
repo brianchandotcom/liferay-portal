@@ -50,7 +50,26 @@ if (!selectableTree) {
 		OPEN_NODES: '<%= SessionTreeJSClicks.getOpenNodes(request, treeId) %>'.split(','),
 		PREFIX_LAYOUT_ID: '_layoutId_',
 		PREFIX_PLID: '_plid_',
-		SELECTED_NODES: '<%= SessionTreeJSClicks.getOpenNodes(request, treeId + "SelectedNode") %>'.split(','),
+
+		<%
+		JSONArray selectedNodesArray = JSONFactoryUtil.createJSONArray();
+
+		String selectedLayoutIds = SessionTreeJSClicks.getOpenNodes(request, treeId + "SelectedNode");
+
+		if (selectedLayoutIds != null) {
+			for (String curLayoutId : selectedLayoutIds.split(",")) {
+				try {
+					Layout curLayout = LayoutLocalServiceUtil.getLayout(groupId, privateLayout, GetterUtil.getLong(curLayoutId));
+
+					selectedNodesArray.put(String.valueOf(curLayout.getPlid()));
+				}
+				catch (NoSuchLayoutException nsle) {
+				}
+			}
+		}
+		%>
+
+		SELECTED_NODES: <%= selectedNodesArray.toString() %>,
 
 		afterRenderTree: function(event) {
 			var treeInstance = event.target;
@@ -117,7 +136,9 @@ if (!selectableTree) {
 								checkedChange: function(event) {
 									var plid = TreeUtil.extractPlid(event.target);
 
-									TreeUtil.updateSessionTreeClick(plid, event.newVal, '<%= HtmlUtil.escape(treeId) %>SelectedNode');
+									if (this === event.originalTarget) {
+										TreeUtil.updateSessionTreeClick(plid, event.newVal, '<%= HtmlUtil.escape(treeId) %>SelectedNode');
+									}
 								}
 							},
 						</c:if>
@@ -188,7 +209,9 @@ if (!selectableTree) {
 
 			if (A.Array.indexOf(TreeUtil.SELECTED_NODES, plid) > -1) {
 				if (node.check) {
-					node.check();
+					var tree = node.get('ownerTree');
+
+					node.check(tree);
 				}
 			}
 		},
@@ -216,12 +239,14 @@ if (!selectableTree) {
 		}
 
 		<c:if test="<%= saveState %>">
-			, updateSessionTreeClick: function(id, open, treeId) {
+			, updateSessionTreeClick: function(plid, check, treeId) {
 				var sessionClickURL = themeDisplay.getPathMain() + '/portal/session_tree_js_click';
 
 				var data = {
-					nodeId: id,
-					openNode: open || false,
+					cmd: check ? 'layoutCheck' : 'layoutUncheck',
+					groupId: <%= groupId %>,
+					plid: plid,
+					privateLayout: <%= privateLayout %>,
 					treeId: treeId
 				};
 
@@ -260,6 +285,9 @@ if (!selectableTree) {
 	var rootNode = new RootNodeType(
 		{
 			after: {
+				checkedChange: function(event) {
+					TreeUtil.updateSessionTreeClick(<%= LayoutConstants.DEFAULT_PLID %>, event.newVal, '<%= HtmlUtil.escape(treeId) %>SelectedNode');
+				},
 				expandedChange: function(event) {
 					var sessionClickURL = themeDisplay.getPathMain() + '/portal/session_click';
 

@@ -1252,13 +1252,15 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			else {
 				resourcePermissionLocalService.setResourcePermissions(
 					role.getCompanyId(), name, ResourceConstants.SCOPE_COMPANY,
-					"0", role.getRoleId(), actionIds);
+					String.valueOf(role.getCompanyId()), role.getRoleId(),
+					actionIds);
 			}
 		}
 		else {
 			permissionLocalService.setRolePermissions(
 				role.getRoleId(), role.getCompanyId(), name,
-				ResourceConstants.SCOPE_COMPANY, "0", actionIds);
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(role.getCompanyId()), actionIds);
 		}
 	}
 

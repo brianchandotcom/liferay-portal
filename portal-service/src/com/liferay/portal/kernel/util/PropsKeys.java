@@ -123,6 +123,8 @@ public interface PropsKeys {
 
 	public static final String AUTH_LOGIN_PORTLET_NAME = "auth.login.portlet.name";
 
+	public static final String AUTH_LOGIN_PROMPT_ENABLED = "auth.login.prompt.enabled";
+
 	public static final String AUTH_LOGIN_SITE_URL = "auth.login.site.url";
 
 	public static final String AUTH_LOGIN_URL = "auth.login.url";

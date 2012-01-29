@@ -98,6 +98,8 @@ public class PropsValues {
 
 	public static final String AUTH_LOGIN_PORTLET_NAME = PropsUtil.get(PropsKeys.AUTH_LOGIN_PORTLET_NAME);
 
+	public static final boolean AUTH_LOGIN_PROMPT_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.AUTH_LOGIN_PROMPT_ENABLED));
+
 	public static final String AUTH_LOGIN_SITE_URL = PropsUtil.get(PropsKeys.AUTH_LOGIN_SITE_URL);
 
 	public static final String AUTH_LOGIN_URL = PropsUtil.get(PropsKeys.AUTH_LOGIN_URL);

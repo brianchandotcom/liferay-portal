@@ -879,7 +879,7 @@ public class ResourceActionsImpl implements ResourceActions {
 			if (_log.isWarnEnabled() && (groupDefaultsElement != null)) {
 				_log.warn(
 					"The community-defaults element is deprecated. Use the " +
-						"site-defaults element instead.");
+						"site-member-defaults element instead.");
 			}
 		}
 

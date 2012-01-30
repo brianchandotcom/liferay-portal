@@ -107,7 +107,7 @@ if (!advancedConfiguration && Validator.isNull(searchConfiguration)) {
 	}
 
 	if (displayModifiedRangeFacet) {
-		sb.append("{className: 'com.liferay.portal.kernel.search.facet.RangeFacet', data: {frequencyThreshold: 1, ranges: [{label:'modified', range:'[19700101000000 TO *]'}]}, displayStyle: 'modified', fieldName: 'modified', label: 'modified', order: 'OrderHitsDesc', static: false, weight: 1.1}");
+		sb.append("{className: 'com.liferay.portal.kernel.search.facet.ModifiedFacet', data: {frequencyThreshold: 0, ranges: [{label:'past-hour', range:'[past-hour TO *]'},{label:'past-24-hours', range:'[past-24-hours TO *]'},{label:'past-week', range:'[past-week TO *]'},{label:'past-month', range:'[past-month TO *]'},{label:'past-year', range:'[past-year TO *]'}]}, displayStyle: 'modified', fieldName: 'modified', label: 'modified', order: 'OrderHitsDesc', static: false, weight: 1.1}");
 	}
 
 	sb.append("]}");

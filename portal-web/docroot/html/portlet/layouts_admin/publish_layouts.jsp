@@ -175,6 +175,7 @@ if (selGroup.isStaged() && selGroup.isStagedRemotely()) {
 portletURL.setParameter("struts_action", "/layouts_admin/edit_layouts");
 portletURL.setParameter("groupId", String.valueOf(liveGroupId));
 portletURL.setParameter("private", String.valueOf(privateLayout));
+portletURL.setParameter("pagesRedirect", currentURL);
 
 PortletURL selectURL = renderResponse.createRenderURL();
 
@@ -200,6 +201,24 @@ request.setAttribute("edit_pages.jsp-portletURL", portletURL);
 
 response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 %>
+
+<c:if test='<%= SessionMessages.contains(renderRequest, "request_processed") %>'>
+	<div class="portlet-msg-success">
+
+		<%
+		String successMessage = (String)SessionMessages.get(renderRequest, "request_processed");
+		%>
+
+		<c:choose>
+			<c:when test='<%= Validator.isNotNull(successMessage) && !successMessage.equals("request_processed") %>'>
+				<%= successMessage %>
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:message key="your-request-completed-successfully" />
+			</c:otherwise>
+		</c:choose>
+	</div>
+</c:if>
 
 <style type="text/css">
 	#<portlet:namespace />pane th.col-3 {
@@ -442,15 +461,6 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 						'form',
 						{
 							id: '<portlet:namespace />exportPagesFm'
-						}
-					);
-
-					dialog.io.detach('success');
-
-					dialog.io.after(
-						'success',
-						function(event){
-							window.location.reload(true);
 						}
 					);
 

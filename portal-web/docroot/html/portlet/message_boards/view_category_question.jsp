@@ -134,7 +134,7 @@ portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 			%>
 
 			<span class="question-details">
-				<span class= "votes">
+				<span class="votes">
 					<span class="count"><%= String.valueOf(ratingScore) %></span> <span><%= LanguageUtil.get(pageContext, "votes") %></span>
 				</span>
 

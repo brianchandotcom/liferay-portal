@@ -120,7 +120,7 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 				%>
 
 					<li class="move-folder">
-						<span class=folder-title>
+						<span class="folder-title">
 							<%= folder.getName() %>
 						</span>
 					</li>
@@ -251,7 +251,7 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 				%>
 
 					<li class="move-file">
-						<span class=file-title>
+						<span class="file-title">
 							<%= fileShortcut.getToTitle() + " (" + LanguageUtil.get(themeDisplay.getLocale(), "shortcut") + ")" %>
 						</span>
 					</li>

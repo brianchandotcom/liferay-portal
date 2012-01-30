@@ -47,7 +47,8 @@
 		<liferay-ui:search-container-column-text
 			buffer="buffer"
 			href="<%= rowURL %>"
-			name="organization-roles">
+			name="organization-roles"
+		>
 
 			<%
 			List<UserGroupRole> userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(user2.getUserId(), organizationGroupId);

@@ -346,7 +346,8 @@ if (row == null && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || 
 					cssClass='<%= randomNamespace + "-slide-show" %>'
 					image="../image_gallery_display/slide_show"
 					message="view-slide-show"
-					url="javascript:;" />
+					url="javascript:;"
+				/>
 			</c:if>
 
 			<c:if test="<%= showActions && ((folder == null) || folder.isSupportsShortcuts()) && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_SHORTCUT) %>">

@@ -230,7 +230,7 @@ String signature = ParamUtil.getString(request, "signature");
 				};
 			</aui:script>
 
-			<aui:form action='<%= jsonWebServiceActionMapping.getServletContextPath() + "/api/secure/jsonws" + jsonWebServiceActionMapping.getPath() %>' enctype="<%= enctype %>" name="execute"  method="<%= jsonWebServiceActionMapping.getMethod() %>">
+			<aui:form action='<%= jsonWebServiceActionMapping.getServletContextPath() + "/api/secure/jsonws" + jsonWebServiceActionMapping.getPath() %>' enctype="<%= enctype %>" name="execute" method="<%= jsonWebServiceActionMapping.getMethod() %>">
 
 				<%
 				for (int i = 0; i < methodParameters.length; i++) {

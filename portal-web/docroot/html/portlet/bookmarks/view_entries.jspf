@@ -69,7 +69,8 @@ OrderByComparator orderByComparator = BookmarksUtil.getEntriesOrderByComparator(
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.model.BaseModel"
 		keyProperty="primaryKeyObj"
-		modelVar="result">
+		modelVar="result"
+	>
 
 		<%@ include file="/html/portlet/bookmarks/cast_result.jspf" %>
 

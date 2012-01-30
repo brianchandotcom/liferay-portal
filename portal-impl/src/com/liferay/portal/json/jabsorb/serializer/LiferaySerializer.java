@@ -20,7 +20,9 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.jabsorb.JSONSerializer;
 import org.jabsorb.serializer.AbstractSerializer;
@@ -28,7 +30,6 @@ import org.jabsorb.serializer.MarshallException;
 import org.jabsorb.serializer.ObjectMatch;
 import org.jabsorb.serializer.SerializerState;
 import org.jabsorb.serializer.UnmarshallException;
-
 import org.json.JSONObject;
 
 /**
@@ -97,12 +98,23 @@ public class LiferaySerializer extends AbstractSerializer {
 		}
 
 		String fieldName = null;
+		List<String> processedFields = new ArrayList<String>();
 
 		try {
 			while (javaClass != null) {
 				Field[] declaredFields = javaClass.getDeclaredFields();
 
 				for (Field field : declaredFields) {
+					fieldName = field.getName();
+
+					// Avoid processing overridden fields of super classes.
+
+					if (processedFields.contains(fieldName)) {
+						continue;
+					}
+
+					processedFields.add(fieldName);
+
 					int modifiers = field.getModifiers();
 
 					// Only marshall fields that are not final, static, or
@@ -119,8 +131,6 @@ public class LiferaySerializer extends AbstractSerializer {
 					if (!field.isAccessible()) {
 						field.setAccessible(true);
 					}
-
-					fieldName = field.getName();
 
 					if (fieldName.startsWith("_")) {
 						fieldName = fieldName.substring(1);
@@ -275,12 +285,23 @@ public class LiferaySerializer extends AbstractSerializer {
 		serializerState.setSerialized(object, javaClassInstance);
 
 		String fieldName = null;
+		List<String> processedFields = new ArrayList<String>();
 
 		try {
 			while (javaClass != null) {
 				Field[] fields = javaClass.getDeclaredFields();
 
 				for (Field field : fields) {
+					fieldName = field.getName();
+
+					// Avoid processing overridden fields of super classes.
+
+					if (processedFields.contains(fieldName)) {
+						continue;
+					}
+
+					processedFields.add(fieldName);
+
 					int modifiers = field.getModifiers();
 
 					// Only unmarshall fields that are not final, static, or
@@ -297,8 +318,6 @@ public class LiferaySerializer extends AbstractSerializer {
 					if (!field.isAccessible()) {
 						field.setAccessible(true);
 					}
-
-					fieldName = field.getName();
 
 					if (fieldName.startsWith("_")) {
 						fieldName = fieldName.substring(1);

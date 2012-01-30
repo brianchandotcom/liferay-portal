@@ -404,7 +404,7 @@ AUI.add(
 							themeDisplay.getPathMain() + '/portal/session_click',
 							{
 								data: {
-									'liferay_dockbar_pinned': pinned
+									'liferay_dockbar_pinned': pinned ? 'true' : 'false'
 								}
 							}
 						);

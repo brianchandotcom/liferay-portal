@@ -42,7 +42,7 @@
 		</div>
 
 		<div class="advanced-configuration <%= (!advancedConfiguration ? "aui-helper-hidden" : "") %>" id="<portlet:namespace />advancedConfiguration">
-			<aui:input helpMessage="search-configuration-help" inputCssClass="search-configuration-text" name="preferences--searchConfiguration--" type="textarea" value="<%= searchConfiguration %>" />
+			<aui:input helpMessage="search-configuration-help" inputCssClass="search-configuration-text" name="preferences--searchConfiguration--" type="textarea" value="<%= JSONFactoryUtil.createJSONObject(searchConfiguration).toString(4) %>" />
 		</div>
 	</aui:fieldset>
 

@@ -164,6 +164,28 @@ definePermissionsURL.setParameter(Constants.CMD, Constants.VIEW);
 		<%
 		List<String> actions = ResourceActionsUtil.getResourceActions(portletResource, modelResource);
 
+		if (modelResource.equals(Group.class.getName())) {
+			long modelResourceGroupId = GetterUtil.getLong(resourcePrimKey);
+			
+			Group modelResourceGroup = GroupLocalServiceUtil.getGroup(modelResourceGroupId);
+			
+			if (modelResourceGroup.isLayoutPrototype() || modelResourceGroup.isLayoutSetPrototype() || modelResourceGroup.isUserGroup()) {
+				actions = new ArrayList(actions);
+
+				actions.remove(ActionKeys.ADD_LAYOUT_BRANCH);
+				actions.remove(ActionKeys.ADD_LAYOUT_SET_BRANCH);
+				actions.remove(ActionKeys.ASSIGN_MEMBERS);
+				actions.remove(ActionKeys.ASSIGN_USER_ROLES);
+				actions.remove(ActionKeys.MANAGE_ANNOUNCEMENTS);
+				actions.remove(ActionKeys.MANAGE_STAGING);
+				actions.remove(ActionKeys.MANAGE_TEAMS);
+				actions.remove(ActionKeys.PUBLISH_STAGING);
+				actions.remove(ActionKeys.PUBLISH_TO_REMOTE);
+				actions.remove(ActionKeys.VIEW_MEMBERS);
+				actions.remove(ActionKeys.VIEW_STAGING);
+			}
+		}
+
 		List<Role> roles = ResourceActionsUtil.getRoles(company.getCompanyId(), group, modelResource, roleTypes);
 
 		Role administrator = RoleLocalServiceUtil.getRole(company.getCompanyId(), RoleConstants.ADMINISTRATOR);

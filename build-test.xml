@@ -275,7 +275,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="7" />
+		<property name="build-test-ant-scripts.version" value="8" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -698,10 +698,10 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
-			<param name="test.ant.script.command" value="kaleo-demo" />
+			<param name="test.ant.script.command" value="kaleo-dynamic-data-lists" />
 			<param name="test.ant.script.plugin.portlets" value="kaleo-designer-portlet,kaleo-forms-portlet" />
 			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
-			<param name="test.ant.script.suite" value="KaleoDemoTestSuite" />
+			<param name="test.ant.script.suite" value="KaleoDynamicDataListsTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">

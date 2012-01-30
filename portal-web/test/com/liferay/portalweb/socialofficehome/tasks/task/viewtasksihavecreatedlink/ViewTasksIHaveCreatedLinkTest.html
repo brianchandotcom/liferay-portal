@@ -10,63 +10,43 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/user/joebloggs/home/</td>
+	<td>/user/joebloggs/home1/</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//nav/ul/li[1]/a/span</td>
-	<td>Home</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//nav/ul/li[1]/a/span</td>
-	<td>Home</td>
+	<td>//nav/ul/li[contains(.,'Tasks')]/a/span</td>
+	<td>Tasks</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/div[1]/ul/li[5]/a</td>
+	<td>//nav/ul/li[contains(.,'Tasks')]/a/span</td>
 	<td>Tasks</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//h1/span[2]</td>
+	<td>//span[@class='portlet-title-default']</td>
 	<td>Tasks</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//li[2]/span/span/a</td>
+	<td>link=I Have Created</td>
 	<td>I Have Created</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//li[2]/span/span/a</td>
+	<td>link=I Have Created</td>
 	<td>I Have Created</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/div[1]/a</td>
-	<td>Task Description</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//td[1]/div[1]/a</td>
-	<td>Task Description</td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//h1/span</td>
+	<td>link=Task Description</td>
 	<td>Task Description</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//h1/span</td>
-	<td>Task Description</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[2]/div[2]/div[2]</td>
-	<td>Created by Joe Bloggs</td>
+	<td>//div/span[contains(.,'Assignee: Joe Bloggs')]</td>
+	<td>Assignee: Joe Bloggs</td>
 </tr>
 
 </tbody></table>

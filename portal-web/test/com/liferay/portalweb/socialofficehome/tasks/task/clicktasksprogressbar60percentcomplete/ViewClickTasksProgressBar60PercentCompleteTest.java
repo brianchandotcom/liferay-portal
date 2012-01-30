@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewClickTasksProgressBar60PercentCompleteTest extends BaseTestCase {
 	public void testViewClickTasksProgressBar60PercentComplete()
 		throws Exception {
-		selenium.open("/user/joebloggs/home/");
+		selenium.open("/user/joebloggs/home1/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -32,7 +32,8 @@ public class ViewClickTasksProgressBar60PercentCompleteTest extends BaseTestCase
 			}
 
 			try {
-				if (selenium.isVisible("//nav/ul/li[1]/a/span")) {
+				if (selenium.isVisible(
+							"//nav/ul/li[contains(.,'Tasks')]/a/span")) {
 					break;
 				}
 			}
@@ -42,22 +43,18 @@ public class ViewClickTasksProgressBar60PercentCompleteTest extends BaseTestCase
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Home"),
-			selenium.getText("//nav/ul/li[1]/a/span"));
-		selenium.clickAt("//div[2]/div[1]/ul/li[5]/a",
+		selenium.clickAt("//nav/ul/li[contains(.,'Tasks')]/a/span",
 			RuntimeVariables.replace("Tasks"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Tasks"),
-			selenium.getText("//h1/span[2]"));
+			selenium.getText("//span[@class='portlet-title-default']"));
 		assertEquals(RuntimeVariables.replace("Assigned to Me"),
 			selenium.getText("link=Assigned to Me"));
 		selenium.clickAt("link=Assigned to Me",
 			RuntimeVariables.replace("Assigned to Me"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Task Description"),
-			selenium.getText("//td[1]/div[1]/a"));
 		assertTrue(selenium.isPartialText("//td[2]/div/div[1]/div[2]", "3/16/16"));
 
 		for (int second = 0;; second++) {
@@ -77,7 +74,9 @@ public class ViewClickTasksProgressBar60PercentCompleteTest extends BaseTestCase
 		}
 
 		assertTrue(selenium.isElementPresent("//div[@style='width: 60%;']"));
-		selenium.clickAt("//td[1]/div[1]/a",
+		assertEquals(RuntimeVariables.replace("Task Description"),
+			selenium.getText("link=Task Description"));
+		selenium.clickAt("link=Task Description",
 			RuntimeVariables.replace("Task Description"));
 
 		for (int second = 0;; second++) {
@@ -87,7 +86,8 @@ public class ViewClickTasksProgressBar60PercentCompleteTest extends BaseTestCase
 
 			try {
 				if (RuntimeVariables.replace("Task Description")
-										.equals(selenium.getText("//h1/span"))) {
+										.equals(selenium.getText(
+								"//h1[@class='header-title']"))) {
 					break;
 				}
 			}
@@ -98,13 +98,14 @@ public class ViewClickTasksProgressBar60PercentCompleteTest extends BaseTestCase
 		}
 
 		assertEquals(RuntimeVariables.replace("Task Description"),
-			selenium.getText("//h1/span"));
+			selenium.getText("//h1[@class='header-title']"));
 		assertEquals(RuntimeVariables.replace("Assigned to Joe Bloggs"),
-			selenium.getText("//div[2]/div[2]/div[1]"));
+			selenium.getText("//div[@class='task-data assignee']"));
 		assertEquals(RuntimeVariables.replace("60% Complete"),
-			selenium.getText("//td[2]/div"));
+			selenium.getText("//div[@class='task-data status']"));
 		assertEquals(RuntimeVariables.replace("Normal"),
-			selenium.getText("//tr[2]/td[2]/div"));
-		assertTrue(selenium.isPartialText("//tr[3]/td[2]/div", "3/16/16"));
+			selenium.getText("//div[@class='task-data normal']"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='task-data due-date']", "3/16/16"));
 	}
 }

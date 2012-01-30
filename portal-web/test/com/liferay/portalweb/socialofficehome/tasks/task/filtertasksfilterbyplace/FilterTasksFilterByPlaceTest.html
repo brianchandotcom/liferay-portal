@@ -10,27 +10,22 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/user/joebloggs/home/</td>
+	<td>/user/joebloggs/home1/</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//nav/ul/li[1]/a/span</td>
-	<td>Home</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//nav/ul/li[1]/a/span</td>
-	<td>Home</td>
+	<td>//nav/ul/li[contains(.,'Tasks')]/a/span</td>
+	<td>Tasks</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/div[1]/ul/li[5]/a</td>
+	<td>//nav/ul/li[contains(.,'Tasks')]/a/span</td>
 	<td>Tasks</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//h1/span[2]</td>
+	<td>//span[@class='portlet-title-default']</td>
 	<td>Tasks</td>
 </tr>
 <tr>
@@ -46,67 +41,67 @@
 <tr>
 	<td>assertText</td>
 	<td>//td[1]/div[1]/a</td>
-	<td>Task Portal Tag Description</td>
+	<td>Portal Task Description</td>
 </tr>
 <tr>
 	<td>assertPartialText</td>
 	<td>//td[1]/div[2]/span[1]</td>
-	<td>Community: Liferay</td>
+	<td>Site: Liferay</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//tr[4]/td[1]/div[1]/a</td>
-	<td>Task Tag Description</td>
+	<td>Task Description</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//a[3]</td>
+	<td>//a[@class='filter-tasks']</td>
 	<td>Filter</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//a[3]</td>
+	<td>//a[@class='filter-tasks']</td>
 	<td>Filter</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//h3[2]</td>
+	<td>//h3[contains(.,'Filter by Place')]</td>
 	<td>Filter by Place</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//h3[2]</td>
+	<td>//h3[contains(.,'Filter by Place')]</td>
 	<td>Filter by Place</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[2]/select</td>
+	<td>//div[@class='filter-container group-filter']/select</td>
 	<td>Select place</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>//div[2]/select</td>
+	<td>//div[@class='filter-container group-filter']/select</td>
 	<td>label=Liferay</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[1]/div[1]/a</td>
-	<td>Task Portal Tag Description</td>
-</tr>
-<tr>
-	<td>assertPartialText</td>
-	<td>//td[1]/div[2]/span[1]</td>
-	<td>Community: Liferay</td>
 </tr>
 <tr>
 	<td>waitForElementNotPresent</td>
 	<td>//tr[4]/td[1]/div[1]/a</td>
-	<td>Task Tag Description</td>
+	<td>Task Description</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
 	<td>//tr[4]/td[1]/div[1]/a</td>
-	<td>Task Tag Description</td>
+	<td>Task Description</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[1]/div[1]/a</td>
+	<td>Portal Task Description</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//td[1]/div[2]/span[1]</td>
+	<td>Site: Liferay</td>
 </tr>
 
 </tbody></table>

@@ -15,7 +15,7 @@
 package com.liferay.portalweb.socialofficehome.tasks.task;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.socialofficehome.tasks.task.addtaskstaskassignedtocoworker.AddTasksTaskAssignedToCoworkerTests;
+import com.liferay.portalweb.socialofficehome.tasks.task.addtaskstaskassignedtoconnection.AddTasksTaskAssignedToConnectionTests;
 import com.liferay.portalweb.socialofficehome.tasks.task.addtaskstaskassignedtome.AddTasksTaskAssignedToMeTests;
 import com.liferay.portalweb.socialofficehome.tasks.task.addtaskstaskassignedtomecomment.AddTasksTaskAssignedToMeCommentTests;
 import com.liferay.portalweb.socialofficehome.tasks.task.addtaskstaskassignedtomeduedate.AddTasksTaskAssignedToMeDueDateTests;
@@ -29,6 +29,7 @@ import com.liferay.portalweb.socialofficehome.tasks.task.edittaskstaskassignedto
 import com.liferay.portalweb.socialofficehome.tasks.task.edittaskstaskassignedtomedescription.EditTasksTaskAssignedToMeDescriptionTests;
 import com.liferay.portalweb.socialofficehome.tasks.task.edittaskstaskassignedtomeduedate.EditTasksTaskAssignedToMeDueDateTests;
 import com.liferay.portalweb.socialofficehome.tasks.task.filtertasksfilterbyplace.FilterTasksFilterByPlaceTests;
+import com.liferay.portalweb.socialofficehome.tasks.task.filtertasksfilterbytags.FilterTasksFilterByTagsTests;
 import com.liferay.portalweb.socialofficehome.tasks.task.resolvetaskstaskassignedtome.ResolveTasksTaskAssignedToMeTests;
 import com.liferay.portalweb.socialofficehome.tasks.task.viewtasksassignedtomelink.ViewTasksAssignedToMeLinkTests;
 import com.liferay.portalweb.socialofficehome.tasks.task.viewtasksihavecreatedlink.ViewTasksIHaveCreatedLinkTests;
@@ -44,7 +45,7 @@ public class TaskTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(AddTasksTaskAssignedToCoworkerTests.suite());
+		testSuite.addTest(AddTasksTaskAssignedToConnectionTests.suite());
 		testSuite.addTest(AddTasksTaskAssignedToMeTests.suite());
 		testSuite.addTest(AddTasksTaskAssignedToMeCommentTests.suite());
 		testSuite.addTest(AddTasksTaskAssignedToMeDueDateTests.suite());
@@ -58,6 +59,7 @@ public class TaskTestPlan extends BaseTestSuite {
 		testSuite.addTest(EditTasksTaskAssignedToMeDescriptionTests.suite());
 		testSuite.addTest(EditTasksTaskAssignedToMeDueDateTests.suite());
 		testSuite.addTest(FilterTasksFilterByPlaceTests.suite());
+		testSuite.addTest(FilterTasksFilterByTagsTests.suite());
 		testSuite.addTest(ResolveTasksTaskAssignedToMeTests.suite());
 		testSuite.addTest(ViewTasksAssignedToMeLinkTests.suite());
 		testSuite.addTest(ViewTasksIHaveCreatedLinkTests.suite());

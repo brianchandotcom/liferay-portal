@@ -27,7 +27,7 @@ public class AddTasksTaskAssignedToMeDueDateTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
-				selenium.open("/user/joebloggs/home/");
+				selenium.open("/user/joebloggs/home1/");
 				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
@@ -36,7 +36,8 @@ public class AddTasksTaskAssignedToMeDueDateTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//nav/ul/li[1]/a/span")) {
+						if (selenium.isVisible(
+									"//nav/ul/li[contains(.,'Tasks')]/a/span")) {
 							break;
 						}
 					}
@@ -46,14 +47,12 @@ public class AddTasksTaskAssignedToMeDueDateTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				assertEquals(RuntimeVariables.replace("Home"),
-					selenium.getText("//nav/ul/li[1]/a/span"));
-				selenium.clickAt("//div[2]/div[1]/ul/li[5]/a",
+				selenium.clickAt("//nav/ul/li[contains(.,'Tasks')]/a/span",
 					RuntimeVariables.replace("Tasks"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Tasks"),
-					selenium.getText("//h1/span[2]"));
+					selenium.getText("//span[@class='portlet-title-default']"));
 				assertEquals(RuntimeVariables.replace("No tasks were found."),
 					selenium.getText("//div[@class='portlet-msg-info']"));
 				assertEquals(RuntimeVariables.replace("Add Task"),
@@ -67,7 +66,7 @@ public class AddTasksTaskAssignedToMeDueDateTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//h1/span")) {
+						if (selenium.isVisible("//h1[@class='header-title']")) {
 							break;
 						}
 					}
@@ -78,30 +77,7 @@ public class AddTasksTaskAssignedToMeDueDateTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Add Task"),
-					selenium.getText("//h1/span"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//td[2]/input")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.type("//td[2]/input",
-					RuntimeVariables.replace("Task Description"));
-				selenium.select("//select",
-					RuntimeVariables.replace("label=Joe Bloggs"));
-				selenium.select("//tr[4]/td[2]/select",
-					RuntimeVariables.replace("label=Normal"));
+					selenium.getText("//h1[@class='header-title']"));
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -110,7 +86,7 @@ public class AddTasksTaskAssignedToMeDueDateTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"_1_WAR_tasksportlet_neverDueCheckbox")) {
+									"//input[@class='input-task-description lfr-input-text']")) {
 							break;
 						}
 					}
@@ -120,8 +96,12 @@ public class AddTasksTaskAssignedToMeDueDateTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				assertTrue(selenium.isElementPresent(
-						"_1_WAR_tasksportlet_neverDueCheckbox"));
+				selenium.type("//input[@class='input-task-description lfr-input-text']",
+					RuntimeVariables.replace("Task Description"));
+				selenium.select("//select[@name='_1_WAR_tasksportlet_assigneeUserId']",
+					RuntimeVariables.replace("label=Joe Bloggs"));
+				selenium.select("//select[@name='_1_WAR_tasksportlet_priority']",
+					RuntimeVariables.replace("label=Normal"));
 
 				boolean neverDueChecked = selenium.isChecked(
 						"_1_WAR_tasksportlet_neverDueCheckbox");
@@ -132,8 +112,8 @@ public class AddTasksTaskAssignedToMeDueDateTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("_1_WAR_tasksportlet_neverDueCheckbox",
-					RuntimeVariables.replace("Uncheck Never Due"));
+				selenium.clickAt("//input[@id='_1_WAR_tasksportlet_neverDueCheckbox']",
+					RuntimeVariables.replace("Never Due"));
 
 			case 2:
 				selenium.select("//select[@id='_1_WAR_tasksportlet_dueDateMonth']",
@@ -153,7 +133,7 @@ public class AddTasksTaskAssignedToMeDueDateTest extends BaseTestCase {
 					try {
 						if (RuntimeVariables.replace("Task Description")
 												.equals(selenium.getText(
-										"//h1/span"))) {
+										"//h1[@class='header-title']"))) {
 							break;
 						}
 					}
@@ -164,9 +144,9 @@ public class AddTasksTaskAssignedToMeDueDateTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Task Description"),
-					selenium.getText("//h1/span"));
+					selenium.getText("//h1[@class='header-title']"));
 				assertEquals(RuntimeVariables.replace("Assigned to Joe Bloggs"),
-					selenium.getText("//div[2]/div[2]/div[1]"));
+					selenium.getText("//div[@class='task-data assignee']"));
 
 			case 100:
 				label = -1;

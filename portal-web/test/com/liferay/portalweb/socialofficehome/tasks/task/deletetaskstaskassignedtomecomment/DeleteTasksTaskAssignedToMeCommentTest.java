@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class DeleteTasksTaskAssignedToMeCommentTest extends BaseTestCase {
 	public void testDeleteTasksTaskAssignedToMeComment()
 		throws Exception {
-		selenium.open("/user/joebloggs/home/");
+		selenium.open("/user/joebloggs/home1/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -32,7 +32,8 @@ public class DeleteTasksTaskAssignedToMeCommentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//nav/ul/li[1]/a/span")) {
+				if (selenium.isVisible(
+							"//nav/ul/li[contains(.,'Tasks')]/a/span")) {
 					break;
 				}
 			}
@@ -42,14 +43,12 @@ public class DeleteTasksTaskAssignedToMeCommentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Home"),
-			selenium.getText("//nav/ul/li[1]/a/span"));
-		selenium.clickAt("//div[2]/div[1]/ul/li[5]/a",
+		selenium.clickAt("//nav/ul/li[contains(.,'Tasks')]/a/span",
 			RuntimeVariables.replace("Tasks"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Tasks"),
-			selenium.getText("//h1/span[2]"));
+			selenium.getText("//span[@class='portlet-title-default']"));
 		assertEquals(RuntimeVariables.replace("Assigned to Me"),
 			selenium.getText("link=Assigned to Me"));
 		selenium.clickAt("link=Assigned to Me",
@@ -68,7 +67,8 @@ public class DeleteTasksTaskAssignedToMeCommentTest extends BaseTestCase {
 
 			try {
 				if (RuntimeVariables.replace("Task Description")
-										.equals(selenium.getText("//h1/span"))) {
+										.equals(selenium.getText(
+								"//h1[@class='header-title']"))) {
 					break;
 				}
 			}
@@ -79,15 +79,35 @@ public class DeleteTasksTaskAssignedToMeCommentTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Task Description"),
-			selenium.getText("//h1/span"));
+			selenium.getText("//h1[@class='header-title']"));
 		assertEquals(RuntimeVariables.replace("Assigned to Joe Bloggs"),
-			selenium.getText("//div[2]/div[2]/div[1]"));
+			selenium.getText("//div[@class='task-data assignee']"));
 		assertEquals(RuntimeVariables.replace("Task Comment"),
-			selenium.getText("//div[4]/div/div[1]/span"));
+			selenium.getText("//div[@class='comment-body']/span"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//span[1]/a"));
+			selenium.getText("//span[@class='user-name']"));
 		assertEquals(RuntimeVariables.replace("Delete"),
 			selenium.getText("link=Delete"));
 		selenium.clickAt("link=Delete", RuntimeVariables.replace("Delete"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (!selenium.isElementPresent(
+							"//div[@class='comment-body']/span")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertFalse(selenium.isElementPresent(
+				"//div[@class='comment-body']/span"));
 	}
 }

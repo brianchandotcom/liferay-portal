@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class FilterTasksFilterByPlaceTest extends BaseTestCase {
 	public void testFilterTasksFilterByPlace() throws Exception {
-		selenium.open("/user/joebloggs/home/");
+		selenium.open("/user/joebloggs/home1/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -31,7 +31,8 @@ public class FilterTasksFilterByPlaceTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//nav/ul/li[1]/a/span")) {
+				if (selenium.isVisible(
+							"//nav/ul/li[contains(.,'Tasks')]/a/span")) {
 					break;
 				}
 			}
@@ -41,28 +42,27 @@ public class FilterTasksFilterByPlaceTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Home"),
-			selenium.getText("//nav/ul/li[1]/a/span"));
-		selenium.clickAt("//div[2]/div[1]/ul/li[5]/a",
+		selenium.clickAt("//nav/ul/li[contains(.,'Tasks')]/a/span",
 			RuntimeVariables.replace("Tasks"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Tasks"),
-			selenium.getText("//h1/span[2]"));
+			selenium.getText("//span[@class='portlet-title-default']"));
 		assertEquals(RuntimeVariables.replace("Assigned to Me"),
 			selenium.getText("link=Assigned to Me"));
 		selenium.clickAt("link=Assigned to Me",
 			RuntimeVariables.replace("Assigned to Me"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Task Portal Tag Description"),
+		assertEquals(RuntimeVariables.replace("Portal Task Description"),
 			selenium.getText("//td[1]/div[1]/a"));
 		assertTrue(selenium.isPartialText("//td[1]/div[2]/span[1]",
-				"Community: Liferay"));
-		assertEquals(RuntimeVariables.replace("Task Tag Description"),
+				"Site: Liferay"));
+		assertEquals(RuntimeVariables.replace("Task Description"),
 			selenium.getText("//tr[4]/td[1]/div[1]/a"));
-		assertTrue(selenium.isVisible("//a[3]"));
-		selenium.clickAt("//a[3]", RuntimeVariables.replace("Filter"));
+		assertTrue(selenium.isVisible("//a[@class='filter-tasks']"));
+		selenium.clickAt("//a[@class='filter-tasks']",
+			RuntimeVariables.replace("Filter"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -70,7 +70,7 @@ public class FilterTasksFilterByPlaceTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//h3[2]")) {
+				if (selenium.isVisible("//h3[contains(.,'Filter by Place')]")) {
 					break;
 				}
 			}
@@ -81,7 +81,7 @@ public class FilterTasksFilterByPlaceTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Filter by Place"),
-			selenium.getText("//h3[2]"));
+			selenium.getText("//h3[contains(.,'Filter by Place')]"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -89,7 +89,8 @@ public class FilterTasksFilterByPlaceTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[2]/select")) {
+				if (selenium.isVisible(
+							"//div[@class='filter-container group-filter']/select")) {
 					break;
 				}
 			}
@@ -99,12 +100,8 @@ public class FilterTasksFilterByPlaceTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.select("//div[2]/select",
+		selenium.select("//div[@class='filter-container group-filter']/select",
 			RuntimeVariables.replace("label=Liferay"));
-		assertEquals(RuntimeVariables.replace("Task Portal Tag Description"),
-			selenium.getText("//td[1]/div[1]/a"));
-		assertTrue(selenium.isPartialText("//td[1]/div[2]/span[1]",
-				"Community: Liferay"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -123,5 +120,9 @@ public class FilterTasksFilterByPlaceTest extends BaseTestCase {
 		}
 
 		assertFalse(selenium.isElementPresent("//tr[4]/td[1]/div[1]/a"));
+		assertEquals(RuntimeVariables.replace("Portal Task Description"),
+			selenium.getText("//td[1]/div[1]/a"));
+		assertTrue(selenium.isPartialText("//td[1]/div[2]/span[1]",
+				"Site: Liferay"));
 	}
 }

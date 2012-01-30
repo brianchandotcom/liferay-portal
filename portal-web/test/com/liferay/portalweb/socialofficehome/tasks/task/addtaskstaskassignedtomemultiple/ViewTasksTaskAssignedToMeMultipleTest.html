@@ -10,27 +10,22 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/user/joebloggs/home/</td>
+	<td>/user/joebloggs/home1/</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//nav/ul/li[1]/a/span</td>
-	<td>Home</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//nav/ul/li[1]/a/span</td>
-	<td>Home</td>
+	<td>//nav/ul/li[contains(.,'Tasks')]/a/span</td>
+	<td>Tasks</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/div[1]/ul/li[5]/a</td>
+	<td>//nav/ul/li[contains(.,'Tasks')]/a/span</td>
 	<td>Tasks</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//h1/span[2]</td>
+	<td>//span[@class='portlet-title-default']</td>
 	<td>Tasks</td>
 </tr>
 <tr>
@@ -45,18 +40,168 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/div[1]/a</td>
-	<td>Task Description</td>
+	<td>link=Task1 Description</td>
+	<td>Task1 Description</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>link=Task1 Description</td>
+	<td>Task1 Description</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//h1[@class='header-title']</td>
+	<td>Task1 Description</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[1]/div[1]/a</td>
+	<td>//h1[@class='header-title']</td>
+	<td>Task1 Description</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='task-data assignee']</td>
+	<td>Assigned to Joe Bloggs</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='task-data status']</td>
+	<td>Open</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='task-data normal']</td>
+	<td>Normal</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/user/joebloggs/home1/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//nav/ul/li[contains(.,'Tasks')]/a/span</td>
+	<td>Tasks</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//nav/ul/li[contains(.,'Tasks')]/a/span</td>
+	<td>Tasks</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='portlet-title-default']</td>
+	<td>Tasks</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Assigned to Me</td>
+	<td>Assigned to Me</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Assigned to Me</td>
+	<td>Assigned to Me</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Task2 Description</td>
+	<td>Task2 Description</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>link=Task2 Description</td>
+	<td>Task2 Description</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//h1[@class='header-title']</td>
 	<td>Task2 Description</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[5]/td[1]/div[1]/a</td>
+	<td>//h1[@class='header-title']</td>
+	<td>Task2 Description</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='task-data assignee']</td>
+	<td>Assigned to Joe Bloggs</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='task-data status']</td>
+	<td>Open</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='task-data normal']</td>
+	<td>Normal</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/user/joebloggs/home1/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//nav/ul/li[contains(.,'Tasks')]/a/span</td>
+	<td>Tasks</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//nav/ul/li[contains(.,'Tasks')]/a/span</td>
+	<td>Tasks</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='portlet-title-default']</td>
+	<td>Tasks</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Assigned to Me</td>
+	<td>Assigned to Me</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Assigned to Me</td>
+	<td>Assigned to Me</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Task3 Description</td>
 	<td>Task3 Description</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>link=Task3 Description</td>
+	<td>Task3 Description</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//h1[@class='header-title']</td>
+	<td>Task3 Description</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1[@class='header-title']</td>
+	<td>Task3 Description</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='task-data assignee']</td>
+	<td>Assigned to Joe Bloggs</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='task-data status']</td>
+	<td>Open</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='task-data normal']</td>
+	<td>Normal</td>
 </tr>
 
 </tbody></table>

@@ -87,9 +87,9 @@ public class AddOrganizationTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Organization Name"),
 			selenium.getText("//div[3]/h1/span"));
 		assertTrue(selenium.isPartialText(
-				"//a[@id='_125_organizationSiteLink']", "Organization site"));
+				"//a[@id='_125_organizationSiteLink']", "Organization Site"));
 		selenium.clickAt("//a[@id='_125_organizationSiteLink']",
-			RuntimeVariables.replace("Organization site"));
+			RuntimeVariables.replace("Organization Site"));
 		assertFalse(selenium.isChecked("//input[@id='_125_siteCheckbox']"));
 		selenium.clickAt("//input[@id='_125_siteCheckbox']",
 			RuntimeVariables.replace("Create Site Checkbox"));

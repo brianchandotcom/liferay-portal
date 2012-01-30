@@ -257,7 +257,11 @@
 	</target>
 
 	<target name="build-dist-tcat-admin-webapps-plugins">
-		<echo file="${lp.plugins.dir}/build.${user.name}.properties">plugins.includes=${lp.plugins.includes.tcat}</echo>
+		<echo file="${lp.plugins.dir}/build.${user.name}.properties">
+
+plugins.includes=${lp.plugins.includes.tcat}
+
+plugins.war.excludes=**/WEB-INF/src/**</echo>
 
 		<ant dir="${lp.plugins.dir}" target="all" inheritAll="false" />
 

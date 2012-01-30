@@ -1565,8 +1565,8 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	private static final String _FINDER_COLUMN_NAME_NAME_2 = "resourceAction.name = ?";
 	private static final String _FINDER_COLUMN_NAME_NAME_3 = "(resourceAction.name IS NULL OR resourceAction.name = ?)";
 	private static final String _FINDER_COLUMN_N_A_NAME_1 = "resourceAction.name IS NULL AND ";
-	private static final String _FINDER_COLUMN_N_A_NAME_2 = "resourceAction.name = ? AND ";
-	private static final String _FINDER_COLUMN_N_A_NAME_3 = "(resourceAction.name IS NULL OR resourceAction.name = ?) AND ";
+	private static final String _FINDER_COLUMN_N_A_NAME_2 = "lower(resourceAction.name) = lower(CAST_TEXT(?)) AND ";
+	private static final String _FINDER_COLUMN_N_A_NAME_3 = "(resourceAction.name IS NULL OR lower(resourceAction.name) = lower(CAST_TEXT(?))) AND ";
 	private static final String _FINDER_COLUMN_N_A_ACTIONID_1 = "resourceAction.actionId IS NULL";
 	private static final String _FINDER_COLUMN_N_A_ACTIONID_2 = "resourceAction.actionId = ?";
 	private static final String _FINDER_COLUMN_N_A_ACTIONID_3 = "(resourceAction.actionId IS NULL OR resourceAction.actionId = ?)";

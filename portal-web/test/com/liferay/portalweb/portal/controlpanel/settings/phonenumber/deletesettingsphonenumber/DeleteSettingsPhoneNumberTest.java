@@ -53,7 +53,7 @@ public class DeleteSettingsPhoneNumberTest extends BaseTestCase {
 				"Phone Numbers"));
 		selenium.clickAt("//a[@id='_130_phoneNumbersLink']",
 			RuntimeVariables.replace("Phone Numbers"));
-		assertEquals("1231231234",
+		assertEquals("123-123-1234",
 			selenium.getValue("//input[@id='_130_phoneNumber0']"));
 
 		for (int second = 0;; second++) {

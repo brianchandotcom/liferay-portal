@@ -65,7 +65,7 @@ public class ViewOrganizationTest extends BaseTestCase {
 		assertTrue(selenium.isPartialText(
 				"//div[@class='section entity-email-addresses']/ul/li",
 				"testuser@liferay.com"));
-		assertEquals(RuntimeVariables.replace("18775433729 8888 Local"),
+		assertEquals(RuntimeVariables.replace("1-877-543-3729 8888 Local"),
 			selenium.getText("//div[@class='section entity-phones']/ul/li"));
 		assertEquals(RuntimeVariables.replace("http://www.liferay.com Public"),
 			selenium.getText("//div[@class='section entity-websites']/ul/li"));

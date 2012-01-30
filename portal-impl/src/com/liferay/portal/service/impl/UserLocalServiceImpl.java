@@ -5421,7 +5421,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			Organization organization =
 				organizationPersistence.fetchByPrimaryKey(organizationId);
 
-			if (Validator.isNull(organization)) {
+			if (organization == null) {
 				throw new NoSuchOrganizationException();
 			}
 		}

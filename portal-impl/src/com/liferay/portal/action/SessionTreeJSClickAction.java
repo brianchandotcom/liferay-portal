@@ -84,7 +84,7 @@ public class SessionTreeJSClickAction extends Action {
 						layout.getLayoutId(), true);
 				}
 			}
-			else if (cmd.equals("layoutCollpase")) {
+			else if (cmd.equals("layoutCollapse")) {
 			}
 			else if (cmd.equals("layoutUncheck")) {
 				long plid = ParamUtil.getLong(request, "plid");
@@ -112,7 +112,7 @@ public class SessionTreeJSClickAction extends Action {
 						layout.getLayoutId(), true);
 				}
 			}
-			else if (cmd.equals("layoutUncollpase")) {
+			else if (cmd.equals("layoutUncollapse")) {
 			}
 			else {
 				String nodeId = ParamUtil.getString(request, "nodeId");

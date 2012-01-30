@@ -99,7 +99,7 @@ public class AddUserPhoneNumber3Test extends BaseTestCase {
 		selenium.clickAt("//div[2]/div[1]/span/span/button[1]",
 			RuntimeVariables.replace("Add Row"));
 		selenium.type("//input[@id='_125_phoneNumber3']",
-			RuntimeVariables.replace("1231231234"));
+			RuntimeVariables.replace("123-123-1234"));
 		selenium.type("//input[@id='_125_phoneExtension3']",
 			RuntimeVariables.replace("123"));
 		selenium.select("//select[@id='_125_phoneTypeId3']",
@@ -128,7 +128,7 @@ public class AddUserPhoneNumber3Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals("1231231234",
+		assertEquals("123-123-1234",
 			selenium.getValue("//input[@id='_125_phoneNumber2']"));
 		assertEquals("123",
 			selenium.getValue("//input[@id='_125_phoneExtension2']"));

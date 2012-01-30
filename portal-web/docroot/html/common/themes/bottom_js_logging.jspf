@@ -15,7 +15,7 @@
 --%>
 
 <%
-String collapsed = GetterUtil.getString(SessionClicks.get(request, _LIFERAY_JS_CONSOLE_COLLPASED_SESSION_CLICKS_KEY, null), "false");
+String collapsed = GetterUtil.getString(SessionClicks.get(request, _LIFERAY_JS_CONSOLE_COLLAPSED_SESSION_CLICKS_KEY, null), "false");
 %>
 
 <div id="liferayJSConsole"></div>
@@ -47,7 +47,7 @@ String collapsed = GetterUtil.getString(SessionClicks.get(request, _LIFERAY_JS_C
 								'<%= themeDisplay.getPathMain() %>/portal/session_click',
 								{
 									data: {
-										<%= _LIFERAY_JS_CONSOLE_COLLPASED_SESSION_CLICKS_KEY %>: String(event.newVal)
+										<%= _LIFERAY_JS_CONSOLE_COLLAPSED_SESSION_CLICKS_KEY %>: String(event.newVal)
 									}
 								}
 							);
@@ -76,5 +76,5 @@ String collapsed = GetterUtil.getString(SessionClicks.get(request, _LIFERAY_JS_C
 </aui:script>
 
 <%!
-private static final String _LIFERAY_JS_CONSOLE_COLLPASED_SESSION_CLICKS_KEY = "liferay_js_console_collapsed";
+private static final String _LIFERAY_JS_CONSOLE_COLLAPSED_SESSION_CLICKS_KEY = "liferay_js_console_collapsed";
 %>

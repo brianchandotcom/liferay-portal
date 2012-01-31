@@ -1278,6 +1278,12 @@ public class SeleneseToJavaBuilder {
 		x = 0;
 		y = 0;
 
+		if (xml.contains("..")) {
+			_formatTestSuiteContent(fileName, xml);
+
+			xml = readFile(fileName);
+		}
+
 		while (xml.indexOf("<a href=\"", x) != -1) {
 			x = xml.indexOf("<a href=\"", x) + 9;
 			y = xml.indexOf("\">", x);
@@ -1375,6 +1381,69 @@ public class SeleneseToJavaBuilder {
 			FileUtil.write(_basedir + "/" + fileName, content);
 		}
 	};
+
+	private void _formatTestSuiteContent(String fileName, String xml)
+		throws Exception {
+
+		int x = 0;
+		int y = 0;
+
+		String content = xml;
+
+		while (xml.indexOf("<a href=\"", x) != -1) {
+			x = xml.indexOf("<a href=\"", x) + 9;
+			y = xml.indexOf("\">", x);
+
+			String testCaseName = xml.substring(x, y);
+
+			if (!testCaseName.contains("..")) {
+				continue;
+			}
+
+			if (testCaseName.contains("../portalweb/")) {
+				continue;
+			}
+
+			int z = fileName.lastIndexOf(StringPool.SLASH);
+
+			String importClassName = fileName.substring(0, z);
+
+			int count = StringUtil.count(testCaseName, "..");
+
+			for (int i = 0; i < count; i++) {
+				z = importClassName.lastIndexOf(StringPool.SLASH);
+
+				importClassName = fileName.substring(0, z);
+			}
+
+			z = testCaseName.lastIndexOf("../", z);
+
+			importClassName +=
+				testCaseName.substring(z + 2, testCaseName.length());
+
+			count = StringUtil.count(fileName, "/") - 2;
+
+			String relativePath = "" ;
+
+			for (int i = 0; i < count; i++) {
+				relativePath += "../";
+			}
+
+			importClassName = StringUtil.replace(
+				importClassName, "com/liferay/", relativePath);
+
+			xml = StringUtil.replace(xml, testCaseName, importClassName);
+		}
+
+		if (!xml.equals(content)) {
+			writeFile(fileName, xml, false);
+
+			fileName = StringUtil.replace(
+				fileName, StringPool.SLASH, StringPool.BACK_SLASH);
+
+			System.out.println("Writing test\\" + fileName);
+		}
+	}
 
 	private static final String[] _FIX_PARAM_NEW_SUBS = {"\\n", "\\n"};
 

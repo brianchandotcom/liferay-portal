@@ -386,7 +386,7 @@ public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 		throw new ValueDataException(sb.toString());
 	}
 
-	private static String _EXPANDO_COMMA = "[$LIFERAY_EXPANDO_COMMA$]";
+	private static final String _EXPANDO_COMMA = "[$LIFERAY_EXPANDO_COMMA$]";
 
 	private transient ExpandoColumn _column;
 

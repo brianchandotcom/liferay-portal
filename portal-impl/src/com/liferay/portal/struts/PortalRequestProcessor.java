@@ -953,64 +953,67 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 		}
 	}
 
-	private static String _PATH_C = "/c";
+	private static final String _PATH_C = "/c";
 
-	private static String _PATH_COMMON = "/common";
+	private static final String _PATH_COMMON = "/common";
 
-	private static String _PATH_COMMON_ERROR = "/common/error";
+	private static final String _PATH_COMMON_ERROR = "/common/error";
 
-	private static String _PATH_J_SECURITY_CHECK = "/j_security_check";
+	private static final String _PATH_J_SECURITY_CHECK = "/j_security_check";
 
-	private static String _PATH_PORTAL = "/portal";
+	private static final String _PATH_PORTAL = "/portal";
 
-	private static String _PATH_PORTAL_API_JSONWS = "/portal/api/jsonws";
+	private static final String _PATH_PORTAL_API_JSONWS = "/portal/api/jsonws";
 
-	private static String _PATH_PORTAL_EE_LICENSE = "/portal/ee/license";
+	private static final String _PATH_PORTAL_EE_LICENSE = "/portal/ee/license";
 
-	private static String _PATH_PORTAL_ERROR = "/portal/error";
+	private static final String _PATH_PORTAL_ERROR = "/portal/error";
 
-	private static String _PATH_PORTAL_EXPIRE_SESSION =
+	private static final String _PATH_PORTAL_EXPIRE_SESSION =
 		"/portal/expire_session";
 
-	private static String _PATH_PORTAL_EXTEND_SESSION =
+	private static final String _PATH_PORTAL_EXTEND_SESSION =
 		"/portal/extend_session";
 
-	private static String _PATH_PORTAL_FLASH = "/portal/flash";
+	private static final String _PATH_PORTAL_FLASH = "/portal/flash";
 
-	private static String _PATH_PORTAL_J_LOGIN = "/portal/j_login";
+	private static final String _PATH_PORTAL_J_LOGIN = "/portal/j_login";
 
-	private static String _PATH_PORTAL_JSON_SERVICE = "/portal/json_service";
+	private static final String _PATH_PORTAL_JSON_SERVICE =
+		"/portal/json_service";
 
-	private static String _PATH_PORTAL_LAYOUT = "/portal/layout";
+	private static final String _PATH_PORTAL_LAYOUT = "/portal/layout";
 
-	private static String _PATH_PORTAL_LOGIN = "/portal/login";
+	private static final String _PATH_PORTAL_LOGIN = "/portal/login";
 
-	private static String _PATH_PORTAL_LOGOUT = "/portal/logout";
+	private static final String _PATH_PORTAL_LOGOUT = "/portal/logout";
 
-	private static String _PATH_PORTAL_PROTECTED = "/portal/protected";
+	private static final String _PATH_PORTAL_PROTECTED = "/portal/protected";
 
-	private static String _PATH_PORTAL_RENDER_PORTLET =
+	private static final String _PATH_PORTAL_RENDER_PORTLET =
 		"/portal/render_portlet";
 
-	private static String _PATH_PORTAL_SETUP_WIZARD = "/portal/setup_wizard";
+	private static final String _PATH_PORTAL_SETUP_WIZARD =
+		"/portal/setup_wizard";
 
-	private static String _PATH_PORTAL_TCK = "/portal/tck";
+	private static final String _PATH_PORTAL_TCK = "/portal/tck";
 
-	private static String _PATH_PORTAL_TERMS_OF_USE = "/portal/terms_of_use";
+	private static final String _PATH_PORTAL_TERMS_OF_USE =
+		"/portal/terms_of_use";
 
-	private static String _PATH_PORTAL_UPDATE_EMAIL_ADDRESS =
+	private static final String _PATH_PORTAL_UPDATE_EMAIL_ADDRESS =
 		"/portal/update_email_address";
 
-	private static String _PATH_PORTAL_UPDATE_PASSWORD =
+	private static final String _PATH_PORTAL_UPDATE_PASSWORD =
 		"/portal/update_password";
 
-	private static String _PATH_PORTAL_UPDATE_REMINDER_QUERY =
+	private static final String _PATH_PORTAL_UPDATE_REMINDER_QUERY =
 		"/portal/update_reminder_query";
 
-	private static String _PATH_PORTAL_UPDATE_TERMS_OF_USE =
+	private static final String _PATH_PORTAL_UPDATE_TERMS_OF_USE =
 		"/portal/update_terms_of_use";
 
-	private static String _PATH_PORTAL_VERIFY_EMAIL_ADDRESS =
+	private static final String _PATH_PORTAL_VERIFY_EMAIL_ADDRESS =
 		"/portal/verify_email_address";
 
 	private static Log _log = LogFactoryUtil.getLog(

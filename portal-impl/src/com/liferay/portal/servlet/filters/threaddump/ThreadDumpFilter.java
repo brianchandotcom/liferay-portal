@@ -52,7 +52,7 @@ public class ThreadDumpFilter
 		return scheduledFuture;
 	}
 
-	private static int _MAX_THREAD_DUMPERS = 5;
+	private static final int _MAX_THREAD_DUMPERS = 5;
 
 	private static ScheduledExecutorService _scheduledExecutorService =
 		Executors.newScheduledThreadPool(_MAX_THREAD_DUMPERS);

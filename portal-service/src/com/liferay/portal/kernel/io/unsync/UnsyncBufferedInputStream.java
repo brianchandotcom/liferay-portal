@@ -318,6 +318,6 @@ public class UnsyncBufferedInputStream extends UnsyncFilterInputStream {
 	protected int index;
 	protected int markLimitIndex = -1;
 
-	private static int _DEFAULT_BUFFER_SIZE = 8192;
+	private static final int _DEFAULT_BUFFER_SIZE = 8192;
 
 }

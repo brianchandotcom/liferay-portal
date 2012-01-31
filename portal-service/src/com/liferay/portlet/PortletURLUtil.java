@@ -276,7 +276,7 @@ public class PortletURLUtil {
 
 	private static final int _CURRENT_URL_PARAMETER_THRESHOLD = 32768;
 
-	private static String[] _PORTLET_URL_REFRESH_URL_RESERVED_PARAMETERS =
+	private static final String[] _PORTLET_URL_REFRESH_URL_RESERVED_PARAMETERS =
 		PropsUtil.getArray(
 			PropsKeys.PORTLET_URL_REFRESH_URL_RESERVED_PARAMETERS);
 

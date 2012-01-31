@@ -584,6 +584,6 @@ public class DiffImpl implements com.liferay.portal.kernel.util.Diff {
 		return sb.toString();
 	}
 
-	private static int _DIFF_MAX_LINE_LENGTH = 5000;
+	private static final int _DIFF_MAX_LINE_LENGTH = 5000;
 
 }

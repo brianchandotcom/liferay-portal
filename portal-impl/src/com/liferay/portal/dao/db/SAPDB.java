@@ -98,7 +98,7 @@ public class SAPDB extends BaseDB {
 		return sb.toString();
 	}
 
-	private static String[] _SAP = {
+	private static final String[] _SAP = {
 		"##", "TRUE", "FALSE",
 		"'1970-01-01 00:00:00.000000'", "timestamp",
 		" blob", " blob", " boolean", " timestamp",

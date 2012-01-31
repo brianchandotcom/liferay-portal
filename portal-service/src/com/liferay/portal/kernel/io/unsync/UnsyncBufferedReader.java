@@ -407,6 +407,6 @@ public class UnsyncBufferedReader extends Reader {
 	protected int markLimitIndex = -1;
 	protected Reader reader;
 
-	private static int _DEFAULT_BUFFER_SIZE = 8192;
+	private static final int _DEFAULT_BUFFER_SIZE = 8192;
 
 }

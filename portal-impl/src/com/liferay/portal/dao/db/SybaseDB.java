@@ -162,7 +162,7 @@ public class SybaseDB extends BaseDB {
 
 	private static final boolean _SUPPORTS_INLINE_DISTINCT = false;
 
-	private static String[] _SYBASE = {
+	private static final String[] _SYBASE = {
 		"--", "1", "0",
 		"'19700101'", "getdate()",
 		" image", " image", " int", " datetime",

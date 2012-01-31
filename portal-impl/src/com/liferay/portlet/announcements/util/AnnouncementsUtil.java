@@ -184,19 +184,19 @@ public class AnnouncementsUtil {
 		return userGroupIds;
 	}
 
-	private static long _GROUP_CLASS_NAME_ID = PortalUtil.getClassNameId(
+	private static final long _GROUP_CLASS_NAME_ID = PortalUtil.getClassNameId(
 		Group.class.getName());
 
-	private static long _ORGANIZATION_CLASS_NAME_ID = PortalUtil.getClassNameId(
-		Organization.class.getName());
+	private static final long _ORGANIZATION_CLASS_NAME_ID =
+		PortalUtil.getClassNameId(Organization.class.getName());
 
-	private static long _ROLE_CLASS_NAME_ID = PortalUtil.getClassNameId(
+	private static final long _ROLE_CLASS_NAME_ID = PortalUtil.getClassNameId(
 		Role.class.getName());
 
-	private static long _USER_CLASS_NAME_ID = PortalUtil.getClassNameId(
+	private static final long _USER_CLASS_NAME_ID = PortalUtil.getClassNameId(
 		User.class.getName());
 
-	private static long _USER_GROUP_CLASS_NAME_ID = PortalUtil.getClassNameId(
-		UserGroup.class.getName());
+	private static final long _USER_GROUP_CLASS_NAME_ID =
+		PortalUtil.getClassNameId(UserGroup.class.getName());
 
 }

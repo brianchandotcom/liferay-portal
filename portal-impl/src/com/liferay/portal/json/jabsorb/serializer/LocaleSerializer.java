@@ -214,8 +214,8 @@ public class LocaleSerializer extends AbstractSerializer {
 		return localeJSONObject;
 	}
 
-	private static Class<?>[] _JSON_CLASSES = {JSONObject.class};
+	private static final Class<?>[] _JSON_CLASSES = {JSONObject.class};
 
-	private static Class<?>[] _SERIALIZABLE_CLASSES = {Locale.class};
+	private static final Class<?>[] _SERIALIZABLE_CLASSES = {Locale.class};
 
 }

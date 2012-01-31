@@ -57,7 +57,7 @@ public class PermissionCheckerUtil {
 		}
 	}
 
-	private static boolean _CHECK_GUEST = true;
+	private static final boolean _CHECK_GUEST = true;
 
 	private static Log _log = LogFactoryUtil.getLog(
 		PermissionCheckerUtil.class);

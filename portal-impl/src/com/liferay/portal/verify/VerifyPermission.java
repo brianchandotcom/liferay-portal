@@ -370,7 +370,7 @@ public class VerifyPermission extends VerifyProcess {
 		}
 	}
 
-	private static Object[][] _ORGANIZATION_ACTION_IDS_TO_MASKS =
+	private static final Object[][] _ORGANIZATION_ACTION_IDS_TO_MASKS =
 		new Object[][] {
 			new Object[] {"APPROVE_PROPOSAL", 2L, 0L},
 			new Object[] {ActionKeys.ASSIGN_MEMBERS, 4L, 4L},

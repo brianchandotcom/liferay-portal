@@ -41,13 +41,13 @@ public class BlogsStatsUserFinderImpl
 	extends BasePersistenceImpl<BlogsStatsUser>
 	implements BlogsStatsUserFinder {
 
-	public static String COUNT_BY_ORGANIZATION_IDS =
+	public static final String COUNT_BY_ORGANIZATION_IDS =
 		BlogsStatsUserFinder.class.getName() + ".countByOrganizationIds";
 
-	public static String FIND_BY_GROUP_IDS =
+	public static final String FIND_BY_GROUP_IDS =
 		BlogsStatsUserFinder.class.getName() + ".findByGroupIds";
 
-	public static String FIND_BY_ORGANIZATION_IDS =
+	public static final String FIND_BY_ORGANIZATION_IDS =
 		BlogsStatsUserFinder.class.getName() + ".findByOrganizationIds";
 
 	public int countByOrganizationId(long organizationId)

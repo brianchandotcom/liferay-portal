@@ -33,10 +33,10 @@ import java.util.List;
 public class AssetTagPropertyKeyFinderImpl
 	extends BasePersistenceImpl<Dummy> implements AssetTagPropertyKeyFinder {
 
-	public static String COUNT_BY_GROUP_ID =
+	public static final String COUNT_BY_GROUP_ID =
 		AssetTagPropertyKeyFinder.class.getName() + ".countByGroupId";
 
-	public static String FIND_BY_GROUP_ID =
+	public static final String FIND_BY_GROUP_ID =
 		AssetTagPropertyKeyFinder.class.getName() + ".findByGroupId";
 
 	public int countByGroupId(long groupId) throws SystemException {

@@ -36,10 +36,10 @@ public class AssetTagPropertyFinderImpl
 	extends BasePersistenceImpl<AssetTagProperty>
 	implements AssetTagPropertyFinder {
 
-	public static String COUNT_BY_G_K =
+	public static final String COUNT_BY_G_K =
 		AssetTagPropertyFinder.class.getName() + ".countByG_K";
 
-	public static String FIND_BY_G_K =
+	public static final String FIND_BY_G_K =
 		AssetTagPropertyFinder.class.getName() + ".findByG_K";
 
 	public int countByG_K(long groupId, String key) throws SystemException {

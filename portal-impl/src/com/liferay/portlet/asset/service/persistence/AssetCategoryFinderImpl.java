@@ -47,28 +47,28 @@ import java.util.List;
 public class AssetCategoryFinderImpl
 	extends BasePersistenceImpl<AssetCategory> implements AssetCategoryFinder {
 
-	public static String COUNT_BY_G_C_N =
+	public static final String COUNT_BY_G_C_N =
 		AssetCategoryFinder.class.getName() + ".countByG_C_N";
 
-	public static String COUNT_BY_G_N_V =
+	public static final String COUNT_BY_G_N_V =
 		AssetCategoryFinder.class.getName() + ".countByG_N_V";
 
-	public static String COUNT_BY_G_N_P =
+	public static final String COUNT_BY_G_N_P =
 		AssetCategoryFinder.class.getName() + ".countByG_N_P";
 
-	public static String FIND_BY_ENTRY_ID =
+	public static final String FIND_BY_ENTRY_ID =
 		AssetCategoryFinder.class.getName() + ".findByEntryId";
 
-	public static String FIND_BY_G_N =
+	public static final String FIND_BY_G_N =
 		AssetCategoryFinder.class.getName() + ".findByG_N";
 
-	public static String FIND_BY_C_C =
+	public static final String FIND_BY_C_C =
 		AssetCategoryFinder.class.getName() + ".findByC_C";
 
-	public static String FIND_BY_G_N_V =
+	public static final String FIND_BY_G_N_V =
 		AssetCategoryFinder.class.getName() + ".findByG_N_V";
 
-	public static String FIND_BY_G_N_P =
+	public static final String FIND_BY_G_N_P =
 		AssetCategoryFinder.class.getName() + ".findByG_N_P";
 
 	public int countByG_C_N(long groupId, long classNameId, String name)

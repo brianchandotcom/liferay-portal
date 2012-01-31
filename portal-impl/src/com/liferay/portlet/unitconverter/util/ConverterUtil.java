@@ -21,9 +21,9 @@ import com.liferay.portlet.unitconverter.model.Conversion;
  */
 public class ConverterUtil {
 
-	public static int TEMPERATURE_CELSIUS = 1;
+	public static final int TEMPERATURE_CELSIUS = 1;
 
-	public static int TEMPERATURE_FAHRENHEIHT = 2;
+	public static final int TEMPERATURE_FAHRENHEIHT = 2;
 
 	public static double convertArea(int fromId, int toId, double fromValue) {
 		return (fromValue / _AREA[fromId]) * _AREA[toId];

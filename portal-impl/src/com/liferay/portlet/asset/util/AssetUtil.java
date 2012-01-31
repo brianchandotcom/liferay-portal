@@ -52,7 +52,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class AssetUtil {
 
-	public static char[] INVALID_CHARACTERS = new char[] {
+	public static final char[] INVALID_CHARACTERS = new char[] {
 		CharPool.AMPERSAND, CharPool.APOSTROPHE, CharPool.AT,
 		CharPool.BACK_SLASH, CharPool.CLOSE_BRACKET, CharPool.CLOSE_CURLY_BRACE,
 		CharPool.COLON, CharPool.COMMA, CharPool.EQUAL, CharPool.GREATER_THAN,

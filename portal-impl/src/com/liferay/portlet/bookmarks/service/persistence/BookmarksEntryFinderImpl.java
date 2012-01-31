@@ -31,7 +31,7 @@ public class BookmarksEntryFinderImpl
 	extends BasePersistenceImpl<BookmarksEntry>
 	implements BookmarksEntryFinder {
 
-	public static String FIND_BY_NO_ASSETS =
+	public static final String FIND_BY_NO_ASSETS =
 		BookmarksEntryFinder.class.getName() + ".findByNoAssets";
 
 	public List<BookmarksEntry> findByNoAssets() throws SystemException {

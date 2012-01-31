@@ -23,12 +23,12 @@ import java.sql.Types;
  */
 public class CyrusUser implements Serializable {
 
-	public static Object[][] TABLE_COLUMNS = {
+	public static final Object[][] TABLE_COLUMNS = {
 		{"userId", new Integer(Types.VARCHAR)},
 		{"password_", new Integer(Types.VARCHAR)}
 	};
 
-	public static String TABLE_NAME = "CyrusUser";
+	public static final String TABLE_NAME = "CyrusUser";
 
 	public static final String TABLE_SQL_CREATE =
 		"create table CyrusUser (userId VARCHAR(75) not null primary key, " +

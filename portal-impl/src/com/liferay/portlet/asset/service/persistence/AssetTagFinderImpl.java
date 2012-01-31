@@ -46,31 +46,31 @@ import java.util.List;
 public class AssetTagFinderImpl
 	extends BasePersistenceImpl<AssetTag> implements AssetTagFinder {
 
-	public static String COUNT_BY_G_N =
+	public static final String COUNT_BY_G_N =
 		AssetTagFinder.class.getName() + ".countByG_N";
 
-	public static String COUNT_BY_G_C_N =
+	public static final String COUNT_BY_G_C_N =
 		AssetTagFinder.class.getName() + ".countByG_C_N";
 
-	public static String COUNT_BY_G_N_P =
+	public static final String COUNT_BY_G_N_P =
 		AssetTagFinder.class.getName() + ".countByG_N_P";
 
-	public static String FIND_BY_ENTRY_ID =
+	public static final String FIND_BY_ENTRY_ID =
 		AssetTagFinder.class.getName() + ".findByEntryId";
 
-	public static String FIND_BY_G_N =
+	public static final String FIND_BY_G_N =
 		AssetTagFinder.class.getName() + ".findByG_N";
 
-	public static String FIND_BY_C_C =
+	public static final String FIND_BY_C_C =
 		AssetTagFinder.class.getName() + ".findByC_C";
 
-	public static String FIND_BY_G_C_N =
+	public static final String FIND_BY_G_C_N =
 		AssetTagFinder.class.getName() + ".findByG_C_N";
 
-	public static String FIND_BY_G_N_P =
+	public static final String FIND_BY_G_N_P =
 		AssetTagFinder.class.getName() + ".findByG_N_P";
 
-	public static String FIND_BY_G_N_S_E =
+	public static final String FIND_BY_G_N_S_E =
 			AssetTagFinder.class.getName() + ".findByG_N_S_E";
 
 	public int countByG_C_N(long groupId, long classNameId, String name)

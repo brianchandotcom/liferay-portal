@@ -44,16 +44,16 @@ import java.util.List;
 public class CalEventFinderImpl
 	extends BasePersistenceImpl<CalEvent> implements CalEventFinder {
 
-	public static String COUNT_BY_G_SD_T =
+	public static final String COUNT_BY_G_SD_T =
 		CalEventFinder.class.getName() + ".countByG_SD_T";
 
-	public static String FIND_BY_FUTURE_REMINDERS =
+	public static final String FIND_BY_FUTURE_REMINDERS =
 		CalEventFinder.class.getName() + ".findByFutureReminders";
 
-	public static String FIND_BY_NO_ASSETS =
+	public static final String FIND_BY_NO_ASSETS =
 		CalEventFinder.class.getName() + ".findByNoAssets";
 
-	public static String FIND_BY_G_SD_T =
+	public static final String FIND_BY_G_SD_T =
 		CalEventFinder.class.getName() + ".findByG_SD_T";
 
 	public int countByG_SD_T(

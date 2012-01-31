@@ -43,7 +43,7 @@ import javax.portlet.PortletRequest;
  */
 public class AssetEntryQuery {
 
-	public static String[] ORDER_BY_COLUMNS = new String[] {
+	public static final String[] ORDER_BY_COLUMNS = new String[] {
 		"title", "createDate", "modifiedDate", "publishDate", "expirationDate",
 		"priority", "viewCount", "ratings"
 	};

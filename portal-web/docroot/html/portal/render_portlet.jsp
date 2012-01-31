@@ -449,8 +449,11 @@ urlConfiguration.setEscapeXml(false);
 if (Validator.isNotNull(portlet.getConfigurationActionClass())) {
 	urlConfiguration.setParameter("struts_action", "/portlet_configuration/edit_configuration");
 }
-else {
+else if (PortletPermissionUtil.contains(permissionChecker, layout, portletDisplay.getId(), ActionKeys.PERMISSIONS)) {
 	urlConfiguration.setParameter("struts_action", "/portlet_configuration/edit_permissions");
+}
+else {
+	urlConfiguration.setParameter("struts_action", "/portlet_configuration/edit_sharing");
 }
 
 urlConfiguration.setParameter("redirect", currentURL);

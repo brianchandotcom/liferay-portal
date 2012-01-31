@@ -58,7 +58,7 @@ if (ratingsEntry != null) {
 %>
 
 <c:if test="<%= !themeDisplay.isFacebook() %>">
-	<div class="taglib-ratings <%= type %>">
+	<div class="taglib-ratings <%= type %>" id="<%= randomNamespace %>ratingContainer">
 		<c:choose>
 			<c:when test='<%= type.equals("stars") %>'>
 				<c:choose>
@@ -147,6 +147,7 @@ if (ratingsEntry != null) {
 				averageScore: <%= ratingsStats.getAverageScore() %>,
 				className: '<%= className %>',
 				classPK: '<%= classPK %>',
+				containerId: '<%= randomNamespace %>ratingContainer',
 				namespace: '<%= randomNamespace %>',
 				size: <%= numberOfStars %>,
 				totalEntries: <%= ratingsStats.getTotalEntries() %>,

@@ -5,7 +5,11 @@ AUI.add(
 
 		var EMPTY_FN = Lang.emptyFn;
 
+		var EVENT_INTERACTIONS_RENDER = ['focus', 'mousemove'];
+
 		var TPL_LABEL_SCORE = '{desc} ({totalEntries} {voteLabel})';
+
+		var buffer = [];
 
 		var Ratings = A.Component.create(
 			{
@@ -150,6 +154,28 @@ AUI.add(
 				register: function(config) {
 					var instance = this;
 
+					var containerId = config.containerId;
+
+					var container = containerId && document.getElementById(config.containerId);
+
+					if (container) {
+						buffer.push(
+							{
+								config: config,
+								container: A.one(container)
+							}
+						);
+
+						instance._registerTask.delay(100);
+					}
+					else {
+						instance._registerRating(config);
+					}
+				},
+
+				_registerRating: function(config) {
+					var instance = this;
+
 					var ratings = Liferay.Ratings.StarRating;
 
 					if (config.type != 'stars') {
@@ -162,6 +188,26 @@ AUI.add(
 
 					return ratingInstance;
 				},
+
+				_registerTask: new A.DelayedTask(
+					function() {
+						A.Array.each(
+							buffer,
+							function(item, index, collection) {
+								var handle = item.container.on(
+									EVENT_INTERACTIONS_RENDER,
+									function(event) {
+										handle.detach();
+
+										Ratings._registerRating(item.config);
+									}
+								);
+							}
+						);
+
+						buffer.length = 0;
+					}
+				),
 
 				_INSTANCES: {},
 

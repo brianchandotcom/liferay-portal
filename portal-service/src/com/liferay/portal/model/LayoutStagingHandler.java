@@ -145,7 +145,19 @@ public class LayoutStagingHandler implements InvocationHandler {
 			ServiceContextThreadLocal.getServiceContext();
 
 		if (!serviceContext.isSignedIn()) {
-			return layoutRevision;
+			LayoutRevision lastLayoutRevision = null;
+
+			lastLayoutRevision =
+				LayoutRevisionLocalServiceUtil.fetchLastLayoutRevision(
+					layout.getPlid(), true);
+
+			if (lastLayoutRevision == null) {
+				lastLayoutRevision =
+					LayoutRevisionLocalServiceUtil.fetchLastLayoutRevision(
+						layout.getPlid(), false);
+			}
+
+			return lastLayoutRevision;
 		}
 
 		long layoutSetBranchId = ParamUtil.getLong(

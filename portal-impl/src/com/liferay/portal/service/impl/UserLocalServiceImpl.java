@@ -5441,6 +5441,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		validateFullName(companyId, firstName, middleName, lastName);
 
+		if ((organizationIds == null) || (organizationIds.length == 0)) {
+			return;
+		}
+
 		for (long organizationId : organizationIds) {
 			Organization organization =
 				organizationPersistence.fetchByPrimaryKey(organizationId);

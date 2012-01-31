@@ -1939,6 +1939,13 @@ public class JournalArticleLocalServiceImpl
 
 		boolean incrementVersion = false;
 
+		Date checkModifiedDate = serviceContext.getModifiedDate();
+
+		if (serviceContext.getAttribute("checkModifiedDate") != null) {
+			checkModifiedDate = (Date)serviceContext.getAttribute(
+				"checkModifiedDate");
+		}
+
 		boolean imported = GetterUtil.getBoolean(
 			serviceContext.getAttribute("imported"));
 
@@ -1962,6 +1969,10 @@ public class JournalArticleLocalServiceImpl
 			oldVersion = oldArticle.getVersion();
 
 			if ((version > 0) && (version != oldVersion)) {
+				throw new ArticleVersionException();
+			}
+
+			if (oldArticle.getModifiedDate().compareTo(checkModifiedDate) > 0) {
 				throw new ArticleVersionException();
 			}
 
@@ -2117,7 +2128,7 @@ public class JournalArticleLocalServiceImpl
 	public JournalArticle updateArticleTranslation(
 			long groupId, String articleId, double version, Locale locale,
 			String title, String description, String content,
-			Map<String, byte[]> images)
+			Map<String, byte[]> images, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		validateContent(content);
@@ -2128,6 +2139,17 @@ public class JournalArticleLocalServiceImpl
 		double oldVersion = oldArticle.getVersion();
 
 		if ((version > 0) && (version != oldVersion)) {
+			throw new ArticleVersionException();
+		}
+
+		Date checkModifiedDate = serviceContext.getModifiedDate();
+
+		if (serviceContext.getAttribute("checkModifiedDate") != null) {
+			checkModifiedDate = (Date)serviceContext.getAttribute(
+				"checkModifiedDate");
+		}
+
+		if (oldArticle.getModifiedDate().compareTo(checkModifiedDate) > 0) {
 			throw new ArticleVersionException();
 		}
 

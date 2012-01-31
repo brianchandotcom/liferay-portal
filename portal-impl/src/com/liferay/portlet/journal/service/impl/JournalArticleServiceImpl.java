@@ -502,7 +502,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	public JournalArticle updateArticleTranslation(
 			long groupId, String articleId, double version, Locale locale,
 			String title, String description, String content,
-			Map<String, byte[]> images)
+			Map<String, byte[]> images, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		JournalArticlePermission.check(
@@ -511,7 +511,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 
 		return journalArticleLocalService.updateArticleTranslation(
 			groupId, articleId, version, locale, title, description, content,
-			images);
+			images, serviceContext);
 	}
 
 	public JournalArticle updateContent(

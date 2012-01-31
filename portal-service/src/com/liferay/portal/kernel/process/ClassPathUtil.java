@@ -120,6 +120,12 @@ public class ClassPathUtil {
 
 		String path = URLCodec.decodeURL(url.getPath());
 
+		path = StringUtil.replace(path, CharPool.BACK_SLASH, CharPool.SLASH);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Decoded path: " + path);
+		}
+
 		if (ServerDetector.isWebLogic()) {
 			if (protocol.equals("zip")) {
 				path = "file:".concat(path);
@@ -127,9 +133,6 @@ public class ClassPathUtil {
 		}
 
 		if (ServerDetector.isJBoss()) {
-			path = StringUtil.replace(
-				path, CharPool.BACK_SLASH, CharPool.SLASH);
-
 			if (protocol.equals("vfs")) {
 				int pos = path.indexOf(".jar/");
 

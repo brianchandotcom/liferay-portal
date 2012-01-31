@@ -550,7 +550,6 @@ public class ClusterExecutorImpl
 
 	private static Log _log = LogFactoryUtil.getLog(ClusterExecutorImpl.class);
 
-	public ScheduledExecutorService _scheduledExecutorService;
 	private CopyOnWriteArrayList<ClusterEventListener> _clusterEventListeners =
 		new CopyOnWriteArrayList<ClusterEventListener>();
 	private Map<String, Address> _clusterNodeAddresses =
@@ -563,6 +562,7 @@ public class ClusterExecutorImpl
 		new ConcurrentHashMap<ObjectValuePair<Address, ClusterNode>, Long>();
 	private Address _localAddress;
 	private ClusterNode _localClusterNode;
+	private ScheduledExecutorService _scheduledExecutorService;
 	private boolean _shortcutLocalMethod;
 
 	private class HeartbeatTask implements Runnable {

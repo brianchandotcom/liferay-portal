@@ -54,7 +54,7 @@ import javax.servlet.ServletContext;
 public class DefaultConfigurationAction
 	implements ConfigurationAction, ResourceServingConfigurationAction {
 
-	public final static String PREFERENCES_PREFIX = "preferences--";
+	public static final String PREFERENCES_PREFIX = "preferences--";
 
 	public String getLocalizedParameter(
 		PortletRequest portletRequest, String name) {

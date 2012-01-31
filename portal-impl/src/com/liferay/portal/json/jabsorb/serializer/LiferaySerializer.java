@@ -23,6 +23,9 @@ import java.lang.reflect.Modifier;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.BeanUtilsBean;
+import org.apache.commons.beanutils.PropertyUtils;
 
 import org.jabsorb.JSONSerializer;
 import org.jabsorb.serializer.AbstractSerializer;
@@ -337,7 +340,19 @@ public class LiferaySerializer extends AbstractSerializer {
 					}
 
 					if (value != null) {
-						field.set(javaClassInstance, value);
+					
+						// original reflection call didn't support 
+						// casting, e.g. setting "[Integer] -> [int]"
+						// (Integer array value to int array property)
+
+						// TODO doesn't this method have some unwanted 
+						// converting side-efects?
+						// It should not, source and target objects should
+						// have matching signatures
+						BeanUtils.copyProperty(javaClassInstance, 
+							fieldName, value);
+						
+						//field.set(javaClassInstance, value);
 					}
 				}
 

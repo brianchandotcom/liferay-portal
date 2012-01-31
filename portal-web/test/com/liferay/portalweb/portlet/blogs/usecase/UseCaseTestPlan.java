@@ -16,6 +16,7 @@ package com.liferay.portalweb.portlet.blogs.usecase;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portlet.blogs.usecase.demo1.Demo1Tests;
+import com.liferay.portalweb.portlet.blogs.usecase.demo2.Demo2Tests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -29,6 +30,7 @@ public class UseCaseTestPlan extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(Demo1Tests.suite());
+		testSuite.addTest(Demo2Tests.suite());
 
 		return testSuite;
 	}

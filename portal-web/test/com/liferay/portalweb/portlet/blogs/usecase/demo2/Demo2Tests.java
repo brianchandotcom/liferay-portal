@@ -12,14 +12,9 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.blogs;
+package com.liferay.portalweb.portlet.blogs.usecase.demo2;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portlet.blogs.blogsentry.BlogsEntryTestPlan;
-import com.liferay.portalweb.portlet.blogs.blogsentrycomment.BlogsEntryCommentTestPlan;
-import com.liferay.portalweb.portlet.blogs.lar.LARTestPlan;
-import com.liferay.portalweb.portlet.blogs.portlet.PortletTestPlan;
-import com.liferay.portalweb.portlet.blogs.usecase.UseCaseTestPlan;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -27,18 +22,17 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class BlogsTestPlan extends BaseTestSuite {
-
+public class Demo2Tests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(BlogsEntryTestPlan.suite());
-		testSuite.addTest(BlogsEntryCommentTestPlan.suite());
-		testSuite.addTest(LARTestPlan.suite());
-		testSuite.addTest(PortletTestPlan.suite());
-		testSuite.addTest(UseCaseTestPlan.suite());
+		testSuite.addTestSuite(AddPageBlogsTest.class);
+		testSuite.addTestSuite(AddPortletBlogsTest.class);
+		testSuite.addTestSuite(AddBlogsEntry1Test.class);
+		testSuite.addTestSuite(AddBlogsEntry2TrackbackTest.class);
+		testSuite.addTestSuite(ViewBlogsEntry1TrackbackCommentTest.class);
+		testSuite.addTestSuite(TearDownBlogsEntryTest.class);
+		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;
 	}
-
 }

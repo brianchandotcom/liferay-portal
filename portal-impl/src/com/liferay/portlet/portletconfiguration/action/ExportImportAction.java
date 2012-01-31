@@ -155,6 +155,8 @@ public class ExportImportAction extends EditConfigurationAction {
 			Portlet portlet)
 		throws Exception {
 
+		File file = null;
+
 		try {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
@@ -236,7 +238,7 @@ public class ExportImportAction extends EditConfigurationAction {
 				}
 			}
 
-			File file = LayoutServiceUtil.exportPortletInfoAsFile(
+			file = LayoutServiceUtil.exportPortletInfoAsFile(
 				plid, groupId, portlet.getPortletId(),
 				actionRequest.getParameterMap(), startDate, endDate);
 
@@ -249,8 +251,6 @@ public class ExportImportAction extends EditConfigurationAction {
 				request, response, fileName, new FileInputStream(file),
 				ContentTypes.APPLICATION_ZIP);
 
-			FileUtil.delete(file);
-
 			setForward(actionRequest, ActionConstants.COMMON_NULL);
 		}
 		catch (Exception e) {
@@ -259,6 +259,9 @@ public class ExportImportAction extends EditConfigurationAction {
 			}
 
 			SessionErrors.add(actionRequest, e.getClass().getName(), e);
+		}
+		finally {
+			FileUtil.delete(file);
 		}
 	}
 

@@ -410,11 +410,13 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 		long groupId, java.lang.String articleId, double version,
 		java.util.Locale locale, java.lang.String title,
 		java.lang.String description, java.lang.String content,
-		java.util.Map<java.lang.String, byte[]> images)
+		java.util.Map<java.lang.String, byte[]> images,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _journalArticleService.updateArticleTranslation(groupId,
-			articleId, version, locale, title, description, content, images);
+			articleId, version, locale, title, description, content, images,
+			serviceContext);
 	}
 
 	public com.liferay.portlet.journal.model.JournalArticle updateContent(

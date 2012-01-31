@@ -272,9 +272,8 @@ public class LoginSocialOfficeTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Social Office User"),
-					selenium.getText(
-						"//tr[contains(., 'Social Office User')]/td"));
-				selenium.click("//tr[contains(., 'Social Office User')]/td");
+					selenium.getText("link=Social Office User"));
+				selenium.click("link=Social Office User");
 				selenium.selectWindow("null");
 
 				for (int second = 0;; second++) {

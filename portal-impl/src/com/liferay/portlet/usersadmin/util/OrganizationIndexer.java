@@ -283,7 +283,7 @@ public class OrganizationIndexer extends BaseIndexer {
 
 	protected void reindexOrganizations(long companyId) throws Exception {
 		int count = OrganizationLocalServiceUtil.getOrganizationsCount(
-				companyId, OrganizationConstants.ANY_PARENT_ORGANIZATION_ID);
+			companyId, OrganizationConstants.ANY_PARENT_ORGANIZATION_ID);
 
 		int pages = count / OrganizationIndexer.DEFAULT_INTERVAL;
 

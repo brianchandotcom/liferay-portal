@@ -504,15 +504,9 @@ public class OrganizationLocalServiceImpl
 			long companyId, long parentOrganizationId)
 		throws SystemException {
 
-		if (parentOrganizationId ==
-				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID) {
-
-			return organizationPersistence.findByCompanyId(companyId);
-		}
-		else {
-			return organizationPersistence.findByC_P(
-				companyId, parentOrganizationId);
-		}
+		return getOrganizations(
+			companyId, parentOrganizationId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
 	}
 
 	/**

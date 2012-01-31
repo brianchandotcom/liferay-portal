@@ -45,55 +45,55 @@ import java.util.List;
 public class PermissionFinderImpl
 	extends BasePersistenceImpl<Permission> implements PermissionFinder {
 
-	public static String COUNT_BY_GROUPS_PERMISSIONS =
+	public static final String COUNT_BY_GROUPS_PERMISSIONS =
 		PermissionFinder.class.getName() + ".countByGroupsPermissions";
 
-	public static String COUNT_BY_GROUPS_ROLES =
+	public static final String COUNT_BY_GROUPS_ROLES =
 		PermissionFinder.class.getName() + ".countByGroupsRoles";
 
-	public static String COUNT_BY_ROLES_PERMISSIONS =
+	public static final String COUNT_BY_ROLES_PERMISSIONS =
 		PermissionFinder.class.getName() + ".countByRolesPermissions";
 
-	public static String COUNT_BY_USER_GROUP_ROLE =
+	public static final String COUNT_BY_USER_GROUP_ROLE =
 		PermissionFinder.class.getName() + ".countByUserGroupRole";
 
-	public static String COUNT_BY_USERS_PERMISSIONS =
+	public static final String COUNT_BY_USERS_PERMISSIONS =
 		PermissionFinder.class.getName() + ".countByUsersPermissions";
 
-	public static String COUNT_BY_USERS_ROLES =
+	public static final String COUNT_BY_USERS_ROLES =
 		PermissionFinder.class.getName() + ".countByUsersRoles";
 
-	public static String COUNT_BY_R_A_C =
+	public static final String COUNT_BY_R_A_C =
 		PermissionFinder.class.getName() + ".countByR_A_C";
 
-	public static String FIND_BY_A_C =
+	public static final String FIND_BY_A_C =
 		PermissionFinder.class.getName() + ".findByA_C";
 
-	public static String FIND_BY_A_R =
+	public static final String FIND_BY_A_R =
 		PermissionFinder.class.getName() + ".findByA_R";
 
-	public static String FIND_BY_G_R =
+	public static final String FIND_BY_G_R =
 		PermissionFinder.class.getName() + ".findByG_R";
 
-	public static String FIND_BY_R_R =
+	public static final String FIND_BY_R_R =
 		PermissionFinder.class.getName() + ".findByR_R";
 
-	public static String FIND_BY_R_S =
+	public static final String FIND_BY_R_S =
 		PermissionFinder.class.getName() + ".findByR_S";
 
-	public static String FIND_BY_U_R =
+	public static final String FIND_BY_U_R =
 		PermissionFinder.class.getName() + ".findByU_R";
 
-	public static String FIND_BY_O_G_R =
+	public static final String FIND_BY_O_G_R =
 		PermissionFinder.class.getName() + ".findByO_G_R";
 
-	public static String FIND_BY_U_A_R =
+	public static final String FIND_BY_U_A_R =
 		PermissionFinder.class.getName() + ".findByU_A_R";
 
-	public static String FIND_BY_G_C_N_S_P =
+	public static final String FIND_BY_G_C_N_S_P =
 		PermissionFinder.class.getName() + ".findByG_C_N_S_P";
 
-	public static String FIND_BY_U_C_N_S_P =
+	public static final String FIND_BY_U_C_N_S_P =
 		PermissionFinder.class.getName() + ".findByU_C_N_S_P";
 
 	public static final FinderPath FINDER_PATH_COUNT_BY_ROLES_PERMISSIONS =

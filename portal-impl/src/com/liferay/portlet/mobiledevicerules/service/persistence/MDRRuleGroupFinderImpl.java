@@ -37,10 +37,10 @@ import java.util.List;
 public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 	implements MDRRuleGroupFinder {
 
-	public static String COUNT_BY_G_N =
+	public static final String COUNT_BY_G_N =
 		MDRRuleGroupFinder.class.getName() + ".countByG_N";
 
-	public static String FIND_BY_G_N =
+	public static final String FIND_BY_G_N =
 		MDRRuleGroupFinder.class.getName() + ".findByG_N";
 
 	public int countByKeywords(long groupId, String keywords)

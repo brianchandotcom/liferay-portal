@@ -25,11 +25,11 @@ import com.liferay.portal.kernel.util.Validator;
  */
 public class PwdGenerator {
 
-	public static String KEY1 = "0123456789";
+	public static final String KEY1 = "0123456789";
 
-	public static String KEY2 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	public static final String KEY2 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-	public static String KEY3 = "abcdefghijklmnopqrstuvwxyz";
+	public static final String KEY3 = "abcdefghijklmnopqrstuvwxyz";
 
 	public static String getPassword() {
 		return getPassword(8);

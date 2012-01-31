@@ -42,22 +42,22 @@ import java.util.List;
 public class MBMessageFinderImpl
 	extends BasePersistenceImpl<MBMessage> implements MBMessageFinder {
 
-	public static String COUNT_BY_C_T =
+	public static final String COUNT_BY_C_T =
 		MBMessageFinder.class.getName() + ".countByC_T";
 
-	public static String COUNT_BY_G_U_C_S =
+	public static final String COUNT_BY_G_U_C_S =
 		MBMessageFinder.class.getName() + ".countByG_U_C_S";
 
-	public static String COUNT_BY_G_U_C_A_S =
+	public static final String COUNT_BY_G_U_C_A_S =
 		MBMessageFinder.class.getName() + ".countByG_U_C_A_S";
 
-	public static String FIND_BY_NO_ASSETS =
+	public static final String FIND_BY_NO_ASSETS =
 		MBMessageFinder.class.getName() + ".findByNoAssets";
 
-	public static String FIND_BY_G_U_C_S =
+	public static final String FIND_BY_G_U_C_S =
 		MBMessageFinder.class.getName() + ".findByG_U_C_S";
 
-	public static String FIND_BY_G_U_C_A_S =
+	public static final String FIND_BY_G_U_C_A_S =
 		MBMessageFinder.class.getName() + ".findByG_U_C_A_S";
 
 	public int countByC_T(Date createDate, long threadId)

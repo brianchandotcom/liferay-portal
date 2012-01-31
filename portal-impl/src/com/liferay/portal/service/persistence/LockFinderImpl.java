@@ -32,7 +32,7 @@ import java.util.List;
 public class LockFinderImpl
 	extends BasePersistenceImpl<Lock> implements LockFinder {
 
-	public static String FIND_BY_C_K =
+	public static final String FIND_BY_C_K =
 		LockFinder.class.getName() + ".findByC_K";
 
 	public Lock fetchByC_K(String className, String key, LockMode lockMode)

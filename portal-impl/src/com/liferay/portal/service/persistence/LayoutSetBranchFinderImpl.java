@@ -34,7 +34,7 @@ import java.util.List;
 public class LayoutSetBranchFinderImpl
 	extends BasePersistenceImpl<Layout> implements LayoutSetBranchFinder {
 
-	public static String FIND_BY_MASTER =
+	public static final String FIND_BY_MASTER =
 		LayoutSetBranchFinder.class.getName() + ".findByMaster";
 
 	public LayoutSetBranch findByMaster(long groupId, boolean privateLayout)

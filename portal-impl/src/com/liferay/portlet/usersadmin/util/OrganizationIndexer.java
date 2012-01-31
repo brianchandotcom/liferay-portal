@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Organization;
+import com.liferay.portal.model.OrganizationConstants;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
@@ -281,7 +282,8 @@ public class OrganizationIndexer extends BaseIndexer {
 	}
 
 	protected void reindexOrganizations(long companyId) throws Exception {
-		int count = OrganizationLocalServiceUtil.getOrganizationsCount();
+		int count = OrganizationLocalServiceUtil.getOrganizationsCount(
+				companyId, OrganizationConstants.ANY_PARENT_ORGANIZATION_ID);
 
 		int pages = count / OrganizationIndexer.DEFAULT_INTERVAL;
 
@@ -297,7 +299,9 @@ public class OrganizationIndexer extends BaseIndexer {
 		throws Exception {
 
 		List<Organization> organizations =
-			OrganizationLocalServiceUtil.getOrganizations(start, end);
+			OrganizationLocalServiceUtil.getOrganizations(
+				companyId, OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
+				start, end);
 
 		if (organizations.isEmpty()) {
 			return;

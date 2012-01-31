@@ -95,20 +95,22 @@ AUI.add(
 								function(item, index, collection) {
 									var layoutConfig = layoutIds[index];
 
-									item._LFR_layoutId = layoutConfig.id;
+									if (layoutConfig) {
+										item._LFR_layoutId = layoutConfig.id;
 
-									if (layoutConfig.deletable) {
-										cssClassBuffer.push('lfr-nav-deletable');
-									}
+										if (layoutConfig.deletable) {
+											cssClassBuffer.push('lfr-nav-deletable');
+										}
 
-									if (layoutConfig.updateable) {
-										cssClassBuffer.push('lfr-nav-updateable');
-									}
+										if (layoutConfig.updateable) {
+											cssClassBuffer.push('lfr-nav-updateable');
+										}
 
-									if (cssClassBuffer.length) {
-										item.addClass(cssClassBuffer.join(' '));
+										if (cssClassBuffer.length) {
+											item.addClass(cssClassBuffer.join(' '));
 
-										cssClassBuffer.length = 0;
+											cssClassBuffer.length = 0;
+										}
 									}
 								}
 							);

@@ -351,6 +351,8 @@ public class MainServlet extends ActionServlet {
 		}
 
 		servletContext.setAttribute(WebKeys.STARTUP_FINISHED, true);
+
+		ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
 	}
 
 	@Override
@@ -1152,8 +1154,6 @@ public class MainServlet extends ActionServlet {
 			response.addHeader(
 				_LIFERAY_PORTAL_REQUEST_HEADER, ReleaseInfo.getReleaseInfo());
 		}
-
-		ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
 	}
 
 	protected boolean processServicePre(

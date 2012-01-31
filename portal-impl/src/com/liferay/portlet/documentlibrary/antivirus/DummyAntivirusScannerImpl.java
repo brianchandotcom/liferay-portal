@@ -35,6 +35,6 @@ public class DummyAntivirusScannerImpl implements AntivirusScanner {
 	public void scan(InputStream inputStream) {
 	}
 
-	private static boolean _ACTIVE = false;
+	private static final boolean _ACTIVE = false;
 
 }

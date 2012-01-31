@@ -176,7 +176,7 @@ public class InformixDB extends BaseDB {
 		return sb.toString();
 	}
 
-	private static String[] _INFORMIX_TEMPLATE = {
+	private static final String[] _INFORMIX_TEMPLATE = {
 		"--", "'T'", "'F'",
 		"'1970-01-01'", "CURRENT YEAR TO FRACTION",
 		" blob", " blob", " boolean", " datetime YEAR TO FRACTION",

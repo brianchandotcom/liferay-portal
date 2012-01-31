@@ -95,6 +95,6 @@ public class UnsyncBufferedOutputStream extends UnsyncFilterOutputStream {
 	protected byte[] buffer;
 	protected int count;
 
-	private static int _DEFAULT_BUFFER_SIZE = 8192;
+	private static final int _DEFAULT_BUFFER_SIZE = 8192;
 
 }

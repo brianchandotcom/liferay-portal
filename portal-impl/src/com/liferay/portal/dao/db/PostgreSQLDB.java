@@ -192,7 +192,7 @@ public class PostgreSQLDB extends BaseDB {
 		return sb.toString();
 	}
 
-	private static String[] _POSTGRESQL = {
+	private static final String[] _POSTGRESQL = {
 		"--", "true", "false",
 		"'01/01/1970'", "current_timestamp",
 		" oid", " bytea", " bool", " timestamp",

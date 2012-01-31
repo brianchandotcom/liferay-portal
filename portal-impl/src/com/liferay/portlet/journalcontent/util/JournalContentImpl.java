@@ -311,7 +311,7 @@ public class JournalContentImpl implements JournalContent {
 			return themeDisplay.isLifecycleRender();
 		}
 		else if (Validator.isNotNull(xmlRequest)) {
-			Matcher matcher = lifecycleRenderPhasePatern.matcher(xmlRequest);
+			Matcher matcher = lifecycleRenderPhasePattern.matcher(xmlRequest);
 
 			return matcher.find();
 		}
@@ -322,7 +322,7 @@ public class JournalContentImpl implements JournalContent {
 
 	protected static final String CACHE_NAME = JournalContent.class.getName();
 
-	protected static Pattern lifecycleRenderPhasePatern = Pattern.compile(
+	protected static Pattern lifecycleRenderPhasePattern = Pattern.compile(
 		"<lifecycle>\\s*RENDER_PHASE\\s*</lifecycle>");
 	protected static PortalCache portalCache = MultiVMPoolUtil.getCache(
 		CACHE_NAME);

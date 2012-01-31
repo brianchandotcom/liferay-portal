@@ -3433,7 +3433,7 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
-	private static long _JOURNAL_ARTICLE_CHECK_INTERVAL =
+	private static final long _JOURNAL_ARTICLE_CHECK_INTERVAL =
 		PropsValues.JOURNAL_ARTICLE_CHECK_INTERVAL * Time.MINUTE;
 
 	private static Log _log = LogFactoryUtil.getLog(

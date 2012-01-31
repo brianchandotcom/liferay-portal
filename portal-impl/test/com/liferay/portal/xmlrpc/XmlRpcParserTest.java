@@ -111,7 +111,7 @@ public class XmlRpcParserTest extends BaseTestCase {
 		}
 	}
 
-	private static String[] _FAULT_RESPONSES = new String[] {
+	private static final String[] _FAULT_RESPONSES = new String[] {
 		"<?xml version=\"1.0\"?>" +
 		"<methodResponse>" +
 		"<fault>" +
@@ -149,7 +149,7 @@ public class XmlRpcParserTest extends BaseTestCase {
 		"</methodResponse>"
 	};
 
-	private static String[] _NON_PARAMETERIZED_METHODS = new String[] {
+	private static final String[] _NON_PARAMETERIZED_METHODS = new String[] {
 		"<?xml version=\"1.0\"?>" +
 		"<methodCall>" +
 		"<methodName>noParams</methodName>" +
@@ -163,7 +163,7 @@ public class XmlRpcParserTest extends BaseTestCase {
 		"</methodCall>"
 	};
 
-	private static String _PARAMETERIZED_METHOD =
+	private static final String _PARAMETERIZED_METHOD =
 		"<?xml version=\"1.0\"?>" +
 		"<methodCall>" +
 		"<methodName>params</methodName>" +
@@ -174,7 +174,7 @@ public class XmlRpcParserTest extends BaseTestCase {
 		"</params>" +
 		"</methodCall>";
 
-	private static String[] _SUCCESS_RESPONSES = new String[] {
+	private static final String[] _SUCCESS_RESPONSES = new String[] {
 		"<?xml version=\"1.0\"?>" +
 		"<methodResponse>" +
 		"<params>" +

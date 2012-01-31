@@ -229,9 +229,9 @@ public class CMISQueryBuilderTest extends TestCase {
 		return searchContext;
 	}
 
-	private static String _QUERY_POSTFIX = ") ORDER BY HITS DESC";
+	private static final String _QUERY_POSTFIX = ") ORDER BY HITS DESC";
 
-	private static String _QUERY_PREFIX =
+	private static final String _QUERY_PREFIX =
 		"SELECT cmis:objectId, SCORE() AS HITS FROM cmis:document WHERE (";
 
 }

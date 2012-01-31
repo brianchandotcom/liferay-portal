@@ -107,7 +107,7 @@ public class HypersonicDB extends BaseDB {
 		return sb.toString();
 	}
 
-	private static String[] _HYPERSONIC = {
+	private static final String[] _HYPERSONIC = {
 		"//", "true", "false",
 		"'1970-01-01 00:00:00'", "now()",
 		" blob", " blob", " bit", " timestamp",

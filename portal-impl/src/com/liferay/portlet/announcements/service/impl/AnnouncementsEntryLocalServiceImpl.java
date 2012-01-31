@@ -492,7 +492,7 @@ public class AnnouncementsEntryLocalServiceImpl
 		}
 	}
 
-	private static long _ANNOUNCEMENTS_ENTRY_CHECK_INTERVAL =
+	private static final long _ANNOUNCEMENTS_ENTRY_CHECK_INTERVAL =
 		PropsValues.ANNOUNCEMENTS_ENTRY_CHECK_INTERVAL * Time.MINUTE;
 
 	private static Log _log = LogFactoryUtil.getLog(

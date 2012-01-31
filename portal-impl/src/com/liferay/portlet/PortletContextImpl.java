@@ -197,9 +197,9 @@ public class PortletContextImpl implements PortletContext {
 		_servletContext.setAttribute(name, obj);
 	}
 
-	private static int _MAJOR_VERSION = 2;
+	private static final int _MAJOR_VERSION = 2;
 
-	private static int _MINOR_VERSION = 0;
+	private static final int _MINOR_VERSION = 0;
 
 	private static Log _log = LogFactoryUtil.getLog(PortletContextImpl.class);
 

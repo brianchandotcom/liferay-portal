@@ -62,7 +62,7 @@ public abstract class URLNode extends ASTNode {
 		_supportedProtocols = supportedProtocols;
 	}
 
-	private static String[] _SUPPORTED_PROTOCOL_LINK =
+	private static final String[] _SUPPORTED_PROTOCOL_LINK =
 		{"http://", "https://", "ftp://"};
 
 	private String _link;

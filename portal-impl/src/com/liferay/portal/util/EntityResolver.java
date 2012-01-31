@@ -103,9 +103,10 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 		return null;
 	}
 
-	private static String _DEFINITIONS_PATH = "com/liferay/portal/definitions/";
+	private static final String _DEFINITIONS_PATH =
+		"com/liferay/portal/definitions/";
 
-	private static KeyValuePair[] _PUBLIC_IDS = {
+	private static final KeyValuePair[] _PUBLIC_IDS = {
 		new KeyValuePair(
 			"datatypes",
 			"datatypes.dtd"
@@ -612,7 +613,7 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 		)
 	};
 
-	private static KeyValuePair[] _SYSTEM_IDS = {
+	private static final KeyValuePair[] _SYSTEM_IDS = {
 		new KeyValuePair(
 			"http://java.sun.com/xml/ns/j2ee/j2ee_1_4.xsd",
 			"j2ee_1_4.xsd"

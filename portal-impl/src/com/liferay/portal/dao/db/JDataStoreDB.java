@@ -58,7 +58,7 @@ public class JDataStoreDB extends FirebirdDB {
 		return _JDATASTORE;
 	}
 
-	private static String[] _JDATASTORE = {
+	private static final String[] _JDATASTORE = {
 		"--", "TRUE", "FALSE",
 		"'1970-01-01'", "current_timestamp",
 		" binary", " binary", " boolean", " date",

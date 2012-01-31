@@ -50,6 +50,6 @@ public abstract class BaseInputStreamAntivirusScanner
 		}
 	}
 
-	private static boolean _ACTIVE = true;
+	private static final boolean _ACTIVE = true;
 
 }

@@ -352,8 +352,9 @@ public class LiferaySerializer extends AbstractSerializer {
 		return javaClassInstance;
 	}
 
-	private static Class<?>[] _JSON_CLASSES = {JSONObject.class};
+	private static final Class<?>[] _JSON_CLASSES = {JSONObject.class};
 
-	private static Class<?>[] _SERIALIZABLE_CLASSES = {Serializable.class};
+	private static final Class<?>[] _SERIALIZABLE_CLASSES =
+		{Serializable.class};
 
 }

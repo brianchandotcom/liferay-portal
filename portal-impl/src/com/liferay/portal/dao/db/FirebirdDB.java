@@ -129,7 +129,7 @@ public class FirebirdDB extends BaseDB {
 		return sb.toString();
 	}
 
-	private static String[] _FIREBIRD = {
+	private static final String[] _FIREBIRD = {
 		"--", "1", "0",
 		"'01/01/1970'", "current_timestamp",
 		" blob", " blob", " smallint", " timestamp",

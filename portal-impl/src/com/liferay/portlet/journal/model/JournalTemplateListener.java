@@ -70,7 +70,7 @@ public class JournalTemplateListener
 		VelocityEngineUtil.flushTemplate(freeMarkerTemplateId);
 	}
 
-	private static String _RESOURCE_TEMPLATE_NAME_SPACE = String.valueOf(
+	private static final String _RESOURCE_TEMPLATE_NAME_SPACE = String.valueOf(
 		ResourceManager.RESOURCE_TEMPLATE);
 
 }

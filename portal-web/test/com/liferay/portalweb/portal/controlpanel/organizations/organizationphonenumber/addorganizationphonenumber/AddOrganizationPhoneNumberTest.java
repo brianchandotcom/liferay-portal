@@ -153,7 +153,7 @@ public class AddOrganizationPhoneNumberTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals("5628020523",
+		assertEquals("(562)802-0523",
 			selenium.getValue("//input[@id='_125_phoneNumber0']"));
 		assertEquals("321",
 			selenium.getValue("//input[@id='_125_phoneExtension0']"));

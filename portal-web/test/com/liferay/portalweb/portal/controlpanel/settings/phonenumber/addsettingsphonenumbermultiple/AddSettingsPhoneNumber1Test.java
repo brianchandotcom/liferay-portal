@@ -100,7 +100,7 @@ public class AddSettingsPhoneNumber1Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals("1231231234",
+		assertEquals("123-123-1234",
 			selenium.getValue("//input[@id='_130_phoneNumber0']"));
 		assertEquals("123",
 			selenium.getValue("//input[@id='_130_phoneExtension0']"));

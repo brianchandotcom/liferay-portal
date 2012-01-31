@@ -17,6 +17,8 @@ package com.liferay.portal.upgrade.v5_2_3;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.v5_2_3.util.CalEventTable;
 
+import java.sql.SQLException;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -24,10 +26,10 @@ public class UpgradeCalendar extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (isSupportsAlterColumnType()) {
+		try {
 			runSQL("alter_column_type CalEvent remindBy INTEGER");
 		}
-		else {
+		catch (SQLException sqle) {
 
 			// CalEvent
 

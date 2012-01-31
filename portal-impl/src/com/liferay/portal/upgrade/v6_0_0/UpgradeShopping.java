@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.upgrade.v6_0_0.util.ShoppingItemTable;
 
+import java.sql.SQLException;
+
 /**
  * @author Alexander Chow
  */
@@ -33,12 +35,12 @@ public class UpgradeShopping extends UpgradeProcess {
 
 		runSQL(sb.toString());
 
-		if (isSupportsAlterColumnType()) {
+		try {
 			runSQL("alter_column_type ShoppingItem smallImageURL STRING null");
 			runSQL("alter_column_type ShoppingItem mediumImageURL STRING null");
 			runSQL("alter_column_type ShoppingItem largeImageURL STRING null");
 		}
-		else {
+		catch (SQLException sqle) {
 			upgradeTable(
 				ShoppingItemTable.TABLE_NAME, ShoppingItemTable.TABLE_COLUMNS,
 				ShoppingItemTable.TABLE_SQL_CREATE,

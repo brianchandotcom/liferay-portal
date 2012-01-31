@@ -17,6 +17,8 @@ package com.liferay.portal.upgrade.v6_0_0;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.v6_0_0.util.ResourceActionTable;
 
+import java.sql.SQLException;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -24,10 +26,10 @@ public class UpgradeResourceAction extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (isSupportsAlterColumnType()) {
+		try {
 			runSQL("alter_column_type ResourceAction name VARCHAR(255) null");
 		}
-		else {
+		catch (SQLException sqle) {
 
 			// Resource
 

@@ -17,6 +17,8 @@ package com.liferay.portal.upgrade.v5_2_3;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.v5_2_3.util.ResourceCodeTable;
 
+import java.sql.SQLException;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -24,10 +26,10 @@ public class UpgradeResourceCode extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (isSupportsAlterColumnType()) {
+		try {
 			runSQL("alter_column_type ResourceCode name VARCHAR(255) null");
 		}
-		else {
+		catch (SQLException sqle) {
 
 			// ResourceCode
 

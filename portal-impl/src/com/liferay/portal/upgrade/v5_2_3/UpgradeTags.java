@@ -25,6 +25,8 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 
+import java.sql.SQLException;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Samuel Kong
@@ -33,10 +35,10 @@ public class UpgradeTags extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (isSupportsAlterColumnType()) {
+		try {
 			runSQL("alter_column_type TagsAsset title VARCHAR(255) null");
 		}
-		else {
+		catch (SQLException sqle) {
 
 			// TagsAsset
 

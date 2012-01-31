@@ -19,6 +19,8 @@ import com.liferay.portal.upgrade.v6_1_0.util.JournalArticleTable;
 import com.liferay.portal.upgrade.v6_1_0.util.JournalStructureTable;
 import com.liferay.portal.upgrade.v6_1_0.util.JournalTemplateTable;
 
+import java.sql.SQLException;
+
 /**
  * @author Juan Fernández
  * @author Sergio González
@@ -27,7 +29,7 @@ public class UpgradeJournal extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (isSupportsAlterColumnType()) {
+		try {
 			runSQL("alter_column_type JournalArticle title STRING null");
 
 			runSQL("alter_column_type JournalStructure name STRING null");
@@ -37,7 +39,7 @@ public class UpgradeJournal extends UpgradeProcess {
 			runSQL("alter_column_type JournalTemplate name STRING null");
 			runSQL("alter_column_type JournalTemplate description STRING null");
 		}
-		else {
+		catch (SQLException sqle) {
 			upgradeTable(
 				JournalArticleTable.TABLE_NAME,
 				JournalArticleTable.TABLE_COLUMNS,

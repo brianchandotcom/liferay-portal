@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.v6_0_1.util.DLFileEntryTable;
 import com.liferay.portal.upgrade.v6_0_1.util.DLFileVersionTable;
 
+import java.sql.SQLException;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -25,12 +27,12 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (isSupportsAlterColumnType()) {
+		try {
 			runSQL("alter_column_type DLFileEntry size_ LONG");
 
 			runSQL("alter_column_type DLFileVersion size_ LONG");
 		}
-		else {
+		catch (SQLException sqle) {
 
 			// DLFileEntry
 

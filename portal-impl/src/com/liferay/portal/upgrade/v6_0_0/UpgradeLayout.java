@@ -17,6 +17,8 @@ package com.liferay.portal.upgrade.v6_0_0;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.v6_0_0.util.LayoutTable;
 
+import java.sql.SQLException;
+
 /**
  * @author Jorge Ferrer
  */
@@ -24,10 +26,10 @@ public class UpgradeLayout extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (isSupportsAlterColumnType()) {
+		try {
 			runSQL("alter_column_type Layout friendlyURL VARCHAR(255) null");
 		}
-		else {
+		catch (SQLException sqle) {
 
 			// Layout
 

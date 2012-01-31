@@ -132,7 +132,7 @@ public class SybaseDB extends BaseDB {
 				String[] template = buildColumnTypeTokens(line);
 
 				line = StringUtil.replace(
-					"alter table @table@ alter column @old-column@ @type@;",
+					"alter table @table@ modify @old-column@ @type@;",
 					REWORD_TEMPLATE, template);
 			}
 			else if (line.indexOf(DROP_INDEX) != -1) {

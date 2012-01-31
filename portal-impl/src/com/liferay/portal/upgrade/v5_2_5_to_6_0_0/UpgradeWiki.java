@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.v5_2_5_to_6_0_0.util.WikiPageResourceTable;
 import com.liferay.portal.upgrade.v5_2_5_to_6_0_0.util.WikiPageTable;
 
+import java.sql.SQLException;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -25,7 +27,7 @@ public class UpgradeWiki extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (isSupportsAlterColumnType()) {
+		try {
 			runSQL("alter_column_type WikiPage parentTitle varchar(255) null");
 			runSQL(
 				"alter_column_type WikiPage redirectTitle varchar(255) null");
@@ -33,7 +35,7 @@ public class UpgradeWiki extends UpgradeProcess {
 			runSQL(
 				"alter_column_type WikiPageResource title varchar(255) null");
 		}
-		else {
+		catch (SQLException sqle) {
 
 			// WikiPage
 

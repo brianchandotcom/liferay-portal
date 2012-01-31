@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 import com.liferay.portal.upgrade.v6_1_0.util.BlogsEntryTable;
 
+import java.sql.SQLException;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -26,14 +28,14 @@ public class UpgradeBlogs extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (isSupportsAlterColumnType()) {
+		try {
 			runSQL("alter_column_type BlogsEntry smallImageURL STRING null");
 		}
-		else {
-			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
-				BlogsEntryTable.TABLE_NAME, BlogsEntryTable.TABLE_COLUMNS);
-
-			upgradeTable.updateTable();
+		catch (SQLException sqle) {
+			upgradeTable(
+				BlogsEntryTable.TABLE_NAME, BlogsEntryTable.TABLE_COLUMNS,
+				BlogsEntryTable.TABLE_SQL_CREATE,
+				BlogsEntryTable.TABLE_SQL_ADD_INDEXES);
 		}
 	}
 

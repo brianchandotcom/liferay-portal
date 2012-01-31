@@ -24,6 +24,8 @@ import com.liferay.portal.upgrade.v5_2_3.util.DLFileShortcutTable;
 import com.liferay.portal.upgrade.v5_2_3.util.DLFileVersionTable;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
+import java.sql.SQLException;
+
 import javax.portlet.PortletPreferences;
 
 /**
@@ -35,7 +37,7 @@ public class UpgradeDocumentLibrary extends BaseUpgradePortletPreferences {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (isSupportsAlterColumnType()) {
+		try {
 			runSQL("alter_column_type DLFileEntry name VARCHAR(255) null");
 
 			runSQL("alter_column_type DLFileRank name VARCHAR(255) null");
@@ -44,7 +46,7 @@ public class UpgradeDocumentLibrary extends BaseUpgradePortletPreferences {
 
 			runSQL("alter_column_type DLFileVersion name VARCHAR(255) null");
 		}
-		else {
+		catch (SQLException sqle) {
 
 			// DLFileEntry
 

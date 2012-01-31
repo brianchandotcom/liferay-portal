@@ -43,13 +43,13 @@ public class DLFileEntryTypeFinderImpl
 	extends BasePersistenceImpl<DLFileEntryType>
 	implements DLFileEntryTypeFinder {
 
-	public static String COUNT_BY_C_G_N_D_S =
+	public static final String COUNT_BY_C_G_N_D_S =
 		DLFileEntryTypeFinder.class.getName() + ".countByC_G_N_D_S";
 
-	public static String FIND_BY_C_G_N_D_S =
+	public static final String FIND_BY_C_G_N_D_S =
 		DLFileEntryTypeFinder.class.getName() + ".findByC_G_N_D_S";
 
-	public static String JOIN_BY_FILE_ENTRY_TYPE =
+	public static final String JOIN_BY_FILE_ENTRY_TYPE =
 		DLFileEntryTypeFinder.class.getName() + ".joinByFileEntryType";
 
 	public int countByKeywords(

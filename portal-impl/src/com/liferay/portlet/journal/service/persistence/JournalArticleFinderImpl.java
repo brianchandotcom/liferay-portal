@@ -49,20 +49,20 @@ public class JournalArticleFinderImpl
 	extends BasePersistenceImpl<JournalArticle>
 	implements JournalArticleFinder {
 
-	public static String COUNT_BY_C_G_C_A_V_T_D_C_T_S_T_D_S_R =
+	public static final String COUNT_BY_C_G_C_A_V_T_D_C_T_S_T_D_S_R =
 		JournalArticleFinder.class.getName() +
 			".countByC_G_C_A_V_T_D_C_T_S_T_D_S_R";
 
-	public static String FIND_BY_EXPIRATION_DATE =
+	public static final String FIND_BY_EXPIRATION_DATE =
 		JournalArticleFinder.class.getName() + ".findByExpirationDate";
 
-	public static String FIND_BY_REVIEW_DATE =
+	public static final String FIND_BY_REVIEW_DATE =
 		JournalArticleFinder.class.getName() + ".findByReviewDate";
 
-	public static String FIND_BY_R_D =
+	public static final String FIND_BY_R_D =
 		JournalArticleFinder.class.getName() + ".findByR_D";
 
-	public static String FIND_BY_C_G_C_A_V_T_D_C_T_S_T_D_S_R =
+	public static final String FIND_BY_C_G_C_A_V_T_D_C_T_S_T_D_S_R =
 		JournalArticleFinder.class.getName() +
 			".findByC_G_C_A_V_T_D_C_T_S_T_D_S_R";
 

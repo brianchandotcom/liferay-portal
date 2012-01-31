@@ -29,13 +29,13 @@ import java.util.concurrent.TimeUnit;
  */
 public class DispatcherDestinationTest extends TestCase {
 
-	public static int LISTENER_COUNT = 10000;
+	public static final int LISTENER_COUNT = 10000;
 
-	public static int REGISTER_TASK_COUNT = 10;
+	public static final int REGISTER_TASK_COUNT = 10;
 
-	public static int TASK_ITERATION_COUNT = 100;
+	public static final int TASK_ITERATION_COUNT = 100;
 
-	public static int UNREGISTER_TASK_COUNT = 10;
+	public static final int UNREGISTER_TASK_COUNT = 10;
 
 	@Override
 	public void setUp() throws Exception {

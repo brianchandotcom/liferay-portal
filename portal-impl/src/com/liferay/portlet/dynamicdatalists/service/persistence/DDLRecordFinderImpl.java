@@ -37,10 +37,10 @@ import java.util.List;
 public class DDLRecordFinderImpl extends BasePersistenceImpl<DDLRecord>
 	implements DDLRecordFinder {
 
-	public static String COUNT_BY_R_S =
+	public static final String COUNT_BY_R_S =
 		DDLRecordFinder.class.getName() + ".countByR_S";
 
-	public static String FIND_BY_R_S =
+	public static final String FIND_BY_R_S =
 		DDLRecordFinder.class.getName() + ".findByR_S";
 
 	public int countByR_S(long recordSetId, int status)

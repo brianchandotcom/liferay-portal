@@ -43,34 +43,34 @@ import java.util.List;
 public class DLFolderFinderImpl
 	extends BasePersistenceImpl<DLFolder> implements DLFolderFinder {
 
-	public static String COUNT_F_BY_G_M_F =
+	public static final String COUNT_F_BY_G_M_F =
 		DLFolderFinder.class.getName() + ".countF_ByG_M_F";
 
-	public static String COUNT_FE_BY_G_F =
+	public static final String COUNT_FE_BY_G_F =
 		DLFolderFinder.class.getName() + ".countFE_ByG_F";
 
-	public static String COUNT_FE_BY_G_F_S =
+	public static final String COUNT_FE_BY_G_F_S =
 		DLFolderFinder.class.getName() + ".countFE_ByG_F_S";
 
-	public static String COUNT_FS_BY_G_F_S =
+	public static final String COUNT_FS_BY_G_F_S =
 		DLFolderFinder.class.getName() + ".countFS_ByG_F_S";
 
-	public static String FIND_F_BY_G_M_F =
+	public static final String FIND_F_BY_G_M_F =
 		DLFolderFinder.class.getName() + ".findF_ByG_M_F";
 
-	public static String FIND_FE_BY_G_F =
+	public static final String FIND_FE_BY_G_F =
 		DLFolderFinder.class.getName() + ".findFE_ByG_F";
 
-	public static String FIND_FE_BY_G_F_S =
+	public static final String FIND_FE_BY_G_F_S =
 		DLFolderFinder.class.getName() + ".findFE_ByG_F_S";
 
-	public static String FIND_FS_BY_G_F_S =
+	public static final String FIND_FS_BY_G_F_S =
 		DLFolderFinder.class.getName() + ".findFS_ByG_F_S";
 
-	public static String JOIN_FS_BY_DL_FILE_ENTRY =
+	public static final String JOIN_FS_BY_DL_FILE_ENTRY =
 		DLFolderFinder.class.getName() + ".joinFS_ByDLFileEntry";
 
-	public static String JOIN_FV_BY_DL_FILE_ENTRY =
+	public static final String JOIN_FV_BY_DL_FILE_ENTRY =
 		DLFolderFinder.class.getName() + ".joinFV_ByDLFileEntry";
 
 	public int countF_FE_FS_ByG_F_S_M_M(

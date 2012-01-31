@@ -36,13 +36,13 @@ import java.util.List;
 public class LayoutFinderImpl
 	extends BasePersistenceImpl<Layout> implements LayoutFinder {
 
-	public static String FIND_BY_NULL_FRIENDLY_URL =
+	public static final String FIND_BY_NULL_FRIENDLY_URL =
 		LayoutFinder.class.getName() + ".findByNullFriendlyURL";
 
-	public static String FIND_BY_SCOPE_GROUP =
+	public static final String FIND_BY_SCOPE_GROUP =
 		LayoutFinder.class.getName() + ".findByScopeGroup";
 
-	public static String FIND_BY_C_P_P =
+	public static final String FIND_BY_C_P_P =
 		LayoutFinder.class.getName() + ".findByC_P_P";
 
 	public List<Layout> findByNullFriendlyURL() throws SystemException {

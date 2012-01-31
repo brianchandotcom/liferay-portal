@@ -172,7 +172,7 @@ import org.springframework.aop.target.SingletonTargetSource;
 public class HookHotDeployListener
 	extends BaseHotDeployListener implements PropsKeys {
 
-	public static String[] SUPPORTED_PROPERTIES = {
+	public static final String[] SUPPORTED_PROPERTIES = {
 		"admin.default.group.names",
 		"admin.default.role.names",
 		"admin.default.user.group.names",

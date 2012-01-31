@@ -42,10 +42,10 @@ public class JournalStructureFinderImpl
 	extends BasePersistenceImpl<JournalStructure>
 	implements JournalStructureFinder {
 
-	public static String COUNT_BY_C_G_S_N_D =
+	public static final String COUNT_BY_C_G_S_N_D =
 		JournalStructureFinder.class.getName() + ".countByC_G_S_N_D";
 
-	public static String FIND_BY_C_G_S_N_D =
+	public static final String FIND_BY_C_G_S_N_D =
 		JournalStructureFinder.class.getName() + ".findByC_G_S_N_D";
 
 	public int countByKeywords(long companyId, long[] groupIds, String keywords)

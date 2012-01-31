@@ -41,10 +41,10 @@ import java.util.List;
 public class DDMTemplateFinderImpl
 	extends BasePersistenceImpl<DDMTemplate> implements DDMTemplateFinder {
 
-	public static String COUNT_BY_C_G_S_N_D_T_M_L =
+	public static final String COUNT_BY_C_G_S_N_D_T_M_L =
 		DDMTemplateFinder.class.getName() + ".countByC_G_S_N_D_T_M_L";
 
-	public static String FIND_BY_C_G_S_N_D_T_M_L =
+	public static final String FIND_BY_C_G_S_N_D_T_M_L =
 		DDMTemplateFinder.class.getName() + ".findByC_G_S_N_D_T_M_L";
 
 	public int countByKeywords(

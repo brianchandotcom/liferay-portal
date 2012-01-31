@@ -31,7 +31,7 @@ import java.util.List;
 public class DLFileRankFinderImpl
 	extends BasePersistenceImpl<DLFileRank> implements DLFileRankFinder {
 
-	public static String FIND_BY_STALE_RANKS =
+	public static final String FIND_BY_STALE_RANKS =
 		DLFileRankFinder.class.getName() + ".findByStaleRanks";
 
 	public List<Object[]> findByStaleRanks(int count) throws SystemException {

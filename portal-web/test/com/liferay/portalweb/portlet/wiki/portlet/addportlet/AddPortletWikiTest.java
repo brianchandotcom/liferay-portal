@@ -67,7 +67,7 @@ public class AddPortletWikiTest extends BaseTestCase {
 		}
 
 		selenium.clickAt("//div[@title='Wiki']/p/a",
-			RuntimeVariables.replace("Wiki"));
+			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

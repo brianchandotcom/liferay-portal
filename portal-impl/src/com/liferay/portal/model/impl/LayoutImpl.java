@@ -113,13 +113,15 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 		for (String keyword : PropsValues.LAYOUT_FRIENDLY_URL_KEYWORDS) {
 
-			// 'friendlyURL' is normalized via FriendlyURLNormalizerUril.normalize(),
-			// part of this process is toLowerCase(), 
-			// so we need to ignore the case ok keywords as well
+			// 'friendlyURL' is normalized via 
+			// FriendlyURLNormalizerUril.normalize(), part of this 
+			// process is toLowerCase(), so we need to ignore 
+			// the case of keywords as well
 			
 			if (StringUtils.containsIgnoreCase(friendlyURL, 
-				    StringUtil.quote(keyword, StringPool.SLASH)) ||
-				StringUtils.endsWithIgnoreCase(friendlyURL, StringPool.SLASH + keyword)) {
+					StringUtil.quote(keyword, StringPool.SLASH)) ||
+				StringUtils.endsWithIgnoreCase(friendlyURL, 
+					StringPool.SLASH + keyword)) {
 
 				LayoutFriendlyURLException lfurle =
 					new LayoutFriendlyURLException(

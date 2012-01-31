@@ -15,19 +15,17 @@
 package com.liferay.portalweb.socialofficehome.contactscenter.contacts;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.socialofficehome.contactscenter.contacts.blockccfriendrmenu.BlockCCFriendRMenuTests;
-import com.liferay.portalweb.socialofficehome.contactscenter.contacts.blockccuseractions.BlockCCUserActionsTests;
-import com.liferay.portalweb.socialofficehome.contactscenter.contacts.ignorecccoworkerrequest.IgnoreCCCoworkerRequestTests;
-import com.liferay.portalweb.socialofficehome.contactscenter.contacts.searchccuserfindpeoplelink.SearchCCUserFindPeopleLinkTests;
-import com.liferay.portalweb.socialofficehome.contactscenter.contacts.socoaddascoworkerccactions.SOCo_AddAsCoworkerCCActionsTests;
-import com.liferay.portalweb.socialofficehome.contactscenter.contacts.socoremoveascoworkercccoworkerrmenu.SOCo_RemoveAsCoworkerCCCoworkerRMenuTests;
-import com.liferay.portalweb.socialofficehome.contactscenter.contacts.sofoaddasfollowerccactions.SOFo_AddAsFollowerCCActionsTests;
-import com.liferay.portalweb.socialofficehome.contactscenter.contacts.sofounfollowccfollowerrmenu.SOFo_UnfollowCCFollowerRMenuTests;
-import com.liferay.portalweb.socialofficehome.contactscenter.contacts.sofraddasfriendccactions.SOFr_AddAsFriendCCActionsTests;
-import com.liferay.portalweb.socialofficehome.contactscenter.contacts.sofrremoveasfriendccfriendrmenu.SOFr_RemoveAsFriendCCFriendRMenuTests;
-import com.liferay.portalweb.socialofficehome.contactscenter.contacts.unblockccuseractions.UnblockCCUserActionsTests;
-import com.liferay.portalweb.socialofficehome.contactscenter.contacts.viewccfriendcontactcard.ViewCCFriendContactCardTests;
-import com.liferay.portalweb.socialofficehome.contactscenter.contacts.viewccrequestslink.ViewCCRequestsLinkTests;
+import com.liferay.portalweb.socialofficehome.contactscenter.contacts.blockccconnection.BlockCCConnectionTests;
+import com.liferay.portalweb.socialofficehome.contactscenter.contacts.blockccuser.BlockCCUserTests;
+import com.liferay.portalweb.socialofficehome.contactscenter.contacts.searchconnectiondropdownconnectionscc.SearchConnectionDropDownConnectionsCCTests;
+import com.liferay.portalweb.socialofficehome.contactscenter.contacts.searchfollowingdropdownfollowingcc.SearchFollowingDropDownFollowingCCTests;
+import com.liferay.portalweb.socialofficehome.contactscenter.contacts.searchuserdropdownallcc.SearchUserDropDownAllCCTests;
+import com.liferay.portalweb.socialofficehome.contactscenter.contacts.sousaddasconnectionccuser.SOUs_AddAsConnectionCCUserTests;
+import com.liferay.portalweb.socialofficehome.contactscenter.contacts.sousfollowccuser.SOUs_FollowCCUserTests;
+import com.liferay.portalweb.socialofficehome.contactscenter.contacts.sousremoveasconnectionccuser.SOUs_RemoveAsConnectionCCUserTests;
+import com.liferay.portalweb.socialofficehome.contactscenter.contacts.sousunfollowccuser.SOUs_UnfollowCCUserTests;
+import com.liferay.portalweb.socialofficehome.contactscenter.contacts.unblockccuser.UnblockCCUserTests;
+import com.liferay.portalweb.socialofficehome.contactscenter.contacts.viewccuserprofile.ViewCCUserProfileTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -40,19 +38,17 @@ public class ContactsTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(BlockCCFriendRMenuTests.suite());
-		testSuite.addTest(BlockCCUserActionsTests.suite());
-		testSuite.addTest(IgnoreCCCoworkerRequestTests.suite());
-		testSuite.addTest(SearchCCUserFindPeopleLinkTests.suite());
-		testSuite.addTest(SOCo_AddAsCoworkerCCActionsTests.suite());
-		testSuite.addTest(SOCo_RemoveAsCoworkerCCCoworkerRMenuTests.suite());
-		testSuite.addTest(SOFo_AddAsFollowerCCActionsTests.suite());
-		testSuite.addTest(SOFo_UnfollowCCFollowerRMenuTests.suite());
-		testSuite.addTest(SOFr_AddAsFriendCCActionsTests.suite());
-		testSuite.addTest(SOFr_RemoveAsFriendCCFriendRMenuTests.suite());
-		testSuite.addTest(UnblockCCUserActionsTests.suite());
-		testSuite.addTest(ViewCCFriendContactCardTests.suite());
-		testSuite.addTest(ViewCCRequestsLinkTests.suite());
+		testSuite.addTest(BlockCCConnectionTests.suite());
+		testSuite.addTest(BlockCCUserTests.suite());
+		testSuite.addTest(SearchConnectionDropDownConnectionsCCTests.suite());
+		testSuite.addTest(SearchFollowingDropDownFollowingCCTests.suite());
+		testSuite.addTest(SearchUserDropDownAllCCTests.suite());
+		testSuite.addTest(SOUs_AddAsConnectionCCUserTests.suite());
+		testSuite.addTest(SOUs_FollowCCUserTests.suite());
+		testSuite.addTest(SOUs_RemoveAsConnectionCCUserTests.suite());
+		testSuite.addTest(SOUs_UnfollowCCUserTests.suite());
+		testSuite.addTest(UnblockCCUserTests.suite());
+		testSuite.addTest(ViewCCUserProfileTests.suite());
 
 		return testSuite;
 	}

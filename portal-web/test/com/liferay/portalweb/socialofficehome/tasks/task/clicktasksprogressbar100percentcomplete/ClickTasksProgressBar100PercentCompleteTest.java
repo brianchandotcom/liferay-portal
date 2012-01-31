@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ClickTasksProgressBar100PercentCompleteTest extends BaseTestCase {
 	public void testClickTasksProgressBar100PercentComplete()
 		throws Exception {
-		selenium.open("/user/joebloggs/home/");
+		selenium.open("/user/joebloggs/home1/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -32,7 +32,8 @@ public class ClickTasksProgressBar100PercentCompleteTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//nav/ul/li[1]/a/span")) {
+				if (selenium.isVisible(
+							"//nav/ul/li[contains(.,'Tasks')]/a/span")) {
 					break;
 				}
 			}
@@ -42,14 +43,12 @@ public class ClickTasksProgressBar100PercentCompleteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Home"),
-			selenium.getText("//nav/ul/li[1]/a/span"));
-		selenium.clickAt("//div[2]/div[1]/ul/li[5]/a",
+		selenium.clickAt("//nav/ul/li[contains(.,'Tasks')]/a/span",
 			RuntimeVariables.replace("Tasks"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Tasks"),
-			selenium.getText("//h1/span[2]"));
+			selenium.getText("//span[@class='portlet-title-default']"));
 		assertEquals(RuntimeVariables.replace("Assigned to Me"),
 			selenium.getText("link=Assigned to Me"));
 		selenium.clickAt("link=Assigned to Me",
@@ -58,7 +57,7 @@ public class ClickTasksProgressBar100PercentCompleteTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Task Description"),
 			selenium.getText("//td[1]/div[1]/a"));
-		selenium.clickAt("//a[5]", RuntimeVariables.replace(""));
+		selenium.clickAt("//div[3]/a[5]", RuntimeVariables.replace(""));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

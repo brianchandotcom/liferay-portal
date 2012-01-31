@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewTasksTaskAssignedToMeTest extends BaseTestCase {
 	public void testViewTasksTaskAssignedToMe() throws Exception {
-		selenium.open("/user/joebloggs/home/");
+		selenium.open("/user/joebloggs/home1/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -31,7 +31,8 @@ public class ViewTasksTaskAssignedToMeTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//nav/ul/li[1]/a/span")) {
+				if (selenium.isVisible(
+							"//nav/ul/li[contains(.,'Tasks')]/a/span")) {
 					break;
 				}
 			}
@@ -41,14 +42,12 @@ public class ViewTasksTaskAssignedToMeTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Home"),
-			selenium.getText("//nav/ul/li[1]/a/span"));
-		selenium.clickAt("//div[2]/div[1]/ul/li[5]/a",
+		selenium.clickAt("//nav/ul/li[contains(.,'Tasks')]/a/span",
 			RuntimeVariables.replace("Tasks"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Tasks"),
-			selenium.getText("//h1/span[2]"));
+			selenium.getText("//span[@class='portlet-title-default']"));
 		assertEquals(RuntimeVariables.replace("Assigned to Me"),
 			selenium.getText("link=Assigned to Me"));
 		selenium.clickAt("link=Assigned to Me",
@@ -67,7 +66,8 @@ public class ViewTasksTaskAssignedToMeTest extends BaseTestCase {
 
 			try {
 				if (RuntimeVariables.replace("Task Description")
-										.equals(selenium.getText("//h1/span"))) {
+										.equals(selenium.getText(
+								"//h1[@class='header-title']"))) {
 					break;
 				}
 			}
@@ -78,12 +78,12 @@ public class ViewTasksTaskAssignedToMeTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Task Description"),
-			selenium.getText("//h1/span"));
+			selenium.getText("//h1[@class='header-title']"));
 		assertEquals(RuntimeVariables.replace("Assigned to Joe Bloggs"),
-			selenium.getText("//div[2]/div[2]/div[1]"));
+			selenium.getText("//div[@class='task-data assignee']"));
 		assertEquals(RuntimeVariables.replace("Open"),
-			selenium.getText("//td[2]/div"));
+			selenium.getText("//div[@class='task-data status']"));
 		assertEquals(RuntimeVariables.replace("Normal"),
-			selenium.getText("//tr[2]/td[2]/div"));
+			selenium.getText("//div[@class='task-data normal']"));
 	}
 }

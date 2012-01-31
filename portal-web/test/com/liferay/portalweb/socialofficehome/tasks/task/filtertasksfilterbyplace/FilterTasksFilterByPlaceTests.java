@@ -31,6 +31,7 @@ public class FilterTasksFilterByPlaceTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddTasksTaskAssignedToMeTagTest.class);
 		testSuite.addTestSuite(FilterTasksFilterByPlaceTest.class);
 		testSuite.addTestSuite(TearDownTasksTaskTest.class);
+		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;
 	}

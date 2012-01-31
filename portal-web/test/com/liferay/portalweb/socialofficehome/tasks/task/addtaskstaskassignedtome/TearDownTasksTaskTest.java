@@ -27,7 +27,7 @@ public class TearDownTasksTaskTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
-				selenium.open("/user/joebloggs/home/");
+				selenium.open("/user/joebloggs/home1/");
 				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
@@ -37,7 +37,7 @@ public class TearDownTasksTaskTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div/div/div/div[1]/ul/li[5]/a")) {
+									"//nav/ul/li[contains(.,'Tasks')]/a/span")) {
 							break;
 						}
 					}
@@ -47,13 +47,12 @@ public class TearDownTasksTaskTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.clickAt("//div/div/div/div[1]/ul/li[5]/a",
+				selenium.clickAt("//nav/ul/li[contains(.,'Tasks')]/a/span",
 					RuntimeVariables.replace("Tasks"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Tasks"),
-					selenium.getText(
-						"//div[2]/div/div/div/section/header/h1/span[2]"));
+					selenium.getText("//span[@class='portlet-title-default']"));
 				selenium.clickAt("link=I Have Created",
 					RuntimeVariables.replace("I Have Created"));
 				selenium.waitForPageToLoad("30000");

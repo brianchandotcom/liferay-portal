@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewTasksTaskAssignedToMeMultipleTest extends BaseTestCase {
 	public void testViewTasksTaskAssignedToMeMultiple()
 		throws Exception {
-		selenium.open("/user/joebloggs/home/");
+		selenium.open("/user/joebloggs/home1/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -32,7 +32,8 @@ public class ViewTasksTaskAssignedToMeMultipleTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//nav/ul/li[1]/a/span")) {
+				if (selenium.isVisible(
+							"//nav/ul/li[contains(.,'Tasks')]/a/span")) {
 					break;
 				}
 			}
@@ -42,25 +43,174 @@ public class ViewTasksTaskAssignedToMeMultipleTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Home"),
-			selenium.getText("//nav/ul/li[1]/a/span"));
-		selenium.clickAt("//div[2]/div[1]/ul/li[5]/a",
+		selenium.clickAt("//nav/ul/li[contains(.,'Tasks')]/a/span",
 			RuntimeVariables.replace("Tasks"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Tasks"),
-			selenium.getText("//h1/span[2]"));
+			selenium.getText("//span[@class='portlet-title-default']"));
 		assertEquals(RuntimeVariables.replace("Assigned to Me"),
 			selenium.getText("link=Assigned to Me"));
 		selenium.clickAt("link=Assigned to Me",
 			RuntimeVariables.replace("Assigned to Me"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Task Description"),
-			selenium.getText("//td[1]/div[1]/a"));
+		assertEquals(RuntimeVariables.replace("Task1 Description"),
+			selenium.getText("link=Task1 Description"));
+		selenium.clickAt("link=Task1 Description",
+			RuntimeVariables.replace("Task1 Description"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Task1 Description")
+										.equals(selenium.getText(
+								"//h1[@class='header-title']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Task1 Description"),
+			selenium.getText("//h1[@class='header-title']"));
+		assertEquals(RuntimeVariables.replace("Assigned to Joe Bloggs"),
+			selenium.getText("//div[@class='task-data assignee']"));
+		assertEquals(RuntimeVariables.replace("Open"),
+			selenium.getText("//div[@class='task-data status']"));
+		assertEquals(RuntimeVariables.replace("Normal"),
+			selenium.getText("//div[@class='task-data normal']"));
+		selenium.open("/user/joebloggs/home1/");
+		loadRequiredJavaScriptModules();
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//nav/ul/li[contains(.,'Tasks')]/a/span")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.clickAt("//nav/ul/li[contains(.,'Tasks')]/a/span",
+			RuntimeVariables.replace("Tasks"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Tasks"),
+			selenium.getText("//span[@class='portlet-title-default']"));
+		assertEquals(RuntimeVariables.replace("Assigned to Me"),
+			selenium.getText("link=Assigned to Me"));
+		selenium.clickAt("link=Assigned to Me",
+			RuntimeVariables.replace("Assigned to Me"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Task2 Description"),
-			selenium.getText("//tr[4]/td[1]/div[1]/a"));
+			selenium.getText("link=Task2 Description"));
+		selenium.clickAt("link=Task2 Description",
+			RuntimeVariables.replace("Task2 Description"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Task2 Description")
+										.equals(selenium.getText(
+								"//h1[@class='header-title']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Task2 Description"),
+			selenium.getText("//h1[@class='header-title']"));
+		assertEquals(RuntimeVariables.replace("Assigned to Joe Bloggs"),
+			selenium.getText("//div[@class='task-data assignee']"));
+		assertEquals(RuntimeVariables.replace("Open"),
+			selenium.getText("//div[@class='task-data status']"));
+		assertEquals(RuntimeVariables.replace("Normal"),
+			selenium.getText("//div[@class='task-data normal']"));
+		selenium.open("/user/joebloggs/home1/");
+		loadRequiredJavaScriptModules();
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//nav/ul/li[contains(.,'Tasks')]/a/span")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.clickAt("//nav/ul/li[contains(.,'Tasks')]/a/span",
+			RuntimeVariables.replace("Tasks"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Tasks"),
+			selenium.getText("//span[@class='portlet-title-default']"));
+		assertEquals(RuntimeVariables.replace("Assigned to Me"),
+			selenium.getText("link=Assigned to Me"));
+		selenium.clickAt("link=Assigned to Me",
+			RuntimeVariables.replace("Assigned to Me"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Task3 Description"),
-			selenium.getText("//tr[5]/td[1]/div[1]/a"));
+			selenium.getText("link=Task3 Description"));
+		selenium.clickAt("link=Task3 Description",
+			RuntimeVariables.replace("Task3 Description"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Task3 Description")
+										.equals(selenium.getText(
+								"//h1[@class='header-title']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Task3 Description"),
+			selenium.getText("//h1[@class='header-title']"));
+		assertEquals(RuntimeVariables.replace("Assigned to Joe Bloggs"),
+			selenium.getText("//div[@class='task-data assignee']"));
+		assertEquals(RuntimeVariables.replace("Open"),
+			selenium.getText("//div[@class='task-data status']"));
+		assertEquals(RuntimeVariables.replace("Normal"),
+			selenium.getText("//div[@class='task-data normal']"));
 	}
 }

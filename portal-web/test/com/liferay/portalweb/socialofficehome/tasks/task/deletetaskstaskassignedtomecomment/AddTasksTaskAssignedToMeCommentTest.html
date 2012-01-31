@@ -10,27 +10,22 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/user/joebloggs/home/</td>
+	<td>/user/joebloggs/home1/</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//nav/ul/li[1]/a/span</td>
-	<td>Home</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//nav/ul/li[1]/a/span</td>
-	<td>Home</td>
+	<td>//nav/ul/li[contains(.,'Tasks')]/a/span</td>
+	<td>Tasks</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/div[1]/ul/li[5]/a</td>
+	<td>//nav/ul/li[contains(.,'Tasks')]/a/span</td>
 	<td>Tasks</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//h1/span[2]</td>
+	<td>//span[@class='portlet-title-default']</td>
 	<td>Tasks</td>
 </tr>
 <tr>
@@ -55,43 +50,53 @@
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//h1/span</td>
+	<td>//h1[@class='header-title']</td>
 	<td>Task Description</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//h1/span</td>
+	<td>//h1[@class='header-title']</td>
 	<td>Task Description</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[2]/div[2]/div[1]</td>
+	<td>//div[@class='task-data assignee']</td>
 	<td>Assigned to Joe Bloggs</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a/span</td>
+	<td>//a/span[contains(.,'Add Comment')]</td>
 	<td>Add Comment</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//a/span</td>
+	<td>//a/span[contains(.,'Add Comment')]</td>
 	<td>Add Comment</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//textarea</td>
+	<td>//textarea[@class='comment-form']</td>
 	<td>Comments</td>
 </tr>
 <tr>
 	<td>typeKeys</td>
-	<td>//textarea</td>
+	<td>//textarea[@class='comment-form']</td>
 	<td>Task Comment</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>clickAt</td>
 	<td>//input[@value='Post']</td>
 	<td>Post</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='comment-body']/span</td>
+	<td>Task Comment</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='comment-body']/span</td>
+	<td>Task Comment</td>
 </tr>
 
 </tbody></table>

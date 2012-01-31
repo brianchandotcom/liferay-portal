@@ -10,27 +10,22 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/user/joebloggs/home/</td>
+	<td>/user/joebloggs/home1/</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//nav/ul/li[1]/a/span</td>
-	<td>Home</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//nav/ul/li[1]/a/span</td>
-	<td>Home</td>
+	<td>//nav/ul/li[contains(.,'Tasks')]/a/span</td>
+	<td>Tasks</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/div[1]/ul/li[5]/a</td>
+	<td>//nav/ul/li[contains(.,'Tasks')]/a/span</td>
 	<td>Tasks</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//h1/span[2]</td>
+	<td>//span[@class='portlet-title-default']</td>
 	<td>Tasks</td>
 </tr>
 <tr>
@@ -50,37 +45,57 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//h1/span</td>
+	<td>//h1[@class='header-title']</td>
 	<td>Add Task</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//h1/span</td>
+	<td>//h1[@class='header-title']</td>
 	<td>Add Task</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//td[2]/input</td>
+	<td>//input[@class='input-task-description lfr-input-text']</td>
 	<td>Description</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//td[2]/input</td>
+	<td>//input[@class='input-task-description lfr-input-text']</td>
 	<td>Task Description</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>//select</td>
+	<td>//select[@name='_1_WAR_tasksportlet_assigneeUserId']</td>
 	<td>label=Joe Bloggs</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>//tr[4]/td[2]/select</td>
+	<td>//select[@name='_1_WAR_tasksportlet_priority']</td>
 	<td>label=Normal</td>
 </tr>
 <tr>
+	<td>store</td>
+	<td>eval(selenium.isChecked('_1_WAR_tasksportlet_neverDueCheckbox'))</td>
+	<td>neverDueChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${neverDueChecked}</td>
+	<td>NeverDueChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@id='_1_WAR_tasksportlet_neverDueCheckbox']</td>
+	<td>Enable propagation of changes from the site template.</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>NeverDueChecked</td>
+	<td></td>
+</tr>
+<tr>
 	<td>assertChecked</td>
-	<td>//span/input[2]</td>
+	<td>//input[@id='_1_WAR_tasksportlet_neverDueCheckbox']</td>
 	<td>Never Due</td>
 </tr>
 <tr>
@@ -90,17 +105,17 @@
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//h1/span</td>
+	<td>//h1[@class='header-title']</td>
 	<td>Task Description</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//h1/span</td>
+	<td>//h1[@class='header-title']</td>
 	<td>Task Description</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[2]/div[2]/div[1]</td>
+	<td>//div[@class='task-data assignee']</td>
 	<td>Assigned to Joe Bloggs</td>
 </tr>
 

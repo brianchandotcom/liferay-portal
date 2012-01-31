@@ -22,79 +22,101 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewDeleteTasksTaskAssignedToMeTest extends BaseTestCase {
 	public void testViewDeleteTasksTaskAssignedToMe() throws Exception {
-		selenium.open("/user/joebloggs/home/");
-		loadRequiredJavaScriptModules();
+		int label = 1;
 
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
+		while (label >= 1) {
+			switch (label) {
+			case 1:
+				selenium.open("/user/joebloggs/home1/");
+				loadRequiredJavaScriptModules();
 
-			try {
-				if (selenium.isVisible("//nav/ul/li[1]/a/span")) {
-					break;
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//nav/ul/li[contains(.,'Tasks')]/a/span")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
 				}
-			}
-			catch (Exception e) {
-			}
 
-			Thread.sleep(1000);
-		}
+				selenium.clickAt("//nav/ul/li[contains(.,'Tasks')]/a/span",
+					RuntimeVariables.replace("Tasks"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+				assertEquals(RuntimeVariables.replace("Tasks"),
+					selenium.getText("//span[@class='portlet-title-default']"));
+				assertEquals(RuntimeVariables.replace("Assigned to Me"),
+					selenium.getText("link=Assigned to Me"));
+				selenium.clickAt("link=Assigned to Me",
+					RuntimeVariables.replace("Assigned to Me"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
 
-		assertEquals(RuntimeVariables.replace("Home"),
-			selenium.getText("//nav/ul/li[1]/a/span"));
-		selenium.clickAt("//div[2]/div[1]/ul/li[5]/a",
-			RuntimeVariables.replace("Tasks"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Tasks"),
-			selenium.getText("//h1/span[2]"));
-		assertEquals(RuntimeVariables.replace("Assigned to Me"),
-			selenium.getText("link=Assigned to Me"));
-		selenium.clickAt("link=Assigned to Me",
-			RuntimeVariables.replace("Assigned to Me"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
 
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
+					try {
+						if (selenium.isVisible(
+									"//div[@class='portlet-msg-info']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
 
-			try {
-				if (selenium.isVisible("//div[@class='portlet-msg-info']")) {
-					break;
+					Thread.sleep(1000);
 				}
-			}
-			catch (Exception e) {
-			}
 
-			Thread.sleep(1000);
-		}
+				assertEquals(RuntimeVariables.replace("No tasks were found."),
+					selenium.getText("//div[@class='portlet-msg-info']"));
 
-		assertEquals(RuntimeVariables.replace("No tasks were found."),
-			selenium.getText("//div[@class='portlet-msg-info']"));
-		assertFalse(selenium.isChecked("//td[1]/input"));
-		selenium.clickAt("//td[1]/input",
-			RuntimeVariables.replace("Show Completed Tasks"));
+				boolean showCompleted1Checked = selenium.isChecked(
+						"//td[1]/input");
 
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
+				if (showCompleted1Checked) {
+					label = 2;
 
-			try {
-				if (selenium.isVisible("//div[@class='portlet-msg-info']")) {
-					break;
+					continue;
 				}
-			}
-			catch (Exception e) {
-			}
 
-			Thread.sleep(1000);
+				selenium.clickAt("//td[1]/input",
+					RuntimeVariables.replace("Check Show Completed Tasks"));
+
+			case 2:
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='portlet-msg-info']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("No tasks were found."),
+					selenium.getText("//div[@class='portlet-msg-info']"));
+
+			case 100:
+				label = -1;
+			}
 		}
-
-		assertEquals(RuntimeVariables.replace("No tasks were found."),
-			selenium.getText("//div[@class='portlet-msg-info']"));
 	}
 }

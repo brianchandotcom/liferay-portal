@@ -23,120 +23,129 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewResolveTasksTaskAssignedToMeTest extends BaseTestCase {
 	public void testViewResolveTasksTaskAssignedToMe()
 		throws Exception {
-		selenium.open("/user/joebloggs/home/");
-		loadRequiredJavaScriptModules();
+		int label = 1;
 
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
+		while (label >= 1) {
+			switch (label) {
+			case 1:
+				selenium.open("/user/joebloggs/home1/");
+				loadRequiredJavaScriptModules();
 
-			try {
-				if (selenium.isVisible("//nav/ul/li[1]/a/span")) {
-					break;
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//nav/ul/li[contains(.,'Home')]/a/span")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
 				}
-			}
-			catch (Exception e) {
-			}
 
-			Thread.sleep(1000);
-		}
+				assertEquals(RuntimeVariables.replace("Home"),
+					selenium.getText("//nav/ul/li[contains(.,'Home')]/a/span"));
+				selenium.clickAt("//nav/ul/li[contains(.,'Tasks')]/a/span",
+					RuntimeVariables.replace("Tasks"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+				assertEquals(RuntimeVariables.replace("Tasks"),
+					selenium.getText("//span[@class='portlet-title-default']"));
+				assertEquals(RuntimeVariables.replace("Assigned to Me"),
+					selenium.getText("link=Assigned to Me"));
+				selenium.clickAt("link=Assigned to Me",
+					RuntimeVariables.replace("Assigned to Me"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
 
-		assertEquals(RuntimeVariables.replace("Home"),
-			selenium.getText("//nav/ul/li[1]/a/span"));
-		selenium.clickAt("//div[2]/div[1]/ul/li[5]/a",
-			RuntimeVariables.replace("Tasks"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Tasks"),
-			selenium.getText("//h1/span[2]"));
-		assertEquals(RuntimeVariables.replace("Assigned to Me"),
-			selenium.getText("link=Assigned to Me"));
-		selenium.clickAt("link=Assigned to Me",
-			RuntimeVariables.replace("Assigned to Me"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
 
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
+					try {
+						if (selenium.isVisible("//td[1]/input")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
 
-			try {
-				if (selenium.isVisible("//td[1]/input")) {
-					break;
+					Thread.sleep(1000);
 				}
-			}
-			catch (Exception e) {
-			}
 
-			Thread.sleep(1000);
-		}
+				boolean showCompleted1Checked = selenium.isChecked(
+						"//td[1]/input");
 
-		assertFalse(selenium.isChecked("//td[1]/input"));
-		selenium.clickAt("//td[1]/input",
-			RuntimeVariables.replace("Show Completed Tasks"));
+				if (showCompleted1Checked) {
+					label = 2;
 
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//td[1]/div[1]/a")) {
-					break;
+					continue;
 				}
-			}
-			catch (Exception e) {
-			}
 
-			Thread.sleep(1000);
-		}
+				selenium.clickAt("//td[1]/input",
+					RuntimeVariables.replace("Check Show Completed Tasks"));
 
-		assertEquals(RuntimeVariables.replace("Task Description"),
-			selenium.getText("//td[1]/div[1]/a"));
-		selenium.clickAt("//td[1]/div[1]/a",
-			RuntimeVariables.replace("Task Description"));
+			case 2:
 
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
 
-			try {
-				if (RuntimeVariables.replace("Task Description")
-										.equals(selenium.getText("//h1/span"))) {
-					break;
+					try {
+						if (selenium.isVisible("link=Task Description")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
 				}
-			}
-			catch (Exception e) {
-			}
 
-			Thread.sleep(1000);
-		}
+				assertEquals(RuntimeVariables.replace("Task Description"),
+					selenium.getText("link=Task Description"));
+				selenium.clickAt("link=Task Description",
+					RuntimeVariables.replace("Task Description"));
 
-		assertEquals(RuntimeVariables.replace("Task Description"),
-			selenium.getText("//h1/span"));
-		assertEquals(RuntimeVariables.replace("Assigned to Joe Bloggs"),
-			selenium.getText("//div[2]/div[2]/div[1]"));
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
 
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
+					try {
+						if (RuntimeVariables.replace("Task Description")
+												.equals(selenium.getText(
+										"//h1[@class='header-title']"))) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
 
-			try {
-				if (RuntimeVariables.replace("Resolved")
-										.equals(selenium.getText("//td[2]/div"))) {
-					break;
+					Thread.sleep(1000);
 				}
-			}
-			catch (Exception e) {
-			}
 
-			Thread.sleep(1000);
+				assertEquals(RuntimeVariables.replace("Task Description"),
+					selenium.getText("//h1[@class='header-title']"));
+				assertEquals(RuntimeVariables.replace("Assigned to Joe Bloggs"),
+					selenium.getText("//div[@class='task-data assignee']"));
+				assertEquals(RuntimeVariables.replace("Resolved"),
+					selenium.getText("//div[@class='task-data status']"));
+				assertEquals(RuntimeVariables.replace("Normal"),
+					selenium.getText("//div[@class='task-data normal']"));
+				assertEquals("Reopen",
+					selenium.getValue("//input[@value='Reopen']"));
+
+			case 100:
+				label = -1;
+			}
 		}
-
-		assertEquals("Reopen", selenium.getValue("//input[@value='Reopen']"));
 	}
 }

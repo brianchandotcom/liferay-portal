@@ -1763,7 +1763,7 @@ public class SourceFormatter {
 				!trimmedLine.startsWith("<!")) {
 
 				if (!trimmedLine.contains(StringPool.SPACE) &&
-					!trimmedLine.endsWith(StringPool.GREATER_THAN)) {
+					!trimmedLine.contains(StringPool.GREATER_THAN)) {
 
 					readAttributes = true;
 				}

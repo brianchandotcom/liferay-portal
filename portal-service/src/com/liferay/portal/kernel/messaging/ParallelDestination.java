@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.messaging;
 
+import com.liferay.portal.kernel.cache.Lifecycle;
+import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -112,6 +114,7 @@ public class ParallelDestination extends BaseAsyncDestination {
 						CompanyThreadLocal.setCompanyId(companyId);
 						PrincipalThreadLocal.setName(principalName);
 						PrincipalThreadLocal.setPassword(principalPassword);
+						ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
 
 						CentralizedThreadLocal.clearShortLivedThreadLocals();
 					}

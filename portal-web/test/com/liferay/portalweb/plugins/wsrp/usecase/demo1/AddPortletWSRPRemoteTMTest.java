@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class RemovePortletDPTest extends BaseTestCase {
-	public void testRemovePortletDP() throws Exception {
+public class AddPortletWSRPRemoteTMTest extends BaseTestCase {
+	public void testAddPortletWSRPRemoteTM() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -31,7 +31,7 @@ public class RemovePortletDPTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=WSRP Test Page")) {
+				if (selenium.isVisible("link=WSRP Remote Test Misc Test Page")) {
 					break;
 				}
 			}
@@ -41,13 +41,14 @@ public class RemovePortletDPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=WSRP Test Page",
-			RuntimeVariables.replace("WSRP Test Page"));
+		selenium.clickAt("link=WSRP Remote Test Misc Test Page",
+			RuntimeVariables.replace("WSRP Remote Test Misc Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.click("//img[@alt='Remove']");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to remove this component[\\s\\S]$"));
+		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
+				"More"));
+		selenium.clickAt("//a[@id='_145_addApplication']",
+			RuntimeVariables.replace("More"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -55,7 +56,8 @@ public class RemovePortletDPTest extends BaseTestCase {
 			}
 
 			try {
-				if (!selenium.isElementPresent("//section")) {
+				if (selenium.isElementPresent(
+							"//div[@title='Remote Test Misc']/p/a")) {
 					break;
 				}
 			}
@@ -65,6 +67,25 @@ public class RemovePortletDPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertFalse(selenium.isElementPresent("//section"));
+		selenium.clickAt("//div[@title='Remote Test Misc']/p/a",
+			RuntimeVariables.replace("Add"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//section")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertTrue(selenium.isVisible("//section"));
 	}
 }

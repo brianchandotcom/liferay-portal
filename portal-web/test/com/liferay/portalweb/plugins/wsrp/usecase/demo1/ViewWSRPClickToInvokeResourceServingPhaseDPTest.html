@@ -15,27 +15,32 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>link=WSRP Test Page</td>
-	<td>WSRP Test Page</td>
+	<td>link=Test Misc Test Page</td>
+	<td>Test Misc Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=WSRP Test Page</td>
-	<td>WSRP Test Page</td>
+	<td>link=Test Misc Test Page</td>
+	<td>Test Misc Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//div[@class='portlet-body']/p[4]/a)[2]</td>
-	<td>Click to invoke Resource Serving Phase</td>
+	<td>//div[@class='portlet-body']/h3[4]</td>
+	<td>Portlet Response (ResourceResponse)</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-body']/p[4]/a[2]</td>
+	<td>Download File</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>xPath=(//div[@class='portlet-body']/p[4]/a)[2]</td>
-	<td>Click to invoke Resource Serving Phase</td>
+	<td>//div[@class='portlet-body']/p[4]/a[2]</td>
+	<td>Download File</td>
 </tr>
 <tr>
 	<td>downloadFile</td>
-	<td>vcard1DP.vcf</td>
+	<td>logo.png</td>
 	<td></td>
 </tr>
 <tr>
@@ -81,12 +86,7 @@
 <tr>
 	<td>uploadFile</td>
 	<td>//input[@id='_20_file']</td>
-	<td>vcard1DP.vcf</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>//input[@id='_20_title']</td>
-	<td>Demo Portlet</td>
+	<td>logo.png</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -106,27 +106,27 @@
 <tr>
 	<td>assertText</td>
 	<td>//a[@class='document-link']/span[2]</td>
-	<td>Demo Portlet</td>
+	<td>logo.png</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//a[@class='document-link']/span[2]</td>
-	<td>Demo Portlet</td>
+	<td>logo.png</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//h2[@class='document-title']</td>
-	<td>Demo Portlet</td>
+	<td>logo.png</td>
 </tr>
 <tr>
 	<td>waitForText</td>
 	<td>//span[@class='download-document']/span/a/span</td>
-	<td>Download (0.0k)</td>
+	<td>Download (2.0k)</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//span[@class='download-document']/span/a/span</td>
-	<td>Download (0.0k)</td>
+	<td>Download (2.0k)</td>
 </tr>
 </tbody></table>
 </body>

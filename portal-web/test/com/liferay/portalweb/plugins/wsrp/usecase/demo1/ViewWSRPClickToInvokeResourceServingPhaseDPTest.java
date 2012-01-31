@@ -33,7 +33,7 @@ public class ViewWSRPClickToInvokeResourceServingPhaseDPTest
 			}
 
 			try {
-				if (selenium.isVisible("link=WSRP Test Page")) {
+				if (selenium.isVisible("link=Test Misc Test Page")) {
 					break;
 				}
 			}
@@ -43,16 +43,18 @@ public class ViewWSRPClickToInvokeResourceServingPhaseDPTest
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=WSRP Test Page",
-			RuntimeVariables.replace("WSRP Test Page"));
+		selenium.clickAt("link=Test Misc Test Page",
+			RuntimeVariables.replace("Test Misc Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
-				"Click to invoke Resource Serving Phase"),
-			selenium.getText("xPath=(//div[@class='portlet-body']/p[4]/a)[2]"));
-		selenium.clickAt("xPath=(//div[@class='portlet-body']/p[4]/a)[2]",
-			RuntimeVariables.replace("Click to invoke Resource Serving Phase"));
-		selenium.downloadFile("vcard1DP.vcf");
+				"Portlet Response (ResourceResponse)"),
+			selenium.getText("//div[@class='portlet-body']/h3[4]"));
+		assertEquals(RuntimeVariables.replace("Download File"),
+			selenium.getText("//div[@class='portlet-body']/p[4]/a[2]"));
+		selenium.clickAt("//div[@class='portlet-body']/p[4]/a[2]",
+			RuntimeVariables.replace("Download File"));
+		selenium.downloadFile("logo.png");
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -106,9 +108,7 @@ public class ViewWSRPClickToInvokeResourceServingPhaseDPTest
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.uploadFile("//input[@id='_20_file']",
-			RuntimeVariables.replace("vcard1DP.vcf"));
-		selenium.type("//input[@id='_20_title']",
-			RuntimeVariables.replace("Demo Portlet"));
+			RuntimeVariables.replace("logo.png"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
@@ -136,13 +136,13 @@ public class ViewWSRPClickToInvokeResourceServingPhaseDPTest
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Demo Portlet"),
+		assertEquals(RuntimeVariables.replace("logo.png"),
 			selenium.getText("//a[@class='document-link']/span[2]"));
 		selenium.clickAt("//a[@class='document-link']/span[2]",
-			RuntimeVariables.replace("Demo Portlet"));
+			RuntimeVariables.replace("logo.png"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Demo Portlet"),
+		assertEquals(RuntimeVariables.replace("logo.png"),
 			selenium.getText("//h2[@class='document-title']"));
 
 		for (int second = 0;; second++) {
@@ -151,7 +151,7 @@ public class ViewWSRPClickToInvokeResourceServingPhaseDPTest
 			}
 
 			try {
-				if (RuntimeVariables.replace("Download (0.0k)")
+				if (RuntimeVariables.replace("Download (2.0k)")
 										.equals(selenium.getText(
 								"//span[@class='download-document']/span/a/span"))) {
 					break;
@@ -163,7 +163,7 @@ public class ViewWSRPClickToInvokeResourceServingPhaseDPTest
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Download (0.0k)"),
+		assertEquals(RuntimeVariables.replace("Download (2.0k)"),
 			selenium.getText("//span[@class='download-document']/span/a/span"));
 	}
 }

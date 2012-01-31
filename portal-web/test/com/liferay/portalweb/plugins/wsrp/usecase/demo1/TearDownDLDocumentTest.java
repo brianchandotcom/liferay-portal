@@ -89,6 +89,7 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 					RuntimeVariables.replace("All Entries Check Box"));
 				assertTrue(selenium.isChecked(
 						"//input[@id='_20_allRowIdsCheckbox']"));
+				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
 						"//span[@title='Actions']/ul/li/strong/a/span"));

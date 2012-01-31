@@ -20,10 +20,12 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class RemovePortletWSRPRemoteDPTest extends BaseTestCase {
-	public void testRemovePortletWSRPRemoteDP() throws Exception {
+public class AddPageWSRPRemoteTMTest extends BaseTestCase {
+	public void testAddPageWSRPRemoteTM() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		selenium.clickAt("//nav[@id='navigation']",
+			RuntimeVariables.replace("Navigation"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -31,7 +33,7 @@ public class RemovePortletWSRPRemoteDPTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=WSRP Test Page")) {
+				if (selenium.isElementPresent("//a[@id='addPage']")) {
 					break;
 				}
 			}
@@ -41,30 +43,49 @@ public class RemovePortletWSRPRemoteDPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=WSRP Test Page",
-			RuntimeVariables.replace("WSRP Test Page"));
+		selenium.clickAt("//a[@id='addPage']",
+			RuntimeVariables.replace("Add Page"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//input[@type='text']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.type("//input[@type='text']",
+			RuntimeVariables.replace("WSRP Remote Test Misc Test Page"));
+		selenium.clickAt("//button[@id='save']",
+			RuntimeVariables.replace("Save"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=WSRP Remote Test Misc Test Page")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.clickAt("link=WSRP Remote Test Misc Test Page",
+			RuntimeVariables.replace("WSRP Remote Test Misc Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.click("//img[@alt='Remove']");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to remove this component[\\s\\S]$"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (!selenium.isElementPresent("//div[2]/div/section")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertFalse(selenium.isElementPresent("//div[2]/div/section"));
 	}
 }

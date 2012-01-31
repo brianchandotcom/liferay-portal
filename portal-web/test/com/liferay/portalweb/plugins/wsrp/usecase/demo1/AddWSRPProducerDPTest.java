@@ -58,7 +58,7 @@ public class AddWSRPProducerDPTest extends BaseTestCase {
 		selenium.type("//input[@id='_1_WAR_wsrpportlet_name']",
 			RuntimeVariables.replace("Producer"));
 		selenium.addSelection("//select[@id='_1_WAR_wsrpportlet_availablePortletIds']",
-			RuntimeVariables.replace("Demo Portlet"));
+			RuntimeVariables.replace("Test Misc"));
 		selenium.clickAt("//button[@title='Move selected items from Available to Current.']",
 			RuntimeVariables.replace("Move Left Arrow"));
 
@@ -68,7 +68,7 @@ public class AddWSRPProducerDPTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("Demo Portlet")
+				if (RuntimeVariables.replace("Test Misc")
 										.equals(selenium.getText(
 								"//select[@id='_1_WAR_wsrpportlet_currentPortletIds']"))) {
 					break;
@@ -80,7 +80,7 @@ public class AddWSRPProducerDPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Demo Portlet"),
+		assertEquals(RuntimeVariables.replace("Test Misc"),
 			selenium.getText(
 				"//select[@id='_1_WAR_wsrpportlet_currentPortletIds']"));
 		selenium.clickAt("//input[@value='Save']",

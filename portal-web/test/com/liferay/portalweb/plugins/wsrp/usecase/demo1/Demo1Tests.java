@@ -25,22 +25,21 @@ import junit.framework.TestSuite;
 public class Demo1Tests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AddPageWSRPTest.class);
-		testSuite.addTestSuite(AddPortletDPTest.class);
+		testSuite.addTestSuite(AddPageTMTest.class);
+		testSuite.addTestSuite(AddPortletTMTest.class);
 		testSuite.addTestSuite(AddPageDLTest.class);
 		testSuite.addTestSuite(AddPortletDLTest.class);
 		testSuite.addTestSuite(AddWSRPProducerDPTest.class);
 		testSuite.addTestSuite(CopyWSRPProducerDPURLTest.class);
 		testSuite.addTestSuite(AddWSRPConsumerDPTest.class);
 		testSuite.addTestSuite(AddWSRPConsumerRemoteDPTest.class);
-		testSuite.addTestSuite(AddPortletWSRPRemoteDPTest.class);
+		testSuite.addTestSuite(AddPageWSRPRemoteTMTest.class);
+		testSuite.addTestSuite(AddPortletWSRPRemoteTMTest.class);
 		testSuite.addTestSuite(ViewWSRPClickToInvokeResourceServingPhaseDPTest.class);
 		testSuite.addTestSuite(ViewWSRPClickToInvokeResouceServingPhaseRDPTest.class);
 		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownWSRPConsumerDPTest.class);
 		testSuite.addTestSuite(TearDownWSRPProducerDPTest.class);
-		testSuite.addTestSuite(RemovePortletWSRPRemoteDPTest.class);
-		testSuite.addTestSuite(RemovePortletDPTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

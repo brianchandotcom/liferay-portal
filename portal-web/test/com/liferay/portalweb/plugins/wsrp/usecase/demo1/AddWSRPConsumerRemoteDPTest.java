@@ -87,9 +87,9 @@ public class AddWSRPConsumerRemoteDPTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_1_WAR_wsrpportlet_name']",
-			RuntimeVariables.replace("Remote Demo Portlet"));
+			RuntimeVariables.replace("Remote Test Misc"));
 		selenium.select("//select[@name='_1_WAR_wsrpportlet_portletHandle']",
-			RuntimeVariables.replace("Demo Portlet"));
+			RuntimeVariables.replace("Test Misc"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -97,9 +97,9 @@ public class AddWSRPConsumerRemoteDPTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Remote Demo Portlet"),
+		assertEquals(RuntimeVariables.replace("Remote Test Misc"),
 			selenium.getText("//tr[3]/td"));
-		assertEquals(RuntimeVariables.replace("Demo Portlet"),
+		assertEquals(RuntimeVariables.replace("Test Misc"),
 			selenium.getText("//tr[3]/td[2]"));
 	}
 }

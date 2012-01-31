@@ -4,7 +4,9 @@
 	<import file="../../build-test-db-sharding.xml" />
 
 	<target name="test-${test.ant.script.command}-tomcat-mysql-firefox">
-		<antcall target="prepare-mysql" />
+		<antcall target="prepare-mysql">
+			${test.ant.script.file.properties}
+		</antcall>
 
 		<antcall target="prepare-db-sharding" />
 
@@ -14,6 +16,7 @@
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="skip.rebuild-database" value="true" />

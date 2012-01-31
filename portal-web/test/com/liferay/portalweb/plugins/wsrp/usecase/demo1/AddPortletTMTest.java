@@ -20,12 +20,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddPageWSRPTest extends BaseTestCase {
-	public void testAddPageWSRP() throws Exception {
+public class AddPortletTMTest extends BaseTestCase {
+	public void testAddPortletTM() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-		selenium.clickAt("//nav[@id='navigation']",
-			RuntimeVariables.replace("Navigation"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -33,7 +31,7 @@ public class AddPageWSRPTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("//a[@id='addPage']")) {
+				if (selenium.isVisible("link=Test Misc Test Page")) {
 					break;
 				}
 			}
@@ -43,49 +41,50 @@ public class AddPageWSRPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//a[@id='addPage']",
-			RuntimeVariables.replace("Add Page"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@type='text']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.type("//input[@type='text']",
-			RuntimeVariables.replace("WSRP Test Page"));
-		selenium.clickAt("//button[@id='save']",
-			RuntimeVariables.replace("Save"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=WSRP Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("link=WSRP Test Page",
-			RuntimeVariables.replace("WSRP Test Page"));
+		selenium.clickAt("link=Test Misc Test Page",
+			RuntimeVariables.replace("Test Misc Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
+		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
+				"More"));
+		selenium.clickAt("//a[@id='_145_addApplication']",
+			RuntimeVariables.replace("More"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent("//div[@title='Test Misc']/p/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.clickAt("//div[@title='Test Misc']/p/a",
+			RuntimeVariables.replace("Add"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//section")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertTrue(selenium.isVisible("//section"));
 	}
 }

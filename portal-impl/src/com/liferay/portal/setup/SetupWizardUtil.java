@@ -461,6 +461,7 @@ public class SetupWizardUtil {
 		HttpSession session = request.getSession();
 
 		session.setAttribute(WebKeys.SETUP_WIZARD_PASSWORD_UPDATED, true);
+		session.setAttribute(WebKeys.USER_ID, user.getUserId());
 	}
 
 	private static void _updateCompany() throws Exception {

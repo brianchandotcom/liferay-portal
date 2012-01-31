@@ -68,6 +68,8 @@ public class ExportLayoutsAction extends PortletAction {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		File file = null;
+
 		try {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
@@ -160,7 +162,7 @@ public class ExportLayoutsAction extends PortletAction {
 				endDate = now;
 			}
 
-			File file = LayoutServiceUtil.exportLayoutsAsFile(
+			file = LayoutServiceUtil.exportLayoutsAsFile(
 				groupId, privateLayout, layoutIds,
 				actionRequest.getParameterMap(), startDate, endDate);
 
@@ -173,8 +175,6 @@ public class ExportLayoutsAction extends PortletAction {
 				request, response, fileName, new FileInputStream(file),
 				ContentTypes.APPLICATION_ZIP);
 
-			FileUtil.delete(file);
-
 			setForward(actionRequest, ActionConstants.COMMON_NULL);
 		}
 		catch (Exception e) {
@@ -186,6 +186,9 @@ public class ExportLayoutsAction extends PortletAction {
 				actionRequest, "pagesRedirect");
 
 			sendRedirect(actionRequest, actionResponse, pagesRedirect);
+		}
+		finally {
+			FileUtil.delete(file);
 		}
 	}
 

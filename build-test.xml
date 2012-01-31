@@ -558,7 +558,8 @@
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="db-sharding-wsrp" />
-			<param name="test.ant.script.plugin.portlets" value="wsrp-portlet" />
+			<param name="test.ant.script.plugin.portlets" value="test-misc-portlet,wsrp-portlet" />
+			<param name="test.ant.script.properties" value="mime.types.content.disposition.inline=pdf" />
 			<param name="test.ant.script.suite" value="PluginsWSRPTestSuite" />
 			<param name="test.ant.script.template" value="ant-script-db-sharding.xml" />
 		</antcall>
@@ -1331,7 +1332,8 @@
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="plugins-wsrp" />
-			<param name="test.ant.script.plugin.portlets" value="wsrp-portlet" />
+			<param name="test.ant.script.plugin.portlets" value="test-misc-portlet,wsrp-portlet" />
+			<param name="test.ant.script.properties" value="mime.types.content.disposition.inline=pdf" />
 			<param name="test.ant.script.suite" value="PluginsWSRPTestSuite" />
 		</antcall>
 
@@ -1786,6 +1788,7 @@
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="staging-community-web-content-display" />
+			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
 			<param name="test.ant.script.suite" value="StagingCommunityWebContentDisplayTestSuite" />
 		</antcall>
 

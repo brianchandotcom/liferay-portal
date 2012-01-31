@@ -12,10 +12,8 @@
  * details.
  */
 
-package com.liferay.portalweb.plugins.wsrp;
+package com.liferay.portalweb.stagingcommunity.webcontentdisplay.wcwebcontent.assertcannoteditwcwebcontentwcd;
 
-import com.liferay.portalweb.plugins.wsrp.helloworld.HelloWorldTestPlan;
-import com.liferay.portalweb.plugins.wsrp.usecase.UseCaseTestPlan;
 import com.liferay.portalweb.portal.BaseTestSuite;
 
 import junit.framework.Test;
@@ -24,15 +22,20 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class WSRPTestPlan extends BaseTestSuite {
-
+public class AssertCannotEditWCWebContentWCDTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(HelloWorldTestPlan.suite());
-		testSuite.addTest(UseCaseTestPlan.suite());
+		testSuite.addTestSuite(AddSiteTest.class);
+		testSuite.addTestSuite(AddSitePublicPageTest.class);
+		testSuite.addTestSuite(AddPageWCDTest.class);
+		testSuite.addTestSuite(AddPortletWCDTest.class);
+		testSuite.addTestSuite(AddWCWebContentWCDTest.class);
+		testSuite.addTestSuite(AssertEditWCWebContentWCDTest.class);
+		testSuite.addTestSuite(ActivateStagingTest.class);
+		testSuite.addTestSuite(AssertCannotEditWCWebContentWCDTest.class);
+		testSuite.addTestSuite(DeactivateStagingTest.class);
+		testSuite.addTestSuite(TearDownSiteTest.class);
 
 		return testSuite;
 	}
-
 }

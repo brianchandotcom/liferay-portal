@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portalweb.plugins.wsrp;
+package com.liferay.portalweb.stagingcommunity.webcontentdisplay.wcwebcontent;
 
-import com.liferay.portalweb.plugins.wsrp.helloworld.HelloWorldTestPlan;
-import com.liferay.portalweb.plugins.wsrp.usecase.UseCaseTestPlan;
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.stagingcommunity.webcontentdisplay.wcwebcontent.assertcannoteditwcwebcontentwcd.AssertCannotEditWCWebContentWCDTests;
+import com.liferay.portalweb.stagingcommunity.webcontentdisplay.wcwebcontent.asserteditwcwebcontentwcd.AssertEditWCWebContentWCDTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -24,13 +24,13 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class WSRPTestPlan extends BaseTestSuite {
+public class WCWebContentTestPlan extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(HelloWorldTestPlan.suite());
-		testSuite.addTest(UseCaseTestPlan.suite());
+		testSuite.addTest(AssertCannotEditWCWebContentWCDTests.suite());
+		testSuite.addTest(AssertEditWCWebContentWCDTests.suite());
 
 		return testSuite;
 	}

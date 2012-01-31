@@ -12,27 +12,20 @@
  * details.
  */
 
-package com.liferay.portalweb.plugins.wsrp;
+package com.liferay.portalweb.stagingcommunity.webcontentdisplay.usecase.demo1;
 
-import com.liferay.portalweb.plugins.wsrp.helloworld.HelloWorldTestPlan;
-import com.liferay.portalweb.plugins.wsrp.usecase.UseCaseTestPlan;
-import com.liferay.portalweb.portal.BaseTestSuite;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import com.liferay.portalweb.portal.BaseTestCase;
+import com.liferay.portalweb.portal.util.RuntimeVariables;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class WSRPTestPlan extends BaseTestSuite {
-
-	public static Test suite() {
-		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(HelloWorldTestPlan.suite());
-		testSuite.addTest(UseCaseTestPlan.suite());
-
-		return testSuite;
+public class ViewPublishToLiveNowWebContentSiteStagingTest extends BaseTestCase {
+	public void testViewPublishToLiveNowWebContentSiteStaging()
+		throws Exception {
+		selenium.open("/web/community-site-test/home");
+		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("This is a Web Content article"),
+			selenium.getText("//div[@class='journal-content-article']/p"));
 	}
-
 }

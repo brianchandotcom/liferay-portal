@@ -1000,6 +1000,10 @@ public class JournalArticleLocalServiceWrapper
 			articleId, version, content, serviceContext);
 	}
 
+	/**
+	* @deprecated {@link #updateArticleTranslation(long, String, double,
+	Locale, String, String, String, Map, ServiceContext)}
+	*/
 	public com.liferay.portlet.journal.model.JournalArticle updateArticleTranslation(
 		long groupId, java.lang.String articleId, double version,
 		java.util.Locale locale, java.lang.String title,
@@ -1009,6 +1013,19 @@ public class JournalArticleLocalServiceWrapper
 			com.liferay.portal.kernel.exception.SystemException {
 		return _journalArticleLocalService.updateArticleTranslation(groupId,
 			articleId, version, locale, title, description, content, images);
+	}
+
+	public com.liferay.portlet.journal.model.JournalArticle updateArticleTranslation(
+		long groupId, java.lang.String articleId, double version,
+		java.util.Locale locale, java.lang.String title,
+		java.lang.String description, java.lang.String content,
+		java.util.Map<java.lang.String, byte[]> images,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleLocalService.updateArticleTranslation(groupId,
+			articleId, version, locale, title, description, content, images,
+			serviceContext);
 	}
 
 	public void updateAsset(long userId,

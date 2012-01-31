@@ -35,6 +35,7 @@ import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -146,6 +147,16 @@ public class ServiceContextFactory {
 		String currentURL = PortalUtil.getCurrentURL(request);
 
 		serviceContext.setCurrentURL(currentURL);
+
+		// Form date
+
+		long formDateLong = ParamUtil.getLong(request, "formDate");
+
+		if (formDateLong > 0) {
+			Date formDate = new Date(formDateLong);
+
+			serviceContext.setFormDate(formDate);
+		}
 
 		// Permissions
 
@@ -309,6 +320,16 @@ public class ServiceContextFactory {
 		String currentURL = PortalUtil.getCurrentURL(portletRequest);
 
 		serviceContext.setCurrentURL(currentURL);
+
+		// Form date
+
+		long formDateLong = ParamUtil.getLong(portletRequest, "formDate");
+
+		if (formDateLong > 0) {
+			Date formDate = new Date(formDateLong);
+
+			serviceContext.setFormDate(formDate);
+		}
 
 		// Permissions
 

@@ -499,10 +499,25 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			getUserId(), groupId, articleId, version, content, serviceContext);
 	}
 
+	/**
+	 * @deprecated {@link #updateArticleTranslation(long, String, double,
+	 *             Locale, String, String, String, Map, ServiceContext)}
+	 */
 	public JournalArticle updateArticleTranslation(
 			long groupId, String articleId, double version, Locale locale,
 			String title, String description, String content,
 			Map<String, byte[]> images)
+		throws PortalException, SystemException {
+
+		return updateArticleTranslation(
+			groupId, articleId, version, locale, title, description, content,
+			images, null);
+	}
+
+	public JournalArticle updateArticleTranslation(
+			long groupId, String articleId, double version, Locale locale,
+			String title, String description, String content,
+			Map<String, byte[]> images, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		JournalArticlePermission.check(
@@ -511,7 +526,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 
 		return journalArticleLocalService.updateArticleTranslation(
 			groupId, articleId, version, locale, title, description, content,
-			images);
+			images, serviceContext);
 	}
 
 	public JournalArticle updateContent(

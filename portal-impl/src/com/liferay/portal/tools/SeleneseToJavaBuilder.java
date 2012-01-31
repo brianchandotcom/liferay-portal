@@ -202,6 +202,71 @@ public class SeleneseToJavaBuilder {
 			sb.toString(), _FIX_PARAM_OLD_SUBS, _FIX_PARAM_NEW_SUBS);
 	}
 
+	protected String formatTestSuite(String fileName, String oldContent)
+		throws Exception {
+
+		if (!oldContent.contains("..")) {
+			return oldContent;
+		}
+
+		String newContent = oldContent;
+
+		int x = 0;
+		int y = 0;
+
+		while (oldContent.indexOf("<a href=\"", x) != -1) {
+			x = oldContent.indexOf("<a href=\"", x) + 9;
+			y = oldContent.indexOf("\">", x);
+
+			String testCaseName = oldContent.substring(x, y);
+
+			if (!testCaseName.contains("..")) {
+				continue;
+			}
+
+			if (testCaseName.contains("../portalweb/")) {
+				continue;
+			}
+
+			int z = fileName.lastIndexOf(StringPool.SLASH);
+
+			String importClassName = fileName.substring(0, z);
+
+			int count = StringUtil.count(testCaseName, "..");
+
+			for (int i = 0; i < count; i++) {
+				z = importClassName.lastIndexOf(StringPool.SLASH);
+
+				importClassName = fileName.substring(0, z);
+			}
+
+			z = testCaseName.lastIndexOf("../", z);
+
+			importClassName +=
+				testCaseName.substring(z + 2, testCaseName.length());
+
+			count = StringUtil.count(fileName, "/") - 2;
+
+			String relativePath = "" ;
+
+			for (int i = 0; i < count; i++) {
+				relativePath += "../";
+			}
+
+			importClassName = StringUtil.replace(
+				importClassName, "com/liferay/", relativePath);
+
+			newContent = StringUtil.replace(
+				newContent, testCaseName, importClassName);
+		}
+
+		if (!oldContent.equals(newContent)) {
+			writeFile(fileName, newContent, false);
+		}
+
+		return newContent;
+	}
+
 	protected Set<String> getFileNames() throws Exception {
 		DirectoryScanner directoryScanner = new DirectoryScanner();
 
@@ -384,8 +449,7 @@ public class SeleneseToJavaBuilder {
 		String testName = fileName.substring(x + 1, y);
 		String testMethodName =
 			"test" + testName.substring(0, testName.length() - 4);
-		String testFileName =
-			_basedir + "/" + fileName.substring(0, y) + ".java";
+		String testFileName = fileName.substring(0, y) + ".java";
 
 		StringBundler sb = new StringBundler();
 
@@ -407,36 +471,36 @@ public class SeleneseToJavaBuilder {
 		sb.append(testMethodName);
 		sb.append("() throws Exception {");
 
-		String xml = readFile(fileName);
+		String content = readFile(fileName);
 
-		if ((xml.indexOf("<title>" + testName + "</title>") == -1) ||
-			(xml.indexOf("colspan=\"3\">" + testName + "</td>") == -1)) {
+		if ((content.indexOf("<title>" + testName + "</title>") == -1) ||
+			(content.indexOf("colspan=\"3\">" + testName + "</td>") == -1)) {
 
 			System.out.println(testName + " has an invalid test name");
 		}
 
-		if (xml.indexOf("&gt;") != -1) {
-			xml = StringUtil.replace(xml, "&gt;", ">");
+		if (content.indexOf("&gt;") != -1) {
+			content = StringUtil.replace(content, "&gt;", ">");
 
-			writeFile(fileName, xml, false);
+			writeFile(fileName, content, false);
 		}
 
-		if (xml.indexOf("&lt;") != -1) {
-			xml = StringUtil.replace(xml, "&lt;", "<");
+		if (content.indexOf("&lt;") != -1) {
+			content = StringUtil.replace(content, "&lt;", "<");
 
-			writeFile(fileName, xml, false);
+			writeFile(fileName, content, false);
 		}
 
-		if (xml.indexOf("&quot;") != -1) {
-			xml = StringUtil.replace(xml, "&quot;", "\"");
+		if (content.indexOf("&quot;") != -1) {
+			content = StringUtil.replace(content, "&quot;", "\"");
 
-			writeFile(fileName, xml, false);
+			writeFile(fileName, content, false);
 		}
 
-		x = xml.indexOf("<tbody>");
-		y = xml.indexOf("</tbody>");
+		x = content.indexOf("<tbody>");
+		y = content.indexOf("</tbody>");
 
-		xml = xml.substring(x, y + 8);
+		content = content.substring(x, y + 8);
 
 		Map<String, String> labels = new HashMap<String, String>();
 
@@ -448,8 +512,8 @@ public class SeleneseToJavaBuilder {
 		y = 0;
 
 		while (true) {
-			x = xml.indexOf("<tr>", x);
-			y = xml.indexOf("\n</tr>", x);
+			x = content.indexOf("<tr>", x);
+			y = content.indexOf("\n</tr>", x);
 
 			if ((x == -1) || (y == -1)) {
 				break;
@@ -458,7 +522,7 @@ public class SeleneseToJavaBuilder {
 			x += 6;
 			y++;
 
-			String step = xml.substring(x, y);
+			String step = content.substring(x, y);
 
 			String[] params = getParams(step);
 
@@ -468,7 +532,7 @@ public class SeleneseToJavaBuilder {
 			if (param1.equals("assertConfirmation")) {
 				int previousX = x - 6;
 
-				previousX = xml.lastIndexOf("<tr>", previousX - 1);
+				previousX = content.lastIndexOf("<tr>", previousX - 1);
 				previousX += 6;
 
 				takeScreenShots.put(previousX, Boolean.FALSE);
@@ -496,8 +560,8 @@ public class SeleneseToJavaBuilder {
 		y = 0;
 
 		while (true) {
-			x = xml.indexOf("<tr>", x);
-			y = xml.indexOf("\n</tr>", x);
+			x = content.indexOf("<tr>", x);
+			y = content.indexOf("\n</tr>", x);
 
 			if ((x == -1) || (y == -1)) {
 				break;
@@ -506,7 +570,7 @@ public class SeleneseToJavaBuilder {
 			x += 6;
 			y++;
 
-			String step = xml.substring(x, y);
+			String step = content.substring(x, y);
 
 			String[] params = getParams(step);
 
@@ -1261,8 +1325,7 @@ public class SeleneseToJavaBuilder {
 		String testPackagePath = StringUtil.replace(
 			fileName.substring(0, x), StringPool.SLASH, StringPool.PERIOD);
 		String testName = fileName.substring(x + 1, y);
-		String testFileName =
-			_basedir + "/" + fileName.substring(0, y) + ".java";
+		String testFileName = fileName.substring(0, y) + ".java";
 
 		StringBundler sb = new StringBundler();
 
@@ -1273,16 +1336,18 @@ public class SeleneseToJavaBuilder {
 		sb.append("import com.liferay.portalweb.portal.BaseTestSuite;\n");
 		sb.append("import com.liferay.portalweb.portal.StopSeleniumTest;\n");
 
-		String xml = readFile(fileName);
+		String content = readFile(fileName);
+
+		content = formatTestSuite(fileName, content);
 
 		x = 0;
 		y = 0;
 
-		while (xml.indexOf("<a href=\"", x) != -1) {
-			x = xml.indexOf("<a href=\"", x) + 9;
-			y = xml.indexOf("\">", x);
+		while (content.indexOf("<a href=\"", x) != -1) {
+			x = content.indexOf("<a href=\"", x) + 9;
+			y = content.indexOf("\">", x);
 
-			String testCaseName = xml.substring(x, y);
+			String testCaseName = content.substring(x, y);
 
 			if (!testCaseName.contains("..")) {
 				continue;
@@ -1331,23 +1396,23 @@ public class SeleneseToJavaBuilder {
 
 		sb.append("TestSuite testSuite = new TestSuite();");
 
-		x = xml.indexOf("</b></td></tr>");
-		y = xml.indexOf("</tbody>");
+		x = content.indexOf("</b></td></tr>");
+		y = content.indexOf("</tbody>");
 
-		xml = xml.substring(x + 15, y);
+		content = content.substring(x + 15, y);
 
 		x = 0;
 		y = 0;
 
 		while (true) {
-			x = xml.indexOf("\">", x);
-			y = xml.indexOf("</a>", x);
+			x = content.indexOf("\">", x);
+			y = content.indexOf("</a>", x);
 
 			if ((x == -1) || (y == -1)) {
 				break;
 			}
 
-			String className = xml.substring(x + 2, y);
+			String className = content.substring(x + 2, y);
 
 			x += className.length();
 
@@ -1366,13 +1431,15 @@ public class SeleneseToJavaBuilder {
 	protected void writeFile(String fileName, String content, boolean format)
 		throws Exception {
 
-		if (format) {
-			File file = new File(fileName);
+		File file = new File(_basedir + "/" + fileName);
 
+		if (format) {
 			ServiceBuilder.writeFile(file, content);
 		}
 		else {
-			FileUtil.write(_basedir + "/" + fileName, content);
+			System.out.println("Writing " + file);
+
+			FileUtil.write(file, content);
 		}
 	};
 

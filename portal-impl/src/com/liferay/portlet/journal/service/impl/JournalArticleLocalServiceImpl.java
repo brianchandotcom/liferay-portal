@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -1965,6 +1966,13 @@ public class JournalArticleLocalServiceImpl
 				throw new ArticleVersionException();
 			}
 
+			if (DateUtil.compareTo(
+					oldArticle.getModifiedDate(), serviceContext.getFormDate())
+						> 0) {
+
+				throw new ArticleVersionException();
+			}
+
 			if (oldArticle.isApproved() || oldArticle.isExpired()) {
 				incrementVersion = true;
 			}
@@ -2114,10 +2122,25 @@ public class JournalArticleLocalServiceImpl
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated {@link #updateArticleTranslation(long, String, double,
+	 *             Locale, String, String, String, Map, ServiceContext)}
+	 */
 	public JournalArticle updateArticleTranslation(
 			long groupId, String articleId, double version, Locale locale,
 			String title, String description, String content,
 			Map<String, byte[]> images)
+		throws PortalException, SystemException {
+
+		return updateArticleTranslation(
+			groupId, articleId, version, locale, title, description, content,
+			images, null);
+	}
+
+	public JournalArticle updateArticleTranslation(
+			long groupId, String articleId, double version, Locale locale,
+			String title, String description, String content,
+			Map<String, byte[]> images, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		validateContent(content);
@@ -2129,6 +2152,15 @@ public class JournalArticleLocalServiceImpl
 
 		if ((version > 0) && (version != oldVersion)) {
 			throw new ArticleVersionException();
+		}
+
+		if (serviceContext != null) {
+			if (DateUtil.compareTo(
+					oldArticle.getModifiedDate(), serviceContext.getFormDate())
+						> 0) {
+
+				throw new ArticleVersionException();
+			}
 		}
 
 		JournalArticle article = null;

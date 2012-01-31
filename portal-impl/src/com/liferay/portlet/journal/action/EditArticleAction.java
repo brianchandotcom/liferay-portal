@@ -775,7 +775,7 @@ public class EditArticleAction extends PortletAction {
 			else if (cmd.equals(Constants.TRANSLATE)) {
 				article = JournalArticleServiceUtil.updateArticleTranslation(
 					groupId, articleId, version, toLocale, title, description,
-					content, images);
+					content, images, serviceContext);
 			}
 
 			if (!tempOldUrlTitle.equals(article.getUrlTitle())) {

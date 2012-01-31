@@ -323,6 +323,10 @@ public class ServiceContext implements Cloneable, Serializable {
 		return _expandoBridgeAttributes;
 	}
 
+	public Date getFormDate() {
+		return _formDate;
+	}
+
 	/**
 	 * Returns the specific group permissions for a resource if this service
 	 * context is being passed as a parameter to a method which manipulates the
@@ -883,6 +887,10 @@ public class ServiceContext implements Cloneable, Serializable {
 		_expandoBridgeAttributes = expandoBridgeAttributes;
 	}
 
+	public void setFormDate(Date formDate) {
+		_formDate = formDate;
+	}
+
 	/**
 	 * Sets an array containing specific group permissions for a resource if
 	 * this service context is being passed as a parameter to a method which
@@ -1139,6 +1147,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	private String _currentURL;
 	private boolean _deriveDefaultPermissions;
 	private Map<String, Serializable> _expandoBridgeAttributes;
+	private Date _formDate;
 	private String[] _groupPermissions;
 	private String[] _guestPermissions;
 	private Map<String, String> _headers;

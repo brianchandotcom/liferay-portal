@@ -423,6 +423,10 @@ public class JournalArticleServiceUtil {
 			serviceContext);
 	}
 
+	/**
+	* @deprecated {@link #updateArticleTranslation(long, String, double,
+	Locale, String, String, String, Map, ServiceContext)}
+	*/
 	public static com.liferay.portlet.journal.model.JournalArticle updateArticleTranslation(
 		long groupId, java.lang.String articleId, double version,
 		java.util.Locale locale, java.lang.String title,
@@ -433,6 +437,19 @@ public class JournalArticleServiceUtil {
 		return getService()
 				   .updateArticleTranslation(groupId, articleId, version,
 			locale, title, description, content, images);
+	}
+
+	public static com.liferay.portlet.journal.model.JournalArticle updateArticleTranslation(
+		long groupId, java.lang.String articleId, double version,
+		java.util.Locale locale, java.lang.String title,
+		java.lang.String description, java.lang.String content,
+		java.util.Map<java.lang.String, byte[]> images,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateArticleTranslation(groupId, articleId, version,
+			locale, title, description, content, images, serviceContext);
 	}
 
 	public static com.liferay.portlet.journal.model.JournalArticle updateContent(

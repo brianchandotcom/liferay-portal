@@ -16,6 +16,7 @@ package com.liferay.portal.service.permission;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -88,31 +89,37 @@ public class UserPermissionImpl implements UserPermission {
 			return false;
 		}
 
-		if (((PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5 ||
-			  PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) &&
-			 (permissionChecker.hasOwnerPermission(
-				permissionChecker.getCompanyId(), User.class.getName(), userId,
-				userId, actionId))) ||
-			(permissionChecker.getUserId() == userId)) {
+		try {
+			User user = null;
 
-			return true;
-		}
-		else if (permissionChecker.hasPermission(
+			if (userId != ResourceConstants.PRIMKEY_DNE) {
+				user = UserLocalServiceUtil.getUserById(userId);
+
+				Contact contact = user.getContact();
+
+				if (((PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5 ||
+					  PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) &&
+					 (permissionChecker.hasOwnerPermission(
+						permissionChecker.getCompanyId(), User.class.getName(),
+						userId, contact.getUserId(), actionId))) ||
+					(permissionChecker.getUserId() == userId)) {
+
+					return true;
+				}
+			}
+
+			if (permissionChecker.hasPermission(
 					0, User.class.getName(), userId, actionId)) {
 
-			return true;
-		}
-		else if (userId != ResourceConstants.PRIMKEY_DNE) {
-			try {
-				if (organizationIds == null) {
-					User user = UserLocalServiceUtil.getUserById(userId);
+				return true;
+			}
 
+			if (user != null) {
+				if (organizationIds == null) {
 					organizationIds = user.getOrganizationIds();
 				}
 
-				for (int i = 0; i < organizationIds.length; i++) {
-					long organizationId = organizationIds[i];
-
+				for (long organizationId : organizationIds) {
 					if (OrganizationPermissionUtil.contains(
 							permissionChecker, organizationId,
 							ActionKeys.MANAGE_USERS)) {
@@ -121,9 +128,9 @@ public class UserPermissionImpl implements UserPermission {
 					}
 				}
 			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
 		}
 
 		return false;

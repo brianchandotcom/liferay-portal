@@ -32,13 +32,13 @@ import java.util.List;
 public class ResourceFinderImpl
 	extends BasePersistenceImpl<Resource> implements ResourceFinder {
 
-	public static String FIND_BY_NAME =
+	public static final String FIND_BY_NAME =
 		ResourceFinder.class.getName() + ".findByName";
 
-	public static String FIND_BY_C_P =
+	public static final String FIND_BY_C_P =
 		ResourceFinder.class.getName() + ".findByC_P";
 
-	public static String FIND_BY_N_S =
+	public static final String FIND_BY_N_S =
 		ResourceFinder.class.getName() + ".findByN_S";
 
 	public List<Resource> findByName(String name) throws SystemException {

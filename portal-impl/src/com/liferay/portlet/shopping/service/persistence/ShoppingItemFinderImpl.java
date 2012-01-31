@@ -38,7 +38,7 @@ import java.util.List;
 public class ShoppingItemFinderImpl
 	extends BasePersistenceImpl<ShoppingItem> implements ShoppingItemFinder {
 
-	public static String COUNT_BY_G_C =
+	public static final String COUNT_BY_G_C =
 		ShoppingItemFinder.class.getName() + ".countByG_C";
 
 	public int countByG_C(long groupId, List<Long> categoryIds)

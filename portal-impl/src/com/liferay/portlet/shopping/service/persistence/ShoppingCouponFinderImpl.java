@@ -36,10 +36,10 @@ public class ShoppingCouponFinderImpl
 	extends BasePersistenceImpl<ShoppingCoupon>
 	implements ShoppingCouponFinder {
 
-	public static String COUNT_BY_G_C_C_A_DT =
+	public static final String COUNT_BY_G_C_C_A_DT =
 		ShoppingCouponFinder.class.getName() + ".countByG_C_C_A_DT";
 
-	public static String FIND_BY_G_C_C_A_DT =
+	public static final String FIND_BY_G_C_C_A_DT =
 		ShoppingCouponFinder.class.getName() + ".findByG_C_C_A_DT";
 
 	public int countByG_C_C_A_DT(

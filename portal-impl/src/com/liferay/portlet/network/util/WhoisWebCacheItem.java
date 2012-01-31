@@ -32,9 +32,9 @@ import java.net.Socket;
  */
 public class WhoisWebCacheItem implements WebCacheItem {
 
-	public static String WHOIS_SERVER = "whois.geektools.com";
+	public static final String WHOIS_SERVER = "whois.geektools.com";
 
-	public static int WHOIS_SERVER_PORT = 43;
+	public static final int WHOIS_SERVER_PORT = 43;
 
 	public WhoisWebCacheItem(String domain) {
 		_domain = domain;

@@ -47,58 +47,58 @@ import java.util.Map;
 public class RoleFinderImpl
 	extends BasePersistenceImpl<Role> implements RoleFinder {
 
-	public static String COUNT_BY_ORGANIZATION =
+	public static final String COUNT_BY_ORGANIZATION =
 		RoleFinder.class.getName() + ".countByOrganization";
 
-	public static String COUNT_BY_ORGANIZATION_SITE =
+	public static final String COUNT_BY_ORGANIZATION_SITE =
 		RoleFinder.class.getName() + ".countByOrganizationSite";
 
-	public static String COUNT_BY_SITE =
+	public static final String COUNT_BY_SITE =
 		RoleFinder.class.getName() + ".countBySite";
 
-	public static String COUNT_BY_USER =
+	public static final String COUNT_BY_USER =
 		RoleFinder.class.getName() + ".countByUser";
 
-	public static String COUNT_BY_USER_GROUP =
+	public static final String COUNT_BY_USER_GROUP =
 		RoleFinder.class.getName() + ".countByUserGroup";
 
-	public static String COUNT_BY_USER_GROUP_SITE =
+	public static final String COUNT_BY_USER_GROUP_SITE =
 		RoleFinder.class.getName() + ".countByUserGroupSite";
 
-	public static String COUNT_BY_U_G_R =
+	public static final String COUNT_BY_U_G_R =
 		RoleFinder.class.getName() + ".countByU_G_R";
 
-	public static String COUNT_BY_C_N_D_T =
+	public static final String COUNT_BY_C_N_D_T =
 		RoleFinder.class.getName() + ".countByC_N_D_T";
 
-	public static String FIND_BY_SYSTEM =
+	public static final String FIND_BY_SYSTEM =
 		RoleFinder.class.getName() + ".findBySystem";
 
-	public static String FIND_BY_USER_GROUP_GROUP_ROLE =
+	public static final String FIND_BY_USER_GROUP_GROUP_ROLE =
 		RoleFinder.class.getName() + ".findByUserGroupGroupRole";
 
-	public static String FIND_BY_USER_GROUP_ROLE =
+	public static final String FIND_BY_USER_GROUP_ROLE =
 		RoleFinder.class.getName() + ".findByUserGroupRole";
 
-	public static String FIND_BY_C_N =
+	public static final String FIND_BY_C_N =
 		RoleFinder.class.getName() + ".findByC_N";
 
-	public static String FIND_BY_U_G =
+	public static final String FIND_BY_U_G =
 		RoleFinder.class.getName() + ".findByU_G";
 
-	public static String FIND_BY_C_N_D_T =
+	public static final String FIND_BY_C_N_D_T =
 		RoleFinder.class.getName() + ".findByC_N_D_T";
 
-	public static String FIND_BY_C_N_S_P =
+	public static final String FIND_BY_C_N_S_P =
 		RoleFinder.class.getName() + ".findByC_N_S_P";
 
-	public static String FIND_BY_C_N_S_P_A =
+	public static final String FIND_BY_C_N_S_P_A =
 		RoleFinder.class.getName() + ".findByC_N_S_P_A";
 
-	public static String JOIN_BY_ROLES_PERMISSIONS =
+	public static final String JOIN_BY_ROLES_PERMISSIONS =
 		RoleFinder.class.getName() + ".joinByRolesPermissions";
 
-	public static String JOIN_BY_USERS_ROLES =
+	public static final String JOIN_BY_USERS_ROLES =
 		RoleFinder.class.getName() + ".joinByUsersRoles";
 
 	public int countByR_U(long roleId, long userId) throws SystemException {

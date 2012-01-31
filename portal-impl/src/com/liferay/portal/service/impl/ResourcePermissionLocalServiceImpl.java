@@ -70,7 +70,7 @@ public class ResourcePermissionLocalServiceImpl
 	 * @see {@link VerifyPermission#fixOrganizationRolePermissions_6} and
 	 *      LPS-23704
 	 */
-	public static String[] EMPTY_ACTION_IDS = {null};
+	public static final String[] EMPTY_ACTION_IDS = {null};
 
 	/**
 	 * Grants the role permission at the scope to perform the action on

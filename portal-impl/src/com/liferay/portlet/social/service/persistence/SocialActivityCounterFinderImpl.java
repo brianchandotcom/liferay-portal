@@ -45,19 +45,19 @@ public class SocialActivityCounterFinderImpl
 	extends BasePersistenceImpl<SocialActivityCounter>
 	implements SocialActivityCounterFinder {
 
-	public static String COUNT_U_BY_G_C_N_S_E =
+	public static final String COUNT_U_BY_G_C_N_S_E =
 		SocialActivityCounterFinder.class.getName() + ".countU_ByG_C_N_S_E";
 
-	public static String FIND_AC_BY_G_N_S_E_1 =
+	public static final String FIND_AC_BY_G_N_S_E_1 =
 		SocialActivityCounterFinder.class.getName() + ".findAC_ByG_N_S_E_1";
 
-	public static String FIND_AC_BY_G_N_S_E_2 =
+	public static final String FIND_AC_BY_G_N_S_E_2 =
 		SocialActivityCounterFinder.class.getName() + ".findAC_ByG_N_S_E_2";
 
-	public static String FIND_AC_BY_G_C_C_N_S_E =
+	public static final String FIND_AC_BY_G_C_C_N_S_E =
 		SocialActivityCounterFinder.class.getName() + ".findAC_By_G_C_C_N_S_E";
 
-	public static String FIND_U_BY_G_C_N_S_E =
+	public static final String FIND_U_BY_G_C_N_S_E =
 		SocialActivityCounterFinder.class.getName() + ".findU_ByG_C_N_S_E";
 
 	public int countU_ByG_N(long groupId, String[] names)

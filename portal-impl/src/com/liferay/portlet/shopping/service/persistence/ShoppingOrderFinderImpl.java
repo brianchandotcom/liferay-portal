@@ -39,10 +39,10 @@ import java.util.List;
 public class ShoppingOrderFinderImpl
 	extends BasePersistenceImpl<ShoppingOrder> implements ShoppingOrderFinder {
 
-	public static String COUNT_BY_G_C_U_N_PPPS =
+	public static final String COUNT_BY_G_C_U_N_PPPS =
 		ShoppingOrderFinder.class.getName() + ".countByG_C_U_N_PPPS";
 
-	public static String FIND_BY_G_C_U_N_PPPS =
+	public static final String FIND_BY_G_C_U_N_PPPS =
 		ShoppingOrderFinder.class.getName() + ".findByG_C_U_N_PPPS";
 
 	public int countByG_C_U_N_PPPS(

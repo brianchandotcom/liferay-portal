@@ -31,7 +31,7 @@ import java.util.List;
  */
 public class ShellHook implements Hook {
 
-	public static String SHELL_SCRIPT =
+	public static final String SHELL_SCRIPT =
 		PropsUtil.get(PropsKeys.MAIL_HOOK_SHELL_SCRIPT);
 
 	public void addFilters(long companyId, long userId, List<String> filters) {

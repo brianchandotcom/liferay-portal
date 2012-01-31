@@ -119,7 +119,7 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 					try {
 						if (RuntimeVariables.replace("Administrator")
 												.equals(selenium.getText(
-										"//td[3]/div/span"))) {
+										"//span[@email='liferay.qa.server.trunk@gmail.com']"))) {
 							break;
 						}
 					}
@@ -130,8 +130,9 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Administrator"),
-					selenium.getText("//td[3]/div/span"));
-				selenium.clickAt("//td[3]/div/span",
+					selenium.getText(
+						"//span[@email='liferay.qa.server.trunk@gmail.com']"));
+				selenium.clickAt("//span[@email='liferay.qa.server.trunk@gmail.com']",
 					RuntimeVariables.replace("Administrator"));
 
 				for (int second = 0;; second++) {
@@ -140,8 +141,7 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 					}
 
 					try {
-						if (RuntimeVariables.replace(
-									"[MB Category Name] MB Message Subject")
+						if (RuntimeVariables.replace("MB Message Subject")
 												.equals(selenium.getText(
 										"//h1/span[1]"))) {
 							break;
@@ -153,8 +153,7 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				assertEquals(RuntimeVariables.replace(
-						"[MB Category Name] MB Message Subject"),
+				assertEquals(RuntimeVariables.replace("MB Message Subject"),
 					selenium.getText("//h1/span[1]"));
 				assertTrue(selenium.isPartialText(
 						"//div[contains(child::text(),'MB Message Body')]",
@@ -166,8 +165,7 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible(
-									"//div[7]/div/table/tbody/tr/td[1]/div/span")) {
+						if (selenium.isVisible("//td[4]/div/img")) {
 							break;
 						}
 					}
@@ -177,7 +175,7 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.clickAt("//div[7]/div/table/tbody/tr/td[1]/div/span",
+				selenium.clickAt("//td[4]/div/img",
 					RuntimeVariables.replace("Reply"));
 				Thread.sleep(5000);
 				selenium.selectFrame("//iframe[@id='canvas_frame']");

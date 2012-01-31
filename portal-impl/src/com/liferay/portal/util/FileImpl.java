@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.process.ProcessExecutor;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileComparator;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -264,7 +265,17 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 	public String extractText(InputStream is, String fileName) {
 		String text = null;
 
+		ClassLoader portalClassLoader = PortalClassLoaderUtil.getClassLoader();
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
 		try {
+			if (contextClassLoader != portalClassLoader) {
+				currentThread.setContextClassLoader(portalClassLoader);
+			}
+
 			Tika tika = new Tika();
 
 			boolean forkProcess = false;
@@ -291,6 +302,11 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		}
 		catch (Exception e) {
 			_log.error(e, e);
+		}
+		finally {
+			if (contextClassLoader != portalClassLoader) {
+				currentThread.setContextClassLoader(contextClassLoader);
+			}
 		}
 
 		if (_log.isInfoEnabled()) {

@@ -17,14 +17,12 @@ package com.liferay.portal.service.permission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Organization;
+import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.OrganizationLocalServiceUtil;
-
-import java.util.List;
+import com.liferay.portal.service.UserLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -59,18 +57,13 @@ public class GroupPermissionImpl implements GroupPermission {
 			// manages a set of organizations may be modifying pages of a user
 			// he manages.
 
-			long userId = group.getClassPK();
+			User user = UserLocalServiceUtil.getUserById(group.getClassPK());
 
-			List<Organization> organizations =
-				OrganizationLocalServiceUtil.getUserOrganizations(userId);
+			if (UserPermissionUtil.contains(
+					permissionChecker, user.getUserId(),
+					user.getOrganizationIds(), ActionKeys.UPDATE)) {
 
-			for (Organization organization : organizations) {
-				if (OrganizationPermissionUtil.contains(
-						permissionChecker, organization.getOrganizationId(),
-						ActionKeys.MANAGE_USERS)) {
-
-					return true;
-				}
+				return true;
 			}
 		}
 

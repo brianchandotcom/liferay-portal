@@ -99,7 +99,10 @@ public class UserIndexer extends BaseIndexer {
 				String key = entry.getKey();
 				Object value = entry.getValue();
 
-				if (value == null) {
+				if ((value == null) ||
+					(value.getClass().isArray() &&
+						((Object[])value).length == 0)) {
+
 					continue;
 				}
 

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.servlet.filters.threadlocal;
 
+import com.liferay.portal.kernel.cache.Lifecycle;
+import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.servlet.TryFinallyFilter;
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
@@ -30,6 +32,8 @@ public class ThreadLocalFilter
 	public void doFilterFinally(
 		HttpServletRequest request, HttpServletResponse response,
 		Object ojbect) {
+
+		ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
 
 		CentralizedThreadLocal.clearShortLivedThreadLocals();
 	}

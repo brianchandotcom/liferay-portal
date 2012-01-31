@@ -432,10 +432,6 @@
 	<filter>
 		<filter-name>Thread Local Filter</filter-name>
 		<filter-class>com.liferay.portal.servlet.filters.threadlocal.ThreadLocalFilter</filter-class>
-		<init-param>
-			<param-name>url-regex-ignore-pattern</param-name>
-			<param-value>^/html/.+\.(css|gif|html|ico|jpg|js|png)(\?.*)?$</param-value>
-		</init-param>
 	</filter>
 	<filter>
 		<filter-name>Tunnel Servlet Filter</filter-name>

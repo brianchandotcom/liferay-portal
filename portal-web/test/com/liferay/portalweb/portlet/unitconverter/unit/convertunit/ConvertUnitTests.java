@@ -16,6 +16,8 @@ package com.liferay.portalweb.portlet.unitconverter.unit.convertunit;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.unitconverter.portlet.addportlet.AddPageUCTest;
+import com.liferay.portalweb.portlet.unitconverter.portlet.addportlet.AddPortletUCTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

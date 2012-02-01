@@ -429,7 +429,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		<if>
 			<equals arg1="${junit.code.coverage}" arg2="true" />
 			<then>
-				<cobertura-report format="{$junit.cobertura.report.format}" datafile="test-coverage/cobertura.ser" destdir="test-coverage" >
+				<cobertura-report format="${junit.cobertura.report.format}" datafile="test-coverage/cobertura.ser" destdir="test-coverage" >
 					<fileset dir="${project.dir}/portal-impl/src">
 						<include name="**/*.java" />
 					</fileset>

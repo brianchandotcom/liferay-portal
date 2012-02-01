@@ -180,3 +180,11 @@ if (layout != null) {
 		);
 	</c:if>
 </aui:script>
+
+<script type="text/javascript">
+	// <![CDATA[
+		<c:if test="<%= runtimePortletIds != null && !runtimePortletIds.isEmpty() && !layoutTypePortlet.hasStateMax() %>">
+			Liferay.Portlet.runtimeList = ['<%= ListUtil.toString(portlets, Portlet.PORTLET_ID_ACCESSOR, "','") %>'];
+		</c:if>
+	// ]]>
+</script>

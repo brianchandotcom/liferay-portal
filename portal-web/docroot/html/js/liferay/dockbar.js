@@ -605,6 +605,7 @@ AUI.add(
 											},
 											data: {
 												doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
+												runtimePortletIds: Liferay.Portlet.runtimeList,
 												p_l_id: themeDisplay.getPlid(),
 												p_p_id: 87,
 												p_p_state: 'exclusive'

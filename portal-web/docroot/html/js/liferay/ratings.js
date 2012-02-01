@@ -166,7 +166,7 @@ AUI.add(
 							}
 						);
 
-						instance._registerTask.delay(100);
+						instance._registerTask();
 					}
 					else {
 						instance._registerRating(config);
@@ -189,7 +189,7 @@ AUI.add(
 					return ratingInstance;
 				},
 
-				_registerTask: new A.DelayedTask(
+				_registerTask: A.debounce(
 					function() {
 						A.Array.each(
 							buffer,
@@ -206,7 +206,8 @@ AUI.add(
 						);
 
 						buffer.length = 0;
-					}
+					},
+					100
 				),
 
 				_INSTANCES: {},

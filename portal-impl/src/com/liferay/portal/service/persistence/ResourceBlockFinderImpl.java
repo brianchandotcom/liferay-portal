@@ -34,7 +34,7 @@ public class ResourceBlockFinderImpl
 	extends BasePersistenceImpl<ResourceBlock>
 	implements ResourceBlockFinder {
 
-	public static String FIND_BY_C_G_N_R =
+	public static final String FIND_BY_C_G_N_R =
 		ResourceBlockFinder.class.getName() + ".findByC_G_N_R";
 
 	public ResourceBlockIdsBag findByC_G_N_R(

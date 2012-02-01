@@ -32,7 +32,7 @@ public class OrgGroupPermissionFinderImpl
 	extends BasePersistenceImpl<OrgGroupPermission>
 	implements OrgGroupPermissionFinder {
 
-	public static String FIND_BY_O_G_R =
+	public static final String FIND_BY_O_G_R =
 		OrgGroupPermissionFinder.class.getName() + ".findByO_G_R";
 
 	public void removeByO_G_R(

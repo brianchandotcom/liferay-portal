@@ -41,37 +41,37 @@ import java.util.List;
 public class MBThreadFinderImpl
 	extends BasePersistenceImpl<MBThread> implements MBThreadFinder {
 
-	public static String COUNT_BY_G_C =
+	public static final String COUNT_BY_G_C =
 		MBThreadFinder.class.getName() + ".countByG_C";
 
-	public static String COUNT_BY_G_U_S =
+	public static final String COUNT_BY_G_U_S =
 		MBThreadFinder.class.getName() + ".countByG_U_S";
 
-	public static String COUNT_BY_G_U_A_S =
+	public static final String COUNT_BY_G_U_A_S =
 		MBThreadFinder.class.getName() + ".countByG_U_A_S";
 
-	public static String COUNT_BY_S_G_U_S =
+	public static final String COUNT_BY_S_G_U_S =
 		MBThreadFinder.class.getName() + ".countByS_G_U_S";
 
-	public static String COUNT_BY_S_G_U_C_S =
+	public static final String COUNT_BY_S_G_U_C_S =
 		MBThreadFinder.class.getName() + ".countByS_G_U_C_S";
 
-	public static String FIND_BY_NO_ASSETS =
+	public static final String FIND_BY_NO_ASSETS =
 		MBThreadFinder.class.getName() + ".findByNoAssets";
 
-	public static String FIND_BY_G_C =
+	public static final String FIND_BY_G_C =
 		MBThreadFinder.class.getName() + ".findByG_C";
 
-	public static String FIND_BY_G_U_S =
+	public static final String FIND_BY_G_U_S =
 		MBThreadFinder.class.getName() + ".findByG_U_S";
 
-	public static String FIND_BY_G_U_A_S =
+	public static final String FIND_BY_G_U_A_S =
 		MBThreadFinder.class.getName() + ".findByG_U_A_S";
 
-	public static String FIND_BY_S_G_U_S =
+	public static final String FIND_BY_S_G_U_S =
 		MBThreadFinder.class.getName() + ".findByS_G_U_S";
 
-	public static String FIND_BY_S_G_U_C_S =
+	public static final String FIND_BY_S_G_U_C_S =
 		MBThreadFinder.class.getName() + ".findByS_G_U_C_S";
 
 	public int countByG_U_S(long groupId, long userId, int status)

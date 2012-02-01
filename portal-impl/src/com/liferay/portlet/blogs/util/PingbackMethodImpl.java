@@ -64,21 +64,21 @@ import net.htmlparser.jericho.TextExtractor;
  */
 public class PingbackMethodImpl implements Method {
 
-	public static int ACCESS_DENIED = 49;
+	public static final int ACCESS_DENIED = 49;
 
-	public static int GENERIC_FAULT = 0;
+	public static final int GENERIC_FAULT = 0;
 
-	public static int PINGBACK_ALREADY_REGISTERED = 48;
+	public static final int PINGBACK_ALREADY_REGISTERED = 48;
 
-	public static int SERVER_ERROR = 50;
+	public static final int SERVER_ERROR = 50;
 
-	public static int SOURCE_URI_DOES_NOT_EXIST = 16;
+	public static final int SOURCE_URI_DOES_NOT_EXIST = 16;
 
-	public static int SOURCE_URI_INVALID = 17;
+	public static final int SOURCE_URI_INVALID = 17;
 
-	public static int TARGET_URI_DOES_NOT_EXIST = 32;
+	public static final int TARGET_URI_DOES_NOT_EXIST = 32;
 
-	public static int TARGET_URI_INVALID = 33;
+	public static final int TARGET_URI_INVALID = 33;
 
 	public Response execute(long companyId) {
 		if (!PropsValues.BLOGS_PINGBACK_ENABLED) {

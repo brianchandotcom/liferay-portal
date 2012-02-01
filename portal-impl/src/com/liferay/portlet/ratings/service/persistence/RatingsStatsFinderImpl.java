@@ -37,7 +37,7 @@ import java.util.List;
 public class RatingsStatsFinderImpl
 	extends BasePersistenceImpl<RatingsStats> implements RatingsStatsFinder {
 
-	public static String FIND_BY_C_C =
+	public static final String FIND_BY_C_C =
 		RatingsStatsFinder.class.getName() + ".findByC_C";
 
 	public static final FinderPath FINDER_PATH_FIND_BY_C_C = new FinderPath(

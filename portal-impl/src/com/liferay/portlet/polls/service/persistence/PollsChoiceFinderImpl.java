@@ -33,7 +33,7 @@ import java.util.List;
 public class PollsChoiceFinderImpl
 	extends BasePersistenceImpl<PollsChoice> implements PollsChoiceFinder {
 
-	public static String FIND_BY_UUID_G =
+	public static final String FIND_BY_UUID_G =
 		PollsChoiceFinder.class.getName() + ".findByUUID_G";
 
 	public PollsChoice fetchByUUID_G(String uuid, long groupId)

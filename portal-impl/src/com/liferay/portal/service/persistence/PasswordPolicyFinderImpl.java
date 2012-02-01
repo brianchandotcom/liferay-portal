@@ -37,10 +37,10 @@ public class PasswordPolicyFinderImpl
 	extends BasePersistenceImpl<PasswordPolicy>
 	implements PasswordPolicyFinder {
 
-	public static String COUNT_BY_C_N =
+	public static final String COUNT_BY_C_N =
 		PasswordPolicyFinder.class.getName() + ".countByC_N";
 
-	public static String FIND_BY_C_N =
+	public static final String FIND_BY_C_N =
 		PasswordPolicyFinder.class.getName() + ".findByC_N";
 
 	public int countByC_N(long companyId, String name) throws SystemException {

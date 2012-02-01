@@ -33,10 +33,10 @@ public class PortletPreferencesFinderImpl
 	extends BasePersistenceImpl<PortletPreferences>
 	implements PortletPreferencesFinder {
 
-	public static String FIND_BY_PORTLETID =
+	public static final String FIND_BY_PORTLETID =
 		PortletPreferencesFinder.class.getName() + ".findByPortletId";
 
-	public static String FIND_BY_C_G_O_O_P_P =
+	public static final String FIND_BY_C_G_O_O_P_P =
 		PortletPreferencesFinder.class.getName() + ".findByC_G_O_O_P_P";
 
 	public List<PortletPreferences> findByPortletId(String portletId)

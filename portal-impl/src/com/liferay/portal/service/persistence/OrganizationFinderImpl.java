@@ -45,44 +45,44 @@ import java.util.Map;
 public class OrganizationFinderImpl
 	extends BasePersistenceImpl<Organization> implements OrganizationFinder {
 
-	public static String COUNT_BY_ORGANIZATION_ID =
+	public static final String COUNT_BY_ORGANIZATION_ID =
 		OrganizationFinder.class.getName() + ".countByOrganizationId";
 
-	public static String COUNT_BY_C_PO_N_S_C_Z_R_C =
+	public static final String COUNT_BY_C_PO_N_S_C_Z_R_C =
 		OrganizationFinder.class.getName() + ".countByC_PO_N_S_C_Z_R_C";
 
-	public static String COUNT_BY_C_PO_N_L_S_C_Z_R_C =
+	public static final String COUNT_BY_C_PO_N_L_S_C_Z_R_C =
 		OrganizationFinder.class.getName() + ".countByC_PO_N_L_S_C_Z_R_C";
 
-	public static String FIND_BY_COMPANY_ID =
+	public static final String FIND_BY_COMPANY_ID =
 		OrganizationFinder.class.getName() + ".findByCompanyId";
 
-	public static String FIND_BY_C_PO_N_S_C_Z_R_C =
+	public static final String FIND_BY_C_PO_N_S_C_Z_R_C =
 		OrganizationFinder.class.getName() + ".findByC_PO_N_S_C_Z_R_C";
 
-	public static String FIND_BY_C_PO_N_L_S_C_Z_R_C =
+	public static final String FIND_BY_C_PO_N_L_S_C_Z_R_C =
 		OrganizationFinder.class.getName() + ".findByC_PO_N_L_S_C_Z_R_C";
 
-	public static String JOIN_BY_GROUPS_PERMISSIONS =
+	public static final String JOIN_BY_GROUPS_PERMISSIONS =
 		OrganizationFinder.class.getName() + ".joinByGroupsPermissions";
 
-	public static String JOIN_BY_ORGANIZATIONS_GROUPS =
+	public static final String JOIN_BY_ORGANIZATIONS_GROUPS =
 		OrganizationFinder.class.getName() + ".joinByOrganizationsGroups";
 
-	public static String JOIN_BY_ORGANIZATIONS_PASSWORD_POLICIES =
+	public static final String JOIN_BY_ORGANIZATIONS_PASSWORD_POLICIES =
 		OrganizationFinder.class.getName() +
 			".joinByOrganizationsPasswordPolicies";
 
-	public static String JOIN_BY_ORGANIZATIONS_ROLES =
+	public static final String JOIN_BY_ORGANIZATIONS_ROLES =
 		OrganizationFinder.class.getName() + ".joinByOrganizationsRoles";
 
-	public static String JOIN_BY_ORGANIZATIONS_USERS =
+	public static final String JOIN_BY_ORGANIZATIONS_USERS =
 		OrganizationFinder.class.getName() + ".joinByOrganizationsUsers";
 
-	public static String JOIN_BY_ORG_GROUP_PERMISSION =
+	public static final String JOIN_BY_ORG_GROUP_PERMISSION =
 		OrganizationFinder.class.getName() + ".joinByOrgGroupPermission";
 
-	public static String JOIN_BY_USERS_ORGS =
+	public static final String JOIN_BY_USERS_ORGS =
 		OrganizationFinder.class.getName() + ".joinByUsersOrgs";
 
 	public int countByKeywords(

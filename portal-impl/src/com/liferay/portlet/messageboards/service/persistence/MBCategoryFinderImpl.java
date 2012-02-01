@@ -48,10 +48,10 @@ import java.util.List;
 public class MBCategoryFinderImpl
 	extends BasePersistenceImpl<MBCategory> implements MBCategoryFinder {
 
-	public static String COUNT_BY_S_G_U_P =
+	public static final String COUNT_BY_S_G_U_P =
 		MBCategoryFinder.class.getName() + ".countByS_G_U_P";
 
-	public static String FIND_BY_S_G_U_P =
+	public static final String FIND_BY_S_G_U_P =
 		MBCategoryFinder.class.getName() + ".findByS_G_U_P";
 
 	public int countByS_G_U_P(

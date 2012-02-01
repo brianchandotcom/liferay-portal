@@ -26,7 +26,7 @@ public class MBMessageConstants {
 	public static final String DEFAULT_FORMAT = PropsUtil.get(
 		PropsKeys.MESSAGE_BOARDS_MESSAGE_FORMATS_DEFAULT);
 
-	public static long DEFAULT_PARENT_MESSAGE_ID = 0;
+	public static final long DEFAULT_PARENT_MESSAGE_ID = 0;
 
 	public static final String[] FORMATS = PropsUtil.getArray(
 		PropsKeys.MESSAGE_BOARDS_MESSAGE_FORMATS);

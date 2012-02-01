@@ -1428,7 +1428,15 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 						map.put("name", new String[] {name});
 					}
 					else if (pathArray.length > 5) {
-						map.put("uuid", new String[] {pathArray[5]});
+						String uuid = pathArray[5];
+
+						int pos = uuid.indexOf(StringPool.QUESTION);
+
+						if (pos != -1) {
+							uuid = uuid.substring(0, pos);
+						}
+
+						map.put("uuid", new String[] {uuid});
 					}
 				}
 				else {

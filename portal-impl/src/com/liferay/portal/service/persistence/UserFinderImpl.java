@@ -807,6 +807,6 @@ public class UserFinderImpl
 		}
 	}
 
-	protected static String STATUS_SQL = "AND (User_.status = ?)";
+	protected static final String STATUS_SQL = "AND (User_.status = ?)";
 
 }

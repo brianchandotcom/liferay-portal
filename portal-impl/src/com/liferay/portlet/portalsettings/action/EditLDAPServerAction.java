@@ -196,7 +196,7 @@ public class EditLDAPServerAction extends PortletAction {
 			themeDisplay.getCompanyId(), properties);
 	}
 
-	private final String[] _KEYS = {
+	private static final String[] _KEYS = {
 		PropsKeys.LDAP_AUTH_SEARCH_FILTER,
 		PropsKeys.LDAP_BASE_DN,
 		PropsKeys.LDAP_BASE_PROVIDER_URL,

@@ -65,7 +65,7 @@
 			'list-view': ['aui-base', 'transition'],
 			'logo-selector': ['aui-base'],
 			'look-and-feel': ['aui-color-picker', 'aui-dialog', 'aui-io-request', 'aui-tabs-base'],
-			'menu': [],
+			'menu': ['aui-debounce', 'aui-node'],
 			'navigation': [],
 			'navigation-touch': ['event-touch', 'liferay-navigation'],
 			'navigation-interaction': ['node-focusmanager', 'plugin'],

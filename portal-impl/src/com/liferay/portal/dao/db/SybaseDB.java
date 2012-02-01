@@ -158,7 +158,7 @@ public class SybaseDB extends BaseDB {
 		return sb.toString();
 	}
 
-	protected static String DROP_COLUMN = "drop column";
+	protected static final String DROP_COLUMN = "drop column";
 
 	private static final boolean _SUPPORTS_INLINE_DISTINCT = false;
 

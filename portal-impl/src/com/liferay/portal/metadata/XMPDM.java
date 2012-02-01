@@ -21,6 +21,7 @@ import org.apache.tika.metadata.Property;
  */
 public interface XMPDM extends org.apache.tika.metadata.XMPDM {
 
-	public Property DURATION = Property.externalText("xmpDM:duration");
+	public static final Property DURATION =
+		Property.externalText("xmpDM:duration");
 
 }

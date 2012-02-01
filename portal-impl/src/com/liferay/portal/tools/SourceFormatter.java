@@ -1300,51 +1300,72 @@ public class SourceFormatter {
 
 				if (tuple != null) {
 					javaTermName = (String)tuple.getObject(0);
-					javaTermType = (Integer)tuple.getObject(1);
 
-					boolean isMethod = _isInJavaTermTypeGroup(
-						javaTermType, _TYPE_METHOD);
-					boolean isPrivateMethodOrVariable =
-						_isInJavaTermTypeGroup(
-							javaTermType, _TYPE_PRIVATE_METHOD_OR_VARIABLE);
+					if (Validator.isNotNull(javaTermName)) {
+						javaTermType = (Integer)tuple.getObject(1);
 
-					if (isMethod) {
-						readMethodParameterTypes = true;
-					}
+						boolean isMethod = _isInJavaTermTypeGroup(
+							javaTermType, _TYPE_METHOD);
+						boolean isPrivateMethodOrVariable =
+							_isInJavaTermTypeGroup(
+								javaTermType, _TYPE_PRIVATE_METHOD_OR_VARIABLE);
 
-					if ((isPrivateMethodOrVariable &&
-						 !javaTermName.startsWith(StringPool.UNDERLINE) &&
-						 !javaTermName.equals("serialVersionUID")) ||
-						(!isPrivateMethodOrVariable &&
-						 javaTermName.startsWith(StringPool.UNDERLINE))) {
+						if (isMethod) {
+							readMethodParameterTypes = true;
+						}
 
-						_sourceFormatterHelper.printError(
-							fileName,
-							"underscore: " + fileName + " " + lineCount);
-					}
+						if ((isPrivateMethodOrVariable &&
+							!javaTermName.startsWith(StringPool.UNDERLINE) &&
+							!javaTermName.equals("serialVersionUID")) ||
+							(!isPrivateMethodOrVariable &&
+							 javaTermName.startsWith(StringPool.UNDERLINE))) {
 
-					if (Validator.isNotNull(previousJavaTermName)) {
-						if (previousJavaTermType > javaTermType) {
 							_sourceFormatterHelper.printError(
 								fileName,
-								"order: " + fileName + " " + lineCount);
+								"underscore: " + fileName + " " + lineCount);
 						}
-						else if (previousJavaTermType == javaTermType) {
-							if (isMethod &&
-								previousJavaTermName.equals(javaTermName)) {
 
-								hasSameMethodName = true;
+						if (_isInJavaTermTypeGroup(
+								javaTermType, _TYPE_VARIABLE_NOT_STATIC)) {
+
+							char firstChar = javaTermName.charAt(0);
+
+							if (firstChar == CharPool.UNDERLINE) {
+								firstChar = javaTermName.charAt(1);
 							}
-							else if (excluded == null) {
-								_compareJavaTermNames(
-									fileName, previousJavaTermName,
-									javaTermName, lineCount);
+
+							if (Character.isUpperCase(firstChar)) {
+								_sourceFormatterHelper.printError(
+									fileName,
+									"final: " + fileName + " " + lineCount);
 							}
 						}
+
+						if (Validator.isNotNull(previousJavaTermName) &&
+							(excluded == null)) {
+
+							if (previousJavaTermType > javaTermType) {
+								_sourceFormatterHelper.printError(
+									fileName,
+									"order: " + fileName + " " + lineCount);
+							}
+							else if (previousJavaTermType == javaTermType) {
+								if (isMethod &&
+									previousJavaTermName.equals(javaTermName)) {
+
+									hasSameMethodName = true;
+								}
+								else {
+									_compareJavaTermNames(
+										fileName, previousJavaTermName,
+										javaTermName, lineCount);
+								}
+							}
+						}
+
+						previousJavaTermName = javaTermName;
+						previousJavaTermType = javaTermType;
 					}
-
-					previousJavaTermName = javaTermName;
-					previousJavaTermType = javaTermType;
 				}
 			}
 
@@ -2267,17 +2288,19 @@ public class SourceFormatter {
 	private static Tuple _getJavaTermTuple(String line) {
 		int pos = line.indexOf(StringPool.OPEN_PARENTHESIS);
 
-		if (line.startsWith(StringPool.TAB + "public static ")) {
+		if (line.startsWith(StringPool.TAB + "public static final ") &&
+			(line.endsWith(StringPool.SEMICOLON) ||
+			 line.contains(StringPool.EQUAL))) {
+
+			return new Tuple(
+				_getVariableName(line), _TYPE_VARIABLE_PUBLIC_STATIC_FINAL);
+		}
+		else if (line.startsWith(StringPool.TAB + "public static ")) {
 			if (line.endsWith(StringPool.SEMICOLON) ||
 				line.contains(StringPool.EQUAL)) {
 
-				String variableName = _getVariableName(line);
-
-				if (Character.isLowerCase(variableName.charAt(0))) {
-					return null;
-				}
-
-				return new Tuple(variableName, _TYPE_VARIABLE_PUBLIC_STATIC);
+				return new Tuple(
+					_getVariableName(line), _TYPE_VARIABLE_PUBLIC_STATIC);
 			}
 
 			if (pos != -1) {
@@ -2292,6 +2315,13 @@ public class SourceFormatter {
 			}
 		}
 		else if (line.startsWith(StringPool.TAB + "public ")) {
+			if (line.contains(StringPool.EQUAL) ||
+				(line.endsWith(StringPool.SEMICOLON) &&
+				 !line.contains(StringPool.OPEN_PARENTHESIS))) {
+
+				return new Tuple(_getVariableName(line), _TYPE_VARIABLE_PUBLIC);
+			}
+
 			if (pos != -1) {
 				int spaceCount = StringUtil.count(
 					line.substring(0, pos), StringPool.SPACE);
@@ -2312,17 +2342,21 @@ public class SourceFormatter {
 				return new Tuple(_getClassName(line), _TYPE_CLASS_PUBLIC);
 			}
 		}
+		else if (line.startsWith(StringPool.TAB + "protected static final ")) {
+			if (line.endsWith(StringPool.SEMICOLON) ||
+				line.contains(StringPool.EQUAL)) {
+
+				return new Tuple(
+					_getVariableName(line),
+					_TYPE_VARIABLE_PROTECTED_STATIC_FINAL);
+			}
+		}
 		else if (line.startsWith(StringPool.TAB + "protected static ")) {
 			if (line.endsWith(StringPool.SEMICOLON) ||
 				line.contains(StringPool.EQUAL)) {
 
-				String variableName = _getVariableName(line);
-
-				if (Character.isLowerCase(variableName.charAt(0))) {
-					return null;
-				}
-
-				return new Tuple(variableName, _TYPE_VARIABLE_PROTECTED_STATIC);
+				return new Tuple(
+					_getVariableName(line), _TYPE_VARIABLE_PROTECTED_STATIC);
 			}
 
 			if (pos != -1) {
@@ -2351,20 +2385,21 @@ public class SourceFormatter {
 
 			return new Tuple(_getVariableName(line), _TYPE_VARIABLE_PROTECTED);
 		}
+		else if (line.startsWith(StringPool.TAB + "private static final ")) {
+			if (line.endsWith(StringPool.SEMICOLON) ||
+				line.contains(StringPool.EQUAL)) {
+
+				return new Tuple(
+					_getVariableName(line),
+					_TYPE_VARIABLE_PRIVATE_STATIC_FINAL);
+			}
+		}
 		else if (line.startsWith(StringPool.TAB + "private static ")) {
 			if (line.endsWith(StringPool.SEMICOLON) ||
 				line.contains(StringPool.EQUAL)) {
 
-				String variableName = _getVariableName(line);
-
-				char firstChar = variableName.charAt(1);
-
-				if (Character.isUpperCase(firstChar)) {
-					return new Tuple(
-						variableName, _TYPE_VARIABLE_PRIVATE_STATIC_CONSTANT);
-				}
-
-				return new Tuple(variableName, _TYPE_VARIABLE_PRIVATE_STATIC);
+				return new Tuple(
+					_getVariableName(line), _TYPE_VARIABLE_PRIVATE_STATIC);
 			}
 
 			if (pos != -1) {
@@ -2881,19 +2916,19 @@ public class SourceFormatter {
 		"tiles"
 	};
 
-	private static final int _TYPE_CLASS_PRIVATE = 19;
+	private static final int _TYPE_CLASS_PRIVATE = 22;
 
-	private static final int _TYPE_CLASS_PRIVATE_STATIC = 18;
+	private static final int _TYPE_CLASS_PRIVATE_STATIC = 21;
 
-	private static final int _TYPE_CLASS_PUBLIC = 6;
+	private static final int _TYPE_CLASS_PUBLIC = 8;
 
-	private static final int _TYPE_CLASS_PUBLIC_STATIC = 5;
+	private static final int _TYPE_CLASS_PUBLIC_STATIC = 7;
 
-	private static final int _TYPE_CONSTRUCTOR_PRIVATE = 13;
+	private static final int _TYPE_CONSTRUCTOR_PRIVATE = 16;
 
-	private static final int _TYPE_CONSTRUCTOR_PROTECTED = 7;
+	private static final int _TYPE_CONSTRUCTOR_PROTECTED = 10;
 
-	private static final int _TYPE_CONSTRUCTOR_PUBLIC = 3;
+	private static final int _TYPE_CONSTRUCTOR_PUBLIC = 5;
 
 	private static final int[] _TYPE_METHOD = {
 		SourceFormatter._TYPE_METHOD_PRIVATE,
@@ -2904,37 +2939,52 @@ public class SourceFormatter {
 		SourceFormatter._TYPE_METHOD_PUBLIC_STATIC
 	};
 
-	private static final int _TYPE_METHOD_PRIVATE = 14;
+	private static final int _TYPE_METHOD_PRIVATE = 17;
 
-	private static final int _TYPE_METHOD_PRIVATE_STATIC = 12;
+	private static final int _TYPE_METHOD_PRIVATE_STATIC = 15;
 
-	private static final int _TYPE_METHOD_PROTECTED = 9;
+	private static final int _TYPE_METHOD_PROTECTED = 11;
 
-	private static final int _TYPE_METHOD_PROTECTED_STATIC = 8;
+	private static final int _TYPE_METHOD_PROTECTED_STATIC = 9;
 
-	private static final int _TYPE_METHOD_PUBLIC = 4;
+	private static final int _TYPE_METHOD_PUBLIC = 6;
 
-	private static final int _TYPE_METHOD_PUBLIC_STATIC = 2;
+	private static final int _TYPE_METHOD_PUBLIC_STATIC = 4;
 
 	private static final int[] _TYPE_PRIVATE_METHOD_OR_VARIABLE = {
 		SourceFormatter._TYPE_METHOD_PRIVATE,
 		SourceFormatter._TYPE_METHOD_PRIVATE_STATIC,
 		SourceFormatter._TYPE_VARIABLE_PRIVATE,
 		SourceFormatter._TYPE_VARIABLE_PRIVATE_STATIC,
-		SourceFormatter._TYPE_VARIABLE_PRIVATE_STATIC_CONSTANT
+		SourceFormatter._TYPE_VARIABLE_PRIVATE_STATIC_FINAL
 	};
 
-	private static final int _TYPE_VARIABLE_PRIVATE = 17;
+	private static final int[] _TYPE_VARIABLE_NOT_STATIC = {
+		SourceFormatter._TYPE_VARIABLE_PRIVATE,
+		SourceFormatter._TYPE_VARIABLE_PRIVATE_STATIC,
+		SourceFormatter._TYPE_VARIABLE_PROTECTED,
+		SourceFormatter._TYPE_VARIABLE_PROTECTED_STATIC,
+		SourceFormatter._TYPE_VARIABLE_PUBLIC,
+		SourceFormatter._TYPE_VARIABLE_PUBLIC_STATIC
+	};
 
-	private static final int _TYPE_VARIABLE_PRIVATE_STATIC = 16;
+	private static final int _TYPE_VARIABLE_PRIVATE = 20;
 
-	private static final int _TYPE_VARIABLE_PRIVATE_STATIC_CONSTANT = 15;
+	private static final int _TYPE_VARIABLE_PRIVATE_STATIC = 19;
 
-	private static final int _TYPE_VARIABLE_PROTECTED = 11;
+	private static final int _TYPE_VARIABLE_PRIVATE_STATIC_FINAL = 18;
 
-	private static final int _TYPE_VARIABLE_PROTECTED_STATIC = 10;
+	private static final int _TYPE_VARIABLE_PROTECTED = 14;
 
-	private static final int _TYPE_VARIABLE_PUBLIC_STATIC = 1;
+	private static final int _TYPE_VARIABLE_PROTECTED_STATIC = 13;
+
+	private static final int _TYPE_VARIABLE_PROTECTED_STATIC_FINAL = 12;
+
+	private static final int _TYPE_VARIABLE_PUBLIC = 3;
+
+	private static final int _TYPE_VARIABLE_PUBLIC_STATIC = 2;
+
+	private static final int _TYPE_VARIABLE_PUBLIC_STATIC_FINAL = 1;
 
 	private static String[] _excludes;
 	private static FileImpl _fileUtil = FileImpl.getInstance();

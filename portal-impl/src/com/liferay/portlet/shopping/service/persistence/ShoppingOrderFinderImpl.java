@@ -196,6 +196,6 @@ public class ShoppingOrderFinderImpl
 		}
 	}
 
-	protected static String USER_ID_SQL = "(userId = ?) AND";
+	protected static final String USER_ID_SQL = "(userId = ?) AND";
 
 }

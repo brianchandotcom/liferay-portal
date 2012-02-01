@@ -10,22 +10,22 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/user/joebloggs/home/</td>
+	<td>/user/joebloggs/home1/</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div/div/div/div/ul/li/a</td>
-	<td>Home</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//div/div/div/div/ul/li/a</td>
+	<td>//li[contains(@class, 'selected')]/a/span</td>
 	<td>Home</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[3]/div/section/header/h1/span</td>
+	<td>//li[contains(@class, 'selected')]/a/span</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='so-sidebar']/h3</td>
 	<td>Sites</td>
 </tr>
 <tr>

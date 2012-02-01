@@ -525,7 +525,8 @@ public class SourceFormatter {
 	}
 
 	private static void _compareJavaTermNames(
-		String fileName, String previousJavaTermName, String javaTermName) {
+		String fileName, String previousJavaTermName, String javaTermName,
+		int lineCount) {
 
 		if (Validator.isNull(previousJavaTermName) ||
 			Validator.isNull(javaTermName)) {
@@ -534,7 +535,8 @@ public class SourceFormatter {
 		}
 
 		if (javaTermName.equals("_log")) {
-			_sourceFormatterHelper.printError(fileName, "sort: " + fileName);
+			_sourceFormatterHelper.printError(
+				fileName, "sort: " + fileName + " " + lineCount);
 
 			return;
 		}
@@ -546,7 +548,8 @@ public class SourceFormatter {
 		}
 
 		if (javaTermName.equals("_instance")) {
-			_sourceFormatterHelper.printError(fileName, "sort: " + fileName);
+			_sourceFormatterHelper.printError(
+				fileName, "sort: " + fileName + " " + lineCount);
 
 			return;
 		}
@@ -576,15 +579,17 @@ public class SourceFormatter {
 			return;
 		}
 
-		_sourceFormatterHelper.printError(fileName, "sort: " + fileName);
+		_sourceFormatterHelper.printError(
+			fileName, "sort: " + fileName + " " + lineCount);
 	}
 
 	private static void _compareMethodParameterTypes(
 		String fileName, List<String> previousMethodParameterTypes,
-		List<String> methodParameterTypes) {
+		List<String> methodParameterTypes, int lineCount) {
 
 		if (methodParameterTypes.isEmpty()) {
-			_sourceFormatterHelper.printError(fileName, "sort: " + fileName);
+			_sourceFormatterHelper.printError(
+				fileName, "sort: " + fileName + " " + lineCount);
 
 			return;
 		}
@@ -592,7 +597,7 @@ public class SourceFormatter {
 		for (int i = 0; i < previousMethodParameterTypes.size(); i++) {
 			if (methodParameterTypes.size() < i + 1) {
 				_sourceFormatterHelper.printError(
-					fileName, "sort: " + fileName);
+					fileName, "sort: " + fileName + " " + lineCount);
 
 				return;
 			}
@@ -617,7 +622,7 @@ public class SourceFormatter {
 
 			if (previousParameterType.compareToIgnoreCase(parameterType) > 0) {
 				_sourceFormatterHelper.printError(
-					fileName, "sort: " + fileName);
+					fileName, "sort: " + fileName + " " + lineCount);
 
 				return;
 			}
@@ -628,7 +633,7 @@ public class SourceFormatter {
 
 			if (previousParameterType.compareTo(parameterType) < 0) {
 				_sourceFormatterHelper.printError(
-					fileName, "sort: " + fileName);
+					fileName, "sort: " + fileName + " " + lineCount);
 
 				return;
 			}
@@ -1333,7 +1338,7 @@ public class SourceFormatter {
 							else if (excluded == null) {
 								_compareJavaTermNames(
 									fileName, previousJavaTermName,
-									javaTermName);
+									javaTermName, lineCount);
 							}
 						}
 					}
@@ -1351,7 +1356,7 @@ public class SourceFormatter {
 					if (hasSameMethodName) {
 						_compareMethodParameterTypes(
 							fileName, previousMethodParameterTypes,
-							methodParameterTypes);
+							methodParameterTypes, lineCount);
 					}
 
 					readMethodParameterTypes = false;

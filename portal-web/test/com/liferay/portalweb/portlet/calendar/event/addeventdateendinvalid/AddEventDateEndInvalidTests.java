@@ -16,6 +16,8 @@ package com.liferay.portalweb.portlet.calendar.event.addeventdateendinvalid;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.calendar.portlet.addportlet.AddPageCalendarTest;
+import com.liferay.portalweb.portlet.calendar.portlet.addportlet.AddPortletCalendarTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

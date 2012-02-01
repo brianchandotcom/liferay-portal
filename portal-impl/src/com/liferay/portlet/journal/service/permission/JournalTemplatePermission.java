@@ -16,8 +16,10 @@ package com.liferay.portlet.journal.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.journal.model.JournalTemplate;
 import com.liferay.portlet.journal.service.JournalTemplateLocalServiceUtil;
 
@@ -59,6 +61,15 @@ public class JournalTemplatePermission {
 	public static boolean contains(
 		PermissionChecker permissionChecker, JournalTemplate template,
 		String actionId) {
+
+		Boolean hasPermission = StagingPermissionUtil.hasPermission(
+			permissionChecker, template.getGroupId(),
+			JournalTemplate.class.getName(), template.getId(),
+			PortletKeys.JOURNAL, actionId);
+
+		if (hasPermission != null) {
+			return hasPermission.booleanValue();
+		}
 
 		if (permissionChecker.hasOwnerPermission(
 				template.getCompanyId(), JournalTemplate.class.getName(),

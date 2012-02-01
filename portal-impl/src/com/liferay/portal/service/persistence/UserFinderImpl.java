@@ -47,70 +47,70 @@ import java.util.Map;
 public class UserFinderImpl
 	extends BasePersistenceImpl<User> implements UserFinder {
 
-	public static String COUNT_BY_USER =
+	public static final String COUNT_BY_USER =
 		UserFinder.class.getName() + ".countByUser";
 
-	public static String COUNT_BY_C_FN_MN_LN_SN_EA_S =
+	public static final String COUNT_BY_C_FN_MN_LN_SN_EA_S =
 		UserFinder.class.getName() + ".countByC_FN_MN_LN_SN_EA_S";
 
-	public static String FIND_BY_NO_ANNOUNCEMENTS_DELIVERIES =
+	public static final String FIND_BY_NO_ANNOUNCEMENTS_DELIVERIES =
 		UserFinder.class.getName() + ".findByNoAnnouncementsDeliveries";
 
-	public static String FIND_BY_NO_CONTACTS =
+	public static final String FIND_BY_NO_CONTACTS =
 		UserFinder.class.getName() + ".findByNoContacts";
 
-	public static String FIND_BY_NO_GROUPS =
+	public static final String FIND_BY_NO_GROUPS =
 		UserFinder.class.getName() + ".findByNoGroups";
 
-	public static String FIND_BY_C_FN_MN_LN_SN_EA_S =
+	public static final String FIND_BY_C_FN_MN_LN_SN_EA_S =
 		UserFinder.class.getName() + ".findByC_FN_MN_LN_SN_EA_S";
 
-	public static String JOIN_BY_CONTACT_TWITTER_SN =
+	public static final String JOIN_BY_CONTACT_TWITTER_SN =
 		UserFinder.class.getName() + ".joinByContactTwitterSN";
 
-	public static String JOIN_BY_NO_ORGANIZATIONS =
+	public static final String JOIN_BY_NO_ORGANIZATIONS =
 		UserFinder.class.getName() + ".joinByNoOrganizations";
 
-	public static String JOIN_BY_PERMISSION =
+	public static final String JOIN_BY_PERMISSION =
 		UserFinder.class.getName() + ".joinByPermission";
 
-	public static String JOIN_BY_USER_GROUP_ROLE =
+	public static final String JOIN_BY_USER_GROUP_ROLE =
 		UserFinder.class.getName() + ".joinByUserGroupRole";
 
-	public static String JOIN_BY_USERS_GROUPS =
+	public static final String JOIN_BY_USERS_GROUPS =
 		UserFinder.class.getName() + ".joinByUsersGroups";
 
-	public static String JOIN_BY_USERS_ORGS =
+	public static final String JOIN_BY_USERS_ORGS =
 		UserFinder.class.getName() + ".joinByUsersOrgs";
 
-	public static String JOIN_BY_USERS_ORGS_TREE =
+	public static final String JOIN_BY_USERS_ORGS_TREE =
 		UserFinder.class.getName() + ".joinByUsersOrgsTree";
 
-	public static String JOIN_BY_USERS_PASSWORD_POLICIES =
+	public static final String JOIN_BY_USERS_PASSWORD_POLICIES =
 		UserFinder.class.getName() + ".joinByUsersPasswordPolicies";
 
-	public static String JOIN_BY_USERS_ROLES =
+	public static final String JOIN_BY_USERS_ROLES =
 		UserFinder.class.getName() + ".joinByUsersRoles";
 
-	public static String JOIN_BY_USERS_TEAMS =
+	public static final String JOIN_BY_USERS_TEAMS =
 		UserFinder.class.getName() + ".joinByUsersTeams";
 
-	public static String JOIN_BY_USERS_USER_GROUPS =
+	public static final String JOIN_BY_USERS_USER_GROUPS =
 		UserFinder.class.getName() + ".joinByUsersUserGroups";
 
-	public static String JOIN_BY_ANNOUNCEMENTS_DELIVERY_EMAIL_OR_SMS =
+	public static final String JOIN_BY_ANNOUNCEMENTS_DELIVERY_EMAIL_OR_SMS =
 		UserFinder.class.getName() + ".joinByAnnouncementsDeliveryEmailOrSms";
 
-	public static String JOIN_BY_SOCIAL_MUTUAL_RELATION =
+	public static final String JOIN_BY_SOCIAL_MUTUAL_RELATION =
 		UserFinder.class.getName() + ".joinBySocialMutualRelation";
 
-	public static String JOIN_BY_SOCIAL_MUTUAL_RELATION_TYPE =
+	public static final String JOIN_BY_SOCIAL_MUTUAL_RELATION_TYPE =
 		UserFinder.class.getName() + ".joinBySocialMutualRelationType";
 
-	public static String JOIN_BY_SOCIAL_RELATION =
+	public static final String JOIN_BY_SOCIAL_RELATION =
 		UserFinder.class.getName() + ".joinBySocialRelation";
 
-	public static String JOIN_BY_SOCIAL_RELATION_TYPE =
+	public static final String JOIN_BY_SOCIAL_RELATION_TYPE =
 		UserFinder.class.getName() + ".joinBySocialRelationType";
 
 	public int countByUser(long userId, LinkedHashMap<String, Object> params)

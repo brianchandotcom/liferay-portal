@@ -42,31 +42,31 @@ import java.util.Map;
 public class UserGroupFinderImpl
 	extends BasePersistenceImpl<UserGroup> implements UserGroupFinder {
 
-	public static String COUNT_BY_C_N_D =
+	public static final String COUNT_BY_C_N_D =
 		UserGroupFinder.class.getName() + ".countByC_N_D";
 
-	public static String FIND_BY_C_N =
+	public static final String FIND_BY_C_N =
 		UserGroupFinder.class.getName() + ".findByC_N";
 
-	public static String FIND_BY_C_N_D =
+	public static final String FIND_BY_C_N_D =
 		UserGroupFinder.class.getName() + ".findByC_N_D";
 
-	public static String JOIN_BY_GROUPS_PERMISSIONS =
+	public static final String JOIN_BY_GROUPS_PERMISSIONS =
 		UserGroupFinder.class.getName() + ".joinByGroupsPermissions";
 
-	public static String JOIN_BY_USER_GROUP_GROUP_ROLE =
+	public static final String JOIN_BY_USER_GROUP_GROUP_ROLE =
 		UserGroupFinder.class.getName() + ".joinByUserGroupGroupRole";
 
-	public static String JOIN_BY_USER_GROUPS_GROUPS =
+	public static final String JOIN_BY_USER_GROUPS_GROUPS =
 		UserGroupFinder.class.getName() + ".joinByUserGroupsGroups";
 
-	public static String JOIN_BY_USER_GROUPS_ROLES =
+	public static final String JOIN_BY_USER_GROUPS_ROLES =
 		UserGroupFinder.class.getName() + ".joinByUserGroupsRoles";
 
-	public static String JOIN_BY_USER_GROUPS_TEAMS =
+	public static final String JOIN_BY_USER_GROUPS_TEAMS =
 		UserGroupFinder.class.getName() + ".joinByUserGroupsTeams";
 
-	public static String JOIN_BY_USER_GROUPS_USERS =
+	public static final String JOIN_BY_USER_GROUPS_USERS =
 		UserGroupFinder.class.getName() + ".joinByUserGroupsUsers";
 
 	public int countByC_N_D(

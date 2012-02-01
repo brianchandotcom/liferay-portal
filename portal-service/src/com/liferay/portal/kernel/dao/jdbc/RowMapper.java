@@ -22,7 +22,7 @@ import java.sql.SQLException;
  */
 public interface RowMapper<T> {
 
-	public static RowMapper<Integer> COUNT = new CountRowMapper();
+	public static final RowMapper<Integer> COUNT = new CountRowMapper();
 
 	public T mapRow(ResultSet rs, int rowNumber) throws SQLException;
 

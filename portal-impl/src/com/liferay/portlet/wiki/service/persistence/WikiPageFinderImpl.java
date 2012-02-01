@@ -42,16 +42,16 @@ import java.util.List;
 public class WikiPageFinderImpl
 	extends BasePersistenceImpl<WikiPage> implements WikiPageFinder {
 
-	public static String COUNT_BY_CREATE_DATE =
+	public static final String COUNT_BY_CREATE_DATE =
 		WikiPageFinder.class.getName() + ".countByCreateDate";
 
-	public static String FIND_BY_RESOURCE_PRIM_KEY =
+	public static final String FIND_BY_RESOURCE_PRIM_KEY =
 		WikiPageFinder.class.getName() + ".findByResourcePrimKey";
 
-	public static String FIND_BY_CREATE_DATE =
+	public static final String FIND_BY_CREATE_DATE =
 		WikiPageFinder.class.getName() + ".findByCreateDate";
 
-	public static String FIND_BY_NO_ASSETS =
+	public static final String FIND_BY_NO_ASSETS =
 		WikiPageFinder.class.getName() + ".findByNoAssets";
 
 	public int countByCreateDate(long nodeId, Date createDate, boolean before)

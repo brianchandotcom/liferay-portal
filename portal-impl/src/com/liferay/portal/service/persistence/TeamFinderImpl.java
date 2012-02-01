@@ -41,16 +41,16 @@ import java.util.Map;
 public class TeamFinderImpl
 	extends BasePersistenceImpl<Team> implements TeamFinder {
 
-	public static String COUNT_BY_G_N_D =
+	public static final String COUNT_BY_G_N_D =
 		TeamFinder.class.getName() + ".countByG_N_D";
 
-	public static String FIND_BY_G_N_D =
+	public static final String FIND_BY_G_N_D =
 		TeamFinder.class.getName() + ".findByG_N_D";
 
-	public static String JOIN_BY_USERS_TEAMS =
+	public static final String JOIN_BY_USERS_TEAMS =
 		TeamFinder.class.getName() + ".joinByUsersTeams";
 
-	public static String JOIN_BY_USERS_USER_GROUPS =
+	public static final String JOIN_BY_USERS_USER_GROUPS =
 		TeamFinder.class.getName() + ".joinByUsersUserGroups";
 
 	public int countByG_N_D(

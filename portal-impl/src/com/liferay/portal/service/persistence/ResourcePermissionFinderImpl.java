@@ -39,19 +39,19 @@ public class ResourcePermissionFinderImpl
 	extends BasePersistenceImpl<ResourcePermission>
 	implements ResourcePermissionFinder {
 
-	public static String COUNT_BY_R_S =
+	public static final String COUNT_BY_R_S =
 		ResourcePermissionFinder.class.getName() + ".countByR_S";
 
-	public static String COUNT_BY_C_N_S_P_R_A =
+	public static final String COUNT_BY_C_N_S_P_R_A =
 		ResourcePermissionFinder.class.getName() + ".countByC_N_S_P_R_A";
 
-	public static String FIND_BY_RESOURCE =
+	public static final String FIND_BY_RESOURCE =
 		ResourcePermissionFinder.class.getName() + ".findByResource";
 
-	public static String FIND_BY_R_S =
+	public static final String FIND_BY_R_S =
 		ResourcePermissionFinder.class.getName() + ".findByR_S";
 
-	public static String FIND_BY_C_N_S =
+	public static final String FIND_BY_C_N_S =
 		ResourcePermissionFinder.class.getName() + ".findByC_N_S";
 
 	public int countByR_S(long roleId, int[] scopes) throws SystemException {

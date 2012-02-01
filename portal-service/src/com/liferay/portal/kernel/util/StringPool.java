@@ -25,7 +25,7 @@ public class StringPool {
 
 	public static final String APOSTROPHE = "'";
 
-	public static String[] ASCII_TABLE = new String[128];
+	public static final String[] ASCII_TABLE = new String[128];
 
 	public static final String AT = "@";
 

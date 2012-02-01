@@ -31,7 +31,7 @@ public class ResourceConstants {
 
 	public static final int SCOPE_INDIVIDUAL = 4;
 
-	public static int[] SCOPES = {
+	public static final int[] SCOPES = {
 		ResourceConstants.SCOPE_COMPANY, ResourceConstants.SCOPE_GROUP,
 		ResourceConstants.SCOPE_GROUP_TEMPLATE,
 		ResourceConstants.SCOPE_INDIVIDUAL

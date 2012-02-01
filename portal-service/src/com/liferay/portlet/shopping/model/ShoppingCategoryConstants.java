@@ -19,6 +19,6 @@ package com.liferay.portlet.shopping.model;
  */
 public class ShoppingCategoryConstants {
 
-	public static long DEFAULT_PARENT_CATEGORY_ID = 0;
+	public static final long DEFAULT_PARENT_CATEGORY_ID = 0;
 
 }

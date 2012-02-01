@@ -33,11 +33,11 @@ public class ResourceTypePermissionFinderImpl
 	extends BasePersistenceImpl<ResourceTypePermission>
 	implements ResourceTypePermissionFinder {
 
-	public static String FIND_BY_EITHER_SCOPE_C_G_N =
+	public static final String FIND_BY_EITHER_SCOPE_C_G_N =
 		ResourceTypePermissionFinder.class.getName() +
 			".findByEitherScopeC_G_N";
 
-	public static String FIND_BY_GROUP_SCOPE_C_N_R =
+	public static final String FIND_BY_GROUP_SCOPE_C_N_R =
 		ResourceTypePermissionFinder.class.getName() + ".findByGroupScopeC_N_R";
 
 	/**

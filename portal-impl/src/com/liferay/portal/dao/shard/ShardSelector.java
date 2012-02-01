@@ -21,7 +21,7 @@ import java.util.Map;
  */
 public interface ShardSelector {
 
-	public static String COMPANY_SCOPE = "COMPANY_SCOPE";
+	public static final String COMPANY_SCOPE = "COMPANY_SCOPE";
 
 	public String getShardName(
 		String scope, String shardName, Map<String, String> params);

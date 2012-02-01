@@ -51,6 +51,23 @@ public class InternationalizationJapaneseTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		selenium.clickAt("//nav/ul/li[2]/a/span",
 			RuntimeVariables.replace("Edit Page Name"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//input[@type='text']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace(
 				"\u8a00\u8a9e\u30c6\u30b9\u30c8\u30da\u30fc\u30b8"));

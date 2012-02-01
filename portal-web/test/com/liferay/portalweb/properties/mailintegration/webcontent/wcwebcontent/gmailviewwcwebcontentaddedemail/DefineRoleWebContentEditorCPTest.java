@@ -103,6 +103,9 @@ public class DefineRoleWebContentEditorCPTest extends BaseTestCase {
 		selenium.check("//input[@value='15ACCESS_IN_CONTROL_PANEL']");
 		assertTrue(selenium.isChecked(
 				"//input[@value='15ACCESS_IN_CONTROL_PANEL']"));
+		assertFalse(selenium.isChecked("//input[@value='15VIEW']"));
+		selenium.check("//input[@value='15VIEW']");
+		assertTrue(selenium.isChecked("//input[@value='15VIEW']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -111,6 +114,8 @@ public class DefineRoleWebContentEditorCPTest extends BaseTestCase {
 				"The role permissions were updated."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Subscribe"),
+			selenium.getText("//tr[5]/td[3]"));
+		assertEquals(RuntimeVariables.replace("View"),
 			selenium.getText("//tr[4]/td[3]"));
 		assertEquals(RuntimeVariables.replace("Access in Control Panel"),
 			selenium.getText("//tr[3]/td[3]"));

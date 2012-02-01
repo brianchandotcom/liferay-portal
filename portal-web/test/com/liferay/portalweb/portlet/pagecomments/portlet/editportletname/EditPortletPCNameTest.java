@@ -49,6 +49,10 @@ public class EditPortletPCNameTest extends BaseTestCase {
 			selenium.getText("//h1[@class='portlet-title']/span[2]"));
 		selenium.clickAt("//h1[@class='portlet-title']/span[2]",
 			RuntimeVariables.replace("Page Comments"));
+		assertEquals(RuntimeVariables.replace("Page Comments"),
+			selenium.getText("//h1[@class='portlet-title']/span[2]"));
+		selenium.clickAt("//h1[@class='portlet-title']/span[2]",
+			RuntimeVariables.replace("Page Comments"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -132,6 +136,10 @@ public class EditPortletPCNameTest extends BaseTestCase {
 			RuntimeVariables.replace("Page Comments Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Page Comments Edit"),
+			selenium.getText("//h1[@class='portlet-title']/span[2]"));
+		selenium.clickAt("//h1[@class='portlet-title']/span[2]",
+			RuntimeVariables.replace("Page Comments Edit"));
 		assertEquals(RuntimeVariables.replace("Page Comments Edit"),
 			selenium.getText("//h1[@class='portlet-title']/span[2]"));
 		selenium.clickAt("//h1[@class='portlet-title']/span[2]",

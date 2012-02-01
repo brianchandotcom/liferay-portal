@@ -16,6 +16,7 @@ package com.liferay.portalweb.portlet.breadcrumb.portlet.addportletmultiple;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.breadcrumb.portlet.addportlet.AddPageBreadcrumbTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

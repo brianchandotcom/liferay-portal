@@ -17,6 +17,7 @@ package com.liferay.portlet.workflowtasks.search;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
 
@@ -86,14 +87,14 @@ public class WorkflowTaskSearch extends SearchContainer<WorkflowTask> {
 
 		OrderByComparator orderByComparator = null;
 
-		if (orderByCol.equals("due-date")) {
+		if (orderByCol.equals("name")) {
+			orderByComparator =
+				WorkflowComparatorFactoryUtil.getTaskNameComparator(orderByAsc);
+		}
+		else {
 			orderByComparator =
 				WorkflowComparatorFactoryUtil.getTaskDueDateComparator(
 					orderByAsc);
-		}
-		else if (orderByCol.equals("name")) {
-			orderByComparator =
-				WorkflowComparatorFactoryUtil.getTaskNameComparator(orderByAsc);
 		}
 
 		return orderByComparator;

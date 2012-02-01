@@ -66,7 +66,6 @@ import javax.portlet.PortletRequest;
 import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
-import org.apache.commons.lang.StringUtils;
 
 /**
  * @author Brian Wing Shun Chan
@@ -112,16 +111,10 @@ public class LayoutImpl extends LayoutBaseImpl {
 		throws LayoutFriendlyURLException {
 
 		for (String keyword : PropsValues.LAYOUT_FRIENDLY_URL_KEYWORDS) {
-
-			// 'friendlyURL' is normalized via 
-			// FriendlyURLNormalizerUril.normalize(), part of this 
-			// process is toLowerCase(), so we need to ignore 
-			// the case of keywords as well
-			
-			if (StringUtils.containsIgnoreCase(friendlyURL, 
-					StringUtil.quote(keyword, StringPool.SLASH)) ||
-				StringUtils.endsWithIgnoreCase(friendlyURL, 
-					StringPool.SLASH + keyword)) {
+			if (StringUtil.endsWith(
+					friendlyURL, StringUtil.quote(keyword, StringPool.SLASH)) ||
+				StringUtil.endsWith(
+					friendlyURL, StringPool.SLASH + keyword)) {
 
 				LayoutFriendlyURLException lfurle =
 					new LayoutFriendlyURLException(

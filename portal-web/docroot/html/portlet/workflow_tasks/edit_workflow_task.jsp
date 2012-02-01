@@ -192,15 +192,23 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 							<c:if test="<%= editPortletURL != null %>">
 
 								<%
-								editPortletURL.setWindowState(WindowState.MAXIMIZED);
+								editPortletURL.setWindowState(LiferayWindowState.POP_UP);
 								editPortletURL.setPortletMode(PortletMode.VIEW);
+
+								String editPortletURLString = editPortletURL.toString();
+								editPortletURLString = HttpUtil.addParameter(editPortletURLString, "doAsGroupId", assetRenderer.getGroupId());
+								editPortletURLString = HttpUtil.addParameter(editPortletURLString, "refererPlid", plid);
 
 								editPortletURL.setParameter("redirect", currentURL);
 								%>
 
 								<c:choose>
 									<c:when test="<%= assetRenderer.hasEditPermission(permissionChecker) && showEditURL %>">
-										<liferay-ui:icon image="edit" method="get" url="<%= editPortletURL.toString() %>" />
+										<%
+											String taglibEditURL = "javascript:Liferay.Util.openWindow({dialog: {width: 960}, id: '" + renderResponse.getNamespace() + "', title: '" + LanguageUtil.format(pageContext, "edit-x", HtmlUtil.escape(assetRenderer.getTitle(locale))) + "', uri:'" + HtmlUtil.escapeURL(editPortletURLString) + "'});";
+										%>
+
+										<liferay-ui:icon image="edit" url="<%= taglibEditURL %>" />
 									</c:when>
 									<c:when test="<%= assetRenderer.hasEditPermission(permissionChecker) && !showEditURL && !workflowTask.isCompleted() %>">
 										<liferay-ui:icon-help message="please-assign-the-task-to-yourself-to-be-able-to-edit-the-content" />

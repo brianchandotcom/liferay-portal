@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficehome.activities.microblogsentryactivity.viewmicroblogsentryactivityme;
+package com.liferay.portalweb.socialofficehome.activities.microblogsentryactivity.sousviewmicroblogsentryactivityfollowing;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;

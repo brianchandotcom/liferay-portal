@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficehome.activities.microblogsentryactivity.viewmicroblogsentryactivityme;
+package com.liferay.portalweb.socialofficehome.activities.microblogsentryactivity.sousviewmicroblogsentryactivityconnections;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddMicroblogsContentViewableByEveryoneTest extends BaseTestCase {
-	public void testAddMicroblogsContentViewableByEveryone()
+public class AddMicroblogsContentViewableByConnectionsTest extends BaseTestCase {
+	public void testAddMicroblogsContentViewableByConnections()
 		throws Exception {
 		selenium.open("/user/joebloggs/home1");
 		loadRequiredJavaScriptModules();
@@ -60,7 +60,7 @@ public class AddMicroblogsContentViewableByEveryoneTest extends BaseTestCase {
 		selenium.typeKeys("//textarea",
 			RuntimeVariables.replace("Microblogs Post"));
 		selenium.select("//select[@id='_1_WAR_microblogsportlet_socialRelationType']",
-			RuntimeVariables.replace("Everyone"));
+			RuntimeVariables.replace("Connections"));
 		selenium.clickAt("//input[@value='Post']",
 			RuntimeVariables.replace("Post"));
 

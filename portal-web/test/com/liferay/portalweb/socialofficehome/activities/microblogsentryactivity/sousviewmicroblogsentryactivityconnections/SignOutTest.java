@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficehome.activities.microblogsentryactivity.viewmicroblogsentryactivityme;
+package com.liferay.portalweb.socialofficehome.activities.microblogsentryactivity.sousviewmicroblogsentryactivityconnections;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,18 +20,42 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewMicroblogsEntryActivityMeTest extends BaseTestCase {
-	public void testViewMicroblogsEntryActivityMe() throws Exception {
-		selenium.open("/user/joebloggs/home1");
-		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Activities"),
-			selenium.getText("xPath=(//h1[@class='portlet-title']/span)[2]"));
-		assertEquals(RuntimeVariables.replace("Me"), selenium.getText("link=Me"));
-		selenium.clickAt("link=Me", RuntimeVariables.replace("Me"));
+public class SignOutTest extends BaseTestCase {
+	public void testSignOut() throws Exception {
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent("link=Sign Out")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.click(RuntimeVariables.replace("link=Sign Out"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Microblogs Post"),
-			selenium.getText("//div[@class='activity-title']"));
-		assertTrue(selenium.isPartialText("//div[@class='activity-body']", "Joe"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent("_58_login")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
 	}
 }

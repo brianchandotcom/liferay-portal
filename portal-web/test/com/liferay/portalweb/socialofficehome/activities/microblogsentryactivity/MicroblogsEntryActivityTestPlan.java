@@ -15,9 +15,8 @@
 package com.liferay.portalweb.socialofficehome.activities.microblogsentryactivity;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.socialofficehome.activities.microblogsentryactivity.socoviewmicroblogsentryactivitycoworkers.SOCo_ViewMicroblogsEntryActivityCoworkersTests;
-import com.liferay.portalweb.socialofficehome.activities.microblogsentryactivity.sofoviewmicroblogsentryactivityfollowing.SOFo_ViewMicroblogsEntryActivityFollowingTests;
-import com.liferay.portalweb.socialofficehome.activities.microblogsentryactivity.sofrviewmicroblogsentryactivityfriends.SOFr_ViewMicroblogsEntryActivityFriendsTests;
+import com.liferay.portalweb.socialofficehome.activities.microblogsentryactivity.sousviewmicroblogsentryactivityconnections.SOUs_ViewMicroblogsEntryActivityConnectionsTests;
+import com.liferay.portalweb.socialofficehome.activities.microblogsentryactivity.sousviewmicroblogsentryactivityfollowing.SOUs_ViewMicroblogsEntryActivityFollowingTests;
 import com.liferay.portalweb.socialofficehome.activities.microblogsentryactivity.viewmicroblogsentryactivityme.ViewMicroblogsEntryActivityMeTests;
 
 import junit.framework.Test;
@@ -32,10 +31,9 @@ public class MicroblogsEntryActivityTestPlan extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(
-			SOCo_ViewMicroblogsEntryActivityCoworkersTests.suite());
+			SOUs_ViewMicroblogsEntryActivityConnectionsTests.suite());
 		testSuite.addTest(
-			SOFo_ViewMicroblogsEntryActivityFollowingTests.suite());
-		testSuite.addTest(SOFr_ViewMicroblogsEntryActivityFriendsTests.suite());
+			SOUs_ViewMicroblogsEntryActivityFollowingTests.suite());
 		testSuite.addTest(ViewMicroblogsEntryActivityMeTests.suite());
 
 		return testSuite;

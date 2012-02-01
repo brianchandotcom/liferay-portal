@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficehome.activities.microblogsentryactivity.viewmicroblogsentryactivityme;
+package com.liferay.portalweb.socialofficehome.activities.microblogsentryactivity.sousviewmicroblogsentryactivityfollowing;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,18 +20,21 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewMicroblogsEntryActivityMeTest extends BaseTestCase {
-	public void testViewMicroblogsEntryActivityMe() throws Exception {
-		selenium.open("/user/joebloggs/home1");
+public class SOUs_ViewMicroblogsEntryActivityFollowingTest extends BaseTestCase {
+	public void testSOUs_ViewMicroblogsEntryActivityFollowing()
+		throws Exception {
+		selenium.open("/user/socialoffice01/home1");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Activities"),
 			selenium.getText("xPath=(//h1[@class='portlet-title']/span)[2]"));
-		assertEquals(RuntimeVariables.replace("Me"), selenium.getText("link=Me"));
-		selenium.clickAt("link=Me", RuntimeVariables.replace("Me"));
+		assertEquals(RuntimeVariables.replace("Following"),
+			selenium.getText("link=Following"));
+		selenium.clickAt("link=Following", RuntimeVariables.replace("Following"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Microblogs Post"),
 			selenium.getText("//div[@class='activity-title']"));
-		assertTrue(selenium.isPartialText("//div[@class='activity-body']", "Joe"));
+		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
+			selenium.getText("//a[@class='user']"));
 	}
 }

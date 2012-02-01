@@ -16,6 +16,8 @@ package com.liferay.portalweb.portlet.signin.portlet.addportletsiduplicate;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.signin.portlet.addportletsi.AddPageSITest;
+import com.liferay.portalweb.portlet.signin.portlet.addportletsi.AddPortletSITest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

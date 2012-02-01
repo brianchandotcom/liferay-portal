@@ -17,15 +17,9 @@ package com.liferay.portalweb.socialofficehome.whatshappening.whentry;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.socialofficehome.whatshappening.whentry.addwhentrycontent150character.AddWHEntryContent150CharacterTests;
 import com.liferay.portalweb.socialofficehome.whatshappening.whentry.addwhentrycontent151character.AddWHEntryContent151CharacterTests;
-import com.liferay.portalweb.socialofficehome.whatshappening.whentry.addwhentrycontentviewablebycoworkers.AddWHEntryContentViewableByCoworkersTests;
+import com.liferay.portalweb.socialofficehome.whatshappening.whentry.addwhentrycontentviewablebyconnections.AddWHEntryContentViewableByConnectionsTests;
 import com.liferay.portalweb.socialofficehome.whatshappening.whentry.addwhentrycontentviewablebyeveryone.AddWHEntryContentViewableByEveryoneTests;
 import com.liferay.portalweb.socialofficehome.whatshappening.whentry.addwhentrycontentviewablebyfollowers.AddWHEntryContentViewableByFollowersTests;
-import com.liferay.portalweb.socialofficehome.whatshappening.whentry.addwhentrycontentviewablebyfriends.AddWHEntryContentViewableByFriendsTests;
-import com.liferay.portalweb.socialofficehome.whatshappening.whentry.deletewhentrycontent.DeleteWHEntryContentTests;
-import com.liferay.portalweb.socialofficehome.whatshappening.whentry.editwhentrycontentviewablebycoworkers.EditWHEntryContentViewableByCoworkersTests;
-import com.liferay.portalweb.socialofficehome.whatshappening.whentry.editwhentrycontentviewablebyeveryone.EditWHEntryContentViewableByEveryoneTests;
-import com.liferay.portalweb.socialofficehome.whatshappening.whentry.editwhentrycontentviewablebyfollowers.EditWHEntryContentViewableByFollowersTests;
-import com.liferay.portalweb.socialofficehome.whatshappening.whentry.editwhentrycontentviewablebyfriends.EditWHEntryContentViewableByFriendsTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -40,15 +34,9 @@ public class WHEntryTestPlan extends BaseTestSuite {
 
 		testSuite.addTest(AddWHEntryContent150CharacterTests.suite());
 		testSuite.addTest(AddWHEntryContent151CharacterTests.suite());
-		testSuite.addTest(AddWHEntryContentViewableByCoworkersTests.suite());
+		testSuite.addTest(AddWHEntryContentViewableByConnectionsTests.suite());
 		testSuite.addTest(AddWHEntryContentViewableByEveryoneTests.suite());
 		testSuite.addTest(AddWHEntryContentViewableByFollowersTests.suite());
-		testSuite.addTest(AddWHEntryContentViewableByFriendsTests.suite());
-		testSuite.addTest(DeleteWHEntryContentTests.suite());
-		testSuite.addTest(EditWHEntryContentViewableByCoworkersTests.suite());
-		testSuite.addTest(EditWHEntryContentViewableByEveryoneTests.suite());
-		testSuite.addTest(EditWHEntryContentViewableByFollowersTests.suite());
-		testSuite.addTest(EditWHEntryContentViewableByFriendsTests.suite());
 
 		return testSuite;
 	}

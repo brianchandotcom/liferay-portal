@@ -25,8 +25,16 @@ import junit.framework.TestSuite;
 public class AddWHEntryContentViewableByEveryoneTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
+		testSuite.addTestSuite(AddSOUserTest.class);
 		testSuite.addTestSuite(AddWHEntryContentViewableByEveryoneTest.class);
+		testSuite.addTestSuite(ViewWHEntryContentViewableByEveryoneTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SOUs_SignInTest.class);
+		testSuite.addTestSuite(SOUs_ViewWHEntryContentViewableByEveryoneTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SOSignInTest.class);
 		testSuite.addTestSuite(TearDownWHEntryContentTest.class);
+		testSuite.addTestSuite(TearDownUserTest.class);
 
 		return testSuite;
 	}

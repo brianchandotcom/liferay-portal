@@ -25,20 +25,18 @@ import junit.framework.TestSuite;
 public class AddWHEntryContentViewableByFollowersTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AddUserSOFollowerTest.class);
+		testSuite.addTestSuite(AddSOUserTest.class);
 		testSuite.addTestSuite(AddWHEntryContentViewableByFollowersTest.class);
 		testSuite.addTestSuite(ViewWHEntryContentViewableByFollowersTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
-		testSuite.addTestSuite(SOFo_NewPasswordTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
-		testSuite.addTestSuite(SOFo_SignInTest.class);
-		testSuite.addTestSuite(SOFo_ViewWHContentViewableByFollowersTest.class);
-		testSuite.addTestSuite(SOFo_AddAsFollowerCCActionsTest.class);
-		testSuite.addTestSuite(SOFo_ViewFollowerWHContentViewableByFollowersTest.class);
+		testSuite.addTestSuite(SOUs_SignInTest.class);
+		testSuite.addTestSuite(SOUs_ViewWHContentViewableByFollowersTest.class);
+		testSuite.addTestSuite(SOUs_AddFollowingCCUserTest.class);
+		testSuite.addTestSuite(SOUs_ViewFollowingWHContentViewableByFollowersTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SOSignInTest.class);
 		testSuite.addTestSuite(TearDownWHEntryContentTest.class);
-		testSuite.addTestSuite(TearDownSOUserTest.class);
+		testSuite.addTestSuite(TearDownUserTest.class);
 
 		return testSuite;
 	}

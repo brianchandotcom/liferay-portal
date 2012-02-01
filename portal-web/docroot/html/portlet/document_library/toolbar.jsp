@@ -45,7 +45,7 @@ String orderByType = ParamUtil.getString(request, "orderByType");
 
 		<liferay-ui:icon
 			image="undo"
-			message="cancel-checkout"
+			message="cancel-checkout[document]"
 			url="<%= taglibUrl %>"
 		/>
 
@@ -65,7 +65,7 @@ String orderByType = ParamUtil.getString(request, "orderByType");
 
 		<liferay-ui:icon
 			image="lock"
-			message="checkout"
+			message="checkout[document]"
 			url="<%= taglibUrl %>"
 		/>
 

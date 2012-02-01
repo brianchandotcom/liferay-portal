@@ -26,7 +26,7 @@
 
 			<liferay-ui:icon
 				image="lock"
-				message="checkout"
+				message="checkout[document]"
 				url="<%= checkOutURL %>"
 			/>
 		</c:when>
@@ -54,7 +54,7 @@
 
 				<liferay-ui:icon
 					image="undo"
-					message="cancel-checkout"
+					message="cancel-checkout[document]"
 					url="<%= cancelCheckOutURL %>"
 				/>
 			</c:if>

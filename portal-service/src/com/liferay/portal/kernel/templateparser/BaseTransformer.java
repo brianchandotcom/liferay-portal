@@ -146,6 +146,7 @@ public abstract class BaseTransformer implements Transformer {
 				try {
 					templateParser =
 						(TemplateParser)InstanceFactory.newInstance(
+							PortalClassLoaderUtil.getClassLoader(),
 							templateParserClassName);
 				}
 				catch (Exception e) {

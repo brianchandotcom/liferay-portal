@@ -16,6 +16,8 @@ package com.liferay.portalweb.portlet.passwordgenerator.portlet.addportletduplic
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.passwordgenerator.portlet.addportlet.AddPagePGTest;
+import com.liferay.portalweb.portlet.passwordgenerator.portlet.addportlet.AddPortletPGTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

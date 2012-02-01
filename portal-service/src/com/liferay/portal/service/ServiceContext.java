@@ -323,6 +323,27 @@ public class ServiceContext implements Cloneable, Serializable {
 		return _expandoBridgeAttributes;
 	}
 
+	/**
+	 * Returns the date when an <code>aui:form</code> was generated in this
+	 * service context. The form date can be used in detecting situations in
+	 * which an entity has been modified while another client was editing that
+	 * entity. </p>
+	 *
+	 * <p>
+	 * Example:
+	 * </p>
+	 *
+	 * <p>
+	 * Person1 and person2 start editing the same version of a journal article.
+	 * Person1 publishes changes to the article first. When person2 attempts to
+	 * publish changes to that article, the service implementation finds that a
+	 * modification to that article has already been published some time after
+	 * person2 started editing the article. Since the the article modification
+	 * date was found to be later than the form date for person2, person2 could
+	 * be alerted to the modification and make a backup copy of his edits before
+	 * synchronizing with the published changes by person1.
+	 * </p>
+	 */
 	public Date getFormDate() {
 		return _formDate;
 	}
@@ -887,6 +908,30 @@ public class ServiceContext implements Cloneable, Serializable {
 		_expandoBridgeAttributes = expandoBridgeAttributes;
 	}
 
+	/**
+	 * Sets the date when an <code>aui:form</code> was generated in this service
+	 * context. The form date can be used in detecting situations in which an
+	 * entity has been modified while another client was editing that entity.
+	 * </p>
+	 *
+	 * <p>
+	 * Example:
+	 * </p>
+	 *
+	 * <p>
+	 * Person1 and person2 start editing the same version of a journal article.
+	 * Person1 publishes changes to the article first. When person2 attempts to
+	 * publish changes to that article, the service implementation finds that a
+	 * modification to that article has already been published some time after
+	 * person2 started editing the article. Since the the article modification
+	 * date was found to be later than the form date for person2, person2 could
+	 * be alerted to the modification and make a backup copy of his edits before
+	 * synchronizing with the published changes by person1.
+	 * </p>
+	 *
+	 * @param formDate the date that an <code>aui:form</code> was generated for
+	 *        this service context (optionally <code>null</code>)
+	 */
 	public void setFormDate(Date formDate) {
 		_formDate = formDate;
 	}

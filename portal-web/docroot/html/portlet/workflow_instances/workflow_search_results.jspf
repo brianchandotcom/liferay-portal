@@ -33,7 +33,7 @@ if (portletName.equals(PortletKeys.WORKFLOW_DEFINITIONS) || portletName.equals(P
 
 	allInstances = true;
 
-	resultsInstances = WorkflowInstanceManagerUtil.getWorkflowInstances(company.getCompanyId(), null, assetTypes, completedInstances, searchContainer.getStart(), searchContainer.getEnd(), null);
+	resultsInstances = WorkflowInstanceManagerUtil.getWorkflowInstances(company.getCompanyId(), null, assetTypes, completedInstances, searchContainer.getStart(), searchContainer.getEnd(), WorkflowComparatorFactoryUtil.getInstanceStartDateComparator());
 	totalInstances = WorkflowInstanceManagerUtil.getWorkflowInstanceCount(company.getCompanyId(), null, assetTypes, completedInstances);
 }
 else {
@@ -44,7 +44,7 @@ else {
 		searchContainer.setEmptyResultsMessage("there-are-no-pending-instances-started-by-me");
 	}
 
-	resultsInstances = WorkflowInstanceManagerUtil.getWorkflowInstances(company.getCompanyId(), user.getUserId(), assetTypes, completedInstances, searchContainer.getStart(), searchContainer.getEnd(), null);
+	resultsInstances = WorkflowInstanceManagerUtil.getWorkflowInstances(company.getCompanyId(), user.getUserId(), assetTypes, completedInstances, searchContainer.getStart(), searchContainer.getEnd(), WorkflowComparatorFactoryUtil.getInstanceStartDateComparator());
 	totalInstances = WorkflowInstanceManagerUtil.getWorkflowInstanceCount(company.getCompanyId(), user.getUserId(), assetTypes, completedInstances);
 }
 %>

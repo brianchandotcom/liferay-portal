@@ -48,19 +48,19 @@ public class AnnouncementsEntryFinderImpl
 	extends BasePersistenceImpl<AnnouncementsEntry>
 	implements AnnouncementsEntryFinder {
 
-	public static String COUNT_BY_HIDDEN =
+	public static final String COUNT_BY_HIDDEN =
 		AnnouncementsEntryFinder.class.getName() + ".countByHidden";
 
-	public static String COUNT_BY_NOT_HIDDEN =
+	public static final String COUNT_BY_NOT_HIDDEN =
 		AnnouncementsEntryFinder.class.getName() + ".countByNotHidden";
 
-	public static String FIND_BY_DISPLAY_DATE =
+	public static final String FIND_BY_DISPLAY_DATE =
 		AnnouncementsEntryFinder.class.getName() + ".findByDisplayDate";
 
-	public static String FIND_BY_HIDDEN =
+	public static final String FIND_BY_HIDDEN =
 		AnnouncementsEntryFinder.class.getName() + ".findByHidden";
 
-	public static String FIND_BY_NOT_HIDDEN =
+	public static final String FIND_BY_NOT_HIDDEN =
 		AnnouncementsEntryFinder.class.getName() + ".findByNotHidden";
 
 	public int countByScope(

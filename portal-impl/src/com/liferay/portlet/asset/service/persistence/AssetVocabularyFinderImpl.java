@@ -37,10 +37,10 @@ public class AssetVocabularyFinderImpl
 	extends BasePersistenceImpl<AssetVocabulary>
 	implements AssetVocabularyFinder {
 
-	public static String COUNT_BY_G_N =
+	public static final String COUNT_BY_G_N =
 		AssetVocabularyFinder.class.getName() + ".countByG_N";
 
-	public static String FIND_BY_G_N =
+	public static final String FIND_BY_G_N =
 		AssetVocabularyFinder.class.getName() + ".findByG_N";
 
 	public int countByG_N(long groupId, String name) throws SystemException {

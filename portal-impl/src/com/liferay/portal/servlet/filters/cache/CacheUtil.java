@@ -29,7 +29,7 @@ import com.liferay.util.servlet.filters.CacheResponseData;
  */
 public class CacheUtil {
 
-	public static String CACHE_NAME = CacheUtil.class.getName();
+	public static final String CACHE_NAME = CacheUtil.class.getName();
 
 	public static void clearCache() {
 		if (ImportExportThreadLocal.isImportInProcess()) {

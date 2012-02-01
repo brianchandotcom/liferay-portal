@@ -20,7 +20,7 @@ package com.liferay.portal.kernel.parsers.bbcode;
  */
 public class BBCodeTranslatorUtil {
 
-	public static String NEW_THREAD_URL = "${newThreadURL}";
+	public static final String NEW_THREAD_URL = "${newThreadURL}";
 
 	public static BBCodeTranslator getBBCodeTranslator() {
 		return _bbCodeTranslator;

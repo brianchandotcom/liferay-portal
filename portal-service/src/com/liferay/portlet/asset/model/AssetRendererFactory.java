@@ -34,9 +34,9 @@ import javax.portlet.PortletURL;
  */
 public interface AssetRendererFactory {
 
-	public static int TYPE_LATEST = 0;
+	public static final int TYPE_LATEST = 0;
 
-	public static int TYPE_LATEST_APPROVED = 1;
+	public static final int TYPE_LATEST_APPROVED = 1;
 
 	public AssetEntry getAssetEntry(long assetEntryId)
 		throws PortalException, SystemException;

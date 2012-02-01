@@ -340,7 +340,7 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 					userId, existingFileEntry.getFileEntryId(),
 					fileEntry.getTitle(), fileEntry.getMimeType(),
 					fileEntry.getTitle(), fileEntry.getDescription(), null,
-					true, is, fileEntry.getSize(), serviceContext);
+					false, is, fileEntry.getSize(), serviceContext);
 			}
 			else {
 				FileVersion latestFileVersion =

@@ -374,14 +374,11 @@ public class UploadServletRequestImpl
 		Enumeration<String> enu = super.getParameterNames();
 
 		while (enu.hasMoreElements()) {
-			String name = enu.nextElement();
-
-			if (!_regularParams.containsKey(name)) {
-				parameterNames.add(name);
-			}
+			parameterNames.add(enu.nextElement());
 		}
 
 		parameterNames.addAll(_regularParams.keySet());
+		parameterNames.addAll(_fileParams.keySet());
 
 		return Collections.enumeration(parameterNames);
 	}

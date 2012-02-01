@@ -3352,7 +3352,7 @@ AUI.add(
 
 						if ((type == 'image') && source) {
 							var isLocalized = instance.get('localized');
-							var inputFileName = 'structure_image_' + value + '_' + instance.get('variableName');
+							var inputFileName = instance.portletNamespace + 'structure_image_' + value + '_' + instance.get('variableName');
 							var inputFile = source.one('.journal-article-component-container [type=file]');
 
 							if (isLocalized) {

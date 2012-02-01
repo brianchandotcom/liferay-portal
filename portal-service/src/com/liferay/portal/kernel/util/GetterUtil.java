@@ -23,7 +23,7 @@ import java.util.Date;
  */
 public class GetterUtil {
 
-	public static String[] BOOLEANS = {"true", "t", "y", "on", "1"};
+	public static final String[] BOOLEANS = {"true", "t", "y", "on", "1"};
 
 	public static final boolean DEFAULT_BOOLEAN = false;
 

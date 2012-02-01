@@ -53,11 +53,11 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 
 	public static final long REPOSITORY_ID = CompanyConstants.SYSTEM;
 
-	public static int THUMBNAIL_INDEX_CUSTOM_1 = 1;
+	public static final int THUMBNAIL_INDEX_CUSTOM_1 = 1;
 
-	public static int THUMBNAIL_INDEX_CUSTOM_2 = 2;
+	public static final int THUMBNAIL_INDEX_CUSTOM_2 = 2;
 
-	public static int THUMBNAIL_INDEX_DEFAULT = 0;
+	public static final int THUMBNAIL_INDEX_DEFAULT = 0;
 
 	public static final String THUMBNAIL_PATH = "document_thumbnail/";
 

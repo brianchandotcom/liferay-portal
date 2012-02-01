@@ -44,10 +44,10 @@ import java.util.List;
 public class DDMStructureFinderImpl
 	extends BasePersistenceImpl<DDMStructure> implements DDMStructureFinder {
 
-	public static String COUNT_BY_C_G_C_N_D_S_T =
+	public static final String COUNT_BY_C_G_C_N_D_S_T =
 		DDMStructureFinder.class.getName() + ".countByC_G_C_N_D_S_T";
 
-	public static String FIND_BY_C_G_C_N_D_S_T =
+	public static final String FIND_BY_C_G_C_N_D_S_T =
 		DDMStructureFinder.class.getName() + ".findByC_G_C_N_D_S_T";
 
 	public int countByKeywords(

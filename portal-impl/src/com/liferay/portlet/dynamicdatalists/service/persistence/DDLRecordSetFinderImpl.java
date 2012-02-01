@@ -40,10 +40,10 @@ import java.util.List;
 public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 	implements DDLRecordSetFinder {
 
-	public static String COUNT_BY_C_G_N_D_S =
+	public static final String COUNT_BY_C_G_N_D_S =
 		DDLRecordSetFinder.class.getName() + ".countByC_G_N_D_S";
 
-	public static String FIND_BY_C_G_N_D_S =
+	public static final String FIND_BY_C_G_N_D_S =
 		DDLRecordSetFinder.class.getName() + ".findByC_G_N_D_S";
 
 	public int countByKeywords(

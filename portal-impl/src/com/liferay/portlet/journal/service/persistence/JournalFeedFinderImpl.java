@@ -39,10 +39,10 @@ import java.util.List;
 public class JournalFeedFinderImpl
 	extends BasePersistenceImpl<JournalFeed> implements JournalFeedFinder {
 
-	public static String COUNT_BY_C_G_F_N_D =
+	public static final String COUNT_BY_C_G_F_N_D =
 		JournalFeedFinder.class.getName() + ".countByC_G_F_N_D";
 
-	public static String FIND_BY_C_G_F_N_D =
+	public static final String FIND_BY_C_G_F_N_D =
 		JournalFeedFinder.class.getName() + ".findByC_G_F_N_D";
 
 	public int countByKeywords(long companyId, long groupId, String keywords)

@@ -43,43 +43,43 @@ import java.util.List;
 public class DLFileEntryFinderImpl
 	extends BasePersistenceImpl<DLFileEntry> implements DLFileEntryFinder {
 
-	public static String COUNT_BY_EXTRA_SETTINGS =
+	public static final String COUNT_BY_EXTRA_SETTINGS =
 		DLFileEntryFinder.class.getName() + ".countByExtraSettings";
 
-	public static String COUNT_BY_G_F =
+	public static final String COUNT_BY_G_F =
 		DLFileEntryFinder.class.getName() + ".countByG_F";
 
-	public static String COUNT_BY_G_U_F =
+	public static final String COUNT_BY_G_U_F =
 		DLFileEntryFinder.class.getName() + ".countByG_U_F";
 
-	public static String COUNT_BY_G_F_S =
+	public static final String COUNT_BY_G_F_S =
 		DLFileEntryFinder.class.getName() + ".countByG_F_S";
 
-	public static String COUNT_BY_G_U_F_S =
+	public static final String COUNT_BY_G_U_F_S =
 		DLFileEntryFinder.class.getName() + ".countByG_U_F_S";
 
-	public static String FIND_BY_ANY_IMAGE_ID =
+	public static final String FIND_BY_ANY_IMAGE_ID =
 		DLFileEntryFinder.class.getName() + ".findByAnyImageId";
 
-	public static String FIND_BY_EXTRA_SETTINGS =
+	public static final String FIND_BY_EXTRA_SETTINGS =
 		DLFileEntryFinder.class.getName() + ".findByExtraSettings";
 
-	public static String FIND_BY_NO_ASSETS =
+	public static final String FIND_BY_NO_ASSETS =
 		DLFileEntryFinder.class.getName() + ".findByNoAssets";
 
-	public static String FIND_BY_ORPHANED_FILE_ENTRIES =
+	public static final String FIND_BY_ORPHANED_FILE_ENTRIES =
 		DLFileEntryFinder.class.getName() + ".findByOrphanedFileEntries";
 
-	public static String FIND_BY_G_F =
+	public static final String FIND_BY_G_F =
 		DLFileEntryFinder.class.getName() + ".findByG_F";
 
-	public static String FIND_BY_G_U_F =
+	public static final String FIND_BY_G_U_F =
 		DLFileEntryFinder.class.getName() + ".findByG_U_F";
 
-	public static String FIND_BY_G_F_S =
+	public static final String FIND_BY_G_F_S =
 		DLFileEntryFinder.class.getName() + ".findByG_F_S";
 
-	public static String FIND_BY_G_U_F_S =
+	public static final String FIND_BY_G_U_F_S =
 		DLFileEntryFinder.class.getName() + ".findByG_U_F_S";
 
 	public int countByExtraSettings() throws SystemException {

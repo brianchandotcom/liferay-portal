@@ -32,7 +32,7 @@ import java.util.List;
 public class CyrusVirtualPersistenceImpl
 	extends BasePersistenceImpl<Dummy> implements CyrusVirtualPersistence {
 
-	public static String FIND_BY_USER_ID =
+	public static final String FIND_BY_USER_ID =
 		"SELECT cyrusVirtual FROM CyrusVirtual cyrusVirtual WHERE userId = ?";
 
 	public CyrusVirtual findByPrimaryKey(String emailAddress)

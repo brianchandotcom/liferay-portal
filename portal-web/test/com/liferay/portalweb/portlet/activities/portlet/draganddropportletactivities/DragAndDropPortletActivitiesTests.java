@@ -15,6 +15,9 @@
 package com.liferay.portalweb.portlet.activities.portlet.draganddropportletactivities;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portlet.activities.portlet.addportletactivities.AddPageActivitiesTest;
+import com.liferay.portalweb.portlet.activities.portlet.addportletactivities.AddPortletActivitiesTest;
+import com.liferay.portalweb.portlet.activities.portlet.addportletactivities.TearDownMyCommunityPrivatePageTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -27,6 +30,7 @@ public class DragAndDropPortletActivitiesTests extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddPageActivitiesTest.class);
 		testSuite.addTestSuite(AddPortletActivitiesTest.class);
+		testSuite.addTestSuite(DragAndDropPortletActivitiesTest.class);
 		testSuite.addTestSuite(TearDownMyCommunityPrivatePageTest.class);
 
 		return testSuite;

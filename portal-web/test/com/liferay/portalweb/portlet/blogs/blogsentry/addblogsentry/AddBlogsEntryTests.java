@@ -16,6 +16,9 @@ package com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.blogs.blogsentry.deleteblogsentry.DeleteBlogsEntryTest;
+import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPageBlogsTest;
+import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPortletBlogsTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -31,6 +34,7 @@ public class AddBlogsEntryTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddBlogsEntryTest.class);
 		testSuite.addTestSuite(TearDownBlogsEntryTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
+		testSuite.addTestSuite(DeleteBlogsEntryTest.class);
 
 		return testSuite;
 	}

@@ -16,6 +16,8 @@ package com.liferay.portalweb.portlet.wikidisplay.wikinode.selectwikinodenull;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.wikidisplay.portlet.addportlet.AddPageWDTest;
+import com.liferay.portalweb.portlet.wikidisplay.portlet.addportlet.AddPortletWDTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

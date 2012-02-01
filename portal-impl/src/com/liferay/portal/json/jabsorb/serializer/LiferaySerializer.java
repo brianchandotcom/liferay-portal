@@ -340,19 +340,8 @@ public class LiferaySerializer extends AbstractSerializer {
 					}
 
 					if (value != null) {
-					
-						// original reflection call didn't support 
-						// casting, e.g. setting "[Integer] -> [int]"
-						// (Integer array value to int array property)
-
-						// TODO doesn't this method have some unwanted 
-						// converting side-efects?
-						// It should not, source and target objects should
-						// have matching signatures
-						BeanUtils.copyProperty(javaClassInstance, 
-							fieldName, value);
-						
-						//field.set(javaClassInstance, value);
+						BeanUtils.copyProperty(
+							javaClassInstance, fieldName, value);
 					}
 				}
 

@@ -530,6 +530,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: []
+		requires: ['aui-debounce', 'aui-node']
 	}
 );

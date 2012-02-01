@@ -16,6 +16,8 @@ package com.liferay.portalweb.portal.permissions.documentsandmedia.portlet.guest
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.documentlibrary.portlet.addportlet.AddPageDMTest;
+import com.liferay.portalweb.portlet.documentlibrary.portlet.addportlet.AddPortletDMTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -26,8 +28,8 @@ import junit.framework.TestSuite;
 public class Guest_ViewDmPortletInlineTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AddPageDmTest.class);
-		testSuite.addTestSuite(AddPortletDmTest.class);
+		testSuite.addTestSuite(AddPageDMTest.class);
+		testSuite.addTestSuite(AddPortletDMTest.class);
 		testSuite.addTestSuite(PermissionsGuestViewPortletOffTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(Guest_NoViewDmPortletTest.class);

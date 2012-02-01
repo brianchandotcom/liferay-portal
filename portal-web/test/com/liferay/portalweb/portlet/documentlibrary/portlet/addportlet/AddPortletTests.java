@@ -26,8 +26,8 @@ import junit.framework.TestSuite;
 public class AddPortletTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AddPageDLTest.class);
-		testSuite.addTestSuite(AddPortletDLTest.class);
+		testSuite.addTestSuite(AddPageDMTest.class);
+		testSuite.addTestSuite(AddPortletDMTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

@@ -16,6 +16,7 @@ package com.liferay.portalweb.portlet.iframe.portlet.addportletiframemultiple;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.iframe.portlet.addportletiframe.AddPageIFrameTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

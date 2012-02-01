@@ -854,7 +854,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						submitForm(document.<portlet:namespace />fm);
 					},
 					icon: 'lock',
-					label: '<%= UnicodeLanguageUtil.get(pageContext, "checkout") %>'
+					label: '<%= UnicodeLanguageUtil.get(pageContext, "checkout[document]") %>'
 				}
 			);
 		</c:if>
@@ -868,7 +868,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						submitForm(document.<portlet:namespace />fm);
 					},
 					icon: 'undo',
-					label: '<%= UnicodeLanguageUtil.get(pageContext, "cancel-checkout") %>'
+					label: '<%= UnicodeLanguageUtil.get(pageContext, "cancel-checkout[document]") %>'
 				},
 				{
 

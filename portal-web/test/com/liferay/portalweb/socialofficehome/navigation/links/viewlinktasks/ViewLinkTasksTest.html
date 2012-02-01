@@ -10,43 +10,43 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/user/joebloggs/home/</td>
+	<td>/user/joebloggs/home1/</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div/div/div/div[1]/ul/li[5]/a</td>
+	<td>//nav/ul/li[contains(.,'Tasks')]/a/span</td>
 	<td>Tasks</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div/div/div/div[1]/ul/li[5]/a</td>
+	<td>//nav/ul/li[contains(.,'Tasks')]/a/span</td>
 	<td>Tasks</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[2]/div/div/div/section/header/h1/span[2]</td>
+	<td>//span[@class='portlet-title-default']</td>
 	<td>Tasks</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/div/ul/li[1]/span/a</td>
+	<td>link=Assigned to Me</td>
 	<td>Assigned to Me</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/div/ul/li[2]/span/a</td>
+	<td>link=I Have Created</td>
 	<td>I Have Created</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//section/div/div/div/div[1]/a[1]</td>
+	<td>link=Add Task</td>
 	<td>Add Task</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[3]</td>
-	<td>Filter</td>
+	<td>link=Permissions</td>
+	<td>Permissions</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -55,12 +55,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[4]/table/tbody/tr/td[2]</td>
-	<td>Show Completed Tasks</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[3]/div/section/header/h1/span</td>
+	<td>//div[@id='so-sidebar']/h3</td>
 	<td>Sites</td>
 </tr>
 <tr>

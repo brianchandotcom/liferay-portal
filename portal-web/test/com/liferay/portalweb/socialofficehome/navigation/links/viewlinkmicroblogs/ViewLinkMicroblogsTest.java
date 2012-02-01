@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewLinkMicroblogsTest extends BaseTestCase {
 	public void testViewLinkMicroblogs() throws Exception {
-		selenium.open("/user/joebloggs/home/");
+		selenium.open("/user/joebloggs/home1/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -31,7 +31,8 @@ public class ViewLinkMicroblogsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div/div/div/div[1]/ul/li[3]/a")) {
+				if (selenium.isVisible(
+							"//nav/ul/li[contains(.,'Microblogs')]/a/span")) {
 					break;
 				}
 			}
@@ -41,23 +42,18 @@ public class ViewLinkMicroblogsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//div/div/div/div[1]/ul/li[3]/a",
+		selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Microblogs"),
-			selenium.getText("//div[2]/div/div/div/section/header/h1"));
-		assertEquals(RuntimeVariables.replace("What's happening?"),
-			selenium.getText("//div[2]/h1/span"));
-		assertTrue(selenium.isElementPresent("//textarea"));
-		assertEquals(RuntimeVariables.replace("Timeline"),
-			selenium.getText("//div/div/ul/li[1]/span/a"));
-		assertEquals(RuntimeVariables.replace("Mentions"),
-			selenium.getText("//div/div/ul/li[2]/span/a"));
+			selenium.getText("//span[@class='portlet-title-default']"));
+		assertTrue(selenium.isElementPresent(
+				"//div[@id='_1_WAR_microblogsportlet_autocompleteContent']"));
 		assertEquals(RuntimeVariables.replace("You have no microblogs entry."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertEquals(RuntimeVariables.replace("Sites"),
-			selenium.getText("//div[3]/div/section/header/h1/span"));
+			selenium.getText("//div[@id='so-sidebar']/h3"));
 		assertTrue(selenium.isVisible("//div/input[1]"));
 		assertEquals(RuntimeVariables.replace("Liferay"),
 			selenium.getText("//li[3]/span[2]"));

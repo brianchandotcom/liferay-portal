@@ -15,33 +15,23 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div/div/div/div[1]/ul/li[1]/a</td>
+	<td>//nav/ul/li[contains(.,'Home')]/a/span</td>
 	<td>Home</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div/div/div/div[1]/ul/li[1]/a</td>
+	<td>//nav/ul/li[contains(.,'Home')]/a/span</td>
 	<td>Home</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//li[@class='home selected']/a/span</td>
-	<td>Home</td>
-</tr>
-<tr>
-	<td>assertElementNotPresent</td>
-	<td>//li[@class='selected']/a/span</td>
-	<td>Profile</td>
+	<td>xPath=(//span[@class='portlet-title-default'])[1]</td>
+	<td>Microblogs Status Update</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[1]/h1/span</td>
-	<td>What's happening?</td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>//textarea</td>
-	<td>Content</td>
+	<td>//div[@id='_2_WAR_microblogsportlet_autocompleteContent']</td>
+	<td>Update your status...</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -50,7 +40,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[2]/div/section/header/h1/span</td>
+	<td>xPath=(//h1[@class='portlet-title'])[2]</td>
 	<td>Activities</td>
 </tr>
 <tr>
@@ -60,7 +50,47 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[3]/div/section/header/h1/span</td>
+	<td>link=Connections</td>
+	<td>Connections</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Following</td>
+	<td>Following</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=My Sites</td>
+	<td>My Sites</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Me</td>
+	<td>Me</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//h1[@class='portlet-title'])[3]</td>
+	<td>Upcoming Tasks</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='view-all-tasks']</td>
+	<td>View All Tasks</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//h1[@class='portlet-title'])[4]</td>
+	<td>Events</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[2]/div/div[2]/div/section/div/div/div</td>
+	<td>There are no more events today.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='so-sidebar']/h3</td>
 	<td>Sites</td>
 </tr>
 <tr>

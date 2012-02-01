@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewLinkPrivateMessagingTest extends BaseTestCase {
 	public void testViewLinkPrivateMessaging() throws Exception {
-		selenium.open("/user/joebloggs/home/");
+		selenium.open("/user/joebloggs/home1/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -32,7 +32,7 @@ public class ViewLinkPrivateMessagingTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//section/div/div/div/div[1]/ul/li[4]/a")) {
+							"//nav/ul/li[contains(.,'Messages')]/a/span")) {
 					break;
 				}
 			}
@@ -42,17 +42,23 @@ public class ViewLinkPrivateMessagingTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//section/div/div/div/div[1]/ul/li[4]/a",
-			RuntimeVariables.replace("Private Messaging"));
+		selenium.clickAt("//nav/ul/li[contains(.,'Messages')]/a/span",
+			RuntimeVariables.replace("Messages"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Private Messaging"),
-			selenium.getText("//div[2]/div/div/div/section/header/h1/span[2]"));
-		assertTrue(selenium.isElementPresent("//input[@value='New Message']"));
+			selenium.getText("//span[@class='portlet-title-default']"));
 		assertEquals(RuntimeVariables.replace("No messages found."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
+		assertEquals("Mark as Unread",
+			selenium.getValue("//input[@value='Mark as Unread']"));
+		assertEquals("Mark as Read",
+			selenium.getValue("//input[@value='Mark as Read']"));
+		assertEquals("Delete", selenium.getValue("//input[@value='Delete']"));
+		assertEquals("New Message",
+			selenium.getValue("//input[@value='New Message']"));
 		assertEquals(RuntimeVariables.replace("Sites"),
-			selenium.getText("//div[3]/div/section/header/h1/span"));
+			selenium.getText("//div[@id='so-sidebar']/h3"));
 		assertTrue(selenium.isVisible("//div/input[1]"));
 		assertEquals(RuntimeVariables.replace("Liferay"),
 			selenium.getText("//li[3]/span[2]"));

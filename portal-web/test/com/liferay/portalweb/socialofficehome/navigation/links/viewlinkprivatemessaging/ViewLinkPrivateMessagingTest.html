@@ -10,28 +10,23 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/user/joebloggs/home/</td>
+	<td>/user/joebloggs/home1/</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//section/div/div/div/div[1]/ul/li[4]/a</td>
-	<td>Private Messaging</td>
+	<td>//nav/ul/li[contains(.,'Messages')]/a/span</td>
+	<td>Messages</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//section/div/div/div/div[1]/ul/li[4]/a</td>
-	<td>Private Messaging</td>
+	<td>//nav/ul/li[contains(.,'Messages')]/a/span</td>
+	<td>Messages</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[2]/div/div/div/section/header/h1/span[2]</td>
+	<td>//span[@class='portlet-title-default']</td>
 	<td>Private Messaging</td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>//input[@value='New Message']</td>
-	<td>New Message</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -39,8 +34,28 @@
 	<td>No messages found.</td>
 </tr>
 <tr>
+	<td>assertValue</td>
+	<td>//input[@value='Mark as Unread']</td>
+	<td>Mark as Unread</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>//input[@value='Mark as Read']</td>
+	<td>Mark as Read</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>//input[@value='Delete']</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>//input[@value='New Message']</td>
+	<td>New Message</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//div[3]/div/section/header/h1/span</td>
+	<td>//div[@id='so-sidebar']/h3</td>
 	<td>Sites</td>
 </tr>
 <tr>

@@ -10,32 +10,47 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/user/joebloggs/home/</td>
+	<td>/user/joebloggs/home1/</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//section/div/div/div/div[1]/ul/li[2]/a</td>
+	<td>//nav/ul/li[contains(.,'Contacts Center')]/a/span</td>
 	<td>Contacts Center</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//section/div/div/div/div[1]/ul/li[2]/a</td>
+	<td>//nav/ul/li[contains(.,'Contacts Center')]/a/span</td>
+	<td>Contacts Center</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//div[@class='aui-layout contacts-result']</td>
+	<td>Contact List</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1[@class='header-title']/span</td>
 	<td>Contacts Center</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[2]/div/div/div/section/header/h1/span[2]</td>
-	<td>Contacts Center</td>
+	<td>//a[contains(.,'You have 0 connections.')]</td>
+	<td>You have 0 connections.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='portlet-msg-info']</td>
-	<td>You have no contacts.</td>
+	<td>//a[contains(.,'You are following 0 people.')]</td>
+	<td>You are following 0 people.</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//a[contains(.,'View all')]</td>
+	<td>View all</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[3]/div/section/header/h1/span</td>
+	<td>//div[@id='so-sidebar']/h3</td>
 	<td>Sites</td>
 </tr>
 <tr>

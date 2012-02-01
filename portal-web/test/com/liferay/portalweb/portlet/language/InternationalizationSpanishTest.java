@@ -51,6 +51,23 @@ public class InternationalizationSpanishTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		selenium.clickAt("//nav/ul/li[2]/a/span",
 			RuntimeVariables.replace("Edit Page Name"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//input[@type='text']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace("P\u00e1gina de la prueba de lengua"));
 		selenium.clickAt("//button[@id='save']",

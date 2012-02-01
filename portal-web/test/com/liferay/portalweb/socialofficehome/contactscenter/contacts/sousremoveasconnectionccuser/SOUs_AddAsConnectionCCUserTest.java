@@ -103,8 +103,9 @@ public class SOUs_AddAsConnectionCCUserTest extends BaseTestCase {
 		assertFalse(selenium.isElementPresent(
 				"//div[contains(@class, 'contacts-center-home-content')]"));
 		assertEquals(RuntimeVariables.replace("Add as Connection"),
-			selenium.getText("//span[@class='action add-connection']/a/span"));
-		selenium.clickAt("//span[@class='action add-connection']/a/span",
+			selenium.getText(
+				"//button[@id='_1_WAR_contactsportlet_addConnectionButton']"));
+		selenium.clickAt("//button[@id='_1_WAR_contactsportlet_addConnectionButton']",
 			RuntimeVariables.replace("Add as Connection"));
 
 		for (int second = 0;; second++) {
@@ -125,6 +126,7 @@ public class SOUs_AddAsConnectionCCUserTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Connection Requested"),
 			selenium.getText("//span[@class='disabled']/span"));
-		assertFalse(selenium.isTextPresent("Add as Connection"));
+		assertFalse(selenium.isVisible(
+				"//button[@id='_1_WAR_contactsportlet_addConnectionButton']"));
 	}
 }

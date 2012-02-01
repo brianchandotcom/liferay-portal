@@ -53,33 +53,6 @@ public class TearDownSOSitesTest extends BaseTestCase {
 				selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-				selenium.clickAt("//strong/a/span",
-					RuntimeVariables.replace("Community Name"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				assertEquals(RuntimeVariables.replace("Global"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
-				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.type("//input[@id='_134_name']",
 					RuntimeVariables.replace("Name"));
 				selenium.clickAt("//input[@value='Search']",
@@ -87,10 +60,10 @@ public class TearDownSOSitesTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 
-				boolean site1Present = selenium.isPartialText("//tr[3]/td[1]",
-						"Name");
+				boolean community1Present = selenium.isElementPresent(
+						"//td[7]/span/ul/li/strong/a/span");
 
-				if (!site1Present) {
+				if (!community1Present) {
 					label = 2;
 
 					continue;
@@ -130,10 +103,10 @@ public class TearDownSOSitesTest extends BaseTestCase {
 
 			case 2:
 
-				boolean site2Present = selenium.isPartialText("//tr[3]/td[1]",
-						"Name");
+				boolean community2Present = selenium.isElementPresent(
+						"//td[7]/span/ul/li/strong/a/span");
 
-				if (!site2Present) {
+				if (!community2Present) {
 					label = 3;
 
 					continue;
@@ -173,10 +146,10 @@ public class TearDownSOSitesTest extends BaseTestCase {
 
 			case 3:
 
-				boolean site3Present = selenium.isPartialText("//tr[3]/td[1]",
-						"Name");
+				boolean community3Present = selenium.isElementPresent(
+						"//td[7]/span/ul/li/strong/a/span");
 
-				if (!site3Present) {
+				if (!community3Present) {
 					label = 4;
 
 					continue;
@@ -216,10 +189,10 @@ public class TearDownSOSitesTest extends BaseTestCase {
 
 			case 4:
 
-				boolean site4Present = selenium.isPartialText("//tr[3]/td[1]",
-						"Name");
+				boolean community4Present = selenium.isElementPresent(
+						"//td[7]/span/ul/li/strong/a/span");
 
-				if (!site4Present) {
+				if (!community4Present) {
 					label = 5;
 
 					continue;
@@ -259,10 +232,10 @@ public class TearDownSOSitesTest extends BaseTestCase {
 
 			case 5:
 
-				boolean site5Present = selenium.isPartialText("//tr[3]/td[1]",
-						"Name");
+				boolean community5Present = selenium.isElementPresent(
+						"//td[7]/span/ul/li/strong/a/span");
 
-				if (!site5Present) {
+				if (!community5Present) {
 					label = 6;
 
 					continue;

@@ -15,7 +15,7 @@
 package com.liferay.portalweb.socialofficehome.notifications;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.socialofficehome.notifications.requests.RequestsTestPlan;
+import com.liferay.portalweb.socialofficehome.notifications.notification.NotificationTestPlan;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -28,7 +28,7 @@ public class NotificationsTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(RequestsTestPlan.suite());
+		testSuite.addTest(NotificationTestPlan.suite());
 
 		return testSuite;
 	}

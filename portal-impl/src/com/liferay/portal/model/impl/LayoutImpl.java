@@ -111,9 +111,10 @@ public class LayoutImpl extends LayoutBaseImpl {
 		throws LayoutFriendlyURLException {
 
 		for (String keyword : PropsValues.LAYOUT_FRIENDLY_URL_KEYWORDS) {
-			if (friendlyURL.contains(
-					StringUtil.quote(keyword, StringPool.SLASH)) ||
-				friendlyURL.endsWith(StringPool.SLASH + keyword)) {
+			if (StringUtil.endsWith(
+					friendlyURL, StringUtil.quote(keyword, StringPool.SLASH)) ||
+				StringUtil.endsWith(
+					friendlyURL, StringPool.SLASH + keyword)) {
 
 				LayoutFriendlyURLException lfurle =
 					new LayoutFriendlyURLException(

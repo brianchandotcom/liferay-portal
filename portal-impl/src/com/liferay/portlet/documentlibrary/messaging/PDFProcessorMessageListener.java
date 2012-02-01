@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.messaging;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
@@ -30,12 +32,22 @@ public class PDFProcessorMessageListener extends BaseMessageListener {
 	protected void doReceive(Message message) throws Exception {
 		FileVersion fileVersion = (FileVersion)message.getPayload();
 
-		PDFProcessorUtil.generateImages(fileVersion);
+		try {
+			PDFProcessorUtil.generateImages(fileVersion);
+		}
+		catch (Exception e) {
+			_log.warn(
+				"Unable to generate images for file version: " +
+					fileVersion.getFileVersionId(), e);
+		}
 
 		if (PropsValues.DL_FILE_ENTRY_PROCESSORS_TRIGGER_SYNCHRONOUSLY) {
 			MessageBusUtil.sendMessage(
 				message.getResponseDestinationName(), message);
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		PDFProcessorMessageListener.class);
 
 }

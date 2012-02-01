@@ -1154,11 +1154,11 @@ public class OrganizationFinderImpl
 		}
 	}
 
-	protected static String COUNTRY_ID_SQL =
+	protected static final String COUNTRY_ID_SQL =
 		"((Organization_.countryId = ?) OR (Address.countryId = ?)) " +
 			"[$AND_OR_CONNECTOR$]";
 
-	protected static String REGION_ID_SQL =
+	protected static final String REGION_ID_SQL =
 		"((Organization_.regionId = ?) OR (Address.regionId = ?)) " +
 			"[$AND_OR_CONNECTOR$]";
 

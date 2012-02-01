@@ -949,19 +949,19 @@ public abstract class BaseDB implements DB {
 
 	protected abstract String reword(String data) throws IOException;
 
-	protected static String ALTER_COLUMN_NAME = "alter_column_name ";
+	protected static final String ALTER_COLUMN_NAME = "alter_column_name ";
 
-	protected static String ALTER_COLUMN_TYPE = "alter_column_type ";
+	protected static final String ALTER_COLUMN_TYPE = "alter_column_type ";
 
-	protected static String DROP_INDEX = "drop index";
+	protected static final String DROP_INDEX = "drop index";
 
-	protected static String DROP_PRIMARY_KEY = "drop primary key";
+	protected static final String DROP_PRIMARY_KEY = "drop primary key";
 
-	protected static String[] REWORD_TEMPLATE = {
+	protected static final String[] REWORD_TEMPLATE = {
 		"@table@", "@old-column@", "@new-column@", "@type@", "@nullable@"
 	};
 
-	protected static String[] TEMPLATE = {
+	protected static final String[] TEMPLATE = {
 		"##", "TRUE", "FALSE",
 		"'01/01/1970'", "CURRENT_TIMESTAMP",
 		" BLOB", " SBLOB", " BOOLEAN", " DATE",

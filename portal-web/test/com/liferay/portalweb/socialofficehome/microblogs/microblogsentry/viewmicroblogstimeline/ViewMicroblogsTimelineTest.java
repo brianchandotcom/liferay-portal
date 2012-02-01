@@ -24,123 +24,32 @@ public class ViewMicroblogsTimelineTest extends BaseTestCase {
 	public void testViewMicroblogsTimeline() throws Exception {
 		selenium.open("/user/joebloggs/home/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div/div/div/div[1]/ul/li[3]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("//div/div/div/div[1]/ul/li[3]/a",
+		assertEquals(RuntimeVariables.replace("Microblogs"),
+			selenium.getText("//nav/ul/li[contains(.,'Microblogs')]/a/span"));
+		selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Microblogs"),
-			selenium.getText("//div[2]/div/div/div/section/header/h1/span[2]"));
 		assertEquals(RuntimeVariables.replace("Timeline"),
 			selenium.getText("link=Timeline"));
 		selenium.clickAt("link=Timeline", RuntimeVariables.replace("Timeline"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"xPath=(//div[@class='my-entry-bubble '])[1]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertTrue(selenium.isVisible("xPath=(//div/span/a/img)[1]"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs (joebloggs)"),
+		assertEquals(RuntimeVariables.replace("Joe Bloggs says"),
 			selenium.getText("xPath=(//div[@class='user-name'])[1]"));
-		assertEquals(RuntimeVariables.replace("Microblogs Content"),
+		assertEquals(RuntimeVariables.replace("Microblogs Post"),
 			selenium.getText("xPath=(//div[@class='content'])[1]"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"xPath=(//div[@class='my-entry-bubble '])[2]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertTrue(selenium.isVisible("xPath=(//div/span/a/img)[2]"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs (joebloggs)"),
+		assertEquals(RuntimeVariables.replace("Comment"),
+			selenium.getText("xPath=(//span[@class='action comment']/a)[1]"));
+		assertEquals(RuntimeVariables.replace("Joe Bloggs says"),
 			selenium.getText("xPath=(//div[@class='user-name'])[2]"));
-		assertEquals(RuntimeVariables.replace("Microblogs Content"),
+		assertEquals(RuntimeVariables.replace("Microblogs Post"),
 			selenium.getText("xPath=(//div[@class='content'])[2]"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"xPath=(//div[@class='my-entry-bubble '])[3]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertTrue(selenium.isVisible("xPath=(//div/span/a/img)[3]"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs (joebloggs)"),
+		assertEquals(RuntimeVariables.replace("Comment"),
+			selenium.getText("xPath=(//span[@class='action comment']/a)[2]"));
+		assertEquals(RuntimeVariables.replace("Joe Bloggs says"),
 			selenium.getText("xPath=(//div[@class='user-name'])[3]"));
-		assertEquals(RuntimeVariables.replace("Microblogs Content"),
+		assertEquals(RuntimeVariables.replace("Microblogs Post"),
 			selenium.getText("xPath=(//div[@class='content'])[3]"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"xPath=(//div[@class='my-entry-bubble '])[4]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertTrue(selenium.isVisible("xPath=(//div/span/a/img)[4]"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs (joebloggs)"),
-			selenium.getText("xPath=(//div[@class='user-name'])[4]"));
-		assertEquals(RuntimeVariables.replace("Microblogs Content"),
-			selenium.getText("xPath=(//div[@class='content'])[4]"));
+		assertEquals(RuntimeVariables.replace("Comment"),
+			selenium.getText("xPath=(//span[@class='action comment']/a)[3]"));
 	}
 }

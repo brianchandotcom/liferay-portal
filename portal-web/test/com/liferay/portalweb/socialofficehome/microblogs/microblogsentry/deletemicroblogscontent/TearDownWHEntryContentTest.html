@@ -1,9 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head profile="http://selenium-ide.openqa.org/profiles/test-case">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="selenium.base" href="" />
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>TearDownWHEntryContentTest</title>
 </head>
 <body>
@@ -13,32 +10,27 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/user/joebloggs/home/</td>
+	<td>/user/joebloggs/home1/</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div/div/div/div[1]/ul/li[3]/a</td>
+	<td>//nav/ul/li[contains(.,'Microblogs')]/a/span</td>
 	<td>Microblogs</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div/div/div/div[1]/ul/li[3]/a</td>
+	<td>//nav/ul/li[contains(.,'Microblogs')]/a/span</td>
 	<td>Microblogs</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[2]/div/div/div/section/header/h1/span[2]</td>
-	<td>Microblogs</td>
-</tr>
-<tr>
-	<td>assertPartialText</td>
-	<td>//div[2]/h1/span</td>
-	<td>What's happening?</td>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>//span[.='Delete' and count(*)=0]</td>
+	<td>//span[@class='action delete']/a</td>
 	<td>whatsHappeningEntry1Present</td>
 </tr>
 <tr>
@@ -47,13 +39,13 @@
 	<td>WhatsHappeningEntry1NotPresent</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//span[.='Delete' and count(*)=0]</td>
+	<td>clickAt</td>
+	<td>//span[@class='action delete']/a</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
+	<td>Are you sure you want to delete this post?</td>
 	<td></td>
 </tr>
 <tr>
@@ -62,8 +54,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>storeElementPresent</td>
-	<td>//span[.='Delete' and count(*)=0]</td>
+	<td>//span[@class='action delete']/a</td>
 	<td>whatsHappeningEntry2Present</td>
 </tr>
 <tr>
@@ -72,13 +69,13 @@
 	<td>WhatsHappeningEntry2NotPresent</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//span[.='Delete' and count(*)=0]</td>
+	<td>clickAt</td>
+	<td>//span[@class='action delete']/a</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
+	<td>Are you sure you want to delete this post?</td>
 	<td></td>
 </tr>
 <tr>
@@ -87,8 +84,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>storeElementPresent</td>
-	<td>//span[.='Delete' and count(*)=0]</td>
+	<td>//span[@class='action delete']/a</td>
 	<td>whatsHappeningEntry3Present</td>
 </tr>
 <tr>
@@ -97,13 +99,13 @@
 	<td>WhatsHappeningEntry3NotPresent</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//span[.='Delete' and count(*)=0]</td>
+	<td>clickAt</td>
+	<td>//span[@class='action delete']/a</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
+	<td>Are you sure you want to delete this post?</td>
 	<td></td>
 </tr>
 <tr>
@@ -112,8 +114,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>storeElementPresent</td>
-	<td>//span[.='Delete' and count(*)=0]</td>
+	<td>//span[@class='action delete']/a</td>
 	<td>whatsHappeningEntry4Present</td>
 </tr>
 <tr>
@@ -122,13 +129,13 @@
 	<td>WhatsHappeningEntry4NotPresent</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//span[.='Delete' and count(*)=0]</td>
+	<td>clickAt</td>
+	<td>//span[@class='action delete']/a</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
+	<td>Are you sure you want to delete this post?</td>
 	<td></td>
 </tr>
 <tr>
@@ -137,8 +144,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>storeElementPresent</td>
-	<td>//span[.='Delete' and count(*)=0]</td>
+	<td>//span[@class='action delete']/a</td>
 	<td>whatsHappeningEntry5Present</td>
 </tr>
 <tr>
@@ -147,13 +159,13 @@
 	<td>WhatsHappeningEntry5NotPresent</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//span[.='Delete' and count(*)=0]</td>
+	<td>clickAt</td>
+	<td>//span[@class='action delete']/a</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
+	<td>Are you sure you want to delete this post?</td>
 	<td></td>
 </tr>
 <tr>

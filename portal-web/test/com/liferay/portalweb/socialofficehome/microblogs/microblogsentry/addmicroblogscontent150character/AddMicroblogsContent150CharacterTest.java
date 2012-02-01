@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddMicroblogsContent150CharacterTest extends BaseTestCase {
 	public void testAddMicroblogsContent150Character()
 		throws Exception {
-		selenium.open("/user/joebloggs/home/");
+		selenium.open("/user/joebloggs/home1");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -33,7 +33,7 @@ public class AddMicroblogsContent150CharacterTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//section/div/div/div/div[1]/ul/li[3]/a")) {
+							"//nav/ul/li[contains(.,'Microblogs')]/a/span")) {
 					break;
 				}
 			}
@@ -43,17 +43,18 @@ public class AddMicroblogsContent150CharacterTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//section/div/div/div/div[1]/ul/li[3]/a",
+		selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Microblogs"),
-			selenium.getText("//div[2]/div/div/div/section/header/h1/span[2]"));
-		assertTrue(selenium.isElementPresent("//textarea"));
+			selenium.getText("//span[@class='portlet-title-default']"));
+		assertTrue(selenium.isElementPresent(
+				"//div[@id='_1_WAR_microblogsportlet_autocompleteContent']"));
 		assertEquals(RuntimeVariables.replace("You have no microblogs entry."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[1]"));
-		selenium.clickAt("//textarea",
-			RuntimeVariables.replace("Microblogs Content"));
+			selenium.getText("//div[@class='portlet-msg-info']"));
+		selenium.clickAt("//div[@id='_1_WAR_microblogsportlet_autocompleteContent']",
+			RuntimeVariables.replace("Update your status..."));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -61,7 +62,7 @@ public class AddMicroblogsContent150CharacterTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//input[@value='Post']")) {
+				if (selenium.isElementPresent("//textarea")) {
 					break;
 				}
 			}
@@ -71,11 +72,10 @@ public class AddMicroblogsContent150CharacterTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		selenium.clickAt("//textarea", RuntimeVariables.replace("Text area"));
 		selenium.typeKeys("//textarea",
 			RuntimeVariables.replace(
-				"|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15|"));
-		assertEquals(RuntimeVariables.replace("0"),
-			selenium.getText("//span[@class='microblogs-countdown']"));
+				"|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15"));
 		selenium.clickAt("//input[@value='Post']",
 			RuntimeVariables.replace("Post"));
 
@@ -85,7 +85,7 @@ public class AddMicroblogsContent150CharacterTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@class='my-entry-bubble ']")) {
+				if (selenium.isVisible("//div[@class='content']")) {
 					break;
 				}
 			}
@@ -95,11 +95,10 @@ public class AddMicroblogsContent150CharacterTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertTrue(selenium.isVisible("//div/span/a/img"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs (joebloggs)"),
-			selenium.getText("//div[@class='user-name']"));
 		assertEquals(RuntimeVariables.replace(
-				"|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15|"),
+				"|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15"),
 			selenium.getText("//div[@class='content']"));
+		assertEquals(RuntimeVariables.replace("Comment"),
+			selenium.getText("//span[@class='action comment']/a"));
 	}
 }

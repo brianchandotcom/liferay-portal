@@ -25,24 +25,25 @@ import junit.framework.TestSuite;
 public class ViewMicroblogsMentionsTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AddUserSOFriendTest.class);
+		testSuite.addTestSuite(AddSOUserTest.class);
+		testSuite.addTestSuite(AddMicroblogsContentViewableByEveryoneTest.class);
+		testSuite.addTestSuite(ViewMicroblogsContentViewableByEveryoneTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
-		testSuite.addTestSuite(SOFr_NewPasswordTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
-		testSuite.addTestSuite(SOFr_SignInTest.class);
-		testSuite.addTestSuite(SOFr_AddAsFriendCCActionsTest.class);
+		testSuite.addTestSuite(SOUs_SignInTest.class);
+		testSuite.addTestSuite(SOUs_ViewMicroblogsContentViewableByEveryoneTest.class);
+		testSuite.addTestSuite(SOUs_AddAsConnectionCCUserTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SOSignInTest.class);
-		testSuite.addTestSuite(ConfirmCCFriendRequestTest.class);
-		testSuite.addTestSuite(AddMicroblogsContentViewableByEveryoneTest.class);
+		testSuite.addTestSuite(ConfirmNotificationsAddConnnectionTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
-		testSuite.addTestSuite(SOFr_SignInTest.class);
-		testSuite.addTestSuite(SOFr_ReplyMicroblogsContentTest.class);
+		testSuite.addTestSuite(SOUs_SignInTest.class);
+		testSuite.addTestSuite(SOUs_ReplyMicroblogsContentTest.class);
+		testSuite.addTestSuite(SOUs_ViewReplyMicroblogsContentTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SOSignInTest.class);
 		testSuite.addTestSuite(ViewMicroblogsMentionsTest.class);
 		testSuite.addTestSuite(TearDownWHEntryContentTest.class);
-		testSuite.addTestSuite(TearDownSOUserTest.class);
+		testSuite.addTestSuite(TearDownUserTest.class);
 
 		return testSuite;
 	}

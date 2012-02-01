@@ -27,7 +27,7 @@ public class TearDownWHEntryContentTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
-				selenium.open("/user/joebloggs/home/");
+				selenium.open("/user/joebloggs/home1/");
 				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
@@ -37,7 +37,7 @@ public class TearDownWHEntryContentTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div/div/div/div[1]/ul/li[3]/a")) {
+									"//nav/ul/li[contains(.,'Microblogs')]/a/span")) {
 							break;
 						}
 					}
@@ -47,18 +47,14 @@ public class TearDownWHEntryContentTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.clickAt("//div/div/div/div[1]/ul/li[3]/a",
+				selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 					RuntimeVariables.replace("Microblogs"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-				assertEquals(RuntimeVariables.replace("Microblogs"),
-					selenium.getText(
-						"//div[2]/div/div/div/section/header/h1/span[2]"));
-				assertTrue(selenium.isPartialText("//div[2]/h1/span",
-						"What's happening?"));
+				Thread.sleep(5000);
 
 				boolean whatsHappeningEntry1Present = selenium.isElementPresent(
-						"//span[.='Delete' and count(*)=0]");
+						"//span[@class='action delete']/a");
 
 				if (!whatsHappeningEntry1Present) {
 					label = 2;
@@ -66,17 +62,16 @@ public class TearDownWHEntryContentTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.click(RuntimeVariables.replace(
-						"//span[.='Delete' and count(*)=0]"));
-				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
+				selenium.clickAt("//span[@class='action delete']/a",
+					RuntimeVariables.replace("Delete"));
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this post[\\s\\S]$"));
 
 			case 2:
+				Thread.sleep(5000);
 
 				boolean whatsHappeningEntry2Present = selenium.isElementPresent(
-						"//span[.='Delete' and count(*)=0]");
+						"//span[@class='action delete']/a");
 
 				if (!whatsHappeningEntry2Present) {
 					label = 3;
@@ -84,17 +79,16 @@ public class TearDownWHEntryContentTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.click(RuntimeVariables.replace(
-						"//span[.='Delete' and count(*)=0]"));
-				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
+				selenium.clickAt("//span[@class='action delete']/a",
+					RuntimeVariables.replace("Delete"));
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this post[\\s\\S]$"));
 
 			case 3:
+				Thread.sleep(5000);
 
 				boolean whatsHappeningEntry3Present = selenium.isElementPresent(
-						"//span[.='Delete' and count(*)=0]");
+						"//span[@class='action delete']/a");
 
 				if (!whatsHappeningEntry3Present) {
 					label = 4;
@@ -102,17 +96,16 @@ public class TearDownWHEntryContentTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.click(RuntimeVariables.replace(
-						"//span[.='Delete' and count(*)=0]"));
-				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
+				selenium.clickAt("//span[@class='action delete']/a",
+					RuntimeVariables.replace("Delete"));
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this post[\\s\\S]$"));
 
 			case 4:
+				Thread.sleep(5000);
 
 				boolean whatsHappeningEntry4Present = selenium.isElementPresent(
-						"//span[.='Delete' and count(*)=0]");
+						"//span[@class='action delete']/a");
 
 				if (!whatsHappeningEntry4Present) {
 					label = 5;
@@ -120,17 +113,16 @@ public class TearDownWHEntryContentTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.click(RuntimeVariables.replace(
-						"//span[.='Delete' and count(*)=0]"));
-				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
+				selenium.clickAt("//span[@class='action delete']/a",
+					RuntimeVariables.replace("Delete"));
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this post[\\s\\S]$"));
 
 			case 5:
+				Thread.sleep(5000);
 
 				boolean whatsHappeningEntry5Present = selenium.isElementPresent(
-						"//span[.='Delete' and count(*)=0]");
+						"//span[@class='action delete']/a");
 
 				if (!whatsHappeningEntry5Present) {
 					label = 6;
@@ -138,12 +130,10 @@ public class TearDownWHEntryContentTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.click(RuntimeVariables.replace(
-						"//span[.='Delete' and count(*)=0]"));
-				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
+				selenium.clickAt("//span[@class='action delete']/a",
+					RuntimeVariables.replace("Delete"));
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this post[\\s\\S]$"));
 
 			case 6:
 			case 100:

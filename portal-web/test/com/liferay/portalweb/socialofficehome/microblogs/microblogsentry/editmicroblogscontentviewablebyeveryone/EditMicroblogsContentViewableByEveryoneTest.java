@@ -23,41 +23,24 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class EditMicroblogsContentViewableByEveryoneTest extends BaseTestCase {
 	public void testEditMicroblogsContentViewableByEveryone()
 		throws Exception {
-		selenium.open("/user/joebloggs/home/");
+		selenium.open("/user/joebloggs/home1/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//section/div/div/div/div[1]/ul/li[3]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("//section/div/div/div/div[1]/ul/li[3]/a",
+		assertEquals(RuntimeVariables.replace("Microblogs"),
+			selenium.getText("//nav/ul/li[contains(.,'Microblogs')]/a/span"));
+		selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Microblogs"),
-			selenium.getText("//div[2]/div/div/div/section/header/h1/span[2]"));
-		assertTrue(selenium.isVisible("//div[@class='my-entry-bubble ']"));
-		assertTrue(selenium.isVisible("//div/span/a/img"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs (joebloggs)"),
-			selenium.getText("//div[@class='user-name']"));
-		assertEquals(RuntimeVariables.replace("Microblogs Content"),
+		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
+			selenium.getText("//div[@class='user-name']/span"));
+		assertEquals(RuntimeVariables.replace("Microblogs Post"),
 			selenium.getText("//div[@class='content']"));
+		assertEquals(RuntimeVariables.replace("Comment"),
+			selenium.getText("//span[@class='action comment']/a"));
 		assertEquals(RuntimeVariables.replace("Edit"),
-			selenium.getText("//span[2]/a/span"));
-		selenium.clickAt("//span[2]/a/span", RuntimeVariables.replace("Edit"));
+			selenium.getText("//span[@class='action edit']/a"));
+		selenium.clickAt("//span[@class='action edit']/a",
+			RuntimeVariables.replace("Edit"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -65,7 +48,7 @@ public class EditMicroblogsContentViewableByEveryoneTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//h1/span")) {
+				if (selenium.isElementPresent("//textarea")) {
 					break;
 				}
 			}
@@ -75,35 +58,14 @@ public class EditMicroblogsContentViewableByEveryoneTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace(
-				"What do you want to say instead?"),
-			selenium.getText("//h1/span"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//textarea")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertEquals(RuntimeVariables.replace("Microblogs Content"),
-			selenium.getText("//textarea"));
-		selenium.typeKeys("//textarea", RuntimeVariables.replace(" Edit"));
-		assertEquals("Everyone", selenium.getSelectedLabel("//span/select"));
-		assertEquals(RuntimeVariables.replace("128"),
-			selenium.getText("//span[@class='microblogs-countdown']"));
-		selenium.clickAt("//input[@value='Post']",
+		selenium.clickAt("//textarea", RuntimeVariables.replace("Text area"));
+		selenium.typeKeys("//textarea", RuntimeVariables.replace("Edit"));
+		assertEquals("Everyone",
+			selenium.getSelectedLabel(
+				"xPath=(//select[@id='_1_WAR_microblogsportlet_socialRelationType'])[2]"));
+		Thread.sleep(5000);
+		selenium.clickAt("xPath=(//input[@value='Post'])[2]",
 			RuntimeVariables.replace("Post"));
-		assertTrue(selenium.isVisible("//div/span/a/img"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -111,9 +73,7 @@ public class EditMicroblogsContentViewableByEveryoneTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("Joe Bloggs (joebloggs)")
-										.equals(selenium.getText(
-								"//div[@class='user-name']"))) {
+				if (selenium.isVisible("//div[@class='content']")) {
 					break;
 				}
 			}
@@ -123,29 +83,9 @@ public class EditMicroblogsContentViewableByEveryoneTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Joe Bloggs (joebloggs)"),
-			selenium.getText("//div[@class='user-name']"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Microblogs Content Edit")
-										.equals(selenium.getText(
-								"//div[@class='content']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertEquals(RuntimeVariables.replace("Microblogs Content Edit"),
+		assertEquals(RuntimeVariables.replace("Microblogs PostEdit"),
 			selenium.getText("//div[@class='content']"));
-		assertTrue(selenium.isTextPresent("Reply"));
+		assertEquals(RuntimeVariables.replace("Comment"),
+			selenium.getText("//span[@class='action comment']/a"));
 	}
 }

@@ -24,83 +24,25 @@ public class ViewEditMicroblogsContentViewableByFollowersTest
 	extends BaseTestCase {
 	public void testViewEditMicroblogsContentViewableByFollowers()
 		throws Exception {
-		selenium.open("/user/joebloggs/home/");
+		selenium.open("/user/joebloggs/home1");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div/div/div/div[1]/ul/li[1]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("//div/div/div/div[1]/ul/li[1]/a",
-			RuntimeVariables.replace("Home"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("What's happening?"),
-			selenium.getText("//div[1]/h1/span"));
-		assertTrue(selenium.isElementPresent("//textarea"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='my-entry-bubble ']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertTrue(selenium.isVisible("//div/span/a/img"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs (joebloggs)"),
-			selenium.getText("//div[@class='user-name']"));
-		assertEquals(RuntimeVariables.replace("Microblogs Content Edit"),
+		assertEquals(RuntimeVariables.replace("Microblogs Status Update"),
+			selenium.getText("//span[@class='portlet-title-default']"));
+		assertTrue(selenium.isElementPresent(
+				"//div[@id='_2_WAR_microblogsportlet_autocompleteContent']"));
+		assertEquals(RuntimeVariables.replace("Microblogs PostEdit"),
 			selenium.getText("//div[@class='content']"));
-		assertFalse(selenium.isTextPresent("Reply"));
-		selenium.clickAt("//div/div/div/div[1]/ul/li[3]/a",
+		assertEquals(RuntimeVariables.replace("Microblogs"),
+			selenium.getText("//nav/ul/li[contains(.,'Microblogs')]/a/span"));
+		selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Microblogs"),
-			selenium.getText("//div[2]/div/div/div/section/header/h1/span[2]"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='my-entry-bubble ']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertTrue(selenium.isVisible("//div/span/a/img"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs (joebloggs)"),
-			selenium.getText("//div[@class='user-name']"));
-		assertEquals(RuntimeVariables.replace("Microblogs Content Edit"),
+		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
+			selenium.getText("//div[@class='user-name']/span"));
+		assertEquals(RuntimeVariables.replace("Microblogs PostEdit"),
 			selenium.getText("//div[@class='content']"));
-		assertFalse(selenium.isTextPresent("Reply"));
+		assertEquals(RuntimeVariables.replace("Comment"),
+			selenium.getText("//span[@class='action comment']/a"));
 	}
 }

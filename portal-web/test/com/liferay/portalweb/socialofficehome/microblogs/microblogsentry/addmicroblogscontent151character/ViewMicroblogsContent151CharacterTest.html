@@ -10,48 +10,53 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/user/joebloggs/home/</td>
+	<td>/user/joebloggs/home1/</td>
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//div/div/div/div[1]/ul/li[1]/a</td>
-	<td>Home</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//div/div/div/div[1]/ul/li[1]/a</td>
-	<td>Home</td>
-</tr>
-<tr>
 	<td>assertText</td>
-	<td>//div[1]/h1/span</td>
-	<td>What's happening?</td>
+	<td>//span[@class='portlet-title-default']</td>
+	<td>Microblogs Status Update</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>//textarea</td>
-	<td>Content</td>
+	<td>//div[@id='_1_WAR_microblogsportlet_autocompleteContent']</td>
+	<td>Update your status...</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//div[@class='portlet-msg-info'])[1]</td>
+	<td>//div[@class='portlet-msg-info']</td>
 	<td>You have no microblogs entry.</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15|</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//nav/ul/li[contains(.,'Microblogs')]/a/span</td>
+	<td>Microblogs</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div/div/div/div[1]/ul/li[3]/a</td>
+	<td>//nav/ul/li[contains(.,'Microblogs')]/a/span</td>
 	<td>Microblogs</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[2]/div/div/div/section/header/h1/span[2]</td>
-	<td>Microblogs</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>xPath=(//div[@class='portlet-msg-info'])[1]</td>
+	<td>//div[@class='portlet-msg-info']</td>
 	<td>You have no microblogs entry.</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15|</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Comment</td>
+	<td></td>
 </tr>
 
 </tbody></table>

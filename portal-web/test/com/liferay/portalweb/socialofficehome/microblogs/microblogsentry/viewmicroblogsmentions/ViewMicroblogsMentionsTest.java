@@ -22,46 +22,25 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewMicroblogsMentionsTest extends BaseTestCase {
 	public void testViewMicroblogsMentions() throws Exception {
-		selenium.open("/user/joebloggs/home");
+		selenium.open("/user/joebloggs/home1");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div/div/div/div[1]/ul/li[3]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("//div/div/div/div[1]/ul/li[3]/a",
+		assertEquals(RuntimeVariables.replace("Microblogs"),
+			selenium.getText("//nav/ul/li[contains(.,'Microblogs')]/a/span"));
+		selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Microblogs"),
-			selenium.getText("//div[2]/div/div/div/section/header/h1/span[2]"));
 		assertEquals(RuntimeVariables.replace("Mentions"),
 			selenium.getText("link=Mentions"));
 		selenium.clickAt("link=Mentions", RuntimeVariables.replace("Mentions"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertTrue(selenium.isVisible("//div[@class='entry-bubble ']"));
-		assertTrue(selenium.isVisible("//div/span/a/img"));
+		assertEquals(RuntimeVariables.replace("Social01 Office01 User01 says"),
+			selenium.getText("//div[@class='user-name']"));
 		assertEquals(RuntimeVariables.replace(
-				"socialofficefriendfn socialofficefriendmn socialofficefriendln (socialofficefriendsn)"),
-			selenium.getText("//div[@class='entry-bubble ']/div[1]"));
-		assertEquals(RuntimeVariables.replace(
-				"Joe Bloggs Microblogs Content Repl"),
-			selenium.getText("//div[@class='entry-bubble ']/div[2]"));
-		assertFalse(selenium.isElementPresent(
-				"//div[@class='my-entry-bubble ']"));
-		assertFalse(selenium.isTextPresent("Joe Bloggs test@liferay.com"));
+				"Microblogs Post Comment Joe Bloggs"),
+			selenium.getText("//div[@class='content']"));
+		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
+			selenium.getText("//div[@class='content']/span/a"));
 	}
 }

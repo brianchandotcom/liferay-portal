@@ -25,10 +25,23 @@ import junit.framework.TestSuite;
 public class EditMicroblogsContentViewableByEveryoneTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
+		testSuite.addTestSuite(AddSOUserTest.class);
 		testSuite.addTestSuite(AddMicroblogsContentViewableByEveryoneTest.class);
+		testSuite.addTestSuite(ViewMicroblogsContentViewableByEveryoneTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SOUs_SignInTest.class);
+		testSuite.addTestSuite(SOUs_ViewMicroblogsContentViewableByEveryoneTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SOSignInTest.class);
 		testSuite.addTestSuite(EditMicroblogsContentViewableByEveryoneTest.class);
 		testSuite.addTestSuite(ViewEditMicroblogsContentViewableByEveryoneTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SOUs_SignInTest.class);
+		testSuite.addTestSuite(SOUs_ViewEditMicroblogsContentViewableByEveryoneTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SOSignInTest.class);
 		testSuite.addTestSuite(TearDownWHEntryContentTest.class);
+		testSuite.addTestSuite(TearDownUserTest.class);
 
 		return testSuite;
 	}

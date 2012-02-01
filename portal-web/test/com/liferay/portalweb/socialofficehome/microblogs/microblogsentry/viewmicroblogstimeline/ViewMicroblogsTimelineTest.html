@@ -14,18 +14,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//div/div/div/div[1]/ul/li[3]/a</td>
+	<td>assertText</td>
+	<td>//nav/ul/li[contains(.,'Microblogs')]/a/span</td>
 	<td>Microblogs</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div/div/div/div[1]/ul/li[3]/a</td>
-	<td>Microblogs</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[2]/div/div/div/section/header/h1/span[2]</td>
+	<td>//nav/ul/li[contains(.,'Microblogs')]/a/span</td>
 	<td>Microblogs</td>
 </tr>
 <tr>
@@ -39,84 +34,49 @@
 	<td>Timeline</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>xPath=(//div[@class='my-entry-bubble '])[1]</td>
-	<td>Micoblogs post</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>xPath=(//div/span/a/img)[1]</td>
-	<td>Thumbnail</td>
-</tr>
-<tr>
 	<td>assertText</td>
 	<td>xPath=(//div[@class='user-name'])[1]</td>
-	<td>Joe Bloggs (joebloggs)</td>
+	<td>Joe Bloggs says</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>xPath=(//div[@class='content'])[1]</td>
-	<td>Microblogs Content</td>
+	<td>Microblogs Post</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>xPath=(//div[@class='my-entry-bubble '])[2]</td>
-	<td>Micoblogs post</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>xPath=(//div/span/a/img)[2]</td>
-	<td>Thumbnail</td>
+	<td>assertText</td>
+	<td>xPath=(//span[@class='action comment']/a)[1]</td>
+	<td>Comment</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>xPath=(//div[@class='user-name'])[2]</td>
-	<td>Joe Bloggs (joebloggs)</td>
+	<td>Joe Bloggs says</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>xPath=(//div[@class='content'])[2]</td>
-	<td>Microblogs Content</td>
+	<td>Microblogs Post</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>xPath=(//div[@class='my-entry-bubble '])[3]</td>
-	<td>Micoblogs post</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>xPath=(//div/span/a/img)[3]</td>
-	<td>Thumbnail</td>
+	<td>assertText</td>
+	<td>xPath=(//span[@class='action comment']/a)[2]</td>
+	<td>Comment</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>xPath=(//div[@class='user-name'])[3]</td>
-	<td>Joe Bloggs (joebloggs)</td>
+	<td>Joe Bloggs says</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>xPath=(//div[@class='content'])[3]</td>
-	<td>Microblogs Content</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>xPath=(//div[@class='my-entry-bubble '])[4]</td>
-	<td>Micoblogs post</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>xPath=(//div/span/a/img)[4]</td>
-	<td>Thumbnail</td>
+	<td>Microblogs Post</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//div[@class='user-name'])[4]</td>
-	<td>Joe Bloggs (joebloggs)</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>xPath=(//div[@class='content'])[4]</td>
-	<td>Microblogs Content</td>
+	<td>xPath=(//span[@class='action comment']/a)[3]</td>
+	<td>Comment</td>
 </tr>
 
 </tbody></table>

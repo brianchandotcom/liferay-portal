@@ -25,9 +25,16 @@ import junit.framework.TestSuite;
 public class AddMicroblogsContentViewableByEveryoneTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
+		testSuite.addTestSuite(AddSOUserTest.class);
 		testSuite.addTestSuite(AddMicroblogsContentViewableByEveryoneTest.class);
-		testSuite.addTestSuite(ViewMicroblogsEntryContentViewableByEveryoneTest.class);
+		testSuite.addTestSuite(ViewMicroblogsContentViewableByEveryoneTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SOUs_SignInTest.class);
+		testSuite.addTestSuite(SOUs_ViewMicroblogsContentViewableByEveryoneTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SOSignInTest.class);
 		testSuite.addTestSuite(TearDownWHEntryContentTest.class);
+		testSuite.addTestSuite(TearDownUserTest.class);
 
 		return testSuite;
 	}

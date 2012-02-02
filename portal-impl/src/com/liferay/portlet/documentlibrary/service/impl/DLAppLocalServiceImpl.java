@@ -1644,8 +1644,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		LocalRepository localRepository = null;
 
 		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			localRepository =
-				getLocalRepository(serviceContext.getScopeGroupId());
+			localRepository = getLocalRepository(
+				serviceContext.getScopeGroupId());
 		}
 		else {
 			localRepository = getLocalRepository(folderId, 0, 0);

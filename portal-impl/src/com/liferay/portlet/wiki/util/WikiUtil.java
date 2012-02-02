@@ -252,8 +252,8 @@ public class WikiUtil {
 		List<WikiNode> nodes = WikiNodeLocalServiceUtil.getNodes(groupId);
 
 		PortletPreferences preferences = portletRequest.getPreferences();
-		String[] visibleNodeNames =
-			StringUtil.split(preferences.getValue("visibleNodes", null));
+		String[] visibleNodeNames = StringUtil.split(
+			preferences.getValue("visibleNodes", null));
 		nodes = orderNodes(nodes, visibleNodeNames);
 
 		String[] hiddenNodes = StringUtil.split(

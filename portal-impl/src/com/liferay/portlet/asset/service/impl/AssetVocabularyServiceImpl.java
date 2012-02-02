@@ -181,8 +181,8 @@ public class AssetVocabularyServiceImpl
 
 		String vocabulariesJSON = JSONFactoryUtil.looseSerialize(vocabularies);
 
-		JSONArray vocabulariesJSONArray =
-			JSONFactoryUtil.createJSONArray(vocabulariesJSON);
+		JSONArray vocabulariesJSONArray = JSONFactoryUtil.createJSONArray(
+			vocabulariesJSON);
 
 		jsonObject.put("vocabularies", vocabulariesJSONArray);
 

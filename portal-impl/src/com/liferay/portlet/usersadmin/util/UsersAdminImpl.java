@@ -306,8 +306,8 @@ public class UsersAdminImpl implements UsersAdmin {
 			List<UserGroupRole> userGroupRoles)
 		throws PortalException, SystemException {
 
-		List<UserGroupRole> filteredUserGroupRoles =
-			ListUtil.copy(userGroupRoles);
+		List<UserGroupRole> filteredUserGroupRoles = ListUtil.copy(
+			userGroupRoles);
 
 		Iterator<UserGroupRole> itr = filteredUserGroupRoles.iterator();
 

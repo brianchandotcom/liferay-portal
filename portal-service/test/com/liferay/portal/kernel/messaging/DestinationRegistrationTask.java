@@ -37,8 +37,8 @@ public class DestinationRegistrationTask implements Callable<Object> {
 		Random random = new Random();
 
 		for (int i = 0; i < _taskIterationCount; i++) {
-			MessageListener listener =
-				_listeners[random.nextInt(_listeners.length)];
+			MessageListener listener = _listeners[random.nextInt(
+				_listeners.length)];
 
 			if (_register) {
 				_destination.register(listener);

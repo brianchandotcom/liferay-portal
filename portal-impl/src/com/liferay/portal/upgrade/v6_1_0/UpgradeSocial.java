@@ -359,14 +359,14 @@ public class UpgradeSocial extends UpgradeProcess {
 			sb.append("activityType = 0 and name = 'enabled' and ");
 			sb.append("value = 'true' and classNameId in (");
 
-			long mbMessageClassNameId =
-				PortalUtil.getClassNameId(MBMessage.class);
+			long mbMessageClassNameId = PortalUtil.getClassNameId(
+				MBMessage.class);
 
 			sb.append(mbMessageClassNameId);
 			sb.append(", ");
 
-			long mbThreadClassNameId =
-				PortalUtil.getClassNameId(MBThread.class);
+			long mbThreadClassNameId = PortalUtil.getClassNameId(
+				MBThread.class);
 
 			sb.append(mbThreadClassNameId);
 			sb.append(")");

@@ -321,8 +321,8 @@ public class DDLImpl implements DDL {
 
 		DDLRecord record = DDLRecordLocalServiceUtil.fetchRecord(recordId);
 
-		DDLRecordSet recordSet =
-			DDLRecordSetLocalServiceUtil.getDDLRecordSet(recordSetId);
+		DDLRecordSet recordSet = DDLRecordSetLocalServiceUtil.getDDLRecordSet(
+			recordSetId);
 
 		DDMStructure ddmStructure = recordSet.getDDMStructure();
 

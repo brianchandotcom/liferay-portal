@@ -203,8 +203,8 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 
 		String categoriesJSON = JSONFactoryUtil.looseSerialize(categories);
 
-		JSONArray categoriesJSONArray =
-			JSONFactoryUtil.createJSONArray(categoriesJSON);
+		JSONArray categoriesJSONArray = JSONFactoryUtil.createJSONArray(
+			categoriesJSON);
 
 		jsonObject.put("categories", categoriesJSONArray);
 

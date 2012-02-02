@@ -500,8 +500,8 @@ public class ResourceActionsImpl implements ResourceActions {
 		List<String> actions = null;
 
 		if (Validator.isNull(modelResource)) {
-			actions =
-				getPortletResourceGuestUnsupportedActions(portletResource);
+			actions = getPortletResourceGuestUnsupportedActions(
+				portletResource);
 		}
 		else {
 			actions = getModelResourceGuestUnsupportedActions(modelResource);

@@ -113,8 +113,8 @@ public class UserInfoFactory {
 			_log.error(e, e);
 		}
 
-		Map<String, String> unmodifiableUserInfo =
-			Collections.unmodifiableMap((Map<String, String>)userInfo.clone());
+		Map<String, String> unmodifiableUserInfo = Collections.unmodifiableMap(
+			(Map<String, String>)userInfo.clone());
 
 		// Custom user attributes
 

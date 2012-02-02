@@ -51,8 +51,8 @@ public interface Method {
 		PROPPATCH, PUT, Method.UNLOCK
 	};
 
-	public static final String SUPPORTED_METHODS =
-		StringUtil.merge(SUPPORTED_METHODS_ARRAY);
+	public static final String SUPPORTED_METHODS = StringUtil.merge(
+		SUPPORTED_METHODS_ARRAY);
 
 	public static final String UNLOCK = "UNLOCK";
 

@@ -149,8 +149,8 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 				javax.portlet.Portlet portletInstance =
 					rootInvokerPortletInstance.getPortletInstance();
 
-				PortletConfig portletConfig =
-					PortletConfigFactoryUtil.create(portlet, servletContext);
+				PortletConfig portletConfig = PortletConfigFactoryUtil.create(
+					portlet, servletContext);
 
 				PortletContext portletContext =
 					portletConfig.getPortletContext();

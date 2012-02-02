@@ -244,8 +244,8 @@ public class SocialCounterPeriodUtil {
 		}
 	}
 
-	private static final long _BASE_TIME =
-		new GregorianCalendar(2011, Calendar.JANUARY, 1).getTimeInMillis();
+	private static final long _BASE_TIME = new GregorianCalendar(
+		2011, Calendar.JANUARY, 1).getTimeInMillis();
 
 	private static final String _SOCIAL_ACTIVITY_COUNTER_PERIOD_LENGTH =
 		PropsUtil.get(PropsKeys.SOCIAL_ACTIVITY_COUNTER_PERIOD_LENGTH);

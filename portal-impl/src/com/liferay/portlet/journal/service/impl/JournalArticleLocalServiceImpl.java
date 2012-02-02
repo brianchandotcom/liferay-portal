@@ -3196,13 +3196,13 @@ public class JournalArticleLocalServiceImpl
 		String body = null;
 
 		if (emailType.equals("denied")) {
-			subject =
-				JournalUtil.getEmailArticleApprovalDeniedSubject(preferences);
+			subject = JournalUtil.getEmailArticleApprovalDeniedSubject(
+				preferences);
 			body = JournalUtil.getEmailArticleApprovalDeniedBody(preferences);
 		}
 		else if (emailType.equals("granted")) {
-			subject =
-				JournalUtil.getEmailArticleApprovalGrantedSubject(preferences);
+			subject = JournalUtil.getEmailArticleApprovalGrantedSubject(
+				preferences);
 			body = JournalUtil.getEmailArticleApprovalGrantedBody(preferences);
 		}
 		else if (emailType.equals("requested")) {

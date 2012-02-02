@@ -407,8 +407,8 @@ public class JSONWebServiceConfigurator extends ClassFinder {
 	private ClassLoader _classLoader;
 	private Set<String> _invalidHttpMethods = SetUtil.fromArray(
 		PropsValues.JSONWS_WEB_SERVICE_INVALID_HTTP_METHODS);
-	private byte[] _jsonWebServiceAnnotationBytes =
-		getTypeSignatureBytes(JSONWebService.class);
+	private byte[] _jsonWebServiceAnnotationBytes = getTypeSignatureBytes(
+		JSONWebService.class);
 	private JSONWebServiceMappingResolver _jsonWebServiceMappingResolver =
 		new JSONWebServiceMappingResolver();
 	private int _registeredActionsCount;

@@ -154,8 +154,8 @@ public class BookmarksEntryLocalServiceImpl
 	public void deleteEntry(long entryId)
 		throws PortalException, SystemException {
 
-		BookmarksEntry entry =
-			bookmarksEntryPersistence.findByPrimaryKey(entryId);
+		BookmarksEntry entry = bookmarksEntryPersistence.findByPrimaryKey(
+			entryId);
 
 		deleteEntry(entry);
 	}
@@ -243,8 +243,8 @@ public class BookmarksEntryLocalServiceImpl
 	public BookmarksEntry openEntry(long userId, long entryId)
 		throws PortalException, SystemException {
 
-		BookmarksEntry entry =
-			bookmarksEntryPersistence.findByPrimaryKey(entryId);
+		BookmarksEntry entry = bookmarksEntryPersistence.findByPrimaryKey(
+			entryId);
 
 		entry.setVisits(entry.getVisits() + 1);
 
@@ -280,8 +280,8 @@ public class BookmarksEntryLocalServiceImpl
 
 		// Entry
 
-		BookmarksEntry entry =
-			bookmarksEntryPersistence.findByPrimaryKey(entryId);
+		BookmarksEntry entry = bookmarksEntryPersistence.findByPrimaryKey(
+			entryId);
 
 		if (Validator.isNull(name)) {
 			name = url;

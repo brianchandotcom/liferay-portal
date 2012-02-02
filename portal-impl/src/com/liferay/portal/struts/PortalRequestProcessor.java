@@ -941,8 +941,8 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 		}
 
 		if (!authorized) {
-			ForwardConfig forwardConfig =
-				actionMapping.findForward(_PATH_PORTAL_ERROR);
+			ForwardConfig forwardConfig = actionMapping.findForward(
+				_PATH_PORTAL_ERROR);
 
 			processForwardConfig(request, response, forwardConfig);
 

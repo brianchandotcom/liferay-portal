@@ -40,8 +40,8 @@ public class TranslatorPortlet extends MVCPortlet {
 			String fromText = ParamUtil.getString(actionRequest, "text");
 
 			if (Validator.isNotNull(fromText)) {
-				Translation translation =
-					TranslatorUtil.getTranslation(translationId, fromText);
+				Translation translation = TranslatorUtil.getTranslation(
+					translationId, fromText);
 
 				actionRequest.setAttribute(
 					WebKeys.TRANSLATOR_TRANSLATION, translation);

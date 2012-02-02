@@ -195,8 +195,8 @@ public class DDMStructureLocalServiceImpl
 	public void deleteStructure(long groupId, String structureKey)
 		throws PortalException, SystemException {
 
-		DDMStructure structure =
-			ddmStructurePersistence.findByG_S(groupId, structureKey);
+		DDMStructure structure = ddmStructurePersistence.findByG_S(
+			groupId, structureKey);
 
 		deleteStructure(structure);
 	}

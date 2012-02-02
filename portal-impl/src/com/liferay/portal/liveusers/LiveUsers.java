@@ -208,8 +208,8 @@ public class LiveUsers {
 
 			userTrackers.add(userTracker);
 
-			Map<Long, List<UserTracker>> userTrackersMap =
-				_getUserTrackersMap(companyId);
+			Map<Long, List<UserTracker>> userTrackersMap = _getUserTrackersMap(
+				companyId);
 
 			userTrackersMap.put(userId, userTrackers);
 		}

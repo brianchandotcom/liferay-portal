@@ -235,8 +235,8 @@ public class LanguageImpl implements Language {
 
 				for (int i = 0; i < arguments.length; i++) {
 					if (translateArguments) {
-						formattedArguments[i] =
-							get(pageContext, arguments[i].toString());
+						formattedArguments[i] = get(
+							pageContext, arguments[i].toString());
 					}
 					else {
 						formattedArguments[i] = arguments[i];

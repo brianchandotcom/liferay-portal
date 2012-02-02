@@ -113,7 +113,7 @@ public class LinkbackConsumerUtil {
 
 	private static Log _log = LogFactoryUtil.getLog(LinkbackConsumerUtil.class);
 
-	private static List<Tuple> _trackbacks =
-		Collections.synchronizedList(new ArrayList<Tuple>());
+	private static List<Tuple> _trackbacks = Collections.synchronizedList(
+		new ArrayList<Tuple>());
 
 }

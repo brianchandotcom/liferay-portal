@@ -212,8 +212,8 @@ public class EditPermissionsAction extends EditConfigurationAction {
 			groupId, actionIds, resourceId);
 
 		if (!layout.isPrivateLayout()) {
-			Resource resource =
-				ResourceLocalServiceUtil.getResource(resourceId);
+			Resource resource = ResourceLocalServiceUtil.getResource(
+				resourceId);
 
 			if (resource.getPrimKey().startsWith(
 					layout.getPlid() + PortletConstants.LAYOUT_SEPARATOR)) {

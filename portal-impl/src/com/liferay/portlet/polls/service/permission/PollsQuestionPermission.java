@@ -51,8 +51,8 @@ public class PollsQuestionPermission {
 			String actionId)
 		throws PortalException, SystemException {
 
-		PollsQuestion question =
-			PollsQuestionLocalServiceUtil.getQuestion(questionId);
+		PollsQuestion question = PollsQuestionLocalServiceUtil.getQuestion(
+			questionId);
 
 		return contains(permissionChecker, question, actionId);
 	}

@@ -957,8 +957,8 @@ public class DLFileEntryLocalServiceImpl
 				int width = PrefsPropsUtil.getInteger(
 					PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH);
 
-				RenderedImage thumbnailRenderedImage =
-					ImageToolUtil.scale(renderedImage, height, width);
+				RenderedImage thumbnailRenderedImage = ImageToolUtil.scale(
+					renderedImage, height, width);
 
 				imageLocalService.updateImage(
 					smallImageId,

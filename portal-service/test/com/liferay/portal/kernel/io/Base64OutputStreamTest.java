@@ -134,8 +134,8 @@ public class Base64OutputStreamTest extends TestCase {
 
 		base64OutputStream.flush();
 
-		byteArrayInputStream =
-			new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
+		byteArrayInputStream = new ByteArrayInputStream(
+			byteArrayOutputStream.toByteArray());
 
 		assertEquals(4, byteArrayInputStream.read(new byte[4]));
 

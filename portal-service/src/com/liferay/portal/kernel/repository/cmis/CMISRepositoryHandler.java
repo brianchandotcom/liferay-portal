@@ -272,8 +272,8 @@ public abstract class CMISRepositoryHandler extends BaseRepositoryImpl {
 		}
 
 		try {
-			String authType =
-				companyLocalService.getCompany(getCompanyId()).getAuthType();
+			String authType = companyLocalService.getCompany(
+				getCompanyId()).getAuthType();
 
 			if (!authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
 				User user = userLocalService.getUser(GetterUtil.getLong(login));

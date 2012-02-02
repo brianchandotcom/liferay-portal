@@ -385,8 +385,8 @@ public class JSONWebServiceActionParameters {
 						new HashMap<String, List<KeyValue<String, Object>>>();
 				}
 
-				List<KeyValue<String, Object>> values =
-					_innerParameters.get(baseName);
+				List<KeyValue<String, Object>> values = _innerParameters.get(
+					baseName);
 
 				if (values == null) {
 					values = new ArrayList<KeyValue<String, Object>>();

@@ -46,8 +46,8 @@ public class OrderByComparatorFactoryImpl implements OrderByComparatorFactory {
 				boolean columnAscending = Boolean.valueOf(
 					String.valueOf(_columns[i + 1]));
 
-				Class<?> columnClass =
-					BeanPropertiesUtil.getObjectTypeSilent(object1, columnName);
+				Class<?> columnClass = BeanPropertiesUtil.getObjectTypeSilent(
+					object1, columnName);
 
 				Object columnInstance = null;
 

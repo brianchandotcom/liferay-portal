@@ -116,8 +116,8 @@ public class LayoutTemplateHotDeployListener extends BaseHotDeployListener {
 			_log.debug("Invoking undeploy for " + servletContextName);
 		}
 
-		List<ObjectValuePair<String, Boolean>> layoutTemplateIds =
-			_vars.get(servletContextName);
+		List<ObjectValuePair<String, Boolean>> layoutTemplateIds = _vars.get(
+			servletContextName);
 
 		if (layoutTemplateIds == null) {
 			return;

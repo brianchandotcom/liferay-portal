@@ -74,8 +74,8 @@ public class SendmailHook implements Hook {
 
 		// Get add user command
 
-		String addUserCmd =
-			PropsUtil.get(PropsKeys.MAIL_HOOK_SENDMAIL_ADD_USER);
+		String addUserCmd = PropsUtil.get(
+			PropsKeys.MAIL_HOOK_SENDMAIL_ADD_USER);
 
 		// Replace userId
 
@@ -111,8 +111,8 @@ public class SendmailHook implements Hook {
 
 		// Get delete user command
 
-		String deleteUserCmd =
-			PropsUtil.get(PropsKeys.MAIL_HOOK_SENDMAIL_DELETE_USER);
+		String deleteUserCmd = PropsUtil.get(
+			PropsKeys.MAIL_HOOK_SENDMAIL_DELETE_USER);
 
 		// Replace userId
 
@@ -176,8 +176,8 @@ public class SendmailHook implements Hook {
 		long companyId, long userId, String emailAddress) {
 
 		try {
-			String virtusertable =
-				PropsUtil.get(PropsKeys.MAIL_HOOK_SENDMAIL_VIRTUSERTABLE);
+			String virtusertable = PropsUtil.get(
+				PropsKeys.MAIL_HOOK_SENDMAIL_VIRTUSERTABLE);
 
 			FileReader fileReader = new FileReader(virtusertable);
 			UnsyncBufferedReader unsyncBufferedReader =
@@ -225,8 +225,8 @@ public class SendmailHook implements Hook {
 
 		// Get change password command
 
-		String changePasswordCmd =
-			PropsUtil.get(PropsKeys.MAIL_HOOK_SENDMAIL_CHANGE_PASSWORD);
+		String changePasswordCmd = PropsUtil.get(
+			PropsKeys.MAIL_HOOK_SENDMAIL_CHANGE_PASSWORD);
 
 		// Replace userId
 

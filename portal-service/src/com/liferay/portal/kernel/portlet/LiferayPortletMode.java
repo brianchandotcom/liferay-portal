@@ -25,8 +25,8 @@ public class LiferayPortletMode extends PortletMode {
 
 	public static final PortletMode CONFIG = new PortletMode("config");
 
-	public static final PortletMode EDIT_DEFAULTS =
-		new PortletMode("edit_defaults");
+	public static final PortletMode EDIT_DEFAULTS = new PortletMode(
+		"edit_defaults");
 
 	public static final PortletMode EDIT_GUEST = new PortletMode("edit_guest");
 

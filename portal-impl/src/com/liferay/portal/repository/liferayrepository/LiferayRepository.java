@@ -743,8 +743,8 @@ public class LiferayRepository
 	@Override
 	protected void initByFileVersionId(long fileVersionId) {
 		try {
-			DLFileVersion dlFileVersion =
-				dlFileVersionService.getFileVersion(fileVersionId);
+			DLFileVersion dlFileVersion = dlFileVersionService.getFileVersion(
+				fileVersionId);
 
 			initByRepositoryId(dlFileVersion.getRepositoryId());
 		}

@@ -118,8 +118,8 @@ public class ConfigurationImpl
 			List<Configuration> configurations =
 				(List<Configuration>)field1.get(aggregatedProperties);
 
-			MapConfiguration newConfiguration =
-				new MapConfiguration(properties);
+			MapConfiguration newConfiguration = new MapConfiguration(
+				properties);
 
 			configurations.add(0, newConfiguration);
 

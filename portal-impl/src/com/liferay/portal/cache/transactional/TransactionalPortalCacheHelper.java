@@ -92,8 +92,8 @@ public class TransactionalPortalCacheHelper {
 		Map<PortalCache, Map<Serializable, Object>> portalCacheMap =
 			_peekPortalCacheMap();
 
-		Map<Serializable, Object> uncommittedMap =
-			portalCacheMap.get(portalCache);
+		Map<Serializable, Object> uncommittedMap = portalCacheMap.get(
+			portalCache);
 
 		if (uncommittedMap == null) {
 			return null;
@@ -108,8 +108,8 @@ public class TransactionalPortalCacheHelper {
 		Map<PortalCache, Map<Serializable, Object>> portalCacheMap =
 			_peekPortalCacheMap();
 
-		Map<Serializable, Object> uncommittedMap =
-			portalCacheMap.get(portalCache);
+		Map<Serializable, Object> uncommittedMap = portalCacheMap.get(
+			portalCache);
 
 		if (uncommittedMap == null) {
 			uncommittedMap = new HashMap<Serializable, Object>();
@@ -124,8 +124,8 @@ public class TransactionalPortalCacheHelper {
 		Map<PortalCache, Map<Serializable, Object>> portalCacheMap =
 			_peekPortalCacheMap();
 
-		Map<Serializable, Object> uncommittedMap =
-			portalCacheMap.get(portalCache);
+		Map<Serializable, Object> uncommittedMap = portalCacheMap.get(
+			portalCache);
 
 		if (uncommittedMap != null) {
 			uncommittedMap.remove(key);
@@ -136,8 +136,8 @@ public class TransactionalPortalCacheHelper {
 		Map<PortalCache, Map<Serializable, Object>> portalCacheMap =
 			_peekPortalCacheMap();
 
-		Map<Serializable, Object> uncommittedMap =
-			portalCacheMap.get(portalCache);
+		Map<Serializable, Object> uncommittedMap = portalCacheMap.get(
+			portalCache);
 
 		if (uncommittedMap != null) {
 			uncommittedMap.clear();

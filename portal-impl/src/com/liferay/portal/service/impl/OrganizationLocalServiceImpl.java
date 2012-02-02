@@ -616,8 +616,8 @@ public class OrganizationLocalServiceImpl
 			return new ArrayList<Organization>();
 		}
 
-		Organization organization =
-			organizationPersistence.findByPrimaryKey(organizationId);
+		Organization organization = organizationPersistence.findByPrimaryKey(
+			organizationId);
 
 		return getParentOrganizations(organization, true);
 	}
@@ -850,8 +850,8 @@ public class OrganizationLocalServiceImpl
 
 		List<Organization> organizationsTree = new ArrayList<Organization>();
 
-		Organization organization =
-			organizationPersistence.findByPrimaryKey(organizationId);
+		Organization organization = organizationPersistence.findByPrimaryKey(
+			organizationId);
 
 		if (!includeSpecifiedOrganization) {
 			organizationsTree.add(organization);

@@ -103,8 +103,8 @@ public class LayoutBranchLocalServiceImpl
 	public void deleteLayoutBranch(long layoutBranchId)
 		throws PortalException, SystemException {
 
-		LayoutBranch layoutBranch =
-			layoutBranchPersistence.findByPrimaryKey(layoutBranchId);
+		LayoutBranch layoutBranch = layoutBranchPersistence.findByPrimaryKey(
+			layoutBranchId);
 
 		layoutRevisionLocalService.deleteLayoutRevisions(
 			layoutBranch.getLayoutSetBranchId(), layoutBranchId,
@@ -160,8 +160,8 @@ public class LayoutBranchLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		LayoutBranch layoutBranch =
-			layoutBranchPersistence.findByPrimaryKey(layoutBranchId);
+		LayoutBranch layoutBranch = layoutBranchPersistence.findByPrimaryKey(
+			layoutBranchId);
 
 		validate(
 			layoutBranch.getLayoutBranchId(),

@@ -82,8 +82,8 @@ public class ParamUtil {
 	public static String get(
 		HttpServletRequest request, String param, String defaultValue) {
 
-		String returnValue =
-			GetterUtil.get(request.getParameter(param), defaultValue);
+		String returnValue = GetterUtil.get(
+			request.getParameter(param), defaultValue);
 
 		if (returnValue != null) {
 			return returnValue.trim();
@@ -139,8 +139,8 @@ public class ParamUtil {
 	public static String get(
 		PortletRequest portletRequest, String param, String defaultValue) {
 
-		String returnValue =
-			GetterUtil.get(portletRequest.getParameter(param), defaultValue);
+		String returnValue = GetterUtil.get(
+			portletRequest.getParameter(param), defaultValue);
 
 		if (returnValue != null) {
 			return returnValue.trim();
@@ -196,8 +196,8 @@ public class ParamUtil {
 	public static String get(
 		ServiceContext serviceContext, String param, String defaultValue) {
 
-		String returnValue =
-			GetterUtil.get(serviceContext.getAttribute(param), defaultValue);
+		String returnValue = GetterUtil.get(
+			serviceContext.getAttribute(param), defaultValue);
 
 		if (returnValue != null) {
 			return returnValue.trim();

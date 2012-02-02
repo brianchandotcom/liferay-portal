@@ -76,8 +76,8 @@ public class FinalizeManager {
 					Reference<? extends Object> reference =
 						_referenceQueue.remove();
 
-					FinalizeAction finalizeAction =
-						_referenceActionMap.remove(reference);
+					FinalizeAction finalizeAction = _referenceActionMap.remove(
+						reference);
 
 					finalizeAction.doFinalize();
 				}

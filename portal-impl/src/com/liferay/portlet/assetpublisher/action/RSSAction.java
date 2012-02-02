@@ -221,8 +221,8 @@ public class RSSAction extends PortletAction {
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				assetEntry.getClassName());
 
-		AssetRenderer assetRenderer =
-			assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
+		AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
+			assetEntry.getClassPK());
 
 		String viewInContextURL = assetRenderer.getURLViewInContext(
 			(LiferayPortletRequest)portletRequest,

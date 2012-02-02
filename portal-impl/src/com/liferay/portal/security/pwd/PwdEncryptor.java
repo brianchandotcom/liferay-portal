@@ -135,8 +135,8 @@ public class PwdEncryptor {
 					saltBytes, clearTextPassword.getBytes(Digester.ENCODING));
 			}
 			else if (algorithm.equals(TYPE_SSHA)) {
-				byte[] clearTextPasswordBytes =
-					clearTextPassword.getBytes(Digester.ENCODING);
+				byte[] clearTextPasswordBytes = clearTextPassword.getBytes(
+					Digester.ENCODING);
 
 				// Create a byte array of salt bytes appended to password bytes
 

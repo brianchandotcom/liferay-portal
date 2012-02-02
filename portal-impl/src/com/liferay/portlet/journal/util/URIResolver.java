@@ -46,8 +46,8 @@ public class URIResolver implements javax.xml.transform.URIResolver {
 					templatePathIndex + _GET_TEMPLATE_PATH.length();
 
 				long groupId = GetterUtil.getLong(_tokens.get("group_id"));
-				String templateId =
-					href.substring(templateIdIndex, href.length());
+				String templateId = href.substring(
+					templateIdIndex, href.length());
 
 				content = JournalUtil.getTemplateScript(
 					groupId, templateId, _tokens, _languageId);

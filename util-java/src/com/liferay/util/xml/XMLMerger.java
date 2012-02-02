@@ -130,8 +130,8 @@ public class XMLMerger {
 
 				if (_containsObjectEqualTo(child, originals, comparator)) {
 					if (_descriptor.canJoinChildren(child)) {
-						Element first =
-							_findObjectEqualTo(child, originals, comparator);
+						Element first = _findObjectEqualTo(
+							child, originals, comparator);
 
 						Collection<Element> childrenToJoin = child.elements();
 

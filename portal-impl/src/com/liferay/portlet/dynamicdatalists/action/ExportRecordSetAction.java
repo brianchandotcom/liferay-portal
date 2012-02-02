@@ -50,10 +50,10 @@ public class ExportRecordSetAction extends PortletAction {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		HttpServletRequest request =
-			PortalUtil.getHttpServletRequest(resourceRequest);
-		HttpServletResponse response =
-			PortalUtil.getHttpServletResponse(resourceResponse);
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			resourceRequest);
+		HttpServletResponse response = PortalUtil.getHttpServletResponse(
+			resourceResponse);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

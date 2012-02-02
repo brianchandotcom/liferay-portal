@@ -50,8 +50,8 @@ public class ViewAction extends PortletAction {
 				preferences.getValue("questionId", StringPool.BLANK));
 
 			if (questionId > 0) {
-				PollsQuestion question =
-					PollsQuestionServiceUtil.getQuestion(questionId);
+				PollsQuestion question = PollsQuestionServiceUtil.getQuestion(
+					questionId);
 
 				renderRequest.setAttribute(WebKeys.POLLS_QUESTION, question);
 			}

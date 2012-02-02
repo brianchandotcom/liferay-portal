@@ -169,8 +169,8 @@ public class EditProductEntryAction extends PortletAction {
 			byte[] bytes = null;
 
 			if (preserveScreenshot) {
-				SCProductScreenshot productScreenshot =
-					getProductScreenshot(uploadPortletRequest, priority);
+				SCProductScreenshot productScreenshot = getProductScreenshot(
+					uploadPortletRequest, priority);
 
 				Image image = null;
 

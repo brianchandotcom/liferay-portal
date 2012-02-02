@@ -547,8 +547,8 @@ public class MainServlet extends ActionServlet {
 		if (portletReqProcessor == null) {
 			ModuleConfig moduleConfig = getModuleConfig(request);
 
-			portletReqProcessor =
-				PortletRequestProcessor.getInstance(this, moduleConfig);
+			portletReqProcessor = PortletRequestProcessor.getInstance(
+				this, moduleConfig);
 
 			servletContext.setAttribute(
 				WebKeys.PORTLET_STRUTS_PROCESSOR, portletReqProcessor);

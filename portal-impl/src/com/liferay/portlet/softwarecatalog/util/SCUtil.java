@@ -37,12 +37,12 @@ public class SCUtil {
 		OrderByComparator orderByComparator = null;
 
 		if (orderByCol.equals("create-date")) {
-			orderByComparator =
-				new ProductEntryCreateDateComparator(orderByAsc);
+			orderByComparator = new ProductEntryCreateDateComparator(
+				orderByAsc);
 		}
 		else if (orderByCol.equals("modified-date")) {
-			orderByComparator =
-				new ProductEntryModifiedDateComparator(orderByAsc);
+			orderByComparator = new ProductEntryModifiedDateComparator(
+				orderByAsc);
 		}
 		else if (orderByCol.equals("name")) {
 			orderByComparator = new ProductEntryNameComparator(orderByAsc);

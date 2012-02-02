@@ -612,8 +612,8 @@ public class AssetEntryFinderImpl
 		}
 
 		if (expirationDate != null) {
-			Timestamp expirationDate_TS =
-				CalendarUtil.getTimestamp(expirationDate);
+			Timestamp expirationDate_TS = CalendarUtil.getTimestamp(
+				expirationDate);
 
 			qPos.add(expirationDate_TS);
 		}

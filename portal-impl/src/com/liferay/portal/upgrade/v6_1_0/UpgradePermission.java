@@ -223,8 +223,8 @@ public class UpgradePermission extends UpgradeProcess {
 			String name, boolean community, boolean guest)
 		throws Exception {
 
-		List<String> modelActions =
-			ResourceActionsUtil.getModelResourceActions(name);
+		List<String> modelActions = ResourceActionsUtil.getModelResourceActions(
+			name);
 
 		ResourceActionLocalServiceUtil.checkResourceActions(name, modelActions);
 

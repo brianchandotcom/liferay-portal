@@ -113,8 +113,8 @@ public class ColorUtil {
 					hexArray[i] = 15;
 				}
 				else {
-					hexArray[i] =
-						GetterUtil.getInteger(new Character(c[i]).toString());
+					hexArray[i] = GetterUtil.getInteger(
+						new Character(c[i]).toString());
 				}
 			}
 		}

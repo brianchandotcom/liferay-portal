@@ -23,8 +23,8 @@ import java.util.List;
 public class PortalCacheClusterLink {
 
 	public void afterPropertiesSet() {
-		_portalCacheClusterChannels =
-			new ArrayList<PortalCacheClusterChannel>(_channelNumber);
+		_portalCacheClusterChannels = new ArrayList<PortalCacheClusterChannel>(
+			_channelNumber);
 
 		for (int i = 0; i < _channelNumber; i++) {
 			_portalCacheClusterChannels.add(

@@ -708,8 +708,8 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 
 		filterOwnerActions(resource.getName(), ownerActionIds);
 
-		String[] ownerPermissions =
-			ownerActionIds.toArray(new String[ownerActionIds.size()]);
+		String[] ownerPermissions = ownerActionIds.toArray(
+			new String[ownerActionIds.size()]);
 
 		// Group permissions
 

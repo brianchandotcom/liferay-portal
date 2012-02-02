@@ -36,8 +36,8 @@ public class DDMStructureLinkLocalServiceImpl
 
 		long structureLinkId = counterLocalService.increment();
 
-		DDMStructureLink structureLink =
-			ddmStructureLinkPersistence.create(structureLinkId);
+		DDMStructureLink structureLink = ddmStructureLinkPersistence.create(
+			structureLinkId);
 
 		structureLink.setClassNameId(classNameId);
 		structureLink.setClassPK(classPK);

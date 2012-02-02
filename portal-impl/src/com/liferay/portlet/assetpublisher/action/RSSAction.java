@@ -286,9 +286,8 @@ public class RSSAction extends PortletAction {
 		String rssFormatType = RSSUtil.getFormatType(rssFormat);
 		double rssFormatVersion = RSSUtil.getFormatVersion(rssFormat);
 
-		AssetEntryQuery assetEntryQuery =
-			AssetPublisherUtil.getAssetEntryQuery(
-				preferences, new long[] {themeDisplay.getScopeGroupId()});
+		AssetEntryQuery assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(
+			preferences, new long[] {themeDisplay.getScopeGroupId()});
 
 		if (!anyAssetType) {
 			long[] availableClassNameIds =

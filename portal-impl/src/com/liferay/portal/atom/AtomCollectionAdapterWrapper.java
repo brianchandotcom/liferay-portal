@@ -131,8 +131,8 @@ public class AtomCollectionAdapterWrapper<E>
 
 		try {
 			if (resourceName.endsWith(":media")) {
-				resourceName =
-					resourceName.substring(0, resourceName.length() - 6);
+				resourceName = resourceName.substring(
+					0, resourceName.length() - 6);
 			}
 
 			return _atomCollectionAdapter.getEntry(

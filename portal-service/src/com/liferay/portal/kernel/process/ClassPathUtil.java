@@ -168,8 +168,8 @@ public class ClassPathUtil {
 				return StringPool.BLANK;
 			}
 
-			String classesDirName =
-				path.substring(0, path.length() - pathOfClass.length());
+			String classesDirName = path.substring(
+				0, path.length() - pathOfClass.length());
 
 			if (!classesDirName.endsWith("/WEB-INF/classes/")) {
 				_log.error(

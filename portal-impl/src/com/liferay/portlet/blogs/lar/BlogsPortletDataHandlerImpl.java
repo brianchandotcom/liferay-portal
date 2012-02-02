@@ -326,8 +326,8 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 				"small-image-path");
 
 			if (entry.isSmallImage() && Validator.isNotNull(smallImagePath)) {
-				smallImageFileName =
-					String.valueOf(entry.getSmallImageId()).concat(
+				smallImageFileName = String.valueOf(
+					entry.getSmallImageId()).concat(
 						StringPool.PERIOD).concat(entry.getSmallImageType());
 				smallImageInputStream =
 					portletDataContext.getZipEntryAsInputStream(smallImagePath);

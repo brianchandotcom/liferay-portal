@@ -178,9 +178,8 @@ public class ResourceTypePermissionLocalServiceImpl
 
 			long resourceTypePermissionId = counterLocalService.increment();
 
-			resourceTypePermission =
-				resourceTypePermissionPersistence.create(
-					resourceTypePermissionId);
+			resourceTypePermission = resourceTypePermissionPersistence.create(
+				resourceTypePermissionId);
 
 			resourceTypePermission.setCompanyId(companyId);
 			resourceTypePermission.setGroupId(groupId);

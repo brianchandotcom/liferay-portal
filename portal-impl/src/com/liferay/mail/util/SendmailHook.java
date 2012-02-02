@@ -206,9 +206,8 @@ public class SendmailHook implements Hook {
 
 			FileUtil.write(virtusertable, sb.toString());
 
-			String virtusertableRefreshCmd =
-				PropsUtil.get(
-					PropsKeys.MAIL_HOOK_SENDMAIL_VIRTUSERTABLE_REFRESH);
+			String virtusertableRefreshCmd = PropsUtil.get(
+				PropsKeys.MAIL_HOOK_SENDMAIL_VIRTUSERTABLE_REFRESH);
 
 			Runtime rt = Runtime.getRuntime();
 

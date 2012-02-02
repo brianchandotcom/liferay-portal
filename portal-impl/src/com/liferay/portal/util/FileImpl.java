@@ -349,9 +349,8 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		String[] includedFiles = directoryScanner.getIncludedFiles();
 
 		for (int i = 0; i < includedFiles.length; i++) {
-			includedFiles[i] =
-				directory.concat(StringPool.SLASH).concat(
-					replaceSeparator(includedFiles[i]));
+			includedFiles[i] = directory.concat(
+				StringPool.SLASH).concat(replaceSeparator(includedFiles[i]));
 		}
 
 		return includedFiles;
@@ -444,8 +443,8 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 			pos = fullFileName.lastIndexOf(CharPool.BACK_SLASH);
 		}
 
-		String shortFileName =
-			fullFileName.substring(pos + 1, fullFileName.length());
+		String shortFileName = fullFileName.substring(
+			pos + 1, fullFileName.length());
 
 		return shortFileName;
 	}

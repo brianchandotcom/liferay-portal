@@ -59,9 +59,8 @@ public class DLFileEntryTypeServiceTest extends BaseServiceTestCase {
 			DLFileEntryTypeLocalServiceUtil.getFileEntryType(
 				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
 
-		_dlFileEntryTypes =
-			DLFileEntryTypeLocalServiceUtil.getFileEntryTypes(
-				DLUtil.getGroupIds(TestPropsValues.getGroupId()));
+		_dlFileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFileEntryTypes(
+			DLUtil.getGroupIds(TestPropsValues.getGroupId()));
 
 		for (DLFileEntryType dlFileEntryType : _dlFileEntryTypes) {
 			String name = dlFileEntryType.getName();

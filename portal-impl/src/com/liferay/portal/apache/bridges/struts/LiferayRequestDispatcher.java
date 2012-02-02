@@ -162,9 +162,8 @@ public class LiferayRequestDispatcher implements RequestDispatcher {
 			servletRequest, portletRequest, pathInfo, queryString, requestURI,
 			servletPath, named, include);
 
-		HttpServletResponse portletServletResponse =
-			getPortletServletResponse(
-				servletResponse, portletRequest, portletResponse, include);
+		HttpServletResponse portletServletResponse = getPortletServletResponse(
+			servletResponse, portletRequest, portletResponse, include);
 
 		if (include) {
 			_requestDispatcher.include(

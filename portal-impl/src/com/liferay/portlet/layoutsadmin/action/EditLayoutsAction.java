@@ -597,9 +597,8 @@ public class EditLayoutsAction extends PortletAction {
 		}
 
 		if (Validator.isNull(colorSchemeId)) {
-			ColorScheme colorScheme =
-				ThemeLocalServiceUtil.getColorScheme(
-					companyId, themeId, colorSchemeId, wapTheme);
+			ColorScheme colorScheme = ThemeLocalServiceUtil.getColorScheme(
+				companyId, themeId, colorSchemeId, wapTheme);
 
 			colorSchemeId = colorScheme.getColorSchemeId();
 		}

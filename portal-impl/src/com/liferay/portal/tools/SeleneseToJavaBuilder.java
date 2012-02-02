@@ -242,8 +242,8 @@ public class SeleneseToJavaBuilder {
 
 			z = testCaseName.lastIndexOf("../", z);
 
-			importClassName +=
-				testCaseName.substring(z + 2, testCaseName.length());
+			importClassName += testCaseName.substring(
+				z + 2, testCaseName.length());
 
 			count = StringUtil.count(fileName, "/") - 2;
 
@@ -390,9 +390,8 @@ public class SeleneseToJavaBuilder {
 			count--;
 		}
 
-		relativeMinimizeTestFileName +=
-			minimizeTestFileName.substring(
-				minimizeTestFileName.lastIndexOf("/", x) + 1);
+		relativeMinimizeTestFileName += minimizeTestFileName.substring(
+			minimizeTestFileName.lastIndexOf("/", x) + 1);
 
 		File minimizeTestFile = new File(
 			_basedir + "/" + dirName + "/" + relativeMinimizeTestFileName);
@@ -1375,8 +1374,8 @@ public class SeleneseToJavaBuilder {
 
 			z = testCaseName.lastIndexOf("../", z);
 
-			importClassName +=
-				testCaseName.substring(z + 2, testCaseName.length() -5);
+			importClassName += testCaseName.substring(
+				z + 2, testCaseName.length() -5);
 			importClassName = StringUtil.replace(
 				importClassName, StringPool.SLASH, StringPool.PERIOD);
 

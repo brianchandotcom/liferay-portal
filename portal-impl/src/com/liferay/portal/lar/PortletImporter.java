@@ -1400,13 +1400,12 @@ public class PortletImporter {
 					portletDataContext.getCompanyId(), className);
 			}
 			catch (NoSuchTableException nste) {
-				expandoTable =
-					ExpandoTableLocalServiceUtil.addDefaultTable(
-						portletDataContext.getCompanyId(), className);
+				expandoTable = ExpandoTableLocalServiceUtil.addDefaultTable(
+					portletDataContext.getCompanyId(), className);
 			}
 
-			List<Element> expandoColumnElements =
-				expandoTableElement.elements("expando-column");
+			List<Element> expandoColumnElements = expandoTableElement.elements(
+				"expando-column");
 
 			for (Element expandoColumnElement : expandoColumnElements) {
 				long columnId = GetterUtil.getLong(

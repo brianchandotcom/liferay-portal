@@ -462,15 +462,19 @@ public class EditFileEntryAction extends PortletAction {
 
 		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
 
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
 		if (fileEntryId > 0) {
-			DLAppServiceUtil.checkOutFileEntry(fileEntryId);
+			DLAppServiceUtil.checkOutFileEntry(fileEntryId, serviceContext);
 		}
 		else {
 			long[] fileEntryIds = StringUtil.split(
 				ParamUtil.getString(actionRequest, "fileEntryIds"), 0L);
 
 			for (int i = 0; i < fileEntryIds.length; i++) {
-				DLAppServiceUtil.checkOutFileEntry(fileEntryIds[i]);
+				DLAppServiceUtil.checkOutFileEntry(
+					fileEntryIds[i], serviceContext);
 			}
 		}
 	}

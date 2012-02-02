@@ -188,21 +188,23 @@ public class LiferayRepository
 		dlFileEntryService.checkInFileEntry(fileEntryId, lockUuid);
 	}
 
-	public FileEntry checkOutFileEntry(long fileEntryId)
+	public FileEntry checkOutFileEntry(
+			long fileEntryId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		DLFileEntry dlFileEntry = dlFileEntryService.checkOutFileEntry(
-			fileEntryId);
+			fileEntryId, serviceContext);
 
 		return new LiferayFileEntry(dlFileEntry);
 	}
 
 	public FileEntry checkOutFileEntry(
-			long fileEntryId, String owner, long expirationTime)
+			long fileEntryId, String owner, long expirationTime,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		DLFileEntry dlFileEntry = dlFileEntryService.checkOutFileEntry(
-			fileEntryId, owner, expirationTime);
+			fileEntryId, owner, expirationTime, serviceContext);
 
 		return new LiferayFileEntry(dlFileEntry);
 	}

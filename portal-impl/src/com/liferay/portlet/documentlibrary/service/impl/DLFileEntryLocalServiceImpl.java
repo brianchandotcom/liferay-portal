@@ -324,16 +324,18 @@ public class DLFileEntryLocalServiceImpl
 			userId, fileEntryId, false, StringPool.BLANK, new ServiceContext());
 	}
 
-	public DLFileEntry checkOutFileEntry(long userId, long fileEntryId)
+	public DLFileEntry checkOutFileEntry(
+		long userId, long fileEntryId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		return checkOutFileEntry(
 			userId, fileEntryId, StringPool.BLANK,
-			DLFileEntryImpl.LOCK_EXPIRATION_TIME);
+			DLFileEntryImpl.LOCK_EXPIRATION_TIME, serviceContext);
 	}
 
 	public DLFileEntry checkOutFileEntry(
-			long userId, long fileEntryId, String owner, long expirationTime)
+			long userId, long fileEntryId, String owner, long expirationTime,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
@@ -366,11 +368,6 @@ public class DLFileEntryLocalServiceImpl
 
 		if (!version.equals(
 				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
-
-			ServiceContext serviceContext = new ServiceContext();
-
-			serviceContext.setCompanyId(user.getCompanyId());
-			serviceContext.setUserId(userId);
 
 			dlFileVersion = addFileVersion(
 				user, dlFileEntry, new Date(), dlFileVersion.getExtension(),
@@ -1476,7 +1473,8 @@ public class DLFileEntryLocalServiceImpl
 		boolean autoCheckIn = !checkedOut && dlFileVersion.isApproved();
 
 		if (autoCheckIn) {
-			dlFileEntry = checkOutFileEntry(userId, fileEntryId);
+			dlFileEntry = checkOutFileEntry(
+				userId, fileEntryId, serviceContext);
 		}
 		else if (!checkedOut) {
 			lockFileEntry(userId, fileEntryId);
@@ -1606,7 +1604,7 @@ public class DLFileEntryLocalServiceImpl
 		return dlFileEntryPersistence.findByPrimaryKey(fileEntryId);
 	}
 
-	protected void updateFileVersion(
+	protected DLFileVersion updateFileVersion(
 			User user, DLFileVersion dlFileVersion, String sourceFileName,
 			String extension, String mimeType, String title, String description,
 			String changeLog, String extraSettings, long fileEntryTypeId,
@@ -1634,7 +1632,7 @@ public class DLFileEntryLocalServiceImpl
 		dlFileVersion.setStatusDate(statusDate);
 		dlFileVersion.setExpandoBridgeAttributes(serviceContext);
 
-		dlFileVersionPersistence.update(dlFileVersion, false);
+		dlFileVersion = dlFileVersionPersistence.update(dlFileVersion, false);
 
 		if ((fileEntryTypeId > 0) && (fieldsMap != null)) {
 			dlFileEntryMetadataLocalService.updateFileEntryMetadata(
@@ -1642,6 +1640,8 @@ public class DLFileEntryLocalServiceImpl
 				dlFileVersion.getFileVersionId(), fieldsMap,
 				serviceContext);
 		}
+
+		return dlFileVersion;
 	}
 
 	protected void validateFile(

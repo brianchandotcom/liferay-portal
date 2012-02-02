@@ -86,18 +86,21 @@ public abstract class CMISRepositoryHandler extends BaseRepositoryImpl {
 		_baseCmisRepository.checkInFileEntry(fileEntryId, lockUuid);
 	}
 
-	public FileEntry checkOutFileEntry(long fileEntryId)
-		throws PortalException, SystemException {
-
-		return _baseCmisRepository.checkOutFileEntry(fileEntryId);
-	}
-
 	public FileEntry checkOutFileEntry(
-			long fileEntryId, String owner, long expirationTime)
+			long fileEntryId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		return _baseCmisRepository.checkOutFileEntry(
-			fileEntryId, owner, expirationTime);
+			fileEntryId, serviceContext);
+	}
+
+	public FileEntry checkOutFileEntry(
+			long fileEntryId, String owner, long expirationTime,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return _baseCmisRepository.checkOutFileEntry(
+			fileEntryId, owner, expirationTime, serviceContext);
 	}
 
 	public FileEntry copyFileEntry(

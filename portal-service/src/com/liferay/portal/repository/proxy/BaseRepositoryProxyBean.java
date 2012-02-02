@@ -112,20 +112,23 @@ public class BaseRepositoryProxyBean
 		_baseRepository.checkInFileEntry(fileEntryId, lockUuid);
 	}
 
-	public FileEntry checkOutFileEntry(long fileEntryId)
+	public FileEntry checkOutFileEntry(
+			long fileEntryId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		FileEntry fileEntry = _baseRepository.checkOutFileEntry(fileEntryId);
+		FileEntry fileEntry = _baseRepository.checkOutFileEntry(
+			fileEntryId, serviceContext);
 
 		return newFileEntryProxyBean(fileEntry);
 	}
 
 	public FileEntry checkOutFileEntry(
-			long fileEntryId, String owner, long expirationTime)
+			long fileEntryId, String owner, long expirationTime,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		FileEntry fileEntry = _baseRepository.checkOutFileEntry(
-			fileEntryId, owner, expirationTime);
+			fileEntryId, owner, expirationTime, serviceContext);
 
 		return newFileEntryProxyBean(fileEntry);
 	}

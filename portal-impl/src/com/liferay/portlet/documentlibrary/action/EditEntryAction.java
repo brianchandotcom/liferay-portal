@@ -217,6 +217,9 @@ public class EditEntryAction extends PortletAction {
 	protected void checkOutEntries(ActionRequest actionRequest)
 		throws Exception {
 
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
 		long repositoryId = ParamUtil.getLong(actionRequest, "repositoryId");
 
 		long[] folderIds = StringUtil.split(
@@ -230,7 +233,7 @@ public class EditEntryAction extends PortletAction {
 			ParamUtil.getString(actionRequest, "fileEntryIds"), 0L);
 
 		for (long fileEntryId : fileEntryIds) {
-			DLAppServiceUtil.checkOutFileEntry(fileEntryId);
+			DLAppServiceUtil.checkOutFileEntry(fileEntryId, serviceContext);
 		}
 	}
 

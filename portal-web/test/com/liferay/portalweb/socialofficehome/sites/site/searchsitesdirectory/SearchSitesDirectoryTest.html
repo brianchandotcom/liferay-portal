@@ -24,39 +24,39 @@
 	<td>Home</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='so-sidebar']/h3</td>
-	<td>Sites</td>
+	<td>waitForVisible</td>
+	<td>//button[contains(.,'More Sites')]/span[2]</td>
+	<td>More Sites</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//form/div[2]/span/span/button[2]</td>
-	<td>Directory</td>
+	<td>//button[contains(.,'More Sites')]/span[2]</td>
+	<td>More Sites</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//form/div[2]/span/span/button[2]</td>
-	<td>Directory</td>
+	<td>//button[contains(.,'More Sites')]/span[2]</td>
+	<td>More Sites</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//h1/span</td>
+	<td>xPath=(//h1[@class='header-title']/span)[1]</td>
 	<td>Directory</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//h1/span</td>
+	<td>xPath=(//h1[@class='header-title']/span)[1]</td>
 	<td>Directory</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//div/input[1]</td>
-	<td>Search Sites</td>
+	<td>//input[@id='_5_WAR_soportlet_dialogKeywords']</td>
+	<td>Search</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//div/input[1]</td>
-	<td>Open</td>
+	<td>//input[@id='_5_WAR_soportlet_dialogKeywords']</td>
+	<td>Open Site1 Name</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -65,24 +65,235 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//li[contains(@class, 'social-office-enabled')]/span[2]/a</td>
+	<td>//span[@class='name']/a</td>
 	<td>Open Site1 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//li[contains(@class, 'social-office-enabled')]/span[3]</td>
+	<td>//span[@class='description']</td>
 	<td>Open Site1 Description</td>
 </tr>
 <tr>
-	<td>assertTextNotPresent</td>
-	<td>Private Site2 Name</td>
+	<td>clickAtAndWait</td>
+	<td>//span[@class='name']/a</td>
+	<td>Open Site1 Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='community-title']</td>
+	<td>Open Site1 Name</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/user/joebloggs/home1/</td>
 	<td></td>
 </tr>
 <tr>
-	<td>assertTextNotPresent</td>
-	<td>Restricted Site3 Name</td>
+	<td>waitForVisible</td>
+	<td>//li[contains(@class, 'selected')]/a/span</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[contains(@class, 'selected')]/a/span</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//button[contains(.,'More Sites')]/span[2]</td>
+	<td>More Sites</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//button[contains(.,'More Sites')]/span[2]</td>
+	<td>More Sites</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//button[contains(.,'More Sites')]/span[2]</td>
+	<td>More Sites</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>xPath=(//h1[@class='header-title']/span)[1]</td>
+	<td>Directory</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//h1[@class='header-title']/span)[1]</td>
+	<td>Directory</td>
+</tr>
+<tr>
+	<td>storeChecked</td>
+	<td>//input[@id='_5_WAR_soportlet_userSites']</td>
+	<td>mySitesChecked1</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${mySitesChecked1}</td>
+	<td>MySitesNotChecked1</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@id='_5_WAR_soportlet_userSites']</td>
+	<td>My Sites</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>MySitesNotChecked1</td>
 	<td></td>
 </tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@id='_5_WAR_soportlet_dialogKeywords']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_5_WAR_soportlet_dialogKeywords']</td>
+	<td>Private Site2 Name</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@class='empty']</td>
+	<td>There are no results.</td>
+</tr>
+<tr>
+	<td>storeChecked</td>
+	<td>//input[@id='_5_WAR_soportlet_userSites']</td>
+	<td>mySitesChecked2</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${mySitesChecked2}</td>
+	<td>MySitesChecked2</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@id='_5_WAR_soportlet_userSites']</td>
+	<td>My Sites</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>MySitesChecked2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@id='_5_WAR_soportlet_dialogKeywords']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_5_WAR_soportlet_dialogKeywords']</td>
+	<td>Private Site2 Name</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='name']/a</td>
+	<td>Private Site2 Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='description']</td>
+	<td>Private Site2 Description</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//span[@class='name']/a</td>
+	<td>Private Site2 Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='community-title']</td>
+	<td>Private Site2 Name</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/user/joebloggs/home1/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//li[contains(@class, 'selected')]/a/span</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[contains(@class, 'selected')]/a/span</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//button[contains(.,'More Sites')]/span[2]</td>
+	<td>More Sites</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//button[contains(.,'More Sites')]/span[2]</td>
+	<td>More Sites</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//button[contains(.,'More Sites')]/span[2]</td>
+	<td>More Sites</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>xPath=(//h1[@class='header-title']/span)[1]</td>
+	<td>Directory</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//h1[@class='header-title']/span)[1]</td>
+	<td>Directory</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@id='_5_WAR_soportlet_dialogKeywords']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_5_WAR_soportlet_dialogKeywords']</td>
+	<td>Restricted Site3 Name</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='name']/a</td>
+	<td>Restricted Site3 Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='description']</td>
+	<td>Restricted Site3 Description</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//span[@class='name']/a</td>
+	<td>Restricted Site3 Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='community-title']</td>
+	<td>Restricted Site3 Name</td>
+</tr>
+
 </tbody></table>
 </body>
 </html>

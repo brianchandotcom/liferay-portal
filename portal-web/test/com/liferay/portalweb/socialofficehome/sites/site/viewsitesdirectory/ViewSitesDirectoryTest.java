@@ -22,62 +22,108 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewSitesDirectoryTest extends BaseTestCase {
 	public void testViewSitesDirectory() throws Exception {
-		selenium.open("/user/joebloggs/home/");
-		loadRequiredJavaScriptModules();
+		int label = 1;
 
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
+		while (label >= 1) {
+			switch (label) {
+			case 1:
+				selenium.open("/user/joebloggs/home1/");
+				loadRequiredJavaScriptModules();
 
-			try {
-				if (selenium.isVisible("//div/div/div/div/ul/li/a")) {
-					break;
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//li[contains(@class, 'selected')]/a/span")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
 				}
-			}
-			catch (Exception e) {
-			}
 
-			Thread.sleep(1000);
-		}
+				assertEquals(RuntimeVariables.replace("Home"),
+					selenium.getText(
+						"//li[contains(@class, 'selected')]/a/span"));
 
-		selenium.clickAt("//div/div/div/div/ul/li/a",
-			RuntimeVariables.replace("Home"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Sites"),
-			selenium.getText("//div[3]/div/section/header/h1/span"));
-		assertEquals(RuntimeVariables.replace("Directory"),
-			selenium.getText("//form/div[2]/span/span/button[2]"));
-		selenium.clickAt("//form/div[2]/span/span/button[2]",
-			RuntimeVariables.replace("Directory"));
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
 
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
+					try {
+						if (selenium.isVisible(
+									"//button[contains(.,'More Sites')]/span[2]")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
 
-			try {
-				if (selenium.isVisible("//h1/span")) {
-					break;
+					Thread.sleep(1000);
 				}
-			}
-			catch (Exception e) {
-			}
 
-			Thread.sleep(1000);
+				assertEquals(RuntimeVariables.replace("More Sites"),
+					selenium.getText(
+						"//button[contains(.,'More Sites')]/span[2]"));
+				selenium.clickAt("//button[contains(.,'More Sites')]/span[2]",
+					RuntimeVariables.replace("More Sites"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"xPath=(//h1[@class='header-title']/span)[1]")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("Directory"),
+					selenium.getText(
+						"xPath=(//h1[@class='header-title']/span)[1]"));
+
+				boolean mySitesChecked = selenium.isChecked(
+						"//input[@id='_5_WAR_soportlet_userSites']");
+
+				if (!mySitesChecked) {
+					label = 2;
+
+					continue;
+				}
+
+				selenium.clickAt("//input[@id='_5_WAR_soportlet_userSites']",
+					RuntimeVariables.replace("My Sites"));
+
+			case 2:
+				Thread.sleep(5000);
+				assertEquals(RuntimeVariables.replace("Liferay"),
+					selenium.getText("xPath=(//span[@class='name']/a)[1]"));
+				assertEquals(RuntimeVariables.replace("Open Site1 Name"),
+					selenium.getText("xPath=(//span[@class='name']/a)[2]"));
+				assertEquals(RuntimeVariables.replace("Open Site1 Description"),
+					selenium.getText("xPath=(//span[@class='description'])[2]"));
+				assertEquals(RuntimeVariables.replace("Restricted Site3 Name"),
+					selenium.getText("xPath=(//span[@class='name']/a)[3]"));
+				assertEquals(RuntimeVariables.replace(
+						"Restricted Site3 Description"),
+					selenium.getText("xPath=(//span[@class='description'])[3]"));
+
+			case 100:
+				label = -1;
+			}
 		}
-
-		assertEquals(RuntimeVariables.replace("Directory"),
-			selenium.getText("//h1/span"));
-		assertEquals(RuntimeVariables.replace("Liferay"),
-			selenium.getText("//span[2]/a"));
-		assertEquals(RuntimeVariables.replace("Open Site1 Name"),
-			selenium.getText(
-				"//li[contains(@class, 'social-office-enabled')][1]/span[2]/a"));
-		assertEquals(RuntimeVariables.replace("Restricted Site3 Name"),
-			selenium.getText(
-				"//li[contains(@class, 'social-office-enabled')][2]/span[2]/a"));
-		assertFalse(selenium.isPartialText("//ul", "Private Site2 Name"));
 	}
 }

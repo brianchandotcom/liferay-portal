@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddSitesSite3TypeRestrictedTest extends BaseTestCase {
 	public void testAddSitesSite3TypeRestricted() throws Exception {
-		selenium.open("/user/joebloggs/home/");
+		selenium.open("/user/joebloggs/home1/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -31,7 +31,8 @@ public class AddSitesSite3TypeRestrictedTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div/div/div/div/ul/li/a")) {
+				if (selenium.isVisible(
+							"//li[contains(@class, 'selected')]/a/span")) {
 					break;
 				}
 			}
@@ -41,12 +42,10 @@ public class AddSitesSite3TypeRestrictedTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//div/div/div/div/ul/li/a",
-			RuntimeVariables.replace("Home"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Home"),
+			selenium.getText("//li[contains(@class, 'selected')]/a/span"));
 		assertEquals(RuntimeVariables.replace("Sites"),
-			selenium.getText("//div[3]/div/section/header/h1/span"));
+			selenium.getText("//div[@id='so-sidebar']/h3"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -54,7 +53,8 @@ public class AddSitesSite3TypeRestrictedTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//form/div[2]/span/span/button[1]")) {
+				if (selenium.isVisible(
+							"//button[contains(.,'Add Site')]/span[2]")) {
 					break;
 				}
 			}
@@ -65,8 +65,8 @@ public class AddSitesSite3TypeRestrictedTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Add Site"),
-			selenium.getText("//form/div[2]/span/span/button[1]"));
-		selenium.clickAt("//form/div[2]/span/span/button[1]",
+			selenium.getText("//button[contains(.,'Add Site')]/span[2]"));
+		selenium.clickAt("//button[contains(.,'Add Site')]/span[2]",
 			RuntimeVariables.replace("Add Site"));
 
 		for (int second = 0;; second++) {
@@ -75,7 +75,8 @@ public class AddSitesSite3TypeRestrictedTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//h1/span")) {
+				if (selenium.isVisible(
+							"xPath=(//h1[@class='header-title']/span)[1]")) {
 					break;
 				}
 			}
@@ -86,12 +87,13 @@ public class AddSitesSite3TypeRestrictedTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Information"),
-			selenium.getText("//h1/span"));
-		assertTrue(selenium.isVisible("//input"));
-		selenium.type("//input",
+			selenium.getText("xPath=(//h1[@class='header-title']/span)[1]"));
+		assertTrue(selenium.isVisible("//input[@id='_5_WAR_soportlet_name']"));
+		selenium.type("//input[@id='_5_WAR_soportlet_name']",
 			RuntimeVariables.replace("Restricted Site3 Name"));
-		assertTrue(selenium.isVisible("//textarea"));
-		selenium.type("//textarea",
+		assertTrue(selenium.isVisible(
+				"//textarea[@id='_5_WAR_soportlet_description']"));
+		selenium.type("//textarea[@id='_5_WAR_soportlet_description']",
 			RuntimeVariables.replace("Restricted Site3 Description"));
 		assertEquals("Next", selenium.getValue("//input[@value='Next']"));
 		selenium.clickAt("//input[@value='Next']",
@@ -103,7 +105,8 @@ public class AddSitesSite3TypeRestrictedTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[2]/div[1]/h1/span")) {
+				if (selenium.isVisible(
+							"xPath=(//h1[@class='header-title']/span)[2]")) {
 					break;
 				}
 			}
@@ -114,13 +117,14 @@ public class AddSitesSite3TypeRestrictedTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Settings"),
-			selenium.getText("//div[2]/div[1]/h1/span"));
-		assertTrue(selenium.isVisible("//select"));
-		selenium.select("//select",
+			selenium.getText("xPath=(//h1[@class='header-title']/span)[2]"));
+		assertTrue(selenium.isVisible(
+				"//select[@id='_5_WAR_soportlet_layoutSetPrototypeSelect']"));
+		selenium.select("//select[@id='_5_WAR_soportlet_layoutSetPrototypeSelect']",
 			RuntimeVariables.replace("Default Social Office Site"));
-		selenium.select("//span[2]/span/span/select",
+		assertTrue(selenium.isVisible("//select[@id='_5_WAR_soportlet_type']"));
+		selenium.select("//select[@id='_5_WAR_soportlet_type']",
 			RuntimeVariables.replace("Restricted"));
-		assertTrue(selenium.isVisible("//span[2]/span/span/select"));
 		assertEquals("Next", selenium.getValue("//input[@value='Next']"));
 		selenium.clickAt("//input[@value='Next']",
 			RuntimeVariables.replace("Next"));
@@ -131,7 +135,8 @@ public class AddSitesSite3TypeRestrictedTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[3]/div[1]/h1/span")) {
+				if (selenium.isVisible(
+							"xPath=(//h1[@class='header-title']/span)[3]")) {
 					break;
 				}
 			}
@@ -142,7 +147,7 @@ public class AddSitesSite3TypeRestrictedTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Customization"),
-			selenium.getText("//div[3]/div[1]/h1/span"));
+			selenium.getText("xPath=(//h1[@class='header-title']/span)[3]"));
 		assertTrue(selenium.isChecked("//div[4]/span[1]/input"));
 		assertTrue(selenium.isChecked("//span[2]/input"));
 		assertTrue(selenium.isChecked("//span[3]/input"));
@@ -160,7 +165,10 @@ public class AddSitesSite3TypeRestrictedTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+				if (RuntimeVariables.replace(
+							"Your request processed successfully.")
+										.equals(selenium.getText(
+								"//div[@class='portlet-msg-success']"))) {
 					break;
 				}
 			}

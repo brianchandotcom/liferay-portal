@@ -176,8 +176,7 @@ public class TrackbackAction extends PortletAction {
 
 		String entryURL =
 			PortalUtil.getLayoutFullURL(themeDisplay) +
-				Portal.FRIENDLY_URL_SEPARATOR + "blogs/" +
-					entry.getUrlTitle();
+				Portal.FRIENDLY_URL_SEPARATOR + "blogs/" + entry.getUrlTitle();
 
 		LinkbackConsumerUtil.addNewTrackback(
 			message.getMessageId(), url, entryURL);

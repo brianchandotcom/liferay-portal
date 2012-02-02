@@ -237,9 +237,7 @@ public class DLAppServiceTest extends BaseServiceTestCase {
 			}
 		}
 		catch (Exception e) {
-			fail(
-				"Unable to pass null File " +
-					StackTraceUtil.getStackTrace(e));
+			fail("Unable to pass null File " + StackTraceUtil.getStackTrace(e));
 		}
 
 		try {

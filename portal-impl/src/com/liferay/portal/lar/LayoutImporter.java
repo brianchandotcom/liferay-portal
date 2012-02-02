@@ -942,8 +942,7 @@ public class LayoutImporter {
 			else {
 				_log.debug(
 					"Layout with {groupId=" + groupId + ",privateLayout=" +
-						privateLayout + ",layoutId=" + layoutId +
-							"} exists");
+						privateLayout + ",layoutId=" + layoutId + "} exists");
 			}
 		}
 

@@ -867,8 +867,25 @@ public class ServiceBuilder {
 		}
 		else {
 			String refPackage = name.substring(0, pos);
-			String refPackageDir = StringUtil.replace(refPackage, ".", "/");
 			String refEntity = name.substring(pos + 1, name.length());
+
+			if (refPackage.equals(_packagePath)) {
+				pos = _ejbList.indexOf(new Entity(refEntity));
+
+				if (pos == -1) {
+					throw new RuntimeException(
+						"Cannot find " + refEntity + " in " +
+							ListUtil.toString(_ejbList, Entity.NAME_ACCESSOR));
+				}
+
+				entity = _ejbList.get(pos);
+
+				_entityPool.put(name, entity);
+
+				return entity;
+			}
+
+			String refPackageDir = StringUtil.replace(refPackage, ".", "/");
 			String refFileName =
 				_implDir + "/" + refPackageDir + "/service.xml";
 

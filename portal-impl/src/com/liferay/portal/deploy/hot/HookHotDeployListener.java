@@ -2180,9 +2180,13 @@ public class HookHotDeployListener
 				unfilteredPortalProperties.getProperty(
 					PropsKeys.UPGRADE_PROCESSES));
 
+			boolean indexOnUpgrade = GetterUtil.getBoolean(
+				unfilteredPortalProperties.getProperty(
+					PropsKeys.INDEX_ON_UPGRADE), PropsValues.INDEX_ON_UPGRADE);
+
 			UpgradeProcessUtil.upgradeProcess(
 				release.getBuildNumber(), upgradeProcessClassNames,
-				portletClassLoader);
+				portletClassLoader, indexOnUpgrade);
 		}
 
 		ReleaseLocalServiceUtil.updateRelease(

@@ -33,11 +33,21 @@ public class UpgradeProcessUtil {
 			ClassLoader classLoader)
 		throws UpgradeException {
 
+		return upgradeProcess(
+			buildNumber, upgradeProcessClassNames, classLoader,
+			PropsValues.INDEX_ON_UPGRADE);
+	}
+
+	public static boolean upgradeProcess(
+			int buildNumber, String[] upgradeProcessClassNames,
+			ClassLoader classLoader, boolean indexOnUpgrade)
+		throws UpgradeException {
+
 		boolean ranUpgradeProcess = false;
 
 		boolean tempIndexReadOnly = SearchEngineUtil.isIndexReadOnly();
 
-		if (PropsValues.INDEX_ON_UPGRADE) {
+		if (indexOnUpgrade) {
 			SearchEngineUtil.setIndexReadOnly(true);
 		}
 

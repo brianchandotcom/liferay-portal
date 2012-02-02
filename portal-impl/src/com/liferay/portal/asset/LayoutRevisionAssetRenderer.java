@@ -16,6 +16,7 @@ package com.liferay.portal.asset;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.model.LayoutBranch;
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
@@ -36,6 +37,8 @@ public class LayoutRevisionAssetRenderer extends BaseAssetRenderer {
 		_layoutRevision = layoutRevision;
 
 		try {
+			_layoutBranch = layoutRevision.getLayoutBranch();
+
 			_layoutSetBranch =
 				LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(
 					_layoutRevision.getLayoutSetBranchId());
@@ -57,13 +60,17 @@ public class LayoutRevisionAssetRenderer extends BaseAssetRenderer {
 		StringBundler sb = new StringBundler(12);
 
 		sb.append("<strong>");
-		sb.append(LanguageUtil.get(locale, "layout"));
+		sb.append(LanguageUtil.get(locale, "page"));
 		sb.append(":</strong> ");
 		sb.append(_layoutRevision.getHTMLTitle(locale));
 		sb.append("<br /><strong>");
-		sb.append(LanguageUtil.get(locale, "branch"));
+		sb.append(LanguageUtil.get(locale, "site-pages-variation"));
 		sb.append(":</strong> ");
-		sb.append(_layoutSetBranch.getName());
+		sb.append(LanguageUtil.get(locale, _layoutSetBranch.getName()));
+		sb.append("<br /><strong>");
+		sb.append(LanguageUtil.get(locale, "page-variation"));
+		sb.append(":</strong> ");
+		sb.append(LanguageUtil.get(locale, _layoutBranch.getName()));
 		sb.append("<br /><strong>");
 		sb.append(LanguageUtil.get(locale, "revision-id"));
 		sb.append(":</strong> ");
@@ -73,14 +80,7 @@ public class LayoutRevisionAssetRenderer extends BaseAssetRenderer {
 	}
 
 	public String getTitle(Locale locale) {
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_layoutRevision.getHTMLTitle(locale));
-		sb.append(" [");
-		sb.append(_layoutSetBranch.getName());
-		sb.append("]");
-
-		return sb.toString();
+		return _layoutRevision.getHTMLTitle(locale);
 	}
 
 	public long getUserId() {
@@ -108,6 +108,7 @@ public class LayoutRevisionAssetRenderer extends BaseAssetRenderer {
 	}
 
 	private LayoutRevision _layoutRevision;
+	private LayoutBranch _layoutBranch;
 	private LayoutSetBranch _layoutSetBranch;
 
 }

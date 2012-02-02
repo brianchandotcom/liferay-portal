@@ -210,6 +210,15 @@ public class LayoutStagingHandler implements InvocationHandler {
 				}
 			}
 
+			if (layoutRevisionId > 0) {
+				try {
+					return LayoutRevisionLocalServiceUtil.getLayoutRevision(
+						layoutRevisionId);
+				}
+				catch (NoSuchLayoutRevisionException nslre) {
+				}
+			}
+
 			try {
 				return LayoutRevisionLocalServiceUtil.getLayoutRevision(
 					layoutSetBranchId, layout.getPlid(), true);
@@ -225,15 +234,6 @@ public class LayoutStagingHandler implements InvocationHandler {
 				if (!layoutRevisions.isEmpty()) {
 					return layoutRevisions.get(0);
 				}
-			}
-		}
-
-		if (layoutRevisionId > 0) {
-			try {
-				return LayoutRevisionLocalServiceUtil.getLayoutRevision(
-					layoutRevisionId);
-			}
-			catch (NoSuchLayoutRevisionException nslre) {
 			}
 		}
 

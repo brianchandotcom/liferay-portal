@@ -38,9 +38,10 @@ public class ListTypeConstants {
 	public static final String ACCOUNT_ADDRESS =
 		Account.class.getName() + ADDRESS;
 
-	public static final int ACCOUNT_ADDRESS_DEFAULT =
-		GetterUtil.getInteger(PropsUtil.get(PropsKeys.
-			SQL_DATA_COM_LIFERAY_PORTAL_MODEL_LISTTYPE_ACCOUNT_ADDRESS));
+	public static final int ACCOUNT_ADDRESS_DEFAULT = GetterUtil.getInteger(
+		PropsUtil.get(
+			PropsKeys.
+				SQL_DATA_COM_LIFERAY_PORTAL_MODEL_LISTTYPE_ACCOUNT_ADDRESS));
 
 	public static final String ACCOUNT_EMAIL_ADDRESS =
 		Account.class.getName() + EMAIL_ADDRESS;

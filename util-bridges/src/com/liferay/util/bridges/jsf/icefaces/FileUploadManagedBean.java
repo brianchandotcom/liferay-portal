@@ -66,9 +66,8 @@ public class FileUploadManagedBean implements Renderable {
 				decimalFormat.setMaximumFractionDigits(2);
 				decimalFormat.setMinimumFractionDigits(0);
 
-				String maxFileSizeInMegs =
-					decimalFormat.format(
-						(double)maxFileSizeInBytes / 1024 / 1024);
+				String maxFileSizeInMegs = decimalFormat.format(
+					(double)maxFileSizeInBytes / 1024 / 1024);
 
 				addErrorMessage(
 					"file-size-is-larger-than-x-megabytes", maxFileSizeInMegs);

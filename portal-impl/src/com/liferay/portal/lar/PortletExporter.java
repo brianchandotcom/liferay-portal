@@ -650,8 +650,8 @@ public class PortletExporter {
 			List<ExpandoColumn> expandoColumns = entry.getValue();
 
 			for (ExpandoColumn expandoColumn: expandoColumns) {
-				Element expandoColumnElement =
-					expandoTableElement.addElement("expando-column");
+				Element expandoColumnElement = expandoTableElement.addElement(
+					"expando-column");
 
 				expandoColumnElement.addAttribute(
 					"column-id", String.valueOf(expandoColumn.getColumnId()));

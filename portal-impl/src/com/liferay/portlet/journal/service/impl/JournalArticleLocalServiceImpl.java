@@ -2259,10 +2259,9 @@ public class JournalArticleLocalServiceImpl
 		if (!article.isApproved() &&
 			(article.getVersion() != JournalArticleConstants.VERSION_DEFAULT)) {
 
-			int approvedArticlesCount =
-				journalArticlePersistence.countByG_A_ST(
-					article.getGroupId(), article.getArticleId(),
-					JournalArticleConstants.ASSET_ENTRY_CREATION_STATUSES);
+			int approvedArticlesCount = journalArticlePersistence.countByG_A_ST(
+				article.getGroupId(), article.getArticleId(),
+				JournalArticleConstants.ASSET_ENTRY_CREATION_STATUSES);
 
 			if (approvedArticlesCount > 0) {
 				addDraftAssetEntry = true;
@@ -2793,20 +2792,17 @@ public class JournalArticleLocalServiceImpl
 				elLanguage = "_" + elLanguage;
 			}
 
-			long imageId =
-				journalArticleImageLocalService.getArticleImageId(
-					groupId, articleId, version, elInstanceId, elName,
-					elLanguage);
+			long imageId = journalArticleImageLocalService.getArticleImageId(
+				groupId, articleId, version, elInstanceId, elName, elLanguage);
 
 			double oldVersion = MathUtil.format(version - 0.1, 1, 1);
 
 			long oldImageId = 0;
 
 			if ((oldVersion >= 1) && incrementVersion) {
-				oldImageId =
-					journalArticleImageLocalService.getArticleImageId(
-						groupId, articleId, oldVersion, elInstanceId, elName,
-						elLanguage);
+				oldImageId = journalArticleImageLocalService.getArticleImageId(
+					groupId, articleId, oldVersion, elInstanceId, elName,
+					elLanguage);
 			}
 
 			String elContent =
@@ -3203,8 +3199,7 @@ public class JournalArticleLocalServiceImpl
 			body = JournalUtil.getEmailArticleApprovalGrantedBody(preferences);
 		}
 		else if (emailType.equals("requested")) {
-			subject =
-				JournalUtil.getEmailArticleApprovalRequestedSubject(
+			subject = JournalUtil.getEmailArticleApprovalRequestedSubject(
 				preferences);
 			body = JournalUtil.getEmailArticleApprovalRequestedBody(
 				preferences);

@@ -582,9 +582,8 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 			if (webDavRequest.isMac()) {
 				try {
-					FileEntry destFileEntry =
-						DLAppServiceUtil.getFileEntry(
-							groupId, newParentFolderId, title);
+					FileEntry destFileEntry = DLAppServiceUtil.getFileEntry(
+						groupId, newParentFolderId, title);
 
 					InputStream is = fileEntry.getContentStream();
 

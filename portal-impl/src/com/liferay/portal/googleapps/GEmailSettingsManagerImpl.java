@@ -32,9 +32,8 @@ public class GEmailSettingsManagerImpl
 
 		GAuthenticator gAuthenticator = googleApps.getGAuthenticator();
 
-		emailSettingsURL =
-			APPS_URL.concat("/emailsettings/2.0/").concat(
-				gAuthenticator.getDomain());
+		emailSettingsURL = APPS_URL.concat(
+			"/emailsettings/2.0/").concat(gAuthenticator.getDomain());
 	}
 
 	public void addSendAs(long userId, String fullName, String emailAddress)

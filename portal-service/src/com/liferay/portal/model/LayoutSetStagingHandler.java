@@ -122,7 +122,7 @@ public class LayoutSetStagingHandler implements InvocationHandler {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		if (!serviceContext.isSignedIn()) {
+		if ((serviceContext == null) || !serviceContext.isSignedIn()) {
 			return null;
 		}
 

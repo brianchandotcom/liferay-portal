@@ -148,9 +148,8 @@ public abstract class AbstractMessagingConfigurator
 				Class<?> messageListenerClass = messageListener.getClass();
 
 				try {
-					Method setMessageBusMethod =
-						messageListenerClass.getMethod(
-							"setMessageBus", MessageBus.class);
+					Method setMessageBusMethod = messageListenerClass.getMethod(
+						"setMessageBus", MessageBus.class);
 
 					setMessageBusMethod.setAccessible(true);
 

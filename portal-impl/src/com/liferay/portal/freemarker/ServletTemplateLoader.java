@@ -57,8 +57,8 @@ public class ServletTemplateLoader extends URLTemplateLoader {
 				servletContextName);
 
 			if (servletContext != null) {
-				String templateName =
-					name.substring(pos + SERVLET_SEPARATOR.length());
+				String templateName = name.substring(
+					pos + SERVLET_SEPARATOR.length());
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(

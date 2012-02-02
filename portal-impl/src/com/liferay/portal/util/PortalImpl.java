@@ -2170,9 +2170,8 @@ public class PortalImpl implements Portal {
 		addPageSubtitle(journalArticle.getTitle(locale), request);
 		addPageDescription(journalArticle.getDescription(locale), request);
 
-		List<AssetTag> assetTags =
-			AssetTagLocalServiceUtil.getTags(
-				JournalArticle.class.getName(), journalArticle.getPrimaryKey());
+		List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(
+			JournalArticle.class.getName(), journalArticle.getPrimaryKey());
 
 		if (!assetTags.isEmpty()) {
 			addPageKeywords(
@@ -2274,9 +2273,8 @@ public class PortalImpl implements Portal {
 			if (Validator.isNotNull(queryString) &&
 				layoutActualURL.contains(StringPool.QUESTION)) {
 
-				layoutActualURL =
-					layoutActualURL.concat(StringPool.AMPERSAND).concat(
-						queryString);
+				layoutActualURL = layoutActualURL.concat(
+					StringPool.AMPERSAND).concat(queryString);
 			}
 		}
 

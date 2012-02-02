@@ -556,9 +556,8 @@ public abstract class BaseIndexer implements Indexer {
 			String keywords)
 		throws Exception {
 
-		ExpandoBridge expandoBridge =
-			ExpandoBridgeFactoryUtil.getExpandoBridge(
-				searchContext.getCompanyId(), getClassName(searchContext));
+		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
+			searchContext.getCompanyId(), getClassName(searchContext));
 
 		Set<String> attributeNames = SetUtil.fromEnumeration(
 			expandoBridge.getAttributeNames());

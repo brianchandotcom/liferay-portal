@@ -197,8 +197,7 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 			con = DataAccess.getConnection();
 
 			ps = con.prepareStatement(
-				"update MBThread set question = ? where threadId =" +
-					threadId);
+				"update MBThread set question = ? where threadId =" + threadId);
 
 			ps.setBoolean(1, question);
 

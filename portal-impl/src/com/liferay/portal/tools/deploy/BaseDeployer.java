@@ -899,8 +899,7 @@ public class BaseDeployer implements Deployer {
 		String tmpDir = SystemProperties.get(SystemProperties.TMP_DIR);
 
 		File file = new File(
-			tmpDir + "/liferay/com/liferay/portal/deploy/dependencies/" +
-				jar);
+			tmpDir + "/liferay/com/liferay/portal/deploy/dependencies/" + jar);
 
 		if (!file.exists()) {
 			synchronized (this) {

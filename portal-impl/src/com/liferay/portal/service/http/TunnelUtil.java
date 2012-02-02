@@ -208,8 +208,7 @@ public class TunnelUtil {
 		return httpURLConnection;
 	}
 
-	private static final boolean _VERIFY_SSL_HOSTNAME =
-		GetterUtil.getBoolean(
-			PropsUtil.get(TunnelUtil.class.getName() + ".verify.ssl.hostname"));
+	private static final boolean _VERIFY_SSL_HOSTNAME = GetterUtil.getBoolean(
+		PropsUtil.get(TunnelUtil.class.getName() + ".verify.ssl.hostname"));
 
 }

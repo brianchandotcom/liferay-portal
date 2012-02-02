@@ -347,8 +347,8 @@ public class ClassUtil {
 		st.wordChars(',',',');
 	}
 
-	private static final Pattern _ANNOTATION_NAME_REGEXP =
-		Pattern.compile("@(\\w+)$");
+	private static final Pattern _ANNOTATION_NAME_REGEXP = Pattern.compile(
+		"@(\\w+)$");
 
 	private static final Pattern _ANNOTATION_PARAMETERS_REGEXP =
 		Pattern.compile("@(\\w+)\\({0,1}\\{{0,1}([^)}]+)\\}{0,1}\\){0,1}");

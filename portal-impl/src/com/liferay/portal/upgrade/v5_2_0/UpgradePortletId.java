@@ -161,8 +161,7 @@ public class UpgradePortletId extends UpgradeProcess {
 					pos + PortletConstants.LAYOUT_SEPARATOR.length());
 
 				String newPrimKey =
-					plid + PortletConstants.LAYOUT_SEPARATOR +
-						newRootPortletId;
+					plid + PortletConstants.LAYOUT_SEPARATOR + newRootPortletId;
 
 				String oldPortletId = oldRootPortletId;
 				String newPortletId = newRootPortletId ;

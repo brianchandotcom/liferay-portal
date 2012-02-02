@@ -40,15 +40,14 @@ public class ThemeLoaderTemplateLoader extends URLTemplateLoader {
 				ctxName);
 
 			if (themeLoader != null) {
-				String templateName =
-					name.substring(pos + THEME_LOADER_SEPARATOR.length());
+				String templateName = name.substring(
+					pos + THEME_LOADER_SEPARATOR.length());
 
 				String themesPath = themeLoader.getThemesPath();
 
 				if (templateName.startsWith(themesPath)) {
-					name =
-						templateName.substring(
-							themesPath.length(), templateName.length());
+					name = templateName.substring(
+						themesPath.length(), templateName.length());
 				}
 
 				if (_log.isDebugEnabled()) {

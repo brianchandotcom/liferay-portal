@@ -16,6 +16,8 @@ package com.liferay.portalweb.portlet.pageratings.portlet.addportletduplicate;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.pageratings.portlet.addportlet.AddPagePRTest;
+import com.liferay.portalweb.portlet.pageratings.portlet.addportlet.AddPortletPRTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

@@ -16,6 +16,8 @@ package com.liferay.portalweb.portlet.amazonrankings.portlet.removeportletar;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.amazonrankings.portlet.addportletar.AddPageARTest;
+import com.liferay.portalweb.portlet.amazonrankings.portlet.addportletar.AddPortletARTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

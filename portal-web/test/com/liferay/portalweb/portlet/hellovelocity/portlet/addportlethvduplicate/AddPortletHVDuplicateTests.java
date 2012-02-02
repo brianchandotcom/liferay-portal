@@ -16,6 +16,8 @@ package com.liferay.portalweb.portlet.hellovelocity.portlet.addportlethvduplicat
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.hellovelocity.portlet.addportlethv.AddPageHVTest;
+import com.liferay.portalweb.portlet.hellovelocity.portlet.addportlethv.AddPortletHVTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

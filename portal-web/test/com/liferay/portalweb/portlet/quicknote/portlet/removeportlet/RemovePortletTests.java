@@ -16,6 +16,7 @@ package com.liferay.portalweb.portlet.quicknote.portlet.removeportlet;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.quicknote.portlet.addportlet.AddPageQNTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

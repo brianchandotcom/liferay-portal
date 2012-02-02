@@ -16,6 +16,8 @@ package com.liferay.portalweb.portlet.helloworld.portlet.removeportlethw;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.helloworld.portlet.addportlethw.AddPageHWTest;
+import com.liferay.portalweb.portlet.helloworld.portlet.addportlethw.AddPortletHWTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.struts;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
@@ -255,7 +256,7 @@ public class PortletAction extends Action {
 
 	protected void sendRedirect(
 			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws IOException {
+		throws IOException, SystemException {
 
 		sendRedirect(actionRequest, actionResponse, null);
 	}
@@ -263,7 +264,7 @@ public class PortletAction extends Action {
 	protected void sendRedirect(
 			ActionRequest actionRequest, ActionResponse actionResponse,
 			String redirect)
-		throws IOException {
+		throws IOException, SystemException {
 
 		if (SessionErrors.isEmpty(actionRequest)) {
 			ThemeDisplay themeDisplay =
@@ -283,7 +284,8 @@ public class PortletAction extends Action {
 			catch (Exception e) {
 			}
 
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+				themeDisplay.getCompanyId(), portletId);
 
 			if (hasPortletId || portlet.isAddDefaultResource()) {
 				addSuccessMessage(actionRequest, actionResponse);

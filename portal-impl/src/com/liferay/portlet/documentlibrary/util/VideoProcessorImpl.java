@@ -191,24 +191,6 @@ public class VideoProcessorImpl
 		_instance._queueGeneration(fileVersion);
 	}
 
-	protected void importPreviewFromLAR(
-			PortletDataContext portletDataContext, FileEntry fileEntry,
-			Element fileEntryElement, String binPathName, String previewType)
-		throws Exception {
-
-		String binPath = fileEntryElement.attributeValue(binPathName);
-
-		InputStream is = portletDataContext.getZipEntryAsInputStream(binPath);
-
-		FileVersion fileVersion = fileEntry.getFileVersion();
-
-		String previewFilePath = getPreviewFilePath(fileVersion, previewType);
-
-		addFileToStore(
-			portletDataContext.getCompanyId(), PREVIEW_PATH, previewFilePath,
-			is);
-	}
-
 	protected void exportPreview(
 			PortletDataContext portletDataContext, FileEntry fileEntry,
 			Element fileEntryElement, String binPathName, String previewType)
@@ -267,6 +249,24 @@ public class VideoProcessorImpl
 	@Override
 	protected String getThumbnailType(FileVersion fileVersion) {
 		return THUMBNAIL_TYPE;
+	}
+
+	protected void importPreviewFromLAR(
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			Element fileEntryElement, String binPathName, String previewType)
+		throws Exception {
+
+		String binPath = fileEntryElement.attributeValue(binPathName);
+
+		InputStream is = portletDataContext.getZipEntryAsInputStream(binPath);
+
+		FileVersion fileVersion = fileEntry.getFileVersion();
+
+		String previewFilePath = getPreviewFilePath(fileVersion, previewType);
+
+		addFileToStore(
+			portletDataContext.getCompanyId(), PREVIEW_PATH, previewFilePath,
+			is);
 	}
 
 	protected void importPreviews(

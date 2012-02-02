@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.lar.PortletImporter;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
@@ -212,7 +213,20 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		boolean dlProcessorEnabled = DLProcessorThreadLocal.isEnabled();
 
-		DLProcessorThreadLocal.setEnabled(false);
+		try {
+			DLProcessorThreadLocal.setEnabled(false);
+
+			importFileEntry(portletDataContext, fileEntryElement, path);
+		}
+		finally {
+			DLProcessorThreadLocal.setEnabled(dlProcessorEnabled);
+		}
+	}
+
+	protected static void importFileEntry(
+			PortletDataContext portletDataContext, Element fileEntryElement,
+			String path)
+		throws Exception {
 
 		FileEntry fileEntry = (FileEntry)portletDataContext.getZipEntryAsObject(
 			path);
@@ -423,8 +437,6 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		portletDataContext.importClassedModel(
 			fileEntry, importedFileEntry, _NAMESPACE);
-
-		DLProcessorThreadLocal.setEnabled(dlProcessorEnabled);
 	}
 
 	public static void importFileRank(

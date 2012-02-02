@@ -272,24 +272,6 @@ public class PDFProcessorImpl
 		Initializer._initializedInstance._queueGeneration(fileVersion);
 	}
 
-	protected void importPreviewFromLAR(
-			PortletDataContext portletDataContext, FileEntry fileEntry,
-			Element fileEntryElement, String binPathName, int fileIndex)
-		throws Exception {
-
-		String binPath = fileEntryElement.attributeValue(binPathName);
-
-		InputStream is = portletDataContext.getZipEntryAsInputStream(binPath);
-
-		FileVersion fileVersion = fileEntry.getFileVersion();
-
-		String previewFilePath = getPreviewFilePath(fileVersion, fileIndex);
-
-		addFileToStore(
-			portletDataContext.getCompanyId(), PREVIEW_PATH, previewFilePath,
-			is);
-	}
-
 	protected void exportPreview(
 			PortletDataContext portletDataContext, FileEntry fileEntry,
 			Element fileEntryElement, String binPathName, int fileIndex)
@@ -343,6 +325,24 @@ public class PDFProcessorImpl
 	@Override
 	protected String getThumbnailType(FileVersion fileVersion) {
 		return THUMBNAIL_TYPE;
+	}
+
+	protected void importPreviewFromLAR(
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			Element fileEntryElement, String binPathName, int fileIndex)
+		throws Exception {
+
+		String binPath = fileEntryElement.attributeValue(binPathName);
+
+		InputStream is = portletDataContext.getZipEntryAsInputStream(binPath);
+
+		FileVersion fileVersion = fileEntry.getFileVersion();
+
+		String previewFilePath = getPreviewFilePath(fileVersion, fileIndex);
+
+		addFileToStore(
+			portletDataContext.getCompanyId(), PREVIEW_PATH, previewFilePath,
+			is);
 	}
 
 	protected void importPreviews(

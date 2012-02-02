@@ -150,24 +150,6 @@ public class AudioProcessorImpl
 		_instance._queueGeneration(fileVersion);
 	}
 
-	protected void importPreviewFromLAR(
-			PortletDataContext portletDataContext, FileEntry fileEntry,
-			Element fileEntryElement, String binPathName, String previewType)
-		throws Exception {
-
-		FileVersion fileVersion = fileEntry.getFileVersion();
-
-		String previewFilePath = getPreviewFilePath(fileVersion, previewType);
-
-		String binPath = fileEntryElement.attributeValue(binPathName);
-
-		InputStream is = portletDataContext.getZipEntryAsInputStream(binPath);
-
-		addFileToStore(
-			portletDataContext.getCompanyId(), PREVIEW_PATH, previewFilePath,
-			is);
-	}
-
 	protected void exportPreview(
 			PortletDataContext portletDataContext, FileEntry fileEntry,
 			Element fileEntryElement, String binPathName, String previewType)
@@ -212,6 +194,24 @@ public class AudioProcessorImpl
 	@Override
 	protected String getThumbnailType(FileVersion fileVersion) {
 		return null;
+	}
+
+	protected void importPreviewFromLAR(
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			Element fileEntryElement, String binPathName, String previewType)
+		throws Exception {
+
+		FileVersion fileVersion = fileEntry.getFileVersion();
+
+		String previewFilePath = getPreviewFilePath(fileVersion, previewType);
+
+		String binPath = fileEntryElement.attributeValue(binPathName);
+
+		InputStream is = portletDataContext.getZipEntryAsInputStream(binPath);
+
+		addFileToStore(
+			portletDataContext.getCompanyId(), PREVIEW_PATH, previewFilePath,
+			is);
 	}
 
 	protected void importPreviews(

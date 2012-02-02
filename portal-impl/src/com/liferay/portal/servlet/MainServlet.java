@@ -15,6 +15,7 @@
 package com.liferay.portal.servlet;
 
 import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.portal.dao.shard.ShardDataSourceTargetSource;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.events.StartupAction;
 import com.liferay.portal.kernel.cache.Lifecycle;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -57,6 +59,7 @@ import com.liferay.portal.model.PortletFilter;
 import com.liferay.portal.model.PortletURLListener;
 import com.liferay.portal.model.User;
 import com.liferay.portal.plugin.PluginPackageUtil;
+import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
@@ -762,10 +765,24 @@ public class MainServlet extends ActionServlet {
 	protected void initCompanies() throws Exception {
 		ServletContext servletContext = getServletContext();
 
-		String[] webIds = PortalInstances.getWebIds();
+		try {
+			String[] webIds = PortalInstances.getWebIds();
 
-		for (int i = 0; i < webIds.length; i++) {
-			PortalInstances.initCompany(servletContext, webIds[i]);
+			for (int i = 0; i < webIds.length; i++) {
+				PortalInstances.initCompany(servletContext, webIds[i]);
+			}
+		}
+		finally {
+			CompanyThreadLocal.setCompanyId(
+				PortalInstances.getDefaultCompanyId());
+
+			ShardDataSourceTargetSource shardDataSourceTargetSource =
+				(ShardDataSourceTargetSource)
+					InfrastructureUtil.getShardDataSourceTargetSource();
+
+			if (shardDataSourceTargetSource != null) {
+				shardDataSourceTargetSource.resetDataSource();
+			}
 		}
 	}
 

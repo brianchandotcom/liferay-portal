@@ -77,8 +77,8 @@ public class VerifyUUID extends VerifyProcess {
 
 	private static final String[][] _MODELS = new String[][] {
 		new String[] {
-			"JournalArticle",
-			"id_"
+			"DLFileVersion",
+			"fileVersionId"
 		},
 		new String[] {
 			"JournalArticleResource",

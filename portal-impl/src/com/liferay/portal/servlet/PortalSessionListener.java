@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.filters.compoundsessionid.CompoundSessionIdHttpSession;
 import com.liferay.portal.kernel.servlet.filters.compoundsessionid.CompoundSessionIdSplitterUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.util.WebKeys;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -52,6 +53,8 @@ public class PortalSessionListener implements HttpSessionListener {
 
 		if (PropsValues.SESSION_MAX_ALLOWED > 0) {
 			if (_counter.incrementAndGet() > PropsValues.SESSION_MAX_ALLOWED) {
+				session.setAttribute(WebKeys.SESSION_MAX_ALLOWED, Boolean.TRUE);
+
 				_log.error(
 					"Exceeded maximum number of " +
 						PropsValues.SESSION_MAX_ALLOWED + " sessions " +

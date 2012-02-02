@@ -365,7 +365,7 @@
 		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetTag" />
 	</entity>
-	<entity name="DLFileVersion" human-name="document library file version" local-service="true" remote-service="true">
+	<entity name="DLFileVersion" human-name="document library file version" uuid="true" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
 

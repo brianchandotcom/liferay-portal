@@ -201,7 +201,8 @@ public class DLFileEntryServiceHttp {
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry checkOutFileEntry(
-		HttpPrincipal httpPrincipal, long fileEntryId)
+		HttpPrincipal httpPrincipal, long fileEntryId,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -209,7 +210,7 @@ public class DLFileEntryServiceHttp {
 					"checkOutFileEntry", _checkOutFileEntryParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					fileEntryId);
+					fileEntryId, serviceContext);
 
 			Object returnObj = null;
 
@@ -239,7 +240,8 @@ public class DLFileEntryServiceHttp {
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry checkOutFileEntry(
 		HttpPrincipal httpPrincipal, long fileEntryId, java.lang.String owner,
-		long expirationTime)
+		long expirationTime,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -247,7 +249,7 @@ public class DLFileEntryServiceHttp {
 					"checkOutFileEntry", _checkOutFileEntryParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					fileEntryId, owner, expirationTime);
+					fileEntryId, owner, expirationTime, serviceContext);
 
 			Object returnObj = null;
 
@@ -1464,10 +1466,11 @@ public class DLFileEntryServiceHttp {
 			long.class, java.lang.String.class
 		};
 	private static final Class<?>[] _checkOutFileEntryParameterTypes4 = new Class[] {
-			long.class
+			long.class, com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _checkOutFileEntryParameterTypes5 = new Class[] {
-			long.class, java.lang.String.class, long.class
+			long.class, java.lang.String.class, long.class,
+			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _copyFileEntryParameterTypes6 = new Class[] {
 			long.class, long.class, long.class, long.class,

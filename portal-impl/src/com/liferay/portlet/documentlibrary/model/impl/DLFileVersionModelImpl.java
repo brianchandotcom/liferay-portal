@@ -65,6 +65,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	 */
 	public static final String TABLE_NAME = "DLFileVersion";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "uuid_", Types.VARCHAR },
 			{ "fileVersionId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
@@ -89,7 +90,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 			{ "statusByUserName", Types.VARCHAR },
 			{ "statusDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table DLFileVersion (fileVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,folderId LONG,fileEntryId LONG,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,changeLog VARCHAR(75) null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table DLFileVersion (uuid_ VARCHAR(75) null,fileVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,folderId LONG,fileEntryId LONG,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,changeLog VARCHAR(75) null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table DLFileVersion";
 	public static final String ORDER_BY_JPQL = " ORDER BY dlFileVersion.fileEntryId DESC, dlFileVersion.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY DLFileVersion.fileEntryId DESC, DLFileVersion.createDate DESC";
@@ -109,7 +110,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	public static long FOLDERID_COLUMN_BITMASK = 2L;
 	public static long GROUPID_COLUMN_BITMASK = 4L;
 	public static long STATUS_COLUMN_BITMASK = 8L;
-	public static long VERSION_COLUMN_BITMASK = 16L;
+	public static long UUID_COLUMN_BITMASK = 16L;
+	public static long VERSION_COLUMN_BITMASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -120,6 +122,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	public static DLFileVersion toModel(DLFileVersionSoap soapModel) {
 		DLFileVersion model = new DLFileVersionImpl();
 
+		model.setUuid(soapModel.getUuid());
 		model.setFileVersionId(soapModel.getFileVersionId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -191,6 +194,28 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 	public String getModelClassName() {
 		return DLFileVersion.class.getName();
+	}
+
+	@JSON
+	public String getUuid() {
+		if (_uuid == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	public void setUuid(String uuid) {
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
+		}
+
+		_uuid = uuid;
+	}
+
+	public String getOriginalUuid() {
+		return GetterUtil.getString(_originalUuid);
 	}
 
 	@JSON
@@ -599,6 +624,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	public Object clone() {
 		DLFileVersionImpl dlFileVersionImpl = new DLFileVersionImpl();
 
+		dlFileVersionImpl.setUuid(getUuid());
 		dlFileVersionImpl.setFileVersionId(getFileVersionId());
 		dlFileVersionImpl.setGroupId(getGroupId());
 		dlFileVersionImpl.setCompanyId(getCompanyId());
@@ -693,6 +719,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	public void resetOriginalValues() {
 		DLFileVersionModelImpl dlFileVersionModelImpl = this;
 
+		dlFileVersionModelImpl._originalUuid = dlFileVersionModelImpl._uuid;
+
 		dlFileVersionModelImpl._originalGroupId = dlFileVersionModelImpl._groupId;
 
 		dlFileVersionModelImpl._setOriginalGroupId = false;
@@ -717,6 +745,14 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	@Override
 	public CacheModel<DLFileVersion> toCacheModel() {
 		DLFileVersionCacheModel dlFileVersionCacheModel = new DLFileVersionCacheModel();
+
+		dlFileVersionCacheModel.uuid = getUuid();
+
+		String uuid = dlFileVersionCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			dlFileVersionCacheModel.uuid = null;
+		}
 
 		dlFileVersionCacheModel.fileVersionId = getFileVersionId();
 
@@ -844,9 +880,11 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(47);
+		StringBundler sb = new StringBundler(49);
 
-		sb.append("{fileVersionId=");
+		sb.append("{uuid=");
+		sb.append(getUuid());
+		sb.append(", fileVersionId=");
 		sb.append(getFileVersionId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
@@ -898,12 +936,16 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(73);
+		StringBundler sb = new StringBundler(76);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.documentlibrary.model.DLFileVersion");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>uuid</column-name><column-value><![CDATA[");
+		sb.append(getUuid());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>fileVersionId</column-name><column-value><![CDATA[");
 		sb.append(getFileVersionId());
@@ -1006,6 +1048,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			DLFileVersion.class
 		};
+	private String _uuid;
+	private String _originalUuid;
 	private long _fileVersionId;
 	private long _groupId;
 	private long _originalGroupId;

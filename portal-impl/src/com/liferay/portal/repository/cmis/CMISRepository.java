@@ -272,7 +272,8 @@ public class CMISRepository extends BaseCmisRepository {
 			fileEntryId, false, StringPool.BLANK, new ServiceContext());
 	}
 
-	public FileEntry checkOutFileEntry(long fileEntryId)
+	public FileEntry checkOutFileEntry(
+			long fileEntryId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		try {
@@ -301,7 +302,8 @@ public class CMISRepository extends BaseCmisRepository {
 	}
 
 	public FileEntry checkOutFileEntry(
-		long fileEntryId, String owner, long expirationTime) {
+		long fileEntryId, String owner, long expirationTime,
+		ServiceContext serviceContext) {
 
 		throw new UnsupportedOperationException();
 	}
@@ -1191,8 +1193,9 @@ public class CMISRepository extends BaseCmisRepository {
 		Object[] ids = getRepositoryEntryIds(version.getId());
 
 		long fileVersionId = (Long)ids[0];
+		String uuid = (String)ids[1];
 
-		return new CMISFileVersion(this, fileVersionId, version);
+		return new CMISFileVersion(this, uuid, fileVersionId, version);
 	}
 
 	public Folder toFolder(

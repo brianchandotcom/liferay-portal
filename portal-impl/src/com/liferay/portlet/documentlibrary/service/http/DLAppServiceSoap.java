@@ -211,15 +211,17 @@ public class DLAppServiceSoap {
 	* </p>
 	*
 	* @param fileEntryId the file entry to check out
+	* @param serviceContext the service context to be applied
 	* @throws PortalException if the file entry could not be found
 	* @throws SystemException if a system exception occurred
 	* @see #cancelCheckOut(long)
 	* @see #checkInFileEntry(long, boolean, String, ServiceContext)
 	*/
-	public static void checkOutFileEntry(long fileEntryId)
+	public static void checkOutFileEntry(long fileEntryId,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			DLAppServiceUtil.checkOutFileEntry(fileEntryId);
+			DLAppServiceUtil.checkOutFileEntry(fileEntryId, serviceContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

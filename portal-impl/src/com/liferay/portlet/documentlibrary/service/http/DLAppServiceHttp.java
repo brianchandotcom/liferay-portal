@@ -448,7 +448,8 @@ public class DLAppServiceHttp {
 	}
 
 	public static void checkOutFileEntry(HttpPrincipal httpPrincipal,
-		long fileEntryId)
+		long fileEntryId,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -456,7 +457,7 @@ public class DLAppServiceHttp {
 					"checkOutFileEntry", _checkOutFileEntryParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					fileEntryId);
+					fileEntryId, serviceContext);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -482,7 +483,8 @@ public class DLAppServiceHttp {
 
 	public static com.liferay.portal.kernel.repository.model.FileEntry checkOutFileEntry(
 		HttpPrincipal httpPrincipal, long fileEntryId, java.lang.String owner,
-		long expirationTime)
+		long expirationTime,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -490,7 +492,7 @@ public class DLAppServiceHttp {
 					"checkOutFileEntry", _checkOutFileEntryParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					fileEntryId, owner, expirationTime);
+					fileEntryId, owner, expirationTime, serviceContext);
 
 			Object returnObj = null;
 
@@ -3541,10 +3543,11 @@ public class DLAppServiceHttp {
 			long.class, java.lang.String.class
 		};
 	private static final Class<?>[] _checkOutFileEntryParameterTypes10 = new Class[] {
-			long.class
+			long.class, com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _checkOutFileEntryParameterTypes11 = new Class[] {
-			long.class, java.lang.String.class, long.class
+			long.class, java.lang.String.class, long.class,
+			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _copyFolderParameterTypes12 = new Class[] {
 			long.class, long.class, long.class, java.lang.String.class,

@@ -1,3 +1,5 @@
+alter table DLFileVersion add uuid_ VARCHAR(75) null;
+
 alter table LayoutSetBranch add logo BOOLEAN;
 alter table LayoutSetBranch add logoId LONG;
 alter table LayoutSetBranch add themeId VARCHAR(75) null;

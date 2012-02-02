@@ -35,9 +35,11 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 	Serializable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(47);
+		StringBundler sb = new StringBundler(49);
 
-		sb.append("{fileVersionId=");
+		sb.append("{uuid=");
+		sb.append(uuid);
+		sb.append(", fileVersionId=");
 		sb.append(fileVersionId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -90,6 +92,13 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 
 	public DLFileVersion toEntityModel() {
 		DLFileVersionImpl dlFileVersionImpl = new DLFileVersionImpl();
+
+		if (uuid == null) {
+			dlFileVersionImpl.setUuid(StringPool.BLANK);
+		}
+		else {
+			dlFileVersionImpl.setUuid(uuid);
+		}
 
 		dlFileVersionImpl.setFileVersionId(fileVersionId);
 		dlFileVersionImpl.setGroupId(groupId);
@@ -195,6 +204,7 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 		return dlFileVersionImpl;
 	}
 
+	public String uuid;
 	public long fileVersionId;
 	public long groupId;
 	public long companyId;

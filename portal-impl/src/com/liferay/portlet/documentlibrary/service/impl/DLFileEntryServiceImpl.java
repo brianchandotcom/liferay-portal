@@ -108,15 +108,18 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			getUserId(), fileEntryId, lockUuid);
 	}
 
-	public DLFileEntry checkOutFileEntry(long fileEntryId)
+	public DLFileEntry checkOutFileEntry(
+			long fileEntryId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		return checkOutFileEntry(
-			fileEntryId, null, DLFileEntryImpl.LOCK_EXPIRATION_TIME);
+			fileEntryId, null, DLFileEntryImpl.LOCK_EXPIRATION_TIME,
+			serviceContext);
 	}
 
 	public DLFileEntry checkOutFileEntry(
-			long fileEntryId, String owner, long expirationTime)
+			long fileEntryId, String owner, long expirationTime,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		DLFileEntryPermission.check(
@@ -129,7 +132,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		}
 
 		return dlFileEntryLocalService.checkOutFileEntry(
-			getUserId(), fileEntryId, owner, expirationTime);
+			getUserId(), fileEntryId, owner, expirationTime, serviceContext);
 	}
 
 	public DLFileEntry copyFileEntry(

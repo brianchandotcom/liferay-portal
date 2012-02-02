@@ -65,11 +65,13 @@ public interface Repository {
 	public void checkInFileEntry(long fileEntryId, String lockUuid)
 		throws PortalException, SystemException;
 
-	public FileEntry checkOutFileEntry(long fileEntryId)
+	public FileEntry checkOutFileEntry(
+			long fileEntryId, ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
 	public FileEntry checkOutFileEntry(
-			long fileEntryId, String owner, long expirationTime)
+			long fileEntryId, String owner, long expirationTime,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
 	public FileEntry copyFileEntry(

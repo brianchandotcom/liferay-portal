@@ -612,6 +612,7 @@ create table DLFileShortcut (
 );
 
 create table DLFileVersion (
+	uuid_ VARCHAR(75) null,
 	fileVersionId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,

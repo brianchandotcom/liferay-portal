@@ -347,12 +347,14 @@ public interface DLAppService {
 	* </p>
 	*
 	* @param fileEntryId the file entry to check out
+	* @param serviceContext the service context to be applied
 	* @throws PortalException if the file entry could not be found
 	* @throws SystemException if a system exception occurred
 	* @see #cancelCheckOut(long)
 	* @see #checkInFileEntry(long, boolean, String, ServiceContext)
 	*/
-	public void checkOutFileEntry(long fileEntryId)
+	public void checkOutFileEntry(long fileEntryId,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -376,6 +378,7 @@ public interface DLAppService {
 	* @param expirationTime the time in milliseconds before the lock expires.
 	If the value is <code>0</code>, the default expiration time will
 	be used from <code>portal.properties>.
+	* @param serviceContext the service context to be applied
 	* @return the file entry
 	* @throws PortalException if the file entry could not be found
 	* @throws SystemException if a system exception occurred
@@ -383,7 +386,8 @@ public interface DLAppService {
 	* @see #checkInFileEntry(long, String)
 	*/
 	public com.liferay.portal.kernel.repository.model.FileEntry checkOutFileEntry(
-		long fileEntryId, java.lang.String owner, long expirationTime)
+		long fileEntryId, java.lang.String owner, long expirationTime,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

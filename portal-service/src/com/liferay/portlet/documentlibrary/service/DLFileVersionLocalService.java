@@ -172,6 +172,21 @@ public interface DLFileVersionLocalService extends PersistedModelLocalService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns the document library file version with the UUID in the group.
+	*
+	* @param uuid the UUID of document library file version
+	* @param groupId the group id of the document library file version
+	* @return the document library file version
+	* @throws PortalException if a document library file version with the UUID in the group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.documentlibrary.model.DLFileVersion getDLFileVersionByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns a range of all the document library file versions.
 	*
 	* <p>
@@ -251,6 +266,11 @@ public interface DLFileVersionLocalService extends PersistedModelLocalService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> getFileVersions(
 		long fileEntryId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.documentlibrary.model.DLFileVersion getFileVersionByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

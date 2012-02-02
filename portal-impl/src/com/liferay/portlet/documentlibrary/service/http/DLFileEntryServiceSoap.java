@@ -106,9 +106,12 @@ public class DLFileEntryServiceSoap {
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntrySoap checkOutFileEntry(
-		long fileEntryId) throws RemoteException {
+		long fileEntryId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
 		try {
-			com.liferay.portlet.documentlibrary.model.DLFileEntry returnValue = DLFileEntryServiceUtil.checkOutFileEntry(fileEntryId);
+			com.liferay.portlet.documentlibrary.model.DLFileEntry returnValue = DLFileEntryServiceUtil.checkOutFileEntry(fileEntryId,
+					serviceContext);
 
 			return com.liferay.portlet.documentlibrary.model.DLFileEntrySoap.toSoapModel(returnValue);
 		}
@@ -120,11 +123,12 @@ public class DLFileEntryServiceSoap {
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntrySoap checkOutFileEntry(
-		long fileEntryId, java.lang.String owner, long expirationTime)
+		long fileEntryId, java.lang.String owner, long expirationTime,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.portlet.documentlibrary.model.DLFileEntry returnValue = DLFileEntryServiceUtil.checkOutFileEntry(fileEntryId,
-					owner, expirationTime);
+					owner, expirationTime, serviceContext);
 
 			return com.liferay.portlet.documentlibrary.model.DLFileEntrySoap.toSoapModel(returnValue);
 		}

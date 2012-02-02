@@ -70,6 +70,8 @@ public class DLFileVersionPersistenceTest extends BasePersistenceTestCase {
 
 		DLFileVersion newDLFileVersion = _persistence.create(pk);
 
+		newDLFileVersion.setUuid(randomString());
+
 		newDLFileVersion.setGroupId(nextLong());
 
 		newDLFileVersion.setCompanyId(nextLong());
@@ -118,6 +120,7 @@ public class DLFileVersionPersistenceTest extends BasePersistenceTestCase {
 
 		DLFileVersion existingDLFileVersion = _persistence.findByPrimaryKey(newDLFileVersion.getPrimaryKey());
 
+		assertEquals(existingDLFileVersion.getUuid(), newDLFileVersion.getUuid());
 		assertEquals(existingDLFileVersion.getFileVersionId(),
 			newDLFileVersion.getFileVersionId());
 		assertEquals(existingDLFileVersion.getGroupId(),
@@ -284,6 +287,11 @@ public class DLFileVersionPersistenceTest extends BasePersistenceTestCase {
 
 		DLFileVersionModelImpl existingDLFileVersionModelImpl = (DLFileVersionModelImpl)_persistence.findByPrimaryKey(newDLFileVersion.getPrimaryKey());
 
+		assertTrue(Validator.equals(existingDLFileVersionModelImpl.getUuid(),
+				existingDLFileVersionModelImpl.getOriginalUuid()));
+		assertEquals(existingDLFileVersionModelImpl.getGroupId(),
+			existingDLFileVersionModelImpl.getOriginalGroupId());
+
 		assertEquals(existingDLFileVersionModelImpl.getFileEntryId(),
 			existingDLFileVersionModelImpl.getOriginalFileEntryId());
 		assertTrue(Validator.equals(
@@ -295,6 +303,8 @@ public class DLFileVersionPersistenceTest extends BasePersistenceTestCase {
 		long pk = nextLong();
 
 		DLFileVersion dlFileVersion = _persistence.create(pk);
+
+		dlFileVersion.setUuid(randomString());
 
 		dlFileVersion.setGroupId(nextLong());
 

@@ -64,6 +64,21 @@ public interface DLFileVersionModel extends BaseModel<DLFileVersion>,
 	public void setPrimaryKey(long primaryKey);
 
 	/**
+	 * Returns the uuid of this document library file version.
+	 *
+	 * @return the uuid of this document library file version
+	 */
+	@AutoEscape
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this document library file version.
+	 *
+	 * @param uuid the uuid of this document library file version
+	 */
+	public void setUuid(String uuid);
+
+	/**
 	 * Returns the file version ID of this document library file version.
 	 *
 	 * @return the file version ID of this document library file version

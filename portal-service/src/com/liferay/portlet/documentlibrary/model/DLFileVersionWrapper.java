@@ -58,6 +58,24 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	}
 
 	/**
+	* Returns the uuid of this document library file version.
+	*
+	* @return the uuid of this document library file version
+	*/
+	public java.lang.String getUuid() {
+		return _dlFileVersion.getUuid();
+	}
+
+	/**
+	* Sets the uuid of this document library file version.
+	*
+	* @param uuid the uuid of this document library file version
+	*/
+	public void setUuid(java.lang.String uuid) {
+		_dlFileVersion.setUuid(uuid);
+	}
+
+	/**
 	* Returns the file version ID of this document library file version.
 	*
 	* @return the file version ID of this document library file version

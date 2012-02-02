@@ -182,6 +182,23 @@ public class DLFileVersionLocalServiceWrapper
 	}
 
 	/**
+	* Returns the document library file version with the UUID in the group.
+	*
+	* @param uuid the UUID of document library file version
+	* @param groupId the group id of the document library file version
+	* @return the document library file version
+	* @throws PortalException if a document library file version with the UUID in the group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.documentlibrary.model.DLFileVersion getDLFileVersionByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileVersionLocalService.getDLFileVersionByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	/**
 	* Returns a range of all the document library file versions.
 	*
 	* <p>
@@ -275,6 +292,13 @@ public class DLFileVersionLocalServiceWrapper
 		long fileEntryId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _dlFileVersionLocalService.getFileVersions(fileEntryId, status);
+	}
+
+	public com.liferay.portlet.documentlibrary.model.DLFileVersion getFileVersionByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileVersionLocalService.getFileVersionByUuidAndGroupId(uuid,
+			groupId);
 	}
 
 	public com.liferay.portlet.documentlibrary.model.DLFileVersion getLatestFileVersion(

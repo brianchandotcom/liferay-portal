@@ -76,17 +76,21 @@ public class DLFileEntryServiceUtil {
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry checkOutFileEntry(
-		long fileEntryId)
+		long fileEntryId,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().checkOutFileEntry(fileEntryId);
+		return getService().checkOutFileEntry(fileEntryId, serviceContext);
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry checkOutFileEntry(
-		long fileEntryId, java.lang.String owner, long expirationTime)
+		long fileEntryId, java.lang.String owner, long expirationTime,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().checkOutFileEntry(fileEntryId, owner, expirationTime);
+		return getService()
+				   .checkOutFileEntry(fileEntryId, owner, expirationTime,
+			serviceContext);
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry copyFileEntry(

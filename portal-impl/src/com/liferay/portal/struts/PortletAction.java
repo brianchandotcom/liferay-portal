@@ -277,17 +277,15 @@ public class PortletAction extends Action {
 
 			String portletId = (String)actionRequest.getAttribute(
 				WebKeys.PORTLET_ID);
-			
+
 			try {
 				hasPortletId = layoutTypePortlet.hasPortletId(portletId);
 			}
 			catch (Exception e) {
 			}
 
-			long companyId = themeDisplay.getCompanyId();
-				
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(
-				companyId,portletId);
+				themeDisplay.getCompanyId(), portletId);
 
 			if (hasPortletId || portlet.isAddDefaultResource()) {
 				addSuccessMessage(actionRequest, actionResponse);

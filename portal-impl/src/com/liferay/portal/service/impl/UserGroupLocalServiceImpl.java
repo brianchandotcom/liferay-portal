@@ -450,13 +450,13 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 * @see    com.liferay.portal.service.persistence.UserGroupFinder
 	 */
 	public List<UserGroup> search(
-			long companyId, String name, String description,
+			long companyId, String keywords,
 			LinkedHashMap<String, Object> params, int start, int end,
 			OrderByComparator obc)
 		throws SystemException {
 
-		return userGroupFinder.findByC_N_D(
-			companyId, name, description, params, start, end, obc);
+		return userGroupFinder.findByKeywords(
+			companyId, keywords, params, start, end, obc);
 	}
 
 	/**
@@ -474,12 +474,11 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 * @see    com.liferay.portal.service.persistence.UserGroupFinder
 	 */
 	public int searchCount(
-			long companyId, String name, String description,
+			long companyId, String keywords,
 			LinkedHashMap<String, Object> params)
 		throws SystemException {
 
-		return userGroupFinder.countByC_N_D(
-			companyId, name, description, params);
+		 return userGroupFinder.countByKeywords(companyId, keywords, params);
 	}
 
 	/**

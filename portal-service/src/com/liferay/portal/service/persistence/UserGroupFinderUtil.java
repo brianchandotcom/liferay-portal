@@ -21,11 +21,21 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @author Brian Wing Shun Chan
  */
 public class UserGroupFinderUtil {
-	public static int countByC_N_D(long companyId, java.lang.String name,
-		java.lang.String description,
+	public static int countByC_N_D(long companyId, java.lang.String[] names,
+		java.lang.String[] descriptions,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andOperator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .countByC_N_D(companyId, names, descriptions, params,
+			andOperator);
+	}
+
+	public static int countByKeywords(long companyId,
+		java.lang.String keywords,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder().countByC_N_D(companyId, name, description, params);
+		return getFinder().countByKeywords(companyId, keywords, params);
 	}
 
 	public static com.liferay.portal.model.UserGroup findByC_N(long companyId,
@@ -36,13 +46,24 @@ public class UserGroupFinderUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.model.UserGroup> findByC_N_D(
-		long companyId, java.lang.String name, java.lang.String description,
+		long companyId, java.lang.String[] names,
+		java.lang.String[] descriptions,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andOperator, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .findByC_N_D(companyId, names, descriptions, params,
+			andOperator, start, end, obc);
+	}
+
+	public static java.util.List<com.liferay.portal.model.UserGroup> findByKeywords(
+		long companyId, java.lang.String keywords,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
-				   .findByC_N_D(companyId, name, description, params, start,
-			end, obc);
+				   .findByKeywords(companyId, keywords, params, start, end, obc);
 	}
 
 	public static UserGroupFinder getFinder() {

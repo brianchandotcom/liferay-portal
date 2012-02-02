@@ -16,6 +16,8 @@ package com.liferay.portalweb.plugins.wsrp.usecase.demo1;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.documentlibrary.portlet.addportlet.AddPageDMTest;
+import com.liferay.portalweb.portlet.documentlibrary.portlet.addportlet.AddPortletDMTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -28,8 +30,8 @@ public class Demo1Tests extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddPageTMTest.class);
 		testSuite.addTestSuite(AddPortletTMTest.class);
-		testSuite.addTestSuite(AddPageDLTest.class);
-		testSuite.addTestSuite(AddPortletDLTest.class);
+		testSuite.addTestSuite(AddPageDMTest.class);
+		testSuite.addTestSuite(AddPortletDMTest.class);
 		testSuite.addTestSuite(AddWSRPProducerDPTest.class);
 		testSuite.addTestSuite(CopyWSRPProducerDPURLTest.class);
 		testSuite.addTestSuite(AddWSRPConsumerDPTest.class);

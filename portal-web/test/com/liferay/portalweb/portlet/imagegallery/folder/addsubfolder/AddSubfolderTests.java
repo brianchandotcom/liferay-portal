@@ -16,6 +16,8 @@ package com.liferay.portalweb.portlet.imagegallery.folder.addsubfolder;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.imagegallery.portlet.addportlet.AddPageIGTest;
+import com.liferay.portalweb.portlet.imagegallery.portlet.addportlet.AddPortletIGTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

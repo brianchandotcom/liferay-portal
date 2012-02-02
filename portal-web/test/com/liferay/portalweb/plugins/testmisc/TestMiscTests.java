@@ -16,6 +16,8 @@ package com.liferay.portalweb.plugins.testmisc;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.documentlibrary.portlet.addportlet.AddPageDMTest;
+import com.liferay.portalweb.portlet.documentlibrary.portlet.addportlet.AddPortletDMTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -28,8 +30,8 @@ public class TestMiscTests extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddPageTest.class);
 		testSuite.addTestSuite(AddPortletTest.class);
-		testSuite.addTestSuite(AddPageDLTest.class);
-		testSuite.addTestSuite(AddPortletDLTest.class);
+		testSuite.addTestSuite(AddPageDMTest.class);
+		testSuite.addTestSuite(AddPortletDMTest.class);
 		testSuite.addTestSuite(ViewPortletTestMiscTest.class);
 		testSuite.addTestSuite(ViewActionResponseNormalStateMiscTest.class);
 		testSuite.addTestSuite(ViewActionResponseExclusiveStateMiscTest.class);

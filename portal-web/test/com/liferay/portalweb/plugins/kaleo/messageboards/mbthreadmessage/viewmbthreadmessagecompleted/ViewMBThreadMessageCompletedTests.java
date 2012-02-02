@@ -16,6 +16,8 @@ package com.liferay.portalweb.plugins.kaleo.messageboards.mbthreadmessage.viewmb
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.messageboards.portlet.addportlet.AddPageMBTest;
+import com.liferay.portalweb.portlet.messageboards.portlet.addportlet.AddPortletMBTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

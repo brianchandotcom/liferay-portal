@@ -16,6 +16,8 @@ package com.liferay.portalweb.portal.permissions.documentsandmedia.portlet.userv
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.documentlibrary.portlet.addportlet.AddPageDMTest;
+import com.liferay.portalweb.portlet.documentlibrary.portlet.addportlet.AddPortletDMTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -30,8 +32,8 @@ public class User_ViewDmPortletScopePortalTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddUserPasswordTest.class);
 		testSuite.addTestSuite(AddRegularRoleTest.class);
 		testSuite.addTestSuite(AssignMembersRegularRoleUserTest.class);
-		testSuite.addTestSuite(AddPageDmTest.class);
-		testSuite.addTestSuite(AddPortletDmTest.class);
+		testSuite.addTestSuite(AddPageDMTest.class);
+		testSuite.addTestSuite(AddPortletDMTest.class);
 		testSuite.addTestSuite(PermissionsGuestViewPortletOffTest.class);
 		testSuite.addTestSuite(DefinePermissionsRoleViewPortletPortalOffTest.class);
 		testSuite.addTestSuite(SignOutTest.class);

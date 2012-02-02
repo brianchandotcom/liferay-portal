@@ -16,6 +16,10 @@ package com.liferay.portalweb.portlet.webcontentsearch.webcontent.searchwcwebcon
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.webcontentdisplay.comment.addwcwebcontentcommentwcd.AddPageWCDTest;
+import com.liferay.portalweb.portlet.webcontentdisplay.comment.addwcwebcontentcommentwcd.AddPortletWCDTest;
+import com.liferay.portalweb.portlet.webcontentsearch.portlet.addportlet.AddPageWCSTest;
+import com.liferay.portalweb.portlet.webcontentsearch.portlet.addportlet.AddPortletWCSTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

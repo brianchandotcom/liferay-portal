@@ -159,8 +159,8 @@ public class JCRStore extends BaseStore {
 
 			Version version = versionManager.checkin(contentNode.getPath());
 
-			VersionHistory versionHistory =
-				versionManager.getVersionHistory(contentNode.getPath());
+			VersionHistory versionHistory = versionManager.getVersionHistory(
+				contentNode.getPath());
 
 			versionHistory.addVersionLabel(
 				version.getName(), VERSION_DEFAULT, false);
@@ -801,8 +801,8 @@ public class JCRStore extends BaseStore {
 
 			Version version = versionManager.checkin(contentNode.getPath());
 
-			VersionHistory versionHistory =
-					versionManager.getVersionHistory(contentNode.getPath());
+			VersionHistory versionHistory = versionManager.getVersionHistory(
+					contentNode.getPath());
 
 			versionHistory.addVersionLabel(
 				version.getName(), versionLabel,

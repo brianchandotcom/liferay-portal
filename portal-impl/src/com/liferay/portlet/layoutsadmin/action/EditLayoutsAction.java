@@ -792,16 +792,16 @@ public class EditLayoutsAction extends PortletAction {
 		long layoutId = ParamUtil.getLong(actionRequest, "layoutId");
 		long parentLayoutId = ParamUtil.getLong(
 			uploadPortletRequest, "parentLayoutId");
-		Map<Locale, String> nameMap =
-			LocalizationUtil.getLocalizationMap(actionRequest, "name");
-		Map<Locale, String> titleMap =
-			LocalizationUtil.getLocalizationMap(actionRequest, "title");
+		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "name");
+		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "title");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
-		Map<Locale, String> keywordsMap =
-			LocalizationUtil.getLocalizationMap(actionRequest, "keywords");
-		Map<Locale, String> robotsMap =
-			LocalizationUtil.getLocalizationMap(actionRequest, "robots");
+		Map<Locale, String> keywordsMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "keywords");
+		Map<Locale, String> robotsMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "robots");
 		String type = ParamUtil.getString(uploadPortletRequest, "type");
 		boolean hidden = ParamUtil.getBoolean(uploadPortletRequest, "hidden");
 		String friendlyURL = ParamUtil.getString(

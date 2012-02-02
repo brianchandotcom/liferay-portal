@@ -104,8 +104,8 @@ public class CyrusHook implements Hook {
 
 			// Expect
 
-			String addUserCmd =
-				PropsUtil.get(PropsKeys.MAIL_HOOK_CYRUS_ADD_USER);
+			String addUserCmd = PropsUtil.get(
+				PropsKeys.MAIL_HOOK_CYRUS_ADD_USER);
 
 			addUserCmd = StringUtil.replace(
 				addUserCmd, "%1%", String.valueOf(userId));
@@ -163,8 +163,8 @@ public class CyrusHook implements Hook {
 
 			// Expect
 
-			String deleteUserCmd =
-				PropsUtil.get(PropsKeys.MAIL_HOOK_CYRUS_DELETE_USER);
+			String deleteUserCmd = PropsUtil.get(
+				PropsKeys.MAIL_HOOK_CYRUS_DELETE_USER);
 
 			deleteUserCmd = StringUtil.replace(
 				deleteUserCmd, "%1%", String.valueOf(userId));

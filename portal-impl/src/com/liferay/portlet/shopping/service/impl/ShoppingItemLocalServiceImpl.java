@@ -621,8 +621,8 @@ public class ShoppingItemLocalServiceImpl
 			double shipping = 0.0;
 			boolean useShippingFormula = true;
 
-			ShoppingItemPrice itemPrice =
-				shoppingItemPricePersistence.create(0);
+			ShoppingItemPrice itemPrice = shoppingItemPricePersistence.create(
+				0);
 
 			itemPrice.setMinQuantity(minQuantity);
 			itemPrice.setMaxQuantity(maxQuantity);

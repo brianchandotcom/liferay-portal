@@ -87,8 +87,8 @@ public class ViewChartAction extends Action {
 					PlotOrientation.VERTICAL, true, false, false);
 			}
 			else {
-				PieDataset pieData =
-					DatasetUtilities.createPieDatasetForRow(dataset, 0);
+				PieDataset pieData = DatasetUtilities.createPieDatasetForRow(
+					dataset, 0);
 
 				chart = ChartFactory.createPieChart(
 					chartName, pieData, true, false, false);

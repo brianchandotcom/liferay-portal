@@ -119,11 +119,11 @@ public class MulticastTransport extends Thread implements Transport {
 	private DatagramHandler _handler;
 	private String _host;
 	private byte[] _inboundBuffer = new byte[4096];
-	private DatagramPacket _inboundPacket =
-		new DatagramPacket(_inboundBuffer, _inboundBuffer.length);
+	private DatagramPacket _inboundPacket = new DatagramPacket(
+		_inboundBuffer, _inboundBuffer.length);
 	private byte[] _outboundBuffer = new byte[4096];
-	private DatagramPacket _outboundPacket =
-		new DatagramPacket(_outboundBuffer, _outboundBuffer.length);
+	private DatagramPacket _outboundPacket = new DatagramPacket(
+		_outboundBuffer, _outboundBuffer.length);
 	private int _port;
 	private MulticastSocket _socket;
 

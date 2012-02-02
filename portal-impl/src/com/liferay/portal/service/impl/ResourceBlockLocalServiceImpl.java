@@ -714,8 +714,8 @@ public class ResourceBlockLocalServiceImpl
 			updateCompanyScopeResourceTypePermissions(
 				companyId, name, roleId, actionIdsLong, operator);
 
-		List<ResourceBlock> resourceBlocks =
-			resourceBlockPersistence.findByC_N(companyId, name);
+		List<ResourceBlock> resourceBlocks = resourceBlockPersistence.findByC_N(
+			companyId, name);
 
 		updatePermissions(resourceBlocks, roleId, actionIdsLong, operator);
 

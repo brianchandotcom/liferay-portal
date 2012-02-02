@@ -41,8 +41,8 @@ public class UserTrackerLocalServiceImpl
 			long userTrackerId = counterLocalService.increment(
 				UserTracker.class.getName());
 
-			UserTracker userTracker =
-				userTrackerPersistence.create(userTrackerId);
+			UserTracker userTracker = userTrackerPersistence.create(
+				userTrackerId);
 
 			userTracker.setCompanyId(companyId);
 			userTracker.setUserId(userId);

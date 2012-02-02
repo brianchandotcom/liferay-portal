@@ -113,8 +113,8 @@ public class DoAsURLTag extends TagSupport {
 		_var = var;
 	}
 
-	private static final String _COMPANY_DEFAULT_HOME_URL =
-		PropsUtil.get(PropsKeys.COMPANY_DEFAULT_HOME_URL);
+	private static final String _COMPANY_DEFAULT_HOME_URL = PropsUtil.get(
+		PropsKeys.COMPANY_DEFAULT_HOME_URL);
 
 	private long _doAsUserId;
 	private String _var;

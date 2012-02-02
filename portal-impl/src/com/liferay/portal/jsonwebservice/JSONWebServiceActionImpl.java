@@ -154,8 +154,8 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 
 			parameterName = CamelCaseUtil.normalizeCamelCase(parameterName);
 
-			Object value =
-				_jsonWebServiceActionParameters.getParameter(parameterName);
+			Object value = _jsonWebServiceActionParameters.getParameter(
+				parameterName);
 
 			Object parameterValue = null;
 

@@ -42,8 +42,8 @@ public class TestPropsValues {
 
 	public static final String PORTAL_URL = TestPropsUtil.get("portal.url");
 
-	public static final String USER_PASSWORD =
-		TestPropsUtil.get("user.password");
+	public static final String USER_PASSWORD = TestPropsUtil.get(
+		"user.password");
 
 	public static long getCompanyId() throws Exception {
 		if (_companyId > 0) {

@@ -241,8 +241,8 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		String actionId) {
 
 		try {
-			ResourceBlockIdsBag resourceBlockIdsBag =
-				getResourceBlockIdsBag(companyId, groupId, userId, name);
+			ResourceBlockIdsBag resourceBlockIdsBag = getResourceBlockIdsBag(
+				companyId, groupId, userId, name);
 
 			return ResourceBlockLocalServiceUtil.getResourceBlockIds(
 				resourceBlockIdsBag, name, actionId);
@@ -987,8 +987,8 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		if ((PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) &&
 			ResourceBlockLocalServiceUtil.isSupported(name)) {
 
-			ResourceBlockIdsBag resourceBlockIdsBag =
-				getResourceBlockIdsBag(companyId, groupId, getUserId(), name);
+			ResourceBlockIdsBag resourceBlockIdsBag = getResourceBlockIdsBag(
+				companyId, groupId, getUserId(), name);
 
 			boolean value = ResourceBlockLocalServiceUtil.hasPermission(
 				name, GetterUtil.getLong(primKey), actionId,

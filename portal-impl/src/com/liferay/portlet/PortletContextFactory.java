@@ -59,8 +59,8 @@ public class PortletContextFactory {
 			_pool.put(portlet.getRootPortletId(), portletContexts);
 		}
 
-		PortletContext portletContext =
-			portletContexts.get(portlet.getPortletId());
+		PortletContext portletContext = portletContexts.get(
+			portlet.getPortletId());
 
 		if (portletContext == null) {
 			PortletApp portletApp = portlet.getPortletApp();

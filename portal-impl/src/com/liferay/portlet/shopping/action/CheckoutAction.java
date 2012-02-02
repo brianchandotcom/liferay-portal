@@ -197,8 +197,8 @@ public class CheckoutAction extends CartAction {
 
 		ShoppingCart cart = ShoppingUtil.getCart(actionRequest);
 
-		ShoppingOrder order =
-			ShoppingOrderLocalServiceUtil.saveLatestOrder(cart);
+		ShoppingOrder order = ShoppingOrderLocalServiceUtil.saveLatestOrder(
+			cart);
 
 		actionRequest.setAttribute(WebKeys.SHOPPING_ORDER, order);
 	}

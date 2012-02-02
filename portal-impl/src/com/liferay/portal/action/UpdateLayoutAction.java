@@ -311,8 +311,8 @@ public class UpdateLayoutAction extends JSONAction {
 		DynamicServletRequest dynamicRequest = null;
 
 		if (portlet.isPrivateRequestAttributes()) {
-			String portletNamespace =
-				PortalUtil.getPortletNamespace(portlet.getPortletId());
+			String portletNamespace = PortalUtil.getPortletNamespace(
+				portlet.getPortletId());
 
 			dynamicRequest = new NamespaceServletRequest(
 				request, portletNamespace, portletNamespace);

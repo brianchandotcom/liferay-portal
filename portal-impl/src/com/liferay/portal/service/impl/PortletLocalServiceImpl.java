@@ -624,8 +624,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 					servletContext, xmls[1], portletsPool, servletURLPatterns,
 					pluginPackage));
 
-			Set<String> liferayPortletIds =
-				_readLiferayPortletXML(xmls[2], portletsPool);
+			Set<String> liferayPortletIds = _readLiferayPortletXML(
+				xmls[2], portletsPool);
 
 			liferayPortletIds.addAll(
 				_readLiferayPortletXML(xmls[3], portletsPool));

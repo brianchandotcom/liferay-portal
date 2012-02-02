@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
  */
 public class AnnouncementsEntryConstants {
 
-	public static final String[] TYPES =
-		PropsUtil.getArray(PropsKeys.ANNOUNCEMENTS_ENTRY_TYPES);
+	public static final String[] TYPES = PropsUtil.getArray(
+		PropsKeys.ANNOUNCEMENTS_ENTRY_TYPES);
 
 }

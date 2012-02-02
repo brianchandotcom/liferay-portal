@@ -36,8 +36,8 @@ public class RouteImplTest extends BaseTestCase {
 		parameters.put("action", "view");
 		parameters.put("id", "bob");
 
-		Map<String, String> originalParameters =
-			new HashMap<String, String>(parameters);
+		Map<String, String> originalParameters = new HashMap<String, String>(
+			parameters);
 
 		Route route = new RouteImpl("{action}/{id:\\d+}");
 

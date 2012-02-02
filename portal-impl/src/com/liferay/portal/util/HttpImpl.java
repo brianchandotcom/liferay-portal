@@ -1230,8 +1230,8 @@ public class HttpImpl implements Http {
 		PropsUtil.get(HttpImpl.class.getName() + ".max.total.connections"),
 		20);
 
-	private static final String _NON_PROXY_HOSTS =
-		SystemProperties.get("http.nonProxyHosts");
+	private static final String _NON_PROXY_HOSTS = SystemProperties.get(
+		"http.nonProxyHosts");
 
 	private static final String _PROXY_AUTH_TYPE = GetterUtil.getString(
 		PropsUtil.get(HttpImpl.class.getName() + ".proxy.auth.type"));

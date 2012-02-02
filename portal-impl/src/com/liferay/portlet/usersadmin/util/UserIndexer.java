@@ -156,8 +156,8 @@ public class UserIndexer extends BaseIndexer {
 			if (value instanceof Long[]) {
 				Long[] values = (Long[])value;
 
-				BooleanQuery usersOrgsQuery =
-					BooleanQueryFactoryUtil.create(searchContext);
+				BooleanQuery usersOrgsQuery = BooleanQueryFactoryUtil.create(
+					searchContext);
 
 				for (long organizationId : values) {
 					usersOrgsQuery.addTerm("organizationIds", organizationId);

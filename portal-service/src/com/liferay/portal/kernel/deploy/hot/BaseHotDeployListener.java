@@ -54,8 +54,8 @@ public abstract class BaseHotDeployListener implements HotDeployListener {
 		Exception e = null;
 
 		try {
-			Method servletContextNameMethod =
-				clpMessageListenerClass.getMethod("getServletContextName");
+			Method servletContextNameMethod = clpMessageListenerClass.getMethod(
+				"getServletContextName");
 
 			String clpServletContextName =
 				(String)servletContextNameMethod.invoke(null);

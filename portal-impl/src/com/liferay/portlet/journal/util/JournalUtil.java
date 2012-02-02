@@ -725,8 +725,8 @@ public class JournalUtil {
 
 			// Listeners
 
-			String[] listeners =
-				PropsUtil.getArray(PropsKeys.JOURNAL_TRANSFORMER_LISTENER);
+			String[] listeners = PropsUtil.getArray(
+				PropsKeys.JOURNAL_TRANSFORMER_LISTENER);
 
 			for (int i = 0; i < listeners.length; i++) {
 				TransformerListener listener = null;

@@ -707,8 +707,8 @@ public class CMISRepository extends BaseCmisRepository {
 			return folders.size() + documentIds.size();
 		}
 		else {
-			List<Object> foldersAndFileEntries =
-				getFoldersAndFileEntries(folderId);
+			List<Object> foldersAndFileEntries = getFoldersAndFileEntries(
+				folderId);
 
 			return foldersAndFileEntries.size();
 		}
@@ -2128,8 +2128,8 @@ public class CMISRepository extends BaseCmisRepository {
 	protected String toFolderId(Session session, long folderId)
 		throws PortalException, SystemException {
 
-		RepositoryEntry repositoryEntry =
-			RepositoryEntryUtil.fetchByPrimaryKey(folderId);
+		RepositoryEntry repositoryEntry = RepositoryEntryUtil.fetchByPrimaryKey(
+			folderId);
 
 		if (repositoryEntry != null) {
 			return repositoryEntry.getMappedId();

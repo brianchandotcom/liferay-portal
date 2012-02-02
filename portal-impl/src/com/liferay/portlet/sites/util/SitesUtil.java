@@ -208,8 +208,8 @@ public class SitesUtil {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		Map<String, String[]> parameterMap =
-			getLayoutSetPrototypeParameters(serviceContext);
+		Map<String, String[]> parameterMap = getLayoutSetPrototypeParameters(
+			serviceContext);
 
 		parameterMap.put(
 			PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS,

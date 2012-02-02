@@ -165,8 +165,8 @@ public class SetupWizardUtil {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		UnicodeProperties unicodeProperties =
-			PropertiesParamUtil.getProperties(request, _PROPERTIES_PREFIX);
+		UnicodeProperties unicodeProperties = PropertiesParamUtil.getProperties(
+			request, _PROPERTIES_PREFIX);
 
 		unicodeProperties.setProperty(
 			PropsKeys.LIFERAY_HOME,

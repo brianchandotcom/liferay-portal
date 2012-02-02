@@ -47,7 +47,7 @@ public class CalEventConstants {
 		Time.DAY * 12, Time.DAY * 13, Time.DAY * 14
 	};
 
-	public static final String[] TYPES =
-		PropsUtil.getArray(PropsKeys.CALENDAR_EVENT_TYPES);
+	public static final String[] TYPES = PropsUtil.getArray(
+		PropsKeys.CALENDAR_EVENT_TYPES);
 
 }

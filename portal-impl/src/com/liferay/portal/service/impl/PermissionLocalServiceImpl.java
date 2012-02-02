@@ -852,8 +852,8 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 			long resourceId)
 		throws PortalException, SystemException {
 
-		Organization organization =
-			organizationPersistence.findByPrimaryKey(organizationId);
+		Organization organization = organizationPersistence.findByPrimaryKey(
+			organizationId);
 
 		long orgGroupId = organization.getGroup().getGroupId();
 
@@ -1153,8 +1153,8 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 			String actionId)
 		throws SystemException {
 
-		ResourceCode resourceCode =
-			resourceCodeLocalService.getResourceCode(companyId, name, scope);
+		ResourceCode resourceCode = resourceCodeLocalService.getResourceCode(
+			companyId, name, scope);
 
 		Resource resource = resourcePersistence.fetchByC_P(
 			resourceCode.getCodeId(), primKey);

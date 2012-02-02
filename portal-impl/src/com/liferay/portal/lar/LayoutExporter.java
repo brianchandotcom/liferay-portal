@@ -557,8 +557,8 @@ public class LayoutExporter {
 
 		Element categoriesElement = rootElement.addElement("categories");
 
-		List<AssetCategory> assetCategories =
-			AssetCategoryUtil.findByGroupId(portletDataContext.getGroupId());
+		List<AssetCategory> assetCategories = AssetCategoryUtil.findByGroupId(
+			portletDataContext.getGroupId());
 
 		for (AssetCategory assetCategory : assetCategories) {
 			_portletExporter.exportAssetCategory(

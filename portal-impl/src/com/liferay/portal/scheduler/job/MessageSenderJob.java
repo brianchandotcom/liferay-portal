@@ -154,8 +154,8 @@ public class MessageSenderJob implements Job {
 			_deleteJobMethodKey, triggerKey.getName(), triggerKey.getGroup(),
 			storageType);
 
-		ClusterRequest clusterRequest =
-			ClusterRequest.createMulticastRequest(methodHandler, true);
+		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
+			methodHandler, true);
 
 		ClusterExecutorUtil.execute(clusterRequest);
 	}

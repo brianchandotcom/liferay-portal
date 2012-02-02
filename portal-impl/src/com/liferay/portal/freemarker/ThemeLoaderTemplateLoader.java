@@ -36,8 +36,8 @@ public class ThemeLoaderTemplateLoader extends URLTemplateLoader {
 		if (pos != -1) {
 			String ctxName = name.substring(0, pos);
 
-			ThemeLoader themeLoader =
-				ThemeLoaderFactory.getThemeLoader(ctxName);
+			ThemeLoader themeLoader = ThemeLoaderFactory.getThemeLoader(
+				ctxName);
 
 			if (themeLoader != null) {
 				String templateName =

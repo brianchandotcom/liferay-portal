@@ -71,8 +71,8 @@ public class ActionUtil {
 		EmailAddress emailAddress = null;
 
 		if (emailAddressId > 0) {
-			emailAddress =
-				EmailAddressServiceUtil.getEmailAddress(emailAddressId);
+			emailAddress = EmailAddressServiceUtil.getEmailAddress(
+				emailAddressId);
 		}
 
 		request.setAttribute(WebKeys.EMAIL_ADDRESS, emailAddress);
@@ -95,8 +95,8 @@ public class ActionUtil {
 		Organization organization = null;
 
 		if (organizationId > 0) {
-			organization =
-				OrganizationServiceUtil.getOrganization(organizationId);
+			organization = OrganizationServiceUtil.getOrganization(
+				organizationId);
 		}
 
 		request.setAttribute(WebKeys.ORGANIZATION, organization);

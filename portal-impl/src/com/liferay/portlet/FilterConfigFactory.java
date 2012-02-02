@@ -50,8 +50,8 @@ public class FilterConfigFactory {
 
 		PortletApp portletApp = portletFilter.getPortletApp();
 
-		Map<String, FilterConfig> filterConfigs =
-			_pool.get(portletApp.getServletContextName());
+		Map<String, FilterConfig> filterConfigs = _pool.get(
+			portletApp.getServletContextName());
 
 		if (filterConfigs == null) {
 			filterConfigs = new ConcurrentHashMap<String, FilterConfig>();

@@ -169,8 +169,8 @@ public class PortletCategory implements Serializable {
 		while (itr.hasNext()) {
 			PortletCategory curCategory2 = itr.next();
 
-			PortletCategory curCategory1 =
-				portletCategory1.getCategory(curCategory2.getName());
+			PortletCategory curCategory1 = portletCategory1.getCategory(
+				curCategory2.getName());
 
 			if (curCategory1 != null) {
 				_merge(curCategory1, curCategory2);

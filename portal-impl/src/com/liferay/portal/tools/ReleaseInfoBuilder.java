@@ -38,8 +38,8 @@ public class ReleaseInfoBuilder {
 
 			// Get version
 
-			Properties releaseProps =
-				_fileUtil.toProperties("../release.properties");
+			Properties releaseProps = _fileUtil.toProperties(
+				"../release.properties");
 
 			String version = releaseProps.getProperty("lp.version");
 

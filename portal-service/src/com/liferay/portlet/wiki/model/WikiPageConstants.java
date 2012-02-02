@@ -22,14 +22,14 @@ import com.liferay.portal.kernel.util.PropsUtil;
  */
 public class WikiPageConstants {
 
-	public static final String DEFAULT_FORMAT =
-		PropsUtil.get(PropsKeys.WIKI_FORMATS_DEFAULT);
+	public static final String DEFAULT_FORMAT = PropsUtil.get(
+		PropsKeys.WIKI_FORMATS_DEFAULT);
 
-	public static final String[] FORMATS =
-		PropsUtil.getArray(PropsKeys.WIKI_FORMATS);
+	public static final String[] FORMATS = PropsUtil.getArray(
+		PropsKeys.WIKI_FORMATS);
 
-	public static final String FRONT_PAGE =
-		PropsUtil.get(PropsKeys.WIKI_FRONT_PAGE_NAME);
+	public static final String FRONT_PAGE = PropsUtil.get(
+		PropsKeys.WIKI_FRONT_PAGE_NAME);
 
 	public static final String MOVED = "Moved";
 

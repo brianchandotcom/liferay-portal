@@ -223,8 +223,8 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 			int start = (i * Indexer.DEFAULT_INTERVAL);
 			int end = start + Indexer.DEFAULT_INTERVAL;
 
-			List<MBMessage> messages =
-				MBMessageLocalServiceUtil.getMBMessages(start, end);
+			List<MBMessage> messages = MBMessageLocalServiceUtil.getMBMessages(
+				start, end);
 
 			for (MBMessage message : messages) {
 				migrateFiles(
@@ -252,8 +252,8 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 			int start = (i * Indexer.DEFAULT_INTERVAL);
 			int end = start + Indexer.DEFAULT_INTERVAL;
 
-			List<WikiPage> wikiPages =
-				WikiPageLocalServiceUtil.getWikiPages(start, end);
+			List<WikiPage> wikiPages = WikiPageLocalServiceUtil.getWikiPages(
+				start, end);
 
 			for (WikiPage wikiPage : wikiPages) {
 				if (!wikiPage.isHead()) {

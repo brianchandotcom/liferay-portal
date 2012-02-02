@@ -369,8 +369,8 @@ public class ConvertPermissionAlgorithm extends ConvertProcess {
 					List<String> defaultActions = null;
 
 					if (type == RoleConstants.TYPE_REGULAR) {
-						defaultActions =
-							ResourceActionsUtil.getResourceActions(name);
+						defaultActions = ResourceActionsUtil.getResourceActions(
+							name);
 					}
 					else {
 						defaultActions =

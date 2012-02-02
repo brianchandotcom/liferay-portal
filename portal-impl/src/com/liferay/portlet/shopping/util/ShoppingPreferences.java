@@ -105,8 +105,8 @@ public class ShoppingPreferences {
 			return new String[0][0];
 		}
 		else {
-			String[] array =
-				StringUtil.split("alternativeShipping", "[$_ARRAY_$]");
+			String[] array = StringUtil.split(
+				"alternativeShipping", "[$_ARRAY_$]");
 
 			String[][] alternativeShipping = new String[array.length][0];
 

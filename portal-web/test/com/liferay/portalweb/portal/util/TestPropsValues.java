@@ -24,11 +24,11 @@ public class TestPropsValues extends com.liferay.portal.util.TestPropsValues {
 
 	public static final String BROWSER_TYPE = TestPropsUtil.get("browser.type");
 
-	public static final String CLUSTER_NODE_1 =
-		TestPropsUtil.get("cluster.node1");
+	public static final String CLUSTER_NODE_1 = TestPropsUtil.get(
+		"cluster.node1");
 
-	public static final String CLUSTER_NODE_2 =
-		TestPropsUtil.get("cluster.node2");
+	public static final String CLUSTER_NODE_2 = TestPropsUtil.get(
+		"cluster.node2");
 
 	public static final String OUTPUT_DIR = TestPropsUtil.get("output.dir");
 
@@ -40,20 +40,20 @@ public class TestPropsValues extends com.liferay.portal.util.TestPropsValues {
 	public static final boolean SAVE_SOURCE = GetterUtil.getBoolean(
 		TestPropsUtil.get("save.source"));
 
-	public static final String SELENIUM_DOWNLOAD_FILE =
-		TestPropsUtil.get("selenium.download.file.executable");
+	public static final String SELENIUM_DOWNLOAD_FILE = TestPropsUtil.get(
+		"selenium.download.file.executable");
 
-	public static final String SELENIUM_EXECUTABLE_DIR =
-		TestPropsUtil.get("selenium.executable.dir");
+	public static final String SELENIUM_EXECUTABLE_DIR = TestPropsUtil.get(
+		"selenium.executable.dir");
 
-	public static final String SELENIUM_HOST =
-		TestPropsUtil.get("selenium.host");
+	public static final String SELENIUM_HOST = TestPropsUtil.get(
+		"selenium.host");
 
 	public static final int SELENIUM_PORT = GetterUtil.getInteger(
 		TestPropsUtil.get("selenium.port"));
 
-	public static final String SELENIUM_SET_BROWSER_OPTION =
-		TestPropsUtil.get("selenium.set.browser.option.executable");
+	public static final String SELENIUM_SET_BROWSER_OPTION = TestPropsUtil.get(
+		"selenium.set.browser.option.executable");
 
 	public static final boolean TEST_DATABASE_MINIMAL = GetterUtil.getBoolean(
 		TestPropsUtil.get("test.database.minimal"));

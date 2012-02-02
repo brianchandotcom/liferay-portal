@@ -140,8 +140,8 @@ public class DLFileEntryMetadataLocalServiceImpl
 
 			long fileEntryMetadataId = counterLocalService.increment();
 
-			fileEntryMetadata =
-				dlFileEntryMetadataPersistence.create(fileEntryMetadataId);
+			fileEntryMetadata = dlFileEntryMetadataPersistence.create(
+				fileEntryMetadataId);
 
 			long ddmStorageId = StorageEngineUtil.create(
 				companyId, ddmStructure.getStructureId(), fields,

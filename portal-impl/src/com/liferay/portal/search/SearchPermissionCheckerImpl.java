@@ -321,8 +321,8 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			groups.addAll(GroupLocalServiceUtil.getUserGroups(userId, true));
 			groups.addAll(permissionCheckerBag.getGroups());
 
-			userGroupRoles =
-				UserGroupRoleLocalServiceUtil.getUserGroupRoles(userId);
+			userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(
+				userId);
 		}
 		else {
 			groups.addAll(permissionCheckerBag.getGroups());

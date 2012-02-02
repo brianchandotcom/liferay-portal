@@ -83,8 +83,8 @@ public class ThemePreviewFilter extends BasePortalFilter {
 
 		request.setAttribute(StripFilter.SKIP_FILTER, Boolean.TRUE);
 
-		StringServletResponse stringServerResponse =
-			new StringServletResponse(response);
+		StringServletResponse stringServerResponse = new StringServletResponse(
+			response);
 
 		processFilter(
 			ThemePreviewFilter.class, request, stringServerResponse,

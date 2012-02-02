@@ -87,8 +87,8 @@ public class JournalTemplatePermission {
 			PermissionChecker permissionChecker, long id, String actionId)
 		throws PortalException, SystemException {
 
-		JournalTemplate template =
-			JournalTemplateLocalServiceUtil.getTemplate(id);
+		JournalTemplate template = JournalTemplateLocalServiceUtil.getTemplate(
+			id);
 
 		return contains(permissionChecker, template, actionId);
 	}
@@ -98,8 +98,8 @@ public class JournalTemplatePermission {
 			String templateId, String actionId)
 		throws PortalException, SystemException {
 
-		JournalTemplate template =
-			JournalTemplateLocalServiceUtil.getTemplate(groupId, templateId);
+		JournalTemplate template = JournalTemplateLocalServiceUtil.getTemplate(
+			groupId, templateId);
 
 		return contains(permissionChecker, template, actionId);
 	}

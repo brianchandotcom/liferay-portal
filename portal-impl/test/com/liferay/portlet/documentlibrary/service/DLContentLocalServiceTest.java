@@ -242,15 +242,15 @@ public class DLContentLocalServiceTest extends BaseServiceTestCase {
 		DLContent dlContent4 = _dlContentLocalService.addContent(
 			companyId, repositoryId, path2, "1.1", _DATA_VERSION_2);
 
-		List<DLContent> dlContents1 =
-			_dlContentLocalService.getContents(companyId, repositoryId, path1);
+		List<DLContent> dlContents1 = _dlContentLocalService.getContents(
+			companyId, repositoryId, path1);
 
 		assertEquals(2, dlContents1.size());
 		assertTrue(dlContents1.contains(dlContent1));
 		assertTrue(dlContents1.contains(dlContent2));
 
-		List<DLContent> dlContents2 =
-			_dlContentLocalService.getContents(companyId, repositoryId, path2);
+		List<DLContent> dlContents2 = _dlContentLocalService.getContents(
+			companyId, repositoryId, path2);
 
 		assertEquals(2, dlContents2.size());
 		assertTrue(dlContents2.contains(dlContent3));

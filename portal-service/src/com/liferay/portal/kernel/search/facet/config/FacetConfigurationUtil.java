@@ -51,8 +51,8 @@ public class FacetConfigurationUtil {
 			for (int i = 0; i < facetsJSONArray.length(); i++) {
 				JSONObject facetJSONObject = facetsJSONArray.getJSONObject(i);
 
-				FacetConfiguration facetConfiguration =
-					_toFacetConfiguration(facetJSONObject);
+				FacetConfiguration facetConfiguration = _toFacetConfiguration(
+					facetJSONObject);
 
 				facetConfigurations.add(facetConfiguration);
 			}

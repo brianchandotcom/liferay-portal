@@ -261,8 +261,8 @@ public class IncludeTag extends AttributesTagSupport {
 		UnicodeProperties typeSettingsProperties =
 			group.getTypeSettingsProperties();
 
-		String customJspServletContextName =
-			typeSettingsProperties.getProperty("customJspServletContextName");
+		String customJspServletContextName = typeSettingsProperties.getProperty(
+			"customJspServletContextName");
 
 		if (Validator.isNull(customJspServletContextName)) {
 			return null;

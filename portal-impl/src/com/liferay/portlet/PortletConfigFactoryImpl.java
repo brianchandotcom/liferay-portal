@@ -36,8 +36,8 @@ public class PortletConfigFactoryImpl implements PortletConfigFactory {
 	public PortletConfig create(
 		Portlet portlet, ServletContext servletContext) {
 
-		Map<String, PortletConfig> portletConfigs =
-			_pool.get(portlet.getRootPortletId());
+		Map<String, PortletConfig> portletConfigs = _pool.get(
+			portlet.getRootPortletId());
 
 		if (portletConfigs == null) {
 			portletConfigs = new ConcurrentHashMap<String, PortletConfig>();
@@ -49,8 +49,8 @@ public class PortletConfigFactoryImpl implements PortletConfigFactory {
 			portlet.getPortletId());
 
 		if (portletConfig == null) {
-			PortletContext portletContext =
-				PortletContextFactory.create(portlet, servletContext);
+			PortletContext portletContext = PortletContextFactory.create(
+				portlet, servletContext);
 
 			portletConfig = new PortletConfigImpl(portlet, portletContext);
 
@@ -65,8 +65,8 @@ public class PortletConfigFactoryImpl implements PortletConfigFactory {
 	}
 
 	public PortletConfig update(Portlet portlet) {
-		Map<String, PortletConfig> portletConfigs =
-			_pool.get(portlet.getRootPortletId());
+		Map<String, PortletConfig> portletConfigs = _pool.get(
+			portlet.getRootPortletId());
 
 		if (portletConfigs == null) {
 			return null;

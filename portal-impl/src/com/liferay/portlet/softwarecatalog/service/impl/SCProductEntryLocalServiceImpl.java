@@ -592,8 +592,8 @@ public class SCProductEntryLocalServiceImpl
 			for (int i = thumbnails.size(); i < productScreenshots.size();
 					i++) {
 
-				SCProductScreenshot productScreenshot =
-					productScreenshots.get(i);
+				SCProductScreenshot productScreenshot = productScreenshots.get(
+					i);
 
 				scProductScreenshotLocalService.deleteProductScreenshot(
 					productScreenshot);

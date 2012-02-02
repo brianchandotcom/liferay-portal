@@ -77,8 +77,8 @@ public class MulticastDatagramHandler implements DatagramHandler {
 	protected byte[] getUnzippedBytes(byte[] bytes) throws Exception {
 		InputStream is = new GZIPInputStream(
 			new UnsyncByteArrayInputStream(bytes));
-		UnsyncByteArrayOutputStream ubaos =
-			new UnsyncByteArrayOutputStream(bytes.length);
+		UnsyncByteArrayOutputStream ubaos = new UnsyncByteArrayOutputStream(
+			bytes.length);
 
 		byte[] buffer = new byte[1500];
 

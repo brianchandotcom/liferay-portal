@@ -262,8 +262,8 @@ public class ShoppingUtil {
 			Map<ShoppingCartItem, Integer> items)
 		throws PortalException, SystemException {
 
-		double discount =
-			calculateDiscountSubtotal(items) / calculateSubtotal(items);
+		double discount = calculateDiscountSubtotal(
+			items) / calculateSubtotal(items);
 
 		if (Double.isNaN(discount) || Double.isInfinite(discount)) {
 			discount = 0.0;
@@ -408,8 +408,8 @@ public class ShoppingUtil {
 			}
 
 			if (item.isRequiresShipping()) {
-				ShoppingItemPrice itemPrice =
-					_getItemPrice(item, count.intValue());
+				ShoppingItemPrice itemPrice = _getItemPrice(
+					item, count.intValue());
 
 				if (itemPrice.isUseShippingFormula()) {
 					subtotal +=

@@ -580,8 +580,8 @@ public class PortletRequestProcessor extends TilesRequestProcessor {
 				}
 			}
 			else if (!portlet.isActive()) {
-				ForwardConfig forwardConfig =
-					actionMapping.findForward(_PATH_PORTAL_PORTLET_INACTIVE);
+				ForwardConfig forwardConfig = actionMapping.findForward(
+					_PATH_PORTAL_PORTLET_INACTIVE);
 
 				if (!action) {
 					processForwardConfig(request, response, forwardConfig);
@@ -595,8 +595,8 @@ public class PortletRequestProcessor extends TilesRequestProcessor {
 				_log.warn(e.getMessage());
 			}
 
-			ForwardConfig forwardConfig =
-				actionMapping.findForward(_PATH_PORTAL_PORTLET_ACCESS_DENIED);
+			ForwardConfig forwardConfig = actionMapping.findForward(
+				_PATH_PORTAL_PORTLET_ACCESS_DENIED);
 
 			if (!action) {
 				processForwardConfig(request, response, forwardConfig);

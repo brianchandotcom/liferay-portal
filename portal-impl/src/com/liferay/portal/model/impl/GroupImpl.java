@@ -286,8 +286,8 @@ public class GroupImpl extends GroupBaseImpl {
 
 		try {
 			if (_stagingGroup == null) {
-				_stagingGroup =
-					GroupLocalServiceUtil.getStagingGroup(getGroupId());
+				_stagingGroup = GroupLocalServiceUtil.getStagingGroup(
+					getGroupId());
 			}
 
 			return _stagingGroup;

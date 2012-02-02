@@ -438,8 +438,8 @@ public class InvokerPortletImpl implements InvokerPortlet {
 
 			Layout layout = (Layout)renderRequest.getAttribute(WebKeys.LAYOUT);
 
-			Map<String, InvokerPortletResponse> sessionResponses =
-				getResponses(portletSession);
+			Map<String, InvokerPortletResponse> sessionResponses = getResponses(
+				portletSession);
 
 			String sessionResponseId = encodeResponseKey(
 				layout.getPlid(), _portletId,

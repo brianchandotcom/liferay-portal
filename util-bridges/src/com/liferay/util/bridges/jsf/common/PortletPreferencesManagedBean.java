@@ -39,8 +39,8 @@ public class PortletPreferencesManagedBean {
 
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 
-		_portletPreferences =
-			JSFPortletUtil.getPortletPreferences(facesContext);
+		_portletPreferences = JSFPortletUtil.getPortletPreferences(
+			facesContext);
 
 		// Portlet preferences are backed by a map of string arrays. This makes
 		// the JSP syntax a little funky, so in order to make the syntax easier,

@@ -1193,8 +1193,9 @@ public class CMISRepository extends BaseCmisRepository {
 		Object[] ids = getRepositoryEntryIds(version.getId());
 
 		long fileVersionId = (Long)ids[0];
+		String uuid = (String)ids[1];
 
-		return new CMISFileVersion(this, fileVersionId, version);
+		return new CMISFileVersion(this, uuid, fileVersionId, version);
 	}
 
 	public Folder toFolder(

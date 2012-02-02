@@ -190,6 +190,10 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 		return _dlFileVersion.getUserUuid();
 	}
 
+	public String getUuid() {
+		return _dlFileVersion.getUuid();
+	}
+
 	public String getVersion() {
 		return _dlFileVersion.getVersion();
 	}

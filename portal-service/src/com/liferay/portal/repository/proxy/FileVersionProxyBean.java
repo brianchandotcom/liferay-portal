@@ -175,6 +175,10 @@ public class FileVersionProxyBean
 		return _fileVersion.getUserUuid();
 	}
 
+	public String getUuid() {
+		return _fileVersion.getUuid();
+	}
+
 	public String getVersion() {
 		return _fileVersion.getVersion();
 	}

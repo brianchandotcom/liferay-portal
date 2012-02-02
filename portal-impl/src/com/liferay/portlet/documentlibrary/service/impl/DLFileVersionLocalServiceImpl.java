@@ -56,6 +56,13 @@ public class DLFileVersionLocalServiceImpl
 		}
 	}
 
+	public DLFileVersion getFileVersionByUuidAndGroupId(
+			String uuid, long groupId)
+		throws SystemException {
+
+		return dlFileVersionPersistence.fetchByUUID_G(uuid, groupId);
+	}
+
 	public DLFileVersion getLatestFileVersion(
 			long fileEntryId, boolean excludeWorkingCopy)
 		throws PortalException, SystemException {

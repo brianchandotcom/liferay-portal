@@ -78,6 +78,8 @@ public interface FileVersion extends RepositoryModel<FileVersion> {
 
 	public String getUserUuid() throws SystemException;
 
+	public String getUuid();
+
 	public String getVersion();
 
 	public boolean isApproved();

@@ -16,6 +16,9 @@ package com.liferay.portal.kernel.metadata;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
 import java.io.File;
@@ -30,6 +33,11 @@ import java.util.Map;
  */
 public interface RawMetadataProcessor {
 
+	public void exportGeneratedFiles(
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			Element fileEntryElement)
+		throws Exception;
+
 	public Map<String, Field[]> getFields();
 
 	public Map<String, Fields> getRawMetadataMap(
@@ -39,5 +47,10 @@ public interface RawMetadataProcessor {
 	public Map<String, Fields> getRawMetadataMap(
 			String extension, String mimeType, InputStream inputStream)
 		throws PortalException, SystemException;
+
+	public void importGeneratedFiles(
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			FileEntry importedFileEntry, Element fileEntryElement)
+		throws Exception;
 
 }

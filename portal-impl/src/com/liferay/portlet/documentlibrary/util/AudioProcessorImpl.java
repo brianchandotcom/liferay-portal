@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
+import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.process.ProcessExecutor;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.InstancePool;
@@ -32,6 +34,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.log.Log4jLogFactoryImpl;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.util.PrefsPropsUtil;
@@ -61,6 +64,14 @@ public class AudioProcessorImpl
 
 	public static AudioProcessorImpl getInstance() {
 		return _instance;
+	}
+
+	public void exportGeneratedFiles(
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			Element fileEntryElement)
+		throws Exception {
+
+		exportPreviews(portletDataContext, fileEntry, fileEntryElement);
 	}
 
 	public void generateAudio(FileVersion fileVersion) throws Exception {
@@ -100,6 +111,15 @@ public class AudioProcessorImpl
 		return hasAudio;
 	}
 
+	public void importGeneratedFiles(
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			FileEntry importedFileEntry, Element fileEntryElement)
+		throws Exception {
+
+		importPreviews(portletDataContext, fileEntry, importedFileEntry,
+			fileEntryElement);
+	}
+
 	public boolean isAudioSupported(FileVersion fileVersion) {
 		return _instance.isSupported(fileVersion);
 	}
@@ -130,6 +150,60 @@ public class AudioProcessorImpl
 		_instance._queueGeneration(fileVersion);
 	}
 
+	protected void importPreviewFromLAR(
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			Element fileEntryElement, String binPathName, String previewType)
+		throws Exception {
+
+		FileVersion fileVersion = fileEntry.getFileVersion();
+
+		String previewFilePath = getPreviewFilePath(fileVersion, previewType);
+
+		String binPath = fileEntryElement.attributeValue(binPathName);
+
+		InputStream is = portletDataContext.getZipEntryAsInputStream(binPath);
+
+		addFileToStore(
+			portletDataContext.getCompanyId(), PREVIEW_PATH, previewFilePath,
+			is);
+	}
+
+	protected void exportPreview(
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			Element fileEntryElement, String binPathName, String previewType)
+		throws Exception {
+
+		String binPath = getBinPath(portletDataContext, fileEntry, previewType);
+
+		fileEntryElement.addAttribute(binPathName, binPath);
+
+		FileVersion fileVersion = fileEntry.getFileVersion();
+
+		InputStream is = doGetPreviewAsStream(fileVersion, previewType);
+
+		exportBinary(
+			portletDataContext, fileEntryElement, fileVersion, is, binPath,
+			binPathName);
+	}
+
+	protected void exportPreviews(
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			Element fileEntryElement)
+		throws Exception {
+
+		FileVersion fileVersion = fileEntry.getFileVersion();
+
+		if (!isSupported(fileVersion)) {
+			return;
+		}
+
+		if (!portletDataContext.isPerformDirectBinaryImport()) {
+			exportPreview(
+				portletDataContext, fileEntry, fileEntryElement,
+				"bin-path-audio-preview-" + PREVIEW_TYPE, PREVIEW_TYPE);
+		}
+	}
+
 	@Override
 	protected String getPreviewType(FileVersion fileVersion) {
 		return PREVIEW_TYPE;
@@ -138,6 +212,33 @@ public class AudioProcessorImpl
 	@Override
 	protected String getThumbnailType(FileVersion fileVersion) {
 		return null;
+	}
+
+	protected void importPreviews(
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			FileEntry importedFileEntry, Element fileEntryElement)
+		throws Exception {
+
+		if (!portletDataContext.isPerformDirectBinaryImport()) {
+			importPreviewFromLAR(
+				portletDataContext, importedFileEntry, fileEntryElement,
+				"bin-path-audio-preview-" + PREVIEW_TYPE, PREVIEW_TYPE);
+		}
+		else {
+			FileVersion importedFileVersion =
+				importedFileEntry.getFileVersion();
+
+			String previewFilePath = getPreviewFilePath(
+				importedFileVersion, PREVIEW_TYPE);
+
+			FileVersion fileVersion = fileEntry.getFileVersion();
+
+			InputStream is = doGetPreviewAsStream(fileVersion, PREVIEW_TYPE);
+
+			addFileToStore(
+				portletDataContext.getCompanyId(), PREVIEW_PATH,
+				previewFilePath, is);
+		}
 	}
 
 	private AudioProcessorImpl() {

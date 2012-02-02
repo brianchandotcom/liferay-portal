@@ -14,8 +14,10 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
+import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.xml.Element;
 
 /**
  * @author Mika Koivisto
@@ -30,8 +32,26 @@ public class DLProcessorRegistryUtil {
 		getDLProcessorRegistry().cleanUp(fileVersion);
 	}
 
+	public static void exportGeneratedFiles(
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			Element fileEntryElement)
+		throws Exception {
+
+		getDLProcessorRegistry().exportGeneratedFiles(
+			portletDataContext, fileEntry, fileEntryElement);
+	}
+
 	public static DLProcessorRegistry getDLProcessorRegistry() {
 		return _dlProcessorRegistry;
+	}
+
+	public static void importGeneratedFiles(
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			FileEntry importedFileEntry, Element fileEntryElement)
+		throws Exception {
+
+		getDLProcessorRegistry().importGeneratedFiles(
+			portletDataContext, fileEntry, importedFileEntry, fileEntryElement);
 	}
 
 	public static void register(DLProcessor dlProcessor) {

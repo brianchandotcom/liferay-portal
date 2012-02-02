@@ -14,7 +14,10 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
+import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.xml.Element;
 
 import java.io.InputStream;
 
@@ -27,6 +30,11 @@ public interface AudioProcessor {
 
 	public static final String PREVIEW_TYPE = "mp3";
 
+	public void exportGeneratedFiles(
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			Element fileEntryElement)
+		throws Exception;
+
 	public void generateAudio(FileVersion fileVersion) throws Exception;
 
 	public Set<String> getAudioMimeTypes();
@@ -38,6 +46,11 @@ public interface AudioProcessor {
 		throws Exception;
 
 	public boolean hasAudio(FileVersion fileVersion);
+
+	public void importGeneratedFiles(
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			FileEntry importedFileEntry, Element fileEntryElement)
+		throws Exception;
 
 	public boolean isAudioSupported(FileVersion fileVersion);
 

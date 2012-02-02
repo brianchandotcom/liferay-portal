@@ -63,6 +63,8 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryTypeUtil;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileRankUtil;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileShortcutUtil;
+import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
+import com.liferay.portlet.documentlibrary.util.DLProcessorThreadLocal;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.lar.DDMPortletDataHandlerImpl;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -167,6 +169,13 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 			}
 		}
 
+		if (portletDataContext.getBooleanParameter(
+			_NAMESPACE, "previews-and-thumbnails")) {
+
+			DLProcessorRegistryUtil.exportGeneratedFiles(
+				portletDataContext, fileEntry, fileEntryElement);
+		}
+
 		exportMetaData(
 			portletDataContext, fileEntryTypesElement, fileEntryElement,
 			fileEntry);
@@ -200,6 +209,10 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 		if (!portletDataContext.isPathNotProcessed(path)) {
 			return;
 		}
+
+		boolean dlProcessorEnabled = DLProcessorThreadLocal.isEnabled();
+
+		DLProcessorThreadLocal.setEnabled(false);
 
 		FileEntry fileEntry = (FileEntry)portletDataContext.getZipEntryAsObject(
 			path);
@@ -394,6 +407,14 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 			}
 		}
 
+		if (portletDataContext.getBooleanParameter(
+			_NAMESPACE, "previews-and-thumbnails")) {
+
+			DLProcessorRegistryUtil.importGeneratedFiles(
+				portletDataContext, fileEntry, importedFileEntry,
+				fileEntryElement);
+		}
+
 		Map<String, String> fileEntryTitles =
 			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
 				DLFileEntry.class.getName() + ".title");
@@ -402,6 +423,8 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		portletDataContext.importClassedModel(
 			fileEntry, importedFileEntry, _NAMESPACE);
+
+		DLProcessorThreadLocal.setEnabled(dlProcessorEnabled);
 	}
 
 	public static void importFileRank(
@@ -441,16 +464,18 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 	@Override
 	public PortletDataHandlerControl[] getExportControls() {
 		return new PortletDataHandlerControl[] {
-			_repositories, _foldersAndDocuments, _shortcuts, _ranks,
-			_categories, _comments, _ratings, _tags
+			_repositories, _foldersAndDocuments, _shortcuts,
+			_previewsAndThumbnails, _ranks, _categories, _comments, _ratings,
+			_tags
 		};
 	}
 
 	@Override
 	public PortletDataHandlerControl[] getImportControls() {
 		return new PortletDataHandlerControl[] {
-			_repositories, _foldersAndDocuments, _shortcuts, _ranks,
-			_categories, _comments, _ratings, _tags
+			_repositories, _foldersAndDocuments, _shortcuts,
+			_previewsAndThumbnails, _ranks, _categories, _comments, _ratings,
+			_tags
 		};
 	}
 
@@ -1640,6 +1665,9 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 	private static PortletDataHandlerBoolean _foldersAndDocuments =
 		new PortletDataHandlerBoolean(
 			_NAMESPACE, "folders-and-documents", true, true);
+
+	private static PortletDataHandlerBoolean _previewsAndThumbnails =
+		new PortletDataHandlerBoolean(_NAMESPACE, "previews-and-thumbnails");
 
 	private static PortletDataHandlerBoolean _ranks =
 		new PortletDataHandlerBoolean(_NAMESPACE, "ranks");

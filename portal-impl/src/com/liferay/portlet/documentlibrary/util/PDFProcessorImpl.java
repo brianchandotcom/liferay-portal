@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.image.ImageToolUtil;
+import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -25,9 +26,11 @@ import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.process.ProcessExecutor;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.OSDetector;
@@ -35,6 +38,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
@@ -80,6 +84,17 @@ public class PDFProcessorImpl
 
 	public static PDFProcessorImpl getInstance() {
 		return _instance;
+	}
+
+	public void exportGeneratedFiles(
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			Element fileEntryElement)
+		throws Exception {
+
+		exportThumbnails(
+			portletDataContext, fileEntry, fileEntryElement, "pdf");
+
+		exportPreviews(portletDataContext, fileEntry, fileEntryElement);
 	}
 
 	public void generateImages(FileVersion fileVersion) throws Exception {
@@ -169,6 +184,19 @@ public class PDFProcessorImpl
 		return hasImages;
 	}
 
+	public void importGeneratedFiles(
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			FileEntry importedFileEntry, Element fileEntryElement)
+		throws Exception {
+
+		importThumbnails(
+			portletDataContext, fileEntry, importedFileEntry, fileEntryElement,
+			"pdf");
+
+		importPreviews(
+			portletDataContext, fileEntry, importedFileEntry, fileEntryElement);
+	}
+
 	public boolean isDocumentSupported(FileVersion fileVersion) {
 		return Initializer._initializedInstance.isSupported(fileVersion);
 	}
@@ -244,6 +272,69 @@ public class PDFProcessorImpl
 		Initializer._initializedInstance._queueGeneration(fileVersion);
 	}
 
+	protected void importPreviewFromLAR(
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			Element fileEntryElement, String binPathName, int fileIndex)
+		throws Exception {
+
+		String binPath = fileEntryElement.attributeValue(binPathName);
+
+		InputStream is = portletDataContext.getZipEntryAsInputStream(binPath);
+
+		FileVersion fileVersion = fileEntry.getFileVersion();
+
+		String previewFilePath = getPreviewFilePath(fileVersion, fileIndex);
+
+		addFileToStore(
+			portletDataContext.getCompanyId(), PREVIEW_PATH, previewFilePath,
+			is);
+	}
+
+	protected void exportPreview(
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			Element fileEntryElement, String binPathName, int fileIndex)
+		throws Exception {
+
+		String binPath = getBinPath(
+			portletDataContext, fileEntry, String.valueOf(fileIndex));
+
+		fileEntryElement.addAttribute(binPathName, binPath);
+
+		FileVersion fileVersion = fileEntry.getFileVersion();
+
+		InputStream is = doGetPreviewAsStream(fileVersion, fileIndex);
+
+		exportBinary(
+			portletDataContext, fileEntryElement, fileVersion, is, binPath,
+			binPathName);
+	}
+
+	protected void exportPreviews(
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			Element fileEntryElement)
+		throws Exception {
+
+		FileVersion fileVersion = fileEntry.getFileVersion();
+
+		if (!isSupported(fileVersion) || !_hasImages(fileVersion)) {
+			return;
+		}
+
+		if (!portletDataContext.isPerformDirectBinaryImport()) {
+			int previewFileCount = PDFProcessorUtil.getPreviewFileCount(
+				fileVersion);
+
+			fileEntryElement.addAttribute(
+				"bin-path-pdf-preview-count", String.valueOf(previewFileCount));
+
+			for (int i = 0; i < previewFileCount; i++) {
+				exportPreview(
+					portletDataContext, fileEntry, fileEntryElement,
+					"bin-path-pdf-preview-" + (i + 1), (i + 1));
+			}
+		}
+	}
+
 	@Override
 	protected String getPreviewType(FileVersion fileVersion) {
 		return PREVIEW_TYPE;
@@ -252,6 +343,38 @@ public class PDFProcessorImpl
 	@Override
 	protected String getThumbnailType(FileVersion fileVersion) {
 		return THUMBNAIL_TYPE;
+	}
+
+	protected void importPreviews(
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			FileEntry importedFileEntry, Element fileEntryElement)
+		throws Exception {
+
+		int previewFileCount = GetterUtil.getInteger(
+			fileEntryElement.attributeValue("bin-path-pdf-preview-count"));
+
+		for (int i = 0; i < previewFileCount; i++) {
+			if (!portletDataContext.isPerformDirectBinaryImport()) {
+				importPreviewFromLAR(
+						portletDataContext, importedFileEntry, fileEntryElement,
+						"bin-path-pdf-preview-" + (i + 1), (i + 1));
+			}
+			else {
+				FileVersion importedfileVersion =
+					importedFileEntry.getFileVersion();
+
+				String previewFilePath = getPreviewFilePath(
+					importedfileVersion, PREVIEW_TYPE);
+
+				FileVersion fileVersion = fileEntry.getFileVersion();
+
+				InputStream is = doGetPreviewAsStream(fileVersion, i);
+
+				addFileToStore(
+					portletDataContext.getCompanyId(), PREVIEW_PATH,
+					previewFilePath, is);
+			}
+		}
 	}
 
 	protected void initialize() {

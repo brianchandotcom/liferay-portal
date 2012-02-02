@@ -14,8 +14,10 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
+import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.xml.Element;
 
 /**
  * Common interface for all the processors of the document library. All document
@@ -35,6 +37,16 @@ public interface DLProcessor {
 	public void cleanUp(FileEntry fileEntry);
 
 	public void cleanUp(FileVersion fileVersion);
+
+	public void exportGeneratedFiles(
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			Element fileEntryElement)
+		throws Exception;
+
+	public void importGeneratedFiles(
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			FileEntry importedFileEntry, Element fileEntryElement)
+		throws Exception;
 
 	public boolean isSupported(FileVersion fileVersion);
 

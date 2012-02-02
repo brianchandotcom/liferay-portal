@@ -15,13 +15,16 @@
 package com.liferay.portal.metadata;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.util.AudioProcessorUtil;
@@ -41,6 +44,14 @@ import org.apache.tika.metadata.Metadata;
  * @author Alexander Chow
  */
 public class XugglerRawMetadataProcessor extends BaseRawMetadataProcessor {
+
+	public void exportGeneratedFiles(
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			Element fileEntryElement)
+		throws Exception {
+
+		return;
+	}
 
 	@Override
 	public Metadata extractMetadata(
@@ -91,6 +102,14 @@ public class XugglerRawMetadataProcessor extends BaseRawMetadataProcessor {
 		}
 
 		return metadata;
+	}
+
+	public void importGeneratedFiles(
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			FileEntry importedFileEntry, Element fileEntryElement)
+		throws Exception {
+
+		return;
 	}
 
 	protected String convertTime(long microseconds) {

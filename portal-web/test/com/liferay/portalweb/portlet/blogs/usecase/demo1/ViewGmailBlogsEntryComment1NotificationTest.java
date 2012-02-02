@@ -71,6 +71,7 @@ public class ViewGmailBlogsEntryComment1NotificationTest extends BaseTestCase {
 				"Blogs Entry Comment1 Body"));
 		selenium.clickAt("link=liferay.qa.testing.trunk@gmail.com",
 			RuntimeVariables.replace("liferay.qa.testing.trunk@gmail.com"));
+		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

@@ -192,7 +192,7 @@ else if (tabs2.equals("web-content-updated-email")) {
 						<liferay-ui:message key="the-web-content-title" />
 					</dd>
 
-					<c:if test='<%= tabs2.startsWith("web-content-added-") || tabs2.startsWith("web-content-approval-") || tabs2.startsWith("web-content-updated-") %>'>
+					<c:if test='<%= tabs2.startsWith("web-content-added-") || tabs2.startsWith("web-content-approval-") || tabs2.startsWith("web-content-review-") || tabs2.startsWith("web-content-updated-") %>'>
 						<dt>
 							[$ARTICLE_URL$]
 						</dt>

@@ -12,14 +12,11 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.blogs;
+package com.liferay.portalweb.portlet.blogs.usecase;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portlet.blogs.blogsentry.BlogsEntryTestPlan;
-import com.liferay.portalweb.portlet.blogs.blogsentrycomment.BlogsEntryCommentTestPlan;
-import com.liferay.portalweb.portlet.blogs.lar.LARTestPlan;
-import com.liferay.portalweb.portlet.blogs.portlet.PortletTestPlan;
-import com.liferay.portalweb.portlet.blogs.usecase.UseCaseTestPlan;
+import com.liferay.portalweb.portlet.blogs.usecase.demo1.Demo1Tests;
+import com.liferay.portalweb.portlet.blogs.usecase.demo2.Demo2Tests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -27,16 +24,13 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class BlogsTestPlan extends BaseTestSuite {
+public class UseCaseTestPlan extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(BlogsEntryTestPlan.suite());
-		testSuite.addTest(BlogsEntryCommentTestPlan.suite());
-		testSuite.addTest(LARTestPlan.suite());
-		testSuite.addTest(PortletTestPlan.suite());
-		testSuite.addTest(UseCaseTestPlan.suite());
+		testSuite.addTest(Demo1Tests.suite());
+		testSuite.addTest(Demo2Tests.suite());
 
 		return testSuite;
 	}

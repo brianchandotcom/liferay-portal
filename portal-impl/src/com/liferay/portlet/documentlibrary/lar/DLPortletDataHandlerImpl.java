@@ -54,12 +54,14 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileRank;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
+import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryTypeUtil;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileRankUtil;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileShortcutUtil;
@@ -204,6 +206,8 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 		FileEntry fileEntry = (FileEntry)portletDataContext.getZipEntryAsObject(
 			path);
 
+		FileVersion fileVersion = fileEntry.getFileVersion();
+
 		long userId = portletDataContext.getUserId(fileEntry.getUserUuid());
 
 		Map<Long, Long> folderPKs =
@@ -326,6 +330,8 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 				}
 
 				serviceContext.setUuid(fileEntry.getUuid());
+				serviceContext.setAttribute(
+					"fileVersionUuid", fileVersion.getUuid());
 
 				importedFileEntry = DLAppLocalServiceUtil.addFileEntry(
 					userId, portletDataContext.getScopeGroupId(), folderId,
@@ -333,34 +339,52 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 					fileEntry.getTitle(), fileEntry.getDescription(), null, is,
 					fileEntry.getSize(), serviceContext);
 			}
-			else if (!isDuplicateFileEntry(
-						folderUuid, fileEntry, existingFileEntry)) {
-
-				importedFileEntry = DLAppLocalServiceUtil.updateFileEntry(
-					userId, existingFileEntry.getFileEntryId(),
-					fileEntry.getTitle(), fileEntry.getMimeType(),
-					fileEntry.getTitle(), fileEntry.getDescription(), null,
-					false, is, fileEntry.getSize(), serviceContext);
-			}
 			else {
-				FileVersion latestFileVersion =
+				FileVersion latestExistingFileVersion =
 					existingFileEntry.getLatestFileVersion();
 
-				DLAppLocalServiceUtil.updateAsset(
-					userId, existingFileEntry, latestFileVersion,
-					assetCategoryIds, assetTagNames, null);
+				if (!fileVersion.getUuid().equals(
+					latestExistingFileVersion.getUuid())) {
 
-				if (existingFileEntry instanceof LiferayFileEntry) {
-					LiferayFileEntry liferayFileEntry =
-						(LiferayFileEntry)existingFileEntry;
+					DLFileVersion alreadyExistingFileVersion =
+						DLFileVersionLocalServiceUtil.
+							getFileVersionByUuidAndGroupId(
+								fileVersion.getUuid(),
+								existingFileEntry.getGroupId());
 
-					Indexer indexer = IndexerRegistryUtil.getIndexer(
-						DLFileEntry.class);
+					if (alreadyExistingFileVersion != null) {
+						serviceContext.setAttribute(
+							"existingDLFileVersionId",
+							alreadyExistingFileVersion.getFileVersionId());
+					}
 
-					indexer.reindex(liferayFileEntry.getModel());
+					serviceContext.setUuid(fileVersion.getUuid());
+
+					importedFileEntry =
+						DLAppLocalServiceUtil.updateFileEntry(
+							userId, existingFileEntry.getFileEntryId(),
+							fileEntry.getTitle(), fileEntry.getMimeType(),
+							fileEntry.getTitle(),
+							fileEntry.getDescription(), null, false, is,
+							fileEntry.getSize(), serviceContext);
 				}
+				else {
+					DLAppLocalServiceUtil.updateAsset(
+						userId, existingFileEntry, latestExistingFileVersion,
+						assetCategoryIds, assetTagNames, null);
 
-				importedFileEntry = existingFileEntry;
+					if (existingFileEntry instanceof LiferayFileEntry) {
+						LiferayFileEntry liferayFileEntry =
+							(LiferayFileEntry)existingFileEntry;
+
+						Indexer indexer = IndexerRegistryUtil.getIndexer(
+							DLFileEntry.class);
+
+						indexer.reindex(liferayFileEntry.getModel());
+					}
+
+					importedFileEntry = existingFileEntry;
+				}
 			}
 		}
 		else {

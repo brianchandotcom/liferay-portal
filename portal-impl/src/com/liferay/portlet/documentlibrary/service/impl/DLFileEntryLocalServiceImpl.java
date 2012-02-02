@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -369,15 +370,40 @@ public class DLFileEntryLocalServiceImpl
 		if (!version.equals(
 				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
 
-			dlFileVersion = addFileVersion(
-				user, dlFileEntry, new Date(), dlFileVersion.getExtension(),
-				dlFileVersion.getMimeType(), dlFileVersion.getTitle(),
-				dlFileVersion.getDescription(), dlFileVersion.getChangeLog(),
-				dlFileVersion.getExtraSettings(),
-				dlFileVersion.getFileEntryTypeId(), null,
-				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION,
-				dlFileVersion.getSize(), WorkflowConstants.STATUS_DRAFT,
-				serviceContext);
+			long existingDLFileVersionId = ParamUtil.get(
+				serviceContext, "existingDLFileVersionId", 0);
+
+			if (existingDLFileVersionId > 0) {
+				DLFileVersion existingDLFileVersion =
+					dlFileVersionPersistence.findByPrimaryKey(
+						existingDLFileVersionId);
+
+				dlFileVersion = updateFileVersion(
+					user, existingDLFileVersion, null,
+					existingDLFileVersion.getExtension(),
+					existingDLFileVersion.getMimeType(),
+					existingDLFileVersion.getTitle(),
+					existingDLFileVersion.getDescription(),
+					existingDLFileVersion.getChangeLog(),
+					existingDLFileVersion.getExtraSettings(),
+					existingDLFileVersion.getFileEntryTypeId(), null,
+					DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION,
+					existingDLFileVersion.getSize(),
+					WorkflowConstants.STATUS_DRAFT, new Date(),
+					serviceContext);
+			}
+			else {
+				dlFileVersion = addFileVersion(
+					user, dlFileEntry, new Date(), dlFileVersion.getExtension(),
+					dlFileVersion.getMimeType(), dlFileVersion.getTitle(),
+					dlFileVersion.getDescription(),
+					dlFileVersion.getChangeLog(),
+					dlFileVersion.getExtraSettings(),
+					dlFileVersion.getFileEntryTypeId(), null,
+					DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION,
+					dlFileVersion.getSize(), WorkflowConstants.STATUS_DRAFT,
+					serviceContext);
+			}
 
 			try {
 				DLStoreUtil.deleteFile(
@@ -1127,6 +1153,10 @@ public class DLFileEntryLocalServiceImpl
 		String versionUserName = GetterUtil.getString(
 			dlFileEntry.getVersionUserName(), dlFileEntry.getUserName());
 
+		String uuid = ParamUtil.get(
+			serviceContext, "fileVersionUuid", serviceContext.getUuid());
+
+		dlFileVersion.setUuid(uuid);
 		dlFileVersion.setGroupId(dlFileEntry.getGroupId());
 		dlFileVersion.setCompanyId(dlFileEntry.getCompanyId());
 		dlFileVersion.setUserId(versionUserId);

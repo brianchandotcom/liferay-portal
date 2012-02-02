@@ -268,18 +268,22 @@ public class DLAppHelperLocalServiceImpl
 	public void moveFileEntry(FileEntry fileEntry)
 		throws PortalException, SystemException {
 
-		dlSyncLocalService.updateSync(
-			fileEntry.getFileEntryId(), fileEntry.getFolderId(),
-			fileEntry.getTitle(), DLSyncConstants.EVENT_UPDATE,
-			fileEntry.getVersion());
+		if (!isStagingGroup(fileEntry.getGroupId())) {
+			dlSyncLocalService.updateSync(
+				fileEntry.getFileEntryId(), fileEntry.getFolderId(),
+				fileEntry.getTitle(), DLSyncConstants.EVENT_UPDATE,
+				fileEntry.getVersion());
+		}
 	}
 
 	public void moveFolder(Folder folder)
 		throws PortalException, SystemException {
 
-		dlSyncLocalService.updateSync(
+		if (!isStagingGroup(folder.getGroupId())) {
+			dlSyncLocalService.updateSync(
 			folder.getFolderId(), folder.getParentFolderId(),
 			folder.getName(), DLSyncConstants.EVENT_UPDATE, "-1");
+		}
 	}
 
 	public AssetEntry updateAsset(

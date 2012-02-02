@@ -16,6 +16,8 @@ package com.liferay.portalweb.portlet.webcontentdisplay.webcontent.viewlocalizew
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.language.AddPageLanguageTest;
+import com.liferay.portalweb.portlet.language.AddPortletLanguageTest;
 import com.liferay.portalweb.portlet.webcontentdisplay.comment.addwcwebcontentcommentwcd.AddPageWCDTest;
 import com.liferay.portalweb.portlet.webcontentdisplay.comment.addwcwebcontentcommentwcd.AddPortletWCDTest;
 

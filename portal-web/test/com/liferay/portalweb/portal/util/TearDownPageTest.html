@@ -29,19 +29,29 @@
 	<td>Manage Pages</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//iframe[@id='manageContentDialog']</td>
+	<td>Manage Pages</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[@id='manageContentDialog']</td>
+	<td>Manage Pages</td>
+</tr>
+<tr>
 	<td>waitForText</td>
 	<td>//a[@class='layout-tree']</td>
 	<td>Public Pages</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//li/ul/li[1]/div/div[3]/a'))</td>
-	<td>welcomePresent</td>
+	<td>storeElementPresent</td>
+	<td>//li[@id='layoutsTree_layoutId_0_plid_0']/div[contains(@class,'aui-tree-collapsed')]</td>
+	<td>tree1Collapsed</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>${welcomePresent}</td>
-	<td>WelcomePresent</td>
+	<td>!${tree1Collapsed}</td>
+	<td>Tree1NotCollapsed</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -50,7 +60,7 @@
 </tr>
 <tr>
 	<td>label</td>
-	<td>WelcomePresent</td>
+	<td>Tree1NotCollapsed</td>
 	<td></td>
 </tr>
 <tr>
@@ -74,11 +84,6 @@
 	<td>Page Name</td>
 </tr>
 <tr>
-	<td>waitForNotValue</td>
-	<td>//input[@id='_88_friendlyURL']</td>
-	<td>/home</td>
-</tr>
-<tr>
 	<td>pause</td>
 	<td>5000</td>
 	<td></td>
@@ -102,11 +107,6 @@
 	<td>assertConfirmation</td>
 	<td>Are you sure you want to delete the selected page?</td>
 	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]</td>
-	<td>Drop Down Arrow</td>
 </tr>
 <tr>
 	<td>waitForText</td>
@@ -129,11 +129,6 @@
 	<td>Page Name</td>
 </tr>
 <tr>
-	<td>waitForNotValue</td>
-	<td>//input[@id='_88_friendlyURL']</td>
-	<td>/home</td>
-</tr>
-<tr>
 	<td>pause</td>
 	<td>5000</td>
 	<td></td>
@@ -157,11 +152,6 @@
 	<td>assertConfirmation</td>
 	<td>Are you sure you want to delete the selected page?</td>
 	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]</td>
-	<td>Drop Down Arrow</td>
 </tr>
 <tr>
 	<td>waitForText</td>
@@ -184,11 +174,6 @@
 	<td>Page Name</td>
 </tr>
 <tr>
-	<td>waitForNotValue</td>
-	<td>//input[@id='_88_friendlyURL']</td>
-	<td>/home</td>
-</tr>
-<tr>
 	<td>pause</td>
 	<td>5000</td>
 	<td></td>
@@ -212,11 +197,6 @@
 	<td>assertConfirmation</td>
 	<td>Are you sure you want to delete the selected page?</td>
 	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]</td>
-	<td>Drop Down Arrow</td>
 </tr>
 <tr>
 	<td>waitForText</td>
@@ -239,11 +219,6 @@
 	<td>Page Name</td>
 </tr>
 <tr>
-	<td>waitForNotValue</td>
-	<td>//input[@id='_88_friendlyURL']</td>
-	<td>/home</td>
-</tr>
-<tr>
 	<td>pause</td>
 	<td>5000</td>
 	<td></td>
@@ -269,11 +244,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]</td>
-	<td>Drop Down Arrow</td>
-</tr>
-<tr>
 	<td>waitForText</td>
 	<td>//li/ul/li[1]/div/div[3]/a</td>
 	<td>Welcome</td>
@@ -292,11 +262,6 @@
 	<td>clickAt</td>
 	<td>//li[2]/div/div[3]/a</td>
 	<td>Page Name</td>
-</tr>
-<tr>
-	<td>waitForNotValue</td>
-	<td>//input[@id='_88_friendlyURL']</td>
-	<td>/home</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -347,6 +312,11 @@
 	<td>label</td>
 	<td>Page5NotPresent</td>
 	<td></td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 </tbody></table>
 </body>

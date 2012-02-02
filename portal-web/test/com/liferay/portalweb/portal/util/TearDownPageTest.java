@@ -58,6 +58,25 @@ public class TearDownPageTest extends BaseTestCase {
 					}
 
 					try {
+						if (selenium.isVisible(
+									"//iframe[@id='manageContentDialog']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.selectFrame("//iframe[@id='manageContentDialog']");
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
 						if (RuntimeVariables.replace("Public Pages")
 												.equals(selenium.getText(
 										"//a[@class='layout-tree']"))) {
@@ -70,10 +89,10 @@ public class TearDownPageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				boolean welcomePresent = selenium.isElementPresent(
-						"//li/ul/li[1]/div/div[3]/a");
+				boolean tree1Collapsed = selenium.isElementPresent(
+						"//li[@id='layoutsTree_layoutId_0_plid_0']/div[contains(@class,'aui-tree-collapsed')]");
 
-				if (welcomePresent) {
+				if (!tree1Collapsed) {
 					label = 2;
 
 					continue;
@@ -113,25 +132,6 @@ public class TearDownPageTest extends BaseTestCase {
 
 				selenium.clickAt("//li[2]/div/div[3]/a",
 					RuntimeVariables.replace("Page Name"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (!RuntimeVariables.replace("/home")
-												 .equals(selenium.getValue(
-										"//input[@id='_88_friendlyURL']"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
 				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
@@ -157,8 +157,6 @@ public class TearDownPageTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected page[\\s\\S]$"));
-				selenium.clickAt("//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]",
-					RuntimeVariables.replace("Drop Down Arrow"));
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -189,25 +187,6 @@ public class TearDownPageTest extends BaseTestCase {
 
 				selenium.clickAt("//li[2]/div/div[3]/a",
 					RuntimeVariables.replace("Page Name"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (!RuntimeVariables.replace("/home")
-												 .equals(selenium.getValue(
-										"//input[@id='_88_friendlyURL']"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
 				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
@@ -233,8 +212,6 @@ public class TearDownPageTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected page[\\s\\S]$"));
-				selenium.clickAt("//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]",
-					RuntimeVariables.replace("Drop Down Arrow"));
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -265,25 +242,6 @@ public class TearDownPageTest extends BaseTestCase {
 
 				selenium.clickAt("//li[2]/div/div[3]/a",
 					RuntimeVariables.replace("Page Name"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (!RuntimeVariables.replace("/home")
-												 .equals(selenium.getValue(
-										"//input[@id='_88_friendlyURL']"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
 				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
@@ -309,8 +267,6 @@ public class TearDownPageTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected page[\\s\\S]$"));
-				selenium.clickAt("//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]",
-					RuntimeVariables.replace("Drop Down Arrow"));
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -341,25 +297,6 @@ public class TearDownPageTest extends BaseTestCase {
 
 				selenium.clickAt("//li[2]/div/div[3]/a",
 					RuntimeVariables.replace("Page Name"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (!RuntimeVariables.replace("/home")
-												 .equals(selenium.getValue(
-										"//input[@id='_88_friendlyURL']"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
 				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
@@ -385,8 +322,6 @@ public class TearDownPageTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected page[\\s\\S]$"));
-				selenium.clickAt("//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]",
-					RuntimeVariables.replace("Drop Down Arrow"));
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -417,25 +352,6 @@ public class TearDownPageTest extends BaseTestCase {
 
 				selenium.clickAt("//li[2]/div/div[3]/a",
 					RuntimeVariables.replace("Page Name"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (!RuntimeVariables.replace("/home")
-												 .equals(selenium.getValue(
-										"//input[@id='_88_friendlyURL']"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
 				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
@@ -467,6 +383,8 @@ public class TearDownPageTest extends BaseTestCase {
 			case 5:
 			case 6:
 			case 7:
+				selenium.selectFrame("relative=top");
+
 			case 100:
 				label = -1;
 			}

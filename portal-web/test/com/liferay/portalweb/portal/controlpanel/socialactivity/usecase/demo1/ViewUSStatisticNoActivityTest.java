@@ -47,6 +47,6 @@ public class ViewUSStatisticNoActivityTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"There are no active users for this period."),
-			selenium.getText("//section/div/div/div"));
+			selenium.getText("//div[@class='portlet-content']/div/div"));
 	}
 }

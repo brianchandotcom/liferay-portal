@@ -50,8 +50,12 @@ public class EnableSocialActivityBlogsEntryTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
+		assertFalse(selenium.isChecked(
+				"//input[@id='_179_com.liferay.portlet.blogs.model.BlogsEntry.enabledCheckbox']"));
 		selenium.clickAt("//input[@id='_179_com.liferay.portlet.blogs.model.BlogsEntry.enabledCheckbox']",
 			RuntimeVariables.replace("Blogs Entry"));
+		assertTrue(selenium.isChecked(
+				"//input[@id='_179_com.liferay.portlet.blogs.model.BlogsEntry.enabledCheckbox']"));
 		selenium.clickAt("link=Blogs Entry",
 			RuntimeVariables.replace("Blogs Entry"));
 

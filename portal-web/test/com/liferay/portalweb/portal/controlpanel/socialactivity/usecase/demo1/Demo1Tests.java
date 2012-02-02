@@ -15,6 +15,9 @@
 package com.liferay.portalweb.portal.controlpanel.socialactivity.usecase.demo1;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPageBlogsTest;
+import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPortletBlogsTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -27,8 +30,8 @@ public class Demo1Tests extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(EnableSocialActivityBlogsEntryTest.class);
 		testSuite.addTestSuite(AddPageBlogsTest.class);
-		testSuite.addTestSuite(AddPageUserStatisticsTest.class);
 		testSuite.addTestSuite(AddPortletBlogsTest.class);
+		testSuite.addTestSuite(AddPageUserStatisticsTest.class);
 		testSuite.addTestSuite(AddPortletUserStatisticsTest.class);
 		testSuite.addTestSuite(AddUserTest.class);
 		testSuite.addTestSuite(SignInUsersTest.class);

@@ -1636,7 +1636,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 						}
 					}
 				}
-
 			}
 
 			// Subscriptions

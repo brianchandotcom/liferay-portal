@@ -112,8 +112,13 @@ public class DLFileEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		if ((size == 0) && Validator.isNull(title)) {
-			throw new FileNameException();
+		if (Validator.isNull(title)) {
+			if (size == 0) {
+				throw new FileNameException();
+			}
+			else {
+				title = sourceFileName;
+			}
 		}
 
 		// File entry
@@ -123,7 +128,7 @@ public class DLFileEntryLocalServiceImpl
 			user.getCompanyId(), folderId);
 		String name = String.valueOf(
 			counterLocalService.increment(DLFileEntry.class.getName()));
-		String extension = FileUtil.getExtension(sourceFileName);
+		String extension = getExtension(title, sourceFileName);
 		fileEntryTypeId = getFileEntryTypeId(
 			DLUtil.getGroupIds(groupId), folderId, fileEntryTypeId);
 		Date now = new Date();
@@ -964,7 +969,7 @@ public class DLFileEntryLocalServiceImpl
 		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
 			fileEntryId);
 
-		String extension = FileUtil.getExtension(sourceFileName);
+		String extension = getExtension(title, sourceFileName);
 
 		String extraSettings = StringPool.BLANK;
 
@@ -1358,6 +1363,16 @@ public class DLFileEntryLocalServiceImpl
 		indexer.delete(dlFileEntry);
 	}
 
+	protected String getExtension(String title, String sourceFileName) {
+		String extension = FileUtil.getExtension(sourceFileName);
+
+		if (Validator.isNull(extension)) {
+			extension = FileUtil.getExtension(title);
+		}
+
+		return extension;
+	}
+
 	protected Long getFileEntryTypeId(
 			long[] groupIds, long folderId, long fileEntryTypeId)
 		throws PortalException, SystemException {
@@ -1716,18 +1731,6 @@ public class DLFileEntryLocalServiceImpl
 
 		if (!title.endsWith(appendExtension)) {
 			title += appendExtension;
-
-			dlFileEntry = dlFileEntryPersistence.fetchByG_F_T(
-				groupId, folderId, title);
-
-			if ((dlFileEntry != null) &&
-				(dlFileEntry.getFileEntryId() != fileEntryId)) {
-
-				throw new DuplicateFileException(title);
-			}
-		}
-		else {
-			title = FileUtil.stripExtension(title);
 
 			dlFileEntry = dlFileEntryPersistence.fetchByG_F_T(
 				groupId, folderId, title);

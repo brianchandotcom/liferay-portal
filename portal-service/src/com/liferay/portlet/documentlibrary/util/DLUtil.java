@@ -563,11 +563,14 @@ public class DLUtil {
 
 	public static String getTitleWithExtension(FileEntry fileEntry) {
 		String title = fileEntry.getTitle();
+		String extension = fileEntry.getExtension();
 
-		String appendExtension = StringPool.PERIOD + fileEntry.getExtension();
+		if (Validator.isNotNull(extension)) {
+			String appendExtension = StringPool.PERIOD + extension;
 
-		if (!title.endsWith(appendExtension)) {
-			title += appendExtension;
+			if (!title.endsWith(appendExtension)) {
+				title += appendExtension;
+			}
 		}
 
 		return title;

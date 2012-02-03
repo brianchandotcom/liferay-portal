@@ -101,8 +101,9 @@ public class BlockCCConnectionTest extends BaseTestCase {
 		assertFalse(selenium.isElementPresent(
 				"//div[contains(@class, 'contacts-center-home-content')]"));
 		assertEquals(RuntimeVariables.replace("Block"),
-			selenium.getText("//span[@class='action block']/a/span"));
-		selenium.clickAt("//span[@class='action block']/a/span",
+			selenium.getText(
+				"//button[@id='_1_WAR_contactsportlet_blockButton']"));
+		selenium.clickAt("//button[@id='_1_WAR_contactsportlet_blockButton']",
 			RuntimeVariables.replace("Block"));
 
 		for (int second = 0;; second++) {
@@ -111,7 +112,8 @@ public class BlockCCConnectionTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//span[@class='action unblock']/a/span")) {
+				if (selenium.isVisible(
+							"//button[@id='_1_WAR_contactsportlet_unblockButton']")) {
 					break;
 				}
 			}
@@ -122,7 +124,9 @@ public class BlockCCConnectionTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Unblock"),
-			selenium.getText("//span[@class='action unblock']/a/span"));
-		assertFalse(selenium.isTextPresent("Block"));
+			selenium.getText(
+				"//button[@id='_1_WAR_contactsportlet_unblockButton']"));
+		assertFalse(selenium.isVisible(
+				"//button[@id='_1_WAR_contactsportlet_blockButton']"));
 	}
 }

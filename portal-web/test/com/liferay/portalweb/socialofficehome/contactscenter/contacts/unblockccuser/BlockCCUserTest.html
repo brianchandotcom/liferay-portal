@@ -75,32 +75,32 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@class='action add-connection']/a/span</td>
+	<td>//button[@id='_1_WAR_contactsportlet_addConnectionButton']/a/span</td>
 	<td>Add as Connection</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@class='action block']/a/span</td>
+	<td>//button[@id='_1_WAR_contactsportlet_blockButton']</td>
 	<td>Block</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@class='action block']/a/span</td>
+	<td>//button[@id='_1_WAR_contactsportlet_blockButton']</td>
 	<td>Block</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//span[@class='action unblock']/a/span</td>
+	<td>//button[@id='_1_WAR_contactsportlet_unblockButton']</td>
 	<td>Unblock</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@class='action unblock']/a/span</td>
+	<td>//button[@id='_1_WAR_contactsportlet_unblockButton']</td>
 	<td>Unblock</td>
 </tr>
 <tr>
-	<td>assertTextNotPresent</td>
-	<td>Block</td>
+	<td>assertNotVisible</td>
+	<td>//button[@id='_1_WAR_contactsportlet_blockButton']</td>
 	<td>Block</td>
 </tr>
 </tbody></table>

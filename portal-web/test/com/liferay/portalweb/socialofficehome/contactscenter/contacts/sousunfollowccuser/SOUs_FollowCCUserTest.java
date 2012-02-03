@@ -115,7 +115,7 @@ public class SOUs_FollowCCUserTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//span[@class='action unfollow']/a/span")) {
+							"//button[@id='_1_WAR_contactsportlet_unfollowButton']")) {
 					break;
 				}
 			}
@@ -126,7 +126,8 @@ public class SOUs_FollowCCUserTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Unfollow"),
-			selenium.getText("//span[@class='action unfollow']/a/span"));
+			selenium.getText(
+				"//button[@id='_1_WAR_contactsportlet_unfollowButton']"));
 		assertFalse(selenium.isVisible(
 				"//button[@id='_1_WAR_contactsportlet_followButton']"));
 	}

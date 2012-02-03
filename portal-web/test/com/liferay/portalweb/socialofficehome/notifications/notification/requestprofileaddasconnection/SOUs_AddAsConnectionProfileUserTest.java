@@ -51,8 +51,9 @@ public class SOUs_AddAsConnectionProfileUserTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("test@liferay.com"),
 			selenium.getText("//div[@class='lfr-contact-extra']"));
 		assertEquals(RuntimeVariables.replace("Add as Connection"),
-			selenium.getText("//span[@class='action add-connection']/a/span"));
-		selenium.clickAt("//span[@class='action add-connection']/a/span",
+			selenium.getText(
+				"//button[@id='_1_WAR_contactsportlet_addConnectionButton']/a/span"));
+		selenium.clickAt("//button[@id='_1_WAR_contactsportlet_addConnectionButton']/a/span",
 			RuntimeVariables.replace("Add as Connection"));
 
 		for (int second = 0;; second++) {
@@ -73,6 +74,7 @@ public class SOUs_AddAsConnectionProfileUserTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Connection Requested"),
 			selenium.getText("//span[@class='disabled']/span"));
-		assertFalse(selenium.isTextPresent("Add as Connection"));
+		assertFalse(selenium.isVisible(
+				"//button[@id='_1_WAR_contactsportlet_addConnectionButton']"));
 	}
 }

@@ -217,6 +217,10 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 
 		InputStream is = portletDataContext.getZipEntryAsInputStream(binPath);
 
+		if (is == null) {
+			return;
+		}
+
 		String thumbnailFilePath = getThumbnailFilePath(
 			fileVersion, getThumbnailType(fileVersion), index);
 
@@ -355,6 +359,10 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		throws PortalException, SystemException {
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
+
+		if (!hasThumbnail(fileVersion, index)) {
+			return;
+		}
 
 		File file = doGetThumbnail(fileVersion, index);
 
@@ -621,6 +629,10 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		}
 		else {
 			FileVersion fileVersion = fileEntry.getFileVersion();
+
+			if (!hasThumbnail(fileVersion, index)) {
+				return;
+			}
 
 			File file = doGetThumbnail(fileVersion, index);
 

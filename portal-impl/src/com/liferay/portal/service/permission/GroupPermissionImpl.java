@@ -31,8 +31,7 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 public class GroupPermissionImpl implements GroupPermission {
 
 	public void check(
-			PermissionChecker permissionChecker, long groupId,
-			String actionId)
+			PermissionChecker permissionChecker, long groupId, String actionId)
 		throws PortalException, SystemException {
 
 		if (!contains(permissionChecker, groupId, actionId)) {

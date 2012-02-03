@@ -141,9 +141,8 @@ public class PortletImporter {
 	}
 
 	protected String checkPortletPreferences(
-			PortletDataContext portletDataContext, long companyId,
-			long ownerId, int ownerType, long plid, String portletId,
-			String xml)
+			PortletDataContext portletDataContext, long companyId, long ownerId,
+			int ownerType, long plid, String portletId, String xml)
 		throws Exception {
 
 		String rootPotletId = PortletConstants.getRootPortletId(portletId);
@@ -1200,8 +1199,7 @@ public class PortletImporter {
 
 			for (String assetCategoryUuid : assetCategoryUuidArray) {
 				assetCategoryUuid = MapUtil.getString(
-					assetCategoryUuids, assetCategoryUuid,
-					assetCategoryUuid);
+					assetCategoryUuids, assetCategoryUuid, assetCategoryUuid);
 
 				AssetCategory assetCategory = AssetCategoryUtil.fetchByUUID_G(
 					assetCategoryUuid, portletDataContext.getScopeGroupId());

@@ -55,8 +55,7 @@ public class ImageImpl extends ImageBaseImpl {
 			}
 			else {
 				is = DLStoreUtil.getFileAsStream(
-					_DEFAULT_COMPANY_ID, _DEFAULT_REPOSITORY_ID,
-					getFileName());
+					_DEFAULT_COMPANY_ID, _DEFAULT_REPOSITORY_ID, getFileName());
 			}
 
 			byte[] bytes = FileUtil.getBytes(is);

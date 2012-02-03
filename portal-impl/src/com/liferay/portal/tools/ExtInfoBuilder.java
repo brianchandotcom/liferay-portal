@@ -55,12 +55,9 @@ public class ExtInfoBuilder {
 				".svn/**", "**/.svn/**", "ext-impl/ext-impl.jar",
 				"ext-impl/src/**", "ext-service/ext-service.jar",
 				"ext-service/src/**", "ext-util-bridges/ext-util-bridges.jar",
-				"ext-util-bridges/src/**",
-				"ext-util-java/ext-util-java.jar",
-				"ext-util-java/src/**",
-				"ext-util-taglib/ext-util-taglib.jar",
-				"ext-util-taglib/src/**",
-				"liferay-plugin-package.properties"
+				"ext-util-bridges/src/**", "ext-util-java/ext-util-java.jar",
+				"ext-util-java/src/**", "ext-util-taglib/ext-util-taglib.jar",
+				"ext-util-taglib/src/**", "liferay-plugin-package.properties"
 			});
 
 		ds.scan();

@@ -952,8 +952,7 @@ public class ThreadPoolExecutorTest extends TestCase {
 
 		assertEquals(1, threadPoolExecutor.getLargestPoolSize());
 		assertEquals(
-			10,
-			recordUncaughtExceptionHandler.getUncaughtMap().size());
+			10, recordUncaughtExceptionHandler.getUncaughtMap().size());
 
 		for (MarkerBlockingJob markerBlockingJob : markerBlockingJobQueue) {
 			assertTrue(markerBlockingJob.isStarted());

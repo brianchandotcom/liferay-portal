@@ -54,8 +54,7 @@ public class LDAPSettingsUtil {
 				"@company_id@", "@email_address@", "@screen_name@", "@user_id@"
 			},
 			new String[] {
-				String.valueOf(companyId), emailAddress, screenName,
-				userId
+				String.valueOf(companyId), emailAddress, screenName, userId
 			});
 
 		if (_log.isDebugEnabled()) {

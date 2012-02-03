@@ -97,8 +97,7 @@ public class PortletPreferencesFactoryImpl
 			populateMap(xml, preferencesMap);
 
 			return new PortletPreferencesImpl(
-				companyId, ownerId, ownerType, plid, portletId,
-				preferencesMap);
+				companyId, ownerId, ownerType, plid, portletId, preferencesMap);
 		}
 		catch (SystemException se) {
 			throw se;

@@ -77,8 +77,8 @@ public class ImageProcessorUtil {
 
 	public static void storeThumbnail(
 			long companyId, long groupId, long fileEntryId, long fileVersionId,
-			long custom1ImageId, long custom2ImageId,
-			InputStream is, String type)
+			long custom1ImageId, long custom2ImageId, InputStream is,
+			String type)
 		throws Exception {
 
 		getImageProcessor().storeThumbnail(

@@ -705,8 +705,8 @@ public class PortalLDAPUtil {
 
 	public static byte[] searchLDAP(
 			long companyId, LdapContext ldapContext, byte[] cookie,
-			int maxResults, String baseDN, String filter,
-			String[] attributeIds, List<SearchResult> searchResults)
+			int maxResults, String baseDN, String filter, String[] attributeIds,
+			List<SearchResult> searchResults)
 		throws Exception {
 
 		SearchControls searchControls = new SearchControls(

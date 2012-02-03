@@ -118,31 +118,21 @@ public class ViewAction extends PortletAction {
 		subject = StringUtil.replace(
 			subject,
 			new String[] {
-				"[$FROM_ADDRESS$]",
-				"[$FROM_NAME$]",
-				"[$PAGE_URL$]",
+				"[$FROM_ADDRESS$]", "[$FROM_NAME$]", "[$PAGE_URL$]",
 				"[$PORTAL_URL$]"
 			},
 			new String[] {
-				fromAddress,
-				fromName,
-				layoutFullURL,
-				portalURL
+				fromAddress, fromName, layoutFullURL, portalURL
 			});
 
 		body = StringUtil.replace(
 			body,
 			new String[] {
-				"[$FROM_ADDRESS$]",
-				"[$FROM_NAME$]",
-				"[$PAGE_URL$]",
+				"[$FROM_ADDRESS$]", "[$FROM_NAME$]", "[$PAGE_URL$]",
 				"[$PORTAL_URL$]"
 			},
 			new String[] {
-				fromAddress,
-				fromName,
-				layoutFullURL,
-				portalURL
+				fromAddress, fromName, layoutFullURL, portalURL
 			});
 
 		for (String emailAddress : validEmailAddresses) {

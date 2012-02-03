@@ -202,8 +202,7 @@ public class MembershipRequestLocalServiceImpl
 			notify(
 				membershipRequest.getUserId(), membershipRequest,
 				PropsKeys.SITES_EMAIL_MEMBERSHIP_REPLY_SUBJECT,
-				PropsKeys.SITES_EMAIL_MEMBERSHIP_REPLY_BODY,
-				serviceContext);
+				PropsKeys.SITES_EMAIL_MEMBERSHIP_REPLY_BODY, serviceContext);
 		}
 	}
 
@@ -280,8 +279,8 @@ public class MembershipRequestLocalServiceImpl
 			membershipRequest.getUserId());
 
 		String fromName = PrefsPropsUtil.getStringFromNames(
-			membershipRequest.getCompanyId(),
-			PropsKeys.SITES_EMAIL_FROM_NAME, PropsKeys.ADMIN_EMAIL_FROM_NAME);
+			membershipRequest.getCompanyId(), PropsKeys.SITES_EMAIL_FROM_NAME,
+			PropsKeys.ADMIN_EMAIL_FROM_NAME);
 
 		String fromAddress = PrefsPropsUtil.getStringFromNames(
 			membershipRequest.getCompanyId(),
@@ -349,8 +348,7 @@ public class MembershipRequestLocalServiceImpl
 			notify(
 				userId, membershipRequest,
 				PropsKeys.SITES_EMAIL_MEMBERSHIP_REQUEST_SUBJECT,
-				PropsKeys.SITES_EMAIL_MEMBERSHIP_REQUEST_BODY,
-				serviceContext);
+				PropsKeys.SITES_EMAIL_MEMBERSHIP_REQUEST_BODY, serviceContext);
 		}
 	}
 

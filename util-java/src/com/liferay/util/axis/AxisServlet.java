@@ -187,20 +187,12 @@ public class AxisServlet extends org.apache.axis.transport.http.AxisServlet {
 		xml = StringUtil.replace(
 			xml,
 			new String[] {
-				"\r\n",
-				"\n",
-				"  ",
-				"> <",
-				_INCORRECT_LONG_ARRAY,
+				"\r\n", "\n", "  ", "> <", _INCORRECT_LONG_ARRAY,
 				_INCORRECT_STRING_ARRAY
 			},
 			new String[] {
-				StringPool.BLANK,
-				StringPool.BLANK,
-				StringPool.BLANK,
-				"><",
-				_CORRECT_LONG_ARRAY,
-				_CORRECT_STRING_ARRAY
+				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, "><",
+				_CORRECT_LONG_ARRAY, _CORRECT_STRING_ARRAY
 			});
 
 		Document document = SAXReaderUtil.read(xml);

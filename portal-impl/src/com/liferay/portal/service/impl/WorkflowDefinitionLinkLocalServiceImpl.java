@@ -105,8 +105,8 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 		long classNameId = PortalUtil.getClassNameId(className);
 
 		return workflowDefinitionLinkPersistence.findByG_C_C_C_T(
-			WorkflowConstants.DEFAULT_GROUP_ID, companyId, classNameId,
-			classPK, typePK);
+			WorkflowConstants.DEFAULT_GROUP_ID, companyId, classNameId, classPK,
+			typePK);
 	}
 
 	public WorkflowDefinitionLink getWorkflowDefinitionLink(

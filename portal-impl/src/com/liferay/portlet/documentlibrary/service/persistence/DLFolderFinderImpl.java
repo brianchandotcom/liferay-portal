@@ -686,8 +686,7 @@ public class DLFolderFinderImpl
 			((mimeTypes != null) && (mimeTypes.length > 0))) {
 
 			sql = StringUtil.replace(
-				sql, "[$JOIN$]",
-				CustomSQLUtil.get(JOIN_FS_BY_DL_FILE_ENTRY));
+				sql, "[$JOIN$]", CustomSQLUtil.get(JOIN_FS_BY_DL_FILE_ENTRY));
 		}
 		else {
 			sql = StringUtil.replace(sql, "[$JOIN$]", "");

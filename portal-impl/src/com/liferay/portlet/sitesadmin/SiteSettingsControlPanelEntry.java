@@ -50,8 +50,8 @@ public class SiteSettingsControlPanelEntry extends BaseControlPanelEntry {
 
 		if (scopeGroup.isCompany() || scopeGroup.isUser() ||
 			!GroupPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(),
-				scopeGroup.getGroupId(), ActionKeys.UPDATE)) {
+				themeDisplay.getPermissionChecker(), scopeGroup.getGroupId(),
+				ActionKeys.UPDATE)) {
 
 			return false;
 		}

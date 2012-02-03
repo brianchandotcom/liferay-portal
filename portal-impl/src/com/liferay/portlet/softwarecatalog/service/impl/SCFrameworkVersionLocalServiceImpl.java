@@ -107,8 +107,8 @@ public class SCFrameworkVersionLocalServiceImpl
 	}
 
 	public void addFrameworkVersionResources(
-			SCFrameworkVersion frameworkVersion,
-			boolean addGroupPermissions, boolean addGuestPermissions)
+			SCFrameworkVersion frameworkVersion, boolean addGroupPermissions,
+			boolean addGuestPermissions)
 		throws PortalException, SystemException {
 
 		resourceLocalService.addResources(

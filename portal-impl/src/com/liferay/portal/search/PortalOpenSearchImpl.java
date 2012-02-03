@@ -182,8 +182,8 @@ public class PortalOpenSearchImpl extends BaseOpenSearchImpl {
 
 		if (Validator.isNotNull(article.getLayoutUuid())) {
 			String groupFriendlyURL = PortalUtil.getGroupFriendlyURL(
-				GroupLocalServiceUtil.getGroup(article.getGroupId()),
-				false, themeDisplay);
+				GroupLocalServiceUtil.getGroup(article.getGroupId()), false,
+				themeDisplay);
 
 			return groupFriendlyURL.concat(
 				JournalArticleConstants.CANONICAL_URL_SEPARATOR).concat(

@@ -579,12 +579,8 @@ public class ShoppingItemLocalServiceImpl
 				"\"", "&", "'", ".", "=", "|"
 			},
 			new String[] {
-				StringPool.BLANK,
-				StringPool.BLANK,
-				StringPool.BLANK,
-				StringPool.BLANK,
-				StringPool.BLANK,
-				StringPool.BLANK
+				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK
 			}
 		);
 	}

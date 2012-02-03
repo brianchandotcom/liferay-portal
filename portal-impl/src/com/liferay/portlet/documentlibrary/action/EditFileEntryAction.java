@@ -308,8 +308,8 @@ public class EditFileEntryAction extends PortletAction {
 
 		for (String selectedFileName : selectedFileNames) {
 			addMultipleFileEntries(
-				actionRequest, actionResponse, selectedFileName,
-				validFileNames, invalidFileNameKVPs);
+				actionRequest, actionResponse, selectedFileName, validFileNames,
+				invalidFileNameKVPs);
 		}
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
@@ -739,8 +739,8 @@ public class EditFileEntryAction extends PortletAction {
 
 				fileEntry = DLAppServiceUtil.updateFileEntryAndCheckIn(
 					fileEntryId, sourceFileName, contentType, title,
-					description, changeLog, majorVersion, inputStream,
-					size, serviceContext);
+					description, changeLog, majorVersion, inputStream, size,
+					serviceContext);
 			}
 			else {
 
@@ -748,8 +748,8 @@ public class EditFileEntryAction extends PortletAction {
 
 				fileEntry = DLAppServiceUtil.updateFileEntry(
 					fileEntryId, sourceFileName, contentType, title,
-					description, changeLog, majorVersion, inputStream,
-					size, serviceContext);
+					description, changeLog, majorVersion, inputStream, size,
+					serviceContext);
 			}
 
 			AssetPublisherUtil.addRecentFolderId(

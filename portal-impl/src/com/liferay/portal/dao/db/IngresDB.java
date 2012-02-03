@@ -148,12 +148,9 @@ public class IngresDB extends BaseDB {
 	}
 
 	private static final String[] _INGRES = {
-		"--", "1", "0",
-		"'1970-01-01'", "date('now')",
-		" blob", " blob", " tinyint", " timestamp",
-		" float", " integer", " bigint",
-		" varchar(1000)", " long varchar", " varchar",
-		"", "commit;\\g"
+		"--", "1", "0", "'1970-01-01'", "date('now')", " blob", " blob",
+		" tinyint", " timestamp", " float", " integer", " bigint",
+		" varchar(1000)", " long varchar", " varchar", "", "commit;\\g"
 	};
 
 	private static final boolean _SUPPORTS_ALTER_COLUMN_NAME = false;

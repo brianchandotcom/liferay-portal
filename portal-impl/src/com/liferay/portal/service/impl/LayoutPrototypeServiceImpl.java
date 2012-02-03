@@ -37,8 +37,7 @@ import java.util.Map;
 public class LayoutPrototypeServiceImpl extends LayoutPrototypeServiceBaseImpl {
 
 	public LayoutPrototype addLayoutPrototype(
-			Map<Locale, String> nameMap, String description,
-			boolean active)
+			Map<Locale, String> nameMap, String description, boolean active)
 		throws PortalException, SystemException {
 
 		PortalPermissionUtil.check(

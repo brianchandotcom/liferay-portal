@@ -429,8 +429,7 @@ public class ServicePreAction extends Action {
 				permissionChecker, layout, controlPanelCategory, true,
 				ActionKeys.VIEW);
 			boolean isViewableStaging = GroupPermissionUtil.contains(
-				permissionChecker, group.getGroupId(),
-				ActionKeys.VIEW_STAGING);
+				permissionChecker, group.getGroupId(), ActionKeys.VIEW_STAGING);
 
 			if (isViewableStaging) {
 				layouts = LayoutLocalServiceUtil.getLayouts(

@@ -34,8 +34,8 @@ import java.util.Map;
 public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 
 	public DDLRecord addRecord(
-			long groupId, long recordSetId, int displayIndex,
-			Fields fields, ServiceContext serviceContext)
+			long groupId, long recordSetId, int displayIndex, Fields fields,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		DDLRecordSetPermission.check(

@@ -40,8 +40,7 @@ public class UpgradeGroup extends UpgradeProcess {
 		catch (SQLException sqle) {
 			upgradeTable(
 				GroupTable.TABLE_NAME, GroupTable.TABLE_COLUMNS,
-				GroupTable.TABLE_SQL_CREATE,
-				GroupTable.TABLE_SQL_ADD_INDEXES);
+				GroupTable.TABLE_SQL_CREATE, GroupTable.TABLE_SQL_ADD_INDEXES);
 		}
 
 		updateName();

@@ -512,8 +512,8 @@ public class VelocityTaglib {
 
 	public void renderURL(
 			String windowState, String portletMode, Boolean secure,
-			Boolean copyCurrentRenderParameters, Boolean escapeXml,
-			long plid, long refererPlid, String portletName, Boolean anchor,
+			Boolean copyCurrentRenderParameters, Boolean escapeXml, long plid,
+			long refererPlid, String portletName, Boolean anchor,
 			Boolean encrypt, long doAsGroupId, long doAsUserId,
 			Boolean portletConfiguration, String queryString)
 		throws Exception {
@@ -541,8 +541,8 @@ public class VelocityTaglib {
 	 */
 	public void renderURL(
 			String windowState, String portletMode, Boolean secure,
-			Boolean copyCurrentRenderParameters, Boolean escapeXml,
-			long plid, String portletName, Boolean anchor, Boolean encrypt,
+			Boolean copyCurrentRenderParameters, Boolean escapeXml, long plid,
+			String portletName, Boolean anchor, Boolean encrypt,
 			long doAsUserId, Boolean portletConfiguration, String queryString)
 		throws Exception {
 

@@ -291,8 +291,7 @@ public class LayoutStagingHandler implements InvocationHandler {
 
 	private Object _toEscapedModel() {
 		return ProxyUtil.newProxyInstance(
-			PortalClassLoaderUtil.getClassLoader(),
-			new Class[] {Layout.class},
+			PortalClassLoaderUtil.getClassLoader(), new Class[] {Layout.class},
 			new LayoutStagingHandler(
 				_layout.toEscapedModel(), _layoutRevision.toEscapedModel()));
 	}

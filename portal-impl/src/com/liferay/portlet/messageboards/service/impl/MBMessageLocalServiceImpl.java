@@ -173,9 +173,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		MBMessage message = addMessage(
 			userId, userName, groupId, categoryId, threadId, parentMessageId,
-			subject, body, MBMessageConstants.DEFAULT_FORMAT,
-			inputStreamOVPs, anonymous, priority, allowPingbacks,
-			serviceContext);
+			subject, body, MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs,
+			anonymous, priority, allowPingbacks, serviceContext);
 
 		// Discussion
 
@@ -451,8 +450,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		resourceLocalService.addResources(
 			message.getCompanyId(), message.getGroupId(), message.getUserId(),
-			MBMessage.class.getName(), message.getMessageId(),
-			false, addGroupPermissions, addGuestPermissions);
+			MBMessage.class.getName(), message.getMessageId(), false,
+			addGroupPermissions, addGuestPermissions);
 	}
 
 	public void addMessageResources(
@@ -1078,8 +1077,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 
 		return new MBMessageDisplayImpl(
-			message, parentMessage, category, thread,
-			previousThread, nextThread, status, threadView, this);
+			message, parentMessage, category, thread, previousThread,
+			nextThread, status, threadView, this);
 	}
 
 	public List<MBMessage> getMessages(
@@ -1300,8 +1299,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		updateAsset(
-			userId, message, assetCategoryIds, assetTagNames,
-			assetLinkEntryIds, true);
+			userId, message, assetCategoryIds, assetTagNames, assetLinkEntryIds,
+			true);
 	}
 
 	public MBMessage updateDiscussionMessage(

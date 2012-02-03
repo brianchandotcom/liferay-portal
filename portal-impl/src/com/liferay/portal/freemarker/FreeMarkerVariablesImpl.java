@@ -235,8 +235,7 @@ public class FreeMarkerVariablesImpl implements FreeMarkerVariables {
 		UtilLocator utilLocator = UtilLocator.getInstance();
 
 		freeMarkerContext.put(
-			"saxReaderUtil",
-			utilLocator.findUtil(SAXReader.class.getName()));
+			"saxReaderUtil", utilLocator.findUtil(SAXReader.class.getName()));
 
 		// Service locator
 
@@ -258,8 +257,7 @@ public class FreeMarkerVariablesImpl implements FreeMarkerVariables {
 		// Static class util
 
 		freeMarkerContext.put(
-			"staticUtil",
-			BeansWrapper.getDefaultInstance().getStaticModels());
+			"staticUtil", BeansWrapper.getDefaultInstance().getStaticModels());
 
 		// String util
 

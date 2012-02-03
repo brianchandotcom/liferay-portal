@@ -153,8 +153,8 @@ public class JournalArticleLocalServiceImpl
 		articleId = articleId.trim().toUpperCase();
 
 		Date displayDate = PortalUtil.getDate(
-			displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, user.getTimeZone(),
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, user.getTimeZone(),
 			new ArticleDisplayDateException());
 
 		Date expirationDate = null;
@@ -338,10 +338,9 @@ public class JournalArticleLocalServiceImpl
 		throws PortalException, SystemException {
 
 		resourceLocalService.addResources(
-			article.getCompanyId(), article.getGroupId(),
-			article.getUserId(), JournalArticle.class.getName(),
-			article.getResourcePrimKey(), false, addGroupPermissions,
-			addGuestPermissions);
+			article.getCompanyId(), article.getGroupId(), article.getUserId(),
+			JournalArticle.class.getName(), article.getResourcePrimKey(), false,
+			addGroupPermissions, addGuestPermissions);
 	}
 
 	public void addArticleResources(
@@ -350,9 +349,9 @@ public class JournalArticleLocalServiceImpl
 		throws PortalException, SystemException {
 
 		resourceLocalService.addModelResources(
-			article.getCompanyId(), article.getGroupId(),
-			article.getUserId(), JournalArticle.class.getName(),
-			article.getResourcePrimKey(), groupPermissions, guestPermissions);
+			article.getCompanyId(), article.getGroupId(), article.getUserId(),
+			JournalArticle.class.getName(), article.getResourcePrimKey(),
+			groupPermissions, guestPermissions);
 	}
 
 	public void addArticleResources(
@@ -1897,8 +1896,8 @@ public class JournalArticleLocalServiceImpl
 		articleId = articleId.trim().toUpperCase();
 
 		Date displayDate = PortalUtil.getDate(
-			displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, user.getTimeZone(),
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, user.getTimeZone(),
 			new ArticleDisplayDateException());
 
 		Date expirationDate = null;
@@ -2088,8 +2087,8 @@ public class JournalArticleLocalServiceImpl
 
 			WorkflowHandlerRegistryUtil.startWorkflowInstance(
 				user.getCompanyId(), groupId, userId,
-				JournalArticle.class.getName(), article.getId(),
-				article, serviceContext);
+				JournalArticle.class.getName(), article.getId(), article,
+				serviceContext);
 		}
 		else if (article.getVersion() ==
 					JournalArticleConstants.VERSION_DEFAULT) {
@@ -2414,8 +2413,8 @@ public class JournalArticleLocalServiceImpl
 								article.getLayoutUuid(), 0, 0, null, false);
 
 						assetLinkLocalService.updateLinks(
-							userId, assetEntry.getEntryId(),
-							assetLinkEntryIds, AssetLinkConstants.TYPE_RELATED);
+							userId, assetEntry.getEntryId(), assetLinkEntryIds,
+							AssetLinkConstants.TYPE_RELATED);
 
 						assetEntryLocalService.deleteEntry(
 							JournalArticle.class.getName(),

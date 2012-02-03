@@ -415,8 +415,7 @@ public class AssetEntryFinderImpl
 		qPos.add(entryQuery.getNotAnyTagIds());
 
 		setDates(
-			qPos, entryQuery.getPublishDate(),
-			entryQuery.getExpirationDate());
+			qPos, entryQuery.getPublishDate(), entryQuery.getExpirationDate());
 
 		qPos.add(entryQuery.getGroupIds());
 		qPos.add(entryQuery.getClassNameIds());

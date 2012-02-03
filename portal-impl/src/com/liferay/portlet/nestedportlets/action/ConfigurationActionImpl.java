@@ -131,8 +131,8 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		layoutTypePortlet.setStateMax(StringPool.BLANK);
 
 		LayoutLocalServiceUtil.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(),
-			layout.getLayoutId(), layout.getTypeSettings());
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getTypeSettings());
 	}
 
 	private static Pattern _pattern = Pattern.compile(

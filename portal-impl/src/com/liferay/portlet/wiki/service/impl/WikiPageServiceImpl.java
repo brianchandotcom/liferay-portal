@@ -244,8 +244,8 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		Locale locale = null;
 
 		return exportToRSS(
-			companyId, name, description, type, version, displayStyle,
-			feedURL, entryURL, pages, diff, locale);
+			companyId, name, description, type, version, displayStyle, feedURL,
+			entryURL, pages, diff, locale);
 	}
 
 	public WikiPage getPage(long nodeId, String title)
@@ -472,8 +472,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 	}
 
 	protected String getPageDiff(
-			long companyId, WikiPage latestPage, WikiPage page,
-			Locale locale)
+			long companyId, WikiPage latestPage, WikiPage page, Locale locale)
 		throws SystemException {
 
 		String sourceContent = WikiUtil.processContent(latestPage.getContent());

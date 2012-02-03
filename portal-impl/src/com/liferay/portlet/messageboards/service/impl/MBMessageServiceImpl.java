@@ -128,8 +128,8 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 		return mbMessageLocalService.addMessage(
 			getGuestOrUserId(), null, groupId, categoryId, threadId,
-			parentMessageId, subject, body, format, inputStreamOVPs,
-			anonymous, priority, allowPingbacks, serviceContext);
+			parentMessageId, subject, body, format, inputStreamOVPs, anonymous,
+			priority, allowPingbacks, serviceContext);
 	}
 
 	public MBMessage addMessage(

@@ -706,8 +706,8 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 
 				if (customElement != null) {
 					layoutTemplateLocalService.readLayoutTemplate(
-						servletContextName, servletContext, null,
-						customElement, false, themeId, pluginPackage);
+						servletContextName, servletContext, null, customElement,
+						false, themeId, pluginPackage);
 				}
 			}
 

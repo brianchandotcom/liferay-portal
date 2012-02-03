@@ -66,8 +66,7 @@ public class LayoutSetServiceImpl extends LayoutSetServiceBaseImpl {
 			!layoutSetPrototypeLinkEnabled) {
 
 			PortalPermissionUtil.check(
-				getPermissionChecker(),
-				ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE);
+				getPermissionChecker(), ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE);
 		}
 
 		layoutSetLocalService.updateLayoutSetPrototypeLinkEnabled(

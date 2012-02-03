@@ -2175,8 +2175,7 @@ public class PortalImpl implements Portal {
 
 		if (!assetTags.isEmpty()) {
 			addPageKeywords(
-				ListUtil.toString(assetTags, AssetTag.NAME_ACCESSOR),
-				request);
+				ListUtil.toString(assetTags, AssetTag.NAME_ACCESSOR), request);
 		}
 
 		return layoutActualURL;
@@ -3170,8 +3169,7 @@ public class PortalImpl implements Portal {
 
 				if (friendlyURLMapper.isCheckMappingWithPrefix()) {
 					friendlyURLMapper.populateParams(
-						url.substring(pos + 2), actualParams,
-						requestContext);
+						url.substring(pos + 2), actualParams, requestContext);
 				}
 				else {
 					friendlyURLMapper.populateParams(
@@ -4305,8 +4303,7 @@ public class PortalImpl implements Portal {
 			"[$CLASS_NAME_ID_COM.LIFERAY.PORTLET.MESSAGEBOARDS.MODEL." +
 				"MBTHREAD$]",
 			"[$CLASS_NAME_ID_COM.LIFERAY.PORTLET.WIKI.MODEL.WIKIPAGE$]",
-			"[$RESOURCE_SCOPE_COMPANY$]",
-			"[$RESOURCE_SCOPE_GROUP$]",
+			"[$RESOURCE_SCOPE_COMPANY$]", "[$RESOURCE_SCOPE_GROUP$]",
 			"[$RESOURCE_SCOPE_GROUP_TEMPLATE$]",
 			"[$RESOURCE_SCOPE_INDIVIDUAL$]",
 			"[$SOCIAL_RELATION_TYPE_BI_COWORKER$]",
@@ -4319,28 +4316,20 @@ public class PortalImpl implements Portal {
 			"[$SOCIAL_RELATION_TYPE_UNI_FOLLOWER$]",
 			"[$SOCIAL_RELATION_TYPE_UNI_PARENT$]",
 			"[$SOCIAL_RELATION_TYPE_UNI_SUBORDINATE$]",
-			"[$SOCIAL_RELATION_TYPE_UNI_SUPERVISOR$]",
-			"[$FALSE$]",
-			"[$TRUE$]"
+			"[$SOCIAL_RELATION_TYPE_UNI_SUPERVISOR$]", "[$FALSE$]", "[$TRUE$]"
 		};
 
 		DB db = DBFactoryUtil.getDB();
 
 		Object[] customSqlValues = new Object[] {
-			getClassNameId(Group.class),
-			getClassNameId(Layout.class),
-			getClassNameId(Organization.class),
-			getClassNameId(Role.class),
-			getClassNameId(User.class),
-			getClassNameId(UserGroup.class),
+			getClassNameId(Group.class), getClassNameId(Layout.class),
+			getClassNameId(Organization.class), getClassNameId(Role.class),
+			getClassNameId(User.class), getClassNameId(UserGroup.class),
 			getClassNameId(BlogsEntry.class),
 			getClassNameId(BookmarksEntry.class),
-			getClassNameId(CalEvent.class),
-			getClassNameId(DLFileEntry.class),
-			getClassNameId(MBMessage.class),
-			getClassNameId(MBThread.class),
-			getClassNameId(WikiPage.class),
-			ResourceConstants.SCOPE_COMPANY,
+			getClassNameId(CalEvent.class), getClassNameId(DLFileEntry.class),
+			getClassNameId(MBMessage.class), getClassNameId(MBThread.class),
+			getClassNameId(WikiPage.class), ResourceConstants.SCOPE_COMPANY,
 			ResourceConstants.SCOPE_GROUP,
 			ResourceConstants.SCOPE_GROUP_TEMPLATE,
 			ResourceConstants.SCOPE_INDIVIDUAL,
@@ -4354,8 +4343,7 @@ public class PortalImpl implements Portal {
 			SocialRelationConstants.TYPE_UNI_FOLLOWER,
 			SocialRelationConstants.TYPE_UNI_PARENT,
 			SocialRelationConstants.TYPE_UNI_SUBORDINATE,
-			SocialRelationConstants.TYPE_UNI_SUPERVISOR,
-			db.getTemplateFalse(),
+			SocialRelationConstants.TYPE_UNI_SUPERVISOR, db.getTemplateFalse(),
 			db.getTemplateTrue()
 		};
 
@@ -5503,8 +5491,8 @@ public class PortalImpl implements Portal {
 				int count =
 					ResourcePermissionLocalServiceUtil.
 						getResourcePermissionsCount(
-							companyId, name,
-							ResourceConstants.SCOPE_INDIVIDUAL, primaryKey);
+							companyId, name, ResourceConstants.SCOPE_INDIVIDUAL,
+							primaryKey);
 
 				if (count == 0) {
 					throw new NoSuchResourceException();
@@ -5512,8 +5500,8 @@ public class PortalImpl implements Portal {
 			}
 			else if (!portlet.isUndeployedPortlet()) {
 				ResourceLocalServiceUtil.getResource(
-					companyId, name,
-					ResourceConstants.SCOPE_INDIVIDUAL, primaryKey);
+					companyId, name, ResourceConstants.SCOPE_INDIVIDUAL,
+					primaryKey);
 			}
 		}
 		catch (NoSuchResourceException nsre) {

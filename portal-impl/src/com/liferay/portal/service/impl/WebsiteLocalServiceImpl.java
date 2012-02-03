@@ -43,8 +43,7 @@ public class WebsiteLocalServiceImpl extends WebsiteLocalServiceBaseImpl {
 		Date now = new Date();
 
 		validate(
-			0, user.getCompanyId(), classNameId, classPK, url, typeId,
-			primary);
+			0, user.getCompanyId(), classNameId, classPK, url, typeId, primary);
 
 		long websiteId = counterLocalService.increment();
 

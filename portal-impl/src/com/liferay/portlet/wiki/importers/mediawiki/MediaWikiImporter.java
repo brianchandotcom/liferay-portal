@@ -471,8 +471,8 @@ public class MediaWikiImporter implements WikiImporter {
 
 				try {
 					importPage(
-						userId, author, node, title, content, summary,
-						usersMap, strictImportMode);
+						userId, author, node, title, content, summary, usersMap,
+						strictImportMode);
 				}
 				catch (Exception e) {
 					if (_log.isWarnEnabled()) {

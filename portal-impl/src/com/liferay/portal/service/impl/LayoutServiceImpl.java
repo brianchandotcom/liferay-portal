@@ -200,8 +200,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		return addLayout(
 			groupId, privateLayout, parentLayoutId, localeNamesMap,
 			new HashMap<Locale, String>(), new HashMap<Locale, String>(),
-			new HashMap<Locale, String>(), new HashMap<Locale, String>(),
-			type, hidden, friendlyURL, serviceContext);
+			new HashMap<Locale, String>(), new HashMap<Locale, String>(), type,
+			hidden, friendlyURL, serviceContext);
 	}
 
 	/**
@@ -756,8 +756,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		String jobName = PortalUUIDUtil.generate();
 
 		Trigger trigger = new CronTrigger(
-			jobName, groupName, schedulerStartDate, schedulerEndDate,
-			cronText);
+			jobName, groupName, schedulerStartDate, schedulerEndDate, cronText);
 
 		String command = StringPool.BLANK;
 

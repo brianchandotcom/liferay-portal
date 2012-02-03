@@ -163,8 +163,8 @@ public class ShoppingCouponLocalServiceImpl
 		throws SystemException {
 
 		return shoppingCouponFinder.findByG_C_C_A_DT(
-			groupId, companyId, code, active, discountType, andOperator,
-			start, end);
+			groupId, companyId, code, active, discountType, andOperator, start,
+			end);
 	}
 
 	public int searchCount(

@@ -102,8 +102,7 @@ public class RouterImplTest extends BaseTestCase {
 
 	public void testGeneratedParameters() {
 		assertUrlGeneratesParameters(
-			"instance/1b7c/recent",
-			"p_p_id=15_INSTANCE_1b7c&topLink=recent");
+			"instance/1b7c/recent", "p_p_id=15_INSTANCE_1b7c&topLink=recent");
 		assertUrlRegenerates("instance/1b7c/recent");
 	}
 

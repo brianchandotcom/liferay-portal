@@ -85,8 +85,7 @@ public class EditStructureAction extends PortletAction {
 
 					if (saveAndContinue) {
 						redirect = getSaveAndContinueRedirect(
-							portletConfig, actionRequest, structure,
-							redirect);
+							portletConfig, actionRequest, structure, redirect);
 					}
 				}
 
@@ -158,8 +157,7 @@ public class EditStructureAction extends PortletAction {
 
 		return mapping.findForward(
 			getForward(
-				renderRequest,
-				"portlet.dynamic_data_mapping.edit_structure"));
+				renderRequest, "portlet.dynamic_data_mapping.edit_structure"));
 	}
 
 	protected void deleteStructure(ActionRequest actionRequest)

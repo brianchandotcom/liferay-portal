@@ -277,8 +277,7 @@ public class PollerRequestHandlerImpl
 
 				PollerResponse pollerResponse = new DefaultPollerResponse(
 					pollerRequest.getPollerHeader(),
-					pollerRequest.getPortletId(),
-					pollerRequest.getChunkId());
+					pollerRequest.getPortletId(), pollerRequest.getChunkId());
 
 				pollerRequestResponsePair.setPollerResponse(pollerResponse);
 
@@ -312,16 +311,12 @@ public class PollerRequestHandlerImpl
 		return StringUtil.replace(
 			pollerRequestString,
 			new String[] {
-				StringPool.OPEN_CURLY_BRACE,
-				StringPool.CLOSE_CURLY_BRACE,
-				_ESCAPED_OPEN_CURLY_BRACE,
-				_ESCAPED_CLOSE_CURLY_BRACE
+				StringPool.OPEN_CURLY_BRACE, StringPool.CLOSE_CURLY_BRACE,
+				_ESCAPED_OPEN_CURLY_BRACE, _ESCAPED_CLOSE_CURLY_BRACE
 			},
 			new String[] {
-				_OPEN_HASH_MAP_WRAPPER,
-				StringPool.DOUBLE_CLOSE_CURLY_BRACE,
-				StringPool.OPEN_CURLY_BRACE,
-				StringPool.CLOSE_CURLY_BRACE
+				_OPEN_HASH_MAP_WRAPPER, StringPool.DOUBLE_CLOSE_CURLY_BRACE,
+				StringPool.OPEN_CURLY_BRACE, StringPool.CLOSE_CURLY_BRACE
 			});
 	}
 

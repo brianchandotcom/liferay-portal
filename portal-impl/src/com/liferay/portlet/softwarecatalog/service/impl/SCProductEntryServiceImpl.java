@@ -44,9 +44,9 @@ public class SCProductEntryServiceImpl extends SCProductEntryServiceBaseImpl {
 			ActionKeys.ADD_PRODUCT_ENTRY);
 
 		return scProductEntryLocalService.addProductEntry(
-			getUserId(), name, type, tags, shortDescription,
-			longDescription, pageURL, author, repoGroupId, repoArtifactId,
-			licenseIds, thumbnails, fullImages, serviceContext);
+			getUserId(), name, type, tags, shortDescription, longDescription,
+			pageURL, author, repoGroupId, repoArtifactId, licenseIds,
+			thumbnails, fullImages, serviceContext);
 	}
 
 	public void deleteProductEntry(long productEntryId)

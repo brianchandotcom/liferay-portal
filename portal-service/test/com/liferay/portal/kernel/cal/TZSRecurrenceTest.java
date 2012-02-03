@@ -45,8 +45,7 @@ public class TZSRecurrenceTest extends RecurrenceTestCase {
 		testWithinTSZRecurrence(
 			getInsideDSTCalendar(AUGUST, 7), _durationHour, firstSunOfMonth);
 		testWithinTSZRecurrence(
-			getInsideDSTCalendar(DECEMBER, 4), _durationHour,
-			firstSunOfMonth);
+			getInsideDSTCalendar(DECEMBER, 4), _durationHour, firstSunOfMonth);
 
 		// Events starting inside DST matched second day of the month
 

@@ -212,8 +212,8 @@ public class VelocityPortlet extends GenericPortlet {
 
 		mergeTemplate(
 			velocityTemplateId,
-			getVelocityContext(portletRequest, portletResponse),
-			portletRequest, portletResponse);
+			getVelocityContext(portletRequest, portletResponse), portletRequest,
+			portletResponse);
 	}
 
 	protected void mergeTemplate(

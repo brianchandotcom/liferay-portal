@@ -84,14 +84,11 @@ public class XMLFormatter {
 		return StringUtil.replace(
 			xml,
 			new String[] {
-				StringPool.RETURN_NEW_LINE,
-				StringPool.NEW_LINE,
+				StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE,
 				StringPool.RETURN
 			},
 			new String[] {
-				"[$NEW_LINE$]",
-				"[$NEW_LINE$]",
-				"[$NEW_LINE$]"
+				"[$NEW_LINE$]", "[$NEW_LINE$]", "[$NEW_LINE$]"
 			});
 	}
 

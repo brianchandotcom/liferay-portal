@@ -38,8 +38,8 @@ public class ShoppingCategoryLocalServiceImpl
 	extends ShoppingCategoryLocalServiceBaseImpl {
 
 	public ShoppingCategory addCategory(
-			long userId, long parentCategoryId, String name,
-			String description, ServiceContext serviceContext)
+			long userId, long parentCategoryId, String name, String description,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// Category

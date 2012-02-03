@@ -36,8 +36,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		throws Exception {
 
 		String[] isbns = StringUtil.split(
-			getParameter(actionRequest, "isbns").toUpperCase(),
-			CharPool.SPACE);
+			getParameter(actionRequest, "isbns").toUpperCase(), CharPool.SPACE);
 
 		Arrays.sort(isbns);
 

@@ -32,8 +32,7 @@ public class UpgradeLock extends UpgradeProcess {
 		catch (SQLException sqle) {
 			upgradeTable(
 				LockTable.TABLE_NAME, LockTable.TABLE_COLUMNS,
-				LockTable.TABLE_SQL_CREATE,
-				LockTable.TABLE_SQL_ADD_INDEXES);
+				LockTable.TABLE_SQL_CREATE, LockTable.TABLE_SQL_ADD_INDEXES);
 		}
 	}
 

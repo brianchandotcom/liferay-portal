@@ -148,8 +148,8 @@ public class DLSyncServiceImpl extends DLSyncServiceBaseImpl {
 				deltaOutputStreamWritableByteChannel);
 
 			DeltaUtil.delta(
-				destinationReadableByteChannel,
-				checksumsByteChannelReader, deltaByteChannelWriter);
+				destinationReadableByteChannel, checksumsByteChannelReader,
+				deltaByteChannelWriter);
 
 			deltaByteChannelWriter.finish();
 

@@ -243,8 +243,8 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void setGroupPermissions(
-			String className, String classPK, long groupId,
-			String[] actionIds, long resourceId)
+			String className, String classPK, long groupId, String[] actionIds,
+			long resourceId)
 		throws PortalException, SystemException {
 
 		checkPermission(getPermissionChecker(), groupId, resourceId);
@@ -470,8 +470,7 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 	}
 
 	protected void checkPermission(
-			PermissionChecker permissionChecker, long groupId,
-			long resourceId)
+			PermissionChecker permissionChecker, long groupId, long resourceId)
 		throws PortalException, SystemException {
 
 		Resource resource = resourcePersistence.findByPrimaryKey(resourceId);

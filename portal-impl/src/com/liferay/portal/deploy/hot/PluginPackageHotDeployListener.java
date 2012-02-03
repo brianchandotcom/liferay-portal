@@ -216,8 +216,8 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 		}
 
 		ServiceComponentLocalServiceUtil.initServiceComponent(
-			servletContext, classLoader, buildNamespace, buildNumber,
-			buildDate, buildAutoUpgrade);
+			servletContext, classLoader, buildNamespace, buildNumber, buildDate,
+			buildAutoUpgrade);
 	}
 
 	protected void reconfigureCaches(ClassLoader classLoader) throws Exception {

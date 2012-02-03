@@ -1221,51 +1221,33 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 			subject = StringUtil.replace(
 				subject,
 				new String[] {
-					"[$EVENT_LOCATION$]",
-					"[$EVENT_START_DATE$]",
-					"[$EVENT_TITLE$]",
-					"[$FROM_ADDRESS$]",
-					"[$FROM_NAME$]",
-					"[$PORTAL_URL$]",
-					"[$PORTLET_NAME$]",
-					"[$TO_ADDRESS$]",
+					"[$EVENT_LOCATION$]", "[$EVENT_START_DATE$]",
+					"[$EVENT_TITLE$]", "[$FROM_ADDRESS$]", "[$FROM_NAME$]",
+					"[$PORTAL_URL$]", "[$PORTLET_NAME$]", "[$TO_ADDRESS$]",
 					"[$TO_NAME$]"
 				},
 				new String[] {
 					event.getLocation(),
 					dateFormatDateTime.format(startDate.getTime()),
-					event.getTitle(),
-					fromAddress,
-					fromName,
-					company.getPortalURL(event.getGroupId()),
-					portletName,
-					HtmlUtil.escape(toAddress),
-					HtmlUtil.escape(toName),
+					event.getTitle(), fromAddress, fromName,
+					company.getPortalURL(event.getGroupId()), portletName,
+					HtmlUtil.escape(toAddress), HtmlUtil.escape(toName),
 				});
 
 			body = StringUtil.replace(
 				body,
 				new String[] {
-					"[$EVENT_LOCATION$]",
-					"[$EVENT_START_DATE$]",
-					"[$EVENT_TITLE$]",
-					"[$FROM_ADDRESS$]",
-					"[$FROM_NAME$]",
-					"[$PORTAL_URL$]",
-					"[$PORTLET_NAME$]",
-					"[$TO_ADDRESS$]",
+					"[$EVENT_LOCATION$]", "[$EVENT_START_DATE$]",
+					"[$EVENT_TITLE$]", "[$FROM_ADDRESS$]", "[$FROM_NAME$]",
+					"[$PORTAL_URL$]", "[$PORTLET_NAME$]", "[$TO_ADDRESS$]",
 					"[$TO_NAME$]"
 				},
 				new String[] {
 					event.getLocation(),
 					dateFormatDateTime.format(startDate.getTime()),
-					event.getTitle(),
-					fromAddress,
-					fromName,
-					company.getPortalURL(event.getGroupId()),
-					portletName,
-					HtmlUtil.escape(toAddress),
-					HtmlUtil.escape(toName),
+					event.getTitle(), fromAddress, fromName,
+					company.getPortalURL(event.getGroupId()), portletName,
+					HtmlUtil.escape(toAddress), HtmlUtil.escape(toName),
 				});
 
 			if ((remindBy == CalEventConstants.REMIND_BY_EMAIL) ||

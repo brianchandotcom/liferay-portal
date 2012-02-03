@@ -466,8 +466,7 @@ public class AssetPublisherUtil {
 	}
 
 	public static void removeAndStoreSelection(
-			List<String> assetEntryUuids,
-			PortletPreferences portletPreferences)
+			List<String> assetEntryUuids, PortletPreferences portletPreferences)
 		throws Exception {
 
 		if (assetEntryUuids.size() == 0) {

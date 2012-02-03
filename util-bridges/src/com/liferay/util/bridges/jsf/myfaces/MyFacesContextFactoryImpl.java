@@ -58,8 +58,7 @@ public class MyFacesContextFactoryImpl extends FacesContextFactory {
 
 		if (context instanceof ServletContext) {
 			return new ServletFacesContextImpl(
-				(ServletContext)context,
-				(ServletRequest)request,
+				(ServletContext)context, (ServletRequest)request,
 				(ServletResponse)response);
 		}
 

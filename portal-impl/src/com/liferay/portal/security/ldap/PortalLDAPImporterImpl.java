@@ -847,8 +847,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 	protected User importUser(
 			long companyId, Attributes attributes, Properties userMappings,
 			Properties userExpandoMappings, Properties contactMappings,
-			Properties contactExpandoMappings,
-			String password)
+			Properties contactExpandoMappings, String password)
 		throws Exception {
 
 		LDAPUserTransactionThreadLocal.setOriginatesFromLDAP(true);

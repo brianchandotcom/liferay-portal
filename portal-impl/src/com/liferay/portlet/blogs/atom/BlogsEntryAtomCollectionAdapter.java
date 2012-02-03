@@ -186,9 +186,9 @@ public class BlogsEntryAtomCollectionAdapter
 
 		return BlogsEntryServiceUtil.addEntry(
 			title, summary, content, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			allowPingbacks, allowTrackbacks, trackbacks, false, null, null,
-			null, serviceContext);
+			displayDateYear, displayDateHour, displayDateMinute, allowPingbacks,
+			allowTrackbacks, trackbacks, false, null, null, null,
+			serviceContext);
 	}
 
 	@Override

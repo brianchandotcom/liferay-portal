@@ -187,47 +187,34 @@ public class VerifyProperties extends VerifyProcess {
 	};
 
 	private static final String[] _OBSOLETE_PORTAL_KEYS = new String[] {
-		"auth.max.failures.limit",
-		"cas.validate.url",
-		"commons.pool.enabled",
-		"jbi.workflow.url",
-		"lucene.analyzer",
+		"auth.max.failures.limit", "cas.validate.url", "commons.pool.enabled",
+		"jbi.workflow.url", "lucene.analyzer",
 		"message.boards.thread.locking.enabled",
-		"portal.security.manager.enable",
-		"shard.available.names",
-		"webdav.storage.class",
-		"webdav.storage.show.edit.url",
-		"webdav.storage.show.view.url",
-		"webdav.storage.tokens",
-		"xss.allow"
+		"portal.security.manager.enable", "shard.available.names",
+		"webdav.storage.class", "webdav.storage.show.edit.url",
+		"webdav.storage.show.view.url", "webdav.storage.tokens", "xss.allow"
 	};
 
 	private static final String[] _OBSOLETE_SYSTEM_KEYS = new String[] {
-		"com.liferay.util.Http.proxy.host",
-		"com.liferay.util.Http.proxy.port",
+		"com.liferay.util.Http.proxy.host", "com.liferay.util.Http.proxy.port",
 		"com.liferay.util.XSSUtil.regexp.pattern"
 	};
 
 	private static final String[][] _RENAMED_PORTAL_KEYS = new String[][] {
 		new String[] {
-			"amazon.license.0",
-			"amazon.access.key.id"
+			"amazon.license.0", "amazon.access.key.id"
 		},
 		new String[] {
-			"amazon.license.1",
-			"amazon.access.key.id"
+			"amazon.license.1", "amazon.access.key.id"
 		},
 		new String[] {
-			"amazon.license.2",
-			"amazon.access.key.id"
+			"amazon.license.2", "amazon.access.key.id"
 		},
 		new String[] {
-			"amazon.license.3",
-			"amazon.access.key.id"
+			"amazon.license.3", "amazon.access.key.id"
 		},
 		new String[] {
-			"cdn.host",
-			"cdn.host.http"
+			"cdn.host", "cdn.host.http"
 		},
 		new String[] {
 			"com.liferay.portal.servlet.filters.compression.CompressionFilter",
@@ -238,24 +225,20 @@ public class VerifyProperties extends VerifyProcess {
 			"default.guest.public.layout.friendly.url"
 		},
 		new String[] {
-			"default.guest.layout.column",
-			"default.guest.public.layout.column"
+			"default.guest.layout.column", "default.guest.public.layout.column"
 		},
 		new String[] {
-			"default.guest.layout.name",
-			"default.guest.public.layout.name"
+			"default.guest.layout.name", "default.guest.public.layout.name"
 		},
 		new String[] {
 			"default.guest.layout.template.id",
 			"default.guest.public.layout.template.id"
 		},
 		new String[] {
-			"default.user.layout.column",
-			"default.user.public.layout.column"
+			"default.user.layout.column", "default.user.public.layout.column"
 		},
 		new String[] {
-			"default.user.layout.name",
-			"default.user.public.layout.name"
+			"default.user.layout.name", "default.user.public.layout.name"
 		},
 		new String[] {
 			"default.user.layout.template.id",
@@ -266,8 +249,7 @@ public class VerifyProperties extends VerifyProcess {
 			"default.user.private.layouts.lar"
 		},
 		new String[] {
-			"default.user.public.layout.lar",
-			"default.user.public.layouts.lar"
+			"default.user.public.layout.lar", "default.user.public.layouts.lar"
 		},
 		new String[] {
 			"dl.hook.cmis.credentials.password",
@@ -278,44 +260,35 @@ public class VerifyProperties extends VerifyProcess {
 			"dl.store.cmis.credentials.username"
 		},
 		new String[] {
-			"dl.hook.cmis.repository.url",
-			"dl.store.cmis.repository.url"
+			"dl.hook.cmis.repository.url", "dl.store.cmis.repository.url"
 		},
 		new String[] {
-			"dl.hook.cmis.system.root.dir",
-			"dl.store.cmis.system.root.dir"
+			"dl.hook.cmis.system.root.dir", "dl.store.cmis.system.root.dir"
 		},
 		new String[] {
-			"dl.hook.file.system.root.dir",
-			"dl.store.file.system.root.dir"
+			"dl.hook.file.system.root.dir", "dl.store.file.system.root.dir"
 		},
 		new String[] {
-			"dl.hook.impl",
-			"dl.store.impl"
+			"dl.hook.impl", "dl.store.impl"
 		},
 		new String[] {
-			"dl.hook.jcr.fetch.delay",
-			"dl.store.jcr.fetch.delay"
+			"dl.hook.jcr.fetch.delay", "dl.store.jcr.fetch.delay"
 		},
 		new String[] {
-			"dl.hook.jcr.fetch.max.failures",
-			"dl.store.jcr.fetch.max.failures"
+			"dl.hook.jcr.fetch.max.failures", "dl.store.jcr.fetch.max.failures"
 		},
 		new String[] {
 			"dl.hook.jcr.move.version.labels",
 			"dl.store.jcr.move.version.labels"
 		},
 		new String[] {
-			"dl.hook.s3.access.key",
-			"dl.store.s3.access.key"
+			"dl.hook.s3.access.key", "dl.store.s3.access.key"
 		},
 		new String[] {
-			"dl.hook.s3.bucket.name",
-			"dl.store.s3.bucket.name"
+			"dl.hook.s3.bucket.name", "dl.store.s3.bucket.name"
 		},
 		new String[] {
-			"dl.hook.s3.secret.key",
-			"dl.store.s3.secret.key"
+			"dl.hook.s3.secret.key", "dl.store.s3.secret.key"
 		},
 		new String[] {
 			"editor.wysiwyg.portal-web.docroot.html.portlet.calendar." +
@@ -352,16 +325,13 @@ public class VerifyProperties extends VerifyProcess {
 			"lucene.store.jdbc.auto.clean.up.enabled"
 		},
 		new String[] {
-			"referer.url.domains.allowed",
-			"redirect.url.domains.allowed"
+			"referer.url.domains.allowed", "redirect.url.domains.allowed"
 		},
 		new String[] {
-			"referer.url.ips.allowed",
-			"redirect.url.ips.allowed"
+			"referer.url.ips.allowed", "redirect.url.ips.allowed"
 		},
 		new String[] {
-			"referer.url.security.mode",
-			"redirect.url.security.mode"
+			"referer.url.security.mode", "redirect.url.security.mode"
 		},
 		new String[] {
 			"tags.asset.increment.view.counter.enabled",

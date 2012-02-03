@@ -132,8 +132,8 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 
 	public void addResources(
 			long companyId, long groupId, long userId, String name,
-			long primKey, boolean portletActions,
-			boolean addGroupPermissions, boolean addGuestPermissions)
+			long primKey, boolean portletActions, boolean addGroupPermissions,
+			boolean addGuestPermissions)
 		throws PortalException, SystemException {
 
 		addResources(
@@ -143,8 +143,8 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 
 	public void addResources(
 			long companyId, long groupId, long userId, String name,
-			String primKey, boolean portletActions,
-			boolean addGroupPermissions, boolean addGuestPermissions)
+			String primKey, boolean portletActions, boolean addGroupPermissions,
+			boolean addGuestPermissions)
 		throws PortalException, SystemException {
 
 		addResources(

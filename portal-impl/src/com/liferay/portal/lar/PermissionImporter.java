@@ -100,8 +100,7 @@ public class PermissionImporter {
 
 	protected void importGroupRoles(
 			LayoutCache layoutCache, long companyId, long groupId,
-			String resourceName, String entityName,
-			Element parentElement)
+			String resourceName, String entityName, Element parentElement)
 		throws Exception {
 
 		Element entityRolesElement = parentElement.element(
@@ -586,8 +585,8 @@ public class PermissionImporter {
 				layoutCache, companyId, groupId, resourceName, rolesElement);
 
 			importInheritedRoles(
-				layoutCache, companyId, groupId, resourceName,
-				"organization", rolesElement);
+				layoutCache, companyId, groupId, resourceName, "organization",
+				rolesElement);
 
 			importInheritedRoles(
 				layoutCache, companyId, groupId, resourceName, "user-group",

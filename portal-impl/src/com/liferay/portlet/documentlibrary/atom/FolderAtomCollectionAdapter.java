@@ -55,8 +55,7 @@ public class FolderAtomCollectionAdapter
 			AtomEntryContent.Type.XML);
 
 		String srcLink = AtomUtil.createCollectionLink(
-			atomRequestContext,
-			FileEntryAtomCollectionAdapter.COLLECTION_NAME);
+			atomRequestContext, FileEntryAtomCollectionAdapter.COLLECTION_NAME);
 
 		srcLink += "?folderId=" + folder.getFolderId();
 
@@ -167,8 +166,8 @@ public class FolderAtomCollectionAdapter
 
 	@Override
 	protected void doPutEntry(
-			Folder folder, String title, String summary,
-			String content, Date date, AtomRequestContext atomRequestContext)
+			Folder folder, String title, String summary, String content,
+			Date date, AtomRequestContext atomRequestContext)
 		throws Exception {
 
 		ServiceContext serviceContext = new ServiceContext();

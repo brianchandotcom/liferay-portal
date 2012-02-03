@@ -154,8 +154,8 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 					company, groupName, reporterEmailAddress, reporterUserName,
 					reportedEmailAddress, reportedUserName, reportedURL,
 					flagsRequest.getClassPK(), flagsRequest.getContentTitle(),
-					contentType, flagsRequest.getContentURL(), reason,
-					fromName, fromAddress, recipient.getFullName(),
+					contentType, flagsRequest.getContentURL(), reason, fromName,
+					fromAddress, recipient.getFullName(),
 					recipient.getEmailAddress(), subject, body, serviceContext);
 			}
 			catch (IOException ioe) {

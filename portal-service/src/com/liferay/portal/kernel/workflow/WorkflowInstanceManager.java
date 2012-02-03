@@ -60,8 +60,8 @@ public interface WorkflowInstanceManager {
 
 	public List<WorkflowInstance> getWorkflowInstances(
 			long companyId, Long userId, String assetClassName,
-			Long assetClassPK, Boolean completed, int start,
-			int end, OrderByComparator orderByComparator)
+			Long assetClassPK, Boolean completed, int start, int end,
+			OrderByComparator orderByComparator)
 		throws WorkflowException;
 
 	public List<WorkflowInstance> getWorkflowInstances(

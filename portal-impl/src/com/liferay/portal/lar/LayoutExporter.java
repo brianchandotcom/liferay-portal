@@ -598,8 +598,7 @@ public class LayoutExporter {
 
 		try {
 			article = JournalArticleLocalServiceUtil.getLatestArticle(
-				articleGroupId, articleId,
-				WorkflowConstants.STATUS_APPROVED);
+				articleGroupId, articleId, WorkflowConstants.STATUS_APPROVED);
 		}
 		catch (NoSuchArticleException nsae) {
 			if (_log.isWarnEnabled()) {

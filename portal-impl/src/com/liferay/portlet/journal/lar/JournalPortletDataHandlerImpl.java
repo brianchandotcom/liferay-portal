@@ -805,8 +805,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			feed.setTargetLayoutFriendlyUrl(
 				StringUtil.replace(
 					feed.getTargetLayoutFriendlyUrl(),
-					"@data_handler_group_friendly_url@",
-					newGroupFriendlyURL));
+					"@data_handler_group_friendly_url@", newGroupFriendlyURL));
 		}
 
 		String feedId = feed.getFeedId();

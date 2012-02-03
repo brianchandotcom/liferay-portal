@@ -97,8 +97,7 @@ public class SocialActivityDefinition implements Serializable {
 
 	public String getName(Locale locale) {
 		return LanguageUtil.get(
-			locale,
-			"social.activity." + _modelName + "." + _languageKey);
+			locale, "social.activity." + _modelName + "." + _languageKey);
 	}
 
 	public boolean isEnabled() {

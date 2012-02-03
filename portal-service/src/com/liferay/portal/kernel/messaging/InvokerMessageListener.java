@@ -20,9 +20,7 @@ package com.liferay.portal.kernel.messaging;
 public class InvokerMessageListener implements MessageListener {
 
 	public InvokerMessageListener(MessageListener messageListener) {
-		this(
-			messageListener,
-			Thread.currentThread().getContextClassLoader());
+		this(messageListener, Thread.currentThread().getContextClassLoader());
 	}
 
 	public InvokerMessageListener(

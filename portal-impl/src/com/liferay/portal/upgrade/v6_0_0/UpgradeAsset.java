@@ -580,8 +580,7 @@ public class UpgradeAsset extends UpgradeProcess {
 		);
 
 		updateResourceCodes(
-			"com.liferay.portlet.tags.model.TagsEntry",
-			AssetTag.class.getName()
+			"com.liferay.portlet.tags.model.TagsEntry", AssetTag.class.getName()
 		);
 
 		updateResourceCodes(

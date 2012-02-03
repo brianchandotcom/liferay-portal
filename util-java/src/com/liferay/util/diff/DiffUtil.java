@@ -106,9 +106,8 @@ public class DiffUtil {
 				// Lines were deleted from source only.
 
 				_highlightLines(
-					sourceStringList, deletedMarkerStart,
-					deletedMarkerEnd, difference.getDeletedStart(),
-					difference.getDeletedEnd());
+					sourceStringList, deletedMarkerStart, deletedMarkerEnd,
+					difference.getDeletedStart(), difference.getDeletedEnd());
 
 				margin = _calculateMargin(
 					sourceResults, targetResults, difference.getDeletedStart(),
@@ -464,9 +463,8 @@ public class DiffUtil {
 				// Chars were deleted from source only.
 
 				_highlightChars(
-					sourceList, deletedMarkerStart,
-					deletedMarkerEnd, difference.getDeletedStart(),
-					difference.getDeletedEnd());
+					sourceList, deletedMarkerStart, deletedMarkerEnd,
+					difference.getDeletedStart(), difference.getDeletedEnd());
 
 				sourceChanged = true;
 			}
@@ -485,9 +483,8 @@ public class DiffUtil {
 				// Chars were both deleted and added.
 
 				_highlightChars(
-					sourceList, deletedMarkerStart,
-					deletedMarkerEnd, difference.getDeletedStart(),
-					difference.getDeletedEnd());
+					sourceList, deletedMarkerStart, deletedMarkerEnd,
+					difference.getDeletedStart(), difference.getDeletedEnd());
 
 				sourceChanged = true;
 

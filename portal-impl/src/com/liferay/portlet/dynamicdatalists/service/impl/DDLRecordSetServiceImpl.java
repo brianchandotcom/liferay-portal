@@ -65,8 +65,7 @@ public class DDLRecordSetServiceImpl extends DDLRecordSetServiceBaseImpl {
 	}
 
 	public DDLRecordSet updateMinDisplayRows(
-			long recordSetId, int minDisplayRows,
-			ServiceContext serviceContext)
+			long recordSetId, int minDisplayRows, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		DDLRecordSetPermission.check(

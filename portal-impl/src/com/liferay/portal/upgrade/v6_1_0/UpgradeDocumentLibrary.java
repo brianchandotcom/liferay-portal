@@ -296,8 +296,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		}
 		catch (SQLException sqle) {
 			upgradeTable(
-				DLFileVersionTable.TABLE_NAME,
-				DLFileVersionTable.TABLE_COLUMNS,
+				DLFileVersionTable.TABLE_NAME, DLFileVersionTable.TABLE_COLUMNS,
 				DLFileVersionTable.TABLE_SQL_CREATE,
 				DLFileVersionTable.TABLE_SQL_ADD_INDEXES);
 		}

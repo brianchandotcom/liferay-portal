@@ -99,8 +99,8 @@ public class JournalUtil {
 	public static final int MAX_STACK_SIZE = 20;
 
 	public static void addAllReservedEls(
-		Element rootElement, Map<String, String> tokens,
-		JournalArticle article, String languageId) {
+		Element rootElement, Map<String, String> tokens, JournalArticle article,
+		String languageId) {
 
 		JournalUtil.addReservedEl(
 			rootElement, tokens, JournalStructureConstants.RESERVED_ARTICLE_ID,
@@ -289,8 +289,7 @@ public class JournalUtil {
 		// Tokens
 
 		tokens.put(
-			StringUtil.replace(name, CharPool.DASH, CharPool.UNDERLINE),
-			value);
+			StringUtil.replace(name, CharPool.DASH, CharPool.UNDERLINE), value);
 	}
 
 	public static String formatVM(String vm) {

@@ -28,8 +28,8 @@ public class LayoutBranchPermissionImpl
 	implements LayoutBranchPermission {
 
 	public void check(
-			PermissionChecker permissionChecker,
-			LayoutBranch layoutBranch, String actionId)
+			PermissionChecker permissionChecker, LayoutBranch layoutBranch,
+			String actionId)
 		throws PortalException {
 
 		if (!contains(permissionChecker, layoutBranch, actionId)) {

@@ -273,8 +273,8 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 	}
 
 	public Folder updateFolder(
-		long folderId, long parentFolderId, String title,
-		String description, ServiceContext serviceContext) {
+		long folderId, long parentFolderId, String title, String description,
+		ServiceContext serviceContext) {
 
 		throw new UnsupportedOperationException();
 	}

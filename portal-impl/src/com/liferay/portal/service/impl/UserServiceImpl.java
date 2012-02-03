@@ -952,8 +952,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		OrganizationPermissionUtil.check(
-			getPermissionChecker(), organizationId,
-			ActionKeys.ASSIGN_MEMBERS);
+			getPermissionChecker(), organizationId, ActionKeys.ASSIGN_MEMBERS);
 
 		userLocalService.unsetOrganizationUsers(organizationId, userIds);
 	}
@@ -1422,8 +1421,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			comments, firstName, middleName, lastName, prefixId, suffixId, male,
 			birthdayMonth, birthdayDay, birthdayYear, smsSn, aimSn, facebookSn,
 			icqSn, jabberSn, msnSn, mySpaceSn, skypeSn, twitterSn, ymSn,
-			jobTitle, groupIds, organizationIds, roleIds,
-			userGroupRoles, userGroupIds, serviceContext);
+			jobTitle, groupIds, organizationIds, roleIds, userGroupRoles,
+			userGroupIds, serviceContext);
 
 		return user;
 	}

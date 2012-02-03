@@ -163,8 +163,16 @@ public class ServicePreAction extends Action {
 		String friendlyURLPrivateUserPath =
 			PortalUtil.getPathFriendlyURLPrivateUser();
 		String friendlyURLPublicPath = PortalUtil.getPathFriendlyURLPublic();
-		String imagePath = cdnHost.concat(PortalUtil.getPathImage());
 		String mainPath = PortalUtil.getPathMain();
+
+		String imagePath = PortalUtil.getPathImage();
+
+		boolean cdnDynamicResourcesEnabled =
+			PortalUtil.isCDNDynamicResourcesEnabled(request);
+
+		if (cdnDynamicResourcesEnabled) {
+			imagePath = cdnHost.concat(imagePath);
+		}
 
 		String i18nPath = (String)request.getAttribute(WebKeys.I18N_PATH);
 
@@ -736,6 +744,7 @@ public class ServicePreAction extends Action {
 		// Set the CDN host, portal URL, and Facebook application ID first
 		// because other methods (setLookAndFeel) depend on them being set
 
+		themeDisplay.setCDNDynamicResourcesEnabled(cdnDynamicResourcesEnabled);
 		themeDisplay.setCDNHost(cdnHost);
 		themeDisplay.setPortalURL(portalURL);
 		themeDisplay.setFacebookCanvasPageURL(facebookCanvasPageURL);
@@ -796,10 +805,16 @@ public class ServicePreAction extends Action {
 		themeDisplay.setPathFriendlyURLPrivateUser(friendlyURLPrivateUserPath);
 		themeDisplay.setPathFriendlyURLPublic(friendlyURLPublicPath);
 		themeDisplay.setPathImage(imagePath);
-		themeDisplay.setPathJavaScript(
-			cdnHost.concat(contextPath).concat("/html/js"));
 		themeDisplay.setPathMain(mainPath);
 		themeDisplay.setPathSound(contextPath.concat("/html/sound"));
+
+		if (cdnDynamicResourcesEnabled) {
+			themeDisplay.setPathJavaScript(
+				cdnHost.concat(contextPath).concat("/html/js"));
+		}
+		else {
+			themeDisplay.setPathJavaScript(contextPath.concat("/html/js"));
+		}
 
 		// Icons
 

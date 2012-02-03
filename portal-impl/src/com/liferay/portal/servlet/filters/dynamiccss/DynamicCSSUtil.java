@@ -173,11 +173,18 @@ public class DynamicCSSUtil {
 			cssThemePath = themeDisplay.getPathThemeCss();
 		}
 		else {
+			boolean cdnDynamicResourcesEnabled =
+				PortalUtil.isCDNDynamicResourcesEnabled(request);
 			String cdnHost = PortalUtil.getCDNHost(request);
 			String themeStaticResourcePath = theme.getStaticResourcePath();
 
-			cssThemePath =
-				cdnHost + themeStaticResourcePath + theme.getCssPath();
+			if (cdnDynamicResourcesEnabled) {
+				cssThemePath =
+					cdnHost + themeStaticResourcePath + theme.getCssPath();
+			}
+			else {
+				cssThemePath = themeStaticResourcePath + theme.getCssPath();
+			}
 		}
 
 		return cssThemePath;

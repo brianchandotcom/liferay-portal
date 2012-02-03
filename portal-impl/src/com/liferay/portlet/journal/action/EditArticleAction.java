@@ -17,6 +17,7 @@ package com.liferay.portlet.journal.action;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
@@ -68,10 +69,10 @@ import com.liferay.portlet.journal.util.JournalUtil;
 import java.io.File;
 
 import java.util.Calendar;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -392,13 +393,14 @@ public class EditArticleAction extends PortletAction {
 
 		Map<String, byte[]> images = new HashMap<String, byte[]>();
 
+		Map<String, FileItem[]> multipartParameterMap =
+			uploadPortletRequest.getMultipartParameterMap();
+
+		Set<String> parameterNames = multipartParameterMap.keySet();
+
 		String imagePrefix = "structure_image_";
 
-		Enumeration<String> enu = uploadPortletRequest.getParameterNames();
-
-		while (enu.hasMoreElements()) {
-			String name = enu.nextElement();
-
+		for (String name : parameterNames) {
 			if (name.startsWith(imagePrefix)) {
 				File file = uploadPortletRequest.getFile(name);
 				byte[] bytes = FileUtil.getBytes(file);

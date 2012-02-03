@@ -18,6 +18,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -51,6 +53,8 @@ public interface UploadRequest extends HttpServletRequest {
 		throws IOException;
 
 	public String getFullFileName(String name);
+
+	public Map<String, FileItem[]> getMultipartParameterMap();
 
 	public Long getSize(String name);
 

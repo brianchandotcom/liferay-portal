@@ -14,6 +14,7 @@
 
 package com.liferay.portal.upload;
 
+import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -30,6 +31,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequestWrapper;
 
@@ -162,6 +164,35 @@ public class UploadPortletRequestImpl
 		}
 
 		return fullFileName;
+	}
+
+	public Map<String, FileItem[]> getMultipartParameterMap() {
+		Map<String, FileItem[]> map = new HashMap<String, FileItem[]>();
+
+		if (!(_uploadServletRequest instanceof UploadServletRequestImpl)) {
+			return map;
+		}
+
+		UploadServletRequestImpl uploadServletRequestImpl =
+			(UploadServletRequestImpl)_uploadServletRequest;
+
+		Map<String, FileItem[]> multipartParameterMap =
+			uploadServletRequestImpl.getMultipartParameterMap();
+
+		Set<String> keySet = multipartParameterMap.keySet();
+
+		for (String name : keySet) {
+			if (name.startsWith(_namespace)) {
+				map.put(
+					name.substring(_namespace.length(), name.length()),
+					multipartParameterMap.get(name));
+			}
+			else {
+				map.put(name, multipartParameterMap.get(name));
+			}
+		}
+
+		return map;
 	}
 
 	@Override

@@ -16,6 +16,7 @@ package com.liferay.portal.upload;
 
 import com.liferay.portal.kernel.memory.DeleteFileFinalizeAction;
 import com.liferay.portal.kernel.memory.FinalizeManager;
+import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -30,7 +31,7 @@ import org.apache.commons.fileupload.disk.DiskFileItem;
  * @author Zongliang Li
  * @author Harry Mark
  */
-public class LiferayFileItem extends DiskFileItem {
+public class LiferayFileItem extends DiskFileItem implements FileItem {
 
 	public static final int THRESHOLD_SIZE = GetterUtil.getInteger(
 		PropsUtil.get(LiferayFileItem.class.getName() + ".threshold.size"));

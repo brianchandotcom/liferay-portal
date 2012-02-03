@@ -1125,6 +1125,7 @@ Please set the property "jdk.6.home" in build.properties.
 					<fileset dir="docroot">
 						<include name="**/*.css" />
 						<include name="**/*.dtd" />
+						<include name="**/*.ftl" />
 						<include name="**/*.gif" />
 						<include name="**/*.jar" />
 						<include name="**/*.jpg" />

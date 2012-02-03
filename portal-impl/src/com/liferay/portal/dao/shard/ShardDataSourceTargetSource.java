@@ -57,6 +57,10 @@ public class ShardDataSourceTargetSource implements TargetSource {
 	public void releaseTarget(Object target) throws Exception {
 	}
 
+	public void resetDataSource() {
+		_dataSource.set(_dataSources.get(PropsValues.SHARD_DEFAULT_NAME));
+	}
+
 	public void setDataSource(String shardName) {
 		_dataSource.set(_dataSources.get(shardName));
 	}

@@ -493,14 +493,14 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 			if (secure) {
 				ExpandoValueServiceUtil.addValues(
 					_companyId, _className,
-					ExpandoTableConstants.DEFAULT_TABLE_NAME,
-					_classPK, attributes);
+					ExpandoTableConstants.DEFAULT_TABLE_NAME, _classPK,
+					attributes);
 			}
 			else {
 				ExpandoValueLocalServiceUtil.addValues(
 					_companyId, _className,
-					ExpandoTableConstants.DEFAULT_TABLE_NAME,
-					_classPK, attributes);
+					ExpandoTableConstants.DEFAULT_TABLE_NAME, _classPK,
+					attributes);
 			}
 		}
 		catch (Exception e) {

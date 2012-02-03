@@ -62,8 +62,7 @@ public abstract class AbstractSearchEngineConfigurator {
 
 		registerSearchEngineMessageListener(
 			searchEngine, searchReaderDestination,
-			new SearchReaderMessageListener(),
-			searchEngine.getIndexSearcher());
+			new SearchReaderMessageListener(), searchEngine.getIndexSearcher());
 
 		registerSearchEngineMessageListener(
 			searchEngine, searchWriterDestination,

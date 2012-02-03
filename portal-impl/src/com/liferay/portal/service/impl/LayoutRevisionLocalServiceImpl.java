@@ -314,8 +314,8 @@ public class LayoutRevisionLocalServiceImpl
 	}
 
 	public List<LayoutRevision> getLayoutRevisions(
-			long layoutSetBranchId, long layoutBranchId, long plid,
-			int start, int end, OrderByComparator orderByComparator)
+			long layoutSetBranchId, long layoutBranchId, long plid, int start,
+			int end, OrderByComparator orderByComparator)
 		throws SystemException {
 
 		return layoutRevisionPersistence.findByL_L_P(
@@ -448,8 +448,8 @@ public class LayoutRevisionLocalServiceImpl
 		// Workflow
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			layoutRevision.getCompanyId(), layoutRevision.getGroupId(),
-			userId, LayoutRevision.class.getName(),
+			layoutRevision.getCompanyId(), layoutRevision.getGroupId(), userId,
+			LayoutRevision.class.getName(),
 			layoutRevision.getLayoutRevisionId(), layoutRevision,
 			serviceContext);
 

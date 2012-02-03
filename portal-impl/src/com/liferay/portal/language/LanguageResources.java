@@ -49,8 +49,7 @@ public class LanguageResources {
 
 		if (value.endsWith(LangBuilder.AUTOMATIC_TRANSLATION)) {
 			value = value.substring(
-				0,
-				value.length() - LangBuilder.AUTOMATIC_TRANSLATION.length());
+				0, value.length() - LangBuilder.AUTOMATIC_TRANSLATION.length());
 		}
 
 		return value;

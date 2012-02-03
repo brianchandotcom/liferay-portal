@@ -373,8 +373,8 @@ public class DLFileEntryLocalServiceImpl
 			}
 
 			lockLocalService.lock(
-				userId, DLFileEntry.class.getName(), fileEntryId, owner,
-				false, expirationTime);
+				userId, DLFileEntry.class.getName(), fileEntryId, owner, false,
+				expirationTime);
 		}
 
 		User user = userPersistence.findByPrimaryKey(userId);
@@ -410,8 +410,7 @@ public class DLFileEntryLocalServiceImpl
 					existingDLFileVersion.getFileEntryTypeId(), null,
 					DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION,
 					existingDLFileVersion.getSize(),
-					WorkflowConstants.STATUS_DRAFT, new Date(),
-					serviceContext);
+					WorkflowConstants.STATUS_DRAFT, new Date(), serviceContext);
 			}
 			else {
 				dlFileVersion = addFileVersion(
@@ -1501,10 +1500,9 @@ public class DLFileEntryLocalServiceImpl
 		workflowContext.put("event", syncEventType);
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			dlFileVersion.getCompanyId(), dlFileVersion.getGroupId(),
-			userId, DLFileEntry.class.getName(),
-			dlFileVersion.getFileVersionId(), dlFileVersion, serviceContext,
-			workflowContext);
+			dlFileVersion.getCompanyId(), dlFileVersion.getGroupId(), userId,
+			DLFileEntry.class.getName(), dlFileVersion.getFileVersionId(),
+			dlFileVersion, serviceContext, workflowContext);
 	}
 
 	protected DLFileEntry updateFileEntry(
@@ -1692,8 +1690,7 @@ public class DLFileEntryLocalServiceImpl
 		if ((fileEntryTypeId > 0) && (fieldsMap != null)) {
 			dlFileEntryMetadataLocalService.updateFileEntryMetadata(
 				fileEntryTypeId, dlFileVersion.getFileEntryId(),
-				dlFileVersion.getFileVersionId(), fieldsMap,
-				serviceContext);
+				dlFileVersion.getFileVersionId(), fieldsMap, serviceContext);
 		}
 
 		return dlFileVersion;

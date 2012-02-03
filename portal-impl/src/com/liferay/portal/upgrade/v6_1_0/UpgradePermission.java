@@ -248,8 +248,7 @@ public class UpgradePermission extends UpgradeProcess {
 	}
 
 	private static final int[] _SCOPES = {
-		ResourceConstants.SCOPE_COMPANY,
-		ResourceConstants.SCOPE_GROUP,
+		ResourceConstants.SCOPE_COMPANY, ResourceConstants.SCOPE_GROUP,
 		ResourceConstants.SCOPE_GROUP_TEMPLATE
 	};
 

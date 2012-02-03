@@ -172,8 +172,8 @@ public class UpgradeSocial extends UpgradeProcess {
 		valueJSONObject.put("value", value);
 
 		addActivitySetting(
-			increment(), groupId, companyId, classNameId, activityType,
-			name, valueJSONObject.toString());
+			increment(), groupId, companyId, classNameId, activityType, name,
+			valueJSONObject.toString());
 	}
 
 	protected void addActivitySetting(

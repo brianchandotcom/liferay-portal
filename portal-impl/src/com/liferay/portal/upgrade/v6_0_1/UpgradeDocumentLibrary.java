@@ -44,8 +44,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			// DLFileVersion
 
 			upgradeTable(
-				DLFileVersionTable.TABLE_NAME,
-				DLFileVersionTable.TABLE_COLUMNS,
+				DLFileVersionTable.TABLE_NAME, DLFileVersionTable.TABLE_COLUMNS,
 				DLFileVersionTable.TABLE_SQL_CREATE,
 				DLFileVersionTable.TABLE_SQL_ADD_INDEXES);
 		}

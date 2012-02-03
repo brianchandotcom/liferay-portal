@@ -150,8 +150,7 @@ public class ChannelImpl extends BaseChannelImpl {
 		}
 		catch (Exception e) {
 			throw new ChannelException(
-				"Uanble to delete event " + notificationEventUuid ,
-				e);
+				"Uanble to delete event " + notificationEventUuid , e);
 		}
 	}
 

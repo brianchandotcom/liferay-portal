@@ -115,12 +115,11 @@ public class AnnouncementsEntryServiceImpl
 	}
 
 	public AnnouncementsEntry updateEntry(
-			long entryId, String title, String content, String url,
-			String type, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, int priority)
+			long entryId, String title, String content, String url, String type,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute, int priority)
 		throws PortalException, SystemException {
 
 		AnnouncementsEntryPermission.check(

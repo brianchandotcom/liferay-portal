@@ -46,8 +46,7 @@ public class CalEventPermission {
 	}
 
 	public static boolean contains(
-		PermissionChecker permissionChecker, CalEvent event,
-		String actionId) {
+		PermissionChecker permissionChecker, CalEvent event, String actionId) {
 
 		if (permissionChecker.hasOwnerPermission(
 				event.getCompanyId(), CalEvent.class.getName(),

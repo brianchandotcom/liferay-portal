@@ -404,8 +404,8 @@ public class DLStoreImpl implements DLStore {
 		throws PortalException, SystemException {
 
 		validate(
-			fileName, fileExtension, sourceFileName,
-			validateFileExtension, file);
+			fileName, fileExtension, sourceFileName, validateFileExtension,
+			file);
 
 		if (!PropsValues.DL_STORE_ANTIVIRUS_ENABLED) {
 			AntivirusScannerUtil.scan(file);
@@ -434,8 +434,7 @@ public class DLStoreImpl implements DLStore {
 		}
 
 		validate(
-			fileName, fileExtension, sourceFileName,
-			validateFileExtension, is);
+			fileName, fileExtension, sourceFileName, validateFileExtension, is);
 
 		if (!PropsValues.DL_STORE_ANTIVIRUS_ENABLED ||
 			!AntivirusScannerUtil.isActive()) {

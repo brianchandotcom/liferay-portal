@@ -185,8 +185,8 @@ public class BlogsEntryFinderImpl
 	}
 
 	public List<BlogsEntry> findByOrganizationIds(
-			List<Long> organizationIds, Date displayDate, int status,
-			int start, int end, OrderByComparator obc)
+			List<Long> organizationIds, Date displayDate, int status, int start,
+			int end, OrderByComparator obc)
 		throws SystemException {
 
 		Timestamp displayDate_TS = CalendarUtil.getTimestamp(displayDate);

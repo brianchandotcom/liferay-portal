@@ -75,12 +75,11 @@ public class UserServiceSoapTest extends BaseServiceSoapTestCase {
 		ServiceContext serviceContext = new ServiceContext();
 
 		return getUserServiceSoap().addUser(
-			TestPropsValues.getCompanyId(), autoPassword,
-			password1, password2, autoScreenName, screenName, emailAddress,
-			facebookId, openId, locale, firstName, middleName, lastName,
-			prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
-			jobTitle, groupIds, organizationIds, roleIds, userGroupIds,
-			sendMail, serviceContext);
+			TestPropsValues.getCompanyId(), autoPassword, password1, password2,
+			autoScreenName, screenName, emailAddress, facebookId, openId,
+			locale, firstName, middleName, lastName, prefixId, suffixId, male,
+			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
+			organizationIds, roleIds, userGroupIds, sendMail, serviceContext);
 	}
 
 	protected UserServiceSoap getUserServiceSoap() throws Exception {

@@ -74,11 +74,11 @@ public abstract class BasePermissionPropagator implements PermissionPropagator {
 		}
 
 		Set<String> parentAvailableActionIds = getAvailableActionIds(
-			themeDisplay.getCompanyId(), parentClassName,
-			parentPrimKey, roleId, parentActionIds);
+			themeDisplay.getCompanyId(), parentClassName, parentPrimKey, roleId,
+			parentActionIds);
 		Set<String> childAvailableActionIds = getAvailableActionIds(
-			themeDisplay.getCompanyId(), childClassName,
-			childPrimKey, roleId, childActionIds);
+			themeDisplay.getCompanyId(), childClassName, childPrimKey, roleId,
+			childActionIds);
 
 		List<String> actionIds = new ArrayList<String>();
 

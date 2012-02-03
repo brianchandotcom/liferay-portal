@@ -40,8 +40,8 @@ import java.util.Map;
 public abstract class BaseDefaultDDMStructureAction extends SimpleAction {
 
 	protected void addDDMStructures(
-			long userId, long groupId, long classNameId,
-			String fileName, ServiceContext serviceContext)
+			long userId, long groupId, long classNameId, String fileName,
+			ServiceContext serviceContext)
 		throws DocumentException, PortalException, SystemException {
 
 		List<Element> structureElements = getDDMStructures(fileName);

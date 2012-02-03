@@ -804,8 +804,8 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void setGroupPermissions(
-			String className, String classPK, long groupId,
-			String[] actionIds, long resourceId)
+			String className, String classPK, long groupId, String[] actionIds,
+			long resourceId)
 		throws PortalException, SystemException {
 
 		long associatedGroupId = 0;
@@ -1481,8 +1481,7 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 
 	protected boolean hasUserPermissions_6(
 			long userId, long resourceId, List<Resource> resources,
-			String actionId, long[] roleIds, StopWatch stopWatch,
-			int block)
+			String actionId, long[] roleIds, StopWatch stopWatch, int block)
 		throws PortalException, SystemException {
 
 		boolean hasUserPermissions =

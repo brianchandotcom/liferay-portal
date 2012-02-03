@@ -41,8 +41,7 @@ public class BookmarksEntryPermission {
 	}
 
 	public static void check(
-			PermissionChecker permissionChecker, long entryId,
-			String actionId)
+			PermissionChecker permissionChecker, long entryId, String actionId)
 		throws PortalException, SystemException {
 
 		if (!contains(permissionChecker, entryId, actionId)) {
@@ -84,8 +83,7 @@ public class BookmarksEntryPermission {
 	}
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, long entryId,
-			String actionId)
+			PermissionChecker permissionChecker, long entryId, String actionId)
 		throws PortalException, SystemException {
 
 		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(entryId);

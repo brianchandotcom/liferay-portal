@@ -184,8 +184,7 @@ public class DeployUtil {
 		}
 
 		int undeployInterval = PrefsPropsUtil.getInteger(
-			PropsKeys.HOT_UNDEPLOY_INTERVAL,
-			PropsValues.HOT_UNDEPLOY_INTERVAL);
+			PropsKeys.HOT_UNDEPLOY_INTERVAL, PropsValues.HOT_UNDEPLOY_INTERVAL);
 
 		if (_log.isInfoEnabled()) {
 			_log.info(

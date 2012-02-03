@@ -50,8 +50,8 @@ public class SiteMembershipsControlPanelEntry extends BaseControlPanelEntry {
 
 		if (scopeGroup.isCompany() || scopeGroup.isUser() ||
 			!GroupPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(),
-				scopeGroup.getGroupId(), ActionKeys.ASSIGN_MEMBERS)) {
+				themeDisplay.getPermissionChecker(), scopeGroup.getGroupId(),
+				ActionKeys.ASSIGN_MEMBERS)) {
 
 			return false;
 		}

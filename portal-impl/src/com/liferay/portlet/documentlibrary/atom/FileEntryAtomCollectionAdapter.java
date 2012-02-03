@@ -249,8 +249,8 @@ public class FileEntryAtomCollectionAdapter
 
 	@Override
 	protected void doPutEntry(
-			FileEntry fileEntry, String title, String summary,
-			String content, Date date, AtomRequestContext atomRequestContext)
+			FileEntry fileEntry, String title, String summary, String content,
+			Date date, AtomRequestContext atomRequestContext)
 		throws Exception {
 
 		String mimeType = atomRequestContext.getHeader("Media-Content-Type");

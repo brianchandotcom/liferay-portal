@@ -95,8 +95,7 @@ public class TranslationToXHTMLTests extends AbstractWikiParserTests {
 
 	public void testParseCorrectlyOneNonEmptyFirstHeadingBlock() {
 		Assert.assertEquals(
-			"<h1> Level 1 (largest) </h1>",
-			translate("heading-1.creole"));
+			"<h1> Level 1 (largest) </h1>", translate("heading-1.creole"));
 	}
 
 	public void testParseCorrectlyOneNonEmptyNoWikiBlock() {
@@ -107,8 +106,7 @@ public class TranslationToXHTMLTests extends AbstractWikiParserTests {
 
 	public void testParseCorrectlyOneNonEmptyNoWikiBlockWitMultipleLines() {
 		Assert.assertEquals(
-			"<pre>Multiple\nlines</pre>",
-			translate("nowikiblock-5.creole"));
+			"<pre>Multiple\nlines</pre>", translate("nowikiblock-5.creole"));
 	}
 
 	public void testParseCorrectlyOneNonEmptySecondHeadingBlock() {

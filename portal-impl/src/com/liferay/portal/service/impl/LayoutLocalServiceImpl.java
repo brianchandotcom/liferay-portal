@@ -1603,8 +1603,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		Layout layout = layoutPersistence.findByPrimaryKey(plid);
 
 		friendlyURL = getFriendlyURL(
-			layout.getGroupId(), layout.isPrivateLayout(),
-			layout.getLayoutId(), StringPool.BLANK, friendlyURL);
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			StringPool.BLANK, friendlyURL);
 
 		validateFriendlyURL(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
@@ -2271,8 +2271,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	protected String getFriendlyURL(
-			long groupId, boolean privateLayout, long layoutId,
-			String name, String friendlyURL)
+			long groupId, boolean privateLayout, long layoutId, String name,
+			String friendlyURL)
 		throws PortalException, SystemException {
 
 		friendlyURL = getFriendlyURL(friendlyURL);

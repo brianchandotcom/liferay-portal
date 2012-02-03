@@ -541,9 +541,8 @@ public class ShoppingOrderLocalServiceImpl
 			billingState, billingZip, billingCountry, billingPhone,
 			shipToBilling, shippingFirstName, shippingLastName,
 			shippingEmailAddress, shippingCompany, shippingStreet, shippingCity,
-			shippingState, shippingZip, shippingCountry, shippingPhone,
-			ccName, ccType, ccNumber, ccExpMonth, ccExpYear, ccVerNumber,
-			comments);
+			shippingState, shippingZip, shippingCountry, shippingPhone, ccName,
+			ccType, ccNumber, ccExpMonth, ccExpYear, ccVerNumber, comments);
 	}
 
 	public ShoppingOrder updateOrder(

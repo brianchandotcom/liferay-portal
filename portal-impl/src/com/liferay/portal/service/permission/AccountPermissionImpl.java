@@ -53,8 +53,7 @@ public class AccountPermissionImpl implements AccountPermission {
 		long groupId = 0;
 
 		return permissionChecker.hasPermission(
-			groupId, Account.class.getName(), account.getAccountId(),
-			actionId);
+			groupId, Account.class.getName(), account.getAccountId(), actionId);
 	}
 
 	public boolean contains(

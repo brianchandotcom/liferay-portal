@@ -186,9 +186,8 @@ public class UserFinderImpl
 
 	public int countByC_FN_MN_LN_SN_EA_S(
 			long companyId, String firstName, String middleName,
-			String lastName, String screenName, String emailAddress,
-			int status, LinkedHashMap<String, Object> params,
-			boolean andOperator)
+			String lastName, String screenName, String emailAddress, int status,
+			LinkedHashMap<String, Object> params, boolean andOperator)
 		throws SystemException {
 
 		String[] firstNames = CustomSQLUtil.keywords(firstName);
@@ -389,9 +388,9 @@ public class UserFinderImpl
 
 	public List<User> findByC_FN_MN_LN_SN_EA_S(
 			long companyId, String firstName, String middleName,
-			String lastName, String screenName, String emailAddress,
-			int status, LinkedHashMap<String, Object> params,
-			boolean andOperator, int start, int end, OrderByComparator obc)
+			String lastName, String screenName, String emailAddress, int status,
+			LinkedHashMap<String, Object> params, boolean andOperator,
+			int start, int end, OrderByComparator obc)
 		throws SystemException {
 
 		String[] firstNames = CustomSQLUtil.keywords(firstName);

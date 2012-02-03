@@ -387,9 +387,9 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 						DLAppLocalServiceUtil.updateFileEntry(
 							userId, existingFileEntry.getFileEntryId(),
 							fileEntry.getTitle(), fileEntry.getMimeType(),
-							fileEntry.getTitle(),
-							fileEntry.getDescription(), null, false, is,
-							fileEntry.getSize(), serviceContext);
+							fileEntry.getTitle(), fileEntry.getDescription(),
+							null, false, is, fileEntry.getSize(),
+							serviceContext);
 				}
 				else {
 					DLAppLocalServiceUtil.updateAsset(
@@ -1091,8 +1091,8 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 			}
 			else {
 				DLFileEntryTypeLocalServiceUtil.updateFileEntryType(
-					userId, existingDLFileEntryType.getFileEntryTypeId(),
-					name, dlFileEntryType.getDescription(), ddmStrutureIds,
+					userId, existingDLFileEntryType.getFileEntryTypeId(), name,
+					dlFileEntryType.getDescription(), ddmStrutureIds,
 					serviceContext);
 
 				importedDLFileEntryType = existingDLFileEntryType;

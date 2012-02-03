@@ -184,8 +184,8 @@ public class EditLayoutSetAction extends EditLayoutsAction {
 	}
 
 	protected void updateLogo(
-			ActionRequest actionRequest, long liveGroupId,
-			long stagingGroupId, boolean privateLayout, boolean hasLogo)
+			ActionRequest actionRequest, long liveGroupId, long stagingGroupId,
+			boolean privateLayout, boolean hasLogo)
 		throws Exception {
 
 		UploadPortletRequest uploadPortletRequest =

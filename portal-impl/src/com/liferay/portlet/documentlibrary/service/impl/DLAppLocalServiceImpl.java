@@ -538,8 +538,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<Object> getFileEntriesAndFileShortcuts(
-			long repositoryId, long folderId, int status, int start,
-			int end)
+			long repositoryId, long folderId, int status, int start, int end)
 		throws PortalException, SystemException {
 
 		LocalRepository localRepository = getLocalRepository(repositoryId);

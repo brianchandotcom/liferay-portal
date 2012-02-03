@@ -397,8 +397,8 @@ public abstract class BaseCommandReceiver implements CommandReceiver {
 	}
 
 	private Node _createRoot(
-		Document document, String command, String resourceType,
-		String path, String url) {
+		Document document, String command, String resourceType, String path,
+		String url) {
 
 		Element rootElement = document.createElement("Connector");
 

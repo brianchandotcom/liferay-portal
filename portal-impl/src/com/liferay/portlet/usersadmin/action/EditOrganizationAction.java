@@ -237,10 +237,9 @@ public class EditOrganizationAction extends PortletAction {
 			// Update organization
 
 			organization = OrganizationServiceUtil.updateOrganization(
-				organizationId, parentOrganizationId, name, type,
-				recursable, regionId, countryId, statusId, comments, site,
-				addresses, emailAddresses, orgLabors, phones, websites,
-				serviceContext);
+				organizationId, parentOrganizationId, name, type, recursable,
+				regionId, countryId, statusId, comments, site, addresses,
+				emailAddresses, orgLabors, phones, websites, serviceContext);
 
 			boolean deleteLogo = ParamUtil.getBoolean(
 				actionRequest, "deleteLogo");

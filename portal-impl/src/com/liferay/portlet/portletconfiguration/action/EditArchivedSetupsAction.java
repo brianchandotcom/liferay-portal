@@ -181,8 +181,8 @@ public class EditArchivedSetupsAction extends EditConfigurationAction {
 				actionRequest, portlet.getPortletId());
 
 		PortletPreferencesServiceUtil.updateArchivePreferences(
-			themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
-			name, portlet.getRootPortletId(), setup);
+			themeDisplay.getUserId(), themeDisplay.getScopeGroupId(), name,
+			portlet.getRootPortletId(), setup);
 	}
 
 }

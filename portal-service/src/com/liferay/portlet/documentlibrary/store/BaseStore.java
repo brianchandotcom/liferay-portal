@@ -476,8 +476,8 @@ public abstract class BaseStore implements Store {
 	 * @throws SystemException if a system exception occurred
 	 */
 	public abstract void updateFile(
-			long companyId, long repositoryId,
-			long newRepositoryId, String fileName)
+			long companyId, long repositoryId, long newRepositoryId,
+			String fileName)
 		throws PortalException, SystemException;
 
 	/**

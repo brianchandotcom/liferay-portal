@@ -220,8 +220,7 @@ public class LayoutSetBranchLocalServiceImpl
 						serviceContext);
 
 				layoutRevisionLocalService.addLayoutRevision(
-					userId, layoutSetBranchId,
-					layoutBranch.getLayoutBranchId(),
+					userId, layoutSetBranchId, layoutBranch.getLayoutBranchId(),
 					LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID,
 					true, layoutRevision.getPlid(),
 					layoutRevision.getLayoutRevisionId(),

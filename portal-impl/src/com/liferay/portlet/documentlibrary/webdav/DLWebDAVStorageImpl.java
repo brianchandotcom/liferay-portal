@@ -948,8 +948,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 	}
 
 	protected Resource toResource(
-		WebDAVRequest webDavRequest, FileEntry fileEntry,
-		boolean appendPath) {
+		WebDAVRequest webDavRequest, FileEntry fileEntry, boolean appendPath) {
 
 		String parentPath = getRootPath() + webDavRequest.getPath();
 		String name = StringPool.BLANK;

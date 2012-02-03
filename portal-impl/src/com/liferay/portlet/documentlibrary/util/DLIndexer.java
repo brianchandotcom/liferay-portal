@@ -574,8 +574,8 @@ public class DLIndexer extends BaseIndexer {
 			long folderId = dlFolder.getFolderId();
 
 			String[] newIds = {
-				String.valueOf(companyId), portletId,
-				String.valueOf(groupId), String.valueOf(folderId)
+				String.valueOf(companyId), portletId, String.valueOf(groupId),
+				String.valueOf(folderId)
 			};
 
 			reindex(newIds);
@@ -607,8 +607,8 @@ public class DLIndexer extends BaseIndexer {
 			long folderId = groupId;
 
 			String[] newIds = {
-				String.valueOf(companyId), portletId,
-				String.valueOf(groupId), String.valueOf(folderId)
+				String.valueOf(companyId), portletId, String.valueOf(groupId),
+				String.valueOf(folderId)
 			};
 
 			reindex(newIds);

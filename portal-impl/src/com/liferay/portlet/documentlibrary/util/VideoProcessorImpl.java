@@ -227,8 +227,7 @@ public class VideoProcessorImpl
 				if (previewType.equals("mp4") || previewType.equals("ogv")) {
 					exportPreview(
 						portletDataContext, fileEntry, fileEntryElement,
-						"bin-path-video-preview-" + previewType,
-						previewType);
+						"bin-path-video-preview-" + previewType, previewType);
 				}
 			}
 		}
@@ -280,10 +279,8 @@ public class VideoProcessorImpl
 			if (previewType.equals("mp4") || previewType.equals("ogv")) {
 				if (!portletDataContext.isPerformDirectBinaryImport()) {
 					importPreviewFromLAR(
-						portletDataContext, importedFileEntry,
-						fileEntryElement,
-						"bin-path-video-preview-" + previewType,
-						previewType);
+						portletDataContext, importedFileEntry, fileEntryElement,
+						"bin-path-video-preview-" + previewType, previewType);
 				}
 				else {
 					FileVersion importedFileVersion =
@@ -387,8 +384,8 @@ public class VideoProcessorImpl
 							ServerDetector.getServerId(),
 							PropsUtil.get(PropsKeys.LIFERAY_HOME),
 							Log4JUtil.getCustomLogSettings(),
-							file.getCanonicalPath(),
-							thumbnailTempFile, THUMBNAIL_TYPE, height, width,
+							file.getCanonicalPath(), thumbnailTempFile,
+							THUMBNAIL_TYPE, height, width,
 							PropsValues.
 								DL_FILE_ENTRY_THUMBNAIL_VIDEO_FRAME_PERCENTAGE);
 

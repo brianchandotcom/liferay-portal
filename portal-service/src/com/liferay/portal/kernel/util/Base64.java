@@ -81,14 +81,10 @@ public class Base64 {
 		return StringUtil.replace(
 			base64,
 			new String[] {
-				StringPool.MINUS,
-				StringPool.STAR,
-				StringPool.UNDERLINE
+				StringPool.MINUS, StringPool.STAR, StringPool.UNDERLINE
 			},
 			new String[] {
-				StringPool.PLUS,
-				StringPool.EQUAL,
-				StringPool.SLASH
+				StringPool.PLUS, StringPool.EQUAL, StringPool.SLASH
 			});
 	}
 
@@ -136,13 +132,11 @@ public class Base64 {
 		return StringUtil.replace(
 			base64,
 			new String[] {
-				StringPool.PLUS,
-				StringPool.EQUAL,
+				StringPool.PLUS, StringPool.EQUAL,
 				StringPool.SLASH
 			},
 			new String[] {
-				StringPool.MINUS,
-				StringPool.STAR,
+				StringPool.MINUS, StringPool.STAR,
 				StringPool.UNDERLINE
 			});
 	}

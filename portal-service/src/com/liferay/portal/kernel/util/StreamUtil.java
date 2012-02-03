@@ -33,8 +33,7 @@ import java.nio.channels.FileChannel;
 public class StreamUtil {
 
 	public static final int BUFFER_SIZE = GetterUtil.getInteger(
-		System.getProperty(StreamUtil.class.getName() + ".buffer.size"),
-		8192);
+		System.getProperty(StreamUtil.class.getName() + ".buffer.size"), 8192);
 
 	public static final boolean FORCE_TIO = GetterUtil.getBoolean(
 		System.getProperty(StreamUtil.class.getName() + ".force.tio"));

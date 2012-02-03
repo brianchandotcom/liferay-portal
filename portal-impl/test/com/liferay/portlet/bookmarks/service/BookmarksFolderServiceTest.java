@@ -89,8 +89,7 @@ public class BookmarksFolderServiceTest extends BaseBookmarksServiceTestCase {
 
 		for (Document doc : results) {
 			assertEquals(
-				companyId,
-				GetterUtil.getLong(doc.get(Field.COMPANY_ID)));
+				companyId, GetterUtil.getLong(doc.get(Field.COMPANY_ID)));
 
 			assertEquals(groupId, GetterUtil.getLong(doc.get(Field.GROUP_ID)));
 

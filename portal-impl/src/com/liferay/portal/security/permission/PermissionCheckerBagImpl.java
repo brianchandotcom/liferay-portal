@@ -158,8 +158,8 @@ public class PermissionCheckerBagImpl implements PermissionCheckerBag {
 					_userId, group.getGroupId(),
 					RoleConstants.SITE_ADMINISTRATOR, true) ||
 				UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-					_userId, group.getGroupId(),
-					RoleConstants.SITE_OWNER, true)) {
+					_userId, group.getGroupId(), RoleConstants.SITE_OWNER,
+					true)) {
 
 				return true;
 			}

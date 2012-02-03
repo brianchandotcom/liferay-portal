@@ -345,13 +345,10 @@ public class RSSAction extends PortletAction {
 		url = StringUtil.replace(
 			url,
 			new String[] {
-				"@group_id@",
-				"@image_path@",
-				"@main_path@"
+				"@group_id@", "@image_path@", "@main_path@"
 			},
 			new String[] {
-				String.valueOf(feed.getGroupId()),
-				themeDisplay.getPathImage(),
+				String.valueOf(feed.getGroupId()), themeDisplay.getPathImage(),
 				themeDisplay.getPathMain()
 			}
 		);

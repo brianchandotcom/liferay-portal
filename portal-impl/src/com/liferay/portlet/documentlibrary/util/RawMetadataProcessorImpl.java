@@ -79,8 +79,7 @@ public class RawMetadataProcessorImpl
 
 		long fileEntryMetadataCount =
 			DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadataCount(
-				fileVersion.getFileEntryId(),
-				fileVersion.getFileVersionId());
+				fileVersion.getFileEntryId(), fileVersion.getFileVersionId());
 
 		if (fileEntryMetadataCount == 0) {
 			_instance.trigger(fileVersion);
@@ -133,8 +132,8 @@ public class RawMetadataProcessorImpl
 
 		List<DDMStructure> ddmStructures =
 			DDMStructureLocalServiceUtil.getClassStructures(
-				PortalUtil.getClassNameId(DLFileEntry.class),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				PortalUtil.getClassNameId(DLFileEntry.class), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
 
 		ServiceContext serviceContext = new ServiceContext();
 

@@ -495,8 +495,8 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 		}
 
 		return lockLocalService.lock(
-			getUserId(), DLFolder.class.getName(), folderId, owner,
-			inheritable, expirationTime);
+			getUserId(), DLFolder.class.getName(), folderId, owner, inheritable,
+			expirationTime);
 	}
 
 	protected void doUnlockFolder(long groupId, long folderId, String lockUuid)

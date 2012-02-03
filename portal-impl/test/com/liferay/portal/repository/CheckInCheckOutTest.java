@@ -160,9 +160,8 @@ public class CheckInCheckOutTest extends TestCase {
 			_TEST_CONTENT.getBytes());
 
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-			repositoryId, folderId, fileName,
-			ContentTypes.TEXT_PLAIN, fileName, null, null, inputStream,
-			_TEST_CONTENT.length(), serviceContext);
+			repositoryId, folderId, fileName, ContentTypes.TEXT_PLAIN, fileName,
+			null, null, inputStream, _TEST_CONTENT.length(), serviceContext);
 
 		assertNotNull(fileEntry);
 

@@ -139,8 +139,7 @@ public class EditTemplateAction extends PortletAction {
 
 		return mapping.findForward(
 			getForward(
-				renderRequest,
-				"portlet.dynamic_data_mapping.edit_template"));
+				renderRequest, "portlet.dynamic_data_mapping.edit_template"));
 	}
 
 	protected void deleteTemplate(ActionRequest actionRequest)

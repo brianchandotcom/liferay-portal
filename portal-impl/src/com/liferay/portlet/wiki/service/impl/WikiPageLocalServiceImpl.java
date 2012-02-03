@@ -202,8 +202,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			user.getCompanyId(), page.getGroupId(), userId,
-			WikiPage.class.getName(), page.getPageId(), page,
-			serviceContext);
+			WikiPage.class.getName(), page.getPageId(), page, serviceContext);
 
 		return page;
 	}
@@ -225,8 +224,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	public void addPageAttachment(
-			long userId, long nodeId, String title, String fileName,
-			File file)
+			long userId, long nodeId, String title, String fileName, File file)
 		throws PortalException, SystemException {
 
 		if (Validator.isNull(fileName)) {
@@ -418,8 +416,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		serviceContext.setAssetTagNames(assetTagNames);
 
 		updatePage(
-			userId, nodeId, title, version, content, summary, minorEdit,
-			format, newParentTitle, redirectTitle, serviceContext);
+			userId, nodeId, title, version, content, summary, minorEdit, format,
+			newParentTitle, redirectTitle, serviceContext);
 
 		List<WikiPage> oldPages = wikiPagePersistence.findByN_T_H(
 			nodeId, title, false);
@@ -837,8 +835,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		throws SystemException {
 
 		return wikiPagePersistence.findByN_H_S(
-			nodeId, head, WorkflowConstants.STATUS_APPROVED, start, end,
-			obc);
+			nodeId, head, WorkflowConstants.STATUS_APPROVED, start, end, obc);
 	}
 
 	public List<WikiPage> getPages(long nodeId, int start, int end)
@@ -1307,8 +1304,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			user.getCompanyId(), page.getGroupId(), userId,
-			WikiPage.class.getName(), page.getPageId(), page,
-			serviceContext);
+			WikiPage.class.getName(), page.getPageId(), page, serviceContext);
 
 		return page;
 	}
@@ -1390,8 +1386,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 					// Asset Links
 
 					assetLinkLocalService.updateLinks(
-						userId, assetEntry.getEntryId(),
-						assetLinkEntryIds, AssetLinkConstants.TYPE_RELATED);
+						userId, assetEntry.getEntryId(), assetLinkEntryIds,
+						AssetLinkConstants.TYPE_RELATED);
 
 					assetEntryLocalService.deleteEntry(
 						draftAssetEntry.getEntryId());
@@ -1717,8 +1713,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		return StringUtil.replace(
 			html,
 			new String[] {
-				"class=\"diff-html-added\"",
-				"class=\"diff-html-removed\"",
+				"class=\"diff-html-added\"", "class=\"diff-html-removed\"",
 				"class=\"diff-html-changed\"",
 				"changeType=\"diff-added-image\"",
 				"changeType=\"diff-removed-image\"",

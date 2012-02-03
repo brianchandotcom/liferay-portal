@@ -152,8 +152,7 @@ public class DynamicCSSUtil {
 		parsedContent = StringUtil.replace(
 			parsedContent,
 			new String[] {
-				"@portal_ctx@",
-				"@theme_image_path@"
+				"@portal_ctx@", "@theme_image_path@"
 			},
 			new String[] {
 				PortalUtil.getPathContext(),

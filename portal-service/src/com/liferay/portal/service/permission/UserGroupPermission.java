@@ -28,7 +28,6 @@ public interface UserGroupPermission {
 		throws PrincipalException;
 
 	public boolean contains(
-		PermissionChecker permissionChecker, long userGroupId,
-		String actionId);
+		PermissionChecker permissionChecker, long userGroupId, String actionId);
 
 }

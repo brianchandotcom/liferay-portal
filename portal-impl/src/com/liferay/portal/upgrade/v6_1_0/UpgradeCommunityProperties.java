@@ -59,8 +59,7 @@ public class UpgradeCommunityProperties extends UpgradeProcess {
 
 	private static final String[] _NEW_PORTAL_PREFERENCES = {
 		PropsKeys.COMPANY_SECURITY_SITE_LOGO,
-		PropsKeys.SITES_EMAIL_FROM_ADDRESS,
-		PropsKeys.SITES_EMAIL_FROM_NAME,
+		PropsKeys.SITES_EMAIL_FROM_ADDRESS, PropsKeys.SITES_EMAIL_FROM_NAME,
 		PropsKeys.SITES_EMAIL_MEMBERSHIP_REPLY_BODY,
 		PropsKeys.SITES_EMAIL_MEMBERSHIP_REPLY_SUBJECT,
 		PropsKeys.SITES_EMAIL_MEMBERSHIP_REQUEST_BODY,

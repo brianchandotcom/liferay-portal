@@ -108,8 +108,7 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 
 	private static final KeyValuePair[] _PUBLIC_IDS = {
 		new KeyValuePair(
-			"datatypes",
-			"datatypes.dtd"
+			"datatypes", "datatypes.dtd"
 		),
 
 		new KeyValuePair(
@@ -123,48 +122,39 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 		),
 
 		new KeyValuePair(
-			"-//Liferay//DTD Display 2.0.0//EN",
-			"liferay-display_2_0_0.dtd"
+			"-//Liferay//DTD Display 2.0.0//EN", "liferay-display_2_0_0.dtd"
 		),
 
 		new KeyValuePair(
-			"-//Liferay//DTD Display 3.5.0//EN",
-			"liferay-display_3_5_0.dtd"
+			"-//Liferay//DTD Display 3.5.0//EN", "liferay-display_3_5_0.dtd"
 		),
 
 		new KeyValuePair(
-			"-//Liferay//DTD Display 4.0.0//EN",
-			"liferay-display_4_0_0.dtd"
+			"-//Liferay//DTD Display 4.0.0//EN", "liferay-display_4_0_0.dtd"
 		),
 
 		new KeyValuePair(
-			"-//Liferay//DTD Display 5.0.0//EN",
-			"liferay-display_5_0_0.dtd"
+			"-//Liferay//DTD Display 5.0.0//EN", "liferay-display_5_0_0.dtd"
 		),
 
 		new KeyValuePair(
-			"-//Liferay//DTD Display 5.1.0//EN",
-			"liferay-display_5_1_0.dtd"
+			"-//Liferay//DTD Display 5.1.0//EN", "liferay-display_5_1_0.dtd"
 		),
 
 		new KeyValuePair(
-			"-//Liferay//DTD Display 5.2.0//EN",
-			"liferay-display_5_2_0.dtd"
+			"-//Liferay//DTD Display 5.2.0//EN", "liferay-display_5_2_0.dtd"
 		),
 
 		new KeyValuePair(
-			"-//Liferay//DTD Display 6.0.0//EN",
-			"liferay-display_6_0_0.dtd"
+			"-//Liferay//DTD Display 6.0.0//EN", "liferay-display_6_0_0.dtd"
 		),
 
 		new KeyValuePair(
-			"-//Liferay//DTD Display 6.1.0//EN",
-			"liferay-display_6_1_0.dtd"
+			"-//Liferay//DTD Display 6.1.0//EN", "liferay-display_6_1_0.dtd"
 		),
 
 		new KeyValuePair(
-			"-//Liferay//DTD Display 6.2.0//EN",
-			"liferay-display_6_2_0.dtd"
+			"-//Liferay//DTD Display 6.2.0//EN", "liferay-display_6_2_0.dtd"
 		),
 
 		new KeyValuePair(
@@ -183,28 +173,23 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 		),
 
 		new KeyValuePair(
-			"-//Liferay//DTD Hook 5.1.0//EN",
-			"liferay-hook_5_1_0.dtd"
+			"-//Liferay//DTD Hook 5.1.0//EN", "liferay-hook_5_1_0.dtd"
 		),
 
 		new KeyValuePair(
-			"-//Liferay//DTD Hook 5.2.0//EN",
-			"liferay-hook_5_2_0.dtd"
+			"-//Liferay//DTD Hook 5.2.0//EN", "liferay-hook_5_2_0.dtd"
 		),
 
 		new KeyValuePair(
-			"-//Liferay//DTD Hook 6.0.0//EN",
-			"liferay-hook_6_0_0.dtd"
+			"-//Liferay//DTD Hook 6.0.0//EN", "liferay-hook_6_0_0.dtd"
 		),
 
 		new KeyValuePair(
-			"-//Liferay//DTD Hook 6.1.0//EN",
-			"liferay-hook_6_1_0.dtd"
+			"-//Liferay//DTD Hook 6.1.0//EN", "liferay-hook_6_1_0.dtd"
 		),
 
 		new KeyValuePair(
-			"-//Liferay//DTD Hook 6.2.0//EN",
-			"liferay-hook_6_2_0.dtd"
+			"-//Liferay//DTD Hook 6.2.0//EN", "liferay-hook_6_2_0.dtd"
 		),
 
 		new KeyValuePair(
@@ -528,13 +513,11 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 		),
 
 		new KeyValuePair(
-			"-//Liferay//DTD Social 6.1.0//EN",
-			"liferay-social_6_1_0.dtd"
+			"-//Liferay//DTD Social 6.1.0//EN", "liferay-social_6_1_0.dtd"
 		),
 
 		new KeyValuePair(
-			"-//Liferay//DTD Social 6.2.0//EN",
-			"liferay-social_6_2_0.dtd"
+			"-//Liferay//DTD Social 6.2.0//EN", "liferay-social_6_2_0.dtd"
 		),
 
 		new KeyValuePair(
@@ -578,8 +561,7 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 		),
 
 		new KeyValuePair(
-			"-//SPRING//DTD BEAN//EN",
-			"spring-beans.dtd"
+			"-//SPRING//DTD BEAN//EN", "spring-beans.dtd"
 		),
 
 		new KeyValuePair(
@@ -608,15 +590,13 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 		),
 
 		new KeyValuePair(
-			"-//W3C//DTD XMLSCHEMA 200102//EN",
-			"XMLSchema.dtd"
+			"-//W3C//DTD XMLSCHEMA 200102//EN", "XMLSchema.dtd"
 		)
 	};
 
 	private static final KeyValuePair[] _SYSTEM_IDS = {
 		new KeyValuePair(
-			"http://java.sun.com/xml/ns/j2ee/j2ee_1_4.xsd",
-			"j2ee_1_4.xsd"
+			"http://java.sun.com/xml/ns/j2ee/j2ee_1_4.xsd", "j2ee_1_4.xsd"
 		),
 
 		new KeyValuePair(
@@ -626,13 +606,11 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 		),
 
 		new KeyValuePair(
-			"http://java.sun.com/xml/ns/javaee/javaee_5.xsd",
-			"javaee_5.xsd"
+			"http://java.sun.com/xml/ns/javaee/javaee_5.xsd", "javaee_5.xsd"
 		),
 
 		new KeyValuePair(
-			"http://java.sun.com/xml/ns/javaee/javaee_6.xsd",
-			"javaee_6.xsd"
+			"http://java.sun.com/xml/ns/javaee/javaee_6.xsd", "javaee_6.xsd"
 		),
 
 		new KeyValuePair(
@@ -648,18 +626,15 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 		),
 
 		new KeyValuePair(
-			"http://java.sun.com/xml/ns/j2ee/jsp_2_0.xsd",
-			"jsp_2_0.xsd"
+			"http://java.sun.com/xml/ns/j2ee/jsp_2_0.xsd", "jsp_2_0.xsd"
 		),
 
 		new KeyValuePair(
-			"http://java.sun.com/xml/ns/javaee/jsp_2_1.xsd",
-			"jsp_2_1.xsd"
+			"http://java.sun.com/xml/ns/javaee/jsp_2_1.xsd", "jsp_2_1.xsd"
 		),
 
 		new KeyValuePair(
-			"http://java.sun.com/xml/ns/javaee/jsp_2_2.xsd",
-			"jsp_2_2.xsd"
+			"http://java.sun.com/xml/ns/javaee/jsp_2_2.xsd", "jsp_2_2.xsd"
 		),
 
 		new KeyValuePair(
@@ -673,8 +648,7 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 		),
 
 		new KeyValuePair(
-			"http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd",
-			"web-app_2_4.xsd"
+			"http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd", "web-app_2_4.xsd"
 		),
 
 		new KeyValuePair(
@@ -718,8 +692,7 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 		),
 
 		new KeyValuePair(
-			"http://www.w3.org/2001/xml.xsd",
-			"xml.xsd"
+			"http://www.w3.org/2001/xml.xsd", "xml.xsd"
 		)
 	};
 

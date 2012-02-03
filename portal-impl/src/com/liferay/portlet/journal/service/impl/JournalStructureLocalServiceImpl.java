@@ -144,8 +144,7 @@ public class JournalStructureLocalServiceImpl
 		resourceLocalService.addResources(
 			structure.getCompanyId(), structure.getGroupId(),
 			structure.getUserId(), JournalStructure.class.getName(),
-			structure.getId(), false, addGroupPermissions,
-			addGuestPermissions);
+			structure.getId(), false, addGroupPermissions, addGuestPermissions);
 	}
 
 	public void addStructureResources(

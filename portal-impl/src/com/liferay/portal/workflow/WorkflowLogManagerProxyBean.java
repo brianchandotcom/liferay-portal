@@ -49,8 +49,8 @@ public class WorkflowLogManagerProxyBean
 	}
 
 	public List<WorkflowLog> getWorkflowLogsByWorkflowTask(
-		long companyId, long workflowTaskId, List<Integer> logTypes,
-		int start, int end, OrderByComparator orderByComparator) {
+		long companyId, long workflowTaskId, List<Integer> logTypes, int start,
+		int end, OrderByComparator orderByComparator) {
 
 		throw new UnsupportedOperationException();
 	}

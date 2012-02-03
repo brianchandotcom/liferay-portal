@@ -46,8 +46,8 @@ public class CookieKeys implements com.liferay.portal.kernel.util.CookieKeys {
 	}
 
 	public static void addCookie(
-		HttpServletRequest request, HttpServletResponse response,
-		Cookie cookie, boolean secure) {
+		HttpServletRequest request, HttpServletResponse response, Cookie cookie,
+		boolean secure) {
 
 		if (!PropsValues.SESSION_ENABLE_PERSISTENT_COOKIES ||
 			PropsValues.TCK_URL) {

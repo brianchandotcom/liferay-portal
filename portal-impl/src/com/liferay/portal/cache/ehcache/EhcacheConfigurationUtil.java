@@ -45,8 +45,7 @@ public class EhcacheConfigurationUtil {
 	}
 
 	public static Configuration getConfiguration(
-		String configurationPath, boolean clusterAware,
-		boolean usingDefault) {
+		String configurationPath, boolean clusterAware, boolean usingDefault) {
 
 		if (Validator.isNull(configurationPath)) {
 			return null;

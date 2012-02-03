@@ -39,10 +39,9 @@ public class JournalTemplateServiceImpl extends JournalTemplateServiceBaseImpl {
 	public JournalTemplate addTemplate(
 			long groupId, String templateId, boolean autoTemplateId,
 			String structureId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String xsl,
-			boolean formatXsl, String langType, boolean cacheable,
-			boolean smallImage, String smallImageURL, File smallFile,
-			ServiceContext serviceContext)
+			Map<Locale, String> descriptionMap, String xsl, boolean formatXsl,
+			String langType, boolean cacheable, boolean smallImage,
+			String smallImageURL, File smallFile, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		JournalPermission.check(
@@ -57,9 +56,8 @@ public class JournalTemplateServiceImpl extends JournalTemplateServiceBaseImpl {
 	public JournalTemplate addTemplate(
 			long groupId, String templateId, boolean autoTemplateId,
 			String structureId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String xsl,
-			boolean formatXsl, String langType, boolean cacheable,
-			ServiceContext serviceContext)
+			Map<Locale, String> descriptionMap, String xsl, boolean formatXsl,
+			String langType, boolean cacheable, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		JournalPermission.check(
@@ -143,8 +141,7 @@ public class JournalTemplateServiceImpl extends JournalTemplateServiceBaseImpl {
 	public int searchCount(
 			long companyId, long[] groupIds, String templateId,
 			String structureId, String structureIdComparator, String name,
-			String description,
-			boolean andOperator)
+			String description, boolean andOperator)
 		throws SystemException {
 
 		return journalTemplateFinder.filterCountByC_G_T_S_N_D(

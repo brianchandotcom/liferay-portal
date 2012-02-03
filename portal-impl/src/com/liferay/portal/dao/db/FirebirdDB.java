@@ -130,12 +130,9 @@ public class FirebirdDB extends BaseDB {
 	}
 
 	private static final String[] _FIREBIRD = {
-		"--", "1", "0",
-		"'01/01/1970'", "current_timestamp",
-		" blob", " blob", " smallint", " timestamp",
-		" double precision", " integer", " int64",
-		" varchar(4000)", " blob", " varchar",
-		"", "commit"
+		"--", "1", "0", "'01/01/1970'", "current_timestamp", " blob", " blob",
+		" smallint", " timestamp", " double precision", " integer", " int64",
+		" varchar(4000)", " blob", " varchar", "", "commit"
 	};
 
 	private static FirebirdDB _instance = new FirebirdDB();

@@ -450,8 +450,8 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 
 	protected void populateCustomAttributeModifications(
 		Object object, ExpandoBridge expandoBridge,
-		Map<String, Serializable> expandoAttributes,
-		Properties expandoMappings, Modifications modifications) {
+		Map<String, Serializable> expandoAttributes, Properties expandoMappings,
+		Modifications modifications) {
 
 		if ((expandoAttributes == null) || expandoAttributes.isEmpty()) {
 			return;

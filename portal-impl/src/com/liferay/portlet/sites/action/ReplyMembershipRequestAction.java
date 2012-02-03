@@ -74,8 +74,7 @@ public class ReplyMembershipRequestAction extends PortletAction {
 						membershipRequestId);
 
 				LiveUsers.joinGroup(
-					themeDisplay.getCompanyId(),
-					membershipRequest.getGroupId(),
+					themeDisplay.getCompanyId(), membershipRequest.getGroupId(),
 					new long[] {membershipRequest.getUserId()});
 			}
 

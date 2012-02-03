@@ -172,8 +172,7 @@ public class JournalTemplateLocalServiceImpl
 		resourceLocalService.addResources(
 			template.getCompanyId(), template.getGroupId(),
 			template.getUserId(), JournalTemplate.class.getName(),
-			template.getId(), false, addGroupPermissions,
-			addGuestPermissions);
+			template.getId(), false, addGroupPermissions, addGuestPermissions);
 	}
 
 	public void addTemplateResources(
@@ -504,8 +503,7 @@ public class JournalTemplateLocalServiceImpl
 	public int searchCount(
 			long companyId, long[] groupIds, String templateId,
 			String structureId, String structureIdComparator, String name,
-			String description,
-			boolean andOperator)
+			String description, boolean andOperator)
 		throws SystemException {
 
 		return journalTemplateFinder.countByC_G_T_S_N_D(

@@ -93,12 +93,10 @@ public class FacebookServlet extends HttpServlet {
 		fbml = StringUtil.replace(
 			fbml,
 			new String[] {
-				"<nobr>",
-				"</nobr>"
+				"<nobr>", "</nobr>"
 			},
 			new String[] {
-				StringPool.BLANK,
-				StringPool.BLANK
+				StringPool.BLANK, StringPool.BLANK
 			});
 
 		return fbml;

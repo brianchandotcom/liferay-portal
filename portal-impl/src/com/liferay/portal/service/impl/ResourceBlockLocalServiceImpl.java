@@ -706,8 +706,8 @@ public class ResourceBlockLocalServiceImpl
 	}
 
 	public void updateCompanyScopePermissions(
-			long companyId, String name, long roleId,
-			long actionIdsLong, int operator)
+			long companyId, String name, long roleId, long actionIdsLong,
+			int operator)
 		throws SystemException {
 
 		resourceTypePermissionLocalService.

@@ -44,8 +44,7 @@ public class DLFolderPermission {
 	}
 
 	public static void check(
-			PermissionChecker permissionChecker, Folder folder,
-			String actionId)
+			PermissionChecker permissionChecker, Folder folder, String actionId)
 		throws PortalException, SystemException {
 
 		if (!folder.containsPermission(permissionChecker, actionId)) {

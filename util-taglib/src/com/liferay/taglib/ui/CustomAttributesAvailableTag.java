@@ -116,8 +116,8 @@ public class CustomAttributesAvailableTag extends TagSupport {
 				if (!propertyHidden &&
 					ExpandoColumnPermissionUtil.contains(
 						permissionChecker, companyId, _className,
-						ExpandoTableConstants.DEFAULT_TABLE_NAME,
-						attributeName, ActionKeys.VIEW)) {
+						ExpandoTableConstants.DEFAULT_TABLE_NAME, attributeName,
+						ActionKeys.VIEW)) {
 
 					return EVAL_BODY_INCLUDE;
 				}

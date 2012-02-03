@@ -89,8 +89,8 @@ public class SubscriptionLocalServiceImpl
 			}
 			catch (Exception e) {
 				assetEntryLocalService.updateEntry(
-					userId, groupId, className, classPK, null, 0,
-					null, null, false, null, null, null, null, null,
+					userId, groupId, className, classPK, null, 0, null, null,
+					false, null, null, null, null, null,
 					String.valueOf(groupId), null, null, null, null, 0, 0, null,
 					false);
 			}

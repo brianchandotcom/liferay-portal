@@ -468,6 +468,9 @@ public class ServicePreAction extends Action {
 
 				throw new NoSuchLayoutException(sb.toString());
 			}
+			else if (isLoginRequest(request) && !isViewableGroup) {
+				layout = null;
+			}
 			else if (group.isLayoutPrototype()) {
 				layouts = new ArrayList<Layout>();
 			}

@@ -2700,7 +2700,7 @@ AUI.add(
 					errorText = Liferay.Language.get('please-enter-a-valid-xsd');
 				}
 				else if (exception.indexOf('DuplicateStructureElementException') > -1) {
-					errorText = Liferay.Language.get('please-enter-unique-structure-field-names-including-the-parent-structure');
+					errorText = Liferay.Language.get('please-enter-unique-structure-field-names-(including-field-names-inherited-from-the-parent-structure)');
 				}
 				else if (exception.indexOf('DuplicateStructureIdException') > -1) {
 					errorText = Liferay.Language.get('please-enter-a-unique-id');

@@ -48,6 +48,7 @@ public class ViewLinkContactsCenterTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//div[@class='aui-layout contacts-result']"));
+		assertTrue(selenium.isVisible("//div[@class='lfr-contact-checkbox']"));
 		assertEquals(RuntimeVariables.replace("Contacts Center"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("You have 0 connections."),

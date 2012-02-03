@@ -10,7 +10,7 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/user/joebloggs/home/</td>
+	<td>/user/joebloggs/home1/</td>
 	<td></td>
 </tr>
 <tr>
@@ -19,8 +19,8 @@
 	<td>Home</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//nav/ul/li[contains(.,'Home')]/a/span</td>
+	<td>assertText</td>
+	<td>//li[contains(@class, 'selected')]/a/span</td>
 	<td>Home</td>
 </tr>
 <tr>
@@ -103,7 +103,6 @@
 	<td>//li[3]/span[2]</td>
 	<td>Liferay</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

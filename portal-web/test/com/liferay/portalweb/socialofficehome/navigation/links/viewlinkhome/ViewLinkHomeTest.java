@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewLinkHomeTest extends BaseTestCase {
 	public void testViewLinkHome() throws Exception {
-		selenium.open("/user/joebloggs/home/");
+		selenium.open("/user/joebloggs/home1/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -41,10 +41,8 @@ public class ViewLinkHomeTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//nav/ul/li[contains(.,'Home')]/a/span",
-			RuntimeVariables.replace("Home"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Home"),
+			selenium.getText("//li[contains(@class, 'selected')]/a/span"));
 		assertEquals(RuntimeVariables.replace("Microblogs Status Update"),
 			selenium.getText(
 				"xPath=(//span[@class='portlet-title-default'])[1]"));

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.util;
 
+import java.io.File;
 import java.io.InputStream;
 
 /**

@@ -112,8 +112,7 @@ public class DDLRecordLocalServiceImpl
 
 		updateAsset(
 			userId, record, recordVersion, serviceContext.getAssetCategoryIds(),
-			serviceContext.getAssetTagNames(),
-			locale);
+			serviceContext.getAssetTagNames(), locale);
 
 		// Workflow
 

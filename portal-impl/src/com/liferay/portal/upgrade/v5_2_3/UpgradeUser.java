@@ -36,8 +36,7 @@ public class UpgradeUser extends UpgradeProcess {
 
 			upgradeTable(
 				UserTable.TABLE_NAME, UserTable.TABLE_COLUMNS,
-				UserTable.TABLE_SQL_CREATE,
-				UserTable.TABLE_SQL_ADD_INDEXES);
+				UserTable.TABLE_SQL_CREATE, UserTable.TABLE_SQL_ADD_INDEXES);
 		}
 
 		StringBundler sb = new StringBundler(9);

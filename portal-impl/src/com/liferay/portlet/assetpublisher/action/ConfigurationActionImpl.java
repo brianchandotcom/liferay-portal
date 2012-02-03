@@ -327,8 +327,8 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		}
 
 		layout = LayoutServiceUtil.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(),
-			layout.getLayoutId(), layout.getTypeSettings());
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getTypeSettings());
 	}
 
 	protected void updateDisplaySettings(ActionRequest actionRequest)

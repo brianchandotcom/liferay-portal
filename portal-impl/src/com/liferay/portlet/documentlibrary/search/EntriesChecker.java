@@ -172,9 +172,7 @@ public class EntriesChecker extends RowChecker {
 			checked, disabled,
 			_liferayPortletResponse.getNamespace() + RowChecker.ROW_IDS +
 				name + "Checkbox",
-			primaryKey,
-			checkBoxRowIds,
-			"'#" + getAllRowIds() + "Checkbox'",
+			primaryKey, checkBoxRowIds, "'#" + getAllRowIds() + "Checkbox'",
 			_liferayPortletResponse.getNamespace() + "toggleActionsButton();");
 	}
 

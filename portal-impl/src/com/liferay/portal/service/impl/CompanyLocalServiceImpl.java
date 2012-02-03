@@ -1172,8 +1172,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				PropsKeys.COMPANY_SECURITY_STRANGERS_VERIFY,
 				String.valueOf(strangersVerify));
 			preferences.setValue(
-				PropsKeys.COMPANY_SECURITY_SITE_LOGO,
-				String.valueOf(siteLogo));
+				PropsKeys.COMPANY_SECURITY_SITE_LOGO, String.valueOf(siteLogo));
 
 			preferences.store();
 		}

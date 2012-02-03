@@ -58,13 +58,11 @@ public class StructureSearch extends SearchContainer<DDMStructure> {
 			StructureDisplayTerms.CLASS_NAME_ID,
 			String.valueOf(displayTerms.getClassNameId()));
 		iteratorURL.setParameter(
-			StructureDisplayTerms.DESCRIPTION,
-			displayTerms.getDescription());
+			StructureDisplayTerms.DESCRIPTION, displayTerms.getDescription());
 		iteratorURL.setParameter(
 			StructureDisplayTerms.NAME, displayTerms.getName());
 		iteratorURL.setParameter(
-			StructureDisplayTerms.STORAGE_TYPE,
-			displayTerms.getStorageType());
+			StructureDisplayTerms.STORAGE_TYPE, displayTerms.getStorageType());
 	}
 
 }

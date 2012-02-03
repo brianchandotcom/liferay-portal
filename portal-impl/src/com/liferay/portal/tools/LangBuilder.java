@@ -431,8 +431,8 @@ public class LangBuilder {
 		value = StringUtil.replace(
 			value.trim(),
 			new String[] {
-				"  ", "<b>", "</b>", "<i>", "</i>", " url ", "&#39;",
-				"&#39 ;", "&quot;", "&quot ;"
+				"  ", "<b>", "</b>", "<i>", "</i>", " url ", "&#39;", "&#39 ;",
+				"&quot;", "&quot ;"
 			},
 			new String[] {
 				" ", "<strong>", "</strong>", "<em>", "</em>", " URL ", "\'",

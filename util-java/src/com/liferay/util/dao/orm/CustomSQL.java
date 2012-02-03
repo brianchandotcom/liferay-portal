@@ -395,8 +395,7 @@ public class CustomSQL {
 				new String[] {
 					"Date >= ? AND ? IS NOT NULL",
 					"Date <= ? AND ? IS NOT NULL",
-					"Date >= ? OR ? IS NULL",
-					"Date <= ? OR ? IS NULL"
+					"Date >= ? OR ? IS NULL", "Date <= ? OR ? IS NULL"
 				},
 				new String[] {
 					"Date >= ? AND CAST(? AS TIMESTAMP) IS NOT NULL",
@@ -459,8 +458,7 @@ public class CustomSQL {
 					"? IS NULL", "? IS NOT NULL"
 				},
 				new String[] {
-					_functionIsNull,
-					_functionIsNotNull
+					_functionIsNull, _functionIsNotNull
 				});
 		}
 

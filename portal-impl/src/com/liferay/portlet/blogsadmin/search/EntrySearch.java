@@ -50,8 +50,7 @@ public class EntrySearch extends SearchContainer<BlogsEntry> {
 		iteratorURL.setParameter(
 			EntryDisplayTerms.AUTHOR, displayTerms.getAuthor());
 		iteratorURL.setParameter(
-			EntryDisplayTerms.STATUS,
-			String.valueOf(displayTerms.getStatus()));
+			EntryDisplayTerms.STATUS, String.valueOf(displayTerms.getStatus()));
 		iteratorURL.setParameter(
 			EntryDisplayTerms.TITLE, displayTerms.getTitle());
 	}

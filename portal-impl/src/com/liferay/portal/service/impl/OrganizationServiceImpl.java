@@ -606,9 +606,9 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 		User user = getUser();
 
 		return organizationLocalService.updateOrganization(
-			user.getCompanyId(), organizationId, parentOrganizationId,
-			name, type, recursable, regionId, countryId, statusId, comments,
-			site, serviceContext);
+			user.getCompanyId(), organizationId, parentOrganizationId, name,
+			type, recursable, regionId, countryId, statusId, comments, site,
+			serviceContext);
 	}
 
 }

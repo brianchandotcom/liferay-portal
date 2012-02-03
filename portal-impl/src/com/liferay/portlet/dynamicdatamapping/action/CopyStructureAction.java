@@ -189,8 +189,7 @@ public class CopyStructureAction extends PortletAction {
 		portletURL.setParameter(
 			"struts_action", "/dynamic_data_mapping/copy_structure");
 		portletURL.setParameter(
-			"structureId", String.valueOf(structure.getStructureId()),
-			false);
+			"structureId", String.valueOf(structure.getStructureId()), false);
 		portletURL.setParameter(
 			"copyDetailTemplates",
 			ParamUtil.getString(actionRequest, "copyDetailTemplates"), false);

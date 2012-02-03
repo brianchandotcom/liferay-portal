@@ -601,8 +601,8 @@ public class LayoutTemplateLocalServiceImpl
 
 		if (customEl != null) {
 			readLayoutTemplate(
-				servletContextName, servletContext, layoutTemplateIds,
-				customEl, false, null, pluginPackage);
+				servletContextName, servletContext, layoutTemplateIds, customEl,
+				false, null, pluginPackage);
 		}
 
 		return layoutTemplateIds;

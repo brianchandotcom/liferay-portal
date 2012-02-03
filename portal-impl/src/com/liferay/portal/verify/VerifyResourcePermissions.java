@@ -180,154 +180,96 @@ public class VerifyResourcePermissions extends VerifyProcess {
 
 	private static final String[][] _MODELS = new String[][] {
 		new String[] {
-			AnnouncementsEntry.class.getName(),
-			"AnnouncementsEntry",
-			"entryId"
+			AnnouncementsEntry.class.getName(), "AnnouncementsEntry", "entryId"
 		},
 		new String[] {
-			AssetCategory.class.getName(),
-			"AssetCategory",
-			"categoryId"
+			AssetCategory.class.getName(), "AssetCategory", "categoryId"
 		},
 		new String[] {
-			AssetTag.class.getName(),
-			"AssetTag",
-			"tagId"
+			AssetTag.class.getName(), "AssetTag", "tagId"
 		},
 		new String[] {
-			AssetVocabulary.class.getName(),
-			"AssetVocabulary",
-			"vocabularyId"
+			AssetVocabulary.class.getName(), "AssetVocabulary", "vocabularyId"
 		},
 		new String[] {
-			BlogsEntry.class.getName(),
-			"BlogsEntry",
-			"entryId"
+			BlogsEntry.class.getName(), "BlogsEntry", "entryId"
 		},
 		new String[] {
-			BookmarksEntry.class.getName(),
-			"BookmarksEntry",
-			"entryId"
+			BookmarksEntry.class.getName(), "BookmarksEntry", "entryId"
 		},
 		new String[] {
-			BookmarksFolder.class.getName(),
-			"BookmarksFolder",
-			"folderId"
+			BookmarksFolder.class.getName(), "BookmarksFolder", "folderId"
 		},
 		new String[] {
-			CalEvent.class.getName(),
-			"CalEvent",
-			"eventId"
+			CalEvent.class.getName(), "CalEvent", "eventId"
 		},
 		new String[] {
-			DDMStructure.class.getName(),
-			"DDMStructure",
-			"structureId"
+			DDMStructure.class.getName(), "DDMStructure", "structureId"
 		},
 		new String[] {
-			DDMTemplate.class.getName(),
-			"DDMTemplate",
-			"templateId"
+			DDMTemplate.class.getName(), "DDMTemplate", "templateId"
 		},
 		new String[] {
-			DLFileEntry.class.getName(),
-			"DLFileEntry",
-			"fileEntryId"
+			DLFileEntry.class.getName(), "DLFileEntry", "fileEntryId"
 		},
 		new String[] {
-			DLFileShortcut.class.getName(),
-			"DLFileShortcut",
-			"fileShortcutId"
+			DLFileShortcut.class.getName(), "DLFileShortcut", "fileShortcutId"
 		},
 		new String[] {
-			DLFolder.class.getName(),
-			"DLFolder",
-			"folderId"
+			DLFolder.class.getName(), "DLFolder", "folderId"
 		},
 		new String[] {
-			JournalArticle.class.getName(),
-			"JournalArticle",
-			"resourcePrimKey"
+			JournalArticle.class.getName(), "JournalArticle", "resourcePrimKey"
 		},
 		new String[] {
-			JournalFeed.class.getName(),
-			"JournalFeed",
-			"id_"
+			JournalFeed.class.getName(), "JournalFeed", "id_"
 		},
 		new String[] {
-			JournalStructure.class.getName(),
-			"JournalStructure",
-			"id_"
+			JournalStructure.class.getName(), "JournalStructure", "id_"
 		},
 		new String[] {
-			JournalTemplate.class.getName(),
-			"JournalTemplate",
-			"id_"
+			JournalTemplate.class.getName(), "JournalTemplate", "id_"
 		},
 		new String[] {
-			LayoutSetBranch.class.getName(),
-			"LayoutSetBranch",
+			LayoutSetBranch.class.getName(), "LayoutSetBranch",
 			"layoutSetBranchId"
 		},
 		new String[] {
-			MBCategory.class.getName(),
-			"MBCategory",
-			"categoryId"
+			MBCategory.class.getName(), "MBCategory", "categoryId"
 		},
 		new String[] {
-			MBMessage.class.getName(),
-			"MBMessage",
-			"messageId"
+			MBMessage.class.getName(), "MBMessage", "messageId"
 		},
 		new String[] {
-			PasswordPolicy.class.getName(),
-			"PasswordPolicy",
-			"passwordPolicyId"
+			PasswordPolicy.class.getName(), "PasswordPolicy", "passwordPolicyId"
 		},
 		new String[] {
-			PollsQuestion.class.getName(),
-			"PollsQuestion",
-			"questionId"
+			PollsQuestion.class.getName(), "PollsQuestion", "questionId"
 		},
 		new String[] {
-			SCFrameworkVersion.class.getName(),
-			"SCFrameworkVersion",
+			SCFrameworkVersion.class.getName(), "SCFrameworkVersion",
 			"frameworkVersionId"
 		},
 		new String[] {
-			SCProductEntry.class.getName(),
-			"SCProductEntry",
-			"productEntryId"
+			SCProductEntry.class.getName(), "SCProductEntry", "productEntryId"
 		},
 		new String[] {
-			ShoppingCategory.class.getName(),
-			"ShoppingCategory",
-			"categoryId"
+			ShoppingCategory.class.getName(), "ShoppingCategory", "categoryId"
 		},
 		new String[] {
-			ShoppingItem.class.getName(),
-			"ShoppingItem",
-			"itemId"
+			ShoppingItem.class.getName(), "ShoppingItem", "itemId"
 		},
 		new String[] {
-			Team.class.getName(),
-			"Team",
-			"teamId"
+			Team.class.getName(), "Team", "teamId"
 		},
 		new String[] {
-			User.class.getName(),
-			"User_",
-			"userId"
+			User.class.getName(), "User_", "userId"
 		},
 		new String[] {
-			WikiNode.class.getName(),
-			"WikiNode",
-			"nodeId"
+			WikiNode.class.getName(), "WikiNode", "nodeId"
 		},
 		new String[] {
-			WikiPage.class.getName(),
-			"WikiPage",
-			"resourcePrimKey"
+			WikiPage.class.getName(), "WikiPage", "resourcePrimKey"
 		}
 	};
 

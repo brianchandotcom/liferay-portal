@@ -498,8 +498,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 		}
 
 		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
-			new MethodHandler(_getLastGenerationMethodKey, companyId),
-			true);
+			new MethodHandler(_getLastGenerationMethodKey, companyId), true);
 
 		FutureClusterResponses futureClusterResponses =
 			ClusterExecutorUtil.execute(clusterRequest);

@@ -237,8 +237,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 			HttpServletResponse.SC_CREATED,
 			serviceCopyOrMove(Method.MOVE, _TEST_FILE_NAME, _TEMP_FILE_NAME_2));
 		assertCode(
-			HttpServletResponse.SC_NOT_FOUND,
-			servicePropFind(_TEST_META_NAME));
+			HttpServletResponse.SC_NOT_FOUND, servicePropFind(_TEST_META_NAME));
 		assertCode(
 			HttpServletResponse.SC_NOT_FOUND,
 			servicePropFind(_TEMP_META_NAME_2));

@@ -96,8 +96,8 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 		}
 
 		return findByC_G_N_D_S(
-			companyId, groupId, names, descriptions, scope, andOperator,
-			start, end, orderByComparator);
+			companyId, groupId, names, descriptions, scope, andOperator, start,
+			end, orderByComparator);
 	}
 
 	public List<DDLRecordSet> findByC_G_N_D_S(

@@ -168,8 +168,8 @@ public class EmailAddressLocalServiceImpl
 	}
 
 	protected void validate(
-			long emailAddressId, long companyId, long classNameId,
-			long classPK, String address, int typeId, boolean primary)
+			long emailAddressId, long companyId, long classNameId, long classPK,
+			String address, int typeId, boolean primary)
 		throws PortalException, SystemException {
 
 		if (!Validator.isEmailAddress(address)) {

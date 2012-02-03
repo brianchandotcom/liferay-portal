@@ -95,8 +95,8 @@ public class LiferayRepository
 		DLFileVersionLocalService dlFileVersionLocalService,
 		DLFileVersionService dlFileVersionService,
 		DLFolderLocalService dlFolderLocalService,
-		DLFolderService dlFolderService, long folderId,
-		long fileEntryId, long fileVersionId) {
+		DLFolderService dlFolderService, long folderId, long fileEntryId,
+		long fileVersionId) {
 
 		super(
 			repositoryLocalService, repositoryService, dlAppHelperLocalService,

@@ -302,10 +302,8 @@ public class FileMultiValueMap<K extends Serializable, V extends Serializable>
 	private void _deleteDatabase() throws Throwable {
 		File[] files = new File[] {
 			new File(_fileName + ".properties"),
-			new File(_fileName + ".script"),
-			new File(_fileName + ".log"),
-			new File(_fileName + ".data"),
-			new File(_fileName + ".backup")
+			new File(_fileName + ".script"), new File(_fileName + ".log"),
+			new File(_fileName + ".data"), new File(_fileName + ".backup")
 		};
 
 		for (File file : files) {

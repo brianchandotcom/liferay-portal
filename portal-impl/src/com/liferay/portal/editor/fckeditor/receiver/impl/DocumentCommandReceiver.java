@@ -101,8 +101,8 @@ public class DocumentCommandReceiver extends BaseCommandReceiver {
 			serviceContext.setAddGuestPermissions(true);
 
 			DLAppServiceUtil.addFileEntry(
-				repositoryId, folderId, title, contentType, title,
-				description, changeLog, inputStream, size, serviceContext);
+				repositoryId, folderId, title, contentType, title, description,
+				changeLog, inputStream, size, serviceContext);
 		}
 		catch (Exception e) {
 			throw new FCKException(e);

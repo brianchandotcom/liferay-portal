@@ -44,8 +44,7 @@ public class UpgradePolls extends UpgradeProcess {
 			// PollsQuestion
 
 			upgradeTable(
-				PollsQuestionTable.TABLE_NAME,
-				PollsQuestionTable.TABLE_COLUMNS,
+				PollsQuestionTable.TABLE_NAME, PollsQuestionTable.TABLE_COLUMNS,
 				PollsQuestionTable.TABLE_SQL_CREATE,
 				PollsQuestionTable.TABLE_SQL_ADD_INDEXES);
 		}

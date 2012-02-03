@@ -51,8 +51,8 @@ public class WorkflowLogManagerUtil {
 		throws WorkflowException {
 
 		return _workflowLogManager.getWorkflowLogsByWorkflowInstance(
-			companyId, workflowInstanceId, logTypes,
-			start, end, orderByComparator);
+			companyId, workflowInstanceId, logTypes, start, end,
+			orderByComparator);
 	}
 
 	public static List<WorkflowLog> getWorkflowLogsByWorkflowTask(
@@ -61,8 +61,7 @@ public class WorkflowLogManagerUtil {
 		throws WorkflowException {
 
 		return _workflowLogManager.getWorkflowLogsByWorkflowTask(
-			companyId, workflowTaskId, logTypes,
-			start, end, orderByComparator);
+			companyId, workflowTaskId, logTypes, start, end, orderByComparator);
 	}
 
 	public void setWorkflowLogManager(WorkflowLogManager workflowLogManager) {

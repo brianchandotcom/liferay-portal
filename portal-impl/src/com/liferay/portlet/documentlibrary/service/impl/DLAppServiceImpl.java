@@ -1479,8 +1479,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		return getGroupFileEntries(
-			groupId, userId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			start, end, new RepositoryModelModifiedDateComparator());
+			groupId, userId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, start,
+			end, new RepositoryModelModifiedDateComparator());
 	}
 
 	/**
@@ -1517,8 +1517,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		return getGroupFileEntries(
-			groupId, userId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			start, end, obc);
+			groupId, userId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, start,
+			end, obc);
 	}
 
 	/**
@@ -2599,8 +2599,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	}
 
 	protected void deleteFileEntry(
-			long oldFileEntryId, long newFileEntryId,
-			Repository fromRepository, Repository toRepository)
+			long oldFileEntryId, long newFileEntryId, Repository fromRepository,
+			Repository toRepository)
 		throws PortalException, SystemException {
 
 		try {

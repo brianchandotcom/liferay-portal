@@ -95,8 +95,8 @@ public class UpgradeExpando extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		updateTables(
-			JournalArticle.class.getName(),
-			JournalArticleImpl.TABLE_NAME, "id_");
+			JournalArticle.class.getName(), JournalArticleImpl.TABLE_NAME,
+			"id_");
 
 		updateTables(
 			WikiPage.class.getName(), WikiPageImpl.TABLE_NAME, "pageId");

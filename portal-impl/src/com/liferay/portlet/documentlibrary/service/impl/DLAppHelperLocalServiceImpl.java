@@ -119,10 +119,10 @@ public class DLAppHelperLocalServiceImpl
 		if (fileEntryAssetEntry == null) {
 			fileEntryAssetEntry = assetEntryLocalService.updateEntry(
 				userId, fileEntry.getGroupId(),
-				DLFileEntryConstants.getClassName(),
-				fileEntry.getFileEntryId(), fileEntry.getUuid(),
-				fileEntryTypeId, assetCategoryIds, assetTagNames, false, null,
-				null, null, null, fileEntry.getMimeType(), fileEntry.getTitle(),
+				DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId(),
+				fileEntry.getUuid(), fileEntryTypeId, assetCategoryIds,
+				assetTagNames, false, null, null, null, null,
+				fileEntry.getMimeType(), fileEntry.getTitle(),
 				fileEntry.getDescription(), null, null, null, 0, 0, null,
 				false);
 		}
@@ -281,8 +281,8 @@ public class DLAppHelperLocalServiceImpl
 
 		if (!isStagingGroup(folder.getGroupId())) {
 			dlSyncLocalService.updateSync(
-			folder.getFolderId(), folder.getParentFolderId(),
-			folder.getName(), DLSyncConstants.EVENT_UPDATE, "-1");
+			folder.getFolderId(), folder.getParentFolderId(), folder.getName(),
+			DLSyncConstants.EVENT_UPDATE, "-1");
 		}
 	}
 
@@ -355,10 +355,10 @@ public class DLAppHelperLocalServiceImpl
 		else {
 			assetEntry = assetEntryLocalService.updateEntry(
 				userId, fileEntry.getGroupId(),
-				DLFileEntryConstants.getClassName(),
-				fileEntry.getFileEntryId(), fileEntry.getUuid(),
-				fileEntryTypeId, assetCategoryIds, assetTagNames, visible, null,
-				null, null, null, fileEntry.getMimeType(), fileEntry.getTitle(),
+				DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId(),
+				fileEntry.getUuid(), fileEntryTypeId, assetCategoryIds,
+				assetTagNames, visible, null, null, null, null,
+				fileEntry.getMimeType(), fileEntry.getTitle(),
 				fileEntry.getDescription(), null, null, null, 0, 0, null,
 				false);
 
@@ -371,11 +371,11 @@ public class DLAppHelperLocalServiceImpl
 					userId, dlFileShortcut.getGroupId(),
 					DLFileShortcut.class.getName(),
 					dlFileShortcut.getFileShortcutId(),
-					dlFileShortcut.getUuid(), fileEntryTypeId,
-					assetCategoryIds, assetTagNames, true,
-					null, null, null, null, fileEntry.getMimeType(),
-					fileEntry.getTitle(), fileEntry.getDescription(), null,
-					null, null, 0, 0, null, false);
+					dlFileShortcut.getUuid(), fileEntryTypeId, assetCategoryIds,
+					assetTagNames, true, null, null, null, null,
+					fileEntry.getMimeType(), fileEntry.getTitle(),
+					fileEntry.getDescription(), null, null, null, 0, 0, null,
+					false);
 			}
 		}
 
@@ -480,8 +480,8 @@ public class DLAppHelperLocalServiceImpl
 								0, null, false);
 
 						assetLinkLocalService.updateLinks(
-							userId, assetEntry.getEntryId(),
-							assetLinkEntryIds, AssetLinkConstants.TYPE_RELATED);
+							userId, assetEntry.getEntryId(), assetLinkEntryIds,
+							AssetLinkConstants.TYPE_RELATED);
 
 						assetEntryLocalService.deleteEntry(
 							draftAssetEntry.getEntryId());
@@ -528,8 +528,8 @@ public class DLAppHelperLocalServiceImpl
 			}
 
 			socialActivityLocalService.addUniqueActivity(
-				latestFileVersion.getStatusByUserId(),
-				fileEntry.getGroupId(), latestFileVersion.getCreateDate(),
+				latestFileVersion.getStatusByUserId(), fileEntry.getGroupId(),
+				latestFileVersion.getCreateDate(),
 				DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId(),
 				activityType, StringPool.BLANK, 0);
 		}

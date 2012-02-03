@@ -521,8 +521,8 @@ public class LayoutImporter {
 				newLayouts, newLayoutsMap, newLayoutIds, portletsMergeMode,
 				themeId, colorSchemeId, layoutsImportMode, privateLayout,
 				importPermissions, importPublicLayoutPermissions,
-				importUserPermissions, importThemeSettings,
-				rootElement, layoutElement);
+				importUserPermissions, importThemeSettings, rootElement,
+				layoutElement);
 		}
 
 		Element portletsElement = rootElement.element("portlets");
@@ -1022,8 +1022,8 @@ public class LayoutImporter {
 				newLayouts, newLayoutsMap, newLayoutIds, portletsMergeMode,
 				themeId, colorSchemeId, layoutsImportMode, privateLayout,
 				importPermissions, importPublicLayoutPermissions,
-				importUserPermissions, importThemeSettings,
-				rootElement, (Element)parentLayoutNode);
+				importUserPermissions, importThemeSettings, rootElement,
+				(Element)parentLayoutNode);
 
 			Layout parentLayout = newLayoutsMap.get(parentLayoutId);
 

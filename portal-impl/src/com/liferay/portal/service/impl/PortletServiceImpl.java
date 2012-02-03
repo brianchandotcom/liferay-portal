@@ -48,8 +48,7 @@ public class PortletServiceImpl extends PortletServiceBaseImpl {
 
 				jsonObject.put("portlet_name", portlet.getPortletName());
 				jsonObject.put(
-					"servlet_context_name",
-					portletApp.getServletContextName());
+					"servlet_context_name", portletApp.getServletContextName());
 
 				jsonArray.put(jsonObject);
 			}

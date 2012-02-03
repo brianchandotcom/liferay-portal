@@ -77,40 +77,31 @@ public class VerifyUUID extends VerifyProcess {
 
 	private static final String[][] _MODELS = new String[][] {
 		new String[] {
-			"DLFileVersion",
-			"fileVersionId"
+			"DLFileVersion", "fileVersionId"
 		},
 		new String[] {
-			"JournalArticleResource",
-			"resourcePrimKey"
+			"JournalArticleResource", "resourcePrimKey"
 		},
 		new String[] {
-			"JournalFeed",
-			"id_"
+			"JournalFeed", "id_"
 		},
 		new String[] {
-			"JournalStructure",
-			"id_"
+			"JournalStructure", "id_"
 		},
 		new String[] {
-			"JournalTemplate",
-			"id_"
+			"JournalTemplate", "id_"
 		},
 		new String[] {
-			"Layout",
-			"plid"
+			"Layout", "plid"
 		},
 		new String[] {
-			"LayoutPrototype",
-			"layoutPrototypeId"
+			"LayoutPrototype", "layoutPrototypeId"
 		},
 		new String[] {
-			"LayoutSetPrototype",
-			"layoutSetPrototypeId"
+			"LayoutSetPrototype", "layoutSetPrototypeId"
 		},
 		new String[] {
-			"WikiPageResource",
-			"resourcePrimKey"
+			"WikiPageResource", "resourcePrimKey"
 		}
 	};
 

@@ -208,8 +208,8 @@ public class PollsPortletDataHandlerImpl extends BasePortletDataHandler {
 			}
 			else {
 				importedChoice = PollsChoiceLocalServiceUtil.updateChoice(
-					existingChoice.getChoiceId(), questionId,
-					choice.getName(), choice.getDescription());
+					existingChoice.getChoiceId(), questionId, choice.getName(),
+					choice.getDescription());
 			}
 		}
 		else {

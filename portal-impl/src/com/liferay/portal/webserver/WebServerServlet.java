@@ -788,8 +788,8 @@ public class WebServerServlet extends HttpServlet {
 	}
 
 	protected void sendFile(
-			HttpServletRequest request, HttpServletResponse response,
-			User user, String[] pathArray)
+			HttpServletRequest request, HttpServletResponse response, User user,
+			String[] pathArray)
 		throws Exception {
 
 		FileEntry fileEntry = getFileEntry(pathArray);

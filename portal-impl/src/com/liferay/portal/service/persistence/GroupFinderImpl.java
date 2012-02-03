@@ -557,8 +557,8 @@ public class GroupFinderImpl
 
 	public List<Group> findByC_C_N_D(
 			long companyId, long[] classNameIds, String name, String realName,
-			String description, LinkedHashMap<String, Object> params,
-			int start, int end, OrderByComparator obc)
+			String description, LinkedHashMap<String, Object> params, int start,
+			int end, OrderByComparator obc)
 		throws SystemException {
 
 		name = StringUtil.lowerCase(name);
@@ -898,8 +898,7 @@ public class GroupFinderImpl
 			return StringUtil.replace(
 				sql,
 				new String[] {
-					"[$JOIN$]",
-					"[$WHERE$]"
+					"[$JOIN$]", "[$WHERE$]"
 				},
 				new String[] {
 					StringPool.BLANK,

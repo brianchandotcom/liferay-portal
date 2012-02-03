@@ -125,9 +125,9 @@ public class PasswordPolicyLocalServiceImpl
 
 			addPasswordPolicy(
 				defaultUserId, true, defaultPasswordPolicyName,
-				defaultPasswordPolicyName, true, true, 0, false, true, 0, 6,
-				0, 1, 0, 1, false, 6, false, 8640000, 86400, 0, false, 3, 0,
-				600, 86400);
+				defaultPasswordPolicyName, true, true, 0, false, true, 0, 6, 0,
+				1, 0, 1, false, 6, false, 8640000, 86400, 0, false, 3, 0, 600,
+				86400);
 		}
 	}
 
@@ -286,8 +286,8 @@ public class PasswordPolicyLocalServiceImpl
 			boolean checkSyntax, boolean allowDictionaryWords,
 			int minAlphanumeric, int minLength, int minLowerCase,
 			int minNumbers, int minSymbols, int minUpperCase, boolean history,
-			int historyCount, boolean expireable, long maxAge,
-			long warningTime, int graceLimit, boolean lockout, int maxFailure,
+			int historyCount, boolean expireable, long maxAge, long warningTime,
+			int graceLimit, boolean lockout, int maxFailure,
 			long lockoutDuration, long resetFailureCount,
 			long resetTicketMaxAge)
 		throws PortalException, SystemException {

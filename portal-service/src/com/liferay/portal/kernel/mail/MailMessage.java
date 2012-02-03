@@ -54,8 +54,7 @@ public class MailMessage implements Serializable {
 	}
 
 	public MailMessage(
-		InternetAddress from, String subject, String body,
-		boolean htmlFormat) {
+		InternetAddress from, String subject, String body, boolean htmlFormat) {
 
 		this(from, null, subject, body, htmlFormat);
 	}

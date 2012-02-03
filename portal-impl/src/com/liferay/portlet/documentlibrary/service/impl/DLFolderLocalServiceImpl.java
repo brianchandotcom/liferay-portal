@@ -411,10 +411,9 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	public DLFolder updateFolder(
-			long folderId, long parentFolderId, String name,
-			String description, long defaultFileEntryTypeId,
-			List<Long> fileEntryTypeIds, boolean overrideFileEntryTypes,
-			ServiceContext serviceContext)
+			long folderId, long parentFolderId, String name, String description,
+			long defaultFileEntryTypeId, List<Long> fileEntryTypeIds,
+			boolean overrideFileEntryTypes, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// File entry types

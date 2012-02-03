@@ -87,8 +87,8 @@ public class OrganizationFinderImpl
 
 	public int countByKeywords(
 			long companyId, long parentOrganizationId,
-			String parentOrganizationIdComparator, String keywords,
-			String type, Long regionId, Long countryId,
+			String parentOrganizationIdComparator, String keywords, String type,
+			Long regionId, Long countryId,
 			LinkedHashMap<String, Object> params)
 		throws SystemException {
 
@@ -160,9 +160,9 @@ public class OrganizationFinderImpl
 
 	public int countByC_PO_N_T_S_C_Z_R_C(
 			long companyId, long parentOrganizationId,
-			String parentOrganizationIdComparator, String[] names,
-			String type, String[] streets, String[] cities, String[] zips,
-			Long regionId, Long countryId, LinkedHashMap<String, Object> params,
+			String parentOrganizationIdComparator, String[] names, String type,
+			String[] streets, String[] cities, String[] zips, Long regionId,
+			Long countryId, LinkedHashMap<String, Object> params,
 			boolean andOperator)
 		throws SystemException {
 
@@ -204,20 +204,15 @@ public class OrganizationFinderImpl
 				sql, "lower(Organization_.name)", StringPool.LIKE, false,
 				names);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(Address.street1)", StringPool.LIKE, true,
-				streets);
+				sql, "lower(Address.street1)", StringPool.LIKE, true, streets);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(Address.street2)", StringPool.LIKE, true,
-				streets);
+				sql, "lower(Address.street2)", StringPool.LIKE, true, streets);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(Address.street3)", StringPool.LIKE, true,
-				streets);
+				sql, "lower(Address.street3)", StringPool.LIKE, true, streets);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(Address.city)", StringPool.LIKE, false,
-				cities);
+				sql, "lower(Address.city)", StringPool.LIKE, false, cities);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(Address.zip)", StringPool.LIKE, true,
-				zips);
+				sql, "lower(Address.zip)", StringPool.LIKE, true, zips);
 
 			if (regionId == null) {
 				sql = StringUtil.replace(sql, REGION_ID_SQL, StringPool.BLANK);
@@ -352,8 +347,8 @@ public class OrganizationFinderImpl
 
 	public List<Organization> findByKeywords(
 			long companyId, long parentOrganizationId,
-			String parentOrganizationIdComparator, String keywords,
-			String type, Long regionId, Long countryId,
+			String parentOrganizationIdComparator, String keywords, String type,
+			Long regionId, Long countryId,
 			LinkedHashMap<String, Object> params, int start, int end,
 			OrderByComparator obc)
 		throws SystemException {
@@ -401,9 +396,9 @@ public class OrganizationFinderImpl
 
 	public List<Organization> findByC_PO_N_T_S_C_Z_R_C(
 			long companyId, long parentOrganizationId,
-			String parentOrganizationIdComparator, String[] names,
-			String type, String[] streets, String[] cities, String[] zips,
-			Long regionId, Long countryId, LinkedHashMap<String, Object> params,
+			String parentOrganizationIdComparator, String[] names, String type,
+			String[] streets, String[] cities, String[] zips, Long regionId,
+			Long countryId, LinkedHashMap<String, Object> params,
 			boolean andOperator, int start, int end, OrderByComparator obc)
 		throws SystemException {
 
@@ -447,23 +442,17 @@ public class OrganizationFinderImpl
 		sql = StringUtil.replace(sql, "[$WHERE$]", getWhere(params));
 		sql = sql.concat(StringPool.CLOSE_PARENTHESIS);
 		sql = CustomSQLUtil.replaceKeywords(
-			sql, "lower(Organization_.name)", StringPool.LIKE, false,
-			names);
+			sql, "lower(Organization_.name)", StringPool.LIKE, false, names);
 		sql = CustomSQLUtil.replaceKeywords(
-			sql, "lower(Address.street1)", StringPool.LIKE, true,
-			streets);
+			sql, "lower(Address.street1)", StringPool.LIKE, true, streets);
 		sql = CustomSQLUtil.replaceKeywords(
-			sql, "lower(Address.street2)", StringPool.LIKE, true,
-			streets);
+			sql, "lower(Address.street2)", StringPool.LIKE, true, streets);
 		sql = CustomSQLUtil.replaceKeywords(
-			sql, "lower(Address.street3)", StringPool.LIKE, true,
-			streets);
+			sql, "lower(Address.street3)", StringPool.LIKE, true, streets);
 		sql = CustomSQLUtil.replaceKeywords(
-			sql, "lower(Address.city)", StringPool.LIKE, false,
-			cities);
+			sql, "lower(Address.city)", StringPool.LIKE, false, cities);
 		sql = CustomSQLUtil.replaceKeywords(
-			sql, "lower(Address.zip)", StringPool.LIKE, true,
-			zips);
+			sql, "lower(Address.zip)", StringPool.LIKE, true, zips);
 		sql = StringUtil.replace(
 			sql, "[$PARENT_ORGANIZATION_ID_COMPARATOR$]",
 			parentOrganizationIdComparator);
@@ -573,10 +562,9 @@ public class OrganizationFinderImpl
 
 	protected int countByPermissions(
 			long companyId, long parentOrganizationId,
-			String parentOrganizationIdComparator, String[] names,
-			String type, String[] streets, String[] cities, String[] zips,
-			Long regionId, Long countryId, long resourceId, long groupId,
-			boolean andOperator)
+			String parentOrganizationIdComparator, String[] names, String type,
+			String[] streets, String[] cities, String[] zips, Long regionId,
+			Long countryId, long resourceId, long groupId, boolean andOperator)
 		throws SystemException {
 
 		Session session = null;
@@ -652,20 +640,15 @@ public class OrganizationFinderImpl
 				sql, "lower(Organization_.name)", StringPool.LIKE, false,
 				names);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(Address.street1)", StringPool.LIKE, true,
-				streets);
+				sql, "lower(Address.street1)", StringPool.LIKE, true, streets);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(Address.street2)", StringPool.LIKE, true,
-				streets);
+				sql, "lower(Address.street2)", StringPool.LIKE, true, streets);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(Address.street3)", StringPool.LIKE, true,
-				streets);
+				sql, "lower(Address.street3)", StringPool.LIKE, true, streets);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(Address.city)", StringPool.LIKE, false,
-				cities);
+				sql, "lower(Address.city)", StringPool.LIKE, false, cities);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(Address.zip)", StringPool.LIKE, true,
-				zips);
+				sql, "lower(Address.zip)", StringPool.LIKE, true, zips);
 
 			if (regionId == null) {
 				sql = StringUtil.replace(sql, REGION_ID_SQL, StringPool.BLANK);
@@ -736,10 +719,10 @@ public class OrganizationFinderImpl
 
 	protected List<Organization> findByPermissions(
 			long companyId, long parentOrganizationId,
-			String parentOrganizationIdComparator, String[] names,
-			String type, String[] streets, String[] cities, String[] zips,
-			Long regionId, Long countryId, long resourceId, long groupId,
-			boolean andOperator, int start, int end, OrderByComparator obc)
+			String parentOrganizationIdComparator, String[] names, String type,
+			String[] streets, String[] cities, String[] zips, Long regionId,
+			Long countryId, long resourceId, long groupId, boolean andOperator,
+			int start, int end, OrderByComparator obc)
 		throws SystemException {
 
 		Session session = null;
@@ -816,20 +799,15 @@ public class OrganizationFinderImpl
 				sql, "lower(Organization_.name)", StringPool.LIKE, false,
 				names);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(Address.street1)", StringPool.LIKE, true,
-				streets);
+				sql, "lower(Address.street1)", StringPool.LIKE, true, streets);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(Address.street2)", StringPool.LIKE, true,
-				streets);
+				sql, "lower(Address.street2)", StringPool.LIKE, true, streets);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(Address.street3)", StringPool.LIKE, true,
-				streets);
+				sql, "lower(Address.street3)", StringPool.LIKE, true, streets);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(Address.city)", StringPool.LIKE, false,
-				cities);
+				sql, "lower(Address.city)", StringPool.LIKE, false, cities);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(Address.zip)", StringPool.LIKE, true,
-				zips);
+				sql, "lower(Address.zip)", StringPool.LIKE, true, zips);
 
 			if (regionId == null) {
 				sql = StringUtil.replace(sql, REGION_ID_SQL, StringPool.BLANK);

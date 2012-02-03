@@ -165,13 +165,12 @@ public class SitesUtil {
 
 		targetLayout = LayoutLocalServiceUtil.updateLayout(
 			targetLayout.getGroupId(), targetLayout.isPrivateLayout(),
-			targetLayout.getLayoutId(),
-			targetLayout.getParentLayoutId(), targetLayout.getNameMap(),
-			targetLayout.getTitleMap(), targetLayout.getDescriptionMap(),
-			targetLayout.getKeywordsMap(), targetLayout.getRobotsMap(),
-			layoutPrototypeLayout.getType(), targetLayout.getHidden(),
-			targetLayout.getFriendlyURL(), targetLayout.getIconImage(), null,
-			serviceContext);
+			targetLayout.getLayoutId(), targetLayout.getParentLayoutId(),
+			targetLayout.getNameMap(), targetLayout.getTitleMap(),
+			targetLayout.getDescriptionMap(), targetLayout.getKeywordsMap(),
+			targetLayout.getRobotsMap(), layoutPrototypeLayout.getType(),
+			targetLayout.getHidden(), targetLayout.getFriendlyURL(),
+			targetLayout.getIconImage(), null, serviceContext);
 
 		targetLayout = LayoutLocalServiceUtil.updateLayout(
 			targetLayout.getGroupId(), targetLayout.isPrivateLayout(),
@@ -493,8 +492,8 @@ public class SitesUtil {
 			serviceContext);
 
 		return LayoutLocalServiceUtil.exportLayoutsAsFile(
-			layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
-			null, parameterMap, null, null);
+			layoutSet.getGroupId(), layoutSet.isPrivateLayout(), null,
+			parameterMap, null, null);
 	}
 
 	public static Map<String, String[]> getLayoutSetPrototypeParameters(
@@ -578,8 +577,8 @@ public class SitesUtil {
 			parameterMap, layoutSet, serviceContext);
 
 		LayoutServiceUtil.importLayouts(
-			layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
-			parameterMap, inputStream);
+			layoutSet.getGroupId(), layoutSet.isPrivateLayout(), parameterMap,
+			inputStream);
 	}
 
 	public static boolean isLayoutDeleteable(Layout layout) {
@@ -1144,8 +1143,8 @@ public class SitesUtil {
 			Group layoutSetPrototypeGroup = layoutSetPrototype.getGroup();
 
 			file = LayoutLocalServiceUtil.exportLayoutsAsFile(
-				layoutSetPrototypeGroup.getGroupId(), true, null,
-				parameterMap, null, null);
+				layoutSetPrototypeGroup.getGroupId(), true, null, parameterMap,
+				null, null);
 
 			newFile = true;
 		}

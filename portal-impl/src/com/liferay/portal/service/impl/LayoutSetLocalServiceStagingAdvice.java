@@ -80,9 +80,9 @@ public class LayoutSetLocalServiceStagingAdvice
 				(arguments.length == 6)) {
 
 			returnValue = updateLookAndFeel(
-				(Long)arguments[0], (Boolean)arguments[1],
-				(String)arguments[2], (String)arguments[3],
-				(String)arguments[4], (Boolean)arguments[5]);
+				(Long)arguments[0], (Boolean)arguments[1], (String)arguments[2],
+				(String)arguments[3], (String)arguments[4],
+				(Boolean)arguments[5]);
 		}
 		else if (methodName.equals("updateSettings")) {
 			returnValue = updateSettings(

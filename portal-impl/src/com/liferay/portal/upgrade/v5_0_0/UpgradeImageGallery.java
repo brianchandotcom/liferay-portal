@@ -56,8 +56,8 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			imageIdColumn);
 
 		upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
-			IGImageTable.TABLE_NAME, IGImageTable.TABLE_COLUMNS,
-			imageIdColumn, imageNameColumn);
+			IGImageTable.TABLE_NAME, IGImageTable.TABLE_COLUMNS, imageIdColumn,
+			imageNameColumn);
 
 		upgradeTable.updateTable();
 	}

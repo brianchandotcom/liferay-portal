@@ -392,12 +392,10 @@ public class RendererImpl implements Renderer {
 		className = StringUtil.replace(
 			className,
 			new String[] {
-				".impl.",
-				"Impl"
+				".impl.", "Impl"
 			},
 			new String[] {
-				StringPool.PERIOD,
-				StringPool.BLANK
+				StringPool.PERIOD, StringPool.BLANK
 			}
 		);
 

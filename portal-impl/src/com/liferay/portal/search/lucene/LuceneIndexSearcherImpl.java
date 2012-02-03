@@ -504,8 +504,8 @@ public class LuceneIndexSearcherImpl implements IndexSearcher {
 
 	protected Hits toHits(
 			org.apache.lucene.search.IndexSearcher indexSearcher,
-			HitDocs hitDocs, Query query, long startTime,
-			float searchTime, int start, int end)
+			HitDocs hitDocs, Query query, long startTime, float searchTime,
+			int start, int end)
 		throws IOException, ParseException {
 
 		int length = hitDocs.getTotalHits();

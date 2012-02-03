@@ -167,8 +167,7 @@ public class ProcessExecutor {
 			if (_executorService == null) {
 				_executorService = Executors.newCachedThreadPool(
 					new NamedThreadFactory(
-						ProcessExecutor.class.getName(),
-						Thread.MIN_PRIORITY,
+						ProcessExecutor.class.getName(), Thread.MIN_PRIORITY,
 						PortalClassLoaderUtil.getClassLoader()));
 			}
 		}

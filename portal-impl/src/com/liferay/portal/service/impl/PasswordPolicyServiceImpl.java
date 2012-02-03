@@ -65,8 +65,8 @@ public class PasswordPolicyServiceImpl extends PasswordPolicyServiceBaseImpl {
 			boolean checkSyntax, boolean allowDictionaryWords,
 			int minAlphanumeric, int minLength, int minLowerCase,
 			int minNumbers, int minSymbols, int minUpperCase, boolean history,
-			int historyCount, boolean expireable, long maxAge,
-			long warningTime, int graceLimit, boolean lockout, int maxFailure,
+			int historyCount, boolean expireable, long maxAge, long warningTime,
+			int graceLimit, boolean lockout, int maxFailure,
 			long lockoutDuration, long resetFailureCount,
 			long resetTicketMaxAge)
 		throws PortalException, SystemException {

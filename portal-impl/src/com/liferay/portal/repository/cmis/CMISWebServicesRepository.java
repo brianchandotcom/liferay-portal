@@ -46,8 +46,7 @@ public class CMISWebServicesRepository extends CMISRepositoryHandler {
 		Locale locale = LocaleUtil.getDefault();
 
 		parameters.put(
-			SessionParameter.LOCALE_ISO3166_COUNTRY,
-			locale.getCountry());
+			SessionParameter.LOCALE_ISO3166_COUNTRY, locale.getCountry());
 		parameters.put(SessionParameter.LOCALE_ISO639_LANGUAGE,
 			locale.getLanguage());
 

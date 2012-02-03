@@ -369,8 +369,7 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 					displayDateYear, displayDateHour, displayDateMinute,
 					allowPingbacks, allowTrackbacks, trackbacks,
 					entry.getSmallImage(), entry.getSmallImageURL(),
-					smallImageFileName, smallImageInputStream,
-					serviceContext);
+					smallImageFileName, smallImageInputStream, serviceContext);
 			}
 
 			portletDataContext.importClassedModel(

@@ -142,9 +142,8 @@ public class GetFileAction extends PortletAction {
 				request, "groupId", themeDisplay.getScopeGroupId());
 
 			getFile(
-				fileEntryId, folderId, title, version, fileShortcutId,
-				uuid, groupId, targetExtension, themeDisplay, request,
-				response);
+				fileEntryId, folderId, title, version, fileShortcutId, uuid,
+				groupId, targetExtension, themeDisplay, request, response);
 
 			return null;
 		}

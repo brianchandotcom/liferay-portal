@@ -347,15 +347,12 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			permissionWhere = StringUtil.replace(
 				permissionWhere,
 				new String[] {
-					"[$OWNER_RESOURCE_BLOCK_IDS$]",
-					"[$USER_ID$]",
-					"[$USER_ID_FIELD$]",
-					"[$USER_RESOURCE_BLOCK_IDS$]"
+					"[$OWNER_RESOURCE_BLOCK_IDS$]", "[$USER_ID$]",
+					"[$USER_ID_FIELD$]", "[$USER_RESOURCE_BLOCK_IDS$]"
 				},
 				new String[] {
 					StringUtil.merge(ownerResourceBlockIds),
-					String.valueOf(permissionChecker.getUserId()),
-					userIdField,
+					String.valueOf(permissionChecker.getUserId()), userIdField,
 					StringUtil.merge(userResourceBlockIds)
 				});
 		}
@@ -524,13 +521,10 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		permissionJoin = StringUtil.replace(
 			permissionJoin,
 			new String[] {
-				"[$CLASS_NAME$]",
-				"[$COMPANY_ID$]",
-				"[$PRIM_KEYS$]"
+				"[$CLASS_NAME$]", "[$COMPANY_ID$]", "[$PRIM_KEYS$]"
 			},
 			new String[] {
-				className,
-				String.valueOf(permissionChecker.getCompanyId()),
+				className, String.valueOf(permissionChecker.getCompanyId()),
 				sb.toString()
 			});
 

@@ -61,8 +61,8 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 		return dlFileEntryLocalService.addFileEntry(
 			getUserId(), groupId, repositoryId, folderId, sourceFileName,
-			mimeType, title, description, changeLog, fileEntryTypeId,
-			fieldsMap, file, is, size, serviceContext);
+			mimeType, title, description, changeLog, fileEntryTypeId, fieldsMap,
+			file, is, size, serviceContext);
 	}
 
 	public void cancelCheckOut(long fileEntryId)
@@ -257,8 +257,8 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 	}
 
 	public List<DLFileEntry> getFileEntries(
-			long groupId, long folderId, String[] mimeTypes, int start,
-			int end, OrderByComparator obc)
+			long groupId, long folderId, String[] mimeTypes, int start, int end,
+			OrderByComparator obc)
 		throws SystemException {
 
 		List<Long> folderIds = new ArrayList<Long>();

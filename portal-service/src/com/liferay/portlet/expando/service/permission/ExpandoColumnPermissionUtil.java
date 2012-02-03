@@ -47,8 +47,8 @@ public class ExpandoColumnPermissionUtil {
 		throws PortalException, SystemException {
 
 		getExpandoColumnPermission().check(
-			permissionChecker, companyId, className, tableName,
-			columnName, actionId);
+			permissionChecker, companyId, className, tableName, columnName,
+			actionId);
 	}
 
 	public static boolean contains(
@@ -74,8 +74,8 @@ public class ExpandoColumnPermissionUtil {
 		throws SystemException {
 
 		return getExpandoColumnPermission().contains(
-			permissionChecker, companyId, className, tableName,
-			columnName, actionId);
+			permissionChecker, companyId, className, tableName, columnName,
+			actionId);
 	}
 
 	public static ExpandoColumnPermission getExpandoColumnPermission() {

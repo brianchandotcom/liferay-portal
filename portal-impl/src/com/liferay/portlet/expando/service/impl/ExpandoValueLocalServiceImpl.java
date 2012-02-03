@@ -1225,8 +1225,8 @@ public class ExpandoValueLocalServiceImpl
 			value.setData(column.getDefaultData());
 
 			Serializable attributeValue = doGetData(
-				companyId, className, tableName, column.getName(),
-				classPK, value, column.getType());
+				companyId, className, tableName, column.getName(), classPK,
+				value, column.getType());
 
 			attributeValues.put(column.getName(), attributeValue);
 		}
@@ -1938,8 +1938,8 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	protected ExpandoValue doAddValue(
-			long companyId, long classNameId, long tableId,
-			long columnId, long classPK, String data)
+			long companyId, long classNameId, long tableId, long columnId,
+			long classPK, String data)
 		throws SystemException {
 
 		ExpandoRow row = expandoRowPersistence.fetchByT_C(tableId, classPK);

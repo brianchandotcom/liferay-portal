@@ -194,8 +194,8 @@ public class AddDefaultLayoutPrototypesAction extends SimpleAction {
 			portletId);
 
 		layout = LayoutLocalServiceUtil.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(),
-			layout.getLayoutId(), layout.getTypeSettings());
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getTypeSettings());
 	}
 
 	protected void addWikiPage(

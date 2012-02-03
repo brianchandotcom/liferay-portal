@@ -1227,8 +1227,7 @@ public class HttpImpl implements Http {
 		2);
 
 	private static final int _MAX_TOTAL_CONNECTIONS = GetterUtil.getInteger(
-		PropsUtil.get(HttpImpl.class.getName() + ".max.total.connections"),
-		20);
+		PropsUtil.get(HttpImpl.class.getName() + ".max.total.connections"), 20);
 
 	private static final String _NON_PROXY_HOSTS = SystemProperties.get(
 		"http.nonProxyHosts");

@@ -292,8 +292,7 @@ public class DDMStructureFinderImpl
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "lower(name)", StringPool.LIKE, false, names);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "description", StringPool.LIKE, false,
-				descriptions);
+				sql, "description", StringPool.LIKE, false, descriptions);
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "storageType", StringPool.LIKE, true, storageTypes);
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
@@ -373,8 +372,7 @@ public class DDMStructureFinderImpl
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "lower(name)", StringPool.LIKE, false, names);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "description", StringPool.LIKE, false,
-				descriptions);
+				sql, "description", StringPool.LIKE, false, descriptions);
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "storageType", StringPool.LIKE, true, storageTypes);
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);

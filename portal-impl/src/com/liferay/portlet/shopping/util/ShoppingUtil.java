@@ -993,8 +993,8 @@ public class ShoppingUtil {
 	}
 
 	public static boolean isInStock(
-		ShoppingItem item, ShoppingItemField[] itemFields,
-		String[] fieldsArray, Integer orderedQuantity) {
+		ShoppingItem item, ShoppingItemField[] itemFields, String[] fieldsArray,
+		Integer orderedQuantity) {
 
 		if (!item.isFields()) {
 			int stockQuantity = item.getStockQuantity();

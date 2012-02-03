@@ -260,8 +260,8 @@ public class FacebookConnectAction extends PortletAction {
 		UserLocalServiceUtil.updateUser(
 			user.getUserId(), StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, false, user.getReminderQueryQuestion(),
-			user.getReminderQueryAnswer(), user.getScreenName(),
-			emailAddress, facebookId, user.getOpenId(), user.getLanguageId(),
+			user.getReminderQueryAnswer(), user.getScreenName(), emailAddress,
+			facebookId, user.getOpenId(), user.getLanguageId(),
 			user.getTimeZoneId(), user.getGreeting(), user.getComments(),
 			firstName, user.getMiddleName(), lastName, contact.getPrefixId(),
 			contact.getSuffixId(), male, birthdayMonth, birthdayDay,

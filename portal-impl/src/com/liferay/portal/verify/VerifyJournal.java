@@ -72,9 +72,8 @@ public class VerifyJournal extends VerifyProcess {
 
 		for (JournalTemplate template : templates) {
 			ResourceLocalServiceUtil.addResources(
-				template.getCompanyId(), 0, 0,
-				JournalTemplate.class.getName(), template.getId(), false, false,
-				false);
+				template.getCompanyId(), 0, 0, JournalTemplate.class.getName(),
+				template.getId(), false, false, false);
 		}
 
 		if (_log.isDebugEnabled()) {

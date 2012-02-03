@@ -177,8 +177,7 @@ public class SitemapImpl implements Sitemap {
 
 		if (layout.isHidden() || !PortalUtil.isLayoutSitemapable(layout) ||
 			!GetterUtil.getBoolean(
-				typeSettingsProperties.getProperty("sitemap-include"),
-				true)) {
+				typeSettingsProperties.getProperty("sitemap-include"), true)) {
 
 			return;
 		}

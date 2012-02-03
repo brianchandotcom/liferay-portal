@@ -139,8 +139,7 @@ public class WorkflowDefinitionManagerUtil {
 	}
 
 	public static WorkflowDefinition updateTitle(
-			long companyId, long userId, String name, int version,
-			String title)
+			long companyId, long userId, String name, int version, String title)
 		throws WorkflowException {
 
 		return _workflowDefinitionManager.updateTitle(

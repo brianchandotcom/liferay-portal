@@ -179,8 +179,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		throws Exception {
 
 		Resource resource = ResourceLocalServiceUtil.getResource(
-			companyId, className, ResourceConstants.SCOPE_INDIVIDUAL,
-			classPK);
+			companyId, className, ResourceConstants.SCOPE_INDIVIDUAL, classPK);
 
 		Group group = null;
 

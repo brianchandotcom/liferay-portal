@@ -91,12 +91,8 @@ public class ModifiedFacet extends RangeFacet {
 				rangeString = StringUtil.replace(
 					rangeString,
 					new String[] {
-						"past-hour",
-						"past-24-hours",
-						"past-week",
-						"past-month",
-						"past-year",
-						"*"
+						"past-hour", "past-24-hours", "past-week", "past-month",
+						"past-year", "*"
 					},
 					new String[] {
 						dateFormat.format(pastHour.getTime()),

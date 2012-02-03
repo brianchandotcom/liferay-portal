@@ -99,8 +99,8 @@ public class PortalLDAPExporterImpl implements PortalLDAPExporter {
 
 			Modifications modifications =
 				_portalToLDAPConverter.getLDAPContactModifications(
-					contact, contactExpandoAttributes,
-					contactMappings, contactExpandoMappings);
+					contact, contactExpandoAttributes, contactMappings,
+					contactExpandoMappings);
 
 			if (modifications == null) {
 				return;

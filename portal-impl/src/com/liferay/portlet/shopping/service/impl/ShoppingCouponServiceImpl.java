@@ -44,11 +44,11 @@ public class ShoppingCouponServiceImpl extends ShoppingCouponServiceBaseImpl {
 			ActionKeys.MANAGE_COUPONS);
 
 		return shoppingCouponLocalService.addCoupon(
-			getUserId(), code, autoCode, name, description,
-			startDateMonth, startDateDay, startDateYear, startDateHour,
-			startDateMinute, endDateMonth, endDateDay, endDateYear, endDateHour,
-			endDateMinute, neverExpire, active, limitCategories, limitSkus,
-			minOrder, discount, discountType, serviceContext);
+			getUserId(), code, autoCode, name, description, startDateMonth,
+			startDateDay, startDateYear, startDateHour, startDateMinute,
+			endDateMonth, endDateDay, endDateYear, endDateHour, endDateMinute,
+			neverExpire, active, limitCategories, limitSkus, minOrder, discount,
+			discountType, serviceContext);
 	}
 
 	public void deleteCoupon(long groupId, long couponId)

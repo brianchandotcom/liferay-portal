@@ -198,8 +198,7 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 		}
 
 		return new Object[] {
-			repositoryEntry.getRepositoryEntryId(),
-			repositoryEntry.getUuid()
+			repositoryEntry.getRepositoryEntryId(), repositoryEntry.getUuid()
 		};
 	}
 

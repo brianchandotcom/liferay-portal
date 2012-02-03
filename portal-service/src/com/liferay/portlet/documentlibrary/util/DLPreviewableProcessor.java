@@ -397,8 +397,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 	}
 
 	protected String getBinPath(
-		PortletDataContext portletDataContext, FileEntry fileEntry,
-		int index) {
+		PortletDataContext portletDataContext, FileEntry fileEntry, int index) {
 
 		StringBundler sb = new StringBundler(8);
 

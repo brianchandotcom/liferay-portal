@@ -37,9 +37,8 @@ public abstract class BaseSanitizer implements Sanitizer {
 			new ByteArrayOutputStream();
 
 		sanitize(
-			companyId, groupId, userId, className, classPK, contentType,
-			modes, new ByteArrayInputStream(bytes), byteArrayOutputStream,
-			options);
+			companyId, groupId, userId, className, classPK, contentType, modes,
+			new ByteArrayInputStream(bytes), byteArrayOutputStream, options);
 
 		return byteArrayOutputStream.toByteArray();
 	}
@@ -61,9 +60,9 @@ public abstract class BaseSanitizer implements Sanitizer {
 			new ByteArrayOutputStream();
 
 		sanitize(
-			companyId, groupId, userId, className, classPK, contentType,
-			modes, new ByteArrayInputStream(s.getBytes()),
-			byteArrayOutputStream, options);
+			companyId, groupId, userId, className, classPK, contentType, modes,
+			new ByteArrayInputStream(s.getBytes()), byteArrayOutputStream,
+			options);
 
 		return byteArrayOutputStream.toString();
 	}

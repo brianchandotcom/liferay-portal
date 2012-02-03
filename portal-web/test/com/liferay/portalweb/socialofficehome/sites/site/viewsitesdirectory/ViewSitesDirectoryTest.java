@@ -120,6 +120,8 @@ public class ViewSitesDirectoryTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace(
 						"Restricted Site3 Description"),
 					selenium.getText("xPath=(//span[@class='description'])[3]"));
+				assertFalse(selenium.isPartialText(
+						"//ul[@class='directory-list']", "Private Site2 Name"));
 
 			case 100:
 				label = -1;

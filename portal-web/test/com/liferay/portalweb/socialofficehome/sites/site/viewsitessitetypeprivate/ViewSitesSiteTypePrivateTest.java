@@ -50,6 +50,80 @@ public class ViewSitesSiteTypePrivateTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Home"),
 					selenium.getText(
 						"//li[contains(@class, 'selected')]/a/span"));
+				assertEquals(RuntimeVariables.replace("Sites"),
+					selenium.getText("//div[@id='so-sidebar']/h3"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//select[@id='_5_WAR_soportlet_tabs1']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertTrue(selenium.isPartialText(
+						"//select[@id='_5_WAR_soportlet_tabs1']", "All Sites"));
+				selenium.select("//select[@id='_5_WAR_soportlet_tabs1']",
+					RuntimeVariables.replace("All Sites"));
+				assertTrue(selenium.isVisible("//input[@class='search-input']"));
+				selenium.type("//input[@class='search-input']",
+					RuntimeVariables.replace("Private"));
+				Thread.sleep(5000);
+				assertEquals(RuntimeVariables.replace("Private Site Name"),
+					selenium.getText(
+						"//li[contains(@class, 'social-office-enabled')]/span[2]/a"));
+				selenium.clickAt("//li[contains(@class, 'social-office-enabled')]/span[2]/a",
+					RuntimeVariables.replace("Private Site Name"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+				assertEquals(RuntimeVariables.replace("Private Site Name"),
+					selenium.getText("//div[@class='community-title']"));
+				assertEquals(RuntimeVariables.replace("Home"),
+					selenium.getText("//nav/ul/li[1]/a/span"));
+				assertEquals(RuntimeVariables.replace("Calendar"),
+					selenium.getText("//nav/ul/li[2]/a/span"));
+				assertEquals(RuntimeVariables.replace("Documents"),
+					selenium.getText("//nav/ul/li[3]/a/span"));
+				assertEquals(RuntimeVariables.replace("Forums"),
+					selenium.getText("//nav/ul/li[4]/a/span"));
+				assertEquals(RuntimeVariables.replace("Blog"),
+					selenium.getText("//nav/ul/li[5]/a/span"));
+				assertEquals(RuntimeVariables.replace("Wiki"),
+					selenium.getText("//nav/ul/li[6]/a/span"));
+				assertEquals(RuntimeVariables.replace("Members"),
+					selenium.getText("//nav/ul/li[7]/a/span"));
+				selenium.open("/user/joebloggs/home1/");
+				loadRequiredJavaScriptModules();
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//li[contains(@class, 'selected')]/a/span")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("Home"),
+					selenium.getText(
+						"//li[contains(@class, 'selected')]/a/span"));
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {

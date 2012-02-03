@@ -512,6 +512,10 @@ public class ThemeDisplay implements Serializable {
 		return _addSessionIdToURL;
 	}
 
+	public boolean isCDNDynamicResourcesEnabled() {
+		return _cdnDynamicResourcesEnabled;
+	}
+
 	public boolean isFacebook() {
 		return _facebook;
 	}
@@ -695,6 +699,10 @@ public class ThemeDisplay implements Serializable {
 		_addSessionIdToURL = addSessionIdToURL;
 	}
 
+	public void setCDNDynamicResourcesEnabled(boolean enabled) {
+		_cdnDynamicResourcesEnabled = enabled;
+	}
+
 	public void setCDNHost(String cdnHost) {
 		_cdnHost = cdnHost;
 	}
@@ -843,25 +851,35 @@ public class ThemeDisplay implements Serializable {
 		if ((theme != null) && (colorScheme != null)) {
 			String themeStaticResourcePath = theme.getStaticResourcePath();
 
-			String host = getCDNHost();
+			String cdnHost = getCDNHost();
+			String host = StringPool.BLANK;
 
-			if (Validator.isNull(host) && isFacebook()) {
+			if (Validator.isNull(cdnHost) && isFacebook()) {
+				cdnHost = getPortalURL();
 				host = getPortalURL();
 			}
 
 			setPathColorSchemeImages(
-				host + themeStaticResourcePath +
+				cdnHost + themeStaticResourcePath +
 					colorScheme.getColorSchemeImagesPath());
 
 			setPathThemeCss(
 				host + themeStaticResourcePath + theme.getCssPath());
 			setPathThemeImages(
-				host + themeStaticResourcePath + theme.getImagesPath());
+				cdnHost + themeStaticResourcePath + theme.getImagesPath());
 			setPathThemeJavaScript(
 				host + themeStaticResourcePath + theme.getJavaScriptPath());
 			setPathThemeRoot(themeStaticResourcePath + theme.getRootPath());
 			setPathThemeTemplates(
 				host + themeStaticResourcePath + theme.getTemplatesPath());
+
+			if (isCDNDynamicResourcesEnabled()) {
+				setPathThemeCss(
+					cdnHost + themeStaticResourcePath + theme.getCssPath());
+				setPathThemeJavaScript(
+					cdnHost + themeStaticResourcePath +
+						theme.getJavaScriptPath());
+			}
 		}
 	}
 
@@ -1240,6 +1258,7 @@ public class ThemeDisplay implements Serializable {
 
 	private Account _account;
 	private boolean _addSessionIdToURL;
+	private boolean _cdnDynamicResourcesEnabled;
 	private String _cdnHost = StringPool.BLANK;
 	private ColorScheme _colorScheme;
 	private Company _company;

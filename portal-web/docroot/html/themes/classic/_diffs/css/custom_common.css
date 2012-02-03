@@ -5,14 +5,14 @@
 }
 
 .breadcrumbs-horizontal li {
-	background: url(../images/arrows/05_right.png) no-repeat 100% 50%;
+	background: url(@theme_image_path@/arrows/05_right.png) no-repeat 100% 50%;
 	margin-right: 5px;
 	max-width: 50%;
 	padding-right: 15px;
 }
 
 .breadcrumbs-vertical li {
-	background: url(../images/arrows/07_down.png) no-repeat 50% 100%;
+	background: url(@theme_image_path@/arrows/07_down.png) no-repeat 50% 100%;
 	padding: 0 0 9px;
 	max-width: auto;
 }
@@ -50,7 +50,7 @@
 }
 
 .opens-new-window-accessible {
-	background: url(../images/common/open_window.png) no-repeat 0 50%;
+	background: url(@theme_image_path@/common/open_window.png) no-repeat 0 50%;
 	display: inline-block;
 	font-size: 0;
 	height: 11px;

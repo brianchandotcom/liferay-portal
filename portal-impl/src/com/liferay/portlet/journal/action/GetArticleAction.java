@@ -112,10 +112,19 @@ public class GetArticleAction extends Action {
 
 		// Portal CSS
 
-		String url = PortalUtil.getStaticResourceURL(
-			request,
-			themeDisplay.getCDNHost() + themeDisplay.getPathContext() +
-				"/html/portal/css.jsp");
+		String url = null;
+
+		if (themeDisplay.isCDNDynamicResourcesEnabled()) {
+			url = PortalUtil.getStaticResourceURL(
+				request,
+				themeDisplay.getCDNHost() + themeDisplay.getPathContext() +
+					"/html/portal/css.jsp");
+		}
+		else {
+			url = PortalUtil.getStaticResourceURL(
+				request,
+				themeDisplay.getPathContext() + "/html/portal/css.jsp");
+		}
 
 		Map<String, String> arguments = new LinkedHashMap<String, String>();
 

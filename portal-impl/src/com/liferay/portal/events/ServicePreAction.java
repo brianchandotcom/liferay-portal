@@ -1085,8 +1085,6 @@ public class ServicePreAction extends Action {
 				siteMapSettingsURL.setParameter("closeRedirect", currentURL);
 				siteMapSettingsURL.setParameter(
 					"groupId", String.valueOf(scopeGroupId));
-				siteMapSettingsURL.setParameter(
-					"selPlid", String.valueOf(plid));
 				siteMapSettingsURL.setPortletMode(PortletMode.VIEW);
 				siteMapSettingsURL.setWindowState(LiferayWindowState.POP_UP);
 

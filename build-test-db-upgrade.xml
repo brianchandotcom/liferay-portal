@@ -3,9 +3,7 @@
 <project name="portal-test-db-upgrade" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
-	<target name="prepare-db-db2-common">
-		<echo file="test.${user.name}.properties">db.type=db2</echo>
-
+	<target name="prepare-db-common">
 		<antcall target="prepare-portal-ext-properties" inheritAll="false" />
 
 		<ant dir="portal-impl" target="deploy-properties" inheritAll="false" />
@@ -14,7 +12,52 @@
 			<isset property="sql.version" />
 			<then>
 				<property name="sql.dir" value="sql\legacy\${sql.version}\create\" />
-				<property name="sql.file" value="create-db2.sql" />
+
+				<if>
+					<equals arg1="${db.type}" arg2="db2" />
+					<then>
+						<property name="sql.file" value="create-db2.sql" />
+					</then>
+					<elseif>
+						<equals arg1="${db.type}" arg2="mysql" />
+						<then>
+							<property name="sql.file" value="create-mysql.sql" />
+						</then>
+					</elseif>
+					<elseif>
+						<or>
+							<equals arg1="${db.type}" arg2="oracle-10" />
+							<equals arg1="${db.type}" arg2="oracle-11" />
+						</or>
+						<then>
+							<property name="sql.file" value="create-oracle.sql" />
+						</then>
+					</elseif>
+					<elseif>
+						<or>
+							<equals arg1="${db.type}" arg2="postgresql-8.4" />
+							<equals arg1="${db.type}" arg2="postgresql-9.0" />
+						</or>
+						<then>
+							<property name="sql.file" value="create-postgresql.sql" />
+						</then>
+					</elseif>
+					<elseif>
+						<or>
+							<equals arg1="${db.type}" arg2="sql-server-2005" />
+							<equals arg1="${db.type}" arg2="sql-server-2008" />
+						</or>
+						<then>
+							<property name="sql.file" value="create-sql-server.sql" />
+						</then>
+					</elseif>
+					<elseif>
+						<equals arg1="${db.type}" arg2="sybase" />
+						<then>
+							<property name="sql.file" value="create-sybase.sql" />
+						</then>
+					</elseif>
+				</if>
 			</then>
 		</if>
 
@@ -22,111 +65,60 @@
 			<param name="sql.dir" value="${sql.dir}" />
 			<param name="sql.file" value="${sql.file}" />
 		</antcall>
+	</target>
+
+	<target name="prepare-db-db2-common">
+		<echo file="test.${user.name}.properties">db.type=db2</echo>
+
+		<antcall target="prepare-db-common" />
 	</target>
 
 	<target name="prepare-db-mysql-common">
 		<echo file="test.${user.name}.properties">db.type=mysql</echo>
 
-		<antcall target="prepare-portal-ext-properties" inheritAll="false" />
-
-		<ant dir="portal-impl" target="deploy-properties" inheritAll="false" />
-
-		<if>
-			<isset property="sql.version" />
-			<then>
-				<property name="sql.dir" value="sql\legacy\${sql.version}\create\" />
-				<property name="sql.file" value="create-mysql.sql" />
-			</then>
-		</if>
-
-		<antcall target="rebuild-database" inheritAll="false">
-			<param name="sql.dir" value="${sql.dir}" />
-			<param name="sql.file" value="${sql.file}" />
-		</antcall>
+		<antcall target="prepare-db-common" />
 	</target>
 
-	<target name="prepare-db-oracle-common">
-		<echo file="test.${user.name}.properties">db.type=oracle</echo>
+	<target name="prepare-db-oracle-10-common">
+		<echo file="test.${user.name}.properties">db.type=oracle-10</echo>
 
-		<antcall target="prepare-portal-ext-properties" inheritAll="false" />
-
-		<ant dir="portal-impl" target="deploy-properties" inheritAll="false" />
-
-		<if>
-			<isset property="sql.version" />
-			<then>
-				<property name="sql.dir" value="sql\legacy\${sql.version}\create\" />
-				<property name="sql.file" value="create-oracle.sql" />
-			</then>
-		</if>
-
-		<antcall target="rebuild-database" inheritAll="false">
-			<param name="sql.dir" value="${sql.dir}" />
-			<param name="sql.file" value="${sql.file}" />
-		</antcall>
+		<antcall target="prepare-db-common" />
 	</target>
 
-	<target name="prepare-db-postgresql-common">
-		<echo file="test.${user.name}.properties">db.type=postgresql</echo>
+	<target name="prepare-db-oracle-11-common">
+		<echo file="test.${user.name}.properties">db.type=oracle-11</echo>
 
-		<antcall target="prepare-portal-ext-properties" inheritAll="false" />
-
-		<ant dir="portal-impl" target="deploy-properties" inheritAll="false" />
-
-		<if>
-			<isset property="sql.version" />
-			<then>
-				<property name="sql.dir" value="sql\legacy\${sql.version}\create\" />
-				<property name="sql.file" value="create-postgresql.sql" />
-			</then>
-		</if>
-
-		<antcall target="rebuild-database" inheritAll="false">
-			<param name="sql.dir" value="${sql.dir}" />
-			<param name="sql.file" value="${sql.file}" />
-		</antcall>
+		<antcall target="prepare-db-common" />
 	</target>
 
-	<target name="prepare-db-sql-server-common">
-		<echo file="test.${user.name}.properties">db.type=sql-server</echo>
+	<target name="prepare-db-postgresql-8.4-common">
+		<echo file="test.${user.name}.properties">db.type=postgresql-8.4</echo>
 
-		<antcall target="prepare-portal-ext-properties" inheritAll="false" />
+		<antcall target="prepare-db-common" />
+	</target>
 
-		<ant dir="portal-impl" target="deploy-properties" inheritAll="false" />
+	<target name="prepare-db-postgresql-9.0-common">
+		<echo file="test.${user.name}.properties">db.type=postgresql-9.0</echo>
 
-		<if>
-			<isset property="sql.version" />
-			<then>
-				<property name="sql.dir" value="sql\legacy\${sql.version}\create\" />
-				<property name="sql.file" value="create-sql-server.sql" />
-			</then>
-		</if>
+		<antcall target="prepare-db-common" />
+	</target>
 
-		<antcall target="rebuild-database" inheritAll="false">
-			<param name="sql.dir" value="${sql.dir}" />
-			<param name="sql.file" value="${sql.file}" />
-		</antcall>
+	<target name="prepare-db-sql-server-2005-common">
+		<echo file="test.${user.name}.properties">db.type=sql-server-2005</echo>
+
+		<antcall target="prepare-db-common" />
+	</target>
+
+	<target name="prepare-db-sql-server-2008-common">
+		<echo file="test.${user.name}.properties">db.type=sql-server-2008</echo>
+
+		<antcall target="prepare-db-common" />
 	</target>
 
 	<target name="prepare-db-sybase-common">
 		<echo file="test.${user.name}.properties">db.type=sybase</echo>
 
-		<antcall target="prepare-portal-ext-properties" inheritAll="false" />
-
-		<ant dir="portal-impl" target="deploy-properties" inheritAll="false" />
-
-		<if>
-			<isset property="sql.version" />
-			<then>
-				<property name="sql.dir" value="sql\legacy\${sql.version}\create\" />
-				<property name="sql.file" value="create-sybase.sql" />
-			</then>
-		</if>
-
-		<antcall target="rebuild-database" inheritAll="false">
-			<param name="sql.dir" value="${sql.dir}" />
-			<param name="sql.file" value="${sql.file}" />
-		</antcall>
+		<antcall target="prepare-db-common" />
 	</target>
 
 	<target name="run-latest-upgrade-test">

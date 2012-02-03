@@ -4954,10 +4954,9 @@ public class PortalImpl implements Portal {
 				Layout layout = themeDisplay.getLayout();
 
 				if (!layout.isTypeControlPanel() &&
-					!PortletPermissionUtil.contains(
-						themeDisplay.getPermissionChecker(),
-						themeDisplay.getPlid(), portlet.getPortletId(),
-						ActionKeys.ADD_TO_PAGE) &&
+					!LayoutPermissionUtil.contains(
+						themeDisplay.getPermissionChecker(), layout,
+						ActionKeys.UPDATE) &&
 					!PortletPermissionUtil.contains(
 						themeDisplay.getPermissionChecker(),
 						themeDisplay.getPlid(), portlet.getPortletId(),

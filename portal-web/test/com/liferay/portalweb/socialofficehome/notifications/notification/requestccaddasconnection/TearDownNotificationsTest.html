@@ -54,6 +54,16 @@
 	<td>Notifications</td>
 </tr>
 <tr>
+	<td>storeElementPresent</td>
+	<td>//input[@name='_6_WAR_soportlet_allRowIds']</td>
+	<td>notificationsPresent</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${notificationsPresent}</td>
+	<td>NotificationsNotPresent</td>
+</tr>
+<tr>
 	<td>assertVisible</td>
 	<td>//input[@name='_6_WAR_soportlet_allRowIds']</td>
 	<td>Select All Checkbox</td>
@@ -64,20 +74,21 @@
 	<td>Select All Checkbox</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>clickAndWait</td>
 	<td>//input[@value='Delete']</td>
 	<td>Delete</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
+	<td>label</td>
+	<td>NotificationsNotPresent</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-info']</td>
 	<td>You have no notifications.</td>
 </tr>
+
 </tbody></table>
 </body>
 </html>

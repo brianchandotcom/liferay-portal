@@ -114,6 +114,9 @@
 			},
 
 			ThemeDisplay: {
+				getCDNHost: function() {
+					return "<%= themeDisplay.getCDNHost() %>";
+				},
 				getCompanyId: function() {
 					return "<%= themeDisplay.getCompanyId() %>";
 				},
@@ -132,6 +135,9 @@
 
 				getDoAsUserIdEncoded: function() {
 					return "<%= UnicodeFormatter.toString(themeDisplay.getDoAsUserId()) %>";
+				},
+				getDynamicResourcesCDNHost: function() {
+					return "<%= themeDisplay.getDynamicResourcesCDNHost() %>";
 				},
 				getPlid: function() {
 					return "<%= themeDisplay.getPlid() %>";
@@ -236,7 +242,7 @@
 
 		String alloyBaseURL = PortalUtil.getPortalURL(request) + alloyRootPath;
 
-		String alloyComboPath = PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + themeDisplay.getPathContext() + "/combo/", "minifierType=", javaScriptLastModified);
+		String alloyComboPath = PortalUtil.getStaticResourceURL(request, themeDisplay.getDynamicResourcesCDNHost() + themeDisplay.getPathContext() + "/combo/", "minifierType=", javaScriptLastModified);
 		%>
 
 		Liferay.AUI = {
@@ -300,10 +306,10 @@
 	<c:when test="<%= themeDisplay.isThemeJsFastLoad() %>">
 		<c:choose>
 			<c:when test="<%= themeDisplay.isThemeJsBarebone() %>">
-				<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getPathJavaScript() + "/barebone.jsp", "minifierBundleId=javascript.barebone.files", javaScriptLastModified)) %>" type="text/javascript"></script>
+				<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getDynamicResourcesCDNHost() + themeDisplay.getPathJavaScript() + "/barebone.jsp", "minifierBundleId=javascript.barebone.files", javaScriptLastModified)) %>" type="text/javascript"></script>
 			</c:when>
 			<c:otherwise>
-				<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getPathJavaScript() + "/everything.jsp", "minifierBundleId=javascript.everything.files", javaScriptLastModified)) %>" type="text/javascript"></script>
+				<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getDynamicResourcesCDNHost() + themeDisplay.getPathJavaScript() + "/everything.jsp", "minifierBundleId=javascript.everything.files", javaScriptLastModified)) %>" type="text/javascript"></script>
 			</c:otherwise>
 		</c:choose>
 	</c:when>
@@ -322,7 +328,7 @@
 		for (String javaScriptFile : javaScriptFiles) {
 		%>
 
-			<script src="<%= themeDisplay.getPathJavaScript() %>/<%= javaScriptFile %>?t=<%= javaScriptLastModified %>" type="text/javascript"></script>
+			<script src="<%= themeDisplay.getCDNHost() + themeDisplay.getPathJavaScript() %>/<%= javaScriptFile %>?t=<%= javaScriptLastModified %>" type="text/javascript"></script>
 
 		<%
 		}
@@ -332,7 +338,7 @@
 </c:choose>
 
 <c:if test="<%= themeDisplay.isIncludeServiceJs() %>">
-	<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getPathJavaScript() + "/liferay/service.js", javaScriptLastModified)) %>" type="text/javascript"></script>
+	<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + themeDisplay.getPathJavaScript() + "/liferay/service.js", javaScriptLastModified)) %>" type="text/javascript"></script>
 </c:if>
 
 <script type="text/javascript">

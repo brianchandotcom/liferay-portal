@@ -19,7 +19,7 @@
 <html>
 
 <head>
-	<link href="<%= PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + themeDisplay.getPathContext() + "/html/css/main.css") %>" type="text/css" rel="stylesheet" />
+	<link href="<%= PortalUtil.getStaticResourceURL(request, themeDisplay.getDynamicResourcesCDNHost() + themeDisplay.getPathContext() + "/html/css/main.css") %>" type="text/css" rel="stylesheet" />
 	<link href="<%= PortalUtil.getStaticResourceURL(request, themeDisplay.getPathThemeCss() + "/main.css") %>" rel="stylesheet" type="text/css" />
 
 	<c:if test="<%= (layout != null) && Validator.isNotNull(layout.getCssText()) %>">

@@ -49,7 +49,7 @@ for (String previewFileURL : previewFileURLs) {
 					'mp3': '<%= previewFileURLs[0] %>'
 				},
 				height: 27,
-				url: '<%= themeDisplay.getPathJavaScript() %>/misc/video_player/mpw_player.swf',
+				url: '<%= themeDisplay.getCDNHost() + themeDisplay.getPathJavaScript() %>/misc/video_player/mpw_player.swf',
 				useExpressInstall: true,
 				version: 9
 			}

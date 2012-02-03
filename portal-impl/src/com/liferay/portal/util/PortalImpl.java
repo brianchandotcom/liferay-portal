@@ -4512,6 +4512,26 @@ public class PortalImpl implements Portal {
 		return false;
 	}
 
+	public boolean isCDNDynamicResourcesEnabled(long companyId) {
+		try {
+			return PrefsPropsUtil.getBoolean(
+				companyId, PropsKeys.CDN_DYNAMIC_RESOURCES_ENABLED,
+				PropsValues.CDN_DYNAMIC_RESOURCES_ENABLED);
+		}
+		catch (SystemException e) {
+		}
+
+		return PropsValues.CDN_DYNAMIC_RESOURCES_ENABLED;
+	}
+
+	public boolean isCDNDynamicResourcesEnabled(HttpServletRequest request)
+		throws PortalException, SystemException {
+
+		Company company = getCompany(request);
+
+		return isCDNDynamicResourcesEnabled(company.getCompanyId());
+	}
+
 	/**
 	 * @deprecated As of 6.1, renamed to {@link #isGroupAdmin(User, long)}
 	 */

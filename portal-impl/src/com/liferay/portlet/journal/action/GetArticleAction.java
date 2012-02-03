@@ -114,8 +114,8 @@ public class GetArticleAction extends Action {
 
 		String url = PortalUtil.getStaticResourceURL(
 			request,
-			themeDisplay.getCDNHost() + themeDisplay.getPathContext() +
-				"/html/portal/css.jsp");
+			themeDisplay.getDynamicResourcesCDNHost() +
+				themeDisplay.getPathContext() + "/html/portal/css.jsp");
 
 		Map<String, String> arguments = new LinkedHashMap<String, String>();
 

@@ -21,6 +21,8 @@
 
 	<property name="selenium.nanny.executable" location="${project.dir}/tools/selenium/selenium_nanny.exe" />
 
+	<taskdef classname="com.liferay.util.ant.FormatTask" classpathref="project.classpath" name="format" />
+
 	<target name="append-ant-script">
 		<loadfile property="template.content" srcfile="portal-web/test-ant-templates/${ant.script.template}">
 			<filterchain>
@@ -2090,8 +2092,10 @@
 
 		<antcall target="revert-test-properties" />
 
-		<exec executable="cmd.exe">
-			<arg line="/c svn revert portal-web/docroot/WEB-INF/web.xml" />
+		<format message="${scm.revert.command}" arguments="portal-web/docroot/WEB-INF/web.xml" property="revert.command" />
+
+		<exec executable="${executable.shell.path}">
+			<arg line="${revert.command}" />
 		</exec>
 
 		<replace
@@ -2421,8 +2425,10 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 	</target>
 
 	<target name="prepare-portal-properties">
-		<exec executable="cmd.exe">
-			<arg line="/c svn revert portal-impl/src/portal.properties" />
+		<format message="${scm.revert.command}" arguments="portal-impl/src/portal.properties" property="revert.command" />
+
+		<exec executable="${executable.shell.path}">
+			<arg line="${revert.command}" />
 		</exec>
 
 		<replace file="portal-impl/src/portal.properties">
@@ -3227,12 +3233,16 @@ file.
 	</target>
 
 	<target name="revert-test-properties">
-		<exec executable="cmd.exe">
-			<arg line="/c svn revert portal-impl/test/test-portal-impl.properties" />
+		<format message="${scm.revert.command}" arguments="portal-impl/test/test-portal-impl.properties" property="revert.command" />
+
+		<exec executable="${executable.shell.path}">
+			<arg line="${revert.command}" />
 		</exec>
 
-		<exec executable="cmd.exe">
-			<arg line="/c svn revert portal-web/test/test-portal-web.properties" />
+		<format message="${scm.revert.command}" arguments="portal-web/test/test-portal-web.properties" property="revert.command" />
+
+		<exec executable="${executable.shell.path}">
+			<arg line="${revert.command}" />
 		</exec>
 	</target>
 
@@ -3501,6 +3511,8 @@ file.
 
 		<antcall target="revert-test-properties" />
 
+		<ant dir="portal-service" target="test" inheritAll="false" />
+
 		<ant dir="portal-impl" target="test-class" inheritAll="false">
 			<property name="class" value="ServiceTestSuite" />
 		</ant>
@@ -3520,8 +3532,6 @@ file.
 		<ant dir="portal-impl" target="test-class" inheritAll="false">
 			<property name="class" value="MiscTestSuite" />
 		</ant>
-
-		<ant dir="portal-service" target="test" inheritAll="false" />
 
 		<ant dir="sql" target="test-sample-sql" inheritAll="false" />
 

@@ -302,12 +302,27 @@ print AdminConfig.save()</echo>
 		<delete dir="${lp.plugins.dir}/portlets/sample-service-builder-portlet/docroot/WEB-INF/service" />
 		<delete dir="${lp.plugins.dir}/portlets/sample-service-builder-portlet/docroot/WEB-INF/src/META-INF" />
 
-		<exec executable="cmd.exe">
-			<arg line="/c svn --username ${svn.username} --password ${svn.password} update ${lp.plugins.dir}/portlets/sample-service-builder-portlet/docroot/WEB-INF" />
-		</exec>
+		<if>
+			<equals arg1="${scm.tool}" arg2="svn" />
+			<then>
+				<exec executable="${executable.shell.path}">
+					<arg line="/c svn --username ${svn.username} --password ${svn.password} update ${lp.plugins.dir}/portlets/sample-service-builder-portlet/docroot/WEB-INF" />
+				</exec>
 
-		<exec executable="cmd.exe">
-			<arg line="/c svn revert --recursive ${lp.plugins.dir}/portlets/sample-service-builder-portlet" />
-		</exec>
+				<exec executable="${executable.shell.path}">
+					<arg line="/c svn revert --recursive ${lp.plugins.dir}/portlets/sample-service-builder-portlet" />
+				</exec>
+			</then>
+			<else>
+				<if>
+					<equals arg1="${scm.tool}" arg2="git" />
+					<then>
+						<exec dir="${lp.plugins.dir}" executable="${executable.shell.path}">
+							<arg line='-c "git checkout portlets/sample-service-builder-portlet"' />
+						</exec>
+					</then>
+				</if>
+			</else>
+		</if>
 	</target>
 </project>

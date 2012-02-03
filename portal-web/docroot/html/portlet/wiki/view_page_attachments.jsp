@@ -72,18 +72,21 @@ for (int i = 0; i < results.size(); i++) {
 
 	ResultRow row = new ResultRow(new Object[] {node, wikiPage, fileName}, fileName, i);
 
-	PortletURL rowURL = renderResponse.createActionURL();
+	StringBundler sb = new StringBundler();
 
-	rowURL.setWindowState(LiferayWindowState.EXCLUSIVE);
+	sb.append(themeDisplay.getPathMain());
+	sb.append("/wiki/get_page_attachment?p_p_state=exclusive&nodeId=");
+	sb.append(String.valueOf(node.getNodeId()));
+	sb.append("&title=");
+	sb.append(HttpUtil.encodeURL(wikiPage.getTitle()));
+	sb.append("&fileName=");
+	sb.append(HttpUtil.encodeURL(shortFileName));
 
-	rowURL.setParameter("struts_action", "/wiki/get_page_attachment");
-	rowURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
-	rowURL.setParameter("title", wikiPage.getTitle());
-	rowURL.setParameter("fileName", shortFileName);
+	String rowURL = sb.toString();
 
 	// File name
 
-	StringBundler sb = new StringBundler(6);
+	sb.setIndex(0);
 
 	sb.append("<img align=\"left\" border=\"0\" src=\"");
 	sb.append(themeDisplay.getPathThemeImages());

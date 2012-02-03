@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.mail.SMTPAccount;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -321,9 +322,10 @@ public class MailEngine {
 				message.setHeader("References", inReplyTo);
 			}
 
-			int batchSize =
-				GetterUtil.getInteger(PropsUtil.get("mail.batch.size"));
-			
+			int batchSize = GetterUtil.getInteger(
+				PropsUtil.get(PropsKeys.MAIL_BATCH_SIZE),
+				_DEFAULT_MAIL_BATCH_SIZE);
+
 			_send(session, message, bulkAddresses, batchSize);
 		}
 		catch (SendFailedException sfe) {
@@ -418,10 +420,10 @@ public class MailEngine {
 	private static Address[] _getNextBatch(
 		Address[] addresses, int current, int batchSize) {
 
-		if ((batchSize == 0) && (current == 0)) {
+		if ((batchSize == _DEFAULT_MAIL_BATCH_SIZE) && (current == 0)) {
 			return addresses;
 		}
-		else if (batchSize == 0) {
+		else if (batchSize == _DEFAULT_MAIL_BATCH_SIZE) {
 			return null;
 		}
 
@@ -486,7 +488,7 @@ public class MailEngine {
 
 	private static void _send(
 		Session session, Message message, InternetAddress[] bulkAddresses,
-			int batchSize) {
+		int batchSize) {
 
 		try {
 			boolean smtpAuth = GetterUtil.getBoolean(
@@ -510,36 +512,31 @@ public class MailEngine {
 
 				int currentBatch = 0;
 				Address[] portion = null;
+				Address[] recipientAddresses = null;
 
-				if ((bulkAddresses != null) && (bulkAddresses.length > 0)) {
-					portion = _getNextBatch(
-						bulkAddresses, currentBatch, batchSize);
+				if (Validator.isNotNull(bulkAddresses)) {
+					recipientAddresses = bulkAddresses;
 				}
 				else {
-					portion = _getNextBatch(
-						message.getAllRecipients(), currentBatch, batchSize);
+					recipientAddresses = message.getAllRecipients();
 				}
+
+				portion = _getNextBatch(
+					recipientAddresses, currentBatch, batchSize);
 
 				while (Validator.isNotNull(portion)) {
 					transport.sendMessage(message, portion);
 
 					currentBatch++;
 
-					if ((bulkAddresses != null) && (bulkAddresses.length > 0)) {
-						portion = _getNextBatch(
-							bulkAddresses, currentBatch, batchSize);
-					}
-					else {
-						portion = _getNextBatch(
-							message.getAllRecipients(), currentBatch,
-							batchSize);
-					}
+					portion = _getNextBatch(
+						recipientAddresses, currentBatch, batchSize);
 				}
 
 				transport.close();
 			}
 			else {
-				if ((bulkAddresses != null) && (bulkAddresses.length > 0)) {
+				if (Validator.isNotNull(bulkAddresses)) {
 
 					int currentBatch = 0;
 					Address[] portion = _getNextBatch(
@@ -575,6 +572,8 @@ public class MailEngine {
 			}
 		}
 	}
+
+	private static final int _DEFAULT_MAIL_BATCH_SIZE = 0;
 
 	private static final String _MULTIPART_TYPE_ALTERNATIVE = "alternative";
 

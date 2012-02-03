@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.journal.action;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
@@ -46,6 +48,7 @@ import com.liferay.util.JS;
 
 import java.io.File;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Locale;
 import java.util.Map;
@@ -213,17 +216,23 @@ public class EditTemplateAction extends PortletAction {
 		return portletURL.toString();
 	}
 
-	private String getTemplateScript(
+	protected String getTemplateScript(
 		UploadPortletRequest uploadPortletRequest) {
 
 		String xsl = null;
 
 		try {
 			InputStream is = uploadPortletRequest.getFileAsStream("xsl");
-			xsl = new String(FileUtil.getBytes(is));
-			is.close();
-		} catch (Exception e) {
-			e.printStackTrace();
+
+			if (is != null) {
+				xsl = new String(FileUtil.getBytes(is));
+
+				is.close();
+			}
+		} catch (IOException ioe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(ioe, ioe);
+			}
 		}
 
 		return xsl;
@@ -304,5 +313,7 @@ public class EditTemplateAction extends PortletAction {
 
 		return template;
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(JournalTemplate.class);
 
 }

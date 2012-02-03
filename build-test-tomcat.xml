@@ -15,16 +15,6 @@
 		/>
 	</target>
 
-	<target name="copy-optional-jars">
-		<copy
-			todir="${app.server.lib.global.dir}">
-				<fileset
-					dir="${jdbc.drivers.optional.dir}"
-					includes="*.jar"
-			/>
-		</copy>
-	</target>
-
 	<target name="prepare-cluster-tomcat-node">
 		<exec executable="${pscp.executable}">
 			<arg line="-pw ${vm.password} dist/liferay-portal-tomcat-${lp.version}.zip ${vm.username}@${cluster-node.host}:/" />

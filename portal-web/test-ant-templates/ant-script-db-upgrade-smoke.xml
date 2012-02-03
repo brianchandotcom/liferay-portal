@@ -36,7 +36,7 @@
 		</antcall>
 	</target>
 
-	<target name="test-db-upgrade-smoke-${test.ant.script.version}-tomcat-oracle-firefox">
+	<target name="test-db-upgrade-smoke-${test.ant.script.version}-tomcat-oracle-10-firefox">
 		<antcall target="prepare-vm-server">
 			<param name="build.war" value="false" />
 			<param name="skip.prepare-bundle" value="true" />
@@ -44,7 +44,7 @@
 			<param name="vm.host" value="${vm.db.host}" />
 		</antcall>
 
-		<antcall target="prepare-db-oracle-common">
+		<antcall target="prepare-db-oracle-10-common">
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="sql.version" value="${test.ant.script.version}" />
 		</antcall>
@@ -58,7 +58,29 @@
 		</antcall>
 	</target>
 
-	<target name="test-db-upgrade-smoke-${test.ant.script.version}-tomcat-postgresql-firefox">
+	<target name="test-db-upgrade-smoke-${test.ant.script.version}-tomcat-oracle-11-firefox">
+		<antcall target="prepare-vm-server">
+			<param name="build.war" value="false" />
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="vm.vmdk.suffix" value="oracle-11.2.0.1.0" />
+			<param name="vm.host" value="${vm.db.host}" />
+		</antcall>
+
+		<antcall target="prepare-db-oracle-11-common">
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="sql.version" value="${test.ant.script.version}" />
+		</antcall>
+
+		<antcall target="run-smoke-test">
+			${test.ant.script.file.evaluate.logs}
+		</antcall>
+
+		<antcall target="stop-vm">
+			<param name="vm.host" value="${vm.db.host}" />
+		</antcall>
+	</target>
+
+	<target name="test-db-upgrade-smoke-${test.ant.script.version}-tomcat-postgresql-8.4-firefox">
 		<antcall target="prepare-vm-server">
 			<param name="build.war" value="false" />
 			<param name="skip.prepare-bundle" value="true" />
@@ -66,7 +88,7 @@
 			<param name="vm.host" value="${vm.db.host}" />
 		</antcall>
 
-		<antcall target="prepare-db-postgresql-common">
+		<antcall target="prepare-db-postgresql-8.4-common">
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="sql.version" value="${test.ant.script.version}" />
 		</antcall>
@@ -80,7 +102,29 @@
 		</antcall>
 	</target>
 
-	<target name="test-db-upgrade-smoke-${test.ant.script.version}-tomcat-sql-server-firefox">
+	<target name="test-db-upgrade-smoke-${test.ant.script.version}-tomcat-postgresql-9.0-firefox">
+		<antcall target="prepare-vm-server">
+			<param name="build.war" value="false" />
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="vm.vmdk.suffix" value="postgresql-9.0.4-1" />
+			<param name="vm.host" value="${vm.db.host}" />
+		</antcall>
+
+		<antcall target="prepare-db-postgresql-9.0-common">
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="sql.version" value="${test.ant.script.version}" />
+		</antcall>
+
+		<antcall target="run-smoke-test">
+			${test.ant.script.file.evaluate.logs}
+		</antcall>
+
+		<antcall target="stop-vm">
+			<param name="vm.host" value="${vm.db.host}" />
+		</antcall>
+	</target>
+
+	<target name="test-db-upgrade-smoke-${test.ant.script.version}-tomcat-sql-server-2005-firefox">
 		<antcall target="prepare-vm-server">
 			<param name="build.war" value="false" />
 			<param name="skip.prepare-bundle" value="true" />
@@ -88,7 +132,29 @@
 			<param name="vm.host" value="${vm.db.host}" />
 		</antcall>
 
-		<antcall target="prepare-db-sql-server-common">
+		<antcall target="prepare-db-sql-server-2005-common">
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="sql.version" value="${test.ant.script.version}" />
+		</antcall>
+
+		<antcall target="run-smoke-test">
+			${test.ant.script.file.evaluate.logs}
+		</antcall>
+
+		<antcall target="stop-vm">
+			<param name="vm.host" value="${vm.db.host}" />
+		</antcall>
+	</target>
+
+	<target name="test-db-upgrade-smoke-${test.ant.script.version}-tomcat-sql-server-2008-firefox">
+		<antcall target="prepare-vm-server">
+			<param name="build.war" value="false" />
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="vm.vmdk.suffix" value="sql-server-2008-r2" />
+			<param name="vm.host" value="${vm.db.host}" />
+		</antcall>
+
+		<antcall target="prepare-db-sql-server-2008-common">
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="sql.version" value="${test.ant.script.version}" />
 		</antcall>

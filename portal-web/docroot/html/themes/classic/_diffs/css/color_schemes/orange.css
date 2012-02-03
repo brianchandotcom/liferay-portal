@@ -8,12 +8,12 @@ body.orange, .orange .portlet {
 
 .orange .aui-state-hover {
 	background-color: #DAC8BA;
-	background-image: url(../../images/color_schemes/orange/application/state_hover_bg.png);
+	background-image: url(@theme_image_path@/color_schemes/orange/application/state_hover_bg.png);
 	border-color: #837062;
 }
 
 .orange .aui-icon {
-	background-image: url(../../images/color_schemes/orange/aui/icon_sprite.png);
+	background-image: url(@theme_image_path@/color_schemes/orange/aui/icon_sprite.png);
 }
 
 /* ---------- Links ---------- */
@@ -130,12 +130,12 @@ body.orange, .orange .portlet {
 
 .orange .dockbar {
 	background-color: #AFA798;
-	background-image: url(../../images/color_schemes/orange/dockbar/dockbar_bg.png);
+	background-image: url(@theme_image_path@/color_schemes/orange/dockbar/dockbar_bg.png);
 }
 
 .orange .dockbar .menu-button-active {
 	background-color: #DBAC5C;
-	background-image: url(../../images/color_schemes/orange/dockbar/button_active_bg.png);
+	background-image: url(@theme_image_path@/color_schemes/orange/dockbar/button_active_bg.png);
 }
 
 .orange .dockbar .menu-button-active a {
@@ -252,14 +252,14 @@ body.orange, .orange .portlet {
 
 .orange input[type="submit"]:hover, .orange input[type="button"]:hover, .orange input[type="reset"]:hover, .orange button:hover, .orange .lfr-actions:hover, .orange .lfr-actions:hover ul {
 	background-color: #DAC8BA;
-	background-image: url(../../images/color_schemes/orange/application/state_hover_bg.png);
+	background-image: url(@theme_image_path@/color_schemes/orange/application/state_hover_bg.png);
 	border-color: #837062;
 	color: #9A6F33;
 }
 
 .orange input[type="submit"]:focus, .orange input[type="button"]:focus, .orange input[type="reset"]:focus, .orange button:focus, .orange .lfr-actions:focus, .orange .lfr-actions:focus ul {
 	background-color: #ECECEC;
-	background-image: url(../../images/application/state_active_bg.png);
+	background-image: url(@theme_image_path@/application/state_active_bg.png);
 }
 
 /* ---------- IE6 chokes on attribute selectors in a chain, so we separate them into their own rule ---------- */

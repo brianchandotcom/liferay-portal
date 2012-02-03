@@ -17,6 +17,7 @@ package com.liferay.portlet.journal.action;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -45,6 +46,7 @@ import com.liferay.util.JS;
 
 import java.io.File;
 
+import java.io.InputStream;
 import java.util.Locale;
 import java.util.Map;
 
@@ -211,6 +213,22 @@ public class EditTemplateAction extends PortletAction {
 		return portletURL.toString();
 	}
 
+	private String getTemplateScript(
+		UploadPortletRequest uploadPortletRequest) {
+
+		String xsl = null;
+
+		try {
+			InputStream is = uploadPortletRequest.getFileAsStream("xsl");
+			xsl = new String(FileUtil.getBytes(is));
+			is.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return xsl;
+	}
+
 	protected JournalTemplate updateTemplate(ActionRequest actionRequest)
 		throws Exception {
 
@@ -233,7 +251,7 @@ public class EditTemplateAction extends PortletAction {
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 
-		String xsl = ParamUtil.getString(uploadPortletRequest, "xsl");
+		String xsl = getTemplateScript(uploadPortletRequest);
 		String xslContent = JS.decodeURIComponent(
 			ParamUtil.getString(uploadPortletRequest, "xslContent"));
 		boolean formatXsl = ParamUtil.getBoolean(

@@ -792,6 +792,8 @@ public class WebServerServlet extends HttpServlet {
 			String[] pathArray)
 		throws Exception {
 
+		// Retrieve file details
+
 		FileEntry fileEntry = getFileEntry(pathArray);
 
 		if (fileEntry == null) {
@@ -820,6 +822,8 @@ public class WebServerServlet extends HttpServlet {
 
 			fileName += StringPool.PERIOD + extension;
 		}
+
+		// Handle requested conversion
 
 		boolean converted = false;
 
@@ -891,44 +895,6 @@ public class WebServerServlet extends HttpServlet {
 			contentLength = VideoProcessorUtil.getPreviewFileSize(
 				fileVersion, type);
 
-			response.setHeader(
-				HttpHeaders.ACCEPT_RANGES,
-				HttpHeaders.ACCEPT_RANGES_BYTES_VALUE);
-
-			List<Range> ranges = null;
-
-			try {
-				ranges = ServletResponseUtil.getRanges(
-					request, response, contentLength);
-			}
-			catch (IOException ioe) {
-				if (_log.isErrorEnabled()) {
-					_log.error(ioe);
-				}
-
-				response.setHeader(
-					HttpHeaders.CONTENT_RANGE, "bytes */" + contentLength);
-
-				response.sendError(
-					HttpServletResponse.SC_REQUESTED_RANGE_NOT_SATISFIABLE);
-
-				return;
-			}
-
-			if ((ranges != null) && (ranges.size() > 0)) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Video range requested");
-				}
-
-				String contentType = MimeTypesUtil.getContentType(fileName);
-
-				ServletResponseUtil.write(
-					request, response, fileName, ranges, inputStream,
-					contentLength, contentType);
-
-				return;
-			}
-
 			converted = true;
 		}
 		else if ((videoThumbnail > 0) && (videoThumbnail <= 3)) {
@@ -963,6 +929,8 @@ public class WebServerServlet extends HttpServlet {
 			}
 		}
 
+		// Determine proper content type
+
 		String contentType = null;
 
 		if (converted) {
@@ -972,9 +940,47 @@ public class WebServerServlet extends HttpServlet {
 			contentType = fileVersion.getMimeType();
 		}
 
-		ServletResponseUtil.sendFile(
-			request, response, fileName, inputStream, contentLength,
-			contentType);
+		// Support range HTTP header
+
+		response.setHeader(
+			HttpHeaders.ACCEPT_RANGES, HttpHeaders.ACCEPT_RANGES_BYTES_VALUE);
+
+		List<Range> ranges = null;
+
+		try {
+			ranges = ServletResponseUtil.getRanges(
+				request, response, contentLength);
+		}
+		catch (IOException ioe) {
+			if (_log.isErrorEnabled()) {
+				_log.error(ioe);
+			}
+
+			response.setHeader(
+				HttpHeaders.CONTENT_RANGE, "bytes */" + contentLength);
+
+			response.sendError(
+				HttpServletResponse.SC_REQUESTED_RANGE_NOT_SATISFIABLE);
+
+			return;
+		}
+
+		if ((ranges == null) || ranges.isEmpty()) {
+			ServletResponseUtil.sendFile(
+				request, response, fileName, inputStream, contentLength,
+				contentType);
+		}
+		else {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Request has range header " +
+						request.getHeader(HttpHeaders.RANGE));
+			}
+
+			ServletResponseUtil.write(
+				request, response, fileName, ranges, inputStream, contentLength,
+				contentType);
+		}
 	}
 
 	protected void sendFile(

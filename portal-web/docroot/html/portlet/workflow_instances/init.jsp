@@ -37,6 +37,8 @@ Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
 
+<%@ include file="/html/portlet/workflow_instances/init-ext.jsp" %>
+
 <%!
 private boolean _isAssignedToUser(WorkflowTask workflowTask, User user) {
 	if (workflowTask.getAssigneeUserId() == user.getUserId()) {
@@ -46,5 +48,3 @@ private boolean _isAssignedToUser(WorkflowTask workflowTask, User user) {
 	return false;
 }
 %>
-
-<%@ include file="/html/portlet/workflow_instances/init-ext.jsp" %>

@@ -41,6 +41,8 @@ Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
 
+<%@ include file="/html/portlet/workflow_tasks/init-ext.jsp" %>
+
 <%!
 private boolean _hasOtherAssignees(long[] pooledActorsIds, WorkflowTask workflowTask, User user) {
 	if (pooledActorsIds.length == 0) {
@@ -66,5 +68,3 @@ private boolean _isAssignedToUser(WorkflowTask workflowTask, User user) {
 	return false;
 }
 %>
-
-<%@ include file="/html/portlet/workflow_tasks/init-ext.jsp" %>

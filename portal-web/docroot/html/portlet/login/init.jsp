@@ -70,3 +70,5 @@ if (Validator.isNotNull(portletResource)) {
 
 String authType = preferences.getValue("authType", StringPool.BLANK);
 %>
+
+<%@ include file="/html/portlet/login/init-ext.jsp" %>

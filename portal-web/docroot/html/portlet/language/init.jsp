@@ -33,3 +33,5 @@ String[] availableLanguageIds = LocaleUtil.toLanguageIds(availableLocales);
 String[] languageIds = StringUtil.split(preferences.getValue("languageIds", StringUtil.merge(availableLanguageIds)));
 int displayStyle = GetterUtil.getInteger(preferences.getValue("displayStyle", StringPool.BLANK));
 %>
+
+<%@ include file="/html/portlet/language/init-ext.jsp" %>

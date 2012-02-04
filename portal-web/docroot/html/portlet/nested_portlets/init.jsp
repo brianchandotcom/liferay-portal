@@ -28,3 +28,5 @@ if (Validator.isNotNull(portletResource)) {
 	preferences = PortletPreferencesFactoryUtil.getPortletSetup(request, portletResource);
 }
 %>
+
+<%@ include file="/html/portlet/nested_portlets/init-ext.jsp" %>

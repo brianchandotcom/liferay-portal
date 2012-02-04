@@ -51,3 +51,5 @@ String ddmResource = portletConfig.getInitParameter("ddm-resource");
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
+
+<%@ include file="/html/portlet/dynamic_data_list_display/init-ext.jsp" %>

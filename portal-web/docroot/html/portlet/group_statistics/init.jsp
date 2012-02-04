@@ -45,3 +45,5 @@ else {
 	displayActivityCounterNameIndexes = new int[] {0};
 }
 %>
+
+<%@ include file="/html/portlet/group_statistics/init-ext.jsp" %>

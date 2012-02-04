@@ -35,3 +35,5 @@ if (Validator.isNotNull(portletResource)) {
 long nodeId = GetterUtil.getLong(preferences.getValue("nodeId", StringPool.BLANK));
 String title = GetterUtil.getString(preferences.getValue("title", WikiPageConstants.FRONT_PAGE));
 %>
+
+<%@ include file="/html/portlet/wiki_display/init-ext.jsp" %>

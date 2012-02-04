@@ -145,3 +145,5 @@ rssURLRSS20Params.append("&version=2.0");
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
+
+<%@ include file="/html/portlet/wiki/init-ext.jsp" %>

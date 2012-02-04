@@ -18,3 +18,5 @@
 
 <%@ page import="com.liferay.portlet.unitconverter.model.Conversion" %><%@
 page import="com.liferay.portlet.unitconverter.util.ConverterUtil" %>
+
+<%@ include file="/html/portlet/unit_converter/init-ext.jsp" %>

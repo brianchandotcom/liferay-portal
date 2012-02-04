@@ -21,3 +21,5 @@ page import="com.liferay.portlet.social.model.SocialRequest" %><%@
 page import="com.liferay.portlet.social.model.SocialRequestConstants" %><%@
 page import="com.liferay.portlet.social.model.SocialRequestFeedEntry" %><%@
 page import="com.liferay.portlet.social.service.SocialRequestInterpreterLocalServiceUtil" %>
+
+<%@ include file="/html/portlet/requests/init-ext.jsp" %>

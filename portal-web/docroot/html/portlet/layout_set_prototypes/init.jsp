@@ -21,3 +21,5 @@ page import="com.liferay.portal.RequiredLayoutSetPrototypeException" %><%@
 page import="com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.permission.PortalPermissionUtil" %><%@
 page import="com.liferay.portal.util.CustomJspRegistryUtil" %>
+
+<%@ include file="/html/portlet/layout_set_prototypes/init-ext.jsp" %>

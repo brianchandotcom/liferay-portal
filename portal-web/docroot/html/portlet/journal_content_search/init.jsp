@@ -52,3 +52,5 @@ if (!showListed) {
 
 String type = preferences.getValue("type", StringPool.BLANK);
 %>
+
+<%@ include file="/html/portlet/journal_content_search/init-ext.jsp" %>

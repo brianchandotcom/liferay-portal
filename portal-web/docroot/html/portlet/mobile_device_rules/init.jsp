@@ -58,3 +58,5 @@ if (groupId == 0) {
 	groupId = themeDisplay.getScopeGroupId();
 }
 %>
+
+<%@ include file="/html/portlet/mobile_device_rules/init-ext.jsp" %>

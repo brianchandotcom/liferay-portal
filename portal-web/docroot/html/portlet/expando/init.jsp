@@ -38,3 +38,5 @@ PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPre
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
+
+<%@ include file="/html/portlet/expando/init-ext.jsp" %>

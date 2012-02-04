@@ -34,3 +34,5 @@ int maxAssetTags = PrefsParamUtil.getInteger(preferences, request, "maxAssetTags
 boolean showAssetCount = PrefsParamUtil.getBoolean(preferences, request, "showAssetCount");
 boolean showZeroAssetCount = PrefsParamUtil.getBoolean(preferences, request, "showZeroAssetCount");
 %>
+
+<%@ include file="/html/portlet/asset_tags_navigation/init-ext.jsp" %>

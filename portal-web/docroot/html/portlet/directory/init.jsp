@@ -35,3 +35,5 @@ boolean filterManageableOrganizations = false;
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale);
 %>
+
+<%@ include file="/html/portlet/directory/init-ext.jsp" %>

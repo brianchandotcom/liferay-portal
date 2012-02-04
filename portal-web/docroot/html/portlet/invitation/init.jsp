@@ -17,3 +17,5 @@
 <%@ include file="/html/portlet/init.jsp" %>
 
 <%@ page import="com.liferay.portlet.invitation.util.InvitationUtil" %>
+
+<%@ include file="/html/portlet/invitation/init-ext.jsp" %>

@@ -113,3 +113,5 @@ PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPre
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
+
+<%@ include file="/html/portlet/journal/init-ext.jsp" %>

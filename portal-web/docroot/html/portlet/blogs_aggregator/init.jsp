@@ -47,3 +47,5 @@ if (organizationId == 0) {
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
+
+<%@ include file="/html/portlet/blogs_aggregator/init-ext.jsp" %>

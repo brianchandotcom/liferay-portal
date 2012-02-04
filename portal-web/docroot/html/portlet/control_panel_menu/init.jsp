@@ -15,3 +15,5 @@
 --%>
 
 <%@ include file="/html/portlet/init.jsp" %>
+
+<%@ include file="/html/portlet/control_panel_menu/init-ext.jsp" %>

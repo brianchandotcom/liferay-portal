@@ -29,3 +29,5 @@ page import="com.liferay.portlet.blogs.service.permission.BlogsPermission" %><%@
 page import="com.liferay.portlet.blogsadmin.search.EntryDisplayTerms" %><%@
 page import="com.liferay.portlet.blogsadmin.search.EntrySearch" %><%@
 page import="com.liferay.portlet.blogsadmin.search.EntrySearchTerms" %>
+
+<%@ include file="/html/portlet/blogs_admin/init-ext.jsp" %>

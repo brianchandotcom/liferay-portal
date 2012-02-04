@@ -66,3 +66,5 @@ String footerArticleId = footerArticleValues[1];
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 %>
+
+<%@ include file="/html/portlet/rss/init-ext.jsp" %>

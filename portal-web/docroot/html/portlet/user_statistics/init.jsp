@@ -50,3 +50,5 @@ boolean rankByParticipation = GetterUtil.getBoolean(PrefsParamUtil.getString(pre
 boolean showHeaderText = GetterUtil.getBoolean(PrefsParamUtil.getString(preferences, request, "showHeaderText"), true);
 boolean showTotals = GetterUtil.getBoolean(PrefsParamUtil.getString(preferences, request, "showTotals"), true);
 %>
+
+<%@ include file="/html/portlet/user_statistics/init-ext.jsp" %>

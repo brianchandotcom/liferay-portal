@@ -79,3 +79,5 @@ boolean enableConversions = openOfficeServerEnabled && (extensions != null) && (
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 %>
+
+<%@ include file="/html/portlet/journal_content/init-ext.jsp" %>

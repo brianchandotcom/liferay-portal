@@ -36,3 +36,5 @@ String proxyAuthenticationHost = preferences.getValue("proxyAuthenticationHost",
 String proxyAuthenticationDomain = preferences.getValue("proxyAuthenticationDomain", StringPool.BLANK);
 String stylesheet = preferences.getValue("stylesheet", StringPool.BLANK);
 %>
+
+<%@ include file="/html/portlet/web_proxy/init-ext.jsp" %>

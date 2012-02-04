@@ -38,3 +38,5 @@ if (Validator.isNotNull(portletResource)) {
 String xmlUrl = preferences.getValue("xmlUrl", XSLContentUtil.DEFAULT_XML_URL);
 String xslUrl = preferences.getValue("xslUrl", XSLContentUtil.DEFAULT_XSL_URL);
 %>
+
+<%@ include file="/html/portlet/xsl_content/init-ext.jsp" %>

@@ -27,3 +27,5 @@ if (Validator.isNotNull(portletResource)) {
 
 String displayStyle = PrefsParamUtil.getString(preferences, renderRequest, "displayStyle", "horizontal");
 %>
+
+<%@ include file="/html/portlet/breadcrumb/init-ext.jsp" %>

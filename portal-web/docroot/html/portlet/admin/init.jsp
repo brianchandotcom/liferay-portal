@@ -61,3 +61,5 @@ if (PropsValues.SHARD_SELECTOR.equals(ManualShardSelector.class.getName()) && Sh
 	showShardSelector = true;
 }
 %>
+
+<%@ include file="/html/portlet/admin/init-ext.jsp" %>

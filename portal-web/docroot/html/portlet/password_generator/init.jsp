@@ -15,3 +15,5 @@
 --%>
 
 <%@ include file="/html/portlet/init.jsp" %>
+
+<%@ include file="/html/portlet/password_generator/init-ext.jsp" %>

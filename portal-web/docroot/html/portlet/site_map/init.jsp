@@ -54,3 +54,5 @@ if (rootLayoutId == LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
 	includeRootInTree = false;
 }
 %>
+
+<%@ include file="/html/portlet/site_map/init-ext.jsp" %>

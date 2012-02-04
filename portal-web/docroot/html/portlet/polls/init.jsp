@@ -37,3 +37,5 @@ page import="com.liferay.portlet.polls.util.PollsUtil" %>
 <%
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
+
+<%@ include file="/html/portlet/polls/init-ext.jsp" %>

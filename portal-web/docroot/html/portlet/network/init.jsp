@@ -19,3 +19,5 @@
 <%@ page import="com.liferay.portlet.network.model.DNSLookup" %><%@
 page import="com.liferay.portlet.network.model.Whois" %><%@
 page import="com.liferay.portlet.network.util.NetworkUtil" %>
+
+<%@ include file="/html/portlet/network/init-ext.jsp" %>

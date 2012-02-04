@@ -32,3 +32,5 @@ String[] isbns = preferences.getValues("isbns", new String[0]);
 
 NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 %>
+
+<%@ include file="/html/portlet/amazon_rankings/init-ext.jsp" %>

@@ -22,3 +22,5 @@ page import="com.liferay.portlet.asset.model.impl.AssetTagPropertyImpl" %><%@
 page import="com.liferay.portlet.asset.service.AssetTagPropertyServiceUtil" %><%@
 page import="com.liferay.portlet.asset.service.AssetTagServiceUtil" %><%@
 page import="com.liferay.portlet.asset.service.permission.AssetPermission" %>
+
+<%@ include file="/html/portlet/asset_tag_admin/init-ext.jsp" %>

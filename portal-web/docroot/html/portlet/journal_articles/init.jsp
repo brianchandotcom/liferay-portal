@@ -56,3 +56,5 @@ OrderByComparator orderByComparator = JournalUtil.getArticleOrderByComparator(or
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
+
+<%@ include file="/html/portlet/journal_articles/init-ext.jsp" %>

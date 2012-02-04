@@ -22,3 +22,5 @@ PortletPreferences preferences = renderRequest.getPreferences();
 String color = preferences.getValue("color", "#FFFFCC");
 String data = preferences.getValue("data", LanguageUtil.get(pageContext, "click-to-edit-me"));
 %>
+
+<%@ include file="/html/portlet/quick_note/init-ext.jsp" %>

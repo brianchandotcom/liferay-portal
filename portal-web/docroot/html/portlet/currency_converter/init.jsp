@@ -25,3 +25,5 @@ String[] symbols = preferences.getValues("symbols", new String[0]);
 
 Map allSymbols = CurrencyUtil.getAllSymbols(pageContext);
 %>
+
+<%@ include file="/html/portlet/currency_converter/init-ext.jsp" %>

@@ -40,3 +40,5 @@ String includedLayouts = PrefsParamUtil.getString(preferences, renderRequest, "i
 
 boolean nestedChildren = PrefsParamUtil.getBoolean(preferences, renderRequest, "nestedChildren", true);
 %>
+
+<%@ include file="/html/portlet/navigation/init-ext.jsp" %>

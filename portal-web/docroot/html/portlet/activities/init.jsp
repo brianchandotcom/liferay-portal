@@ -18,3 +18,5 @@
 
 <%@ page import="com.liferay.portlet.social.model.SocialActivity" %><%@
 page import="com.liferay.portlet.social.service.SocialActivityLocalServiceUtil" %>
+
+<%@ include file="/html/portlet/activities/init-ext.jsp" %>

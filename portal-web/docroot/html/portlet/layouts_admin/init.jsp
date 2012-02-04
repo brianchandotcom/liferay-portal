@@ -62,3 +62,5 @@ page import="com.liferay.portlet.sites.util.SitesUtil" %>
 <%
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
+
+<%@ include file="/html/portlet/layouts_admin/init-ext.jsp" %>

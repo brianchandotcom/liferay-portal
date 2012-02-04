@@ -51,3 +51,5 @@ Portlet selPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
+
+<%@ include file="/html/portlet/portlet_configuration/init-ext.jsp" %>

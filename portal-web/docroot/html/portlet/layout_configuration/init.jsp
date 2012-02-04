@@ -18,3 +18,5 @@
 
 <%@ page import="java.util.regex.Matcher" %><%@
 page import="java.util.regex.Pattern" %>
+
+<%@ include file="/html/portlet/layout_configuration/init-ext.jsp" %>

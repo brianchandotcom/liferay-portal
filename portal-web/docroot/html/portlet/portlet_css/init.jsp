@@ -18,3 +18,5 @@
 
 <%@ page import="com.liferay.portal.util.LayoutLister" %><%@
 page import="com.liferay.portal.util.LayoutView" %>
+
+<%@ include file="/html/portlet/portlet_css/init-ext.jsp" %>

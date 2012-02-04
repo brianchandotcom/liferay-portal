@@ -87,3 +87,5 @@ boolean showTabs = PrefsParamUtil.getBoolean(preferences, request, "showTabs");
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 %>
+
+<%@ include file="/html/portlet/image_gallery_display/init-ext.jsp" %>

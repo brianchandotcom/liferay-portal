@@ -41,3 +41,5 @@ long questionId = GetterUtil.getLong(preferences.getValue("questionId", StringPo
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
+
+<%@ include file="/html/portlet/polls_display/init-ext.jsp" %>

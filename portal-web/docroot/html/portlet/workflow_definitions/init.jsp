@@ -22,3 +22,5 @@ page import="com.liferay.portal.kernel.workflow.WorkflowDefinitionFileException"
 page import="com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowEngineManagerUtil" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowException" %>
+
+<%@ include file="/html/portlet/workflow_definitions/init-ext.jsp" %>

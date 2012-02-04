@@ -20,17 +20,34 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SOUs_ViewWHEntryContentViewableByEveryoneTest extends BaseTestCase {
-	public void testSOUs_ViewWHEntryContentViewableByEveryone()
+public class SOUs_ViewWHContentViewableByEveryoneProfileTest
+	extends BaseTestCase {
+	public void testSOUs_ViewWHContentViewableByEveryoneProfile()
 		throws Exception {
-		selenium.open("/web/joebloggs");
+		selenium.open("/web/joebloggs/profile");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Microblogs Post"),
 			selenium.getText("//div[@class='content']"));
 		assertEquals(RuntimeVariables.replace("Microblogs Post"),
 			selenium.getText("//div[@class='activity-title']"));
-		assertEquals(RuntimeVariables.replace("Microblogs"),
-			selenium.getText("//nav/ul/li[contains(.,'Microblogs')]/a/span"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//nav/ul/li[contains(.,'Microblogs')]/a/span")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");

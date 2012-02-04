@@ -53,6 +53,27 @@ public class AddWHEntryContentViewableByFollowersTest extends BaseTestCase {
 		selenium.clickAt("//textarea", RuntimeVariables.replace("Text area"));
 		selenium.typeKeys("//textarea",
 			RuntimeVariables.replace("Microblogs Post"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("135")
+										.equals(selenium.getText(
+								"//span[@class='microblogs-countdown']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("135"),
+			selenium.getText("//span[@class='microblogs-countdown']"));
 		selenium.select("//select[@id='_2_WAR_microblogsportlet_socialRelationType']",
 			RuntimeVariables.replace("Followers"));
 		selenium.clickAt("//input[@value='Post']",

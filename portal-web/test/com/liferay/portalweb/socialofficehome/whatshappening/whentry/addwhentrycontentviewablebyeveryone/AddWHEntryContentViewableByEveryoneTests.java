@@ -30,7 +30,7 @@ public class AddWHEntryContentViewableByEveryoneTests extends BaseTestSuite {
 		testSuite.addTestSuite(ViewWHEntryContentViewableByEveryoneTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SOUs_SignInTest.class);
-		testSuite.addTestSuite(SOUs_ViewWHEntryContentViewableByEveryoneTest.class);
+		testSuite.addTestSuite(SOUs_ViewWHContentViewableByEveryoneProfileTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SOSignInTest.class);
 		testSuite.addTestSuite(TearDownWHEntryContentTest.class);

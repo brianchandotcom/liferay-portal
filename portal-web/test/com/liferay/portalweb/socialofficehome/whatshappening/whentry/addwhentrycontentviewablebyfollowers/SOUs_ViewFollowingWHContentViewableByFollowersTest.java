@@ -41,24 +41,24 @@ public class SOUs_ViewFollowingWHContentViewableByFollowersTest
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Microblogs Post"),
 			selenium.getText("//div[@class='activity-title']"));
-		assertEquals(RuntimeVariables.replace("Microblogs"),
-			selenium.getText("//nav/ul/li[contains(.,'Microblogs')]/a/span"));
-		selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
-			RuntimeVariables.replace("Microblogs"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//div[@class='user-name']/span"));
-		assertEquals(RuntimeVariables.replace("Microblogs Post"),
-			selenium.getText("//div[@class='content']"));
-		selenium.open("/web/joebloggs");
-		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Microblogs Post"),
-			selenium.getText("//div[@class='content']"));
-		assertEquals(RuntimeVariables.replace("Microblogs Post"),
-			selenium.getText("//div[@class='activity-title']"));
-		assertEquals(RuntimeVariables.replace("Microblogs"),
-			selenium.getText("//nav/ul/li[contains(.,'Microblogs')]/a/span"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//nav/ul/li[contains(.,'Microblogs')]/a/span")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");

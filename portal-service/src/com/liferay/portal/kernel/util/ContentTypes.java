@@ -21,6 +21,8 @@ public interface ContentTypes {
 
 	public static final String APPLICATION_ATOM_XML = "application/atom+xml";
 
+	public static final String APPLICATION_GZIP = "application/gzip";
+
 	public static final String APPLICATION_JSON = "application/json";
 
 	public static final String APPLICATION_MSWORD = "application/msword";
@@ -37,6 +39,9 @@ public interface ContentTypes {
 
 	public static final String APPLICATION_VND_MS_POWERPOINT =
 		"application/vnd.ms-powerpoint";
+
+	public static final String APPLICATION_X_GZIP =
+		"application/x-gzip";
 
 	public static final String APPLICATION_X_JAVA_SERIALIZED_OBJECT =
 		"application/x-java-serialized-object";

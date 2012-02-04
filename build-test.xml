@@ -2188,7 +2188,7 @@ tunnel.servlet.hosts.allowed=
 resource.repositories.root=$${user.home}/liferay</echo>
 
 		<if>
-			<equals arg1="${db.type}" arg2="db2" />
+			<contains string="${db.type}" substring="db2" />
 			<then>
 				<echo file="portal-impl/src/portal-ext.properties" append="true">
 
@@ -2197,10 +2197,7 @@ custom.sql.function.isnull=CAST(? AS VARCHAR(32672)) IS NULL
 custom.sql.function.isnotnull=CAST(? AS VARCHAR(32672)) IS NOT NULL</echo>
 			</then>
 			<elseif>
-				<or>
-					<equals arg1="${db.type}" arg2="oracle-10" />
-					<equals arg1="${db.type}" arg2="oracle-11" />
-				</or>
+				<contains string="${db.type}" substring="oracle" />
 				<then>
 					<echo file="portal-impl/src/portal-ext.properties" append="true">
 
@@ -2211,7 +2208,7 @@ jdbc.default.numHelperThreads=1</echo>
 				</then>
 			</elseif>
 			<elseif>
-				<equals arg1="${db.type}" arg2="sybase" />
+				<contains string="${db.type}" substring="sybase" />
 				<then>
 					<echo file="portal-impl/src/portal-ext.properties" append="true">
 

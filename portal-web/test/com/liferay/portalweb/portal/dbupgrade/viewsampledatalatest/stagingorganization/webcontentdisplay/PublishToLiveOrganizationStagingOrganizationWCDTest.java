@@ -49,12 +49,14 @@ public class PublishToLiveOrganizationStagingOrganizationWCDTest
 				"Page Staging Organization Web Content Display"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.clickAt("//li[2]/span/a",
-			RuntimeVariables.replace("Staged Page"));
+		assertEquals(RuntimeVariables.replace("Staging"),
+			selenium.getText("//div[@class='staging-bar']/ul/li[2]/span/a"));
+		selenium.clickAt("//div[@class='staging-bar']/ul/li[2]/span/a",
+			RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
-		selenium.clickAt("//strong/a",
+		selenium.clickAt("//span[@class='staging-icon-menu-container']/span/ul/li/strong/a",
 			RuntimeVariables.replace("Staging Dropdown"));
 
 		for (int second = 0;; second++) {
@@ -87,6 +89,29 @@ public class PublishToLiveOrganizationStagingOrganizationWCDTest
 			}
 
 			try {
+				if (RuntimeVariables.replace(
+							"Page Staging Organization Web Content Display")
+										.equals(selenium.getText(
+								"//tr[3]/td[2]"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace(
+				"Page Staging Organization Web Content Display"),
+			selenium.getText("//tr[3]/td[2]"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
 				if (selenium.isVisible("//input[@value='Publish']")) {
 					break;
 				}
@@ -99,9 +124,42 @@ public class PublishToLiveOrganizationStagingOrganizationWCDTest
 
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to publish these pages[\\s\\S]$"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if ("Are you sure you want to publish these pages?".equals(
+							selenium.getConfirmation())) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 	}
 }

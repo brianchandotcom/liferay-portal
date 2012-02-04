@@ -15,7 +15,6 @@
 package com.liferay.portalweb.portal.dbupgrade.sampledatalatest.wiki.usecase;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portlet.wiki.portlet.addportlet.AddPortletWikiTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -28,7 +27,7 @@ public class UseCaseTests extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddCustomSiteWikiUseCaseTest.class);
 		testSuite.addTestSuite(AddPageWikiTest.class);
-		testSuite.addTestSuite(AddPortletWikiTest.class);
+		testSuite.addTestSuite(AddPortletWikiSiteTest.class);
 		testSuite.addTestSuite(SaveAsDraftWikiPageContentTest.class);
 		testSuite.addTestSuite(DiscardDraftWikiPageDraftPagesActionsTest.class);
 		testSuite.addTestSuite(AddWikiFrontPageTest.class);

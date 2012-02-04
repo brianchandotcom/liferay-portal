@@ -14,7 +14,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>waitForVisible</td>
 	<td>//nav/ul/li[contains(.,'Microblogs')]/a/span</td>
 	<td>Microblogs</td>
 </tr>
@@ -59,6 +59,16 @@
 	<td>Microblogs Post</td>
 </tr>
 <tr>
+	<td>waitForText</td>
+	<td>//span[@class='microblogs-countdown']</td>
+	<td>135</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='microblogs-countdown']</td>
+	<td>135</td>
+</tr>
+<tr>
 	<td>select</td>
 	<td>//select[@id='_1_WAR_microblogsportlet_socialRelationType']</td>
 	<td>Followers</td>
@@ -82,6 +92,11 @@
 	<td>assertText</td>
 	<td>//span[@class='action comment']/a</td>
 	<td>Comment</td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>//span[@class='action repost']/a</td>
+	<td>Repost</td>
 </tr>
 
 </tbody></table>

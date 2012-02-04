@@ -30,14 +30,14 @@ public class EditMicroblogsContentViewableByEveryoneTests extends BaseTestSuite 
 		testSuite.addTestSuite(ViewMicroblogsContentViewableByEveryoneTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SOUs_SignInTest.class);
-		testSuite.addTestSuite(SOUs_ViewMicroblogsContentViewableByEveryoneTest.class);
+		testSuite.addTestSuite(SOUs_ViewMBContentViewableByEveryoneProfileTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SOSignInTest.class);
 		testSuite.addTestSuite(EditMicroblogsContentViewableByEveryoneTest.class);
 		testSuite.addTestSuite(ViewEditMicroblogsContentViewableByEveryoneTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SOUs_SignInTest.class);
-		testSuite.addTestSuite(SOUs_ViewEditMicroblogsContentViewableByEveryoneTest.class);
+		testSuite.addTestSuite(SOUs_ViewEditMBContentViewableByEveryoneProfileTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SOSignInTest.class);
 		testSuite.addTestSuite(TearDownWHEntryContentTest.class);

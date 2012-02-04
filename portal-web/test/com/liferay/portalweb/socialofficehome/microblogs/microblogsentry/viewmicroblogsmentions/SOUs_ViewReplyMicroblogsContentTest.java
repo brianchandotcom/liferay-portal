@@ -22,49 +22,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SOUs_ViewReplyMicroblogsContentTest extends BaseTestCase {
 	public void testSOUs_ViewReplyMicroblogsContent() throws Exception {
-		selenium.open("/web/joebloggs");
-		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace(
-				"@Joe Bloggs: Microblogs Post Comment [@joebloggs]"),
-			selenium.getText("xPath=(//div[@class='activity-title'])[1]"));
-		assertEquals(RuntimeVariables.replace("Microblogs Post"),
-			selenium.getText("xPath=(//div[@class='activity-title'])[2]"));
-		assertEquals(RuntimeVariables.replace("Microblogs"),
-			selenium.getText("//nav/ul/li[contains(.,'Microblogs')]/a/span"));
-		selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
-			RuntimeVariables.replace("Microblogs"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("1 Comment"),
-			selenium.getText("//span[@class='action comment']/a"));
-		selenium.clickAt("//span[@class='action comment']/a",
-			RuntimeVariables.replace("1 Comment"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("xPath=(//div[@class='user-name'])[2]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertEquals(RuntimeVariables.replace("Joe Bloggs says"),
-			selenium.getText("xPath=(//div[@class='user-name'])[1]"));
-		assertEquals(RuntimeVariables.replace("Microblogs Post"),
-			selenium.getText("xPath=(//div[@class='content'])[1]"));
-		assertEquals(RuntimeVariables.replace("Social01 Office01 User01 says"),
-			selenium.getText("xPath=(//div[@class='user-name'])[2]"));
-		assertEquals(RuntimeVariables.replace(
-				"Microblogs Post Comment Joe Bloggs"),
-			selenium.getText("xPath=(//div[@class='content'])[2]"));
 		selenium.open("/user/socialoffice01/home1");
 		loadRequiredJavaScriptModules();
 

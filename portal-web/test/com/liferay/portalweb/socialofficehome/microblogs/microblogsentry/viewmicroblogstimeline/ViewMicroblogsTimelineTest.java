@@ -24,8 +24,24 @@ public class ViewMicroblogsTimelineTest extends BaseTestCase {
 	public void testViewMicroblogsTimeline() throws Exception {
 		selenium.open("/user/joebloggs/home/");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Microblogs"),
-			selenium.getText("//nav/ul/li[contains(.,'Microblogs')]/a/span"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//nav/ul/li[contains(.,'Microblogs')]/a/span")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");

@@ -30,14 +30,14 @@ public class ViewMicroblogsMentionsTests extends BaseTestSuite {
 		testSuite.addTestSuite(ViewMicroblogsContentViewableByEveryoneTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SOUs_SignInTest.class);
-		testSuite.addTestSuite(SOUs_ViewMicroblogsContentViewableByEveryoneTest.class);
+		testSuite.addTestSuite(SOUs_ViewMBContentViewableByEveryoneProfileTest.class);
 		testSuite.addTestSuite(SOUs_AddAsConnectionCCUserTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SOSignInTest.class);
 		testSuite.addTestSuite(ConfirmNotificationsAddConnnectionTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SOUs_SignInTest.class);
-		testSuite.addTestSuite(SOUs_ReplyMicroblogsContentTest.class);
+		testSuite.addTestSuite(SOUs_ReplyMicroblogsContentProfileTest.class);
 		testSuite.addTestSuite(SOUs_ViewReplyMicroblogsContentTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SOSignInTest.class);

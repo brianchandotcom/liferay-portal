@@ -32,8 +32,24 @@ public class ViewMicroblogsContent150CharacterTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15"),
 			selenium.getText("//div[@class='content']"));
-		assertEquals(RuntimeVariables.replace("Microblogs"),
-			selenium.getText("//nav/ul/li[contains(.,'Microblogs')]/a/span"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//nav/ul/li[contains(.,'Microblogs')]/a/span")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");

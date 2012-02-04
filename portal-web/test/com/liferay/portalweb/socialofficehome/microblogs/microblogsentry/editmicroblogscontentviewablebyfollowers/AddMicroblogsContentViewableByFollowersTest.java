@@ -25,8 +25,24 @@ public class AddMicroblogsContentViewableByFollowersTest extends BaseTestCase {
 		throws Exception {
 		selenium.open("/user/joebloggs/home1");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Microblogs"),
-			selenium.getText("//nav/ul/li[contains(.,'Microblogs')]/a/span"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//nav/ul/li[contains(.,'Microblogs')]/a/span")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
@@ -59,6 +75,27 @@ public class AddMicroblogsContentViewableByFollowersTest extends BaseTestCase {
 		selenium.clickAt("//textarea", RuntimeVariables.replace("Text area"));
 		selenium.typeKeys("//textarea",
 			RuntimeVariables.replace("Microblogs Post"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("135")
+										.equals(selenium.getText(
+								"//span[@class='microblogs-countdown']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("135"),
+			selenium.getText("//span[@class='microblogs-countdown']"));
 		selenium.select("//select[@id='_1_WAR_microblogsportlet_socialRelationType']",
 			RuntimeVariables.replace("Followers"));
 		selenium.clickAt("//input[@value='Post']",
@@ -84,5 +121,7 @@ public class AddMicroblogsContentViewableByFollowersTest extends BaseTestCase {
 			selenium.getText("//div[@class='content']"));
 		assertEquals(RuntimeVariables.replace("Comment"),
 			selenium.getText("//span[@class='action comment']/a"));
+		assertFalse(selenium.isElementPresent(
+				"//span[@class='action repost']/a"));
 	}
 }

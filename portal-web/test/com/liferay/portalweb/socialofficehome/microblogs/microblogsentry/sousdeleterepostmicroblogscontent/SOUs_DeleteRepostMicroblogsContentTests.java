@@ -30,8 +30,8 @@ public class SOUs_DeleteRepostMicroblogsContentTests extends BaseTestSuite {
 		testSuite.addTestSuite(ViewMicroblogsContentViewableByEveryoneTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SOUs_SignInTest.class);
-		testSuite.addTestSuite(SOUs_ViewMicroblogsContentViewableByEveryoneTest.class);
-		testSuite.addTestSuite(SOUs_RepostMicroblogsContentTest.class);
+		testSuite.addTestSuite(SOUs_ViewMBContentViewableByEveryoneProfileTest.class);
+		testSuite.addTestSuite(SOUs_RepostMicroblogsContentProfileTest.class);
 		testSuite.addTestSuite(SOUs_DeleteRepostMicroblogsContentTest.class);
 		testSuite.addTestSuite(SOUs_ViewDeleteRepostMicroblogsContentTest.class);
 		testSuite.addTestSuite(SignOutTest.class);

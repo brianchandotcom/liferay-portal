@@ -101,7 +101,9 @@ public class ViewIgnoreAddAsConnectionCCUserTest extends BaseTestCase {
 		assertFalse(selenium.isElementPresent(
 				"//div[contains(@class, 'contacts-center-home-content')]"));
 		assertEquals(RuntimeVariables.replace("Add as Connection"),
-			selenium.getText("//span[@class='action add-connection']/a/span"));
-		assertFalse(selenium.isTextPresent("Remove as Connection"));
+			selenium.getText(
+				"//button[@id='_1_WAR_contactsportlet_addConnectionButton']"));
+		assertFalse(selenium.isVisible(
+				"//button[@id='_1_WAR_contactsportlet_removeConnectionButton']"));
 	}
 }

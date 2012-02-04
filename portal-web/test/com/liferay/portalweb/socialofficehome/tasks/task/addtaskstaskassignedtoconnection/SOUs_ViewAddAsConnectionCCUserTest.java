@@ -101,6 +101,9 @@ public class SOUs_ViewAddAsConnectionCCUserTest extends BaseTestCase {
 		assertFalse(selenium.isElementPresent(
 				"//div[contains(@class, 'contacts-center-home-content')]"));
 		assertEquals(RuntimeVariables.replace("Remove as Connection"),
-			selenium.getText("//span[@class='action remove-connection']/a/span"));
+			selenium.getText(
+				"//button[@id='_1_WAR_contactsportlet_removeConnectionButton']"));
+		assertFalse(selenium.isVisible(
+				"//button[@id='_1_WAR_contactsportlet_addConnectionButton']"));
 	}
 }

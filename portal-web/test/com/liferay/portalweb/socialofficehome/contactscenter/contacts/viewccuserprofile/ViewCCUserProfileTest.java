@@ -108,7 +108,7 @@ public class ViewCCUserProfileTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//span[@class='action add-connection']/a/span")) {
+							"//button[@id='_1_WAR_contactsportlet_addConnectionButton']/a/span")) {
 					break;
 				}
 			}
@@ -119,11 +119,14 @@ public class ViewCCUserProfileTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Add as Connection"),
-			selenium.getText("//span[@class='action add-connection']/a/span"));
+			selenium.getText(
+				"//button[@id='_1_WAR_contactsportlet_addConnectionButton']/a/span"));
 		assertEquals(RuntimeVariables.replace("Follow"),
-			selenium.getText("//span[@class='action follow']/a/span"));
+			selenium.getText(
+				"//button[@id='_1_WAR_contactsportlet_followButton']"));
 		assertEquals(RuntimeVariables.replace("Block"),
-			selenium.getText("//span[@class='action block']/a/span"));
+			selenium.getText(
+				"//button[@id='_1_WAR_contactsportlet_blockButton']"));
 		assertEquals(RuntimeVariables.replace("About"),
 			selenium.getText(
 				"xPath=(//div[@class='user-information-title'])[1]"));

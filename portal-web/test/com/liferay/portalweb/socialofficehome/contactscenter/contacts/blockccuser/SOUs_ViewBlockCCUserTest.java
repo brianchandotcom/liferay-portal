@@ -98,8 +98,10 @@ public class SOUs_ViewBlockCCUserTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("test@liferay.com"),
 			selenium.getText(
 				"//div[@class='contacts-profile']/div/div[2]/div[3]"));
-		assertFalse(selenium.isTextPresent("Add as Connection"));
+		assertFalse(selenium.isVisible(
+				"//button[@id='_1_WAR_contactsportlet_addConnectionButton']"));
 		assertEquals(RuntimeVariables.replace("Block"),
-			selenium.getText("//span[@class='action block']/a/span"));
+			selenium.getText(
+				"//button[@id='_1_WAR_contactsportlet_blockButton']"));
 	}
 }

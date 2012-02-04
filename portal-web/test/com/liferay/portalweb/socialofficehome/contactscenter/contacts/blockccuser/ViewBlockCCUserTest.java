@@ -101,7 +101,9 @@ public class ViewBlockCCUserTest extends BaseTestCase {
 		assertFalse(selenium.isElementPresent(
 				"//div[contains(@class, 'contacts-center-home-content')]"));
 		assertEquals(RuntimeVariables.replace("Unblock"),
-			selenium.getText("//span[@class='action unblock']/a/span"));
-		assertFalse(selenium.isTextPresent("Add as Connection"));
+			selenium.getText(
+				"//button[@id='_1_WAR_contactsportlet_unblockButton']"));
+		assertFalse(selenium.isVisible(
+				"//button[@id='_1_WAR_contactsportlet_addConnectionButton']"));
 	}
 }

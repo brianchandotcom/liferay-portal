@@ -101,6 +101,7 @@ public class SOUs_ViewUnfollowCCUserTest extends BaseTestCase {
 		assertFalse(selenium.isElementPresent(
 				"//div[contains(@class, 'contacts-center-home-content')]"));
 		assertEquals(RuntimeVariables.replace("Follow"),
-			selenium.getText("//span[@class='action follow']/a/span"));
+			selenium.getText(
+				"//button[@id='_1_WAR_contactsportlet_followButton']"));
 	}
 }

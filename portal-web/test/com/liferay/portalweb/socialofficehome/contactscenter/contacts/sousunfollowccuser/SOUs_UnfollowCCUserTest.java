@@ -103,8 +103,9 @@ public class SOUs_UnfollowCCUserTest extends BaseTestCase {
 		assertFalse(selenium.isElementPresent(
 				"//div[contains(@class, 'contacts-center-home-content')]"));
 		assertEquals(RuntimeVariables.replace("Unfollow"),
-			selenium.getText("//span[@class='action unfollow']/a/span"));
-		selenium.clickAt("//span[@class='action unfollow']/a/span",
+			selenium.getText(
+				"//button[@id='_1_WAR_contactsportlet_unfollowButton']"));
+		selenium.clickAt("//button[@id='_1_WAR_contactsportlet_unfollowButton']",
 			RuntimeVariables.replace("Unfollow"));
 
 		for (int second = 0;; second++) {
@@ -113,7 +114,8 @@ public class SOUs_UnfollowCCUserTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//span[@class='action follow']/a/span")) {
+				if (selenium.isVisible(
+							"//button[@id='_1_WAR_contactsportlet_followButton']")) {
 					break;
 				}
 			}
@@ -124,6 +126,7 @@ public class SOUs_UnfollowCCUserTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Follow"),
-			selenium.getText("//span[@class='action follow']/a/span"));
+			selenium.getText(
+				"//button[@id='_1_WAR_contactsportlet_followButton']"));
 	}
 }

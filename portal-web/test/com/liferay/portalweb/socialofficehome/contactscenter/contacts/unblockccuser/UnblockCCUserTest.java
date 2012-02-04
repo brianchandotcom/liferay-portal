@@ -101,8 +101,9 @@ public class UnblockCCUserTest extends BaseTestCase {
 		assertFalse(selenium.isElementPresent(
 				"//div[contains(@class, 'contacts-center-home-content')]"));
 		assertEquals(RuntimeVariables.replace("Unblock"),
-			selenium.getText("//span[@class='action unblock']/a/span"));
-		selenium.clickAt("//span[@class='action unblock']/a/span",
+			selenium.getText(
+				"//button[@id='_1_WAR_contactsportlet_unblockButton']"));
+		selenium.clickAt("//button[@id='_1_WAR_contactsportlet_unblockButton']",
 			RuntimeVariables.replace("Unblock"));
 
 		for (int second = 0;; second++) {
@@ -112,7 +113,7 @@ public class UnblockCCUserTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//span[@class='action add-connection']/a/span")) {
+							"//button[@id='_1_WAR_contactsportlet_addConnectionButton']/a/span")) {
 					break;
 				}
 			}
@@ -123,11 +124,15 @@ public class UnblockCCUserTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Add as Connection"),
-			selenium.getText("//span[@class='action add-connection']/a/span"));
+			selenium.getText(
+				"//button[@id='_1_WAR_contactsportlet_addConnectionButton']/a/span"));
 		assertEquals(RuntimeVariables.replace("Follow"),
-			selenium.getText("//span[@class='action follow']/a/span"));
+			selenium.getText(
+				"//button[@id='_1_WAR_contactsportlet_followButton']"));
 		assertEquals(RuntimeVariables.replace("Block"),
-			selenium.getText("//span[@class='action block']/a/span"));
-		assertFalse(selenium.isTextPresent("Unblock"));
+			selenium.getText(
+				"//button[@id='_1_WAR_contactsportlet_blockButton']"));
+		assertFalse(selenium.isVisible(
+				"//button[@id='_1_WAR_contactsportlet_unblockButton']"));
 	}
 }

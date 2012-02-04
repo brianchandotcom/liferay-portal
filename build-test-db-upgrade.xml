@@ -14,45 +14,36 @@
 				<property name="sql.dir" value="sql\legacy\${sql.version}\create\" />
 
 				<if>
-					<equals arg1="${db.type}" arg2="db2" />
+					<contains string="${db.type}" substring="db2" />
 					<then>
 						<property name="sql.file" value="create-db2.sql" />
 					</then>
 					<elseif>
-						<equals arg1="${db.type}" arg2="mysql" />
+						<contains string="${db.type}" substring="mysql" />
 						<then>
 							<property name="sql.file" value="create-mysql.sql" />
 						</then>
 					</elseif>
 					<elseif>
-						<or>
-							<equals arg1="${db.type}" arg2="oracle-10" />
-							<equals arg1="${db.type}" arg2="oracle-11" />
-						</or>
+						<contains string="${db.type}" substring="oracle" />
 						<then>
 							<property name="sql.file" value="create-oracle.sql" />
 						</then>
 					</elseif>
 					<elseif>
-						<or>
-							<equals arg1="${db.type}" arg2="postgresql-8.4" />
-							<equals arg1="${db.type}" arg2="postgresql-9.0" />
-						</or>
+						<contains string="${db.type}" substring="postgresql" />
 						<then>
 							<property name="sql.file" value="create-postgresql.sql" />
 						</then>
 					</elseif>
 					<elseif>
-						<or>
-							<equals arg1="${db.type}" arg2="sql-server-2005" />
-							<equals arg1="${db.type}" arg2="sql-server-2008" />
-						</or>
+						<contains string="${db.type}" substring="sql-server" />
 						<then>
 							<property name="sql.file" value="create-sql-server.sql" />
 						</then>
 					</elseif>
 					<elseif>
-						<equals arg1="${db.type}" arg2="sybase" />
+						<contains string="${db.type}" substring="sybase" />
 						<then>
 							<property name="sql.file" value="create-sybase.sql" />
 						</then>
@@ -70,55 +61,55 @@
 	<target name="prepare-db-db2-common">
 		<echo file="test.${user.name}.properties">db.type=db2</echo>
 
-		<antcall target="prepare-db-common" />
+		<antcall target="prepare-db-common" inheritAll="false" />
 	</target>
 
 	<target name="prepare-db-mysql-common">
 		<echo file="test.${user.name}.properties">db.type=mysql</echo>
 
-		<antcall target="prepare-db-common" />
+		<antcall target="prepare-db-common" inheritAll="false" />
 	</target>
 
 	<target name="prepare-db-oracle-10-common">
 		<echo file="test.${user.name}.properties">db.type=oracle-10</echo>
 
-		<antcall target="prepare-db-common" />
+		<antcall target="prepare-db-common" inheritAll="false" />
 	</target>
 
 	<target name="prepare-db-oracle-11-common">
 		<echo file="test.${user.name}.properties">db.type=oracle-11</echo>
 
-		<antcall target="prepare-db-common" />
+		<antcall target="prepare-db-common" inheritAll="false" />
 	</target>
 
 	<target name="prepare-db-postgresql-8.4-common">
 		<echo file="test.${user.name}.properties">db.type=postgresql-8.4</echo>
 
-		<antcall target="prepare-db-common" />
+		<antcall target="prepare-db-common" inheritAll="false" />
 	</target>
 
 	<target name="prepare-db-postgresql-9.0-common">
 		<echo file="test.${user.name}.properties">db.type=postgresql-9.0</echo>
 
-		<antcall target="prepare-db-common" />
+		<antcall target="prepare-db-common" inheritAll="false" />
 	</target>
 
 	<target name="prepare-db-sql-server-2005-common">
 		<echo file="test.${user.name}.properties">db.type=sql-server-2005</echo>
 
-		<antcall target="prepare-db-common" />
+		<antcall target="prepare-db-common" inheritAll="false" />
 	</target>
 
 	<target name="prepare-db-sql-server-2008-common">
 		<echo file="test.${user.name}.properties">db.type=sql-server-2008</echo>
 
-		<antcall target="prepare-db-common" />
+		<antcall target="prepare-db-common" inheritAll="false" />
 	</target>
 
 	<target name="prepare-db-sybase-common">
 		<echo file="test.${user.name}.properties">db.type=sybase</echo>
 
-		<antcall target="prepare-db-common" />
+		<antcall target="prepare-db-common" inheritAll="false" />
 	</target>
 
 	<target name="run-latest-upgrade-test">

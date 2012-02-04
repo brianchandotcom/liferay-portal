@@ -10,78 +10,63 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/user/joebloggs/home/</td>
+	<td>/user/joebloggs/home1/</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div/div/div/div/ul/li/a</td>
-	<td>Home</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//div/div/div/div/ul/li/a</td>
+	<td>//li[contains(@class, 'selected')]/a/span</td>
 	<td>Home</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[3]/div/section/header/h1/span</td>
-	<td>Sites</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//form/div[2]/span/span/button[2]</td>
-	<td>Directory</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//form/div[2]/span/span/button[2]</td>
-	<td>Directory</td>
+	<td>//li[contains(@class, 'selected')]/a/span</td>
+	<td>Home</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//h1/span</td>
-	<td>Directory</td>
+	<td>//button[contains(.,'More Sites')]/span[2]</td>
+	<td>More Sites</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//h1/span</td>
-	<td>Directory</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span[2]/a</td>
-	<td>Liferay</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//li[contains(@class, 'social-office-enabled')][1]/span[2]/a</td>
-	<td>Open Site1 Name</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//li[contains(@class, 'social-office-enabled')][2]/span[2]/a</td>
-	<td>Restricted Site3 Name</td>
-</tr>
-<tr>
-	<td>assertNotPartialText</td>
-	<td>//ul</td>
-	<td>Private Site2 Name</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//span/input</td>
-	<td>My Sites</td>
-</tr>
-<tr>
-	<td>assertNotChecked</td>
-	<td>//span/input</td>
-	<td>My Sites</td>
+	<td>//button[contains(.,'More Sites')]/span[2]</td>
+	<td>More Sites</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span/input</td>
+	<td>//button[contains(.,'More Sites')]/span[2]</td>
+	<td>More Sites</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>xPath=(//h1[@class='header-title']/span)[1]</td>
+	<td>Directory</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//h1[@class='header-title']/span)[1]</td>
+	<td>Directory</td>
+</tr>
+<tr>
+	<td>storeChecked</td>
+	<td>//input[@id='_5_WAR_soportlet_userSites']</td>
+	<td>mySitesChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${mySitesChecked}</td>
+	<td>MySitesChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@id='_5_WAR_soportlet_userSites']</td>
 	<td>My Sites</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>MySitesChecked</td>
+	<td></td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -90,19 +75,50 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//li[contains(@class, 'social-office-enabled')][1]/span[2]/a</td>
+	<td>xPath=(//span[@class='name']/a)[1]</td>
+	<td>Liferay, Inc.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//span[@class='name'])[2]</td>
+	<td>Liferay Los Angeles</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//span[@class='name']/a)[2]</td>
+	<td>Liferay</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//span[@class='name']/a)[3]</td>
 	<td>Open Site1 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//li[contains(@class, 'social-office-enabled')][2]/span[2]/a</td>
+	<td>xPath=(//span[@class='description'])[4]</td>
+	<td>Open Site1 Description</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//span[@class='name']/a)[4]</td>
 	<td>Private Site2 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//li[contains(@class, 'social-office-enabled')][3]/span[2]/a</td>
+	<td>xPath=(//span[@class='description'])[5]</td>
+	<td>Private Site2 Description</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//span[@class='name']/a)[5]</td>
 	<td>Restricted Site3 Name</td>
 </tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//span[@class='description'])[6]</td>
+	<td>Restricted Site3 Description</td>
+</tr>
+
 </tbody></table>
 </body>
 </html>

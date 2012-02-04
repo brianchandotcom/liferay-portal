@@ -165,7 +165,10 @@ public class AddSitesSiteTypeRestrictedTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+				if (RuntimeVariables.replace(
+							"Your request processed successfully.")
+										.equals(selenium.getText(
+								"//div[@class='portlet-msg-success']"))) {
 					break;
 				}
 			}
@@ -179,7 +182,7 @@ public class AddSitesSiteTypeRestrictedTest extends BaseTestCase {
 				"Your request processed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		Thread.sleep(5000);
-		assertEquals(RuntimeVariables.replace("Private Site Name"),
+		assertEquals(RuntimeVariables.replace("Restricted Site Name"),
 			selenium.getText(
 				"//li[contains(@class, 'social-office-enabled')]/span[2]/a"));
 	}

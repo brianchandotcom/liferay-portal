@@ -29,26 +29,6 @@
 	<td>Sites</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//strong/a/span</td>
-	<td>Community Name</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
-	<td>Global</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
-	<td>Global</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
-	<td>Global</td>
-</tr>
-<tr>
 	<td>type</td>
 	<td>//input[@id='_134_name']</td>
 	<td>Name</td>
@@ -60,13 +40,13 @@
 </tr>
 <tr>
 	<td>store</td>
-	<td>eval(selenium.isPartialText('//tr[3]/td[1]','Name'))</td>
-	<td>site1Present</td>
+	<td>eval(selenium.isElementPresent('//td[7]/span/ul/li/strong/a/span'))</td>
+	<td>community1Present</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${site1Present}</td>
-	<td>Site1NotPresent</td>
+	<td>!${community1Present}</td>
+	<td>Community1NotPresent</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -100,18 +80,18 @@
 </tr>
 <tr>
 	<td>label</td>
-	<td>Site1NotPresent</td>
+	<td>Community1NotPresent</td>
 	<td></td>
 </tr>
 <tr>
 	<td>store</td>
-	<td>eval(selenium.isPartialText('//tr[3]/td[1]','Name'))</td>
-	<td>site2Present</td>
+	<td>eval(selenium.isElementPresent('//td[7]/span/ul/li/strong/a/span'))</td>
+	<td>community2Present</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${site2Present}</td>
-	<td>Site2NotPresent</td>
+	<td>!${community2Present}</td>
+	<td>Community2NotPresent</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -145,18 +125,18 @@
 </tr>
 <tr>
 	<td>label</td>
-	<td>Site2NotPresent</td>
+	<td>Community2NotPresent</td>
 	<td></td>
 </tr>
 <tr>
 	<td>store</td>
-	<td>eval(selenium.isPartialText('//tr[3]/td[1]','Name'))</td>
-	<td>site3Present</td>
+	<td>eval(selenium.isElementPresent('//td[7]/span/ul/li/strong/a/span'))</td>
+	<td>community3Present</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${site3Present}</td>
-	<td>Site3NotPresent</td>
+	<td>!${community3Present}</td>
+	<td>Community3NotPresent</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -190,18 +170,18 @@
 </tr>
 <tr>
 	<td>label</td>
-	<td>Site3NotPresent</td>
+	<td>Community3NotPresent</td>
 	<td></td>
 </tr>
 <tr>
 	<td>store</td>
-	<td>eval(selenium.isPartialText('//tr[3]/td[1]','Name'))</td>
-	<td>site4Present</td>
+	<td>eval(selenium.isElementPresent('//td[7]/span/ul/li/strong/a/span'))</td>
+	<td>community4Present</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${site4Present}</td>
-	<td>Site4NotPresent</td>
+	<td>!${community4Present}</td>
+	<td>Community4NotPresent</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -235,18 +215,18 @@
 </tr>
 <tr>
 	<td>label</td>
-	<td>Site4NotPresent</td>
+	<td>Community4NotPresent</td>
 	<td></td>
 </tr>
 <tr>
 	<td>store</td>
-	<td>eval(selenium.isPartialText('//tr[3]/td[1]','Name'))</td>
-	<td>site5Present</td>
+	<td>eval(selenium.isElementPresent('//td[7]/span/ul/li/strong/a/span'))</td>
+	<td>community5Present</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${site5Present}</td>
-	<td>Site5NotPresent</td>
+	<td>!${community5Present}</td>
+	<td>Community5NotPresent</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -280,9 +260,10 @@
 </tr>
 <tr>
 	<td>label</td>
-	<td>Site5NotPresent</td>
+	<td>Community5NotPresent</td>
 	<td></td>
 </tr>
+
 </tbody></table>
 </body>
 </html>

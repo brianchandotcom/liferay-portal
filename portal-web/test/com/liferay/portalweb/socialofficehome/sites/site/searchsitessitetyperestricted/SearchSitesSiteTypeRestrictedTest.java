@@ -22,34 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SearchSitesSiteTypeRestrictedTest extends BaseTestCase {
 	public void testSearchSitesSiteTypeRestricted() throws Exception {
-		selenium.open("/user/joebloggs/home/");
+		selenium.open("/user/joebloggs/home1/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div/div/div/div/ul/li/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("//div/div/div/div/ul/li/a",
-			RuntimeVariables.replace("Home"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Sites"),
-			selenium.getText("//div[3]/div/section/header/h1/span"));
-		assertTrue(selenium.isVisible("//div/input[1]"));
-		selenium.type("//div/input[1]", RuntimeVariables.replace("Restricted"));
-		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -58,7 +32,7 @@ public class SearchSitesSiteTypeRestrictedTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//li[contains(@class, 'social-office-enabled')]")) {
+							"//li[contains(@class, 'selected')]/a/span")) {
 					break;
 				}
 			}
@@ -68,12 +42,13 @@ public class SearchSitesSiteTypeRestrictedTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Restricted Site Name"),
-			selenium.getText(
-				"//li[contains(@class, 'social-office-enabled')]/span[2]/a"));
-		assertEquals("Search", selenium.getValue("//input[@value='Search']"));
-		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace("Search"));
+		assertEquals(RuntimeVariables.replace("Home"),
+			selenium.getText("//li[contains(@class, 'selected')]/a/span"));
+		assertEquals(RuntimeVariables.replace("Sites"),
+			selenium.getText("//div[@id='so-sidebar']/h3"));
+		assertTrue(selenium.isVisible("//input[@class='search-input']"));
+		selenium.type("//input[@class='search-input']",
+			RuntimeVariables.replace("Restricted"));
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Restricted Site Name"),
 			selenium.getText(

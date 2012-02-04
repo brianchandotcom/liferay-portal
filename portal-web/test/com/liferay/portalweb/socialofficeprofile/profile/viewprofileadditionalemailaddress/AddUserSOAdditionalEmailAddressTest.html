@@ -10,7 +10,7 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/user/joebloggs/home/</td>
+	<td>/web/guest/home/</td>
 	<td></td>
 </tr>
 <tr>
@@ -29,9 +29,14 @@
 	<td>Users and Organizations</td>
 </tr>
 <tr>
+	<td>clickAtAndWait</td>
+	<td>link=Search All Users</td>
+	<td>Search All Users</td>
+</tr>
+<tr>
 	<td>type</td>
-	<td>//input[@id='_125_keywords']</td>
-	<td>socialofficefriend</td>
+	<td>//input[@id='_125_toggle_id_users_admin_user_searchkeywords']</td>
+	<td>socialoffice01</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -39,14 +44,19 @@
 	<td>Search</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//a[contains(.,'Social01')]</td>
+	<td>Social01</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
-	<td>//td[2]/a</td>
-	<td>User Name</td>
+	<td>//a[contains(.,'Social01')]</td>
+	<td>Social01</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[2]/h1/span</td>
-	<td>socialofficefriendfn socialofficefriendmn socialofficefriendln</td>
+	<td>Social01 Office01 User01</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -108,7 +118,6 @@
 	<td>//input[@id='_125_emailAddressPrimary0']</td>
 	<td>Yes</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

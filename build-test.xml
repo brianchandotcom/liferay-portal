@@ -21,7 +21,15 @@
 
 	<property name="selenium.nanny.executable" location="${project.dir}/tools/selenium/selenium_nanny.exe" />
 
-	<taskdef classname="com.liferay.util.ant.FormatTask" classpathref="project.classpath" name="liferay-format" />
+	<trycatch>
+		<try>
+			<taskdef classname="com.liferay.util.ant.FormatTask" classpathref="project.classpath" name="liferay-format" />
+		</try>
+		<catch>
+			<ant antfile="portal-service/build.xml" target="compile" inheritAll="false" />
+			<ant antfile="util-java/build.xml" target="compile" inheritAll="false" />
+		</catch>
+	</trycatch>
 
 	<target name="append-ant-script">
 		<loadfile property="template.content" srcfile="portal-web/test-ant-templates/${ant.script.template}">

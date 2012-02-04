@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewLinkTasksTest extends BaseTestCase {
 	public void testViewLinkTasks() throws Exception {
-		selenium.open("/user/joebloggs/home/");
+		selenium.open("/user/joebloggs/home1/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -31,7 +31,8 @@ public class ViewLinkTasksTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div/div/div/div[1]/ul/li[5]/a")) {
+				if (selenium.isVisible(
+							"//nav/ul/li[contains(.,'Tasks')]/a/span")) {
 					break;
 				}
 			}
@@ -41,26 +42,24 @@ public class ViewLinkTasksTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//div/div/div/div[1]/ul/li[5]/a",
+		selenium.clickAt("//nav/ul/li[contains(.,'Tasks')]/a/span",
 			RuntimeVariables.replace("Tasks"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Tasks"),
-			selenium.getText("//div[2]/div/div/div/section/header/h1/span[2]"));
+			selenium.getText("//span[@class='portlet-title-default']"));
 		assertEquals(RuntimeVariables.replace("Assigned to Me"),
-			selenium.getText("//div/div/ul/li[1]/span/a"));
+			selenium.getText("link=Assigned to Me"));
 		assertEquals(RuntimeVariables.replace("I Have Created"),
-			selenium.getText("//div/div/ul/li[2]/span/a"));
+			selenium.getText("link=I Have Created"));
 		assertEquals(RuntimeVariables.replace("Add Task"),
-			selenium.getText("//section/div/div/div/div[1]/a[1]"));
-		assertEquals(RuntimeVariables.replace("Filter"),
-			selenium.getText("//a[3]"));
+			selenium.getText("link=Add Task"));
+		assertEquals(RuntimeVariables.replace("Permissions"),
+			selenium.getText("link=Permissions"));
 		assertEquals(RuntimeVariables.replace("No tasks were found."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
-		assertEquals(RuntimeVariables.replace("Show Completed Tasks"),
-			selenium.getText("//div[4]/table/tbody/tr/td[2]"));
 		assertEquals(RuntimeVariables.replace("Sites"),
-			selenium.getText("//div[3]/div/section/header/h1/span"));
+			selenium.getText("//div[@id='so-sidebar']/h3"));
 		assertTrue(selenium.isVisible("//div/input[1]"));
 		assertEquals(RuntimeVariables.replace("Liferay"),
 			selenium.getText("//li[3]/span[2]"));

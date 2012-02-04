@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewLinkHomeTest extends BaseTestCase {
 	public void testViewLinkHome() throws Exception {
-		selenium.open("/user/joebloggs/home/");
+		selenium.open("/user/joebloggs/home1/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -31,7 +31,7 @@ public class ViewLinkHomeTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div/div/div/div[1]/ul/li[1]/a")) {
+				if (selenium.isVisible("//nav/ul/li[contains(.,'Home')]/a/span")) {
 					break;
 				}
 			}
@@ -41,24 +41,37 @@ public class ViewLinkHomeTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//div/div/div/div[1]/ul/li[1]/a",
-			RuntimeVariables.replace("Home"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Home"),
-			selenium.getText("//li[@class='home selected']/a/span"));
-		assertFalse(selenium.isElementPresent("//li[@class='selected']/a/span"));
-		assertEquals(RuntimeVariables.replace("What's happening?"),
-			selenium.getText("//div[1]/h1/span"));
-		assertTrue(selenium.isElementPresent("//textarea"));
+			selenium.getText("//li[contains(@class, 'selected')]/a/span"));
+		assertEquals(RuntimeVariables.replace("Microblogs Status Update"),
+			selenium.getText(
+				"xPath=(//span[@class='portlet-title-default'])[1]"));
+		assertEquals(RuntimeVariables.replace("Update your status..."),
+			selenium.getText(
+				"//div[@id='_2_WAR_microblogsportlet_autocompleteContent']"));
 		assertEquals(RuntimeVariables.replace("You have no microblogs entry."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[1]"));
 		assertEquals(RuntimeVariables.replace("Activities"),
-			selenium.getText("//div[2]/div/section/header/h1/span"));
+			selenium.getText("xPath=(//h1[@class='portlet-title'])[2]"));
 		assertEquals(RuntimeVariables.replace("There are no recent activities."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[2]"));
+		assertEquals(RuntimeVariables.replace("Connections"),
+			selenium.getText("link=Connections"));
+		assertEquals(RuntimeVariables.replace("Following"),
+			selenium.getText("link=Following"));
+		assertEquals(RuntimeVariables.replace("My Sites"),
+			selenium.getText("link=My Sites"));
+		assertEquals(RuntimeVariables.replace("Me"), selenium.getText("link=Me"));
+		assertEquals(RuntimeVariables.replace("Upcoming Tasks"),
+			selenium.getText("xPath=(//h1[@class='portlet-title'])[3]"));
+		assertEquals(RuntimeVariables.replace("View All Tasks"),
+			selenium.getText("//div[@class='view-all-tasks']"));
+		assertEquals(RuntimeVariables.replace("Events"),
+			selenium.getText("xPath=(//h1[@class='portlet-title'])[4]"));
+		assertEquals(RuntimeVariables.replace("There are no more events today."),
+			selenium.getText("//div[2]/div/div[2]/div/section/div/div/div"));
 		assertEquals(RuntimeVariables.replace("Sites"),
-			selenium.getText("//div[3]/div/section/header/h1/span"));
+			selenium.getText("//div[@id='so-sidebar']/h3"));
 		assertTrue(selenium.isVisible("//div/input[1]"));
 		assertEquals(RuntimeVariables.replace("Liferay"),
 			selenium.getText("//li[3]/span[2]"));

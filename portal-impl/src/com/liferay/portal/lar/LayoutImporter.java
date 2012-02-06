@@ -247,6 +247,12 @@ public class LayoutImporter {
 		String userIdStrategy = MapUtil.getString(
 			parameterMap, PortletDataHandlerKeys.USER_ID_STRATEGY);
 
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		if (group.isLayoutSetPrototype()) {
+			layoutSetPrototypeLinkEnabled = false;
+		}
+		
 		if (_log.isDebugEnabled()) {
 			_log.debug("Delete portlet data " + deletePortletData);
 			_log.debug("Import categories " + importCategories);
@@ -477,7 +483,7 @@ public class LayoutImporter {
 				LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuid(
 					layoutSetPrototypeUuid);
 
-			Group group = layoutSetPrototype.getGroup();
+			Group layoutSetPrototypeGroup = layoutSetPrototype.getGroup();
 
 			for (Layout layout : previousLayouts) {
 				String sourcePrototypeLayoutUuid =
@@ -488,7 +494,8 @@ public class LayoutImporter {
 				}
 
 				Layout sourcePrototypeLayout = LayoutUtil.fetchByUUID_G(
-					sourcePrototypeLayoutUuid, group.getGroupId());
+					sourcePrototypeLayoutUuid,
+					layoutSetPrototypeGroup.getGroupId());
 
 				if (sourcePrototypeLayout == null) {
 					LayoutLocalServiceUtil.deleteLayout(

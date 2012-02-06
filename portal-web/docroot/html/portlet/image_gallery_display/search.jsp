@@ -93,7 +93,6 @@ boolean useAssetEntryQuery = false;
 		searchContainer.setTotal(total);
 
 		List results = new ArrayList(hits.getDocs().length);
-		List scores = new ArrayList(hits.getDocs().length);
 
 		for (int i = 0; i < hits.getDocs().length; i++) {
 			Document doc = hits.doc(i);
@@ -104,7 +103,6 @@ boolean useAssetEntryQuery = false;
 				FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
 
 				results.add(fileEntry);
-				scores.add(new Double(hits.score(i)));
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {

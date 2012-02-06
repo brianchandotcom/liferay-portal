@@ -25,10 +25,10 @@ import junit.framework.TestSuite;
 public class ViewProfilePhoneNumberTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AddUserSOFriendTest.class);
+		testSuite.addTestSuite(AddSOUserTest.class);
 		testSuite.addTestSuite(AddUserSOPhoneNumberTest.class);
 		testSuite.addTestSuite(ViewProfilePhoneNumberTest.class);
-		testSuite.addTestSuite(TearDownSOUserTest.class);
+		testSuite.addTestSuite(TearDownUserTest.class);
 
 		return testSuite;
 	}

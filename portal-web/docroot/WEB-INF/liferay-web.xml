@@ -532,6 +532,8 @@
 	<filter-mapping>
 		<filter-name>Session Max Allowed Filter</filter-name>
 		<url-pattern>/*</url-pattern>
+		<dispatcher>ERROR</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>Audit Filter</filter-name>

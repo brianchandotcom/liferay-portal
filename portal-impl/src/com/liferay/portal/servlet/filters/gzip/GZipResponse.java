@@ -53,6 +53,8 @@ public class GZipResponse extends HttpServletResponseWrapper {
 
 		_response.setContentLength(-1);
 
+		_response.addHeader(HttpHeaders.CONTENT_ENCODING, _GZIP);
+
 		_firefox = BrowserSnifferUtil.isFirefox(request);
 	}
 
@@ -93,8 +95,6 @@ public class GZipResponse extends HttpServletResponseWrapper {
 				_servletOutputStream = _response.getOutputStream();
 			}
 			else {
-				_response.addHeader(HttpHeaders.CONTENT_ENCODING, _GZIP);
-
 				if (_firefox && RSSThreadLocal.isExportRSS()) {
 					_unsyncByteArrayOutputStream =
 						new UnsyncByteArrayOutputStream();

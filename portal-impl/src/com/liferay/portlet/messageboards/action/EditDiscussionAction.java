@@ -63,7 +63,8 @@ public class EditDiscussionAction extends PortletAction {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
+			String redirect = PortalUtil.escapeRedirect(
+				ParamUtil.getString(actionRequest, "redirect"));
 
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				MBMessage message = updateMessage(actionRequest);

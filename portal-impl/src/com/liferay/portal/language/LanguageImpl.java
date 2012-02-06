@@ -667,7 +667,7 @@ public class LanguageImpl implements Language {
 			}
 		}
 
-		if (value == null) {
+		if (value == null || value.equals(key)) {
 			value = defaultValue;
 		}
 

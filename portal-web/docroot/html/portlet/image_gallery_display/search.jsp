@@ -112,19 +112,21 @@ boolean useAssetEntryQuery = false;
 		}
 	%>
 
-		<span class="aui-search-bar">
-			<aui:input inlineField="<%= true %>" label="" name="keywords" size="30" title="search-images" type="text" value="<%= keywords %>" />
+	<div id="<portlet:namespace />imageGalleryAssetInfo">
+			<span class="aui-search-bar">
+				<aui:input inlineField="<%= true %>" label="" name="keywords" size="30" title="search-images" type="text" value="<%= keywords %>" />
 
-			<aui:button type="submit" value="search" />
-		</span>
+				<aui:button type="submit" value="search" />
+			</span>
 
 		<br /><br />
 
 		<%
-		String[] mediaGalleryMimeTypes = null;
+			String[] mediaGalleryMimeTypes = null;
 		%>
 
 		<%@ include file="/html/portlet/image_gallery_display/view_images.jspf" %>
+	</div>
 
 	<%
 	}

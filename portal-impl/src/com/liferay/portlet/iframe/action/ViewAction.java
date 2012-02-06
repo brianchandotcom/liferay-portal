@@ -17,6 +17,7 @@ package com.liferay.portlet.iframe.action;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -50,7 +51,9 @@ public class ViewAction extends PortletAction {
 
 		String src = transformSrc(renderRequest, renderResponse);
 
-		if (Validator.isNull(src)) {
+		if (Validator.isNull(src) || src.equals(Http.HTTP_WITH_SLASH) ||
+				src.equals(Http.HTTPS_WITH_SLASH)) {
+
 			return mapping.findForward("/portal/portlet_not_setup");
 		}
 

@@ -969,6 +969,7 @@ public class ServicePreAction extends Action {
 				pageSettingsURL.setControlPanelCategory(
 					_CONTROL_PANEL_CATEGORY_PORTLET_PREFIX +
 						PortletKeys.LAYOUTS_ADMIN);
+				pageSettingsURL.setDoAsGroupId(scopeGroupId);
 				pageSettingsURL.setParameter(
 					"struts_action", "/layouts_admin/edit_layouts");
 
@@ -1011,6 +1012,7 @@ public class ServicePreAction extends Action {
 					manageSiteMembershipsURL.setControlPanelCategory(
 						_CONTROL_PANEL_CATEGORY_PORTLET_PREFIX +
 							PortletKeys.SITE_MEMBERSHIPS_ADMIN);
+					manageSiteMembershipsURL.setDoAsGroupId(scopeGroupId);
 					manageSiteMembershipsURL.setParameter(
 						"struts_action", "/sites_admin/edit_site_assignments");
 					manageSiteMembershipsURL.setParameter(
@@ -1058,6 +1060,7 @@ public class ServicePreAction extends Action {
 				siteSettingsURL.setControlPanelCategory(
 					_CONTROL_PANEL_CATEGORY_PORTLET_PREFIX +
 						PortletKeys.SITE_SETTINGS);
+				siteSettingsURL.setDoAsGroupId(scopeGroupId);
 				siteSettingsURL.setParameter(
 					"struts_action", "/sites_admin/edit_site");
 				siteSettingsURL.setParameter("closeRedirect", currentURL);
@@ -1082,6 +1085,7 @@ public class ServicePreAction extends Action {
 				siteMapSettingsURL.setControlPanelCategory(
 					_CONTROL_PANEL_CATEGORY_PORTLET_PREFIX +
 						PortletKeys.LAYOUTS_ADMIN);
+				siteMapSettingsURL.setDoAsGroupId(scopeGroupId);
 				siteMapSettingsURL.setParameter(
 					"struts_action", "/layouts_admin/edit_layouts");
 

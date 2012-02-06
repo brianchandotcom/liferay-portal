@@ -75,7 +75,7 @@
 					else {
 						long groupId = GetterUtil.getLong(HttpUtil.getParameter(PortalUtil.getCurrentURL(request), "doAsGroupId", false));
 
-						Group group = GroupServiceUtil.getGroup(groupId);
+						Group group = GroupLocalServiceUtil.getGroup(groupId);
 
 						manageableSites.add(group);
 					}

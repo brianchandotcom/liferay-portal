@@ -74,10 +74,7 @@ public class ServiceContextFactory {
 					themeDisplay.getLayout()));
 			serviceContext.setPathMain(PortalUtil.getPathMain());
 			serviceContext.setPlid(themeDisplay.getPlid());
-			serviceContext.setPortalURL(
-				PortalUtil.getCanonicalURL(
-					PortalUtil.getPortalURL(request), themeDisplay,
-					themeDisplay.getLayout()));
+			serviceContext.setPortalURL(PortalUtil.getPortalURL(request));
 			serviceContext.setScopeGroupId(themeDisplay.getScopeGroupId());
 			serviceContext.setSignedIn(themeDisplay.isSignedIn());
 

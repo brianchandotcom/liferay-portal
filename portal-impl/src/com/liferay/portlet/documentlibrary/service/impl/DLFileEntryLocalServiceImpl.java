@@ -379,6 +379,9 @@ public class DLFileEntryLocalServiceImpl
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
+		serviceContext.setCompanyId(user.getCompanyId());
+		serviceContext.setUserId(userId);
+
 		dlFileEntryPersistence.update(dlFileEntry, false);
 
 		DLFileVersion dlFileVersion =

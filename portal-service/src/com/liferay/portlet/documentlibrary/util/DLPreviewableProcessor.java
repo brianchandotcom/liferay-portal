@@ -206,29 +206,6 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		DLStoreUtil.addFile(companyId, REPOSITORY_ID, filePath, is);
 	}
 
-	protected void directBinaryImportThumbnail(
-			PortletDataContext portletDataContext, FileEntry fileEntry,
-			Element fileEntryElement, String binPathName, int index)
-		throws Exception {
-
-		FileVersion fileVersion = fileEntry.getFileVersion();
-
-		String binPath = fileEntryElement.attributeValue(binPathName);
-
-		InputStream is = portletDataContext.getZipEntryAsInputStream(binPath);
-
-		if (is == null) {
-			return;
-		}
-
-		String thumbnailFilePath = getThumbnailFilePath(
-			fileVersion, getThumbnailType(fileVersion), index);
-
-		addFileToStore(
-			portletDataContext.getCompanyId(), THUMBNAIL_PATH,
-			thumbnailFilePath, is);
-	}
-
 	protected InputStream doGetPreviewAsStream(
 			FileVersion fileVersion, int index, String type)
 		throws Exception {
@@ -616,6 +593,29 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		return true;
 	}
 
+	protected void importPreviewFromLAR(
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			Element fileEntryElement, String binPathName, int index)
+		throws Exception {
+
+		FileVersion fileVersion = fileEntry.getFileVersion();
+
+		String binPath = fileEntryElement.attributeValue(binPathName);
+
+		InputStream is = portletDataContext.getZipEntryAsInputStream(binPath);
+
+		if (is == null) {
+			return;
+		}
+
+		String thumbnailFilePath = getThumbnailFilePath(
+			fileVersion, getThumbnailType(fileVersion), index);
+
+		addFileToStore(
+			portletDataContext.getCompanyId(), THUMBNAIL_PATH,
+			thumbnailFilePath, is);
+	}
+
 	protected void importThumbnail(
 			PortletDataContext portletDataContext, FileEntry fileEntry,
 			FileEntry importedFileEntry, Element fileEntryElement,
@@ -623,7 +623,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		throws Exception {
 
 		if (!portletDataContext.isPerformDirectBinaryImport()) {
-			directBinaryImportThumbnail(
+			importPreviewFromLAR(
 				portletDataContext, importedFileEntry, fileEntryElement,
 				binPathName, index);
 		}

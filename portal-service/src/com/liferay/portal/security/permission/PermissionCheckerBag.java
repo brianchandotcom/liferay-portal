@@ -61,6 +61,10 @@ public interface PermissionCheckerBag extends Serializable {
 			PermissionChecker permissionChecker, Group group)
 		throws Exception;
 
+	public boolean isGroupMember(
+			PermissionChecker permissionChecker, Group group)
+		throws Exception;
+
 	public boolean isGroupOwner(
 			PermissionChecker permissionChecker, Group group)
 		throws Exception;

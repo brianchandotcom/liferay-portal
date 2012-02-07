@@ -210,6 +210,15 @@ public interface PermissionChecker extends Cloneable {
 	public boolean isGroupAdmin(long groupId);
 
 	/**
+	 * Returns <code>true</code> if the user is a member of the group.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @return <code>true</code> if the user is a member of the group;
+	 *         <code>false</code> otherwise
+	 */
+	public boolean isGroupMember(long groupId);
+
+	/**
 	 * Returns <code>true</code> if the user is the owner of the group.
 	 *
 	 * @param  groupId the primary key of the group

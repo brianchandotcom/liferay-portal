@@ -19,6 +19,7 @@ import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -44,10 +45,16 @@ public class DefaultScreenNameGenerator implements ScreenNameGenerator {
 			screenName = StringUtil.extractFirst(
 				emailAddress, CharPool.AT).toLowerCase();
 
-			screenName = StringUtil.replace(
-				screenName,
-				new String[] {StringPool.SLASH, StringPool.UNDERLINE},
-				new String[] {StringPool.PERIOD, StringPool.PERIOD});
+			for (char c : screenName.toCharArray()) {
+				if ((!Validator.isChar(c) && (c != CharPool.DASH) &&
+					(c != CharPool.PERIOD)) ||
+					(!_USERS_SCREEN_NAME_ALLOW_NUMERIC &&
+						Validator.isDigit(c))) {
+
+					screenName = StringUtil.replace(
+						screenName, c, CharPool.PERIOD);
+				}
+			}
 
 			if (screenName.equals(DefaultScreenNameValidator.CYRUS) ||
 				screenName.equals(DefaultScreenNameValidator.POSTFIX)) {
@@ -114,5 +121,9 @@ public class DefaultScreenNameGenerator implements ScreenNameGenerator {
 	private static final String[] _ADMIN_RESERVED_SCREEN_NAMES =
 		StringUtil.splitLines(
 			PropsUtil.get(PropsKeys.ADMIN_RESERVED_SCREEN_NAMES));
+
+	private static final boolean _USERS_SCREEN_NAME_ALLOW_NUMERIC =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.USERS_SCREEN_NAME_ALLOW_NUMERIC));
 
 }

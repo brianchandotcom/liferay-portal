@@ -98,7 +98,7 @@ String htmlAttributes =
 							</tr>
 							</table>
 
-							<aui:input cssClass="lfr-input-text-container" name="hiddenVariables" type="text" value="<%= hiddenVariables %>" />
+							<aui:input cssClass="lfr-input-text-container" name="preferences--hiddenVariables--" type="text" value="<%= hiddenVariables %>" />
 						</aui:field-wrapper>
 					</div>
 

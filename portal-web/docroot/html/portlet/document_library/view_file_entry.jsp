@@ -197,7 +197,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 					</span>
 
 					<span class="user-date">
-						<liferay-ui:icon image="../document_library/add_document" label="<%= true %>" message='<%= LanguageUtil.format(pageContext, "uploaded-by-x-x", new Object[] {userDisplay.getDisplayURL(themeDisplay), HtmlUtil.escape(fileEntry.getUserName()), fileEntry.getCreateDate().toString()}) %>' />
+						<liferay-ui:icon image="../document_library/add_document" label="<%= true %>" message='<%= LanguageUtil.format(pageContext, "uploaded-by-x-x", new Object[] {userDisplay.getDisplayURL(themeDisplay), HtmlUtil.escape(fileEntry.getUserName()), dateFormatDateTime.format(fileEntry.getCreateDate())}) %>' />
 					</span>
 
 					<c:if test="<%= fileEntry.isSupportsSocial() %>">

@@ -2931,7 +2931,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			andOperator = true;
 		}
 
-		params.put("keywords", keywords);
+		if (params != null) {
+			params.put("keywords", keywords);
+		}
 
 		return search(
 			companyId, firstName, middleName, lastName, fullName, screenName,
@@ -5140,10 +5142,12 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			searchContext.setCompanyId(companyId);
 			searchContext.setEnd(end);
 
-			String keywords = (String)params.remove("keywords");
+			if (params != null) {
+				String keywords = (String)params.remove("keywords");
 
-			if (Validator.isNotNull(keywords)) {
-				searchContext.setKeywords(keywords);
+				if (Validator.isNotNull(keywords)) {
+					searchContext.setKeywords(keywords);
+				}
 			}
 
 			QueryConfig queryConfig = new QueryConfig();

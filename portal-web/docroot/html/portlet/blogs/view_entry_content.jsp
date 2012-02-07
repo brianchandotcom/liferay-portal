@@ -135,8 +135,6 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 			<div class="entry-body">
 				<c:choose>
 					<c:when test='<%= pageDisplayStyle.equals(RSSUtil.DISPLAY_STYLE_ABSTRACT) && !strutsAction.equals("/blogs/view_entry") %>'>
-						<%= StringUtil.shorten(HtmlUtil.stripHtml(entry.getDescription()), pageAbstractLength) %>
-
 						<c:if test="<%= entry.isSmallImage() %>">
 
 							<%
@@ -151,6 +149,16 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 								<img alt="" class="asset-small-image" src="<%= HtmlUtil.escape(src) %>" width="150" />
 							</div>
 						</c:if>
+
+						<%
+						String summary = entry.getDescription();
+
+						if (Validator.isNull(summary)) {
+							summary = entry.getContent();
+						}
+						%>
+
+						<%= StringUtil.shorten(HtmlUtil.stripHtml(summary), pageAbstractLength) %>
 
 						<br />
 

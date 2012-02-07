@@ -37,6 +37,10 @@
 		padding-left: 25px;
 	}
 
+	.entry-footer-thin {
+		height: 15px;
+	}
+
 	.taglib-asset-categories-summary, .taglib-asset-tags-summary {
 		border-left: 1px solid #999;
 		padding-left: 10px;
@@ -49,7 +53,7 @@
 		margin-bottom: 0.5em;
 	}
 
-	.entry.draft {
+	.entry.invisible {
 		background: #eee;
 		border: 1px solid #ccc;
 		color: #555;

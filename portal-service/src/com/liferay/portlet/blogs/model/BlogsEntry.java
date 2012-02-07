@@ -35,5 +35,7 @@ public interface BlogsEntry extends BlogsEntryModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public boolean isVisible();
+
 	public void setSmallImageType(java.lang.String smallImageType);
 }

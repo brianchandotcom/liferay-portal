@@ -659,6 +659,10 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 		return _blogsEntry.getSmallImageType();
 	}
 
+	public boolean isVisible() {
+		return _blogsEntry.isVisible();
+	}
+
 	public void setSmallImageType(java.lang.String smallImageType) {
 		_blogsEntry.setSmallImageType(smallImageType);
 	}

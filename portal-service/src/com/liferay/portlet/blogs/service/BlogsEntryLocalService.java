@@ -314,7 +314,7 @@ public interface BlogsEntryLocalService extends PersistedModelLocalService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.blogs.model.BlogsEntry[] getEntriesPrevAndNext(
-		long entryId)
+		long userId, long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -402,7 +402,34 @@ public interface BlogsEntryLocalService extends PersistedModelLocalService {
 		java.util.Date displayDate, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasScheduledStatsUpdate(
+		com.liferay.portlet.blogs.model.BlogsEntry blogsEntry)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void notifySubscribers(
+		com.liferay.portlet.blogs.model.BlogsEntry entry,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void performPings(com.liferay.portlet.blogs.model.BlogsEntry entry,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void scheduleBlogsStatsUpdate(
+		com.liferay.portlet.blogs.model.BlogsEntry blogsEntry,
+		java.lang.Object messagePayload)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public void subscribe(long userId, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void removeScheduledUpdates(
+		com.liferay.portlet.blogs.model.BlogsEntry blogsEntry)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

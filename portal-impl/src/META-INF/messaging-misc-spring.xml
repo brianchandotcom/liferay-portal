@@ -14,6 +14,9 @@
 	<bean id="destination.async_service" class="com.liferay.portal.kernel.messaging.ParallelDestination">
 		<property name="name" value="liferay/async_service" />
 	</bean>
+	<bean id="destination.blogs_stats_update" class="com.liferay.portal.kernel.messaging.ParallelDestination">
+		<property name="name" value="liferay/blogs_stats_update" />
+	</bean>
 	<bean id="destination.buffered_increment_parallel" class="com.liferay.portal.kernel.messaging.ParallelDestination">
 		<property name="maximumQueueSize">
 			<util:constant static-field="com.liferay.portal.util.PropsValues.BUFFERED_INCREMENT_PARALLEL_QUEUE_SIZE" />
@@ -75,6 +78,12 @@
 	<!-- Listeners -->
 
 	<bean id="messageListener.async_service" class="com.liferay.portal.messaging.async.AsyncMessageListener" />
+	<bean id="messageListener.blogs_stats_update" class="com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper">
+		<property name="className" value="com.liferay.portlet.blogs.messaging.UpdateBlogsStatsMessageListener" />
+		<property name="messageListener">
+			<bean class="com.liferay.portlet.blogs.messaging.UpdateBlogsStatsMessageListener" />
+		</property>
+	</bean>
 	<bean id="messageListener.buffered_increment" class="com.liferay.portal.increment.BufferedIncrementMessageListener" />
 	<bean id="messageListener.convert_process" class="com.liferay.portal.convert.messaging.ConvertProcessMessageListener" />
 	<bean id="messageListener.document_library_audio_processor" class="com.liferay.portlet.documentlibrary.messaging.AudioProcessorMessageListener" />
@@ -122,6 +131,7 @@
 		<property name="destinations">
 			<list>
 				<ref bean="destination.async_service" />
+				<ref bean="destination.blogs_stats_update" />
 				<ref bean="destination.buffered_increment_parallel" />
 				<ref bean="destination.buffered_increment_serial" />
 				<ref bean="destination.convert_process" />
@@ -147,6 +157,11 @@
 				<entry key="liferay/async_service">
 					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
 						<ref bean="messageListener.async_service" />
+					</list>
+				</entry>
+				<entry key="liferay/blogs_stats_update">
+					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
+						<ref bean="messageListener.blogs_stats_update" />
 					</list>
 				</entry>
 				<entry key="liferay/buffered_increment_parallel">

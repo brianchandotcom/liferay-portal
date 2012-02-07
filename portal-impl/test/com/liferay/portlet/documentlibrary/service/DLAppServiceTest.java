@@ -17,7 +17,6 @@ package com.liferay.portlet.documentlibrary.service;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -33,15 +32,12 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.DoAsUserThread;
-import com.liferay.portal.service.BaseServiceTestCase;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
-import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -52,7 +48,7 @@ import java.util.List;
 /**
  * @author Alexander Chow
  */
-public class DLAppServiceTest extends BaseServiceTestCase {
+public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	@Override
 	public void setUp() throws Exception {
@@ -67,37 +63,12 @@ public class DLAppServiceTest extends BaseServiceTestCase {
 
 			_userIds[i] = user.getUserId();
 		}
-
-		String name = "Test Folder";
-		String description = "This is a test folder.";
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-
-		try {
-			DLAppServiceUtil.deleteFolder(
-				TestPropsValues.getGroupId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, name);
-		}
-		catch (NoSuchFolderException nsfe) {
-		}
-
-		_folder = DLAppServiceUtil.addFolder(
-			TestPropsValues.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, name, description,
-			serviceContext);
 	}
 
 	@Override
 	public void tearDown() throws Exception {
 		if (_fileEntry != null) {
 			DLAppServiceUtil.deleteFileEntry(_fileEntry.getFileEntryId());
-		}
-
-		if (_folder != null) {
-			DLAppServiceUtil.deleteFolder(_folder.getFolderId());
 		}
 
 		super.tearDown();
@@ -160,6 +131,8 @@ public class DLAppServiceTest extends BaseServiceTestCase {
 
 		try {
 			addFileEntry(true);
+
+			DLAppServiceUtil.deleteFileEntry(_fileEntry.getFileEntryId());
 		}
 		catch (DuplicateFileException dfe) {
 			fail(
@@ -167,13 +140,11 @@ public class DLAppServiceTest extends BaseServiceTestCase {
 					"folders");
 		}
 
-		DLAppServiceUtil.deleteFileEntry(_fileEntry.getFileEntryId());
-
 		_fileEntry = null;
 	}
 
 	public void testAddNullFileEntry() throws Exception {
-		long folderId = _folder.getFolderId();
+		long folderId = folder.getFolderId();
 		String description = StringPool.BLANK;
 		String changeLog = StringPool.BLANK;
 
@@ -197,7 +168,7 @@ public class DLAppServiceTest extends BaseServiceTestCase {
 
 			String newName = "Bytes-changed.txt";
 
-			bytes = _CONTENT.getBytes();
+			bytes = CONTENT.getBytes();
 
 			DLAppServiceUtil.updateFileEntry(
 				fileEntry.getFileEntryId(), newName, ContentTypes.TEXT_PLAIN,
@@ -225,7 +196,7 @@ public class DLAppServiceTest extends BaseServiceTestCase {
 			try {
 				String newName = "File-changed.txt";
 
-				file = FileUtil.createTempFile(_CONTENT.getBytes());
+				file = FileUtil.createTempFile(CONTENT.getBytes());
 
 				DLAppServiceUtil.updateFileEntry(
 					fileEntry.getFileEntryId(), newName,
@@ -256,7 +227,7 @@ public class DLAppServiceTest extends BaseServiceTestCase {
 			try {
 				String newName = "IS-changed.txt";
 
-				is = new ByteArrayInputStream(_CONTENT.getBytes());
+				is = new ByteArrayInputStream(CONTENT.getBytes());
 
 				DLAppServiceUtil.updateFileEntry(
 					fileEntry.getFileEntryId(), newName,
@@ -277,11 +248,11 @@ public class DLAppServiceTest extends BaseServiceTestCase {
 	}
 
 	public void testAsstTags() throws Exception {
-		long folderId = _folder.getFolderId();
+		long folderId = folder.getFolderId();
 		String name = "TestTags.txt";
 		String description = StringPool.BLANK;
 		String changeLog = StringPool.BLANK;
-		byte[] bytes = _CONTENT.getBytes();
+		byte[] bytes = CONTENT.getBytes();
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -345,69 +316,31 @@ public class DLAppServiceTest extends BaseServiceTestCase {
 	}
 
 	public void testVersionLabel() throws Exception {
-		long folderId = _folder.getFolderId();
-		String name = "TestVersion.txt";
-		String description = StringPool.BLANK;
-		String changeLog = StringPool.BLANK;
-		byte[] bytes = _CONTENT.getBytes();
+		String fileName = "TestVersion.txt";
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-
-		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-			TestPropsValues.getGroupId(), folderId, name,
-			ContentTypes.TEXT_PLAIN, name, description, changeLog, bytes,
-			serviceContext);
+		FileEntry fileEntry = addFileEntry(false, fileName);
 
 		assertEquals(
 			"Version label incorrect after add", "1.0", fileEntry.getVersion());
 
-		fileEntry = DLAppServiceUtil.updateFileEntry(
-			fileEntry.getFileEntryId(), name, ContentTypes.TEXT_PLAIN, name,
-			description, changeLog, false, bytes, serviceContext);
+		fileEntry = updateFileEntry(
+			fileEntry.getFileEntryId(), fileName, false);
 
 		assertEquals(
 			"Version label incorrect after minor update", "1.1",
 			fileEntry.getVersion());
 
-		fileEntry = DLAppServiceUtil.updateFileEntry(
-			fileEntry.getFileEntryId(), name, ContentTypes.TEXT_PLAIN, name,
-			description, changeLog, true, bytes, serviceContext);
+		fileEntry = updateFileEntry(fileEntry.getFileEntryId(), fileName, true);
 
 		assertEquals(
 			"Version label incorrect after major update", "2.0",
 			fileEntry.getVersion());
 	}
 
-	protected void addFileEntry(boolean rootFolder) throws Exception {
+	protected FileEntry addFileEntry(boolean rootFolder) throws Exception {
 		_fileEntry = addFileEntry(rootFolder, "Title.txt");
-	}
 
-	protected FileEntry addFileEntry(boolean rootFolder, String fileName)
-		throws Exception {
-
-		long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-
-		if (!rootFolder) {
-			folderId = _folder.getFolderId();
-		}
-
-		String description = StringPool.BLANK;
-		String changeLog = StringPool.BLANK;
-
-		byte[] bytes = _CONTENT.getBytes();
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-
-		return DLAppServiceUtil.addFileEntry(
-			TestPropsValues.getGroupId(), folderId, fileName,
-			ContentTypes.TEXT_PLAIN, fileName, description, changeLog, bytes,
-			serviceContext);
+		return _fileEntry;
 	}
 
 	protected void search(
@@ -479,14 +412,17 @@ public class DLAppServiceTest extends BaseServiceTestCase {
 		_fileEntry = null;
 	}
 
-	private static final String _CONTENT =
-		"Content: Enterprise. Open Source. For Life.";
+	protected FileEntry updateFileEntry(
+			long fileEntryId, String fileName, boolean majorVersion)
+		throws Exception {
+
+		return updateFileEntry(fileEntryId, fileName, fileName, majorVersion);
+	}
 
 	private static Log _log = LogFactoryUtil.getLog(DLAppServiceTest.class);
 
 	private FileEntry _fileEntry;
 	private long[] _fileEntryIds;
-	private Folder _folder;
 	private long[] _userIds;
 
 	private class AddFileEntryThread extends DoAsUserThread {
@@ -547,7 +483,7 @@ public class DLAppServiceTest extends BaseServiceTestCase {
 
 				String content = StringUtil.read(is);
 
-				if (_CONTENT.equals(content)) {
+				if (CONTENT.equals(content)) {
 					_log.debug("Retrieved file " + _index);
 
 					_success = true;

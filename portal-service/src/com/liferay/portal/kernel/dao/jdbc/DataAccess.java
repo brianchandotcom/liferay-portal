@@ -18,12 +18,16 @@ import com.liferay.portal.kernel.jndi.JNDIUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Properties;
 
+import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
@@ -95,7 +99,11 @@ public class DataAccess {
 	public static Connection getConnection(String location)
 		throws NamingException, SQLException {
 
-		InitialContext initialContext = new InitialContext();
+		Properties jndiEnvironmentProperties = PropsUtil.getProperties(
+			PropsKeys.JNDI_ENVIRONMENT, true);
+
+		Context initialContext = new InitialContext(
+			jndiEnvironmentProperties);
 
 		DataSource dataSource = (DataSource)JNDIUtil.lookup(
 			initialContext, location);

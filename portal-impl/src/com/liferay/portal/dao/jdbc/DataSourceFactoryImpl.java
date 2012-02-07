@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.jndi.JNDIUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SortedProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsUtil;
@@ -36,6 +37,7 @@ import java.util.Properties;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
 
+import javax.naming.Context;
 import javax.naming.InitialContext;
 
 import javax.sql.DataSource;
@@ -81,8 +83,13 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 
 		if (Validator.isNotNull(jndiName)) {
 			try {
-				return (DataSource)JNDIUtil.lookup(
-					new InitialContext(), jndiName);
+				Properties jndiEnvironmentProperties = PropsUtil.getProperties(
+					PropsKeys.JNDI_ENVIRONMENT, true);
+
+				Context initialContext = new InitialContext(
+					jndiEnvironmentProperties);
+
+				return (DataSource)JNDIUtil.lookup(initialContext, jndiName);
 			}
 			catch (Exception e) {
 				_log.error("Unable to lookup " + jndiName, e);

@@ -518,11 +518,11 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 		_blogsEntryLocalService.subscribe(userId, groupId);
 	}
 
-	public void unscheduleBlogsStatsUpdate(
+	public void removeScheduledUpdates(
 		com.liferay.portlet.blogs.model.BlogsEntry blogsEntry)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_blogsEntryLocalService.unscheduleBlogsStatsUpdate(blogsEntry);
+		_blogsEntryLocalService.removeScheduledUpdates(blogsEntry);
 	}
 
 	public void unsubscribe(long userId, long groupId)

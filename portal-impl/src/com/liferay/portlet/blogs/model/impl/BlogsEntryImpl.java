@@ -44,14 +44,7 @@ public class BlogsEntryImpl extends BlogsEntryBaseImpl {
 	public boolean isVisible() {
 		Date displayDate = getDisplayDate();
 
-		Date now = new Date();
-
-		if (isApproved() && displayDate.before(now)) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return (isApproved() && displayDate.before(new Date()));
 	}
 
 	public void setSmallImageType(String smallImageType) {

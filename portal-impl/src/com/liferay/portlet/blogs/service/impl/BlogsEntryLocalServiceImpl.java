@@ -314,7 +314,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		// Delete scheduled jobs
 
-		unscheduleBlogsStatsUpdate(entry);
+		removeScheduledUpdates(entry);
 	}
 
 	public void deleteEntry(long entryId)
@@ -569,15 +569,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			SchedulerEngineUtil.getScheduledJobs(
 				schedulerGroupName, StorageType.PERSISTED);
 
-		if (Validator.isNull(scheduledJobs)) {
-			return false;
-		}
-		else if (scheduledJobs.isEmpty()) {
-			return false;
-		}
-		else {
-			return true;
-		}
+		return (Validator.isNotNull(scheduledJobs) && !scheduledJobs.isEmpty());
 	}
 
 	public void notifySubscribers(
@@ -604,6 +596,15 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		pingTrackbacks(entry, trackbacks, pingOldTrackbacks, serviceContext);
 	}
 
+	public void removeScheduledUpdates(BlogsEntry blogsEntry)
+		throws PortalException, SystemException {
+
+		String groupName = _schedulerGroupNamePrefix.concat(
+			String.valueOf(blogsEntry.getEntryId()));
+
+		SchedulerEngineUtil.delete(groupName, StorageType.PERSISTED);
+	}
+
 	public void scheduleBlogsStatsUpdate(
 			BlogsEntry blogsEntry, Object messagePayload)
 		throws PortalException, SystemException {
@@ -613,11 +614,11 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				String.valueOf(blogsEntry.getEntryId()));
 
 			Calendar startCal = Calendar.getInstance();
+
 			startCal.setTime(blogsEntry.getDisplayDate());
 			startCal.add(Calendar.SECOND, 10);
 
 			String cronText = SchedulerEngineUtil.getCronText(startCal, true);
-
 			String jobName = PortalUUIDUtil.generate();
 
 			Trigger trigger = new CronTrigger(
@@ -637,15 +638,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		subscriptionLocalService.addSubscription(
 			userId, groupId, BlogsEntry.class.getName(), groupId);
-	}
-
-	public void unscheduleBlogsStatsUpdate(BlogsEntry blogsEntry)
-		throws PortalException, SystemException {
-
-		String groupName = _schedulerGroupNamePrefix.concat(
-				String.valueOf(blogsEntry.getEntryId()));
-
-		SchedulerEngineUtil.delete(groupName, StorageType.PERSISTED);
 	}
 
 	public void unsubscribe(long userId, long groupId)
@@ -831,7 +823,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		boolean futureEntry = false;
 
 		if (hasScheduledStatsUpdate(entry)) {
-			unscheduleBlogsStatsUpdate(entry);
+			removeScheduledUpdates(entry);
 
 			futureEntry = true;
 		}
@@ -931,7 +923,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			// Asset
 
 			assetEntryLocalService.updateVisible(
-					BlogsEntry.class.getName(), entryId, false);
+				BlogsEntry.class.getName(), entryId, false);
 
 			// Indexer
 

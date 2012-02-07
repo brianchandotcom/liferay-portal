@@ -9,6 +9,14 @@ AUI.add(
 
 		var BODY = A.getBody();
 
+		var BODY_CONTENT = 'bodyContent';
+
+		var BOUNDING_BOX = 'boundingBox';
+
+		var CONTENT_BOX = 'contentBox';
+
+		var EVENT_CLICK = 'click';
+
 		var Dockbar = {
 			init: function() {
 				var instance = this;
@@ -70,13 +78,13 @@ AUI.add(
 				instance.messageList.push(message);
 				instance.messageIdList.push(messageId);
 
-				var currentBody = messages.get('bodyContent');
+				var currentBody = messages.get(BODY_CONTENT);
 
 				message = instance._createMessage(message, messageId);
 
 				messages.setStdModContent('body', message, 'after');
 
-				var messagesContainer = messages.get('boundingBox');
+				var messagesContainer = messages.get(BOUNDING_BOX);
 
 				var action = 'removeClass';
 
@@ -92,7 +100,7 @@ AUI.add(
 			clearMessages: function(event) {
 				var instance = this;
 
-				instance.messages.set('bodyContent', ' ');
+				instance.messages.set(BODY_CONTENT, ' ');
 
 				instance.messageList = [];
 				instance.messageIdList = [];
@@ -114,9 +122,9 @@ AUI.add(
 
 				message = instance._createMessage(message, messageId);
 
-				messages.set('bodyContent', message);
+				messages.set(BODY_CONTENT, message);
 
-				var messagesContainer = messages.get('boundingBox');
+				var messagesContainer = messages.get(BOUNDING_BOX);
 
 				messagesContainer.removeClass('multiple-messages');
 
@@ -146,13 +154,13 @@ AUI.add(
 
 					var boundingBox = options.boundingBox;
 
-					if (boundingBox && !('contentBox' in options)) {
+					if (boundingBox && !(CONTENT_BOX in options)) {
 						options.contentBox = boundingBox + '> .aui-menu-content';
 					}
 
 					menu = new A.OverlayContext(options);
 
-					var contentBox = menu.get('contentBox');
+					var contentBox = menu.get(CONTENT_BOX);
 
 					contentBox.plug(
 						A.Plugin.NodeFocusManager,
@@ -262,7 +270,7 @@ AUI.add(
 				).render();
 
 				if (customizable) {
-					overlayMask.get('boundingBox').addClass('customizable');
+					overlayMask.get(BOUNDING_BOX).addClass('customizable');
 				}
 
 				var columnControls = instance._controls.clone();
@@ -283,7 +291,7 @@ AUI.add(
 
 				label.attr('for', newName);
 
-				overlayMask.get('boundingBox').prepend(columnControls);
+				overlayMask.get(BOUNDING_BOX).prepend(columnControls);
 
 				columnControls.show();
 
@@ -392,7 +400,7 @@ AUI.add(
 				var namespace = instance._namespace;
 
 				dockBar.one('.pin-dockbar').on(
-					'click',
+					EVENT_CLICK,
 					function(event) {
 						event.halt();
 
@@ -465,7 +473,7 @@ AUI.add(
 					}
 				);
 
-				messages.closeTool.on('click', instance.clearMessages, instance);
+				messages.closeTool.on(EVENT_CLICK, instance.clearMessages, instance);
 
 				var addContent = instance._addMenu(
 					{
@@ -484,7 +492,7 @@ AUI.add(
 						}
 					);
 
-					var addContentNode = addContent.get('contentBox');
+					var addContentNode = addContent.get(CONTENT_BOX);
 
 					instance._addContentNode = addContentNode;
 
@@ -495,7 +503,7 @@ AUI.add(
 					}
 
 					addContentNode.delegate(
-						'click',
+						EVENT_CLICK,
 						function(event) {
 							event.halt();
 
@@ -580,7 +588,7 @@ AUI.add(
 
 				if (addApplicationLink) {
 					addApplicationLink.on(
-						'click',
+						EVENT_CLICK,
 						function(event) {
 							addContent.hide();
 
@@ -638,8 +646,8 @@ AUI.add(
 				}
 
 				if (manageContent) {
-					manageContent.get('boundingBox').delegate(
-						'click',
+					manageContent.get(BOUNDING_BOX).delegate(
+						EVENT_CLICK,
 						function(event) {
 							event.preventDefault();
 
@@ -680,12 +688,12 @@ AUI.add(
 						var customizationsHandle;
 
 						manageCustomizationLink.on(
-							'click',
+							EVENT_CLICK,
 							function(event) {
 								event.halt();
 
 								if (!customizationsHandle) {
-									customizationsHandle = BODY.delegate('click', instance._onChangeCustomization, '.layout-customizable-checkbox', instance);
+									customizationsHandle = BODY.delegate(EVENT_CLICK, instance._onChangeCustomization, '.layout-customizable-checkbox', instance);
 								}
 								else {
 									customizationsHandle.detach();
@@ -732,7 +740,7 @@ AUI.add(
 
 				if (myAccount) {
 					myAccount.delegate(
-						'click',
+						EVENT_CLICK,
 						function(event) {
 							event.preventDefault();
 
@@ -781,7 +789,7 @@ AUI.add(
 			Dockbar,
 			'_loadAddApplications',
 			function(event, id, obj) {
-				var contentBox = Dockbar.addApplication.get('contentBox');
+				var contentBox = Dockbar.addApplication.get(CONTENT_BOX);
 
 				LayoutConfiguration._dialogBody = contentBox;
 
@@ -800,7 +808,7 @@ AUI.add(
 
 				var overlayMask = checkbox.getData('customizationControls');
 
-				var boundingBox = overlayMask.get('boundingBox');
+				var boundingBox = overlayMask.get(BOUNDING_BOX);
 				var column = overlayMask.get('target');
 
 				boundingBox.toggleClass('customizable');

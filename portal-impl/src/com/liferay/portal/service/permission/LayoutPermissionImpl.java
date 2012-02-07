@@ -338,6 +338,12 @@ public class LayoutPermissionImpl implements LayoutPermission {
 			}
 		}
 
+		if (layout.isPrivateLayout() &&
+			!permissionChecker.isGroupMember(group.getGroupId())) {
+
+			return false;
+		}
+
 		// User private layouts are only viewable by the user and anyone who can
 		// update the user. The user must also be active.
 

@@ -17,6 +17,7 @@ package com.liferay.mail.util;
 import com.liferay.portal.kernel.jndi.JNDIUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SortedProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsUtil;
@@ -25,6 +26,7 @@ import java.util.Properties;
 
 import javax.mail.Session;
 
+import javax.naming.Context;
 import javax.naming.InitialContext;
 
 import org.springframework.beans.factory.config.AbstractFactoryBean;
@@ -51,7 +53,13 @@ public class MailSessionFactoryBean extends AbstractFactoryBean<Session> {
 
 		if (Validator.isNotNull(jndiName)) {
 			try {
-				return (Session)JNDIUtil.lookup(new InitialContext(), jndiName);
+				Properties jndiEnvironmentProperties = PropsUtil.getProperties(
+					PropsKeys.JNDI_ENVIRONMENT, true);
+
+				Context initialContext = new InitialContext(
+					jndiEnvironmentProperties);
+
+				return (Session)JNDIUtil.lookup(initialContext, jndiName);
 			}
 			catch (Exception e) {
 				_log.error("Unable to lookup " + jndiName, e);

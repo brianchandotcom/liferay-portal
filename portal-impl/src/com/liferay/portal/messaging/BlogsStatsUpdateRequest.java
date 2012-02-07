@@ -23,9 +23,6 @@ import java.io.Serializable;
  */
 public class BlogsStatsUpdateRequest implements Serializable {
 
-	public BlogsStatsUpdateRequest() {
-	}
-
 	public BlogsStatsUpdateRequest(long groupId, long userId, long entryId) {
 		_groupId = groupId;
 		_userId = userId;

@@ -37,13 +37,13 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 					<h3>
 						<c:choose>
 							<c:when test="<%= entry.isPending() %>">
-								<aui:field-wrapper label="pending-approval" helpMessage="please-note-that-certain-functions-will-be-restricted-until-this-entry-is-not-visible" />
+								<aui:field-wrapper label="pending-approval" />
 							</c:when>
 							<c:when test="<%= entry.isDraft() %>">
-								<aui:field-wrapper label="draft" helpMessage="please-note-that-certain-functions-will-be-restricted-until-this-entry-is-not-visible" />
+								<aui:field-wrapper label="draft" />
 							</c:when>
-							<c:when test="<%= entry.getDisplayDate().after(now) %>">
-								<aui:field-wrapper label="future-entry" helpMessage="please-note-that-certain-functions-will-be-restricted-until-this-entry-is-not-visible" />
+							<c:when test="<%= entry.getDisplayDate().after(new Date()) %>">
+								<aui:field-wrapper label="future-entry" />
 							</c:when>
 						</c:choose>
 					</h3>
@@ -203,30 +203,25 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 						</span>
 					</c:if>
 
-					<c:choose>
-						<c:when test="<%= enableComments && entry.isVisible() %>">
-							<span class="comments">
+					<c:if test="<%= enableComments && entry.isVisible() %>">
+						<span class="comments">
 
-								<%
-									long classNameId = PortalUtil.getClassNameId(BlogsEntry.class.getName());
+							<%
+								long classNameId = PortalUtil.getClassNameId(BlogsEntry.class.getName());
 
-									int messagesCount = MBMessageLocalServiceUtil.getDiscussionMessagesCount(classNameId, entry.getEntryId(), WorkflowConstants.STATUS_APPROVED);
-								%>
+								int messagesCount = MBMessageLocalServiceUtil.getDiscussionMessagesCount(classNameId, entry.getEntryId(), WorkflowConstants.STATUS_APPROVED);
+							%>
 
-								<c:choose>
-									<c:when test='<%= strutsAction.equals("/blogs/view_entry") %>'>
-										<%= messagesCount %> <liferay-ui:message key='<%= (messagesCount == 1) ? "comment" : "comments" %>' />
-									</c:when>
-									<c:otherwise>
-										<aui:a href='<%= PropsValues.PORTLET_URL_ANCHOR_ENABLE ? viewEntryURL : viewEntryURL + StringPool.POUND + "blogsCommentsPanelContainer" %>'><%= messagesCount %> <liferay-ui:message key='<%= (messagesCount == 1) ? "comment" : "comments" %>' /></aui:a>
-									</c:otherwise>
-								</c:choose>
-							</span>
-						</c:when>
-						<c:otherwise>
-							<liferay-ui:message key="comments-are-currently-disabled" />
-						</c:otherwise>
-					</c:choose>
+							<c:choose>
+								<c:when test='<%= strutsAction.equals("/blogs/view_entry") %>'>
+									<%= messagesCount %> <liferay-ui:message key='<%= (messagesCount == 1) ? "comment" : "comments" %>' />
+								</c:when>
+								<c:otherwise>
+									<aui:a href='<%= PropsValues.PORTLET_URL_ANCHOR_ENABLE ? viewEntryURL : viewEntryURL + StringPool.POUND + "blogsCommentsPanelContainer" %>'><%= messagesCount %> <liferay-ui:message key='<%= (messagesCount == 1) ? "comment" : "comments" %>' /></aui:a>
+								</c:otherwise>
+							</c:choose>
+						</span>
+					</c:if>
 				</div>
 
 				<c:if test="<%= enableFlags && entry.isVisible() %>">

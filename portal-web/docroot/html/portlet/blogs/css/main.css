@@ -31,14 +31,14 @@
 		margin-bottom: 10px;
 	}
 
-	.entry-footer-thin {
-		height: 15px;
-	}
-
 	.entry-date {
 		background: url(@theme_image_path@/common/date.png) no-repeat 0 50%;
 		color: #999;
 		padding-left: 25px;
+	}
+
+	.entry-footer-thin {
+		height: 15px;
 	}
 
 	.taglib-asset-categories-summary, .taglib-asset-tags-summary {

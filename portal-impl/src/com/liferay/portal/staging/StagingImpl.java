@@ -21,10 +21,6 @@ import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.NoSuchLayoutRevisionException;
 import com.liferay.portal.RemoteExportException;
 import com.liferay.portal.RemoteOptionsException;
-import com.liferay.portal.kernel.cal.DayAndPosition;
-import com.liferay.portal.kernel.cal.Duration;
-import com.liferay.portal.kernel.cal.Recurrence;
-import com.liferay.portal.kernel.cal.RecurrenceSerializer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -34,6 +30,7 @@ import com.liferay.portal.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageStatus;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineUtil;
 import com.liferay.portal.kernel.staging.LayoutStagingUtil;
 import com.liferay.portal.kernel.staging.Staging;
 import com.liferay.portal.kernel.staging.StagingConstants;
@@ -1333,14 +1330,6 @@ public class StagingImpl implements Staging {
 		}
 	}
 
-	protected void addWeeklyDayPos(
-		PortletRequest portletRequest, List<DayAndPosition> list, int day) {
-
-		if (ParamUtil.getBoolean(portletRequest, "weeklyDayPos" + day)) {
-			list.add(new DayAndPosition(day, 0));
-		}
-	}
-
 	protected void checkDefaultLayoutSetBranches(
 			long userId, Group liveGroup, boolean branchingPublic,
 			boolean branchingPrivate, boolean remote,
@@ -1408,143 +1397,6 @@ public class StagingImpl implements Staging {
 		portalPreferences.setValue(
 			Staging.class.getName(),
 			getRecentLayoutRevisionIdKey(layoutSetBranchId, plid), null);
-	}
-
-	protected String getCronText(
-			PortletRequest portletRequest, Calendar startDate,
-			boolean timeZoneSensitive, int recurrenceType)
-		throws Exception {
-
-		Calendar startCal = null;
-
-		if (timeZoneSensitive) {
-			startCal = CalendarFactoryUtil.getCalendar();
-
-			startCal.setTime(startDate.getTime());
-		}
-		else {
-			startCal = (Calendar)startDate.clone();
-		}
-
-		Recurrence recurrence = new Recurrence(
-			startCal, new Duration(1, 0, 0, 0), recurrenceType);
-
-		recurrence.setWeekStart(Calendar.SUNDAY);
-
-		if (recurrenceType == Recurrence.DAILY) {
-			int dailyType = ParamUtil.getInteger(portletRequest, "dailyType");
-
-			if (dailyType == 0) {
-				int dailyInterval = ParamUtil.getInteger(
-					portletRequest, "dailyInterval", 1);
-
-				recurrence.setInterval(dailyInterval);
-			}
-			else {
-				DayAndPosition[] dayPos = {
-					new DayAndPosition(Calendar.MONDAY, 0),
-					new DayAndPosition(Calendar.TUESDAY, 0),
-					new DayAndPosition(Calendar.WEDNESDAY, 0),
-					new DayAndPosition(Calendar.THURSDAY, 0),
-					new DayAndPosition(Calendar.FRIDAY, 0)};
-
-				recurrence.setByDay(dayPos);
-			}
-		}
-		else if (recurrenceType == Recurrence.WEEKLY) {
-			int weeklyInterval = ParamUtil.getInteger(
-				portletRequest, "weeklyInterval", 1);
-
-			recurrence.setInterval(weeklyInterval);
-
-			List<DayAndPosition> dayPos = new ArrayList<DayAndPosition>();
-
-			addWeeklyDayPos(portletRequest, dayPos, Calendar.SUNDAY);
-			addWeeklyDayPos(portletRequest, dayPos, Calendar.MONDAY);
-			addWeeklyDayPos(portletRequest, dayPos, Calendar.TUESDAY);
-			addWeeklyDayPos(portletRequest, dayPos, Calendar.WEDNESDAY);
-			addWeeklyDayPos(portletRequest, dayPos, Calendar.THURSDAY);
-			addWeeklyDayPos(portletRequest, dayPos, Calendar.FRIDAY);
-			addWeeklyDayPos(portletRequest, dayPos, Calendar.SATURDAY);
-
-			if (dayPos.size() == 0) {
-				dayPos.add(new DayAndPosition(Calendar.MONDAY, 0));
-			}
-
-			recurrence.setByDay(dayPos.toArray(new DayAndPosition[0]));
-		}
-		else if (recurrenceType == Recurrence.MONTHLY) {
-			int monthlyType = ParamUtil.getInteger(
-				portletRequest, "monthlyType");
-
-			if (monthlyType == 0) {
-				int monthlyDay = ParamUtil.getInteger(
-					portletRequest, "monthlyDay0", 1);
-
-				recurrence.setByMonthDay(new int[] {monthlyDay});
-
-				int monthlyInterval = ParamUtil.getInteger(
-					portletRequest, "monthlyInterval0", 1);
-
-				recurrence.setInterval(monthlyInterval);
-			}
-			else {
-				int monthlyPos = ParamUtil.getInteger(
-					portletRequest, "monthlyPos");
-				int monthlyDay = ParamUtil.getInteger(
-					portletRequest, "monthlyDay1");
-
-				DayAndPosition[] dayPos = {
-					new DayAndPosition(monthlyDay, monthlyPos)};
-
-				recurrence.setByDay(dayPos);
-
-				int monthlyInterval = ParamUtil.getInteger(
-					portletRequest, "monthlyInterval1", 1);
-
-				recurrence.setInterval(monthlyInterval);
-			}
-		}
-		else if (recurrenceType == Recurrence.YEARLY) {
-			int yearlyType = ParamUtil.getInteger(portletRequest, "yearlyType");
-
-			if (yearlyType == 0) {
-				int yearlyMonth = ParamUtil.getInteger(
-					portletRequest, "yearlyMonth0");
-				int yearlyDay = ParamUtil.getInteger(
-					portletRequest, "yearlyDay0", 1);
-
-				recurrence.setByMonth(new int[] {yearlyMonth});
-				recurrence.setByMonthDay(new int[] {yearlyDay});
-
-				int yearlyInterval = ParamUtil.getInteger(
-					portletRequest, "yearlyInterval0", 1);
-
-				recurrence.setInterval(yearlyInterval);
-			}
-			else {
-				int yearlyPos = ParamUtil.getInteger(
-					portletRequest, "yearlyPos");
-				int yearlyDay = ParamUtil.getInteger(
-					portletRequest, "yearlyDay1");
-				int yearlyMonth = ParamUtil.getInteger(
-					portletRequest, "yearlyMonth1");
-
-				DayAndPosition[] dayPos = {
-					new DayAndPosition(yearlyDay, yearlyPos)};
-
-				recurrence.setByDay(dayPos);
-
-				recurrence.setByMonth(new int[] {yearlyMonth});
-
-				int yearlyInterval = ParamUtil.getInteger(
-					portletRequest, "yearlyInterval1", 1);
-
-				recurrence.setInterval(yearlyInterval);
-			}
-		}
-
-		return RecurrenceSerializer.toCronText(recurrence);
 	}
 
 	protected Calendar getDate(
@@ -1778,7 +1630,7 @@ public class StagingImpl implements Staging {
 			Calendar startCal = getDate(
 				portletRequest, "schedulerStartDate", true);
 
-			String cronText = getCronText(
+			String cronText = SchedulerEngineUtil.getCronText(
 				portletRequest, startCal, true, recurrenceType);
 
 			Date schedulerEndDate = null;
@@ -1970,7 +1822,7 @@ public class StagingImpl implements Staging {
 			Calendar startCal = getDate(
 				portletRequest, "schedulerStartDate", true);
 
-			String cronText = getCronText(
+			String cronText = SchedulerEngineUtil.getCronText(
 				portletRequest, startCal, true, recurrenceType);
 
 			Date schedulerEndDate = null;

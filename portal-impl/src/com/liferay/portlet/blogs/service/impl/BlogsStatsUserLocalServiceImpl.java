@@ -17,6 +17,7 @@ package com.liferay.portlet.blogs.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portlet.blogs.NoSuchStatsUserException;
@@ -31,6 +32,7 @@ import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Mate Thurzo
  */
 public class BlogsStatsUserLocalServiceImpl
 	extends BlogsStatsUserLocalServiceBaseImpl {
@@ -212,8 +214,13 @@ public class BlogsStatsUserLocalServiceImpl
 				statsUser.setLastPostDate(lastDisplayDate);
 			}
 		}
-		else if (lastDisplayDate.before(lastPostDate)) {
-			statsUser.setLastPostDate(lastDisplayDate);
+		else if (Validator.isNull(displayDate)) {
+			if (Validator.isNull(lastPostDate)) {
+				statsUser.setLastPostDate(lastDisplayDate);
+			}
+			else if (lastPostDate.before(lastDisplayDate)) {
+				statsUser.setLastPostDate(lastDisplayDate);
+			}
 		}
 
 		blogsStatsUserPersistence.update(statsUser, false);

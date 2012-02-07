@@ -18,6 +18,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.DestinationNames;
+import com.liferay.portal.kernel.scheduler.CronTrigger;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineUtil;
+import com.liferay.portal.kernel.scheduler.StorageType;
+import com.liferay.portal.kernel.scheduler.Trigger;
+import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -32,8 +38,10 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.messaging.BlogsStatsUpdateRequest;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.ResourceConstants;
@@ -63,6 +71,7 @@ import com.liferay.portlet.blogs.util.comparator.EntryDisplayDateComparator;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -83,6 +92,7 @@ import net.htmlparser.jericho.StartTag;
  * @author Thiago Moreira
  * @author Juan Fernández
  * @author Zsolt Berentey
+ * @author Mate Thurzo
  */
 public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
@@ -301,6 +311,10 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
 			entry.getCompanyId(), entry.getGroupId(),
 			BlogsEntry.class.getName(), entry.getEntryId());
+
+		// Delete scheduled jobs
+
+		removeScheduledUpdates(entry);
 	}
 
 	public void deleteEntry(long entryId)
@@ -353,15 +367,23 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 	}
 
-	public BlogsEntry[] getEntriesPrevAndNext(long entryId)
+	public BlogsEntry[] getEntriesPrevAndNext(long userId, long entryId)
 		throws PortalException, SystemException {
 
 		BlogsEntry entry = blogsEntryPersistence.findByPrimaryKey(entryId);
 
-		return blogsEntryPersistence.findByG_S_PrevAndNext(
-			entry.getEntryId(), entry.getGroupId(),
-			WorkflowConstants.STATUS_APPROVED,
-			new EntryDisplayDateComparator(true));
+		if (userId == entry.getUserId()) {
+			return blogsEntryPersistence.findByG_S_PrevAndNext(
+				entry.getEntryId(), entry.getGroupId(),
+				WorkflowConstants.STATUS_APPROVED,
+				new EntryDisplayDateComparator(true));
+		}
+		else {
+			return blogsEntryPersistence.findByG_LtD_S_PrevAndNext(
+				entry.getEntryId(), entry.getGroupId(), new Date(),
+				WorkflowConstants.STATUS_APPROVED,
+				new EntryDisplayDateComparator(true));
+		}
 	}
 
 	public BlogsEntry getEntry(long entryId)
@@ -535,6 +557,80 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		return blogsEntryFinder.countByOrganizationId(
 			organizationId, displayDate, status);
+	}
+
+	public boolean hasScheduledStatsUpdate(BlogsEntry blogsEntry)
+		throws PortalException, SystemException {
+
+		String schedulerGroupName = _schedulerGroupNamePrefix.concat(
+				String.valueOf(blogsEntry.getEntryId()));
+
+		List<SchedulerResponse> scheduledJobs =
+			SchedulerEngineUtil.getScheduledJobs(
+				schedulerGroupName, StorageType.PERSISTED);
+
+		return (Validator.isNotNull(scheduledJobs) && !scheduledJobs.isEmpty());
+	}
+
+	public void notifySubscribers(
+			BlogsEntry entry, ServiceContext serviceContext)
+		throws SystemException {
+
+		if (Validator.isNull(entry) || Validator.isNull(serviceContext)) {
+			throw new SystemException(new IllegalArgumentException());
+		}
+
+		doNotifySubscribers(entry, serviceContext);
+	}
+
+	public void performPings(BlogsEntry entry, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		String[] trackbacks = (String[])serviceContext.getAttribute(
+			"trackbacks");
+		Boolean pingOldTrackbacks = GetterUtil.getBoolean(
+			(String)serviceContext.getAttribute("pingOldTrackbacks"));
+
+		pingGoogle(entry, serviceContext);
+		pingPingback(entry, serviceContext);
+		pingTrackbacks(entry, trackbacks, pingOldTrackbacks, serviceContext);
+	}
+
+	public void removeScheduledUpdates(BlogsEntry blogsEntry)
+		throws PortalException, SystemException {
+
+		String groupName = _schedulerGroupNamePrefix.concat(
+			String.valueOf(blogsEntry.getEntryId()));
+
+		SchedulerEngineUtil.delete(groupName, StorageType.PERSISTED);
+	}
+
+	public void scheduleBlogsStatsUpdate(
+			BlogsEntry blogsEntry, Object messagePayload)
+		throws PortalException, SystemException {
+
+		try {
+			String groupName = _schedulerGroupNamePrefix.concat(
+				String.valueOf(blogsEntry.getEntryId()));
+
+			Calendar startCal = Calendar.getInstance();
+
+			startCal.setTime(blogsEntry.getDisplayDate());
+			startCal.add(Calendar.SECOND, 10);
+
+			String cronText = SchedulerEngineUtil.getCronText(startCal, true);
+			String jobName = PortalUUIDUtil.generate();
+
+			Trigger trigger = new CronTrigger(
+				jobName, groupName, startCal.getTime(), null, cronText);
+
+			SchedulerEngineUtil.schedule(
+				trigger, StorageType.PERSISTED, StringPool.BLANK,
+				DestinationNames.BLOGS_STATS_UPDATE, messagePayload, 0);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
 	}
 
 	public void subscribe(long userId, long groupId)
@@ -722,58 +818,108 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(BlogsEntry.class);
 
-		if (status == WorkflowConstants.STATUS_APPROVED) {
+		Date entryDisplayDate = entry.getDisplayDate();
 
-			// Statistics
+		boolean futureEntry = false;
 
-			blogsStatsUserLocalService.updateStatsUser(
-				entry.getGroupId(), user.getUserId(), entry.getDisplayDate());
+		if (hasScheduledStatsUpdate(entry)) {
+			removeScheduledUpdates(entry);
 
-			if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
+			futureEntry = true;
+		}
 
-				// Asset
+		if (entryDisplayDate.before(now)) {
+			if (status == WorkflowConstants.STATUS_APPROVED) {
 
-				assetEntryLocalService.updateVisible(
-					BlogsEntry.class.getName(), entryId, true);
+				// Statistics
 
-				// Social
+				blogsStatsUserLocalService.updateStatsUser(
+					entry.getGroupId(), user.getUserId(),
+					entry.getDisplayDate());
 
-				if (oldStatusByUserId == 0) {
-					socialActivityLocalService.addUniqueActivity(
-						user.getUserId(), entry.getGroupId(),
-						BlogsEntry.class.getName(), entryId,
-						BlogsActivityKeys.ADD_ENTRY, StringPool.BLANK, 0);
-				}
-				else {
-					socialActivityLocalService.addActivity(
-						user.getUserId(), entry.getGroupId(),
-						BlogsEntry.class.getName(), entryId,
-						BlogsActivityKeys.UPDATE_ENTRY, StringPool.BLANK, 0);
+				if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
+
+					// Asset
+
+					assetEntryLocalService.updateVisible(
+						BlogsEntry.class.getName(), entryId, true);
+
+					// Social
+
+					if (futureEntry || (oldStatusByUserId == 0)) {
+						socialActivityLocalService.addUniqueActivity(
+							user.getUserId(), entry.getGroupId(),
+							BlogsEntry.class.getName(), entryId,
+							BlogsActivityKeys.ADD_ENTRY, StringPool.BLANK, 0);
+					}
+					else {
+						socialActivityLocalService.addActivity(
+							user.getUserId(), entry.getGroupId(),
+							BlogsEntry.class.getName(), entryId,
+							BlogsActivityKeys.UPDATE_ENTRY,
+							StringPool.BLANK, 0);
+					}
+
+					// Indexer
+
+					indexer.reindex(entry);
+
+					// Subscriptions
+
+					notifySubscribers(entry, serviceContext);
+
+					// Ping
+
+					String[] trackbacks = (String[])serviceContext.getAttribute(
+						"trackbacks");
+					Boolean pingOldTrackbacks = GetterUtil.getBoolean(
+						(String)serviceContext.getAttribute(
+							"pingOldTrackbacks"));
+
+					pingGoogle(entry, serviceContext);
+					pingPingback(entry, serviceContext);
+					pingTrackbacks(
+						entry, trackbacks, pingOldTrackbacks, serviceContext);
 				}
 			}
-
-			// Indexer
-
-			indexer.reindex(entry);
-
-			// Subscriptions
-
-			notifySubscribers(entry, serviceContext);
-
-			// Ping
-
-			String[] trackbacks = (String[])serviceContext.getAttribute(
-				"trackbacks");
-			Boolean pingOldTrackbacks = GetterUtil.getBoolean(
-				(String)serviceContext.getAttribute("pingOldTrackbacks"));
-
-			pingGoogle(entry, serviceContext);
-			pingPingback(entry, serviceContext);
-			pingTrackbacks(
-				entry, trackbacks, pingOldTrackbacks, serviceContext);
 		}
-		else if (status != WorkflowConstants.STATUS_APPROVED) {
+		else if (!entryDisplayDate.before(now) &&
+				!entryDisplayDate.equals(now)) {
 
+			BlogsStatsUpdateRequest updateRequest;
+
+			if (status == WorkflowConstants.STATUS_APPROVED) {
+				updateRequest = new BlogsStatsUpdateRequest(
+					entry.getGroupId(), entry.getUserId(), entry.getEntryId());
+
+				if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
+					updateRequest.setAssetEntryUpdateNeeded(Boolean.TRUE);
+					updateRequest.setAssetEntryVisibility(Boolean.TRUE);
+					updateRequest.setSocialActivityUpdateNeeded(Boolean.TRUE);
+					updateRequest.setSocialActivityExtraData(StringPool.BLANK);
+					updateRequest.setSocialActivityReceiverUserId(0);
+
+					if (oldStatusByUserId == 0) {
+						updateRequest.setSocialActivityUniqueActivity(
+							Boolean.TRUE);
+						updateRequest.setSocialActivityActivityKey(
+							BlogsActivityKeys.ADD_ENTRY);
+					}
+					else {
+						updateRequest.setSocialActivityUniqueActivity(
+							Boolean.FALSE);
+						updateRequest.setSocialActivityActivityKey(
+							BlogsActivityKeys.UPDATE_ENTRY);
+					}
+				}
+
+				updateRequest.setServiceContext(serviceContext);
+
+				scheduleBlogsStatsUpdate(entry, updateRequest);
+			}
+		}
+
+		if (status != WorkflowConstants.STATUS_APPROVED) {
 			// Asset
 
 			assetEntryLocalService.updateVisible(
@@ -787,39 +933,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		return entry;
 	}
 
-	protected String getUniqueUrlTitle(long entryId, long groupId, String title)
-		throws SystemException {
-
-		String urlTitle = BlogsUtil.getUrlTitle(entryId, title);
-
-		String newUrlTitle = ModelHintsUtil.trimString(
-			BlogsEntry.class.getName(), "urlTitle", urlTitle);
-
-		for (int i = 1;; i++) {
-			BlogsEntry entry = blogsEntryPersistence.fetchByG_UT(
-				groupId, newUrlTitle);
-
-			if ((entry == null) || (entry.getEntryId() == entryId)) {
-				break;
-			}
-			else {
-				String suffix = StringPool.DASH + i;
-
-				String prefix = newUrlTitle;
-
-				if (newUrlTitle.length() > suffix.length()) {
-					prefix = newUrlTitle.substring(
-						0, newUrlTitle.length() - suffix.length());
-				}
-
-				newUrlTitle = prefix + suffix;
-			}
-		}
-
-		return newUrlTitle;
-	}
-
-	protected void notifySubscribers(
+	protected void doNotifySubscribers(
 			BlogsEntry entry, ServiceContext serviceContext)
 		throws SystemException {
 
@@ -852,7 +966,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			BlogsUtil.getEmailEntryAddedEnabled(preferences)) {
 		}
 		else if (serviceContext.isCommandUpdate() &&
-				 BlogsUtil.getEmailEntryUpdatedEnabled(preferences)) {
+			BlogsUtil.getEmailEntryUpdatedEnabled(preferences)) {
 		}
 		else {
 			return;
@@ -903,6 +1017,38 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			BlogsEntry.class.getName(), entry.getGroupId());
 
 		subscriptionSender.flushNotificationsAsync();
+	}
+
+	protected String getUniqueUrlTitle(long entryId, long groupId, String title)
+		throws SystemException {
+
+		String urlTitle = BlogsUtil.getUrlTitle(entryId, title);
+
+		String newUrlTitle = ModelHintsUtil.trimString(
+			BlogsEntry.class.getName(), "urlTitle", urlTitle);
+
+		for (int i = 1;; i++) {
+			BlogsEntry entry = blogsEntryPersistence.fetchByG_UT(
+				groupId, newUrlTitle);
+
+			if ((entry == null) || (entry.getEntryId() == entryId)) {
+				break;
+			}
+			else {
+				String suffix = StringPool.DASH + i;
+
+				String prefix = newUrlTitle;
+
+				if (newUrlTitle.length() > suffix.length()) {
+					prefix = newUrlTitle.substring(
+						0, newUrlTitle.length() - suffix.length());
+				}
+
+				newUrlTitle = prefix + suffix;
+			}
+		}
+
+		return newUrlTitle;
 	}
 
 	protected void pingGoogle(BlogsEntry entry, ServiceContext serviceContext)
@@ -1145,6 +1291,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			}
 		}
 	}
+
+	private static final String _schedulerGroupNamePrefix =
+		DestinationNames.BLOGS_STATS_UPDATE.concat(StringPool.SLASH);
 
 	private static Log _log = LogFactoryUtil.getLog(
 		BlogsEntryLocalServiceImpl.class);

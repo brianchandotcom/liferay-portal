@@ -364,10 +364,10 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	}
 
 	public com.liferay.portlet.blogs.model.BlogsEntry[] getEntriesPrevAndNext(
-		long entryId)
+		long userId, long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _blogsEntryLocalService.getEntriesPrevAndNext(entryId);
+		return _blogsEntryLocalService.getEntriesPrevAndNext(userId, entryId);
 	}
 
 	public com.liferay.portlet.blogs.model.BlogsEntry getEntry(long entryId)
@@ -482,10 +482,47 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 			displayDate, status);
 	}
 
+	public boolean hasScheduledStatsUpdate(
+		com.liferay.portlet.blogs.model.BlogsEntry blogsEntry)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _blogsEntryLocalService.hasScheduledStatsUpdate(blogsEntry);
+	}
+
+	public void notifySubscribers(
+		com.liferay.portlet.blogs.model.BlogsEntry entry,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_blogsEntryLocalService.notifySubscribers(entry, serviceContext);
+	}
+
+	public void performPings(com.liferay.portlet.blogs.model.BlogsEntry entry,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_blogsEntryLocalService.performPings(entry, serviceContext);
+	}
+
+	public void scheduleBlogsStatsUpdate(
+		com.liferay.portlet.blogs.model.BlogsEntry blogsEntry,
+		java.lang.Object messagePayload)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_blogsEntryLocalService.scheduleBlogsStatsUpdate(blogsEntry,
+			messagePayload);
+	}
+
 	public void subscribe(long userId, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_blogsEntryLocalService.subscribe(userId, groupId);
+	}
+
+	public void removeScheduledUpdates(
+		com.liferay.portlet.blogs.model.BlogsEntry blogsEntry)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_blogsEntryLocalService.removeScheduledUpdates(blogsEntry);
 	}
 
 	public void unsubscribe(long userId, long groupId)

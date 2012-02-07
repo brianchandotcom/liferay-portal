@@ -28,6 +28,9 @@ public interface DestinationNames {
 	 */
 	public static final String BLOGS = "liferay/blogs";
 
+	public static final String BLOGS_STATS_UPDATE =
+		"liferay/blogs_stats_update";
+
 	public static final String BUFFERED_INCREMENT_PARALLEL =
 		"liferay/buffered_increment_parallel";
 

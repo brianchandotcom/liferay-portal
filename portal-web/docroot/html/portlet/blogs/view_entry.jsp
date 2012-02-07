@@ -64,7 +64,7 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 <c:if test="<%= PropsValues.BLOGS_ENTRY_PREVIOUS_AND_NEXT_NAVIGATION_ENABLED %>">
 
 	<%
-	BlogsEntry[] prevAndNext = BlogsEntryLocalServiceUtil.getEntriesPrevAndNext(entryId);
+	BlogsEntry[] prevAndNext = BlogsEntryLocalServiceUtil.getEntriesPrevAndNext(user.getUserId(), entryId);
 
 	BlogsEntry previousEntry = prevAndNext[0];
 	BlogsEntry nextEntry = prevAndNext[2];
@@ -103,7 +103,7 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 	</div>
 </c:if>
 
-<c:if test="<%= enableComments %>">
+<c:if test="<%= enableComments && entry.isVisible() %>">
 	<liferay-ui:panel-container extended="<%= false %>" id="blogsCommentsPanelContainer" persistState="<%= true %>">
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="blogsCommentsPanel" persistState="<%= true %>" title="comments">
 			<c:if test="<%= PropsValues.BLOGS_TRACKBACK_ENABLED && entry.isAllowTrackbacks() %>">

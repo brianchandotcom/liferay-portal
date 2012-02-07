@@ -1649,7 +1649,9 @@ public class JournalArticleLocalServiceImpl
 
 		String status = String.valueOf(WorkflowConstants.STATUS_ANY);
 
-		params.put("keywords", keywords);
+		if (params != null) {
+			params.put("keywords", keywords);
+		}
 
 		return search(
 			companyId, groupId, classNameId, articleId, title, description,
@@ -1690,10 +1692,12 @@ public class JournalArticleLocalServiceImpl
 			searchContext.setGroupIds(new long[] {groupId});
 			searchContext.setEnd(end);
 
-			String keywords = (String)params.remove("keywords");
+			if (params != null) {
+				String keywords = (String)params.remove("keywords");
 
-			if (Validator.isNotNull(keywords)) {
-				searchContext.setKeywords(keywords);
+				if (Validator.isNotNull(keywords)) {
+					searchContext.setKeywords(keywords);
+				}
 			}
 
 			QueryConfig queryConfig = new QueryConfig();

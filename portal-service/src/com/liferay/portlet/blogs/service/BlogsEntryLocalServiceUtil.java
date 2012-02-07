@@ -536,7 +536,7 @@ public class BlogsEntryLocalServiceUtil {
 		com.liferay.portlet.blogs.model.BlogsEntry blogsEntry)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().unscheduleBlogsStatsUpdate(blogsEntry);
+		getService().removeScheduledUpdates(blogsEntry);
 	}
 
 	public static void unsubscribe(long userId, long groupId)

@@ -124,7 +124,7 @@ String groupMappingDescription = StringPool.BLANK;
 String groupMappingUser = StringPool.BLANK;
 
 for (int i = 0 ; i < groupMappingArray.length ; i++) {
-	if (userMappingArray[i].indexOf("=") == -1) {
+	if (groupMappingArray[i].indexOf("=") == -1) {
 		continue;
 	}
 

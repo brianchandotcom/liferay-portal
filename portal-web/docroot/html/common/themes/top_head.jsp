@@ -34,7 +34,7 @@ if (!themeDisplay.isSignedIn() && layout.isPublicLayout()) {
 	String canonicalURL = PortalUtil.getCanonicalURL(completeURL, themeDisplay, layout);
 %>
 
-	<link href="<%= canonicalURL %>" rel="canonical" />
+	<link href="<%= HtmlUtil.escape(canonicalURL) %>" rel="canonical" />
 
 	<%
 	Locale defaultLocale = LocaleUtil.getDefault();
@@ -53,7 +53,7 @@ if (!themeDisplay.isSignedIn() && layout.isPublicLayout()) {
 					if (!curLocale.equals(defaultLocale)) {
 		%>
 
-						<link href="<%= PortalUtil.getAlternateURL(canonicalURL, themeDisplay, curLocale) %>" hreflang="<%= LocaleUtil.toW3cLanguageId(curLocale) %>" rel="alternate" />
+						<link href="<%= HtmlUtil.escape(PortalUtil.getAlternateURL(canonicalURL, themeDisplay, curLocale)) %>" hreflang="<%= LocaleUtil.toW3cLanguageId(curLocale) %>" rel="alternate" />
 
 		<%
 					}

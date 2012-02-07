@@ -151,11 +151,11 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 						</c:if>
 
 						<%
-							String summary = entry.getDescription();
+						String summary = entry.getDescription();
 
-							if (Validator.isNull(summary)) {
-								summary = entry.getContent();
-							}
+						if (Validator.isNull(summary)) {
+							summary = entry.getContent();
+						}
 						%>
 
 						<%= StringUtil.shorten(HtmlUtil.stripHtml(summary), pageAbstractLength) %>

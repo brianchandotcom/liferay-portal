@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
@@ -420,8 +421,14 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			String value = null;
 
 			if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_ABSTRACT)) {
+				String summary = entry.getDescription();
+
+				if (Validator.isNull(summary)) {
+					summary = entry.getContent();
+				}
+
 				value = StringUtil.shorten(
-					HtmlUtil.extractText(entry.getDescription()),
+					HtmlUtil.extractText(summary),
 					PropsValues.BLOGS_RSS_ABSTRACT_LENGTH, StringPool.BLANK);
 			}
 			else if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_TITLE)) {

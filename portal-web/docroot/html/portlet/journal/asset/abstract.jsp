@@ -59,8 +59,8 @@ else {
 String summary = articleDisplay.getDescription();
 
 if (Validator.isNull(summary)) {
-	summary = StringUtil.shorten(HtmlUtil.stripHtml(articleDisplay.getContent()), abstractLength);
+	summary = HtmlUtil.stripHtml(articleDisplay.getContent());
 }
 %>
 
-<%= summary %>
+<%= StringUtil.shorten(summary, abstractLength) %>

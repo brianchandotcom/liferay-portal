@@ -20,8 +20,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SOUs_ViewReplyMicroblogsContentTest extends BaseTestCase {
-	public void testSOUs_ViewReplyMicroblogsContent() throws Exception {
+public class SOUs_ViewReplyMicroblogsContentMentionsTest extends BaseTestCase {
+	public void testSOUs_ViewReplyMicroblogsContentMentions()
+		throws Exception {
 		selenium.open("/user/socialoffice01/home1");
 		loadRequiredJavaScriptModules();
 

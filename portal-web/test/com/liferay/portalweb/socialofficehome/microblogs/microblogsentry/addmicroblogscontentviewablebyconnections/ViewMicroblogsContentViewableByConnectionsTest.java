@@ -59,5 +59,7 @@ public class ViewMicroblogsContentViewableByConnectionsTest extends BaseTestCase
 			selenium.getText("//div[@class='content']"));
 		assertEquals(RuntimeVariables.replace("Comment"),
 			selenium.getText("//span[@class='action comment']/a"));
+		assertFalse(selenium.isElementPresent(
+				"//span[@class='action repost']/a"));
 	}
 }

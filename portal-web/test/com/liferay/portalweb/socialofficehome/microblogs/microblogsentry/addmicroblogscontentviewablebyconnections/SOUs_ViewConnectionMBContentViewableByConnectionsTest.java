@@ -66,5 +66,9 @@ public class SOUs_ViewConnectionMBContentViewableByConnectionsTest
 			selenium.getText("//div[@class='user-name']/span"));
 		assertEquals(RuntimeVariables.replace("Microblogs Post"),
 			selenium.getText("//div[@class='content']"));
+		assertEquals(RuntimeVariables.replace("Comment"),
+			selenium.getText("//span[@class='action comment']/a"));
+		assertFalse(selenium.isElementPresent(
+				"//span[@class='action repost']/a"));
 	}
 }

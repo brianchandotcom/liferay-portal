@@ -25,34 +25,25 @@ import junit.framework.TestSuite;
 public class EditMicroblogsContentViewableByFollowersTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AddUserSOCoworkerTest.class);
-		testSuite.addTestSuite(AddUserSOFollowerTest.class);
+		testSuite.addTestSuite(AddSOUserTest.class);
 		testSuite.addTestSuite(AddMicroblogsContentViewableByFollowersTest.class);
+		testSuite.addTestSuite(ViewMicroblogsContentViewableByFollowersTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
-		testSuite.addTestSuite(SOCo_NewPasswordTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
-		testSuite.addTestSuite(SOCo_SignInTest.class);
-		testSuite.addTestSuite(SOCo_AddAsCoworkerCCActionsTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
-		testSuite.addTestSuite(SOFo_NewPasswordTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
-		testSuite.addTestSuite(SOFo_SignInTest.class);
-		testSuite.addTestSuite(SOFo_AddAsFollowerCCActionsTest.class);
+		testSuite.addTestSuite(SOUs_SignInTest.class);
+		testSuite.addTestSuite(SOUs_ViewMicroblogsContentViewableByFollowersTest.class);
+		testSuite.addTestSuite(SOUs_AddFollowingCCUserTest.class);
+		testSuite.addTestSuite(SOUs_ViewFollowingMBContentViewableByFollowersTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SOSignInTest.class);
-		testSuite.addTestSuite(ConfirmCCCoworkerRequestTest.class);
 		testSuite.addTestSuite(EditMicroblogsContentViewableByFollowersTest.class);
 		testSuite.addTestSuite(ViewEditMicroblogsContentViewableByFollowersTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
-		testSuite.addTestSuite(SOCo_SignInTest.class);
-		testSuite.addTestSuite(SOCo_ViewEditMicroblogsContentFollowersTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
-		testSuite.addTestSuite(SOFo_SignInTest.class);
-		testSuite.addTestSuite(SOFo_ViewEditMicroblogsContentFollowersTest.class);
+		testSuite.addTestSuite(SOUs_SignInTest.class);
+		testSuite.addTestSuite(SOUs_ViewEditMicroblogsContentViewableByFollowersTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SOSignInTest.class);
 		testSuite.addTestSuite(TearDownWHEntryContentTest.class);
-		testSuite.addTestSuite(TearDownSOUserTest.class);
+		testSuite.addTestSuite(TearDownUserTest.class);
 
 		return testSuite;
 	}

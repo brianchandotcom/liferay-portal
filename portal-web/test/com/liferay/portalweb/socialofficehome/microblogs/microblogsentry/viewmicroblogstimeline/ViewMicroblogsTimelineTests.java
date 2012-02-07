@@ -25,10 +25,9 @@ import junit.framework.TestSuite;
 public class ViewMicroblogsTimelineTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AddMicroblogsContentViewableByCoworkersTest.class);
+		testSuite.addTestSuite(AddMicroblogsContentViewableByConnectionsTest.class);
 		testSuite.addTestSuite(AddMicroblogsContentViewableByEveryoneTest.class);
 		testSuite.addTestSuite(AddMicroblogsContentViewableByFollowersTest.class);
-		testSuite.addTestSuite(AddMicroblogsContentViewableByFriendsTest.class);
 		testSuite.addTestSuite(ViewMicroblogsTimelineTest.class);
 		testSuite.addTestSuite(TearDownWHEntryContentTest.class);
 

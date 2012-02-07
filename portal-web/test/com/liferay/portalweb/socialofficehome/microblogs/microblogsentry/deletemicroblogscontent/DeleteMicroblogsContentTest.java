@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class DeleteMicroblogsContentTest extends BaseTestCase {
 	public void testDeleteMicroblogsContent() throws Exception {
-		selenium.open("/user/joebloggs/home/");
+		selenium.open("/user/joebloggs/home1");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -32,7 +32,7 @@ public class DeleteMicroblogsContentTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//section/div/div/div/div[1]/ul/li[3]/a")) {
+							"//nav/ul/li[contains(.,'Microblogs')]/a/span")) {
 					break;
 				}
 			}
@@ -42,32 +42,41 @@ public class DeleteMicroblogsContentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//section/div/div/div/div[1]/ul/li[3]/a",
+		selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Microblogs"),
-			selenium.getText("//div[2]/div/div/div/section/header/h1/span[2]"));
-		assertTrue(selenium.isVisible("//div[@class='my-entry-bubble ']"));
-		assertTrue(selenium.isVisible("//div/span/a/img"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs (joebloggs)"),
-			selenium.getText("//div[@class='user-name']"));
-		assertEquals(RuntimeVariables.replace("Microblogs Content"),
+		assertEquals(RuntimeVariables.replace("Microblogs Post"),
 			selenium.getText("//div[@class='content']"));
+		assertEquals(RuntimeVariables.replace("Comment"),
+			selenium.getText("//span[@class='action comment']/a"));
 		assertEquals(RuntimeVariables.replace("Delete"),
-			selenium.getText("//span[3]/a/span"));
-		selenium.click(RuntimeVariables.replace("//span[3]/a/span"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
+			selenium.getText("//span[@class='action delete']/a"));
+		selenium.clickAt("//span[@class='action delete']/a",
+			RuntimeVariables.replace("Delete"));
 		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertFalse(selenium.isElementPresent("//div/span/a/img"));
-		assertFalse(selenium.isTextPresent("Joe Bloggs (joebloggs)"));
-		assertFalse(selenium.isTextPresent("Microblogs Content"));
+						   .matches("^Are you sure you want to delete this post[\\s\\S]$"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("You have no microblogs entry.")
+										.equals(selenium.getText(
+								"//div[@class='portlet-msg-info']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("You have no microblogs entry."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
+		assertFalse(selenium.isTextPresent("Microblogs Post"));
 	}
 }

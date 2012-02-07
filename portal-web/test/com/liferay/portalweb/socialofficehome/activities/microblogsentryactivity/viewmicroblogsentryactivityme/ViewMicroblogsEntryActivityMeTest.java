@@ -22,42 +22,16 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewMicroblogsEntryActivityMeTest extends BaseTestCase {
 	public void testViewMicroblogsEntryActivityMe() throws Exception {
-		selenium.open("/user/joebloggs/home/");
-		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div/div/div/div[1]/ul/li[1]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("//div/div/div/div[1]/ul/li[1]/a",
-			RuntimeVariables.replace("Home"));
-		selenium.waitForPageToLoad("30000");
+		selenium.open("/user/joebloggs/home1");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Activities"),
-			selenium.getText("//div[2]/div/section/header/h1/span"));
-		assertEquals(RuntimeVariables.replace("Me"),
-			selenium.getText("//section/div/div/div/ul/li[5]/span/a"));
-		selenium.clickAt("//section/div/div/div/ul/li[5]/span/a",
-			RuntimeVariables.replace("Me"));
+			selenium.getText("xPath=(//h1[@class='portlet-title']/span)[2]"));
+		assertEquals(RuntimeVariables.replace("Me"), selenium.getText("link=Me"));
+		selenium.clickAt("link=Me", RuntimeVariables.replace("Me"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertTrue(selenium.isVisible("//div[1]/span[1]/img"));
-		assertTrue(selenium.isVisible("//span[2]/span/img"));
-		assertEquals(RuntimeVariables.replace("Microblogs Content"),
-			selenium.getText("//section/div/div/div/div/div/div[2]/div[1]"));
-		assertTrue(selenium.isPartialText(
-				"//section/div/div/div/div/div/div[2]/div[2]", "Joe"));
+		assertEquals(RuntimeVariables.replace("Microblogs Post"),
+			selenium.getText("//div[@class='activity-title']"));
+		assertTrue(selenium.isPartialText("//div[@class='activity-body']", "Joe"));
 	}
 }

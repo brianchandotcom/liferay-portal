@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -925,6 +926,19 @@ public class SitesUtil {
 		if (mergeFailCount >
 			PropsValues.LAYOUT_SET_PROTOTYPE_MERGE_FAIL_THRESHOLD) {
 
+			if (_log.isWarnEnabled()) {
+				StringBundler sb = new StringBundler();
+
+				sb.append("Merge not performed because the fail threshold was");
+				sb.append("reached for layoutSetPrototypeId=");
+				sb.append(layoutSetPrototype.getLayoutSetPrototypeId());
+				sb.append(" and layoutId = ");
+				sb.append(layoutSetPrototypeLayoutSet.getLayoutSetId());
+				sb.append(". Update the count in the database to try again.");
+
+				_log.warn(sb.toString());
+			}
+
 			return;
 		}
 
@@ -969,16 +983,17 @@ public class SitesUtil {
 		try {
 			Map<String, String[]> parameterMap = null;
 
+			boolean importData = true;
+
 			if (lastMergeTime > 0) {
-				parameterMap = getLayoutSetPrototypesParameters(false);
+				importData = false;
 			}
-			else {
-				parameterMap = getLayoutSetPrototypesParameters(true);
-			}
+
+			parameterMap = getLayoutSetPrototypesParameters(importData);
 
 			importLayoutSetPrototype(
 				layoutSetPrototype, layoutSet.getGroupId(),
-				layoutSet.isPrivateLayout(), parameterMap);
+				layoutSet.isPrivateLayout(), parameterMap, importData);
 
 			layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 				layoutSet.getGroupId(), layoutSet.isPrivateLayout());
@@ -1039,7 +1054,7 @@ public class SitesUtil {
 	}
 
 	protected static Map<String, String[]> getLayoutSetPrototypesParameters(
-		boolean firstTime) {
+		boolean importData) {
 
 		Map<String, String[]> parameterMap =
 			new LinkedHashMap<String, String[]>();
@@ -1090,7 +1105,7 @@ public class SitesUtil {
 			PortletDataHandlerKeys.USER_ID_STRATEGY,
 			new String[] {UserIdStrategy.CURRENT_USER_ID});
 
-		if (firstTime) {
+		if (importData) {
 			parameterMap.put(
 				PortletDataHandlerKeys.DATA_STRATEGY,
 				new String[] {PortletDataHandlerKeys.DATA_STRATEGY_MIRROR});
@@ -1115,13 +1130,24 @@ public class SitesUtil {
 
 	protected static void importLayoutSetPrototype(
 			LayoutSetPrototype layoutSetPrototype, long groupId,
-			boolean privateLayout, Map<String, String[]> parameterMap)
+			boolean privateLayout, Map<String, String[]> parameterMap,
+			boolean importData)
 		throws PortalException, SystemException {
 
 		File file = null;
 
-		File cacheFile = new File(
-			_TEMP_DIR.concat(layoutSetPrototype.getUuid()).concat(".lar"));
+		StringBundler sb = new StringBundler(importData ? 4 : 4);
+		
+		sb.append(_TEMP_DIR);
+		sb.append(layoutSetPrototype.getUuid());
+		
+		if (importData) {
+			sb.append("-data");
+		}
+
+		sb.append(".lar");
+
+		File cacheFile = new File(sb.toString());
 
 		if (cacheFile.exists()) {
 			Date modifiedDate = layoutSetPrototype.getModifiedDate();
@@ -1245,7 +1271,7 @@ public class SitesUtil {
 
 					importLayoutSetPrototype(
 						layoutSetPrototype, groupId, privateLayout,
-						parameterMap);
+						parameterMap, true);
 				}
 			}
 		}

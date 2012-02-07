@@ -17,12 +17,6 @@ AUI.add(
 
 		var DEFAULT_ALIGN_POINTS = ['tl', 'bl'];
 
-		var DIRECTION_DOWN = 'down';
-
-		var DIRECTION_LEFT = 'left';
-
-		var DIRECTION_RIGHT = 'right';
-
 		var EVENT_CLICK = 'click';
 
 		var STR_B = 'b';

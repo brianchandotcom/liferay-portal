@@ -663,6 +663,17 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		}
 	}
 
+	public boolean isGroupMember(long groupId) {
+		try {
+			return isGroupMemberImpl(groupId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			return false;
+		}
+	}
+
 	public boolean isGroupOwner(long groupId) {
 		try {
 			return isGroupOwnerImpl(groupId);
@@ -1073,6 +1084,31 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		}
 
 		if (bag.isGroupAdmin(this, group)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	protected boolean isGroupMemberImpl(long groupId) throws Exception {
+		if (!signedIn) {
+			return false;
+		}
+
+		if (groupId <= 0) {
+			return false;
+		}
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		PermissionCheckerBag bag = getUserBag(user.getUserId(), groupId);
+
+		if (bag == null) {
+			_log.error("Bag should never be null");
+		}
+
+		if (bag.isGroupMember(this, group)) {
 			return true;
 		}
 		else {

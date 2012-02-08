@@ -558,7 +558,7 @@
 			<attribute>
 				<name>label</name>
 				<inputType>java.lang.Object</inputType>
-				<outputType>java.lang.String</outputType>
+				<outputType>java.lang.Object</outputType>
 			</attribute>
 			<attribute>
 				<name>selected</name>
@@ -573,7 +573,7 @@
 			<attribute>
 				<name>value</name>
 				<inputType>java.lang.Object</inputType>
-				<outputType>java.lang.String</outputType>
+				<outputType>java.lang.Object</outputType>
 			</attribute>
 		</attributes>
 	</component>

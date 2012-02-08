@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.portal.image.ImageToolImpl;
+import com.liferay.portal.kernel.image.ImageTool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -297,7 +298,7 @@ public abstract class LiferayConverter {
 
 				thumbnailFile.createNewFile();
 
-				ImageToolImpl imageToolImpl = ImageToolImpl.getInstance();
+				ImageTool imageToolImpl = ImageToolImpl.getInstance();
 
 				RenderedImage renderedImage = imageToolImpl.scale(
 					bufferedImage, thumbnailHeight, thumbnailWidth);

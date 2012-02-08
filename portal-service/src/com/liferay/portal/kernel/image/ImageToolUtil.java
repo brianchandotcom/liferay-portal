@@ -29,58 +29,65 @@ public class ImageToolUtil {
 	public static BufferedImage convertImageType(
 		BufferedImage sourceImage, int type) {
 
-		return getImageProcessor().convertImageType(sourceImage, type);
+		return getImageTool().convertImageType(sourceImage, type);
 	}
 
 	public static void encodeGIF(RenderedImage renderedImage, OutputStream os)
 		throws IOException {
 
-		getImageProcessor().encodeGIF(renderedImage, os);
+		getImageTool().encodeGIF(renderedImage, os);
 	}
 
 	public static void encodeWBMP(RenderedImage renderedImage, OutputStream os)
 		throws InterruptedException, IOException {
 
-		getImageProcessor().encodeWBMP(renderedImage, os);
+		getImageTool().encodeWBMP(renderedImage, os);
 	}
 
 	public static BufferedImage getBufferedImage(RenderedImage renderedImage) {
-		return getImageProcessor().getBufferedImage(renderedImage);
+		return getImageTool().getBufferedImage(renderedImage);
 	}
 
 	public static byte[] getBytes(
 			RenderedImage renderedImage, String contentType)
 		throws IOException {
 
-		return getImageProcessor().getBytes(renderedImage, contentType);
+		return getImageTool().getBytes(renderedImage, contentType);
 	}
 
-	public static ImageTool getImageProcessor() {
-		return _imageProcessor;
+	public static ImageTool getImageTool() {
+		return _imageTool;
 	}
 
 	public static ImageBag read(byte[] bytes) throws IOException {
-		return getImageProcessor().read(bytes);
+		return getImageTool().read(bytes);
 	}
 
 	public static ImageBag read(File file) throws IOException {
-		return getImageProcessor().read(file);
+		return getImageTool().read(file);
 	}
 
 	public static RenderedImage scale(RenderedImage renderedImage, int width) {
-		return getImageProcessor().scale(renderedImage, width);
+		return getImageTool().scale(renderedImage, width);
 	}
 
 	public static RenderedImage scale(
 		RenderedImage renderedImage, int maxHeight, int maxWidth) {
 
-		return getImageProcessor().scale(renderedImage, maxHeight, maxWidth);
+		return getImageTool().scale(renderedImage, maxHeight, maxWidth);
 	}
 
-	public void setImageProcessor(ImageTool imageProcessor) {
-		_imageProcessor = imageProcessor;
+	public static void write(
+			RenderedImage renderedImage, String contentType, OutputStream os)
+		throws IOException {
+
+		getImageTool().write(renderedImage, contentType, os);
 	}
 
-	private static ImageTool _imageProcessor;
+	public void setImageTool(ImageTool imageTool) {
+		_imageTool = imageTool;
+	}
+
+	private static ImageTool _imageTool;
 
 }

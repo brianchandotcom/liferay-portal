@@ -60,7 +60,7 @@
 						playerHeight = 43;
 					}
 					else if (hasImages) {
-						href = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK);
+						href = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&imagePreview=1");
 						src = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&imageThumbnail=1");
 					}
 					else if (hasPDFImages) {

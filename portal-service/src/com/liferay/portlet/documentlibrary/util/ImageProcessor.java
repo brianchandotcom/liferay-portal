@@ -41,11 +41,21 @@ public interface ImageProcessor {
 
 	public Set<String> getImageMimeTypes();
 
+	public InputStream getPreviewAsStream(FileVersion fileVersion)
+		throws Exception;
+
+	public long getPreviewFileSize(FileVersion fileVersion)
+		throws Exception;
+
+	public String getPreviewType(FileVersion fileVersion);
+
 	public InputStream getThumbnailAsStream(FileVersion fileVersion, int index)
 		throws Exception;
 
 	public long getThumbnailFileSize(FileVersion fileVersion, int index)
 		throws Exception;
+
+	public String getThumbnailType(FileVersion fileVersion);
 
 	public boolean hasImages(FileVersion fileVersion);
 

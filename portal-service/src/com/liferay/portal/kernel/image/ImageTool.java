@@ -78,4 +78,8 @@ public interface ImageTool {
 	public RenderedImage scale(
 		RenderedImage renderedImage, int maxHeight, int maxWidth);
 
+	public abstract void write(
+			RenderedImage renderedImage, String contentType, OutputStream os)
+		throws IOException;
+
 }

@@ -54,7 +54,7 @@ import net.jmge.gif.Gif89Encoder;
  */
 public class ImageToolImpl implements ImageTool {
 
-	public static ImageToolImpl getInstance() {
+	public static ImageTool getInstance() {
 		return _instance;
 	}
 
@@ -152,29 +152,7 @@ public class ImageToolImpl implements ImageTool {
 
 		UnsyncByteArrayOutputStream baos = new UnsyncByteArrayOutputStream();
 
-		if (contentType.indexOf(TYPE_BMP) != -1) {
-			ImageEncoder encoder = ImageCodec.createImageEncoder(
-				TYPE_BMP, baos, null);
-
-			encoder.encode(renderedImage);
-		}
-		else if (contentType.indexOf(TYPE_GIF) != -1) {
-			encodeGIF(renderedImage, baos);
-		}
-		else if ((contentType.indexOf(TYPE_JPEG) != -1) ||
-				 (contentType.indexOf("jpeg") != -1)) {
-
-			ImageIO.write(renderedImage, "jpeg", baos);
-		}
-		else if (contentType.indexOf(TYPE_PNG) != -1) {
-			ImageIO.write(renderedImage, TYPE_PNG, baos);
-		}
-		else if (contentType.indexOf("tif") != -1) {
-			ImageEncoder encoder = ImageCodec.createImageEncoder(
-				TYPE_TIFF, baos, null);
-
-			encoder.encode(renderedImage);
-		}
+		write(renderedImage, contentType, baos);
 
 		return baos.toByteArray();
 	}
@@ -335,6 +313,35 @@ public class ImageToolImpl implements ImageTool {
 		return scaledBufferedImage;
 	}
 
+	public void write(
+			RenderedImage renderedImage, String contentType, OutputStream os)
+		throws IOException {
+
+		if (contentType.indexOf(TYPE_BMP) != -1) {
+			ImageEncoder encoder = ImageCodec.createImageEncoder(
+				TYPE_BMP, os, null);
+
+			encoder.encode(renderedImage);
+		}
+		else if (contentType.indexOf(TYPE_GIF) != -1) {
+			encodeGIF(renderedImage, os);
+		}
+		else if ((contentType.indexOf(TYPE_JPEG) != -1) ||
+				 (contentType.indexOf("jpeg") != -1)) {
+
+			ImageIO.write(renderedImage, "jpeg", os);
+		}
+		else if (contentType.indexOf(TYPE_PNG) != -1) {
+			ImageIO.write(renderedImage, TYPE_PNG, os);
+		}
+		else if (contentType.indexOf("tif") != -1) {
+			ImageEncoder encoder = ImageCodec.createImageEncoder(
+				TYPE_TIFF, os, null);
+
+			encoder.encode(renderedImage);
+		}
+	}
+
 	private byte[] _toMultiByte(int intValue) {
 		int numBits = 32;
 		int mask = 0x80000000;
@@ -362,7 +369,7 @@ public class ImageToolImpl implements ImageTool {
 
 	private static Log _log = LogFactoryUtil.getLog(ImageToolImpl.class);
 
-	private static ImageToolImpl _instance = new ImageToolImpl();
+	private static ImageTool _instance = new ImageToolImpl();
 
 	private static FileImpl _fileUtil = FileImpl.getInstance();
 

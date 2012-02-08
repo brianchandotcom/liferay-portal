@@ -81,19 +81,6 @@
 						<img alt="<%= HtmlUtil.escape(fileEntry.getTitle()) + " - " + HtmlUtil.escape(fileEntry.getDescription()) %>" border="no" src="<%= src %>" style="max-height: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT %>px; max-width: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH %>px;" />
 
 						<span class="image-title"><%= HtmlUtil.escape(fileVersion.getTitle()) %></span>
-
-						<c:if test="<%= scores != null %>">
-							<span class="image-score">
-
-								<%
-								double score = ((Double)scores.get(i)).doubleValue();
-
-								score = MathUtils.round((score * 10) / 2, 1, BigDecimal.ROUND_HALF_UP);
-								%>
-
-								<liferay-ui:ratings-score score="<%= score %>" />
-							</span>
-						</c:if>
 					</a>
 
 					<c:if test="<%= showActions %>">

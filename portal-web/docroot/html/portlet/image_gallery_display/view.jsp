@@ -131,8 +131,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 		searchContainer.setResults(results);
 
-		List scores = null;
-
 		String[] mediaGalleryMimeTypes = null;
 		%>
 
@@ -171,8 +169,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			List results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, mediaGalleryMimeTypes, true, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 
 			searchContainer.setResults(results);
-
-			List scores = null;
 			%>
 
 			<aui:column columnWidth="<%= showFolderMenu ? 75 : 100 %>" cssClass="lfr-asset-column lfr-asset-column-details" first="<%= true %>">
@@ -272,10 +268,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			<liferay-ui:header
 				title="<%= topLink %>"
 			/>
-
-			<%
-			List scores = null;
-			%>
 
 			<%@ include file="/html/portlet/image_gallery_display/view_images.jspf" %>
 		</aui:layout>

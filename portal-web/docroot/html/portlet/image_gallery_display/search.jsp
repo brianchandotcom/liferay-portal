@@ -93,7 +93,6 @@ boolean useAssetEntryQuery = false;
 		searchContainer.setTotal(total);
 
 		List results = new ArrayList(hits.getDocs().length);
-		List scores = new ArrayList(hits.getDocs().length);
 
 		for (int i = 0; i < hits.getDocs().length; i++) {
 			Document doc = hits.doc(i);
@@ -104,7 +103,6 @@ boolean useAssetEntryQuery = false;
 				FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
 
 				results.add(fileEntry);
-				scores.add(new Double(hits.score(i)));
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
@@ -114,19 +112,21 @@ boolean useAssetEntryQuery = false;
 		}
 	%>
 
-		<span class="aui-search-bar">
-			<aui:input inlineField="<%= true %>" label="" name="keywords" size="30" title="search-images" type="text" value="<%= keywords %>" />
+	<div id="<portlet:namespace />imageGalleryAssetInfo">
+			<span class="aui-search-bar">
+				<aui:input inlineField="<%= true %>" label="" name="keywords" size="30" title="search-images" type="text" value="<%= keywords %>" />
 
-			<aui:button type="submit" value="search" />
-		</span>
+				<aui:button type="submit" value="search" />
+			</span>
 
 		<br /><br />
 
 		<%
-		String[] mediaGalleryMimeTypes = null;
+			String[] mediaGalleryMimeTypes = null;
 		%>
 
 		<%@ include file="/html/portlet/image_gallery_display/view_images.jspf" %>
+	</div>
 
 	<%
 	}

@@ -415,6 +415,12 @@ public class LayoutPermissionImpl implements LayoutPermission {
 
 				return true;
 			}
+
+			if (layout.isPrivateLayout() &&
+				!permissionChecker.isGroupMember(group.getGroupId())) {
+
+				return false;
+			}
 		}
 
 		// Organization site layouts are also viewable by users who belong to

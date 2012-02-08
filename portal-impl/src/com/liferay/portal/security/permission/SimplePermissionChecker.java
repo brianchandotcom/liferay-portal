@@ -56,6 +56,10 @@ public class SimplePermissionChecker extends BasePermissionChecker {
 		return signedIn;
 	}
 
+	public boolean isGroupMember(long groupId) {
+		return signedIn;
+	}
+
 	public boolean isGroupOwner(long groupId) {
 		return signedIn;
 	}

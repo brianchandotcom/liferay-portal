@@ -10,7 +10,7 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/user/joebloggs/home/</td>
+	<td>/web/guest/home/</td>
 	<td></td>
 </tr>
 <tr>
@@ -29,9 +29,14 @@
 	<td>Users and Organizations</td>
 </tr>
 <tr>
+	<td>clickAtAndWait</td>
+	<td>link=Search All Users</td>
+	<td>Search All Users</td>
+</tr>
+<tr>
 	<td>type</td>
-	<td>//input[@id='_125_keywords']</td>
-	<td>socialofficefriendfn</td>
+	<td>//input[@id='_125_toggle_id_users_admin_user_searchkeywords']</td>
+	<td>socialoffice01</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -40,18 +45,18 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
-	<td>socialofficefriendfn</td>
+	<td>//a[contains(.,'Social01')]</td>
+	<td>Social01</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//td[2]/a</td>
-	<td>socialofficefriendfn</td>
+	<td>//a[contains(.,'Social01')]</td>
+	<td>Social01</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[2]/h1/span</td>
-	<td>socialofficefriendfn socialofficefriendmn socialofficefriendln</td>
+	<td>Social01 Office01 User01</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -71,7 +76,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_125_websiteUrl0']</td>
-	<td>http://www.socialofficefriendfn.com</td>
+	<td>http://www.socialoffice01.com</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -101,7 +106,7 @@
 <tr>
 	<td>assertValue</td>
 	<td>//input[@id='_125_websiteUrl0']</td>
-	<td>http://www.socialofficefriendfn.com</td>
+	<td>http://www.socialoffice01.com</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>

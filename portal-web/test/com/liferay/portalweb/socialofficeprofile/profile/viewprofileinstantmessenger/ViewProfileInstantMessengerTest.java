@@ -22,45 +22,72 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewProfileInstantMessengerTest extends BaseTestCase {
 	public void testViewProfileInstantMessenger() throws Exception {
-		selenium.open("/web/socialofficefriendsn/profile");
+		selenium.open("/web/socialoffice01/profile");
 		loadRequiredJavaScriptModules();
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//li[contains(@class, 'selected')]/a/span")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("Profile"),
-			selenium.getText("//nav/ul/li/a/span"));
-		assertEquals(RuntimeVariables.replace("Profile"),
-			selenium.getText("//div[2]/div/div/div/section/header/h1/span[2]"));
-		assertEquals(RuntimeVariables.replace(
-				"socialofficefriendfn socialofficefriendmn socialofficefriendln"),
-			selenium.getText("//div[1]/h1/span"));
-		assertEquals(RuntimeVariables.replace(
-				"socialofficefriendea@liferay.com"),
-			selenium.getText("//div[2]/div/div[1]/div/div[1]/div/a"));
-		assertEquals(RuntimeVariables.replace("Information"),
-			selenium.getText("//div[1]/div[1]/div/span"));
-		assertTrue(selenium.isVisible("//div[1]/h3"));
-		assertEquals(RuntimeVariables.replace("Instant Messenger"),
-			selenium.getText("//div[1]/h3"));
+			selenium.getText("//li[contains(@class, 'selected')]/a/span"));
+		assertEquals(RuntimeVariables.replace("Social01 Office01 User01"),
+			selenium.getText("//div[@class='lfr-contact-name']/a"));
+		assertEquals(RuntimeVariables.replace("socialoffice01@liferay.com"),
+			selenium.getText("//div[@class='lfr-contact-extra']"));
+		assertTrue(selenium.isVisible(
+				"//div[@class='section lfr-user-instant-messenger']/h3"));
+		assertEquals(RuntimeVariables.replace("Instant Messenger:"),
+			selenium.getText(
+				"//div[@class='section lfr-user-instant-messenger']/h3"));
 		assertEquals(RuntimeVariables.replace("AIM"),
-			selenium.getText("//dt[1]"));
+			selenium.getText(
+				"//div[@class='section lfr-user-instant-messenger']/ul/li[1]/span"));
 		assertEquals(RuntimeVariables.replace("socialofficesn"),
-			selenium.getText("//dd[1]"));
+			selenium.getText(
+				"//div[@class='section lfr-user-instant-messenger']/ul/li[1]/span[2]"));
 		assertEquals(RuntimeVariables.replace("ICQ"),
-			selenium.getText("//dt[2]"));
+			selenium.getText(
+				"//div[@class='section lfr-user-instant-messenger']/ul/li[2]/span"));
 		assertEquals(RuntimeVariables.replace("socialofficesn"),
-			selenium.getText("//dd[2]"));
+			selenium.getText(
+				"//div[@class='section lfr-user-instant-messenger']/ul/li[2]/span[2]"));
 		assertEquals(RuntimeVariables.replace("Jabber"),
-			selenium.getText("//dt[3]"));
+			selenium.getText(
+				"//div[@class='section lfr-user-instant-messenger']/ul/li[3]/span"));
 		assertEquals(RuntimeVariables.replace("socialofficesn"),
-			selenium.getText("//dd[3]"));
+			selenium.getText(
+				"//div[@class='section lfr-user-instant-messenger']/ul/li[3]/span[2]"));
 		assertEquals(RuntimeVariables.replace("MSN"),
-			selenium.getText("//dt[4]"));
+			selenium.getText(
+				"//div[@class='section lfr-user-instant-messenger']/ul/li[4]/span"));
 		assertEquals(RuntimeVariables.replace("socialofficesn"),
-			selenium.getText("//dd[4]"));
+			selenium.getText(
+				"//div[@class='section lfr-user-instant-messenger']/ul/li[4]/span[2]"));
 		assertEquals(RuntimeVariables.replace("Skype"),
-			selenium.getText("//dt[5]"));
+			selenium.getText(
+				"//div[@class='section lfr-user-instant-messenger']/ul/li[5]/span"));
 		assertEquals(RuntimeVariables.replace("socialofficesn"),
-			selenium.getText("//dd[5]"));
-		assertEquals(RuntimeVariables.replace("YM"), selenium.getText("//dt[6]"));
+			selenium.getText(
+				"//div[@class='section lfr-user-instant-messenger']/ul/li[5]/span[2]"));
+		assertEquals(RuntimeVariables.replace("YM"),
+			selenium.getText(
+				"//div[@class='section lfr-user-instant-messenger']/ul/li[6]/span"));
 		assertEquals(RuntimeVariables.replace("socialofficesn"),
-			selenium.getText("//dd[6]"));
+			selenium.getText(
+				"//div[@class='section lfr-user-instant-messenger']/ul/li[6]/span[2]"));
 	}
 }

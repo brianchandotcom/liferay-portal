@@ -25,9 +25,9 @@ import junit.framework.TestSuite;
 public class AddUserSOAdditionalEmailAddressTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AddUserSOFriendTest.class);
+		testSuite.addTestSuite(AddSOUserTest.class);
 		testSuite.addTestSuite(AddUserSOAdditionalEmailAddressTest.class);
-		testSuite.addTestSuite(TearDownSOUserTest.class);
+		testSuite.addTestSuite(TearDownUserTest.class);
 
 		return testSuite;
 	}

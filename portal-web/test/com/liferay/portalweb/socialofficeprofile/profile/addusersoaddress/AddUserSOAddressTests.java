@@ -25,9 +25,9 @@ import junit.framework.TestSuite;
 public class AddUserSOAddressTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AddUserSOFriendTest.class);
+		testSuite.addTestSuite(AddSOUserTest.class);
 		testSuite.addTestSuite(AddUserSOAddressTest.class);
-		testSuite.addTestSuite(TearDownSOUserTest.class);
+		testSuite.addTestSuite(TearDownUserTest.class);
 
 		return testSuite;
 	}

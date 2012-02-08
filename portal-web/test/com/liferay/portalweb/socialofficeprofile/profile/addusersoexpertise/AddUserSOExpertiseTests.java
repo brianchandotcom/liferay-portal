@@ -25,9 +25,9 @@ import junit.framework.TestSuite;
 public class AddUserSOExpertiseTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AddUserSOFriendTest.class);
+		testSuite.addTestSuite(AddSOUserTest.class);
 		testSuite.addTestSuite(AddUserSOExpertiseTest.class);
-		testSuite.addTestSuite(TearDownSOUserTest.class);
+		testSuite.addTestSuite(TearDownUserTest.class);
 
 		return testSuite;
 	}

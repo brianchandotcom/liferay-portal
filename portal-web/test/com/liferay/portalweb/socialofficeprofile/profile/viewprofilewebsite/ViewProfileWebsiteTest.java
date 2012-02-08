@@ -22,27 +22,41 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewProfileWebsiteTest extends BaseTestCase {
 	public void testViewProfileWebsite() throws Exception {
-		selenium.open("/web/socialofficefriendsn/profile");
+		selenium.open("/web/socialoffice01/profile");
 		loadRequiredJavaScriptModules();
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//li[contains(@class, 'selected')]/a/span")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("Profile"),
-			selenium.getText("//nav/ul/li/a/span"));
-		assertEquals(RuntimeVariables.replace("Profile"),
-			selenium.getText("//div[2]/div/div/div/section/header/h1/span[2]"));
-		assertEquals(RuntimeVariables.replace(
-				"socialofficefriendfn socialofficefriendmn socialofficefriendln"),
-			selenium.getText("//div[1]/h1/span"));
-		assertEquals(RuntimeVariables.replace(
-				"socialofficefriendea@liferay.com"),
-			selenium.getText("//div[2]/div/div[1]/div/div[1]/div/a"));
-		assertEquals(RuntimeVariables.replace("Information"),
-			selenium.getText("//div[1]/div[1]/div/span"));
-		assertTrue(selenium.isVisible("//div[1]/h3"));
-		assertEquals(RuntimeVariables.replace("Websites"),
-			selenium.getText("//div[1]/h3"));
+			selenium.getText("//li[contains(@class, 'selected')]/a/span"));
+		assertEquals(RuntimeVariables.replace("Social01 Office01 User01"),
+			selenium.getText("//div[@class='lfr-contact-name']/a"));
+		assertEquals(RuntimeVariables.replace("socialoffice01@liferay.com"),
+			selenium.getText("//div[@class='lfr-contact-extra']"));
+		assertTrue(selenium.isVisible(
+				"//div[@class='section lfr-user-websites']/h3"));
+		assertEquals(RuntimeVariables.replace("Websites:"),
+			selenium.getText("//div[@class='section lfr-user-websites']/h3"));
 		assertEquals(RuntimeVariables.replace("Personal"),
-			selenium.getText("//dt"));
-		assertEquals(RuntimeVariables.replace(
-				"http://www.socialofficefriendfn.com"),
-			selenium.getText("//dd/a"));
+			selenium.getText(
+				"//div[@class='section lfr-user-websites']/ul/li/span"));
+		assertEquals(RuntimeVariables.replace("http://www.socialoffice01.com"),
+			selenium.getText(
+				"//div[@class='section lfr-user-websites']/ul/li/span[2]"));
 	}
 }

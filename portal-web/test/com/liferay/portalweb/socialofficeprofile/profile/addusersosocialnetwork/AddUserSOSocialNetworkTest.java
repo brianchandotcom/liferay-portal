@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddUserSOSocialNetworkTest extends BaseTestCase {
 	public void testAddUserSOSocialNetwork() throws Exception {
-		selenium.open("/user/joebloggs/home/");
+		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -49,20 +49,23 @@ public class AddUserSOSocialNetworkTest extends BaseTestCase {
 			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.type("//input[@id='_125_keywords']",
-			RuntimeVariables.replace("socialofficefriendfn"));
+		selenium.clickAt("link=Search All Users",
+			RuntimeVariables.replace("Search All Users"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		selenium.type("//input[@id='_125_toggle_id_users_admin_user_searchkeywords']",
+			RuntimeVariables.replace("socialoffice01"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("socialofficefriendfn"),
-			selenium.getText("//td[2]/a"));
-		selenium.clickAt("//td[2]/a",
-			RuntimeVariables.replace("socialofficefriendfn"));
+		assertEquals(RuntimeVariables.replace("Social01"),
+			selenium.getText("//a[contains(.,'Social01')]"));
+		selenium.clickAt("//a[contains(.,'Social01')]",
+			RuntimeVariables.replace("Social01"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace(
-				"socialofficefriendfn socialofficefriendmn socialofficefriendln"),
+		assertEquals(RuntimeVariables.replace("Social01 Office01 User01"),
 			selenium.getText("//div[2]/h1/span"));
 
 		for (int second = 0;; second++) {
@@ -103,11 +106,11 @@ public class AddUserSOSocialNetworkTest extends BaseTestCase {
 		}
 
 		selenium.type("//input[@id='_125_facebookSn']",
-			RuntimeVariables.replace("socialofficefriendfn"));
+			RuntimeVariables.replace("socialoffice01"));
 		selenium.type("//input[@id='_125_mySpaceSn']",
-			RuntimeVariables.replace("socialofficefriendfn"));
+			RuntimeVariables.replace("socialoffice01"));
 		selenium.type("//input[@id='_125_twitterSn']",
-			RuntimeVariables.replace("socialofficefriendfn"));
+			RuntimeVariables.replace("socialoffice01"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -132,11 +135,11 @@ public class AddUserSOSocialNetworkTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals("socialofficefriendfn",
+		assertEquals("socialoffice01",
 			selenium.getValue("//input[@id='_125_facebookSn']"));
-		assertEquals("socialofficefriendfn",
+		assertEquals("socialoffice01",
 			selenium.getValue("//input[@id='_125_mySpaceSn']"));
-		assertEquals("socialofficefriendfn",
+		assertEquals("socialoffice01",
 			selenium.getValue("//input[@id='_125_twitterSn']"));
 	}
 }

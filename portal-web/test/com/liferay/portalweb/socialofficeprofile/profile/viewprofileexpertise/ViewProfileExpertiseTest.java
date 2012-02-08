@@ -22,22 +22,36 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewProfileExpertiseTest extends BaseTestCase {
 	public void testViewProfileExpertise() throws Exception {
-		selenium.open("/web/socialofficefriendsn/profile");
+		selenium.open("/web/socialoffice01/profile");
 		loadRequiredJavaScriptModules();
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//li[contains(@class, 'selected')]/a/span")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("Profile"),
-			selenium.getText("//nav/ul/li/a/span"));
-		assertEquals(RuntimeVariables.replace("Profile"),
-			selenium.getText("//div[2]/div/div/div/section/header/h1/span[2]"));
-		assertEquals(RuntimeVariables.replace(
-				"socialofficefriendfn socialofficefriendmn socialofficefriendln"),
-			selenium.getText("//div[1]/h1/span"));
-		assertEquals(RuntimeVariables.replace(
-				"socialofficefriendea@liferay.com"),
-			selenium.getText("//div[2]/div/div[1]/div/div[1]/div/a"));
+			selenium.getText("//li[contains(@class, 'selected')]/a/span"));
+		assertEquals(RuntimeVariables.replace("Social01 Office01 User01"),
+			selenium.getText("//div[@class='lfr-contact-name']/a"));
+		assertEquals(RuntimeVariables.replace("socialoffice01@liferay.com"),
+			selenium.getText("//div[@class='lfr-contact-extra']"));
 		assertEquals(RuntimeVariables.replace("Expertise"),
 			selenium.getText("//div[2]/div[1]/div/span"));
 		assertTrue(selenium.isVisible("//div/h3"));
-		assertEquals(RuntimeVariables.replace("Apr 2011 - Current"),
+		assertEquals(RuntimeVariables.replace("Jan 2012 - Current"),
 			selenium.getText("//div[2]/div[2]/div[2]/div/div/div[1]"));
 		assertEquals(RuntimeVariables.replace("Expertise Description"),
 			selenium.getText("//div[2]/div/div/div[2]"));

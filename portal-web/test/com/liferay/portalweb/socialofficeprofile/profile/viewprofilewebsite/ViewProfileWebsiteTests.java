@@ -25,10 +25,10 @@ import junit.framework.TestSuite;
 public class ViewProfileWebsiteTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AddUserSOFriendTest.class);
+		testSuite.addTestSuite(AddSOUserTest.class);
 		testSuite.addTestSuite(AddUserSOWebsiteTest.class);
 		testSuite.addTestSuite(ViewProfileWebsiteTest.class);
-		testSuite.addTestSuite(TearDownSOUserTest.class);
+		testSuite.addTestSuite(TearDownUserTest.class);
 
 		return testSuite;
 	}

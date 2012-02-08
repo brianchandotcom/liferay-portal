@@ -136,14 +136,6 @@ public class WebDAVUtil {
 			String name = pathArray[0];
 
 			try {
-				Group group = GroupLocalServiceUtil.getGroup(companyId, name);
-
-				return group.getGroupId();
-			}
-			catch (NoSuchGroupException nsge) {
-			}
-
-			try {
 				Group group = GroupLocalServiceUtil.getFriendlyURLGroup(
 					companyId, StringPool.SLASH + name);
 

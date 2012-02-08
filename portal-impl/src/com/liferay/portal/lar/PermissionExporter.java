@@ -282,6 +282,7 @@ public class PermissionExporter {
 			Element roleElement = permissionsElement.addElement("role");
 
 			roleElement.addAttribute("name", role.getName());
+			roleElement.addAttribute("title", role.getTitle());
 			roleElement.addAttribute("description", role.getDescription());
 			roleElement.addAttribute("type", String.valueOf(role.getType()));
 
@@ -349,6 +350,7 @@ public class PermissionExporter {
 			Element roleElement = permissionsElement.addElement("role");
 
 			roleElement.addAttribute("name", role.getName());
+			roleElement.addAttribute("title", role.getTitle());
 			roleElement.addAttribute("description", role.getDescription());
 			roleElement.addAttribute("type", String.valueOf(role.getType()));
 

@@ -83,6 +83,12 @@ PollsQuestion question = (PollsQuestion)request.getAttribute(WebKeys.POLLS_QUEST
 				</c:when>
 				<c:otherwise>
 					<%@ include file="/html/portlet/polls/view_question_results.jspf" %>
+
+					<c:if test="<%= !question.isExpired() && !PollsQuestionPermission.contains(permissionChecker, question, ActionKeys.ADD_VOTE) && !themeDisplay.isSignedIn() %>">
+						<div class="portlet-msg-info">
+							<a href="<%= themeDisplay.getURLSignIn() %>" target="_top"><liferay-ui:message key="please-sign-in-to-vote" /></a>
+						</div>
+					</c:if>
 				</c:otherwise>
 			</c:choose>
 		</aui:form>

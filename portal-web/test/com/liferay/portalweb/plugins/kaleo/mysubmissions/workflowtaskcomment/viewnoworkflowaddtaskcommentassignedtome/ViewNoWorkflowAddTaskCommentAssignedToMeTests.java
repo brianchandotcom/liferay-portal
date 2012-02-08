@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficehome.activities;
+package com.liferay.portalweb.plugins.kaleo.mysubmissions.workflowtaskcomment.viewnoworkflowaddtaskcommentassignedtome;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.socialofficehome.activities.mbentryactivity.MBEntryActivityTestPlan;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -23,14 +22,17 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ActivitiesTestPlan extends BaseTestSuite {
-
+public class ViewNoWorkflowAddTaskCommentAssignedToMeTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(MBEntryActivityTestPlan.suite());
+		testSuite.addTestSuite(ConfigureWebContentSingleApproverTest.class);
+		testSuite.addTestSuite(AddWebContentTest.class);
+		testSuite.addTestSuite(AssignToMeTaskWebContentDetailsTest.class);
+		testSuite.addTestSuite(AddWebContentTaskCommentAssignedToMeTest.class);
+		testSuite.addTestSuite(ViewNoWorkflowAddTaskCommentAssignedToMeTest.class);
+		testSuite.addTestSuite(TearDownWebContentTest.class);
+		testSuite.addTestSuite(TearDownWorkflowConfigurationTest.class);
 
 		return testSuite;
 	}
-
 }

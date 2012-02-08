@@ -12,10 +12,12 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficehome.activities;
+package com.liferay.portalweb.socialofficehome.activities.mbentryactivity;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.socialofficehome.activities.mbentryactivity.MBEntryActivityTestPlan;
+import com.liferay.portalweb.socialofficehome.activities.mbentryactivity.sousviewmbentryactivityconnections.SOUs_ViewMBEntryActivityConnectionsTests;
+import com.liferay.portalweb.socialofficehome.activities.mbentryactivity.sousviewmbentryactivityfollowing.SOUs_ViewMBEntryActivityFollowingTests;
+import com.liferay.portalweb.socialofficehome.activities.mbentryactivity.viewmbentryactivityme.ViewMBEntryActivityMeTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -23,12 +25,14 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ActivitiesTestPlan extends BaseTestSuite {
+public class MBEntryActivityTestPlan extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(MBEntryActivityTestPlan.suite());
+		testSuite.addTest(SOUs_ViewMBEntryActivityConnectionsTests.suite());
+		testSuite.addTest(SOUs_ViewMBEntryActivityFollowingTests.suite());
+		testSuite.addTest(ViewMBEntryActivityMeTests.suite());
 
 		return testSuite;
 	}

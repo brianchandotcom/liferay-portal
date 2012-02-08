@@ -327,6 +327,11 @@ public class PermissionImporter {
 			}
 
 			if (role == null) {
+				String title = roleElement.attributeValue("title");
+
+				Map<Locale, String> titleMap =
+					LocalizationUtil.getLocalizationMap(title);
+
 				String description = roleElement.attributeValue("description");
 
 				Map<Locale, String> descriptionMap =
@@ -335,7 +340,7 @@ public class PermissionImporter {
 				int type = Integer.valueOf(roleElement.attributeValue("type"));
 
 				role = RoleLocalServiceUtil.addRole(
-					userId, companyId, name, null, descriptionMap, type);
+					userId, companyId, name, titleMap, descriptionMap, type);
 			}
 
 			List<String> actions = getActions(roleElement);
@@ -394,13 +399,18 @@ public class PermissionImporter {
 			}
 
 			if (role == null) {
+				String title = roleElement.attributeValue("title");
+
+				Map<Locale, String> titleMap =
+					LocalizationUtil.getLocalizationMap(title);
+
 				String description = roleElement.attributeValue("description");
 
 				Map<Locale, String> descriptionMap =
 					LocalizationUtil.getLocalizationMap(description);
 
 				role = RoleLocalServiceUtil.addRole(
-					userId, companyId, name, null, descriptionMap, type);
+					userId, companyId, name, titleMap, descriptionMap, type);
 			}
 
 			List<String> actions = getActions(roleElement);

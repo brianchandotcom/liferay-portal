@@ -60,7 +60,9 @@ public class LiferayFilterTracker {
 		Set<LiferayFilter> liferayFilters = _liferayFilters.get(
 			clazz.getName());
 
-		liferayFilters.remove(liferayFilter);
+		if (liferayFilters != null) {
+			liferayFilters.remove(liferayFilter);
+		}
 	}
 
 	private static Map<String, Set<LiferayFilter>> _liferayFilters =

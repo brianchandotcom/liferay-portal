@@ -1973,19 +1973,60 @@
 	</target>
 
 	<target name="copy-optional-jars">
-		<delete includeemptydirs="true" failonerror="false">
-			<fileset
-				dir="${simple.server.lib.global.dir}"
-				includes="db2*.jar,jtds.jar,ojdbc*.jar"
-			/>
-		</delete>
+		<if>
+			<equals arg1="${db.type}" arg2="db2" />
+			<then>
+				<delete includeemptydirs="true" failonerror="false">
+					<fileset
+						dir="${simple.server.lib.global.dir}"
+						includes="db2*.jar"
+					/>
+				</delete>
 
-		<copy todir="${app.server.lib.global.dir}">
-				<fileset
-					dir="${jdbc.drivers.optional.dir}/${db.type}"
-					includes="*.jar"
-			/>
-		</copy>
+				<copy todir="${app.server.lib.global.dir}">
+						<fileset
+							dir="${jdbc.drivers.optional.dir}/db2/8.1.18"
+							includes="*.jar"
+					/>
+				</copy>
+			</then>
+			<elseif>
+				<equals arg1="${db.type}" arg2="oracle-10" />
+				<then>
+					<delete includeemptydirs="true" failonerror="false">
+						<fileset
+							dir="${simple.server.lib.global.dir}"
+							includes="ojdbc*.jar"
+						/>
+					</delete>
+
+					<copy todir="${app.server.lib.global.dir}">
+							<fileset
+								dir="${jdbc.drivers.optional.dir}/oracle/10.2.0.1.0"
+								includes="*.jar"
+						/>
+					</copy>
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${db.type}" arg2="oracle-11" />
+				<then>
+					<delete includeemptydirs="true" failonerror="false">
+						<fileset
+							dir="${simple.server.lib.global.dir}"
+							includes="ojdbc*.jar"
+						/>
+					</delete>
+
+					<copy todir="${app.server.lib.global.dir}">
+							<fileset
+								dir="${jdbc.drivers.optional.dir}/oracle/11.2.0.1.0"
+								includes="*.jar"
+						/>
+					</copy>
+				</then>
+			</elseif>
+		</if>
 	</target>
 
 	<target name="create-ant-script">

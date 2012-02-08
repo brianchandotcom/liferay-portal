@@ -24,10 +24,10 @@ import com.liferay.portalweb.plugins.kaleo.mysubmissions.workflowtask.viewpagina
 import com.liferay.portalweb.plugins.kaleo.mysubmissions.workflowtask.viewtaskwebcontentassignedtouser.ViewTaskWebContentAssignedToUserTests;
 import com.liferay.portalweb.plugins.kaleo.mysubmissions.workflowtask.viewwithdrawsubmissiontaskwcassignedtome.ViewWithdrawSubmissionTaskWCAssignedToMeTests;
 import com.liferay.portalweb.plugins.kaleo.mysubmissions.workflowtask.viewwithdrawsubmissiontaskwcassignedtomyroles.ViewWithdrawSubmissionTaskWCAssignedToMyRolesTests;
+import com.liferay.portalweb.plugins.kaleo.mysubmissions.workflowtask.withdrawsubmissiontaskwcassignedmyrolesactions.WithdrawSubmissionTaskWCAssignedMyRolesActionsTests;
+import com.liferay.portalweb.plugins.kaleo.mysubmissions.workflowtask.withdrawsubmissiontaskwcassignedmyrolesdetails.WithdrawSubmissionTaskWCAssignedMyRolesDetailsTests;
 import com.liferay.portalweb.plugins.kaleo.mysubmissions.workflowtask.withdrawsubmissiontaskwcassignedtomeactions.WithdrawSubmissionTaskWCAssignedToMeActionsTests;
 import com.liferay.portalweb.plugins.kaleo.mysubmissions.workflowtask.withdrawsubmissiontaskwcassignedtomedetails.WithdrawSubmissionTaskWCAssignedToMeDetailsTests;
-import com.liferay.portalweb.plugins.kaleo.mysubmissions.workflowtask.withdrawsubmissiontaskwcassignedtomyrolesactions.WithdrawSubmissionTaskWCAssignedToMyRolesActionsTests;
-import com.liferay.portalweb.plugins.kaleo.mysubmissions.workflowtask.withdrawsubmissiontaskwcassignedtomyrolesdetails.WithdrawSubmissionTaskWCAssignedToMyRolesDetailsTests;
 import com.liferay.portalweb.plugins.kaleo.mysubmissions.workflowtask.withdrawsubmissiontaskwccompletedactions.WithdrawSubmissionTaskWCCompletedActionsTests;
 import com.liferay.portalweb.plugins.kaleo.mysubmissions.workflowtask.withdrawsubmissiontaskwccompleteddetails.WithdrawSubmissionTaskWCCompletedDetailsTests;
 import com.liferay.portalweb.portal.BaseTestSuite;
@@ -56,13 +56,13 @@ public class WorkflowTaskTestPlan extends BaseTestSuite {
 		testSuite.addTest(
 			ViewWithdrawSubmissionTaskWCAssignedToMyRolesTests.suite());
 		testSuite.addTest(
+			WithdrawSubmissionTaskWCAssignedMyRolesActionsTests.suite());
+		testSuite.addTest(
+			WithdrawSubmissionTaskWCAssignedMyRolesDetailsTests.suite());
+		testSuite.addTest(
 			WithdrawSubmissionTaskWCAssignedToMeActionsTests.suite());
 		testSuite.addTest(
 			WithdrawSubmissionTaskWCAssignedToMeDetailsTests.suite());
-		testSuite.addTest(
-			WithdrawSubmissionTaskWCAssignedToMyRolesActionsTests.suite());
-		testSuite.addTest(
-			WithdrawSubmissionTaskWCAssignedToMyRolesDetailsTests.suite());
 		testSuite.addTest(
 			WithdrawSubmissionTaskWCCompletedActionsTests.suite());
 		testSuite.addTest(

@@ -52,10 +52,10 @@ import com.liferay.portalweb.plugins.kaleo.myworkflowtasks.workflowtask.resubmit
 import com.liferay.portalweb.plugins.kaleo.myworkflowtasks.workflowtask.resubmitwebcontentrmenu.ResubmitWebContentRMenuTests;
 import com.liferay.portalweb.plugins.kaleo.myworkflowtasks.workflowtask.resubmitwebcontentversion2actions.ResubmitWebContentVersion2ActionsTests;
 import com.liferay.portalweb.plugins.kaleo.myworkflowtasks.workflowtask.submitforpublicationwebcontentdraft.SubmitForPublicationWebContentDraftTests;
+import com.liferay.portalweb.plugins.kaleo.myworkflowtasks.workflowtask.updateduedatewebcontentassignedmyrolesactions.UpdateDueDateWebContentAssignedMyRolesActionsTests;
 import com.liferay.portalweb.plugins.kaleo.myworkflowtasks.workflowtask.updateduedatewebcontentassignedtomeactions.UpdateDueDateWebContentAssignedToMeActionsTests;
-import com.liferay.portalweb.plugins.kaleo.myworkflowtasks.workflowtask.updateduedatewebcontentassignedtomyrolesactions.UpdateDueDateWebContentAssignedToMyRolesActionsTests;
 import com.liferay.portalweb.plugins.kaleo.myworkflowtasks.workflowtask.updateduedatewebcontentcompletedactions.UpdateDueDateWebContentCompletedActionsTests;
-import com.liferay.portalweb.plugins.kaleo.myworkflowtasks.workflowtask.userviewwebcontentassignedtomyrolessitestaging.User_ViewWebContentAssignedToMyRolesSiteStagingTests;
+import com.liferay.portalweb.plugins.kaleo.myworkflowtasks.workflowtask.userviewwebcontentassignedtomyrolesstaging.User_ViewWebContentAssignedToMyRolesStagingTests;
 import com.liferay.portalweb.plugins.kaleo.myworkflowtasks.workflowtask.viewwebcontenttaskactivitiesassignedtome.ViewWebContentTaskActivitiesAssignedToMeTests;
 import com.liferay.portalweb.plugins.kaleo.myworkflowtasks.workflowtask.viewwebcontenttaskactivitiesassignedtomyroles.ViewWebContentTaskActivitiesAssignedToMyRolesTests;
 import com.liferay.portalweb.plugins.kaleo.myworkflowtasks.workflowtask.viewwebcontenttaskactivitiescompleted.ViewWebContentTaskActivitiesCompletedTests;
@@ -113,12 +113,12 @@ public class WorkflowTaskTestPlan extends BaseTestSuite {
 		testSuite.addTest(ResubmitWebContentVersion2ActionsTests.suite());
 		testSuite.addTest(SubmitForPublicationWebContentDraftTests.suite());
 		testSuite.addTest(
-			UpdateDueDateWebContentAssignedToMeActionsTests.suite());
+			UpdateDueDateWebContentAssignedMyRolesActionsTests.suite());
 		testSuite.addTest(
-			UpdateDueDateWebContentAssignedToMyRolesActionsTests.suite());
+			UpdateDueDateWebContentAssignedToMeActionsTests.suite());
 		testSuite.addTest(UpdateDueDateWebContentCompletedActionsTests.suite());
 		testSuite.addTest(
-			User_ViewWebContentAssignedToMyRolesSiteStagingTests.suite());
+			User_ViewWebContentAssignedToMyRolesStagingTests.suite());
 		testSuite.addTest(
 			ViewWebContentTaskActivitiesAssignedToMeTests.suite());
 		testSuite.addTest(

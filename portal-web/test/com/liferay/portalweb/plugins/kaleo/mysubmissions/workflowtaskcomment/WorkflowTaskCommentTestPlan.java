@@ -17,9 +17,9 @@ package com.liferay.portalweb.plugins.kaleo.mysubmissions.workflowtaskcomment;
 import com.liferay.portalweb.plugins.kaleo.mysubmissions.workflowtaskcomment.addwebcontenttaskcommentassignedtome.AddWebContentTaskCommentAssignedToMeTests;
 import com.liferay.portalweb.plugins.kaleo.mysubmissions.workflowtaskcomment.addwebcontenttaskcommentassignedtomyroles.AddWebContentTaskCommentAssignedToMyRolesTests;
 import com.liferay.portalweb.plugins.kaleo.mysubmissions.workflowtaskcomment.addwebcontenttaskcommentcompleted.AddWebContentTaskCommentCompletedTests;
-import com.liferay.portalweb.plugins.kaleo.mysubmissions.workflowtaskcomment.assertnoworkflowaddtaskcommentassignedtome.AssertNoWorkflowAddTaskCommentAssignedToMeTests;
-import com.liferay.portalweb.plugins.kaleo.mysubmissions.workflowtaskcomment.assertnoworkflowaddtaskcommentassigntomyroles.AssertNoWorkflowAddTaskCommentAssignToMyRolesTests;
-import com.liferay.portalweb.plugins.kaleo.mysubmissions.workflowtaskcomment.assertnoworkflowaddtaskcommentcompleted.AssertNoWorkflowAddTaskCommentCompletedTests;
+import com.liferay.portalweb.plugins.kaleo.mysubmissions.workflowtaskcomment.viewnoworkflowaddtaskcommentassignedtome.ViewNoWorkflowAddTaskCommentAssignedToMeTests;
+import com.liferay.portalweb.plugins.kaleo.mysubmissions.workflowtaskcomment.viewnoworkflowaddtaskcommentassigntomyroles.ViewNoWorkflowAddTaskCommentAssignToMyRolesTests;
+import com.liferay.portalweb.plugins.kaleo.mysubmissions.workflowtaskcomment.viewnoworkflowaddtaskcommentcompleted.ViewNoWorkflowAddTaskCommentCompletedTests;
 import com.liferay.portalweb.portal.BaseTestSuite;
 
 import junit.framework.Test;
@@ -38,10 +38,10 @@ public class WorkflowTaskCommentTestPlan extends BaseTestSuite {
 			AddWebContentTaskCommentAssignedToMyRolesTests.suite());
 		testSuite.addTest(AddWebContentTaskCommentCompletedTests.suite());
 		testSuite.addTest(
-			AssertNoWorkflowAddTaskCommentAssignedToMeTests.suite());
+			ViewNoWorkflowAddTaskCommentAssignedToMeTests.suite());
 		testSuite.addTest(
-			AssertNoWorkflowAddTaskCommentAssignToMyRolesTests.suite());
-		testSuite.addTest(AssertNoWorkflowAddTaskCommentCompletedTests.suite());
+			ViewNoWorkflowAddTaskCommentAssignToMyRolesTests.suite());
+		testSuite.addTest(ViewNoWorkflowAddTaskCommentCompletedTests.suite());
 
 		return testSuite;
 	}

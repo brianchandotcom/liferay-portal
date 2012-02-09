@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.scheduler.JobStateSerializeUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineUtil;
 import com.liferay.portal.kernel.scheduler.StorageType;
-import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.spring.context.PortletContextLoaderListener;
@@ -36,13 +35,7 @@ import com.liferay.portal.util.PropsValues;
 import java.util.Map;
 import java.util.concurrent.locks.ReentrantLock;
 
-import org.quartz.Job;
-import org.quartz.JobDataMap;
-import org.quartz.JobDetail;
-import org.quartz.JobExecutionContext;
-import org.quartz.Scheduler;
-import org.quartz.Trigger;
-import org.quartz.TriggerKey;
+import org.quartz.*;
 
 /**
  * @author Michael C. Han
@@ -101,41 +94,33 @@ public class MessageSenderJob implements Job {
 		try {
 			message.put(SchedulerEngine.DESTINATION_NAME, destinationName);
 
-			Scheduler scheduler = jobExecutionContext.getScheduler();
-
 			Map<String, Object> jobStateMap =
 				(Map<String, Object>)jobDataMap.get(SchedulerEngine.JOB_STATE);
 
 			JobState jobState = JobStateSerializeUtil.deserialize(jobStateMap);
 
+			JobKey jobKey = jobDetail.getKey();
+
 			if (jobExecutionContext.getNextFireTime() == null) {
-				Trigger trigger = jobExecutionContext.getTrigger();
+				message.put(SchedulerEngine.DISABLE, true);
 
 				StorageType storageType = StorageType.valueOf(
 					jobDataMap.getString(SchedulerEngine.STORAGE_TYPE));
 
-				if (storageType.equals(StorageType.PERSISTED)) {
-					JobState jobStateClone = updatePersistedJobState(
-						jobState, trigger);
+				if (PropsValues.CLUSTER_LINK_ENABLED &&
+					storageType.equals(StorageType.MEMORY_CLUSTERED)) {
 
-				jobDataMap.put(
-					SchedulerEngine.JOB_STATE,
-					JobStateSerializeUtil.serialize(jobStateClone));
-
-					scheduler.addJob(jobDetail, true);
+					notifyClusterMember(jobKey, storageType);
 				}
-				else {
-					message.put(SchedulerEngine.DISABLE, true);
 
-					if (PropsValues.CLUSTER_LINK_ENABLED &&
-						storageType.equals(StorageType.MEMORY_CLUSTERED)) {
-
-						notifyClusterMember(trigger.getKey(), storageType);
-					}
+				if (storageType.equals(StorageType.PERSISTED)) {
+					jobExecutionContext.getScheduler().deleteJob(jobKey);
 				}
 			}
 
 			message.put(SchedulerEngine.JOB_STATE, jobState);
+			message.put(SchedulerEngine.JOB_NAME, jobKey.getName());
+			message.put(SchedulerEngine.GROUP_NAME, jobKey.getGroup());
 
 			MessageBusUtil.sendMessage(destinationName, message);
 		}
@@ -146,38 +131,17 @@ public class MessageSenderJob implements Job {
 		}
 	}
 
-	protected void notifyClusterMember(
-			TriggerKey triggerKey, StorageType storageType)
+	protected void notifyClusterMember(JobKey jobKey, StorageType storageType)
 		throws Exception {
 
 		MethodHandler methodHandler = new MethodHandler(
-			_deleteJobMethodKey, triggerKey.getName(), triggerKey.getGroup(),
+			_deleteJobMethodKey, jobKey.getName(), jobKey.getGroup(),
 			storageType);
 
 		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
 			methodHandler, true);
 
 		ClusterExecutorUtil.execute(clusterRequest);
-	}
-
-	protected JobState updatePersistedJobState(
-		JobState jobState, Trigger trigger) {
-
-		jobState.setTriggerDate(SchedulerEngine.END_TIME, trigger.getEndTime());
-		jobState.setTriggerDate(
-			SchedulerEngine.FINAL_FIRE_TIME, trigger.getFinalFireTime());
-		jobState.setTriggerDate(SchedulerEngine.NEXT_FIRE_TIME, null);
-		jobState.setTriggerDate(
-			SchedulerEngine.PREVIOUS_FIRE_TIME, trigger.getPreviousFireTime());
-		jobState.setTriggerDate(
-			SchedulerEngine.START_TIME, trigger.getStartTime());
-		jobState.setTriggerState(TriggerState.COMPLETE);
-
-		JobState jobStateClone = (JobState)jobState.clone();
-
-		jobStateClone.clearExceptions();
-
-		return jobStateClone;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(MessageSenderJob.class);

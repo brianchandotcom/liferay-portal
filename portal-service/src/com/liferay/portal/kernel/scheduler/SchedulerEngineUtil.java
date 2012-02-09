@@ -14,11 +14,14 @@
 
 package com.liferay.portal.kernel.scheduler;
 
+import com.liferay.portal.kernel.audit.AuditMessage;
+import com.liferay.portal.kernel.audit.AuditRouterUtil;
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.cal.DayAndPosition;
 import com.liferay.portal.kernel.cal.Duration;
 import com.liferay.portal.kernel.cal.Recurrence;
 import com.liferay.portal.kernel.cal.RecurrenceSerializer;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
@@ -30,12 +33,15 @@ import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
+import com.liferay.portal.kernel.util.*;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CompanyConstants;
+import com.liferay.portal.util.PortalUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -60,6 +66,22 @@ public class SchedulerEngineUtil {
 		_instance._addScriptingJob(
 			trigger, storageType, description, language, script,
 			exceptionsMaxSize);
+	}
+
+	public static void auditSchedulerJobs(Message message, String jobStatus)
+		throws Exception {
+
+		AuditMessage auditMessage = new AuditMessage(
+			SchedulerEngine.AUDIT_ACTION, CompanyConstants.SYSTEM, 0, "",
+			SchedulerEngine.class.getName(), "0", jobStatus, new Date(),
+			JSONFactoryUtil.createJSONObject(
+				JSONFactoryUtil.serialize(message)));
+
+		auditMessage.setServerName(
+			InetAddressUtil.getLocalInetAddressHostName());
+		auditMessage.setServerPort(PortalUtil.getPortalPort(false));
+
+		AuditRouterUtil.route(auditMessage);
 	}
 
 	public static void delete(

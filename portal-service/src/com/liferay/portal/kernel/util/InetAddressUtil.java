@@ -51,4 +51,19 @@ public class InetAddressUtil {
 		throw new SystemException("No local internet address");
 	}
 
+	public static String getLocalInetAddressHostName() throws Exception {
+		return _localInetAddressHostName;
+	}
+
+	private static String _localInetAddressHostName;
+
+	static {
+		try {
+			_localInetAddressHostName = getLocalInetAddress().getHostName();
+		}
+		catch (Exception ex) {
+			throw new RuntimeException(ex);
+		}
+	}
+
 }

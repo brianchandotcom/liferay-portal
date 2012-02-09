@@ -32,6 +32,8 @@ import java.util.List;
  */
 public interface SchedulerEngine {
 
+	public static final String AUDIT_ACTION = "SCHEDULER_AUDIT";
+
 	public static final String CONTEXT_PATH = "CONTEXT_PATH";
 
 	public static final String DESCRIPTION = "DESCRIPTION";
@@ -49,8 +51,14 @@ public interface SchedulerEngine {
 
 	public static final String FINAL_FIRE_TIME = "FINAL_FIRE_TIME";
 
+	public static final String GROUP_NAME = "GROUP_NAME";
+
 	public static final int GROUP_NAME_MAX_LENGTH = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.SCHEDULER_GROUP_NAME_MAX_LENGTH));
+
+	public static final String JOB_EXPIRED = "EXPIRED";
+
+	public static final String JOB_NAME = "JOB_NAME";
 
 	public static final int JOB_NAME_MAX_LENGTH = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.SCHEDULER_JOB_NAME_MAX_LENGTH));

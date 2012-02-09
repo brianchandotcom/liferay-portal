@@ -2235,13 +2235,6 @@ public class JournalArticleLocalServiceImpl
 		// Get the earliest display date and latest expiration date among
 		// all article versions
 
-		Date[] dateInterval = getDateInterval(
-			article.getGroupId(), article.getArticleId(),
-			article.getDisplayDate(), article.getExpirationDate());
-
-		Date displayDate = dateInterval[0];
-		Date expirationDate = dateInterval[1];
-
 		boolean visible = article.isApproved();
 
 		if (article.getClassNameId() > 0) {
@@ -2269,12 +2262,20 @@ public class JournalArticleLocalServiceImpl
 				userId, article.getGroupId(), JournalArticle.class.getName(),
 				article.getPrimaryKey(), article.getUuid(),
 				getClassTypeId(article), assetCategoryIds, assetTagNames, false,
-				null, null, displayDate, expirationDate, ContentTypes.TEXT_HTML,
+				null, null, article.getDisplayDate(),
+				article.getExpirationDate(), ContentTypes.TEXT_HTML,
 				article.getTitle(), article.getDescription(),
 				article.getDescription(), null, article.getLayoutUuid(), 0, 0,
 				null, false);
 		}
 		else {
+			Date[] dateInterval = getDateInterval(
+				article.getGroupId(), article.getArticleId(),
+				article.getDisplayDate(), article.getExpirationDate());
+
+			Date displayDate = dateInterval[0];
+			Date expirationDate = dateInterval[1];
+
 			JournalArticleResource journalArticleResource =
 				journalArticleResourceLocalService.getArticleResource(
 					article.getResourcePrimKey());
@@ -2368,13 +2369,9 @@ public class JournalArticleLocalServiceImpl
 							JournalArticle.class.getName(),
 							article.getPrimaryKey());
 
-						Date[] dateInterval = getDateInterval(
-							article.getGroupId(), article.getArticleId(),
-							article.getDisplayDate(),
-							article.getExpirationDate());
-
-						Date displayDate = dateInterval[0];
-						Date expirationDate = dateInterval[1];
+						Date displayDate = draftAssetEntry.getPublishDate();
+						Date expirationDate =
+							draftAssetEntry.getExpirationDate();
 
 						long[] assetCategoryIds =
 							draftAssetEntry.getCategoryIds();

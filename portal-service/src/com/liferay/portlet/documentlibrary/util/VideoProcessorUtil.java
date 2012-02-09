@@ -31,23 +31,11 @@ public class VideoProcessorUtil {
 		getVideoProcessor().generateVideo(fileVersion);
 	}
 
-	public static InputStream getPreviewAsStream(FileVersion fileVersion)
-		throws Exception {
-
-		return getVideoProcessor().getPreviewAsStream(fileVersion);
-	}
-
 	public static InputStream getPreviewAsStream(
 			FileVersion fileVersion, String type)
 		throws Exception {
 
 		return getVideoProcessor().getPreviewAsStream(fileVersion, type);
-	}
-
-	public static long getPreviewFileSize(FileVersion fileVersion)
-		throws Exception {
-
-		return getVideoProcessor().getPreviewFileSize(fileVersion);
 	}
 
 	public static long getPreviewFileSize(FileVersion fileVersion, String type)

@@ -37,13 +37,7 @@ public interface VideoProcessor {
 
 	public void generateVideo(FileVersion fileVersion) throws Exception;
 
-	public InputStream getPreviewAsStream(FileVersion fileVersion)
-		throws Exception;
-
 	public InputStream getPreviewAsStream(FileVersion fileVersion, String type)
-		throws Exception;
-
-	public long getPreviewFileSize(FileVersion fileVersion)
 		throws Exception;
 
 	public long getPreviewFileSize(FileVersion fileVersion, String type)

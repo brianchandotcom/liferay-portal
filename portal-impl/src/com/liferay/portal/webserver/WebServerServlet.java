@@ -83,11 +83,10 @@ import com.liferay.portlet.documentlibrary.util.AudioProcessor;
 import com.liferay.portlet.documentlibrary.util.AudioProcessorUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.DocumentConversionUtil;
-import com.liferay.portlet.documentlibrary.util.ImageProcessorImpl;
 import com.liferay.portlet.documentlibrary.util.ImageProcessorUtil;
-import com.liferay.portlet.documentlibrary.util.PDFProcessorImpl;
+import com.liferay.portlet.documentlibrary.util.PDFProcessor;
 import com.liferay.portlet.documentlibrary.util.PDFProcessorUtil;
-import com.liferay.portlet.documentlibrary.util.VideoProcessorImpl;
+import com.liferay.portlet.documentlibrary.util.VideoProcessor;
 import com.liferay.portlet.documentlibrary.util.VideoProcessorUtil;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
@@ -286,8 +285,7 @@ public class WebServerServlet extends HttpServlet {
 
 			if (smallImage) {
 				is = ImageProcessorUtil.getThumbnailAsStream(
-					fileEntry.getFileVersion(),
-					ImageProcessorImpl.THUMBNAIL_INDEX_DEFAULT);
+					fileEntry.getFileVersion(), 0);
 			}
 			else {
 				is = fileEntry.getContentStream();
@@ -835,6 +833,7 @@ public class WebServerServlet extends HttpServlet {
 		int previewFileIndex = ParamUtil.getInteger(
 			request, "previewFileIndex");
 		boolean audioPreview = ParamUtil.getBoolean(request, "audioPreview");
+		boolean imagePreview = ParamUtil.getBoolean(request, "imagePreview");
 		boolean videoPreview = ParamUtil.getBoolean(request, "videoPreview");
 		int videoThumbnail = ParamUtil.getInteger(request, "videoThumbnail");
 
@@ -843,7 +842,8 @@ public class WebServerServlet extends HttpServlet {
 
 		if ((imageThumbnail > 0) && (imageThumbnail <= 3)) {
 			fileName = FileUtil.stripExtension(fileName).concat(
-				StringPool.PERIOD).concat(fileVersion.getExtension());
+				StringPool.PERIOD).concat(
+				ImageProcessorUtil.getThumbnailType(fileVersion));
 
 			int thumbnailIndex = imageThumbnail - 1;
 
@@ -856,7 +856,7 @@ public class WebServerServlet extends HttpServlet {
 		}
 		else if ((documentThumbnail > 0) && (documentThumbnail <= 3)) {
 			fileName = FileUtil.stripExtension(fileName).concat(
-				StringPool.PERIOD).concat(PDFProcessorImpl.THUMBNAIL_TYPE);
+				StringPool.PERIOD).concat(PDFProcessor.THUMBNAIL_TYPE);
 
 			int thumbnailIndex = documentThumbnail - 1;
 
@@ -869,7 +869,7 @@ public class WebServerServlet extends HttpServlet {
 		}
 		else if (previewFileIndex > 0) {
 			fileName = FileUtil.stripExtension(fileName).concat(
-				StringPool.PERIOD).concat(PDFProcessorImpl.PREVIEW_TYPE);
+				StringPool.PERIOD).concat(PDFProcessor.PREVIEW_TYPE);
 			inputStream = PDFProcessorUtil.getPreviewAsStream(
 				fileVersion, previewFileIndex);
 			contentLength = PDFProcessorUtil.getPreviewFileSize(
@@ -882,6 +882,16 @@ public class WebServerServlet extends HttpServlet {
 				StringPool.PERIOD).concat(AudioProcessor.PREVIEW_TYPE);
 			inputStream = AudioProcessorUtil.getPreviewAsStream(fileVersion);
 			contentLength = AudioProcessorUtil.getPreviewFileSize(fileVersion);
+
+			converted = true;
+		}
+		else if (imagePreview) {
+			fileName = FileUtil.stripExtension(fileName).concat(
+				StringPool.PERIOD).concat(
+				ImageProcessorUtil.getPreviewType(fileVersion));
+
+			inputStream = ImageProcessorUtil.getPreviewAsStream(fileVersion);
+			contentLength = ImageProcessorUtil.getPreviewFileSize(fileVersion);
 
 			converted = true;
 		}
@@ -899,7 +909,7 @@ public class WebServerServlet extends HttpServlet {
 		}
 		else if ((videoThumbnail > 0) && (videoThumbnail <= 3)) {
 			fileName = FileUtil.stripExtension(fileName).concat(
-				StringPool.PERIOD).concat(VideoProcessorImpl.THUMBNAIL_TYPE);
+				StringPool.PERIOD).concat(VideoProcessor.THUMBNAIL_TYPE);
 
 			int thumbnailIndex = videoThumbnail - 1;
 

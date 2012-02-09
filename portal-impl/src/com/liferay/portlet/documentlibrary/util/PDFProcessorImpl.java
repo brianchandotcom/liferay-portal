@@ -80,7 +80,7 @@ import org.im4java.process.ProcessStarter;
  * @author Sergio González
  */
 public class PDFProcessorImpl
-	extends DefaultPreviewableProcessor implements PDFProcessor {
+	extends DLPreviewableProcessor implements PDFProcessor {
 
 	public static PDFProcessorImpl getInstance() {
 		return _instance;
@@ -131,7 +131,7 @@ public class PDFProcessorImpl
 		throws Exception {
 
 		return Initializer._initializedInstance.doGetPreviewAsStream(
-			fileVersion, index);
+			fileVersion, index, PREVIEW_TYPE);
 	}
 
 	public int getPreviewFileCount(FileVersion fileVersion) {
@@ -270,25 +270,6 @@ public class PDFProcessorImpl
 		Initializer._initializedInstance._queueGeneration(fileVersion);
 	}
 
-	protected void exportPreview(
-			PortletDataContext portletDataContext, FileEntry fileEntry,
-			Element fileEntryElement, String binPathName, int fileIndex)
-		throws Exception {
-
-		String binPath = getBinPath(
-			portletDataContext, fileEntry, String.valueOf(fileIndex));
-
-		fileEntryElement.addAttribute(binPathName, binPath);
-
-		FileVersion fileVersion = fileEntry.getFileVersion();
-
-		InputStream is = doGetPreviewAsStream(fileVersion, fileIndex);
-
-		exportBinary(
-			portletDataContext, fileEntryElement, fileVersion, is, binPath,
-			binPathName);
-	}
-
 	protected void exportPreviews(
 			PortletDataContext portletDataContext, FileEntry fileEntry,
 			Element fileEntryElement)
@@ -309,8 +290,8 @@ public class PDFProcessorImpl
 
 			for (int i = 0; i < previewFileCount; i++) {
 				exportPreview(
-					portletDataContext, fileEntry, fileEntryElement,
-					"bin-path-pdf-preview-" + (i + 1), (i + 1));
+					portletDataContext, fileEntry, fileEntryElement, "pdf",
+					PREVIEW_TYPE, i);
 			}
 		}
 	}
@@ -325,54 +306,18 @@ public class PDFProcessorImpl
 		return THUMBNAIL_TYPE;
 	}
 
-	@Override
-	protected void importPreviewFromLAR(
-			PortletDataContext portletDataContext, FileEntry fileEntry,
-			Element fileEntryElement, String binPathName, int fileIndex)
-		throws Exception {
-
-		String binPath = fileEntryElement.attributeValue(binPathName);
-
-		InputStream is = portletDataContext.getZipEntryAsInputStream(binPath);
-
-		FileVersion fileVersion = fileEntry.getFileVersion();
-
-		String previewFilePath = getPreviewFilePath(fileVersion, fileIndex);
-
-		addFileToStore(
-			portletDataContext.getCompanyId(), PREVIEW_PATH, previewFilePath,
-			is);
-	}
-
 	protected void importPreviews(
 			PortletDataContext portletDataContext, FileEntry fileEntry,
 			FileEntry importedFileEntry, Element fileEntryElement)
 		throws Exception {
 
 		int previewFileCount = GetterUtil.getInteger(
-			fileEntryElement.attributeValue("bin-path-pdf-preview-count"));
+			fileEntryElement.attributeValue("bin-path-preview-pdf-count"));
 
 		for (int i = 0; i < previewFileCount; i++) {
-			if (!portletDataContext.isPerformDirectBinaryImport()) {
-				importPreviewFromLAR(
-						portletDataContext, importedFileEntry, fileEntryElement,
-						"bin-path-pdf-preview-" + (i + 1), (i + 1));
-			}
-			else {
-				FileVersion importedFileVersion =
-					importedFileEntry.getFileVersion();
-
-				String previewFilePath = getPreviewFilePath(
-					importedFileVersion, PREVIEW_TYPE);
-
-				FileVersion fileVersion = fileEntry.getFileVersion();
-
-				InputStream is = doGetPreviewAsStream(fileVersion, i);
-
-				addFileToStore(
-					portletDataContext.getCompanyId(), PREVIEW_PATH,
-					previewFilePath, is);
-			}
+			importPreview(
+				portletDataContext, fileEntry, importedFileEntry,
+				fileEntryElement, "pdf", PREVIEW_TYPE, i);
 		}
 	}
 

@@ -46,6 +46,22 @@ public class ImageProcessorUtil {
 		return _imageProcessor;
 	}
 
+	public static InputStream getPreviewAsStream(FileVersion fileVersion)
+		throws Exception {
+
+		return getImageProcessor().getPreviewAsStream(fileVersion);
+	}
+
+	public static long getPreviewFileSize(FileVersion fileVersion)
+		throws Exception {
+
+		return getImageProcessor().getPreviewFileSize(fileVersion);
+	}
+
+	public static String getPreviewType(FileVersion fileVersion) {
+		return getImageProcessor().getPreviewType(fileVersion);
+	}
+
 	public static InputStream getThumbnailAsStream(
 			FileVersion fileVersion, int index)
 		throws Exception {
@@ -57,6 +73,10 @@ public class ImageProcessorUtil {
 		throws Exception {
 
 		return getImageProcessor().getThumbnailFileSize(fileVersion, index);
+	}
+
+	public static String getThumbnailType(FileVersion fileVersion) {
+		return getImageProcessor().getThumbnailType(fileVersion);
 	}
 
 	public static boolean hasImages(FileVersion fileVersion) {

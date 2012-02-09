@@ -16,6 +16,7 @@ package com.liferay.portal.tools;
 
 import com.liferay.portal.image.ImageToolImpl;
 import com.liferay.portal.kernel.image.ImageBag;
+import com.liferay.portal.kernel.image.ImageTool;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.awt.image.RenderedImage;
@@ -75,6 +76,6 @@ public class ThumbnailBuilder {
 		}
 	}
 
-	private static ImageToolImpl _imageToolUtil = ImageToolImpl.getInstance();
+	private static ImageTool _imageToolUtil = ImageToolImpl.getInstance();
 
 }

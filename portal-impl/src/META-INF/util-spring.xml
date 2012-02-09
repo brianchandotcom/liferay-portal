@@ -157,7 +157,7 @@
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.image.ImageToolUtil" class="com.liferay.portal.kernel.image.ImageToolUtil">
-		<property name="imageProcessor">
+		<property name="imageTool">
 			<bean class="com.liferay.portal.image.ImageToolImpl" />
 		</property>
 	</bean>

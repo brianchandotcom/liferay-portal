@@ -60,7 +60,7 @@ import org.apache.commons.lang.time.StopWatch;
  * @author Mika Koivisto
  */
 public class AudioProcessorImpl
-	extends DefaultPreviewableProcessor implements AudioProcessor {
+	extends DLPreviewableProcessor implements AudioProcessor {
 
 	public static AudioProcessorImpl getInstance() {
 		return _instance;
@@ -71,7 +71,7 @@ public class AudioProcessorImpl
 			Element fileEntryElement)
 		throws Exception {
 
-		exportPreviews(portletDataContext, fileEntry, fileEntryElement);
+		exportPreview(portletDataContext, fileEntry, fileEntryElement);
 	}
 
 	public void generateAudio(FileVersion fileVersion) throws Exception {
@@ -85,13 +85,13 @@ public class AudioProcessorImpl
 	public InputStream getPreviewAsStream(FileVersion fileVersion)
 		throws Exception {
 
-		return _instance.doGetPreviewAsStream(fileVersion);
+		return _instance.doGetPreviewAsStream(fileVersion, PREVIEW_TYPE);
 	}
 
 	public long getPreviewFileSize(FileVersion fileVersion)
 		throws Exception {
 
-		return _instance.doGetPreviewFileSize(fileVersion);
+		return _instance.doGetPreviewFileSize(fileVersion, PREVIEW_TYPE);
 	}
 
 	public boolean hasAudio(FileVersion fileVersion) {
@@ -116,8 +116,9 @@ public class AudioProcessorImpl
 			FileEntry importedFileEntry, Element fileEntryElement)
 		throws Exception {
 
-		importPreviews(portletDataContext, fileEntry, importedFileEntry,
-			fileEntryElement);
+		importPreview(
+			portletDataContext, fileEntry, importedFileEntry, fileEntryElement,
+			"audio", PREVIEW_TYPE);
 	}
 
 	public boolean isAudioSupported(FileVersion fileVersion) {
@@ -152,24 +153,6 @@ public class AudioProcessorImpl
 
 	protected void exportPreview(
 			PortletDataContext portletDataContext, FileEntry fileEntry,
-			Element fileEntryElement, String binPathName, String previewType)
-		throws Exception {
-
-		String binPath = getBinPath(portletDataContext, fileEntry, previewType);
-
-		fileEntryElement.addAttribute(binPathName, binPath);
-
-		FileVersion fileVersion = fileEntry.getFileVersion();
-
-		InputStream is = doGetPreviewAsStream(fileVersion, previewType);
-
-		exportBinary(
-			portletDataContext, fileEntryElement, fileVersion, is, binPath,
-			binPathName);
-	}
-
-	protected void exportPreviews(
-			PortletDataContext portletDataContext, FileEntry fileEntry,
 			Element fileEntryElement)
 		throws Exception {
 
@@ -179,11 +162,9 @@ public class AudioProcessorImpl
 			return;
 		}
 
-		if (!portletDataContext.isPerformDirectBinaryImport()) {
-			exportPreview(
-				portletDataContext, fileEntry, fileEntryElement,
-				"bin-path-audio-preview-" + PREVIEW_TYPE, PREVIEW_TYPE);
-		}
+		exportPreview(
+			portletDataContext, fileEntry, fileEntryElement, "audio",
+			PREVIEW_TYPE);
 	}
 
 	@Override
@@ -194,51 +175,6 @@ public class AudioProcessorImpl
 	@Override
 	protected String getThumbnailType(FileVersion fileVersion) {
 		return null;
-	}
-
-	protected void importPreviewFromLAR(
-			PortletDataContext portletDataContext, FileEntry fileEntry,
-			Element fileEntryElement, String binPathName, String previewType)
-		throws Exception {
-
-		FileVersion fileVersion = fileEntry.getFileVersion();
-
-		String previewFilePath = getPreviewFilePath(fileVersion, previewType);
-
-		String binPath = fileEntryElement.attributeValue(binPathName);
-
-		InputStream is = portletDataContext.getZipEntryAsInputStream(binPath);
-
-		addFileToStore(
-			portletDataContext.getCompanyId(), PREVIEW_PATH, previewFilePath,
-			is);
-	}
-
-	protected void importPreviews(
-			PortletDataContext portletDataContext, FileEntry fileEntry,
-			FileEntry importedFileEntry, Element fileEntryElement)
-		throws Exception {
-
-		if (!portletDataContext.isPerformDirectBinaryImport()) {
-			importPreviewFromLAR(
-				portletDataContext, importedFileEntry, fileEntryElement,
-				"bin-path-audio-preview-" + PREVIEW_TYPE, PREVIEW_TYPE);
-		}
-		else {
-			FileVersion importedFileVersion =
-				importedFileEntry.getFileVersion();
-
-			String previewFilePath = getPreviewFilePath(
-				importedFileVersion, PREVIEW_TYPE);
-
-			FileVersion fileVersion = fileEntry.getFileVersion();
-
-			InputStream is = doGetPreviewAsStream(fileVersion, PREVIEW_TYPE);
-
-			addFileToStore(
-				portletDataContext.getCompanyId(), PREVIEW_PATH,
-				previewFilePath, is);
-		}
 	}
 
 	private AudioProcessorImpl() {

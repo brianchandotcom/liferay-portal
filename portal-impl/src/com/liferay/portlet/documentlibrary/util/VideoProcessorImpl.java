@@ -66,7 +66,7 @@ import org.apache.commons.lang.time.StopWatch;
  * @author Mika Koivisto
  */
 public class VideoProcessorImpl
-	extends DefaultPreviewableProcessor implements VideoProcessor {
+	extends DLPreviewableProcessor implements VideoProcessor {
 
 	public static VideoProcessorImpl getInstance() {
 		return _instance;
@@ -89,22 +89,10 @@ public class VideoProcessorImpl
 		_instance._generateVideo(fileVersion);
 	}
 
-	public InputStream getPreviewAsStream(FileVersion fileVersion)
-		throws Exception {
-
-		return _instance.doGetPreviewAsStream(fileVersion);
-	}
-
 	public InputStream getPreviewAsStream(FileVersion fileVersion, String type)
 		throws Exception {
 
 		return _instance.doGetPreviewAsStream(fileVersion, type);
-	}
-
-	public long getPreviewFileSize(FileVersion fileVersion)
-		throws Exception {
-
-		return _instance.doGetPreviewFileSize(fileVersion);
 	}
 
 	public long getPreviewFileSize(FileVersion fileVersion, String type)
@@ -189,24 +177,6 @@ public class VideoProcessorImpl
 		_instance._queueGeneration(fileVersion);
 	}
 
-	protected void exportPreview(
-			PortletDataContext portletDataContext, FileEntry fileEntry,
-			Element fileEntryElement, String binPathName, String previewType)
-		throws Exception {
-
-		String binPath = getBinPath(portletDataContext, fileEntry, previewType);
-
-		fileEntryElement.addAttribute(binPathName, binPath);
-
-		FileVersion fileVersion = fileEntry.getFileVersion();
-
-		InputStream is = doGetPreviewAsStream(fileVersion, previewType);
-
-		exportBinary(
-			portletDataContext, fileEntryElement, fileVersion, is, binPath,
-			binPathName);
-	}
-
 	protected void exportPreviews(
 			PortletDataContext portletDataContext, FileEntry fileEntry,
 			Element fileEntryElement)
@@ -227,7 +197,7 @@ public class VideoProcessorImpl
 				if (previewType.equals("mp4") || previewType.equals("ogv")) {
 					exportPreview(
 						portletDataContext, fileEntry, fileEntryElement,
-						"bin-path-video-preview-" + previewType, previewType);
+						"video", previewType);
 				}
 			}
 		}
@@ -248,24 +218,6 @@ public class VideoProcessorImpl
 		return THUMBNAIL_TYPE;
 	}
 
-	protected void importPreviewFromLAR(
-			PortletDataContext portletDataContext, FileEntry fileEntry,
-			Element fileEntryElement, String binPathName, String previewType)
-		throws Exception {
-
-		String binPath = fileEntryElement.attributeValue(binPathName);
-
-		InputStream is = portletDataContext.getZipEntryAsInputStream(binPath);
-
-		FileVersion fileVersion = fileEntry.getFileVersion();
-
-		String previewFilePath = getPreviewFilePath(fileVersion, previewType);
-
-		addFileToStore(
-			portletDataContext.getCompanyId(), PREVIEW_PATH, previewFilePath,
-			is);
-	}
-
 	protected void importPreviews(
 			PortletDataContext portletDataContext, FileEntry fileEntry,
 			FileEntry importedFileEntry, Element fileEntryElement)
@@ -277,27 +229,9 @@ public class VideoProcessorImpl
 
 		for (String previewType : _PREVIEW_TYPES) {
 			if (previewType.equals("mp4") || previewType.equals("ogv")) {
-				if (!portletDataContext.isPerformDirectBinaryImport()) {
-					importPreviewFromLAR(
-						portletDataContext, importedFileEntry, fileEntryElement,
-						"bin-path-video-preview-" + previewType, previewType);
-				}
-				else {
-					FileVersion importedFileVersion =
-						importedFileEntry.getFileVersion();
-
-					String previewFilePath = getPreviewFilePath(
-						importedFileVersion, previewType);
-
-					FileVersion fileVersion = fileEntry.getFileVersion();
-
-					InputStream is = doGetPreviewAsStream(
-						fileVersion, previewType);
-
-					addFileToStore(
-						portletDataContext.getCompanyId(), PREVIEW_PATH,
-						previewFilePath, is);
-				}
+				importPreview(
+					portletDataContext, fileEntry, importedFileEntry,
+					fileEntryElement, "video", previewType);
 			}
 		}
 	}

@@ -113,6 +113,16 @@ public class DLDisplayPortletDataHandlerImpl extends BasePortletDataHandler {
 					fileEntriesElement, fileShortcutsElement, fileRanksElement,
 					folder, false);
 			}
+
+			List<FileEntry> fileEntries = FileEntryUtil.findByR_F(
+				portletDataContext.getScopeGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+			for (FileEntry fileEntry : fileEntries) {
+				DLPortletDataHandlerImpl.exportFileEntry(
+					portletDataContext, fileEntryTypesElement, foldersElement,
+					fileEntriesElement, fileRanksElement, fileEntry, true);
+			}
 		}
 		else {
 			Folder folder = FolderUtil.findByPrimaryKey(rootFolderId);
@@ -124,16 +134,6 @@ public class DLDisplayPortletDataHandlerImpl extends BasePortletDataHandler {
 				portletDataContext, fileEntryTypesElement, foldersElement,
 				fileEntriesElement, fileShortcutsElement, fileRanksElement,
 				folder, true);
-		}
-
-		List<FileEntry> fileEntries = FileEntryUtil.findByR_F(
-			portletDataContext.getScopeGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
-		for (FileEntry fileEntry : fileEntries) {
-			DLPortletDataHandlerImpl.exportFileEntry(
-				portletDataContext, fileEntryTypesElement, foldersElement,
-				fileEntriesElement, fileRanksElement, fileEntry, true);
 		}
 
 		return document.formattedString();

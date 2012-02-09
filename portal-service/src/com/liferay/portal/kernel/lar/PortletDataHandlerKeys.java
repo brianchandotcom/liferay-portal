@@ -90,6 +90,8 @@ public class PortletDataHandlerKeys {
 
 	public static final String PORTLETS_MERGE_MODE_REPLACE = "REPLACE";
 
+	public static final String PORTLET_METADATA_ALL = "PORTLET_METADATA_ALL";
+
 	public static final String PUBLIC_LAYOUT_PERMISSIONS =
 		"PUBLIC_LAYOUT_PERMISSIONS";
 

@@ -602,6 +602,10 @@
 		}
 	}
 
+	.show-sync-message {
+		float: right;
+	}
+
 	.lfr-list-view-content {
 		ul .expand-folder {
 			height: 10px;

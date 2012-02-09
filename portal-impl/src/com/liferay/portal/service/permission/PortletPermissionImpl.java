@@ -422,6 +422,10 @@ public class PortletPermissionImpl implements PortletPermission {
 			Layout layout, Portlet portlet, PortletMode portletMode)
 		throws PortalException, SystemException {
 
+		if (portlet.isSystem()) {
+			return true;
+		}
+
 		String portletId = portlet.getPortletId();
 
 		if ((layout != null) && layout.isTypeControlPanel()) {

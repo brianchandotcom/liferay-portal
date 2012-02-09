@@ -1050,6 +1050,7 @@
 	<portlet>
 		<portlet-name>116</portlet-name>
 		<struts-path>activities</struts-path>
+		<configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
 		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
 		<friendly-url-mapping>activities</friendly-url-mapping>
 		<friendly-url-routes>com/liferay/portlet/activities/activities-friendly-url-routes.xml</friendly-url-routes>

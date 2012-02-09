@@ -401,30 +401,18 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 
 	private static final String _NAMESPACE = "blogs";
 
-	private static PortletDataHandlerBoolean _categories =
-		new PortletDataHandlerBoolean(_NAMESPACE, "categories");
-
-	private static PortletDataHandlerBoolean _comments =
-		new PortletDataHandlerBoolean(_NAMESPACE, "comments");
-
 	private static PortletDataHandlerBoolean _entries =
 		new PortletDataHandlerBoolean(_NAMESPACE, "entries", true, true);
 
-	private static PortletDataHandlerControl[] _metadataControls;
-
-	private static PortletDataHandlerBoolean _ratings =
-		new PortletDataHandlerBoolean(_NAMESPACE, "ratings");
-
-	private static PortletDataHandlerBoolean _tags =
-		new PortletDataHandlerBoolean(_NAMESPACE, "tags");
+	private static PortletDataHandlerControl[] _metadataControls =
+		new PortletDataHandlerControl[] {
+			new PortletDataHandlerBoolean(_NAMESPACE, "categories"),
+			new PortletDataHandlerBoolean(_NAMESPACE, "comments"),
+			new PortletDataHandlerBoolean(_NAMESPACE, "ratings"),
+			new PortletDataHandlerBoolean(_NAMESPACE, "tags")
+		};
 
 	private static PortletDataHandlerBoolean _wordpress =
 		new PortletDataHandlerBoolean(_NAMESPACE, "wordpress");
-
-	static {
-		_metadataControls = new PortletDataHandlerControl[] {
-			_categories, _comments, _ratings, _tags
-		};
-	}
 
 }

@@ -78,8 +78,8 @@ public interface PortletDataHandler {
 	/**
 	 * Returns an array of the metadata controls defined for this data handler.
 	 * These controls enable the developer to create fine grained controls over
-	 * export behavior of metadata such as tags, categories, ratings
-	 * or comments. The controls are rendered in the export UI.
+	 * export behavior of metadata such as tags, categories, ratings or
+	 * comments. The controls are rendered in the export UI.
 	 *
 	 * @return an array of PortletDataHandlerControls
 	 */
@@ -99,8 +99,8 @@ public interface PortletDataHandler {
 	/**
 	 * Returns an array of the metadata controls defined for this data handler.
 	 * These controls enable the developer to create fine grained controls over
-	 * import behavior of metadata such as tags, categories, ratings
-	 * or comments. The controls are rendered in the export UI.
+	 * import behavior of metadata such as tags, categories, ratings or
+	 * comments. The controls are rendered in the export UI.
 	 *
 	 * @return an array of PortletDataHandlerControls
 	 */

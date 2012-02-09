@@ -862,31 +862,21 @@ public class MBPortletDataHandlerImpl extends BasePortletDataHandler {
 	private static Log _log = LogFactoryUtil.getLog(
 		MBPortletDataHandlerImpl.class);
 
-	private static PortletDataHandlerBoolean _attachments =
-		new PortletDataHandlerBoolean(_NAMESPACE, "attachments");
-
 	private static PortletDataHandlerBoolean _categoriesAndMessages =
 		new PortletDataHandlerBoolean(
 			_NAMESPACE, "categories-and-messages", true, true);
 
-	private static PortletDataHandlerControl[] _metadataControls;
-
-	private static PortletDataHandlerBoolean _ratings =
-		new PortletDataHandlerBoolean(_NAMESPACE, "ratings");
-
-	private static PortletDataHandlerBoolean _tags =
-		new PortletDataHandlerBoolean(_NAMESPACE, "tags");
+	private static PortletDataHandlerControl[] _metadataControls =
+		new PortletDataHandlerControl[] {
+			new PortletDataHandlerBoolean(_NAMESPACE, "attachments"),
+			new PortletDataHandlerBoolean(_NAMESPACE, "ratings"),
+			new PortletDataHandlerBoolean(_NAMESPACE, "tags")
+		};
 
 	private static PortletDataHandlerBoolean _threadFlags =
 		new PortletDataHandlerBoolean(_NAMESPACE, "thread-flags");
 
 	private static PortletDataHandlerBoolean _userBans =
 		new PortletDataHandlerBoolean(_NAMESPACE, "user-bans");
-
-	static {
-		_metadataControls = new PortletDataHandlerControl[] {
-			_attachments, _ratings, _tags
-		};
-	}
 
 }

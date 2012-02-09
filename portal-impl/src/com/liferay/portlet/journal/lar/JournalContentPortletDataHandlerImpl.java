@@ -80,7 +80,13 @@ public class JournalContentPortletDataHandlerImpl
 	@Override
 	public PortletDataHandlerControl[] getExportMetadataControls() {
 		return new PortletDataHandlerControl[] {
-			_journalMetadata, _dlMetadata
+			 new PortletDataHandlerBoolean(
+				_NAMESPACE, "web-content", true,
+				JournalPortletDataHandlerImpl.getMetadataControls()),
+			new PortletDataHandlerBoolean(
+				_NAMESPACE, "folders-and-documents", true,
+				DLPortletDataHandlerImpl.getMetadataControls()
+			)
 		};
 	}
 
@@ -94,7 +100,13 @@ public class JournalContentPortletDataHandlerImpl
 	@Override
 	public PortletDataHandlerControl[] getImportMetadataControls() {
 		return new PortletDataHandlerControl[] {
-			_journalMetadata, _dlMetadata
+			 new PortletDataHandlerBoolean(
+				_NAMESPACE, "web-content", true,
+				JournalPortletDataHandlerImpl.getMetadataControls()),
+			new PortletDataHandlerBoolean(
+				_NAMESPACE, "folders-and-documents", true,
+				DLPortletDataHandlerImpl.getMetadataControls()
+			)
 		};
 	}
 
@@ -330,30 +342,14 @@ public class JournalContentPortletDataHandlerImpl
 
 	private static final boolean _PUBLISH_TO_LIVE_BY_DEFAULT = true;
 
-	private static PortletDataHandlerBoolean _dlMetadata;
-
 	private static PortletDataHandlerBoolean _embeddedAssets =
 		new PortletDataHandlerBoolean(_NAMESPACE, "embedded-assets");
 
 	private static Log _log = LogFactoryUtil.getLog(
-			JournalContentPortletDataHandlerImpl.class);
+		JournalContentPortletDataHandlerImpl.class);
 
 	private static PortletDataHandlerBoolean _selectedArticles =
 		new PortletDataHandlerBoolean(
 			_NAMESPACE, "selected-web-content", true, true);
-
-	private static PortletDataHandlerBoolean _journalMetadata;
-
-	static {
-		_dlMetadata = new PortletDataHandlerBoolean(
-			_NAMESPACE, "folders-and-documents", true,
-			DLPortletDataHandlerImpl.getMetadataControls()
-		);
-
-		_journalMetadata = new PortletDataHandlerBoolean(
-			_NAMESPACE, "web-content", true,
-			JournalPortletDataHandlerImpl.getMetadataControls()
-		);
-	}
 
 }

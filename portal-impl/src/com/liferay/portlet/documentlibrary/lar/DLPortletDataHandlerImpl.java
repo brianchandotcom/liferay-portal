@@ -510,7 +510,7 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 		return new PortletDataHandlerControl[] {
 			new PortletDataHandlerBoolean(
 				_NAMESPACE, "folders-and-documents", true,
-				getMetadataControls())
+				_metadataControls)
 		};
 	}
 
@@ -526,8 +526,7 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 	public PortletDataHandlerControl[] getImportMetadataControls() {
 		return new PortletDataHandlerControl[] {
 			new PortletDataHandlerBoolean(
-				_NAMESPACE, "folders-and-documents", true,
-				getMetadataControls())
+				_NAMESPACE, "folders-and-documents", true, _metadataControls)
 		};
 	}
 
@@ -1708,17 +1707,17 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 	private static Log _log = LogFactoryUtil.getLog(
 		DLPortletDataHandlerImpl.class);
 
-	private static PortletDataHandlerBoolean _categories =
-		new PortletDataHandlerBoolean(_NAMESPACE, "categories");
-
-	private static PortletDataHandlerBoolean _comments =
-		new PortletDataHandlerBoolean(_NAMESPACE, "comments");
-
 	private static PortletDataHandlerBoolean _foldersAndDocuments =
 		new PortletDataHandlerBoolean(
 			_NAMESPACE, "folders-and-documents", true, true);
 
-	private static PortletDataHandlerControl[] _metadataControls;
+	private static PortletDataHandlerControl[] _metadataControls =
+		new PortletDataHandlerControl[] {
+			new PortletDataHandlerBoolean(_NAMESPACE, "categories"),
+			new PortletDataHandlerBoolean(_NAMESPACE, "comments"),
+			new PortletDataHandlerBoolean(_NAMESPACE, "ratings"),
+			new PortletDataHandlerBoolean(_NAMESPACE, "tags")
+		};
 
 	private static PortletDataHandlerBoolean _previewsAndThumbnails =
 		new PortletDataHandlerBoolean(_NAMESPACE, "previews-and-thumbnails");
@@ -1726,22 +1725,10 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 	private static PortletDataHandlerBoolean _ranks =
 		new PortletDataHandlerBoolean(_NAMESPACE, "ranks");
 
-	private static PortletDataHandlerBoolean _ratings =
-		new PortletDataHandlerBoolean(_NAMESPACE, "ratings");
-
 	private static PortletDataHandlerBoolean _repositories =
 		new PortletDataHandlerBoolean(_NAMESPACE, "repositories", false, false);
 
 	private static PortletDataHandlerBoolean _shortcuts=
 		new PortletDataHandlerBoolean(_NAMESPACE, "shortcuts");
-
-	private static PortletDataHandlerBoolean _tags =
-		new PortletDataHandlerBoolean(_NAMESPACE, "tags");
-
-	static {
-		_metadataControls = new PortletDataHandlerControl[] {
-			_categories, _comments, _ratings, _tags
-		};
-	}
 
 }

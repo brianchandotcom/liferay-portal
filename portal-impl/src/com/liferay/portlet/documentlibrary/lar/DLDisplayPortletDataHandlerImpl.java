@@ -48,7 +48,9 @@ public class DLDisplayPortletDataHandlerImpl extends BasePortletDataHandler {
 	@Override
 	public PortletDataHandlerControl[] getExportMetadataControls() {
 		return new PortletDataHandlerControl[] {
-			_dlMetadata
+			new PortletDataHandlerBoolean(
+				_NAMESPACE, "folders-and-documents", true,
+				DLPortletDataHandlerImpl.getMetadataControls())
 		};
 	}
 
@@ -62,7 +64,9 @@ public class DLDisplayPortletDataHandlerImpl extends BasePortletDataHandler {
 	@Override
 	public PortletDataHandlerControl[] getImportMetadataControls() {
 		return new PortletDataHandlerControl[] {
-			_dlMetadata
+			new PortletDataHandlerBoolean(
+				_NAMESPACE, "folders-and-documents", true,
+				DLPortletDataHandlerImpl.getMetadataControls())
 		};
 	}
 
@@ -226,8 +230,6 @@ public class DLDisplayPortletDataHandlerImpl extends BasePortletDataHandler {
 
 	private static final String _NAMESPACE = "document_library";
 
-	private static PortletDataHandlerBoolean _dlMetadata;
-
 	private static PortletDataHandlerBoolean _foldersAndDocuments =
 		new PortletDataHandlerBoolean(
 			_NAMESPACE, "folders-and-documents", true, true);
@@ -240,12 +242,5 @@ public class DLDisplayPortletDataHandlerImpl extends BasePortletDataHandler {
 
 	private static PortletDataHandlerBoolean _shortcuts=
 		new PortletDataHandlerBoolean(_NAMESPACE, "shortcuts");
-
-	static {
-		_dlMetadata = new PortletDataHandlerBoolean(
-			_NAMESPACE, "folders-and-documents", true,
-			DLPortletDataHandlerImpl.getMetadataControls()
-		);
-	}
 
 }

@@ -1307,7 +1307,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 	public PortletDataHandlerControl[] getExportMetadataControls() {
 		return new PortletDataHandlerControl[] {
 			new PortletDataHandlerBoolean(
-				_NAMESPACE, "web-content", true, getMetadataControls())
+				_NAMESPACE, "web-content", true, _metadataControls)
 		};
 	}
 
@@ -1322,7 +1322,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 	public PortletDataHandlerControl[] getImportMetadataControls() {
 		return new PortletDataHandlerControl[] {
 			new PortletDataHandlerBoolean(
-				_NAMESPACE, "web-content", true, getMetadataControls())
+				_NAMESPACE, "web-content", true, _metadataControls)
 		};
 	}
 
@@ -2267,41 +2267,27 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 	private static PortletDataHandlerBoolean _articles =
 		new PortletDataHandlerBoolean(_NAMESPACE, "web-content", true, false);
 
-	private static PortletDataHandlerBoolean _categories =
-		new PortletDataHandlerBoolean(_NAMESPACE, "categories");
-
-	private static PortletDataHandlerBoolean _comments =
-		new PortletDataHandlerBoolean(_NAMESPACE, "comments");
-
 	private static PortletDataHandlerBoolean _embeddedAssets =
 		new PortletDataHandlerBoolean(_NAMESPACE, "embedded-assets");
 
 	private static Pattern _exportLinksToLayoutPattern = Pattern.compile(
 		"\\[([0-9]+)@(public|private\\-[a-z]*)\\]");
 
-	private static PortletDataHandlerBoolean _images =
-		new PortletDataHandlerBoolean(_NAMESPACE, "images");
-
 	private static Pattern _importLinksToLayoutPattern = Pattern.compile(
 		"\\[([0-9]+)@(public|private\\-[a-z]*)@(\\p{XDigit}{8}\\-" +
 		"(?:\\p{XDigit}{4}\\-){3}\\p{XDigit}{12})@([^\\]]*)\\]");
 
-	private static PortletDataHandlerControl[] _metadataControls;
-
-	private static PortletDataHandlerBoolean _ratings =
-		new PortletDataHandlerBoolean(_NAMESPACE, "ratings");
+	private static PortletDataHandlerControl[] _metadataControls =
+		new PortletDataHandlerControl[] {
+			new PortletDataHandlerBoolean(_NAMESPACE, "images"),
+			new PortletDataHandlerBoolean(_NAMESPACE, "categories"),
+			new PortletDataHandlerBoolean(_NAMESPACE, "comments"),
+			new PortletDataHandlerBoolean(_NAMESPACE, "ratings"),
+			new PortletDataHandlerBoolean(_NAMESPACE, "tags")
+		};
 
 	private static PortletDataHandlerBoolean
 		_structuresTemplatesAndFeeds = new PortletDataHandlerBoolean(
 			_NAMESPACE, "structures-templates-and-feeds", true, true);
-
-	private static PortletDataHandlerBoolean _tags =
-		new PortletDataHandlerBoolean(_NAMESPACE, "tags");
-
-	static {
-		_metadataControls = new PortletDataHandlerControl[] {
-			_images, _categories, _comments, _ratings, _tags
-		};
-	}
 
 }

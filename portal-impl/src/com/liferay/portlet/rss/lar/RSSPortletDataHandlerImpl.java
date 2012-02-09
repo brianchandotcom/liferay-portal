@@ -57,7 +57,14 @@ public class RSSPortletDataHandlerImpl extends JournalPortletDataHandlerImpl {
 	@Override
 	public PortletDataHandlerControl[] getExportMetadataControls() {
 		return new PortletDataHandlerControl[] {
-			_journalMetadata, _dlMetadata
+			new PortletDataHandlerBoolean(
+				_NAMESPACE, "web-content", true,
+				JournalPortletDataHandlerImpl.getMetadataControls()
+			),
+			new PortletDataHandlerBoolean(
+				_NAMESPACE, "folders-and-documents", true,
+				DLPortletDataHandlerImpl.getMetadataControls()
+			)
 		};
 	}
 
@@ -71,7 +78,14 @@ public class RSSPortletDataHandlerImpl extends JournalPortletDataHandlerImpl {
 	@Override
 	public PortletDataHandlerControl[] getImportMetadataControls() {
 		return new PortletDataHandlerControl[] {
-			_journalMetadata, _dlMetadata
+			new PortletDataHandlerBoolean(
+				_NAMESPACE, "web-content", true,
+				JournalPortletDataHandlerImpl.getMetadataControls()
+			),
+			new PortletDataHandlerBoolean(
+				_NAMESPACE, "folders-and-documents", true,
+				DLPortletDataHandlerImpl.getMetadataControls()
+			)
 		};
 	}
 
@@ -329,27 +343,11 @@ public class RSSPortletDataHandlerImpl extends JournalPortletDataHandlerImpl {
 	private static Log _log = LogFactoryUtil.getLog(
 		RSSPortletDataHandlerImpl.class);
 
-	private static PortletDataHandlerBoolean _dlMetadata;
-
 	private static PortletDataHandlerBoolean _embeddedAssets =
 		new PortletDataHandlerBoolean(_NAMESPACE, "embedded-assets");
-
-	private static PortletDataHandlerBoolean _journalMetadata;
 
 	private static PortletDataHandlerBoolean _selectedArticles =
 		new PortletDataHandlerBoolean(
 			_NAMESPACE, "selected-web-content", true, true);
-
-	static {
-		_dlMetadata = new PortletDataHandlerBoolean(
-			_NAMESPACE, "folders-and-documents", true,
-			DLPortletDataHandlerImpl.getMetadataControls()
-		);
-
-		_journalMetadata = new PortletDataHandlerBoolean(
-			_NAMESPACE, "web-content", true,
-			JournalPortletDataHandlerImpl.getMetadataControls()
-		);
-	}
 
 }

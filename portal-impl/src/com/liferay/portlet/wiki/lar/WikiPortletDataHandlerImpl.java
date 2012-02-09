@@ -266,7 +266,7 @@ public class WikiPortletDataHandlerImpl extends BasePortletDataHandler {
 	public PortletDataHandlerControl[] getExportMetadataControls() {
 		return new PortletDataHandlerControl[] {
 			new PortletDataHandlerBoolean(
-				_NAMESPACE, "wiki-pages", true, getMetadataControls())
+				_NAMESPACE, "wiki-pages", true, _metadataControls)
 		};
 	}
 
@@ -281,7 +281,7 @@ public class WikiPortletDataHandlerImpl extends BasePortletDataHandler {
 	public PortletDataHandlerControl[] getImportMetadataControls() {
 		return new PortletDataHandlerControl[] {
 			new PortletDataHandlerBoolean(
-				_NAMESPACE, "wiki-pages", true, getMetadataControls())
+				_NAMESPACE, "wiki-pages", true, _metadataControls)
 		};
 	}
 
@@ -584,31 +584,17 @@ public class WikiPortletDataHandlerImpl extends BasePortletDataHandler {
 
 	private static final String _NAMESPACE = "wiki";
 
-	private static PortletDataHandlerBoolean _attachments =
-		new PortletDataHandlerBoolean(_NAMESPACE, "attachments");
-
-	private static PortletDataHandlerBoolean _categories =
-		new PortletDataHandlerBoolean(_NAMESPACE, "categories");
-
-	private static PortletDataHandlerBoolean _comments =
-		new PortletDataHandlerBoolean(_NAMESPACE, "comments");
-
-	private static PortletDataHandlerControl[] _metadataControls;
+	private static PortletDataHandlerControl[] _metadataControls =
+		new PortletDataHandlerControl[] {
+			new PortletDataHandlerBoolean(_NAMESPACE, "attachments"),
+			new PortletDataHandlerBoolean(_NAMESPACE, "categories"),
+			new PortletDataHandlerBoolean(_NAMESPACE, "comments"),
+			new PortletDataHandlerBoolean(_NAMESPACE, "ratings"),
+			new PortletDataHandlerBoolean(_NAMESPACE, "tags")
+		};
 
 	private static PortletDataHandlerBoolean _nodesAndPages =
 		new PortletDataHandlerBoolean(
 			_NAMESPACE, "wikis-and-pages", true, true);
-
-	private static PortletDataHandlerBoolean _ratings =
-		new PortletDataHandlerBoolean(_NAMESPACE, "ratings");
-
-	private static PortletDataHandlerBoolean _tags =
-		new PortletDataHandlerBoolean(_NAMESPACE, "tags");
-
-	static {
-		_metadataControls = new PortletDataHandlerControl[] {
-			_attachments, _categories, _comments, _ratings, _tags
-		};
-	}
 
 }

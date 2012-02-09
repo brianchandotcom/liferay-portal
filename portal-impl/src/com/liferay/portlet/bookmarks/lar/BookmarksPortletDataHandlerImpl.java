@@ -442,25 +442,15 @@ public class BookmarksPortletDataHandlerImpl extends BasePortletDataHandler {
 
 	private static final boolean _PUBLISH_TO_LIVE_BY_DEFAULT = true;
 
-	private static PortletDataHandlerBoolean _categories =
-		new PortletDataHandlerBoolean(_NAMESPACE, "categories");
-
 	private static PortletDataHandlerBoolean _foldersAndEntries =
 		new PortletDataHandlerBoolean(
 			_NAMESPACE, "folders-and-entries", true, true);
 
-	private static PortletDataHandlerControl[] _metadataControls;
-
-	private static PortletDataHandlerBoolean _ratings =
-		new PortletDataHandlerBoolean(_NAMESPACE, "ratings");
-
-	private static PortletDataHandlerBoolean _tags =
-		new PortletDataHandlerBoolean(_NAMESPACE, "tags");
-
-	static {
-		_metadataControls = new PortletDataHandlerControl[] {
-			_categories, _ratings, _tags
+	private static PortletDataHandlerControl[] _metadataControls =
+		new PortletDataHandlerControl[] {
+			new PortletDataHandlerBoolean(_NAMESPACE, "categories"),
+			new PortletDataHandlerBoolean(_NAMESPACE, "ratings"),
+			new PortletDataHandlerBoolean(_NAMESPACE, "tags")
 		};
-	}
 
 }

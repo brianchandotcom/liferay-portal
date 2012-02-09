@@ -91,35 +91,35 @@
 
 									<ul class="aui-helper-hidden <%= metadataControls.length > 1 ? "multiple-metadata-controls" : StringPool.BLANK %>" id="<portlet:namespace />assetList">
 
-									<%
-									for (int i = 0; i < metadataControls.length; i++) {
-										PortletDataHandlerBoolean control = (PortletDataHandlerBoolean)metadataControls[i];
+										<%
+										for (int i = 0; i < metadataControls.length; i++) {
+											PortletDataHandlerBoolean control = (PortletDataHandlerBoolean)metadataControls[i];
 
-										PortletDataHandlerControl[] children = control.getChildren();
+											PortletDataHandlerControl[] children = control.getChildren();
 
-										if ((children != null) && (children.length > 0)) {
-											request.setAttribute("render_controls.jsp-controls", children);
-									%>
+											if ((children != null) && (children.length > 0)) {
+												request.setAttribute("render_controls.jsp-controls", children);
+										%>
 
-											<c:choose>
-												<c:when test="<%= metadataControls.length > 1 %>">
-													<li class="tree-item">
-														<aui:fieldset cssClass="portlet-data-sub-section" label="<%= metadataControls[i].getControlName() %>">
-															<ul id="<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA %>_<%= selPortlet.getRootPortletId() %>Controls">
-																<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
-															</ul>
-														</aui:fieldset>
-													</li>
-												</c:when>
-												<c:otherwise>
-													<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
-												</c:otherwise>
-											</c:choose>
+												<c:choose>
+													<c:when test="<%= metadataControls.length > 1 %>">
+														<li class="tree-item">
+															<aui:fieldset cssClass="portlet-data-sub-section" label="<%= metadataControls[i].getControlName() %>">
+																<ul id="<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA %>_<%= selPortlet.getRootPortletId() %>Controls">
+																	<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
+																</ul>
+															</aui:fieldset>
+														</li>
+													</c:when>
+													<c:otherwise>
+														<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
+													</c:otherwise>
+												</c:choose>
 
-									<%
+										<%
+											}
 										}
-									}
-									%>
+										%>
 
 									</ul>
 
@@ -285,11 +285,11 @@
 
 	Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PERMISSIONS %>Checkbox', '<portlet:namespace />permissionsUl');
 
-	Liferay.Util.toggleRadio('<portlet:namespace />assetFilter','<portlet:namespace />assetList');
+	Liferay.Util.toggleRadio('<portlet:namespace />assetFilter', '<portlet:namespace />assetList');
 	Liferay.Util.toggleRadio('<portlet:namespace />assetAll', '', ['<portlet:namespace />assetList']);
 
-	Liferay.Util.toggleRadio('<portlet:namespace />rangeDateRange','<portlet:namespace />startEndDate');
-	Liferay.Util.toggleRadio('<portlet:namespace />rangeAll','', ['<portlet:namespace />startEndDate']);
-	Liferay.Util.toggleRadio('<portlet:namespace />rangeLastPublish','', ['<portlet:namespace />startEndDate']);
-	Liferay.Util.toggleRadio('<portlet:namespace />rangeLast','', ['<portlet:namespace />startEndDate']);
+	Liferay.Util.toggleRadio('<portlet:namespace />rangeDateRange', '<portlet:namespace />startEndDate');
+	Liferay.Util.toggleRadio('<portlet:namespace />rangeAll', '', ['<portlet:namespace />startEndDate']);
+	Liferay.Util.toggleRadio('<portlet:namespace />rangeLastPublish', '', ['<portlet:namespace />startEndDate']);
+	Liferay.Util.toggleRadio('<portlet:namespace />rangeLast', '', ['<portlet:namespace />startEndDate']);
 </aui:script>

@@ -55,7 +55,10 @@ public class WikiDisplayPortletDataHandlerImpl extends BasePortletDataHandler {
 	@Override
 	public PortletDataHandlerControl[] getExportMetadataControls() {
 		return new PortletDataHandlerControl[] {
-			_wikiMetadata
+			new PortletDataHandlerBoolean(
+				_NAMESPACE, "wiki-pages", true,
+				WikiPortletDataHandlerImpl.getMetadataControls()
+			)
 		};
 	}
 
@@ -69,7 +72,10 @@ public class WikiDisplayPortletDataHandlerImpl extends BasePortletDataHandler {
 	@Override
 	public PortletDataHandlerControl[] getImportMetadataControls() {
 		return new PortletDataHandlerControl[] {
-			_wikiMetadata
+			new PortletDataHandlerBoolean(
+				_NAMESPACE, "wiki-pages", true,
+				WikiPortletDataHandlerImpl.getMetadataControls()
+			)
 		};
 	}
 
@@ -243,14 +249,5 @@ public class WikiDisplayPortletDataHandlerImpl extends BasePortletDataHandler {
 	private static PortletDataHandlerBoolean _nodesAndPages =
 		new PortletDataHandlerBoolean(
 			_NAMESPACE, "wikis-and-pages", true, true);
-
-	private static PortletDataHandlerBoolean _wikiMetadata;
-
-	static {
-		_wikiMetadata = new PortletDataHandlerBoolean(
-			_NAMESPACE, "wiki-pages", true,
-			WikiPortletDataHandlerImpl.getMetadataControls()
-		);
-	}
 
 }

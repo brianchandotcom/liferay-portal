@@ -375,8 +375,14 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		String binPath = getBinPath(
 			portletDataContext, fileEntry, binPathSegment);
 
-		String binPathName =
-			"bin-path-preview-" + binPathSegment + "-" + binPathSuffix;
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("bin-path-preview-");
+		sb.append(binPathSegment);
+		sb.append("-");
+		sb.append(binPathSuffix);
+
+		String binPathName = sb.toString();
 
 		fileEntryElement.addAttribute(binPathName, binPath);
 
@@ -784,8 +790,16 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			binPathSegment = Integer.toString(fileIndex + 1);
 		}
 
-		String binPath = fileEntryElement.attributeValue(
-			"bin-path-preview-" + binPathSegment + "-" + binPathSuffix);
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("bin-path-preview-");
+		sb.append(binPathSegment);
+		sb.append("-");
+		sb.append(binPathSuffix);
+
+		String binPathName = sb.toString();
+
+		String binPath = fileEntryElement.attributeValue(binPathName);
 
 		InputStream is = portletDataContext.getZipEntryAsInputStream(binPath);
 

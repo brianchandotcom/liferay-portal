@@ -34,7 +34,7 @@ if (!themeDisplay.isSignedIn() && layout.isPublicLayout()) {
 	String canonicalURL = PortalUtil.getCanonicalURL(completeURL, themeDisplay, layout);
 %>
 
-	<link href="<%= canonicalURL %>" rel="canonical" />
+	<link href="<%= HtmlUtil.escapeAttribute(canonicalURL) %>" rel="canonical" />
 
 	<%
 	Locale defaultLocale = LocaleUtil.getDefault();
@@ -53,7 +53,7 @@ if (!themeDisplay.isSignedIn() && layout.isPublicLayout()) {
 					if (!curLocale.equals(defaultLocale)) {
 		%>
 
-						<link href="<%= PortalUtil.getAlternateURL(canonicalURL, themeDisplay, curLocale) %>" hreflang="<%= LocaleUtil.toW3cLanguageId(curLocale) %>" rel="alternate" />
+						<link href="<%= HtmlUtil.escapeAttribute(PortalUtil.getAlternateURL(canonicalURL, themeDisplay, curLocale)) %>" hreflang="<%= LocaleUtil.toW3cLanguageId(curLocale) %>" rel="alternate" />
 
 		<%
 					}
@@ -70,7 +70,7 @@ if (!themeDisplay.isSignedIn() && layout.isPublicLayout()) {
 
 <%-- Portal CSS --%>
 
-<link href="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathContext() + "/html/css/main.css")) %>" rel="stylesheet" type="text/css" />
+<link href="<%= HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathContext() + "/html/css/main.css")) %>" rel="stylesheet" type="text/css" />
 
 <%
 List<Portlet> portlets = null;
@@ -161,7 +161,7 @@ StringBundler pageTopSB = (StringBundler)request.getAttribute(WebKeys.PAGE_TOP);
 
 <%-- Theme CSS --%>
 
-<link class="lfr-css-file" href="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getPathThemeCss() + "/main.css")) %>" rel="stylesheet" type="text/css" />
+<link class="lfr-css-file" href="<%= HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, themeDisplay.getPathThemeCss() + "/main.css")) %>" rel="stylesheet" type="text/css" />
 
 <style type="text/css">
 	/* <![CDATA[ */

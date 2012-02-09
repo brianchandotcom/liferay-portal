@@ -112,7 +112,7 @@ AUI.add(
 					_defaultSubmitFn: function(event) {
 						var instance = this;
 
-						if (!event.prevented && !event.stopped) {
+						if (!event.stopped) {
 							submitForm(instance.form);
 						}
 					},

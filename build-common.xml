@@ -332,6 +332,28 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</java>
 	</target>
 
+	<target name="generate-cobertura-report">
+		<if>
+			<equals arg1="${junit.code.coverage}" arg2="true" />
+			<then>
+				<cobertura-report format="${junit.cobertura.report.format}" datafile="test-coverage/cobertura.ser" destdir="test-coverage" >
+					<fileset dir="${project.dir}/portal-impl/src">
+						<include name="**/*.java" />
+					</fileset>
+					<fileset dir="${project.dir}/portal-service/src">
+						<include name="**/*.java" />
+					</fileset>
+					<fileset dir="${project.dir}/util-java/src">
+						<include name="**/*.java" />
+					</fileset>
+					<fileset dir="${project.dir}/util-taglib/src">
+						<include name="**/*.java" />
+					</fileset>
+				</cobertura-report>
+			</then>
+		</if>
+	</target>
+
 	<target name="instrument">
 		<delete dir="test-coverage" />
 
@@ -426,25 +448,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 			</else>
 		</if>
 
-		<if>
-			<equals arg1="${junit.code.coverage}" arg2="true" />
-			<then>
-				<cobertura-report format="${junit.cobertura.report.format}" datafile="test-coverage/cobertura.ser" destdir="test-coverage" >
-					<fileset dir="${project.dir}/portal-impl/src">
-						<include name="**/*.java" />
-					</fileset>
-					<fileset dir="${project.dir}/portal-service/src">
-						<include name="**/*.java" />
-					</fileset>
-					<fileset dir="${project.dir}/util-java/src">
-						<include name="**/*.java" />
-					</fileset>
-					<fileset dir="${project.dir}/util-taglib/src">
-						<include name="**/*.java" />
-					</fileset>
-				</cobertura-report>
-			</then>
-		</if>
+		<antcall target="generate-cobertura-report" />
 	</target>
 
 	<target name="test-class" depends="compile,instrument,compile-test" if="class">
@@ -464,24 +468,6 @@ Please set the environment variable ANT_OPTS to the recommended value of
 			</batchtest>
 		</junit>
 
-		<if>
-			<equals arg1="${junit.code.coverage}" arg2="true" />
-			<then>
-				<cobertura-report format="${junit.cobertura.report.format}" datafile="test-coverage/cobertura.ser" destdir="test-coverage" >
-					<fileset dir="${project.dir}/portal-impl/src">
-						<include name="**/*.java" />
-					</fileset>
-					<fileset dir="${project.dir}/portal-service/src">
-						<include name="**/*.java" />
-					</fileset>
-					<fileset dir="${project.dir}/util-java/src">
-						<include name="**/*.java" />
-					</fileset>
-					<fileset dir="${project.dir}/util-taglib/src">
-						<include name="**/*.java" />
-					</fileset>
-				</cobertura-report>
-			</then>
-		</if>
+		<antcall target="generate-cobertura-report" />
 	</target>
 </project>

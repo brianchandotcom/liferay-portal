@@ -206,21 +206,13 @@ public class PortletPermissionImpl implements PortletPermission {
 			return false;
 		}
 
-		boolean value = contains(
-			permissionChecker, groupId, layout, portlet.getPortletId(),
-			actionId, strict);
-
-		if (value) {
+		if (portlet.isSystem() && actionId.equals(ActionKeys.VIEW)) {
 			return true;
 		}
-		else {
-			if (portlet.isSystem() && actionId.equals(ActionKeys.VIEW)) {
-				return true;
-			}
-			else {
-				return false;
-			}
-		}
+
+		return contains(
+			permissionChecker, groupId, layout, portlet.getPortletId(),
+			actionId, strict);
 	}
 
 	public boolean contains(
@@ -422,12 +414,6 @@ public class PortletPermissionImpl implements PortletPermission {
 			Layout layout, Portlet portlet, PortletMode portletMode)
 		throws PortalException, SystemException {
 
-		if (portlet.isSystem()) {
-			return true;
-		}
-
-		String portletId = portlet.getPortletId();
-
 		if ((layout != null) && layout.isTypeControlPanel()) {
 			String category = portlet.getControlPanelEntryCategory();
 
@@ -437,14 +423,13 @@ public class PortletPermissionImpl implements PortletPermission {
 		}
 
 		boolean access = contains(
-			permissionChecker, scopeGroupId, layout, portletId,
-			ActionKeys.VIEW);
+			permissionChecker, scopeGroupId, layout, portlet, ActionKeys.VIEW);
 
 		if (access && !PropsValues.TCK_URL &&
 			portletMode.equals(PortletMode.EDIT)) {
 
 			access = contains(
-				permissionChecker, scopeGroupId, layout, portletId,
+				permissionChecker, scopeGroupId, layout, portlet,
 				ActionKeys.PREFERENCES);
 		}
 

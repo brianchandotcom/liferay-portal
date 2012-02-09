@@ -30,13 +30,23 @@ LayoutSet privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroupId,
 String defaultPrivateRobots = RobotsUtil.getRobots(privateLayoutSet);
 
 String privateRobots = ParamUtil.getString(request, "robots", defaultPrivateRobots);
+
+String publicVirtualHostName = publicLayoutSet.getVirtualHostname();
+
+if (Validator.isNull(publicVirtualHostName) && Validator.isNotNull(PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME) ) {
+	Group defaultGroup = GroupLocalServiceUtil.getGroup(company.getCompanyId(), PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME);
+
+	if (publicLayoutSet.getGroupId() == defaultGroup.getGroupId()) {
+		publicVirtualHostName = company.getVirtualHostname();
+	}
+}
 %>
 
 <liferay-ui:error-marker key="errorSection" value="robots" />
 
 <aui:fieldset label="public-pages">
 	<c:choose>
-		<c:when test="<%= Validator.isNotNull(publicLayoutSet.getVirtualHostname()) %>">
+		<c:when test="<%= Validator.isNotNull(publicVirtualHostName) %>">
 			<textarea cols="60" name="<portlet:namespace />publicRobots" rows="15"><%= HtmlUtil.escape(publicRobots) %></textarea>
 		</c:when>
 		<c:otherwise>

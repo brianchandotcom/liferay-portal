@@ -21,9 +21,14 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Company;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutSet;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.RobotsUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,6 +60,18 @@ public class RobotsAction extends Action {
 					virtualHostname);
 			}
 			catch (LayoutSetVirtualHostException lsvhe) {
+				Company company = PortalUtil.getCompany(request);
+
+				if (company.getVirtualHostname().equals(virtualHostname) &&
+					Validator.isNotNull(
+						PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME)) {
+
+					Group defaultGroup = GroupLocalServiceUtil.getGroup(
+						company.getCompanyId(),
+						PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME);
+
+					layoutSet = defaultGroup.getPublicLayoutSet();
+				}
 			}
 			catch (NoSuchLayoutSetException nslse) {
 			}

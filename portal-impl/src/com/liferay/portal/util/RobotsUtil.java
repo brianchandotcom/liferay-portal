@@ -20,8 +20,11 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutSet;
+import com.liferay.portal.service.CompanyLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.util.ContentUtil;
 
 /**
@@ -59,6 +62,21 @@ public class RobotsUtil {
 			virtualHostname = layoutSet.getVirtualHostname();
 		}
 		catch (Exception e) {
+		}
+		
+		if (Validator.isNull(virtualHostname) && Validator.isNotNull(
+			PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME) ) {
+			
+			Group defaultGroup = GroupLocalServiceUtil.getGroup(
+				layoutSet.getCompanyId(), 
+				PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME);
+		
+			if (layoutSet.getGroupId() == defaultGroup.getGroupId()) {
+				Company company = CompanyLocalServiceUtil.getCompany(
+					layoutSet.getCompanyId());
+
+				virtualHostname = company.getVirtualHostname();
+			}
 		}
 
 		Group group = layoutSet.getGroup();

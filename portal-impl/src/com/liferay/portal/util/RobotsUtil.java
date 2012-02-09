@@ -60,7 +60,7 @@ public class RobotsUtil {
 		}
 		catch (Exception e) {
 		}
-		
+
 		Group group = layoutSet.getGroup();
 
 		return GetterUtil.get(

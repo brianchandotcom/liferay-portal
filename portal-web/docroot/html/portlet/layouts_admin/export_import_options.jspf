@@ -262,6 +262,93 @@
 										</ul>
 									</aui:fieldset>
 								</li>
+
+								<li class="tree-item">
+									<aui:fieldset cssClass="portlet-data-section" helpMessage="content-metadata-help" label="content-metadata">
+										<aui:input checked="<%= true %>" id="assetAll" label="all-metadata" name="<%= PortletDataHandlerKeys.PORTLET_METADATA_ALL %>" type="radio" value="true" />
+
+										<aui:input id="assetFilter" label="choose-metadata" name="<%= PortletDataHandlerKeys.PORTLET_METADATA_ALL %>" type="radio" value="false" />
+
+										<ul class="aui-helper-hidden" id="<portlet:namespace />assetList">
+
+											<%
+											Set<String> displayedControls = new HashSet<String>();
+											Set<String> portletDataHandlerClasses = new HashSet<String>();
+
+											itr1 = portletsList.iterator();
+
+											while (itr1.hasNext()) {
+												Portlet curPortlet = (Portlet)itr1.next();
+
+												String portletDataHandlerClass = curPortlet.getPortletDataHandlerClass();
+
+												if (!portletDataHandlerClasses.contains(portletDataHandlerClass)) {
+													portletDataHandlerClasses.add(portletDataHandlerClass);
+												}
+												else {
+													continue;
+												}
+
+												PortletDataHandler portletDataHandler = curPortlet.getPortletDataHandlerInstance();
+
+												try {
+													PortletDataHandlerControl[] metadataControls = null;
+
+													if (cmd.equals(Constants.IMPORT)) {
+														metadataControls = portletDataHandler.getImportMetadataControls();
+													}
+													else {
+														metadataControls = portletDataHandler.getExportMetadataControls();
+													}
+
+													if (metadataControls.length > 0) {
+														String rootPortletId = curPortlet.getRootPortletId();
+
+														for (int i = 0; i < metadataControls.length; i++) {
+															if (!displayedControls.contains(metadataControls[i].getControlName())) {
+																displayedControls.add(metadataControls[i].getControlName());
+															}
+															else {
+																continue;
+															}
+
+															PortletDataHandlerBoolean control = (PortletDataHandlerBoolean)metadataControls[i];
+
+															PortletDataHandlerControl[] children = control.getChildren();
+
+															if ((children != null) && (children.length > 0)) {
+																request.setAttribute("render_controls.jsp-controls", children);
+														%>
+
+																<li class="tree-item">
+																	<aui:fieldset cssClass="portlet-data-sub-section" label="<%= metadataControls[i].getControlName() %>">
+																		<ul id="<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA %>_<%= rootPortletId %>Controls">
+																			<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
+																		</ul>
+																	</aui:fieldset>
+																</li>
+														<%
+															}
+														}
+													}
+												}
+												catch (PortletDataException pde) {
+												%>
+
+													<li class="tree-item">
+														<div class="portlet-msg-error">
+															<%= PortalUtil.getPortletTitle(curPortlet, application, locale) %>: <%= LanguageUtil.get(pageContext, "error-initializing-import-controls") %>
+														</div>
+													</li>
+
+											<%
+												}
+											}
+											%>
+
+										</ul>
+									</aui:fieldset>
+								</li>
 							</ul>
 						</c:otherwise>
 					</c:choose>
@@ -322,6 +409,9 @@
 	Liferay.Util.toggleRadio('<portlet:namespace />rangeAll','', ['<portlet:namespace />startEndDate']);
 	Liferay.Util.toggleRadio('<portlet:namespace />rangeLastPublish','', ['<portlet:namespace />startEndDate']);
 	Liferay.Util.toggleRadio('<portlet:namespace />rangeLast','', ['<portlet:namespace />startEndDate']);
+
+	Liferay.Util.toggleRadio('<portlet:namespace />assetFilter','<portlet:namespace />assetList');
+	Liferay.Util.toggleRadio('<portlet:namespace />assetAll', '', ['<portlet:namespace />assetList']);
 
 	Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA %>Checkbox', '<portlet:namespace />portletDataControls');
 	Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PERMISSIONS %>Checkbox', '<portlet:namespace />permissionsUl');

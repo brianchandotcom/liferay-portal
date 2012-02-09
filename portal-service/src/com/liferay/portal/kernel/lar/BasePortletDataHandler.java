@@ -53,10 +53,17 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		return new PortletDataHandlerControl[0];
 	}
 
+	public PortletDataHandlerControl[] getExportMetadataControls() {
+		return _EMPTY_CONTROLS_ARRAY;
+	}
+
 	public PortletDataHandlerControl[] getImportControls() {
 		return new PortletDataHandlerControl[0];
 	}
 
+	public PortletDataHandlerControl[] getImportMetadataControls() {
+		return _EMPTY_CONTROLS_ARRAY;
+	}
 	public PortletPreferences importData(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences, String data)
@@ -110,6 +117,9 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	private static final boolean _ALWAYS_EXPORTABLE = false;
 
 	private static final boolean _ALWAYS_STAGED = false;
+
+	private static final PortletDataHandlerControl[] _EMPTY_CONTROLS_ARRAY =
+			new PortletDataHandlerControl[0];
 
 	private static final boolean _PUBLISH_TO_LIVE_BY_DEFAULT = false;
 

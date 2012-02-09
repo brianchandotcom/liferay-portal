@@ -312,6 +312,10 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		return sb.toString();
 	}
 
+	public static PortletDataHandlerControl[] getMetadataControls() {
+		return _metadataControls;
+	}
+
 	public static void importArticle(
 			PortletDataContext portletDataContext, Element articleElement)
 		throws Exception {
@@ -1295,16 +1299,30 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 	@Override
 	public PortletDataHandlerControl[] getExportControls() {
 		return new PortletDataHandlerControl[] {
-			_articles, _structuresTemplatesAndFeeds, _embeddedAssets, _images,
-			_categories, _comments, _ratings, _tags
+			_articles, _structuresTemplatesAndFeeds, _embeddedAssets
+		};
+	}
+
+	@Override
+	public PortletDataHandlerControl[] getExportMetadataControls() {
+		return new PortletDataHandlerControl[] {
+			new PortletDataHandlerBoolean(
+				_NAMESPACE, "web-content", true, getMetadataControls())
 		};
 	}
 
 	@Override
 	public PortletDataHandlerControl[] getImportControls() {
 		return new PortletDataHandlerControl[] {
-			_articles, _structuresTemplatesAndFeeds, _images, _categories,
-			_comments, _ratings, _tags
+			_articles, _structuresTemplatesAndFeeds
+		};
+	}
+
+	@Override
+	public PortletDataHandlerControl[] getImportMetadataControls() {
+		return new PortletDataHandlerControl[] {
+			new PortletDataHandlerBoolean(
+				_NAMESPACE, "web-content", true, getMetadataControls())
 		};
 	}
 
@@ -2247,13 +2265,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		JournalPortletDataHandlerImpl.class);
 
 	private static PortletDataHandlerBoolean _articles =
-		new PortletDataHandlerBoolean(_NAMESPACE, "articles", true, false,
-		new PortletDataHandlerControl[] {
-			JournalPortletDataHandlerImpl._images,
-			JournalPortletDataHandlerImpl._comments,
-			JournalPortletDataHandlerImpl._ratings,
-			JournalPortletDataHandlerImpl._tags
-		});
+		new PortletDataHandlerBoolean(_NAMESPACE, "web-content", true, false);
 
 	private static PortletDataHandlerBoolean _categories =
 		new PortletDataHandlerBoolean(_NAMESPACE, "categories");
@@ -2274,6 +2286,8 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		"\\[([0-9]+)@(public|private\\-[a-z]*)@(\\p{XDigit}{8}\\-" +
 		"(?:\\p{XDigit}{4}\\-){3}\\p{XDigit}{12})@([^\\]]*)\\]");
 
+	private static PortletDataHandlerControl[] _metadataControls;
+
 	private static PortletDataHandlerBoolean _ratings =
 		new PortletDataHandlerBoolean(_NAMESPACE, "ratings");
 
@@ -2283,5 +2297,11 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 
 	private static PortletDataHandlerBoolean _tags =
 		new PortletDataHandlerBoolean(_NAMESPACE, "tags");
+
+	static {
+		_metadataControls = new PortletDataHandlerControl[] {
+			_images, _categories, _comments, _ratings, _tags
+		};
+	}
 
 }

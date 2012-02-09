@@ -202,6 +202,10 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 		return sb.toString();
 	}
 
+	public static PortletDataHandlerControl[] getMetadataControls() {
+		return _metadataControls;
+	}
+
 	public static void importFileEntry(
 			PortletDataContext portletDataContext, Element fileEntryElement)
 		throws Exception {
@@ -497,8 +501,16 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 	public PortletDataHandlerControl[] getExportControls() {
 		return new PortletDataHandlerControl[] {
 			_repositories, _foldersAndDocuments, _shortcuts,
-			_previewsAndThumbnails, _ranks, _categories, _comments, _ratings,
-			_tags
+			_previewsAndThumbnails, _ranks
+		};
+	}
+
+	@Override
+	public PortletDataHandlerControl[] getExportMetadataControls() {
+		return new PortletDataHandlerControl[] {
+			new PortletDataHandlerBoolean(
+				_NAMESPACE, "folders-and-documents", true,
+				getMetadataControls())
 		};
 	}
 
@@ -506,8 +518,16 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 	public PortletDataHandlerControl[] getImportControls() {
 		return new PortletDataHandlerControl[] {
 			_repositories, _foldersAndDocuments, _shortcuts,
-			_previewsAndThumbnails, _ranks, _categories, _comments, _ratings,
-			_tags
+			_previewsAndThumbnails, _ranks
+		};
+	}
+
+	@Override
+	public PortletDataHandlerControl[] getImportMetadataControls() {
+		return new PortletDataHandlerControl[] {
+			new PortletDataHandlerBoolean(
+				_NAMESPACE, "folders-and-documents", true,
+				getMetadataControls())
 		};
 	}
 
@@ -1698,6 +1718,8 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 		new PortletDataHandlerBoolean(
 			_NAMESPACE, "folders-and-documents", true, true);
 
+	private static PortletDataHandlerControl[] _metadataControls;
+
 	private static PortletDataHandlerBoolean _previewsAndThumbnails =
 		new PortletDataHandlerBoolean(_NAMESPACE, "previews-and-thumbnails");
 
@@ -1715,5 +1737,11 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 
 	private static PortletDataHandlerBoolean _tags =
 		new PortletDataHandlerBoolean(_NAMESPACE, "tags");
+
+	static {
+		_metadataControls = new PortletDataHandlerControl[] {
+			_categories, _comments, _ratings, _tags
+		};
+	}
 
 }

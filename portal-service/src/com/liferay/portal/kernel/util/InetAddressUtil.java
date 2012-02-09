@@ -28,6 +28,10 @@ import java.util.Enumeration;
  */
 public class InetAddressUtil {
 
+	public static String getLocalHostName() {
+		return LocalHostNameHolder._localHostName;
+	}
+
 	public static InetAddress getLocalInetAddress() throws Exception {
 		Enumeration<NetworkInterface> enu1 =
 			NetworkInterface.getNetworkInterfaces();
@@ -49,6 +53,20 @@ public class InetAddressUtil {
 		}
 
 		throw new SystemException("No local internet address");
+	}
+
+	private static class LocalHostNameHolder {
+
+		private static final String _localHostName;
+
+		static {
+			try {
+				_localHostName = getLocalInetAddress().getHostName();
+			}
+			catch (Exception e) {
+				throw new ExceptionInInitializerError(e);
+			}
+		}
 	}
 
 }

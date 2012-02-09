@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.scheduler.IntervalTrigger;
 import com.liferay.portal.kernel.scheduler.JobState;
 import com.liferay.portal.kernel.scheduler.JobStateSerializeUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
@@ -838,14 +839,15 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 				JobDataMap jobDataMap = jobDetail.getJobDataMap();
 
-				JobState jobState = getJobState(jobDataMap);
+				Message message = getMessage(jobDataMap);
 
-				jobState.setTriggerState(TriggerState.COMPLETE);
+				message.put(JOB_NAME, jobKey.getName());
+				message.put(GROUP_NAME, jobKey.getGroup());
 
-				jobDataMap.put(
-					JOB_STATE, JobStateSerializeUtil.serialize(jobState));
+				SchedulerEngineUtil.auditSchedulerJobs(
+					message, TriggerState.EXPIRED);
 
-				_persistedScheduler.addJob(jobDetail, true);
+				_persistedScheduler.deleteJob(jobKey);
 			}
 		}
 	}
@@ -860,7 +862,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 			JobBuilder jobBuilder = JobBuilder.newJob(MessageSenderJob.class);
 
-			jobBuilder.storeDurably(scheduler == _persistedScheduler);
 			jobBuilder.withIdentity(trigger.getJobKey());
 
 			jobDetail = jobBuilder.build();
@@ -876,7 +877,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 				TriggerState.NORMAL, message.getInteger(EXCEPTIONS_MAX_SIZE));
 
 			jobDataMap.put(
-			JOB_STATE, JobStateSerializeUtil.serialize(jobState));
+				JOB_STATE, JobStateSerializeUtil.serialize(jobState));
 
 			synchronized (this) {
 				scheduler.deleteJob(trigger.getJobKey());

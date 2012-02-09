@@ -36,6 +36,35 @@ Team team = (Team)row.getObject();
 		/>
 	</c:if>
 
+	<c:if test="<%= TeamPermissionUtil.contains(permissionChecker, team.getTeamId(), ActionKeys.PERMISSIONS) %>">
+
+		<%
+		Role role = team.getRole();
+		int roleType = RoleConstants.TYPE_SITE;
+
+		Group group = GroupServiceUtil.getGroup(team.getGroupId());
+
+		if (group.isOrganization()) {
+			roleType = RoleConstants.TYPE_ORGANIZATION;
+		}
+
+		int[] roleTypes = new int[] {RoleConstants.TYPE_REGULAR, roleType};
+		%>
+
+		<liferay-security:permissionsURL
+			modelResource="<%= Role.class.getName() %>"
+			modelResourceDescription="<%= team.getName() %>"
+			resourcePrimKey="<%= String.valueOf(role.getRoleId()) %>"
+			roleTypes="<%= roleTypes %>"
+			var="permissionsURL"
+		/>
+
+		<liferay-ui:icon
+			image="permissions"
+			url="<%= permissionsURL %>"
+		/>
+	</c:if>
+
 	<c:if test="<%= TeamPermissionUtil.contains(permissionChecker, team.getTeamId(), ActionKeys.ASSIGN_MEMBERS) %>">
 		<portlet:renderURL var="assignMembersURL">
 			<portlet:param name="struts_action" value="/sites_admin/edit_team_assignments" />

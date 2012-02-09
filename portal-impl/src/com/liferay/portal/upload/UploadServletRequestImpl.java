@@ -95,6 +95,8 @@ public class UploadServletRequestImpl
 
 			for (LiferayFileItem liferayFileItem : liferayFileItemsList) {
 				if (liferayFileItem.isFormField()) {
+					liferayFileItem.setString(request.getCharacterEncoding());
+
 					String fieldName = liferayFileItem.getFieldName();
 
 					if (!_regularParams.containsKey(fieldName)) {

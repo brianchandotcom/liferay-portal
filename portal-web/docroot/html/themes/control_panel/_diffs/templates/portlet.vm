@@ -30,7 +30,7 @@
 			<div class="$portlet_description_css_class" id="cpContextPanelTemplate" data-portlet-id="$portlet_id" data-visible-panel="$show_portlet_description">
 				<p class="hide-notices-control">
 					<span class="aui-icon aui-icon-help"></span>
-					<span class="hide-all-notices aui-helper-hidden">#language ("or") <a href="javascript:;">disable for all portlets</a></span>
+					<span class="hide-all-notices aui-helper-hidden">#language ("or-disable-for-all-portlets")</span>
 				</p>
 				$portlet_description
 			</div>

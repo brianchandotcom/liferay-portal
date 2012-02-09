@@ -19,10 +19,12 @@ import com.liferay.portal.NoSuchShardException;
 import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.Shard;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
@@ -30,6 +32,7 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ShardLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.util.RobotsUtil;
 
 import java.util.List;
 
@@ -42,7 +45,27 @@ public class VerifyGroup extends VerifyProcess {
 	protected void doVerify() throws Exception {
 		verifyCompanyGroups();
 		verifyNullFriendlyURLGroups();
+		verifyRobots();
 		verifyStagedGroups();
+	}
+
+	protected String getRobots(LayoutSet layoutSet) {
+		if (layoutSet == null) {
+			return RobotsUtil.getDefaultRobots(null);
+		}
+
+		String virtualHostname = StringPool.BLANK;
+
+		try {
+			virtualHostname = layoutSet.getVirtualHostname();
+		}
+		catch (Exception e) {
+		}
+
+		return GetterUtil.get(
+			layoutSet.getSettingsProperty(
+				layoutSet.isPrivateLayout() + "-robots.txt"),
+			RobotsUtil.getDefaultRobots(virtualHostname));
 	}
 
 	protected void verifyCompanyGroups() throws Exception {
@@ -115,6 +138,29 @@ public class VerifyGroup extends VerifyProcess {
 		}
 	}
 
+	protected void verifyRobots() throws Exception {
+		List<Group> groups = GroupLocalServiceUtil.getLiveGroups();
+
+		for (Group group : groups) {
+			LayoutSet privateLayoutSet = group.getPrivateLayoutSet();
+			LayoutSet publicLayoutSet = group.getPublicLayoutSet();
+
+			String privateLayoutSetRobots = getRobots(privateLayoutSet);
+			String publicLayoutSetRobots = getRobots(publicLayoutSet);
+
+			UnicodeProperties typeSettingsProperties =
+				group.getTypeSettingsProperties();
+
+			typeSettingsProperties.setProperty(
+				"true-robots.txt", privateLayoutSetRobots);
+			typeSettingsProperties.setProperty(
+				"false-robots.txt", publicLayoutSetRobots);
+
+			GroupLocalServiceUtil.updateGroup(
+				group.getGroupId(), typeSettingsProperties.toString());
+		}
+
+	}
 	protected void verifyStagedGroups() throws Exception {
 		List<Group> groups = GroupLocalServiceUtil.getLiveGroups();
 

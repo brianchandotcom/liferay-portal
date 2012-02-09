@@ -20,6 +20,157 @@ import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 /**
+ * This JUnit test case takes into consideration all possible permutations of file names
+ * and extensions that can be added into the document library. It verifies that
+ * the correct validations occur and the correct title with extension can be
+ * generated.
+ *
+ * <table>
+ *
+ *		<tr>
+ *			<th>
+ *				Source
+ *			</th>
+ *			<th>
+ *				Title
+ *			</th>
+ *			<th>
+ *				Extension
+ *			</th>
+ *			<th>
+ *				Download Title
+ *			</th>
+ *		</tr>
+ *
+ *		<tr>
+ *			<td>
+ *				Text.txt
+ *			</td>
+ *			<td>
+ *				Text.pdf
+ *			</td>
+ *			<td>
+ *				txt
+ *			</td>
+ *			<td>
+ *				Text.pdf.txt
+ *			</td>
+ *		</tr>
+ *
+ *		<tr>
+ *			<td>
+ *				Test.txt
+ *			</td>
+ *			<td>
+ *				Test.txt
+ *			</td>
+ *			<td>
+ *				txt
+ *			</td>
+ *			<td>
+ *				Test.txt
+ *			</td>
+ *		</tr>
+ *
+ *		<tr>
+ *			<td>
+ *				Test.txt
+ *			</td>
+ *			<td>
+ *				Test
+ *			</td>
+ *			<td>
+ *				txt
+ *			</td>
+ *			<td>
+ *				Test.txt
+ *			</td>
+ *		</tr>
+ *
+ *		<tr>
+ *			<td>
+ *				Test.txt
+ *			</td>
+ *			<td>
+ *			</td>
+ *			<td>
+ *				txt
+ *			</td>
+ *			<td>
+ *				Test.txt
+ *			</td>
+ *		</tr>
+ *
+ *		<tr>
+ *			<td>
+ *				Test
+ *			</td>
+ *			<td>
+ *				Test.txt
+ *			</td>
+ *			<td>
+ *				txt
+ *			</td>
+ *			<td>
+ *				Test.txt
+ *			</td>
+ *		</tr>
+ *
+ *		<tr>
+ *			<td>
+ *				Test
+ *			</td>
+ *			<td>
+ *				Test
+ *			</td>
+ *			<td>
+ *			</td>
+ *			<td>
+ *				Test
+ *			</td>
+ *		</tr>
+ *
+ *		<tr>
+ *			<td>
+ *				Test
+ *			</td>
+ *			<td>
+ *			</td>
+ *			<td>
+ *			</td>
+ *			<td>
+ *				Test
+ *			</td>
+ *		</tr>
+ *		<tr>
+ *			<td>
+ *			</td>
+ *			<td>
+ *				Test.txt
+ *			</td>
+ *			<td>
+ *				txt
+ *			</td>
+ *			<td>
+ *				Test.txt
+ *			</td>
+ *		</tr>
+ *
+ *		<tr>
+ *			<td>
+ *			</td>
+ *			<td>
+ *				Test
+ *			</td>
+ *			<td>
+ *			</td>
+ *			<td>
+ *				Test
+ *			</td>
+ *		</tr>
+ *
+ * </table>
+ *
  * @author Alexander Chow
  */
 public class DLFileEntryExtensionTest extends BaseDLAppTestCase {

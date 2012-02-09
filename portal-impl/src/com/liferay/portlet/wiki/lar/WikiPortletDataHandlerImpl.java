@@ -97,6 +97,10 @@ public class WikiPortletDataHandlerImpl extends BasePortletDataHandler {
 		}
 	}
 
+	public static PortletDataHandlerControl[] getMetadataControls() {
+		return _metadataControls;
+	}
+
 	public static void importNode(
 			PortletDataContext portletDataContext, WikiNode node)
 		throws Exception {
@@ -254,16 +258,30 @@ public class WikiPortletDataHandlerImpl extends BasePortletDataHandler {
 	@Override
 	public PortletDataHandlerControl[] getExportControls() {
 		return new PortletDataHandlerControl[] {
-			_nodesAndPages, _attachments, _categories, _comments, _ratings,
-			_tags
+			_nodesAndPages
+		};
+	}
+
+	@Override
+	public PortletDataHandlerControl[] getExportMetadataControls() {
+		return new PortletDataHandlerControl[] {
+			new PortletDataHandlerBoolean(
+				_NAMESPACE, "wiki-pages", true, getMetadataControls())
 		};
 	}
 
 	@Override
 	public PortletDataHandlerControl[] getImportControls() {
 		return new PortletDataHandlerControl[] {
-			_nodesAndPages, _attachments, _categories, _comments, _ratings,
-			_tags
+			_nodesAndPages
+		};
+	}
+
+	@Override
+	public PortletDataHandlerControl[] getImportMetadataControls() {
+		return new PortletDataHandlerControl[] {
+			new PortletDataHandlerBoolean(
+				_NAMESPACE, "wiki-pages", true, getMetadataControls())
 		};
 	}
 
@@ -575,6 +593,8 @@ public class WikiPortletDataHandlerImpl extends BasePortletDataHandler {
 	private static PortletDataHandlerBoolean _comments =
 		new PortletDataHandlerBoolean(_NAMESPACE, "comments");
 
+	private static PortletDataHandlerControl[] _metadataControls;
+
 	private static PortletDataHandlerBoolean _nodesAndPages =
 		new PortletDataHandlerBoolean(
 			_NAMESPACE, "wikis-and-pages", true, true);
@@ -584,5 +604,11 @@ public class WikiPortletDataHandlerImpl extends BasePortletDataHandler {
 
 	private static PortletDataHandlerBoolean _tags =
 		new PortletDataHandlerBoolean(_NAMESPACE, "tags");
+
+	static {
+		_metadataControls = new PortletDataHandlerControl[] {
+			_attachments, _categories, _comments, _ratings, _tags
+		};
+	}
 
 }

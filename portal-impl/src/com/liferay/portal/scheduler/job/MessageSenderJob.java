@@ -35,7 +35,11 @@ import com.liferay.portal.util.PropsValues;
 import java.util.Map;
 import java.util.concurrent.locks.ReentrantLock;
 
-import org.quartz.*;
+import org.quartz.Job;
+import org.quartz.JobDataMap;
+import org.quartz.JobDetail;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobKey;
 
 /**
  * @author Michael C. Han

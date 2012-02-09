@@ -844,7 +844,8 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 				message.put(JOB_NAME, jobKey.getName());
 				message.put(GROUP_NAME, jobKey.getGroup());
 
-				SchedulerEngineUtil.auditSchedulerJobs(message, JOB_EXPIRED);
+				SchedulerEngineUtil.auditSchedulerJobs(
+					message, TriggerState.EXPIRED);
 
 				_persistedScheduler.deleteJob(jobKey);
 			}

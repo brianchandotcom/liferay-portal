@@ -56,8 +56,6 @@ public interface SchedulerEngine {
 	public static final int GROUP_NAME_MAX_LENGTH = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.SCHEDULER_GROUP_NAME_MAX_LENGTH));
 
-	public static final String JOB_EXPIRED = "EXPIRED";
-
 	public static final String JOB_NAME = "JOB_NAME";
 
 	public static final int JOB_NAME_MAX_LENGTH = GetterUtil.getInteger(

@@ -104,8 +104,7 @@ public class SchedulerEventMessageListenerWrapper implements MessageListener {
 			}
 
 			try {
-				SchedulerEngineUtil.auditSchedulerJobs(
-					message, triggerState.toString());
+				SchedulerEngineUtil.auditSchedulerJobs(message, triggerState);
 			}
 			catch(Exception e) {
 				throw new MessageListenerException(e);

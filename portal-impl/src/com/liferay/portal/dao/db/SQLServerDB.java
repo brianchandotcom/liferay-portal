@@ -76,7 +76,7 @@ public class SQLServerDB extends BaseDB {
 			if (databaseMetaData.getDatabaseMajorVersion() <=
 					_SQL_SERVER_2000) {
 
-				return null;
+				return indexes;
 			}
 
 			StringBundler sb = new StringBundler(6);

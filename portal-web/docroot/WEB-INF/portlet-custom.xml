@@ -1596,6 +1596,10 @@
 		<display-name>Activities</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
 		<init-param>
+			<name>config-template</name>
+			<value>/html/portlet/activities/configuration.jsp</value>
+		</init-param>
+		<init-param>
 			<name>view-action</name>
 			<value>/activities/view</value>
 		</init-param>

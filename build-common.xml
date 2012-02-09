@@ -371,7 +371,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				<cobertura-report
 					datafile="test-coverage/cobertura.ser"
 					destdir="test-coverage"
-					format="${junit.cobertura.report.format}" 
+					format="${junit.cobertura.report.format}"
 				>
 					<fileset dir="${project.dir}/portal-impl/src">
 						<include name="**/*.java" />
@@ -455,7 +455,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		<antcall target="report-test-coverage" />
 	</target>
 
-	<target name="test-class" depends="compile,instrument,compile-test" if="class">
+	<target name="test-class" depends="compile,instrument-test-coverage,compile-test" if="class">
 		<junit dir="${project.dir}" fork="on" forkmode="once" outputtoformatters="false" printsummary="on" showoutput="true">
 			<sysproperty key="net.sourceforge.cobertura.datafile" file="test-coverage/cobertura.ser" />
 			<jvmarg line="${junit.debug.jpda}" />

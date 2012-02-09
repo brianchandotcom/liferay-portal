@@ -74,16 +74,30 @@ public class MBPortletDataHandlerImpl extends BasePortletDataHandler {
 	@Override
 	public PortletDataHandlerControl[] getExportControls() {
 		return new PortletDataHandlerControl[] {
-			_categoriesAndMessages, _attachments, _threadFlags, _userBans,
-			_ratings, _tags
+			_categoriesAndMessages, _threadFlags, _userBans
+		};
+	}
+
+	@Override
+	public PortletDataHandlerControl[] getExportMetadataControls() {
+		return new PortletDataHandlerControl[] {
+			new PortletDataHandlerBoolean(
+				_NAMESPACE, "message-board-messages", true, _metadataControls)
 		};
 	}
 
 	@Override
 	public PortletDataHandlerControl[] getImportControls() {
 		return new PortletDataHandlerControl[] {
-			_categoriesAndMessages, _attachments, _threadFlags, _userBans,
-			_ratings, _tags
+			_categoriesAndMessages, _threadFlags, _userBans
+		};
+	}
+
+	@Override
+	public PortletDataHandlerControl[] getImportMetadataControls() {
+		return new PortletDataHandlerControl[] {
+			new PortletDataHandlerBoolean(
+				_NAMESPACE, "message-board-messages", true, _metadataControls)
 		};
 	}
 
@@ -855,6 +869,8 @@ public class MBPortletDataHandlerImpl extends BasePortletDataHandler {
 		new PortletDataHandlerBoolean(
 			_NAMESPACE, "categories-and-messages", true, true);
 
+	private static PortletDataHandlerControl[] _metadataControls;
+
 	private static PortletDataHandlerBoolean _ratings =
 		new PortletDataHandlerBoolean(_NAMESPACE, "ratings");
 
@@ -866,5 +882,11 @@ public class MBPortletDataHandlerImpl extends BasePortletDataHandler {
 
 	private static PortletDataHandlerBoolean _userBans =
 		new PortletDataHandlerBoolean(_NAMESPACE, "user-bans");
+
+	static {
+		_metadataControls = new PortletDataHandlerControl[] {
+			_attachments, _ratings, _tags
+		};
+	}
 
 }

@@ -41,16 +41,28 @@ public class DLDisplayPortletDataHandlerImpl extends BasePortletDataHandler {
 	@Override
 	public PortletDataHandlerControl[] getExportControls() {
 		return new PortletDataHandlerControl[] {
-			_foldersAndDocuments, _shortcuts, _previewsAndThumbnails, _ranks,
-			_comments, _ratings, _tags
+			_foldersAndDocuments, _shortcuts, _previewsAndThumbnails, _ranks
+		};
+	}
+
+	@Override
+	public PortletDataHandlerControl[] getExportMetadataControls() {
+		return new PortletDataHandlerControl[] {
+			_dlMetadata
 		};
 	}
 
 	@Override
 	public PortletDataHandlerControl[] getImportControls() {
 		return new PortletDataHandlerControl[] {
-			_foldersAndDocuments, _shortcuts, _previewsAndThumbnails, _ranks,
-			_comments, _ratings, _tags
+			_foldersAndDocuments, _shortcuts, _previewsAndThumbnails, _ranks
+		};
+	}
+
+	@Override
+	public PortletDataHandlerControl[] getImportMetadataControls() {
+		return new PortletDataHandlerControl[] {
+			_dlMetadata
 		};
 	}
 
@@ -214,8 +226,7 @@ public class DLDisplayPortletDataHandlerImpl extends BasePortletDataHandler {
 
 	private static final String _NAMESPACE = "document_library";
 
-	private static PortletDataHandlerBoolean _comments =
-		new PortletDataHandlerBoolean(_NAMESPACE, "comments");
+	private static PortletDataHandlerBoolean _dlMetadata;
 
 	private static PortletDataHandlerBoolean _foldersAndDocuments =
 		new PortletDataHandlerBoolean(
@@ -227,13 +238,14 @@ public class DLDisplayPortletDataHandlerImpl extends BasePortletDataHandler {
 	private static PortletDataHandlerBoolean _ranks =
 		new PortletDataHandlerBoolean(_NAMESPACE, "ranks");
 
-	private static PortletDataHandlerBoolean _ratings =
-		new PortletDataHandlerBoolean(_NAMESPACE, "ratings");
-
 	private static PortletDataHandlerBoolean _shortcuts=
 		new PortletDataHandlerBoolean(_NAMESPACE, "shortcuts");
 
-	private static PortletDataHandlerBoolean _tags =
-		new PortletDataHandlerBoolean(_NAMESPACE, "tags");
+	static {
+		_dlMetadata = new PortletDataHandlerBoolean(
+			_NAMESPACE, "folders-and-documents", true,
+			DLPortletDataHandlerImpl.getMetadataControls()
+		);
+	}
 
 }

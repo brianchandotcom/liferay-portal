@@ -309,19 +309,28 @@ public class PortletDataContextImpl implements PortletDataContext {
 			addLocks(clazz, String.valueOf(classPK));
 			addPermissions(clazz, classPK);
 
-			if (getBooleanParameter(namespace, "categories")) {
+			boolean addContentMetadata = getBooleanParameter(
+				namespace, PortletDataHandlerKeys.PORTLET_METADATA_ALL);
+
+			if (addContentMetadata ||
+				getBooleanParameter(namespace, "categories")) {
+
 				addAssetCategories(clazz, classPK);
 			}
 
-			if (getBooleanParameter(namespace, "comments")) {
+			if (addContentMetadata ||
+				getBooleanParameter(namespace, "comments")) {
+
 				addComments(clazz, classPK);
 			}
 
-			if (getBooleanParameter(namespace, "ratings")) {
+			if (addContentMetadata ||
+				getBooleanParameter(namespace, "ratings")) {
+
 				addRatingsEntries(clazz, classPK);
 			}
 
-			if (getBooleanParameter(namespace, "tags")) {
+			if (addContentMetadata || getBooleanParameter(namespace, "tags")) {
 				addAssetTags(clazz, classPK);
 			}
 		}
@@ -917,11 +926,18 @@ public class PortletDataContextImpl implements PortletDataContext {
 		importLocks(clazz, String.valueOf(classPK), String.valueOf(newClassPK));
 		importPermissions(clazz, classPK, newClassPK);
 
-		if (getBooleanParameter(namespace, "comments")) {
+		boolean addContentRelatedInformation = getBooleanParameter(
+			namespace, PortletDataHandlerKeys.PORTLET_METADATA_ALL);
+
+		if (addContentRelatedInformation ||
+			getBooleanParameter(namespace, "comments")) {
+
 			importComments(clazz, classPK, newClassPK, getScopeGroupId());
 		}
 
-		if (getBooleanParameter(namespace, "ratings")) {
+		if (addContentRelatedInformation ||
+			getBooleanParameter(namespace, "ratings")) {
+
 			importRatingsEntries(clazz, classPK, newClassPK);
 		}
 	}
@@ -1306,14 +1322,21 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		// Asset
 
+		boolean addContentRelatedInformation = getBooleanParameter(
+			namespace, PortletDataHandlerKeys.PORTLET_METADATA_ALL);
+
 		if (isResourceMain(classedModel)) {
-			if (getBooleanParameter(namespace, "categories")) {
+			if (addContentRelatedInformation ||
+				getBooleanParameter(namespace, "categories")) {
+
 				long[] assetCategoryIds = getAssetCategoryIds(clazz, classPK);
 
 				serviceContext.setAssetCategoryIds(assetCategoryIds);
 			}
 
-			if (getBooleanParameter(namespace, "tags")) {
+			if (addContentRelatedInformation ||
+				getBooleanParameter(namespace, "tags")) {
+
 				String[] assetTagNames = getAssetTagNames(clazz, classPK);
 
 				serviceContext.setAssetTagNames(assetTagNames);

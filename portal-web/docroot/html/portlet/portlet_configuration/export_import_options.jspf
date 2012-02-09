@@ -64,12 +64,15 @@
 				<%
 				try {
 					PortletDataHandlerControl[] controls = null;
+					PortletDataHandlerControl[] metadataControls = null;
 
 					if (tabs2.equals("import")) {
 						controls = portletDataHandler.getImportControls();
+						metadataControls = portletDataHandler.getImportMetadataControls();
 					}
 					else {
 						controls = portletDataHandler.getExportControls();
+						metadataControls = portletDataHandler.getExportMetadataControls();
 					}
 
 					if (controls != null) {
@@ -78,6 +81,51 @@
 				%>
 
 						<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
+
+						<c:if test="<%= metadataControls.length > 0 %>">
+							<li class="tree-item">
+								<aui:fieldset cssClass="portlet-data-section" helpMessage="content-metadata-help" label="content-metadata">
+									<aui:input checked="<%= true %>" id="assetAll" label="all-metadata" name="<%= PortletDataHandlerKeys.PORTLET_METADATA_ALL %>" type="radio" value="true" />
+
+									<aui:input id="assetFilter" label="choose-metadata" name="<%= PortletDataHandlerKeys.PORTLET_METADATA_ALL %>" type="radio" value="false" />
+
+									<ul class="aui-helper-hidden <%= metadataControls.length > 1 ? "multiple-metadata-controls" : StringPool.BLANK %>" id="<portlet:namespace />assetList">
+
+									<%
+									for (int i = 0; i < metadataControls.length; i++) {
+										PortletDataHandlerBoolean control = (PortletDataHandlerBoolean)metadataControls[i];
+
+										PortletDataHandlerControl[] children = control.getChildren();
+
+										if ((children != null) && (children.length > 0)) {
+											request.setAttribute("render_controls.jsp-controls", children);
+									%>
+
+											<c:choose>
+												<c:when test="<%= metadataControls.length > 1 %>">
+													<li class="tree-item">
+														<aui:fieldset cssClass="portlet-data-sub-section" label="<%= metadataControls[i].getControlName() %>">
+															<ul id="<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA %>_<%= selPortlet.getRootPortletId() %>Controls">
+																<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
+															</ul>
+														</aui:fieldset>
+													</li>
+												</c:when>
+												<c:otherwise>
+													<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
+												</c:otherwise>
+											</c:choose>
+
+									<%
+										}
+									}
+									%>
+
+									</ul>
+
+								</aui:fieldset>
+							</li>
+						</c:if>
 
 				<%
 					}
@@ -96,32 +144,21 @@
 				<c:choose>
 					<c:when test='<%= tabs2.equals("import") %>'>
 						<li class="tree-item">
-							<aui:field-wrapper label="data-strategy">
-								<ul>
-									<li>
-										<aui:input checked="<%= true %>" helpMessage="import-data-strategy-mirror-help" id="mirror" label="mirror" name="<%= PortletDataHandlerKeys.DATA_STRATEGY %>" type="radio" value="<%= PortletDataHandlerKeys.DATA_STRATEGY_MIRROR %>" />
-									</li>
-									<li>
-										<aui:input helpMessage="import-data-strategy-mirror-with-overwritting-help" id="mirrorWithOverwriting" label="mirror-with-overwritting" name="<%= PortletDataHandlerKeys.DATA_STRATEGY %>" type="radio" value="<%= PortletDataHandlerKeys.DATA_STRATEGY_MIRROR_OVERWRITE %>" />
-									</li>
-									<li>
-										<aui:input helpMessage="import-data-strategy-copy-as-new-help" id="copyAsNew" label="copy-as-new" name="<%= PortletDataHandlerKeys.DATA_STRATEGY %>" type="radio" value="<%= PortletDataHandlerKeys.DATA_STRATEGY_COPY_AS_NEW %>" />
-									</li>
-								</ul>
-							</aui:field-wrapper>
+							<aui:fieldset label="data-strategy">
+								<aui:input checked="<%= true %>" helpMessage="import-data-strategy-mirror-help" id="mirror" label="mirror" name="<%= PortletDataHandlerKeys.DATA_STRATEGY %>" type="radio" value="<%= PortletDataHandlerKeys.DATA_STRATEGY_MIRROR %>" />
+
+								<aui:input helpMessage="import-data-strategy-mirror-with-overwritting-help" id="mirrorWithOverwriting" label="mirror-with-overwritting" name="<%= PortletDataHandlerKeys.DATA_STRATEGY %>" type="radio" value="<%= PortletDataHandlerKeys.DATA_STRATEGY_MIRROR_OVERWRITE %>" />
+
+								<aui:input helpMessage="import-data-strategy-copy-as-new-help" id="copyAsNew" label="copy-as-new" name="<%= PortletDataHandlerKeys.DATA_STRATEGY %>" type="radio" value="<%= PortletDataHandlerKeys.DATA_STRATEGY_COPY_AS_NEW %>" />
+							</aui:fieldset>
 						</li>
 
 						<li class="tree-item">
-							<aui:field-wrapper label="user-id-strategy">
-								<ul>
-									<li>
-										<aui:input checked="<%= true %>" id="currentUserId" label="if-a-user-id-does-not-exist,-then-use-my-user-id" name="<%= PortletDataHandlerKeys.USER_ID_STRATEGY %>" type="radio" value="<%= UserIdStrategy.CURRENT_USER_ID %>" />
-									</li>
-									<li>
-										<aui:input id="alwaysCurrentUserId" label="always-use-my-user-id" name="<%= PortletDataHandlerKeys.USER_ID_STRATEGY %>" type="radio" value="<%= UserIdStrategy.ALWAYS_CURRENT_USER_ID %>" />
-									</li>
-								</ul>
-							</aui:field-wrapper>
+							<aui:fieldset label="user-id-strategy">
+								<aui:input checked="<%= true %>" id="currentUserId" label="if-a-user-id-does-not-exist,-then-use-my-user-id" name="<%= PortletDataHandlerKeys.USER_ID_STRATEGY %>" type="radio" value="<%= UserIdStrategy.CURRENT_USER_ID %>" />
+
+								<aui:input id="alwaysCurrentUserId" label="always-use-my-user-id" name="<%= PortletDataHandlerKeys.USER_ID_STRATEGY %>" type="radio" value="<%= UserIdStrategy.ALWAYS_CURRENT_USER_ID %>" />
+							</aui:fieldset>
 						</li>
 					</c:when>
 					<c:otherwise>
@@ -247,6 +284,9 @@
 	</c:choose>
 
 	Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PERMISSIONS %>Checkbox', '<portlet:namespace />permissionsUl');
+
+	Liferay.Util.toggleRadio('<portlet:namespace />assetFilter','<portlet:namespace />assetList');
+	Liferay.Util.toggleRadio('<portlet:namespace />assetAll', '', ['<portlet:namespace />assetList']);
 
 	Liferay.Util.toggleRadio('<portlet:namespace />rangeDateRange','<portlet:namespace />startEndDate');
 	Liferay.Util.toggleRadio('<portlet:namespace />rangeAll','', ['<portlet:namespace />startEndDate']);

@@ -46,9 +46,9 @@ public class ViewBlogsEntryCompletedTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
-			selenium.getText("//h3/a"));
+			selenium.getText("//h3[@class='asset-title']/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
-			selenium.getText("//div/div/div[1]/div[2]/div[1]"));
+			selenium.getText("//div[@class='asset-summary']"));
 		assertTrue(selenium.isPartialText("//div[@class='asset-more']/a",
 				"Read More"));
 		assertFalse(selenium.isTextPresent("There are no results."));
@@ -57,9 +57,9 @@ public class ViewBlogsEntryCompletedTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
-			selenium.getText("//div[1]/h1/span"));
+			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
-			selenium.getText("//p"));
+			selenium.getText("//div[@class='asset-content']/p"));
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -105,7 +105,7 @@ public class ViewBlogsEntryCompletedTest extends BaseTestCase {
 			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry"),
 			selenium.getText("//td[3]/a"));
-		assertTrue(selenium.isElementPresent("//td[4]/a"));
+		assertTrue(selenium.isVisible("//td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
 			selenium.getText("//td[5]/a"));
 	}

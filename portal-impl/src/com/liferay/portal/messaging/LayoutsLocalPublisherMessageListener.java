@@ -98,7 +98,7 @@ public class LayoutsLocalPublisherMessageListener
 		User user = UserLocalServiceUtil.getUserById(userId);
 
 		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(user, false);
+			PermissionCheckerFactoryUtil.create(user);
 
 		PermissionThreadLocal.setPermissionChecker(permissionChecker);
 

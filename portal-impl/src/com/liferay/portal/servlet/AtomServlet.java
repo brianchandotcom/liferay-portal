@@ -76,7 +76,7 @@ public class AtomServlet extends AbderaServlet {
 				}
 
 				PermissionChecker permissionChecker =
-					PermissionCheckerFactoryUtil.create(user, true);
+					PermissionCheckerFactoryUtil.create(user);
 
 				PermissionThreadLocal.setPermissionChecker(permissionChecker);
 

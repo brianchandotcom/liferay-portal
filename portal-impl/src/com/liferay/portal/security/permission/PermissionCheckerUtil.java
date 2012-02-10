@@ -48,7 +48,7 @@ public class PermissionCheckerUtil {
 					PropsValues.PERMISSIONS_CHECKER).newInstance();
 			}
 
-			permissionChecker.init(user, _CHECK_GUEST);
+			permissionChecker.init(user);
 
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 		}
@@ -56,8 +56,6 @@ public class PermissionCheckerUtil {
 			_log.error(e);
 		}
 	}
-
-	private static final boolean _CHECK_GUEST = true;
 
 	private static Log _log = LogFactoryUtil.getLog(
 		PermissionCheckerUtil.class);

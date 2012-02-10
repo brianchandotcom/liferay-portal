@@ -169,27 +169,13 @@ public class ViewAction extends PortletAction {
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		boolean checkGuest = permissionChecker.isCheckGuest();
+		for (Layout layout : layouts) {
+			if (!layout.isHidden() &&
+				LayoutPermissionUtil.contains(
+					permissionChecker, layout, ActionKeys.VIEW)) {
 
-		try {
-			for (Layout layout : layouts) {
-				if (layout.isPrivateLayout()) {
-					permissionChecker.setCheckGuest(false);
-				}
-				else {
-					permissionChecker.setCheckGuest(true);
-				}
-
-				if (!layout.isHidden() &&
-					LayoutPermissionUtil.contains(
-						permissionChecker, layout, ActionKeys.VIEW)) {
-
-					return PortalUtil.getLayoutURL(layout, themeDisplay);
-				}
+				return PortalUtil.getLayoutURL(layout, themeDisplay);
 			}
-		}
-		finally {
-			permissionChecker.setCheckGuest(checkGuest);
 		}
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);

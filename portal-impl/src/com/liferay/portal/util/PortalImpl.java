@@ -4548,7 +4548,7 @@ public class PortalImpl implements Portal {
 
 	public boolean isCompanyAdmin(User user) throws Exception {
 		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(user, true);
+			PermissionCheckerFactoryUtil.create(user);
 
 		return permissionChecker.isCompanyAdmin();
 	}
@@ -4655,14 +4655,14 @@ public class PortalImpl implements Portal {
 
 	public boolean isGroupAdmin(User user, long groupId) throws Exception {
 		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(user, true);
+			PermissionCheckerFactoryUtil.create(user);
 
 		return permissionChecker.isGroupAdmin(groupId);
 	}
 
 	public boolean isGroupOwner(User user, long groupId) throws Exception {
 		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(user, true);
+			PermissionCheckerFactoryUtil.create(user);
 
 		return permissionChecker.isGroupOwner(groupId);
 	}
@@ -5739,7 +5739,7 @@ public class PortalImpl implements Portal {
 		boolean checkGuest = true;
 
 		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(realUser, checkGuest);
+			PermissionCheckerFactoryUtil.create(realUser);
 
 		if (doAsUser.isDefaultUser() ||
 			UserPermissionUtil.contains(

@@ -32,12 +32,12 @@ public class PermissionCheckerFactoryImpl implements PermissionCheckerFactory {
 		_permissionChecker = clazz.newInstance();
 	}
 
-	public PermissionChecker create(User user, boolean checkGuest)
+	public PermissionChecker create(User user)
 		throws Exception {
 
 		PermissionChecker permissionChecker = _permissionChecker.clone();
 
-		permissionChecker.init(user, checkGuest);
+		permissionChecker.init(user);
 
 		return permissionChecker;
 	}

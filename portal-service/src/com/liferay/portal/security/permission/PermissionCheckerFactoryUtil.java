@@ -22,10 +22,10 @@ import com.liferay.portal.model.User;
  */
 public class PermissionCheckerFactoryUtil {
 
-	public static PermissionChecker create(User user, boolean checkGuest)
+	public static PermissionChecker create(User user)
 		throws Exception {
 
-		return getPermissionCheckerFactory().create(user, checkGuest);
+		return getPermissionCheckerFactory().create(user);
 	}
 
 	public static PermissionCheckerFactory getPermissionCheckerFactory() {

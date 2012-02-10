@@ -173,7 +173,7 @@ public class JSONWebServiceServlet extends JSONServlet {
 
 		if (user != null) {
 			PermissionChecker permissionChecker =
-				PermissionCheckerFactoryUtil.create(user, true);
+				PermissionCheckerFactoryUtil.create(user);
 
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 

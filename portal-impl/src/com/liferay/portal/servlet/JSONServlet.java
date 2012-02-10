@@ -109,7 +109,7 @@ public class JSONServlet extends HttpServlet {
 			User user = UserLocalServiceUtil.getUserById(userId);
 
 			PermissionChecker permissionChecker =
-				PermissionCheckerFactoryUtil.create(user, true);
+				PermissionCheckerFactoryUtil.create(user);
 
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 		}

@@ -201,7 +201,7 @@ public class WebServerServlet extends HttpServlet {
 				PortalUtil.getUserPassword(request));
 
 			PermissionChecker permissionChecker =
-				PermissionCheckerFactoryUtil.create(user, true);
+				PermissionCheckerFactoryUtil.create(user);
 
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 

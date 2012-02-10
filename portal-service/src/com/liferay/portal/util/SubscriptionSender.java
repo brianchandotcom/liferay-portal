@@ -370,7 +370,7 @@ public class SubscriptionSender implements Serializable {
 		throws Exception {
 
 		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(user, true);
+			PermissionCheckerFactoryUtil.create(user);
 
 		return SubscriptionPermissionUtil.contains(
 			permissionChecker, subscription.getClassName(),

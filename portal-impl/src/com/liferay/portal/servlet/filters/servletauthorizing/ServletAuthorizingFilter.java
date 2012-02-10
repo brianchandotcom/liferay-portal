@@ -106,7 +106,7 @@ public class ServletAuthorizingFilter extends BasePortalFilter {
 				// Permission checker
 
 				PermissionChecker permissionChecker =
-					PermissionCheckerFactoryUtil.create(user, true);
+					PermissionCheckerFactoryUtil.create(user);
 
 				PermissionThreadLocal.setPermissionChecker(permissionChecker);
 

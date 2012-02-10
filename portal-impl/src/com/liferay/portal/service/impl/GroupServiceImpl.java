@@ -426,8 +426,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 		if (permissionChecker.getUserId() != userId) {
 			try {
-				permissionChecker = PermissionCheckerFactoryUtil.create(
-					user, true);
+				permissionChecker = PermissionCheckerFactoryUtil.create(user);
 			}
 			catch (Exception e) {
 				throw new PrincipalException(e);

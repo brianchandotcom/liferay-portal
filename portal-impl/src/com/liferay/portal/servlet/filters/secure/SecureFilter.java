@@ -310,7 +310,7 @@ public class SecureFilter extends BasePortalFilter {
 				PortalUtil.getUserPassword(request));
 
 			PermissionChecker permissionChecker =
-				PermissionCheckerFactoryUtil.create(user, false);
+				PermissionCheckerFactoryUtil.create(user);
 
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 		}

@@ -1840,8 +1840,7 @@ public class PortletImpl extends PortletBaseImpl {
 
 				User user = UserLocalServiceUtil.getUser(userId);
 
-				permissionChecker = PermissionCheckerFactoryUtil.create(
-					user, true);
+				permissionChecker = PermissionCheckerFactoryUtil.create(user);
 			}
 
 			if (PortletPermissionUtil.contains(

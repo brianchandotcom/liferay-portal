@@ -142,7 +142,7 @@ public class RollingChecksum {
 			_messageDigest = MessageDigest.getInstance("MD5");
 		}
 		catch (NoSuchAlgorithmException nsae) {
-			throw new RuntimeException("MD5 algorithm not found", nsae);
+			throw new ExceptionInInitializerError(nsae);
 		}
 	}
 

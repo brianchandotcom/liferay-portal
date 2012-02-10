@@ -46,11 +46,11 @@
 		<div id="main-content">
 
 			<%
-			boolean propertiesFileUpdated = GetterUtil.getBoolean((Boolean)session.getAttribute(WebKeys.SETUP_WIZARD_PROPERTIES_UPDATED));
+			boolean propertiesUpdated = GetterUtil.getBoolean((Boolean)session.getAttribute(WebKeys.SETUP_WIZARD_PROPERTIES_UPDATED));
 			%>
 
 			<c:choose>
-				<c:when test="<%= !propertiesFileUpdated && !SetupWizardUtil.isSetupFinished() %>">
+				<c:when test="<%= !propertiesUpdated && !SetupWizardUtil.isSetupFinished() %>">
 
 					<%
 					boolean defaultDatabase = SetupWizardUtil.isDefaultDatabase(request);
@@ -346,10 +346,12 @@
 
 					<%
 					SetupWizardUtil.setSetupFinished(true);
+
+                    boolean adminUserUpdated = GetterUtil.getBoolean((Boolean)session.getAttribute(WebKeys.SETUP_WIZARD_USER_UPDATED));
 					%>
 
 					<c:choose>
-						<c:when test="<%= propertiesFileUpdated %>">
+						<c:when test="<%= propertiesUpdated && adminUserUpdated %>">
 
 							<%
 							PortletURL loginURL = new PortletURLImpl(request, PortletKeys.LOGIN, plid, PortletRequest.ACTION_PHASE);
@@ -387,7 +389,7 @@
 								<c:if test="<%= !passwordUpdated %>">
 									<p>
 										<span class="aui-field-hint">
-											<liferay-ui:message arguments="<%= PropsValues.DEFAULT_ADMIN_PASSWORD %>" key="your-password-is-x.-don't-forget-to-change-it-in-my-account" />
+											<liferay-ui:message arguments="<%= PropsValues.DEFAULT_ADMIN_PASSWORD %>" key="your-password-is-x.-you-will-be-required-to-change-it-the-next-time-you-log-into-the-portal" />
 										</span>
 									</p>
 								</c:if>
@@ -398,12 +400,24 @@
 						<c:otherwise>
 							<p>
 								<span class="portlet-msg-alert">
+                                    <c:choose>
+                                        <c:when test="<%= !propertiesUpdated %>">
+                                            
+                                            <%
+                                            String taglibArguments = "<span class=\"lfr-inline-code\">" + PropsValues.LIFERAY_HOME + "</span>";
+                                            %>
 
-									<%
-									String taglibArguments = "<span class=\"lfr-inline-code\">" + PropsValues.LIFERAY_HOME + "</span>";
-									%>
+                                            <liferay-ui:message arguments="<%= taglibArguments %>" key="sorry,-we-were-not-able-to-save-the-configuration-file-in-x" />
+                                        </c:when>
+                                        <c:otherwise>
 
-									<liferay-ui:message arguments="<%= taglibArguments %>" key="sorry,-we-were-not-able-to-save-the-configuration-file-in-x" />
+                                            <%
+                                            String[] taglibArguments = {PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS, PropsValues.LIFERAY_HOME};
+                                            %>
+
+                                            <liferay-ui:message arguments="<%= taglibArguments %>" key="sorry,-we-were-not-able-to-find-the-administrator-x-in-the-database" />
+                                        </c:otherwise>
+                                    </c:choose>
 								</span>
 							</p>
 

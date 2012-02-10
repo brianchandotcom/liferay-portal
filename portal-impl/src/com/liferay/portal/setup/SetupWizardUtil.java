@@ -185,24 +185,46 @@ public class SetupWizardUtil {
 
 		PropsUtil.addProperties(unicodeProperties);
 
-		HttpSession session = request.getSession();
-
-		session.setAttribute(
-			WebKeys.SETUP_WIZARD_PROPERTIES, unicodeProperties);
-
-		boolean propertiesFileUpdated = _writePropertiesFile(unicodeProperties);
-
-		session.setAttribute(
-			WebKeys.SETUP_WIZARD_PROPERTIES_UPDATED, propertiesFileUpdated);
-
 		if (!databaseConfigured) {
 			_reloadServletContext(request, unicodeProperties);
 		}
 
 		_updateCompany();
-		_updateAdminUser(request);
+
+		boolean adminUserUpdated = true;
+
+		try {
+			_updateAdminUser(request);
+		}
+		catch (NoSuchUserException nsue) {
+			adminUserUpdated = false;
+
+			// remove administrator properties
+
+			unicodeProperties.remove(PropsKeys.ADMIN_EMAIL_FROM_NAME);
+			unicodeProperties.remove(PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+			unicodeProperties.remove(PropsKeys.DEFAULT_ADMIN_FIRST_NAME);
+			unicodeProperties.remove(PropsKeys.DEFAULT_ADMIN_LAST_NAME);
+			unicodeProperties.remove(PropsKeys.DEFAULT_ADMIN_EMAIL_ADDRESS);
+			unicodeProperties.remove(PropsKeys.DEFAULT_ADMIN_SCREEN_NAME);
+		}
 
 		_initPlugins();
+
+		boolean propertiesUpdated = true;
+
+		if (adminUserUpdated) {
+			propertiesUpdated = _writePropertiesFile(unicodeProperties);
+		}
+
+		HttpSession session = request.getSession();
+
+		session.setAttribute(
+			WebKeys.SETUP_WIZARD_PROPERTIES, unicodeProperties);
+		session.setAttribute(
+			WebKeys.SETUP_WIZARD_PROPERTIES_UPDATED, propertiesUpdated);
+		session.setAttribute(
+			WebKeys.SETUP_WIZARD_USER_UPDATED, adminUserUpdated);
 	}
 
 	private static String _getParameter(

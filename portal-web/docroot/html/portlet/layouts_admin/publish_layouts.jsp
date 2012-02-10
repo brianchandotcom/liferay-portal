@@ -253,6 +253,10 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 	#<portlet:namespace />exportPagesFm .portlet-data-section legend {
 		font-size: 110%;
 	}
+
+	#<portlet:namespace />exportPagesFm .portlet-data-section .portlet-type-data-section .aui-legend {
+		border-width: 0;
+	}
 </style>
 
 <aui:form action='<%= portletURL.toString() + "&etag=0" %>' method="post" name="exportPagesFm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "refreshDialog();" %>' >

@@ -53,7 +53,15 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		return new PortletDataHandlerControl[0];
 	}
 
+	public PortletDataHandlerControl[] getExportMetadataControls() {
+		return new PortletDataHandlerControl[0];
+	}
+
 	public PortletDataHandlerControl[] getImportControls() {
+		return new PortletDataHandlerControl[0];
+	}
+
+	public PortletDataHandlerControl[] getImportMetadataControls() {
 		return new PortletDataHandlerControl[0];
 	}
 

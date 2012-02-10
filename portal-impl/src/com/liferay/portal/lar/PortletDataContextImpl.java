@@ -309,19 +309,28 @@ public class PortletDataContextImpl implements PortletDataContext {
 			addLocks(clazz, String.valueOf(classPK));
 			addPermissions(clazz, classPK);
 
-			if (getBooleanParameter(namespace, "categories")) {
+			boolean portletMetadataAll = getBooleanParameter(
+				namespace, PortletDataHandlerKeys.PORTLET_METADATA_ALL);
+
+			if (portletMetadataAll ||
+				getBooleanParameter(namespace, "categories")) {
+
 				addAssetCategories(clazz, classPK);
 			}
 
-			if (getBooleanParameter(namespace, "comments")) {
+			if (portletMetadataAll ||
+				getBooleanParameter(namespace, "comments")) {
+
 				addComments(clazz, classPK);
 			}
 
-			if (getBooleanParameter(namespace, "ratings")) {
+			if (portletMetadataAll ||
+				getBooleanParameter(namespace, "ratings")) {
+
 				addRatingsEntries(clazz, classPK);
 			}
 
-			if (getBooleanParameter(namespace, "tags")) {
+			if (portletMetadataAll || getBooleanParameter(namespace, "tags")) {
 				addAssetTags(clazz, classPK);
 			}
 		}
@@ -917,11 +926,14 @@ public class PortletDataContextImpl implements PortletDataContext {
 		importLocks(clazz, String.valueOf(classPK), String.valueOf(newClassPK));
 		importPermissions(clazz, classPK, newClassPK);
 
-		if (getBooleanParameter(namespace, "comments")) {
+		boolean portletMetadataAll = getBooleanParameter(
+			namespace, PortletDataHandlerKeys.PORTLET_METADATA_ALL);
+
+		if (portletMetadataAll || getBooleanParameter(namespace, "comments")) {
 			importComments(clazz, classPK, newClassPK, getScopeGroupId());
 		}
 
-		if (getBooleanParameter(namespace, "ratings")) {
+		if (portletMetadataAll || getBooleanParameter(namespace, "ratings")) {
 			importRatingsEntries(clazz, classPK, newClassPK);
 		}
 	}
@@ -1306,14 +1318,19 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		// Asset
 
+		boolean portletMetadataAll = getBooleanParameter(
+			namespace, PortletDataHandlerKeys.PORTLET_METADATA_ALL);
+
 		if (isResourceMain(classedModel)) {
-			if (getBooleanParameter(namespace, "categories")) {
+			if (portletMetadataAll ||
+				getBooleanParameter(namespace, "categories")) {
+
 				long[] assetCategoryIds = getAssetCategoryIds(clazz, classPK);
 
 				serviceContext.setAssetCategoryIds(assetCategoryIds);
 			}
 
-			if (getBooleanParameter(namespace, "tags")) {
+			if (portletMetadataAll || getBooleanParameter(namespace, "tags")) {
 				String[] assetTagNames = getAssetTagNames(clazz, classPK);
 
 				serviceContext.setAssetTagNames(assetTagNames);

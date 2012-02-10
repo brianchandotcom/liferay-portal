@@ -411,8 +411,14 @@
 		margin: 0.5em 0 1.5em;
 	}
 
-	.portlet-data-section legend {
-		font-size: 110%;
+	.portlet-data-section {
+		legend {
+			font-size: 110%;
+		}
+
+		.portlet-type-data-section .aui-legend {
+			border-width: 0;
+		}
 	}
 }
 

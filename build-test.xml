@@ -1910,8 +1910,15 @@
 			<sequential>
 				<if>
 					<or>
+						<contains string="@{java.processes.new.current}" substring="admin-cli.jar" />
+						<contains string="@{java.processes.new.current}" substring="ASMain" />
 						<contains string="@{java.processes.new.current}" substring="Bootstrap" />
+						<contains string="@{java.processes.new.current}" substring="ClientAdmin" />
+						<contains string="@{java.processes.new.current}" substring="gshell-bootstrap.jar" />
+						<contains string="@{java.processes.new.current}" substring="jboss-modules.jar" />
 						<contains string="@{java.processes.new.current}" substring="selenium-server.jar" />
+						<contains string="@{java.processes.new.current}" substring="server.jar" />
+						<contains string="@{java.processes.new.current}" substring="start.jar" />
 					</or>
 					<then>
 						<antcall target="kill-java-process">

@@ -1112,6 +1112,8 @@ public class PropsValues {
 
 	public static final boolean PERMISSIONS_INLINE_SQL_CHECK_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.PERMISSIONS_INLINE_SQL_CHECK_ENABLED));
 
+	public static final boolean PERMISSIONS_LAYOUT_PRIVATE_CHECK_GUEST_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.PERMISSIONS_LAYOUT_PRIVATE_CHECK_GUEST_ENABLED));
+
 	public static final boolean PERMISSIONS_LAYOUT_PUBLIC_CHECK_GUEST_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.PERMISSIONS_LAYOUT_PUBLIC_CHECK_GUEST_ENABLED));
 
 	public static final String PERMISSIONS_LIST_FILTER = PropsUtil.get(PropsKeys.PERMISSIONS_LIST_FILTER);

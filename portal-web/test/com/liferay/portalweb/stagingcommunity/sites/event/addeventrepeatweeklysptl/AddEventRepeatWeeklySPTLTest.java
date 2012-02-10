@@ -106,7 +106,7 @@ public class AddEventRepeatWeeklySPTLTest extends BaseTestCase {
 
 					try {
 						if (selenium.isElementPresent(
-									"//span[3]/span/span/input")) {
+									"//input[@id='_88_recurrenceTypeWeekly']")) {
 							break;
 						}
 					}
@@ -116,7 +116,7 @@ public class AddEventRepeatWeeklySPTLTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.clickAt("//span[3]/span/span/input",
+				selenium.clickAt("//input[@id='_88_recurrenceTypeWeekly']",
 					RuntimeVariables.replace("Weekly"));
 				selenium.clickAt("//div[2]/div/span[1]/span/span/input[2]",
 					RuntimeVariables.replace("Monday"));

@@ -106,7 +106,7 @@ public class AddEventRepeatYearlySPTLTest extends BaseTestCase {
 
 					try {
 						if (selenium.isElementPresent(
-									"//span[5]/span/span/input")) {
+									"//input[@id='_88_recurrenceTypeYearly']")) {
 							break;
 						}
 					}
@@ -116,7 +116,7 @@ public class AddEventRepeatYearlySPTLTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.clickAt("//span[5]/span/span/input",
+				selenium.clickAt("//input[@id='_88_recurrenceTypeYearly']",
 					RuntimeVariables.replace("Yearly"));
 
 				for (int second = 0;; second++) {

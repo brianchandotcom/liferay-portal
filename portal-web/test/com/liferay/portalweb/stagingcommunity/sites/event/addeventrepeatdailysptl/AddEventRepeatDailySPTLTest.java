@@ -106,7 +106,7 @@ public class AddEventRepeatDailySPTLTest extends BaseTestCase {
 
 					try {
 						if (selenium.isElementPresent(
-									"//div/div/span[2]/span/span/input")) {
+									"//input[@id='_88_recurrenceTypeDaily']")) {
 							break;
 						}
 					}
@@ -116,7 +116,7 @@ public class AddEventRepeatDailySPTLTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.clickAt("//div/div/span[2]/span/span/input",
+				selenium.clickAt("//input[@id='_88_recurrenceTypeDaily']",
 					RuntimeVariables.replace("Daily"));
 
 				for (int second = 0;; second++) {

@@ -106,7 +106,7 @@ public class AddEventRepeatNeverSPTLTest extends BaseTestCase {
 
 					try {
 						if (selenium.isElementPresent(
-									"//div/div[1]/div/div/div/span[1]/span/span/input")) {
+									"//input[@id='_88_recurrenceTypeNever']")) {
 							break;
 						}
 					}
@@ -116,7 +116,7 @@ public class AddEventRepeatNeverSPTLTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.clickAt("//div/div[1]/div/div/div/span[1]/span/span/input",
+				selenium.clickAt("//input[@id='_88_recurrenceTypeNever']",
 					RuntimeVariables.replace("Never"));
 
 				for (int second = 0;; second++) {

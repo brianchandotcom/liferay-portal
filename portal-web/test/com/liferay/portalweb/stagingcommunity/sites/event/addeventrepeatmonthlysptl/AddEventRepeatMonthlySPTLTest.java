@@ -106,7 +106,7 @@ public class AddEventRepeatMonthlySPTLTest extends BaseTestCase {
 
 					try {
 						if (selenium.isElementPresent(
-									"//span[4]/span/span/input")) {
+									"//input[@id='_88_recurrenceTypeMonthly']")) {
 							break;
 						}
 					}
@@ -116,7 +116,7 @@ public class AddEventRepeatMonthlySPTLTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.clickAt("//span[4]/span/span/input",
+				selenium.clickAt("//input[@id='_88_recurrenceTypeMonthly']",
 					RuntimeVariables.replace("Monthly"));
 
 				for (int second = 0;; second++) {

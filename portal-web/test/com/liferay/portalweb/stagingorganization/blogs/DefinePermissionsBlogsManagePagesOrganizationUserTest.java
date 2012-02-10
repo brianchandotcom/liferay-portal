@@ -57,8 +57,8 @@ public class DefinePermissionsBlogsManagePagesOrganizationUserTest
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Organization User"),
-			selenium.getText("//tr[6]/td[1]/a"));
-		selenium.clickAt("//tr[6]/td[1]/a",
+			selenium.getText("//tr[contains(.,'Organization User')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'Organization User')]/td[1]/a",
 			RuntimeVariables.replace("Organization User"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();

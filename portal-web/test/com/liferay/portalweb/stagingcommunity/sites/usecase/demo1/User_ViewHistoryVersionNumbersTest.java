@@ -184,6 +184,8 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 
 		assertTrue(selenium.isVisible(
 				"//div[@id='column-2']/div/div[contains(@class,'portlet-message-boards')]"));
+		selenium.open("/web/guest/home/");
+		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

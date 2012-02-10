@@ -54,9 +54,22 @@ public class TearDownUserTest extends BaseTestCase {
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
+				assertTrue(selenium.isVisible("//input[@id='_125_keywords']"));
+				selenium.type("//input[@id='_125_keywords']",
+					RuntimeVariables.replace("Selenium"));
+				selenium.clickAt("//input[@value='Search']",
+					RuntimeVariables.replace("Search"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+				assertEquals(RuntimeVariables.replace("Selenium"),
+					selenium.getText("//tr/td[contains(.,'Selenium')]/a/strong"));
+				selenium.clickAt("//tr/td[contains(.,'Selenium')]/a/strong",
+					RuntimeVariables.replace("Selenium"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
 
 				boolean usersPresent = selenium.isElementPresent(
-						"xPath=(//input[@name='_125_allRowIds'])[2]");
+						"//input[@name='_125_allRowIds']");
 
 				if (!usersPresent) {
 					label = 2;
@@ -65,15 +78,29 @@ public class TearDownUserTest extends BaseTestCase {
 				}
 
 				assertFalse(selenium.isChecked(
-						"xPath=(//input[@name='_125_allRowIds'])[2]"));
-				selenium.clickAt("xPath=(//input[@name='_125_allRowIds'])[2]",
+						"//input[@name='_125_allRowIds']"));
+				selenium.clickAt("//input[@name='_125_allRowIds']",
 					RuntimeVariables.replace("Select All"));
-				assertTrue(selenium.isChecked(
-						"xPath=(//input[@name='_125_allRowIds'])[2]"));
+				assertTrue(selenium.isChecked("//input[@name='_125_allRowIds']"));
 				selenium.clickAt("//input[@value='Deactivate']",
 					RuntimeVariables.replace("Deactivate"));
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to deactivate the selected users[\\s\\S]$"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if ("Are you sure you want to deactivate the selected users?".equals(
+									selenium.getConfirmation())) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -97,6 +124,10 @@ public class TearDownUserTest extends BaseTestCase {
 					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 2:
+				selenium.clickAt("link=Users and Organizations",
+					RuntimeVariables.replace("Users and Organizations"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Search All Users",
 					RuntimeVariables.replace("Search All Users"));
 				selenium.waitForPageToLoad("30000");

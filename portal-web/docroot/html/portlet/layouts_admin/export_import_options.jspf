@@ -265,11 +265,11 @@
 
 								<li class="tree-item">
 									<aui:fieldset cssClass="portlet-data-section" helpMessage="content-metadata-help" label="content-metadata">
-										<aui:input checked="<%= true %>" id="assetAll" label="all-metadata" name="<%= PortletDataHandlerKeys.PORTLET_METADATA_ALL %>" type="radio" value="true" />
+										<aui:input checked="<%= true %>" id="portletMetaDataAll" label="all-metadata" name="<%= PortletDataHandlerKeys.PORTLET_METADATA_ALL %>" type="radio" value="true" />
 
-										<aui:input id="assetFilter" label="choose-metadata" name="<%= PortletDataHandlerKeys.PORTLET_METADATA_ALL %>" type="radio" value="false" />
+										<aui:input id="portletMetaDataFilter" label="choose-metadata" name="<%= PortletDataHandlerKeys.PORTLET_METADATA_ALL %>" type="radio" value="false" />
 
-										<ul class="aui-helper-hidden" id="<portlet:namespace />assetList">
+										<ul class="aui-helper-hidden" id="<portlet:namespace />portletMetaDataList">
 
 											<%
 											Set<String> displayedControls = new HashSet<String>();
@@ -321,7 +321,7 @@
 														%>
 
 																<li class="tree-item">
-																	<aui:fieldset cssClass="portlet-data-sub-section" label="<%= metadataControls[i].getControlName() %>">
+																	<aui:fieldset cssClass="portlet-type-data-section" label="<%= metadataControls[i].getControlName() %>">
 																		<ul id="<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA %>_<%= rootPortletId %>Controls">
 																			<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
 																		</ul>
@@ -411,8 +411,8 @@
 	Liferay.Util.toggleRadio('<portlet:namespace />rangeLastPublish', '', ['<portlet:namespace />startEndDate']);
 	Liferay.Util.toggleRadio('<portlet:namespace />rangeLast', '', ['<portlet:namespace />startEndDate']);
 
-	Liferay.Util.toggleRadio('<portlet:namespace />assetFilter', '<portlet:namespace />assetList');
-	Liferay.Util.toggleRadio('<portlet:namespace />assetAll', '', ['<portlet:namespace />assetList']);
+	Liferay.Util.toggleRadio('<portlet:namespace />portletMetaDataFilter', '<portlet:namespace />portletMetaDataList');
+	Liferay.Util.toggleRadio('<portlet:namespace />portletMetaDataAll', '', ['<portlet:namespace />portletMetaDataList']);
 
 	Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA %>Checkbox', '<portlet:namespace />portletDataControls');
 	Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PERMISSIONS %>Checkbox', '<portlet:namespace />permissionsUl');

@@ -254,7 +254,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 		font-size: 110%;
 	}
 
-	#<portlet:namespace />exportPagesFm .portlet-data-section .portlet-data-sub-section .aui-legend {
+	#<portlet:namespace />exportPagesFm .portlet-data-section .portlet-type-data-section .aui-legend {
 		border-width: 0;
 	}
 </style>

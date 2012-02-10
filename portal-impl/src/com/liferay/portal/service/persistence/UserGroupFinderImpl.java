@@ -70,12 +70,12 @@ public class UserGroupFinderImpl
 		UserGroupFinder.class.getName() + ".joinByUserGroupsUsers";
 
 	public int countByC_N_D(
-			long companyId, String name, String description,
-			LinkedHashMap<String, Object> params)
+			long companyId, String[] names, String[] descriptions,
+			LinkedHashMap<String, Object> params, boolean andOperator)
 		throws SystemException {
 
-		name = StringUtil.lowerCase(name);
-		description = StringUtil.lowerCase(description);
+		names = CustomSQLUtil.keywords(names);
+		descriptions = CustomSQLUtil.keywords(descriptions);
 
 		Session session = null;
 
@@ -84,6 +84,11 @@ public class UserGroupFinderImpl
 
 			String sql = CustomSQLUtil.get(COUNT_BY_C_N_D);
 
+			sql = CustomSQLUtil.replaceKeywords(
+				sql, "UserGroup.name", StringPool.LIKE, false, names);
+				sql = CustomSQLUtil.replaceKeywords(
+					sql, "UserGroup.description", StringPool.LIKE, false,
+					descriptions);
 			sql = StringUtil.replace(sql, "[$JOIN$]", getJoin(params));
 			sql = StringUtil.replace(sql, "[$WHERE$]", getWhere(params));
 
@@ -96,10 +101,8 @@ public class UserGroupFinderImpl
 			setJoin(qPos, params);
 
 			qPos.add(companyId);
-			qPos.add(name);
-			qPos.add(name);
-			qPos.add(description);
-			qPos.add(description);
+			qPos.add(names, 2);
+			qPos.add(descriptions, 2);
 
 			Iterator<Long> itr = q.iterate();
 
@@ -119,6 +122,27 @@ public class UserGroupFinderImpl
 		finally {
 			closeSession(session);
 		}
+	}
+
+	public int countByKeywords(
+			long companyId, String keywords,
+			LinkedHashMap<String, Object> params)
+		throws SystemException {
+
+		String[] names = null;
+		String[] descriptions = null;
+		boolean andOperator = false;
+
+		if (Validator.isNotNull(keywords)) {
+			names = CustomSQLUtil.keywords(keywords);
+			descriptions = CustomSQLUtil.keywords(keywords);
+		}
+		else {
+			andOperator = true;
+		}
+
+		return countByC_N_D(
+			companyId, names, descriptions, params, andOperator);
 	}
 
 	public UserGroup findByC_N(long companyId, String name)
@@ -167,13 +191,13 @@ public class UserGroupFinderImpl
 	}
 
 	public List<UserGroup> findByC_N_D(
-			long companyId, String name, String description,
-			LinkedHashMap<String, Object> params, int start, int end,
-			OrderByComparator obc)
+			long companyId, String[] names, String[] descriptions,
+			LinkedHashMap<String, Object> params, boolean andOperator,
+			int start, int end, OrderByComparator obc)
 		throws SystemException {
 
-		name = StringUtil.lowerCase(name);
-		description = StringUtil.lowerCase(description);
+		names = CustomSQLUtil.keywords(names);
+		descriptions = CustomSQLUtil.keywords(descriptions);
 
 		Session session = null;
 
@@ -182,8 +206,15 @@ public class UserGroupFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_C_N_D);
 
+			sql = CustomSQLUtil.replaceKeywords(
+				sql, "UserGroup.name", StringPool.LIKE, false, names);
+				sql = CustomSQLUtil.replaceKeywords(
+				sql, "UserGroup.description", StringPool.LIKE, false,
+					descriptions);
+
 			sql = StringUtil.replace(sql, "[$JOIN$]", getJoin(params));
 			sql = StringUtil.replace(sql, "[$WHERE$]", getWhere(params));
+			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
 			sql = CustomSQLUtil.replaceOrderBy(sql, obc);
 
 			SQLQuery q = session.createSQLQuery(sql);
@@ -195,10 +226,8 @@ public class UserGroupFinderImpl
 			setJoin(qPos, params);
 
 			qPos.add(companyId);
-			qPos.add(name);
-			qPos.add(name);
-			qPos.add(description);
-			qPos.add(description);
+			qPos.add(names, 2);
+			qPos.add(descriptions, 2);
 
 			return (List<UserGroup>)QueryUtil.list(q, getDialect(), start, end);
 		}
@@ -208,6 +237,29 @@ public class UserGroupFinderImpl
 		finally {
 			closeSession(session);
 		}
+	}
+
+	public List<UserGroup> findByKeywords(
+			long companyId, String keywords,
+			LinkedHashMap<String, Object> params, int start, int end,
+			OrderByComparator obc)
+		throws SystemException {
+
+		String[] names = null;
+		String[] descriptions = null;
+		boolean andOperator = false;
+
+		if (Validator.isNotNull(keywords)) {
+			names = CustomSQLUtil.keywords(keywords);
+			descriptions = CustomSQLUtil.keywords(keywords);
+		}
+		else {
+			andOperator = true;
+		}
+
+		return findByC_N_D(
+			companyId, names, descriptions, params, andOperator, start, end,
+			obc);
 	}
 
 	protected String getJoin(LinkedHashMap<String, Object> params) {

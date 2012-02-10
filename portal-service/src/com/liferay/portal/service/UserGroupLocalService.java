@@ -442,7 +442,7 @@ public interface UserGroupLocalService extends PersistedModelLocalService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.UserGroup> search(
-		long companyId, java.lang.String name, java.lang.String description,
+		long companyId, java.lang.String keywords,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -462,8 +462,7 @@ public interface UserGroupLocalService extends PersistedModelLocalService {
 	* @see com.liferay.portal.service.persistence.UserGroupFinder
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, java.lang.String name,
-		java.lang.String description,
+	public int searchCount(long companyId, java.lang.String keywords,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

@@ -1831,8 +1831,8 @@
 			WHERE
 				[$WHERE$]
 				(UserGroup.companyId = ?) AND
-				(lower(UserGroup.name) LIKE ? OR ? IS NULL) AND
-				(lower(UserGroup.description) LIKE ? OR ? IS NULL)
+				((lower(UserGroup.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+				(lower(UserGroup.description) LIKE ? [$AND_OR_NULL_CHECK$]))
 			ORDER BY
 				UserGroup.name ASC
 		]]>

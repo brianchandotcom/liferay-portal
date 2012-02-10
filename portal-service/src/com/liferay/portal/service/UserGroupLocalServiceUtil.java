@@ -491,12 +491,11 @@ public class UserGroupLocalServiceUtil {
 	* @see com.liferay.portal.service.persistence.UserGroupFinder
 	*/
 	public static java.util.List<com.liferay.portal.model.UserGroup> search(
-		long companyId, java.lang.String name, java.lang.String description,
+		long companyId, java.lang.String keywords,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .search(companyId, name, description, params, start, end, obc);
+		return getService().search(companyId, keywords, params, start, end, obc);
 	}
 
 	/**
@@ -513,11 +512,10 @@ public class UserGroupLocalServiceUtil {
 	* @throws SystemException if a system exception occurred
 	* @see com.liferay.portal.service.persistence.UserGroupFinder
 	*/
-	public static int searchCount(long companyId, java.lang.String name,
-		java.lang.String description,
+	public static int searchCount(long companyId, java.lang.String keywords,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().searchCount(companyId, name, description, params);
+		return getService().searchCount(companyId, keywords, params);
 	}
 
 	/**

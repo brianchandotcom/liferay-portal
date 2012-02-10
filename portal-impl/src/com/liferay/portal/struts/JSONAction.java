@@ -19,11 +19,12 @@ import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 
-import java.io.PrintWriter;
+import java.io.OutputStream;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -80,15 +81,18 @@ public abstract class JSONAction extends Action {
 		}
 		else if (Validator.isNotNull(json)) {
 			response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
+			response.setCharacterEncoding(StringPool.UTF8);
 			response.setHeader(
 				HttpHeaders.CACHE_CONTROL,
 				HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
 
-			PrintWriter printWriter = response.getWriter();
+			byte[] jsonBytes = json.getBytes(StringPool.UTF8);
+			
+			OutputStream outputStream = response.getOutputStream();
 
-			printWriter.write(json);
+			outputStream.write(jsonBytes);
 
-			printWriter.close();
+			outputStream.close();
 		}
 
 		return null;

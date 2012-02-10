@@ -165,6 +165,20 @@ public class PortletDeployer extends BaseDeployer {
 		sb.append("</listener-class>");
 		sb.append("</listener>");
 
+		return sb.toString();
+	}
+
+	@Override
+	public String getExtraFiltersContent(double webXmlVersion, File srcFile)
+		throws Exception {
+
+		StringBundler sb = new StringBundler(4);
+
+		String extraFiltersContent = super.getExtraFiltersContent(
+			webXmlVersion, srcFile);
+
+		sb.append(extraFiltersContent);
+
 		// Ignore filters
 
 		sb.append(getIgnoreFiltersContent(srcFile));

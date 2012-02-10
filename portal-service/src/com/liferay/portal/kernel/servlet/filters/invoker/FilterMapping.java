@@ -90,6 +90,46 @@ public class FilterMapping {
 		return false;
 	}
 
+	public boolean isMatchURLRegexPattern(
+		HttpServletRequest request, String uri) {
+
+		String url = uri;
+
+		String queryString = request.getQueryString();
+
+		if (Validator.isNotNull(queryString)) {
+			url = url.concat(StringPool.QUESTION).concat(queryString);
+		}
+
+		boolean matchURLRegexPattern = true;
+
+		if (_urlRegexPattern != null) {
+			Matcher matcher = _urlRegexPattern.matcher(url);
+
+			matchURLRegexPattern = matcher.find();
+		}
+
+		if (matchURLRegexPattern && (_urlRegexIgnorePattern != null)) {
+			Matcher matcher = _urlRegexIgnorePattern.matcher(url);
+
+			matchURLRegexPattern = !matcher.find();
+		}
+
+		if (_log.isDebugEnabled()) {
+			if (matchURLRegexPattern) {
+				_log.debug(
+					_filter.getClass() + " has a regex match with " + url);
+			}
+			else {
+				_log.debug(
+					_filter.getClass() + " does not have a regex match with " +
+						url);
+			}
+		}
+
+		return matchURLRegexPattern;
+	}
+
 	public void setFilter(Filter filter) {
 		_filter = filter;
 	}
@@ -188,46 +228,6 @@ public class FilterMapping {
 		}
 
 		return false;
-	}
-
-	protected boolean isMatchURLRegexPattern(
-		HttpServletRequest request, String uri) {
-
-		String url = uri;
-
-		String queryString = request.getQueryString();
-
-		if (Validator.isNotNull(queryString)) {
-			url = url.concat(StringPool.QUESTION).concat(queryString);
-		}
-
-		boolean matchURLRegexPattern = true;
-
-		if (_urlRegexPattern != null) {
-			Matcher matcher = _urlRegexPattern.matcher(url);
-
-			matchURLRegexPattern = matcher.find();
-		}
-
-		if (matchURLRegexPattern && (_urlRegexIgnorePattern != null)) {
-			Matcher matcher = _urlRegexIgnorePattern.matcher(url);
-
-			matchURLRegexPattern = !matcher.find();
-		}
-
-		if (_log.isDebugEnabled()) {
-			if (matchURLRegexPattern) {
-				_log.debug(
-					_filter.getClass() + " has a regex match with " + url);
-			}
-			else {
-				_log.debug(
-					_filter.getClass() + " does not have a regex match with " +
-						url);
-			}
-		}
-
-		return matchURLRegexPattern;
 	}
 
 	private static final String _SLASH_STAR = "/*";

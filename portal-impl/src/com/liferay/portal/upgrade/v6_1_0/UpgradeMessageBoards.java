@@ -99,8 +99,9 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 
 			StringBundler sb = new StringBundler(4);
 
-			sb.append("select messageFlag.messageId from MBMessageFlag ");
-			sb.append("messageFlag inner join MBMessage message on ");
+			sb.append("select messageFlag.messageId as messageId ");
+			sb.append("from MBMessageFlag messageFlag ");
+			sb.append("inner join MBMessage message on ");
 			sb.append("messageFlag.messageId = message.messageId where ");
 			sb.append("message.parentMessageId != 0 and flag = 3");
 
@@ -111,7 +112,7 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				long messageId = rs.getLong("messageFlag.messageId");
+				long messageId = rs.getLong("messageId");
 
 				updateMessageAnswer(messageId, true);
 			}
@@ -207,11 +208,19 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 
 				updateThreadQuestion(threadId, true);
 			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+
+		try {
+			con = DataAccess.getConnection();
 
 			StringBundler sb = new StringBundler(4);
 
-			sb.append("select messageFlag.threadId from MBMessageFlag ");
-			sb.append("messageFlag inner join MBMessage message on ");
+			sb.append("select messageFlag.threadId as threadId ");
+			sb.append("from MBMessageFlag messageFlag ");
+			sb.append("inner join MBMessage message on ");
 			sb.append("messageFlag.messageId = message.messageId where ");
 			sb.append("message.parentMessageId = 0 and flag = 3");
 
@@ -220,7 +229,7 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				long threadId = rs.getLong("messageFlag.threadId");
+				long threadId = rs.getLong("threadId");
 
 				updateThreadQuestion(threadId, true);
 			}

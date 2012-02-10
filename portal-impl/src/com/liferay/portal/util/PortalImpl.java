@@ -569,8 +569,19 @@ public class PortalImpl implements Portal {
 
 		Layout layout = themeDisplay.getLayout();
 
-		addDefaultResource(themeDisplay, layout, portlet, true);
-		addDefaultResource(themeDisplay, layout, portlet, false);
+		long groupId = 0;
+
+		if (layout.isTypeControlPanel()) {
+			groupId = themeDisplay.getScopeGroupId();
+		}
+		else {
+			groupId = getScopeGroupId(layout, portlet.getPortletId());
+		}
+
+		addDefaultResource(
+			themeDisplay.getCompanyId(), groupId, layout, portlet, true);
+		addDefaultResource(
+			themeDisplay.getCompanyId(), groupId, layout, portlet, false);
 	}
 
 	public void addPortletDefaultResource(
@@ -5480,7 +5491,7 @@ public class PortalImpl implements Portal {
 	}
 
 	protected void addDefaultResource(
-			long companyId, Layout layout, Portlet portlet,
+			long companyId, long groupId, Layout layout, Portlet portlet,
 			boolean portletActions)
 		throws PortalException, SystemException {
 
@@ -5498,8 +5509,7 @@ public class PortalImpl implements Portal {
 		}
 		else {
 			name = ResourceActionsUtil.getPortletBaseResource(rootPortletId);
-			primaryKey = String.valueOf(
-				getScopeGroupId(layout, portlet.getPortletId()));
+			primaryKey = String.valueOf(groupId);
 		}
 
 		if (Validator.isNull(name)) {
@@ -5526,18 +5536,19 @@ public class PortalImpl implements Portal {
 		}
 		catch (NoSuchResourceException nsre) {
 			ResourceLocalServiceUtil.addResources(
-				companyId, layout.getGroupId(), 0, name, primaryKey,
-				portletActions, true, true);
+				companyId, groupId, 0, name, primaryKey, portletActions, true,
+				true);
 		}
 	}
 
 	protected void addDefaultResource(
-			ThemeDisplay themeDisplay, Layout layout, Portlet portlet,
+			long companyId, Layout layout, Portlet portlet,
 			boolean portletActions)
 		throws PortalException, SystemException {
 
-		addDefaultResource(
-			themeDisplay.getCompanyId(), layout, portlet, portletActions);
+		long groupId = getScopeGroupId(layout, portlet.getPortletId());
+
+		addDefaultResource(companyId, groupId, layout, portlet, portletActions);
 	}
 
 	protected String buildI18NPath(Locale locale) {

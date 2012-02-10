@@ -121,7 +121,6 @@
 	<bean id="com.liferay.portal.search.lucene.LuceneHelperUtil" class="com.liferay.portal.search.lucene.LuceneHelperUtil">
 		<property name="luceneHelper" ref="com.liferay.portal.search.lucene.LuceneHelperImpl" />
 	</bean>
-	<bean id="com.liferay.portal.search.lucene.TagAnalyzer" class="com.liferay.portal.search.lucene.TagAnalyzer" />
 
 	<!-- Lucene analyzers -->
 
@@ -131,8 +130,8 @@
 		</constructor-arg>
 		<constructor-arg>
 			<util:map>
-				<entry key="assetCategoryNames" value-ref="org.apache.lucene.analysis.standard.StandardAnalyzer" />
-				<entry key="assetTagNames" value-ref="com.liferay.portal.search.lucene.TagAnalyzer" />
+				<entry key="assetCategoryNames" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
+				<entry key="assetTagNames" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
 				<entry key="entryClassName" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
 				<entry key="extension" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
 				<entry key="installedVersion" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />

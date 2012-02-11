@@ -63,8 +63,7 @@ public class ViewWikiFrontPageTest extends BaseTestCase {
 			selenium.getText("//tr[3]/td"));
 		assertTrue(selenium.isPartialText("//tr[4]/td", "Joe Bloggs"));
 		assertTrue(selenium.isPartialText("//tr[5]/td", "Joe Bloggs"));
-		assertEquals(RuntimeVariables.replace("1"),
-			selenium.getText("//tr[6]/td"));
+		assertTrue(selenium.isVisible("//tr[6]/td"));
 		selenium.clickAt("link=History", RuntimeVariables.replace("History"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();

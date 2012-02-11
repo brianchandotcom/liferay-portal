@@ -55,8 +55,7 @@ public class ViewRateWikiFrontPageChildPageComment1Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("+1 (1 Vote)"),
 			selenium.getText(
 				"xPath=(//div[@class='aui-rating-label-element'])[3]"));
-		assertEquals(RuntimeVariables.replace("You have rated this as good."),
-			selenium.getText(
-				"//a[@class='aui-rating-element aui-rating-thumb-up aui-rating-element-off aui-rating-element-on']"));
+		assertTrue(selenium.isVisible(
+				"//a[contains(@class,'aui-rating-thumb-up') and contains(@class,'aui-rating-element-on')]"));
 	}
 }

@@ -34,9 +34,9 @@
 	<td>Wiki FrontPage ChildPage Title</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>assertPartialText</td>
 	<td>xPath=(//div[@class='aui-rating-label-element'])[2]</td>
-	<td>Average (0 Votes)</td>
+	<td>0 Votes</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -44,61 +44,65 @@
 	<td>Rating</td>
 </tr>
 <tr>
-	<td>waitForText</td>
+	<td>waitForPartialText</td>
 	<td>xPath=(//div[@class='aui-rating-label-element'])[2]</td>
-	<td>Average (1 Vote)</td>
+	<td>1 Vote</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>assertPartialText</td>
 	<td>xPath=(//div[@class='aui-rating-label-element'])[2]</td>
-	<td>Average (1 Vote)</td>
+	<td>1 Vote</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>assertVisible</td>
 	<td>xPath=(//a[contains(@class,'aui-rating-element-on')])[1]</td>
-	<td>Rate this 1 stars out of 5.</td>
+	<td>1 Star</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>assertVisible</td>
 	<td>xPath=(//a[contains(@class,'aui-rating-element-on')])[2]</td>
-	<td>Rate this 2 stars out of 5.</td>
+	<td>2 Stars</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>assertVisible</td>
 	<td>xPath=(//a[contains(@class,'aui-rating-element-on')])[3]</td>
-	<td>Rate this 3 stars out of 5.</td>
+	<td>3 Stars</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>assertVisible</td>
 	<td>xPath=(//a[contains(@class,'aui-rating-element-on')])[4]</td>
-	<td>Rate this 4 stars out of 5.</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//a[@class='aui-rating-element ']</td>
-	<td>Rate this 5 stars out of 5.</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>xPath=(//div[@class='aui-rating-label-element'])[2]</td>
-	<td>Average (1 Vote)</td>
-</tr>
-<tr>
-	<td>mouseOver</td>
-	<td>xPath=(//div[@class='aui-rating-label-element'])[2]</td>
-	<td>Average (1 Vote)</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='yui3-widget-bd']</td>
 	<td>4 Stars</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@class='yui3-widget-bd']</td>
+	<td>assertElementNotPresent</td>
+	<td>xPath=(//a[contains(@class,'aui-rating-element-on')])[5]</td>
+	<td>5 Stars</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>xPath=(//img[contains(@class,'aui-rating-element-on')])[1]</td>
+	<td>1 Star</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>xPath=(//img[contains(@class,'aui-rating-element-on')])[2]</td>
+	<td>2 Stars</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>xPath=(//img[contains(@class,'aui-rating-element-on')])[3]</td>
+	<td>3 Stars</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>xPath=(//img[contains(@class,'aui-rating-element-on')])[4]</td>
 	<td>4 Stars</td>
 </tr>
-
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>xPath=(//img[contains(@class,'aui-rating-element-on')])[5]</td>
+	<td>5 Stars</td>
+</tr>
 </tbody></table>
 </body>
 </html>

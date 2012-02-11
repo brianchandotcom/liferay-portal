@@ -56,6 +56,7 @@ public class ViewWikiFrontPageChildPageComment2Test extends BaseTestCase {
 			selenium.getText("xPath=(//span[@class='user-name'])[2]"));
 		assertEquals(RuntimeVariables.replace(
 				"Wiki FrontPage ChildPage Comment2 Body"),
-			selenium.getText("//div[2]/div[3]/div/div[1]"));
+			selenium.getText(
+				"xPath=(//div[@class='lfr-discussion-message'])[2]"));
 	}
 }

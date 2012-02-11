@@ -73,7 +73,9 @@ public class RateWikiFrontPageChildPageComment1Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
 			selenium.getText(
 				"xPath=(//div[@class='aui-rating-label-element'])[3]"));
-		selenium.clickAt("//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']",
+		assertFalse(selenium.isElementPresent(
+				"//a[contains(@class,'aui-rating-element-off aui-rating-thumb-up aui-rating-element-on')]"));
+		selenium.clickAt("//a[contains(@class,'aui-rating-element-off aui-rating-thumb-up')]",
 			RuntimeVariables.replace("Thumbs Up"));
 
 		for (int second = 0;; second++) {
@@ -97,8 +99,7 @@ public class RateWikiFrontPageChildPageComment1Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("+1 (1 Vote)"),
 			selenium.getText(
 				"xPath=(//div[@class='aui-rating-label-element'])[3]"));
-		assertEquals(RuntimeVariables.replace("Rate this as good."),
-			selenium.getText(
-				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up aui-rating-element-on']"));
+		assertTrue(selenium.isVisible(
+				"//a[contains(@class,'aui-rating-element-off aui-rating-thumb-up aui-rating-element-on')]"));
 	}
 }

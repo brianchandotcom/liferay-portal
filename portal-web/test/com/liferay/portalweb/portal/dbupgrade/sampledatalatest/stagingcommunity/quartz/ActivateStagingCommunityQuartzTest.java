@@ -64,8 +64,9 @@ public class ActivateStagingCommunityQuartzTest extends BaseTestCase {
 						"Community Staging Community Quartz"),
 					selenium.getText("//tr[3]/td[1]"));
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[6]/span/ul/li/strong/a/span"));
-				selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -103,8 +104,7 @@ public class ActivateStagingCommunityQuartzTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible(
-									"//select[@name='_165_stagingType']")) {
+						if (selenium.isVisible("//input[@id='_165_local']")) {
 							break;
 						}
 					}
@@ -114,8 +114,9 @@ public class ActivateStagingCommunityQuartzTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.select("//select[@name='_165_stagingType']",
-					RuntimeVariables.replace("label=Local Live"));
+				selenium.clickAt("//input[@id='_165_local']",
+					RuntimeVariables.replace("Local Live"));
+				assertTrue(selenium.isChecked("//input[@id='_165_local']"));
 				assertFalse(selenium.isChecked(
 						"//input[@id='_165_branchingPublicCheckbox']"));
 				selenium.clickAt("//input[@id='_165_branchingPublicCheckbox']",
@@ -200,7 +201,7 @@ public class ActivateStagingCommunityQuartzTest extends BaseTestCase {
 			case 6:
 
 				boolean messageBoardsChecked = selenium.isChecked(
-						"_165_staged-portlet_162Checkbox");
+						"_165_staged-portlet_19Checkbox");
 
 				if (messageBoardsChecked) {
 					label = 7;
@@ -208,7 +209,7 @@ public class ActivateStagingCommunityQuartzTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//input[@id='_165_staged-portlet_162Checkbox']",
+				selenium.clickAt("//input[@id='_165_staged-portlet_19Checkbox']",
 					RuntimeVariables.replace("Message Boards"));
 
 			case 7:
@@ -324,12 +325,10 @@ public class ActivateStagingCommunityQuartzTest extends BaseTestCase {
 					RuntimeVariables.replace("Wiki Display Checked"));
 
 			case 15:
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Save']"));
+				selenium.clickAt("//input[@value='Save']",
+					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to activate local staging for Community Staging Community Quartz[\\s\\S]$"));
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));

@@ -84,6 +84,9 @@ public class AddCommunityStagingCommunityQuartzTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_134_name']",
 			RuntimeVariables.replace("Community Staging Community Quartz"));
 		selenium.clickAt("//input[@value='Search']",

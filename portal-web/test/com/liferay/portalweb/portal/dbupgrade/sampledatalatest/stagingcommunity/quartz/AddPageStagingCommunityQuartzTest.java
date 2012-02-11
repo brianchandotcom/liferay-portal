@@ -58,8 +58,8 @@ public class AddPageStagingCommunityQuartzTest extends BaseTestCase {
 				"Community Staging Community Quartz"),
 			selenium.getText("//tr[3]/td[1]"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//td[6]/span/ul/li/strong/a/span"));
-		selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {

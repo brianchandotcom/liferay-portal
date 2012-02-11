@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portalweb.portal;
+package com.liferay.portalweb.portal.dbupgrade.viewsampledatalatest.stagingcommunity;
 
-import com.liferay.portalweb.portal.dbupgrade.viewsampledatalatest.login.LoginTests;
-import com.liferay.portalweb.portal.dbupgrade.viewsampledatalatest.serveradministration.executegeneratecustomroles.ExecuteGenerateCustomRolesTests;
-import com.liferay.portalweb.portal.dbupgrade.viewsampledatalatest.stagingcommunity.StagingCommunity523LatestNoPublishTestPlan;
+import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.dbupgrade.viewsampledatalatest.stagingcommunity.quartz.QuartzTests;
+import com.liferay.portalweb.portal.dbupgrade.viewsampledatalatest.stagingcommunity.webcontentdisplay.WebContentDisplayNoPublishTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -24,17 +24,13 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DBUpgradeStagingCommunity523LatestConvertTestSuite
-	extends BaseTestSuite {
+public class StagingCommunity523LatestNoPublishTestPlan extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(LoginTests.suite());
-		testSuite.addTest(StagingCommunity523LatestNoPublishTestPlan.suite());
-		testSuite.addTest(ExecuteGenerateCustomRolesTests.suite());
-
-		testSuite.addTestSuite(StopSeleniumTest.class);
+		testSuite.addTest(QuartzTests.suite());
+		testSuite.addTest(WebContentDisplayNoPublishTests.suite());
 
 		return testSuite;
 	}

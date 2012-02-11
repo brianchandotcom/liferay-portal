@@ -111,7 +111,5 @@ public class ViewWCJournalFeedURLTest extends BaseTestCase {
 			selenium.getText("//x:h2"));
 		assertEquals(RuntimeVariables.replace("Web Content Name"),
 			selenium.getText("//x:h3/x:a"));
-		assertEquals(RuntimeVariables.replace("Web Content Content"),
-			selenium.getText("//x:div[2]/x:div[1]/x:div/x:p"));
 	}
 }

@@ -14,13 +14,31 @@
 
 package com.liferay.portal.kernel.util;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Miguel Pastor
  */
 public class ReflectionUtil {
+
+	public static Class<?> findDeclaringClassAnnotation(
+		Class<? extends Annotation> annotationType, Class<?> clazz) {
+
+		if (clazz == null || clazz.equals(Object.class)) {
+			return null;
+		}
+
+		if (isAnnotationDeclaredInClass(annotationType, clazz)) {
+			return clazz;
+		}
+		else {
+			return findDeclaringClassAnnotation(
+				annotationType, clazz.getSuperclass());
+		}
+	}
 
 	public static Field getDeclaredField(Class<?> clazz, String name)
 		throws Exception {
@@ -88,6 +106,33 @@ public class ReflectionUtil {
 		}
 
 		return parameterTypes;
+	}
+
+	public static Object instantiateClass(Class<?> clazz) throws Exception {
+		if (clazz.isInterface()) {
+			throw new IllegalArgumentException(
+				clazz + " is an interface. This cannot be instanciated");
+		}
+
+		return clazz.newInstance();
+	}
+
+	public static boolean isAnnotationDeclaredInClass(
+		Class<? extends Annotation> annotationType, Class<?> clazz) {
+
+		if (annotationType == null || clazz == null) {
+			throw new IllegalArgumentException();
+		}
+
+		Annotation[] annotations = clazz.getAnnotations();
+
+		for (Annotation annotation:annotations) {
+			if (annotation.annotationType().equals(annotationType)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 }

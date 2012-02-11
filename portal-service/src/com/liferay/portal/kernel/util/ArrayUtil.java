@@ -723,6 +723,10 @@ public class ArrayUtil {
 		}
 	}
 
+	public static boolean isEmpty(Object[] array) {
+		return (array == null) || (array.length == 0);
+	}
+
 	public static boolean[] remove(boolean[] array, boolean value) {
 		List<Boolean> list = new ArrayList<Boolean>();
 

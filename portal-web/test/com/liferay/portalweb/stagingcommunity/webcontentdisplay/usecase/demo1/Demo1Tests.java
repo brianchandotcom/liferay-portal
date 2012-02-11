@@ -53,7 +53,7 @@ public class Demo1Tests extends BaseTestSuite {
 		testSuite.addTestSuite(WCC_SignInTest.class);
 		testSuite.addTestSuite(WCC_ViewApproveTaskWebContentDetailsSiteStagingTest.class);
 		testSuite.addTestSuite(WCC_SubmitForPublicationMainVariationHomeSiteStagingTest.class);
-		testSuite.addTestSuite(WCC_PublishToLiveNowWebContentSiteStagingTest.class);
+		testSuite.addTestSuite(WCC_PublishToLiveNowWebContentNullSiteStagingTest.class);
 		testSuite.addTestSuite(WCC_ViewPublishToLiveNowWebContentNullSiteStagingTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(WCA_SignInTest.class);

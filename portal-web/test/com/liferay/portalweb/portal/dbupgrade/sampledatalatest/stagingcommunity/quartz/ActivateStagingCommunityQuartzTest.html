@@ -45,12 +45,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[6]/span/ul/li/strong/a/span</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[6]/span/ul/li/strong/a/span</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -80,13 +80,18 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//select[@name='_165_stagingType']</td>
-	<td>Staging Type</td>
+	<td>//input[@id='_165_local']</td>
+	<td>Local Live</td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>//select[@name='_165_stagingType']</td>
-	<td>label=Local Live</td>
+	<td>clickAt</td>
+	<td>//input[@id='_165_local']</td>
+	<td>Local Live</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='_165_local']</td>
+	<td>Local Live</td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
@@ -220,7 +225,7 @@
 </tr>
 <tr>
 	<td>store</td>
-	<td>eval(selenium.isChecked('_165_staged-portlet_162Checkbox'))</td>
+	<td>eval(selenium.isChecked('_165_staged-portlet_19Checkbox'))</td>
 	<td>messageBoardsChecked</td>
 </tr>
 <tr>
@@ -230,7 +235,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@id='_165_staged-portlet_162Checkbox']</td>
+	<td>//input[@id='_165_staged-portlet_19Checkbox']</td>
 	<td>Message Boards</td>
 </tr>
 <tr>
@@ -399,14 +404,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
 	<td>Save</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to activate local staging for Community Staging Community Quartz?</td>
-	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>

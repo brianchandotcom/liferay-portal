@@ -52,6 +52,10 @@ public class BaseTestCase extends LiferaySeleneseTestCase {
 			return;
 		}
 
+		if (location.contains("/journal/rss/")) {
+			return;
+		}
+
 		if (!location.contains(TestPropsValues.PORTAL_URL)) {
 			return;
 		}

@@ -44,9 +44,14 @@
 	<td>Schedule Publication to Live</td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>click</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
 	<td>Schedule Publication to Live</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=View All</td>
+	<td>View All</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -54,31 +59,20 @@
 	<td></td>
 </tr>
 <tr>
+	<td>click</td>
+	<td>link=View All</td>
+	<td>View All</td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
-	<td>//span[1]/a</td>
-	<td>View All</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>There are no scheduled events.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[1]/a</td>
-	<td>View All</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>There are no scheduled events.</td>
 </tr>
-<tr>
-	<td>clickAt</td>
-	<td>//span[1]/a</td>
-	<td>View All</td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//div[@id='_88_scheduledPublishEventsDiv']/div/div/table/tbody/tr[3]/td</td>
-	<td>Quartz Scheduler Event</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@id='_88_scheduledPublishEventsDiv']/div/div/table/tbody/tr[3]/td</td>
-	<td>Quartz Scheduler Event</td>
-</tr>
-
 </tbody></table>
 </body>
 </html>

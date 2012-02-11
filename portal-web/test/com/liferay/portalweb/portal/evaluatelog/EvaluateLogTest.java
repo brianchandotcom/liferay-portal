@@ -85,7 +85,7 @@ public class EvaluateLogTest extends BaseTestCase {
 
 			// LPS-17639
 
-			if (line.contains("Table \'lportal.lock_\' doesn't exist")) {
+			if (line.contains("Table 'lportal.lock_' doesn't exist")) {
 				continue;
 			}
 

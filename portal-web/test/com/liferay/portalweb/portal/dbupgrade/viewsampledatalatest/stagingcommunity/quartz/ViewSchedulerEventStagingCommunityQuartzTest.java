@@ -70,9 +70,26 @@ public class ViewSchedulerEventStagingCommunityQuartzTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Schedule Publication to Live"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
-			RuntimeVariables.replace("Schedule Publication to Live"));
+		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=View All")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		Thread.sleep(5000);
+		selenium.click("link=View All");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -80,7 +97,7 @@ public class ViewSchedulerEventStagingCommunityQuartzTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//span[1]/a")) {
+				if (selenium.isVisible("//div[@class='portlet-msg-info']")) {
 					break;
 				}
 			}
@@ -90,30 +107,7 @@ public class ViewSchedulerEventStagingCommunityQuartzTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("View All"),
-			selenium.getText("//span[1]/a"));
-		selenium.clickAt("//span[1]/a", RuntimeVariables.replace("View All"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Quartz Scheduler Event")
-										.equals(selenium.getText(
-								"//div[@id='_88_scheduledPublishEventsDiv']/div/div/table/tbody/tr[3]/td"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertEquals(RuntimeVariables.replace("Quartz Scheduler Event"),
-			selenium.getText(
-				"//div[@id='_88_scheduledPublishEventsDiv']/div/div/table/tbody/tr[3]/td"));
+		assertEquals(RuntimeVariables.replace("There are no scheduled events."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
 	}
 }

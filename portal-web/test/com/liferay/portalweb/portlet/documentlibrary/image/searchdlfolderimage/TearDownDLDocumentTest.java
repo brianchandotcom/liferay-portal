@@ -75,7 +75,7 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 						"//button[contains(@class,'aui-state-active') and @title='Icon View']"));
 
 				boolean dmlDocumentPresent = selenium.isElementPresent(
-						"//div[1]/a/span[1]/img");
+						"//div[2]/a/span[1]/img");
 
 				if (!dmlDocumentPresent) {
 					label = 2;

@@ -140,7 +140,8 @@ public class ViewPage2BlogsEntry2Comment1Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("//span[@class='user-name']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Comment1 Body"),
-			selenium.getText("//form/div/div/div[1]/div[3]/div/div[1]"));
+			selenium.getText(
+				"xPath=(//div[@class='lfr-discussion-message'])[1]"));
 		selenium.open("/web/blogs-page-scope-community/");
 		loadRequiredJavaScriptModules();
 
@@ -257,7 +258,8 @@ public class ViewPage2BlogsEntry2Comment1Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("//span[@class='user-name']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Comment1 Body"),
-			selenium.getText("//form/div/div/div[1]/div[3]/div/div[1]"));
+			selenium.getText(
+				"xPath=(//div[@class='lfr-discussion-message'])[1]"));
 		selenium.open("/web/blogs-page-scope-community/");
 		loadRequiredJavaScriptModules();
 
@@ -423,6 +425,7 @@ public class ViewPage2BlogsEntry2Comment1Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("//span[@class='user-name']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Comment1 Body"),
-			selenium.getText("//form/div/div/div[1]/div[3]/div/div[1]"));
+			selenium.getText(
+				"xPath=(//div[@class='lfr-discussion-message'])[1]"));
 	}
 }

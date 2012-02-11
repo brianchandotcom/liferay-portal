@@ -75,26 +75,10 @@ public class Guest_ViewPage1BlogsEntry1Test extends BaseTestCase {
 			selenium.getText("//span[@class='comments']/a"));
 		assertEquals(RuntimeVariables.replace("Average (1 Vote)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
-		selenium.mouseOver("//div[@class='aui-rating-label-element']");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='yui3-widget-bd']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertEquals(RuntimeVariables.replace("4 Stars"),
-			selenium.getText("//div[@class='yui3-widget-bd']"));
+		assertTrue(selenium.isVisible(
+				"xPath=(//img[contains(@class,'aui-rating-element aui-rating-element-on')])[4]"));
+		assertFalse(selenium.isElementPresent(
+				"xPath=(//img[contains(@class,'aui-rating-element aui-rating-element-on')])[5]"));
 		assertEquals(RuntimeVariables.replace("2 Comments"),
 			selenium.getText("//span[@class='comments']/a"));
 		selenium.clickAt("//span[@class='comments']/a",
@@ -109,30 +93,16 @@ public class Guest_ViewPage1BlogsEntry1Test extends BaseTestCase {
 			selenium.getText("//span[@class='comments']"));
 		assertEquals(RuntimeVariables.replace("Average (1 Vote)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
-		selenium.mouseOver("//div[@class='aui-rating-label-element']");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='yui3-widget-bd']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertEquals(RuntimeVariables.replace("4 Stars"),
-			selenium.getText("//div[@class='yui3-widget-bd']"));
+		assertTrue(selenium.isVisible(
+				"xPath=(//img[contains(@class,'aui-rating-element aui-rating-element-on')])[4]"));
+		assertFalse(selenium.isElementPresent(
+				"xPath=(//img[contains(@class,'aui-rating-element aui-rating-element-on')])[5]"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Comment1 Body"),
-			selenium.getText("//form/div/div/div[1]/div[3]/div/div[1]"));
+			selenium.getText(
+				"xPath=(//div[@class='lfr-discussion-message'])[1]"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Comment2 Body"),
-			selenium.getText("//form/div/div/div[2]/div[3]/div/div[1]"));
+			selenium.getText(
+				"xPath=(//div[@class='lfr-discussion-message'])[2]"));
 		selenium.open("/web/blogs-page-scope-community/");
 		loadRequiredJavaScriptModules();
 
@@ -233,30 +203,16 @@ public class Guest_ViewPage1BlogsEntry1Test extends BaseTestCase {
 			selenium.getText("//span[@class='comments']"));
 		assertEquals(RuntimeVariables.replace("Average (1 Vote)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
-		selenium.mouseOver("//div[@class='aui-rating-label-element']");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='yui3-widget-bd']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertEquals(RuntimeVariables.replace("4 Stars"),
-			selenium.getText("//div[@class='yui3-widget-bd']"));
+		assertTrue(selenium.isVisible(
+				"xPath=(//img[contains(@class,'aui-rating-element aui-rating-element-on')])[4]"));
+		assertFalse(selenium.isElementPresent(
+				"xPath=(//img[contains(@class,'aui-rating-element aui-rating-element-on')])[5]"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Comment1 Body"),
-			selenium.getText("//form/div/div/div[1]/div[3]/div/div[1]"));
+			selenium.getText(
+				"xPath=(//div[@class='lfr-discussion-message'])[1]"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Comment2 Body"),
-			selenium.getText("//form/div/div/div[2]/div[3]/div/div[1]"));
+			selenium.getText(
+				"xPath=(//div[@class='lfr-discussion-message'])[2]"));
 		selenium.open("/web/blogs-page-scope-community/");
 		loadRequiredJavaScriptModules();
 

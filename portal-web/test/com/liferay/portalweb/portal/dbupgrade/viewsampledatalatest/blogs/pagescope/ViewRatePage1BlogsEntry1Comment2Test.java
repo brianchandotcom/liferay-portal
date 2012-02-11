@@ -63,7 +63,7 @@ public class ViewRatePage1BlogsEntry1Comment2Test extends BaseTestCase {
 			try {
 				if (RuntimeVariables.replace("Blogs Entry1 Comment2 Body")
 										.equals(selenium.getText(
-								"//form/div/div/div[2]/div[3]/div/div[1]"))) {
+								"xPath=(//div[@class='lfr-discussion-message'])[2]"))) {
 					break;
 				}
 			}
@@ -74,7 +74,8 @@ public class ViewRatePage1BlogsEntry1Comment2Test extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Comment2 Body"),
-			selenium.getText("//form/div/div/div[2]/div[3]/div/div[1]"));
+			selenium.getText(
+				"xPath=(//div[@class='lfr-discussion-message'])[2]"));
 		assertEquals(RuntimeVariables.replace("-1 (1 Vote)"),
 			selenium.getText(
 				"xPath=(//div[@class='aui-rating-label-element'])[4]"));
@@ -130,7 +131,8 @@ public class ViewRatePage1BlogsEntry1Comment2Test extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Comment2 Body"),
-			selenium.getText("//form/div/div/div[2]/div[3]/div/div[1]"));
+			selenium.getText(
+				"xPath=(//div[@class='lfr-discussion-message'])[2]"));
 		assertEquals(RuntimeVariables.replace("-1 (1 Vote)"),
 			selenium.getText(
 				"xPath=(//div[@class='aui-rating-label-element'])[4]"));

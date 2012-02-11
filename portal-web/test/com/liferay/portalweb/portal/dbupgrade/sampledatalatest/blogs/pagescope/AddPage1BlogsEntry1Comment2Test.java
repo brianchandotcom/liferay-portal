@@ -174,8 +174,10 @@ public class AddPage1BlogsEntry1Comment2Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("2 Comments"),
 			selenium.getText("//span[@class='comments']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Comment1 Body"),
-			selenium.getText("//form/div/div/div[1]/div[3]/div/div[1]"));
+			selenium.getText(
+				"xPath=(//div[@class='lfr-discussion-message'])[1]"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Comment2 Body"),
-			selenium.getText("//form/div/div/div[2]/div[3]/div/div[1]"));
+			selenium.getText(
+				"xPath=(//div[@class='lfr-discussion-message'])[2]"));
 	}
 }

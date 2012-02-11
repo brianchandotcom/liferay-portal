@@ -137,27 +137,10 @@ public class ViewRatePage2BlogsEntry2Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Average (1 Vote)"),
 			selenium.getText(
 				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
-		selenium.mouseOver(
-			"xPath=(//div[@class='aui-rating-label-element'])[2]");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='yui3-widget-bd']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertEquals(RuntimeVariables.replace("4 Stars"),
-			selenium.getText("//div[@class='yui3-widget-bd']"));
+		assertTrue(selenium.isVisible(
+				"xPath=(//img[contains(@class,'aui-rating-element aui-rating-element-on')])[4]"));
+		assertFalse(selenium.isElementPresent(
+				"xPath=(//img[contains(@class,'aui-rating-element aui-rating-element-on')])[5]"));
 		selenium.open("/web/blogs-page-scope-community/");
 		loadRequiredJavaScriptModules();
 
@@ -273,27 +256,10 @@ public class ViewRatePage2BlogsEntry2Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Average (1 Vote)"),
 			selenium.getText(
 				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
-		selenium.mouseOver(
-			"xPath=(//div[@class='aui-rating-label-element'])[2]");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='yui3-widget-bd']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertEquals(RuntimeVariables.replace("4 Stars"),
-			selenium.getText("//div[@class='yui3-widget-bd']"));
+		assertTrue(selenium.isVisible(
+				"xPath=(//img[contains(@class,'aui-rating-element aui-rating-element-on')])[4]"));
+		assertFalse(selenium.isElementPresent(
+				"xPath=(//img[contains(@class,'aui-rating-element aui-rating-element-on')])[5]"));
 		selenium.open("/web/blogs-page-scope-community/");
 		loadRequiredJavaScriptModules();
 
@@ -457,26 +423,9 @@ public class ViewRatePage2BlogsEntry2Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Average (1 Vote)"),
 			selenium.getText(
 				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
-		selenium.mouseOver(
-			"xPath=(//div[@class='aui-rating-label-element'])[2]");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='yui3-widget-bd']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertEquals(RuntimeVariables.replace("4 Stars"),
-			selenium.getText("//div[@class='yui3-widget-bd']"));
+		assertTrue(selenium.isVisible(
+				"xPath=(//img[contains(@class,'aui-rating-element aui-rating-element-on')])[4]"));
+		assertFalse(selenium.isElementPresent(
+				"xPath=(//img[contains(@class,'aui-rating-element aui-rating-element-on')])[5]"));
 	}
 }

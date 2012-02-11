@@ -73,10 +73,7 @@ public class RatePage1BlogsEntry1Test extends BaseTestCase {
 			selenium.getText("//div[@class='entry-body']/p"));
 		assertTrue(selenium.isPartialText(
 				"//div[@class='taglib-ratings stars']/div[2]/div/div", "0 Votes"));
-		assertEquals(RuntimeVariables.replace("Rate this 4 stars out of 5."),
-			selenium.getText("//a[4]"));
-		selenium.clickAt("//a[4]",
-			RuntimeVariables.replace("Rate this 4 stars out of 5."));
+		selenium.clickAt("//a[4]", RuntimeVariables.replace("4 Star"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -98,26 +95,9 @@ public class RatePage1BlogsEntry1Test extends BaseTestCase {
 
 		assertTrue(selenium.isPartialText(
 				"//div[@class='taglib-ratings stars']/div[2]/div/div", "1 Vote"));
-		selenium.mouseOver(
-			"//div[@class='taglib-ratings stars']/div[2]/div/div");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='yui3-widget-bd']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertEquals(RuntimeVariables.replace("4 Stars"),
-			selenium.getText("//div[@class='yui3-widget-bd']"));
+		assertTrue(selenium.isVisible(
+				"xPath=(//img[contains(@class,'aui-rating-element aui-rating-element-on')])[4]"));
+		assertFalse(selenium.isElementPresent(
+				"xPath=(//img[contains(@class,'aui-rating-element aui-rating-element-on')])[5]"));
 	}
 }

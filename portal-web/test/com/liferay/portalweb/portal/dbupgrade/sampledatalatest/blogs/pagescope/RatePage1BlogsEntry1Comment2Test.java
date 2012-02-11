@@ -103,7 +103,7 @@ public class RatePage1BlogsEntry1Comment2Test extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//form/div/div/div[2]/div[3]/div/div[1]")) {
+							"xPath=(//div[@class='lfr-discussion-message'])[2]")) {
 					break;
 				}
 			}
@@ -114,17 +114,16 @@ public class RatePage1BlogsEntry1Comment2Test extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Comment2 Body"),
-			selenium.getText("//form/div/div/div[2]/div[3]/div/div[1]"));
+			selenium.getText(
+				"xPath=(//div[@class='lfr-discussion-message'])[2]"));
 		assertTrue(selenium.isPartialText(
 				"xPath=(//div[@class='aui-rating-label-element'])[4]", "0 Votes"));
-		assertEquals(RuntimeVariables.replace("Rate this as good."),
-			selenium.getText(
+		assertTrue(selenium.isVisible(
 				"xPath=(//a[contains(@class,'aui-rating-thumb-up')])[2]"));
-		assertEquals(RuntimeVariables.replace("Rate this as bad."),
-			selenium.getText(
+		assertTrue(selenium.isVisible(
 				"xPath=(//a[contains(@class,'aui-rating-thumb-down')])[2]"));
 		selenium.clickAt("xPath=(//a[contains(@class,'aui-rating-thumb-down')])[2]",
-			RuntimeVariables.replace("Rate this as bad."));
+			RuntimeVariables.replace("Thumbs Down"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

@@ -60,12 +60,12 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//form/div/div/div[1]/div[3]/div/div[1]</td>
+	<td>xPath=(//div[@class='lfr-discussion-message'])[1]</td>
 	<td>Blogs Entry1 Comment1 Body</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//form/div/div/div[1]/div[3]/div/div[1]</td>
+	<td>xPath=(//div[@class='lfr-discussion-message'])[1]</td>
 	<td>Blogs Entry1 Comment1 Body</td>
 </tr>
 <tr>
@@ -74,19 +74,19 @@
 	<td>0 Votes</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']</td>
-	<td>Rate this as good.</td>
+	<td>assertVisible</td>
+	<td>//a[contains(@class,'aui-rating-thumb-up')]</td>
+	<td>Thumbs Up</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']</td>
-	<td>Rate this as bad.</td>
+	<td>assertVisible</td>
+	<td>//a[contains(@class,'aui-rating-thumb-down')]</td>
+	<td>Thumbs Down</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']</td>
-	<td>Rate this as good.</td>
+	<td>//a[contains(@class,'aui-rating-thumb-up')]</td>
+	<td>Thumbs Up</td>
 </tr>
 <tr>
 	<td>waitForText</td>
@@ -98,7 +98,6 @@
 	<td>xPath=(//div[@class='aui-rating-label-element'])[3]</td>
 	<td>+1 (1 Vote)</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

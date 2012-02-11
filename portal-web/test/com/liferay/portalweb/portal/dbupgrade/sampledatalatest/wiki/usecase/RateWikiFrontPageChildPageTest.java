@@ -51,9 +51,8 @@ public class RateWikiFrontPageChildPageTest extends BaseTestCase {
 			RuntimeVariables.replace("Wiki FrontPage ChildPage Title"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Average (0 Votes)"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
+		assertTrue(selenium.isPartialText(
+				"xPath=(//div[@class='aui-rating-label-element'])[2]", "0 Votes"));
 		selenium.clickAt("//a[4]", RuntimeVariables.replace("Rating"));
 
 		for (int second = 0;; second++) {
@@ -62,9 +61,9 @@ public class RateWikiFrontPageChildPageTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("Average (1 Vote)")
-										.equals(selenium.getText(
-								"xPath=(//div[@class='aui-rating-label-element'])[2]"))) {
+				if (selenium.isPartialText(
+							"xPath=(//div[@class='aui-rating-label-element'])[2]",
+							"1 Vote")) {
 					break;
 				}
 			}
@@ -74,46 +73,27 @@ public class RateWikiFrontPageChildPageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Average (1 Vote)"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
-		assertEquals(RuntimeVariables.replace("Rate this 1 stars out of 5."),
-			selenium.getText(
+		assertTrue(selenium.isPartialText(
+				"xPath=(//div[@class='aui-rating-label-element'])[2]", "1 Vote"));
+		assertTrue(selenium.isVisible(
 				"xPath=(//a[contains(@class,'aui-rating-element-on')])[1]"));
-		assertEquals(RuntimeVariables.replace("Rate this 2 stars out of 5."),
-			selenium.getText(
+		assertTrue(selenium.isVisible(
 				"xPath=(//a[contains(@class,'aui-rating-element-on')])[2]"));
-		assertEquals(RuntimeVariables.replace("Rate this 3 stars out of 5."),
-			selenium.getText(
+		assertTrue(selenium.isVisible(
 				"xPath=(//a[contains(@class,'aui-rating-element-on')])[3]"));
-		assertEquals(RuntimeVariables.replace("Rate this 4 stars out of 5."),
-			selenium.getText(
+		assertTrue(selenium.isVisible(
 				"xPath=(//a[contains(@class,'aui-rating-element-on')])[4]"));
-		assertEquals(RuntimeVariables.replace("Rate this 5 stars out of 5."),
-			selenium.getText("//a[@class='aui-rating-element ']"));
-		assertEquals(RuntimeVariables.replace("Average (1 Vote)"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
-		selenium.mouseOver(
-			"xPath=(//div[@class='aui-rating-label-element'])[2]");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='yui3-widget-bd']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertEquals(RuntimeVariables.replace("4 Stars"),
-			selenium.getText("//div[@class='yui3-widget-bd']"));
+		assertFalse(selenium.isElementPresent(
+				"xPath=(//a[contains(@class,'aui-rating-element-on')])[5]"));
+		assertTrue(selenium.isVisible(
+				"xPath=(//img[contains(@class,'aui-rating-element-on')])[1]"));
+		assertTrue(selenium.isVisible(
+				"xPath=(//img[contains(@class,'aui-rating-element-on')])[2]"));
+		assertTrue(selenium.isVisible(
+				"xPath=(//img[contains(@class,'aui-rating-element-on')])[3]"));
+		assertTrue(selenium.isVisible(
+				"xPath=(//img[contains(@class,'aui-rating-element-on')])[4]"));
+		assertFalse(selenium.isElementPresent(
+				"xPath=(//img[contains(@class,'aui-rating-element-on')])[5]"));
 	}
 }

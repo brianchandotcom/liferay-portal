@@ -36,7 +36,7 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>xPath=(//div[@class='aui-rating-label-element'])[3]</td>
-	<td>Rate this as good.</td>
+	<td>0 (0 Votes)</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -44,8 +44,13 @@
 	<td>0 (0 Votes)</td>
 </tr>
 <tr>
+	<td>assertElementNotPresent</td>
+	<td>//a[contains(@class,'aui-rating-element-off aui-rating-thumb-up aui-rating-element-on')]</td>
+	<td>Thumbs Up (green)</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']</td>
+	<td>//a[contains(@class,'aui-rating-element-off aui-rating-thumb-up')]</td>
 	<td>Thumbs Up</td>
 </tr>
 <tr>
@@ -59,11 +64,10 @@
 	<td>+1 (1 Vote)</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up aui-rating-element-on']</td>
-	<td>Rate this as good.</td>
+	<td>assertVisible</td>
+	<td>//a[contains(@class,'aui-rating-element-off aui-rating-thumb-up aui-rating-element-on')]</td>
+	<td>Thumbs Up (green)</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

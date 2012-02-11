@@ -107,6 +107,7 @@ public class AddWikiFrontPageChildPageComment2Test extends BaseTestCase {
 				"//div[@class='lfr-message-response portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace(
 				"Wiki FrontPage ChildPage Comment2 Body"),
-			selenium.getText("//div[2]/div[3]/div/div[1]"));
+			selenium.getText(
+				"xPath=(//div[@class='lfr-discussion-message'])[2]"));
 	}
 }

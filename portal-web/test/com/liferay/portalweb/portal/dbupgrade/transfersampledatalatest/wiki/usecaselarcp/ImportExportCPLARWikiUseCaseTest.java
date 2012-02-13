@@ -51,6 +51,7 @@ public class ImportExportCPLARWikiUseCaseTest extends BaseTestCase {
 			RuntimeVariables.replace("Wiki"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//menu/span/ul/li/strong/a"));
 		selenium.clickAt("//menu/span/ul/li/strong/a",

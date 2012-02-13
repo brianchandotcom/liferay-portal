@@ -94,14 +94,23 @@ public class ViewMessageResubmittedTest extends BaseTestCase {
 		selenium.clickAt("link=Completed", RuntimeVariables.replace("Completed"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//td[1]/a"));
+		assertEquals(RuntimeVariables.replace("Update"),
+			selenium.getText("//tr[3]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Message Boards Message Subject"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//tr[3]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Message Boards Message"),
-			selenium.getText("//td[3]/a"));
-		assertTrue(selenium.isElementPresent("//td[4]/a"));
+			selenium.getText("//tr[3]/td[3]/a"));
+		assertTrue(selenium.isVisible("//tr[3]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//td[5]/a"));
+			selenium.getText("//tr[3]/td[5]/a"));
+		assertEquals(RuntimeVariables.replace("Review"),
+			selenium.getText("//tr[4]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace("Message Boards Message Subject"),
+			selenium.getText("//tr[4]/td[2]/a"));
+		assertEquals(RuntimeVariables.replace("Message Boards Message"),
+			selenium.getText("//tr[4]/td[3]/a"));
+		assertTrue(selenium.isVisible("//tr[4]/td[4]/a"));
+		assertEquals(RuntimeVariables.replace("Never"),
+			selenium.getText("//tr[4]/td[5]/a"));
 	}
 }

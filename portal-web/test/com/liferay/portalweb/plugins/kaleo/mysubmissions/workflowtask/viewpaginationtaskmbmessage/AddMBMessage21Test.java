@@ -129,11 +129,6 @@ public class AddMBMessage21Test extends BaseTestCase {
 		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Next"),
-			selenium.getText("//a[@class='next']"));
-		selenium.clickAt("//a[@class='next']", RuntimeVariables.replace("Next"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Single Approver"),
 			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace(

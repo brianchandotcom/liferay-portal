@@ -46,18 +46,20 @@ public class ViewWebContentCompletedTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Web Content Name"),
-			selenium.getText("//h3/a"));
+			selenium.getText("//h3[@class='asset-title']/a"));
 		assertTrue(selenium.isPartialText("//div[@class='asset-more']/a",
 				"Read More"));
+		assertEquals(RuntimeVariables.replace("Web Content Content"),
+			selenium.getText("//div[@class='asset-summary']"));
 		assertFalse(selenium.isTextPresent("Web Content Name is not approved."));
 		selenium.clickAt("//div[@class='asset-more']/a",
 			RuntimeVariables.replace("Read More"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Web Content Name"),
-			selenium.getText("//div[1]/h1/span"));
+			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Web Content Content"),
-			selenium.getText("//p"));
+			selenium.getText("//div[@class='journal-content-article']/p"));
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -103,7 +105,7 @@ public class ViewWebContentCompletedTest extends BaseTestCase {
 			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText("//td[3]/a"));
-		assertTrue(selenium.isElementPresent("//td[4]/a"));
+		assertTrue(selenium.isVisible("//td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
 			selenium.getText("//td[5]/a"));
 	}

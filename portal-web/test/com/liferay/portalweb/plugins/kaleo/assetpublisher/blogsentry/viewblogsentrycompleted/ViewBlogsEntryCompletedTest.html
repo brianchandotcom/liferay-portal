@@ -25,12 +25,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//h3/a</td>
+	<td>//h3[@class='asset-title']/a</td>
 	<td>Blogs Entry Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/div/div[1]/div[2]/div[1]</td>
+	<td>//div[@class='asset-summary']</td>
 	<td>Blogs Entry Content</td>
 </tr>
 <tr>
@@ -50,12 +50,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[1]/h1/span</td>
+	<td>//h1[@class='header-title']/span</td>
 	<td>Blogs Entry Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//p</td>
+	<td>//div[@class='asset-content']/p</td>
 	<td>Blogs Entry Content</td>
 </tr>
 <tr>
@@ -114,7 +114,7 @@
 	<td>Blogs Entry</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>assertVisible</td>
 	<td>//td[4]/a</td>
 	<td>Last Activity Date</td>
 </tr>

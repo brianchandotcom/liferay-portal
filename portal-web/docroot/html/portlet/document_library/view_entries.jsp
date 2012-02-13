@@ -201,6 +201,14 @@ searchContainer.setResults(results);
 searchContainer.setTotal(total);
 
 request.setAttribute("view_entries.jsp-total", String.valueOf(total));
+
+boolean showSyncMessage = GetterUtil.getBoolean(SessionClicks.get(request, liferayPortletResponse.getNamespace() + "show-sync-message", "true"));
+
+String cssClass = StringPool.BLANK;
+
+if (!showSyncMessage || !PropsValues.DL_SHOW_LIFERAY_SYNC_MESSAGE) {
+	cssClass = "aui-helper-hidden";
+}
 %>
 
 <c:choose>
@@ -209,13 +217,19 @@ request.setAttribute("view_entries.jsp-total", String.valueOf(total));
 			<liferay-ui:message key="there-are-no-documents-or-media-files-in-this-folder" />
 		</div>
 	</c:when>
-	<c:when test="<%= System.currentTimeMillis() > 1328126400000L %>">
-		<div class="portlet-msg-info sync-notification">
-			<a href="http://www.liferay.com/products/liferay-sync" target="_blank">
-				<liferay-ui:message key="access-these-files-offline-using-liferay-sync" />
-			</a>
+	<c:otherwise>
+		<div class="<%= cssClass %>" id="<portlet:namespace />syncNotificationContainer">
+			<div class="dismissible portlet-msg-info sync-notification" id="<portlet:namespace />syncNotification">
+				<span class="hide-notices-control">
+					<img alt="<%= LanguageUtil.get(pageContext, "hide-liferay-sync-tip") %>" class="aui-icon" src="<%= themeDisplay.getPathThemeImages() + "/portlet/close_borderless.png" %>" />
+				</span>
+
+				<a href="http://www.liferay.com/products/liferay-sync" target="_blank">
+					<liferay-ui:message key="access-these-files-offline-using-liferay-sync" />
+				</a>
+			</div>
 		</div>
-	</c:when>
+	</c:otherwise>
 </c:choose>
 
 <%

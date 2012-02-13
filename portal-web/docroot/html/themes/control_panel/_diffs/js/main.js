@@ -2,7 +2,7 @@ Liferay.Util.portletTitleEdit = function() {
 };
 
 if (!themeDisplay.isStatePopUp()) {
-	AUI().ready('aui-io-request', 'aui-live-search', 'aui-overlay-context-panel', 'event-mouseenter', 'node-focusmanager', 'transition',
+	AUI().ready('aui-io-request', 'aui-live-search', 'aui-overlay-context-panel', 'event-mouseenter', 'liferay-persistent-dismissible-message', 'node-focusmanager', 'transition',
 		function(A) {
 			var body = A.getBody();
 
@@ -17,22 +17,11 @@ if (!themeDisplay.isStatePopUp()) {
 				visible = (portletInformationEl.attr('data-visible-panel') == 'true');
 			}
 
-			var sessionData = {};
 			var sessionKey = 'show-portlet-description-' + portletId;
-
-			if (themeDisplay.isImpersonated()) {
-				sessionData.doAsUserId = themeDisplay.getDoAsUserIdEncoded();
-			}
 
 			var trim = A.Lang.trim;
 
-			var ATTR_DATA_NODE_STATUS = 'data-nodeStatus';
-
 			var CSS_DISPLAY_PANEL_COLUMNS = 'display-panel-columns';
-
-			var CSS_ICON_CLOSE = 'aui-icon-closethick';
-
-			var CSS_ICON_HELP = 'aui-icon-help';
 
 			var CSS_PANELS_MINIMIZED = 'panels-minimized';
 
@@ -47,125 +36,6 @@ if (!themeDisplay.isStatePopUp()) {
 			var TPL_CANCEL_SEARCH_BUTTON = '<a class="cancel-search" href="javascript:;"></a>';
 
 			var TPL_TOGGLE_PANELS_BUTTON = '<div id="minimize-panels"><a href="javascript:;"><span>' + Liferay.Language.get('minimize-panels') + '</span></a></div>';
-
-			var helpBox = A.Component.create(
-				{
-					NAME: 'helpbox',
-					ATTRS: {
-						trigger: {
-							setter: A.one
-						}
-					},
-					prototype: {
-						renderUI: function() {
-							var instance = this;
-
-							var contentBox = instance.get('contentBox');
-
-							instance._icon = contentBox.one('.aui-icon');
-
-							instance._hideNoticesControl = contentBox.one('.hide-notices-control');
-							instance._hideAllNotices = instance._hideNoticesControl.one('.hide-all-notices');
-							instance._hideAllNoticesControl = instance._hideNoticesControl.one('a');
-						},
-
-						bindUI: function() {
-							var instance = this;
-
-							instance.on(['mouseenter', 'mouseleave'], instance._onBoxMouseToggle);
-							instance.after('visibleChange', instance._afterVisibleChange);
-
-							instance._icon.on('click', instance._onIconClick, instance);
-
-							instance.get('trigger').on('click', instance._onTriggerClick, instance);
-
-							instance._hideNoticesControl.on(['mouseenter', 'mouseleave'], instance._onIconMouseToggle, instance);
-							instance._hideAllNoticesControl.on('click', instance._onHideAllClick, instance);
-						},
-
-						_afterVisibleChange: function(event) {
-							var instance = this;
-
-							var action = 'show';
-							var panelAction = 'hide';
-
-							if (event.newVal) {
-								action = 'hide';
-								panelAction = 'show';
-							}
-
-							var trigger = instance.get('trigger');
-
-							trigger[action]();
-
-							var contentBox = instance.get('contentBox');
-
-							contentBox[panelAction]();
-
-							if (event.enablePortletDescriptions === false) {
-								sessionData['enable-portlet-descriptions'] = false;
-							}
-
-							sessionData[sessionKey] = event.newVal;
-
-							A.io.request(
-								themeDisplay.getPathMain() + '/portal/session_click',
-								{
-									data: sessionData
-								}
-							);
-						},
-
-						_onBoxMouseToggle: function(event) {
-							var instance = this;
-
-							var from = CSS_ICON_HELP;
-							var to = CSS_ICON_CLOSE;
-
-							var mouseenter = event.type.indexOf('mouseenter') > -1;
-
-							if (!mouseenter) {
-								from = CSS_ICON_CLOSE;
-								to = CSS_ICON_HELP;
-							}
-
-							instance._icon.replaceClass(from, to);
-						},
-
-						_onHideAllClick: function(event) {
-							var instance = this;
-
-							instance.set(
-								'visible',
-								false,
-								{
-									enablePortletDescriptions: false
-								}
-							);
-						},
-
-						_onIconClick: function(event) {
-							var instance = this;
-
-							instance.hide();
-						},
-
-						_onIconMouseToggle: function(event) {
-							var instance = this;
-
-							instance._hideNoticesControl.toggleClass('hide-notices-hover', (event.type == 'mouseenter'));
-
-							instance._hideAllNotices.toggle();
-						},
-
-						_onTriggerClick: function(event) {
-							var instance = this;
-
-							instance.show();
-						}
-					}
-				}
-			);
 
 			var ControlPanel = {
 				init: function() {
@@ -368,9 +238,11 @@ if (!themeDisplay.isStatePopUp()) {
 					searchPanelInput.attr('autocomplete', 'off');
 
 					if (portletInformationEl) {
-						instance._helpBox = new helpBox(
+						instance._helpBox = new Liferay.PersistentDismissibleMessage(
 							{
 								contentBox: portletInformationEl,
+								sessionDismissAllMessage: 'enable-portlet-descriptions',
+								sessionDismissMessage: sessionKey,
 								trigger: portletInformationIcon,
 								visible: portletInformationEl.test(':visible')
 							}

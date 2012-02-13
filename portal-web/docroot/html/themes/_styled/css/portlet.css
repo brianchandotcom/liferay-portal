@@ -208,6 +208,23 @@ body.portlet {
 	background-image: url(../images/messages/info.png);
 	border-color: #A7CEDF;
 
+	&.dismissible .hide-notices-control {
+		background-color: #333;
+		display: none;
+	}
+
+	&.dismissible:hover {
+		background-image: none;
+		padding-left: 0px;
+
+		.hide-notices-control {
+			display: block;
+			float: left;
+			margin-left: 6px;
+			margin-right: 8px;
+		}
+	}
+
 	&.pending {
 		background-image: url(../images/common/time.png);
 	}

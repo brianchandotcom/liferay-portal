@@ -72,6 +72,7 @@
 			'notice': ['aui-base'],
 			'panel': ['aui-base', 'aui-io-request'],
 			'panel-floating': ['aui-paginator', 'liferay-panel'],
+			'persistent-dismissible-message': ['aui-base', 'aui-io-request'],
 			'poller': ['aui-base', 'io', 'json'],
 			'portlet-base': ['aui-base'],
 			'portlet-url': ['aui-base', 'aui-io-request', 'querystring-stringify-simple'],

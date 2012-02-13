@@ -775,7 +775,7 @@ input[type="text"], input[type="password"], select, textarea, .textarea, #breadc
 	@include border-radius(4px 4px 0 0);
 }
 
-.portlet-description .aui-icon, .hide-notices-hover .hide-all-notices {
+.portlet-description .aui-icon, .hide-notices-hover .hide-all-notices, .portlet-msg-info.dismissible .hide-notices-control {
 	@include border-radius(10px);
 }
 

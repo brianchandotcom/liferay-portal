@@ -46,11 +46,13 @@
 		<div id="main-content">
 
 			<%
+			boolean setupWizardConfigurationFinished = GetterUtil.getBoolean((Boolean)session.getAttribute(WebKeys.SETUP_WIZARD_CONFIGURATION_FINISHED));
+
 			boolean propertiesFileUpdated = GetterUtil.getBoolean((Boolean)session.getAttribute(WebKeys.SETUP_WIZARD_PROPERTIES_UPDATED));
 			%>
 
 			<c:choose>
-				<c:when test="<%= !propertiesFileUpdated && !SetupWizardUtil.isSetupFinished() %>">
+				<c:when test="<%= !propertiesFileUpdated && !SetupWizardUtil.isSetupFinished() && !setupWizardConfigurationFinished %>">
 
 					<%
 					boolean defaultDatabase = SetupWizardUtil.isDefaultDatabase(request);
@@ -88,7 +90,7 @@
 
 							<aui:input label="last-name" name='<%= "properties--" + PropsKeys.DEFAULT_ADMIN_LAST_NAME + "--" %>' value="<%= PropsValues.DEFAULT_ADMIN_LAST_NAME %>" />
 
-							<aui:input label="email" name='<%= "properties--" + PropsKeys.ADMIN_EMAIL_FROM_ADDRESS + "--" %>' value="<%= PropsValues.ADMIN_EMAIL_FROM_ADDRESS %>">
+							<aui:input label="email" name='<%= "properties--" + PropsKeys.ADMIN_EMAIL_FROM_ADDRESS + "--" %>' value="<%= PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS %>">
 								<aui:validator name="email" />
 								<aui:validator name="required" />
 							</aui:input>
@@ -387,7 +389,7 @@
 								<c:if test="<%= !passwordUpdated %>">
 									<p>
 										<span class="aui-field-hint">
-											<liferay-ui:message arguments="<%= PropsValues.DEFAULT_ADMIN_PASSWORD %>" key="your-password-is-x.-don't-forget-to-change-it-in-my-account" />
+											<liferay-ui:message arguments="<%= PropsValues.DEFAULT_ADMIN_PASSWORD %>" key="your-password-is-x.-you-will-be-required-to-change-it-the-next-time-you-log-into-the-portal" />
 										</span>
 									</p>
 								</c:if>
@@ -396,8 +398,17 @@
 							</aui:form>
 						</c:when>
 						<c:otherwise>
+
+							<%
+							boolean adminUserUpdated = GetterUtil.getBoolean((Boolean)session.getAttribute(WebKeys.SETUP_WIZARD_USER_UPDATED));
+							%>
+
 							<p>
 								<span class="portlet-msg-alert">
+
+									<c:if test="<%= !adminUserUpdated %>">
+										<liferay-ui:message arguments="<%= StringPool.OPEN_PARENTHESIS + PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS + StringPool.CLOSE_PARENTHESIS %>" key="it-seems-that-your-portal-was-already-setup-since-we-could-not-find-the-default-admin-user-x" /> <br />>
+									</c:if>
 
 									<%
 									String taglibArguments = "<span class=\"lfr-inline-code\">" + PropsValues.LIFERAY_HOME + "</span>";

@@ -366,6 +366,8 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String SESSION_MAX_ALLOWED = "SESSION_MAX_ALLOWED";
 
+	public static final String SETUP_WIZARD_CONFIGURATION_FINISHED = "SETUP_WIZARD_CONFIGURATION_FINISHED";
+
 	public static final String SETUP_WIZARD_DEFAULT_LOCALE = "SETUP_WIZARD_DEFAULT_LOCALE";
 
 	public static final String SETUP_WIZARD_PASSWORD_UPDATED = "SETUP_WIZARD_PASSWORD_UPDATED";
@@ -373,6 +375,8 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 	public static final String SETUP_WIZARD_PROPERTIES = "SETUP_WIZARD_PROPERTIES";
 
 	public static final String SETUP_WIZARD_PROPERTIES_UPDATED = "SETUP_WIZARD_PROPERTIES_UPDATED";
+
+	public static final String SETUP_WIZARD_USER_UPDATED = "SETUP_WIZARD_USER_UPDATED";
 
 	public static final String SHOPPING_CATEGORY = "SHOPPING_CATEGORY";
 

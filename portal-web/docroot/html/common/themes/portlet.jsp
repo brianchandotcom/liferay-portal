@@ -163,7 +163,7 @@ boolean wsrp = ParamUtil.getBoolean(request, "wsrp");
 										<span class="portlet-action portlet-close">
 											<span class="portlet-action-separator">-</span>
 
-											<a href="<%= portletDisplay.getURLClose() %>" title="<liferay-ui:message key="close" />"><liferay-ui:message key="close" /></a>
+											<liferay-portlet:icon-close />
 										</span>
 									</c:if>
 

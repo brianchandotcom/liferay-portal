@@ -123,6 +123,12 @@ public class WikiPagePermission {
 			if (redirectPage != null) {
 				page = redirectPage;
 			}
+
+			if (!WikiNodePermission.contains(
+					permissionChecker, page.getNode(), actionId)) {
+
+				return false;
+			}
 		}
 
 		if (page.isPending()) {

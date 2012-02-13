@@ -22,8 +22,14 @@ Folder folder = (Folder)request.getAttribute("view.jsp-folder");
 DLUtil.addPortletBreadcrumbEntries(folder, request, liferayPortletResponse);
 
 boolean showSyncMessage = GetterUtil.getBoolean(SessionClicks.get(request, "show-sync-message", "true"));
+
+String cssClass = "show-sync-message";
+
+if (showSyncMessage || !PropsValues.DL_SHOW_LIFERAY_SYNC_MESSAGE) {
+	cssClass = "show-sync-message aui-helper-hidden";
+}
 %>
 
-<img alt="<%= LanguageUtil.get(pageContext, "show-liferay-sync-tip") %>" class="<%= showSyncMessage ? "show-sync-message aui-helper-hidden" : "show-sync-message" %>" id="<portlet:namespace />showSyncMessageIcon" src="<%= themeDisplay.getPathThemeImages() + "/document_library/sync.png" %>" title="<%= LanguageUtil.get(pageContext, "liferay-sync") %>" />
+<img alt="<%= LanguageUtil.get(pageContext, "show-liferay-sync-tip") %>" class="<%= cssClass %>" id="<portlet:namespace />showSyncMessageIcon" src="<%= themeDisplay.getPathThemeImages() + "/document_library/sync.png" %>" title="<%= LanguageUtil.get(pageContext, "liferay-sync") %>" />
 
 <liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showCurrentPortlet="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showParentGroups="<%= false %>" />

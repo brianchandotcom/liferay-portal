@@ -611,6 +611,8 @@ public interface PropsKeys {
 
 	public static final String DL_REPOSITORY_IMPL = "dl.repository.impl";
 
+	public static final String DL_SHOW_LIFERAY_SYNC_MESSAGE = "dl.show.liferay.sync.message";
+
 	public static final String DL_STORE_ANTIVIRUS_ENABLED = "dl.store.antivirus.enabled";
 
 	public static final String DL_STORE_ANTIVIRUS_IMPL = "dl.store.antivirus.impl";

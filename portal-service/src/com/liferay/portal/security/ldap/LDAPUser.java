@@ -270,7 +270,7 @@ public class LDAPUser {
 	}
 
 	public void setFirstName(String firstName) {
-		_contact.setFirstName(firstName);
+		_user.setFirstName(firstName);
 	}
 
 	public void setGreeting(String greeting) {
@@ -298,7 +298,7 @@ public class LDAPUser {
 	}
 
 	public void setLastName(String lastName) {
-		_contact.setLastName(lastName);
+		_user.setLastName(lastName);
 	}
 
 	public void setLocale(Locale locale) {
@@ -306,7 +306,7 @@ public class LDAPUser {
 	}
 
 	public void setMiddleName(String middleName) {
-		_contact.setMiddleName(middleName);
+		_user.setMiddleName(middleName);
 	}
 
 	public void setMsnSn(String msnSn) {

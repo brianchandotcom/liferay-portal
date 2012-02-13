@@ -88,7 +88,7 @@ String portletURLString = portletURL.toString();
 
 		// Name
 
-		row.addText(HtmlUtil.escape(role.getTitle(locale)), rowURL);
+		row.addText(role.getTitle(locale), rowURL);
 
 		// Type
 
@@ -105,7 +105,7 @@ String portletURLString = portletURL.toString();
 
 		// Description
 
-		row.addText(HtmlUtil.escape(role.getDescription(locale)), rowURL);
+		row.addText(role.getDescription(locale), rowURL);
 
 		// Action
 

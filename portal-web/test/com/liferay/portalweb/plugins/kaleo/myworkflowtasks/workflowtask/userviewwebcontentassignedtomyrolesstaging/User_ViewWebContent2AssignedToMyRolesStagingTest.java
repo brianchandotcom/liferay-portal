@@ -52,18 +52,18 @@ public class User_ViewWebContent2AssignedToMyRolesStagingTest
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//td[1]/a/span"));
-		assertEquals(RuntimeVariables.replace("Web Content1 Name"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//tr[3]/td[1]/a/span"));
+		assertEquals(RuntimeVariables.replace("Web Content2 Name"),
+			selenium.getText("//tr[3]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
-			selenium.getText("//td[3]/a"));
+			selenium.getText("//tr[3]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Review"),
 			selenium.getText("//tr[4]/td[1]/a/span"));
-		assertEquals(RuntimeVariables.replace("Web Content2 Name"),
+		assertEquals(RuntimeVariables.replace("Web Content1 Name"),
 			selenium.getText("//tr[4]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText("//tr[4]/td[3]/a"));
-		selenium.clickAt("//tr[4]/td[2]/a",
+		selenium.clickAt("//tr[3]/td[2]/a",
 			RuntimeVariables.replace("Web Content2 Name"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();

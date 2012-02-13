@@ -141,11 +141,18 @@ pageContext.setAttribute("portletURL", portletURL);
 
 		StringBundler sb = new StringBundler();
 
-		sb.append("<a href=\"");
-		sb.append(rowURL.toString());
-		sb.append("\">");
-		sb.append(HtmlUtil.escape(group.getDescriptiveName(locale)));
-		sb.append("</a>");
+		boolean hasUpdatePermissions = GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.UPDATE);
+
+		if (hasUpdatePermissions) {
+			sb.append("<a href=\"");
+			sb.append(rowURL.toString());
+			sb.append("\">");
+			sb.append(HtmlUtil.escape(group.getDescriptiveName(locale)));
+			sb.append("</a>");
+		}
+		else {
+			sb.append(HtmlUtil.escape(group.getDescriptiveName(locale)));
+		}
 
 		if (group.isOrganization()) {
 			Organization organization = OrganizationLocalServiceUtil.getOrganization(group.getOrganizationId());
@@ -230,7 +237,12 @@ pageContext.setAttribute("portletURL", portletURL);
 
 		// Type
 
-		row.addText(LanguageUtil.get(pageContext, group.getTypeLabel()), rowURL);
+		if (hasUpdatePermissions) {
+			row.addText(LanguageUtil.get(pageContext, group.getTypeLabel()), rowURL);
+		}
+		else {
+			row.addText(LanguageUtil.get(pageContext, group.getTypeLabel()));
+		}
 
 		// Members
 

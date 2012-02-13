@@ -191,30 +191,14 @@ public class SetupWizardUtil {
 
 		_updateCompany();
 
-		boolean adminUserUpdated = true;
-
-		try {
-			_updateAdminUser(request);
-		}
-		catch (NoSuchUserException nsue) {
-			adminUserUpdated = false;
-
-			// remove administrator properties
-
-			unicodeProperties.remove(PropsKeys.ADMIN_EMAIL_FROM_NAME);
-			unicodeProperties.remove(PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
-			unicodeProperties.remove(PropsKeys.DEFAULT_ADMIN_FIRST_NAME);
-			unicodeProperties.remove(PropsKeys.DEFAULT_ADMIN_LAST_NAME);
-			unicodeProperties.remove(PropsKeys.DEFAULT_ADMIN_EMAIL_ADDRESS);
-			unicodeProperties.remove(PropsKeys.DEFAULT_ADMIN_SCREEN_NAME);
-		}
+		boolean adminUserUpdated = _updateAdminUser(request, unicodeProperties);
 
 		_initPlugins();
 
-		boolean propertiesUpdated = true;
+		boolean propertiesFileUpdated = false;
 
 		if (adminUserUpdated) {
-			propertiesUpdated = _writePropertiesFile(unicodeProperties);
+			propertiesFileUpdated = _writePropertiesFile(unicodeProperties);
 		}
 
 		HttpSession session = request.getSession();
@@ -222,9 +206,9 @@ public class SetupWizardUtil {
 		session.setAttribute(
 			WebKeys.SETUP_WIZARD_PROPERTIES, unicodeProperties);
 		session.setAttribute(
-			WebKeys.SETUP_WIZARD_PROPERTIES_UPDATED, propertiesUpdated);
+			WebKeys.SETUP_WIZARD_PROPERTIES_UPDATED, propertiesFileUpdated);
 		session.setAttribute(
-			WebKeys.SETUP_WIZARD_USER_UPDATED, adminUserUpdated);
+			WebKeys.SETUP_WIZARD_CONFIGURATION_FINISHED, true);
 	}
 
 	private static String _getParameter(
@@ -419,7 +403,8 @@ public class SetupWizardUtil {
 		}
 	}
 
-	private static void _updateAdminUser(HttpServletRequest request)
+	private static boolean _updateAdminUser(
+			HttpServletRequest request, UnicodeProperties unicodeProperties)
 		throws Exception {
 
 		// Email address
@@ -432,16 +417,29 @@ public class SetupWizardUtil {
 		try {
 			user = UserLocalServiceUtil.getUserByEmailAddress(
 				PortalUtil.getDefaultCompanyId(),
-				PropsValues.ADMIN_EMAIL_FROM_ADDRESS);
+				PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS);
 		}
 		catch (NoSuchUserException nsue) {
-			user = UserLocalServiceUtil.getUserByEmailAddress(
-				PortalUtil.getDefaultCompanyId(), "test@liferay.com");
+		}
 
-			user = UserLocalServiceUtil.updateEmailAddress(
-				user.getUserId(), StringPool.BLANK,
-				PropsValues.ADMIN_EMAIL_FROM_ADDRESS,
-				PropsValues.ADMIN_EMAIL_FROM_ADDRESS);
+		if (user == null) {
+			try {
+				user = UserLocalServiceUtil.getUserByEmailAddress(
+					PortalUtil.getDefaultCompanyId(), "test@liferay.com");
+
+				user = UserLocalServiceUtil.updateEmailAddress(
+					user.getUserId(), StringPool.BLANK,
+					PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS,
+					PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS);
+			}
+			catch (NoSuchUserException nsue) {
+				unicodeProperties.remove(PropsKeys.DEFAULT_ADMIN_FIRST_NAME);
+				unicodeProperties.remove(PropsKeys.DEFAULT_ADMIN_LAST_NAME);
+				unicodeProperties.remove(PropsKeys.DEFAULT_ADMIN_EMAIL_ADDRESS);
+				unicodeProperties.remove(PropsKeys.DEFAULT_ADMIN_SCREEN_NAME);
+
+				return false;
+			}
 		}
 
 		// First and last name
@@ -484,6 +482,8 @@ public class SetupWizardUtil {
 
 		session.setAttribute(WebKeys.SETUP_WIZARD_PASSWORD_UPDATED, true);
 		session.setAttribute(WebKeys.USER_ID, user.getUserId());
+
+		return true;
 	}
 
 	private static void _updateCompany() throws Exception {

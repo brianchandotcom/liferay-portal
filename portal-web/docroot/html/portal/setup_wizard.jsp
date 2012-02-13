@@ -46,11 +46,13 @@
 		<div id="main-content">
 
 			<%
-			boolean propertiesUpdated = GetterUtil.getBoolean((Boolean)session.getAttribute(WebKeys.SETUP_WIZARD_PROPERTIES_UPDATED));
+			boolean setupWizardConfigurationFinished = GetterUtil.getBoolean((Boolean)session.getAttribute(WebKeys.SETUP_WIZARD_CONFIGURATION_FINISHED));
+
+			boolean propertiesFileUpdated = GetterUtil.getBoolean((Boolean)session.getAttribute(WebKeys.SETUP_WIZARD_PROPERTIES_UPDATED));
 			%>
 
 			<c:choose>
-				<c:when test="<%= !propertiesUpdated && !SetupWizardUtil.isSetupFinished() %>">
+				<c:when test="<%= !propertiesFileUpdated && !SetupWizardUtil.isSetupFinished() && !setupWizardConfigurationFinished %>">
 
 					<%
 					boolean defaultDatabase = SetupWizardUtil.isDefaultDatabase(request);
@@ -88,7 +90,7 @@
 
 							<aui:input label="last-name" name='<%= "properties--" + PropsKeys.DEFAULT_ADMIN_LAST_NAME + "--" %>' value="<%= PropsValues.DEFAULT_ADMIN_LAST_NAME %>" />
 
-							<aui:input label="email" name='<%= "properties--" + PropsKeys.ADMIN_EMAIL_FROM_ADDRESS + "--" %>' value="<%= PropsValues.ADMIN_EMAIL_FROM_ADDRESS %>">
+							<aui:input label="email" name='<%= "properties--" + PropsKeys.ADMIN_EMAIL_FROM_ADDRESS + "--" %>' value="<%= PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS %>">
 								<aui:validator name="email" />
 								<aui:validator name="required" />
 							</aui:input>
@@ -346,12 +348,10 @@
 
 					<%
 					SetupWizardUtil.setSetupFinished(true);
-
-                    boolean adminUserUpdated = GetterUtil.getBoolean((Boolean)session.getAttribute(WebKeys.SETUP_WIZARD_USER_UPDATED));
 					%>
 
 					<c:choose>
-						<c:when test="<%= propertiesUpdated && adminUserUpdated %>">
+						<c:when test="<%= propertiesFileUpdated %>">
 
 							<%
 							PortletURL loginURL = new PortletURLImpl(request, PortletKeys.LOGIN, plid, PortletRequest.ACTION_PHASE);
@@ -398,26 +398,23 @@
 							</aui:form>
 						</c:when>
 						<c:otherwise>
+
+							<%
+							boolean adminUserUpdated = GetterUtil.getBoolean((Boolean)session.getAttribute(WebKeys.SETUP_WIZARD_USER_UPDATED));
+							%>
+
 							<p>
 								<span class="portlet-msg-alert">
-                                    <c:choose>
-                                        <c:when test="<%= !propertiesUpdated %>">
-                                            
-                                            <%
-                                            String taglibArguments = "<span class=\"lfr-inline-code\">" + PropsValues.LIFERAY_HOME + "</span>";
-                                            %>
 
-                                            <liferay-ui:message arguments="<%= taglibArguments %>" key="sorry,-we-were-not-able-to-save-the-configuration-file-in-x" />
-                                        </c:when>
-                                        <c:otherwise>
+									<c:if test="<%= !adminUserUpdated %>">
+										<liferay-ui:message arguments="<%= StringPool.OPEN_PARENTHESIS + PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS + StringPool.CLOSE_PARENTHESIS %>" key="it-seems-that-your-portal-was-already-setup-since-we-could-not-find-the-default-admin-user-x" /> <br />>
+									</c:if>
 
-                                            <%
-                                            String[] taglibArguments = {PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS, PropsValues.LIFERAY_HOME};
-                                            %>
+									<%
+									String taglibArguments = "<span class=\"lfr-inline-code\">" + PropsValues.LIFERAY_HOME + "</span>";
+									%>
 
-                                            <liferay-ui:message arguments="<%= taglibArguments %>" key="sorry,-we-were-not-able-to-find-the-administrator-x-in-the-database" />
-                                        </c:otherwise>
-                                    </c:choose>
+									<liferay-ui:message arguments="<%= taglibArguments %>" key="sorry,-we-were-not-able-to-save-the-configuration-file-in-x" />
 								</span>
 							</p>
 

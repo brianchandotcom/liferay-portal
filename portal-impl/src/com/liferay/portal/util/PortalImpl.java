@@ -551,6 +551,12 @@ public class PortalImpl implements Portal {
 				WebKeys.PORTLET_BREADCRUMBS, breadcrumbEntries);
 		}
 
+		for (BreadcrumbEntry curBreadcrumbEntry : breadcrumbEntries) {
+			if (title.equals(curBreadcrumbEntry.getTitle())) {
+				return;
+			}
+		}
+
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
 		breadcrumbEntry.setData(data);

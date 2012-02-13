@@ -54,23 +54,6 @@ int fileEntriesCount = DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(repo
 long assetCategoryId = ParamUtil.getLong(request, "categoryId");
 String assetTagName = ParamUtil.getString(request, "tag");
 
-String assetCategoryTitle = null;
-String assetVocabularyTitle = null;
-
-if (assetCategoryId != 0) {
-	AssetCategory assetCategory = AssetCategoryLocalServiceUtil.getAssetCategory(assetCategoryId);
-
-	assetCategory = assetCategory.toEscapedModel();
-
-	assetCategoryTitle = assetCategory.getTitle(locale);
-
-	AssetVocabulary assetVocabulary = AssetVocabularyLocalServiceUtil.getAssetVocabulary(assetCategory.getVocabularyId());
-
-	assetVocabulary = assetVocabulary.toEscapedModel();
-
-	assetVocabularyTitle = assetVocabulary.getTitle(locale);
-}
-
 boolean useAssetEntryQuery = (assetCategoryId > 0) || Validator.isNotNull(assetTagName);
 
 PortletURL portletURL = renderResponse.createRenderURL();
@@ -96,33 +79,9 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 
 <c:choose>
 	<c:when test="<%= useAssetEntryQuery %>">
-		<c:choose>
-			<c:when test="<%= Validator.isNotNull(assetCategoryTitle) && Validator.isNotNull(assetTagName) %>">
-				<h1 class="entry-title">
-					<liferay-ui:message arguments="<%= new String[] {assetVocabularyTitle, assetCategoryTitle, assetTagName} %>" key="documents-with-x-x-and-tag-x" />
-				</h1>
-			</c:when>
-			<c:otherwise>
-				<c:if test="<%= Validator.isNotNull(assetCategoryTitle) %>">
-					<h1 class="entry-title">
-						<liferay-ui:message arguments="<%= new String[] {assetVocabularyTitle, assetCategoryTitle} %>" key="documents-with-x-x" />
-					</h1>
-				</c:if>
-
-				<c:if test="<%= Validator.isNotNull(assetTagName) %>">
-					<h1 class="entry-title">
-						<liferay-ui:message arguments="<%= assetTagName %>" key="documents-with-tag-x" />
-					</h1>
-				</c:if>
-			</c:otherwise>
-		</c:choose>
+		<liferay-ui:categorization-filter assetType="documents" portletURL="<%= portletURL%>" />
 
 		<%@ include file="/html/portlet/document_library_display/view_file_entries.jspf" %>
-
-		<%
-		PortalUtil.addPageKeywords(assetTagName, request);
-		PortalUtil.addPageKeywords(assetCategoryTitle, request);
-		%>
 
 	</c:when>
 	<c:when test='<%= topLink.equals("home") %>'>

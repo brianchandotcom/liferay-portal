@@ -19,23 +19,6 @@
 <%
 long assetCategoryId = ParamUtil.getLong(request, "categoryId");
 
-String assetCategoryTitle = null;
-String assetVocabularyTitle = null;
-
-if (assetCategoryId != 0) {
-	AssetCategory assetCategory = AssetCategoryLocalServiceUtil.getAssetCategory(assetCategoryId);
-
-	assetCategory = assetCategory.toEscapedModel();
-
-	assetCategoryTitle = assetCategory.getTitle(locale);
-
-	AssetVocabulary assetVocabulary = AssetVocabularyLocalServiceUtil.getAssetVocabulary(assetCategory.getVocabularyId());
-
-	assetVocabulary = assetVocabulary.toEscapedModel();
-
-	assetVocabularyTitle = assetVocabulary.getTitle(locale);
-}
-
 String assetTagName = ParamUtil.getString(request, "tag");
 
 PortletURL portletURL = renderResponse.createRenderURL();

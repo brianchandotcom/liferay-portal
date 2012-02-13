@@ -19,35 +19,20 @@
 <%
 String tagName = ParamUtil.getString(request, "tag");
 
-String title = "pages-with-tag-x";
-String description = null;
-
-try {
-	AssetTag assetTag = AssetTagLocalServiceUtil.getTag(scopeGroupId, tagName);
-
-	AssetTagProperty assetTagProperty = AssetTagPropertyLocalServiceUtil.getTagProperty(assetTag.getTagId(), "description");
-
-	description = assetTagProperty.getValue();
-}
-catch (NoSuchTagException nste) {
-}
-catch (NoSuchTagPropertyException nstpe) {
-}
+PortletURL portletURL = renderResponse.createRenderURL();
+portletURL.setParameter("struts_action", "/wiki/view_tagged_pages");
+portletURL.setParameter("tag", tagName);
 %>
 
 <liferay-util:include page="/html/portlet/wiki/top_links.jsp" />
 
+<liferay-ui:categorization-filter assetType="pages" portletURL="<%= portletURL %>" />
+
 <liferay-ui:header
 	escapeXml="<%= false %>"
 	localizeTitle="<%= false %>"
-	title="<%= LanguageUtil.format(pageContext, title, HtmlUtil.escape(tagName)) %>"
+	title=""
 />
-
-<c:if test="<%= Validator.isNotNull(description) %>">
-	<p class="tag-description">
-		<%= description %>
-	</p>
-</c:if>
 
 <liferay-util:include page="/html/portlet/wiki/page_iterator.jsp">
 	<liferay-util:param name="type" value="tagged_pages" />

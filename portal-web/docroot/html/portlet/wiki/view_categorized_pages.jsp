@@ -18,31 +18,20 @@
 
 <%
 long categoryId = GetterUtil.getLong(ParamUtil.getString(request, "categoryId"));
+PortletURL portletURL = renderResponse.createRenderURL();
 
-String categoryTitle = null;
-String vocabularyTitle = null;
-
-if (categoryId != 0) {
-	AssetCategory assetCategory = AssetCategoryLocalServiceUtil.getAssetCategory(categoryId);
-
-	assetCategory = assetCategory.toEscapedModel();
-
-	categoryTitle = assetCategory.getTitle(locale);
-
-	AssetVocabulary assetVocabulary = AssetVocabularyLocalServiceUtil.getAssetVocabulary(assetCategory.getVocabularyId());
-
-	assetVocabulary = assetVocabulary.toEscapedModel();
-
-	vocabularyTitle = assetVocabulary.getTitle(locale);
-}
+portletURL.setParameter("struts_action", "/wiki/view_categorized_pages");
+portletURL.setParameter("categoryId", String.valueOf(categoryId));
 %>
 
 <liferay-util:include page="/html/portlet/wiki/top_links.jsp" />
 
+<liferay-ui:categorization-filter assetType="pages" portletURL="<%= portletURL %>" />
+
 <liferay-ui:header
 	escapeXml="<%= false %>"
 	localizeTitle="<%= false %>"
-	title='<%= LanguageUtil.format(pageContext, "pages-with-x-x", new String[] {vocabularyTitle, categoryTitle}) %>'
+	title=''
 />
 
 <liferay-util:include page="/html/portlet/wiki/page_iterator.jsp">

@@ -40,23 +40,6 @@ int entriesCount = BookmarksEntryServiceUtil.getEntriesCount(scopeGroupId, folde
 long assetCategoryId = ParamUtil.getLong(request, "categoryId");
 String assetTagName = ParamUtil.getString(request, "tag");
 
-String assetCategoryTitle = null;
-String assetVocabularyTitle = null;
-
-if (assetCategoryId != 0) {
-	AssetCategory assetCategory = AssetCategoryLocalServiceUtil.getAssetCategory(assetCategoryId);
-
-	assetCategory = assetCategory.toEscapedModel();
-
-	assetCategoryTitle = assetCategory.getTitle(locale);
-
-	AssetVocabulary assetVocabulary = AssetVocabularyLocalServiceUtil.getAssetVocabulary(assetCategory.getVocabularyId());
-
-	assetVocabulary = assetVocabulary.toEscapedModel();
-
-	assetVocabularyTitle = assetVocabulary.getTitle(locale);
-}
-
 boolean useAssetEntryQuery = (assetCategoryId > 0) || Validator.isNotNull(assetTagName);
 
 PortletURL portletURL = renderResponse.createRenderURL();
@@ -78,35 +61,9 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 
 <c:choose>
 	<c:when test="<%= useAssetEntryQuery %>">
-		<c:choose>
-			<c:when test="<%= Validator.isNotNull(assetCategoryTitle) && Validator.isNotNull(assetTagName) %>">
-				<h1 class="entry-title">
-					<liferay-ui:message arguments="<%= new String[] {assetVocabularyTitle, assetCategoryTitle, assetTagName} %>" key="bookmarks-with-x-x-and-tag-x" />
-				</h1>
-			</c:when>
-			<c:otherwise>
-				<c:if test="<%= Validator.isNotNull(assetCategoryTitle) %>">
-					<h1 class="entry-title">
-						<liferay-ui:message arguments="<%= new String[] {assetVocabularyTitle, assetCategoryTitle} %>" key="bookmarks-with-x-x" />
-					</h1>
-				</c:if>
-
-				<c:if test="<%= Validator.isNotNull(assetTagName) %>">
-					<h1 class="entry-title">
-						<liferay-ui:message arguments="<%= assetTagName %>" key="bookmarks-with-tag-x" />
-					</h1>
-				</c:if>
-			</c:otherwise>
-		</c:choose>
+		<liferay-ui:categorization-filter assetType="bookmarks" portletURL="<%= portletURL %>" />
 
 		<%@ include file="/html/portlet/bookmarks/view_entries.jspf" %>
-
-		<%
-		if (portletName.equals(PortletKeys.BOOKMARKS)) {
-			PortalUtil.addPageKeywords(assetTagName, request);
-			PortalUtil.addPageKeywords(assetCategoryTitle, request);
-		}
-		%>
 
 	</c:when>
 	<c:when test='<%= topLink.equals("home") %>'>

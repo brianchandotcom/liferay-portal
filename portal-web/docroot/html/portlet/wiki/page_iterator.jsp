@@ -37,12 +37,6 @@ if (type.equals("all_pages")) {
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "all-pages"), portletURL.toString());
 }
-else if (type.equals("categorized_pages")) {
-	portletURL.setParameter("struts_action", "/wiki/view_categorized_pages");
-	portletURL.setParameter("categoryId", String.valueOf(categoryId));
-
-	AssetUtil.addPortletBreadcrumbEntries(categoryId, request, PortletURLUtil.clone(portletURL, renderResponse));
-}
 else if (type.equals("draft_pages") && type.equals("pending_pages")) {
 	portletURL.setParameter("struts_action", "/wiki/view_draft_pages");
 
@@ -91,12 +85,7 @@ else if (type.equals("recent_changes")) {
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "recent-changes"), portletURL.toString());
 }
-else if (type.equals("tagged_pages")) {
-	portletURL.setParameter("struts_action", "/wiki/view_tagged_pages");
-	portletURL.setParameter("tag", tagName);
 
-	PortalUtil.addPortletBreadcrumbEntry(request, tagName, portletURL.toString());
-}
 
 List<String> headerNames = new ArrayList<String>();
 

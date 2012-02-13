@@ -44,7 +44,9 @@ public class AddPortletTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace("link=Chat Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertTrue(selenium.isTextPresent("Online Friends (0)"));
-		assertTrue(selenium.isElementPresent("//div[1]/span"));
+		assertEquals(RuntimeVariables.replace("Settings"),
+			selenium.getText("//li[contains(@class,'chat-settings')]/div/span"));
+		assertEquals(RuntimeVariables.replace("Online Friends (0)"),
+			selenium.getText("//li[contains(@class,'buddy-list')]/div/span"));
 	}
 }

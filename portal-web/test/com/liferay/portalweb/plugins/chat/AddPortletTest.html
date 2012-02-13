@@ -16,24 +16,23 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>link=Chat Test Page</td>
-	<td></td>
+	<td>Chat Test Page</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>link=Chat Test Page</td>
-	<td></td>
+	<td>Chat Test Page</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//li[contains(@class,'chat-settings')]/div/span</td>
+	<td>Settings</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[contains(@class,'buddy-list')]/div/span</td>
 	<td>Online Friends (0)</td>
-	<td></td>
 </tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>//div[1]/span</td>
-	<td></td>
-</tr>
-
 </tbody></table>
 </body>
 </html>

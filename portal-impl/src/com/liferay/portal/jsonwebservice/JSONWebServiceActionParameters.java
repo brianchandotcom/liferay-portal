@@ -190,7 +190,7 @@ public class JSONWebServiceActionParameters {
 			Object value = null;
 
 			if ((uploadServletRequest != null) &&
-				!uploadServletRequest.isFormField(parameterName)) {
+				(uploadServletRequest.getFileName(parameterName) != null)) {
 
 				value = uploadServletRequest.getFile(parameterName, true);
 			}

@@ -407,7 +407,7 @@ hr, .separator {
 	box-shadow: 1px 1px 0 #FFF;
 }
 
-.portlet-msg-info.dismissable .hide-notices-control {
+.portlet-msg-info.dismissible .hide-notices-control {
 	@include border-radius(10px);
 }
 

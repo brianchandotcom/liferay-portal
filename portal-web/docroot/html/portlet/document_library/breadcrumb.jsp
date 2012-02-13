@@ -21,7 +21,7 @@ Folder folder = (Folder)request.getAttribute("view.jsp-folder");
 
 DLUtil.addPortletBreadcrumbEntries(folder, request, liferayPortletResponse);
 
-boolean showSyncMessage = GetterUtil.getBoolean(SessionClicks.get(request, "show-sync-message", "true"));
+boolean showSyncMessage = GetterUtil.getBoolean(SessionClicks.get(request, liferayPortletResponse.getNamespace() + "show-sync-message", "true"));
 
 String cssClass = "show-sync-message";
 

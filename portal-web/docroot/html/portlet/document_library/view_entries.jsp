@@ -202,7 +202,7 @@ searchContainer.setTotal(total);
 
 request.setAttribute("view_entries.jsp-total", String.valueOf(total));
 
-boolean showSyncMessage = GetterUtil.getBoolean(SessionClicks.get(request, "show-sync-message", "true"));
+boolean showSyncMessage = GetterUtil.getBoolean(SessionClicks.get(request, liferayPortletResponse.getNamespace() + "show-sync-message", "true"));
 
 String cssClass = StringPool.BLANK;
 
@@ -219,7 +219,7 @@ if (!showSyncMessage || !PropsValues.DL_SHOW_LIFERAY_SYNC_MESSAGE) {
 	</c:when>
 	<c:otherwise>
 		<div class="<%= cssClass %>" id="<portlet:namespace />syncNotificationContainer">
-			<div class="dismissable portlet-msg-info sync-notification" id="<portlet:namespace />syncNotification">
+			<div class="dismissible portlet-msg-info sync-notification" id="<portlet:namespace />syncNotification">
 				<span class="hide-notices-control">
 					<img alt="<%= LanguageUtil.get(pageContext, "hide-liferay-sync-tip") %>" class="aui-icon" src="<%= themeDisplay.getPathThemeImages() + "/portlet/close_borderless.png" %>" />
 				</span>

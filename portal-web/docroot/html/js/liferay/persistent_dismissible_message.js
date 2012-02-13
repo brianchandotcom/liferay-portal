@@ -1,5 +1,5 @@
 AUI.add(
-	'liferay-persistent-dismissable-message',
+	'liferay-persistent-dismissible-message',
 	function(A) {
 		var sessionData = {};
 
@@ -11,9 +11,9 @@ AUI.add(
 
 		var CSS_ICON_HELP = 'aui-icon-help';
 
-		var	NAME = 'persistent-dismissable-message';
+		var	NAME = 'persistent-dismissible-message';
 
-		var PersistentDismissableMessage = A.Component.create(
+		var PersistentDismissibleMessage = A.Component.create(
 			{
 				ATTRS: {
 					iconDismissSelector: {
@@ -21,9 +21,11 @@ AUI.add(
 					},
 
 					sessionDismissAllMessage: {
+						value: ''
 					},
 
 					sessionDismissMessage: {
+						value: ''
 					},
 
 					trigger: {
@@ -151,10 +153,10 @@ AUI.add(
 			}
 		);
 
-		Liferay.PersistentDismissableMessage = PersistentDismissableMessage;
+		Liferay.PersistentDismissibleMessage = PersistentDismissibleMessage;
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-io-request']
+		requires: ['aui-io-request']
 	}
 );

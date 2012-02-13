@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ArrayUtil_IW;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ClearThreadLocalUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -606,9 +607,11 @@ public class ServiceBuilder {
 
 			_portletShortName = _portletShortName.trim();
 
-			if (!Validator.isChar(_portletShortName)) {
-				throw new RuntimeException(
-					"The namespace element must be a valid keyword");
+			for (char c : _portletShortName.toCharArray()) {
+				if (!Validator.isChar(c) && (c != CharPool.UNDERLINE)) {
+					throw new RuntimeException(
+						"The namespace element must be a valid keyword");
+				}
 			}
 
 			_ejbList = new ArrayList<Entity>();

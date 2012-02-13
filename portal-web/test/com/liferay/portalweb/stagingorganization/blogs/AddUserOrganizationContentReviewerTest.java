@@ -200,7 +200,8 @@ public class AddUserOrganizationContentReviewerTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//div[3]/span/a/span")) {
+						if (selenium.isVisible(
+									"//div[contains(.,'Select')]/span/a/span")) {
 							break;
 						}
 					}
@@ -211,8 +212,8 @@ public class AddUserOrganizationContentReviewerTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Select"),
-					selenium.getText("//div[3]/span/a/span"));
-				selenium.clickAt("//div[3]/span/a/span",
+					selenium.getText("//div[contains(.,'Select')]/span/a/span"));
+				selenium.clickAt("//div[contains(.,'Select')]/span/a/span",
 					RuntimeVariables.replace("Select"));
 				Thread.sleep(5000);
 				selenium.selectWindow("name=organization");
@@ -264,7 +265,8 @@ public class AddUserOrganizationContentReviewerTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//div[6]/span[2]/a/span")) {
+						if (selenium.isVisible(
+									"//div[contains(.,'Select')]/span[2]/a/span")) {
 							break;
 						}
 					}
@@ -275,8 +277,9 @@ public class AddUserOrganizationContentReviewerTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Select"),
-					selenium.getText("//div[6]/span[2]/a/span"));
-				selenium.clickAt("//div[6]/span[2]/a/span",
+					selenium.getText(
+						"//div[contains(.,'Select')]/span[2]/a/span"));
+				selenium.clickAt("//div[contains(.,'Select')]/span[2]/a/span",
 					RuntimeVariables.replace("Select"));
 				Thread.sleep(5000);
 				selenium.selectWindow("name=role");

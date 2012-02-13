@@ -16,6 +16,7 @@ package com.liferay.portalweb.portlet.documentlibrarydisplay.folder.viewfolder;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.documentlibrary.document.addfolderdocument.TearDownDLDocumentTest;
 import com.liferay.portalweb.portlet.documentlibrary.portlet.addportlet.AddPageDMTest;
 import com.liferay.portalweb.portlet.documentlibrary.portlet.addportlet.AddPortletDMTest;
 import com.liferay.portalweb.portlet.documentlibrarydisplay.portlet.addportlet.AddPageDLDTest;

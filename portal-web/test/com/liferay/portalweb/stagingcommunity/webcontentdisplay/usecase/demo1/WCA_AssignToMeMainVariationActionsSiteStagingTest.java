@@ -55,7 +55,7 @@ public class WCA_AssignToMeMainVariationActionsSiteStagingTest
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertEquals(RuntimeVariables.replace("Review"),
 			selenium.getText("//td[1]/a"));
-		assertEquals(RuntimeVariables.replace("Home [main-variation]"),
+		assertEquals(RuntimeVariables.replace("Home"),
 			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Page Revision"),
 			selenium.getText("//td[3]/a"));
@@ -99,7 +99,7 @@ public class WCA_AssignToMeMainVariationActionsSiteStagingTest
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Review"),
 			selenium.getText("//td[1]/a"));
-		assertEquals(RuntimeVariables.replace("Home [main-variation]"),
+		assertEquals(RuntimeVariables.replace("Home"),
 			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Page Revision"),
 			selenium.getText("//td[3]/a"));

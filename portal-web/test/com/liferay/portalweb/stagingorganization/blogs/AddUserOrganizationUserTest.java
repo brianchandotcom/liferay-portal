@@ -198,7 +198,8 @@ public class AddUserOrganizationUserTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//div[3]/span/a/span")) {
+						if (selenium.isVisible(
+									"//div[contains(.,'Select')]/span/a/span")) {
 							break;
 						}
 					}
@@ -209,8 +210,8 @@ public class AddUserOrganizationUserTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Select"),
-					selenium.getText("//div[3]/span/a/span"));
-				selenium.clickAt("//div[3]/span/a/span",
+					selenium.getText("//div[contains(.,'Select')]/span/a/span"));
+				selenium.clickAt("//div[contains(.,'Select')]/span/a/span",
 					RuntimeVariables.replace("Select"));
 				Thread.sleep(5000);
 				selenium.selectWindow("name=organization");

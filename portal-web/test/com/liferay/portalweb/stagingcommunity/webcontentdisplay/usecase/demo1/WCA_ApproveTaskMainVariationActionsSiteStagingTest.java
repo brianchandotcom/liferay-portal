@@ -52,7 +52,7 @@ public class WCA_ApproveTaskMainVariationActionsSiteStagingTest
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Review"),
 			selenium.getText("//td[1]/a"));
-		assertEquals(RuntimeVariables.replace("Home [main-variation]"),
+		assertEquals(RuntimeVariables.replace("Home"),
 			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Page Revision"),
 			selenium.getText("//td[3]/a"));
@@ -157,18 +157,18 @@ public class WCA_ApproveTaskMainVariationActionsSiteStagingTest
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Review"),
 			selenium.getText("//tr[3]/td[1]/a"));
-		assertEquals(RuntimeVariables.replace("This is a Web Content article"),
+		assertEquals(RuntimeVariables.replace("Home"),
 			selenium.getText("//tr[3]/td[2]/a"));
-		assertEquals(RuntimeVariables.replace("Web Content"),
+		assertEquals(RuntimeVariables.replace("Page Revision"),
 			selenium.getText("//tr[3]/td[3]/a"));
 		assertTrue(selenium.isVisible("//tr[3]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
 			selenium.getText("//tr[3]/td[5]/a"));
 		assertEquals(RuntimeVariables.replace("Review"),
 			selenium.getText("//tr[4]/td[1]/a"));
-		assertEquals(RuntimeVariables.replace("Home [main-variation]"),
+		assertEquals(RuntimeVariables.replace("This is a Web Content article"),
 			selenium.getText("//tr[4]/td[2]/a"));
-		assertEquals(RuntimeVariables.replace("Page Revision"),
+		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText("//tr[4]/td[3]/a"));
 		assertTrue(selenium.isVisible("//tr[4]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),

@@ -87,7 +87,7 @@ public abstract class JSONAction extends Action {
 				HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
 
 			byte[] jsonBytes = json.getBytes(StringPool.UTF8);
-			
+
 			OutputStream outputStream = response.getOutputStream();
 
 			outputStream.write(jsonBytes);

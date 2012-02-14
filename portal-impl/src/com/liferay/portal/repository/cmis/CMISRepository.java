@@ -57,6 +57,7 @@ import com.liferay.portal.service.persistence.RepositoryEntryUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
+import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
@@ -129,6 +130,15 @@ public class CMISRepository extends BaseCmisRepository {
 			String description, String changeLog, InputStream is, long size,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
+
+		if (Validator.isNull(title)) {
+			if (size == 0) {
+				throw new FileNameException();
+			}
+			else {
+				title = sourceFileName;
+			}
+		}
 
 		try {
 			Session session = getSession();

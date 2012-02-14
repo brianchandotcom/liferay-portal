@@ -85,7 +85,7 @@ else {
 		<div class="lfr-form-row lfr-form-row-inline">
 			<div class="row-fields">
 
-				<aui:input name='<%= "websiteId" + websitesIndex %>' type="hidden" />
+				<aui:input name='<%= "websiteId" + websitesIndex %>' type="hidden" value="<%= website.getWebsiteId() %>" />
 
 				<aui:input fieldParam='<%= "websiteUrl" + websitesIndex %>' name="url" />
 

@@ -84,9 +84,24 @@
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
+	<td>storeElementPresent</td>
+	<td>//div[contains(@class,'aui-tree-expanded')]</td>
+	<td>treeExpanded</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${treeExpanded}</td>
+	<td>TreeExpanded</td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>//div[@class='aui-tree-hitarea']</td>
 	<td>Public Pages</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>TreeExpanded</td>
+	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>

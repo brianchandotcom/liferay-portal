@@ -107,7 +107,7 @@ public class SelectExistingBMFolderBookmarkAPActionsTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[10]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a")) {
 					break;
 				}
 			}
@@ -119,9 +119,9 @@ public class SelectExistingBMFolderBookmarkAPActionsTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Bookmarks Entry"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[10]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[10]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("BM Folder Bookmark Name"),

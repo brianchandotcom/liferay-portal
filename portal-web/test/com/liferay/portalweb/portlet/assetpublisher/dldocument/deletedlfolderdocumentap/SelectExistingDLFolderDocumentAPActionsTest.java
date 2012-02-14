@@ -124,7 +124,7 @@ public class SelectExistingDLFolderDocumentAPActionsTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[11]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a")) {
 					break;
 				}
 			}
@@ -136,9 +136,9 @@ public class SelectExistingDLFolderDocumentAPActionsTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Documents and Media Document"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[11]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[11]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),

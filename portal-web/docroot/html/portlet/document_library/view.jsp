@@ -136,40 +136,6 @@ if (folder != null) {
 %>
 
 <aui:script>
-	function <portlet:namespace />editFileEntry(action) {
-		if (action == '<%= Constants.DELETE %>') {
-			<portlet:namespace />doFileEntryAction(action, '<portlet:actionURL><portlet:param name="struts_action" value="/document_library/edit_entry" /></portlet:actionURL>');
-		}
-		else if (action == '<%= Constants.MOVE %>') {
-			<portlet:namespace />doFileEntryAction(action, '<portlet:renderURL><portlet:param name="struts_action" value="/document_library/move_entry" /></portlet:renderURL>');
-		}
-		else {
-			<portlet:namespace />doFileEntryAction(action, '<portlet:actionURL><portlet:param name="struts_action" value="/document_library/edit_entry" /></portlet:actionURL>');
-		}
-	}
-
-	function <portlet:namespace />moveEntries(folderId) {
-		document.<portlet:namespace />fm2.<portlet:namespace />newFolderId.value = folderId;
-
-		<portlet:namespace />doFileEntryAction('<%= Constants.MOVE %>', '<portlet:renderURL><portlet:param name="struts_action" value="/document_library/move_entry" /></portlet:renderURL>');
-	}
-
-	Liferay.provide(
-		window,
-		'<portlet:namespace />doFileEntryAction',
-		function(action, url) {
-			document.<portlet:namespace />fm2.method = "post";
-			document.<portlet:namespace />fm2.<portlet:namespace /><%= Constants.CMD %>.value = action;
-			document.<portlet:namespace />fm2.<portlet:namespace />redirect.value = location.href;
-			document.<portlet:namespace />fm2.<portlet:namespace />folderIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm2, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>Checkbox', '<portlet:namespace /><%= RowChecker.ROW_IDS %>FolderCheckbox');
-			document.<portlet:namespace />fm2.<portlet:namespace />fileEntryIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm2, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>Checkbox', '<portlet:namespace /><%= RowChecker.ROW_IDS %>FileEntryCheckbox');
-			document.<portlet:namespace />fm2.<portlet:namespace />fileShortcutIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm2, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>Checkbox', '<portlet:namespace /><%= RowChecker.ROW_IDS %>DLFileShortcutCheckbox');
-
-			submitForm(document.<portlet:namespace />fm2, url);
-		},
-		['liferay-util-list-fields']
-	);
-
 	Liferay.provide(
 		window,
 		'<portlet:namespace />toggleActionsButton',
@@ -197,15 +163,24 @@ if (folder != null) {
 <aui:script use="liferay-document-library">
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" varImpl="mainURL" />
 
+	<portlet:renderURL var="deleteRedirectURL">
+		<portlet:param name="struts_action" value="/document_library/view" />
+		<portlet:param name="folderId" value="<%= String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+	</portlet:renderURL>
+
+
 	new Liferay.Portlet.DocumentLibrary(
 		{
+			allRowIds: '<%= RowChecker.ALL_ROW_IDS %>',
 			defaultParams: {
 				p_p_id: <%= portletId %>,
 				p_p_lifecycle: 0
 			},
 			defaultParentFolderId: '<%= DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>',
+			deleteRedirectUrl: '<%= deleteRedirectURL %>',
 			displayStyle: '<%= HtmlUtil.escapeJS(displayStyle) %>',
 			displayViews: ['<%= StringUtil.merge(displayViews, "','") %>'],
+			editEntryUrl: '<portlet:actionURL><portlet:param name="struts_action" value="/document_library/edit_entry" /></portlet:actionURL>',
 			entriesTotal: <%= entriesTotal %>,
 			entryEnd: <%= entryEnd %>,
 			entryRowsPerPage: <%= entryRowsPerPage %>,
@@ -217,9 +192,14 @@ if (folder != null) {
 			folderRowsPerPageOptions: [<%= StringUtil.merge(PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) %>],
 			folderStart: <%= folderStart %>,
 			foldersTotal: <%= foldersTotal %>,
+			form: document.<portlet:namespace />fm2,
 			mainUrl: '<%= mainURL %>',
+			moveConstant: '<%= Constants.MOVE %>',
+			moveEntryActionUrl: '<portlet:actionURL><portlet:param name="struts_action" value="/document_library/move_entry" /></portlet:actionURL>',
+			moveEntryRenderUrl: '<portlet:renderURL><portlet:param name="struts_action" value="/document_library/move_entry" /></portlet:renderURL>',
 			namespace: '<portlet:namespace />',
 			portletId: '<%= portletId %>',
+			rowIds: '<%= RowChecker.ROW_IDS %>',
 			strutsAction: '/document_library/view'
 		}
 	);

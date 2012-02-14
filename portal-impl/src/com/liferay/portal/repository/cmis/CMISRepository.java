@@ -131,16 +131,16 @@ public class CMISRepository extends BaseCmisRepository {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		try {
-			if (Validator.isNull(title)) {
-				if (size == 0) {
-					throw new FileNameException();
-				}
-				else {
-					title = sourceFileName;
-				}
+		if (Validator.isNull(title)) {
+			if (size == 0) {
+				throw new FileNameException();
 			}
+			else {
+				title = sourceFileName;
+			}
+		}
 
+		try {
 			Session session = getSession();
 
 			validateTitle(session, folderId, title);

@@ -93,8 +93,6 @@ public class AddPageMBSiteTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		selenium.clickAt("//div[3]/ul/li/div/div[1]",
-			RuntimeVariables.replace("Public Pages"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

@@ -191,17 +191,15 @@ public class Gmail_ViewMBThreadMessageGmailMailingListTest extends BaseTestCase 
 				selenium.click("link=liferay-mailinglist");
 				assertTrue(selenium.isElementPresent("//div[3]/div/div[2]/a"));
 				selenium.click("//div[3]/div/div[2]/a");
-				assertTrue(selenium.isPartialText(
-						"//table[@id='top']/tbody/tr[2]/td[1]/span/span/i",
-						"liferay.qa.server"));
-				assertTrue(selenium.isPartialText(
-						"//div[1]/table/tbody/tr/td[2]/div[1]/div[2]/div",
+				assertEquals(RuntimeVariables.replace("me"),
+					selenium.getText("//div/span[2]/span/span"));
+				assertTrue(selenium.isPartialText("//div/div/span[3]",
 						"MB Message Body"));
 				assertEquals(RuntimeVariables.replace("Trunk Liferay QA"),
-					selenium.getText(
-						"//div[2]/table/tbody/tr/td[2]/div[1]/div[1]/table/tbody/tr[2]/td[1]/span/span"));
-				assertEquals(RuntimeVariables.replace("MB Message Email Reply"),
-					selenium.getText("//p"));
+					selenium.getText("//td[2]/span/span"));
+				assertEquals(RuntimeVariables.replace(
+						"MB Message Email Reply- show quoted text -"),
+					selenium.getText("//td/div[4]/div"));
 
 				boolean SignedIn2 = selenium.isElementPresent("link=Sign out");
 

@@ -63,8 +63,8 @@ public class DeleteMarkAsAnswerCategoryMessageQuestionReplyTest
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Delete"),
-			selenium.getText("//li[5]/span/a/span"));
-		selenium.clickAt("//li[5]/span/a/span",
+			selenium.getText("//td/ul/li[5]/span/a/span"));
+		selenium.clickAt("//td/ul/li[5]/span/a/span",
 			RuntimeVariables.replace("Delete"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();

@@ -66,8 +66,8 @@ public class RateCommentTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
-		assertEquals(RuntimeVariables.replace("Rate this as good."),
-			selenium.getText("//div[@class='taglib-ratings thumbs']/div/div/a"));
+		assertTrue(selenium.isVisible(
+				"//div[@class='taglib-ratings thumbs']/div/div/a"));
 		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a",
 			RuntimeVariables.replace("Rate this as good."));
 
@@ -91,8 +91,8 @@ public class RateCommentTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("+1 (1 Vote)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
-		assertEquals(RuntimeVariables.replace("Rate this as good."),
-			selenium.getText("//div[@class='taglib-ratings thumbs']/div/div/a"));
+		assertTrue(selenium.isVisible(
+				"//div[@class='taglib-ratings thumbs']/div/div/a"));
 		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a",
 			RuntimeVariables.replace("Rate this as good."));
 
@@ -116,8 +116,7 @@ public class RateCommentTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
-		assertEquals(RuntimeVariables.replace("Rate this as bad."),
-			selenium.getText(
+		assertTrue(selenium.isVisible(
 				"//div[@class='taglib-ratings thumbs']/div/div/a[2]"));
 		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a[2]",
 			RuntimeVariables.replace("Rate this as bad."));
@@ -142,8 +141,7 @@ public class RateCommentTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("-1 (1 Vote)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
-		assertEquals(RuntimeVariables.replace("Rate this as bad."),
-			selenium.getText(
+		assertTrue(selenium.isVisible(
 				"//div[@class='taglib-ratings thumbs']/div/div/a[2]"));
 		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a[2]",
 			RuntimeVariables.replace("Rate this as bad."));
@@ -168,8 +166,8 @@ public class RateCommentTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
-		assertEquals(RuntimeVariables.replace("Rate this as good."),
-			selenium.getText("//div[@class='taglib-ratings thumbs']/div/div/a"));
+		assertTrue(selenium.isVisible(
+				"//div[@class='taglib-ratings thumbs']/div/div/a"));
 		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a",
 			RuntimeVariables.replace("Rate this as good."));
 
@@ -193,8 +191,7 @@ public class RateCommentTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("+1 (1 Vote)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
-		assertEquals(RuntimeVariables.replace("Rate this as bad."),
-			selenium.getText(
+		assertTrue(selenium.isVisible(
 				"//div[@class='taglib-ratings thumbs']/div/div/a[2]"));
 		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a[2]",
 			RuntimeVariables.replace("Rate this as bad."));
@@ -219,8 +216,7 @@ public class RateCommentTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("-1 (1 Vote)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
-		assertEquals(RuntimeVariables.replace("Rate this as bad."),
-			selenium.getText(
+		assertTrue(selenium.isVisible(
 				"//div[@class='taglib-ratings thumbs']/div/div/a[2]"));
 		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a[2]",
 			RuntimeVariables.replace("Rate this as bad."));
@@ -245,8 +241,7 @@ public class RateCommentTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
-		assertEquals(RuntimeVariables.replace("Rate this as bad."),
-			selenium.getText(
+		assertTrue(selenium.isVisible(
 				"//div[@class='taglib-ratings thumbs']/div/div/a[2]"));
 		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a[2]",
 			RuntimeVariables.replace("Rate this as bad."));
@@ -271,8 +266,8 @@ public class RateCommentTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("-1 (1 Vote)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
-		assertEquals(RuntimeVariables.replace("Rate this as good."),
-			selenium.getText("//div[@class='taglib-ratings thumbs']/div/div/a"));
+		assertTrue(selenium.isVisible(
+				"//div[@class='taglib-ratings thumbs']/div/div/a"));
 		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a",
 			RuntimeVariables.replace("Rate this as good."));
 
@@ -296,8 +291,8 @@ public class RateCommentTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("+1 (1 Vote)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
-		assertEquals(RuntimeVariables.replace("Rate this as good."),
-			selenium.getText("//div[@class='taglib-ratings thumbs']/div/div/a"));
+		assertTrue(selenium.isVisible(
+				"//div[@class='taglib-ratings thumbs']/div/div/a"));
 		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a",
 			RuntimeVariables.replace("Rate this as good."));
 

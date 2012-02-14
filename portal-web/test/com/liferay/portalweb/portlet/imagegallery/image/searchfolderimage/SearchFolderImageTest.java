@@ -52,7 +52,7 @@ public class SearchFolderImageTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isVisible(
-				"//a[@class='image-thumbnail preview']/img"));
+				"//a[@class='image-thumbnail preview aui-image-viewer-link']/img"));
 		assertEquals(RuntimeVariables.replace("MG Folder Image Title"),
 			selenium.getText("//span[@class='image-title']"));
 		selenium.open("/web/guest/home/");
@@ -85,7 +85,7 @@ public class SearchFolderImageTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isElementPresent(
-				"//a[@class='image-thumbnail preview']/img"));
+				"//a[@class='image-thumbnail preview aui-image-viewer-link']/img"));
 		assertFalse(selenium.isTextPresent("MG Folder Image Title"));
 	}
 }

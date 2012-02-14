@@ -83,7 +83,7 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 			for (long groupId : groupIds) {
 				Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-				scopesLeftList.add(new KeyValuePair(_getKey(group), _getName(group, locale)));
+				scopesLeftList.add(new KeyValuePair(_getKey(group, scopeGroupId), _getName(group, locale)));
 			}
 
 			// Right list
@@ -101,11 +101,11 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 					<%
 					for (Group group : groups) {
 						if (Arrays.binarySearch(groupIds, group.getGroupId()) < 0) {
-							scopesRightList.add(new KeyValuePair(_getKey(group), _getName(group, locale)));
+							scopesRightList.add(new KeyValuePair(_getKey(group, scopeGroupId), _getName(group, locale)));
 						}
 					%>
 
-						<aui:option label="<%= _getName(group, locale) %>" selected="<%= (groupIds.length == 1) && (group.getGroupId() == groupIds[0]) %>" value="<%= group.getGroupId() %>" />
+						<aui:option label="<%= _getName(group, locale) %>" selected="<%= (groupIds.length == 1) && (group.getGroupId() == groupIds[0]) %>" value="<%= _getKey(group, scopeGroupId) %>" />
 
 					<%
 					}
@@ -848,7 +848,7 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 </c:if>
 
 <%!
-private String _getKey(Group group) throws Exception {
+private String _getKey(Group group, long scopeGroupId) throws Exception {
 	String key = null;
 
 	if (group.isLayout()) {
@@ -856,7 +856,7 @@ private String _getKey(Group group) throws Exception {
 
 		key = "Layout" + StringPool.UNDERLINE + layout.getLayoutId();
 	}
-	else if (group.isLayoutPrototype()) {
+	else if (group.isLayoutPrototype() || (group.getGroupId() == scopeGroupId)) {
 		key = "Group" + StringPool.UNDERLINE + GroupConstants.DEFAULT;
 	}
 	else {

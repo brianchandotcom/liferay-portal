@@ -64,10 +64,10 @@ public class AddWikiNodeNameSymbolTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
-				"Your request failed to complete."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
-		assertEquals(RuntimeVariables.replace("Please enter a valid name."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("Wiki/ Node/ Name/"),
+			selenium.getText("//tr[contains(.,'Wiki/ Node/ Name/')]/td/a"));
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -110,10 +110,12 @@ public class AddWikiNodeNameSymbolTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
-				"Your request failed to complete."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
-		assertEquals(RuntimeVariables.replace("Please enter a valid name."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("Wiki! Node! Name!"),
+			selenium.getText("//tr[contains(.,'Wiki! Node! Name!')]/td/a"));
+		assertEquals(RuntimeVariables.replace("Wiki/ Node/ Name/"),
+			selenium.getText("//tr[contains(.,'Wiki/ Node/ Name/')]/td/a"));
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -156,9 +158,16 @@ public class AddWikiNodeNameSymbolTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
-				"Your request failed to complete."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
-		assertEquals(RuntimeVariables.replace("Please enter a valid name."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("Wiki? Node? Name?"),
+			selenium.getText("//tr[contains(.,'Wiki? Node? Name?')]/td/a"));
+		assertEquals(RuntimeVariables.replace("Wiki! Node! Name!"),
+			selenium.getText("//tr[contains(.,'Wiki! Node! Name!')]/td/a"));
+		assertEquals(RuntimeVariables.replace("Wiki/ Node/ Name/"),
+			selenium.getText("//tr[contains(.,'Wiki/ Node/ Name/')]/td/a"));
 	}
 }

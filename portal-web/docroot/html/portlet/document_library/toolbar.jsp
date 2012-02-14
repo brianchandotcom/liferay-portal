@@ -29,7 +29,7 @@
 	<c:if test="<%= !scopeGroup.isStaged() || scopeGroup.isStagingGroup() || !scopeGroup.isStagedPortlet(PortletKeys.DOCUMENT_LIBRARY) %>">
 
 		<%
-		String taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editFileEntry', {cmd: '" + Constants.CANCEL_CHECKOUT + "'});";
+		String taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editFileEntry', {action: '" + Constants.CANCEL_CHECKOUT + "'});";
 		%>
 
 		<liferay-ui:icon
@@ -40,7 +40,7 @@
 		/>
 
 		<%
-		taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editFileEntry', {cmd: '" + Constants.CHECKIN + "'});";
+		taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editFileEntry', {action: '" + Constants.CHECKIN + "'});";
 		%>
 
 		<liferay-ui:icon
@@ -51,7 +51,7 @@
 		/>
 
 		<%
-		taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editFileEntry', {cmd: '" + Constants.CHECKOUT + "'});";
+		taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editFileEntry', {action: '" + Constants.CHECKOUT + "'});";
 		%>
 
 		<liferay-ui:icon
@@ -62,7 +62,7 @@
 		/>
 
 		<%
-		taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editFileEntry', {cmd: '" + Constants.MOVE + "'});";
+		taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editFileEntry', {action: '" + Constants.MOVE + "'});";
 		%>
 
 		<liferay-ui:icon
@@ -74,7 +74,7 @@
 	</c:if>
 
 	<%
-	String taglibUrl = "Liferay.fire('" + renderResponse.getNamespace() + "editFileEntry', {cmd: '" + Constants.DELETE + "'});";
+	String taglibUrl = "Liferay.fire('" + renderResponse.getNamespace() + "editFileEntry', {action: '" + Constants.DELETE + "'});";
 	%>
 
 	<liferay-ui:icon-delete

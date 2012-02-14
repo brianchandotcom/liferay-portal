@@ -163,21 +163,18 @@ if (folder != null) {
 <aui:script use="liferay-document-library">
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" varImpl="mainURL" />
 
-	<portlet:renderURL var="deleteRedirectURL">
-		<portlet:param name="struts_action" value="/document_library/view" />
-		<portlet:param name="folderId" value="<%= String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-	</portlet:renderURL>
-
-
 	new Liferay.Portlet.DocumentLibrary(
 		{
+			actions: {
+				DELETE: '<%= Constants.DELETE %>',
+				MOVE: '<%= Constants.MOVE %>'
+			},
 			allRowIds: '<%= RowChecker.ALL_ROW_IDS %>',
 			defaultParams: {
 				p_p_id: <%= portletId %>,
 				p_p_lifecycle: 0
 			},
 			defaultParentFolderId: '<%= DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>',
-			deleteRedirectUrl: '<%= deleteRedirectURL %>',
 			displayStyle: '<%= HtmlUtil.escapeJS(displayStyle) %>',
 			displayViews: ['<%= StringUtil.merge(displayViews, "','") %>'],
 			editEntryUrl: '<portlet:actionURL><portlet:param name="struts_action" value="/document_library/edit_entry" /></portlet:actionURL>',
@@ -188,13 +185,17 @@ if (folder != null) {
 			entryStart: <%= entryStart %>,
 			folderEnd: <%= folderEnd %>,
 			folderId: <%= folderId %>,
+			folderIdRegEx: /&?<portlet:namespace />folderId=([\d]+)/i,
+			folderIdHashRegEx: /#.*&?<portlet:namespace />folderId=([\d]+)/i,
 			folderRowsPerPage: <%= folderRowsPerPage %>,
 			folderRowsPerPageOptions: [<%= StringUtil.merge(PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) %>],
 			folderStart: <%= folderStart %>,
 			foldersTotal: <%= foldersTotal %>,
-			form: document.<portlet:namespace />fm2,
+			form: {
+				instance: document.<portlet:namespace />fm2,
+				method: 'post',
+			},
 			mainUrl: '<%= mainURL %>',
-			moveConstant: '<%= Constants.MOVE %>',
 			moveEntryActionUrl: '<portlet:actionURL><portlet:param name="struts_action" value="/document_library/move_entry" /></portlet:actionURL>',
 			moveEntryRenderUrl: '<portlet:renderURL><portlet:param name="struts_action" value="/document_library/move_entry" /></portlet:renderURL>',
 			namespace: '<portlet:namespace />',

@@ -492,36 +492,16 @@ AUI.add(
 						);
 					},
 
-					_doFileEntryAction: function(cmd, url) {
-						var instance = this;
-
-						var form = instance._config.form;
-
-						var allRowIds = instance._config.allRowIds;
-						var rowIds = instance._config.rowIds;
-
-						form.method = 'post';
-						form[instance.ns('cmd')].value = cmd;
-						form[instance.ns('redirect')].value = location.href;
-						form[instance.ns('folderIds')].value = Liferay.Util.listCheckedExcept(form, instance.NS + allRowIds + 'Checkbox', instance.NS + rowIds + 'FolderCheckbox');
-						form[instance.ns('fileEntryIds')].value = Liferay.Util.listCheckedExcept(form, instance.NS + allRowIds + 'Checkbox', instance.NS + rowIds + 'FileEntryCheckbox');
-						form[instance.ns('fileShortcutIds')].value = Liferay.Util.listCheckedExcept(form, instance.NS + allRowIds + 'Checkbox', instance.NS + rowIds + 'DLFileShortcutCheckbox');
-
-						submitForm(form, url);
-					},
-
 					_editFileEntry: function(event) {
 						var instance = this;
 
-						var cmd = event.cmd;
+						var action = event.action;
 
-						var move = instance._config.moveConstant;
-
-						if (cmd == move) {
-							instance._doFileEntryAction(cmd, instance._config.moveEntryActionUrl);
+						if (action == instance._config.actions.MOVE) {
+							instance._processFileEntryAction(action, instance._config.moveEntryActionUrl);
 						}
 						else {
-							instance._doFileEntryAction(cmd, instance._config.editEntryUrl);
+							instance._processFileEntryAction(action, instance._config.editEntryUrl);
 						}
 					},
 
@@ -726,7 +706,7 @@ AUI.add(
 
 						var move = instance._config.moveConstant;
 
-						instance._doFileEntryAction(move, instance._config.moveEntryRenderUrl);
+						instance._processFileEntryAction(move, instance._config.moveEntryRenderUrl);
 					},
 
 					_onDataRetrieveSuccess: function(event) {
@@ -1129,6 +1109,34 @@ AUI.add(
 						);
 					},
 
+					_processFileEntryAction: function(action, url) {
+						var instance = this;
+
+						var config = instance._config;
+
+						var form = config.form.instance;
+
+						var allRowIds = config.allRowIds;
+						var rowIds = config.rowIds;
+
+						var allRowsIdCheckbox = instance.ns(allRowIds + 'Checkbox');
+
+						var redirectUrl = location.href;
+
+						if (action === config.actions.DELETE && !History.HTML5 && location.hash) {
+							redirectUrl = instance._updateFolderIdRedirectUrl(redirectUrl);
+						}
+
+						form.method = config.form.method;
+						form[instance.ns('cmd')].value = action;
+						form[instance.ns('redirect')].value = redirectUrl;
+						form[instance.ns('folderIds')].value = Liferay.Util.listCheckedExcept(form, allRowsIdCheckbox, instance.ns(rowIds + 'FolderCheckbox'));
+						form[instance.ns('fileEntryIds')].value = Liferay.Util.listCheckedExcept(form, allRowsIdCheckbox, instance.ns(rowIds + 'FileEntryCheckbox'));
+						form[instance.ns('fileShortcutIds')].value = Liferay.Util.listCheckedExcept(form, allRowsIdCheckbox, instance.ns(rowIds + 'DLFileShortcutCheckbox'));
+
+						submitForm(form, url);
+					},
+
 					_restoreState: function() {
 						var instance = this;
 
@@ -1500,6 +1508,27 @@ AUI.add(
 						instance._selectAllCheckbox.attr(CSS_SELECTED, false);
 
 						instance._toggleEntriesSelection();
+					},
+
+					_updateFolderIdRedirectUrl: function(redirectUrl) {
+						var instance = this;
+
+						var config = instance._config;
+
+						var currentFolderMatch = config.folderIdHashRegEx.exec(redirectUrl);
+
+						if (currentFolderMatch) {
+							var currentFolderId = currentFolderMatch[1];
+
+							redirectUrl = redirectUrl.replace(
+								config.folderIdRegEx,
+								function(match, folderId) {
+									return match.replace(folderId, currentFolderId);
+								}
+							);
+						}
+
+						return redirectUrl;
 					},
 
 					_updateSelectedEntriesStatus: function() {

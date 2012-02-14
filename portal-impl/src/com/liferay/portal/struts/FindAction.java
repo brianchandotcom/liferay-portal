@@ -118,7 +118,25 @@ public abstract class FindAction extends Action {
 			HttpServletRequest request, long plid, long primaryKey)
 		throws Exception {
 
-		if (plid != LayoutConstants.DEFAULT_PLID) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long groupId = themeDisplay.getScopeGroupId();
+
+		if (primaryKey > 0) {
+			try {
+				groupId = getGroupId(primaryKey);
+			}
+			catch (Exception e) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(e, e);
+				}
+			}
+		}
+
+		if ((plid != LayoutConstants.DEFAULT_PLID) &&
+			(groupId == themeDisplay.getScopeGroupId())) {
+
 			try {
 				Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
@@ -133,26 +151,6 @@ public abstract class FindAction extends Action {
 			}
 			catch (NoSuchLayoutException nsle) {
 			}
-		}
-
-		long groupId = 0;
-
-		if (primaryKey > 0) {
-			try {
-				groupId = getGroupId(primaryKey);
-			}
-			catch (Exception e) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
-				}
-			}
-		}
-
-		if (groupId <= 0) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-			groupId = themeDisplay.getScopeGroupId();
 		}
 
 		for (String portletId : _portletIds) {

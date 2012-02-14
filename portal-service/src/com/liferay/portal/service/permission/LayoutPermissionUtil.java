@@ -113,6 +113,26 @@ public class LayoutPermissionUtil {
 			permissionChecker, plid, actionId);
 	}
 
+	public static boolean containsWithoutViewableGroup(
+		PermissionChecker permissionChecker, Layout layout,
+		String controlPanelCategory, boolean checkLayoutUpdateable,
+		String actionId)
+		throws PortalException, SystemException {
+
+		return getLayoutPermission().containsWithoutViewableGroup(
+			permissionChecker, layout, controlPanelCategory,
+			checkLayoutUpdateable, actionId);
+	}
+
+	public static boolean containsWithoutViewableGroup(
+		PermissionChecker permissionChecker, Layout layout,
+		String controlPanelCategory, String actionId)
+		throws PortalException, SystemException {
+
+		return getLayoutPermission().containsWithoutViewableGroup(
+			permissionChecker, layout, controlPanelCategory, true, actionId);
+	}
+
 	public static LayoutPermission getLayoutPermission() {
 		return _layoutPermission;
 	}

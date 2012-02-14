@@ -33,9 +33,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CustomizedPages;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutSet;
-import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.LayoutTemplate;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.LayoutTypePortletConstants;
@@ -49,9 +47,6 @@ import com.liferay.portal.model.Theme;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
-import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.LayoutTemplateLocalServiceUtil;
 import com.liferay.portal.service.PluginSettingLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
@@ -65,6 +60,7 @@ import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portlet.sites.util.SitesUtil;
 import com.liferay.util.JS;
 import com.liferay.util.PwdGenerator;
 
@@ -93,46 +89,6 @@ public class LayoutTypePortletImpl
 		return PortletConstants.INSTANCE_SEPARATOR + instanceId;
 	}
 
-	public static Layout getSourcePrototypeLayout(Layout layout) {
-		if (Validator.isNull(layout.getUuid())) {
-			return null;
-		}
-
-		try {
-			Group group = null;
-
-			if (layout.isLayoutPrototypeLinkActive()) {
-				LayoutPrototype layoutPrototype =
-					LayoutPrototypeLocalServiceUtil.getLayoutPrototypeByUuid(
-						layout.getLayoutPrototypeUuid());
-
-				group = layoutPrototype.getGroup();
-			}
-			else {
-				LayoutSet layoutSet = layout.getLayoutSet();
-
-				if (!layoutSet.isLayoutSetPrototypeLinkActive()) {
-					return null;
-				}
-
-				LayoutSetPrototype layoutSetPrototype =
-					LayoutSetPrototypeLocalServiceUtil.
-						getLayoutSetPrototypeByUuid(
-							layoutSet.getLayoutSetPrototypeUuid());
-
-				group = layoutSetPrototype.getGroup();
-			}
-
-			return LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-				layout.getSourcePrototypeLayoutUuid(), group.getGroupId());
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return null;
-	}
-
 	public LayoutTypePortletImpl(Layout layout) {
 		super(layout);
 
@@ -141,7 +97,8 @@ public class LayoutTypePortletImpl
 				PortletKeys.NESTED_PORTLETS);
 		}
 
-		_sourcePrototypeLayout = getSourcePrototypeLayout(layout);
+		_layoutSetPrototypeLayout = SitesUtil.getLayoutSetPrototypeLayout(
+			layout);
 	}
 
 	public void addModeAboutPortletId(String portletId) {
@@ -454,6 +411,21 @@ public class LayoutTypePortletImpl
 		return addStaticPortlets(portlets, startPortlets, endPortlets);
 	}
 
+	public Layout getLayoutSetPrototypeLayout() {
+		return _layoutSetPrototypeLayout;
+	}
+
+	public String getLayoutSetPrototypeLayoutProperty(String key) {
+		if (_layoutSetPrototypeLayout== null) {
+			return StringPool.BLANK;
+		}
+
+		UnicodeProperties typeSettingsProperties =
+			_layoutSetPrototypeLayout.getTypeSettingsProperties();
+
+		return typeSettingsProperties.getProperty(key);
+	}
+
 	public LayoutTemplate getLayoutTemplate() {
 		String themeId = getThemeId();
 
@@ -480,8 +452,8 @@ public class LayoutTypePortletImpl
 	public String getLayoutTemplateId() {
 		String layoutTemplateId = StringPool.BLANK;
 
-		if (hasSourcePrototypeLayout()) {
-			layoutTemplateId = getSourcePrototypeLayoutProperty(
+		if (hasLayoutSetPrototypeLayout()) {
+			layoutTemplateId = getLayoutSetPrototypeLayoutProperty(
 				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID);
 		}
 		else {
@@ -574,21 +546,6 @@ public class LayoutTypePortletImpl
 		return portlets;
 	}
 
-	public Layout getSourcePrototypeLayout() {
-		return _sourcePrototypeLayout;
-	}
-
-	public String getSourcePrototypeLayoutProperty(String key) {
-		if (_sourcePrototypeLayout == null) {
-			return StringPool.BLANK;
-		}
-
-		UnicodeProperties typeSettingsProperties =
-			_sourcePrototypeLayout.getTypeSettingsProperties();
-
-		return typeSettingsProperties.getProperty(key);
-	}
-
 	public String getStateMax() {
 		return getTypeSettingsProperty(LayoutTypePortletConstants.STATE_MAX);
 	}
@@ -618,6 +575,14 @@ public class LayoutTypePortletImpl
 			if (groupId == scopeGroupId) {
 				return true;
 			}
+		}
+
+		return false;
+	}
+
+	public boolean hasLayoutSetPrototypeLayout() {
+		if (_layoutSetPrototypeLayout != null) {
+			return true;
 		}
 
 		return false;
@@ -696,14 +661,6 @@ public class LayoutTypePortletImpl
 		return false;
 	}
 
-	public boolean hasSourcePrototypeLayout() {
-		if (_sourcePrototypeLayout != null) {
-			return true;
-		}
-
-		return false;
-	}
-
 	public boolean hasStateMax() {
 		String[] stateMax = StringUtil.split(getStateMax());
 
@@ -760,7 +717,7 @@ public class LayoutTypePortletImpl
 	}
 
 	public boolean isColumnCustomizable(String columnId) {
-		if (!isLayoutSetPrototype() && isTemplateCustomizable(columnId)) {
+		if (!isLayoutSetPrototype()) {
 			String customizableString = getTypeSettingsProperty(
 				CustomizedPages.namespaceColumnId(columnId));
 
@@ -783,8 +740,7 @@ public class LayoutTypePortletImpl
 	}
 
 	public boolean isColumnDisabled(String columnId) {
-		if (!isTemplateCustomizable(columnId) ||
-			(isCustomizedView() && !isColumnCustomizable(columnId)) ||
+		if ((isCustomizedView() && !isColumnCustomizable(columnId)) ||
 			(!isCustomizedView() && !hasUpdatePermission())) {
 
 			return true;
@@ -823,9 +779,9 @@ public class LayoutTypePortletImpl
 			Date preferencesModifiedDate = dateFormat.parse(
 				preferencesModifiedDateString);
 
-			if (hasSourcePrototypeLayout()) {
+			if (hasLayoutSetPrototypeLayout()) {
 				String propertiesModifiedDateString =
-					_sourcePrototypeLayout.getTypeSettingsProperty(
+					_layoutSetPrototypeLayout.getTypeSettingsProperty(
 						_MODIFIED_DATE, _NULL_DATE);
 
 				Date propertiesModifiedDate = dateFormat.parse(
@@ -854,17 +810,6 @@ public class LayoutTypePortletImpl
 
 	public boolean isPortletCustomizable(String portletId) {
 		return isColumnCustomizable(getColumn(portletId));
-	}
-
-	public boolean isTemplateCustomizable(String columnId) {
-		if (!hasSourcePrototypeLayout()) {
-			return true;
-		}
-
-		String customizable = getSourcePrototypeLayoutProperty(
-			CustomizedPages.namespaceColumnId(columnId));
-
-		return GetterUtil.getBoolean(customizable, false);
 	}
 
 	public void movePortletId(
@@ -1340,14 +1285,14 @@ public class LayoutTypePortletImpl
 		Boolean customizable = null;
 		Boolean columnDisabled = null;
 
-		if (hasSourcePrototypeLayout()) {
+		if (hasLayoutSetPrototypeLayout()) {
 			customizable = isCustomizable();
 
 			if (customizable) {
 				columnDisabled = isColumnDisabled(columnId);
 
 				if (columnDisabled) {
-					return getSourcePrototypeLayoutProperty(columnId);
+					return getLayoutSetPrototypeLayoutProperty(columnId);
 				}
 			}
 		}
@@ -1387,8 +1332,8 @@ public class LayoutTypePortletImpl
 
 		Layout layout = getLayout();
 
-		if (hasSourcePrototypeLayout()) {
-			layout = _sourcePrototypeLayout;
+		if (hasLayoutSetPrototypeLayout()) {
+			layout = _layoutSetPrototypeLayout;
 		}
 
 		String selector1 = StringPool.BLANK;
@@ -1500,8 +1445,8 @@ public class LayoutTypePortletImpl
 			return value;
 		}
 
-		if (hasSourcePrototypeLayout()) {
-			value = getSourcePrototypeLayoutProperty(key);
+		if (hasLayoutSetPrototypeLayout()) {
+			value = getLayoutSetPrototypeLayoutProperty(key);
 		}
 		else {
 			value = getTypeSettingsProperty(key);
@@ -1695,8 +1640,8 @@ public class LayoutTypePortletImpl
 	private Format _dateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
 		PropsValues.INDEX_DATE_FORMAT_PATTERN);
 	private boolean _enablePortletLayoutListener = true;
+	private Layout _layoutSetPrototypeLayout;
 	private PortalPreferences _portalPreferences;
-	private Layout _sourcePrototypeLayout;
 	private boolean _updatePermission;
 
 }

@@ -106,27 +106,6 @@ catch (NoSuchLayoutException nsle) {
 }
 
 if (selLayout != null) {
-	try {
-		if (SitesUtil.isLayoutToBeUpdatedFromSourcePrototype(selLayout)) {
-			Layout sourcePrototypeLayout = LayoutTypePortletImpl.getSourcePrototypeLayout(selLayout);
-
-			SitesUtil.copyLayout(user.getUserId(), sourcePrototypeLayout, selLayout, new ServiceContext());
-
-			selLayout = LayoutLocalServiceUtil.getLayout(selLayout.getPlid());
-
-			UnicodeProperties typeSettings = selLayout.getTypeSettingsProperties();
-
-			typeSettings.put("layoutSetPrototypeLastCopyDate", String.valueOf((new Date()).getTime()));
-
-			LayoutLocalServiceUtil.updateLayout(selLayout);
-		}
-	}
-	catch (Exception e) {
-		if (_log.isWarnEnabled()) {
-			_log.warn("Unable to process dynamic site templates", e);
-		}
-	}
-
 	layoutId = selLayout.getLayoutId();
 }
 

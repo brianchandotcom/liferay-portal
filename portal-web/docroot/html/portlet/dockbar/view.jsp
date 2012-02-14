@@ -416,7 +416,7 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 	</div>
 </c:if>
 
-<c:if test="<%= (!SitesUtil.isLayoutUpdateable(layout) || (layout.isLayoutPrototypeLinkActive() && !group.hasStagingGroup())) && LayoutPermissionUtil.contains(themeDisplay.getPermissionChecker(), layout, ActionKeys.UPDATE) %>">
+<c:if test="<%= (!SitesUtil.isLayoutUpdateable(layout) || (layout.isLayoutPrototypeLinkActive() && !group.hasStagingGroup())) && LayoutPermissionUtil.containsWithoutViewableGroup(themeDisplay.getPermissionChecker(), layout, null, false, ActionKeys.UPDATE) %>">
 	<div class="page-customization-bar">
 		<img alt="" class="customized-icon" src="<%= themeDisplay.getPathThemeImages() %>/common/site_icon.png" />
 
@@ -434,7 +434,7 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 	</div>
 </c:if>
 
-<c:if test="<%= !(group.isLayoutPrototype() || group.isLayoutSetPrototype() || group.isUserGroup()) && layoutTypePortlet.isCustomizable() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE) %>">
+<c:if test="<%= !(group.isLayoutPrototype() || group.isLayoutSetPrototype() || group.isUserGroup()) && layoutTypePortlet.isCustomizable() && LayoutPermissionUtil.containsWithoutViewableGroup(permissionChecker, layout, null, false, ActionKeys.CUSTOMIZE) %>">
 	<div class="page-customization-bar">
 		<img alt="" class="customized-icon" src="<%= themeDisplay.getPathThemeImages() %>/common/guest_icon.png" />
 

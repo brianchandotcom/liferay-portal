@@ -82,6 +82,10 @@ public interface LayoutTypePortlet extends LayoutType {
 	public List<Portlet> getAllPortlets(String columnId)
 		throws PortalException, SystemException;
 
+	public Layout getLayoutSetPrototypeLayout();
+
+	public String getLayoutSetPrototypeLayoutProperty(String key);
+
 	public LayoutTemplate getLayoutTemplate();
 
 	public String getLayoutTemplateId();
@@ -110,10 +114,6 @@ public interface LayoutTypePortlet extends LayoutType {
 
 	public List<Portlet> getPortlets() throws SystemException;
 
-	public Layout getSourcePrototypeLayout();
-
-	public String getSourcePrototypeLayoutProperty(String key);
-
 	public String getStateMax();
 
 	public String getStateMaxPortletId();
@@ -122,6 +122,8 @@ public interface LayoutTypePortlet extends LayoutType {
 
 	public boolean hasDefaultScopePortletId(long groupId, String portletId)
 		throws PortalException, SystemException;
+
+	public boolean hasLayoutSetPrototypeLayout();
 
 	public boolean hasModeAboutPortletId(String portletId);
 
@@ -143,8 +145,6 @@ public interface LayoutTypePortlet extends LayoutType {
 
 	public boolean hasPortletId(String portletId)
 		throws PortalException, SystemException;
-
-	public boolean hasSourcePrototypeLayout();
 
 	public boolean hasStateMax();
 
@@ -169,8 +169,6 @@ public interface LayoutTypePortlet extends LayoutType {
 	public boolean isDefaultUpdated();
 
 	public boolean isPortletCustomizable(String portletId);
-
-	public boolean isTemplateCustomizable(String columnId);
 
 	public void movePortletId(
 			long userId, String portletId, String columnId, int columnPos)

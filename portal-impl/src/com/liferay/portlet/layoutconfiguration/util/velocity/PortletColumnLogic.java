@@ -102,8 +102,7 @@ public class PortletColumnLogic extends RuntimeLogic {
 			columnCssClass += " portlet-dropzone-disabled";
 		}
 
-		if (layoutTypePortlet.isTemplateCustomizable(columnId) &&
-			layoutTypePortlet.isColumnCustomizable(columnId)) {
+		if (layoutTypePortlet.isColumnCustomizable(columnId)) {
 
 			columnCssClass += " customizable";
 		}

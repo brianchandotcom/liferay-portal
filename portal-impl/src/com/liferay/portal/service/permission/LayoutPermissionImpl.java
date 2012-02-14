@@ -150,12 +150,14 @@ public class LayoutPermissionImpl implements LayoutPermission {
 		return contains(permissionChecker, layout, actionId);
 	}
 
-	protected boolean containsWithoutViewableGroup(
+	public boolean containsWithoutViewableGroup(
 			PermissionChecker permissionChecker, Layout layout,
-			String controlPanelCategory, String actionId)
+			String controlPanelCategory, boolean checkLayoutUpdateable,
+			String actionId)
 		throws PortalException, SystemException {
 
-		if (!actionId.equals(ActionKeys.CUSTOMIZE) &&
+		if (checkLayoutUpdateable &&
+			!actionId.equals(ActionKeys.CUSTOMIZE) &&
 			!actionId.equals(ActionKeys.VIEW) &&
 			(layout instanceof VirtualLayout)) {
 
@@ -178,7 +180,7 @@ public class LayoutPermissionImpl implements LayoutPermission {
 
 		Group group = layout.getGroup();
 
-		if (!group.isLayoutSetPrototype() &&
+		if (checkLayoutUpdateable && !group.isLayoutSetPrototype() &&
 			isAttemptToModifyLockedLayout(layout, actionId)) {
 
 			return false;
@@ -287,6 +289,15 @@ public class LayoutPermissionImpl implements LayoutPermission {
 		return permissionChecker.hasPermission(
 			layout.getGroupId(), Layout.class.getName(), layout.getPlid(),
 			actionId);
+	}
+
+	public boolean containsWithoutViewableGroup(
+		PermissionChecker permissionChecker, Layout layout,
+		String controlPanelCategory, String actionId)
+		throws PortalException, SystemException {
+
+		return containsWithoutViewableGroup(
+			permissionChecker, layout, controlPanelCategory, true, actionId);
 	}
 
 	protected boolean containsWithViewableGroup(

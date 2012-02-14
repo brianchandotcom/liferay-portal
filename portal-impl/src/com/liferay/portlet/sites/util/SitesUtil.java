@@ -44,7 +44,6 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.UserGroup;
-import com.liferay.portal.model.impl.LayoutTypePortletImpl;
 import com.liferay.portal.model.impl.VirtualLayout;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -423,34 +422,8 @@ public class SitesUtil {
 
 		LayoutSet layoutSet = layout.getLayoutSet();
 
-		Group layoutSetGroup = layoutSet.getGroup();
-
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			request);
-
-		if (layoutSetGroup.isLayoutSetPrototype()) {
-			LayoutSetPrototype layoutSetPrototype =
-				LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototype(
-					layoutSetGroup.getClassPK());
-
-			List<LayoutSet> linkedLayoutSets =
-				LayoutSetLocalServiceUtil.getLayoutSetsByLayoutSetPrototypeUuid(
-					layoutSetPrototype.getUuid());
-
-			for (LayoutSet linkedLayoutSet : linkedLayoutSets) {
-				Layout linkedLayout =
-					LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-						layout.getUuid(), linkedLayoutSet.getGroupId());
-
-				if ((linkedLayout != null) &&
-					(!isLayoutUpdateable(linkedLayout) ||
-					 isLayoutToBeUpdatedFromSourcePrototype(linkedLayout))) {
-
-					LayoutServiceUtil.deleteLayout(
-						linkedLayout.getPlid(), serviceContext);
-				}
-			}
-		}
 
 		LayoutServiceUtil.deleteLayout(
 			groupId, privateLayout, layoutId, serviceContext);
@@ -495,6 +468,34 @@ public class SitesUtil {
 		return LayoutLocalServiceUtil.exportLayoutsAsFile(
 			layoutSet.getGroupId(), layoutSet.isPrivateLayout(), null,
 			parameterMap, null, null);
+	}
+
+	public static Layout getLayoutSetPrototypeLayout(Layout layout) {
+		try {
+			LayoutSet layoutSet = layout.getLayoutSet();
+
+			if (!layoutSet.isLayoutSetPrototypeLinkActive()) {
+				return null;
+			}
+
+			LayoutSetPrototype layoutSetPrototype =
+				LayoutSetPrototypeLocalServiceUtil.
+					getLayoutSetPrototypeByUuid(
+						layoutSet.getLayoutSetPrototypeUuid());
+
+			Group group = layoutSetPrototype.getGroup();
+
+			return LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+				layout.getSourcePrototypeLayoutUuid(), group.getGroupId());
+		}
+		catch (Exception e) {
+			_log.error(
+				"An error occurred while fetching the associated layout in " +
+					"the LayoutSetPrototype",
+				e);
+		}
+
+		return null;
 	}
 
 	public static Map<String, String[]> getLayoutSetPrototypeParameters(
@@ -668,64 +669,15 @@ public class SitesUtil {
 		return true;
 	}
 
-	public static boolean isLayoutToBeUpdatedFromSourcePrototype(Layout layout)
-		throws Exception {
-
-		if (layout == null) {
-			return false;
-		}
-
-		LayoutSet layoutSet = layout.getLayoutSet();
-
-		if (!layoutSet.isLayoutSetPrototypeLinkActive()) {
-			return false;
-		}
-
-		Layout sourcePrototypeLayout =
-			LayoutTypePortletImpl.getSourcePrototypeLayout(layout);
-
-		if (sourcePrototypeLayout == null) {
-			return false;
-		}
-
-		Date layoutModifiedDate = layout.getModifiedDate();
-
-		Date lastCopyDate = null;
-
-		String lastCopyDateString = layout.getTypeSettingsProperty(
-			"layoutSetPrototypeLastCopyDate");
-
-		if (Validator.isNotNull(lastCopyDateString)) {
-			lastCopyDate = new Date(GetterUtil.getLong(lastCopyDateString));
-		}
-
-		if ((lastCopyDate != null) &&
-			lastCopyDate.after(sourcePrototypeLayout.getModifiedDate())) {
-
-			return false;
-		}
-
-		if (!isLayoutUpdateable(layout)) {
-			return true;
-		}
-
-		if ((layoutModifiedDate == null) ||
-			((lastCopyDate != null) &&
-			 layoutModifiedDate.before(lastCopyDate))) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	public static boolean isLayoutUpdateable(Layout layout) {
 		try {
 			if (layout instanceof VirtualLayout) {
 				return false;
 			}
 
-			if (Validator.isNull(layout.getSourcePrototypeLayoutUuid())) {
+			if (Validator.isNull(layout.getSourcePrototypeLayoutUuid()) &&
+				Validator.isNull(layout.getLayoutPrototypeUuid())) {
+
 				return true;
 			}
 
@@ -739,12 +691,14 @@ public class SitesUtil {
 					return false;
 				}
 
-				LayoutTypePortlet layoutTypePortlet = new LayoutTypePortletImpl(
+				Layout layoutSetPrototypeLayout = getLayoutSetPrototypeLayout(
 					layout);
 
-				String layoutUpdateable =
-					layoutTypePortlet.getSourcePrototypeLayoutProperty(
-						"layoutUpdateable");
+				UnicodeProperties typeSettingsProperties =
+					layoutSetPrototypeLayout.getTypeSettingsProperties();
+
+				String layoutUpdateable = typeSettingsProperties.getProperty(
+					"layoutUpdateable");
 
 				if (Validator.isNull(layoutUpdateable)) {
 					return true;

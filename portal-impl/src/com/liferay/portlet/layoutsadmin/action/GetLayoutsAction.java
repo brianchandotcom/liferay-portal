@@ -26,7 +26,6 @@ import com.liferay.portal.model.LayoutBranch;
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.User;
-import com.liferay.portal.model.impl.LayoutTypePortletImpl;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.struts.JSONAction;
@@ -76,21 +75,7 @@ public class GetLayoutsAction extends JSONAction {
 			jsonObject.put("contentDisplayPage", layout.isContentDisplayPage());
 			jsonObject.put("hasChildren", layout.hasChildren());
 			jsonObject.put("layoutId", layout.getLayoutId());
-
-			String name = layout.getName(themeDisplay.getLocale());
-
-			if (SitesUtil.isLayoutToBeUpdatedFromSourcePrototype(layout)) {
-				Layout sourcePrototypeLayout =
-					LayoutTypePortletImpl.getSourcePrototypeLayout(layout);
-
-				if (sourcePrototypeLayout != null) {
-					name = sourcePrototypeLayout.getName(
-						themeDisplay.getLocale());
-				}
-			}
-
-			jsonObject.put("name", name);
-
+			jsonObject.put("name", layout.getName(themeDisplay.getLocale()));
 			jsonObject.put("parentLayoutId", layout.getParentLayoutId());
 			jsonObject.put("plid", layout.getPlid());
 			jsonObject.put("priority", layout.getPriority());

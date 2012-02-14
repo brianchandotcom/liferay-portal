@@ -79,7 +79,9 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 
 			Layout layout = (Layout)methodInvocation.proceed();
 
-			if (Validator.isNull(layout.getSourcePrototypeLayoutUuid())) {
+			if (Validator.isNull(layout.getSourcePrototypeLayoutUuid()) &&
+				Validator.isNull(layout.getLayoutPrototypeUuid())) {
+
 				return layout;
 			}
 
@@ -91,7 +93,12 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 				WorkflowThreadLocal.setEnabled(false);
 
 				SitesUtil.mergeLayoutProtypeLayout(group, layout);
-				SitesUtil.mergeLayoutSetProtypeLayouts(group, layoutSet);
+
+				if (Validator.isNotNull(
+						layout.getSourcePrototypeLayoutUuid())) {
+
+					SitesUtil.mergeLayoutSetProtypeLayouts(group, layoutSet);
+				}
 			}
 			finally {
 				MergeLayoutPrototypesThreadLocal.setInProgress(false);

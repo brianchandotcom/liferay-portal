@@ -53,7 +53,6 @@ import com.liferay.portal.lar.PortletImporter;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
-import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutReference;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
@@ -249,15 +248,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		if (Validator.isNotNull(layoutPrototypeUuid)) {
 			layout.setLayoutPrototypeUuid(layoutPrototypeUuid);
 			layout.setLayoutPrototypeLinkEnabled(layoutPrototypeLinkEnabled);
-
-			LayoutPrototype layoutPrototype =
-				layoutPrototypeLocalService.getLayoutPrototypeByUuid(
-					layoutPrototypeUuid);
-
-			Layout layoutPrototypeLayout = layoutPrototype.getLayout();
-
-			layout.setSourcePrototypeLayoutUuid(
-				layoutPrototypeLayout.getUuid());
 		}
 
 		if (type.equals(LayoutConstants.TYPE_PORTLET)) {
@@ -1747,15 +1737,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		if (Validator.isNotNull(layoutPrototypeUuid)) {
 			layout.setLayoutPrototypeUuid(layoutPrototypeUuid);
 			layout.setLayoutPrototypeLinkEnabled(layoutPrototypeLinkEnabled);
-
-			LayoutPrototype layoutPrototype =
-				layoutPrototypeLocalService.getLayoutPrototypeByUuid(
-					layoutPrototypeUuid);
-
-			Layout layoutPrototypeLayout = layoutPrototype.getLayout();
-
-			layout.setSourcePrototypeLayoutUuid(
-				layoutPrototypeLayout.getUuid());
 		}
 
 		layoutPersistence.update(layout, false);

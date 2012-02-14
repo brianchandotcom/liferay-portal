@@ -74,4 +74,15 @@ public interface LayoutPermission {
 			PermissionChecker permissionChecker, long plid, String actionId)
 		throws PortalException, SystemException;
 
+	public boolean containsWithoutViewableGroup(
+		PermissionChecker permissionChecker, Layout layout,
+		String controlPanelCategory, boolean checkLayoutUpdateable,
+		String actionId)
+		throws PortalException, SystemException;
+
+	public boolean containsWithoutViewableGroup(
+			PermissionChecker permissionChecker, Layout layout,
+			String controlPanelCategory, String actionId)
+		throws PortalException, SystemException;
+
 }

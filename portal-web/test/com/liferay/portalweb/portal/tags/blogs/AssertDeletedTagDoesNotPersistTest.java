@@ -146,5 +146,37 @@ public class AssertDeletedTagDoesNotPersistTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isTextPresent("selenium2 liferay2"));
+		selenium.open("/web/guest/home/");
+		loadRequiredJavaScriptModules();
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=Blogs Tags Test Page")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.clickAt("link=Blogs Tags Test Page",
+			RuntimeVariables.replace("Blogs Tags Test Page"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		selenium.type("//input[@id='_33_keywords']",
+			RuntimeVariables.replace("\"selenium2 liferay2\""));
+		selenium.clickAt("//input[@value='Search']",
+			RuntimeVariables.replace("Search"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace(
+				"No entries were found that matched the keywords: \"selenium2 liferay2\"."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
 	}
 }

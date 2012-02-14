@@ -46,7 +46,7 @@ public class SearchRemovedTagTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_33_keywords']",
-			RuntimeVariables.replace("selenium3 liferay3"));
+			RuntimeVariables.replace("\"selenium3 liferay3\""));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");

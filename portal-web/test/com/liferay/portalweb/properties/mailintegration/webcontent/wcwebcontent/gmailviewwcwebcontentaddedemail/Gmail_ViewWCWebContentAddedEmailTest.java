@@ -148,7 +148,8 @@ public class Gmail_ViewWCWebContentAddedEmailTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//td[5]/div/span/span")) {
+						if (selenium.isVisible(
+									"//span[@email='liferay.qa.server.trunk@gmail.com']")) {
 							break;
 						}
 					}
@@ -159,8 +160,9 @@ public class Gmail_ViewWCWebContentAddedEmailTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Administrator"),
-					selenium.getText("//td[5]/div/span/span"));
-				selenium.clickAt("//td[5]/div/span/span",
+					selenium.getText(
+						"//span[@email='liferay.qa.server.trunk@gmail.com']"));
+				selenium.clickAt("//span[@email='liferay.qa.server.trunk@gmail.com']",
 					RuntimeVariables.replace("Administrator"));
 				Thread.sleep(5000);
 				assertTrue(selenium.isPartialText("//h1/span[1]",

@@ -46,7 +46,7 @@ public class SearchTagsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_33_keywords']",
-			RuntimeVariables.replace("selenium1 liferay1"));
+			RuntimeVariables.replace("\"selenium1 liferay1\""));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
@@ -55,7 +55,7 @@ public class SearchTagsTest extends BaseTestCase {
 		assertFalse(selenium.isTextPresent("Tags Blog Entry2 Title"));
 		assertFalse(selenium.isTextPresent("Tags Blog Entry3 Title"));
 		selenium.type("//input[@id='_33_keywords']",
-			RuntimeVariables.replace("selenium2 liferay2"));
+			RuntimeVariables.replace("\"selenium2 liferay2\""));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
@@ -64,7 +64,7 @@ public class SearchTagsTest extends BaseTestCase {
 		assertFalse(selenium.isTextPresent("Tags Blog Entry2 Title"));
 		assertTrue(selenium.isTextPresent("Tags Blog Entry3 Title"));
 		selenium.type("//input[@id='_33_keywords']",
-			RuntimeVariables.replace("selenium3 liferay3"));
+			RuntimeVariables.replace("\"selenium3 liferay3\""));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
@@ -73,7 +73,7 @@ public class SearchTagsTest extends BaseTestCase {
 		assertTrue(selenium.isTextPresent("Tags Blog Entry2 Title"));
 		assertTrue(selenium.isTextPresent("Tags Blog Entry3 Title"));
 		selenium.type("//input[@id='_33_keywords']",
-			RuntimeVariables.replace("selenium4 liferay4"));
+			RuntimeVariables.replace("\"selenium4 liferay4\""));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");

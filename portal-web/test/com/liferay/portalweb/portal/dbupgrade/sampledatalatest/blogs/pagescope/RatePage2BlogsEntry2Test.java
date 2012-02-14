@@ -96,8 +96,12 @@ public class RatePage2BlogsEntry2Test extends BaseTestCase {
 		assertTrue(selenium.isPartialText(
 				"//div[@class='taglib-ratings stars']/div[2]/div/div", "1 Vote"));
 		assertTrue(selenium.isVisible(
-				"xPath=(//img[contains(@class,'aui-rating-element aui-rating-element-on')])[4]"));
+				"xPath=(//img[contains(@class,'aui-rating-element-on')])[4]"));
+		assertTrue(selenium.isVisible(
+				"xPath=(//a[contains(@class,'aui-rating-element-on')])[4]"));
 		assertFalse(selenium.isElementPresent(
-				"xPath=(//img[contains(@class,'aui-rating-element aui-rating-element-on')])[5]"));
+				"xPath=(//img[contains(@class,'aui-rating-element-on')])[5]"));
+		assertFalse(selenium.isElementPresent(
+				"xPath=(//a[contains(@class,'aui-rating-element-on')])[5]"));
 	}
 }

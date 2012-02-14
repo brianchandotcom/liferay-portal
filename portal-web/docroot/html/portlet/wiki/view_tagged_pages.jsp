@@ -16,19 +16,7 @@
 
 <%@ include file="/html/portlet/wiki/init.jsp" %>
 
-<%
-String tagName = ParamUtil.getString(request, "tag");
-
-String title = "pages-with-tag-x";
-%>
-
 <liferay-util:include page="/html/portlet/wiki/top_links.jsp" />
-
-<liferay-ui:header
-	escapeXml="<%= false %>"
-	localizeTitle="<%= false %>"
-	title="<%= LanguageUtil.format(pageContext, title, HtmlUtil.escape(tagName)) %>"
-/>
 
 <liferay-util:include page="/html/portlet/wiki/page_iterator.jsp">
 	<liferay-util:param name="type" value="tagged_pages" />

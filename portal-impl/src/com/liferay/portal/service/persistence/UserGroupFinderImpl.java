@@ -95,8 +95,16 @@ public class UserGroupFinderImpl
 			LinkedHashMap<String, Object> params, boolean andOperator)
 		throws SystemException {
 
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description);
+		String[] names = null;
+		String[] descriptions = null;
+
+		if ((Validator.isNotNull(name) || Validator.isNotNull(description))) {
+			names = CustomSQLUtil.keywords(name);
+			CustomSQLUtil.keywords(description);
+		}
+		else {
+			andOperator = true;
+		}
 
 		return countByC_N_D(
 			companyId, names, descriptions, params, andOperator);
@@ -124,6 +132,7 @@ public class UserGroupFinderImpl
 				descriptions);
 			sql = StringUtil.replace(sql, "[$JOIN$]", getJoin(params));
 			sql = StringUtil.replace(sql, "[$WHERE$]", getWhere(params));
+			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
 
 			SQLQuery q = session.createSQLQuery(sql);
 
@@ -231,8 +240,16 @@ public class UserGroupFinderImpl
 			int start, int end, OrderByComparator obc)
 		throws SystemException {
 
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description);
+		String[] names = null;
+		String[] descriptions = null;
+
+		if ((Validator.isNotNull(name) || Validator.isNotNull(description))) {
+			names = CustomSQLUtil.keywords(name);
+			descriptions = CustomSQLUtil.keywords(description);
+		}
+		else {
+			andOperator = true;
+		}
 
 		return findByC_N_D(
 			companyId, names, descriptions, params, andOperator, start, end,

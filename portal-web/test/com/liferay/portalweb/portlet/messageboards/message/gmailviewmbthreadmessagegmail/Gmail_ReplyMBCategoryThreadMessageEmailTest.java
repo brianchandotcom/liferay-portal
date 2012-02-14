@@ -148,7 +148,7 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//td[2]/div/div/span[1]")) {
+						if (selenium.isVisible("//td[4]/div/img")) {
 							break;
 						}
 					}
@@ -158,9 +158,8 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				assertEquals(RuntimeVariables.replace("Reply"),
-					selenium.getText("//td[2]/div/div/span[1]"));
-				selenium.click("//td[2]/div/div/span[1]");
+				assertTrue(selenium.isVisible("//td[4]/div/img"));
+				selenium.click("//td[4]/div/img");
 				Thread.sleep(5000);
 				selenium.selectFrame("//iframe[@id='canvas_frame']");
 				selenium.selectFrame("//iframe[@class='Am Al editable']");

@@ -499,9 +499,9 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	public ${entity.name} updateImpl(${packagePath}.model.${entity.name} ${entity.varName}, boolean merge) throws SystemException {
 		${entity.varName} = toUnwrappedModel(${entity.varName});
 
-		<#if (entity.finderColumnsList?size != 0) || entity.isHierarchicalTree()>
-			boolean isNew = ${entity.varName}.isNew();
+		boolean isNew = ${entity.varName}.isNew();
 
+		<#if (entity.finderColumnsList?size != 0) || entity.isHierarchicalTree()>
 			${entity.name}ModelImpl ${entity.varName}ModelImpl = (${entity.name}ModelImpl)${entity.varName};
 		</#if>
 
@@ -666,10 +666,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				}
 			</#if>
 		<#else>
+			if (isNew) {
+				FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			}
+
 			<#if entity.finderColumnsList?size != 0>
-				if (isNew) {
-					FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-				}
 				else {
 					<#list entity.collectionFinderList as finder>
 						<#assign finderColsList = finder.getColumns()>

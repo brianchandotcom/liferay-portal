@@ -49,8 +49,7 @@ public class RateWCWebContentWCDTest extends BaseTestCase {
 			selenium.getText("//div/div[4]/div/div[1]/div/div"));
 		assertEquals(RuntimeVariables.replace("Average (0 Votes)"),
 			selenium.getText("//div/div[4]/div/div[2]/div/div"));
-		assertEquals(RuntimeVariables.replace("Rate this 5 stars out of 5."),
-			selenium.getText("//a[5]"));
+		assertTrue(selenium.isVisible("//a[5]"));
 		selenium.clickAt("//a[5]",
 			RuntimeVariables.replace("Rate this 5 stars out of 5."));
 

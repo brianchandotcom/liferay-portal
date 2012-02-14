@@ -125,7 +125,7 @@ public class AtomProvider extends AbstractWorkspaceProvider {
 		addWorkspace(_workspace);
 	}
 
-	private static final String[] _BASES = {"/secure/atom", "/atom"};
+	private static final String[] _BASES = {"/api/secure/atom", "/api/atom"};
 
 	private SimpleWorkspaceInfo _workspace;
 

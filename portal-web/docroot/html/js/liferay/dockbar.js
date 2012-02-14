@@ -683,7 +683,7 @@ AUI.add(
 					if (!manageCustomizationLink.hasClass('disabled')) {
 						instance._controls = dockBar.one('.layout-customizable-controls');
 
-						var columns = A.all('.portlet-column .portlet-dropzone:not(.portlet-dropzone-disabled)');
+						var columns = A.all('.portlet-column');
 
 						var customizationsHandle;
 

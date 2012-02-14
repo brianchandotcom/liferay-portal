@@ -354,7 +354,8 @@ public class UpgradeImageGallery extends UpgradeProcess {
 					}
 					catch (Exception e) {
 						if (_log.isWarnEnabled()) {
-							_log.warn(e);
+							_log.warn(
+								"Ignoring exception for imageId " + imageId, e);
 						}
 
 						return;
@@ -379,7 +380,8 @@ public class UpgradeImageGallery extends UpgradeProcess {
 					}
 					catch (Exception e) {
 						if (_log.isWarnEnabled()) {
-							_log.warn(e);
+							_log.warn(
+								"Ignoring exception for imageId " + imageId, e);
 						}
 
 						return;
@@ -396,7 +398,8 @@ public class UpgradeImageGallery extends UpgradeProcess {
 				}
 				catch (Exception e) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(e);
+						_log.warn(
+							"Ignoring exception for imageId " + imageId, e);
 					}
 
 					return;
@@ -665,9 +668,9 @@ public class UpgradeImageGallery extends UpgradeProcess {
 	private static final String _IG_IMAGE_CLASS_NAME =
 		"com.liferay.portlet.imagegallery.model.IGImage";
 
+	private static Log _log = LogFactoryUtil.getLog(UpgradeImageGallery.class);
+
 	private Hook _sourceHook;
 	private String _sourceHookClassName;
-
-	private static Log _log = LogFactoryUtil.getLog(UpgradeImageGallery.class);
 
 }

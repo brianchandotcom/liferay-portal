@@ -40,8 +40,6 @@ if (type.equals("all_pages")) {
 else if (type.equals("categorized_pages")) {
 	portletURL.setParameter("struts_action", "/wiki/view_categorized_pages");
 	portletURL.setParameter("categoryId", String.valueOf(categoryId));
-
-	AssetUtil.addPortletBreadcrumbEntries(categoryId, request, PortletURLUtil.clone(portletURL, renderResponse));
 }
 else if (type.equals("draft_pages") && type.equals("pending_pages")) {
 	portletURL.setParameter("struts_action", "/wiki/view_draft_pages");
@@ -94,8 +92,6 @@ else if (type.equals("recent_changes")) {
 else if (type.equals("tagged_pages")) {
 	portletURL.setParameter("struts_action", "/wiki/view_tagged_pages");
 	portletURL.setParameter("tag", tagName);
-
-	PortalUtil.addPortletBreadcrumbEntry(request, tagName, portletURL.toString());
 }
 
 List<String> headerNames = new ArrayList<String>();
@@ -370,6 +366,8 @@ for (int i = 0; i < results.size(); i++) {
 		<aui:button href="<%= addPageURL %>" name="addPageButton" value="add-page" />
 	</aui:button-row>
 </c:if>
+
+<liferay-ui:categorization-filter assetType="pages" portletURL="<%= portletURL %>" />
 
 <liferay-ui:search-iterator searchContainer="<%= searchContainer %>" paginate='<%= type.equals("history") ? false : true %>' />
 

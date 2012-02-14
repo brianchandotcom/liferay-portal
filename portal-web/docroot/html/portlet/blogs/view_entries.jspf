@@ -54,43 +54,7 @@ showSearch = showSearch && !results.isEmpty();
 	</div>
 </c:if>
 
-<c:choose>
-	<c:when test="<%= Validator.isNotNull(assetCategoryTitle) && Validator.isNotNull(assetTagName) %>">
-		<h1 class="entry-title">
-			<liferay-ui:message arguments="<%= new String[] {assetVocabularyTitle, assetCategoryTitle, assetTagName} %>" key="entries-with-x-x-and-tag-x" />
-		</h1>
-
-		<%
-		AssetUtil.addPortletBreadcrumbEntries(assetCategoryId, request, portletURL);
-
-		PortalUtil.addPortletBreadcrumbEntry(request, assetTagName, currentURL);
-		%>
-
-	</c:when>
-	<c:otherwise>
-		<c:if test="<%= Validator.isNotNull(assetCategoryTitle) %>">
-			<h1 class="entry-title">
-				<liferay-ui:message arguments="<%= new String[] {assetVocabularyTitle, assetCategoryTitle} %>" key="entries-with-x-x" />
-			</h1>
-
-			<%
-			AssetUtil.addPortletBreadcrumbEntries(assetCategoryId, request, portletURL);
-			%>
-
-		</c:if>
-
-		<c:if test="<%= Validator.isNotNull(assetTagName) %>">
-			<h1 class="entry-title">
-				<liferay-ui:message arguments="<%= assetTagName %>" key="entries-with-tag-x" />
-			</h1>
-
-			<%
-			PortalUtil.addPortletBreadcrumbEntry(request, assetTagName, currentURL);
-			%>
-
-		</c:if>
-	</c:otherwise>
-</c:choose>
+<liferay-ui:categorization-filter assetType="entries" portletURL="<%= portletURL %>" />
 
 <%
 for (Object result : results) {

@@ -325,6 +325,21 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>categorization-filter</name>
+		<tag-class>com.liferay.taglib.ui.CategorizationFilterTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>assetType</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>portletURL</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<name>custom-attribute</name>
 		<tag-class>com.liferay.taglib.ui.CustomAttributeTag</tag-class>
 		<body-content>JSP</body-content>

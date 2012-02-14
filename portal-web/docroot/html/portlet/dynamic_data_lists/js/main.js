@@ -289,6 +289,7 @@ AUI.add(
 							}
 						);
 
+						delete normalized.classPK;
 						delete normalized.displayIndex;
 						delete normalized.recordId;
 
@@ -315,8 +316,8 @@ AUI.add(
 
 								var fieldsMap = instance._normalizeRecordData(data);
 
-								if (data.recordId > 0) {
-									SpreadSheet.updateRecord(data.recordId, recordIndex, fieldsMap, true);
+								if (data.classPK > 0) {
+									SpreadSheet.updateRecord(data.classPK, recordIndex, fieldsMap, true);
 								}
 								else {
 									SpreadSheet.addRecord(
@@ -325,7 +326,7 @@ AUI.add(
 										fieldsMap,
 										function(json) {
 											if (json.recordId > 0) {
-												data.recordId = json.recordId;
+												data.classPK = json.recordId;
 											}
 										}
 									);

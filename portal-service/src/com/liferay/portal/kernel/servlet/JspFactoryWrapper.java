@@ -56,9 +56,13 @@ public class JspFactoryWrapper extends JspFactory {
 		ServletResponse servletResponse, String errorPageURL,
 		boolean needsSession, int buffer, boolean autoflush) {
 
+		if (autoflush) {
+			buffer = _JSP_WRITER_BUFFER_SIZE;
+		}
+
 		PageContext pageContext = _jspFactory.getPageContext(
 			servlet, servletRequest, servletResponse, errorPageURL,
-			needsSession, _JSP_WRITER_BUFFER_SIZE, autoflush);
+			needsSession, buffer, autoflush);
 
 		if (_DIRECT_SERVLET_CONTEXT_ENABLED) {
 			String servletPath = (String)servletRequest.getAttribute(

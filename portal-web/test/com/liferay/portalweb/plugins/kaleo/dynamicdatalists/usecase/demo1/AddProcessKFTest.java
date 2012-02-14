@@ -58,6 +58,7 @@ public class AddProcessKFTest extends BaseTestCase {
 			RuntimeVariables.replace("Ticket Process"));
 		selenium.type("//textarea[@id='_1_WAR_kaleoformsportlet_description_en_US']",
 			RuntimeVariables.replace("Ticket Process"));
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Select"),
 			selenium.getText(
 				"//a[@id='_1_WAR_kaleoformsportlet_selectDDMStructure']"));
@@ -124,6 +125,7 @@ public class AddProcessKFTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Ticket Definition"),
 			selenium.getText(
 				"//a[@id='_1_WAR_kaleoformsportlet_selectDDMStructureDisplay']"));
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Select"),
 			selenium.getText(
 				"//a[@id='_1_WAR_kaleoformsportlet_selectDDMTemplate']"));
@@ -190,6 +192,7 @@ public class AddProcessKFTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Ticket Creation"),
 			selenium.getText(
 				"//a[@id='_1_WAR_kaleoformsportlet_selectDDMTemplateDisplay']"));
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Select"),
 			selenium.getText(
 				"//a[@id='_1_WAR_kaleoformsportlet_selectWorkflowDefinition']"));
@@ -254,6 +257,7 @@ public class AddProcessKFTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Ticket Process (Version 1)"),
 			selenium.getText(
 				"//a[@id='_1_WAR_kaleoformsportlet_selectWorkflowDefinitionDisplay']"));
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Assign"),
 			selenium.getText(
 				"//a[@id='_1_WAR_kaleoformsportlet_assignWorkflowTaskForms']"));

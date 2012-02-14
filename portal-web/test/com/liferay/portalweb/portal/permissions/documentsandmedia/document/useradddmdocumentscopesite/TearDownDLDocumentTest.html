@@ -34,19 +34,9 @@
 	<td>Icon View Selected</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
-	<td>//button[contains(@class,'aui-state-active') and @title='Icon View']</td>
-	<td>Icon View Selected</td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//div[1]/a/span[1]/img'))</td>
-	<td>dmlDocumentPresent</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${dmlDocumentPresent}</td>
-	<td>DMLDocumentNotPresent</td>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
@@ -97,11 +87,6 @@
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>DMLDocumentNotPresent</td>
-	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>

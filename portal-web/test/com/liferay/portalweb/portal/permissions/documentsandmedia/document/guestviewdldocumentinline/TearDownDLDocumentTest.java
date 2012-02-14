@@ -22,117 +22,90 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class TearDownDLDocumentTest extends BaseTestCase {
 	public void testTearDownDLDocument() throws Exception {
-		int label = 1;
+		selenium.open("/web/guest/home/");
+		loadRequiredJavaScriptModules();
 
-		while (label >= 1) {
-			switch (label) {
-			case 1:
-				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"link=Documents and Media Test Page")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.clickAt("link=Documents and Media Test Page",
-					RuntimeVariables.replace("Documents and Media Test Page"));
-				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
-				selenium.clickAt("//button[@title='Icon View']",
-					RuntimeVariables.replace("Icon View"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//button[contains(@class,'aui-state-active') and @title='Icon View']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				assertTrue(selenium.isVisible(
-						"//button[contains(@class,'aui-state-active') and @title='Icon View']"));
-
-				boolean dmlDocumentPresent = selenium.isElementPresent(
-						"//div[1]/a/span[1]/img");
-
-				if (!dmlDocumentPresent) {
-					label = 2;
-
-					continue;
-				}
-
-				assertFalse(selenium.isChecked(
-						"//input[@id='_20_allRowIdsCheckbox']"));
-				selenium.clickAt("//input[@id='_20_allRowIdsCheckbox']",
-					RuntimeVariables.replace("All Entries Check Box"));
-				assertTrue(selenium.isChecked(
-						"//input[@id='_20_allRowIdsCheckbox']"));
-				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText(
-						"//span[@title='Actions']/ul/li/strong/a/span"));
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
-					RuntimeVariables.replace("Actions"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
-				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
-
-			case 2:
-				assertEquals(RuntimeVariables.replace(
-						"There are no documents or media files in this folder."),
-					selenium.getText("//div[@class='portlet-msg-info']"));
-
-			case 100:
-				label = -1;
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
 			}
+
+			try {
+				if (selenium.isVisible("link=Documents and Media Test Page")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
 		}
+
+		selenium.clickAt("link=Documents and Media Test Page",
+			RuntimeVariables.replace("Documents and Media Test Page"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		selenium.clickAt("//button[@title='Icon View']",
+			RuntimeVariables.replace("Icon View"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//button[contains(@class,'aui-state-active') and @title='Icon View']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		Thread.sleep(5000);
+		assertFalse(selenium.isChecked("//input[@id='_20_allRowIdsCheckbox']"));
+		selenium.clickAt("//input[@id='_20_allRowIdsCheckbox']",
+			RuntimeVariables.replace("All Entries Check Box"));
+		assertTrue(selenium.isChecked("//input[@id='_20_allRowIdsCheckbox']"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+			RuntimeVariables.replace("Actions"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Delete"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		assertTrue(selenium.getConfirmation()
+						   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace(
+				"There are no documents or media files in this folder."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
 	}
 }

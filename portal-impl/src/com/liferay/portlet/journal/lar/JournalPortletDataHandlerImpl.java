@@ -2186,7 +2186,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		Element articlesElement = rootElement.addElement("articles");
 
-		if (portletDataContext.getBooleanParameter(_NAMESPACE, "articles")) {
+		if (portletDataContext.getBooleanParameter(_NAMESPACE, "web-content")) {
 			List<JournalArticle> articles = JournalArticleUtil.findByGroupId(
 				portletDataContext.getScopeGroupId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, new ArticleIDComparator(true));
@@ -2244,7 +2244,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			importFeed(portletDataContext, feedElement);
 		}
 
-		if (portletDataContext.getBooleanParameter(_NAMESPACE, "articles")) {
+		if (portletDataContext.getBooleanParameter(_NAMESPACE, "web-content")) {
 			Element articlesElement = rootElement.element("articles");
 
 			List<Element> articleElements = articlesElement.elements("article");

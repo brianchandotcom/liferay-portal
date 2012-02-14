@@ -57,8 +57,8 @@ public class BrowseInstallMorePluginsTest extends BaseTestCase {
 			RuntimeVariables.replace("Portlet Plugins"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("No portlet plugins were found."),
-			selenium.getText("//div[@class='portlet-msg-info']"));
+		assertTrue(selenium.isVisible("//input[@id='_111_keywords']"));
+		assertTrue(selenium.isVisible("//input[@value='Search']"));
 		selenium.clickAt("link=Theme Plugins",
 			RuntimeVariables.replace("Theme Plugins"));
 		selenium.waitForPageToLoad("30000");

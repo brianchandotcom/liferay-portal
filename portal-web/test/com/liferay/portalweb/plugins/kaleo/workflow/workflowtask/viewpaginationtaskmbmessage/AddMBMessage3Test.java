@@ -130,16 +130,16 @@ public class AddMBMessage3Test extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Single Approver"),
-			selenium.getText("//tr[5]/td[1]/a"));
+			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace(
 				"MB Category Thread3 Message Subject"),
-			selenium.getText("//tr[5]/td[2]/a"));
+			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Message Boards Message"),
-			selenium.getText("//tr[5]/td[3]/a"));
+			selenium.getText("//td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//tr[5]/td[4]/a"));
-		assertTrue(selenium.isVisible("//tr[5]/td[5]/a"));
+			selenium.getText("//td[4]/a"));
+		assertTrue(selenium.isVisible("//td[5]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//tr[5]/td[6]/a"));
+			selenium.getText("//td[6]/a"));
 	}
 }

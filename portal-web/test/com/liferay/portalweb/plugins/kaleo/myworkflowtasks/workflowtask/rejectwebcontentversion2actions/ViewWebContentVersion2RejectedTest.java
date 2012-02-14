@@ -58,7 +58,7 @@ public class ViewWebContentVersion2RejectedTest extends BaseTestCase {
 			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText("//td[3]/a"));
-		assertTrue(selenium.isElementPresent("//td[4]/a"));
+		assertTrue(selenium.isVisible("//td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
 			selenium.getText("//td[5]/a"));
 		assertEquals(RuntimeVariables.replace(
@@ -68,21 +68,21 @@ public class ViewWebContentVersion2RejectedTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//td[1]/a"));
-		assertEquals(RuntimeVariables.replace("Web Content Name"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//tr[3]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace("Web Content Name Edited"),
+			selenium.getText("//tr[3]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
-			selenium.getText("//td[3]/a"));
-		assertTrue(selenium.isElementPresent("//td[4]/a"));
+			selenium.getText("//tr[3]/td[3]/a"));
+		assertTrue(selenium.isVisible("//tr[3]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//td[5]/a"));
+			selenium.getText("//tr[3]/td[5]/a"));
 		assertEquals(RuntimeVariables.replace("Review"),
 			selenium.getText("//tr[4]/td[1]/a"));
-		assertEquals(RuntimeVariables.replace("Web Content Name Edited"),
+		assertEquals(RuntimeVariables.replace("Web Content Name"),
 			selenium.getText("//tr[4]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText("//tr[4]/td[3]/a"));
-		assertTrue(selenium.isElementPresent("//tr[4]/td[4]/a"));
+		assertTrue(selenium.isVisible("//tr[4]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
 			selenium.getText("//tr[4]/td[5]/a"));
 		selenium.clickAt("link=My Submissions",
@@ -100,11 +100,11 @@ public class ViewWebContentVersion2RejectedTest extends BaseTestCase {
 			selenium.getText("//td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Update"),
 			selenium.getText("//td[4]/a"));
-		assertTrue(selenium.isElementPresent("//td[5]/a"));
+		assertTrue(selenium.isVisible("//td[5]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
 			selenium.getText("//td[6]/a"));
 		assertEquals(RuntimeVariables.replace("Withdraw Submission"),
-			selenium.getText("//span/a/span"));
+			selenium.getText("//td[7]/span/a/span"));
 		selenium.clickAt("link=Completed", RuntimeVariables.replace("Completed"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
@@ -116,8 +116,8 @@ public class ViewWebContentVersion2RejectedTest extends BaseTestCase {
 			selenium.getText("//td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Approved"),
 			selenium.getText("//td[4]/a"));
-		assertTrue(selenium.isElementPresent("//td[5]/a"));
-		assertTrue(selenium.isElementPresent("//td[6]/a"));
+		assertTrue(selenium.isVisible("//td[5]/a"));
+		assertTrue(selenium.isVisible("//td[6]/a"));
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
@@ -126,8 +126,8 @@ public class ViewWebContentVersion2RejectedTest extends BaseTestCase {
 			selenium.getText("//td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Pending"),
 			selenium.getText("//td[4]/a"));
-		assertTrue(selenium.isElementPresent("//td[5]/a"));
-		assertTrue(selenium.isElementPresent("//td[6]/a"));
+		assertTrue(selenium.isVisible("//td[5]/a"));
+		assertTrue(selenium.isVisible("//td[6]/a"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("//td[7]/a"));
 		selenium.clickAt("link=Workflow", RuntimeVariables.replace("Workflow"));
@@ -148,7 +148,7 @@ public class ViewWebContentVersion2RejectedTest extends BaseTestCase {
 			selenium.getText("//td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Update"),
 			selenium.getText("//td[4]/a"));
-		assertTrue(selenium.isElementPresent("//td[5]/a"));
+		assertTrue(selenium.isVisible("//td[5]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
 			selenium.getText("//td[6]/a"));
 		selenium.clickAt("link=Completed", RuntimeVariables.replace("Completed"));
@@ -162,7 +162,7 @@ public class ViewWebContentVersion2RejectedTest extends BaseTestCase {
 			selenium.getText("//td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Approved"),
 			selenium.getText("//td[4]/a"));
-		assertTrue(selenium.isElementPresent("//td[5]/a"));
-		assertTrue(selenium.isElementPresent("//td[6]/a"));
+		assertTrue(selenium.isVisible("//td[5]/a"));
+		assertTrue(selenium.isVisible("//td[6]/a"));
 	}
 }

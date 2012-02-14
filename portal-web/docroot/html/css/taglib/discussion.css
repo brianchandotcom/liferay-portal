@@ -32,6 +32,10 @@
 	width: 15%;
 }
 
+.taglib-discussion .lfr-discussion-details .aui-column-content {
+	padding: 0;
+}
+
 .taglib-discussion .lfr-discussion-details .taglib-user-display {
 	padding-bottom: 0;
 	padding-top: 0;
@@ -62,8 +66,12 @@
 	width: 85%;
 }
 
+.taglib-discussion .lfr-discussion-body .lfr-discussion-controls .taglib-ratings .aui-rating-label-element {
+	padding-left: 0;
+}
+
 .taglib-discussion .lfr-discussion-body-content {
-	padding: 5px 0;
+	padding: 5px 0 0 0.5em;
 }
 
 .taglib-discussion .lfr-discussion-posted-on {
@@ -76,7 +84,6 @@
 
 .taglib-discussion .lfr-discussion-message {
 	padding-bottom: 1em;
-	padding-left: 0.5em;
 }
 
 .taglib-discussion .taglib-ratings {

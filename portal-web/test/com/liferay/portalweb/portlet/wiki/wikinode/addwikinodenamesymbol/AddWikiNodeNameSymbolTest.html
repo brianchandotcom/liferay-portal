@@ -55,13 +55,13 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//div[@class='portlet-msg-error'])[1]</td>
-	<td>Your request failed to complete.</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//div[@class='portlet-msg-error'])[2]</td>
-	<td>Please enter a valid name.</td>
+	<td>//tr[contains(.,'Wiki/ Node/ Name/')]/td/a</td>
+	<td>Wiki/ Node/ Name/</td>
 </tr>
 <tr>
 	<td>open</td>
@@ -110,13 +110,18 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//div[@class='portlet-msg-error'])[1]</td>
-	<td>Your request failed to complete.</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//div[@class='portlet-msg-error'])[2]</td>
-	<td>Please enter a valid name.</td>
+	<td>//tr[contains(.,'Wiki! Node! Name!')]/td/a</td>
+	<td>Wiki! Node! Name!</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Wiki/ Node/ Name/')]/td/a</td>
+	<td>Wiki/ Node/ Name/</td>
 </tr>
 <tr>
 	<td>open</td>
@@ -165,15 +170,29 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//div[@class='portlet-msg-error'])[1]</td>
-	<td>Your request failed to complete.</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//div[@class='portlet-msg-error'])[2]</td>
-	<td>Please enter a valid name.</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
-
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Wiki? Node? Name?')]/td/a</td>
+	<td>Wiki? Node? Name?</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Wiki! Node! Name!')]/td/a</td>
+	<td>Wiki! Node! Name!</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Wiki/ Node/ Name/')]/td/a</td>
+	<td>Wiki/ Node/ Name/</td>
+</tr>
 </tbody></table>
 </body>
 </html>

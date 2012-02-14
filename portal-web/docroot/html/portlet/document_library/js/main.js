@@ -156,6 +156,7 @@ AUI.add(
 						instance._dataRetrieveFailure = instance.ns('dataRetrieveFailure');
 						instance._eventDataRequest = instance.ns('dataRequest');
 						instance._eventDataRetrieveSuccess = instance.ns('dataRetrieveSuccess');
+						instance._eventEditFileEntry = instance.ns('editFileEntry');
 						instance._eventOpenDocument = instance.ns('openDocument');
 						instance._eventPageLoaded = instance.ns('pageLoaded');
 
@@ -231,6 +232,7 @@ AUI.add(
 							Liferay.on(instance._dataRetrieveFailure, instance._onDataRetrieveFailure, instance),
 							Liferay.on(instance._eventDataRequest, instance._onDataRequest, instance),
 							Liferay.on(instance._eventDataRetrieveSuccess, instance._onDataRetrieveSuccess, instance),
+							Liferay.on(instance._eventEditFileEntry, instance._editFileEntry, instance),
 							Liferay.on(instance._eventOpenDocument, instance._openDocument, instance),
 							Liferay.on(instance._eventPageLoaded, instance._onPageLoaded, instance)
 						];
@@ -490,6 +492,39 @@ AUI.add(
 						);
 					},
 
+					_doFileEntryAction: function(cmd, url) {
+						var instance = this;
+
+						var form = instance._config.form;
+
+						var allRowIds = instance._config.allRowIds;
+						var rowIds = instance._config.rowIds;
+
+						form.method = 'post';
+						form[instance.ns('cmd')].value = cmd;
+						form[instance.ns('redirect')].value = location.href;
+						form[instance.ns('folderIds')].value = Liferay.Util.listCheckedExcept(form, instance.NS + allRowIds + 'Checkbox', instance.NS + rowIds + 'FolderCheckbox');
+						form[instance.ns('fileEntryIds')].value = Liferay.Util.listCheckedExcept(form, instance.NS + allRowIds + 'Checkbox', instance.NS + rowIds + 'FileEntryCheckbox');
+						form[instance.ns('fileShortcutIds')].value = Liferay.Util.listCheckedExcept(form, instance.NS + allRowIds + 'Checkbox', instance.NS + rowIds + 'DLFileShortcutCheckbox');
+
+						submitForm(form, url);
+					},
+
+					_editFileEntry: function(event) {
+						var instance = this;
+
+						var cmd = event.cmd;
+
+						var move = instance._config.moveConstant;
+
+						if (cmd == move) {
+							instance._doFileEntryAction(cmd, instance._config.moveEntryActionUrl);
+						}
+						else {
+							instance._doFileEntryAction(cmd, instance._config.editEntryUrl);
+						}
+					},
+
 					_getDefaultHistoryState: function() {
 						var instance = this;
 
@@ -682,6 +717,18 @@ AUI.add(
 						);
 					},
 
+					_moveEntries: function(folderId) {
+						var instance = this;
+
+						var form = instance._config.form;
+
+						form[instance.ns('newFolderId')].value = folderId;
+
+						var move = instance._config.moveConstant;
+
+						instance._doFileEntryAction(move, instance._config.moveEntryRenderUrl);
+					},
+
 					_onDataRetrieveSuccess: function(event) {
 						var instance = this;
 
@@ -826,7 +873,7 @@ AUI.add(
 						var selectedItems = instance._ddHandler.dd.get(STR_DATA).selectedItems;
 
 						if (selectedItems.indexOf(folderContainer) == -1) {
-							WIN[instance.ns('moveEntries')](folderId);
+							instance._moveEntries(folderId);
 						}
 					},
 

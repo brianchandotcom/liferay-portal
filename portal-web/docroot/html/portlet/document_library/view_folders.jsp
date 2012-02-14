@@ -132,6 +132,7 @@ if (folder != null) {
 						<%
 						String navigation = ParamUtil.getString(request, "navigation", "home");
 
+						request.setAttribute("view_entries.jsp-folder", folder);
 						request.setAttribute("view_entries.jsp-folderId", String.valueOf(folderId));
 						request.setAttribute("view_entries.jsp-repositoryId", String.valueOf(repositoryId));
 						%>

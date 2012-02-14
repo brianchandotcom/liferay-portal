@@ -122,10 +122,10 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 
 		_publicPaths.add(_PATH_C);
 		_publicPaths.add(_PATH_PORTAL_API_JSONWS);
-		_publicPaths.add(_PATH_PORTAL_EE_LICENSE);
 		_publicPaths.add(_PATH_PORTAL_FLASH);
 		_publicPaths.add(_PATH_PORTAL_J_LOGIN);
 		_publicPaths.add(_PATH_PORTAL_LAYOUT);
+		_publicPaths.add(_PATH_PORTAL_LICENSE);
 		_publicPaths.add(_PATH_PORTAL_LOGIN);
 		_publicPaths.add(_PATH_PORTAL_RENDER_PORTLET);
 		_publicPaths.add(_PATH_PORTAL_TCK);
@@ -674,7 +674,9 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 		// Setup wizard
 
 		if (!SetupWizardUtil.isSetupFinished()) {
-			return _PATH_PORTAL_SETUP_WIZARD;
+			if (!path.equals(_PATH_PORTAL_LICENSE)) {
+				return _PATH_PORTAL_SETUP_WIZARD;
+			}
 		}
 		else if (path.equals(_PATH_PORTAL_SETUP_WIZARD)) {
 			return _PATH_PORTAL_LAYOUT;
@@ -966,8 +968,6 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 
 	private static final String _PATH_PORTAL_API_JSONWS = "/portal/api/jsonws";
 
-	private static final String _PATH_PORTAL_EE_LICENSE = "/portal/ee/license";
-
 	private static final String _PATH_PORTAL_ERROR = "/portal/error";
 
 	private static final String _PATH_PORTAL_EXPIRE_SESSION =
@@ -984,6 +984,8 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 		"/portal/json_service";
 
 	private static final String _PATH_PORTAL_LAYOUT = "/portal/layout";
+
+	private static final String _PATH_PORTAL_LICENSE = "/portal/license";
 
 	private static final String _PATH_PORTAL_LOGIN = "/portal/login";
 

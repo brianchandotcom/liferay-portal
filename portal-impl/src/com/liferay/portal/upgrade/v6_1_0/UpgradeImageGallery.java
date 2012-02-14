@@ -19,6 +19,8 @@ import com.liferay.portal.image.DatabaseHook;
 import com.liferay.portal.image.FileSystemHook;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.image.Hook;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -351,22 +353,39 @@ public class UpgradeImageGallery extends UpgradeProcess {
 						migrateFile(repositoryId, companyId, name, image);
 					}
 					catch (Exception e) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Ignoring exception for imageId " + imageId, e);
+						}
+
+						return;
 					}
 				}
 				else {
-					InputStream is = _sourceHook.getImageAsStream(image);
+					try {
+						InputStream is = _sourceHook.getImageAsStream(image);
 
-					if (custom1ImageId != imageId) {
-						custom1ImageId = 0;
+						if (custom1ImageId != imageId) {
+							custom1ImageId = 0;
+						}
+
+						if (custom2ImageId != imageId) {
+							custom2ImageId = 0;
+						}
+
+						ImageProcessorUtil.storeThumbnail(
+							companyId, groupId, fileEntryId, fileVersionId,
+							custom1ImageId, custom2ImageId, is,
+							image.getType());
 					}
+					catch (Exception e) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Ignoring exception for imageId " + imageId, e);
+						}
 
-					if (custom2ImageId != imageId) {
-						custom2ImageId = 0;
+						return;
 					}
-
-					ImageProcessorUtil.storeThumbnail(
-						companyId, groupId, fileEntryId, fileVersionId,
-						custom1ImageId, custom2ImageId, is, image.getType());
 				}
 
 				_sourceHook.deleteImage(image);
@@ -378,6 +397,12 @@ public class UpgradeImageGallery extends UpgradeProcess {
 					migrateFile(0, 0, null, image);
 				}
 				catch (Exception e) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Ignoring exception for imageId " + imageId, e);
+					}
+
+					return;
 				}
 
 				_sourceHook.deleteImage(image);
@@ -642,6 +667,8 @@ public class UpgradeImageGallery extends UpgradeProcess {
 
 	private static final String _IG_IMAGE_CLASS_NAME =
 		"com.liferay.portlet.imagegallery.model.IGImage";
+
+	private static Log _log = LogFactoryUtil.getLog(UpgradeImageGallery.class);
 
 	private Hook _sourceHook;
 	private String _sourceHookClassName;

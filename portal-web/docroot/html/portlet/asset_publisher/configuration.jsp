@@ -159,7 +159,7 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 
 											<%
 											for (AssetRendererFactory curRendererFactory : AssetRendererFactoryRegistryUtil.getAssetRendererFactories()) {
-												if (curRendererFactory.isSelectable() && IndexerRegistryUtil.getIndexer(curRendererFactory.getClassName()) != null) {
+												if (curRendererFactory.isSelectable() && (IndexerRegistryUtil.getIndexer(curRendererFactory.getClassName()) != null)) {
 													String taglibURL = "javascript:" + renderResponse.getNamespace() + "selectionForType('" + curRendererFactory.getClassName() + "')";
 												%>
 

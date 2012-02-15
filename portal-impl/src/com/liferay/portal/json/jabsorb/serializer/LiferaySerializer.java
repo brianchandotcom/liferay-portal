@@ -14,6 +14,10 @@
 
 package com.liferay.portal.json.jabsorb.serializer;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+
 import java.io.Serializable;
 
 import java.lang.reflect.Constructor;
@@ -24,15 +28,12 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.apache.commons.beanutils.BeanUtils;
-
 import org.jabsorb.JSONSerializer;
 import org.jabsorb.serializer.AbstractSerializer;
 import org.jabsorb.serializer.MarshallException;
 import org.jabsorb.serializer.ObjectMatch;
 import org.jabsorb.serializer.SerializerState;
 import org.jabsorb.serializer.UnmarshallException;
-
 import org.json.JSONObject;
 
 /**
@@ -339,8 +340,46 @@ public class LiferaySerializer extends AbstractSerializer {
 					}
 
 					if (value != null) {
-						BeanUtils.copyProperty(
-							javaClassInstance, fieldName, value);
+						Class<?> type = field.getType();
+
+						try {
+							if (type.isArray() &&
+								type.getComponentType().isPrimitive()) {
+
+								if (type.isAssignableFrom(boolean[].class)) {
+									value = ArrayUtil.toArray((Boolean[])value);
+								}
+								else if (type.isAssignableFrom(byte[].class)) {
+									value = ArrayUtil.toArray((Byte[])value);
+								}
+								else if (type.isAssignableFrom(char[].class)) {
+									value = ArrayUtil.toArray(
+										(Character[])value);
+								}
+								else if (type.isAssignableFrom(short[].class)) {
+									value = ArrayUtil.toArray((Short[])value);
+								}
+								else if (type.isAssignableFrom(int[].class)) {
+									value = ArrayUtil.toArray((Integer[])value);
+								}
+								else if (type.isAssignableFrom(long[].class)) {
+									value = ArrayUtil.toArray((Long[])value);
+								}
+								else if (type.isAssignableFrom(float[].class)) {
+									value = ArrayUtil.toArray((Float[])value);
+								}
+								else if (type.isAssignableFrom(
+											double[].class)) {
+
+									value = ArrayUtil.toArray((Double[])value);
+								}
+							}
+
+							field.set(javaClassInstance, value);
+						}
+						catch (Exception e) {
+							_log.error(e, e);
+						}
 					}
 				}
 
@@ -354,6 +393,9 @@ public class LiferaySerializer extends AbstractSerializer {
 
 		return javaClassInstance;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LiferaySerializer.class);
 
 	private static final Class<?>[] _JSON_CLASSES = {JSONObject.class};
 

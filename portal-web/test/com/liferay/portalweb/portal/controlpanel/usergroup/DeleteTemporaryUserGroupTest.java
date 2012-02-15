@@ -49,7 +49,7 @@ public class DeleteTemporaryUserGroupTest extends BaseTestCase {
 			RuntimeVariables.replace("User Groups"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.type("//input[@id='_127_name']",
+		selenium.type("//input[@id='_127_keywords']",
 			RuntimeVariables.replace("Temporary"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
@@ -60,7 +60,7 @@ public class DeleteTemporaryUserGroupTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("This is a temporary user group."),
 			selenium.getText("//td[3]/a"));
 		selenium.clickAt("//input[@name='_127_allRowIds']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Select All"));
 		selenium.click(RuntimeVariables.replace("//input[@value='Delete']"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();

@@ -114,7 +114,7 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 
 		<c:if test="<%= (userGroupGroup != null) || !layoutSetPrototypes.isEmpty() %>">
 			<c:choose>
-				<c:when test="<%= ((userGroupGroup == null) || (userGroupGroup.getPublicLayoutsPageCount() == 0)) && !layoutSetPrototypes.isEmpty() %>">
+				<c:when test="<%= ((userGroupGroup == null) || (publicLayoutSetPrototype == null)) && !layoutSetPrototypes.isEmpty() %>">
 					<aui:select label="public-pages" name="publicLayoutSetPrototypeId">
 						<aui:option label="none" selected="<%= true %>" value="" />
 
@@ -144,7 +144,7 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 				<c:otherwise>
 					<aui:field-wrapper label="public-pages">
 						<c:choose>
-							<c:when test="<%= (userGroupGroup != null) && (userGroupGroup.getPublicLayoutsPageCount() > 0) %>">
+							<c:when test="<%= userGroupGroup != null %>">
 
 								<liferay-portlet:actionURL var="publicPagesURL" portletName="<%= PortletKeys.SITE_REDIRECTOR %>">
 									<portlet:param name="struts_action" value="/MY_SITES/view" />
@@ -152,14 +152,21 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 									<portlet:param name="publicLayout" value="<%= Boolean.TRUE.toString() %>" />
 								</liferay-portlet:actionURL>
 
-								<liferay-ui:icon
-									image="view"
-									label="<%= true %>"
-									message="open-pages"
-									method="get"
-									target="_blank"
-									url="<%= publicPagesURL.toString() %>"
-								/>
+								<c:choose>
+									<c:when test="<%= userGroupGroup.getPublicLayoutsPageCount() > 0 %>">
+										<liferay-ui:icon
+											image="view"
+											label="<%= true %>"
+											message="open-pages"
+											method="get"
+											target="_blank"
+											url="<%= publicPagesURL.toString() %>"
+										/>
+									</c:when>
+									<c:otherwise>
+										<liferay-ui:message key="this-user-group-does-not-have-any-public-pages" />
+									</c:otherwise>
+								</c:choose>
 
 								<c:choose>
 									<c:when test="<%= (publicLayoutSetPrototype != null) && PortalPermissionUtil.contains(permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE) %>">
@@ -172,16 +179,13 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 									</c:when>
 								</c:choose>
 							</c:when>
-							<c:otherwise>
-								<liferay-ui:message key="this-user-group-does-not-have-any-public-pages" />
-							</c:otherwise>
 						</c:choose>
 					</aui:field-wrapper>
 				</c:otherwise>
 			</c:choose>
 
 			<c:choose>
-				<c:when test="<%= ((userGroup == null) || (userGroup.getPrivateLayoutsPageCount() == 0)) && !layoutSetPrototypes.isEmpty() %>">
+				<c:when test="<%= ((userGroup == null) || (privateLayoutSetPrototype == null)) && !layoutSetPrototypes.isEmpty() %>">
 					<aui:select label="private-pages" name="privateLayoutSetPrototypeId">
 						<aui:option label="none" selected="<%= true %>" value="" />
 
@@ -211,21 +215,28 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 				<c:otherwise>
 					<aui:field-wrapper label="private-pages">
 						<c:choose>
-							<c:when test="<%= (userGroupGroup != null) && (userGroupGroup.getPrivateLayoutsPageCount() > 0) %>">
+							<c:when test="<%= userGroupGroup != null %>">
 								<liferay-portlet:actionURL var="privatePagesURL" portletName="<%= PortletKeys.SITE_REDIRECTOR %>">
 									<portlet:param name="struts_action" value="/MY_SITES/view" />
 									<portlet:param name="groupId" value="<%= String.valueOf(userGroupGroup.getGroupId()) %>" />
 									<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
 								</liferay-portlet:actionURL>
 
-								<liferay-ui:icon
-									image="view"
-									label="<%= true %>"
-									message="open-pages"
-									method="get"
-									target="_blank"
-									url="<%= privatePagesURL.toString() %>"
-								/>
+								<c:choose>
+									<c:when test="<%= userGroupGroup.getPrivateLayoutsPageCount() > 0 %>">
+										<liferay-ui:icon
+											image="view"
+											label="<%= true %>"
+											message="open-pages"
+											method="get"
+											target="_blank"
+											url="<%= privatePagesURL.toString() %>"
+										/>
+									</c:when>
+									<c:otherwise>
+										<liferay-ui:message key="this-user-group-does-not-have-any-private-pages" />
+									</c:otherwise>
+								</c:choose>
 
 								<c:choose>
 									<c:when test="<%= (privateLayoutSetPrototype != null) && PortalPermissionUtil.contains(permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE) %>">
@@ -238,9 +249,6 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 									</c:when>
 								</c:choose>
 							</c:when>
-							<c:otherwise>
-								<liferay-ui:message key="this-user-group-does-not-have-any-private-pages" />
-							</c:otherwise>
 						</c:choose>
 					</aui:field-wrapper>
 				</c:otherwise>

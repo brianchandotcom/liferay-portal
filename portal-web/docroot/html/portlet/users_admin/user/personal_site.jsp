@@ -72,7 +72,7 @@ if (selUser != null) {
 
 <aui:fieldset>
 	<c:choose>
-		<c:when test="<%= ((selUser == null) || (selUser.getPublicLayoutsPageCount() == 0)) && !layoutSetPrototypes.isEmpty() %>">
+		<c:when test="<%= ((selUser == null) || (publicLayoutSetPrototype == null)) && !layoutSetPrototypes.isEmpty() %>">
 			<aui:select label="public-pages" name="publicLayoutSetPrototypeId">
 				<aui:option label='<%= selUser == null ? "default" : "none" %>' selected="<%= true %>" value="" />
 
@@ -102,21 +102,28 @@ if (selUser != null) {
 		<c:otherwise>
 			<aui:field-wrapper label="public-pages">
 				<c:choose>
-					<c:when test="<%= (selUser != null) && (selUser.getPublicLayoutsPageCount() > 0) %>">
+					<c:when test="<%= selUser != null %>">
 						<liferay-portlet:actionURL var="publicPagesURL" portletName="<%= PortletKeys.SITE_REDIRECTOR %>">
 							<portlet:param name="struts_action" value="/my_sites/view" />
 							<portlet:param name="groupId" value="<%= String.valueOf(selUser.getGroup().getGroupId()) %>" />
 							<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
 						</liferay-portlet:actionURL>
 
-						<liferay-ui:icon
-							image="view"
-							label="<%= true %>"
-							message="open-public-pages"
-							method="get"
-							target="_blank"
-							url="<%= publicPagesURL.toString() %>"
-						/>
+						<c:choose>
+							<c:when test="<%= selUser.getPublicLayoutsPageCount() > 0 %>">
+								<liferay-ui:icon
+									image="view"
+									label="<%= true %>"
+									message="open-public-pages"
+									method="get"
+									target="_blank"
+									url="<%= publicPagesURL.toString() %>"
+								/>
+							</c:when>
+							<c:otherwise>
+								<liferay-ui:message key="this-user-does-not-have-any-public-pages" />
+							</c:otherwise>
+						</c:choose>
 
 						<c:choose>
 							<c:when test="<%= (publicLayoutSetPrototype != null) && PortalPermissionUtil.contains(permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE) %>">
@@ -129,16 +136,13 @@ if (selUser != null) {
 							</c:when>
 						</c:choose>
 					</c:when>
-					<c:otherwise>
-						<liferay-ui:message key="this-user-does-not-have-any-public-pages" />
-					</c:otherwise>
 				</c:choose>
 			</aui:field-wrapper>
 		</c:otherwise>
 	</c:choose>
 
 	<c:choose>
-		<c:when test="<%= ((selUser == null) || (selUser.getPrivateLayoutsPageCount() == 0)) && !layoutSetPrototypes.isEmpty() %>">
+		<c:when test="<%= ((selUser == null) || (privateLayoutSetPrototype == null)) && !layoutSetPrototypes.isEmpty() %>">
 			<aui:select label="private-pages" name="privateLayoutSetPrototypeId">
 				<aui:option label='<%= selUser == null ? "default" : "none" %>' selected="<%= true %>" value="" />
 
@@ -168,21 +172,28 @@ if (selUser != null) {
 		<c:otherwise>
 			<aui:field-wrapper label="private-pages">
 				<c:choose>
-					<c:when test="<%= (selUser != null) && (selUser.getPrivateLayoutsPageCount() > 0) %>">
+					<c:when test="<%= selUser != null %>">
 						<liferay-portlet:actionURL var="privatePagesURL" portletName="<%= PortletKeys.SITE_REDIRECTOR %>">
 							<portlet:param name="struts_action" value="/my_sites/view" />
 							<portlet:param name="groupId" value="<%= String.valueOf(selUser.getGroup().getGroupId()) %>" />
 							<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
 						</liferay-portlet:actionURL>
 
-						<liferay-ui:icon
-							image="view"
-							label="<%= true %>"
-							message="open-private-pages"
-							method="get"
-							target="_blank"
-							url="<%= privatePagesURL.toString() %>"
-						/>
+						<c:choose>
+							<c:when test="<%= selUser.getPrivateLayoutsPageCount() > 0 %>">
+								<liferay-ui:icon
+									image="view"
+									label="<%= true %>"
+									message="open-private-pages"
+									method="get"
+									target="_blank"
+									url="<%= privatePagesURL.toString() %>"
+								/>
+							</c:when>
+							<c:otherwise>
+								<liferay-ui:message key="this-user-does-not-have-any-private-pages" />
+								</c:otherwise>
+						</c:choose>
 
 						<c:choose>
 							<c:when test="<%= (privateLayoutSetPrototype != null) && PortalPermissionUtil.contains(permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE) %>">
@@ -195,9 +206,6 @@ if (selUser != null) {
 							</c:when>
 						</c:choose>
 					</c:when>
-					<c:otherwise>
-						<liferay-ui:message key="this-user-does-not-have-any-private-pages" />
-					</c:otherwise>
 				</c:choose>
 			</aui:field-wrapper>
 		</c:otherwise>

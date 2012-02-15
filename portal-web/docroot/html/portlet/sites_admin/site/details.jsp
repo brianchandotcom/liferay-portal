@@ -113,7 +113,7 @@ if (showPrototypes && (group != null)) {
 			<liferay-ui:panel-container extended="<%= false %>">
 				<liferay-ui:panel defaultState='<%= ((group != null) && (group.getPublicLayoutsPageCount() > 0)) ? "open" : "closed" %>' collapsible="<%= true %>" title="public-pages">
 					<c:choose>
-						<c:when test="<%= ((group == null) || (group.getPublicLayoutsPageCount() == 0)) && !layoutSetPrototypes.isEmpty() %>">
+						<c:when test="<%= ((group == null) || (publicLayoutSetPrototype == null)) && !layoutSetPrototypes.isEmpty() %>">
 							<aui:select helpMessage="site-templates-with-an-incompatible-application-adapter-are-disabled" label="site-template" name="publicLayoutSetPrototypeId">
 								<aui:option label="none" selected="<%= true %>" value="" />
 
@@ -145,21 +145,28 @@ if (showPrototypes && (group != null)) {
 						</c:when>
 						<c:otherwise>
 							<c:choose>
-								<c:when test="<%= (group != null) && (group.getPublicLayoutsPageCount() > 0) %>">
+								<c:when test="<%= group != null %>">
 									<liferay-portlet:actionURL var="publicPagesURL" portletName="<%= PortletKeys.SITE_REDIRECTOR %>">
 										<portlet:param name="struts_action" value="/my_sites/view" />
 										<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 										<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
 									</liferay-portlet:actionURL>
 
-									<liferay-ui:icon
-										image="view"
-										label="<%= true %>"
-										message="open-public-pages"
-										method="get"
-										target="_blank"
-										url="<%= publicPagesURL.toString() %>"
-									/>
+									<c:choose>
+										<c:when test="<%= group.getPublicLayoutsPageCount() > 0 %>">
+											<liferay-ui:icon
+												image="view"
+												label="<%= true %>"
+												message="open-public-pages"
+												method="get"
+												target="_blank"
+												url="<%= publicPagesURL.toString() %>"
+											/>
+										</c:when>
+										<c:otherwise>
+											<liferay-ui:message key="this-site-does-not-have-any-public-pages" />
+										</c:otherwise>
+									</c:choose>
 
 									<c:choose>
 										<c:when test="<%= (publicLayoutSetPrototype != null) && !liveGroup.isStaged() && PortalPermissionUtil.contains(permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE) %>">
@@ -172,16 +179,13 @@ if (showPrototypes && (group != null)) {
 										</c:when>
 									</c:choose>
 								</c:when>
-								<c:otherwise>
-									<liferay-ui:message key="this-site-does-not-have-any-public-pages" />
-								</c:otherwise>
 							</c:choose>
 						</c:otherwise>
 					</c:choose>
 				</liferay-ui:panel>
 				<liferay-ui:panel defaultState='<%= ((group != null) && (group.getPrivateLayoutsPageCount() > 0)) ? "open" : "closed" %>' collapsible="<%= true %>" title="private-pages">
 					<c:choose>
-						<c:when test="<%= ((group == null) || (group.getPrivateLayoutsPageCount() == 0)) && !layoutSetPrototypes.isEmpty() %>">
+						<c:when test="<%= ((group == null) || (privateLayoutSetPrototype == null)) && !layoutSetPrototypes.isEmpty() %>">
 							<aui:select helpMessage="site-templates-with-an-incompatible-application-adapter-are-disabled" label="site-template" name="privateLayoutSetPrototypeId">
 								<aui:option label="none" selected="<%= true %>" value="" />
 
@@ -213,21 +217,28 @@ if (showPrototypes && (group != null)) {
 						</c:when>
 						<c:otherwise>
 							<c:choose>
-								<c:when test="<%= (group != null) && (group.getPrivateLayoutsPageCount() > 0) %>">
+								<c:when test="<%= group != null %>">
 									<liferay-portlet:actionURL var="privatePagesURL" portletName="<%= PortletKeys.SITE_REDIRECTOR %>">
 										<portlet:param name="struts_action" value="/my_sites/view" />
 										<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 										<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
 									</liferay-portlet:actionURL>
 
-									<liferay-ui:icon
-										image="view"
-										label="<%= true %>"
-										message="open-private-pages"
-										method="get"
-										target="_blank"
-										url="<%= privatePagesURL.toString() %>"
-									/>
+									<c:choose>
+										<c:when test="<%= group.getPrivateLayoutsPageCount() > 0 %>">
+											<liferay-ui:icon
+												image="view"
+												label="<%= true %>"
+												message="open-private-pages"
+												method="get"
+												target="_blank"
+												url="<%= privatePagesURL.toString() %>"
+											/>
+										</c:when>
+										<c:otherwise>
+											<liferay-ui:message key="this-site-does-not-have-any-private-pages" />
+										</c:otherwise>
+									</c:choose>
 
 									<c:choose>
 										<c:when test="<%= (privateLayoutSetPrototype != null) && !liveGroup.isStaged() && PortalPermissionUtil.contains(permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE) %>">
@@ -240,9 +251,6 @@ if (showPrototypes && (group != null)) {
 										</c:when>
 									</c:choose>
 								</c:when>
-								<c:otherwise>
-									<liferay-ui:message key="this-site-does-not-have-any-private-pages" />
-								</c:otherwise>
 							</c:choose>
 						</c:otherwise>
 					</c:choose>

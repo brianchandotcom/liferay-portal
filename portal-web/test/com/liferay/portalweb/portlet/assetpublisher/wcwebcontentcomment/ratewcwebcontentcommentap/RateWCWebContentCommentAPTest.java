@@ -66,8 +66,7 @@ public class RateWCWebContentCommentAPTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
-		assertEquals(RuntimeVariables.replace("Rate this as good."),
-			selenium.getText(
+		assertTrue(selenium.isVisible(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']"));
 		selenium.click(
 			"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']");
@@ -92,8 +91,7 @@ public class RateWCWebContentCommentAPTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("+1 (1 Vote)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
-		assertEquals(RuntimeVariables.replace("Rate this as good."),
-			selenium.getText(
+		assertTrue(selenium.isVisible(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up aui-rating-element-on']"));
 		selenium.click(
 			"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up aui-rating-element-on']");
@@ -118,8 +116,7 @@ public class RateWCWebContentCommentAPTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
-		assertEquals(RuntimeVariables.replace("Rate this as bad."),
-			selenium.getText(
+		assertTrue(selenium.isVisible(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']"));
 		selenium.click(
 			"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']");
@@ -144,8 +141,7 @@ public class RateWCWebContentCommentAPTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("-1 (1 Vote)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
-		assertEquals(RuntimeVariables.replace("Rate this as bad."),
-			selenium.getText(
+		assertTrue(selenium.isVisible(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down aui-rating-element-on']"));
 		selenium.click(
 			"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down aui-rating-element-on']");
@@ -170,8 +166,7 @@ public class RateWCWebContentCommentAPTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
-		assertEquals(RuntimeVariables.replace("Rate this as good."),
-			selenium.getText(
+		assertTrue(selenium.isVisible(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']"));
 		selenium.click(
 			"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']");
@@ -196,8 +191,7 @@ public class RateWCWebContentCommentAPTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("+1 (1 Vote)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
-		assertEquals(RuntimeVariables.replace("Rate this as bad."),
-			selenium.getText(
+		assertTrue(selenium.isVisible(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']"));
 		selenium.click(
 			"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']");
@@ -222,8 +216,7 @@ public class RateWCWebContentCommentAPTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("-1 (1 Vote)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
-		assertEquals(RuntimeVariables.replace("Rate this as bad."),
-			selenium.getText(
+		assertTrue(selenium.isVisible(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down aui-rating-element-on']"));
 		selenium.click(
 			"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down aui-rating-element-on']");
@@ -248,8 +241,7 @@ public class RateWCWebContentCommentAPTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
-		assertEquals(RuntimeVariables.replace("Rate this as bad."),
-			selenium.getText(
+		assertTrue(selenium.isVisible(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']"));
 		selenium.click(
 			"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']");
@@ -274,8 +266,7 @@ public class RateWCWebContentCommentAPTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("-1 (1 Vote)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
-		assertEquals(RuntimeVariables.replace("Rate this as good."),
-			selenium.getText(
+		assertTrue(selenium.isVisible(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']"));
 		selenium.click(
 			"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']");
@@ -300,8 +291,7 @@ public class RateWCWebContentCommentAPTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("+1 (1 Vote)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
-		assertEquals(RuntimeVariables.replace("Rate this as good."),
-			selenium.getText(
+		assertTrue(selenium.isVisible(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up aui-rating-element-on']"));
 		selenium.click(
 			"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up aui-rating-element-on']");

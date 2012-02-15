@@ -19,6 +19,8 @@
 <%@ page import="com.liferay.portal.NoSuchModelException" %><%@
 page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
 page import="com.liferay.portal.kernel.search.Hits" %><%@
+page import="com.liferay.portal.kernel.search.Indexer" %><%@
+page import="com.liferay.portal.kernel.search.IndexerRegistryUtil" %><%@
 page import="com.liferay.portal.kernel.xml.Document" %><%@
 page import="com.liferay.portal.kernel.xml.Element" %><%@
 page import="com.liferay.portal.kernel.xml.SAXReaderUtil" %><%@
@@ -80,8 +82,9 @@ long[] availableClassNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(
 
 for (long classNameId : availableClassNameIds) {
 	AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(PortalUtil.getClassName(classNameId));
+	Indexer indexer = IndexerRegistryUtil.getIndexer(PortalUtil.getClassName(classNameId));
 
-	if (!assetRendererFactory.isSelectable()) {
+	if (!assetRendererFactory.isSelectable() || (indexer == null)) {
 		availableClassNameIds = ArrayUtil.remove(availableClassNameIds, classNameId);
 	}
 }

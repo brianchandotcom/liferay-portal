@@ -97,7 +97,7 @@ public class AddShortcutTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Liferay", RuntimeVariables.replace("Global"));
+		selenium.clickAt("link=Liferay", RuntimeVariables.replace("Liferay"));
 		selenium.selectWindow("null");
 
 		for (int second = 0;; second++) {
@@ -118,6 +118,8 @@ public class AddShortcutTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		assertEquals(RuntimeVariables.replace("Liferay"),
+			selenium.getText("//span[@id='_20_toGroupName']"));
 		selenium.clickAt("xPath=(//input[@value='Select'])[2]",
 			RuntimeVariables.replace("Select Site"));
 		Thread.sleep(5000);
@@ -161,6 +163,38 @@ public class AddShortcutTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		assertEquals(RuntimeVariables.replace("Liferay"),
+			selenium.getText("//span[@id='_20_toGroupName']"));
+		assertEquals(RuntimeVariables.replace("TestDocument.txt"),
+			selenium.getText("//span[@id='_20_toFileEntryTitle']"));
+		selenium.select("//select[@id='_20_inputPermissionsViewRole']",
+			RuntimeVariables.replace("Owner"));
+		selenium.clickAt("link=More Options \u00bb",
+			RuntimeVariables.replace("More Options \u00bb"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//input[@id='_20_guestPermissions_ADD_DISCUSSION']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertTrue(selenium.isChecked(
+				"//input[@id='_20_groupPermissions_ADD_DISCUSSION']"));
+		selenium.clickAt("//input[@id='_20_groupPermissions_ADD_DISCUSSION']",
+			RuntimeVariables.replace("Add Discussion"));
+		assertFalse(selenium.isChecked(
+				"//input[@id='_20_groupPermissions_ADD_DISCUSSION']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

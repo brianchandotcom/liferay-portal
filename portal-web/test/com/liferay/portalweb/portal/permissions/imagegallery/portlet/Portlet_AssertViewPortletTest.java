@@ -50,6 +50,6 @@ public class Portlet_AssertViewPortletTest extends BaseTestCase {
 				"//div[@class='portlet-msg-error']"));
 		assertTrue(selenium.isVisible("//section"));
 		assertEquals(RuntimeVariables.replace("Home"),
-			selenium.getText("//div[1]/span[1]/span"));
+			selenium.getText("//div[@class='top-links']/ul/li/span/span"));
 	}
 }

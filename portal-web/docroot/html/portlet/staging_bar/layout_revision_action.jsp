@@ -56,6 +56,7 @@ if (layoutRevision.getLayoutRevisionId() == layoutRevisionId) {
 			/>
 		</c:if>
 
+		<%--
 		<c:if test="<%= !layoutRevision.isMajor() && !layoutRevision.isHead() %>">
 			<portlet:actionURL var="saveURL">
 				<portlet:param name="struts_action" value="/staging_bar/edit_layouts" />
@@ -77,6 +78,7 @@ if (layoutRevision.getLayoutRevisionId() == layoutRevisionId) {
 				url="<%= taglibURL %>"
 			/>
 		</c:if>
+		--%>
 
 		<c:if test="<%= !layoutRevision.isHead() && !layoutRevision.isPending() %>">
 			<portlet:actionURL var="deleteURL">

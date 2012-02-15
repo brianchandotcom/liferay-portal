@@ -122,7 +122,7 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 				}
 			);
 
-			opener.<portlet:namespace />saveLayoutset();
+			opener.<portlet:namespace />saveLayoutset('view');
 		}
 	</aui:script>
 </c:if>

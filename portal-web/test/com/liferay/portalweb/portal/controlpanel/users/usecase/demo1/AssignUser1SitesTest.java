@@ -139,7 +139,8 @@ public class AssignUser1SitesTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//table/tr/td[1]")) {
+				if (selenium.isVisible(
+							"//div[@id='_125_sites']/div/div/div/table/tr/td")) {
 					break;
 				}
 			}
@@ -150,7 +151,7 @@ public class AssignUser1SitesTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Liferay"),
-			selenium.getText("//table/tr/td[1]"));
+			selenium.getText("//div[@id='_125_sites']/div/div/div/table/tr/td"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

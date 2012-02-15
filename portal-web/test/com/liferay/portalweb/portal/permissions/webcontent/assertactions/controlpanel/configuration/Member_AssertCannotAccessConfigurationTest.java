@@ -51,9 +51,10 @@ public class Member_AssertCannotAccessConfigurationTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
-		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -77,6 +78,7 @@ public class Member_AssertCannotAccessConfigurationTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a",
 			RuntimeVariables.replace("Configuration"));
+		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -84,7 +86,7 @@ public class Member_AssertCannotAccessConfigurationTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@class='portlet-msg-error']")) {
+				if (selenium.isVisible("//iframe")) {
 					break;
 				}
 			}
@@ -94,8 +96,10 @@ public class Member_AssertCannotAccessConfigurationTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		selenium.selectFrame("//iframe");
 		assertEquals(RuntimeVariables.replace(
 				"You do not have the required permissions."),
 			selenium.getText("//div[@class='portlet-msg-error']"));
+		selenium.selectFrame("relative=top");
 	}
 }

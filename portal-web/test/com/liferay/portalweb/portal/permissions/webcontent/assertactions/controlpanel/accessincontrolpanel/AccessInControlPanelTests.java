@@ -28,6 +28,7 @@ public class AccessInControlPanelTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddMemberTest.class);
 		testSuite.addTestSuite(AddMemberRoleTest.class);
 		testSuite.addTestSuite(RemoveRolePowerUserTest.class);
+		testSuite.addTestSuite(AddPermissionViewPortletTest.class);
 		testSuite.addTestSuite(AssignUserRolesTest.class);
 		testSuite.addTestSuite(LogoutTest.class);
 		testSuite.addTestSuite(LoginUsersTest.class);

@@ -30,6 +30,7 @@ public class PermissionsTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddMemberRoleTest.class);
 		testSuite.addTestSuite(DefineMemberRoleTest.class);
 		testSuite.addTestSuite(AssignUserRolesTest.class);
+		testSuite.addTestSuite(AddPermissionViewPortletTest.class);
 		testSuite.addTestSuite(LogoutTest.class);
 		testSuite.addTestSuite(LoginUsersTest.class);
 		testSuite.addTestSuite(Member_LoginTest.class);

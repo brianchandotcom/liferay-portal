@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class RemoveRolePermissionViewTest extends BaseTestCase {
-	public void testRemoveRolePermissionView() throws Exception {
+public class AddPermissionViewPortletTest extends BaseTestCase {
+	public void testAddPermissionViewPortlet() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -71,9 +71,8 @@ public class RemoveRolePermissionViewTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText("//h3"));
-		selenium.uncheck("//input[@value='15VIEW']");
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
+		selenium.check("//input[@value='15VIEW']");
+		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(

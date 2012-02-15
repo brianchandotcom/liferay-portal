@@ -169,6 +169,8 @@ _sass_cache_*.css
 /support-tomcat/classes
 /support-tomcat/support-tomcat*.jar
 
+/tools/db-upgrade/portal-ext.properties
+
 /tools/maven/*.asc
 
 /tools/liferay-doclet

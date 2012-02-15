@@ -1181,6 +1181,10 @@ public class ServicePreAction extends Action {
 			themeDisplay.setShowPageSettingsIcon(false);
 		}
 
+		if (layout.isLayoutPrototypeLinkActive()) {
+			themeDisplay.setShowPageCustomizationIcon(false);
+		}
+
 		if (group.isLayoutPrototype()) {
 			themeDisplay.setShowControlPanelIcon(false);
 			themeDisplay.setShowHomeIcon(false);

@@ -1,4 +1,4 @@
-// $ANTLR 3.0.1 /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g 2011-08-19 12:28:58
+// $ANTLR 3.0.1 /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g 2012-02-15 09:25:40
 
 /**
  * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
@@ -60,45 +60,46 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class Creole10Parser extends Parser {
 	public static final String[] tokenNames = new String[] {
-	"<invalid>", "<EOR>", "<DOWN>", "<UP>", "FORCED_END_OF_LINE", "HEADING_SECTION", "HORIZONTAL_SECTION", "LIST_ITEM", "LIST_ITEM_PART", "NOWIKI_SECTION", "SCAPE_NODE", "TEXT_NODE", "UNORDERED_LIST", "UNFORMATTED_TEXT", "WIKI", "NEWLINE", "POUND", "STAR", "EQUAL", "PIPE", "ITAL", "LINK_OPEN", "IMAGE_OPEN", "NOWIKI_OPEN", "EXTENSION", "FORCED_LINEBREAK", "ESCAPE", "NOWIKI_BLOCK_CLOSE", "NOWIKI_CLOSE", "LINK_CLOSE", "IMAGE_CLOSE", "BLANKS", "TABLE_OF_CONTENTS_TEXT", "DASH", "CR", "LF", "SPACE", "TABULATOR", "COLON_SLASH", "SLASH", "TABLE_OF_CONTENTS_OPEN_MARKUP", "TABLE_OF_CONTENTS_CLOSE_MARKUP", "INSIGNIFICANT_CHAR", "':'", "'C'", "'2'", "'D'", "'o'", "'k'", "'u'", "'W'", "'i'", "'F'", "'l'", "'c'", "'r'", "'G'", "'g'", "'e'", "'J'", "'S'", "'P'", "'M'", "'a'", "'t'", "'b'", "'d'", "'n'", "'O'", "'m'", "'s'", "'h'", "'p'", "'R'", "'x'", "'T'", "'y'", "'U'", "'X'"
+	"<invalid>", "<EOR>", "<DOWN>", "<UP>", "FORCED_END_OF_LINE", "HEADING_SECTION", "HORIZONTAL_SECTION", "LIST_ITEM", "LIST_ITEM_PART", "NOWIKI_SECTION", "SCAPE_NODE", "TEXT_NODE", "UNORDERED_LIST", "UNFORMATTED_TEXT", "WIKI", "NEWLINE", "POUND", "STAR", "EQUAL", "PIPE", "ITAL", "LINK_OPEN", "IMAGE_OPEN", "NOWIKI_OPEN", "EXTENSION", "FORCED_LINEBREAK", "ESCAPE", "NOWIKI_BLOCK_CLOSE", "NOWIKI_CLOSE", "LINK_CLOSE", "IMAGE_CLOSE", "BLANKS", "TABLE_OF_CONTENTS_TEXT", "DASH", "CR", "LF", "SPACE", "TABULATOR", "BRACE_CLOSE", "COLON_SLASH", "SLASH", "TABLE_OF_CONTENTS_OPEN_MARKUP", "TABLE_OF_CONTENTS_CLOSE_MARKUP", "INSIGNIFICANT_CHAR", "':'", "'C'", "'2'", "'D'", "'o'", "'k'", "'u'", "'W'", "'i'", "'F'", "'l'", "'c'", "'r'", "'G'", "'g'", "'e'", "'J'", "'S'", "'P'", "'M'", "'a'", "'t'", "'b'", "'d'", "'n'", "'O'", "'m'", "'s'", "'h'", "'p'", "'R'", "'x'", "'T'", "'y'", "'U'", "'X'"
 	};
-	public static final int BLANKS=31;
-	public static final int INSIGNIFICANT_CHAR=42;
-	public static final int FORCED_LINEBREAK=25;
-	public static final int UNORDERED_LIST=12;
+	public static final int INSIGNIFICANT_CHAR=43;
 	public static final int STAR=17;
-	public static final int DASH=33;
-	public static final int POUND=16;
-	public static final int HEADING_SECTION=5;
-	public static final int NOWIKI_OPEN=23;
 	public static final int FORCED_END_OF_LINE=4;
 	public static final int TABLE_OF_CONTENTS_TEXT=32;
-	public static final int HORIZONTAL_SECTION=6;
 	public static final int NOWIKI_BLOCK_CLOSE=27;
-	public static final int UNFORMATTED_TEXT=13;
-	public static final int NOWIKI_SECTION=9;
-	public static final int SPACE=36;
-	public static final int NOWIKI_CLOSE=28;
-	public static final int IMAGE_OPEN=22;
-	public static final int ITAL=20;
 	public static final int EOF=-1;
-	public static final int COLON_SLASH=38;
+	public static final int NOWIKI_CLOSE=28;
+	public static final int SPACE=36;
 	public static final int LIST_ITEM=7;
 	public static final int TEXT_NODE=11;
 	public static final int WIKI=14;
-	public static final int SLASH=39;
+	public static final int SLASH=40;
 	public static final int ESCAPE=26;
+	public static final int BRACE_CLOSE=38;
+	public static final int EQUAL=18;
+	public static final int TABULATOR=37;
+	public static final int PIPE=19;
+	public static final int LIST_ITEM_PART=8;
+	public static final int LINK_OPEN=21;
+	public static final int TABLE_OF_CONTENTS_OPEN_MARKUP=41;
+	public static final int BLANKS=31;
+	public static final int FORCED_LINEBREAK=25;
+	public static final int UNORDERED_LIST=12;
+	public static final int POUND=16;
+	public static final int DASH=33;
+	public static final int HEADING_SECTION=5;
+	public static final int NOWIKI_OPEN=23;
+	public static final int HORIZONTAL_SECTION=6;
+	public static final int UNFORMATTED_TEXT=13;
+	public static final int NOWIKI_SECTION=9;
+	public static final int ITAL=20;
+	public static final int IMAGE_OPEN=22;
+	public static final int COLON_SLASH=39;
 	public static final int NEWLINE=15;
 	public static final int SCAPE_NODE=10;
 	public static final int IMAGE_CLOSE=30;
-	public static final int EQUAL=18;
-	public static final int TABLE_OF_CONTENTS_CLOSE_MARKUP=41;
-	public static final int TABULATOR=37;
+	public static final int TABLE_OF_CONTENTS_CLOSE_MARKUP=42;
 	public static final int LINK_CLOSE=29;
-	public static final int LIST_ITEM_PART=8;
-	public static final int PIPE=19;
-	public static final int LINK_OPEN=21;
-	public static final int TABLE_OF_CONTENTS_OPEN_MARKUP=40;
 	public static final int CR=34;
 	public static final int EXTENSION=24;
 	public static final int LF=35;
@@ -154,7 +155,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:112:6: whitespaces
 			{
-			pushFollow(FOLLOW_whitespaces_in_wikipage118);
+			pushFollow(FOLLOW_whitespaces_in_wikipage114);
 			whitespaces();
 			_fsp--;
 			if (failed) return ;
@@ -164,14 +165,14 @@ public class Creole10Parser extends Parser {
 
 		}
 
-		pushFollow(FOLLOW_paragraphs_in_wikipage126);
+		pushFollow(FOLLOW_paragraphs_in_wikipage122);
 		p=paragraphs();
 		_fsp--;
 		if (failed) return ;
 		if ( backtracking==0 ) {
 		   _wikipage = new WikiPageNode(p); 
 		}
-		match(input,EOF,FOLLOW_EOF_in_wikipage131); if (failed) return ;
+		match(input,EOF,FOLLOW_EOF_in_wikipage127); if (failed) return ;
 
 		}
 
@@ -205,7 +206,7 @@ public class Creole10Parser extends Parser {
 		int alt2=2;
 		int LA2_0 = input.LA(1);
 
-		if ( ((LA2_0>=FORCED_END_OF_LINE && LA2_0<=WIKI)||(LA2_0>=POUND && LA2_0<=78)) ) {
+		if ( ((LA2_0>=FORCED_END_OF_LINE && LA2_0<=WIKI)||(LA2_0>=POUND && LA2_0<=79)) ) {
 			alt2=1;
 		}
 
@@ -214,7 +215,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:115:5: p= paragraph
 			{
-			pushFollow(FOLLOW_paragraph_in_paragraphs149);
+			pushFollow(FOLLOW_paragraph_in_paragraphs145);
 			p=paragraph();
 			_fsp--;
 			if (failed) return sections;
@@ -282,7 +283,7 @@ public class Creole10Parser extends Parser {
 		if ( (LA6_1==NEWLINE) ) {
 			alt6=1;
 		}
-		else if ( ((LA6_1>=FORCED_END_OF_LINE && LA6_1<=WIKI)||(LA6_1>=POUND && LA6_1<=78)) ) {
+		else if ( ((LA6_1>=FORCED_END_OF_LINE && LA6_1<=WIKI)||(LA6_1>=POUND && LA6_1<=79)) ) {
 			alt6=3;
 		}
 		else {
@@ -330,12 +331,12 @@ public class Creole10Parser extends Parser {
 		case LF:
 		case SPACE:
 		case TABULATOR:
+		case BRACE_CLOSE:
 		case COLON_SLASH:
 		case SLASH:
 		case TABLE_OF_CONTENTS_OPEN_MARKUP:
 		case TABLE_OF_CONTENTS_CLOSE_MARKUP:
 		case INSIGNIFICANT_CHAR:
-		case 43:
 		case 44:
 		case 45:
 		case 46:
@@ -371,6 +372,7 @@ public class Creole10Parser extends Parser {
 		case 76:
 		case 77:
 		case 78:
+		case 79:
 			{
 			alt6=3;
 			}
@@ -426,12 +428,12 @@ public class Creole10Parser extends Parser {
 		case LF:
 		case SPACE:
 		case TABULATOR:
+		case BRACE_CLOSE:
 		case COLON_SLASH:
 		case SLASH:
 		case TABLE_OF_CONTENTS_OPEN_MARKUP:
 		case TABLE_OF_CONTENTS_CLOSE_MARKUP:
 		case INSIGNIFICANT_CHAR:
-		case 43:
 		case 44:
 		case 45:
 		case 46:
@@ -467,6 +469,7 @@ public class Creole10Parser extends Parser {
 		case 76:
 		case 77:
 		case 78:
+		case 79:
 		{
 		alt6=3;
 		}
@@ -483,7 +486,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:122:4: n= nowiki_block
 			{
-			pushFollow(FOLLOW_nowiki_block_in_paragraph170);
+			pushFollow(FOLLOW_nowiki_block_in_paragraph166);
 			n=nowiki_block();
 			_fsp--;
 			if (failed) return node;
@@ -496,11 +499,11 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:123:4: blanks paragraph_separator
 			{
-			pushFollow(FOLLOW_blanks_in_paragraph177);
+			pushFollow(FOLLOW_blanks_in_paragraph173);
 			blanks();
 			_fsp--;
 			if (failed) return node;
-			pushFollow(FOLLOW_paragraph_separator_in_paragraph180);
+			pushFollow(FOLLOW_paragraph_separator_in_paragraph176);
 			paragraph_separator();
 			_fsp--;
 			if (failed) return node;
@@ -521,7 +524,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:124:6: blanks
 				{
-				pushFollow(FOLLOW_blanks_in_paragraph187);
+				pushFollow(FOLLOW_blanks_in_paragraph183);
 				blanks();
 				_fsp--;
 				if (failed) return node;
@@ -620,12 +623,12 @@ public class Creole10Parser extends Parser {
 			case LF:
 			case SPACE:
 			case TABULATOR:
+			case BRACE_CLOSE:
 			case COLON_SLASH:
 			case SLASH:
 			case TABLE_OF_CONTENTS_OPEN_MARKUP:
 			case TABLE_OF_CONTENTS_CLOSE_MARKUP:
 			case INSIGNIFICANT_CHAR:
-			case 43:
 			case 44:
 			case 45:
 			case 46:
@@ -661,6 +664,7 @@ public class Creole10Parser extends Parser {
 			case 76:
 			case 77:
 			case 78:
+			case 79:
 			{
 			alt4=7;
 			}
@@ -677,7 +681,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:125:6: tof= table_of_contents
 				{
-				pushFollow(FOLLOW_table_of_contents_in_paragraph201);
+				pushFollow(FOLLOW_table_of_contents_in_paragraph197);
 				tof=table_of_contents();
 				_fsp--;
 				if (failed) return node;
@@ -690,7 +694,7 @@ public class Creole10Parser extends Parser {
 			case 2 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:126:6: h= heading
 				{
-				pushFollow(FOLLOW_heading_in_paragraph218);
+				pushFollow(FOLLOW_heading_in_paragraph211);
 				h=heading();
 				_fsp--;
 				if (failed) return node;
@@ -708,7 +712,7 @@ public class Creole10Parser extends Parser {
 				if (backtracking>0) {failed=true; return node;}
 				throw new FailedPredicateException(input, "paragraph", " input.LA(1) == DASH && input.LA(2) == DASH &&\n\t\t\t\tinput.LA(3) == DASH && input.LA(4) == DASH ");
 				}
-				pushFollow(FOLLOW_horizontalrule_in_paragraph237);
+				pushFollow(FOLLOW_horizontalrule_in_paragraph230);
 				hn=horizontalrule();
 				_fsp--;
 				if (failed) return node;
@@ -721,7 +725,7 @@ public class Creole10Parser extends Parser {
 			case 4 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:130:6: lu= list_unord
 				{
-				pushFollow(FOLLOW_list_unord_in_paragraph249);
+				pushFollow(FOLLOW_list_unord_in_paragraph242);
 				lu=list_unord();
 				_fsp--;
 				if (failed) return node;
@@ -734,7 +738,7 @@ public class Creole10Parser extends Parser {
 			case 5 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:131:6: lo= list_ord
 				{
-				pushFollow(FOLLOW_list_ord_in_paragraph262);
+				pushFollow(FOLLOW_list_ord_in_paragraph255);
 				lo=list_ord();
 				_fsp--;
 				if (failed) return node;
@@ -747,7 +751,7 @@ public class Creole10Parser extends Parser {
 			case 6 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:132:6: t= table
 				{
-				pushFollow(FOLLOW_table_in_paragraph275);
+				pushFollow(FOLLOW_table_in_paragraph268);
 				t=table();
 				_fsp--;
 				if (failed) return node;
@@ -760,7 +764,7 @@ public class Creole10Parser extends Parser {
 			case 7 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:133:6: tp= text_paragraph
 				{
-				pushFollow(FOLLOW_text_paragraph_in_paragraph288);
+				pushFollow(FOLLOW_text_paragraph_in_paragraph281);
 				tp=text_paragraph();
 				_fsp--;
 				if (failed) return node;
@@ -790,7 +794,7 @@ public class Creole10Parser extends Parser {
 				alt5=1;
 				}
 			}
-			else if ( ((LA5_2>=FORCED_END_OF_LINE && LA5_2<=WIKI)||(LA5_2>=POUND && LA5_2<=78)) ) {
+			else if ( ((LA5_2>=FORCED_END_OF_LINE && LA5_2<=WIKI)||(LA5_2>=POUND && LA5_2<=79)) ) {
 				alt5=1;
 			}
 			}
@@ -798,7 +802,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:134:9: paragraph_separator
 				{
-				pushFollow(FOLLOW_paragraph_separator_in_paragraph301);
+				pushFollow(FOLLOW_paragraph_separator_in_paragraph294);
 				paragraph_separator();
 				_fsp--;
 				if (failed) return node;
@@ -914,12 +918,12 @@ public class Creole10Parser extends Parser {
 		case LF:
 		case SPACE:
 		case TABULATOR:
+		case BRACE_CLOSE:
 		case COLON_SLASH:
 		case SLASH:
 		case TABLE_OF_CONTENTS_OPEN_MARKUP:
 		case TABLE_OF_CONTENTS_CLOSE_MARKUP:
 		case INSIGNIFICANT_CHAR:
-		case 43:
 		case 44:
 		case 45:
 		case 46:
@@ -955,6 +959,7 @@ public class Creole10Parser extends Parser {
 		case 76:
 		case 77:
 		case 78:
+		case 79:
 			{
 			alt8=1;
 			}
@@ -991,7 +996,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:142:6: tl= text_line
 			{
-			pushFollow(FOLLOW_text_line_in_text_paragraph329);
+			pushFollow(FOLLOW_text_line_in_text_paragraph322);
 			tl=text_line();
 			_fsp--;
 			if (failed) return paragraph;
@@ -1004,7 +1009,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:143:5: ( NOWIKI_OPEN ~ ( NEWLINE ) )=>nw= nowiki_inline (te= text_element )* text_lineseparator
 			{
-			pushFollow(FOLLOW_nowiki_inline_in_text_paragraph361);
+			pushFollow(FOLLOW_nowiki_inline_in_text_paragraph354);
 			nw=nowiki_inline();
 			_fsp--;
 			if (failed) return paragraph;
@@ -1017,7 +1022,7 @@ public class Creole10Parser extends Parser {
 			int alt7=2;
 			int LA7_0 = input.LA(1);
 
-			if ( ((LA7_0>=FORCED_END_OF_LINE && LA7_0<=WIKI)||(LA7_0>=POUND && LA7_0<=78)) ) {
+			if ( ((LA7_0>=FORCED_END_OF_LINE && LA7_0<=WIKI)||(LA7_0>=POUND && LA7_0<=79)) ) {
 				alt7=1;
 			}
 
@@ -1026,7 +1031,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:144:68: te= text_element
 				{
-				pushFollow(FOLLOW_text_element_in_text_paragraph372);
+				pushFollow(FOLLOW_text_element_in_text_paragraph365);
 				te=text_element();
 				_fsp--;
 				if (failed) return paragraph;
@@ -1042,7 +1047,7 @@ public class Creole10Parser extends Parser {
 			}
 			} while (true);
 
-			pushFollow(FOLLOW_text_lineseparator_in_text_paragraph381);
+			pushFollow(FOLLOW_text_lineseparator_in_text_paragraph374);
 			text_lineseparator();
 			_fsp--;
 			if (failed) return paragraph;
@@ -1089,7 +1094,7 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:148:2: (first= text_firstelement (element= text_element )* text_lineseparator )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:148:4: first= text_firstelement (element= text_element )* text_lineseparator
 		{
-		pushFollow(FOLLOW_text_firstelement_in_text_line404);
+		pushFollow(FOLLOW_text_firstelement_in_text_line397);
 		first=text_firstelement();
 		_fsp--;
 		if (failed) return line;
@@ -1106,7 +1111,7 @@ public class Creole10Parser extends Parser {
 		int alt9=2;
 		int LA9_0 = input.LA(1);
 
-		if ( ((LA9_0>=FORCED_END_OF_LINE && LA9_0<=WIKI)||(LA9_0>=POUND && LA9_0<=78)) ) {
+		if ( ((LA9_0>=FORCED_END_OF_LINE && LA9_0<=WIKI)||(LA9_0>=POUND && LA9_0<=79)) ) {
 			alt9=1;
 		}
 
@@ -1115,7 +1120,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:153:11: element= text_element
 			{
-			pushFollow(FOLLOW_text_element_in_text_line423);
+			pushFollow(FOLLOW_text_element_in_text_line416);
 			element=text_element();
 			_fsp--;
 			if (failed) return line;
@@ -1134,7 +1139,7 @@ public class Creole10Parser extends Parser {
 		}
 		} while (true);
 
-		pushFollow(FOLLOW_text_lineseparator_in_text_line438);
+		pushFollow(FOLLOW_text_lineseparator_in_text_line431);
 		text_lineseparator();
 		_fsp--;
 		if (failed) return line;
@@ -1171,7 +1176,7 @@ public class Creole10Parser extends Parser {
 		if ( (LA10_0==STAR||LA10_0==ITAL) ) {
 		alt10=1;
 		}
-		else if ( ((LA10_0>=FORCED_END_OF_LINE && LA10_0<=WIKI)||(LA10_0>=LINK_OPEN && LA10_0<=IMAGE_OPEN)||(LA10_0>=EXTENSION && LA10_0<=78)) ) {
+		else if ( ((LA10_0>=FORCED_END_OF_LINE && LA10_0<=WIKI)||(LA10_0>=LINK_OPEN && LA10_0<=IMAGE_OPEN)||(LA10_0>=EXTENSION && LA10_0<=79)) ) {
 		alt10=2;
 		}
 		else {
@@ -1189,7 +1194,7 @@ public class Creole10Parser extends Parser {
 			if (backtracking>0) {failed=true; return item;}
 			throw new FailedPredicateException(input, "text_firstelement", " input.LA(1) != STAR || (input.LA(1) == STAR && input.LA(2) == STAR) ");
 			}
-			pushFollow(FOLLOW_text_formattedelement_in_text_firstelement460);
+			pushFollow(FOLLOW_text_formattedelement_in_text_firstelement453);
 			tf=text_formattedelement();
 			_fsp--;
 			if (failed) return item;
@@ -1202,7 +1207,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:162:4: tu= text_first_unformattedelement
 			{
-			pushFollow(FOLLOW_text_first_unformattedelement_in_text_firstelement471);
+			pushFollow(FOLLOW_text_first_unformattedelement_in_text_firstelement464);
 			tu=text_first_unformattedelement();
 			_fsp--;
 			if (failed) return item;
@@ -1258,11 +1263,11 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:165:4: ital_markup ic= text_italcontent ( ( NEWLINE )? ital_markup )?
 			{
-			pushFollow(FOLLOW_ital_markup_in_text_formattedelement487);
+			pushFollow(FOLLOW_ital_markup_in_text_formattedelement480);
 			ital_markup();
 			_fsp--;
 			if (failed) return item;
-			pushFollow(FOLLOW_text_italcontent_in_text_formattedelement493);
+			pushFollow(FOLLOW_text_italcontent_in_text_formattedelement486);
 			ic=text_italcontent();
 			_fsp--;
 			if (failed) return item;
@@ -1298,14 +1303,14 @@ public class Creole10Parser extends Parser {
 				case 1 :
 					// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:165:85: NEWLINE
 					{
-					match(input,NEWLINE,FOLLOW_NEWLINE_in_text_formattedelement502); if (failed) return item;
+					match(input,NEWLINE,FOLLOW_NEWLINE_in_text_formattedelement495); if (failed) return item;
 
 					}
 					break;
 
 				}
 
-				pushFollow(FOLLOW_ital_markup_in_text_formattedelement508);
+				pushFollow(FOLLOW_ital_markup_in_text_formattedelement501);
 				ital_markup();
 				_fsp--;
 				if (failed) return item;
@@ -1321,11 +1326,11 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:166:4: bold_markup bc= text_boldcontent ( ( NEWLINE )? bold_markup )?
 			{
-			pushFollow(FOLLOW_bold_markup_in_text_formattedelement516);
+			pushFollow(FOLLOW_bold_markup_in_text_formattedelement509);
 			bold_markup();
 			_fsp--;
 			if (failed) return item;
-			pushFollow(FOLLOW_text_boldcontent_in_text_formattedelement523);
+			pushFollow(FOLLOW_text_boldcontent_in_text_formattedelement516);
 			bc=text_boldcontent();
 			_fsp--;
 			if (failed) return item;
@@ -1369,14 +1374,14 @@ public class Creole10Parser extends Parser {
 				case 1 :
 					// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:166:83: NEWLINE
 					{
-					match(input,NEWLINE,FOLLOW_NEWLINE_in_text_formattedelement532); if (failed) return item;
+					match(input,NEWLINE,FOLLOW_NEWLINE_in_text_formattedelement525); if (failed) return item;
 
 					}
 					break;
 
 				}
 
-				pushFollow(FOLLOW_bold_markup_in_text_formattedelement538);
+				pushFollow(FOLLOW_bold_markup_in_text_formattedelement531);
 				bold_markup();
 				_fsp--;
 				if (failed) return item;
@@ -1416,7 +1421,7 @@ public class Creole10Parser extends Parser {
 		int alt18=2;
 		int LA18_0 = input.LA(1);
 
-		if ( ((LA18_0>=FORCED_END_OF_LINE && LA18_0<=78)) ) {
+		if ( ((LA18_0>=FORCED_END_OF_LINE && LA18_0<=79)) ) {
 		alt18=1;
 		}
 		else if ( (LA18_0==EOF) ) {
@@ -1444,7 +1449,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:169:6: NEWLINE
 				{
-				match(input,NEWLINE,FOLLOW_NEWLINE_in_text_boldcontent557); if (failed) return text;
+				match(input,NEWLINE,FOLLOW_NEWLINE_in_text_boldcontent550); if (failed) return text;
 
 				}
 				break;
@@ -1492,12 +1497,12 @@ public class Creole10Parser extends Parser {
 			case LF:
 			case SPACE:
 			case TABULATOR:
+			case BRACE_CLOSE:
 			case COLON_SLASH:
 			case SLASH:
 			case TABLE_OF_CONTENTS_OPEN_MARKUP:
 			case TABLE_OF_CONTENTS_CLOSE_MARKUP:
 			case INSIGNIFICANT_CHAR:
-			case 43:
 			case 44:
 			case 45:
 			case 46:
@@ -1533,6 +1538,7 @@ public class Creole10Parser extends Parser {
 			case 76:
 			case 77:
 			case 78:
+			case 79:
 				{
 				alt17=1;
 				}
@@ -1579,7 +1585,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:169:20: p= text_boldcontentpart
 				{
-				pushFollow(FOLLOW_text_boldcontentpart_in_text_boldcontent569);
+				pushFollow(FOLLOW_text_boldcontentpart_in_text_boldcontent562);
 				p=text_boldcontentpart();
 				_fsp--;
 				if (failed) return text;
@@ -1601,7 +1607,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:170:4: EOF
 			{
-			match(input,EOF,FOLLOW_EOF_in_text_boldcontent580); if (failed) return text;
+			match(input,EOF,FOLLOW_EOF_in_text_boldcontent573); if (failed) return text;
 
 			}
 			break;
@@ -1632,7 +1638,7 @@ public class Creole10Parser extends Parser {
 		int alt21=2;
 		int LA21_0 = input.LA(1);
 
-		if ( ((LA21_0>=FORCED_END_OF_LINE && LA21_0<=78)) ) {
+		if ( ((LA21_0>=FORCED_END_OF_LINE && LA21_0<=79)) ) {
 		alt21=1;
 		}
 		else if ( (LA21_0==EOF) ) {
@@ -1660,7 +1666,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:173:6: NEWLINE
 				{
-				match(input,NEWLINE,FOLLOW_NEWLINE_in_text_italcontent596); if (failed) return text;
+				match(input,NEWLINE,FOLLOW_NEWLINE_in_text_italcontent589); if (failed) return text;
 
 				}
 				break;
@@ -1702,12 +1708,12 @@ public class Creole10Parser extends Parser {
 			case LF:
 			case SPACE:
 			case TABULATOR:
+			case BRACE_CLOSE:
 			case COLON_SLASH:
 			case SLASH:
 			case TABLE_OF_CONTENTS_OPEN_MARKUP:
 			case TABLE_OF_CONTENTS_CLOSE_MARKUP:
 			case INSIGNIFICANT_CHAR:
-			case 43:
 			case 44:
 			case 45:
 			case 46:
@@ -1743,6 +1749,7 @@ public class Creole10Parser extends Parser {
 			case 76:
 			case 77:
 			case 78:
+			case 79:
 				{
 				alt20=1;
 				}
@@ -1784,7 +1791,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:173:20: p= text_italcontentpart
 				{
-				pushFollow(FOLLOW_text_italcontentpart_in_text_italcontent608);
+				pushFollow(FOLLOW_text_italcontentpart_in_text_italcontent601);
 				p=text_italcontentpart();
 				_fsp--;
 				if (failed) return text;
@@ -1806,7 +1813,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:174:4: EOF
 			{
-			match(input,EOF,FOLLOW_EOF_in_text_italcontent619); if (failed) return text;
+			match(input,EOF,FOLLOW_EOF_in_text_italcontent612); if (failed) return text;
 
 			}
 			break;
@@ -1884,12 +1891,12 @@ public class Creole10Parser extends Parser {
 		case LF:
 		case SPACE:
 		case TABULATOR:
+		case BRACE_CLOSE:
 		case COLON_SLASH:
 		case SLASH:
 		case TABLE_OF_CONTENTS_OPEN_MARKUP:
 		case TABLE_OF_CONTENTS_CLOSE_MARKUP:
 		case INSIGNIFICANT_CHAR:
-		case 43:
 		case 44:
 		case 45:
 		case 46:
@@ -1925,6 +1932,7 @@ public class Creole10Parser extends Parser {
 		case 76:
 		case 77:
 		case 78:
+		case 79:
 		{
 		alt22=1;
 		}
@@ -1976,11 +1984,11 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:177:4: onestar tu1= text_unformattedelement
 			{
-			pushFollow(FOLLOW_onestar_in_text_element634);
+			pushFollow(FOLLOW_onestar_in_text_element627);
 			onestar();
 			_fsp--;
 			if (failed) return item;
-			pushFollow(FOLLOW_text_unformattedelement_in_text_element641);
+			pushFollow(FOLLOW_text_unformattedelement_in_text_element634);
 			tu1=text_unformattedelement();
 			_fsp--;
 			if (failed) return item;
@@ -1993,11 +2001,11 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:178:4: tu2= text_unformattedelement onestar
 			{
-			pushFollow(FOLLOW_text_unformattedelement_in_text_element652);
+			pushFollow(FOLLOW_text_unformattedelement_in_text_element645);
 			tu2=text_unformattedelement();
 			_fsp--;
 			if (failed) return item;
-			pushFollow(FOLLOW_onestar_in_text_element655);
+			pushFollow(FOLLOW_onestar_in_text_element648);
 			onestar();
 			_fsp--;
 			if (failed) return item;
@@ -2010,7 +2018,7 @@ public class Creole10Parser extends Parser {
 		case 3 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:179:4: tf= text_formattedelement
 			{
-			pushFollow(FOLLOW_text_formattedelement_in_text_element666);
+			pushFollow(FOLLOW_text_formattedelement_in_text_element659);
 			tf=text_formattedelement();
 			_fsp--;
 			if (failed) return item;
@@ -2052,7 +2060,7 @@ public class Creole10Parser extends Parser {
 		if ( (LA24_0==ITAL) ) {
 		alt24=1;
 		}
-		else if ( ((LA24_0>=FORCED_END_OF_LINE && LA24_0<=WIKI)||(LA24_0>=POUND && LA24_0<=PIPE)||(LA24_0>=LINK_OPEN && LA24_0<=78)) ) {
+		else if ( ((LA24_0>=FORCED_END_OF_LINE && LA24_0<=WIKI)||(LA24_0>=POUND && LA24_0<=PIPE)||(LA24_0>=LINK_OPEN && LA24_0<=79)) ) {
 		alt24=2;
 		}
 		else {
@@ -2066,11 +2074,11 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:183:4: ital_markup t= text_bolditalcontent ( ital_markup )?
 			{
-			pushFollow(FOLLOW_ital_markup_in_text_boldcontentpart683);
+			pushFollow(FOLLOW_ital_markup_in_text_boldcontentpart676);
 			ital_markup();
 			_fsp--;
 			if (failed) return node;
-			pushFollow(FOLLOW_text_bolditalcontent_in_text_boldcontentpart690);
+			pushFollow(FOLLOW_text_bolditalcontent_in_text_boldcontentpart683);
 			t=text_bolditalcontent();
 			_fsp--;
 			if (failed) return node;
@@ -2088,7 +2096,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:183:86: ital_markup
 				{
-				pushFollow(FOLLOW_ital_markup_in_text_boldcontentpart697);
+				pushFollow(FOLLOW_ital_markup_in_text_boldcontentpart690);
 				ital_markup();
 				_fsp--;
 				if (failed) return node;
@@ -2104,7 +2112,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:184:4: tf= text_formattedcontent
 			{
-			pushFollow(FOLLOW_text_formattedcontent_in_text_boldcontentpart709);
+			pushFollow(FOLLOW_text_formattedcontent_in_text_boldcontentpart702);
 			tf=text_formattedcontent();
 			_fsp--;
 			if (failed) return node;
@@ -2149,7 +2157,7 @@ public class Creole10Parser extends Parser {
 		if ( (LA26_1==STAR) ) {
 			alt26=1;
 		}
-		else if ( ((LA26_1>=FORCED_END_OF_LINE && LA26_1<=WIKI)||LA26_1==POUND||(LA26_1>=EQUAL && LA26_1<=PIPE)||(LA26_1>=LINK_OPEN && LA26_1<=78)) ) {
+		else if ( ((LA26_1>=FORCED_END_OF_LINE && LA26_1<=WIKI)||LA26_1==POUND||(LA26_1>=EQUAL && LA26_1<=PIPE)||(LA26_1>=LINK_OPEN && LA26_1<=79)) ) {
 			alt26=2;
 		}
 		else {
@@ -2160,7 +2168,7 @@ public class Creole10Parser extends Parser {
 			throw nvae;
 		}
 		}
-		else if ( ((LA26_0>=FORCED_END_OF_LINE && LA26_0<=WIKI)||LA26_0==POUND||(LA26_0>=EQUAL && LA26_0<=PIPE)||(LA26_0>=LINK_OPEN && LA26_0<=78)) ) {
+		else if ( ((LA26_0>=FORCED_END_OF_LINE && LA26_0<=WIKI)||LA26_0==POUND||(LA26_0>=EQUAL && LA26_0<=PIPE)||(LA26_0>=LINK_OPEN && LA26_0<=79)) ) {
 		alt26=2;
 		}
 		else {
@@ -2174,11 +2182,11 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:187:4: bold_markup t= text_bolditalcontent ( bold_markup )?
 			{
-			pushFollow(FOLLOW_bold_markup_in_text_italcontentpart725);
+			pushFollow(FOLLOW_bold_markup_in_text_italcontentpart718);
 			bold_markup();
 			_fsp--;
 			if (failed) return node;
-			pushFollow(FOLLOW_text_bolditalcontent_in_text_italcontentpart732);
+			pushFollow(FOLLOW_text_bolditalcontent_in_text_italcontentpart725);
 			t=text_bolditalcontent();
 			_fsp--;
 			if (failed) return node;
@@ -2200,7 +2208,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:187:84: bold_markup
 				{
-				pushFollow(FOLLOW_bold_markup_in_text_italcontentpart738);
+				pushFollow(FOLLOW_bold_markup_in_text_italcontentpart731);
 				bold_markup();
 				_fsp--;
 				if (failed) return node;
@@ -2216,7 +2224,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:188:4: tf= text_formattedcontent
 			{
-			pushFollow(FOLLOW_text_formattedcontent_in_text_italcontentpart750);
+			pushFollow(FOLLOW_text_formattedcontent_in_text_italcontentpart743);
 			tf=text_formattedcontent();
 			_fsp--;
 			if (failed) return node;
@@ -2253,7 +2261,7 @@ public class Creole10Parser extends Parser {
 		int alt29=2;
 		int LA29_0 = input.LA(1);
 
-		if ( ((LA29_0>=FORCED_END_OF_LINE && LA29_0<=78)) ) {
+		if ( ((LA29_0>=FORCED_END_OF_LINE && LA29_0<=79)) ) {
 		alt29=1;
 		}
 		else if ( (LA29_0==EOF) ) {
@@ -2281,7 +2289,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:191:6: NEWLINE
 				{
-				match(input,NEWLINE,FOLLOW_NEWLINE_in_text_bolditalcontent768); if (failed) return items;
+				match(input,NEWLINE,FOLLOW_NEWLINE_in_text_bolditalcontent761); if (failed) return items;
 
 				}
 				break;
@@ -2325,12 +2333,12 @@ public class Creole10Parser extends Parser {
 			case LF:
 			case SPACE:
 			case TABULATOR:
+			case BRACE_CLOSE:
 			case COLON_SLASH:
 			case SLASH:
 			case TABLE_OF_CONTENTS_OPEN_MARKUP:
 			case TABLE_OF_CONTENTS_CLOSE_MARKUP:
 			case INSIGNIFICANT_CHAR:
-			case 43:
 			case 44:
 			case 45:
 			case 46:
@@ -2366,6 +2374,7 @@ public class Creole10Parser extends Parser {
 			case 76:
 			case 77:
 			case 78:
+			case 79:
 				{
 				alt28=1;
 				}
@@ -2406,7 +2415,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:191:20: tf= text_formattedcontent
 				{
-				pushFollow(FOLLOW_text_formattedcontent_in_text_bolditalcontent779);
+				pushFollow(FOLLOW_text_formattedcontent_in_text_bolditalcontent772);
 				tf=text_formattedcontent();
 				_fsp--;
 				if (failed) return items;
@@ -2425,7 +2434,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:192:4: EOF
 			{
-			match(input,EOF,FOLLOW_EOF_in_text_bolditalcontent789); if (failed) return items;
+			match(input,EOF,FOLLOW_EOF_in_text_bolditalcontent782); if (failed) return items;
 
 			}
 			break;
@@ -2455,7 +2464,7 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:195:2: ( onestar (t= text_unformattedelement onestar ( text_linebreak )? )+ )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:195:4: onestar (t= text_unformattedelement onestar ( text_linebreak )? )+
 		{
-		pushFollow(FOLLOW_onestar_in_text_formattedcontent803);
+		pushFollow(FOLLOW_onestar_in_text_formattedcontent796);
 		onestar();
 		_fsp--;
 		if (failed) return items;
@@ -2490,12 +2499,12 @@ public class Creole10Parser extends Parser {
 		case LF:
 		case SPACE:
 		case TABULATOR:
+		case BRACE_CLOSE:
 		case COLON_SLASH:
 		case SLASH:
 		case TABLE_OF_CONTENTS_OPEN_MARKUP:
 		case TABLE_OF_CONTENTS_CLOSE_MARKUP:
 		case INSIGNIFICANT_CHAR:
-		case 43:
 		case 44:
 		case 45:
 		case 46:
@@ -2531,6 +2540,7 @@ public class Creole10Parser extends Parser {
 		case 76:
 		case 77:
 		case 78:
+		case 79:
 			{
 			alt31=1;
 			}
@@ -2572,14 +2582,14 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:195:15: t= text_unformattedelement onestar ( text_linebreak )?
 			{
-			pushFollow(FOLLOW_text_unformattedelement_in_text_formattedcontent812);
+			pushFollow(FOLLOW_text_unformattedelement_in_text_formattedcontent805);
 			t=text_unformattedelement();
 			_fsp--;
 			if (failed) return items;
 			if ( backtracking==0 ) {
 			  items.add(t); 
 			}
-			pushFollow(FOLLOW_onestar_in_text_formattedcontent817);
+			pushFollow(FOLLOW_onestar_in_text_formattedcontent810);
 			onestar();
 			_fsp--;
 			if (failed) return items;
@@ -2607,7 +2617,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:195:83: text_linebreak
 				{
-				pushFollow(FOLLOW_text_linebreak_in_text_formattedcontent822);
+				pushFollow(FOLLOW_text_linebreak_in_text_formattedcontent815);
 				text_linebreak();
 				_fsp--;
 				if (failed) return items;
@@ -2658,7 +2668,7 @@ public class Creole10Parser extends Parser {
 		if (backtracking>0) {failed=true; return ;}
 		throw new FailedPredicateException(input, "text_linebreak", " input.LA(2) != DASH && input.LA(2) != POUND && \n\t\tinput.LA(2) != EQUAL && input.LA(2) != NEWLINE ");
 		}
-		pushFollow(FOLLOW_text_lineseparator_in_text_linebreak842);
+		pushFollow(FOLLOW_text_lineseparator_in_text_linebreak835);
 		text_lineseparator();
 		_fsp--;
 		if (failed) return ;
@@ -2709,7 +2719,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:203:4: tf= text_first_inlineelement
 			{
-			pushFollow(FOLLOW_text_first_inlineelement_in_text_inlineelement860);
+			pushFollow(FOLLOW_text_first_inlineelement_in_text_inlineelement853);
 			tf=text_first_inlineelement();
 			_fsp--;
 			if (failed) return element;
@@ -2722,7 +2732,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:204:4: nwi= nowiki_inline
 			{
-			pushFollow(FOLLOW_nowiki_inline_in_text_inlineelement871);
+			pushFollow(FOLLOW_nowiki_inline_in_text_inlineelement864);
 			nwi=nowiki_inline();
 			_fsp--;
 			if (failed) return element;
@@ -2789,7 +2799,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:208:3: l= link
 			{
-			pushFollow(FOLLOW_link_in_text_first_inlineelement894);
+			pushFollow(FOLLOW_link_in_text_first_inlineelement887);
 			l=link();
 			_fsp--;
 			if (failed) return element;
@@ -2802,7 +2812,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:209:4: i= image
 			{
-			pushFollow(FOLLOW_image_in_text_first_inlineelement905);
+			pushFollow(FOLLOW_image_in_text_first_inlineelement898);
 			i=image();
 			_fsp--;
 			if (failed) return element;
@@ -2815,7 +2825,7 @@ public class Creole10Parser extends Parser {
 		case 3 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:210:4: e= extension
 			{
-			pushFollow(FOLLOW_extension_in_text_first_inlineelement915);
+			pushFollow(FOLLOW_extension_in_text_first_inlineelement908);
 			e=extension();
 			_fsp--;
 			if (failed) return element;
@@ -2854,7 +2864,7 @@ public class Creole10Parser extends Parser {
 		int alt34=2;
 		int LA34_0 = input.LA(1);
 
-		if ( ((LA34_0>=FORCED_END_OF_LINE && LA34_0<=WIKI)||(LA34_0>=FORCED_LINEBREAK && LA34_0<=78)) ) {
+		if ( ((LA34_0>=FORCED_END_OF_LINE && LA34_0<=WIKI)||(LA34_0>=FORCED_LINEBREAK && LA34_0<=79)) ) {
 		alt34=1;
 		}
 		else if ( ((LA34_0>=LINK_OPEN && LA34_0<=IMAGE_OPEN)||LA34_0==EXTENSION) ) {
@@ -2871,7 +2881,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:213:4: tfu= text_first_unformatted
 			{
-			pushFollow(FOLLOW_text_first_unformatted_in_text_first_unformattedelement935);
+			pushFollow(FOLLOW_text_first_unformatted_in_text_first_unformattedelement928);
 			tfu=text_first_unformatted();
 			_fsp--;
 			if (failed) return item;
@@ -2884,7 +2894,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:214:4: tfi= text_first_inlineelement
 			{
-			pushFollow(FOLLOW_text_first_inlineelement_in_text_first_unformattedelement946);
+			pushFollow(FOLLOW_text_first_inlineelement_in_text_first_unformattedelement939);
 			tfi=text_first_inlineelement();
 			_fsp--;
 			if (failed) return item;
@@ -2923,7 +2933,7 @@ public class Creole10Parser extends Parser {
 		int alt36=2;
 		int LA36_0 = input.LA(1);
 
-		if ( ((LA36_0>=FORCED_END_OF_LINE && LA36_0<=WIKI)||(LA36_0>=NOWIKI_BLOCK_CLOSE && LA36_0<=78)) ) {
+		if ( ((LA36_0>=FORCED_END_OF_LINE && LA36_0<=WIKI)||(LA36_0>=NOWIKI_BLOCK_CLOSE && LA36_0<=79)) ) {
 		alt36=1;
 		}
 		else if ( ((LA36_0>=FORCED_LINEBREAK && LA36_0<=ESCAPE)) ) {
@@ -2940,7 +2950,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:217:6: t= text_first_unformmatted_text
 			{
-			pushFollow(FOLLOW_text_first_unformmatted_text_in_text_first_unformatted968);
+			pushFollow(FOLLOW_text_first_unformmatted_text_in_text_first_unformatted961);
 			t=text_first_unformmatted_text();
 			_fsp--;
 			if (failed) return items;
@@ -2966,7 +2976,7 @@ public class Creole10Parser extends Parser {
 			else if ( (LA35_0==ESCAPE) ) {
 				int LA35_3 = input.LA(2);
 
-				if ( ((LA35_3>=FORCED_END_OF_LINE && LA35_3<=78)) ) {
+				if ( ((LA35_3>=FORCED_END_OF_LINE && LA35_3<=79)) ) {
 				alt35=2;
 				}
 
@@ -2978,7 +2988,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:218:6: forced_linebreak
 				{
-				pushFollow(FOLLOW_forced_linebreak_in_text_first_unformatted977);
+				pushFollow(FOLLOW_forced_linebreak_in_text_first_unformatted970);
 				forced_linebreak();
 				_fsp--;
 				if (failed) return items;
@@ -2991,7 +3001,7 @@ public class Creole10Parser extends Parser {
 			case 2 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:219:5: e= escaped
 				{
-				pushFollow(FOLLOW_escaped_in_text_first_unformatted989);
+				pushFollow(FOLLOW_escaped_in_text_first_unformatted982);
 				e=escaped();
 				_fsp--;
 				if (failed) return items;
@@ -3047,7 +3057,7 @@ public class Creole10Parser extends Parser {
 		int alt37=2;
 		int LA37_0 = input.LA(1);
 
-		if ( ((LA37_0>=FORCED_END_OF_LINE && LA37_0<=WIKI)||(LA37_0>=NOWIKI_BLOCK_CLOSE && LA37_0<=78)) ) {
+		if ( ((LA37_0>=FORCED_END_OF_LINE && LA37_0<=WIKI)||(LA37_0>=NOWIKI_BLOCK_CLOSE && LA37_0<=79)) ) {
 			alt37=1;
 		}
 
@@ -3057,7 +3067,7 @@ public class Creole10Parser extends Parser {
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:224:4: c=~ ( POUND | STAR | EQUAL | PIPE | ITAL | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF )
 			{
 			c=(Token)input.LT(1);
-			if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=WIKI)||(input.LA(1)>=NOWIKI_BLOCK_CLOSE && input.LA(1)<=78) ) {
+			if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=WIKI)||(input.LA(1)>=NOWIKI_BLOCK_CLOSE && input.LA(1)<=79) ) {
 			input.consume();
 			errorRecovery=false;failed=false;
 			}
@@ -3065,7 +3075,7 @@ public class Creole10Parser extends Parser {
 			if (backtracking>0) {failed=true; return text;}
 			MismatchedSetException mse =
 				new MismatchedSetException(null,input);
-			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_text_first_unformmatted_text1018);	throw mse;
+			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_text_first_unformmatted_text1010);	throw mse;
 			}
 
 			if ( backtracking==0 ) {
@@ -3115,7 +3125,7 @@ public class Creole10Parser extends Parser {
 		int alt38=2;
 		int LA38_0 = input.LA(1);
 
-		if ( ((LA38_0>=FORCED_END_OF_LINE && LA38_0<=WIKI)||LA38_0==POUND||(LA38_0>=EQUAL && LA38_0<=PIPE)||(LA38_0>=FORCED_LINEBREAK && LA38_0<=78)) ) {
+		if ( ((LA38_0>=FORCED_END_OF_LINE && LA38_0<=WIKI)||LA38_0==POUND||(LA38_0>=EQUAL && LA38_0<=PIPE)||(LA38_0>=FORCED_LINEBREAK && LA38_0<=79)) ) {
 		alt38=1;
 		}
 		else if ( ((LA38_0>=LINK_OPEN && LA38_0<=EXTENSION)) ) {
@@ -3132,7 +3142,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:239:4: text= text_unformatted
 			{
-			pushFollow(FOLLOW_text_unformatted_in_text_unformattedelement1133);
+			pushFollow(FOLLOW_text_unformatted_in_text_unformattedelement1125);
 			text=text_unformatted();
 			_fsp--;
 			if (failed) return contents;
@@ -3145,7 +3155,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:240:4: ti= text_inlineelement
 			{
-			pushFollow(FOLLOW_text_inlineelement_in_text_unformattedelement1144);
+			pushFollow(FOLLOW_text_inlineelement_in_text_unformattedelement1136);
 			ti=text_inlineelement();
 			_fsp--;
 			if (failed) return contents;
@@ -3184,7 +3194,7 @@ public class Creole10Parser extends Parser {
 		int alt40=2;
 		int LA40_0 = input.LA(1);
 
-		if ( ((LA40_0>=FORCED_END_OF_LINE && LA40_0<=WIKI)||LA40_0==POUND||(LA40_0>=EQUAL && LA40_0<=PIPE)||(LA40_0>=NOWIKI_BLOCK_CLOSE && LA40_0<=78)) ) {
+		if ( ((LA40_0>=FORCED_END_OF_LINE && LA40_0<=WIKI)||LA40_0==POUND||(LA40_0>=EQUAL && LA40_0<=PIPE)||(LA40_0>=NOWIKI_BLOCK_CLOSE && LA40_0<=79)) ) {
 		alt40=1;
 		}
 		else if ( ((LA40_0>=FORCED_LINEBREAK && LA40_0<=ESCAPE)) ) {
@@ -3201,7 +3211,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:244:5: contents= text_unformated_text
 			{
-			pushFollow(FOLLOW_text_unformated_text_in_text_unformatted1166);
+			pushFollow(FOLLOW_text_unformated_text_in_text_unformatted1158);
 			contents=text_unformated_text();
 			_fsp--;
 			if (failed) return items;
@@ -3233,7 +3243,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:245:6: forced_linebreak
 				{
-				pushFollow(FOLLOW_forced_linebreak_in_text_unformatted1175);
+				pushFollow(FOLLOW_forced_linebreak_in_text_unformatted1167);
 				forced_linebreak();
 				_fsp--;
 				if (failed) return items;
@@ -3246,7 +3256,7 @@ public class Creole10Parser extends Parser {
 			case 2 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:246:5: e= escaped
 				{
-				pushFollow(FOLLOW_escaped_in_text_unformatted1187);
+				pushFollow(FOLLOW_escaped_in_text_unformatted1179);
 				e=escaped();
 				_fsp--;
 				if (failed) return items;
@@ -3302,7 +3312,7 @@ public class Creole10Parser extends Parser {
 		int alt41=2;
 		int LA41_0 = input.LA(1);
 
-		if ( ((LA41_0>=FORCED_END_OF_LINE && LA41_0<=WIKI)||LA41_0==POUND||(LA41_0>=EQUAL && LA41_0<=PIPE)||(LA41_0>=NOWIKI_BLOCK_CLOSE && LA41_0<=78)) ) {
+		if ( ((LA41_0>=FORCED_END_OF_LINE && LA41_0<=WIKI)||LA41_0==POUND||(LA41_0>=EQUAL && LA41_0<=PIPE)||(LA41_0>=NOWIKI_BLOCK_CLOSE && LA41_0<=79)) ) {
 			alt41=1;
 		}
 
@@ -3312,7 +3322,7 @@ public class Creole10Parser extends Parser {
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:251:3: c=~ ( ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF )
 			{
 			c=(Token)input.LT(1);
-			if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=WIKI)||input.LA(1)==POUND||(input.LA(1)>=EQUAL && input.LA(1)<=PIPE)||(input.LA(1)>=NOWIKI_BLOCK_CLOSE && input.LA(1)<=78) ) {
+			if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=WIKI)||input.LA(1)==POUND||(input.LA(1)>=EQUAL && input.LA(1)<=PIPE)||(input.LA(1)>=NOWIKI_BLOCK_CLOSE && input.LA(1)<=79) ) {
 			input.consume();
 			errorRecovery=false;failed=false;
 			}
@@ -3320,7 +3330,7 @@ public class Creole10Parser extends Parser {
 			if (backtracking>0) {failed=true; return text;}
 			MismatchedSetException mse =
 				new MismatchedSetException(null,input);
-			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_text_unformated_text1214);	throw mse;
+			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_text_unformated_text1206);	throw mse;
 			}
 
 			if ( backtracking==0 ) {
@@ -3369,21 +3379,21 @@ public class Creole10Parser extends Parser {
 	ASTNode header = null;
 
 
-			((heading_scope)heading_stack.peek()).items = new CollectionNode();	
+			((heading_scope)heading_stack.peek()).items = new CollectionNode();
 			((heading_scope)heading_stack.peek()).text = new String();
 		
 	try {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:275:2: ( heading_markup heading_content ( heading_markup )? ( blanks )? paragraph_separator )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:275:4: heading_markup heading_content ( heading_markup )? ( blanks )? paragraph_separator
 		{
-		pushFollow(FOLLOW_heading_markup_in_heading1318);
+		pushFollow(FOLLOW_heading_markup_in_heading1309);
 		heading_markup();
 		_fsp--;
 		if (failed) return header;
 		if ( backtracking==0 ) {
 		  ((heading_scope)heading_stack.peek()).nestedLevel++;
 		}
-		pushFollow(FOLLOW_heading_content_in_heading1323);
+		pushFollow(FOLLOW_heading_content_in_heading1314);
 		heading_content();
 		_fsp--;
 		if (failed) return header;
@@ -3401,7 +3411,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:275:136: heading_markup
 			{
-			pushFollow(FOLLOW_heading_markup_in_heading1330);
+			pushFollow(FOLLOW_heading_markup_in_heading1321);
 			heading_markup();
 			_fsp--;
 			if (failed) return header;
@@ -3422,7 +3432,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:275:157: blanks
 			{
-			pushFollow(FOLLOW_blanks_in_heading1338);
+			pushFollow(FOLLOW_blanks_in_heading1329);
 			blanks();
 			_fsp--;
 			if (failed) return header;
@@ -3432,7 +3442,7 @@ public class Creole10Parser extends Parser {
 
 		}
 
-		pushFollow(FOLLOW_paragraph_separator_in_heading1345);
+		pushFollow(FOLLOW_paragraph_separator_in_heading1336);
 		paragraph_separator();
 		_fsp--;
 		if (failed) return header;
@@ -3466,7 +3476,7 @@ public class Creole10Parser extends Parser {
 		if ( (LA45_0==EQUAL) ) {
 		alt45=1;
 		}
-		else if ( (LA45_0==EOF||(LA45_0>=FORCED_END_OF_LINE && LA45_0<=STAR)||(LA45_0>=PIPE && LA45_0<=FORCED_LINEBREAK)||(LA45_0>=NOWIKI_BLOCK_CLOSE && LA45_0<=78)) ) {
+		else if ( (LA45_0==EOF||(LA45_0>=FORCED_END_OF_LINE && LA45_0<=STAR)||(LA45_0>=PIPE && LA45_0<=FORCED_LINEBREAK)||(LA45_0>=NOWIKI_BLOCK_CLOSE && LA45_0<=79)) ) {
 		alt45=2;
 		}
 		else {
@@ -3480,14 +3490,14 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:279:4: heading_markup heading_content ( heading_markup )?
 			{
-			pushFollow(FOLLOW_heading_markup_in_heading_content1355);
+			pushFollow(FOLLOW_heading_markup_in_heading_content1346);
 			heading_markup();
 			_fsp--;
 			if (failed) return ;
 			if ( backtracking==0 ) {
 			  ((heading_scope)heading_stack.peek()).nestedLevel++;
 			}
-			pushFollow(FOLLOW_heading_content_in_heading_content1360);
+			pushFollow(FOLLOW_heading_content_in_heading_content1351);
 			heading_content();
 			_fsp--;
 			if (failed) return ;
@@ -3502,7 +3512,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:279:66: heading_markup
 				{
-				pushFollow(FOLLOW_heading_markup_in_heading_content1365);
+				pushFollow(FOLLOW_heading_markup_in_heading_content1356);
 				heading_markup();
 				_fsp--;
 				if (failed) return ;
@@ -3518,7 +3528,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:280:4: ht= heading_text
 			{
-			pushFollow(FOLLOW_heading_text_in_heading_content1377);
+			pushFollow(FOLLOW_heading_text_in_heading_content1368);
 			ht=heading_text();
 			_fsp--;
 			if (failed) return ;
@@ -3554,7 +3564,7 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:284:2: (te= heading_cellcontent )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:284:4: te= heading_cellcontent
 		{
-		pushFollow(FOLLOW_heading_cellcontent_in_heading_text1398);
+		pushFollow(FOLLOW_heading_cellcontent_in_heading_text1389);
 		te=heading_cellcontent();
 		_fsp--;
 		if (failed) return items;
@@ -3588,7 +3598,7 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:288:2: ( onestar (tcp= heading_cellcontentpart onestar )* )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:288:4: onestar (tcp= heading_cellcontentpart onestar )*
 		{
-		pushFollow(FOLLOW_onestar_in_heading_cellcontent1415);
+		pushFollow(FOLLOW_onestar_in_heading_cellcontent1406);
 		onestar();
 		_fsp--;
 		if (failed) return items;
@@ -3598,7 +3608,7 @@ public class Creole10Parser extends Parser {
 		int alt46=2;
 		int LA46_0 = input.LA(1);
 
-		if ( ((LA46_0>=FORCED_END_OF_LINE && LA46_0<=WIKI)||(LA46_0>=POUND && LA46_0<=STAR)||(LA46_0>=PIPE && LA46_0<=FORCED_LINEBREAK)||(LA46_0>=NOWIKI_BLOCK_CLOSE && LA46_0<=78)) ) {
+		if ( ((LA46_0>=FORCED_END_OF_LINE && LA46_0<=WIKI)||(LA46_0>=POUND && LA46_0<=STAR)||(LA46_0>=PIPE && LA46_0<=FORCED_LINEBREAK)||(LA46_0>=NOWIKI_BLOCK_CLOSE && LA46_0<=79)) ) {
 			alt46=1;
 		}
 
@@ -3607,7 +3617,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:288:15: tcp= heading_cellcontentpart onestar
 			{
-			pushFollow(FOLLOW_heading_cellcontentpart_in_heading_cellcontent1424);
+			pushFollow(FOLLOW_heading_cellcontentpart_in_heading_cellcontent1415);
 			tcp=heading_cellcontentpart();
 			_fsp--;
 			if (failed) return items;
@@ -3620,7 +3630,7 @@ public class Creole10Parser extends Parser {
 									
 									
 			}
-			pushFollow(FOLLOW_onestar_in_heading_cellcontent1436);
+			pushFollow(FOLLOW_onestar_in_heading_cellcontent1427);
 			onestar();
 			_fsp--;
 			if (failed) return items;
@@ -3674,7 +3684,7 @@ public class Creole10Parser extends Parser {
 		if ( (LA47_2==STAR) ) {
 			alt47=1;
 		}
-		else if ( (LA47_2==EOF||(LA47_2>=FORCED_END_OF_LINE && LA47_2<=POUND)||(LA47_2>=EQUAL && LA47_2<=FORCED_LINEBREAK)||(LA47_2>=NOWIKI_BLOCK_CLOSE && LA47_2<=78)) ) {
+		else if ( (LA47_2==EOF||(LA47_2>=FORCED_END_OF_LINE && LA47_2<=POUND)||(LA47_2>=EQUAL && LA47_2<=FORCED_LINEBREAK)||(LA47_2>=NOWIKI_BLOCK_CLOSE && LA47_2<=79)) ) {
 			alt47=2;
 		}
 		else {
@@ -3715,12 +3725,12 @@ public class Creole10Parser extends Parser {
 		case LF:
 		case SPACE:
 		case TABULATOR:
+		case BRACE_CLOSE:
 		case COLON_SLASH:
 		case SLASH:
 		case TABLE_OF_CONTENTS_OPEN_MARKUP:
 		case TABLE_OF_CONTENTS_CLOSE_MARKUP:
 		case INSIGNIFICANT_CHAR:
-		case 43:
 		case 44:
 		case 45:
 		case 46:
@@ -3756,6 +3766,7 @@ public class Creole10Parser extends Parser {
 		case 76:
 		case 77:
 		case 78:
+		case 79:
 		{
 		alt47=2;
 		}
@@ -3772,7 +3783,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:298:4: tf= heading_formattedelement
 			{
-			pushFollow(FOLLOW_heading_formattedelement_in_heading_cellcontentpart1457);
+			pushFollow(FOLLOW_heading_formattedelement_in_heading_cellcontentpart1448);
 			tf=heading_formattedelement();
 			_fsp--;
 			if (failed) return node;
@@ -3785,7 +3796,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:299:4: tu= heading_unformattedelement
 			{
-			pushFollow(FOLLOW_heading_unformattedelement_in_heading_cellcontentpart1468);
+			pushFollow(FOLLOW_heading_unformattedelement_in_heading_cellcontentpart1459);
 			tu=heading_unformattedelement();
 			_fsp--;
 			if (failed) return node;
@@ -3841,7 +3852,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:302:4: ital_markup (tic= heading_italcontent )? ( ital_markup )?
 			{
-			pushFollow(FOLLOW_ital_markup_in_heading_formattedelement1484);
+			pushFollow(FOLLOW_ital_markup_in_heading_formattedelement1475);
 			ital_markup();
 			_fsp--;
 			if (failed) return content;
@@ -3908,12 +3919,12 @@ public class Creole10Parser extends Parser {
 			case LF:
 			case SPACE:
 			case TABULATOR:
+			case BRACE_CLOSE:
 			case COLON_SLASH:
 			case SLASH:
 			case TABLE_OF_CONTENTS_OPEN_MARKUP:
 			case TABLE_OF_CONTENTS_CLOSE_MARKUP:
 			case INSIGNIFICANT_CHAR:
-			case 43:
 			case 44:
 			case 45:
 			case 46:
@@ -3949,6 +3960,7 @@ public class Creole10Parser extends Parser {
 			case 76:
 			case 77:
 			case 78:
+			case 79:
 				{
 				alt48=1;
 				}
@@ -3959,7 +3971,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:302:20: tic= heading_italcontent
 				{
-				pushFollow(FOLLOW_heading_italcontent_in_heading_formattedelement1494);
+				pushFollow(FOLLOW_heading_italcontent_in_heading_formattedelement1485);
 				tic=heading_italcontent();
 				_fsp--;
 				if (failed) return content;
@@ -3983,7 +3995,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:302:98: ital_markup
 				{
-				pushFollow(FOLLOW_ital_markup_in_heading_formattedelement1503);
+				pushFollow(FOLLOW_ital_markup_in_heading_formattedelement1494);
 				ital_markup();
 				_fsp--;
 				if (failed) return content;
@@ -3999,7 +4011,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:303:4: bold_markup (tbc= heading_boldcontent )? ( bold_markup )?
 			{
-			pushFollow(FOLLOW_bold_markup_in_heading_formattedelement1511);
+			pushFollow(FOLLOW_bold_markup_in_heading_formattedelement1502);
 			bold_markup();
 			_fsp--;
 			if (failed) return content;
@@ -4066,12 +4078,12 @@ public class Creole10Parser extends Parser {
 			case LF:
 			case SPACE:
 			case TABULATOR:
+			case BRACE_CLOSE:
 			case COLON_SLASH:
 			case SLASH:
 			case TABLE_OF_CONTENTS_OPEN_MARKUP:
 			case TABLE_OF_CONTENTS_CLOSE_MARKUP:
 			case INSIGNIFICANT_CHAR:
-			case 43:
 			case 44:
 			case 45:
 			case 46:
@@ -4107,6 +4119,7 @@ public class Creole10Parser extends Parser {
 			case 76:
 			case 77:
 			case 78:
+			case 79:
 				{
 				alt50=1;
 				}
@@ -4117,7 +4130,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:303:18: tbc= heading_boldcontent
 				{
-				pushFollow(FOLLOW_heading_boldcontent_in_heading_formattedelement1518);
+				pushFollow(FOLLOW_heading_boldcontent_in_heading_formattedelement1509);
 				tbc=heading_boldcontent();
 				_fsp--;
 				if (failed) return content;
@@ -4145,7 +4158,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:303:92: bold_markup
 				{
-				pushFollow(FOLLOW_bold_markup_in_heading_formattedelement1528);
+				pushFollow(FOLLOW_bold_markup_in_heading_formattedelement1519);
 				bold_markup();
 				_fsp--;
 				if (failed) return content;
@@ -4185,7 +4198,7 @@ public class Creole10Parser extends Parser {
 		int alt54=2;
 		int LA54_0 = input.LA(1);
 
-		if ( ((LA54_0>=FORCED_END_OF_LINE && LA54_0<=WIKI)||(LA54_0>=POUND && LA54_0<=STAR)||(LA54_0>=PIPE && LA54_0<=FORCED_LINEBREAK)||(LA54_0>=NOWIKI_BLOCK_CLOSE && LA54_0<=78)) ) {
+		if ( ((LA54_0>=FORCED_END_OF_LINE && LA54_0<=WIKI)||(LA54_0>=POUND && LA54_0<=STAR)||(LA54_0>=PIPE && LA54_0<=FORCED_LINEBREAK)||(LA54_0>=NOWIKI_BLOCK_CLOSE && LA54_0<=79)) ) {
 		alt54=1;
 		}
 		else if ( (LA54_0==EOF) ) {
@@ -4202,7 +4215,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:306:4: onestar (tb= heading_boldcontentpart onestar )+
 			{
-			pushFollow(FOLLOW_onestar_in_heading_boldcontent1545);
+			pushFollow(FOLLOW_onestar_in_heading_boldcontent1536);
 			onestar();
 			_fsp--;
 			if (failed) return items;
@@ -4252,12 +4265,12 @@ public class Creole10Parser extends Parser {
 			case LF:
 			case SPACE:
 			case TABULATOR:
+			case BRACE_CLOSE:
 			case COLON_SLASH:
 			case SLASH:
 			case TABLE_OF_CONTENTS_OPEN_MARKUP:
 			case TABLE_OF_CONTENTS_CLOSE_MARKUP:
 			case INSIGNIFICANT_CHAR:
-			case 43:
 			case 44:
 			case 45:
 			case 46:
@@ -4293,6 +4306,7 @@ public class Creole10Parser extends Parser {
 			case 76:
 			case 77:
 			case 78:
+			case 79:
 				{
 				alt53=1;
 				}
@@ -4319,14 +4333,14 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:306:15: tb= heading_boldcontentpart onestar
 				{
-				pushFollow(FOLLOW_heading_boldcontentpart_in_heading_boldcontent1554);
+				pushFollow(FOLLOW_heading_boldcontentpart_in_heading_boldcontent1545);
 				tb=heading_boldcontentpart();
 				_fsp--;
 				if (failed) return items;
 				if ( backtracking==0 ) {
 				   items.add(tb); 
 				}
-				pushFollow(FOLLOW_onestar_in_heading_boldcontent1559);
+				pushFollow(FOLLOW_onestar_in_heading_boldcontent1550);
 				onestar();
 				_fsp--;
 				if (failed) return items;
@@ -4350,7 +4364,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:307:4: EOF
 			{
-			match(input,EOF,FOLLOW_EOF_in_heading_boldcontent1567); if (failed) return items;
+			match(input,EOF,FOLLOW_EOF_in_heading_boldcontent1558); if (failed) return items;
 
 			}
 			break;
@@ -4381,7 +4395,7 @@ public class Creole10Parser extends Parser {
 		int alt56=2;
 		int LA56_0 = input.LA(1);
 
-		if ( ((LA56_0>=FORCED_END_OF_LINE && LA56_0<=WIKI)||(LA56_0>=POUND && LA56_0<=STAR)||(LA56_0>=PIPE && LA56_0<=FORCED_LINEBREAK)||(LA56_0>=NOWIKI_BLOCK_CLOSE && LA56_0<=78)) ) {
+		if ( ((LA56_0>=FORCED_END_OF_LINE && LA56_0<=WIKI)||(LA56_0>=POUND && LA56_0<=STAR)||(LA56_0>=PIPE && LA56_0<=FORCED_LINEBREAK)||(LA56_0>=NOWIKI_BLOCK_CLOSE && LA56_0<=79)) ) {
 		alt56=1;
 		}
 		else if ( (LA56_0==EOF) ) {
@@ -4398,7 +4412,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:310:4: onestar (ti= heading_italcontentpart onestar )+
 			{
-			pushFollow(FOLLOW_onestar_in_heading_italcontent1581);
+			pushFollow(FOLLOW_onestar_in_heading_italcontent1572);
 			onestar();
 			_fsp--;
 			if (failed) return items;
@@ -4448,12 +4462,12 @@ public class Creole10Parser extends Parser {
 			case LF:
 			case SPACE:
 			case TABULATOR:
+			case BRACE_CLOSE:
 			case COLON_SLASH:
 			case SLASH:
 			case TABLE_OF_CONTENTS_OPEN_MARKUP:
 			case TABLE_OF_CONTENTS_CLOSE_MARKUP:
 			case INSIGNIFICANT_CHAR:
-			case 43:
 			case 44:
 			case 45:
 			case 46:
@@ -4489,6 +4503,7 @@ public class Creole10Parser extends Parser {
 			case 76:
 			case 77:
 			case 78:
+			case 79:
 				{
 				alt55=1;
 				}
@@ -4515,14 +4530,14 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:310:15: ti= heading_italcontentpart onestar
 				{
-				pushFollow(FOLLOW_heading_italcontentpart_in_heading_italcontent1590);
+				pushFollow(FOLLOW_heading_italcontentpart_in_heading_italcontent1581);
 				ti=heading_italcontentpart();
 				_fsp--;
 				if (failed) return items;
 				if ( backtracking==0 ) {
 				   items.add(ti); 
 				}
-				pushFollow(FOLLOW_onestar_in_heading_italcontent1595);
+				pushFollow(FOLLOW_onestar_in_heading_italcontent1586);
 				onestar();
 				_fsp--;
 				if (failed) return items;
@@ -4546,7 +4561,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:311:4: EOF
 			{
-			match(input,EOF,FOLLOW_EOF_in_heading_italcontent1603); if (failed) return items;
+			match(input,EOF,FOLLOW_EOF_in_heading_italcontent1594); if (failed) return items;
 
 			}
 			break;
@@ -4579,7 +4594,7 @@ public class Creole10Parser extends Parser {
 		int alt58=2;
 		int LA58_0 = input.LA(1);
 
-		if ( ((LA58_0>=FORCED_END_OF_LINE && LA58_0<=WIKI)||(LA58_0>=POUND && LA58_0<=STAR)||(LA58_0>=PIPE && LA58_0<=FORCED_LINEBREAK)||(LA58_0>=NOWIKI_BLOCK_CLOSE && LA58_0<=78)) ) {
+		if ( ((LA58_0>=FORCED_END_OF_LINE && LA58_0<=WIKI)||(LA58_0>=POUND && LA58_0<=STAR)||(LA58_0>=PIPE && LA58_0<=FORCED_LINEBREAK)||(LA58_0>=NOWIKI_BLOCK_CLOSE && LA58_0<=79)) ) {
 		alt58=1;
 		}
 		else {
@@ -4593,7 +4608,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:314:4: tf= heading_formattedcontent
 			{
-			pushFollow(FOLLOW_heading_formattedcontent_in_heading_boldcontentpart1621);
+			pushFollow(FOLLOW_heading_formattedcontent_in_heading_boldcontentpart1612);
 			tf=heading_formattedcontent();
 			_fsp--;
 			if (failed) return node;
@@ -4606,11 +4621,11 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:315:4: ital_markup tb= heading_bolditalcontent ( ital_markup )?
 			{
-			pushFollow(FOLLOW_ital_markup_in_heading_boldcontentpart1628);
+			pushFollow(FOLLOW_ital_markup_in_heading_boldcontentpart1619);
 			ital_markup();
 			_fsp--;
 			if (failed) return node;
-			pushFollow(FOLLOW_heading_bolditalcontent_in_heading_boldcontentpart1635);
+			pushFollow(FOLLOW_heading_bolditalcontent_in_heading_boldcontentpart1626);
 			tb=heading_bolditalcontent();
 			_fsp--;
 			if (failed) return node;
@@ -4628,7 +4643,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:315:96: ital_markup
 				{
-				pushFollow(FOLLOW_ital_markup_in_heading_boldcontentpart1642);
+				pushFollow(FOLLOW_ital_markup_in_heading_boldcontentpart1633);
 				ital_markup();
 				_fsp--;
 				if (failed) return node;
@@ -4676,7 +4691,7 @@ public class Creole10Parser extends Parser {
 		if ( (LA60_1==STAR) ) {
 			alt60=1;
 		}
-		else if ( (LA60_1==EOF||(LA60_1>=FORCED_END_OF_LINE && LA60_1<=POUND)||(LA60_1>=EQUAL && LA60_1<=FORCED_LINEBREAK)||(LA60_1>=NOWIKI_BLOCK_CLOSE && LA60_1<=78)) ) {
+		else if ( (LA60_1==EOF||(LA60_1>=FORCED_END_OF_LINE && LA60_1<=POUND)||(LA60_1>=EQUAL && LA60_1<=FORCED_LINEBREAK)||(LA60_1>=NOWIKI_BLOCK_CLOSE && LA60_1<=79)) ) {
 			alt60=2;
 		}
 		else {
@@ -4687,7 +4702,7 @@ public class Creole10Parser extends Parser {
 			throw nvae;
 		}
 		}
-		else if ( ((LA60_0>=FORCED_END_OF_LINE && LA60_0<=WIKI)||LA60_0==POUND||(LA60_0>=PIPE && LA60_0<=FORCED_LINEBREAK)||(LA60_0>=NOWIKI_BLOCK_CLOSE && LA60_0<=78)) ) {
+		else if ( ((LA60_0>=FORCED_END_OF_LINE && LA60_0<=WIKI)||LA60_0==POUND||(LA60_0>=PIPE && LA60_0<=FORCED_LINEBREAK)||(LA60_0>=NOWIKI_BLOCK_CLOSE && LA60_0<=79)) ) {
 		alt60=2;
 		}
 		else {
@@ -4701,11 +4716,11 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:318:4: bold_markup tb= heading_bolditalcontent ( bold_markup )?
 			{
-			pushFollow(FOLLOW_bold_markup_in_heading_italcontentpart1659);
+			pushFollow(FOLLOW_bold_markup_in_heading_italcontentpart1650);
 			bold_markup();
 			_fsp--;
 			if (failed) return node;
-			pushFollow(FOLLOW_heading_bolditalcontent_in_heading_italcontentpart1666);
+			pushFollow(FOLLOW_heading_bolditalcontent_in_heading_italcontentpart1657);
 			tb=heading_bolditalcontent();
 			_fsp--;
 			if (failed) return node;
@@ -4727,7 +4742,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:318:92: bold_markup
 				{
-				pushFollow(FOLLOW_bold_markup_in_heading_italcontentpart1673);
+				pushFollow(FOLLOW_bold_markup_in_heading_italcontentpart1664);
 				bold_markup();
 				_fsp--;
 				if (failed) return node;
@@ -4743,7 +4758,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:319:4: tf= heading_formattedcontent
 			{
-			pushFollow(FOLLOW_heading_formattedcontent_in_heading_italcontentpart1685);
+			pushFollow(FOLLOW_heading_formattedcontent_in_heading_italcontentpart1676);
 			tf=heading_formattedcontent();
 			_fsp--;
 			if (failed) return node;
@@ -4780,7 +4795,7 @@ public class Creole10Parser extends Parser {
 		int alt62=2;
 		int LA62_0 = input.LA(1);
 
-		if ( ((LA62_0>=FORCED_END_OF_LINE && LA62_0<=FORCED_LINEBREAK)||(LA62_0>=NOWIKI_BLOCK_CLOSE && LA62_0<=78)) ) {
+		if ( ((LA62_0>=FORCED_END_OF_LINE && LA62_0<=FORCED_LINEBREAK)||(LA62_0>=NOWIKI_BLOCK_CLOSE && LA62_0<=79)) ) {
 		alt62=1;
 		}
 		else if ( (LA62_0==EOF) ) {
@@ -4797,7 +4812,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:322:4: onestar (tfc= heading_formattedcontent onestar )?
 			{
-			pushFollow(FOLLOW_onestar_in_heading_bolditalcontent1701);
+			pushFollow(FOLLOW_onestar_in_heading_bolditalcontent1692);
 			onestar();
 			_fsp--;
 			if (failed) return elements;
@@ -4859,12 +4874,12 @@ public class Creole10Parser extends Parser {
 			case LF:
 			case SPACE:
 			case TABULATOR:
+			case BRACE_CLOSE:
 			case COLON_SLASH:
 			case SLASH:
 			case TABLE_OF_CONTENTS_OPEN_MARKUP:
 			case TABLE_OF_CONTENTS_CLOSE_MARKUP:
 			case INSIGNIFICANT_CHAR:
-			case 43:
 			case 44:
 			case 45:
 			case 46:
@@ -4900,6 +4915,7 @@ public class Creole10Parser extends Parser {
 			case 76:
 			case 77:
 			case 78:
+			case 79:
 				{
 				alt61=1;
 				}
@@ -4910,14 +4926,14 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:322:15: tfc= heading_formattedcontent onestar
 				{
-				pushFollow(FOLLOW_heading_formattedcontent_in_heading_bolditalcontent1710);
+				pushFollow(FOLLOW_heading_formattedcontent_in_heading_bolditalcontent1701);
 				tfc=heading_formattedcontent();
 				_fsp--;
 				if (failed) return elements;
 				if ( backtracking==0 ) {
 				   elements = tfc; 
 				}
-				pushFollow(FOLLOW_onestar_in_heading_bolditalcontent1715);
+				pushFollow(FOLLOW_onestar_in_heading_bolditalcontent1706);
 				onestar();
 				_fsp--;
 				if (failed) return elements;
@@ -4933,7 +4949,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:323:4: EOF
 			{
-			match(input,EOF,FOLLOW_EOF_in_heading_bolditalcontent1723); if (failed) return elements;
+			match(input,EOF,FOLLOW_EOF_in_heading_bolditalcontent1714); if (failed) return elements;
 
 			}
 			break;
@@ -5009,12 +5025,12 @@ public class Creole10Parser extends Parser {
 		case LF:
 		case SPACE:
 		case TABULATOR:
+		case BRACE_CLOSE:
 		case COLON_SLASH:
 		case SLASH:
 		case TABLE_OF_CONTENTS_OPEN_MARKUP:
 		case TABLE_OF_CONTENTS_CLOSE_MARKUP:
 		case INSIGNIFICANT_CHAR:
-		case 43:
 		case 44:
 		case 45:
 		case 46:
@@ -5050,6 +5066,7 @@ public class Creole10Parser extends Parser {
 		case 76:
 		case 77:
 		case 78:
+		case 79:
 			{
 			alt63=1;
 			}
@@ -5076,7 +5093,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:326:6: tu= heading_unformattedelement
 			{
-			pushFollow(FOLLOW_heading_unformattedelement_in_heading_formattedcontent1743);
+			pushFollow(FOLLOW_heading_unformattedelement_in_heading_formattedcontent1734);
 			tu=heading_unformattedelement();
 			_fsp--;
 			if (failed) return elements;
@@ -5127,7 +5144,7 @@ public class Creole10Parser extends Parser {
 		int alt64=2;
 		int LA64_0 = input.LA(1);
 
-		if ( ((LA64_0>=FORCED_END_OF_LINE && LA64_0<=WIKI)||(LA64_0>=POUND && LA64_0<=STAR)||(LA64_0>=PIPE && LA64_0<=ITAL)||(LA64_0>=EXTENSION && LA64_0<=FORCED_LINEBREAK)||(LA64_0>=NOWIKI_BLOCK_CLOSE && LA64_0<=78)) ) {
+		if ( ((LA64_0>=FORCED_END_OF_LINE && LA64_0<=WIKI)||(LA64_0>=POUND && LA64_0<=STAR)||(LA64_0>=PIPE && LA64_0<=ITAL)||(LA64_0>=EXTENSION && LA64_0<=FORCED_LINEBREAK)||(LA64_0>=NOWIKI_BLOCK_CLOSE && LA64_0<=79)) ) {
 		alt64=1;
 		}
 		else if ( ((LA64_0>=LINK_OPEN && LA64_0<=NOWIKI_OPEN)) ) {
@@ -5144,7 +5161,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:329:4: tu= heading_unformatted_text
 			{
-			pushFollow(FOLLOW_heading_unformatted_text_in_heading_unformattedelement1766);
+			pushFollow(FOLLOW_heading_unformatted_text_in_heading_unformattedelement1757);
 			tu=heading_unformatted_text();
 			_fsp--;
 			if (failed) return content;
@@ -5157,7 +5174,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:330:4: ti= heading_inlineelement
 			{
-			pushFollow(FOLLOW_heading_inlineelement_in_heading_unformattedelement1778);
+			pushFollow(FOLLOW_heading_inlineelement_in_heading_unformattedelement1769);
 			ti=heading_inlineelement();
 			_fsp--;
 			if (failed) return content;
@@ -5224,7 +5241,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:333:4: l= link
 			{
-			pushFollow(FOLLOW_link_in_heading_inlineelement1799);
+			pushFollow(FOLLOW_link_in_heading_inlineelement1790);
 			l=link();
 			_fsp--;
 			if (failed) return element;
@@ -5237,7 +5254,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:334:4: i= image
 			{
-			pushFollow(FOLLOW_image_in_heading_inlineelement1809);
+			pushFollow(FOLLOW_image_in_heading_inlineelement1800);
 			i=image();
 			_fsp--;
 			if (failed) return element;
@@ -5250,7 +5267,7 @@ public class Creole10Parser extends Parser {
 		case 3 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:335:4: nwi= nowiki_inline
 			{
-			pushFollow(FOLLOW_nowiki_inline_in_heading_inlineelement1820);
+			pushFollow(FOLLOW_nowiki_inline_in_heading_inlineelement1811);
 			nwi=nowiki_inline();
 			_fsp--;
 			if (failed) return element;
@@ -5331,12 +5348,12 @@ public class Creole10Parser extends Parser {
 		case LF:
 		case SPACE:
 		case TABULATOR:
+		case BRACE_CLOSE:
 		case COLON_SLASH:
 		case SLASH:
 		case TABLE_OF_CONTENTS_OPEN_MARKUP:
 		case TABLE_OF_CONTENTS_CLOSE_MARKUP:
 		case INSIGNIFICANT_CHAR:
-		case 43:
 		case 44:
 		case 45:
 		case 46:
@@ -5372,6 +5389,7 @@ public class Creole10Parser extends Parser {
 		case 76:
 		case 77:
 		case 78:
+		case 79:
 			{
 			alt66=1;
 			}
@@ -5384,7 +5402,7 @@ public class Creole10Parser extends Parser {
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:339:6: c=~ ( LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EQUAL | ESCAPE | NEWLINE | EOF )
 			{
 			c=(Token)input.LT(1);
-			if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=WIKI)||(input.LA(1)>=POUND && input.LA(1)<=STAR)||(input.LA(1)>=PIPE && input.LA(1)<=ITAL)||(input.LA(1)>=EXTENSION && input.LA(1)<=FORCED_LINEBREAK)||(input.LA(1)>=NOWIKI_BLOCK_CLOSE && input.LA(1)<=78) ) {
+			if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=WIKI)||(input.LA(1)>=POUND && input.LA(1)<=STAR)||(input.LA(1)>=PIPE && input.LA(1)<=ITAL)||(input.LA(1)>=EXTENSION && input.LA(1)<=FORCED_LINEBREAK)||(input.LA(1)>=NOWIKI_BLOCK_CLOSE && input.LA(1)<=79) ) {
 			input.consume();
 			errorRecovery=false;failed=false;
 			}
@@ -5392,7 +5410,7 @@ public class Creole10Parser extends Parser {
 			if (backtracking>0) {failed=true; return text;}
 			MismatchedSetException mse =
 				new MismatchedSetException(null,input);
-			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_heading_unformatted_text1845);	throw mse;
+			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_heading_unformatted_text1836);	throw mse;
 			}
 
 			if ( backtracking==0 ) {
@@ -5455,7 +5473,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:346:6: elem= list_ordelem
 			{
-			pushFollow(FOLLOW_list_ordelem_in_list_ord1904);
+			pushFollow(FOLLOW_list_ordelem_in_list_ord1895);
 			elem=list_ordelem();
 			_fsp--;
 			if (failed) return orderedList;
@@ -5490,7 +5508,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:346:79: end_of_list
 			{
-			pushFollow(FOLLOW_end_of_list_in_list_ord1914);
+			pushFollow(FOLLOW_end_of_list_in_list_ord1905);
 			end_of_list();
 			_fsp--;
 			if (failed) return orderedList;
@@ -5527,7 +5545,7 @@ public class Creole10Parser extends Parser {
 	CollectionNode elem = null;
 
 
-			
+
 			((CountLevel_scope)CountLevel_stack.peek()).level = 0;
 			((CountLevel_scope)CountLevel_stack.peek()).groups = new String();
 		
@@ -5535,14 +5553,14 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:354:2: (om= list_ordelem_markup elem= list_elem )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:354:4: om= list_ordelem_markup elem= list_elem
 		{
-		pushFollow(FOLLOW_list_ordelem_markup_in_list_ordelem1947);
+		pushFollow(FOLLOW_list_ordelem_markup_in_list_ordelem1938);
 		om=list_ordelem_markup();
 		_fsp--;
 		if (failed) return item;
 		if ( backtracking==0 ) {
 		  ++((CountLevel_scope)CountLevel_stack.peek()).level; ((CountLevel_scope)CountLevel_stack.peek()).currentMarkup = input.toString(om.start,om.stop); ((CountLevel_scope)CountLevel_stack.peek()).groups += input.toString(om.start,om.stop);
 		}
-		pushFollow(FOLLOW_list_elem_in_list_ordelem1955);
+		pushFollow(FOLLOW_list_elem_in_list_ordelem1946);
 		elem=list_elem();
 		_fsp--;
 		if (failed) return item;
@@ -5594,7 +5612,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:358:6: elem= list_unordelem
 			{
-			pushFollow(FOLLOW_list_unordelem_in_list_unord1979);
+			pushFollow(FOLLOW_list_unordelem_in_list_unord1969);
 			elem=list_unordelem();
 			_fsp--;
 			if (failed) return unorderedList;
@@ -5629,7 +5647,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:358:82: end_of_list
 			{
-			pushFollow(FOLLOW_end_of_list_in_list_unord1989);
+			pushFollow(FOLLOW_end_of_list_in_list_unord1979);
 			end_of_list();
 			_fsp--;
 			if (failed) return unorderedList;
@@ -5673,14 +5691,14 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:365:2: (um= list_unordelem_markup elem= list_elem )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:365:4: um= list_unordelem_markup elem= list_elem
 		{
-		pushFollow(FOLLOW_list_unordelem_markup_in_list_unordelem2022);
+		pushFollow(FOLLOW_list_unordelem_markup_in_list_unordelem2012);
 		um=list_unordelem_markup();
 		_fsp--;
 		if (failed) return item;
 		if ( backtracking==0 ) {
 		  ++((CountLevel_scope)CountLevel_stack.peek()).level; ((CountLevel_scope)CountLevel_stack.peek()).currentMarkup = input.toString(um.start,um.stop);((CountLevel_scope)CountLevel_stack.peek()).groups += input.toString(um.start,um.stop);
 		}
-		pushFollow(FOLLOW_list_elem_in_list_unordelem2029);
+		pushFollow(FOLLOW_list_elem_in_list_unordelem2019);
 		elem=list_elem();
 		_fsp--;
 		if (failed) return item;
@@ -5736,14 +5754,14 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:368:6: m= list_elem_markup
 			{
-			pushFollow(FOLLOW_list_elem_markup_in_list_elem2054);
+			pushFollow(FOLLOW_list_elem_markup_in_list_elem2042);
 			m=list_elem_markup();
 			_fsp--;
 			if (failed) return items;
 			if ( backtracking==0 ) {
 
 							 ++((CountLevel_scope)CountLevel_stack.peek()).level;
-							 if(!input.toString(m.start,m.stop).equals(((CountLevel_scope)CountLevel_stack.peek()).currentMarkup)) {					
+							 if(!input.toString(m.start,m.stop).equals(((CountLevel_scope)CountLevel_stack.peek()).currentMarkup)) {
 						((CountLevel_scope)CountLevel_stack.peek()).groups+= GROUPING_SEPARATOR;
 							 }
 							 ((CountLevel_scope)CountLevel_stack.peek()).groups+= input.toString(m.start,m.stop);
@@ -5759,14 +5777,14 @@ public class Creole10Parser extends Parser {
 		}
 		} while (true);
 
-		pushFollow(FOLLOW_list_elemcontent_in_list_elem2065);
+		pushFollow(FOLLOW_list_elemcontent_in_list_elem2053);
 		c=list_elemcontent();
 		_fsp--;
 		if (failed) return items;
 		if ( backtracking==0 ) {
 		  items = c; 
 		}
-		pushFollow(FOLLOW_list_elemseparator_in_list_elem2070);
+		pushFollow(FOLLOW_list_elemseparator_in_list_elem2058);
 		list_elemseparator();
 		_fsp--;
 		if (failed) return items;
@@ -5815,7 +5833,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:378:4: list_ordelem_markup
 			{
-			pushFollow(FOLLOW_list_ordelem_markup_in_list_elem_markup2080);
+			pushFollow(FOLLOW_list_ordelem_markup_in_list_elem_markup2068);
 			list_ordelem_markup();
 			_fsp--;
 			if (failed) return retval;
@@ -5825,7 +5843,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:379:4: list_unordelem_markup
 			{
-			pushFollow(FOLLOW_list_unordelem_markup_in_list_elem_markup2085);
+			pushFollow(FOLLOW_list_unordelem_markup_in_list_elem_markup2073);
 			list_unordelem_markup();
 			_fsp--;
 			if (failed) return retval;
@@ -5860,7 +5878,7 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:382:2: ( onestar (part= list_elemcontentpart onestar )* )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:382:4: onestar (part= list_elemcontentpart onestar )*
 		{
-		pushFollow(FOLLOW_onestar_in_list_elemcontent2099);
+		pushFollow(FOLLOW_onestar_in_list_elemcontent2087);
 		onestar();
 		_fsp--;
 		if (failed) return items;
@@ -5870,7 +5888,7 @@ public class Creole10Parser extends Parser {
 		int alt73=2;
 		int LA73_0 = input.LA(1);
 
-		if ( ((LA73_0>=FORCED_END_OF_LINE && LA73_0<=WIKI)||(LA73_0>=POUND && LA73_0<=78)) ) {
+		if ( ((LA73_0>=FORCED_END_OF_LINE && LA73_0<=WIKI)||(LA73_0>=POUND && LA73_0<=79)) ) {
 			alt73=1;
 		}
 
@@ -5879,14 +5897,14 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:382:15: part= list_elemcontentpart onestar
 			{
-			pushFollow(FOLLOW_list_elemcontentpart_in_list_elemcontent2108);
+			pushFollow(FOLLOW_list_elemcontentpart_in_list_elemcontent2096);
 			part=list_elemcontentpart();
 			_fsp--;
 			if (failed) return items;
 			if ( backtracking==0 ) {
 			   items.add(part); 
 			}
-			pushFollow(FOLLOW_onestar_in_list_elemcontent2113);
+			pushFollow(FOLLOW_onestar_in_list_elemcontent2101);
 			onestar();
 			_fsp--;
 			if (failed) return items;
@@ -5929,7 +5947,7 @@ public class Creole10Parser extends Parser {
 		int alt74=2;
 		int LA74_0 = input.LA(1);
 
-		if ( ((LA74_0>=FORCED_END_OF_LINE && LA74_0<=WIKI)||LA74_0==POUND||(LA74_0>=EQUAL && LA74_0<=PIPE)||(LA74_0>=LINK_OPEN && LA74_0<=78)) ) {
+		if ( ((LA74_0>=FORCED_END_OF_LINE && LA74_0<=WIKI)||LA74_0==POUND||(LA74_0>=EQUAL && LA74_0<=PIPE)||(LA74_0>=LINK_OPEN && LA74_0<=79)) ) {
 		alt74=1;
 		}
 		else if ( (LA74_0==STAR||LA74_0==ITAL) ) {
@@ -5946,7 +5964,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:385:4: tuf= text_unformattedelement
 			{
-			pushFollow(FOLLOW_text_unformattedelement_in_list_elemcontentpart2134);
+			pushFollow(FOLLOW_text_unformattedelement_in_list_elemcontentpart2122);
 			tuf=text_unformattedelement();
 			_fsp--;
 			if (failed) return node;
@@ -5964,7 +5982,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:391:4: tf= list_formatted_elem
 			{
-			pushFollow(FOLLOW_list_formatted_elem_in_list_elemcontentpart2145);
+			pushFollow(FOLLOW_list_formatted_elem_in_list_elemcontentpart2133);
 			tf=list_formatted_elem();
 			_fsp--;
 			if (failed) return node;
@@ -6020,11 +6038,11 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:394:4: bold_markup onestar (boldContents= list_boldcontentpart onestar )* ( bold_markup )?
 			{
-			pushFollow(FOLLOW_bold_markup_in_list_formatted_elem2162);
+			pushFollow(FOLLOW_bold_markup_in_list_formatted_elem2150);
 			bold_markup();
 			_fsp--;
 			if (failed) return contents;
-			pushFollow(FOLLOW_onestar_in_list_formatted_elem2165);
+			pushFollow(FOLLOW_onestar_in_list_formatted_elem2153);
 			onestar();
 			_fsp--;
 			if (failed) return contents;
@@ -6058,12 +6076,12 @@ public class Creole10Parser extends Parser {
 			case LF:
 			case SPACE:
 			case TABULATOR:
+			case BRACE_CLOSE:
 			case COLON_SLASH:
 			case SLASH:
 			case TABLE_OF_CONTENTS_OPEN_MARKUP:
 			case TABLE_OF_CONTENTS_CLOSE_MARKUP:
 			case INSIGNIFICANT_CHAR:
-			case 43:
 			case 44:
 			case 45:
 			case 46:
@@ -6099,6 +6117,7 @@ public class Creole10Parser extends Parser {
 			case 76:
 			case 77:
 			case 78:
+			case 79:
 				{
 				alt75=1;
 				}
@@ -6145,7 +6164,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:394:28: boldContents= list_boldcontentpart onestar
 				{
-				pushFollow(FOLLOW_list_boldcontentpart_in_list_formatted_elem2174);
+				pushFollow(FOLLOW_list_boldcontentpart_in_list_formatted_elem2162);
 				boldContents=list_boldcontentpart();
 				_fsp--;
 				if (failed) return contents;
@@ -6153,16 +6172,16 @@ public class Creole10Parser extends Parser {
 				   
 									BoldTextNode add = null;
 									if(boldContents instanceof CollectionNode){
-										 add = new BoldTextNode(boldContents);			 
-									}else{						
+										 add = new BoldTextNode(boldContents);
+									}else{
 										CollectionNode c = new CollectionNode();
 										c.add(boldContents);
-										add = new BoldTextNode(c);			 
+										add = new BoldTextNode(c);
 									}
-									contents.add(add);						
+									contents.add(add);
 									
 				}
-				pushFollow(FOLLOW_onestar_in_list_formatted_elem2184);
+				pushFollow(FOLLOW_onestar_in_list_formatted_elem2172);
 				onestar();
 				_fsp--;
 				if (failed) return contents;
@@ -6190,7 +6209,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:406:5: bold_markup
 				{
-				pushFollow(FOLLOW_bold_markup_in_list_formatted_elem2193);
+				pushFollow(FOLLOW_bold_markup_in_list_formatted_elem2181);
 				bold_markup();
 				_fsp--;
 				if (failed) return contents;
@@ -6206,11 +6225,11 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:407:4: ital_markup onestar (italContents= list_italcontentpart onestar )* ( ital_markup )?
 			{
-			pushFollow(FOLLOW_ital_markup_in_list_formatted_elem2201);
+			pushFollow(FOLLOW_ital_markup_in_list_formatted_elem2189);
 			ital_markup();
 			_fsp--;
 			if (failed) return contents;
-			pushFollow(FOLLOW_onestar_in_list_formatted_elem2206);
+			pushFollow(FOLLOW_onestar_in_list_formatted_elem2194);
 			onestar();
 			_fsp--;
 			if (failed) return contents;
@@ -6249,12 +6268,12 @@ public class Creole10Parser extends Parser {
 			case LF:
 			case SPACE:
 			case TABULATOR:
+			case BRACE_CLOSE:
 			case COLON_SLASH:
 			case SLASH:
 			case TABLE_OF_CONTENTS_OPEN_MARKUP:
 			case TABLE_OF_CONTENTS_CLOSE_MARKUP:
 			case INSIGNIFICANT_CHAR:
-			case 43:
 			case 44:
 			case 45:
 			case 46:
@@ -6290,6 +6309,7 @@ public class Creole10Parser extends Parser {
 			case 76:
 			case 77:
 			case 78:
+			case 79:
 				{
 				alt77=1;
 				}
@@ -6331,7 +6351,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:407:30: italContents= list_italcontentpart onestar
 				{
-				pushFollow(FOLLOW_list_italcontentpart_in_list_formatted_elem2215);
+				pushFollow(FOLLOW_list_italcontentpart_in_list_formatted_elem2203);
 				italContents=list_italcontentpart();
 				_fsp--;
 				if (failed) return contents;
@@ -6348,7 +6368,7 @@ public class Creole10Parser extends Parser {
 									contents.add(add); 
 									
 				}
-				pushFollow(FOLLOW_onestar_in_list_formatted_elem2224);
+				pushFollow(FOLLOW_onestar_in_list_formatted_elem2212);
 				onestar();
 				_fsp--;
 				if (failed) return contents;
@@ -6372,7 +6392,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:418:5: ital_markup
 				{
-				pushFollow(FOLLOW_ital_markup_in_list_formatted_elem2233);
+				pushFollow(FOLLOW_ital_markup_in_list_formatted_elem2221);
 				ital_markup();
 				_fsp--;
 				if (failed) return contents;
@@ -6416,7 +6436,7 @@ public class Creole10Parser extends Parser {
 
 
 
-		((list_boldcontentpart_scope)list_boldcontentpart_stack.peek()).elements = new ArrayList<ASTNode>();		
+		((list_boldcontentpart_scope)list_boldcontentpart_stack.peek()).elements = new ArrayList<ASTNode>();
 
 	try {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:428:2: ( ital_markup c= list_bolditalcontent ( ital_markup )? | (t= text_unformattedelement )+ )
@@ -6426,7 +6446,7 @@ public class Creole10Parser extends Parser {
 		if ( (LA82_0==ITAL) ) {
 		alt82=1;
 		}
-		else if ( ((LA82_0>=FORCED_END_OF_LINE && LA82_0<=WIKI)||LA82_0==POUND||(LA82_0>=EQUAL && LA82_0<=PIPE)||(LA82_0>=LINK_OPEN && LA82_0<=78)) ) {
+		else if ( ((LA82_0>=FORCED_END_OF_LINE && LA82_0<=WIKI)||LA82_0==POUND||(LA82_0>=EQUAL && LA82_0<=PIPE)||(LA82_0>=LINK_OPEN && LA82_0<=79)) ) {
 		alt82=2;
 		}
 		else {
@@ -6440,11 +6460,11 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:428:4: ital_markup c= list_bolditalcontent ( ital_markup )?
 			{
-			pushFollow(FOLLOW_ital_markup_in_list_boldcontentpart2259);
+			pushFollow(FOLLOW_ital_markup_in_list_boldcontentpart2247);
 			ital_markup();
 			_fsp--;
 			if (failed) return contents;
-			pushFollow(FOLLOW_list_bolditalcontent_in_list_boldcontentpart2266);
+			pushFollow(FOLLOW_list_bolditalcontent_in_list_boldcontentpart2254);
 			c=list_bolditalcontent();
 			_fsp--;
 			if (failed) return contents;
@@ -6462,7 +6482,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:428:88: ital_markup
 				{
-				pushFollow(FOLLOW_ital_markup_in_list_boldcontentpart2273);
+				pushFollow(FOLLOW_ital_markup_in_list_boldcontentpart2261);
 				ital_markup();
 				_fsp--;
 				if (failed) return contents;
@@ -6509,12 +6529,12 @@ public class Creole10Parser extends Parser {
 			case LF:
 			case SPACE:
 			case TABULATOR:
+			case BRACE_CLOSE:
 			case COLON_SLASH:
 			case SLASH:
 			case TABLE_OF_CONTENTS_OPEN_MARKUP:
 			case TABLE_OF_CONTENTS_CLOSE_MARKUP:
 			case INSIGNIFICANT_CHAR:
-			case 43:
 			case 44:
 			case 45:
 			case 46:
@@ -6550,6 +6570,7 @@ public class Creole10Parser extends Parser {
 			case 76:
 			case 77:
 			case 78:
+			case 79:
 				{
 				alt81=1;
 				}
@@ -6591,7 +6612,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:429:6: t= text_unformattedelement
 				{
-				pushFollow(FOLLOW_text_unformattedelement_in_list_boldcontentpart2288);
+				pushFollow(FOLLOW_text_unformattedelement_in_list_boldcontentpart2276);
 				t=text_unformattedelement();
 				_fsp--;
 				if (failed) return contents;
@@ -6676,12 +6697,12 @@ public class Creole10Parser extends Parser {
 		case LF:
 		case SPACE:
 		case TABULATOR:
+		case BRACE_CLOSE:
 		case COLON_SLASH:
 		case SLASH:
 		case TABLE_OF_CONTENTS_OPEN_MARKUP:
 		case TABLE_OF_CONTENTS_CLOSE_MARKUP:
 		case INSIGNIFICANT_CHAR:
-		case 43:
 		case 44:
 		case 45:
 		case 46:
@@ -6717,6 +6738,7 @@ public class Creole10Parser extends Parser {
 		case 76:
 		case 77:
 		case 78:
+		case 79:
 			{
 			alt83=1;
 			}
@@ -6758,7 +6780,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:434:6: t= text_unformattedelement
 			{
-			pushFollow(FOLLOW_text_unformattedelement_in_list_bolditalcontent2320);
+			pushFollow(FOLLOW_text_unformattedelement_in_list_bolditalcontent2307);
 			t=text_unformattedelement();
 			_fsp--;
 			if (failed) return text;
@@ -6821,7 +6843,7 @@ public class Creole10Parser extends Parser {
 		if ( (LA86_0==STAR) ) {
 		alt86=1;
 		}
-		else if ( ((LA86_0>=FORCED_END_OF_LINE && LA86_0<=WIKI)||LA86_0==POUND||(LA86_0>=EQUAL && LA86_0<=PIPE)||(LA86_0>=LINK_OPEN && LA86_0<=78)) ) {
+		else if ( ((LA86_0>=FORCED_END_OF_LINE && LA86_0<=WIKI)||LA86_0==POUND||(LA86_0>=EQUAL && LA86_0<=PIPE)||(LA86_0>=LINK_OPEN && LA86_0<=79)) ) {
 		alt86=2;
 		}
 		else {
@@ -6835,11 +6857,11 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:444:4: bold_markup c= list_bolditalcontent ( bold_markup )?
 			{
-			pushFollow(FOLLOW_bold_markup_in_list_italcontentpart2350);
+			pushFollow(FOLLOW_bold_markup_in_list_italcontentpart2336);
 			bold_markup();
 			_fsp--;
 			if (failed) return contents;
-			pushFollow(FOLLOW_list_bolditalcontent_in_list_italcontentpart2357);
+			pushFollow(FOLLOW_list_bolditalcontent_in_list_italcontentpart2343);
 			c=list_bolditalcontent();
 			_fsp--;
 			if (failed) return contents;
@@ -6861,7 +6883,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:444:88: bold_markup
 				{
-				pushFollow(FOLLOW_bold_markup_in_list_italcontentpart2364);
+				pushFollow(FOLLOW_bold_markup_in_list_italcontentpart2350);
 				bold_markup();
 				_fsp--;
 				if (failed) return contents;
@@ -6908,12 +6930,12 @@ public class Creole10Parser extends Parser {
 			case LF:
 			case SPACE:
 			case TABULATOR:
+			case BRACE_CLOSE:
 			case COLON_SLASH:
 			case SLASH:
 			case TABLE_OF_CONTENTS_OPEN_MARKUP:
 			case TABLE_OF_CONTENTS_CLOSE_MARKUP:
 			case INSIGNIFICANT_CHAR:
-			case 43:
 			case 44:
 			case 45:
 			case 46:
@@ -6949,6 +6971,7 @@ public class Creole10Parser extends Parser {
 			case 76:
 			case 77:
 			case 78:
+			case 79:
 				{
 				alt85=1;
 				}
@@ -6990,7 +7013,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:445:6: t= text_unformattedelement
 				{
-				pushFollow(FOLLOW_text_unformattedelement_in_list_italcontentpart2378);
+				pushFollow(FOLLOW_text_unformattedelement_in_list_italcontentpart2364);
 				t=text_unformattedelement();
 				_fsp--;
 				if (failed) return contents;
@@ -7060,7 +7083,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:450:6: tr= table_row
 			{
-			pushFollow(FOLLOW_table_row_in_table2408);
+			pushFollow(FOLLOW_table_row_in_table2394);
 			tr=table_row();
 			_fsp--;
 			if (failed) return table;
@@ -7124,7 +7147,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:453:6: tc= table_cell
 			{
-			pushFollow(FOLLOW_table_cell_in_table_row2434);
+			pushFollow(FOLLOW_table_cell_in_table_row2420);
 			tc=table_cell();
 			_fsp--;
 			if (failed) return row;
@@ -7145,7 +7168,7 @@ public class Creole10Parser extends Parser {
 		cnt88++;
 		} while (true);
 
-		pushFollow(FOLLOW_table_rowseparator_in_table_row2442);
+		pushFollow(FOLLOW_table_rowseparator_in_table_row2428);
 		table_rowseparator();
 		_fsp--;
 		if (failed) return row;
@@ -7199,7 +7222,7 @@ public class Creole10Parser extends Parser {
 			throw nvae;
 			}
 		}
-		else if ( (LA89_1==EOF||(LA89_1>=FORCED_END_OF_LINE && LA89_1<=STAR)||(LA89_1>=PIPE && LA89_1<=78)) ) {
+		else if ( (LA89_1==EOF||(LA89_1>=FORCED_END_OF_LINE && LA89_1<=STAR)||(LA89_1>=PIPE && LA89_1<=79)) ) {
 			alt89=2;
 		}
 		else {
@@ -7225,7 +7248,7 @@ public class Creole10Parser extends Parser {
 			if (backtracking>0) {failed=true; return cell;}
 			throw new FailedPredicateException(input, "table_cell", " input.LA(2) == EQUAL ");
 			}
-			pushFollow(FOLLOW_table_headercell_in_table_cell2463);
+			pushFollow(FOLLOW_table_headercell_in_table_cell2449);
 			th=table_headercell();
 			_fsp--;
 			if (failed) return cell;
@@ -7238,7 +7261,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:457:4: tc= table_normalcell
 			{
-			pushFollow(FOLLOW_table_normalcell_in_table_cell2474);
+			pushFollow(FOLLOW_table_normalcell_in_table_cell2460);
 			tc=table_normalcell();
 			_fsp--;
 			if (failed) return cell;
@@ -7274,11 +7297,11 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:460:2: ( table_headercell_markup tc= table_cellcontent )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:460:4: table_headercell_markup tc= table_cellcontent
 		{
-		pushFollow(FOLLOW_table_headercell_markup_in_table_headercell2490);
+		pushFollow(FOLLOW_table_headercell_markup_in_table_headercell2476);
 		table_headercell_markup();
 		_fsp--;
 		if (failed) return header;
-		pushFollow(FOLLOW_table_cellcontent_in_table_headercell2497);
+		pushFollow(FOLLOW_table_cellcontent_in_table_headercell2483);
 		tc=table_cellcontent();
 		_fsp--;
 		if (failed) return header;
@@ -7312,11 +7335,11 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:463:2: ( table_cell_markup tc= table_cellcontent )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:463:4: table_cell_markup tc= table_cellcontent
 		{
-		pushFollow(FOLLOW_table_cell_markup_in_table_normalcell2513);
+		pushFollow(FOLLOW_table_cell_markup_in_table_normalcell2499);
 		table_cell_markup();
 		_fsp--;
 		if (failed) return cell;
-		pushFollow(FOLLOW_table_cellcontent_in_table_normalcell2520);
+		pushFollow(FOLLOW_table_cellcontent_in_table_normalcell2506);
 		tc=table_cellcontent();
 		_fsp--;
 		if (failed) return cell;
@@ -7350,7 +7373,7 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:466:2: ( onestar (tcp= table_cellcontentpart onestar )* )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:466:4: onestar (tcp= table_cellcontentpart onestar )*
 		{
-		pushFollow(FOLLOW_onestar_in_table_cellcontent2536);
+		pushFollow(FOLLOW_onestar_in_table_cellcontent2522);
 		onestar();
 		_fsp--;
 		if (failed) return items;
@@ -7360,7 +7383,7 @@ public class Creole10Parser extends Parser {
 		int alt90=2;
 		int LA90_0 = input.LA(1);
 
-		if ( ((LA90_0>=FORCED_END_OF_LINE && LA90_0<=WIKI)||(LA90_0>=POUND && LA90_0<=EQUAL)||(LA90_0>=ITAL && LA90_0<=78)) ) {
+		if ( ((LA90_0>=FORCED_END_OF_LINE && LA90_0<=WIKI)||(LA90_0>=POUND && LA90_0<=EQUAL)||(LA90_0>=ITAL && LA90_0<=79)) ) {
 			alt90=1;
 		}
 
@@ -7369,14 +7392,14 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:466:15: tcp= table_cellcontentpart onestar
 			{
-			pushFollow(FOLLOW_table_cellcontentpart_in_table_cellcontent2545);
+			pushFollow(FOLLOW_table_cellcontentpart_in_table_cellcontent2531);
 			tcp=table_cellcontentpart();
 			_fsp--;
 			if (failed) return items;
 			if ( backtracking==0 ) {
 			  items.add(tcp); 
 			}
-			pushFollow(FOLLOW_onestar_in_table_cellcontent2550);
+			pushFollow(FOLLOW_onestar_in_table_cellcontent2536);
 			onestar();
 			_fsp--;
 			if (failed) return items;
@@ -7422,7 +7445,7 @@ public class Creole10Parser extends Parser {
 		if ( (LA91_0==STAR||LA91_0==ITAL) ) {
 		alt91=1;
 		}
-		else if ( ((LA91_0>=FORCED_END_OF_LINE && LA91_0<=WIKI)||LA91_0==POUND||LA91_0==EQUAL||(LA91_0>=LINK_OPEN && LA91_0<=78)) ) {
+		else if ( ((LA91_0>=FORCED_END_OF_LINE && LA91_0<=WIKI)||LA91_0==POUND||LA91_0==EQUAL||(LA91_0>=LINK_OPEN && LA91_0<=79)) ) {
 		alt91=2;
 		}
 		else {
@@ -7436,7 +7459,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:469:4: tf= table_formattedelement
 			{
-			pushFollow(FOLLOW_table_formattedelement_in_table_cellcontentpart2571);
+			pushFollow(FOLLOW_table_formattedelement_in_table_cellcontentpart2557);
 			tf=table_formattedelement();
 			_fsp--;
 			if (failed) return node;
@@ -7449,7 +7472,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:470:4: tu= table_unformattedelement
 			{
-			pushFollow(FOLLOW_table_unformattedelement_in_table_cellcontentpart2582);
+			pushFollow(FOLLOW_table_unformattedelement_in_table_cellcontentpart2568);
 			tu=table_unformattedelement();
 			_fsp--;
 			if (failed) return node;
@@ -7505,7 +7528,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:473:4: ital_markup (tic= table_italcontent )? ( ital_markup )?
 			{
-			pushFollow(FOLLOW_ital_markup_in_table_formattedelement2598);
+			pushFollow(FOLLOW_ital_markup_in_table_formattedelement2584);
 			ital_markup();
 			_fsp--;
 			if (failed) return content;
@@ -7541,12 +7564,12 @@ public class Creole10Parser extends Parser {
 			case LF:
 			case SPACE:
 			case TABULATOR:
+			case BRACE_CLOSE:
 			case COLON_SLASH:
 			case SLASH:
 			case TABLE_OF_CONTENTS_OPEN_MARKUP:
 			case TABLE_OF_CONTENTS_CLOSE_MARKUP:
 			case INSIGNIFICANT_CHAR:
-			case 43:
 			case 44:
 			case 45:
 			case 46:
@@ -7582,6 +7605,7 @@ public class Creole10Parser extends Parser {
 			case 76:
 			case 77:
 			case 78:
+			case 79:
 				{
 				alt92=1;
 				}
@@ -7627,7 +7651,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:473:20: tic= table_italcontent
 				{
-				pushFollow(FOLLOW_table_italcontent_in_table_formattedelement2608);
+				pushFollow(FOLLOW_table_italcontent_in_table_formattedelement2594);
 				tic=table_italcontent();
 				_fsp--;
 				if (failed) return content;
@@ -7651,7 +7675,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:473:96: ital_markup
 				{
-				pushFollow(FOLLOW_ital_markup_in_table_formattedelement2617);
+				pushFollow(FOLLOW_ital_markup_in_table_formattedelement2603);
 				ital_markup();
 				_fsp--;
 				if (failed) return content;
@@ -7667,7 +7691,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:474:4: bold_markup (tbc= table_boldcontent )? ( bold_markup )?
 			{
-			pushFollow(FOLLOW_bold_markup_in_table_formattedelement2625);
+			pushFollow(FOLLOW_bold_markup_in_table_formattedelement2611);
 			bold_markup();
 			_fsp--;
 			if (failed) return content;
@@ -7707,12 +7731,12 @@ public class Creole10Parser extends Parser {
 			case LF:
 			case SPACE:
 			case TABULATOR:
+			case BRACE_CLOSE:
 			case COLON_SLASH:
 			case SLASH:
 			case TABLE_OF_CONTENTS_OPEN_MARKUP:
 			case TABLE_OF_CONTENTS_CLOSE_MARKUP:
 			case INSIGNIFICANT_CHAR:
-			case 43:
 			case 44:
 			case 45:
 			case 46:
@@ -7748,6 +7772,7 @@ public class Creole10Parser extends Parser {
 			case 76:
 			case 77:
 			case 78:
+			case 79:
 				{
 				alt94=1;
 				}
@@ -7798,7 +7823,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:474:18: tbc= table_boldcontent
 				{
-				pushFollow(FOLLOW_table_boldcontent_in_table_formattedelement2632);
+				pushFollow(FOLLOW_table_boldcontent_in_table_formattedelement2618);
 				tbc=table_boldcontent();
 				_fsp--;
 				if (failed) return content;
@@ -7826,7 +7851,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:474:90: bold_markup
 				{
-				pushFollow(FOLLOW_bold_markup_in_table_formattedelement2642);
+				pushFollow(FOLLOW_bold_markup_in_table_formattedelement2628);
 				bold_markup();
 				_fsp--;
 				if (failed) return content;
@@ -7866,7 +7891,7 @@ public class Creole10Parser extends Parser {
 		int alt98=2;
 		int LA98_0 = input.LA(1);
 
-		if ( ((LA98_0>=FORCED_END_OF_LINE && LA98_0<=WIKI)||(LA98_0>=POUND && LA98_0<=EQUAL)||(LA98_0>=ITAL && LA98_0<=78)) ) {
+		if ( ((LA98_0>=FORCED_END_OF_LINE && LA98_0<=WIKI)||(LA98_0>=POUND && LA98_0<=EQUAL)||(LA98_0>=ITAL && LA98_0<=79)) ) {
 		alt98=1;
 		}
 		else if ( (LA98_0==EOF) ) {
@@ -7883,7 +7908,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:477:4: onestar (tb= table_boldcontentpart onestar )+
 			{
-			pushFollow(FOLLOW_onestar_in_table_boldcontent2659);
+			pushFollow(FOLLOW_onestar_in_table_boldcontent2645);
 			onestar();
 			_fsp--;
 			if (failed) return items;
@@ -7922,12 +7947,12 @@ public class Creole10Parser extends Parser {
 			case LF:
 			case SPACE:
 			case TABULATOR:
+			case BRACE_CLOSE:
 			case COLON_SLASH:
 			case SLASH:
 			case TABLE_OF_CONTENTS_OPEN_MARKUP:
 			case TABLE_OF_CONTENTS_CLOSE_MARKUP:
 			case INSIGNIFICANT_CHAR:
-			case 43:
 			case 44:
 			case 45:
 			case 46:
@@ -7963,6 +7988,7 @@ public class Creole10Parser extends Parser {
 			case 76:
 			case 77:
 			case 78:
+			case 79:
 				{
 				alt97=1;
 				}
@@ -8004,14 +8030,14 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:477:15: tb= table_boldcontentpart onestar
 				{
-				pushFollow(FOLLOW_table_boldcontentpart_in_table_boldcontent2668);
+				pushFollow(FOLLOW_table_boldcontentpart_in_table_boldcontent2654);
 				tb=table_boldcontentpart();
 				_fsp--;
 				if (failed) return items;
 				if ( backtracking==0 ) {
 				   items.add(tb); 
 				}
-				pushFollow(FOLLOW_onestar_in_table_boldcontent2673);
+				pushFollow(FOLLOW_onestar_in_table_boldcontent2659);
 				onestar();
 				_fsp--;
 				if (failed) return items;
@@ -8035,7 +8061,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:478:4: EOF
 			{
-			match(input,EOF,FOLLOW_EOF_in_table_boldcontent2681); if (failed) return items;
+			match(input,EOF,FOLLOW_EOF_in_table_boldcontent2667); if (failed) return items;
 
 			}
 			break;
@@ -8066,7 +8092,7 @@ public class Creole10Parser extends Parser {
 		int alt100=2;
 		int LA100_0 = input.LA(1);
 
-		if ( ((LA100_0>=FORCED_END_OF_LINE && LA100_0<=WIKI)||(LA100_0>=POUND && LA100_0<=EQUAL)||(LA100_0>=LINK_OPEN && LA100_0<=78)) ) {
+		if ( ((LA100_0>=FORCED_END_OF_LINE && LA100_0<=WIKI)||(LA100_0>=POUND && LA100_0<=EQUAL)||(LA100_0>=LINK_OPEN && LA100_0<=79)) ) {
 		alt100=1;
 		}
 		else if ( (LA100_0==EOF) ) {
@@ -8083,7 +8109,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:481:4: onestar (ti= table_italcontentpart onestar )+
 			{
-			pushFollow(FOLLOW_onestar_in_table_italcontent2695);
+			pushFollow(FOLLOW_onestar_in_table_italcontent2681);
 			onestar();
 			_fsp--;
 			if (failed) return items;
@@ -8122,12 +8148,12 @@ public class Creole10Parser extends Parser {
 			case LF:
 			case SPACE:
 			case TABULATOR:
+			case BRACE_CLOSE:
 			case COLON_SLASH:
 			case SLASH:
 			case TABLE_OF_CONTENTS_OPEN_MARKUP:
 			case TABLE_OF_CONTENTS_CLOSE_MARKUP:
 			case INSIGNIFICANT_CHAR:
-			case 43:
 			case 44:
 			case 45:
 			case 46:
@@ -8163,6 +8189,7 @@ public class Creole10Parser extends Parser {
 			case 76:
 			case 77:
 			case 78:
+			case 79:
 				{
 				alt99=1;
 				}
@@ -8204,14 +8231,14 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:481:15: ti= table_italcontentpart onestar
 				{
-				pushFollow(FOLLOW_table_italcontentpart_in_table_italcontent2704);
+				pushFollow(FOLLOW_table_italcontentpart_in_table_italcontent2690);
 				ti=table_italcontentpart();
 				_fsp--;
 				if (failed) return items;
 				if ( backtracking==0 ) {
 				   items.add(ti); 
 				}
-				pushFollow(FOLLOW_onestar_in_table_italcontent2709);
+				pushFollow(FOLLOW_onestar_in_table_italcontent2695);
 				onestar();
 				_fsp--;
 				if (failed) return items;
@@ -8235,7 +8262,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:482:4: EOF
 			{
-			match(input,EOF,FOLLOW_EOF_in_table_italcontent2717); if (failed) return items;
+			match(input,EOF,FOLLOW_EOF_in_table_italcontent2703); if (failed) return items;
 
 			}
 			break;
@@ -8268,7 +8295,7 @@ public class Creole10Parser extends Parser {
 		int alt102=2;
 		int LA102_0 = input.LA(1);
 
-		if ( ((LA102_0>=FORCED_END_OF_LINE && LA102_0<=WIKI)||LA102_0==POUND||LA102_0==EQUAL||(LA102_0>=LINK_OPEN && LA102_0<=78)) ) {
+		if ( ((LA102_0>=FORCED_END_OF_LINE && LA102_0<=WIKI)||LA102_0==POUND||LA102_0==EQUAL||(LA102_0>=LINK_OPEN && LA102_0<=79)) ) {
 		alt102=1;
 		}
 		else if ( (LA102_0==ITAL) ) {
@@ -8285,7 +8312,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:485:4: tf= table_formattedcontent
 			{
-			pushFollow(FOLLOW_table_formattedcontent_in_table_boldcontentpart2735);
+			pushFollow(FOLLOW_table_formattedcontent_in_table_boldcontentpart2721);
 			tf=table_formattedcontent();
 			_fsp--;
 			if (failed) return node;
@@ -8298,11 +8325,11 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:486:4: ital_markup tb= table_bolditalcontent ( ital_markup )?
 			{
-			pushFollow(FOLLOW_ital_markup_in_table_boldcontentpart2742);
+			pushFollow(FOLLOW_ital_markup_in_table_boldcontentpart2728);
 			ital_markup();
 			_fsp--;
 			if (failed) return node;
-			pushFollow(FOLLOW_table_bolditalcontent_in_table_boldcontentpart2749);
+			pushFollow(FOLLOW_table_bolditalcontent_in_table_boldcontentpart2735);
 			tb=table_bolditalcontent();
 			_fsp--;
 			if (failed) return node;
@@ -8320,7 +8347,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:486:94: ital_markup
 				{
-				pushFollow(FOLLOW_ital_markup_in_table_boldcontentpart2756);
+				pushFollow(FOLLOW_ital_markup_in_table_boldcontentpart2742);
 				ital_markup();
 				_fsp--;
 				if (failed) return node;
@@ -8365,7 +8392,7 @@ public class Creole10Parser extends Parser {
 		if ( (LA104_0==STAR) ) {
 		alt104=1;
 		}
-		else if ( ((LA104_0>=FORCED_END_OF_LINE && LA104_0<=WIKI)||LA104_0==POUND||LA104_0==EQUAL||(LA104_0>=LINK_OPEN && LA104_0<=78)) ) {
+		else if ( ((LA104_0>=FORCED_END_OF_LINE && LA104_0<=WIKI)||LA104_0==POUND||LA104_0==EQUAL||(LA104_0>=LINK_OPEN && LA104_0<=79)) ) {
 		alt104=2;
 		}
 		else {
@@ -8379,11 +8406,11 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:489:4: bold_markup tb= table_bolditalcontent ( bold_markup )?
 			{
-			pushFollow(FOLLOW_bold_markup_in_table_italcontentpart2773);
+			pushFollow(FOLLOW_bold_markup_in_table_italcontentpart2759);
 			bold_markup();
 			_fsp--;
 			if (failed) return node;
-			pushFollow(FOLLOW_table_bolditalcontent_in_table_italcontentpart2780);
+			pushFollow(FOLLOW_table_bolditalcontent_in_table_italcontentpart2766);
 			tb=table_bolditalcontent();
 			_fsp--;
 			if (failed) return node;
@@ -8405,7 +8432,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:489:90: bold_markup
 				{
-				pushFollow(FOLLOW_bold_markup_in_table_italcontentpart2787);
+				pushFollow(FOLLOW_bold_markup_in_table_italcontentpart2773);
 				bold_markup();
 				_fsp--;
 				if (failed) return node;
@@ -8421,7 +8448,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:490:4: tf= table_formattedcontent
 			{
-			pushFollow(FOLLOW_table_formattedcontent_in_table_italcontentpart2799);
+			pushFollow(FOLLOW_table_formattedcontent_in_table_italcontentpart2785);
 			tf=table_formattedcontent();
 			_fsp--;
 			if (failed) return node;
@@ -8458,7 +8485,7 @@ public class Creole10Parser extends Parser {
 		int alt106=2;
 		int LA106_0 = input.LA(1);
 
-		if ( ((LA106_0>=FORCED_END_OF_LINE && LA106_0<=EQUAL)||(LA106_0>=ITAL && LA106_0<=78)) ) {
+		if ( ((LA106_0>=FORCED_END_OF_LINE && LA106_0<=EQUAL)||(LA106_0>=ITAL && LA106_0<=79)) ) {
 		alt106=1;
 		}
 		else if ( (LA106_0==EOF||LA106_0==PIPE) ) {
@@ -8475,7 +8502,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:493:4: onestar (tfc= table_formattedcontent onestar )?
 			{
-			pushFollow(FOLLOW_onestar_in_table_bolditalcontent2815);
+			pushFollow(FOLLOW_onestar_in_table_bolditalcontent2801);
 			onestar();
 			_fsp--;
 			if (failed) return elements;
@@ -8506,12 +8533,12 @@ public class Creole10Parser extends Parser {
 			case LF:
 			case SPACE:
 			case TABULATOR:
+			case BRACE_CLOSE:
 			case COLON_SLASH:
 			case SLASH:
 			case TABLE_OF_CONTENTS_OPEN_MARKUP:
 			case TABLE_OF_CONTENTS_CLOSE_MARKUP:
 			case INSIGNIFICANT_CHAR:
-			case 43:
 			case 44:
 			case 45:
 			case 46:
@@ -8547,6 +8574,7 @@ public class Creole10Parser extends Parser {
 			case 76:
 			case 77:
 			case 78:
+			case 79:
 				{
 				alt105=1;
 				}
@@ -8587,14 +8615,14 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:493:15: tfc= table_formattedcontent onestar
 				{
-				pushFollow(FOLLOW_table_formattedcontent_in_table_bolditalcontent2824);
+				pushFollow(FOLLOW_table_formattedcontent_in_table_bolditalcontent2810);
 				tfc=table_formattedcontent();
 				_fsp--;
 				if (failed) return elements;
 				if ( backtracking==0 ) {
 				   elements = tfc; 
 				}
-				pushFollow(FOLLOW_onestar_in_table_bolditalcontent2829);
+				pushFollow(FOLLOW_onestar_in_table_bolditalcontent2815);
 				onestar();
 				_fsp--;
 				if (failed) return elements;
@@ -8610,7 +8638,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:494:4: EOF
 			{
-			match(input,EOF,FOLLOW_EOF_in_table_bolditalcontent2837); if (failed) return elements;
+			match(input,EOF,FOLLOW_EOF_in_table_bolditalcontent2823); if (failed) return elements;
 
 			}
 			break;
@@ -8670,12 +8698,12 @@ public class Creole10Parser extends Parser {
 		case LF:
 		case SPACE:
 		case TABULATOR:
+		case BRACE_CLOSE:
 		case COLON_SLASH:
 		case SLASH:
 		case TABLE_OF_CONTENTS_OPEN_MARKUP:
 		case TABLE_OF_CONTENTS_CLOSE_MARKUP:
 		case INSIGNIFICANT_CHAR:
-		case 43:
 		case 44:
 		case 45:
 		case 46:
@@ -8711,6 +8739,7 @@ public class Creole10Parser extends Parser {
 		case 76:
 		case 77:
 		case 78:
+		case 79:
 			{
 			alt107=1;
 			}
@@ -8752,7 +8781,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:497:6: tu= table_unformattedelement
 			{
-			pushFollow(FOLLOW_table_unformattedelement_in_table_formattedcontent2857);
+			pushFollow(FOLLOW_table_unformattedelement_in_table_formattedcontent2843);
 			tu=table_unformattedelement();
 			_fsp--;
 			if (failed) return elements;
@@ -8803,7 +8832,7 @@ public class Creole10Parser extends Parser {
 		int alt108=2;
 		int LA108_0 = input.LA(1);
 
-		if ( ((LA108_0>=FORCED_END_OF_LINE && LA108_0<=WIKI)||LA108_0==POUND||LA108_0==EQUAL||(LA108_0>=FORCED_LINEBREAK && LA108_0<=78)) ) {
+		if ( ((LA108_0>=FORCED_END_OF_LINE && LA108_0<=WIKI)||LA108_0==POUND||LA108_0==EQUAL||(LA108_0>=FORCED_LINEBREAK && LA108_0<=79)) ) {
 		alt108=1;
 		}
 		else if ( ((LA108_0>=LINK_OPEN && LA108_0<=EXTENSION)) ) {
@@ -8820,7 +8849,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:500:4: tu= table_unformatted
 			{
-			pushFollow(FOLLOW_table_unformatted_in_table_unformattedelement2880);
+			pushFollow(FOLLOW_table_unformatted_in_table_unformattedelement2866);
 			tu=table_unformatted();
 			_fsp--;
 			if (failed) return content;
@@ -8833,7 +8862,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:501:4: ti= table_inlineelement
 			{
-			pushFollow(FOLLOW_table_inlineelement_in_table_unformattedelement2892);
+			pushFollow(FOLLOW_table_inlineelement_in_table_unformattedelement2878);
 			ti=table_inlineelement();
 			_fsp--;
 			if (failed) return content;
@@ -8907,7 +8936,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:504:4: l= link
 			{
-			pushFollow(FOLLOW_link_in_table_inlineelement2913);
+			pushFollow(FOLLOW_link_in_table_inlineelement2899);
 			l=link();
 			_fsp--;
 			if (failed) return element;
@@ -8920,7 +8949,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:505:4: i= image
 			{
-			pushFollow(FOLLOW_image_in_table_inlineelement2923);
+			pushFollow(FOLLOW_image_in_table_inlineelement2909);
 			i=image();
 			_fsp--;
 			if (failed) return element;
@@ -8933,7 +8962,7 @@ public class Creole10Parser extends Parser {
 		case 3 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:506:4: e= extension
 			{
-			pushFollow(FOLLOW_extension_in_table_inlineelement2934);
+			pushFollow(FOLLOW_extension_in_table_inlineelement2920);
 			e=extension();
 			_fsp--;
 			if (failed) return element;
@@ -8946,7 +8975,7 @@ public class Creole10Parser extends Parser {
 		case 4 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:507:4: nw= nowiki_inline
 			{
-			pushFollow(FOLLOW_nowiki_inline_in_table_inlineelement2944);
+			pushFollow(FOLLOW_nowiki_inline_in_table_inlineelement2930);
 			nw=nowiki_inline();
 			_fsp--;
 			if (failed) return element;
@@ -8985,7 +9014,7 @@ public class Creole10Parser extends Parser {
 		int alt111=2;
 		int LA111_0 = input.LA(1);
 
-		if ( ((LA111_0>=FORCED_END_OF_LINE && LA111_0<=WIKI)||LA111_0==POUND||LA111_0==EQUAL||(LA111_0>=NOWIKI_BLOCK_CLOSE && LA111_0<=78)) ) {
+		if ( ((LA111_0>=FORCED_END_OF_LINE && LA111_0<=WIKI)||LA111_0==POUND||LA111_0==EQUAL||(LA111_0>=NOWIKI_BLOCK_CLOSE && LA111_0<=79)) ) {
 		alt111=1;
 		}
 		else if ( ((LA111_0>=FORCED_LINEBREAK && LA111_0<=ESCAPE)) ) {
@@ -9002,7 +9031,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:510:5: t= table_unformatted_text
 			{
-			pushFollow(FOLLOW_table_unformatted_text_in_table_unformatted2966);
+			pushFollow(FOLLOW_table_unformatted_text_in_table_unformatted2952);
 			t=table_unformatted_text();
 			_fsp--;
 			if (failed) return text;
@@ -9034,7 +9063,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:511:6: forced_linebreak
 				{
-				pushFollow(FOLLOW_forced_linebreak_in_table_unformatted2975);
+				pushFollow(FOLLOW_forced_linebreak_in_table_unformatted2961);
 				forced_linebreak();
 				_fsp--;
 				if (failed) return text;
@@ -9047,7 +9076,7 @@ public class Creole10Parser extends Parser {
 			case 2 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:512:5: e= escaped
 				{
-				pushFollow(FOLLOW_escaped_in_table_unformatted2988);
+				pushFollow(FOLLOW_escaped_in_table_unformatted2974);
 				e=escaped();
 				_fsp--;
 				if (failed) return text;
@@ -9103,7 +9132,7 @@ public class Creole10Parser extends Parser {
 		int alt112=2;
 		int LA112_0 = input.LA(1);
 
-		if ( ((LA112_0>=FORCED_END_OF_LINE && LA112_0<=WIKI)||LA112_0==POUND||LA112_0==EQUAL||(LA112_0>=NOWIKI_BLOCK_CLOSE && LA112_0<=78)) ) {
+		if ( ((LA112_0>=FORCED_END_OF_LINE && LA112_0<=WIKI)||LA112_0==POUND||LA112_0==EQUAL||(LA112_0>=NOWIKI_BLOCK_CLOSE && LA112_0<=79)) ) {
 			alt112=1;
 		}
 
@@ -9113,7 +9142,7 @@ public class Creole10Parser extends Parser {
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:516:6: c=~ ( PIPE | ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF )
 			{
 			c=(Token)input.LT(1);
-			if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=WIKI)||input.LA(1)==POUND||input.LA(1)==EQUAL||(input.LA(1)>=NOWIKI_BLOCK_CLOSE && input.LA(1)<=78) ) {
+			if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=WIKI)||input.LA(1)==POUND||input.LA(1)==EQUAL||(input.LA(1)>=NOWIKI_BLOCK_CLOSE && input.LA(1)<=79) ) {
 			input.consume();
 			errorRecovery=false;failed=false;
 			}
@@ -9121,7 +9150,7 @@ public class Creole10Parser extends Parser {
 			if (backtracking>0) {failed=true; return text;}
 			MismatchedSetException mse =
 				new MismatchedSetException(null,input);
-			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_table_unformatted_text3014);	 throw mse;
+			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_table_unformatted_text3000);	 throw mse;
 			}
 
 			if ( backtracking==0 ) {
@@ -9168,22 +9197,22 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:531:2: ( nowikiblock_open_markup contents= nowiki_block_contents nowikiblock_close_markup paragraph_separator )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:531:4: nowikiblock_open_markup contents= nowiki_block_contents nowikiblock_close_markup paragraph_separator
 		{
-		pushFollow(FOLLOW_nowikiblock_open_markup_in_nowiki_block3111);
+		pushFollow(FOLLOW_nowikiblock_open_markup_in_nowiki_block3097);
 		nowikiblock_open_markup();
 		_fsp--;
 		if (failed) return nowikiNode;
-		pushFollow(FOLLOW_nowiki_block_contents_in_nowiki_block3118);
+		pushFollow(FOLLOW_nowiki_block_contents_in_nowiki_block3104);
 		contents=nowiki_block_contents();
 		_fsp--;
 		if (failed) return nowikiNode;
 		if ( backtracking==0 ) {
 		  nowikiNode = new NoWikiSectionNode(input.toString(contents.start,contents.stop).toString());
 		}
-		pushFollow(FOLLOW_nowikiblock_close_markup_in_nowiki_block3124);
+		pushFollow(FOLLOW_nowikiblock_close_markup_in_nowiki_block3110);
 		nowikiblock_close_markup();
 		_fsp--;
 		if (failed) return nowikiNode;
-		pushFollow(FOLLOW_paragraph_separator_in_nowiki_block3127);
+		pushFollow(FOLLOW_paragraph_separator_in_nowiki_block3113);
 		paragraph_separator();
 		_fsp--;
 		if (failed) return nowikiNode;
@@ -9209,11 +9238,11 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:536:2: ( nowiki_open_markup newline )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:536:4: nowiki_open_markup newline
 		{
-		pushFollow(FOLLOW_nowiki_open_markup_in_nowikiblock_open_markup3142);
+		pushFollow(FOLLOW_nowiki_open_markup_in_nowikiblock_open_markup3125);
 		nowiki_open_markup();
 		_fsp--;
 		if (failed) return ;
-		pushFollow(FOLLOW_newline_in_nowikiblock_open_markup3145);
+		pushFollow(FOLLOW_newline_in_nowikiblock_open_markup3128);
 		newline();
 		_fsp--;
 		if (failed) return ;
@@ -9239,7 +9268,7 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:540:2: ( NOWIKI_BLOCK_CLOSE )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:540:4: NOWIKI_BLOCK_CLOSE
 		{
-		match(input,NOWIKI_BLOCK_CLOSE,FOLLOW_NOWIKI_BLOCK_CLOSE_in_nowikiblock_close_markup3157); if (failed) return ;
+		match(input,NOWIKI_BLOCK_CLOSE,FOLLOW_NOWIKI_BLOCK_CLOSE_in_nowikiblock_close_markup3140); if (failed) return ;
 
 		}
 
@@ -9267,15 +9296,15 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:544:2: ( nowiki_open_markup t= nowiki_inline_contents nowiki_close_markup )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:544:4: nowiki_open_markup t= nowiki_inline_contents nowiki_close_markup
 		{
-		pushFollow(FOLLOW_nowiki_open_markup_in_nowiki_inline3172);
+		pushFollow(FOLLOW_nowiki_open_markup_in_nowiki_inline3155);
 		nowiki_open_markup();
 		_fsp--;
 		if (failed) return nowiki;
-		pushFollow(FOLLOW_nowiki_inline_contents_in_nowiki_inline3179);
+		pushFollow(FOLLOW_nowiki_inline_contents_in_nowiki_inline3162);
 		t=nowiki_inline_contents();
 		_fsp--;
 		if (failed) return nowiki;
-		pushFollow(FOLLOW_nowiki_close_markup_in_nowiki_inline3184);
+		pushFollow(FOLLOW_nowiki_close_markup_in_nowiki_inline3167);
 		nowiki_close_markup();
 		_fsp--;
 		if (failed) return nowiki;
@@ -9310,25 +9339,25 @@ public class Creole10Parser extends Parser {
 
 	try {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:548:2: ( (c=~ ( NOWIKI_BLOCK_CLOSE | EOF ) )* )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:548:4: (c=~ ( NOWIKI_BLOCK_CLOSE | EOF ) )*
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:548:3: (c=~ ( NOWIKI_BLOCK_CLOSE | EOF ) )*
 		{
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:548:4: (c=~ ( NOWIKI_BLOCK_CLOSE | EOF ) )*
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:548:3: (c=~ ( NOWIKI_BLOCK_CLOSE | EOF ) )*
 		loop113:
 		do {
 		int alt113=2;
 		int LA113_0 = input.LA(1);
 
-		if ( ((LA113_0>=FORCED_END_OF_LINE && LA113_0<=ESCAPE)||(LA113_0>=NOWIKI_CLOSE && LA113_0<=78)) ) {
+		if ( ((LA113_0>=FORCED_END_OF_LINE && LA113_0<=ESCAPE)||(LA113_0>=NOWIKI_CLOSE && LA113_0<=79)) ) {
 			alt113=1;
 		}
 
 
 		switch (alt113) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:548:5: c=~ ( NOWIKI_BLOCK_CLOSE | EOF )
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:548:4: c=~ ( NOWIKI_BLOCK_CLOSE | EOF )
 			{
 			c=(Token)input.LT(1);
-			if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=ESCAPE)||(input.LA(1)>=NOWIKI_CLOSE && input.LA(1)<=78) ) {
+			if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=ESCAPE)||(input.LA(1)>=NOWIKI_CLOSE && input.LA(1)<=79) ) {
 			input.consume();
 			errorRecovery=false;failed=false;
 			}
@@ -9336,7 +9365,7 @@ public class Creole10Parser extends Parser {
 			if (backtracking>0) {failed=true; return retval;}
 			MismatchedSetException mse =
 				new MismatchedSetException(null,input);
-			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_nowiki_block_contents3204);	throw mse;
+			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_nowiki_block_contents3186);	throw mse;
 			}
 
 			if ( backtracking==0 ) {
@@ -9385,7 +9414,7 @@ public class Creole10Parser extends Parser {
 		int alt114=2;
 		int LA114_0 = input.LA(1);
 
-		if ( ((LA114_0>=FORCED_END_OF_LINE && LA114_0<=WIKI)||(LA114_0>=POUND && LA114_0<=NOWIKI_BLOCK_CLOSE)||(LA114_0>=LINK_CLOSE && LA114_0<=78)) ) {
+		if ( ((LA114_0>=FORCED_END_OF_LINE && LA114_0<=WIKI)||(LA114_0>=POUND && LA114_0<=NOWIKI_BLOCK_CLOSE)||(LA114_0>=LINK_CLOSE && LA114_0<=79)) ) {
 			alt114=1;
 		}
 
@@ -9395,7 +9424,7 @@ public class Creole10Parser extends Parser {
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:552:5: c=~ ( NOWIKI_CLOSE | NEWLINE | EOF )
 			{
 			c=(Token)input.LT(1);
-			if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=WIKI)||(input.LA(1)>=POUND && input.LA(1)<=NOWIKI_BLOCK_CLOSE)||(input.LA(1)>=LINK_CLOSE && input.LA(1)<=78) ) {
+			if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=WIKI)||(input.LA(1)>=POUND && input.LA(1)<=NOWIKI_BLOCK_CLOSE)||(input.LA(1)>=LINK_CLOSE && input.LA(1)<=79) ) {
 			input.consume();
 			errorRecovery=false;failed=false;
 			}
@@ -9403,7 +9432,7 @@ public class Creole10Parser extends Parser {
 			if (backtracking>0) {failed=true; return text;}
 			MismatchedSetException mse =
 				new MismatchedSetException(null,input);
-			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_nowiki_inline_contents3238);	 throw mse;
+			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_nowiki_inline_contents3219);	 throw mse;
 			}
 
 			if ( backtracking==0 ) {
@@ -9442,7 +9471,7 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:560:2: ( horizontalrule_markup ( blanks )? paragraph_separator )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:560:4: horizontalrule_markup ( blanks )? paragraph_separator
 		{
-		pushFollow(FOLLOW_horizontalrule_markup_in_horizontalrule3275);
+		pushFollow(FOLLOW_horizontalrule_markup_in_horizontalrule3256);
 		horizontalrule_markup();
 		_fsp--;
 		if (failed) return horizontal;
@@ -9457,7 +9486,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:560:29: blanks
 			{
-			pushFollow(FOLLOW_blanks_in_horizontalrule3280);
+			pushFollow(FOLLOW_blanks_in_horizontalrule3261);
 			blanks();
 			_fsp--;
 			if (failed) return horizontal;
@@ -9467,7 +9496,7 @@ public class Creole10Parser extends Parser {
 
 		}
 
-		pushFollow(FOLLOW_paragraph_separator_in_horizontalrule3286);
+		pushFollow(FOLLOW_paragraph_separator_in_horizontalrule3267);
 		paragraph_separator();
 		_fsp--;
 		if (failed) return horizontal;
@@ -9503,11 +9532,11 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:568:2: ( link_open_markup a= link_address ( link_description_markup d= link_description )? link_close_markup )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:568:4: link_open_markup a= link_address ( link_description_markup d= link_description )? link_close_markup
 		{
-		pushFollow(FOLLOW_link_open_markup_in_link3308);
+		pushFollow(FOLLOW_link_open_markup_in_link3289);
 		link_open_markup();
 		_fsp--;
 		if (failed) return link;
-		pushFollow(FOLLOW_link_address_in_link3314);
+		pushFollow(FOLLOW_link_address_in_link3295);
 		a=link_address();
 		_fsp--;
 		if (failed) return link;
@@ -9525,11 +9554,11 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:568:60: link_description_markup d= link_description
 			{
-			pushFollow(FOLLOW_link_description_markup_in_link3320);
+			pushFollow(FOLLOW_link_description_markup_in_link3301);
 			link_description_markup();
 			_fsp--;
 			if (failed) return link;
-			pushFollow(FOLLOW_link_description_in_link3330);
+			pushFollow(FOLLOW_link_description_in_link3311);
 			d=link_description();
 			_fsp--;
 			if (failed) return link;
@@ -9548,7 +9577,7 @@ public class Creole10Parser extends Parser {
 
 		}
 
-		pushFollow(FOLLOW_link_close_markup_in_link3338);
+		pushFollow(FOLLOW_link_close_markup_in_link3319);
 		link_close_markup();
 		_fsp--;
 		if (failed) return link;
@@ -9583,20 +9612,20 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:579:2: (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri )
 		int alt117=2;
 		switch ( input.LA(1) ) {
-		case 44:
+		case 45:
 		{
 		int LA117_1 = input.LA(2);
 
-		if ( (LA117_1==45) ) {
+		if ( (LA117_1==46) ) {
 			int LA117_16 = input.LA(3);
 
-			if ( (LA117_16==43) ) {
+			if ( (LA117_16==44) ) {
 			int LA117_34 = input.LA(4);
 
 			if ( (LA117_34==PIPE||LA117_34==LINK_CLOSE) ) {
 				alt117=2;
 			}
-			else if ( ((LA117_34>=FORCED_END_OF_LINE && LA117_34<=WIKI)||(LA117_34>=POUND && LA117_34<=EQUAL)||(LA117_34>=ITAL && LA117_34<=NOWIKI_CLOSE)||(LA117_34>=IMAGE_CLOSE && LA117_34<=78)) ) {
+			else if ( ((LA117_34>=FORCED_END_OF_LINE && LA117_34<=WIKI)||(LA117_34>=POUND && LA117_34<=EQUAL)||(LA117_34>=ITAL && LA117_34<=NOWIKI_CLOSE)||(LA117_34>=IMAGE_CLOSE && LA117_34<=79)) ) {
 				alt117=1;
 			}
 			else {
@@ -9607,7 +9636,7 @@ public class Creole10Parser extends Parser {
 				throw nvae;
 			}
 			}
-			else if ( ((LA117_16>=FORCED_END_OF_LINE && LA117_16<=WIKI)||(LA117_16>=POUND && LA117_16<=INSIGNIFICANT_CHAR)||(LA117_16>=44 && LA117_16<=78)) ) {
+			else if ( ((LA117_16>=FORCED_END_OF_LINE && LA117_16<=WIKI)||(LA117_16>=POUND && LA117_16<=INSIGNIFICANT_CHAR)||(LA117_16>=45 && LA117_16<=79)) ) {
 			alt117=2;
 			}
 			else {
@@ -9618,7 +9647,7 @@ public class Creole10Parser extends Parser {
 			throw nvae;
 			}
 		}
-		else if ( ((LA117_1>=FORCED_END_OF_LINE && LA117_1<=WIKI)||(LA117_1>=POUND && LA117_1<=44)||(LA117_1>=46 && LA117_1<=78)) ) {
+		else if ( ((LA117_1>=FORCED_END_OF_LINE && LA117_1<=WIKI)||(LA117_1>=POUND && LA117_1<=45)||(LA117_1>=47 && LA117_1<=79)) ) {
 			alt117=2;
 		}
 		else {
@@ -9630,38 +9659,38 @@ public class Creole10Parser extends Parser {
 		}
 		}
 		break;
-		case 46:
+		case 47:
 		{
 		int LA117_2 = input.LA(2);
 
-		if ( (LA117_2==47) ) {
+		if ( (LA117_2==48) ) {
 			int LA117_17 = input.LA(3);
 
-			if ( (LA117_17==48) ) {
+			if ( (LA117_17==49) ) {
 			int LA117_35 = input.LA(4);
 
-			if ( (LA117_35==49) ) {
+			if ( (LA117_35==50) ) {
 				int LA117_55 = input.LA(5);
 
-				if ( (LA117_55==50) ) {
+				if ( (LA117_55==51) ) {
 				int LA117_74 = input.LA(6);
 
-				if ( (LA117_74==51) ) {
+				if ( (LA117_74==52) ) {
 					int LA117_93 = input.LA(7);
 
-					if ( (LA117_93==48) ) {
+					if ( (LA117_93==49) ) {
 					int LA117_109 = input.LA(8);
 
-					if ( (LA117_109==51) ) {
+					if ( (LA117_109==52) ) {
 						int LA117_120 = input.LA(9);
 
-						if ( (LA117_120==43) ) {
+						if ( (LA117_120==44) ) {
 						int LA117_34 = input.LA(10);
 
 						if ( (LA117_34==PIPE||LA117_34==LINK_CLOSE) ) {
 							alt117=2;
 						}
-						else if ( ((LA117_34>=FORCED_END_OF_LINE && LA117_34<=WIKI)||(LA117_34>=POUND && LA117_34<=EQUAL)||(LA117_34>=ITAL && LA117_34<=NOWIKI_CLOSE)||(LA117_34>=IMAGE_CLOSE && LA117_34<=78)) ) {
+						else if ( ((LA117_34>=FORCED_END_OF_LINE && LA117_34<=WIKI)||(LA117_34>=POUND && LA117_34<=EQUAL)||(LA117_34>=ITAL && LA117_34<=NOWIKI_CLOSE)||(LA117_34>=IMAGE_CLOSE && LA117_34<=79)) ) {
 							alt117=1;
 						}
 						else {
@@ -9672,7 +9701,7 @@ public class Creole10Parser extends Parser {
 							throw nvae;
 						}
 						}
-						else if ( ((LA117_120>=FORCED_END_OF_LINE && LA117_120<=WIKI)||(LA117_120>=POUND && LA117_120<=INSIGNIFICANT_CHAR)||(LA117_120>=44 && LA117_120<=78)) ) {
+						else if ( ((LA117_120>=FORCED_END_OF_LINE && LA117_120<=WIKI)||(LA117_120>=POUND && LA117_120<=INSIGNIFICANT_CHAR)||(LA117_120>=45 && LA117_120<=79)) ) {
 						alt117=2;
 						}
 						else {
@@ -9683,7 +9712,7 @@ public class Creole10Parser extends Parser {
 						throw nvae;
 						}
 					}
-					else if ( ((LA117_109>=FORCED_END_OF_LINE && LA117_109<=WIKI)||(LA117_109>=POUND && LA117_109<=50)||(LA117_109>=52 && LA117_109<=78)) ) {
+					else if ( ((LA117_109>=FORCED_END_OF_LINE && LA117_109<=WIKI)||(LA117_109>=POUND && LA117_109<=51)||(LA117_109>=53 && LA117_109<=79)) ) {
 						alt117=2;
 					}
 					else {
@@ -9694,7 +9723,7 @@ public class Creole10Parser extends Parser {
 						throw nvae;
 					}
 					}
-					else if ( ((LA117_93>=FORCED_END_OF_LINE && LA117_93<=WIKI)||(LA117_93>=POUND && LA117_93<=47)||(LA117_93>=49 && LA117_93<=78)) ) {
+					else if ( ((LA117_93>=FORCED_END_OF_LINE && LA117_93<=WIKI)||(LA117_93>=POUND && LA117_93<=48)||(LA117_93>=50 && LA117_93<=79)) ) {
 					alt117=2;
 					}
 					else {
@@ -9705,7 +9734,7 @@ public class Creole10Parser extends Parser {
 					throw nvae;
 					}
 				}
-				else if ( ((LA117_74>=FORCED_END_OF_LINE && LA117_74<=WIKI)||(LA117_74>=POUND && LA117_74<=50)||(LA117_74>=52 && LA117_74<=78)) ) {
+				else if ( ((LA117_74>=FORCED_END_OF_LINE && LA117_74<=WIKI)||(LA117_74>=POUND && LA117_74<=51)||(LA117_74>=53 && LA117_74<=79)) ) {
 					alt117=2;
 				}
 				else {
@@ -9716,7 +9745,7 @@ public class Creole10Parser extends Parser {
 					throw nvae;
 				}
 				}
-				else if ( ((LA117_55>=FORCED_END_OF_LINE && LA117_55<=WIKI)||(LA117_55>=POUND && LA117_55<=49)||(LA117_55>=51 && LA117_55<=78)) ) {
+				else if ( ((LA117_55>=FORCED_END_OF_LINE && LA117_55<=WIKI)||(LA117_55>=POUND && LA117_55<=50)||(LA117_55>=52 && LA117_55<=79)) ) {
 				alt117=2;
 				}
 				else {
@@ -9727,7 +9756,7 @@ public class Creole10Parser extends Parser {
 				throw nvae;
 				}
 			}
-			else if ( ((LA117_35>=FORCED_END_OF_LINE && LA117_35<=WIKI)||(LA117_35>=POUND && LA117_35<=48)||(LA117_35>=50 && LA117_35<=78)) ) {
+			else if ( ((LA117_35>=FORCED_END_OF_LINE && LA117_35<=WIKI)||(LA117_35>=POUND && LA117_35<=49)||(LA117_35>=51 && LA117_35<=79)) ) {
 				alt117=2;
 			}
 			else {
@@ -9738,7 +9767,7 @@ public class Creole10Parser extends Parser {
 				throw nvae;
 			}
 			}
-			else if ( ((LA117_17>=FORCED_END_OF_LINE && LA117_17<=WIKI)||(LA117_17>=POUND && LA117_17<=47)||(LA117_17>=49 && LA117_17<=78)) ) {
+			else if ( ((LA117_17>=FORCED_END_OF_LINE && LA117_17<=WIKI)||(LA117_17>=POUND && LA117_17<=48)||(LA117_17>=50 && LA117_17<=79)) ) {
 			alt117=2;
 			}
 			else {
@@ -9749,7 +9778,7 @@ public class Creole10Parser extends Parser {
 			throw nvae;
 			}
 		}
-		else if ( ((LA117_2>=FORCED_END_OF_LINE && LA117_2<=WIKI)||(LA117_2>=POUND && LA117_2<=46)||(LA117_2>=48 && LA117_2<=78)) ) {
+		else if ( ((LA117_2>=FORCED_END_OF_LINE && LA117_2<=WIKI)||(LA117_2>=POUND && LA117_2<=47)||(LA117_2>=49 && LA117_2<=79)) ) {
 			alt117=2;
 		}
 		else {
@@ -9761,32 +9790,32 @@ public class Creole10Parser extends Parser {
 		}
 		}
 		break;
-		case 52:
+		case 53:
 		{
 		int LA117_3 = input.LA(2);
 
-		if ( (LA117_3==53) ) {
+		if ( (LA117_3==54) ) {
 			int LA117_18 = input.LA(3);
 
-			if ( (LA117_18==51) ) {
+			if ( (LA117_18==52) ) {
 			int LA117_36 = input.LA(4);
 
-			if ( (LA117_36==54) ) {
+			if ( (LA117_36==55) ) {
 				int LA117_56 = input.LA(5);
 
-				if ( (LA117_56==48) ) {
+				if ( (LA117_56==49) ) {
 				int LA117_75 = input.LA(6);
 
-				if ( (LA117_75==55) ) {
+				if ( (LA117_75==56) ) {
 					int LA117_94 = input.LA(7);
 
-					if ( (LA117_94==43) ) {
+					if ( (LA117_94==44) ) {
 					int LA117_34 = input.LA(8);
 
 					if ( (LA117_34==PIPE||LA117_34==LINK_CLOSE) ) {
 						alt117=2;
 					}
-					else if ( ((LA117_34>=FORCED_END_OF_LINE && LA117_34<=WIKI)||(LA117_34>=POUND && LA117_34<=EQUAL)||(LA117_34>=ITAL && LA117_34<=NOWIKI_CLOSE)||(LA117_34>=IMAGE_CLOSE && LA117_34<=78)) ) {
+					else if ( ((LA117_34>=FORCED_END_OF_LINE && LA117_34<=WIKI)||(LA117_34>=POUND && LA117_34<=EQUAL)||(LA117_34>=ITAL && LA117_34<=NOWIKI_CLOSE)||(LA117_34>=IMAGE_CLOSE && LA117_34<=79)) ) {
 						alt117=1;
 					}
 					else {
@@ -9797,7 +9826,7 @@ public class Creole10Parser extends Parser {
 						throw nvae;
 					}
 					}
-					else if ( ((LA117_94>=FORCED_END_OF_LINE && LA117_94<=WIKI)||(LA117_94>=POUND && LA117_94<=INSIGNIFICANT_CHAR)||(LA117_94>=44 && LA117_94<=78)) ) {
+					else if ( ((LA117_94>=FORCED_END_OF_LINE && LA117_94<=WIKI)||(LA117_94>=POUND && LA117_94<=INSIGNIFICANT_CHAR)||(LA117_94>=45 && LA117_94<=79)) ) {
 					alt117=2;
 					}
 					else {
@@ -9808,7 +9837,7 @@ public class Creole10Parser extends Parser {
 					throw nvae;
 					}
 				}
-				else if ( ((LA117_75>=FORCED_END_OF_LINE && LA117_75<=WIKI)||(LA117_75>=POUND && LA117_75<=54)||(LA117_75>=56 && LA117_75<=78)) ) {
+				else if ( ((LA117_75>=FORCED_END_OF_LINE && LA117_75<=WIKI)||(LA117_75>=POUND && LA117_75<=55)||(LA117_75>=57 && LA117_75<=79)) ) {
 					alt117=2;
 				}
 				else {
@@ -9819,7 +9848,7 @@ public class Creole10Parser extends Parser {
 					throw nvae;
 				}
 				}
-				else if ( ((LA117_56>=FORCED_END_OF_LINE && LA117_56<=WIKI)||(LA117_56>=POUND && LA117_56<=47)||(LA117_56>=49 && LA117_56<=78)) ) {
+				else if ( ((LA117_56>=FORCED_END_OF_LINE && LA117_56<=WIKI)||(LA117_56>=POUND && LA117_56<=48)||(LA117_56>=50 && LA117_56<=79)) ) {
 				alt117=2;
 				}
 				else {
@@ -9830,7 +9859,7 @@ public class Creole10Parser extends Parser {
 				throw nvae;
 				}
 			}
-			else if ( ((LA117_36>=FORCED_END_OF_LINE && LA117_36<=WIKI)||(LA117_36>=POUND && LA117_36<=53)||(LA117_36>=55 && LA117_36<=78)) ) {
+			else if ( ((LA117_36>=FORCED_END_OF_LINE && LA117_36<=WIKI)||(LA117_36>=POUND && LA117_36<=54)||(LA117_36>=56 && LA117_36<=79)) ) {
 				alt117=2;
 			}
 			else {
@@ -9841,7 +9870,7 @@ public class Creole10Parser extends Parser {
 				throw nvae;
 			}
 			}
-			else if ( ((LA117_18>=FORCED_END_OF_LINE && LA117_18<=WIKI)||(LA117_18>=POUND && LA117_18<=50)||(LA117_18>=52 && LA117_18<=78)) ) {
+			else if ( ((LA117_18>=FORCED_END_OF_LINE && LA117_18<=WIKI)||(LA117_18>=POUND && LA117_18<=51)||(LA117_18>=53 && LA117_18<=79)) ) {
 			alt117=2;
 			}
 			else {
@@ -9852,7 +9881,7 @@ public class Creole10Parser extends Parser {
 			throw nvae;
 			}
 		}
-		else if ( ((LA117_3>=FORCED_END_OF_LINE && LA117_3<=WIKI)||(LA117_3>=POUND && LA117_3<=52)||(LA117_3>=54 && LA117_3<=78)) ) {
+		else if ( ((LA117_3>=FORCED_END_OF_LINE && LA117_3<=WIKI)||(LA117_3>=POUND && LA117_3<=53)||(LA117_3>=55 && LA117_3<=79)) ) {
 			alt117=2;
 		}
 		else {
@@ -9864,32 +9893,32 @@ public class Creole10Parser extends Parser {
 		}
 		}
 		break;
-		case 56:
+		case 57:
 		{
 		int LA117_4 = input.LA(2);
 
-		if ( (LA117_4==47) ) {
+		if ( (LA117_4==48) ) {
 			int LA117_19 = input.LA(3);
 
-			if ( (LA117_19==47) ) {
+			if ( (LA117_19==48) ) {
 			int LA117_37 = input.LA(4);
 
-			if ( (LA117_37==57) ) {
+			if ( (LA117_37==58) ) {
 				int LA117_57 = input.LA(5);
 
-				if ( (LA117_57==53) ) {
+				if ( (LA117_57==54) ) {
 				int LA117_76 = input.LA(6);
 
-				if ( (LA117_76==58) ) {
+				if ( (LA117_76==59) ) {
 					int LA117_95 = input.LA(7);
 
-					if ( (LA117_95==43) ) {
+					if ( (LA117_95==44) ) {
 					int LA117_34 = input.LA(8);
 
 					if ( (LA117_34==PIPE||LA117_34==LINK_CLOSE) ) {
 						alt117=2;
 					}
-					else if ( ((LA117_34>=FORCED_END_OF_LINE && LA117_34<=WIKI)||(LA117_34>=POUND && LA117_34<=EQUAL)||(LA117_34>=ITAL && LA117_34<=NOWIKI_CLOSE)||(LA117_34>=IMAGE_CLOSE && LA117_34<=78)) ) {
+					else if ( ((LA117_34>=FORCED_END_OF_LINE && LA117_34<=WIKI)||(LA117_34>=POUND && LA117_34<=EQUAL)||(LA117_34>=ITAL && LA117_34<=NOWIKI_CLOSE)||(LA117_34>=IMAGE_CLOSE && LA117_34<=79)) ) {
 						alt117=1;
 					}
 					else {
@@ -9900,7 +9929,7 @@ public class Creole10Parser extends Parser {
 						throw nvae;
 					}
 					}
-					else if ( ((LA117_95>=FORCED_END_OF_LINE && LA117_95<=WIKI)||(LA117_95>=POUND && LA117_95<=INSIGNIFICANT_CHAR)||(LA117_95>=44 && LA117_95<=78)) ) {
+					else if ( ((LA117_95>=FORCED_END_OF_LINE && LA117_95<=WIKI)||(LA117_95>=POUND && LA117_95<=INSIGNIFICANT_CHAR)||(LA117_95>=45 && LA117_95<=79)) ) {
 					alt117=2;
 					}
 					else {
@@ -9911,7 +9940,7 @@ public class Creole10Parser extends Parser {
 					throw nvae;
 					}
 				}
-				else if ( ((LA117_76>=FORCED_END_OF_LINE && LA117_76<=WIKI)||(LA117_76>=POUND && LA117_76<=57)||(LA117_76>=59 && LA117_76<=78)) ) {
+				else if ( ((LA117_76>=FORCED_END_OF_LINE && LA117_76<=WIKI)||(LA117_76>=POUND && LA117_76<=58)||(LA117_76>=60 && LA117_76<=79)) ) {
 					alt117=2;
 				}
 				else {
@@ -9922,7 +9951,7 @@ public class Creole10Parser extends Parser {
 					throw nvae;
 				}
 				}
-				else if ( ((LA117_57>=FORCED_END_OF_LINE && LA117_57<=WIKI)||(LA117_57>=POUND && LA117_57<=52)||(LA117_57>=54 && LA117_57<=78)) ) {
+				else if ( ((LA117_57>=FORCED_END_OF_LINE && LA117_57<=WIKI)||(LA117_57>=POUND && LA117_57<=53)||(LA117_57>=55 && LA117_57<=79)) ) {
 				alt117=2;
 				}
 				else {
@@ -9933,7 +9962,7 @@ public class Creole10Parser extends Parser {
 				throw nvae;
 				}
 			}
-			else if ( ((LA117_37>=FORCED_END_OF_LINE && LA117_37<=WIKI)||(LA117_37>=POUND && LA117_37<=56)||(LA117_37>=58 && LA117_37<=78)) ) {
+			else if ( ((LA117_37>=FORCED_END_OF_LINE && LA117_37<=WIKI)||(LA117_37>=POUND && LA117_37<=57)||(LA117_37>=59 && LA117_37<=79)) ) {
 				alt117=2;
 			}
 			else {
@@ -9944,7 +9973,7 @@ public class Creole10Parser extends Parser {
 				throw nvae;
 			}
 			}
-			else if ( ((LA117_19>=FORCED_END_OF_LINE && LA117_19<=WIKI)||(LA117_19>=POUND && LA117_19<=46)||(LA117_19>=48 && LA117_19<=78)) ) {
+			else if ( ((LA117_19>=FORCED_END_OF_LINE && LA117_19<=WIKI)||(LA117_19>=POUND && LA117_19<=47)||(LA117_19>=49 && LA117_19<=79)) ) {
 			alt117=2;
 			}
 			else {
@@ -9955,7 +9984,7 @@ public class Creole10Parser extends Parser {
 			throw nvae;
 			}
 		}
-		else if ( ((LA117_4>=FORCED_END_OF_LINE && LA117_4<=WIKI)||(LA117_4>=POUND && LA117_4<=46)||(LA117_4>=48 && LA117_4<=78)) ) {
+		else if ( ((LA117_4>=FORCED_END_OF_LINE && LA117_4<=WIKI)||(LA117_4>=POUND && LA117_4<=47)||(LA117_4>=49 && LA117_4<=79)) ) {
 			alt117=2;
 		}
 		else {
@@ -9967,35 +9996,35 @@ public class Creole10Parser extends Parser {
 		}
 		}
 		break;
-		case 59:
+		case 60:
 		{
 		int LA117_5 = input.LA(2);
 
-		if ( (LA117_5==60) ) {
+		if ( (LA117_5==61) ) {
 			int LA117_20 = input.LA(3);
 
-			if ( (LA117_20==61) ) {
+			if ( (LA117_20==62) ) {
 			int LA117_38 = input.LA(4);
 
-			if ( (LA117_38==50) ) {
+			if ( (LA117_38==51) ) {
 				int LA117_58 = input.LA(5);
 
-				if ( (LA117_58==51) ) {
+				if ( (LA117_58==52) ) {
 				int LA117_77 = input.LA(6);
 
-				if ( (LA117_77==48) ) {
+				if ( (LA117_77==49) ) {
 					int LA117_96 = input.LA(7);
 
-					if ( (LA117_96==51) ) {
+					if ( (LA117_96==52) ) {
 					int LA117_110 = input.LA(8);
 
-					if ( (LA117_110==43) ) {
+					if ( (LA117_110==44) ) {
 						int LA117_34 = input.LA(9);
 
 						if ( (LA117_34==PIPE||LA117_34==LINK_CLOSE) ) {
 						alt117=2;
 						}
-						else if ( ((LA117_34>=FORCED_END_OF_LINE && LA117_34<=WIKI)||(LA117_34>=POUND && LA117_34<=EQUAL)||(LA117_34>=ITAL && LA117_34<=NOWIKI_CLOSE)||(LA117_34>=IMAGE_CLOSE && LA117_34<=78)) ) {
+						else if ( ((LA117_34>=FORCED_END_OF_LINE && LA117_34<=WIKI)||(LA117_34>=POUND && LA117_34<=EQUAL)||(LA117_34>=ITAL && LA117_34<=NOWIKI_CLOSE)||(LA117_34>=IMAGE_CLOSE && LA117_34<=79)) ) {
 						alt117=1;
 						}
 						else {
@@ -10006,7 +10035,7 @@ public class Creole10Parser extends Parser {
 						throw nvae;
 						}
 					}
-					else if ( ((LA117_110>=FORCED_END_OF_LINE && LA117_110<=WIKI)||(LA117_110>=POUND && LA117_110<=INSIGNIFICANT_CHAR)||(LA117_110>=44 && LA117_110<=78)) ) {
+					else if ( ((LA117_110>=FORCED_END_OF_LINE && LA117_110<=WIKI)||(LA117_110>=POUND && LA117_110<=INSIGNIFICANT_CHAR)||(LA117_110>=45 && LA117_110<=79)) ) {
 						alt117=2;
 					}
 					else {
@@ -10017,7 +10046,7 @@ public class Creole10Parser extends Parser {
 						throw nvae;
 					}
 					}
-					else if ( ((LA117_96>=FORCED_END_OF_LINE && LA117_96<=WIKI)||(LA117_96>=POUND && LA117_96<=50)||(LA117_96>=52 && LA117_96<=78)) ) {
+					else if ( ((LA117_96>=FORCED_END_OF_LINE && LA117_96<=WIKI)||(LA117_96>=POUND && LA117_96<=51)||(LA117_96>=53 && LA117_96<=79)) ) {
 					alt117=2;
 					}
 					else {
@@ -10028,7 +10057,7 @@ public class Creole10Parser extends Parser {
 					throw nvae;
 					}
 				}
-				else if ( ((LA117_77>=FORCED_END_OF_LINE && LA117_77<=WIKI)||(LA117_77>=POUND && LA117_77<=47)||(LA117_77>=49 && LA117_77<=78)) ) {
+				else if ( ((LA117_77>=FORCED_END_OF_LINE && LA117_77<=WIKI)||(LA117_77>=POUND && LA117_77<=48)||(LA117_77>=50 && LA117_77<=79)) ) {
 					alt117=2;
 				}
 				else {
@@ -10039,7 +10068,7 @@ public class Creole10Parser extends Parser {
 					throw nvae;
 				}
 				}
-				else if ( ((LA117_58>=FORCED_END_OF_LINE && LA117_58<=WIKI)||(LA117_58>=POUND && LA117_58<=50)||(LA117_58>=52 && LA117_58<=78)) ) {
+				else if ( ((LA117_58>=FORCED_END_OF_LINE && LA117_58<=WIKI)||(LA117_58>=POUND && LA117_58<=51)||(LA117_58>=53 && LA117_58<=79)) ) {
 				alt117=2;
 				}
 				else {
@@ -10050,7 +10079,7 @@ public class Creole10Parser extends Parser {
 				throw nvae;
 				}
 			}
-			else if ( ((LA117_38>=FORCED_END_OF_LINE && LA117_38<=WIKI)||(LA117_38>=POUND && LA117_38<=49)||(LA117_38>=51 && LA117_38<=78)) ) {
+			else if ( ((LA117_38>=FORCED_END_OF_LINE && LA117_38<=WIKI)||(LA117_38>=POUND && LA117_38<=50)||(LA117_38>=52 && LA117_38<=79)) ) {
 				alt117=2;
 			}
 			else {
@@ -10061,7 +10090,7 @@ public class Creole10Parser extends Parser {
 				throw nvae;
 			}
 			}
-			else if ( ((LA117_20>=FORCED_END_OF_LINE && LA117_20<=WIKI)||(LA117_20>=POUND && LA117_20<=60)||(LA117_20>=62 && LA117_20<=78)) ) {
+			else if ( ((LA117_20>=FORCED_END_OF_LINE && LA117_20<=WIKI)||(LA117_20>=POUND && LA117_20<=61)||(LA117_20>=63 && LA117_20<=79)) ) {
 			alt117=2;
 			}
 			else {
@@ -10072,7 +10101,7 @@ public class Creole10Parser extends Parser {
 			throw nvae;
 			}
 		}
-		else if ( ((LA117_5>=FORCED_END_OF_LINE && LA117_5<=WIKI)||(LA117_5>=POUND && LA117_5<=59)||(LA117_5>=61 && LA117_5<=78)) ) {
+		else if ( ((LA117_5>=FORCED_END_OF_LINE && LA117_5<=WIKI)||(LA117_5>=POUND && LA117_5<=60)||(LA117_5>=62 && LA117_5<=79)) ) {
 			alt117=2;
 		}
 		else {
@@ -10084,38 +10113,38 @@ public class Creole10Parser extends Parser {
 		}
 		}
 		break;
-		case 62:
+		case 63:
 		{
 		switch ( input.LA(2) ) {
-		case 58:
+		case 59:
 			{
 			switch ( input.LA(3) ) {
-			case 63:
+			case 64:
 			{
 			int LA117_39 = input.LA(4);
 
-			if ( (LA117_39==64) ) {
+			if ( (LA117_39==65) ) {
 				int LA117_59 = input.LA(5);
 
-				if ( (LA117_59==65) ) {
+				if ( (LA117_59==66) ) {
 				int LA117_78 = input.LA(6);
 
-				if ( (LA117_78==63) ) {
+				if ( (LA117_78==64) ) {
 					int LA117_97 = input.LA(7);
 
-					if ( (LA117_97==53) ) {
+					if ( (LA117_97==54) ) {
 					int LA117_111 = input.LA(8);
 
-					if ( (LA117_111==53) ) {
+					if ( (LA117_111==54) ) {
 						int LA117_121 = input.LA(9);
 
-						if ( (LA117_121==43) ) {
+						if ( (LA117_121==44) ) {
 						int LA117_34 = input.LA(10);
 
 						if ( (LA117_34==PIPE||LA117_34==LINK_CLOSE) ) {
 							alt117=2;
 						}
-						else if ( ((LA117_34>=FORCED_END_OF_LINE && LA117_34<=WIKI)||(LA117_34>=POUND && LA117_34<=EQUAL)||(LA117_34>=ITAL && LA117_34<=NOWIKI_CLOSE)||(LA117_34>=IMAGE_CLOSE && LA117_34<=78)) ) {
+						else if ( ((LA117_34>=FORCED_END_OF_LINE && LA117_34<=WIKI)||(LA117_34>=POUND && LA117_34<=EQUAL)||(LA117_34>=ITAL && LA117_34<=NOWIKI_CLOSE)||(LA117_34>=IMAGE_CLOSE && LA117_34<=79)) ) {
 							alt117=1;
 						}
 						else {
@@ -10126,7 +10155,7 @@ public class Creole10Parser extends Parser {
 							throw nvae;
 						}
 						}
-						else if ( ((LA117_121>=FORCED_END_OF_LINE && LA117_121<=WIKI)||(LA117_121>=POUND && LA117_121<=INSIGNIFICANT_CHAR)||(LA117_121>=44 && LA117_121<=78)) ) {
+						else if ( ((LA117_121>=FORCED_END_OF_LINE && LA117_121<=WIKI)||(LA117_121>=POUND && LA117_121<=INSIGNIFICANT_CHAR)||(LA117_121>=45 && LA117_121<=79)) ) {
 						alt117=2;
 						}
 						else {
@@ -10137,7 +10166,7 @@ public class Creole10Parser extends Parser {
 						throw nvae;
 						}
 					}
-					else if ( ((LA117_111>=FORCED_END_OF_LINE && LA117_111<=WIKI)||(LA117_111>=POUND && LA117_111<=52)||(LA117_111>=54 && LA117_111<=78)) ) {
+					else if ( ((LA117_111>=FORCED_END_OF_LINE && LA117_111<=WIKI)||(LA117_111>=POUND && LA117_111<=53)||(LA117_111>=55 && LA117_111<=79)) ) {
 						alt117=2;
 					}
 					else {
@@ -10148,7 +10177,7 @@ public class Creole10Parser extends Parser {
 						throw nvae;
 					}
 					}
-					else if ( ((LA117_97>=FORCED_END_OF_LINE && LA117_97<=WIKI)||(LA117_97>=POUND && LA117_97<=52)||(LA117_97>=54 && LA117_97<=78)) ) {
+					else if ( ((LA117_97>=FORCED_END_OF_LINE && LA117_97<=WIKI)||(LA117_97>=POUND && LA117_97<=53)||(LA117_97>=55 && LA117_97<=79)) ) {
 					alt117=2;
 					}
 					else {
@@ -10159,7 +10188,7 @@ public class Creole10Parser extends Parser {
 					throw nvae;
 					}
 				}
-				else if ( ((LA117_78>=FORCED_END_OF_LINE && LA117_78<=WIKI)||(LA117_78>=POUND && LA117_78<=62)||(LA117_78>=64 && LA117_78<=78)) ) {
+				else if ( ((LA117_78>=FORCED_END_OF_LINE && LA117_78<=WIKI)||(LA117_78>=POUND && LA117_78<=63)||(LA117_78>=65 && LA117_78<=79)) ) {
 					alt117=2;
 				}
 				else {
@@ -10170,7 +10199,7 @@ public class Creole10Parser extends Parser {
 					throw nvae;
 				}
 				}
-				else if ( ((LA117_59>=FORCED_END_OF_LINE && LA117_59<=WIKI)||(LA117_59>=POUND && LA117_59<=64)||(LA117_59>=66 && LA117_59<=78)) ) {
+				else if ( ((LA117_59>=FORCED_END_OF_LINE && LA117_59<=WIKI)||(LA117_59>=POUND && LA117_59<=65)||(LA117_59>=67 && LA117_59<=79)) ) {
 				alt117=2;
 				}
 				else {
@@ -10181,7 +10210,7 @@ public class Creole10Parser extends Parser {
 				throw nvae;
 				}
 			}
-			else if ( ((LA117_39>=FORCED_END_OF_LINE && LA117_39<=WIKI)||(LA117_39>=POUND && LA117_39<=63)||(LA117_39>=65 && LA117_39<=78)) ) {
+			else if ( ((LA117_39>=FORCED_END_OF_LINE && LA117_39<=WIKI)||(LA117_39>=POUND && LA117_39<=64)||(LA117_39>=66 && LA117_39<=79)) ) {
 				alt117=2;
 			}
 			else {
@@ -10193,35 +10222,35 @@ public class Creole10Parser extends Parser {
 			}
 			}
 			break;
-			case 66:
+			case 67:
 			{
 			int LA117_40 = input.LA(4);
 
-			if ( (LA117_40==51) ) {
+			if ( (LA117_40==52) ) {
 				int LA117_60 = input.LA(5);
 
-				if ( (LA117_60==63) ) {
+				if ( (LA117_60==64) ) {
 				int LA117_79 = input.LA(6);
 
-				if ( (LA117_79==50) ) {
+				if ( (LA117_79==51) ) {
 					int LA117_98 = input.LA(7);
 
-					if ( (LA117_98==51) ) {
+					if ( (LA117_98==52) ) {
 					int LA117_112 = input.LA(8);
 
-					if ( (LA117_112==48) ) {
+					if ( (LA117_112==49) ) {
 						int LA117_122 = input.LA(9);
 
-						if ( (LA117_122==51) ) {
+						if ( (LA117_122==52) ) {
 						int LA117_129 = input.LA(10);
 
-						if ( (LA117_129==43) ) {
+						if ( (LA117_129==44) ) {
 							int LA117_34 = input.LA(11);
 
 							if ( (LA117_34==PIPE||LA117_34==LINK_CLOSE) ) {
 							alt117=2;
 							}
-							else if ( ((LA117_34>=FORCED_END_OF_LINE && LA117_34<=WIKI)||(LA117_34>=POUND && LA117_34<=EQUAL)||(LA117_34>=ITAL && LA117_34<=NOWIKI_CLOSE)||(LA117_34>=IMAGE_CLOSE && LA117_34<=78)) ) {
+							else if ( ((LA117_34>=FORCED_END_OF_LINE && LA117_34<=WIKI)||(LA117_34>=POUND && LA117_34<=EQUAL)||(LA117_34>=ITAL && LA117_34<=NOWIKI_CLOSE)||(LA117_34>=IMAGE_CLOSE && LA117_34<=79)) ) {
 							alt117=1;
 							}
 							else {
@@ -10232,7 +10261,7 @@ public class Creole10Parser extends Parser {
 							throw nvae;
 							}
 						}
-						else if ( ((LA117_129>=FORCED_END_OF_LINE && LA117_129<=WIKI)||(LA117_129>=POUND && LA117_129<=INSIGNIFICANT_CHAR)||(LA117_129>=44 && LA117_129<=78)) ) {
+						else if ( ((LA117_129>=FORCED_END_OF_LINE && LA117_129<=WIKI)||(LA117_129>=POUND && LA117_129<=INSIGNIFICANT_CHAR)||(LA117_129>=45 && LA117_129<=79)) ) {
 							alt117=2;
 						}
 						else {
@@ -10243,7 +10272,7 @@ public class Creole10Parser extends Parser {
 							throw nvae;
 						}
 						}
-						else if ( ((LA117_122>=FORCED_END_OF_LINE && LA117_122<=WIKI)||(LA117_122>=POUND && LA117_122<=50)||(LA117_122>=52 && LA117_122<=78)) ) {
+						else if ( ((LA117_122>=FORCED_END_OF_LINE && LA117_122<=WIKI)||(LA117_122>=POUND && LA117_122<=51)||(LA117_122>=53 && LA117_122<=79)) ) {
 						alt117=2;
 						}
 						else {
@@ -10254,7 +10283,7 @@ public class Creole10Parser extends Parser {
 						throw nvae;
 						}
 					}
-					else if ( ((LA117_112>=FORCED_END_OF_LINE && LA117_112<=WIKI)||(LA117_112>=POUND && LA117_112<=47)||(LA117_112>=49 && LA117_112<=78)) ) {
+					else if ( ((LA117_112>=FORCED_END_OF_LINE && LA117_112<=WIKI)||(LA117_112>=POUND && LA117_112<=48)||(LA117_112>=50 && LA117_112<=79)) ) {
 						alt117=2;
 					}
 					else {
@@ -10265,7 +10294,7 @@ public class Creole10Parser extends Parser {
 						throw nvae;
 					}
 					}
-					else if ( ((LA117_98>=FORCED_END_OF_LINE && LA117_98<=WIKI)||(LA117_98>=POUND && LA117_98<=50)||(LA117_98>=52 && LA117_98<=78)) ) {
+					else if ( ((LA117_98>=FORCED_END_OF_LINE && LA117_98<=WIKI)||(LA117_98>=POUND && LA117_98<=51)||(LA117_98>=53 && LA117_98<=79)) ) {
 					alt117=2;
 					}
 					else {
@@ -10276,7 +10305,7 @@ public class Creole10Parser extends Parser {
 					throw nvae;
 					}
 				}
-				else if ( ((LA117_79>=FORCED_END_OF_LINE && LA117_79<=WIKI)||(LA117_79>=POUND && LA117_79<=49)||(LA117_79>=51 && LA117_79<=78)) ) {
+				else if ( ((LA117_79>=FORCED_END_OF_LINE && LA117_79<=WIKI)||(LA117_79>=POUND && LA117_79<=50)||(LA117_79>=52 && LA117_79<=79)) ) {
 					alt117=2;
 				}
 				else {
@@ -10287,7 +10316,7 @@ public class Creole10Parser extends Parser {
 					throw nvae;
 				}
 				}
-				else if ( ((LA117_60>=FORCED_END_OF_LINE && LA117_60<=WIKI)||(LA117_60>=POUND && LA117_60<=62)||(LA117_60>=64 && LA117_60<=78)) ) {
+				else if ( ((LA117_60>=FORCED_END_OF_LINE && LA117_60<=WIKI)||(LA117_60>=POUND && LA117_60<=63)||(LA117_60>=65 && LA117_60<=79)) ) {
 				alt117=2;
 				}
 				else {
@@ -10298,7 +10327,7 @@ public class Creole10Parser extends Parser {
 				throw nvae;
 				}
 			}
-			else if ( ((LA117_40>=FORCED_END_OF_LINE && LA117_40<=WIKI)||(LA117_40>=POUND && LA117_40<=50)||(LA117_40>=52 && LA117_40<=78)) ) {
+			else if ( ((LA117_40>=FORCED_END_OF_LINE && LA117_40<=WIKI)||(LA117_40>=POUND && LA117_40<=51)||(LA117_40>=53 && LA117_40<=79)) ) {
 				alt117=2;
 			}
 			else {
@@ -10343,12 +10372,12 @@ public class Creole10Parser extends Parser {
 			case LF:
 			case SPACE:
 			case TABULATOR:
+			case BRACE_CLOSE:
 			case COLON_SLASH:
 			case SLASH:
 			case TABLE_OF_CONTENTS_OPEN_MARKUP:
 			case TABLE_OF_CONTENTS_CLOSE_MARKUP:
 			case INSIGNIFICANT_CHAR:
-			case 43:
 			case 44:
 			case 45:
 			case 46:
@@ -10368,9 +10397,9 @@ public class Creole10Parser extends Parser {
 			case 60:
 			case 61:
 			case 62:
-			case 64:
+			case 63:
 			case 65:
-			case 67:
+			case 66:
 			case 68:
 			case 69:
 			case 70:
@@ -10382,6 +10411,7 @@ public class Creole10Parser extends Parser {
 			case 76:
 			case 77:
 			case 78:
+			case 79:
 			{
 			alt117=2;
 			}
@@ -10396,35 +10426,35 @@ public class Creole10Parser extends Parser {
 
 			}
 			break;
-		case 47:
+		case 48:
 			{
 			int LA117_22 = input.LA(3);
 
-			if ( (LA117_22==51) ) {
+			if ( (LA117_22==52) ) {
 			int LA117_41 = input.LA(4);
 
-			if ( (LA117_41==67) ) {
+			if ( (LA117_41==68) ) {
 				int LA117_61 = input.LA(5);
 
-				if ( (LA117_61==62) ) {
+				if ( (LA117_61==63) ) {
 				int LA117_80 = input.LA(6);
 
-				if ( (LA117_80==47) ) {
+				if ( (LA117_80==48) ) {
 					int LA117_99 = input.LA(7);
 
-					if ( (LA117_99==51) ) {
+					if ( (LA117_99==52) ) {
 					int LA117_113 = input.LA(8);
 
-					if ( (LA117_113==67) ) {
+					if ( (LA117_113==68) ) {
 						int LA117_123 = input.LA(9);
 
-						if ( (LA117_123==43) ) {
+						if ( (LA117_123==44) ) {
 						int LA117_34 = input.LA(10);
 
 						if ( (LA117_34==PIPE||LA117_34==LINK_CLOSE) ) {
 							alt117=2;
 						}
-						else if ( ((LA117_34>=FORCED_END_OF_LINE && LA117_34<=WIKI)||(LA117_34>=POUND && LA117_34<=EQUAL)||(LA117_34>=ITAL && LA117_34<=NOWIKI_CLOSE)||(LA117_34>=IMAGE_CLOSE && LA117_34<=78)) ) {
+						else if ( ((LA117_34>=FORCED_END_OF_LINE && LA117_34<=WIKI)||(LA117_34>=POUND && LA117_34<=EQUAL)||(LA117_34>=ITAL && LA117_34<=NOWIKI_CLOSE)||(LA117_34>=IMAGE_CLOSE && LA117_34<=79)) ) {
 							alt117=1;
 						}
 						else {
@@ -10435,7 +10465,7 @@ public class Creole10Parser extends Parser {
 							throw nvae;
 						}
 						}
-						else if ( ((LA117_123>=FORCED_END_OF_LINE && LA117_123<=WIKI)||(LA117_123>=POUND && LA117_123<=INSIGNIFICANT_CHAR)||(LA117_123>=44 && LA117_123<=78)) ) {
+						else if ( ((LA117_123>=FORCED_END_OF_LINE && LA117_123<=WIKI)||(LA117_123>=POUND && LA117_123<=INSIGNIFICANT_CHAR)||(LA117_123>=45 && LA117_123<=79)) ) {
 						alt117=2;
 						}
 						else {
@@ -10446,7 +10476,7 @@ public class Creole10Parser extends Parser {
 						throw nvae;
 						}
 					}
-					else if ( ((LA117_113>=FORCED_END_OF_LINE && LA117_113<=WIKI)||(LA117_113>=POUND && LA117_113<=66)||(LA117_113>=68 && LA117_113<=78)) ) {
+					else if ( ((LA117_113>=FORCED_END_OF_LINE && LA117_113<=WIKI)||(LA117_113>=POUND && LA117_113<=67)||(LA117_113>=69 && LA117_113<=79)) ) {
 						alt117=2;
 					}
 					else {
@@ -10457,7 +10487,7 @@ public class Creole10Parser extends Parser {
 						throw nvae;
 					}
 					}
-					else if ( ((LA117_99>=FORCED_END_OF_LINE && LA117_99<=WIKI)||(LA117_99>=POUND && LA117_99<=50)||(LA117_99>=52 && LA117_99<=78)) ) {
+					else if ( ((LA117_99>=FORCED_END_OF_LINE && LA117_99<=WIKI)||(LA117_99>=POUND && LA117_99<=51)||(LA117_99>=53 && LA117_99<=79)) ) {
 					alt117=2;
 					}
 					else {
@@ -10468,7 +10498,7 @@ public class Creole10Parser extends Parser {
 					throw nvae;
 					}
 				}
-				else if ( ((LA117_80>=FORCED_END_OF_LINE && LA117_80<=WIKI)||(LA117_80>=POUND && LA117_80<=46)||(LA117_80>=48 && LA117_80<=78)) ) {
+				else if ( ((LA117_80>=FORCED_END_OF_LINE && LA117_80<=WIKI)||(LA117_80>=POUND && LA117_80<=47)||(LA117_80>=49 && LA117_80<=79)) ) {
 					alt117=2;
 				}
 				else {
@@ -10479,7 +10509,7 @@ public class Creole10Parser extends Parser {
 					throw nvae;
 				}
 				}
-				else if ( ((LA117_61>=FORCED_END_OF_LINE && LA117_61<=WIKI)||(LA117_61>=POUND && LA117_61<=61)||(LA117_61>=63 && LA117_61<=78)) ) {
+				else if ( ((LA117_61>=FORCED_END_OF_LINE && LA117_61<=WIKI)||(LA117_61>=POUND && LA117_61<=62)||(LA117_61>=64 && LA117_61<=79)) ) {
 				alt117=2;
 				}
 				else {
@@ -10490,7 +10520,7 @@ public class Creole10Parser extends Parser {
 				throw nvae;
 				}
 			}
-			else if ( ((LA117_41>=FORCED_END_OF_LINE && LA117_41<=WIKI)||(LA117_41>=POUND && LA117_41<=66)||(LA117_41>=68 && LA117_41<=78)) ) {
+			else if ( ((LA117_41>=FORCED_END_OF_LINE && LA117_41<=WIKI)||(LA117_41>=POUND && LA117_41<=67)||(LA117_41>=69 && LA117_41<=79)) ) {
 				alt117=2;
 			}
 			else {
@@ -10501,7 +10531,7 @@ public class Creole10Parser extends Parser {
 				throw nvae;
 			}
 			}
-			else if ( ((LA117_22>=FORCED_END_OF_LINE && LA117_22<=WIKI)||(LA117_22>=POUND && LA117_22<=50)||(LA117_22>=52 && LA117_22<=78)) ) {
+			else if ( ((LA117_22>=FORCED_END_OF_LINE && LA117_22<=WIKI)||(LA117_22>=POUND && LA117_22<=51)||(LA117_22>=53 && LA117_22<=79)) ) {
 			alt117=2;
 			}
 			else {
@@ -10546,16 +10576,16 @@ public class Creole10Parser extends Parser {
 		case LF:
 		case SPACE:
 		case TABULATOR:
+		case BRACE_CLOSE:
 		case COLON_SLASH:
 		case SLASH:
 		case TABLE_OF_CONTENTS_OPEN_MARKUP:
 		case TABLE_OF_CONTENTS_CLOSE_MARKUP:
 		case INSIGNIFICANT_CHAR:
-		case 43:
 		case 44:
 		case 45:
 		case 46:
-		case 48:
+		case 47:
 		case 49:
 		case 50:
 		case 51:
@@ -10565,7 +10595,7 @@ public class Creole10Parser extends Parser {
 		case 55:
 		case 56:
 		case 57:
-		case 59:
+		case 58:
 		case 60:
 		case 61:
 		case 62:
@@ -10585,6 +10615,7 @@ public class Creole10Parser extends Parser {
 		case 76:
 		case 77:
 		case 78:
+		case 79:
 			{
 			alt117=2;
 			}
@@ -10599,29 +10630,29 @@ public class Creole10Parser extends Parser {
 
 		}
 		break;
-		case 68:
+		case 69:
 		{
 		switch ( input.LA(2) ) {
-		case 71:
+		case 72:
 			{
 			int LA117_23 = input.LA(3);
 
-			if ( (LA117_23==63) ) {
+			if ( (LA117_23==64) ) {
 			int LA117_42 = input.LA(4);
 
-			if ( (LA117_42==67) ) {
+			if ( (LA117_42==68) ) {
 				int LA117_62 = input.LA(5);
 
-				if ( (LA117_62==63) ) {
+				if ( (LA117_62==64) ) {
 				int LA117_81 = input.LA(6);
 
-				if ( (LA117_81==43) ) {
+				if ( (LA117_81==44) ) {
 					int LA117_34 = input.LA(7);
 
 					if ( (LA117_34==PIPE||LA117_34==LINK_CLOSE) ) {
 					alt117=2;
 					}
-					else if ( ((LA117_34>=FORCED_END_OF_LINE && LA117_34<=WIKI)||(LA117_34>=POUND && LA117_34<=EQUAL)||(LA117_34>=ITAL && LA117_34<=NOWIKI_CLOSE)||(LA117_34>=IMAGE_CLOSE && LA117_34<=78)) ) {
+					else if ( ((LA117_34>=FORCED_END_OF_LINE && LA117_34<=WIKI)||(LA117_34>=POUND && LA117_34<=EQUAL)||(LA117_34>=ITAL && LA117_34<=NOWIKI_CLOSE)||(LA117_34>=IMAGE_CLOSE && LA117_34<=79)) ) {
 					alt117=1;
 					}
 					else {
@@ -10632,7 +10663,7 @@ public class Creole10Parser extends Parser {
 					throw nvae;
 					}
 				}
-				else if ( ((LA117_81>=FORCED_END_OF_LINE && LA117_81<=WIKI)||(LA117_81>=POUND && LA117_81<=INSIGNIFICANT_CHAR)||(LA117_81>=44 && LA117_81<=78)) ) {
+				else if ( ((LA117_81>=FORCED_END_OF_LINE && LA117_81<=WIKI)||(LA117_81>=POUND && LA117_81<=INSIGNIFICANT_CHAR)||(LA117_81>=45 && LA117_81<=79)) ) {
 					alt117=2;
 				}
 				else {
@@ -10643,7 +10674,7 @@ public class Creole10Parser extends Parser {
 					throw nvae;
 				}
 				}
-				else if ( ((LA117_62>=FORCED_END_OF_LINE && LA117_62<=WIKI)||(LA117_62>=POUND && LA117_62<=62)||(LA117_62>=64 && LA117_62<=78)) ) {
+				else if ( ((LA117_62>=FORCED_END_OF_LINE && LA117_62<=WIKI)||(LA117_62>=POUND && LA117_62<=63)||(LA117_62>=65 && LA117_62<=79)) ) {
 				alt117=2;
 				}
 				else {
@@ -10654,7 +10685,7 @@ public class Creole10Parser extends Parser {
 				throw nvae;
 				}
 			}
-			else if ( ((LA117_42>=FORCED_END_OF_LINE && LA117_42<=WIKI)||(LA117_42>=POUND && LA117_42<=66)||(LA117_42>=68 && LA117_42<=78)) ) {
+			else if ( ((LA117_42>=FORCED_END_OF_LINE && LA117_42<=WIKI)||(LA117_42>=POUND && LA117_42<=67)||(LA117_42>=69 && LA117_42<=79)) ) {
 				alt117=2;
 			}
 			else {
@@ -10665,7 +10696,7 @@ public class Creole10Parser extends Parser {
 				throw nvae;
 			}
 			}
-			else if ( ((LA117_23>=FORCED_END_OF_LINE && LA117_23<=WIKI)||(LA117_23>=POUND && LA117_23<=62)||(LA117_23>=64 && LA117_23<=78)) ) {
+			else if ( ((LA117_23>=FORCED_END_OF_LINE && LA117_23<=WIKI)||(LA117_23>=POUND && LA117_23<=63)||(LA117_23>=65 && LA117_23<=79)) ) {
 			alt117=2;
 			}
 			else {
@@ -10677,35 +10708,35 @@ public class Creole10Parser extends Parser {
 			}
 			}
 			break;
-		case 66:
+		case 67:
 			{
 			int LA117_24 = input.LA(3);
 
-			if ( (LA117_24==66) ) {
+			if ( (LA117_24==67) ) {
 			int LA117_43 = input.LA(4);
 
-			if ( (LA117_43==69) ) {
+			if ( (LA117_43==70) ) {
 				int LA117_63 = input.LA(5);
 
-				if ( (LA117_63==49) ) {
+				if ( (LA117_63==50) ) {
 				int LA117_82 = input.LA(6);
 
-				if ( (LA117_82==70) ) {
+				if ( (LA117_82==71) ) {
 					int LA117_100 = input.LA(7);
 
-					if ( (LA117_100==58) ) {
+					if ( (LA117_100==59) ) {
 					int LA117_114 = input.LA(8);
 
-					if ( ((LA117_114>=FORCED_END_OF_LINE && LA117_114<=WIKI)||(LA117_114>=POUND && LA117_114<=INSIGNIFICANT_CHAR)||(LA117_114>=44 && LA117_114<=78)) ) {
+					if ( ((LA117_114>=FORCED_END_OF_LINE && LA117_114<=WIKI)||(LA117_114>=POUND && LA117_114<=INSIGNIFICANT_CHAR)||(LA117_114>=45 && LA117_114<=79)) ) {
 						alt117=2;
 					}
-					else if ( (LA117_114==43) ) {
+					else if ( (LA117_114==44) ) {
 						int LA117_34 = input.LA(9);
 
 						if ( (LA117_34==PIPE||LA117_34==LINK_CLOSE) ) {
 						alt117=2;
 						}
-						else if ( ((LA117_34>=FORCED_END_OF_LINE && LA117_34<=WIKI)||(LA117_34>=POUND && LA117_34<=EQUAL)||(LA117_34>=ITAL && LA117_34<=NOWIKI_CLOSE)||(LA117_34>=IMAGE_CLOSE && LA117_34<=78)) ) {
+						else if ( ((LA117_34>=FORCED_END_OF_LINE && LA117_34<=WIKI)||(LA117_34>=POUND && LA117_34<=EQUAL)||(LA117_34>=ITAL && LA117_34<=NOWIKI_CLOSE)||(LA117_34>=IMAGE_CLOSE && LA117_34<=79)) ) {
 						alt117=1;
 						}
 						else {
@@ -10724,7 +10755,7 @@ public class Creole10Parser extends Parser {
 						throw nvae;
 					}
 					}
-					else if ( ((LA117_100>=FORCED_END_OF_LINE && LA117_100<=WIKI)||(LA117_100>=POUND && LA117_100<=57)||(LA117_100>=59 && LA117_100<=78)) ) {
+					else if ( ((LA117_100>=FORCED_END_OF_LINE && LA117_100<=WIKI)||(LA117_100>=POUND && LA117_100<=58)||(LA117_100>=60 && LA117_100<=79)) ) {
 					alt117=2;
 					}
 					else {
@@ -10735,7 +10766,7 @@ public class Creole10Parser extends Parser {
 					throw nvae;
 					}
 				}
-				else if ( ((LA117_82>=FORCED_END_OF_LINE && LA117_82<=WIKI)||(LA117_82>=POUND && LA117_82<=69)||(LA117_82>=71 && LA117_82<=78)) ) {
+				else if ( ((LA117_82>=FORCED_END_OF_LINE && LA117_82<=WIKI)||(LA117_82>=POUND && LA117_82<=70)||(LA117_82>=72 && LA117_82<=79)) ) {
 					alt117=2;
 				}
 				else {
@@ -10746,7 +10777,7 @@ public class Creole10Parser extends Parser {
 					throw nvae;
 				}
 				}
-				else if ( ((LA117_63>=FORCED_END_OF_LINE && LA117_63<=WIKI)||(LA117_63>=POUND && LA117_63<=48)||(LA117_63>=50 && LA117_63<=78)) ) {
+				else if ( ((LA117_63>=FORCED_END_OF_LINE && LA117_63<=WIKI)||(LA117_63>=POUND && LA117_63<=49)||(LA117_63>=51 && LA117_63<=79)) ) {
 				alt117=2;
 				}
 				else {
@@ -10757,7 +10788,7 @@ public class Creole10Parser extends Parser {
 				throw nvae;
 				}
 			}
-			else if ( ((LA117_43>=FORCED_END_OF_LINE && LA117_43<=WIKI)||(LA117_43>=POUND && LA117_43<=68)||(LA117_43>=70 && LA117_43<=78)) ) {
+			else if ( ((LA117_43>=FORCED_END_OF_LINE && LA117_43<=WIKI)||(LA117_43>=POUND && LA117_43<=69)||(LA117_43>=71 && LA117_43<=79)) ) {
 				alt117=2;
 			}
 			else {
@@ -10768,7 +10799,7 @@ public class Creole10Parser extends Parser {
 				throw nvae;
 			}
 			}
-			else if ( ((LA117_24>=FORCED_END_OF_LINE && LA117_24<=WIKI)||(LA117_24>=POUND && LA117_24<=65)||(LA117_24>=67 && LA117_24<=78)) ) {
+			else if ( ((LA117_24>=FORCED_END_OF_LINE && LA117_24<=WIKI)||(LA117_24>=POUND && LA117_24<=66)||(LA117_24>=68 && LA117_24<=79)) ) {
 			alt117=2;
 			}
 			else {
@@ -10813,12 +10844,12 @@ public class Creole10Parser extends Parser {
 		case LF:
 		case SPACE:
 		case TABULATOR:
+		case BRACE_CLOSE:
 		case COLON_SLASH:
 		case SLASH:
 		case TABLE_OF_CONTENTS_OPEN_MARKUP:
 		case TABLE_OF_CONTENTS_CLOSE_MARKUP:
 		case INSIGNIFICANT_CHAR:
-		case 43:
 		case 44:
 		case 45:
 		case 46:
@@ -10841,17 +10872,18 @@ public class Creole10Parser extends Parser {
 		case 63:
 		case 64:
 		case 65:
-		case 67:
+		case 66:
 		case 68:
 		case 69:
 		case 70:
-		case 72:
+		case 71:
 		case 73:
 		case 74:
 		case 75:
 		case 76:
 		case 77:
 		case 78:
+		case 79:
 			{
 			alt117=2;
 			}
@@ -10866,32 +10898,32 @@ public class Creole10Parser extends Parser {
 
 		}
 		break;
-		case 61:
+		case 62:
 		{
 		switch ( input.LA(2) ) {
-		case 69:
+		case 70:
 			{
 			int LA117_25 = input.LA(3);
 
-			if ( (LA117_25==50) ) {
+			if ( (LA117_25==51) ) {
 			int LA117_44 = input.LA(4);
 
-			if ( (LA117_44==51) ) {
+			if ( (LA117_44==52) ) {
 				int LA117_64 = input.LA(5);
 
-				if ( (LA117_64==48) ) {
+				if ( (LA117_64==49) ) {
 				int LA117_83 = input.LA(6);
 
-				if ( (LA117_83==51) ) {
+				if ( (LA117_83==52) ) {
 					int LA117_101 = input.LA(7);
 
-					if ( (LA117_101==43) ) {
+					if ( (LA117_101==44) ) {
 					int LA117_34 = input.LA(8);
 
 					if ( (LA117_34==PIPE||LA117_34==LINK_CLOSE) ) {
 						alt117=2;
 					}
-					else if ( ((LA117_34>=FORCED_END_OF_LINE && LA117_34<=WIKI)||(LA117_34>=POUND && LA117_34<=EQUAL)||(LA117_34>=ITAL && LA117_34<=NOWIKI_CLOSE)||(LA117_34>=IMAGE_CLOSE && LA117_34<=78)) ) {
+					else if ( ((LA117_34>=FORCED_END_OF_LINE && LA117_34<=WIKI)||(LA117_34>=POUND && LA117_34<=EQUAL)||(LA117_34>=ITAL && LA117_34<=NOWIKI_CLOSE)||(LA117_34>=IMAGE_CLOSE && LA117_34<=79)) ) {
 						alt117=1;
 					}
 					else {
@@ -10902,7 +10934,7 @@ public class Creole10Parser extends Parser {
 						throw nvae;
 					}
 					}
-					else if ( ((LA117_101>=FORCED_END_OF_LINE && LA117_101<=WIKI)||(LA117_101>=POUND && LA117_101<=INSIGNIFICANT_CHAR)||(LA117_101>=44 && LA117_101<=78)) ) {
+					else if ( ((LA117_101>=FORCED_END_OF_LINE && LA117_101<=WIKI)||(LA117_101>=POUND && LA117_101<=INSIGNIFICANT_CHAR)||(LA117_101>=45 && LA117_101<=79)) ) {
 					alt117=2;
 					}
 					else {
@@ -10913,7 +10945,7 @@ public class Creole10Parser extends Parser {
 					throw nvae;
 					}
 				}
-				else if ( ((LA117_83>=FORCED_END_OF_LINE && LA117_83<=WIKI)||(LA117_83>=POUND && LA117_83<=50)||(LA117_83>=52 && LA117_83<=78)) ) {
+				else if ( ((LA117_83>=FORCED_END_OF_LINE && LA117_83<=WIKI)||(LA117_83>=POUND && LA117_83<=51)||(LA117_83>=53 && LA117_83<=79)) ) {
 					alt117=2;
 				}
 				else {
@@ -10924,7 +10956,7 @@ public class Creole10Parser extends Parser {
 					throw nvae;
 				}
 				}
-				else if ( ((LA117_64>=FORCED_END_OF_LINE && LA117_64<=WIKI)||(LA117_64>=POUND && LA117_64<=47)||(LA117_64>=49 && LA117_64<=78)) ) {
+				else if ( ((LA117_64>=FORCED_END_OF_LINE && LA117_64<=WIKI)||(LA117_64>=POUND && LA117_64<=48)||(LA117_64>=50 && LA117_64<=79)) ) {
 				alt117=2;
 				}
 				else {
@@ -10935,7 +10967,7 @@ public class Creole10Parser extends Parser {
 				throw nvae;
 				}
 			}
-			else if ( ((LA117_44>=FORCED_END_OF_LINE && LA117_44<=WIKI)||(LA117_44>=POUND && LA117_44<=50)||(LA117_44>=52 && LA117_44<=78)) ) {
+			else if ( ((LA117_44>=FORCED_END_OF_LINE && LA117_44<=WIKI)||(LA117_44>=POUND && LA117_44<=51)||(LA117_44>=53 && LA117_44<=79)) ) {
 				alt117=2;
 			}
 			else {
@@ -10946,7 +10978,7 @@ public class Creole10Parser extends Parser {
 				throw nvae;
 			}
 			}
-			else if ( ((LA117_25>=FORCED_END_OF_LINE && LA117_25<=WIKI)||(LA117_25>=POUND && LA117_25<=49)||(LA117_25>=51 && LA117_25<=78)) ) {
+			else if ( ((LA117_25>=FORCED_END_OF_LINE && LA117_25<=WIKI)||(LA117_25>=POUND && LA117_25<=50)||(LA117_25>=52 && LA117_25<=79)) ) {
 			alt117=2;
 			}
 			else {
@@ -10958,41 +10990,41 @@ public class Creole10Parser extends Parser {
 			}
 			}
 			break;
-		case 49:
+		case 50:
 			{
 			switch ( input.LA(3) ) {
-			case 55:
+			case 56:
 			{
 			int LA117_45 = input.LA(4);
 
-			if ( (LA117_45==72) ) {
+			if ( (LA117_45==73) ) {
 				int LA117_65 = input.LA(5);
 
-				if ( (LA117_65==53) ) {
+				if ( (LA117_65==54) ) {
 				int LA117_84 = input.LA(6);
 
-				if ( (LA117_84==58) ) {
+				if ( (LA117_84==59) ) {
 					int LA117_102 = input.LA(7);
 
-					if ( (LA117_102==50) ) {
+					if ( (LA117_102==51) ) {
 					int LA117_115 = input.LA(8);
 
-					if ( (LA117_115==51) ) {
+					if ( (LA117_115==52) ) {
 						int LA117_124 = input.LA(9);
 
-						if ( (LA117_124==48) ) {
+						if ( (LA117_124==49) ) {
 						int LA117_130 = input.LA(10);
 
-						if ( (LA117_130==51) ) {
+						if ( (LA117_130==52) ) {
 							int LA117_133 = input.LA(11);
 
-							if ( (LA117_133==43) ) {
+							if ( (LA117_133==44) ) {
 							int LA117_34 = input.LA(12);
 
 							if ( (LA117_34==PIPE||LA117_34==LINK_CLOSE) ) {
 								alt117=2;
 							}
-							else if ( ((LA117_34>=FORCED_END_OF_LINE && LA117_34<=WIKI)||(LA117_34>=POUND && LA117_34<=EQUAL)||(LA117_34>=ITAL && LA117_34<=NOWIKI_CLOSE)||(LA117_34>=IMAGE_CLOSE && LA117_34<=78)) ) {
+							else if ( ((LA117_34>=FORCED_END_OF_LINE && LA117_34<=WIKI)||(LA117_34>=POUND && LA117_34<=EQUAL)||(LA117_34>=ITAL && LA117_34<=NOWIKI_CLOSE)||(LA117_34>=IMAGE_CLOSE && LA117_34<=79)) ) {
 								alt117=1;
 							}
 							else {
@@ -11003,7 +11035,7 @@ public class Creole10Parser extends Parser {
 								throw nvae;
 							}
 							}
-							else if ( ((LA117_133>=FORCED_END_OF_LINE && LA117_133<=WIKI)||(LA117_133>=POUND && LA117_133<=INSIGNIFICANT_CHAR)||(LA117_133>=44 && LA117_133<=78)) ) {
+							else if ( ((LA117_133>=FORCED_END_OF_LINE && LA117_133<=WIKI)||(LA117_133>=POUND && LA117_133<=INSIGNIFICANT_CHAR)||(LA117_133>=45 && LA117_133<=79)) ) {
 							alt117=2;
 							}
 							else {
@@ -11014,7 +11046,7 @@ public class Creole10Parser extends Parser {
 							throw nvae;
 							}
 						}
-						else if ( ((LA117_130>=FORCED_END_OF_LINE && LA117_130<=WIKI)||(LA117_130>=POUND && LA117_130<=50)||(LA117_130>=52 && LA117_130<=78)) ) {
+						else if ( ((LA117_130>=FORCED_END_OF_LINE && LA117_130<=WIKI)||(LA117_130>=POUND && LA117_130<=51)||(LA117_130>=53 && LA117_130<=79)) ) {
 							alt117=2;
 						}
 						else {
@@ -11025,7 +11057,7 @@ public class Creole10Parser extends Parser {
 							throw nvae;
 						}
 						}
-						else if ( ((LA117_124>=FORCED_END_OF_LINE && LA117_124<=WIKI)||(LA117_124>=POUND && LA117_124<=47)||(LA117_124>=49 && LA117_124<=78)) ) {
+						else if ( ((LA117_124>=FORCED_END_OF_LINE && LA117_124<=WIKI)||(LA117_124>=POUND && LA117_124<=48)||(LA117_124>=50 && LA117_124<=79)) ) {
 						alt117=2;
 						}
 						else {
@@ -11036,7 +11068,7 @@ public class Creole10Parser extends Parser {
 						throw nvae;
 						}
 					}
-					else if ( ((LA117_115>=FORCED_END_OF_LINE && LA117_115<=WIKI)||(LA117_115>=POUND && LA117_115<=50)||(LA117_115>=52 && LA117_115<=78)) ) {
+					else if ( ((LA117_115>=FORCED_END_OF_LINE && LA117_115<=WIKI)||(LA117_115>=POUND && LA117_115<=51)||(LA117_115>=53 && LA117_115<=79)) ) {
 						alt117=2;
 					}
 					else {
@@ -11047,7 +11079,7 @@ public class Creole10Parser extends Parser {
 						throw nvae;
 					}
 					}
-					else if ( ((LA117_102>=FORCED_END_OF_LINE && LA117_102<=WIKI)||(LA117_102>=POUND && LA117_102<=49)||(LA117_102>=51 && LA117_102<=78)) ) {
+					else if ( ((LA117_102>=FORCED_END_OF_LINE && LA117_102<=WIKI)||(LA117_102>=POUND && LA117_102<=50)||(LA117_102>=52 && LA117_102<=79)) ) {
 					alt117=2;
 					}
 					else {
@@ -11058,7 +11090,7 @@ public class Creole10Parser extends Parser {
 					throw nvae;
 					}
 				}
-				else if ( ((LA117_84>=FORCED_END_OF_LINE && LA117_84<=WIKI)||(LA117_84>=POUND && LA117_84<=57)||(LA117_84>=59 && LA117_84<=78)) ) {
+				else if ( ((LA117_84>=FORCED_END_OF_LINE && LA117_84<=WIKI)||(LA117_84>=POUND && LA117_84<=58)||(LA117_84>=60 && LA117_84<=79)) ) {
 					alt117=2;
 				}
 				else {
@@ -11069,7 +11101,7 @@ public class Creole10Parser extends Parser {
 					throw nvae;
 				}
 				}
-				else if ( ((LA117_65>=FORCED_END_OF_LINE && LA117_65<=WIKI)||(LA117_65>=POUND && LA117_65<=52)||(LA117_65>=54 && LA117_65<=78)) ) {
+				else if ( ((LA117_65>=FORCED_END_OF_LINE && LA117_65<=WIKI)||(LA117_65>=POUND && LA117_65<=53)||(LA117_65>=55 && LA117_65<=79)) ) {
 				alt117=2;
 				}
 				else {
@@ -11080,7 +11112,7 @@ public class Creole10Parser extends Parser {
 				throw nvae;
 				}
 			}
-			else if ( ((LA117_45>=FORCED_END_OF_LINE && LA117_45<=WIKI)||(LA117_45>=POUND && LA117_45<=71)||(LA117_45>=73 && LA117_45<=78)) ) {
+			else if ( ((LA117_45>=FORCED_END_OF_LINE && LA117_45<=WIKI)||(LA117_45>=POUND && LA117_45<=72)||(LA117_45>=74 && LA117_45<=79)) ) {
 				alt117=2;
 			}
 			else {
@@ -11092,32 +11124,32 @@ public class Creole10Parser extends Parser {
 			}
 			}
 			break;
-			case 48:
+			case 49:
 			{
 			int LA117_46 = input.LA(4);
 
-			if ( (LA117_46==51) ) {
+			if ( (LA117_46==52) ) {
 				int LA117_66 = input.LA(5);
 
-				if ( (LA117_66==50) ) {
+				if ( (LA117_66==51) ) {
 				int LA117_85 = input.LA(6);
 
-				if ( (LA117_85==51) ) {
+				if ( (LA117_85==52) ) {
 					int LA117_103 = input.LA(7);
 
-					if ( (LA117_103==48) ) {
+					if ( (LA117_103==49) ) {
 					int LA117_116 = input.LA(8);
 
-					if ( (LA117_116==51) ) {
+					if ( (LA117_116==52) ) {
 						int LA117_125 = input.LA(9);
 
-						if ( (LA117_125==43) ) {
+						if ( (LA117_125==44) ) {
 						int LA117_34 = input.LA(10);
 
 						if ( (LA117_34==PIPE||LA117_34==LINK_CLOSE) ) {
 							alt117=2;
 						}
-						else if ( ((LA117_34>=FORCED_END_OF_LINE && LA117_34<=WIKI)||(LA117_34>=POUND && LA117_34<=EQUAL)||(LA117_34>=ITAL && LA117_34<=NOWIKI_CLOSE)||(LA117_34>=IMAGE_CLOSE && LA117_34<=78)) ) {
+						else if ( ((LA117_34>=FORCED_END_OF_LINE && LA117_34<=WIKI)||(LA117_34>=POUND && LA117_34<=EQUAL)||(LA117_34>=ITAL && LA117_34<=NOWIKI_CLOSE)||(LA117_34>=IMAGE_CLOSE && LA117_34<=79)) ) {
 							alt117=1;
 						}
 						else {
@@ -11128,7 +11160,7 @@ public class Creole10Parser extends Parser {
 							throw nvae;
 						}
 						}
-						else if ( ((LA117_125>=FORCED_END_OF_LINE && LA117_125<=WIKI)||(LA117_125>=POUND && LA117_125<=INSIGNIFICANT_CHAR)||(LA117_125>=44 && LA117_125<=78)) ) {
+						else if ( ((LA117_125>=FORCED_END_OF_LINE && LA117_125<=WIKI)||(LA117_125>=POUND && LA117_125<=INSIGNIFICANT_CHAR)||(LA117_125>=45 && LA117_125<=79)) ) {
 						alt117=2;
 						}
 						else {
@@ -11139,7 +11171,7 @@ public class Creole10Parser extends Parser {
 						throw nvae;
 						}
 					}
-					else if ( ((LA117_116>=FORCED_END_OF_LINE && LA117_116<=WIKI)||(LA117_116>=POUND && LA117_116<=50)||(LA117_116>=52 && LA117_116<=78)) ) {
+					else if ( ((LA117_116>=FORCED_END_OF_LINE && LA117_116<=WIKI)||(LA117_116>=POUND && LA117_116<=51)||(LA117_116>=53 && LA117_116<=79)) ) {
 						alt117=2;
 					}
 					else {
@@ -11150,7 +11182,7 @@ public class Creole10Parser extends Parser {
 						throw nvae;
 					}
 					}
-					else if ( ((LA117_103>=FORCED_END_OF_LINE && LA117_103<=WIKI)||(LA117_103>=POUND && LA117_103<=47)||(LA117_103>=49 && LA117_103<=78)) ) {
+					else if ( ((LA117_103>=FORCED_END_OF_LINE && LA117_103<=WIKI)||(LA117_103>=POUND && LA117_103<=48)||(LA117_103>=50 && LA117_103<=79)) ) {
 					alt117=2;
 					}
 					else {
@@ -11161,7 +11193,7 @@ public class Creole10Parser extends Parser {
 					throw nvae;
 					}
 				}
-				else if ( ((LA117_85>=FORCED_END_OF_LINE && LA117_85<=WIKI)||(LA117_85>=POUND && LA117_85<=50)||(LA117_85>=52 && LA117_85<=78)) ) {
+				else if ( ((LA117_85>=FORCED_END_OF_LINE && LA117_85<=WIKI)||(LA117_85>=POUND && LA117_85<=51)||(LA117_85>=53 && LA117_85<=79)) ) {
 					alt117=2;
 				}
 				else {
@@ -11172,7 +11204,7 @@ public class Creole10Parser extends Parser {
 					throw nvae;
 				}
 				}
-				else if ( ((LA117_66>=FORCED_END_OF_LINE && LA117_66<=WIKI)||(LA117_66>=POUND && LA117_66<=49)||(LA117_66>=51 && LA117_66<=78)) ) {
+				else if ( ((LA117_66>=FORCED_END_OF_LINE && LA117_66<=WIKI)||(LA117_66>=POUND && LA117_66<=50)||(LA117_66>=52 && LA117_66<=79)) ) {
 				alt117=2;
 				}
 				else {
@@ -11183,7 +11215,7 @@ public class Creole10Parser extends Parser {
 				throw nvae;
 				}
 			}
-			else if ( ((LA117_46>=FORCED_END_OF_LINE && LA117_46<=WIKI)||(LA117_46>=POUND && LA117_46<=50)||(LA117_46>=52 && LA117_46<=78)) ) {
+			else if ( ((LA117_46>=FORCED_END_OF_LINE && LA117_46<=WIKI)||(LA117_46>=POUND && LA117_46<=51)||(LA117_46>=53 && LA117_46<=79)) ) {
 				alt117=2;
 			}
 			else {
@@ -11228,23 +11260,23 @@ public class Creole10Parser extends Parser {
 			case LF:
 			case SPACE:
 			case TABULATOR:
+			case BRACE_CLOSE:
 			case COLON_SLASH:
 			case SLASH:
 			case TABLE_OF_CONTENTS_OPEN_MARKUP:
 			case TABLE_OF_CONTENTS_CLOSE_MARKUP:
 			case INSIGNIFICANT_CHAR:
-			case 43:
 			case 44:
 			case 45:
 			case 46:
 			case 47:
-			case 49:
+			case 48:
 			case 50:
 			case 51:
 			case 52:
 			case 53:
 			case 54:
-			case 56:
+			case 55:
 			case 57:
 			case 58:
 			case 59:
@@ -11267,6 +11299,7 @@ public class Creole10Parser extends Parser {
 			case 76:
 			case 77:
 			case 78:
+			case 79:
 			{
 			alt117=2;
 			}
@@ -11314,18 +11347,18 @@ public class Creole10Parser extends Parser {
 		case LF:
 		case SPACE:
 		case TABULATOR:
+		case BRACE_CLOSE:
 		case COLON_SLASH:
 		case SLASH:
 		case TABLE_OF_CONTENTS_OPEN_MARKUP:
 		case TABLE_OF_CONTENTS_CLOSE_MARKUP:
 		case INSIGNIFICANT_CHAR:
-		case 43:
 		case 44:
 		case 45:
 		case 46:
 		case 47:
 		case 48:
-		case 50:
+		case 49:
 		case 51:
 		case 52:
 		case 53:
@@ -11344,7 +11377,7 @@ public class Creole10Parser extends Parser {
 		case 66:
 		case 67:
 		case 68:
-		case 70:
+		case 69:
 		case 71:
 		case 72:
 		case 73:
@@ -11353,6 +11386,7 @@ public class Creole10Parser extends Parser {
 		case 76:
 		case 77:
 		case 78:
+		case 79:
 			{
 			alt117=2;
 			}
@@ -11367,32 +11401,32 @@ public class Creole10Parser extends Parser {
 
 		}
 		break;
-		case 73:
+		case 74:
 		{
 		int LA117_9 = input.LA(2);
 
-		if ( (LA117_9==63) ) {
+		if ( (LA117_9==64) ) {
 			int LA117_27 = input.LA(3);
 
-			if ( (LA117_27==66) ) {
+			if ( (LA117_27==67) ) {
 			int LA117_47 = input.LA(4);
 
-			if ( (LA117_47==58) ) {
+			if ( (LA117_47==59) ) {
 				int LA117_67 = input.LA(5);
 
-				if ( (LA117_67==47) ) {
+				if ( (LA117_67==48) ) {
 				int LA117_86 = input.LA(6);
 
-				if ( (LA117_86==74) ) {
+				if ( (LA117_86==75) ) {
 					int LA117_104 = input.LA(7);
 
-					if ( (LA117_104==43) ) {
+					if ( (LA117_104==44) ) {
 					int LA117_34 = input.LA(8);
 
 					if ( (LA117_34==PIPE||LA117_34==LINK_CLOSE) ) {
 						alt117=2;
 					}
-					else if ( ((LA117_34>=FORCED_END_OF_LINE && LA117_34<=WIKI)||(LA117_34>=POUND && LA117_34<=EQUAL)||(LA117_34>=ITAL && LA117_34<=NOWIKI_CLOSE)||(LA117_34>=IMAGE_CLOSE && LA117_34<=78)) ) {
+					else if ( ((LA117_34>=FORCED_END_OF_LINE && LA117_34<=WIKI)||(LA117_34>=POUND && LA117_34<=EQUAL)||(LA117_34>=ITAL && LA117_34<=NOWIKI_CLOSE)||(LA117_34>=IMAGE_CLOSE && LA117_34<=79)) ) {
 						alt117=1;
 					}
 					else {
@@ -11403,7 +11437,7 @@ public class Creole10Parser extends Parser {
 						throw nvae;
 					}
 					}
-					else if ( ((LA117_104>=FORCED_END_OF_LINE && LA117_104<=WIKI)||(LA117_104>=POUND && LA117_104<=INSIGNIFICANT_CHAR)||(LA117_104>=44 && LA117_104<=78)) ) {
+					else if ( ((LA117_104>=FORCED_END_OF_LINE && LA117_104<=WIKI)||(LA117_104>=POUND && LA117_104<=INSIGNIFICANT_CHAR)||(LA117_104>=45 && LA117_104<=79)) ) {
 					alt117=2;
 					}
 					else {
@@ -11414,7 +11448,7 @@ public class Creole10Parser extends Parser {
 					throw nvae;
 					}
 				}
-				else if ( ((LA117_86>=FORCED_END_OF_LINE && LA117_86<=WIKI)||(LA117_86>=POUND && LA117_86<=73)||(LA117_86>=75 && LA117_86<=78)) ) {
+				else if ( ((LA117_86>=FORCED_END_OF_LINE && LA117_86<=WIKI)||(LA117_86>=POUND && LA117_86<=74)||(LA117_86>=76 && LA117_86<=79)) ) {
 					alt117=2;
 				}
 				else {
@@ -11425,7 +11459,7 @@ public class Creole10Parser extends Parser {
 					throw nvae;
 				}
 				}
-				else if ( ((LA117_67>=FORCED_END_OF_LINE && LA117_67<=WIKI)||(LA117_67>=POUND && LA117_67<=46)||(LA117_67>=48 && LA117_67<=78)) ) {
+				else if ( ((LA117_67>=FORCED_END_OF_LINE && LA117_67<=WIKI)||(LA117_67>=POUND && LA117_67<=47)||(LA117_67>=49 && LA117_67<=79)) ) {
 				alt117=2;
 				}
 				else {
@@ -11436,7 +11470,7 @@ public class Creole10Parser extends Parser {
 				throw nvae;
 				}
 			}
-			else if ( ((LA117_47>=FORCED_END_OF_LINE && LA117_47<=WIKI)||(LA117_47>=POUND && LA117_47<=57)||(LA117_47>=59 && LA117_47<=78)) ) {
+			else if ( ((LA117_47>=FORCED_END_OF_LINE && LA117_47<=WIKI)||(LA117_47>=POUND && LA117_47<=58)||(LA117_47>=60 && LA117_47<=79)) ) {
 				alt117=2;
 			}
 			else {
@@ -11447,7 +11481,7 @@ public class Creole10Parser extends Parser {
 				throw nvae;
 			}
 			}
-			else if ( ((LA117_27>=FORCED_END_OF_LINE && LA117_27<=WIKI)||(LA117_27>=POUND && LA117_27<=65)||(LA117_27>=67 && LA117_27<=78)) ) {
+			else if ( ((LA117_27>=FORCED_END_OF_LINE && LA117_27<=WIKI)||(LA117_27>=POUND && LA117_27<=66)||(LA117_27>=68 && LA117_27<=79)) ) {
 			alt117=2;
 			}
 			else {
@@ -11458,7 +11492,7 @@ public class Creole10Parser extends Parser {
 			throw nvae;
 			}
 		}
-		else if ( ((LA117_9>=FORCED_END_OF_LINE && LA117_9<=WIKI)||(LA117_9>=POUND && LA117_9<=62)||(LA117_9>=64 && LA117_9<=78)) ) {
+		else if ( ((LA117_9>=FORCED_END_OF_LINE && LA117_9<=WIKI)||(LA117_9>=POUND && LA117_9<=63)||(LA117_9>=65 && LA117_9<=79)) ) {
 			alt117=2;
 		}
 		else {
@@ -11470,38 +11504,38 @@ public class Creole10Parser extends Parser {
 		}
 		}
 		break;
-		case 60:
+		case 61:
 		{
 		int LA117_10 = input.LA(2);
 
-		if ( (LA117_10==67) ) {
+		if ( (LA117_10==68) ) {
 			int LA117_28 = input.LA(3);
 
-			if ( (LA117_28==51) ) {
+			if ( (LA117_28==52) ) {
 			int LA117_48 = input.LA(4);
 
-			if ( (LA117_48==72) ) {
+			if ( (LA117_48==73) ) {
 				int LA117_68 = input.LA(5);
 
-				if ( (LA117_68==60) ) {
+				if ( (LA117_68==61) ) {
 				int LA117_87 = input.LA(6);
 
-				if ( (LA117_87==67) ) {
+				if ( (LA117_87==68) ) {
 					int LA117_105 = input.LA(7);
 
-					if ( (LA117_105==63) ) {
+					if ( (LA117_105==64) ) {
 					int LA117_117 = input.LA(8);
 
-					if ( (LA117_117==72) ) {
+					if ( (LA117_117==73) ) {
 						int LA117_126 = input.LA(9);
 
-						if ( (LA117_126==43) ) {
+						if ( (LA117_126==44) ) {
 						int LA117_34 = input.LA(10);
 
 						if ( (LA117_34==PIPE||LA117_34==LINK_CLOSE) ) {
 							alt117=2;
 						}
-						else if ( ((LA117_34>=FORCED_END_OF_LINE && LA117_34<=WIKI)||(LA117_34>=POUND && LA117_34<=EQUAL)||(LA117_34>=ITAL && LA117_34<=NOWIKI_CLOSE)||(LA117_34>=IMAGE_CLOSE && LA117_34<=78)) ) {
+						else if ( ((LA117_34>=FORCED_END_OF_LINE && LA117_34<=WIKI)||(LA117_34>=POUND && LA117_34<=EQUAL)||(LA117_34>=ITAL && LA117_34<=NOWIKI_CLOSE)||(LA117_34>=IMAGE_CLOSE && LA117_34<=79)) ) {
 							alt117=1;
 						}
 						else {
@@ -11512,7 +11546,7 @@ public class Creole10Parser extends Parser {
 							throw nvae;
 						}
 						}
-						else if ( ((LA117_126>=FORCED_END_OF_LINE && LA117_126<=WIKI)||(LA117_126>=POUND && LA117_126<=INSIGNIFICANT_CHAR)||(LA117_126>=44 && LA117_126<=78)) ) {
+						else if ( ((LA117_126>=FORCED_END_OF_LINE && LA117_126<=WIKI)||(LA117_126>=POUND && LA117_126<=INSIGNIFICANT_CHAR)||(LA117_126>=45 && LA117_126<=79)) ) {
 						alt117=2;
 						}
 						else {
@@ -11523,7 +11557,7 @@ public class Creole10Parser extends Parser {
 						throw nvae;
 						}
 					}
-					else if ( ((LA117_117>=FORCED_END_OF_LINE && LA117_117<=WIKI)||(LA117_117>=POUND && LA117_117<=71)||(LA117_117>=73 && LA117_117<=78)) ) {
+					else if ( ((LA117_117>=FORCED_END_OF_LINE && LA117_117<=WIKI)||(LA117_117>=POUND && LA117_117<=72)||(LA117_117>=74 && LA117_117<=79)) ) {
 						alt117=2;
 					}
 					else {
@@ -11534,7 +11568,7 @@ public class Creole10Parser extends Parser {
 						throw nvae;
 					}
 					}
-					else if ( ((LA117_105>=FORCED_END_OF_LINE && LA117_105<=WIKI)||(LA117_105>=POUND && LA117_105<=62)||(LA117_105>=64 && LA117_105<=78)) ) {
+					else if ( ((LA117_105>=FORCED_END_OF_LINE && LA117_105<=WIKI)||(LA117_105>=POUND && LA117_105<=63)||(LA117_105>=65 && LA117_105<=79)) ) {
 					alt117=2;
 					}
 					else {
@@ -11545,7 +11579,7 @@ public class Creole10Parser extends Parser {
 					throw nvae;
 					}
 				}
-				else if ( ((LA117_87>=FORCED_END_OF_LINE && LA117_87<=WIKI)||(LA117_87>=POUND && LA117_87<=66)||(LA117_87>=68 && LA117_87<=78)) ) {
+				else if ( ((LA117_87>=FORCED_END_OF_LINE && LA117_87<=WIKI)||(LA117_87>=POUND && LA117_87<=67)||(LA117_87>=69 && LA117_87<=79)) ) {
 					alt117=2;
 				}
 				else {
@@ -11556,7 +11590,7 @@ public class Creole10Parser extends Parser {
 					throw nvae;
 				}
 				}
-				else if ( ((LA117_68>=FORCED_END_OF_LINE && LA117_68<=WIKI)||(LA117_68>=POUND && LA117_68<=59)||(LA117_68>=61 && LA117_68<=78)) ) {
+				else if ( ((LA117_68>=FORCED_END_OF_LINE && LA117_68<=WIKI)||(LA117_68>=POUND && LA117_68<=60)||(LA117_68>=62 && LA117_68<=79)) ) {
 				alt117=2;
 				}
 				else {
@@ -11567,7 +11601,7 @@ public class Creole10Parser extends Parser {
 				throw nvae;
 				}
 			}
-			else if ( ((LA117_48>=FORCED_END_OF_LINE && LA117_48<=WIKI)||(LA117_48>=POUND && LA117_48<=71)||(LA117_48>=73 && LA117_48<=78)) ) {
+			else if ( ((LA117_48>=FORCED_END_OF_LINE && LA117_48<=WIKI)||(LA117_48>=POUND && LA117_48<=72)||(LA117_48>=74 && LA117_48<=79)) ) {
 				alt117=2;
 			}
 			else {
@@ -11578,7 +11612,7 @@ public class Creole10Parser extends Parser {
 				throw nvae;
 			}
 			}
-			else if ( ((LA117_28>=FORCED_END_OF_LINE && LA117_28<=WIKI)||(LA117_28>=POUND && LA117_28<=50)||(LA117_28>=52 && LA117_28<=78)) ) {
+			else if ( ((LA117_28>=FORCED_END_OF_LINE && LA117_28<=WIKI)||(LA117_28>=POUND && LA117_28<=51)||(LA117_28>=53 && LA117_28<=79)) ) {
 			alt117=2;
 			}
 			else {
@@ -11589,7 +11623,7 @@ public class Creole10Parser extends Parser {
 			throw nvae;
 			}
 		}
-		else if ( ((LA117_10>=FORCED_END_OF_LINE && LA117_10<=WIKI)||(LA117_10>=POUND && LA117_10<=66)||(LA117_10>=68 && LA117_10<=78)) ) {
+		else if ( ((LA117_10>=FORCED_END_OF_LINE && LA117_10<=WIKI)||(LA117_10>=POUND && LA117_10<=67)||(LA117_10>=69 && LA117_10<=79)) ) {
 			alt117=2;
 		}
 		else {
@@ -11601,29 +11635,29 @@ public class Creole10Parser extends Parser {
 		}
 		}
 		break;
-		case 75:
+		case 76:
 		{
 		switch ( input.LA(2) ) {
-		case 50:
+		case 51:
 			{
 			int LA117_29 = input.LA(3);
 
-			if ( (LA117_29==51) ) {
+			if ( (LA117_29==52) ) {
 			int LA117_49 = input.LA(4);
 
-			if ( (LA117_49==48) ) {
+			if ( (LA117_49==49) ) {
 				int LA117_69 = input.LA(5);
 
-				if ( (LA117_69==51) ) {
+				if ( (LA117_69==52) ) {
 				int LA117_88 = input.LA(6);
 
-				if ( (LA117_88==43) ) {
+				if ( (LA117_88==44) ) {
 					int LA117_34 = input.LA(7);
 
 					if ( (LA117_34==PIPE||LA117_34==LINK_CLOSE) ) {
 					alt117=2;
 					}
-					else if ( ((LA117_34>=FORCED_END_OF_LINE && LA117_34<=WIKI)||(LA117_34>=POUND && LA117_34<=EQUAL)||(LA117_34>=ITAL && LA117_34<=NOWIKI_CLOSE)||(LA117_34>=IMAGE_CLOSE && LA117_34<=78)) ) {
+					else if ( ((LA117_34>=FORCED_END_OF_LINE && LA117_34<=WIKI)||(LA117_34>=POUND && LA117_34<=EQUAL)||(LA117_34>=ITAL && LA117_34<=NOWIKI_CLOSE)||(LA117_34>=IMAGE_CLOSE && LA117_34<=79)) ) {
 					alt117=1;
 					}
 					else {
@@ -11634,7 +11668,7 @@ public class Creole10Parser extends Parser {
 					throw nvae;
 					}
 				}
-				else if ( ((LA117_88>=FORCED_END_OF_LINE && LA117_88<=WIKI)||(LA117_88>=POUND && LA117_88<=INSIGNIFICANT_CHAR)||(LA117_88>=44 && LA117_88<=78)) ) {
+				else if ( ((LA117_88>=FORCED_END_OF_LINE && LA117_88<=WIKI)||(LA117_88>=POUND && LA117_88<=INSIGNIFICANT_CHAR)||(LA117_88>=45 && LA117_88<=79)) ) {
 					alt117=2;
 				}
 				else {
@@ -11645,7 +11679,7 @@ public class Creole10Parser extends Parser {
 					throw nvae;
 				}
 				}
-				else if ( ((LA117_69>=FORCED_END_OF_LINE && LA117_69<=WIKI)||(LA117_69>=POUND && LA117_69<=50)||(LA117_69>=52 && LA117_69<=78)) ) {
+				else if ( ((LA117_69>=FORCED_END_OF_LINE && LA117_69<=WIKI)||(LA117_69>=POUND && LA117_69<=51)||(LA117_69>=53 && LA117_69<=79)) ) {
 				alt117=2;
 				}
 				else {
@@ -11656,7 +11690,7 @@ public class Creole10Parser extends Parser {
 				throw nvae;
 				}
 			}
-			else if ( ((LA117_49>=FORCED_END_OF_LINE && LA117_49<=WIKI)||(LA117_49>=POUND && LA117_49<=47)||(LA117_49>=49 && LA117_49<=78)) ) {
+			else if ( ((LA117_49>=FORCED_END_OF_LINE && LA117_49<=WIKI)||(LA117_49>=POUND && LA117_49<=48)||(LA117_49>=50 && LA117_49<=79)) ) {
 				alt117=2;
 			}
 			else {
@@ -11667,7 +11701,7 @@ public class Creole10Parser extends Parser {
 				throw nvae;
 			}
 			}
-			else if ( ((LA117_29>=FORCED_END_OF_LINE && LA117_29<=WIKI)||(LA117_29>=POUND && LA117_29<=50)||(LA117_29>=52 && LA117_29<=78)) ) {
+			else if ( ((LA117_29>=FORCED_END_OF_LINE && LA117_29<=WIKI)||(LA117_29>=POUND && LA117_29<=51)||(LA117_29>=53 && LA117_29<=79)) ) {
 			alt117=2;
 			}
 			else {
@@ -11679,41 +11713,41 @@ public class Creole10Parser extends Parser {
 			}
 			}
 			break;
-		case 51:
+		case 52:
 			{
 			int LA117_30 = input.LA(3);
 
-			if ( (LA117_30==66) ) {
+			if ( (LA117_30==67) ) {
 			int LA117_50 = input.LA(4);
 
-			if ( (LA117_50==66) ) {
+			if ( (LA117_50==67) ) {
 				int LA117_70 = input.LA(5);
 
-				if ( (LA117_70==53) ) {
+				if ( (LA117_70==54) ) {
 				int LA117_89 = input.LA(6);
 
-				if ( (LA117_89==76) ) {
+				if ( (LA117_89==77) ) {
 					int LA117_106 = input.LA(7);
 
-					if ( (LA117_106==50) ) {
+					if ( (LA117_106==51) ) {
 					int LA117_118 = input.LA(8);
 
-					if ( (LA117_118==51) ) {
+					if ( (LA117_118==52) ) {
 						int LA117_127 = input.LA(9);
 
-						if ( (LA117_127==48) ) {
+						if ( (LA117_127==49) ) {
 						int LA117_131 = input.LA(10);
 
-						if ( (LA117_131==51) ) {
+						if ( (LA117_131==52) ) {
 							int LA117_134 = input.LA(11);
 
-							if ( (LA117_134==43) ) {
+							if ( (LA117_134==44) ) {
 							int LA117_34 = input.LA(12);
 
 							if ( (LA117_34==PIPE||LA117_34==LINK_CLOSE) ) {
 								alt117=2;
 							}
-							else if ( ((LA117_34>=FORCED_END_OF_LINE && LA117_34<=WIKI)||(LA117_34>=POUND && LA117_34<=EQUAL)||(LA117_34>=ITAL && LA117_34<=NOWIKI_CLOSE)||(LA117_34>=IMAGE_CLOSE && LA117_34<=78)) ) {
+							else if ( ((LA117_34>=FORCED_END_OF_LINE && LA117_34<=WIKI)||(LA117_34>=POUND && LA117_34<=EQUAL)||(LA117_34>=ITAL && LA117_34<=NOWIKI_CLOSE)||(LA117_34>=IMAGE_CLOSE && LA117_34<=79)) ) {
 								alt117=1;
 							}
 							else {
@@ -11724,7 +11758,7 @@ public class Creole10Parser extends Parser {
 								throw nvae;
 							}
 							}
-							else if ( ((LA117_134>=FORCED_END_OF_LINE && LA117_134<=WIKI)||(LA117_134>=POUND && LA117_134<=INSIGNIFICANT_CHAR)||(LA117_134>=44 && LA117_134<=78)) ) {
+							else if ( ((LA117_134>=FORCED_END_OF_LINE && LA117_134<=WIKI)||(LA117_134>=POUND && LA117_134<=INSIGNIFICANT_CHAR)||(LA117_134>=45 && LA117_134<=79)) ) {
 							alt117=2;
 							}
 							else {
@@ -11735,7 +11769,7 @@ public class Creole10Parser extends Parser {
 							throw nvae;
 							}
 						}
-						else if ( ((LA117_131>=FORCED_END_OF_LINE && LA117_131<=WIKI)||(LA117_131>=POUND && LA117_131<=50)||(LA117_131>=52 && LA117_131<=78)) ) {
+						else if ( ((LA117_131>=FORCED_END_OF_LINE && LA117_131<=WIKI)||(LA117_131>=POUND && LA117_131<=51)||(LA117_131>=53 && LA117_131<=79)) ) {
 							alt117=2;
 						}
 						else {
@@ -11746,7 +11780,7 @@ public class Creole10Parser extends Parser {
 							throw nvae;
 						}
 						}
-						else if ( ((LA117_127>=FORCED_END_OF_LINE && LA117_127<=WIKI)||(LA117_127>=POUND && LA117_127<=47)||(LA117_127>=49 && LA117_127<=78)) ) {
+						else if ( ((LA117_127>=FORCED_END_OF_LINE && LA117_127<=WIKI)||(LA117_127>=POUND && LA117_127<=48)||(LA117_127>=50 && LA117_127<=79)) ) {
 						alt117=2;
 						}
 						else {
@@ -11757,7 +11791,7 @@ public class Creole10Parser extends Parser {
 						throw nvae;
 						}
 					}
-					else if ( ((LA117_118>=FORCED_END_OF_LINE && LA117_118<=WIKI)||(LA117_118>=POUND && LA117_118<=50)||(LA117_118>=52 && LA117_118<=78)) ) {
+					else if ( ((LA117_118>=FORCED_END_OF_LINE && LA117_118<=WIKI)||(LA117_118>=POUND && LA117_118<=51)||(LA117_118>=53 && LA117_118<=79)) ) {
 						alt117=2;
 					}
 					else {
@@ -11768,7 +11802,7 @@ public class Creole10Parser extends Parser {
 						throw nvae;
 					}
 					}
-					else if ( ((LA117_106>=FORCED_END_OF_LINE && LA117_106<=WIKI)||(LA117_106>=POUND && LA117_106<=49)||(LA117_106>=51 && LA117_106<=78)) ) {
+					else if ( ((LA117_106>=FORCED_END_OF_LINE && LA117_106<=WIKI)||(LA117_106>=POUND && LA117_106<=50)||(LA117_106>=52 && LA117_106<=79)) ) {
 					alt117=2;
 					}
 					else {
@@ -11779,7 +11813,7 @@ public class Creole10Parser extends Parser {
 					throw nvae;
 					}
 				}
-				else if ( ((LA117_89>=FORCED_END_OF_LINE && LA117_89<=WIKI)||(LA117_89>=POUND && LA117_89<=75)||(LA117_89>=77 && LA117_89<=78)) ) {
+				else if ( ((LA117_89>=FORCED_END_OF_LINE && LA117_89<=WIKI)||(LA117_89>=POUND && LA117_89<=76)||(LA117_89>=78 && LA117_89<=79)) ) {
 					alt117=2;
 				}
 				else {
@@ -11790,7 +11824,7 @@ public class Creole10Parser extends Parser {
 					throw nvae;
 				}
 				}
-				else if ( ((LA117_70>=FORCED_END_OF_LINE && LA117_70<=WIKI)||(LA117_70>=POUND && LA117_70<=52)||(LA117_70>=54 && LA117_70<=78)) ) {
+				else if ( ((LA117_70>=FORCED_END_OF_LINE && LA117_70<=WIKI)||(LA117_70>=POUND && LA117_70<=53)||(LA117_70>=55 && LA117_70<=79)) ) {
 				alt117=2;
 				}
 				else {
@@ -11801,7 +11835,7 @@ public class Creole10Parser extends Parser {
 				throw nvae;
 				}
 			}
-			else if ( ((LA117_50>=FORCED_END_OF_LINE && LA117_50<=WIKI)||(LA117_50>=POUND && LA117_50<=65)||(LA117_50>=67 && LA117_50<=78)) ) {
+			else if ( ((LA117_50>=FORCED_END_OF_LINE && LA117_50<=WIKI)||(LA117_50>=POUND && LA117_50<=66)||(LA117_50>=68 && LA117_50<=79)) ) {
 				alt117=2;
 			}
 			else {
@@ -11812,7 +11846,7 @@ public class Creole10Parser extends Parser {
 				throw nvae;
 			}
 			}
-			else if ( ((LA117_30>=FORCED_END_OF_LINE && LA117_30<=WIKI)||(LA117_30>=POUND && LA117_30<=65)||(LA117_30>=67 && LA117_30<=78)) ) {
+			else if ( ((LA117_30>=FORCED_END_OF_LINE && LA117_30<=WIKI)||(LA117_30>=POUND && LA117_30<=66)||(LA117_30>=68 && LA117_30<=79)) ) {
 			alt117=2;
 			}
 			else {
@@ -11857,19 +11891,19 @@ public class Creole10Parser extends Parser {
 		case LF:
 		case SPACE:
 		case TABULATOR:
+		case BRACE_CLOSE:
 		case COLON_SLASH:
 		case SLASH:
 		case TABLE_OF_CONTENTS_OPEN_MARKUP:
 		case TABLE_OF_CONTENTS_CLOSE_MARKUP:
 		case INSIGNIFICANT_CHAR:
-		case 43:
 		case 44:
 		case 45:
 		case 46:
 		case 47:
 		case 48:
 		case 49:
-		case 52:
+		case 50:
 		case 53:
 		case 54:
 		case 55:
@@ -11896,6 +11930,7 @@ public class Creole10Parser extends Parser {
 		case 76:
 		case 77:
 		case 78:
+		case 79:
 			{
 			alt117=2;
 			}
@@ -11910,32 +11945,32 @@ public class Creole10Parser extends Parser {
 
 		}
 		break;
-		case 77:
+		case 78:
 		{
 		int LA117_12 = input.LA(2);
 
-		if ( (LA117_12==70) ) {
+		if ( (LA117_12==71) ) {
 			int LA117_31 = input.LA(3);
 
-			if ( (LA117_31==58) ) {
+			if ( (LA117_31==59) ) {
 			int LA117_51 = input.LA(4);
 
-			if ( (LA117_51==69) ) {
+			if ( (LA117_51==70) ) {
 				int LA117_71 = input.LA(5);
 
-				if ( (LA117_71==47) ) {
+				if ( (LA117_71==48) ) {
 				int LA117_90 = input.LA(6);
 
-				if ( (LA117_90==66) ) {
+				if ( (LA117_90==67) ) {
 					int LA117_107 = input.LA(7);
 
-					if ( (LA117_107==43) ) {
+					if ( (LA117_107==44) ) {
 					int LA117_34 = input.LA(8);
 
 					if ( (LA117_34==PIPE||LA117_34==LINK_CLOSE) ) {
 						alt117=2;
 					}
-					else if ( ((LA117_34>=FORCED_END_OF_LINE && LA117_34<=WIKI)||(LA117_34>=POUND && LA117_34<=EQUAL)||(LA117_34>=ITAL && LA117_34<=NOWIKI_CLOSE)||(LA117_34>=IMAGE_CLOSE && LA117_34<=78)) ) {
+					else if ( ((LA117_34>=FORCED_END_OF_LINE && LA117_34<=WIKI)||(LA117_34>=POUND && LA117_34<=EQUAL)||(LA117_34>=ITAL && LA117_34<=NOWIKI_CLOSE)||(LA117_34>=IMAGE_CLOSE && LA117_34<=79)) ) {
 						alt117=1;
 					}
 					else {
@@ -11946,7 +11981,7 @@ public class Creole10Parser extends Parser {
 						throw nvae;
 					}
 					}
-					else if ( ((LA117_107>=FORCED_END_OF_LINE && LA117_107<=WIKI)||(LA117_107>=POUND && LA117_107<=INSIGNIFICANT_CHAR)||(LA117_107>=44 && LA117_107<=78)) ) {
+					else if ( ((LA117_107>=FORCED_END_OF_LINE && LA117_107<=WIKI)||(LA117_107>=POUND && LA117_107<=INSIGNIFICANT_CHAR)||(LA117_107>=45 && LA117_107<=79)) ) {
 					alt117=2;
 					}
 					else {
@@ -11957,7 +11992,7 @@ public class Creole10Parser extends Parser {
 					throw nvae;
 					}
 				}
-				else if ( ((LA117_90>=FORCED_END_OF_LINE && LA117_90<=WIKI)||(LA117_90>=POUND && LA117_90<=65)||(LA117_90>=67 && LA117_90<=78)) ) {
+				else if ( ((LA117_90>=FORCED_END_OF_LINE && LA117_90<=WIKI)||(LA117_90>=POUND && LA117_90<=66)||(LA117_90>=68 && LA117_90<=79)) ) {
 					alt117=2;
 				}
 				else {
@@ -11968,7 +12003,7 @@ public class Creole10Parser extends Parser {
 					throw nvae;
 				}
 				}
-				else if ( ((LA117_71>=FORCED_END_OF_LINE && LA117_71<=WIKI)||(LA117_71>=POUND && LA117_71<=46)||(LA117_71>=48 && LA117_71<=78)) ) {
+				else if ( ((LA117_71>=FORCED_END_OF_LINE && LA117_71<=WIKI)||(LA117_71>=POUND && LA117_71<=47)||(LA117_71>=49 && LA117_71<=79)) ) {
 				alt117=2;
 				}
 				else {
@@ -11979,7 +12014,7 @@ public class Creole10Parser extends Parser {
 				throw nvae;
 				}
 			}
-			else if ( ((LA117_51>=FORCED_END_OF_LINE && LA117_51<=WIKI)||(LA117_51>=POUND && LA117_51<=68)||(LA117_51>=70 && LA117_51<=78)) ) {
+			else if ( ((LA117_51>=FORCED_END_OF_LINE && LA117_51<=WIKI)||(LA117_51>=POUND && LA117_51<=69)||(LA117_51>=71 && LA117_51<=79)) ) {
 				alt117=2;
 			}
 			else {
@@ -11990,7 +12025,7 @@ public class Creole10Parser extends Parser {
 				throw nvae;
 			}
 			}
-			else if ( ((LA117_31>=FORCED_END_OF_LINE && LA117_31<=WIKI)||(LA117_31>=POUND && LA117_31<=57)||(LA117_31>=59 && LA117_31<=78)) ) {
+			else if ( ((LA117_31>=FORCED_END_OF_LINE && LA117_31<=WIKI)||(LA117_31>=POUND && LA117_31<=58)||(LA117_31>=60 && LA117_31<=79)) ) {
 			alt117=2;
 			}
 			else {
@@ -12001,7 +12036,7 @@ public class Creole10Parser extends Parser {
 			throw nvae;
 			}
 		}
-		else if ( ((LA117_12>=FORCED_END_OF_LINE && LA117_12<=WIKI)||(LA117_12>=POUND && LA117_12<=69)||(LA117_12>=71 && LA117_12<=78)) ) {
+		else if ( ((LA117_12>=FORCED_END_OF_LINE && LA117_12<=WIKI)||(LA117_12>=POUND && LA117_12<=70)||(LA117_12>=72 && LA117_12<=79)) ) {
 			alt117=2;
 		}
 		else {
@@ -12013,41 +12048,41 @@ public class Creole10Parser extends Parser {
 		}
 		}
 		break;
-		case 50:
+		case 51:
 		{
 		int LA117_13 = input.LA(2);
 
-		if ( (LA117_13==51) ) {
+		if ( (LA117_13==52) ) {
 			int LA117_32 = input.LA(3);
 
-			if ( (LA117_32==48) ) {
+			if ( (LA117_32==49) ) {
 			int LA117_52 = input.LA(4);
 
-			if ( (LA117_52==51) ) {
+			if ( (LA117_52==52) ) {
 				int LA117_72 = input.LA(5);
 
-				if ( (LA117_72==72) ) {
+				if ( (LA117_72==73) ) {
 				int LA117_91 = input.LA(6);
 
-				if ( (LA117_91==58) ) {
+				if ( (LA117_91==59) ) {
 					int LA117_108 = input.LA(7);
 
-					if ( (LA117_108==66) ) {
+					if ( (LA117_108==67) ) {
 					int LA117_119 = input.LA(8);
 
-					if ( (LA117_119==51) ) {
+					if ( (LA117_119==52) ) {
 						int LA117_128 = input.LA(9);
 
-						if ( (LA117_128==63) ) {
+						if ( (LA117_128==64) ) {
 						int LA117_132 = input.LA(10);
 
-						if ( (LA117_132==43) ) {
+						if ( (LA117_132==44) ) {
 							int LA117_34 = input.LA(11);
 
 							if ( (LA117_34==PIPE||LA117_34==LINK_CLOSE) ) {
 							alt117=2;
 							}
-							else if ( ((LA117_34>=FORCED_END_OF_LINE && LA117_34<=WIKI)||(LA117_34>=POUND && LA117_34<=EQUAL)||(LA117_34>=ITAL && LA117_34<=NOWIKI_CLOSE)||(LA117_34>=IMAGE_CLOSE && LA117_34<=78)) ) {
+							else if ( ((LA117_34>=FORCED_END_OF_LINE && LA117_34<=WIKI)||(LA117_34>=POUND && LA117_34<=EQUAL)||(LA117_34>=ITAL && LA117_34<=NOWIKI_CLOSE)||(LA117_34>=IMAGE_CLOSE && LA117_34<=79)) ) {
 							alt117=1;
 							}
 							else {
@@ -12058,7 +12093,7 @@ public class Creole10Parser extends Parser {
 							throw nvae;
 							}
 						}
-						else if ( ((LA117_132>=FORCED_END_OF_LINE && LA117_132<=WIKI)||(LA117_132>=POUND && LA117_132<=INSIGNIFICANT_CHAR)||(LA117_132>=44 && LA117_132<=78)) ) {
+						else if ( ((LA117_132>=FORCED_END_OF_LINE && LA117_132<=WIKI)||(LA117_132>=POUND && LA117_132<=INSIGNIFICANT_CHAR)||(LA117_132>=45 && LA117_132<=79)) ) {
 							alt117=2;
 						}
 						else {
@@ -12069,7 +12104,7 @@ public class Creole10Parser extends Parser {
 							throw nvae;
 						}
 						}
-						else if ( ((LA117_128>=FORCED_END_OF_LINE && LA117_128<=WIKI)||(LA117_128>=POUND && LA117_128<=62)||(LA117_128>=64 && LA117_128<=78)) ) {
+						else if ( ((LA117_128>=FORCED_END_OF_LINE && LA117_128<=WIKI)||(LA117_128>=POUND && LA117_128<=63)||(LA117_128>=65 && LA117_128<=79)) ) {
 						alt117=2;
 						}
 						else {
@@ -12080,7 +12115,7 @@ public class Creole10Parser extends Parser {
 						throw nvae;
 						}
 					}
-					else if ( ((LA117_119>=FORCED_END_OF_LINE && LA117_119<=WIKI)||(LA117_119>=POUND && LA117_119<=50)||(LA117_119>=52 && LA117_119<=78)) ) {
+					else if ( ((LA117_119>=FORCED_END_OF_LINE && LA117_119<=WIKI)||(LA117_119>=POUND && LA117_119<=51)||(LA117_119>=53 && LA117_119<=79)) ) {
 						alt117=2;
 					}
 					else {
@@ -12091,7 +12126,7 @@ public class Creole10Parser extends Parser {
 						throw nvae;
 					}
 					}
-					else if ( ((LA117_108>=FORCED_END_OF_LINE && LA117_108<=WIKI)||(LA117_108>=POUND && LA117_108<=65)||(LA117_108>=67 && LA117_108<=78)) ) {
+					else if ( ((LA117_108>=FORCED_END_OF_LINE && LA117_108<=WIKI)||(LA117_108>=POUND && LA117_108<=66)||(LA117_108>=68 && LA117_108<=79)) ) {
 					alt117=2;
 					}
 					else {
@@ -12102,7 +12137,7 @@ public class Creole10Parser extends Parser {
 					throw nvae;
 					}
 				}
-				else if ( ((LA117_91>=FORCED_END_OF_LINE && LA117_91<=WIKI)||(LA117_91>=POUND && LA117_91<=57)||(LA117_91>=59 && LA117_91<=78)) ) {
+				else if ( ((LA117_91>=FORCED_END_OF_LINE && LA117_91<=WIKI)||(LA117_91>=POUND && LA117_91<=58)||(LA117_91>=60 && LA117_91<=79)) ) {
 					alt117=2;
 				}
 				else {
@@ -12113,7 +12148,7 @@ public class Creole10Parser extends Parser {
 					throw nvae;
 				}
 				}
-				else if ( ((LA117_72>=FORCED_END_OF_LINE && LA117_72<=WIKI)||(LA117_72>=POUND && LA117_72<=71)||(LA117_72>=73 && LA117_72<=78)) ) {
+				else if ( ((LA117_72>=FORCED_END_OF_LINE && LA117_72<=WIKI)||(LA117_72>=POUND && LA117_72<=72)||(LA117_72>=74 && LA117_72<=79)) ) {
 				alt117=2;
 				}
 				else {
@@ -12124,7 +12159,7 @@ public class Creole10Parser extends Parser {
 				throw nvae;
 				}
 			}
-			else if ( ((LA117_52>=FORCED_END_OF_LINE && LA117_52<=WIKI)||(LA117_52>=POUND && LA117_52<=50)||(LA117_52>=52 && LA117_52<=78)) ) {
+			else if ( ((LA117_52>=FORCED_END_OF_LINE && LA117_52<=WIKI)||(LA117_52>=POUND && LA117_52<=51)||(LA117_52>=53 && LA117_52<=79)) ) {
 				alt117=2;
 			}
 			else {
@@ -12135,7 +12170,7 @@ public class Creole10Parser extends Parser {
 				throw nvae;
 			}
 			}
-			else if ( ((LA117_32>=FORCED_END_OF_LINE && LA117_32<=WIKI)||(LA117_32>=POUND && LA117_32<=47)||(LA117_32>=49 && LA117_32<=78)) ) {
+			else if ( ((LA117_32>=FORCED_END_OF_LINE && LA117_32<=WIKI)||(LA117_32>=POUND && LA117_32<=48)||(LA117_32>=50 && LA117_32<=79)) ) {
 			alt117=2;
 			}
 			else {
@@ -12146,7 +12181,7 @@ public class Creole10Parser extends Parser {
 			throw nvae;
 			}
 		}
-		else if ( ((LA117_13>=FORCED_END_OF_LINE && LA117_13<=WIKI)||(LA117_13>=POUND && LA117_13<=50)||(LA117_13>=52 && LA117_13<=78)) ) {
+		else if ( ((LA117_13>=FORCED_END_OF_LINE && LA117_13<=WIKI)||(LA117_13>=POUND && LA117_13<=51)||(LA117_13>=53 && LA117_13<=79)) ) {
 			alt117=2;
 		}
 		else {
@@ -12158,29 +12193,29 @@ public class Creole10Parser extends Parser {
 		}
 		}
 		break;
-		case 78:
+		case 79:
 		{
 		int LA117_14 = input.LA(2);
 
-		if ( (LA117_14==50) ) {
+		if ( (LA117_14==51) ) {
 			int LA117_33 = input.LA(3);
 
-			if ( (LA117_33==51) ) {
+			if ( (LA117_33==52) ) {
 			int LA117_53 = input.LA(4);
 
-			if ( (LA117_53==48) ) {
+			if ( (LA117_53==49) ) {
 				int LA117_73 = input.LA(5);
 
-				if ( (LA117_73==51) ) {
+				if ( (LA117_73==52) ) {
 				int LA117_92 = input.LA(6);
 
-				if ( (LA117_92==43) ) {
+				if ( (LA117_92==44) ) {
 					int LA117_34 = input.LA(7);
 
 					if ( (LA117_34==PIPE||LA117_34==LINK_CLOSE) ) {
 					alt117=2;
 					}
-					else if ( ((LA117_34>=FORCED_END_OF_LINE && LA117_34<=WIKI)||(LA117_34>=POUND && LA117_34<=EQUAL)||(LA117_34>=ITAL && LA117_34<=NOWIKI_CLOSE)||(LA117_34>=IMAGE_CLOSE && LA117_34<=78)) ) {
+					else if ( ((LA117_34>=FORCED_END_OF_LINE && LA117_34<=WIKI)||(LA117_34>=POUND && LA117_34<=EQUAL)||(LA117_34>=ITAL && LA117_34<=NOWIKI_CLOSE)||(LA117_34>=IMAGE_CLOSE && LA117_34<=79)) ) {
 					alt117=1;
 					}
 					else {
@@ -12191,7 +12226,7 @@ public class Creole10Parser extends Parser {
 					throw nvae;
 					}
 				}
-				else if ( ((LA117_92>=FORCED_END_OF_LINE && LA117_92<=WIKI)||(LA117_92>=POUND && LA117_92<=INSIGNIFICANT_CHAR)||(LA117_92>=44 && LA117_92<=78)) ) {
+				else if ( ((LA117_92>=FORCED_END_OF_LINE && LA117_92<=WIKI)||(LA117_92>=POUND && LA117_92<=INSIGNIFICANT_CHAR)||(LA117_92>=45 && LA117_92<=79)) ) {
 					alt117=2;
 				}
 				else {
@@ -12202,7 +12237,7 @@ public class Creole10Parser extends Parser {
 					throw nvae;
 				}
 				}
-				else if ( ((LA117_73>=FORCED_END_OF_LINE && LA117_73<=WIKI)||(LA117_73>=POUND && LA117_73<=50)||(LA117_73>=52 && LA117_73<=78)) ) {
+				else if ( ((LA117_73>=FORCED_END_OF_LINE && LA117_73<=WIKI)||(LA117_73>=POUND && LA117_73<=51)||(LA117_73>=53 && LA117_73<=79)) ) {
 				alt117=2;
 				}
 				else {
@@ -12213,7 +12248,7 @@ public class Creole10Parser extends Parser {
 				throw nvae;
 				}
 			}
-			else if ( ((LA117_53>=FORCED_END_OF_LINE && LA117_53<=WIKI)||(LA117_53>=POUND && LA117_53<=47)||(LA117_53>=49 && LA117_53<=78)) ) {
+			else if ( ((LA117_53>=FORCED_END_OF_LINE && LA117_53<=WIKI)||(LA117_53>=POUND && LA117_53<=48)||(LA117_53>=50 && LA117_53<=79)) ) {
 				alt117=2;
 			}
 			else {
@@ -12224,7 +12259,7 @@ public class Creole10Parser extends Parser {
 				throw nvae;
 			}
 			}
-			else if ( ((LA117_33>=FORCED_END_OF_LINE && LA117_33<=WIKI)||(LA117_33>=POUND && LA117_33<=50)||(LA117_33>=52 && LA117_33<=78)) ) {
+			else if ( ((LA117_33>=FORCED_END_OF_LINE && LA117_33<=WIKI)||(LA117_33>=POUND && LA117_33<=51)||(LA117_33>=53 && LA117_33<=79)) ) {
 			alt117=2;
 			}
 			else {
@@ -12235,7 +12270,7 @@ public class Creole10Parser extends Parser {
 			throw nvae;
 			}
 		}
-		else if ( ((LA117_14>=FORCED_END_OF_LINE && LA117_14<=WIKI)||(LA117_14>=POUND && LA117_14<=49)||(LA117_14>=51 && LA117_14<=78)) ) {
+		else if ( ((LA117_14>=FORCED_END_OF_LINE && LA117_14<=WIKI)||(LA117_14>=POUND && LA117_14<=50)||(LA117_14>=52 && LA117_14<=79)) ) {
 			alt117=2;
 		}
 		else {
@@ -12278,33 +12313,34 @@ public class Creole10Parser extends Parser {
 		case LF:
 		case SPACE:
 		case TABULATOR:
+		case BRACE_CLOSE:
 		case COLON_SLASH:
 		case SLASH:
 		case TABLE_OF_CONTENTS_OPEN_MARKUP:
 		case TABLE_OF_CONTENTS_CLOSE_MARKUP:
 		case INSIGNIFICANT_CHAR:
-		case 43:
-		case 45:
-		case 47:
+		case 44:
+		case 46:
 		case 48:
 		case 49:
-		case 51:
-		case 53:
+		case 50:
+		case 52:
 		case 54:
 		case 55:
-		case 57:
+		case 56:
 		case 58:
-		case 63:
+		case 59:
 		case 64:
 		case 65:
 		case 66:
 		case 67:
-		case 69:
+		case 68:
 		case 70:
 		case 71:
 		case 72:
-		case 74:
-		case 76:
+		case 73:
+		case 75:
+		case 77:
 		{
 		alt117=2;
 		}
@@ -12321,12 +12357,12 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:579:4: li= link_interwiki_uri ':' p= link_interwiki_pagename
 			{
-			pushFollow(FOLLOW_link_interwiki_uri_in_link_address3357);
+			pushFollow(FOLLOW_link_interwiki_uri_in_link_address3338);
 			li=link_interwiki_uri();
 			_fsp--;
 			if (failed) return link;
-			match(input,43,FOLLOW_43_in_link_address3360); if (failed) return link;
-			pushFollow(FOLLOW_link_interwiki_pagename_in_link_address3367);
+			match(input,44,FOLLOW_44_in_link_address3341); if (failed) return link;
+			pushFollow(FOLLOW_link_interwiki_pagename_in_link_address3348);
 			p=link_interwiki_pagename();
 			_fsp--;
 			if (failed) return link;
@@ -12342,7 +12378,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:583:4: lu= link_uri
 			{
-			pushFollow(FOLLOW_link_uri_in_link_address3378);
+			pushFollow(FOLLOW_link_uri_in_link_address3359);
 			lu=link_uri();
 			_fsp--;
 			if (failed) return link;
@@ -12375,42 +12411,42 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:586:2: ( 'C' '2' | 'D' 'o' 'k' 'u' 'W' 'i' 'k' 'i' | 'F' 'l' 'i' 'c' 'k' 'r' | 'G' 'o' 'o' 'g' 'l' 'e' | 'J' 'S' 'P' 'W' 'i' 'k' 'i' | 'M' 'e' 'a' 't' 'b' 'a' 'l' 'l' | 'M' 'e' 'd' 'i' 'a' 'W' 'i' 'k' 'i' | 'M' 'o' 'i' 'n' 'M' 'o' 'i' 'n' | 'O' 'd' 'd' 'm' 'u' 's' 'e' | 'O' 'h' 'a' 'n' 'a' | 'P' 'm' 'W' 'i' 'k' 'i' | 'P' 'u' 'k' 'i' 'W' 'i' 'k' 'i' | 'P' 'u' 'r' 'p' 'l' 'e' 'W' 'i' 'k' 'i' | 'R' 'a' 'd' 'e' 'o' 'x' | 'S' 'n' 'i' 'p' 'S' 'n' 'a' 'p' | 'T' 'i' 'd' 'd' 'l' 'y' 'W' 'i' 'k' 'i' | 'T' 'W' 'i' 'k' 'i' | 'U' 's' 'e' 'm' 'o' 'd' | 'W' 'i' 'k' 'i' 'p' 'e' 'd' 'i' 'a' | 'X' 'W' 'i' 'k' 'i' )
 		int alt118=20;
 		switch ( input.LA(1) ) {
-		case 44:
+		case 45:
 		{
 		alt118=1;
 		}
 		break;
-		case 46:
+		case 47:
 		{
 		alt118=2;
 		}
 		break;
-		case 52:
+		case 53:
 		{
 		alt118=3;
 		}
 		break;
-		case 56:
+		case 57:
 		{
 		alt118=4;
 		}
 		break;
-		case 59:
+		case 60:
 		{
 		alt118=5;
 		}
 		break;
-		case 62:
+		case 63:
 		{
 		int LA118_6 = input.LA(2);
 
-		if ( (LA118_6==58) ) {
+		if ( (LA118_6==59) ) {
 			int LA118_15 = input.LA(3);
 
-			if ( (LA118_15==66) ) {
+			if ( (LA118_15==67) ) {
 			alt118=7;
 			}
-			else if ( (LA118_15==63) ) {
+			else if ( (LA118_15==64) ) {
 			alt118=6;
 			}
 			else {
@@ -12421,7 +12457,7 @@ public class Creole10Parser extends Parser {
 			throw nvae;
 			}
 		}
-		else if ( (LA118_6==47) ) {
+		else if ( (LA118_6==48) ) {
 			alt118=8;
 		}
 		else {
@@ -12433,14 +12469,14 @@ public class Creole10Parser extends Parser {
 		}
 		}
 		break;
-		case 68:
+		case 69:
 		{
 		int LA118_7 = input.LA(2);
 
-		if ( (LA118_7==66) ) {
+		if ( (LA118_7==67) ) {
 			alt118=9;
 		}
-		else if ( (LA118_7==71) ) {
+		else if ( (LA118_7==72) ) {
 			alt118=10;
 		}
 		else {
@@ -12452,17 +12488,17 @@ public class Creole10Parser extends Parser {
 		}
 		}
 		break;
-		case 61:
+		case 62:
 		{
 		int LA118_8 = input.LA(2);
 
-		if ( (LA118_8==49) ) {
+		if ( (LA118_8==50) ) {
 			int LA118_19 = input.LA(3);
 
-			if ( (LA118_19==55) ) {
+			if ( (LA118_19==56) ) {
 			alt118=13;
 			}
-			else if ( (LA118_19==48) ) {
+			else if ( (LA118_19==49) ) {
 			alt118=12;
 			}
 			else {
@@ -12473,7 +12509,7 @@ public class Creole10Parser extends Parser {
 			throw nvae;
 			}
 		}
-		else if ( (LA118_8==69) ) {
+		else if ( (LA118_8==70) ) {
 			alt118=11;
 		}
 		else {
@@ -12485,24 +12521,24 @@ public class Creole10Parser extends Parser {
 		}
 		}
 		break;
-		case 73:
+		case 74:
 		{
 		alt118=14;
 		}
 		break;
-		case 60:
+		case 61:
 		{
 		alt118=15;
 		}
 		break;
-		case 75:
+		case 76:
 		{
 		int LA118_11 = input.LA(2);
 
-		if ( (LA118_11==50) ) {
+		if ( (LA118_11==51) ) {
 			alt118=17;
 		}
-		else if ( (LA118_11==51) ) {
+		else if ( (LA118_11==52) ) {
 			alt118=16;
 		}
 		else {
@@ -12514,17 +12550,17 @@ public class Creole10Parser extends Parser {
 		}
 		}
 		break;
-		case 77:
+		case 78:
 		{
 		alt118=18;
 		}
 		break;
-		case 50:
+		case 51:
 		{
 		alt118=19;
 		}
 		break;
-		case 78:
+		case 79:
 		{
 		alt118=20;
 		}
@@ -12541,259 +12577,259 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:586:4: 'C' '2'
 			{
-			match(input,44,FOLLOW_44_in_link_interwiki_uri3394); if (failed) return interwiki;
-			match(input,45,FOLLOW_45_in_link_interwiki_uri3396); if (failed) return interwiki;
+			match(input,45,FOLLOW_45_in_link_interwiki_uri3375); if (failed) return interwiki;
+			match(input,46,FOLLOW_46_in_link_interwiki_uri3377); if (failed) return interwiki;
 
 			}
 			break;
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:587:4: 'D' 'o' 'k' 'u' 'W' 'i' 'k' 'i'
 			{
-			match(input,46,FOLLOW_46_in_link_interwiki_uri3401); if (failed) return interwiki;
-			match(input,47,FOLLOW_47_in_link_interwiki_uri3403); if (failed) return interwiki;
-			match(input,48,FOLLOW_48_in_link_interwiki_uri3405); if (failed) return interwiki;
-			match(input,49,FOLLOW_49_in_link_interwiki_uri3407); if (failed) return interwiki;
-			match(input,50,FOLLOW_50_in_link_interwiki_uri3409); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3411); if (failed) return interwiki;
-			match(input,48,FOLLOW_48_in_link_interwiki_uri3413); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3415); if (failed) return interwiki;
+			match(input,47,FOLLOW_47_in_link_interwiki_uri3382); if (failed) return interwiki;
+			match(input,48,FOLLOW_48_in_link_interwiki_uri3384); if (failed) return interwiki;
+			match(input,49,FOLLOW_49_in_link_interwiki_uri3386); if (failed) return interwiki;
+			match(input,50,FOLLOW_50_in_link_interwiki_uri3388); if (failed) return interwiki;
+			match(input,51,FOLLOW_51_in_link_interwiki_uri3390); if (failed) return interwiki;
+			match(input,52,FOLLOW_52_in_link_interwiki_uri3392); if (failed) return interwiki;
+			match(input,49,FOLLOW_49_in_link_interwiki_uri3394); if (failed) return interwiki;
+			match(input,52,FOLLOW_52_in_link_interwiki_uri3396); if (failed) return interwiki;
 
 			}
 			break;
 		case 3 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:588:4: 'F' 'l' 'i' 'c' 'k' 'r'
 			{
-			match(input,52,FOLLOW_52_in_link_interwiki_uri3420); if (failed) return interwiki;
-			match(input,53,FOLLOW_53_in_link_interwiki_uri3422); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3424); if (failed) return interwiki;
-			match(input,54,FOLLOW_54_in_link_interwiki_uri3426); if (failed) return interwiki;
-			match(input,48,FOLLOW_48_in_link_interwiki_uri3428); if (failed) return interwiki;
-			match(input,55,FOLLOW_55_in_link_interwiki_uri3430); if (failed) return interwiki;
+			match(input,53,FOLLOW_53_in_link_interwiki_uri3401); if (failed) return interwiki;
+			match(input,54,FOLLOW_54_in_link_interwiki_uri3403); if (failed) return interwiki;
+			match(input,52,FOLLOW_52_in_link_interwiki_uri3405); if (failed) return interwiki;
+			match(input,55,FOLLOW_55_in_link_interwiki_uri3407); if (failed) return interwiki;
+			match(input,49,FOLLOW_49_in_link_interwiki_uri3409); if (failed) return interwiki;
+			match(input,56,FOLLOW_56_in_link_interwiki_uri3411); if (failed) return interwiki;
 
 			}
 			break;
 		case 4 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:589:4: 'G' 'o' 'o' 'g' 'l' 'e'
 			{
-			match(input,56,FOLLOW_56_in_link_interwiki_uri3435); if (failed) return interwiki;
-			match(input,47,FOLLOW_47_in_link_interwiki_uri3437); if (failed) return interwiki;
-			match(input,47,FOLLOW_47_in_link_interwiki_uri3439); if (failed) return interwiki;
-			match(input,57,FOLLOW_57_in_link_interwiki_uri3441); if (failed) return interwiki;
-			match(input,53,FOLLOW_53_in_link_interwiki_uri3443); if (failed) return interwiki;
-			match(input,58,FOLLOW_58_in_link_interwiki_uri3445); if (failed) return interwiki;
+			match(input,57,FOLLOW_57_in_link_interwiki_uri3416); if (failed) return interwiki;
+			match(input,48,FOLLOW_48_in_link_interwiki_uri3418); if (failed) return interwiki;
+			match(input,48,FOLLOW_48_in_link_interwiki_uri3420); if (failed) return interwiki;
+			match(input,58,FOLLOW_58_in_link_interwiki_uri3422); if (failed) return interwiki;
+			match(input,54,FOLLOW_54_in_link_interwiki_uri3424); if (failed) return interwiki;
+			match(input,59,FOLLOW_59_in_link_interwiki_uri3426); if (failed) return interwiki;
 
 			}
 			break;
 		case 5 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:590:4: 'J' 'S' 'P' 'W' 'i' 'k' 'i'
 			{
-			match(input,59,FOLLOW_59_in_link_interwiki_uri3450); if (failed) return interwiki;
-			match(input,60,FOLLOW_60_in_link_interwiki_uri3452); if (failed) return interwiki;
-			match(input,61,FOLLOW_61_in_link_interwiki_uri3454); if (failed) return interwiki;
-			match(input,50,FOLLOW_50_in_link_interwiki_uri3456); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3458); if (failed) return interwiki;
-			match(input,48,FOLLOW_48_in_link_interwiki_uri3460); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3462); if (failed) return interwiki;
+			match(input,60,FOLLOW_60_in_link_interwiki_uri3431); if (failed) return interwiki;
+			match(input,61,FOLLOW_61_in_link_interwiki_uri3433); if (failed) return interwiki;
+			match(input,62,FOLLOW_62_in_link_interwiki_uri3435); if (failed) return interwiki;
+			match(input,51,FOLLOW_51_in_link_interwiki_uri3437); if (failed) return interwiki;
+			match(input,52,FOLLOW_52_in_link_interwiki_uri3439); if (failed) return interwiki;
+			match(input,49,FOLLOW_49_in_link_interwiki_uri3441); if (failed) return interwiki;
+			match(input,52,FOLLOW_52_in_link_interwiki_uri3443); if (failed) return interwiki;
 
 			}
 			break;
 		case 6 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:591:4: 'M' 'e' 'a' 't' 'b' 'a' 'l' 'l'
 			{
-			match(input,62,FOLLOW_62_in_link_interwiki_uri3467); if (failed) return interwiki;
-			match(input,58,FOLLOW_58_in_link_interwiki_uri3469); if (failed) return interwiki;
-			match(input,63,FOLLOW_63_in_link_interwiki_uri3471); if (failed) return interwiki;
-			match(input,64,FOLLOW_64_in_link_interwiki_uri3473); if (failed) return interwiki;
-			match(input,65,FOLLOW_65_in_link_interwiki_uri3475); if (failed) return interwiki;
-			match(input,63,FOLLOW_63_in_link_interwiki_uri3477); if (failed) return interwiki;
-			match(input,53,FOLLOW_53_in_link_interwiki_uri3479); if (failed) return interwiki;
-			match(input,53,FOLLOW_53_in_link_interwiki_uri3481); if (failed) return interwiki;
+			match(input,63,FOLLOW_63_in_link_interwiki_uri3448); if (failed) return interwiki;
+			match(input,59,FOLLOW_59_in_link_interwiki_uri3450); if (failed) return interwiki;
+			match(input,64,FOLLOW_64_in_link_interwiki_uri3452); if (failed) return interwiki;
+			match(input,65,FOLLOW_65_in_link_interwiki_uri3454); if (failed) return interwiki;
+			match(input,66,FOLLOW_66_in_link_interwiki_uri3456); if (failed) return interwiki;
+			match(input,64,FOLLOW_64_in_link_interwiki_uri3458); if (failed) return interwiki;
+			match(input,54,FOLLOW_54_in_link_interwiki_uri3460); if (failed) return interwiki;
+			match(input,54,FOLLOW_54_in_link_interwiki_uri3462); if (failed) return interwiki;
 
 			}
 			break;
 		case 7 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:592:4: 'M' 'e' 'd' 'i' 'a' 'W' 'i' 'k' 'i'
 			{
-			match(input,62,FOLLOW_62_in_link_interwiki_uri3486); if (failed) return interwiki;
-			match(input,58,FOLLOW_58_in_link_interwiki_uri3488); if (failed) return interwiki;
-			match(input,66,FOLLOW_66_in_link_interwiki_uri3490); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3492); if (failed) return interwiki;
-			match(input,63,FOLLOW_63_in_link_interwiki_uri3494); if (failed) return interwiki;
-			match(input,50,FOLLOW_50_in_link_interwiki_uri3496); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3498); if (failed) return interwiki;
-			match(input,48,FOLLOW_48_in_link_interwiki_uri3500); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3502); if (failed) return interwiki;
+			match(input,63,FOLLOW_63_in_link_interwiki_uri3467); if (failed) return interwiki;
+			match(input,59,FOLLOW_59_in_link_interwiki_uri3469); if (failed) return interwiki;
+			match(input,67,FOLLOW_67_in_link_interwiki_uri3471); if (failed) return interwiki;
+			match(input,52,FOLLOW_52_in_link_interwiki_uri3473); if (failed) return interwiki;
+			match(input,64,FOLLOW_64_in_link_interwiki_uri3475); if (failed) return interwiki;
+			match(input,51,FOLLOW_51_in_link_interwiki_uri3477); if (failed) return interwiki;
+			match(input,52,FOLLOW_52_in_link_interwiki_uri3479); if (failed) return interwiki;
+			match(input,49,FOLLOW_49_in_link_interwiki_uri3481); if (failed) return interwiki;
+			match(input,52,FOLLOW_52_in_link_interwiki_uri3483); if (failed) return interwiki;
 
 			}
 			break;
 		case 8 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:593:4: 'M' 'o' 'i' 'n' 'M' 'o' 'i' 'n'
 			{
-			match(input,62,FOLLOW_62_in_link_interwiki_uri3507); if (failed) return interwiki;
-			match(input,47,FOLLOW_47_in_link_interwiki_uri3509); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3511); if (failed) return interwiki;
-			match(input,67,FOLLOW_67_in_link_interwiki_uri3513); if (failed) return interwiki;
-			match(input,62,FOLLOW_62_in_link_interwiki_uri3515); if (failed) return interwiki;
-			match(input,47,FOLLOW_47_in_link_interwiki_uri3517); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3519); if (failed) return interwiki;
-			match(input,67,FOLLOW_67_in_link_interwiki_uri3521); if (failed) return interwiki;
+			match(input,63,FOLLOW_63_in_link_interwiki_uri3488); if (failed) return interwiki;
+			match(input,48,FOLLOW_48_in_link_interwiki_uri3490); if (failed) return interwiki;
+			match(input,52,FOLLOW_52_in_link_interwiki_uri3492); if (failed) return interwiki;
+			match(input,68,FOLLOW_68_in_link_interwiki_uri3494); if (failed) return interwiki;
+			match(input,63,FOLLOW_63_in_link_interwiki_uri3496); if (failed) return interwiki;
+			match(input,48,FOLLOW_48_in_link_interwiki_uri3498); if (failed) return interwiki;
+			match(input,52,FOLLOW_52_in_link_interwiki_uri3500); if (failed) return interwiki;
+			match(input,68,FOLLOW_68_in_link_interwiki_uri3502); if (failed) return interwiki;
 
 			}
 			break;
 		case 9 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:594:4: 'O' 'd' 'd' 'm' 'u' 's' 'e'
 			{
-			match(input,68,FOLLOW_68_in_link_interwiki_uri3526); if (failed) return interwiki;
-			match(input,66,FOLLOW_66_in_link_interwiki_uri3528); if (failed) return interwiki;
-			match(input,66,FOLLOW_66_in_link_interwiki_uri3530); if (failed) return interwiki;
-			match(input,69,FOLLOW_69_in_link_interwiki_uri3532); if (failed) return interwiki;
-			match(input,49,FOLLOW_49_in_link_interwiki_uri3534); if (failed) return interwiki;
-			match(input,70,FOLLOW_70_in_link_interwiki_uri3536); if (failed) return interwiki;
-			match(input,58,FOLLOW_58_in_link_interwiki_uri3538); if (failed) return interwiki;
+			match(input,69,FOLLOW_69_in_link_interwiki_uri3507); if (failed) return interwiki;
+			match(input,67,FOLLOW_67_in_link_interwiki_uri3509); if (failed) return interwiki;
+			match(input,67,FOLLOW_67_in_link_interwiki_uri3511); if (failed) return interwiki;
+			match(input,70,FOLLOW_70_in_link_interwiki_uri3513); if (failed) return interwiki;
+			match(input,50,FOLLOW_50_in_link_interwiki_uri3515); if (failed) return interwiki;
+			match(input,71,FOLLOW_71_in_link_interwiki_uri3517); if (failed) return interwiki;
+			match(input,59,FOLLOW_59_in_link_interwiki_uri3519); if (failed) return interwiki;
 
 			}
 			break;
 		case 10 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:595:4: 'O' 'h' 'a' 'n' 'a'
 			{
-			match(input,68,FOLLOW_68_in_link_interwiki_uri3543); if (failed) return interwiki;
-			match(input,71,FOLLOW_71_in_link_interwiki_uri3545); if (failed) return interwiki;
-			match(input,63,FOLLOW_63_in_link_interwiki_uri3547); if (failed) return interwiki;
-			match(input,67,FOLLOW_67_in_link_interwiki_uri3549); if (failed) return interwiki;
-			match(input,63,FOLLOW_63_in_link_interwiki_uri3551); if (failed) return interwiki;
+			match(input,69,FOLLOW_69_in_link_interwiki_uri3524); if (failed) return interwiki;
+			match(input,72,FOLLOW_72_in_link_interwiki_uri3526); if (failed) return interwiki;
+			match(input,64,FOLLOW_64_in_link_interwiki_uri3528); if (failed) return interwiki;
+			match(input,68,FOLLOW_68_in_link_interwiki_uri3530); if (failed) return interwiki;
+			match(input,64,FOLLOW_64_in_link_interwiki_uri3532); if (failed) return interwiki;
 
 			}
 			break;
 		case 11 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:596:4: 'P' 'm' 'W' 'i' 'k' 'i'
 			{
-			match(input,61,FOLLOW_61_in_link_interwiki_uri3556); if (failed) return interwiki;
-			match(input,69,FOLLOW_69_in_link_interwiki_uri3558); if (failed) return interwiki;
-			match(input,50,FOLLOW_50_in_link_interwiki_uri3560); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3562); if (failed) return interwiki;
-			match(input,48,FOLLOW_48_in_link_interwiki_uri3564); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3566); if (failed) return interwiki;
+			match(input,62,FOLLOW_62_in_link_interwiki_uri3537); if (failed) return interwiki;
+			match(input,70,FOLLOW_70_in_link_interwiki_uri3539); if (failed) return interwiki;
+			match(input,51,FOLLOW_51_in_link_interwiki_uri3541); if (failed) return interwiki;
+			match(input,52,FOLLOW_52_in_link_interwiki_uri3543); if (failed) return interwiki;
+			match(input,49,FOLLOW_49_in_link_interwiki_uri3545); if (failed) return interwiki;
+			match(input,52,FOLLOW_52_in_link_interwiki_uri3547); if (failed) return interwiki;
 
 			}
 			break;
 		case 12 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:597:4: 'P' 'u' 'k' 'i' 'W' 'i' 'k' 'i'
 			{
-			match(input,61,FOLLOW_61_in_link_interwiki_uri3571); if (failed) return interwiki;
-			match(input,49,FOLLOW_49_in_link_interwiki_uri3573); if (failed) return interwiki;
-			match(input,48,FOLLOW_48_in_link_interwiki_uri3575); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3577); if (failed) return interwiki;
-			match(input,50,FOLLOW_50_in_link_interwiki_uri3579); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3581); if (failed) return interwiki;
-			match(input,48,FOLLOW_48_in_link_interwiki_uri3583); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3585); if (failed) return interwiki;
+			match(input,62,FOLLOW_62_in_link_interwiki_uri3552); if (failed) return interwiki;
+			match(input,50,FOLLOW_50_in_link_interwiki_uri3554); if (failed) return interwiki;
+			match(input,49,FOLLOW_49_in_link_interwiki_uri3556); if (failed) return interwiki;
+			match(input,52,FOLLOW_52_in_link_interwiki_uri3558); if (failed) return interwiki;
+			match(input,51,FOLLOW_51_in_link_interwiki_uri3560); if (failed) return interwiki;
+			match(input,52,FOLLOW_52_in_link_interwiki_uri3562); if (failed) return interwiki;
+			match(input,49,FOLLOW_49_in_link_interwiki_uri3564); if (failed) return interwiki;
+			match(input,52,FOLLOW_52_in_link_interwiki_uri3566); if (failed) return interwiki;
 
 			}
 			break;
 		case 13 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:598:4: 'P' 'u' 'r' 'p' 'l' 'e' 'W' 'i' 'k' 'i'
 			{
-			match(input,61,FOLLOW_61_in_link_interwiki_uri3590); if (failed) return interwiki;
-			match(input,49,FOLLOW_49_in_link_interwiki_uri3592); if (failed) return interwiki;
-			match(input,55,FOLLOW_55_in_link_interwiki_uri3594); if (failed) return interwiki;
-			match(input,72,FOLLOW_72_in_link_interwiki_uri3596); if (failed) return interwiki;
-			match(input,53,FOLLOW_53_in_link_interwiki_uri3598); if (failed) return interwiki;
-			match(input,58,FOLLOW_58_in_link_interwiki_uri3600); if (failed) return interwiki;
-			match(input,50,FOLLOW_50_in_link_interwiki_uri3602); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3604); if (failed) return interwiki;
-			match(input,48,FOLLOW_48_in_link_interwiki_uri3606); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3608); if (failed) return interwiki;
+			match(input,62,FOLLOW_62_in_link_interwiki_uri3571); if (failed) return interwiki;
+			match(input,50,FOLLOW_50_in_link_interwiki_uri3573); if (failed) return interwiki;
+			match(input,56,FOLLOW_56_in_link_interwiki_uri3575); if (failed) return interwiki;
+			match(input,73,FOLLOW_73_in_link_interwiki_uri3577); if (failed) return interwiki;
+			match(input,54,FOLLOW_54_in_link_interwiki_uri3579); if (failed) return interwiki;
+			match(input,59,FOLLOW_59_in_link_interwiki_uri3581); if (failed) return interwiki;
+			match(input,51,FOLLOW_51_in_link_interwiki_uri3583); if (failed) return interwiki;
+			match(input,52,FOLLOW_52_in_link_interwiki_uri3585); if (failed) return interwiki;
+			match(input,49,FOLLOW_49_in_link_interwiki_uri3587); if (failed) return interwiki;
+			match(input,52,FOLLOW_52_in_link_interwiki_uri3589); if (failed) return interwiki;
 
 			}
 			break;
 		case 14 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:599:4: 'R' 'a' 'd' 'e' 'o' 'x'
 			{
-			match(input,73,FOLLOW_73_in_link_interwiki_uri3613); if (failed) return interwiki;
-			match(input,63,FOLLOW_63_in_link_interwiki_uri3615); if (failed) return interwiki;
-			match(input,66,FOLLOW_66_in_link_interwiki_uri3617); if (failed) return interwiki;
-			match(input,58,FOLLOW_58_in_link_interwiki_uri3619); if (failed) return interwiki;
-			match(input,47,FOLLOW_47_in_link_interwiki_uri3621); if (failed) return interwiki;
-			match(input,74,FOLLOW_74_in_link_interwiki_uri3623); if (failed) return interwiki;
+			match(input,74,FOLLOW_74_in_link_interwiki_uri3594); if (failed) return interwiki;
+			match(input,64,FOLLOW_64_in_link_interwiki_uri3596); if (failed) return interwiki;
+			match(input,67,FOLLOW_67_in_link_interwiki_uri3598); if (failed) return interwiki;
+			match(input,59,FOLLOW_59_in_link_interwiki_uri3600); if (failed) return interwiki;
+			match(input,48,FOLLOW_48_in_link_interwiki_uri3602); if (failed) return interwiki;
+			match(input,75,FOLLOW_75_in_link_interwiki_uri3604); if (failed) return interwiki;
 
 			}
 			break;
 		case 15 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:600:4: 'S' 'n' 'i' 'p' 'S' 'n' 'a' 'p'
 			{
-			match(input,60,FOLLOW_60_in_link_interwiki_uri3628); if (failed) return interwiki;
-			match(input,67,FOLLOW_67_in_link_interwiki_uri3630); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3632); if (failed) return interwiki;
-			match(input,72,FOLLOW_72_in_link_interwiki_uri3634); if (failed) return interwiki;
-			match(input,60,FOLLOW_60_in_link_interwiki_uri3636); if (failed) return interwiki;
-			match(input,67,FOLLOW_67_in_link_interwiki_uri3638); if (failed) return interwiki;
-			match(input,63,FOLLOW_63_in_link_interwiki_uri3640); if (failed) return interwiki;
-			match(input,72,FOLLOW_72_in_link_interwiki_uri3642); if (failed) return interwiki;
+			match(input,61,FOLLOW_61_in_link_interwiki_uri3609); if (failed) return interwiki;
+			match(input,68,FOLLOW_68_in_link_interwiki_uri3611); if (failed) return interwiki;
+			match(input,52,FOLLOW_52_in_link_interwiki_uri3613); if (failed) return interwiki;
+			match(input,73,FOLLOW_73_in_link_interwiki_uri3615); if (failed) return interwiki;
+			match(input,61,FOLLOW_61_in_link_interwiki_uri3617); if (failed) return interwiki;
+			match(input,68,FOLLOW_68_in_link_interwiki_uri3619); if (failed) return interwiki;
+			match(input,64,FOLLOW_64_in_link_interwiki_uri3621); if (failed) return interwiki;
+			match(input,73,FOLLOW_73_in_link_interwiki_uri3623); if (failed) return interwiki;
 
 			}
 			break;
 		case 16 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:601:4: 'T' 'i' 'd' 'd' 'l' 'y' 'W' 'i' 'k' 'i'
 			{
-			match(input,75,FOLLOW_75_in_link_interwiki_uri3647); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3649); if (failed) return interwiki;
-			match(input,66,FOLLOW_66_in_link_interwiki_uri3651); if (failed) return interwiki;
-			match(input,66,FOLLOW_66_in_link_interwiki_uri3653); if (failed) return interwiki;
-			match(input,53,FOLLOW_53_in_link_interwiki_uri3655); if (failed) return interwiki;
-			match(input,76,FOLLOW_76_in_link_interwiki_uri3657); if (failed) return interwiki;
-			match(input,50,FOLLOW_50_in_link_interwiki_uri3659); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3661); if (failed) return interwiki;
-			match(input,48,FOLLOW_48_in_link_interwiki_uri3663); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3665); if (failed) return interwiki;
+			match(input,76,FOLLOW_76_in_link_interwiki_uri3628); if (failed) return interwiki;
+			match(input,52,FOLLOW_52_in_link_interwiki_uri3630); if (failed) return interwiki;
+			match(input,67,FOLLOW_67_in_link_interwiki_uri3632); if (failed) return interwiki;
+			match(input,67,FOLLOW_67_in_link_interwiki_uri3634); if (failed) return interwiki;
+			match(input,54,FOLLOW_54_in_link_interwiki_uri3636); if (failed) return interwiki;
+			match(input,77,FOLLOW_77_in_link_interwiki_uri3638); if (failed) return interwiki;
+			match(input,51,FOLLOW_51_in_link_interwiki_uri3640); if (failed) return interwiki;
+			match(input,52,FOLLOW_52_in_link_interwiki_uri3642); if (failed) return interwiki;
+			match(input,49,FOLLOW_49_in_link_interwiki_uri3644); if (failed) return interwiki;
+			match(input,52,FOLLOW_52_in_link_interwiki_uri3646); if (failed) return interwiki;
 
 			}
 			break;
 		case 17 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:602:4: 'T' 'W' 'i' 'k' 'i'
 			{
-			match(input,75,FOLLOW_75_in_link_interwiki_uri3670); if (failed) return interwiki;
-			match(input,50,FOLLOW_50_in_link_interwiki_uri3672); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3674); if (failed) return interwiki;
-			match(input,48,FOLLOW_48_in_link_interwiki_uri3676); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3678); if (failed) return interwiki;
+			match(input,76,FOLLOW_76_in_link_interwiki_uri3651); if (failed) return interwiki;
+			match(input,51,FOLLOW_51_in_link_interwiki_uri3653); if (failed) return interwiki;
+			match(input,52,FOLLOW_52_in_link_interwiki_uri3655); if (failed) return interwiki;
+			match(input,49,FOLLOW_49_in_link_interwiki_uri3657); if (failed) return interwiki;
+			match(input,52,FOLLOW_52_in_link_interwiki_uri3659); if (failed) return interwiki;
 
 			}
 			break;
 		case 18 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:603:4: 'U' 's' 'e' 'm' 'o' 'd'
 			{
-			match(input,77,FOLLOW_77_in_link_interwiki_uri3683); if (failed) return interwiki;
-			match(input,70,FOLLOW_70_in_link_interwiki_uri3685); if (failed) return interwiki;
-			match(input,58,FOLLOW_58_in_link_interwiki_uri3687); if (failed) return interwiki;
-			match(input,69,FOLLOW_69_in_link_interwiki_uri3689); if (failed) return interwiki;
-			match(input,47,FOLLOW_47_in_link_interwiki_uri3691); if (failed) return interwiki;
-			match(input,66,FOLLOW_66_in_link_interwiki_uri3693); if (failed) return interwiki;
+			match(input,78,FOLLOW_78_in_link_interwiki_uri3664); if (failed) return interwiki;
+			match(input,71,FOLLOW_71_in_link_interwiki_uri3666); if (failed) return interwiki;
+			match(input,59,FOLLOW_59_in_link_interwiki_uri3668); if (failed) return interwiki;
+			match(input,70,FOLLOW_70_in_link_interwiki_uri3670); if (failed) return interwiki;
+			match(input,48,FOLLOW_48_in_link_interwiki_uri3672); if (failed) return interwiki;
+			match(input,67,FOLLOW_67_in_link_interwiki_uri3674); if (failed) return interwiki;
 
 			}
 			break;
 		case 19 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:604:4: 'W' 'i' 'k' 'i' 'p' 'e' 'd' 'i' 'a'
 			{
-			match(input,50,FOLLOW_50_in_link_interwiki_uri3698); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3700); if (failed) return interwiki;
-			match(input,48,FOLLOW_48_in_link_interwiki_uri3702); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3704); if (failed) return interwiki;
-			match(input,72,FOLLOW_72_in_link_interwiki_uri3706); if (failed) return interwiki;
-			match(input,58,FOLLOW_58_in_link_interwiki_uri3708); if (failed) return interwiki;
-			match(input,66,FOLLOW_66_in_link_interwiki_uri3710); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3712); if (failed) return interwiki;
-			match(input,63,FOLLOW_63_in_link_interwiki_uri3714); if (failed) return interwiki;
+			match(input,51,FOLLOW_51_in_link_interwiki_uri3679); if (failed) return interwiki;
+			match(input,52,FOLLOW_52_in_link_interwiki_uri3681); if (failed) return interwiki;
+			match(input,49,FOLLOW_49_in_link_interwiki_uri3683); if (failed) return interwiki;
+			match(input,52,FOLLOW_52_in_link_interwiki_uri3685); if (failed) return interwiki;
+			match(input,73,FOLLOW_73_in_link_interwiki_uri3687); if (failed) return interwiki;
+			match(input,59,FOLLOW_59_in_link_interwiki_uri3689); if (failed) return interwiki;
+			match(input,67,FOLLOW_67_in_link_interwiki_uri3691); if (failed) return interwiki;
+			match(input,52,FOLLOW_52_in_link_interwiki_uri3693); if (failed) return interwiki;
+			match(input,64,FOLLOW_64_in_link_interwiki_uri3695); if (failed) return interwiki;
 
 			}
 			break;
 		case 20 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:605:4: 'X' 'W' 'i' 'k' 'i'
 			{
-			match(input,78,FOLLOW_78_in_link_interwiki_uri3719); if (failed) return interwiki;
-			match(input,50,FOLLOW_50_in_link_interwiki_uri3721); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3723); if (failed) return interwiki;
-			match(input,48,FOLLOW_48_in_link_interwiki_uri3725); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3727); if (failed) return interwiki;
+			match(input,79,FOLLOW_79_in_link_interwiki_uri3700); if (failed) return interwiki;
+			match(input,51,FOLLOW_51_in_link_interwiki_uri3702); if (failed) return interwiki;
+			match(input,52,FOLLOW_52_in_link_interwiki_uri3704); if (failed) return interwiki;
+			match(input,49,FOLLOW_49_in_link_interwiki_uri3706); if (failed) return interwiki;
+			match(input,52,FOLLOW_52_in_link_interwiki_uri3708); if (failed) return interwiki;
 
 			}
 			break;
@@ -12829,7 +12865,7 @@ public class Creole10Parser extends Parser {
 		int alt119=2;
 		int LA119_0 = input.LA(1);
 
-		if ( ((LA119_0>=FORCED_END_OF_LINE && LA119_0<=WIKI)||(LA119_0>=POUND && LA119_0<=EQUAL)||(LA119_0>=ITAL && LA119_0<=NOWIKI_CLOSE)||(LA119_0>=IMAGE_CLOSE && LA119_0<=78)) ) {
+		if ( ((LA119_0>=FORCED_END_OF_LINE && LA119_0<=WIKI)||(LA119_0>=POUND && LA119_0<=EQUAL)||(LA119_0>=ITAL && LA119_0<=NOWIKI_CLOSE)||(LA119_0>=IMAGE_CLOSE && LA119_0<=79)) ) {
 			alt119=1;
 		}
 
@@ -12839,7 +12875,7 @@ public class Creole10Parser extends Parser {
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:608:6: c=~ ( PIPE | LINK_CLOSE | NEWLINE | EOF )
 			{
 			c=(Token)input.LT(1);
-			if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=WIKI)||(input.LA(1)>=POUND && input.LA(1)<=EQUAL)||(input.LA(1)>=ITAL && input.LA(1)<=NOWIKI_CLOSE)||(input.LA(1)>=IMAGE_CLOSE && input.LA(1)<=78) ) {
+			if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=WIKI)||(input.LA(1)>=POUND && input.LA(1)<=EQUAL)||(input.LA(1)>=ITAL && input.LA(1)<=NOWIKI_CLOSE)||(input.LA(1)>=IMAGE_CLOSE && input.LA(1)<=79) ) {
 			input.consume();
 			errorRecovery=false;failed=false;
 			}
@@ -12847,7 +12883,7 @@ public class Creole10Parser extends Parser {
 			if (backtracking>0) {failed=true; return text;}
 			MismatchedSetException mse =
 				new MismatchedSetException(null,input);
-			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_link_interwiki_pagename3747);	  throw mse;
+			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_link_interwiki_pagename3728);	  throw mse;
 			}
 
 			if ( backtracking==0 ) {
@@ -12903,7 +12939,7 @@ public class Creole10Parser extends Parser {
 		int alt120=3;
 		int LA120_0 = input.LA(1);
 
-		if ( ((LA120_0>=FORCED_END_OF_LINE && LA120_0<=WIKI)||(LA120_0>=POUND && LA120_0<=ITAL)||(LA120_0>=FORCED_LINEBREAK && LA120_0<=NOWIKI_CLOSE)||(LA120_0>=IMAGE_CLOSE && LA120_0<=78)) ) {
+		if ( ((LA120_0>=FORCED_END_OF_LINE && LA120_0<=WIKI)||(LA120_0>=POUND && LA120_0<=ITAL)||(LA120_0>=FORCED_LINEBREAK && LA120_0<=NOWIKI_CLOSE)||(LA120_0>=IMAGE_CLOSE && LA120_0<=79)) ) {
 			alt120=1;
 		}
 		else if ( (LA120_0==IMAGE_OPEN) ) {
@@ -12915,7 +12951,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:611:6: l= link_descriptionpart
 			{
-			pushFollow(FOLLOW_link_descriptionpart_in_link_description3790);
+			pushFollow(FOLLOW_link_descriptionpart_in_link_description3771);
 			l=link_descriptionpart();
 			_fsp--;
 			if (failed) return node;
@@ -12933,7 +12969,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:617:5: i= image
 			{
-			pushFollow(FOLLOW_image_in_link_description3802);
+			pushFollow(FOLLOW_image_in_link_description3783);
 			i=image();
 			_fsp--;
 			if (failed) return node;
@@ -13001,7 +13037,7 @@ public class Creole10Parser extends Parser {
 		if ( (LA124_1==STAR) ) {
 			alt124=1;
 		}
-		else if ( ((LA124_1>=FORCED_END_OF_LINE && LA124_1<=WIKI)||LA124_1==POUND||(LA124_1>=EQUAL && LA124_1<=PIPE)||(LA124_1>=FORCED_LINEBREAK && LA124_1<=NOWIKI_CLOSE)||(LA124_1>=IMAGE_CLOSE && LA124_1<=78)) ) {
+		else if ( ((LA124_1>=FORCED_END_OF_LINE && LA124_1<=WIKI)||LA124_1==POUND||(LA124_1>=EQUAL && LA124_1<=PIPE)||(LA124_1>=FORCED_LINEBREAK && LA124_1<=NOWIKI_CLOSE)||(LA124_1>=IMAGE_CLOSE && LA124_1<=79)) ) {
 			alt124=3;
 		}
 		else {
@@ -13044,12 +13080,12 @@ public class Creole10Parser extends Parser {
 		case LF:
 		case SPACE:
 		case TABULATOR:
+		case BRACE_CLOSE:
 		case COLON_SLASH:
 		case SLASH:
 		case TABLE_OF_CONTENTS_OPEN_MARKUP:
 		case TABLE_OF_CONTENTS_CLOSE_MARKUP:
 		case INSIGNIFICANT_CHAR:
-		case 43:
 		case 44:
 		case 45:
 		case 46:
@@ -13085,6 +13121,7 @@ public class Creole10Parser extends Parser {
 		case 76:
 		case 77:
 		case 78:
+		case 79:
 		{
 		alt124=3;
 		}
@@ -13101,11 +13138,11 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:626:4: bold_markup onestar (lb= link_bold_descriptionpart onestar )+ bold_markup
 			{
-			pushFollow(FOLLOW_bold_markup_in_link_descriptionpart3827);
+			pushFollow(FOLLOW_bold_markup_in_link_descriptionpart3808);
 			bold_markup();
 			_fsp--;
 			if (failed) return text;
-			pushFollow(FOLLOW_onestar_in_link_descriptionpart3830);
+			pushFollow(FOLLOW_onestar_in_link_descriptionpart3811);
 			onestar();
 			_fsp--;
 			if (failed) return text;
@@ -13116,7 +13153,7 @@ public class Creole10Parser extends Parser {
 			int alt121=2;
 			int LA121_0 = input.LA(1);
 
-			if ( ((LA121_0>=FORCED_END_OF_LINE && LA121_0<=WIKI)||LA121_0==POUND||(LA121_0>=EQUAL && LA121_0<=ITAL)||(LA121_0>=FORCED_LINEBREAK && LA121_0<=NOWIKI_CLOSE)||(LA121_0>=IMAGE_CLOSE && LA121_0<=78)) ) {
+			if ( ((LA121_0>=FORCED_END_OF_LINE && LA121_0<=WIKI)||LA121_0==POUND||(LA121_0>=EQUAL && LA121_0<=ITAL)||(LA121_0>=FORCED_LINEBREAK && LA121_0<=NOWIKI_CLOSE)||(LA121_0>=IMAGE_CLOSE && LA121_0<=79)) ) {
 				alt121=1;
 			}
 
@@ -13125,14 +13162,14 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:626:27: lb= link_bold_descriptionpart onestar
 				{
-				pushFollow(FOLLOW_link_bold_descriptionpart_in_link_descriptionpart3838);
+				pushFollow(FOLLOW_link_bold_descriptionpart_in_link_descriptionpart3819);
 				lb=link_bold_descriptionpart();
 				_fsp--;
 				if (failed) return text;
 				if ( backtracking==0 ) {
 				  ((link_descriptionpart_scope)link_descriptionpart_stack.peek()).element.add(lb);
 				}
-				pushFollow(FOLLOW_onestar_in_link_descriptionpart3843);
+				pushFollow(FOLLOW_onestar_in_link_descriptionpart3824);
 				onestar();
 				_fsp--;
 				if (failed) return text;
@@ -13153,7 +13190,7 @@ public class Creole10Parser extends Parser {
 			if ( backtracking==0 ) {
 			  text = new BoldTextNode(((link_descriptionpart_scope)link_descriptionpart_stack.peek()).element);
 			}
-			pushFollow(FOLLOW_bold_markup_in_link_descriptionpart3853);
+			pushFollow(FOLLOW_bold_markup_in_link_descriptionpart3834);
 			bold_markup();
 			_fsp--;
 			if (failed) return text;
@@ -13163,11 +13200,11 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:628:4: ital_markup onestar (li= link_ital_descriptionpart onestar )+ ital_markup
 			{
-			pushFollow(FOLLOW_ital_markup_in_link_descriptionpart3858);
+			pushFollow(FOLLOW_ital_markup_in_link_descriptionpart3839);
 			ital_markup();
 			_fsp--;
 			if (failed) return text;
-			pushFollow(FOLLOW_onestar_in_link_descriptionpart3861);
+			pushFollow(FOLLOW_onestar_in_link_descriptionpart3842);
 			onestar();
 			_fsp--;
 			if (failed) return text;
@@ -13178,7 +13215,7 @@ public class Creole10Parser extends Parser {
 			int alt122=2;
 			int LA122_0 = input.LA(1);
 
-			if ( ((LA122_0>=FORCED_END_OF_LINE && LA122_0<=WIKI)||(LA122_0>=POUND && LA122_0<=PIPE)||(LA122_0>=FORCED_LINEBREAK && LA122_0<=NOWIKI_CLOSE)||(LA122_0>=IMAGE_CLOSE && LA122_0<=78)) ) {
+			if ( ((LA122_0>=FORCED_END_OF_LINE && LA122_0<=WIKI)||(LA122_0>=POUND && LA122_0<=PIPE)||(LA122_0>=FORCED_LINEBREAK && LA122_0<=NOWIKI_CLOSE)||(LA122_0>=IMAGE_CLOSE && LA122_0<=79)) ) {
 				alt122=1;
 			}
 
@@ -13187,14 +13224,14 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:628:28: li= link_ital_descriptionpart onestar
 				{
-				pushFollow(FOLLOW_link_ital_descriptionpart_in_link_descriptionpart3870);
+				pushFollow(FOLLOW_link_ital_descriptionpart_in_link_descriptionpart3851);
 				li=link_ital_descriptionpart();
 				_fsp--;
 				if (failed) return text;
 				if ( backtracking==0 ) {
 				  ((link_descriptionpart_scope)link_descriptionpart_stack.peek()).element.add(li);
 				}
-				pushFollow(FOLLOW_onestar_in_link_descriptionpart3875);
+				pushFollow(FOLLOW_onestar_in_link_descriptionpart3856);
 				onestar();
 				_fsp--;
 				if (failed) return text;
@@ -13215,7 +13252,7 @@ public class Creole10Parser extends Parser {
 			if ( backtracking==0 ) {
 			  text = new ItalicTextNode(((link_descriptionpart_scope)link_descriptionpart_stack.peek()).element);
 			}
-			pushFollow(FOLLOW_ital_markup_in_link_descriptionpart3884);
+			pushFollow(FOLLOW_ital_markup_in_link_descriptionpart3865);
 			ital_markup();
 			_fsp--;
 			if (failed) return text;
@@ -13225,7 +13262,7 @@ public class Creole10Parser extends Parser {
 		case 3 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:630:4: onestar (t= link_descriptiontext onestar )+
 			{
-			pushFollow(FOLLOW_onestar_in_link_descriptionpart3889);
+			pushFollow(FOLLOW_onestar_in_link_descriptionpart3870);
 			onestar();
 			_fsp--;
 			if (failed) return text;
@@ -13259,12 +13296,12 @@ public class Creole10Parser extends Parser {
 			case LF:
 			case SPACE:
 			case TABULATOR:
+			case BRACE_CLOSE:
 			case COLON_SLASH:
 			case SLASH:
 			case TABLE_OF_CONTENTS_OPEN_MARKUP:
 			case TABLE_OF_CONTENTS_CLOSE_MARKUP:
 			case INSIGNIFICANT_CHAR:
-			case 43:
 			case 44:
 			case 45:
 			case 46:
@@ -13300,6 +13337,7 @@ public class Creole10Parser extends Parser {
 			case 76:
 			case 77:
 			case 78:
+			case 79:
 				{
 				alt123=1;
 				}
@@ -13321,11 +13359,11 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:630:15: t= link_descriptiontext onestar
 				{
-				pushFollow(FOLLOW_link_descriptiontext_in_link_descriptionpart3898);
+				pushFollow(FOLLOW_link_descriptiontext_in_link_descriptionpart3879);
 				t=link_descriptiontext();
 				_fsp--;
 				if (failed) return text;
-				pushFollow(FOLLOW_onestar_in_link_descriptionpart3901);
+				pushFollow(FOLLOW_onestar_in_link_descriptionpart3882);
 				onestar();
 				_fsp--;
 				if (failed) return text;
@@ -13385,7 +13423,7 @@ public class Creole10Parser extends Parser {
 		if ( (LA125_0==ITAL) ) {
 		alt125=1;
 		}
-		else if ( ((LA125_0>=FORCED_END_OF_LINE && LA125_0<=WIKI)||LA125_0==POUND||(LA125_0>=EQUAL && LA125_0<=PIPE)||(LA125_0>=FORCED_LINEBREAK && LA125_0<=NOWIKI_CLOSE)||(LA125_0>=IMAGE_CLOSE && LA125_0<=78)) ) {
+		else if ( ((LA125_0>=FORCED_END_OF_LINE && LA125_0<=WIKI)||LA125_0==POUND||(LA125_0>=EQUAL && LA125_0<=PIPE)||(LA125_0>=FORCED_LINEBREAK && LA125_0<=NOWIKI_CLOSE)||(LA125_0>=IMAGE_CLOSE && LA125_0<=79)) ) {
 		alt125=2;
 		}
 		else {
@@ -13399,18 +13437,18 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:633:4: ital_markup t= link_boldital_description ital_markup
 			{
-			pushFollow(FOLLOW_ital_markup_in_link_bold_descriptionpart3921);
+			pushFollow(FOLLOW_ital_markup_in_link_bold_descriptionpart3902);
 			ital_markup();
 			_fsp--;
 			if (failed) return text;
-			pushFollow(FOLLOW_link_boldital_description_in_link_bold_descriptionpart3928);
+			pushFollow(FOLLOW_link_boldital_description_in_link_bold_descriptionpart3909);
 			t=link_boldital_description();
 			_fsp--;
 			if (failed) return text;
 			if ( backtracking==0 ) {
 			  text = new ItalicTextNode(t);
 			}
-			pushFollow(FOLLOW_ital_markup_in_link_bold_descriptionpart3933);
+			pushFollow(FOLLOW_ital_markup_in_link_bold_descriptionpart3914);
 			ital_markup();
 			_fsp--;
 			if (failed) return text;
@@ -13420,7 +13458,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:634:4: ld= link_descriptiontext
 			{
-			pushFollow(FOLLOW_link_descriptiontext_in_link_bold_descriptionpart3942);
+			pushFollow(FOLLOW_link_descriptiontext_in_link_bold_descriptionpart3923);
 			ld=link_descriptiontext();
 			_fsp--;
 			if (failed) return text;
@@ -13462,7 +13500,7 @@ public class Creole10Parser extends Parser {
 		if ( (LA126_0==STAR) ) {
 		alt126=1;
 		}
-		else if ( ((LA126_0>=FORCED_END_OF_LINE && LA126_0<=WIKI)||LA126_0==POUND||(LA126_0>=EQUAL && LA126_0<=PIPE)||(LA126_0>=FORCED_LINEBREAK && LA126_0<=NOWIKI_CLOSE)||(LA126_0>=IMAGE_CLOSE && LA126_0<=78)) ) {
+		else if ( ((LA126_0>=FORCED_END_OF_LINE && LA126_0<=WIKI)||LA126_0==POUND||(LA126_0>=EQUAL && LA126_0<=PIPE)||(LA126_0>=FORCED_LINEBREAK && LA126_0<=NOWIKI_CLOSE)||(LA126_0>=IMAGE_CLOSE && LA126_0<=79)) ) {
 		alt126=2;
 		}
 		else {
@@ -13476,15 +13514,15 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:637:4: bold_markup td= link_boldital_description bold_markup
 			{
-			pushFollow(FOLLOW_bold_markup_in_link_ital_descriptionpart3958);
+			pushFollow(FOLLOW_bold_markup_in_link_ital_descriptionpart3939);
 			bold_markup();
 			_fsp--;
 			if (failed) return text;
-			pushFollow(FOLLOW_link_boldital_description_in_link_ital_descriptionpart3965);
+			pushFollow(FOLLOW_link_boldital_description_in_link_ital_descriptionpart3946);
 			td=link_boldital_description();
 			_fsp--;
 			if (failed) return text;
-			pushFollow(FOLLOW_bold_markup_in_link_ital_descriptionpart3968);
+			pushFollow(FOLLOW_bold_markup_in_link_ital_descriptionpart3949);
 			bold_markup();
 			_fsp--;
 			if (failed) return text;
@@ -13497,7 +13535,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:638:4: t= link_descriptiontext
 			{
-			pushFollow(FOLLOW_link_descriptiontext_in_link_ital_descriptionpart3979);
+			pushFollow(FOLLOW_link_descriptiontext_in_link_ital_descriptionpart3960);
 			t=link_descriptiontext();
 			_fsp--;
 			if (failed) return text;
@@ -13533,7 +13571,7 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:641:2: ( onestar (t= link_descriptiontext onestar )+ )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:641:4: onestar (t= link_descriptiontext onestar )+
 		{
-		pushFollow(FOLLOW_onestar_in_link_boldital_description3995);
+		pushFollow(FOLLOW_onestar_in_link_boldital_description3976);
 		onestar();
 		_fsp--;
 		if (failed) return text;
@@ -13544,7 +13582,7 @@ public class Creole10Parser extends Parser {
 		int alt127=2;
 		int LA127_0 = input.LA(1);
 
-		if ( ((LA127_0>=FORCED_END_OF_LINE && LA127_0<=WIKI)||LA127_0==POUND||(LA127_0>=EQUAL && LA127_0<=PIPE)||(LA127_0>=FORCED_LINEBREAK && LA127_0<=NOWIKI_CLOSE)||(LA127_0>=IMAGE_CLOSE && LA127_0<=78)) ) {
+		if ( ((LA127_0>=FORCED_END_OF_LINE && LA127_0<=WIKI)||LA127_0==POUND||(LA127_0>=EQUAL && LA127_0<=PIPE)||(LA127_0>=FORCED_LINEBREAK && LA127_0<=NOWIKI_CLOSE)||(LA127_0>=IMAGE_CLOSE && LA127_0<=79)) ) {
 			alt127=1;
 		}
 
@@ -13553,11 +13591,11 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:641:15: t= link_descriptiontext onestar
 			{
-			pushFollow(FOLLOW_link_descriptiontext_in_link_boldital_description4004);
+			pushFollow(FOLLOW_link_descriptiontext_in_link_boldital_description3985);
 			t=link_descriptiontext();
 			_fsp--;
 			if (failed) return text;
-			pushFollow(FOLLOW_onestar_in_link_boldital_description4007);
+			pushFollow(FOLLOW_onestar_in_link_boldital_description3988);
 			onestar();
 			_fsp--;
 			if (failed) return text;
@@ -13566,7 +13604,7 @@ public class Creole10Parser extends Parser {
 							for (ASTNode item:t.getASTNodes()) {
 								text.add(item);
 							}
-								   
+						
 			}
 
 			}
@@ -13612,7 +13650,7 @@ public class Creole10Parser extends Parser {
 		int alt129=2;
 		int LA129_0 = input.LA(1);
 
-		if ( ((LA129_0>=FORCED_END_OF_LINE && LA129_0<=WIKI)||LA129_0==POUND||(LA129_0>=EQUAL && LA129_0<=PIPE)||(LA129_0>=NOWIKI_BLOCK_CLOSE && LA129_0<=NOWIKI_CLOSE)||(LA129_0>=IMAGE_CLOSE && LA129_0<=78)) ) {
+		if ( ((LA129_0>=FORCED_END_OF_LINE && LA129_0<=WIKI)||LA129_0==POUND||(LA129_0>=EQUAL && LA129_0<=PIPE)||(LA129_0>=NOWIKI_BLOCK_CLOSE && LA129_0<=NOWIKI_CLOSE)||(LA129_0>=IMAGE_CLOSE && LA129_0<=79)) ) {
 		alt129=1;
 		}
 		else if ( ((LA129_0>=FORCED_LINEBREAK && LA129_0<=ESCAPE)) ) {
@@ -13629,7 +13667,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:648:5: t= link_descriptiontext_simple
 			{
-			pushFollow(FOLLOW_link_descriptiontext_simple_in_link_descriptiontext4030);
+			pushFollow(FOLLOW_link_descriptiontext_simple_in_link_descriptiontext4011);
 			t=link_descriptiontext_simple();
 			_fsp--;
 			if (failed) return text;
@@ -13661,7 +13699,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:649:7: forced_linebreak
 				{
-				pushFollow(FOLLOW_forced_linebreak_in_link_descriptiontext4040);
+				pushFollow(FOLLOW_forced_linebreak_in_link_descriptiontext4021);
 				forced_linebreak();
 				_fsp--;
 				if (failed) return text;
@@ -13674,7 +13712,7 @@ public class Creole10Parser extends Parser {
 			case 2 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:650:5: e= escaped
 				{
-				pushFollow(FOLLOW_escaped_in_link_descriptiontext4052);
+				pushFollow(FOLLOW_escaped_in_link_descriptiontext4033);
 				e=escaped();
 				_fsp--;
 				if (failed) return text;
@@ -13730,7 +13768,7 @@ public class Creole10Parser extends Parser {
 		int alt130=2;
 		int LA130_0 = input.LA(1);
 
-		if ( ((LA130_0>=FORCED_END_OF_LINE && LA130_0<=WIKI)||LA130_0==POUND||(LA130_0>=EQUAL && LA130_0<=PIPE)||(LA130_0>=NOWIKI_BLOCK_CLOSE && LA130_0<=NOWIKI_CLOSE)||(LA130_0>=IMAGE_CLOSE && LA130_0<=78)) ) {
+		if ( ((LA130_0>=FORCED_END_OF_LINE && LA130_0<=WIKI)||LA130_0==POUND||(LA130_0>=EQUAL && LA130_0<=PIPE)||(LA130_0>=NOWIKI_BLOCK_CLOSE && LA130_0<=NOWIKI_CLOSE)||(LA130_0>=IMAGE_CLOSE && LA130_0<=79)) ) {
 			alt130=1;
 		}
 
@@ -13740,7 +13778,7 @@ public class Creole10Parser extends Parser {
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:653:6: c=~ ( LINK_CLOSE | ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF )
 			{
 			c=(Token)input.LT(1);
-			if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=WIKI)||input.LA(1)==POUND||(input.LA(1)>=EQUAL && input.LA(1)<=PIPE)||(input.LA(1)>=NOWIKI_BLOCK_CLOSE && input.LA(1)<=NOWIKI_CLOSE)||(input.LA(1)>=IMAGE_CLOSE && input.LA(1)<=78) ) {
+			if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=WIKI)||input.LA(1)==POUND||(input.LA(1)>=EQUAL && input.LA(1)<=PIPE)||(input.LA(1)>=NOWIKI_BLOCK_CLOSE && input.LA(1)<=NOWIKI_CLOSE)||(input.LA(1)>=IMAGE_CLOSE && input.LA(1)<=79) ) {
 			input.consume();
 			errorRecovery=false;failed=false;
 			}
@@ -13748,7 +13786,7 @@ public class Creole10Parser extends Parser {
 			if (backtracking>0) {failed=true; return text;}
 			MismatchedSetException mse =
 				new MismatchedSetException(null,input);
-			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_link_descriptiontext_simple4077);	throw mse;
+			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_link_descriptiontext_simple4058);	throw mse;
 			}
 
 			if ( backtracking==0 ) {
@@ -13801,7 +13839,7 @@ public class Creole10Parser extends Parser {
 		int alt131=2;
 		int LA131_0 = input.LA(1);
 
-		if ( ((LA131_0>=FORCED_END_OF_LINE && LA131_0<=WIKI)||(LA131_0>=POUND && LA131_0<=EQUAL)||(LA131_0>=ITAL && LA131_0<=NOWIKI_CLOSE)||(LA131_0>=IMAGE_CLOSE && LA131_0<=78)) ) {
+		if ( ((LA131_0>=FORCED_END_OF_LINE && LA131_0<=WIKI)||(LA131_0>=POUND && LA131_0<=EQUAL)||(LA131_0>=ITAL && LA131_0<=NOWIKI_CLOSE)||(LA131_0>=IMAGE_CLOSE && LA131_0<=79)) ) {
 			alt131=1;
 		}
 
@@ -13811,7 +13849,7 @@ public class Creole10Parser extends Parser {
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:666:6: c=~ ( PIPE | LINK_CLOSE | NEWLINE | EOF )
 			{
 			c=(Token)input.LT(1);
-			if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=WIKI)||(input.LA(1)>=POUND && input.LA(1)<=EQUAL)||(input.LA(1)>=ITAL && input.LA(1)<=NOWIKI_CLOSE)||(input.LA(1)>=IMAGE_CLOSE && input.LA(1)<=78) ) {
+			if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=WIKI)||(input.LA(1)>=POUND && input.LA(1)<=EQUAL)||(input.LA(1)>=ITAL && input.LA(1)<=NOWIKI_CLOSE)||(input.LA(1)>=IMAGE_CLOSE && input.LA(1)<=79) ) {
 			input.consume();
 			errorRecovery=false;failed=false;
 			}
@@ -13819,7 +13857,7 @@ public class Creole10Parser extends Parser {
 			if (backtracking>0) {failed=true; return text;}
 			MismatchedSetException mse =
 				new MismatchedSetException(null,input);
-			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_link_uri4178);	throw mse;
+			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_link_uri4158);	throw mse;
 			}
 
 			if ( backtracking==0 ) {
@@ -13868,11 +13906,11 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:674:2: ( image_open_markup uri= image_uri (alt= image_alternative )? image_close_markup )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:674:4: image_open_markup uri= image_uri (alt= image_alternative )? image_close_markup
 		{
-		pushFollow(FOLLOW_image_open_markup_in_image4219);
+		pushFollow(FOLLOW_image_open_markup_in_image4199);
 		image_open_markup();
 		_fsp--;
 		if (failed) return image;
-		pushFollow(FOLLOW_image_uri_in_image4225);
+		pushFollow(FOLLOW_image_uri_in_image4205);
 		uri=image_uri();
 		_fsp--;
 		if (failed) return image;
@@ -13890,7 +13928,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:674:81: alt= image_alternative
 			{
-			pushFollow(FOLLOW_image_alternative_in_image4235);
+			pushFollow(FOLLOW_image_alternative_in_image4215);
 			alt=image_alternative();
 			_fsp--;
 			if (failed) return image;
@@ -13903,7 +13941,7 @@ public class Creole10Parser extends Parser {
 
 		}
 
-		pushFollow(FOLLOW_image_close_markup_in_image4244);
+		pushFollow(FOLLOW_image_close_markup_in_image4224);
 		image_close_markup();
 		_fsp--;
 		if (failed) return image;
@@ -13940,7 +13978,7 @@ public class Creole10Parser extends Parser {
 		int alt133=2;
 		int LA133_0 = input.LA(1);
 
-		if ( ((LA133_0>=FORCED_END_OF_LINE && LA133_0<=WIKI)||(LA133_0>=POUND && LA133_0<=EQUAL)||(LA133_0>=ITAL && LA133_0<=LINK_CLOSE)||(LA133_0>=BLANKS && LA133_0<=78)) ) {
+		if ( ((LA133_0>=FORCED_END_OF_LINE && LA133_0<=WIKI)||(LA133_0>=POUND && LA133_0<=EQUAL)||(LA133_0>=ITAL && LA133_0<=LINK_CLOSE)||(LA133_0>=BLANKS && LA133_0<=79)) ) {
 			alt133=1;
 		}
 
@@ -13950,7 +13988,7 @@ public class Creole10Parser extends Parser {
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:678:5: c=~ ( PIPE | IMAGE_CLOSE | NEWLINE | EOF )
 			{
 			c=(Token)input.LT(1);
-			if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=WIKI)||(input.LA(1)>=POUND && input.LA(1)<=EQUAL)||(input.LA(1)>=ITAL && input.LA(1)<=LINK_CLOSE)||(input.LA(1)>=BLANKS && input.LA(1)<=78) ) {
+			if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=WIKI)||(input.LA(1)>=POUND && input.LA(1)<=EQUAL)||(input.LA(1)>=ITAL && input.LA(1)<=LINK_CLOSE)||(input.LA(1)>=BLANKS && input.LA(1)<=79) ) {
 			input.consume();
 			errorRecovery=false;failed=false;
 			}
@@ -13958,7 +13996,7 @@ public class Creole10Parser extends Parser {
 			if (backtracking>0) {failed=true; return link;}
 			MismatchedSetException mse =
 				new MismatchedSetException(null,input);
-			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_image_uri4263);	throw mse;
+			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_image_uri4243);	throw mse;
 			}
 
 			if ( backtracking==0 ) {
@@ -14005,7 +14043,7 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:681:2: ( image_alternative_markup (p= image_alternativepart )+ )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:681:4: image_alternative_markup (p= image_alternativepart )+
 		{
-		pushFollow(FOLLOW_image_alternative_markup_in_image_alternative4298);
+		pushFollow(FOLLOW_image_alternative_markup_in_image_alternative4278);
 		image_alternative_markup();
 		_fsp--;
 		if (failed) return alternative;
@@ -14016,7 +14054,7 @@ public class Creole10Parser extends Parser {
 		int alt134=2;
 		int LA134_0 = input.LA(1);
 
-		if ( ((LA134_0>=FORCED_END_OF_LINE && LA134_0<=WIKI)||(LA134_0>=POUND && LA134_0<=ITAL)||(LA134_0>=FORCED_LINEBREAK && LA134_0<=LINK_CLOSE)||(LA134_0>=BLANKS && LA134_0<=78)) ) {
+		if ( ((LA134_0>=FORCED_END_OF_LINE && LA134_0<=WIKI)||(LA134_0>=POUND && LA134_0<=ITAL)||(LA134_0>=FORCED_LINEBREAK && LA134_0<=LINK_CLOSE)||(LA134_0>=BLANKS && LA134_0<=79)) ) {
 			alt134=1;
 		}
 
@@ -14025,7 +14063,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:681:32: p= image_alternativepart
 			{
-			pushFollow(FOLLOW_image_alternativepart_in_image_alternative4307);
+			pushFollow(FOLLOW_image_alternativepart_in_image_alternative4287);
 			p=image_alternativepart();
 			_fsp--;
 			if (failed) return alternative;
@@ -14093,7 +14131,7 @@ public class Creole10Parser extends Parser {
 		if ( (LA138_1==STAR) ) {
 			alt138=1;
 		}
-		else if ( ((LA138_1>=FORCED_END_OF_LINE && LA138_1<=WIKI)||LA138_1==POUND||(LA138_1>=EQUAL && LA138_1<=PIPE)||(LA138_1>=FORCED_LINEBREAK && LA138_1<=LINK_CLOSE)||(LA138_1>=BLANKS && LA138_1<=78)) ) {
+		else if ( ((LA138_1>=FORCED_END_OF_LINE && LA138_1<=WIKI)||LA138_1==POUND||(LA138_1>=EQUAL && LA138_1<=PIPE)||(LA138_1>=FORCED_LINEBREAK && LA138_1<=LINK_CLOSE)||(LA138_1>=BLANKS && LA138_1<=79)) ) {
 			alt138=3;
 		}
 		else {
@@ -14136,12 +14174,12 @@ public class Creole10Parser extends Parser {
 		case LF:
 		case SPACE:
 		case TABULATOR:
+		case BRACE_CLOSE:
 		case COLON_SLASH:
 		case SLASH:
 		case TABLE_OF_CONTENTS_OPEN_MARKUP:
 		case TABLE_OF_CONTENTS_CLOSE_MARKUP:
 		case INSIGNIFICANT_CHAR:
-		case 43:
 		case 44:
 		case 45:
 		case 46:
@@ -14177,6 +14215,7 @@ public class Creole10Parser extends Parser {
 		case 76:
 		case 77:
 		case 78:
+		case 79:
 		{
 		alt138=3;
 		}
@@ -14193,11 +14232,11 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:690:4: bold_markup onestar (t1= image_bold_alternativepart onestar )+ bold_markup
 			{
-			pushFollow(FOLLOW_bold_markup_in_image_alternativepart4333);
+			pushFollow(FOLLOW_bold_markup_in_image_alternativepart4313);
 			bold_markup();
 			_fsp--;
 			if (failed) return item;
-			pushFollow(FOLLOW_onestar_in_image_alternativepart4336);
+			pushFollow(FOLLOW_onestar_in_image_alternativepart4316);
 			onestar();
 			_fsp--;
 			if (failed) return item;
@@ -14211,13 +14250,13 @@ public class Creole10Parser extends Parser {
 			if ( (LA135_0==STAR) ) {
 				int LA135_1 = input.LA(2);
 
-				if ( ((LA135_1>=FORCED_END_OF_LINE && LA135_1<=WIKI)||LA135_1==POUND||(LA135_1>=EQUAL && LA135_1<=PIPE)||(LA135_1>=FORCED_LINEBREAK && LA135_1<=LINK_CLOSE)||(LA135_1>=BLANKS && LA135_1<=78)) ) {
+				if ( ((LA135_1>=FORCED_END_OF_LINE && LA135_1<=WIKI)||LA135_1==POUND||(LA135_1>=EQUAL && LA135_1<=PIPE)||(LA135_1>=FORCED_LINEBREAK && LA135_1<=LINK_CLOSE)||(LA135_1>=BLANKS && LA135_1<=79)) ) {
 				alt135=1;
 				}
 
 
 			}
-			else if ( ((LA135_0>=FORCED_END_OF_LINE && LA135_0<=WIKI)||LA135_0==POUND||(LA135_0>=EQUAL && LA135_0<=ITAL)||(LA135_0>=FORCED_LINEBREAK && LA135_0<=LINK_CLOSE)||(LA135_0>=BLANKS && LA135_0<=78)) ) {
+			else if ( ((LA135_0>=FORCED_END_OF_LINE && LA135_0<=WIKI)||LA135_0==POUND||(LA135_0>=EQUAL && LA135_0<=ITAL)||(LA135_0>=FORCED_LINEBREAK && LA135_0<=LINK_CLOSE)||(LA135_0>=BLANKS && LA135_0<=79)) ) {
 				alt135=1;
 			}
 
@@ -14226,14 +14265,14 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:690:28: t1= image_bold_alternativepart onestar
 				{
-				pushFollow(FOLLOW_image_bold_alternativepart_in_image_alternativepart4345);
+				pushFollow(FOLLOW_image_bold_alternativepart_in_image_alternativepart4325);
 				t1=image_bold_alternativepart();
 				_fsp--;
 				if (failed) return item;
 				if ( backtracking==0 ) {
 				  ((image_alternativepart_scope)image_alternativepart_stack.peek()).elements.add(t1);
 				}
-				pushFollow(FOLLOW_onestar_in_image_alternativepart4350);
+				pushFollow(FOLLOW_onestar_in_image_alternativepart4330);
 				onestar();
 				_fsp--;
 				if (failed) return item;
@@ -14251,7 +14290,7 @@ public class Creole10Parser extends Parser {
 			cnt135++;
 			} while (true);
 
-			pushFollow(FOLLOW_bold_markup_in_image_alternativepart4357);
+			pushFollow(FOLLOW_bold_markup_in_image_alternativepart4337);
 			bold_markup();
 			_fsp--;
 			if (failed) return item;
@@ -14264,11 +14303,11 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:692:4: ital_markup onestar (t2= image_ital_alternativepart onestar )+ ital_markup
 			{
-			pushFollow(FOLLOW_ital_markup_in_image_alternativepart4364);
+			pushFollow(FOLLOW_ital_markup_in_image_alternativepart4344);
 			ital_markup();
 			_fsp--;
 			if (failed) return item;
-			pushFollow(FOLLOW_onestar_in_image_alternativepart4367);
+			pushFollow(FOLLOW_onestar_in_image_alternativepart4347);
 			onestar();
 			_fsp--;
 			if (failed) return item;
@@ -14279,7 +14318,7 @@ public class Creole10Parser extends Parser {
 			int alt136=2;
 			int LA136_0 = input.LA(1);
 
-			if ( ((LA136_0>=FORCED_END_OF_LINE && LA136_0<=WIKI)||(LA136_0>=POUND && LA136_0<=PIPE)||(LA136_0>=FORCED_LINEBREAK && LA136_0<=LINK_CLOSE)||(LA136_0>=BLANKS && LA136_0<=78)) ) {
+			if ( ((LA136_0>=FORCED_END_OF_LINE && LA136_0<=WIKI)||(LA136_0>=POUND && LA136_0<=PIPE)||(LA136_0>=FORCED_LINEBREAK && LA136_0<=LINK_CLOSE)||(LA136_0>=BLANKS && LA136_0<=79)) ) {
 				alt136=1;
 			}
 
@@ -14288,14 +14327,14 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:692:29: t2= image_ital_alternativepart onestar
 				{
-				pushFollow(FOLLOW_image_ital_alternativepart_in_image_alternativepart4377);
+				pushFollow(FOLLOW_image_ital_alternativepart_in_image_alternativepart4357);
 				t2=image_ital_alternativepart();
 				_fsp--;
 				if (failed) return item;
 				if ( backtracking==0 ) {
 				  ((image_alternativepart_scope)image_alternativepart_stack.peek()).elements.add(t2);
 				}
-				pushFollow(FOLLOW_onestar_in_image_alternativepart4382);
+				pushFollow(FOLLOW_onestar_in_image_alternativepart4362);
 				onestar();
 				_fsp--;
 				if (failed) return item;
@@ -14313,7 +14352,7 @@ public class Creole10Parser extends Parser {
 			cnt136++;
 			} while (true);
 
-			pushFollow(FOLLOW_ital_markup_in_image_alternativepart4389);
+			pushFollow(FOLLOW_ital_markup_in_image_alternativepart4369);
 			ital_markup();
 			_fsp--;
 			if (failed) return item;
@@ -14326,7 +14365,7 @@ public class Creole10Parser extends Parser {
 		case 3 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:694:4: onestar (t3= image_alternativetext onestar )+
 			{
-			pushFollow(FOLLOW_onestar_in_image_alternativepart4396);
+			pushFollow(FOLLOW_onestar_in_image_alternativepart4376);
 			onestar();
 			_fsp--;
 			if (failed) return item;
@@ -14337,7 +14376,7 @@ public class Creole10Parser extends Parser {
 			int alt137=2;
 			int LA137_0 = input.LA(1);
 
-			if ( ((LA137_0>=FORCED_END_OF_LINE && LA137_0<=WIKI)||LA137_0==POUND||(LA137_0>=EQUAL && LA137_0<=PIPE)||(LA137_0>=ESCAPE && LA137_0<=LINK_CLOSE)||(LA137_0>=BLANKS && LA137_0<=78)) ) {
+			if ( ((LA137_0>=FORCED_END_OF_LINE && LA137_0<=WIKI)||LA137_0==POUND||(LA137_0>=EQUAL && LA137_0<=PIPE)||(LA137_0>=ESCAPE && LA137_0<=LINK_CLOSE)||(LA137_0>=BLANKS && LA137_0<=79)) ) {
 				alt137=1;
 			}
 			else if ( (LA137_0==FORCED_LINEBREAK) ) {
@@ -14349,7 +14388,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:694:15: t3= image_alternativetext onestar
 				{
-				pushFollow(FOLLOW_image_alternativetext_in_image_alternativepart4403);
+				pushFollow(FOLLOW_image_alternativetext_in_image_alternativepart4383);
 				t3=image_alternativetext();
 				_fsp--;
 				if (failed) return item;
@@ -14360,7 +14399,7 @@ public class Creole10Parser extends Parser {
 								 }
 									  
 				}
-				pushFollow(FOLLOW_onestar_in_image_alternativepart4408);
+				pushFollow(FOLLOW_onestar_in_image_alternativepart4388);
 				onestar();
 				_fsp--;
 				if (failed) return item;
@@ -14426,7 +14465,7 @@ public class Creole10Parser extends Parser {
 		if ( (LA140_0==ITAL) ) {
 		alt140=1;
 		}
-		else if ( ((LA140_0>=FORCED_END_OF_LINE && LA140_0<=WIKI)||(LA140_0>=POUND && LA140_0<=PIPE)||(LA140_0>=FORCED_LINEBREAK && LA140_0<=LINK_CLOSE)||(LA140_0>=BLANKS && LA140_0<=78)) ) {
+		else if ( ((LA140_0>=FORCED_END_OF_LINE && LA140_0<=WIKI)||(LA140_0>=POUND && LA140_0<=PIPE)||(LA140_0>=FORCED_LINEBREAK && LA140_0<=LINK_CLOSE)||(LA140_0>=BLANKS && LA140_0<=79)) ) {
 		alt140=2;
 		}
 		else {
@@ -14440,18 +14479,18 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:707:4: ital_markup t= link_boldital_description ital_markup
 			{
-			pushFollow(FOLLOW_ital_markup_in_image_bold_alternativepart4434);
+			pushFollow(FOLLOW_ital_markup_in_image_bold_alternativepart4414);
 			ital_markup();
 			_fsp--;
 			if (failed) return text;
-			pushFollow(FOLLOW_link_boldital_description_in_image_bold_alternativepart4441);
+			pushFollow(FOLLOW_link_boldital_description_in_image_bold_alternativepart4421);
 			t=link_boldital_description();
 			_fsp--;
 			if (failed) return text;
 			if ( backtracking==0 ) {
 			  text = new ItalicTextNode(t); 
 			}
-			pushFollow(FOLLOW_ital_markup_in_image_bold_alternativepart4446);
+			pushFollow(FOLLOW_ital_markup_in_image_bold_alternativepart4426);
 			ital_markup();
 			_fsp--;
 			if (failed) return text;
@@ -14461,7 +14500,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:708:4: onestar (i= image_alternativetext onestar )+
 			{
-			pushFollow(FOLLOW_onestar_in_image_bold_alternativepart4451);
+			pushFollow(FOLLOW_onestar_in_image_bold_alternativepart4431);
 			onestar();
 			_fsp--;
 			if (failed) return text;
@@ -14472,7 +14511,7 @@ public class Creole10Parser extends Parser {
 			int alt139=2;
 			int LA139_0 = input.LA(1);
 
-			if ( ((LA139_0>=FORCED_END_OF_LINE && LA139_0<=WIKI)||LA139_0==POUND||(LA139_0>=EQUAL && LA139_0<=PIPE)||(LA139_0>=ESCAPE && LA139_0<=LINK_CLOSE)||(LA139_0>=BLANKS && LA139_0<=78)) ) {
+			if ( ((LA139_0>=FORCED_END_OF_LINE && LA139_0<=WIKI)||LA139_0==POUND||(LA139_0>=EQUAL && LA139_0<=PIPE)||(LA139_0>=ESCAPE && LA139_0<=LINK_CLOSE)||(LA139_0>=BLANKS && LA139_0<=79)) ) {
 				alt139=1;
 			}
 			else if ( (LA139_0==FORCED_LINEBREAK) ) {
@@ -14484,11 +14523,11 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:708:15: i= image_alternativetext onestar
 				{
-				pushFollow(FOLLOW_image_alternativetext_in_image_bold_alternativepart4460);
+				pushFollow(FOLLOW_image_alternativetext_in_image_bold_alternativepart4440);
 				i=image_alternativetext();
 				_fsp--;
 				if (failed) return text;
-				pushFollow(FOLLOW_onestar_in_image_bold_alternativepart4463);
+				pushFollow(FOLLOW_onestar_in_image_bold_alternativepart4443);
 				onestar();
 				_fsp--;
 				if (failed) return text;
@@ -14564,7 +14603,7 @@ public class Creole10Parser extends Parser {
 		if ( (LA142_1==STAR) ) {
 			alt142=1;
 		}
-		else if ( ((LA142_1>=FORCED_END_OF_LINE && LA142_1<=WIKI)||LA142_1==POUND||(LA142_1>=EQUAL && LA142_1<=PIPE)||(LA142_1>=FORCED_LINEBREAK && LA142_1<=LINK_CLOSE)||(LA142_1>=BLANKS && LA142_1<=78)) ) {
+		else if ( ((LA142_1>=FORCED_END_OF_LINE && LA142_1<=WIKI)||LA142_1==POUND||(LA142_1>=EQUAL && LA142_1<=PIPE)||(LA142_1>=FORCED_LINEBREAK && LA142_1<=LINK_CLOSE)||(LA142_1>=BLANKS && LA142_1<=79)) ) {
 			alt142=2;
 		}
 		else {
@@ -14575,7 +14614,7 @@ public class Creole10Parser extends Parser {
 			throw nvae;
 		}
 		}
-		else if ( ((LA142_0>=FORCED_END_OF_LINE && LA142_0<=WIKI)||LA142_0==POUND||(LA142_0>=EQUAL && LA142_0<=PIPE)||(LA142_0>=FORCED_LINEBREAK && LA142_0<=LINK_CLOSE)||(LA142_0>=BLANKS && LA142_0<=78)) ) {
+		else if ( ((LA142_0>=FORCED_END_OF_LINE && LA142_0<=WIKI)||LA142_0==POUND||(LA142_0>=EQUAL && LA142_0<=PIPE)||(LA142_0>=FORCED_LINEBREAK && LA142_0<=LINK_CLOSE)||(LA142_0>=BLANKS && LA142_0<=79)) ) {
 		alt142=2;
 		}
 		else {
@@ -14589,18 +14628,18 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:722:4: bold_markup t= link_boldital_description bold_markup
 			{
-			pushFollow(FOLLOW_bold_markup_in_image_ital_alternativepart4492);
+			pushFollow(FOLLOW_bold_markup_in_image_ital_alternativepart4472);
 			bold_markup();
 			_fsp--;
 			if (failed) return text;
-			pushFollow(FOLLOW_link_boldital_description_in_image_ital_alternativepart4499);
+			pushFollow(FOLLOW_link_boldital_description_in_image_ital_alternativepart4479);
 			t=link_boldital_description();
 			_fsp--;
 			if (failed) return text;
 			if ( backtracking==0 ) {
 			  text = new BoldTextNode(t); 
 			}
-			pushFollow(FOLLOW_bold_markup_in_image_ital_alternativepart4504);
+			pushFollow(FOLLOW_bold_markup_in_image_ital_alternativepart4484);
 			bold_markup();
 			_fsp--;
 			if (failed) return text;
@@ -14610,7 +14649,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:723:4: onestar (i= image_alternativetext onestar )+
 			{
-			pushFollow(FOLLOW_onestar_in_image_ital_alternativepart4509);
+			pushFollow(FOLLOW_onestar_in_image_ital_alternativepart4489);
 			onestar();
 			_fsp--;
 			if (failed) return text;
@@ -14621,7 +14660,7 @@ public class Creole10Parser extends Parser {
 			int alt141=2;
 			int LA141_0 = input.LA(1);
 
-			if ( ((LA141_0>=FORCED_END_OF_LINE && LA141_0<=WIKI)||LA141_0==POUND||(LA141_0>=EQUAL && LA141_0<=PIPE)||(LA141_0>=ESCAPE && LA141_0<=LINK_CLOSE)||(LA141_0>=BLANKS && LA141_0<=78)) ) {
+			if ( ((LA141_0>=FORCED_END_OF_LINE && LA141_0<=WIKI)||LA141_0==POUND||(LA141_0>=EQUAL && LA141_0<=PIPE)||(LA141_0>=ESCAPE && LA141_0<=LINK_CLOSE)||(LA141_0>=BLANKS && LA141_0<=79)) ) {
 				alt141=1;
 			}
 			else if ( (LA141_0==FORCED_LINEBREAK) ) {
@@ -14633,11 +14672,11 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:723:14: i= image_alternativetext onestar
 				{
-				pushFollow(FOLLOW_image_alternativetext_in_image_ital_alternativepart4518);
+				pushFollow(FOLLOW_image_alternativetext_in_image_ital_alternativepart4498);
 				i=image_alternativetext();
 				_fsp--;
 				if (failed) return text;
-				pushFollow(FOLLOW_onestar_in_image_ital_alternativepart4521);
+				pushFollow(FOLLOW_onestar_in_image_ital_alternativepart4501);
 				onestar();
 				_fsp--;
 				if (failed) return text;
@@ -14695,7 +14734,7 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:730:2: ( onestar (i= image_alternativetext onestar )+ )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:730:4: onestar (i= image_alternativetext onestar )+
 		{
-		pushFollow(FOLLOW_onestar_in_image_boldital_alternative4542);
+		pushFollow(FOLLOW_onestar_in_image_boldital_alternative4522);
 		onestar();
 		_fsp--;
 		if (failed) return text;
@@ -14706,7 +14745,7 @@ public class Creole10Parser extends Parser {
 		int alt143=2;
 		int LA143_0 = input.LA(1);
 
-		if ( ((LA143_0>=FORCED_END_OF_LINE && LA143_0<=WIKI)||LA143_0==POUND||(LA143_0>=EQUAL && LA143_0<=PIPE)||(LA143_0>=FORCED_LINEBREAK && LA143_0<=LINK_CLOSE)||(LA143_0>=BLANKS && LA143_0<=78)) ) {
+		if ( ((LA143_0>=FORCED_END_OF_LINE && LA143_0<=WIKI)||LA143_0==POUND||(LA143_0>=EQUAL && LA143_0<=PIPE)||(LA143_0>=FORCED_LINEBREAK && LA143_0<=LINK_CLOSE)||(LA143_0>=BLANKS && LA143_0<=79)) ) {
 			alt143=1;
 		}
 
@@ -14715,11 +14754,11 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:730:15: i= image_alternativetext onestar
 			{
-			pushFollow(FOLLOW_image_alternativetext_in_image_boldital_alternative4551);
+			pushFollow(FOLLOW_image_alternativetext_in_image_boldital_alternative4531);
 			i=image_alternativetext();
 			_fsp--;
 			if (failed) return text;
-			pushFollow(FOLLOW_onestar_in_image_boldital_alternative4554);
+			pushFollow(FOLLOW_onestar_in_image_boldital_alternative4534);
 			onestar();
 			_fsp--;
 			if (failed) return text;
@@ -14772,7 +14811,7 @@ public class Creole10Parser extends Parser {
 		int alt145=2;
 		int LA145_0 = input.LA(1);
 
-		if ( ((LA145_0>=FORCED_END_OF_LINE && LA145_0<=WIKI)||LA145_0==POUND||(LA145_0>=EQUAL && LA145_0<=PIPE)||(LA145_0>=ESCAPE && LA145_0<=LINK_CLOSE)||(LA145_0>=BLANKS && LA145_0<=78)) ) {
+		if ( ((LA145_0>=FORCED_END_OF_LINE && LA145_0<=WIKI)||LA145_0==POUND||(LA145_0>=EQUAL && LA145_0<=PIPE)||(LA145_0>=ESCAPE && LA145_0<=LINK_CLOSE)||(LA145_0>=BLANKS && LA145_0<=79)) ) {
 		alt145=1;
 		}
 		else if ( (LA145_0==FORCED_LINEBREAK) ) {
@@ -14789,7 +14828,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:737:4: contents= image_alternative_simple_text
 			{
-			pushFollow(FOLLOW_image_alternative_simple_text_in_image_alternativetext4577);
+			pushFollow(FOLLOW_image_alternative_simple_text_in_image_alternativetext4557);
 			contents=image_alternative_simple_text();
 			_fsp--;
 			if (failed) return items;
@@ -14818,7 +14857,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:738:5: forced_linebreak
 				{
-				pushFollow(FOLLOW_forced_linebreak_in_image_alternativetext4585);
+				pushFollow(FOLLOW_forced_linebreak_in_image_alternativetext4565);
 				forced_linebreak();
 				_fsp--;
 				if (failed) return items;
@@ -14874,7 +14913,7 @@ public class Creole10Parser extends Parser {
 		int alt146=2;
 		int LA146_0 = input.LA(1);
 
-		if ( ((LA146_0>=FORCED_END_OF_LINE && LA146_0<=WIKI)||LA146_0==POUND||(LA146_0>=EQUAL && LA146_0<=PIPE)||(LA146_0>=ESCAPE && LA146_0<=LINK_CLOSE)||(LA146_0>=BLANKS && LA146_0<=78)) ) {
+		if ( ((LA146_0>=FORCED_END_OF_LINE && LA146_0<=WIKI)||LA146_0==POUND||(LA146_0>=EQUAL && LA146_0<=PIPE)||(LA146_0>=ESCAPE && LA146_0<=LINK_CLOSE)||(LA146_0>=BLANKS && LA146_0<=79)) ) {
 			alt146=1;
 		}
 
@@ -14884,7 +14923,7 @@ public class Creole10Parser extends Parser {
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:743:4: c=~ ( IMAGE_CLOSE | ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | NEWLINE | EOF )
 			{
 			c=(Token)input.LT(1);
-			if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=WIKI)||input.LA(1)==POUND||(input.LA(1)>=EQUAL && input.LA(1)<=PIPE)||(input.LA(1)>=ESCAPE && input.LA(1)<=LINK_CLOSE)||(input.LA(1)>=BLANKS && input.LA(1)<=78) ) {
+			if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=WIKI)||input.LA(1)==POUND||(input.LA(1)>=EQUAL && input.LA(1)<=PIPE)||(input.LA(1)>=ESCAPE && input.LA(1)<=LINK_CLOSE)||(input.LA(1)>=BLANKS && input.LA(1)<=79) ) {
 			input.consume();
 			errorRecovery=false;failed=false;
 			}
@@ -14892,7 +14931,7 @@ public class Creole10Parser extends Parser {
 			if (backtracking>0) {failed=true; return text;}
 			MismatchedSetException mse =
 				new MismatchedSetException(null,input);
-			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_image_alternative_simple_text4612);	throw mse;
+			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_image_alternative_simple_text4592);	throw mse;
 			}
 
 			if ( backtracking==0 ) {
@@ -14936,23 +14975,23 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:758:2: ( extension_markup extension_handler blanks extension_statement extension_markup )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:758:4: extension_markup extension_handler blanks extension_statement extension_markup
 		{
-		pushFollow(FOLLOW_extension_markup_in_extension4705);
+		pushFollow(FOLLOW_extension_markup_in_extension4685);
 		extension_markup();
 		_fsp--;
 		if (failed) return node;
-		pushFollow(FOLLOW_extension_handler_in_extension4708);
+		pushFollow(FOLLOW_extension_handler_in_extension4688);
 		extension_handler();
 		_fsp--;
 		if (failed) return node;
-		pushFollow(FOLLOW_blanks_in_extension4711);
+		pushFollow(FOLLOW_blanks_in_extension4691);
 		blanks();
 		_fsp--;
 		if (failed) return node;
-		pushFollow(FOLLOW_extension_statement_in_extension4714);
+		pushFollow(FOLLOW_extension_statement_in_extension4694);
 		extension_statement();
 		_fsp--;
 		if (failed) return node;
-		pushFollow(FOLLOW_extension_markup_in_extension4719);
+		pushFollow(FOLLOW_extension_markup_in_extension4699);
 		extension_markup();
 		_fsp--;
 		if (failed) return node;
@@ -14985,7 +15024,7 @@ public class Creole10Parser extends Parser {
 		int alt147=3;
 		int LA147_0 = input.LA(1);
 
-		if ( ((LA147_0>=FORCED_END_OF_LINE && LA147_0<=WIKI)||(LA147_0>=POUND && LA147_0<=NOWIKI_OPEN)||LA147_0==FORCED_LINEBREAK||(LA147_0>=NOWIKI_BLOCK_CLOSE && LA147_0<=IMAGE_CLOSE)||(LA147_0>=TABLE_OF_CONTENTS_TEXT && LA147_0<=78)) ) {
+		if ( ((LA147_0>=FORCED_END_OF_LINE && LA147_0<=WIKI)||(LA147_0>=POUND && LA147_0<=NOWIKI_OPEN)||LA147_0==FORCED_LINEBREAK||(LA147_0>=NOWIKI_BLOCK_CLOSE && LA147_0<=IMAGE_CLOSE)||(LA147_0>=TABLE_OF_CONTENTS_TEXT && LA147_0<=79)) ) {
 			alt147=1;
 		}
 		else if ( (LA147_0==ESCAPE) ) {
@@ -14997,7 +15036,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:762:5: ~ ( EXTENSION | BLANKS | ESCAPE | NEWLINE | EOF )
 			{
-			if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=WIKI)||(input.LA(1)>=POUND && input.LA(1)<=NOWIKI_OPEN)||input.LA(1)==FORCED_LINEBREAK||(input.LA(1)>=NOWIKI_BLOCK_CLOSE && input.LA(1)<=IMAGE_CLOSE)||(input.LA(1)>=TABLE_OF_CONTENTS_TEXT && input.LA(1)<=78) ) {
+			if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=WIKI)||(input.LA(1)>=POUND && input.LA(1)<=NOWIKI_OPEN)||input.LA(1)==FORCED_LINEBREAK||(input.LA(1)>=NOWIKI_BLOCK_CLOSE && input.LA(1)<=IMAGE_CLOSE)||(input.LA(1)>=TABLE_OF_CONTENTS_TEXT && input.LA(1)<=79) ) {
 			input.consume();
 			errorRecovery=false;failed=false;
 			}
@@ -15005,7 +15044,7 @@ public class Creole10Parser extends Parser {
 			if (backtracking>0) {failed=true; return ;}
 			MismatchedSetException mse =
 				new MismatchedSetException(null,input);
-			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_extension_handler4731);	throw mse;
+			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_extension_handler4710);	throw mse;
 			}
 
 
@@ -15014,7 +15053,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:762:64: escaped
 			{
-			pushFollow(FOLLOW_escaped_in_extension_handler4764);
+			pushFollow(FOLLOW_escaped_in_extension_handler4743);
 			escaped();
 			_fsp--;
 			if (failed) return ;
@@ -15060,7 +15099,7 @@ public class Creole10Parser extends Parser {
 		int alt148=3;
 		int LA148_0 = input.LA(1);
 
-		if ( ((LA148_0>=FORCED_END_OF_LINE && LA148_0<=NOWIKI_OPEN)||LA148_0==FORCED_LINEBREAK||(LA148_0>=NOWIKI_BLOCK_CLOSE && LA148_0<=78)) ) {
+		if ( ((LA148_0>=FORCED_END_OF_LINE && LA148_0<=NOWIKI_OPEN)||LA148_0==FORCED_LINEBREAK||(LA148_0>=NOWIKI_BLOCK_CLOSE && LA148_0<=79)) ) {
 			alt148=1;
 		}
 		else if ( (LA148_0==ESCAPE) ) {
@@ -15072,7 +15111,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:765:5: ~ ( EXTENSION | ESCAPE | EOF )
 			{
-			if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=NOWIKI_OPEN)||input.LA(1)==FORCED_LINEBREAK||(input.LA(1)>=NOWIKI_BLOCK_CLOSE && input.LA(1)<=78) ) {
+			if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=NOWIKI_OPEN)||input.LA(1)==FORCED_LINEBREAK||(input.LA(1)>=NOWIKI_BLOCK_CLOSE && input.LA(1)<=79) ) {
 			input.consume();
 			errorRecovery=false;failed=false;
 			}
@@ -15080,7 +15119,7 @@ public class Creole10Parser extends Parser {
 			if (backtracking>0) {failed=true; return ;}
 			MismatchedSetException mse =
 				new MismatchedSetException(null,input);
-			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_extension_statement4778);	throw mse;
+			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_extension_statement4757);	throw mse;
 			}
 
 
@@ -15089,7 +15128,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:765:41: escaped
 			{
-			pushFollow(FOLLOW_escaped_in_extension_statement4799);
+			pushFollow(FOLLOW_escaped_in_extension_statement4778);
 			escaped();
 			_fsp--;
 			if (failed) return ;
@@ -15126,7 +15165,7 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:772:2: ( TABLE_OF_CONTENTS_TEXT )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:772:38: TABLE_OF_CONTENTS_TEXT
 		{
-		match(input,TABLE_OF_CONTENTS_TEXT,FOLLOW_TABLE_OF_CONTENTS_TEXT_in_table_of_contents4822); if (failed) return tableOfContents;
+		match(input,TABLE_OF_CONTENTS_TEXT,FOLLOW_TABLE_OF_CONTENTS_TEXT_in_table_of_contents4801); if (failed) return tableOfContents;
 
 		}
 
@@ -15305,8 +15344,8 @@ public class Creole10Parser extends Parser {
 		{
 		int LA150_9 = input.LA(2);
 
-		if ( ((( input.LA(2) != STAR && input.LA(2) != DASH && input.LA(2) != POUND && 
-				input.LA(2) != EQUAL && input.LA(2) != NEWLINE )|| input.LA(2) != STAR )) ) {
+		if ( (( input.LA(2) != STAR ||( input.LA(2) != STAR && input.LA(2) != DASH && input.LA(2) != POUND && 
+				input.LA(2) != EQUAL && input.LA(2) != NEWLINE ))) ) {
 			alt150=1;
 		}
 		else if ( (true) ) {
@@ -15325,8 +15364,8 @@ public class Creole10Parser extends Parser {
 		{
 		int LA150_10 = input.LA(2);
 
-		if ( ((( input.LA(2) != STAR && input.LA(2) != DASH && input.LA(2) != POUND && 
-				input.LA(2) != EQUAL && input.LA(2) != NEWLINE )|| input.LA(2) != STAR )) ) {
+		if ( (( input.LA(2) != STAR ||( input.LA(2) != STAR && input.LA(2) != DASH && input.LA(2) != POUND && 
+				input.LA(2) != EQUAL && input.LA(2) != NEWLINE ))) ) {
 			alt150=1;
 		}
 		else if ( (true) ) {
@@ -15399,12 +15438,12 @@ public class Creole10Parser extends Parser {
 		case LF:
 		case SPACE:
 		case TABULATOR:
+		case BRACE_CLOSE:
 		case COLON_SLASH:
 		case SLASH:
 		case TABLE_OF_CONTENTS_OPEN_MARKUP:
 		case TABLE_OF_CONTENTS_CLOSE_MARKUP:
 		case INSIGNIFICANT_CHAR:
-		case 43:
 		case 44:
 		case 45:
 		case 46:
@@ -15440,6 +15479,7 @@ public class Creole10Parser extends Parser {
 		case 76:
 		case 77:
 		case 78:
+		case 79:
 		{
 		int LA150_13 = input.LA(2);
 
@@ -15545,7 +15585,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:777:34: STAR
 				{
-				match(input,STAR,FOLLOW_STAR_in_onestar4845); if (failed) return ;
+				match(input,STAR,FOLLOW_STAR_in_onestar4824); if (failed) return ;
 
 				}
 				break;
@@ -15588,7 +15628,7 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:781:2: ( ESCAPE c= . )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:781:4: ESCAPE c= .
 		{
-		match(input,ESCAPE,FOLLOW_ESCAPE_in_escaped4867); if (failed) return scaped;
+		match(input,ESCAPE,FOLLOW_ESCAPE_in_escaped4846); if (failed) return scaped;
 		c=(Token)input.LT(1);
 		matchAny(input); if (failed) return scaped;
 		if ( backtracking==0 ) {
@@ -15650,7 +15690,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:785:6: newline
 				{
-				pushFollow(FOLLOW_newline_in_paragraph_separator4891);
+				pushFollow(FOLLOW_newline_in_paragraph_separator4870);
 				newline();
 				_fsp--;
 				if (failed) return ;
@@ -15674,7 +15714,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:786:4: EOF
 			{
-			match(input,EOF,FOLLOW_EOF_in_paragraph_separator4899); if (failed) return ;
+			match(input,EOF,FOLLOW_EOF_in_paragraph_separator4878); if (failed) return ;
 
 			}
 			break;
@@ -15718,7 +15758,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:789:6: blanks
 			{
-			pushFollow(FOLLOW_blanks_in_whitespaces4911);
+			pushFollow(FOLLOW_blanks_in_whitespaces4890);
 			blanks();
 			_fsp--;
 			if (failed) return ;
@@ -15728,7 +15768,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:789:15: newline
 			{
-			pushFollow(FOLLOW_newline_in_whitespaces4915);
+			pushFollow(FOLLOW_newline_in_whitespaces4894);
 			newline();
 			_fsp--;
 			if (failed) return ;
@@ -15768,7 +15808,7 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:792:2: ( BLANKS )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:792:4: BLANKS
 		{
-		match(input,BLANKS,FOLLOW_BLANKS_in_blanks4928); if (failed) return ;
+		match(input,BLANKS,FOLLOW_BLANKS_in_blanks4907); if (failed) return ;
 
 		}
 
@@ -15809,7 +15849,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:795:4: newline ( blanks )?
 			{
-			pushFollow(FOLLOW_newline_in_text_lineseparator4938);
+			pushFollow(FOLLOW_newline_in_text_lineseparator4917);
 			newline();
 			_fsp--;
 			if (failed) return ;
@@ -15824,7 +15864,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:795:15: blanks
 				{
-				pushFollow(FOLLOW_blanks_in_text_lineseparator4943);
+				pushFollow(FOLLOW_blanks_in_text_lineseparator4922);
 				blanks();
 				_fsp--;
 				if (failed) return ;
@@ -15840,7 +15880,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:796:4: EOF
 			{
-			match(input,EOF,FOLLOW_EOF_in_text_lineseparator4951); if (failed) return ;
+			match(input,EOF,FOLLOW_EOF_in_text_lineseparator4930); if (failed) return ;
 
 			}
 			break;
@@ -15865,7 +15905,7 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:799:2: ( NEWLINE )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:799:4: NEWLINE
 		{
-		match(input,NEWLINE,FOLLOW_NEWLINE_in_newline4961); if (failed) return ;
+		match(input,NEWLINE,FOLLOW_NEWLINE_in_newline4940); if (failed) return ;
 
 		}
 
@@ -15888,8 +15928,8 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:802:2: ( STAR STAR )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:802:4: STAR STAR
 		{
-		match(input,STAR,FOLLOW_STAR_in_bold_markup4971); if (failed) return ;
-		match(input,STAR,FOLLOW_STAR_in_bold_markup4974); if (failed) return ;
+		match(input,STAR,FOLLOW_STAR_in_bold_markup4950); if (failed) return ;
+		match(input,STAR,FOLLOW_STAR_in_bold_markup4953); if (failed) return ;
 
 		}
 
@@ -15912,7 +15952,7 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:805:2: ( ITAL )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:805:4: ITAL
 		{
-		match(input,ITAL,FOLLOW_ITAL_in_ital_markup4984); if (failed) return ;
+		match(input,ITAL,FOLLOW_ITAL_in_ital_markup4963); if (failed) return ;
 
 		}
 
@@ -15935,7 +15975,7 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:808:2: ( EQUAL )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:808:4: EQUAL
 		{
-		match(input,EQUAL,FOLLOW_EQUAL_in_heading_markup4994); if (failed) return ;
+		match(input,EQUAL,FOLLOW_EQUAL_in_heading_markup4973); if (failed) return ;
 
 		}
 
@@ -15963,7 +16003,7 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:811:2: ( POUND )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:811:4: POUND
 		{
-		match(input,POUND,FOLLOW_POUND_in_list_ordelem_markup5004); if (failed) return retval;
+		match(input,POUND,FOLLOW_POUND_in_list_ordelem_markup4983); if (failed) return retval;
 
 		}
 
@@ -15993,7 +16033,7 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:814:2: ( STAR )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:814:4: STAR
 		{
-		match(input,STAR,FOLLOW_STAR_in_list_unordelem_markup5014); if (failed) return retval;
+		match(input,STAR,FOLLOW_STAR_in_list_unordelem_markup4993); if (failed) return retval;
 
 		}
 
@@ -16036,7 +16076,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:817:4: newline ( blanks )?
 			{
-			pushFollow(FOLLOW_newline_in_list_elemseparator5024);
+			pushFollow(FOLLOW_newline_in_list_elemseparator5003);
 			newline();
 			_fsp--;
 			if (failed) return ;
@@ -16051,7 +16091,7 @@ public class Creole10Parser extends Parser {
 			case 1 :
 				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:817:15: blanks
 				{
-				pushFollow(FOLLOW_blanks_in_list_elemseparator5029);
+				pushFollow(FOLLOW_blanks_in_list_elemseparator5008);
 				blanks();
 				_fsp--;
 				if (failed) return ;
@@ -16067,7 +16107,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:818:4: EOF
 			{
-			match(input,EOF,FOLLOW_EOF_in_list_elemseparator5037); if (failed) return ;
+			match(input,EOF,FOLLOW_EOF_in_list_elemseparator5016); if (failed) return ;
 
 			}
 			break;
@@ -16110,7 +16150,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:821:4: newline
 			{
-			pushFollow(FOLLOW_newline_in_end_of_list5047);
+			pushFollow(FOLLOW_newline_in_end_of_list5026);
 			newline();
 			_fsp--;
 			if (failed) return ;
@@ -16120,7 +16160,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:822:4: EOF
 			{
-			match(input,EOF,FOLLOW_EOF_in_end_of_list5052); if (failed) return ;
+			match(input,EOF,FOLLOW_EOF_in_end_of_list5031); if (failed) return ;
 
 			}
 			break;
@@ -16145,7 +16185,7 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:825:2: ( PIPE )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:825:4: PIPE
 		{
-		match(input,PIPE,FOLLOW_PIPE_in_table_cell_markup5062); if (failed) return ;
+		match(input,PIPE,FOLLOW_PIPE_in_table_cell_markup5041); if (failed) return ;
 
 		}
 
@@ -16168,8 +16208,8 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:828:2: ( PIPE EQUAL )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:828:4: PIPE EQUAL
 		{
-		match(input,PIPE,FOLLOW_PIPE_in_table_headercell_markup5072); if (failed) return ;
-		match(input,EQUAL,FOLLOW_EQUAL_in_table_headercell_markup5075); if (failed) return ;
+		match(input,PIPE,FOLLOW_PIPE_in_table_headercell_markup5051); if (failed) return ;
+		match(input,EQUAL,FOLLOW_EQUAL_in_table_headercell_markup5054); if (failed) return ;
 
 		}
 
@@ -16210,7 +16250,7 @@ public class Creole10Parser extends Parser {
 		case 1 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:831:4: newline
 			{
-			pushFollow(FOLLOW_newline_in_table_rowseparator5085);
+			pushFollow(FOLLOW_newline_in_table_rowseparator5064);
 			newline();
 			_fsp--;
 			if (failed) return ;
@@ -16220,7 +16260,7 @@ public class Creole10Parser extends Parser {
 		case 2 :
 			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:832:4: EOF
 			{
-			match(input,EOF,FOLLOW_EOF_in_table_rowseparator5090); if (failed) return ;
+			match(input,EOF,FOLLOW_EOF_in_table_rowseparator5069); if (failed) return ;
 
 			}
 			break;
@@ -16245,7 +16285,7 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:835:2: ( NOWIKI_OPEN )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:835:4: NOWIKI_OPEN
 		{
-		match(input,NOWIKI_OPEN,FOLLOW_NOWIKI_OPEN_in_nowiki_open_markup5100); if (failed) return ;
+		match(input,NOWIKI_OPEN,FOLLOW_NOWIKI_OPEN_in_nowiki_open_markup5079); if (failed) return ;
 
 		}
 
@@ -16268,7 +16308,7 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:838:2: ( NOWIKI_CLOSE )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:838:4: NOWIKI_CLOSE
 		{
-		match(input,NOWIKI_CLOSE,FOLLOW_NOWIKI_CLOSE_in_nowiki_close_markup5110); if (failed) return ;
+		match(input,NOWIKI_CLOSE,FOLLOW_NOWIKI_CLOSE_in_nowiki_close_markup5089); if (failed) return ;
 
 		}
 
@@ -16291,10 +16331,10 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:841:2: ( DASH DASH DASH DASH )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:841:4: DASH DASH DASH DASH
 		{
-		match(input,DASH,FOLLOW_DASH_in_horizontalrule_markup5120); if (failed) return ;
-		match(input,DASH,FOLLOW_DASH_in_horizontalrule_markup5123); if (failed) return ;
-		match(input,DASH,FOLLOW_DASH_in_horizontalrule_markup5126); if (failed) return ;
-		match(input,DASH,FOLLOW_DASH_in_horizontalrule_markup5129); if (failed) return ;
+		match(input,DASH,FOLLOW_DASH_in_horizontalrule_markup5099); if (failed) return ;
+		match(input,DASH,FOLLOW_DASH_in_horizontalrule_markup5102); if (failed) return ;
+		match(input,DASH,FOLLOW_DASH_in_horizontalrule_markup5105); if (failed) return ;
+		match(input,DASH,FOLLOW_DASH_in_horizontalrule_markup5108); if (failed) return ;
 
 		}
 
@@ -16317,7 +16357,7 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:844:2: ( LINK_OPEN )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:844:4: LINK_OPEN
 		{
-		match(input,LINK_OPEN,FOLLOW_LINK_OPEN_in_link_open_markup5139); if (failed) return ;
+		match(input,LINK_OPEN,FOLLOW_LINK_OPEN_in_link_open_markup5118); if (failed) return ;
 
 		}
 
@@ -16340,7 +16380,7 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:847:2: ( LINK_CLOSE )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:847:4: LINK_CLOSE
 		{
-		match(input,LINK_CLOSE,FOLLOW_LINK_CLOSE_in_link_close_markup5149); if (failed) return ;
+		match(input,LINK_CLOSE,FOLLOW_LINK_CLOSE_in_link_close_markup5128); if (failed) return ;
 
 		}
 
@@ -16363,7 +16403,7 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:850:2: ( PIPE )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:850:4: PIPE
 		{
-		match(input,PIPE,FOLLOW_PIPE_in_link_description_markup5159); if (failed) return ;
+		match(input,PIPE,FOLLOW_PIPE_in_link_description_markup5138); if (failed) return ;
 
 		}
 
@@ -16386,7 +16426,7 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:853:2: ( IMAGE_OPEN )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:853:4: IMAGE_OPEN
 		{
-		match(input,IMAGE_OPEN,FOLLOW_IMAGE_OPEN_in_image_open_markup5169); if (failed) return ;
+		match(input,IMAGE_OPEN,FOLLOW_IMAGE_OPEN_in_image_open_markup5148); if (failed) return ;
 
 		}
 
@@ -16409,7 +16449,7 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:856:2: ( IMAGE_CLOSE )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:856:4: IMAGE_CLOSE
 		{
-		match(input,IMAGE_CLOSE,FOLLOW_IMAGE_CLOSE_in_image_close_markup5179); if (failed) return ;
+		match(input,IMAGE_CLOSE,FOLLOW_IMAGE_CLOSE_in_image_close_markup5158); if (failed) return ;
 
 		}
 
@@ -16432,7 +16472,7 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:859:2: ( PIPE )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:859:4: PIPE
 		{
-		match(input,PIPE,FOLLOW_PIPE_in_image_alternative_markup5189); if (failed) return ;
+		match(input,PIPE,FOLLOW_PIPE_in_image_alternative_markup5168); if (failed) return ;
 
 		}
 
@@ -16455,7 +16495,7 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:862:2: ( EXTENSION )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:862:4: EXTENSION
 		{
-		match(input,EXTENSION,FOLLOW_EXTENSION_in_extension_markup5199); if (failed) return ;
+		match(input,EXTENSION,FOLLOW_EXTENSION_in_extension_markup5178); if (failed) return ;
 
 		}
 
@@ -16478,7 +16518,7 @@ public class Creole10Parser extends Parser {
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:865:2: ( FORCED_LINEBREAK )
 		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:865:4: FORCED_LINEBREAK
 		{
-		match(input,FORCED_LINEBREAK,FOLLOW_FORCED_LINEBREAK_in_forced_linebreak5209); if (failed) return ;
+		match(input,FORCED_LINEBREAK,FOLLOW_FORCED_LINEBREAK_in_forced_linebreak5188); if (failed) return ;
 
 		}
 
@@ -16498,8 +16538,8 @@ public class Creole10Parser extends Parser {
 	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:143:5: ( NOWIKI_OPEN ~ ( NEWLINE ) )
 	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:143:7: NOWIKI_OPEN ~ ( NEWLINE )
 	{
-	match(input,NOWIKI_OPEN,FOLLOW_NOWIKI_OPEN_in_synpred1339); if (failed) return ;
-	if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=WIKI)||(input.LA(1)>=POUND && input.LA(1)<=78) ) {
+	match(input,NOWIKI_OPEN,FOLLOW_NOWIKI_OPEN_in_synpred1332); if (failed) return ;
+	if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=WIKI)||(input.LA(1)>=POUND && input.LA(1)<=79) ) {
 		input.consume();
 		errorRecovery=false;failed=false;
 	}
@@ -16507,7 +16547,7 @@ public class Creole10Parser extends Parser {
 		if (backtracking>0) {failed=true; return ;}
 		MismatchedSetException mse =
 		new MismatchedSetException(null,input);
-		recoverFromMismatchedSet(input,mse,FOLLOW_set_in_synpred1342);	throw mse;
+		recoverFromMismatchedSet(input,mse,FOLLOW_set_in_synpred1335);	throw mse;
 	}
 
 
@@ -16533,504 +16573,504 @@ public class Creole10Parser extends Parser {
 
  
 
-	public static final BitSet FOLLOW_whitespaces_in_wikipage118 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_paragraphs_in_wikipage126 = new BitSet(new long[]{0x0000000000000000L});
-	public static final BitSet FOLLOW_EOF_in_wikipage131 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_paragraph_in_paragraphs149 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_nowiki_block_in_paragraph170 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_blanks_in_paragraph177 = new BitSet(new long[]{0x0000000000008000L});
-	public static final BitSet FOLLOW_paragraph_separator_in_paragraph180 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_blanks_in_paragraph187 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_table_of_contents_in_paragraph201 = new BitSet(new long[]{0x0000000000008002L});
-	public static final BitSet FOLLOW_heading_in_paragraph218 = new BitSet(new long[]{0x0000000000008002L});
-	public static final BitSet FOLLOW_horizontalrule_in_paragraph237 = new BitSet(new long[]{0x0000000000008002L});
-	public static final BitSet FOLLOW_list_unord_in_paragraph249 = new BitSet(new long[]{0x0000000000008002L});
-	public static final BitSet FOLLOW_list_ord_in_paragraph262 = new BitSet(new long[]{0x0000000000008002L});
-	public static final BitSet FOLLOW_table_in_paragraph275 = new BitSet(new long[]{0x0000000000008002L});
-	public static final BitSet FOLLOW_text_paragraph_in_paragraph288 = new BitSet(new long[]{0x0000000000008002L});
-	public static final BitSet FOLLOW_paragraph_separator_in_paragraph301 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_text_line_in_text_paragraph329 = new BitSet(new long[]{0xFFFFFFFFFFF27FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_nowiki_inline_in_text_paragraph361 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_text_element_in_text_paragraph372 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_text_lineseparator_in_text_paragraph381 = new BitSet(new long[]{0xFFFFFFFFFFF27FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_text_firstelement_in_text_line404 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_text_element_in_text_line423 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_text_lineseparator_in_text_line438 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_text_formattedelement_in_text_firstelement460 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_text_first_unformattedelement_in_text_firstelement471 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_ital_markup_in_text_formattedelement487 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_text_italcontent_in_text_formattedelement493 = new BitSet(new long[]{0x0000000000108002L});
-	public static final BitSet FOLLOW_NEWLINE_in_text_formattedelement502 = new BitSet(new long[]{0x0000000000100000L});
-	public static final BitSet FOLLOW_ital_markup_in_text_formattedelement508 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_bold_markup_in_text_formattedelement516 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_text_boldcontent_in_text_formattedelement523 = new BitSet(new long[]{0x0000000000028002L});
-	public static final BitSet FOLLOW_NEWLINE_in_text_formattedelement532 = new BitSet(new long[]{0x0000000000020000L});
-	public static final BitSet FOLLOW_bold_markup_in_text_formattedelement538 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_NEWLINE_in_text_boldcontent557 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_text_boldcontentpart_in_text_boldcontent569 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_EOF_in_text_boldcontent580 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_NEWLINE_in_text_italcontent596 = new BitSet(new long[]{0xFFFFFFFFFFEF7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_text_italcontentpart_in_text_italcontent608 = new BitSet(new long[]{0xFFFFFFFFFFEF7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_EOF_in_text_italcontent619 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_onestar_in_text_element634 = new BitSet(new long[]{0xFFFFFFFFFFED7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_text_unformattedelement_in_text_element641 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_text_unformattedelement_in_text_element652 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_onestar_in_text_element655 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_text_formattedelement_in_text_element666 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_ital_markup_in_text_boldcontentpart683 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_text_bolditalcontent_in_text_boldcontentpart690 = new BitSet(new long[]{0x0000000000100002L});
-	public static final BitSet FOLLOW_ital_markup_in_text_boldcontentpart697 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_text_formattedcontent_in_text_boldcontentpart709 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_bold_markup_in_text_italcontentpart725 = new BitSet(new long[]{0xFFFFFFFFFFEFFFF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_text_bolditalcontent_in_text_italcontentpart732 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_bold_markup_in_text_italcontentpart738 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_text_formattedcontent_in_text_italcontentpart750 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_NEWLINE_in_text_bolditalcontent768 = new BitSet(new long[]{0xFFFFFFFFFFEF7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_text_formattedcontent_in_text_bolditalcontent779 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_EOF_in_text_bolditalcontent789 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_onestar_in_text_formattedcontent803 = new BitSet(new long[]{0xFFFFFFFFFFED7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_text_unformattedelement_in_text_formattedcontent812 = new BitSet(new long[]{0xFFFFFFFFFFEFFFF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_text_formattedcontent817 = new BitSet(new long[]{0xFFFFFFFFFFEDFFF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_text_linebreak_in_text_formattedcontent822 = new BitSet(new long[]{0xFFFFFFFFFFED7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_text_lineseparator_in_text_linebreak842 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_text_first_inlineelement_in_text_inlineelement860 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_nowiki_inline_in_text_inlineelement871 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_link_in_text_first_inlineelement894 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_image_in_text_first_inlineelement905 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_extension_in_text_first_inlineelement915 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_text_first_unformatted_in_text_first_unformattedelement935 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_text_first_inlineelement_in_text_first_unformattedelement946 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_text_first_unformmatted_text_in_text_first_unformatted968 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_forced_linebreak_in_text_first_unformatted977 = new BitSet(new long[]{0x0000000006000002L});
-	public static final BitSet FOLLOW_escaped_in_text_first_unformatted989 = new BitSet(new long[]{0x0000000006000002L});
-	public static final BitSet FOLLOW_set_in_text_first_unformmatted_text1018 = new BitSet(new long[]{0xFFFFFFFFF8007FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_text_unformatted_in_text_unformattedelement1133 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_text_inlineelement_in_text_unformattedelement1144 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_text_unformated_text_in_text_unformatted1166 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_forced_linebreak_in_text_unformatted1175 = new BitSet(new long[]{0x0000000006000002L});
-	public static final BitSet FOLLOW_escaped_in_text_unformatted1187 = new BitSet(new long[]{0x0000000006000002L});
-	public static final BitSet FOLLOW_set_in_text_unformated_text1214 = new BitSet(new long[]{0xFFFFFFFFF80D7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_heading_markup_in_heading1318 = new BitSet(new long[]{0xFFFFFFFFFBFFFFF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_heading_content_in_heading1323 = new BitSet(new long[]{0x0000000080048000L});
-	public static final BitSet FOLLOW_heading_markup_in_heading1330 = new BitSet(new long[]{0x0000000080008000L});
-	public static final BitSet FOLLOW_blanks_in_heading1338 = new BitSet(new long[]{0x0000000000008000L});
-	public static final BitSet FOLLOW_paragraph_separator_in_heading1345 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_heading_markup_in_heading_content1355 = new BitSet(new long[]{0xFFFFFFFFFBFF7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_heading_content_in_heading_content1360 = new BitSet(new long[]{0x0000000000040002L});
-	public static final BitSet FOLLOW_heading_markup_in_heading_content1365 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_heading_text_in_heading_content1377 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_heading_cellcontent_in_heading_text1398 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_onestar_in_heading_cellcontent1415 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_heading_cellcontentpart_in_heading_cellcontent1424 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_heading_cellcontent1436 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_heading_formattedelement_in_heading_cellcontentpart1457 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_heading_unformattedelement_in_heading_cellcontentpart1468 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_ital_markup_in_heading_formattedelement1484 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_heading_italcontent_in_heading_formattedelement1494 = new BitSet(new long[]{0x0000000000100002L});
-	public static final BitSet FOLLOW_ital_markup_in_heading_formattedelement1503 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_bold_markup_in_heading_formattedelement1511 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_heading_boldcontent_in_heading_formattedelement1518 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_bold_markup_in_heading_formattedelement1528 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_onestar_in_heading_boldcontent1545 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_heading_boldcontentpart_in_heading_boldcontent1554 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_heading_boldcontent1559 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_EOF_in_heading_boldcontent1567 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_onestar_in_heading_italcontent1581 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_heading_italcontentpart_in_heading_italcontent1590 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_heading_italcontent1595 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_EOF_in_heading_italcontent1603 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_heading_formattedcontent_in_heading_boldcontentpart1621 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_ital_markup_in_heading_boldcontentpart1628 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_heading_bolditalcontent_in_heading_boldcontentpart1635 = new BitSet(new long[]{0x0000000000100002L});
-	public static final BitSet FOLLOW_ital_markup_in_heading_boldcontentpart1642 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_bold_markup_in_heading_italcontentpart1659 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_heading_bolditalcontent_in_heading_italcontentpart1666 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_bold_markup_in_heading_italcontentpart1673 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_heading_formattedcontent_in_heading_italcontentpart1685 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_onestar_in_heading_bolditalcontent1701 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_heading_formattedcontent_in_heading_bolditalcontent1710 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_onestar_in_heading_bolditalcontent1715 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_EOF_in_heading_bolditalcontent1723 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_heading_unformattedelement_in_heading_formattedcontent1743 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_heading_unformatted_text_in_heading_unformattedelement1766 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_heading_inlineelement_in_heading_unformattedelement1778 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_link_in_heading_inlineelement1799 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_image_in_heading_inlineelement1809 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_nowiki_inline_in_heading_inlineelement1820 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_set_in_heading_unformatted_text1845 = new BitSet(new long[]{0xFFFFFFFFFB1B7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_list_ordelem_in_list_ord1904 = new BitSet(new long[]{0x0000000000018002L});
-	public static final BitSet FOLLOW_end_of_list_in_list_ord1914 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_list_ordelem_markup_in_list_ordelem1947 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_list_elem_in_list_ordelem1955 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_list_unordelem_in_list_unord1979 = new BitSet(new long[]{0x0000000000028002L});
-	public static final BitSet FOLLOW_end_of_list_in_list_unord1989 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_list_unordelem_markup_in_list_unordelem2022 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_list_elem_in_list_unordelem2029 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_list_elem_markup_in_list_elem2054 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_list_elemcontent_in_list_elem2065 = new BitSet(new long[]{0x0000000000008000L});
-	public static final BitSet FOLLOW_list_elemseparator_in_list_elem2070 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_list_ordelem_markup_in_list_elem_markup2080 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_list_unordelem_markup_in_list_elem_markup2085 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_onestar_in_list_elemcontent2099 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_list_elemcontentpart_in_list_elemcontent2108 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_list_elemcontent2113 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_text_unformattedelement_in_list_elemcontentpart2134 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_list_formatted_elem_in_list_elemcontentpart2145 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_bold_markup_in_list_formatted_elem2162 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_list_formatted_elem2165 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_list_boldcontentpart_in_list_formatted_elem2174 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_list_formatted_elem2184 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_bold_markup_in_list_formatted_elem2193 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_ital_markup_in_list_formatted_elem2201 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_list_formatted_elem2206 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_list_italcontentpart_in_list_formatted_elem2215 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_list_formatted_elem2224 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_ital_markup_in_list_formatted_elem2233 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_ital_markup_in_list_boldcontentpart2259 = new BitSet(new long[]{0xFFFFFFFFFFED7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_list_bolditalcontent_in_list_boldcontentpart2266 = new BitSet(new long[]{0x0000000000100002L});
-	public static final BitSet FOLLOW_ital_markup_in_list_boldcontentpart2273 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_text_unformattedelement_in_list_boldcontentpart2288 = new BitSet(new long[]{0xFFFFFFFFFFED7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_text_unformattedelement_in_list_bolditalcontent2320 = new BitSet(new long[]{0xFFFFFFFFFFED7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_bold_markup_in_list_italcontentpart2350 = new BitSet(new long[]{0xFFFFFFFFFFED7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_list_bolditalcontent_in_list_italcontentpart2357 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_bold_markup_in_list_italcontentpart2364 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_text_unformattedelement_in_list_italcontentpart2378 = new BitSet(new long[]{0xFFFFFFFFFFED7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_table_row_in_table2408 = new BitSet(new long[]{0x0000000000080002L});
-	public static final BitSet FOLLOW_table_cell_in_table_row2434 = new BitSet(new long[]{0x0000000000088000L});
-	public static final BitSet FOLLOW_table_rowseparator_in_table_row2442 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_table_headercell_in_table_cell2463 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_table_normalcell_in_table_cell2474 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_table_headercell_markup_in_table_headercell2490 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_table_cellcontent_in_table_headercell2497 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_table_cell_markup_in_table_normalcell2513 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_table_cellcontent_in_table_normalcell2520 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_onestar_in_table_cellcontent2536 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_table_cellcontentpart_in_table_cellcontent2545 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_table_cellcontent2550 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_table_formattedelement_in_table_cellcontentpart2571 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_table_unformattedelement_in_table_cellcontentpart2582 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_ital_markup_in_table_formattedelement2598 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_table_italcontent_in_table_formattedelement2608 = new BitSet(new long[]{0x0000000000100002L});
-	public static final BitSet FOLLOW_ital_markup_in_table_formattedelement2617 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_bold_markup_in_table_formattedelement2625 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_table_boldcontent_in_table_formattedelement2632 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_bold_markup_in_table_formattedelement2642 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_onestar_in_table_boldcontent2659 = new BitSet(new long[]{0xFFFFFFFFFFF57FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_table_boldcontentpart_in_table_boldcontent2668 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_table_boldcontent2673 = new BitSet(new long[]{0xFFFFFFFFFFF57FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_EOF_in_table_boldcontent2681 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_onestar_in_table_italcontent2695 = new BitSet(new long[]{0xFFFFFFFFFFE77FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_table_italcontentpart_in_table_italcontent2704 = new BitSet(new long[]{0xFFFFFFFFFFE77FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_table_italcontent2709 = new BitSet(new long[]{0xFFFFFFFFFFE77FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_EOF_in_table_italcontent2717 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_table_formattedcontent_in_table_boldcontentpart2735 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_ital_markup_in_table_boldcontentpart2742 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_table_bolditalcontent_in_table_boldcontentpart2749 = new BitSet(new long[]{0x0000000000100002L});
-	public static final BitSet FOLLOW_ital_markup_in_table_boldcontentpart2756 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_bold_markup_in_table_italcontentpart2773 = new BitSet(new long[]{0xFFFFFFFFFFE77FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_table_bolditalcontent_in_table_italcontentpart2780 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_bold_markup_in_table_italcontentpart2787 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_table_formattedcontent_in_table_italcontentpart2799 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_onestar_in_table_bolditalcontent2815 = new BitSet(new long[]{0xFFFFFFFFFFE57FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_table_formattedcontent_in_table_bolditalcontent2824 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_onestar_in_table_bolditalcontent2829 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_EOF_in_table_bolditalcontent2837 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_table_unformattedelement_in_table_formattedcontent2857 = new BitSet(new long[]{0xFFFFFFFFFFE57FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_table_unformatted_in_table_unformattedelement2880 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_table_inlineelement_in_table_unformattedelement2892 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_link_in_table_inlineelement2913 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_image_in_table_inlineelement2923 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_extension_in_table_inlineelement2934 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_nowiki_inline_in_table_inlineelement2944 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_table_unformatted_text_in_table_unformatted2966 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_forced_linebreak_in_table_unformatted2975 = new BitSet(new long[]{0x0000000006000002L});
-	public static final BitSet FOLLOW_escaped_in_table_unformatted2988 = new BitSet(new long[]{0x0000000006000002L});
-	public static final BitSet FOLLOW_set_in_table_unformatted_text3014 = new BitSet(new long[]{0xFFFFFFFFF8057FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_nowikiblock_open_markup_in_nowiki_block3111 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_nowiki_block_contents_in_nowiki_block3118 = new BitSet(new long[]{0x0000000008000000L});
-	public static final BitSet FOLLOW_nowikiblock_close_markup_in_nowiki_block3124 = new BitSet(new long[]{0x0000000000008000L});
-	public static final BitSet FOLLOW_paragraph_separator_in_nowiki_block3127 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_nowiki_open_markup_in_nowikiblock_open_markup3142 = new BitSet(new long[]{0x0000000000008000L});
-	public static final BitSet FOLLOW_newline_in_nowikiblock_open_markup3145 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_NOWIKI_BLOCK_CLOSE_in_nowikiblock_close_markup3157 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_nowiki_open_markup_in_nowiki_inline3172 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_nowiki_inline_contents_in_nowiki_inline3179 = new BitSet(new long[]{0x0000000010000000L});
-	public static final BitSet FOLLOW_nowiki_close_markup_in_nowiki_inline3184 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_set_in_nowiki_block_contents3204 = new BitSet(new long[]{0xFFFFFFFFF7FFFFF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_set_in_nowiki_inline_contents3238 = new BitSet(new long[]{0xFFFFFFFFEFFF7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_horizontalrule_markup_in_horizontalrule3275 = new BitSet(new long[]{0x0000000080008000L});
-	public static final BitSet FOLLOW_blanks_in_horizontalrule3280 = new BitSet(new long[]{0x0000000000008000L});
-	public static final BitSet FOLLOW_paragraph_separator_in_horizontalrule3286 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_link_open_markup_in_link3308 = new BitSet(new long[]{0xFFFFFFFFDFF77FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_link_address_in_link3314 = new BitSet(new long[]{0x0000000020080000L});
-	public static final BitSet FOLLOW_link_description_markup_in_link3320 = new BitSet(new long[]{0xFFFFFFFFDE5F7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_link_description_in_link3330 = new BitSet(new long[]{0x0000000020000000L});
-	public static final BitSet FOLLOW_link_close_markup_in_link3338 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_link_interwiki_uri_in_link_address3357 = new BitSet(new long[]{0x0000080000000000L});
-	public static final BitSet FOLLOW_43_in_link_address3360 = new BitSet(new long[]{0xFFFFFFFFDFF77FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_link_interwiki_pagename_in_link_address3367 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_link_uri_in_link_address3378 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_44_in_link_interwiki_uri3394 = new BitSet(new long[]{0x0000200000000000L});
-	public static final BitSet FOLLOW_45_in_link_interwiki_uri3396 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_46_in_link_interwiki_uri3401 = new BitSet(new long[]{0x0000800000000000L});
-	public static final BitSet FOLLOW_47_in_link_interwiki_uri3403 = new BitSet(new long[]{0x0001000000000000L});
-	public static final BitSet FOLLOW_48_in_link_interwiki_uri3405 = new BitSet(new long[]{0x0002000000000000L});
-	public static final BitSet FOLLOW_49_in_link_interwiki_uri3407 = new BitSet(new long[]{0x0004000000000000L});
-	public static final BitSet FOLLOW_50_in_link_interwiki_uri3409 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3411 = new BitSet(new long[]{0x0001000000000000L});
-	public static final BitSet FOLLOW_48_in_link_interwiki_uri3413 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3415 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_52_in_link_interwiki_uri3420 = new BitSet(new long[]{0x0020000000000000L});
-	public static final BitSet FOLLOW_53_in_link_interwiki_uri3422 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3424 = new BitSet(new long[]{0x0040000000000000L});
-	public static final BitSet FOLLOW_54_in_link_interwiki_uri3426 = new BitSet(new long[]{0x0001000000000000L});
-	public static final BitSet FOLLOW_48_in_link_interwiki_uri3428 = new BitSet(new long[]{0x0080000000000000L});
-	public static final BitSet FOLLOW_55_in_link_interwiki_uri3430 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_56_in_link_interwiki_uri3435 = new BitSet(new long[]{0x0000800000000000L});
-	public static final BitSet FOLLOW_47_in_link_interwiki_uri3437 = new BitSet(new long[]{0x0000800000000000L});
-	public static final BitSet FOLLOW_47_in_link_interwiki_uri3439 = new BitSet(new long[]{0x0200000000000000L});
-	public static final BitSet FOLLOW_57_in_link_interwiki_uri3441 = new BitSet(new long[]{0x0020000000000000L});
-	public static final BitSet FOLLOW_53_in_link_interwiki_uri3443 = new BitSet(new long[]{0x0400000000000000L});
-	public static final BitSet FOLLOW_58_in_link_interwiki_uri3445 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_59_in_link_interwiki_uri3450 = new BitSet(new long[]{0x1000000000000000L});
-	public static final BitSet FOLLOW_60_in_link_interwiki_uri3452 = new BitSet(new long[]{0x2000000000000000L});
-	public static final BitSet FOLLOW_61_in_link_interwiki_uri3454 = new BitSet(new long[]{0x0004000000000000L});
-	public static final BitSet FOLLOW_50_in_link_interwiki_uri3456 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3458 = new BitSet(new long[]{0x0001000000000000L});
-	public static final BitSet FOLLOW_48_in_link_interwiki_uri3460 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3462 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_62_in_link_interwiki_uri3467 = new BitSet(new long[]{0x0400000000000000L});
-	public static final BitSet FOLLOW_58_in_link_interwiki_uri3469 = new BitSet(new long[]{0x8000000000000000L});
-	public static final BitSet FOLLOW_63_in_link_interwiki_uri3471 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000001L});
-	public static final BitSet FOLLOW_64_in_link_interwiki_uri3473 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000002L});
-	public static final BitSet FOLLOW_65_in_link_interwiki_uri3475 = new BitSet(new long[]{0x8000000000000000L});
-	public static final BitSet FOLLOW_63_in_link_interwiki_uri3477 = new BitSet(new long[]{0x0020000000000000L});
-	public static final BitSet FOLLOW_53_in_link_interwiki_uri3479 = new BitSet(new long[]{0x0020000000000000L});
-	public static final BitSet FOLLOW_53_in_link_interwiki_uri3481 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_62_in_link_interwiki_uri3486 = new BitSet(new long[]{0x0400000000000000L});
-	public static final BitSet FOLLOW_58_in_link_interwiki_uri3488 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_66_in_link_interwiki_uri3490 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3492 = new BitSet(new long[]{0x8000000000000000L});
-	public static final BitSet FOLLOW_63_in_link_interwiki_uri3494 = new BitSet(new long[]{0x0004000000000000L});
-	public static final BitSet FOLLOW_50_in_link_interwiki_uri3496 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3498 = new BitSet(new long[]{0x0001000000000000L});
-	public static final BitSet FOLLOW_48_in_link_interwiki_uri3500 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3502 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_62_in_link_interwiki_uri3507 = new BitSet(new long[]{0x0000800000000000L});
-	public static final BitSet FOLLOW_47_in_link_interwiki_uri3509 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3511 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000008L});
-	public static final BitSet FOLLOW_67_in_link_interwiki_uri3513 = new BitSet(new long[]{0x4000000000000000L});
-	public static final BitSet FOLLOW_62_in_link_interwiki_uri3515 = new BitSet(new long[]{0x0000800000000000L});
-	public static final BitSet FOLLOW_47_in_link_interwiki_uri3517 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3519 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000008L});
-	public static final BitSet FOLLOW_67_in_link_interwiki_uri3521 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_68_in_link_interwiki_uri3526 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_66_in_link_interwiki_uri3528 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_66_in_link_interwiki_uri3530 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000020L});
-	public static final BitSet FOLLOW_69_in_link_interwiki_uri3532 = new BitSet(new long[]{0x0002000000000000L});
-	public static final BitSet FOLLOW_49_in_link_interwiki_uri3534 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000040L});
-	public static final BitSet FOLLOW_70_in_link_interwiki_uri3536 = new BitSet(new long[]{0x0400000000000000L});
-	public static final BitSet FOLLOW_58_in_link_interwiki_uri3538 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_68_in_link_interwiki_uri3543 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000080L});
-	public static final BitSet FOLLOW_71_in_link_interwiki_uri3545 = new BitSet(new long[]{0x8000000000000000L});
-	public static final BitSet FOLLOW_63_in_link_interwiki_uri3547 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000008L});
-	public static final BitSet FOLLOW_67_in_link_interwiki_uri3549 = new BitSet(new long[]{0x8000000000000000L});
-	public static final BitSet FOLLOW_63_in_link_interwiki_uri3551 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_61_in_link_interwiki_uri3556 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000020L});
-	public static final BitSet FOLLOW_69_in_link_interwiki_uri3558 = new BitSet(new long[]{0x0004000000000000L});
-	public static final BitSet FOLLOW_50_in_link_interwiki_uri3560 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3562 = new BitSet(new long[]{0x0001000000000000L});
-	public static final BitSet FOLLOW_48_in_link_interwiki_uri3564 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3566 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_61_in_link_interwiki_uri3571 = new BitSet(new long[]{0x0002000000000000L});
-	public static final BitSet FOLLOW_49_in_link_interwiki_uri3573 = new BitSet(new long[]{0x0001000000000000L});
-	public static final BitSet FOLLOW_48_in_link_interwiki_uri3575 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3577 = new BitSet(new long[]{0x0004000000000000L});
-	public static final BitSet FOLLOW_50_in_link_interwiki_uri3579 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3581 = new BitSet(new long[]{0x0001000000000000L});
-	public static final BitSet FOLLOW_48_in_link_interwiki_uri3583 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3585 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_61_in_link_interwiki_uri3590 = new BitSet(new long[]{0x0002000000000000L});
-	public static final BitSet FOLLOW_49_in_link_interwiki_uri3592 = new BitSet(new long[]{0x0080000000000000L});
-	public static final BitSet FOLLOW_55_in_link_interwiki_uri3594 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000100L});
-	public static final BitSet FOLLOW_72_in_link_interwiki_uri3596 = new BitSet(new long[]{0x0020000000000000L});
-	public static final BitSet FOLLOW_53_in_link_interwiki_uri3598 = new BitSet(new long[]{0x0400000000000000L});
-	public static final BitSet FOLLOW_58_in_link_interwiki_uri3600 = new BitSet(new long[]{0x0004000000000000L});
-	public static final BitSet FOLLOW_50_in_link_interwiki_uri3602 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3604 = new BitSet(new long[]{0x0001000000000000L});
-	public static final BitSet FOLLOW_48_in_link_interwiki_uri3606 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3608 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_73_in_link_interwiki_uri3613 = new BitSet(new long[]{0x8000000000000000L});
-	public static final BitSet FOLLOW_63_in_link_interwiki_uri3615 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_66_in_link_interwiki_uri3617 = new BitSet(new long[]{0x0400000000000000L});
-	public static final BitSet FOLLOW_58_in_link_interwiki_uri3619 = new BitSet(new long[]{0x0000800000000000L});
-	public static final BitSet FOLLOW_47_in_link_interwiki_uri3621 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000400L});
-	public static final BitSet FOLLOW_74_in_link_interwiki_uri3623 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_60_in_link_interwiki_uri3628 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000008L});
-	public static final BitSet FOLLOW_67_in_link_interwiki_uri3630 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3632 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000100L});
-	public static final BitSet FOLLOW_72_in_link_interwiki_uri3634 = new BitSet(new long[]{0x1000000000000000L});
-	public static final BitSet FOLLOW_60_in_link_interwiki_uri3636 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000008L});
-	public static final BitSet FOLLOW_67_in_link_interwiki_uri3638 = new BitSet(new long[]{0x8000000000000000L});
-	public static final BitSet FOLLOW_63_in_link_interwiki_uri3640 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000100L});
-	public static final BitSet FOLLOW_72_in_link_interwiki_uri3642 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_75_in_link_interwiki_uri3647 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3649 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_66_in_link_interwiki_uri3651 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_66_in_link_interwiki_uri3653 = new BitSet(new long[]{0x0020000000000000L});
-	public static final BitSet FOLLOW_53_in_link_interwiki_uri3655 = new BitSet(new long[]{0x0000000000000000L,0x0000000000001000L});
-	public static final BitSet FOLLOW_76_in_link_interwiki_uri3657 = new BitSet(new long[]{0x0004000000000000L});
-	public static final BitSet FOLLOW_50_in_link_interwiki_uri3659 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3661 = new BitSet(new long[]{0x0001000000000000L});
-	public static final BitSet FOLLOW_48_in_link_interwiki_uri3663 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3665 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_75_in_link_interwiki_uri3670 = new BitSet(new long[]{0x0004000000000000L});
-	public static final BitSet FOLLOW_50_in_link_interwiki_uri3672 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3674 = new BitSet(new long[]{0x0001000000000000L});
-	public static final BitSet FOLLOW_48_in_link_interwiki_uri3676 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3678 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_77_in_link_interwiki_uri3683 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000040L});
-	public static final BitSet FOLLOW_70_in_link_interwiki_uri3685 = new BitSet(new long[]{0x0400000000000000L});
-	public static final BitSet FOLLOW_58_in_link_interwiki_uri3687 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000020L});
-	public static final BitSet FOLLOW_69_in_link_interwiki_uri3689 = new BitSet(new long[]{0x0000800000000000L});
-	public static final BitSet FOLLOW_47_in_link_interwiki_uri3691 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_66_in_link_interwiki_uri3693 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_50_in_link_interwiki_uri3698 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3700 = new BitSet(new long[]{0x0001000000000000L});
-	public static final BitSet FOLLOW_48_in_link_interwiki_uri3702 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3704 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000100L});
-	public static final BitSet FOLLOW_72_in_link_interwiki_uri3706 = new BitSet(new long[]{0x0400000000000000L});
-	public static final BitSet FOLLOW_58_in_link_interwiki_uri3708 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_66_in_link_interwiki_uri3710 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3712 = new BitSet(new long[]{0x8000000000000000L});
-	public static final BitSet FOLLOW_63_in_link_interwiki_uri3714 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_78_in_link_interwiki_uri3719 = new BitSet(new long[]{0x0004000000000000L});
-	public static final BitSet FOLLOW_50_in_link_interwiki_uri3721 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3723 = new BitSet(new long[]{0x0001000000000000L});
-	public static final BitSet FOLLOW_48_in_link_interwiki_uri3725 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3727 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_set_in_link_interwiki_pagename3747 = new BitSet(new long[]{0xFFFFFFFFDFF77FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_link_descriptionpart_in_link_description3790 = new BitSet(new long[]{0xFFFFFFFFDE5F7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_image_in_link_description3802 = new BitSet(new long[]{0xFFFFFFFFDE5F7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_bold_markup_in_link_descriptionpart3827 = new BitSet(new long[]{0xFFFFFFFFDE1F7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_link_descriptionpart3830 = new BitSet(new long[]{0xFFFFFFFFDE1D7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_link_bold_descriptionpart_in_link_descriptionpart3838 = new BitSet(new long[]{0xFFFFFFFFDE1F7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_link_descriptionpart3843 = new BitSet(new long[]{0xFFFFFFFFDE1F7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_bold_markup_in_link_descriptionpart3853 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_ital_markup_in_link_descriptionpart3858 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_link_descriptionpart3861 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_link_ital_descriptionpart_in_link_descriptionpart3870 = new BitSet(new long[]{0xFFFFFFFFDE1F7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_link_descriptionpart3875 = new BitSet(new long[]{0xFFFFFFFFDE1F7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_ital_markup_in_link_descriptionpart3884 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_onestar_in_link_descriptionpart3889 = new BitSet(new long[]{0xFFFFFFFFDE0D7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_link_descriptiontext_in_link_descriptionpart3898 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_link_descriptionpart3901 = new BitSet(new long[]{0xFFFFFFFFDE0D7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_ital_markup_in_link_bold_descriptionpart3921 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_link_boldital_description_in_link_bold_descriptionpart3928 = new BitSet(new long[]{0x0000000000100000L});
-	public static final BitSet FOLLOW_ital_markup_in_link_bold_descriptionpart3933 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_link_descriptiontext_in_link_bold_descriptionpart3942 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_bold_markup_in_link_ital_descriptionpart3958 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_link_boldital_description_in_link_ital_descriptionpart3965 = new BitSet(new long[]{0x0000000000020000L});
-	public static final BitSet FOLLOW_bold_markup_in_link_ital_descriptionpart3968 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_link_descriptiontext_in_link_ital_descriptionpart3979 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_onestar_in_link_boldital_description3995 = new BitSet(new long[]{0xFFFFFFFFDE0D7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_link_descriptiontext_in_link_boldital_description4004 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_link_boldital_description4007 = new BitSet(new long[]{0xFFFFFFFFDE0D7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_link_descriptiontext_simple_in_link_descriptiontext4030 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_forced_linebreak_in_link_descriptiontext4040 = new BitSet(new long[]{0x0000000006000002L});
-	public static final BitSet FOLLOW_escaped_in_link_descriptiontext4052 = new BitSet(new long[]{0x0000000006000002L});
-	public static final BitSet FOLLOW_set_in_link_descriptiontext_simple4077 = new BitSet(new long[]{0xFFFFFFFFD80D7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_set_in_link_uri4178 = new BitSet(new long[]{0xFFFFFFFFDFF77FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_image_open_markup_in_image4219 = new BitSet(new long[]{0xFFFFFFFFBFF77FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_image_uri_in_image4225 = new BitSet(new long[]{0x0000000040080000L});
-	public static final BitSet FOLLOW_image_alternative_in_image4235 = new BitSet(new long[]{0x0000000040000000L});
-	public static final BitSet FOLLOW_image_close_markup_in_image4244 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_set_in_image_uri4263 = new BitSet(new long[]{0xFFFFFFFFBFF77FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_image_alternative_markup_in_image_alternative4298 = new BitSet(new long[]{0xFFFFFFFFBE1F7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_image_alternativepart_in_image_alternative4307 = new BitSet(new long[]{0xFFFFFFFFBE1F7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_bold_markup_in_image_alternativepart4333 = new BitSet(new long[]{0x0000000000120000L});
-	public static final BitSet FOLLOW_onestar_in_image_alternativepart4336 = new BitSet(new long[]{0xFFFFFFFFBE1F7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_image_bold_alternativepart_in_image_alternativepart4345 = new BitSet(new long[]{0x0000000000120000L});
-	public static final BitSet FOLLOW_onestar_in_image_alternativepart4350 = new BitSet(new long[]{0xFFFFFFFFBE1F7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_bold_markup_in_image_alternativepart4357 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_ital_markup_in_image_alternativepart4364 = new BitSet(new long[]{0x0000000000020000L});
-	public static final BitSet FOLLOW_onestar_in_image_alternativepart4367 = new BitSet(new long[]{0xFFFFFFFFBE0F7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_image_ital_alternativepart_in_image_alternativepart4377 = new BitSet(new long[]{0x0000000000120000L});
-	public static final BitSet FOLLOW_onestar_in_image_alternativepart4382 = new BitSet(new long[]{0xFFFFFFFFBE1F7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_ital_markup_in_image_alternativepart4389 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_onestar_in_image_alternativepart4396 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_image_alternativetext_in_image_alternativepart4403 = new BitSet(new long[]{0xFFFFFFFFBE0F7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_image_alternativepart4408 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_ital_markup_in_image_bold_alternativepart4434 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_link_boldital_description_in_image_bold_alternativepart4441 = new BitSet(new long[]{0x0000000000100000L});
-	public static final BitSet FOLLOW_ital_markup_in_image_bold_alternativepart4446 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_onestar_in_image_bold_alternativepart4451 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_image_alternativetext_in_image_bold_alternativepart4460 = new BitSet(new long[]{0xFFFFFFFFBE0F7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_image_bold_alternativepart4463 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_bold_markup_in_image_ital_alternativepart4492 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_link_boldital_description_in_image_ital_alternativepart4499 = new BitSet(new long[]{0x0000000000020000L});
-	public static final BitSet FOLLOW_bold_markup_in_image_ital_alternativepart4504 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_onestar_in_image_ital_alternativepart4509 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_image_alternativetext_in_image_ital_alternativepart4518 = new BitSet(new long[]{0xFFFFFFFFBE0F7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_image_ital_alternativepart4521 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_image_boldital_alternative4542 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_image_alternativetext_in_image_boldital_alternative4551 = new BitSet(new long[]{0xFFFFFFFFBE0F7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_image_boldital_alternative4554 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_image_alternative_simple_text_in_image_alternativetext4577 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_forced_linebreak_in_image_alternativetext4585 = new BitSet(new long[]{0x0000000002000002L});
-	public static final BitSet FOLLOW_set_in_image_alternative_simple_text4612 = new BitSet(new long[]{0xFFFFFFFFBC0D7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_extension_markup_in_extension4705 = new BitSet(new long[]{0xFFFFFFFF7EFF7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_extension_handler_in_extension4708 = new BitSet(new long[]{0x0000000080000000L});
-	public static final BitSet FOLLOW_blanks_in_extension4711 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_extension_statement_in_extension4714 = new BitSet(new long[]{0x0000000001000000L});
-	public static final BitSet FOLLOW_extension_markup_in_extension4719 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_set_in_extension_handler4731 = new BitSet(new long[]{0xFFFFFFFF7EFF7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_escaped_in_extension_handler4764 = new BitSet(new long[]{0xFFFFFFFF7EFF7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_set_in_extension_statement4778 = new BitSet(new long[]{0xFFFFFFFFFEFFFFF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_escaped_in_extension_statement4799 = new BitSet(new long[]{0xFFFFFFFFFEFFFFF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_TABLE_OF_CONTENTS_TEXT_in_table_of_contents4822 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_STAR_in_onestar4845 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_ESCAPE_in_escaped4867 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_newline_in_paragraph_separator4891 = new BitSet(new long[]{0x0000000000008002L});
-	public static final BitSet FOLLOW_EOF_in_paragraph_separator4899 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_blanks_in_whitespaces4911 = new BitSet(new long[]{0x0000000080008002L});
-	public static final BitSet FOLLOW_newline_in_whitespaces4915 = new BitSet(new long[]{0x0000000080008002L});
-	public static final BitSet FOLLOW_BLANKS_in_blanks4928 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_newline_in_text_lineseparator4938 = new BitSet(new long[]{0x0000000080000002L});
-	public static final BitSet FOLLOW_blanks_in_text_lineseparator4943 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_EOF_in_text_lineseparator4951 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_NEWLINE_in_newline4961 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_STAR_in_bold_markup4971 = new BitSet(new long[]{0x0000000000020000L});
-	public static final BitSet FOLLOW_STAR_in_bold_markup4974 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_ITAL_in_ital_markup4984 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_EQUAL_in_heading_markup4994 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_POUND_in_list_ordelem_markup5004 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_STAR_in_list_unordelem_markup5014 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_newline_in_list_elemseparator5024 = new BitSet(new long[]{0x0000000080000002L});
-	public static final BitSet FOLLOW_blanks_in_list_elemseparator5029 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_EOF_in_list_elemseparator5037 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_newline_in_end_of_list5047 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_EOF_in_end_of_list5052 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_PIPE_in_table_cell_markup5062 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_PIPE_in_table_headercell_markup5072 = new BitSet(new long[]{0x0000000000040000L});
-	public static final BitSet FOLLOW_EQUAL_in_table_headercell_markup5075 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_newline_in_table_rowseparator5085 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_EOF_in_table_rowseparator5090 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_NOWIKI_OPEN_in_nowiki_open_markup5100 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_NOWIKI_CLOSE_in_nowiki_close_markup5110 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_DASH_in_horizontalrule_markup5120 = new BitSet(new long[]{0x0000000200000000L});
-	public static final BitSet FOLLOW_DASH_in_horizontalrule_markup5123 = new BitSet(new long[]{0x0000000200000000L});
-	public static final BitSet FOLLOW_DASH_in_horizontalrule_markup5126 = new BitSet(new long[]{0x0000000200000000L});
-	public static final BitSet FOLLOW_DASH_in_horizontalrule_markup5129 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_LINK_OPEN_in_link_open_markup5139 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_LINK_CLOSE_in_link_close_markup5149 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_PIPE_in_link_description_markup5159 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_IMAGE_OPEN_in_image_open_markup5169 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_IMAGE_CLOSE_in_image_close_markup5179 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_PIPE_in_image_alternative_markup5189 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_EXTENSION_in_extension_markup5199 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_FORCED_LINEBREAK_in_forced_linebreak5209 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_NOWIKI_OPEN_in_synpred1339 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_set_in_synpred1342 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_whitespaces_in_wikipage114 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_paragraphs_in_wikipage122 = new BitSet(new long[]{0x0000000000000000L});
+	public static final BitSet FOLLOW_EOF_in_wikipage127 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_paragraph_in_paragraphs145 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_nowiki_block_in_paragraph166 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_blanks_in_paragraph173 = new BitSet(new long[]{0x0000000000008000L});
+	public static final BitSet FOLLOW_paragraph_separator_in_paragraph176 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_blanks_in_paragraph183 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_table_of_contents_in_paragraph197 = new BitSet(new long[]{0x0000000000008002L});
+	public static final BitSet FOLLOW_heading_in_paragraph211 = new BitSet(new long[]{0x0000000000008002L});
+	public static final BitSet FOLLOW_horizontalrule_in_paragraph230 = new BitSet(new long[]{0x0000000000008002L});
+	public static final BitSet FOLLOW_list_unord_in_paragraph242 = new BitSet(new long[]{0x0000000000008002L});
+	public static final BitSet FOLLOW_list_ord_in_paragraph255 = new BitSet(new long[]{0x0000000000008002L});
+	public static final BitSet FOLLOW_table_in_paragraph268 = new BitSet(new long[]{0x0000000000008002L});
+	public static final BitSet FOLLOW_text_paragraph_in_paragraph281 = new BitSet(new long[]{0x0000000000008002L});
+	public static final BitSet FOLLOW_paragraph_separator_in_paragraph294 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_text_line_in_text_paragraph322 = new BitSet(new long[]{0xFFFFFFFFFFF27FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_nowiki_inline_in_text_paragraph354 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_text_element_in_text_paragraph365 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_text_lineseparator_in_text_paragraph374 = new BitSet(new long[]{0xFFFFFFFFFFF27FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_text_firstelement_in_text_line397 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_text_element_in_text_line416 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_text_lineseparator_in_text_line431 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_text_formattedelement_in_text_firstelement453 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_text_first_unformattedelement_in_text_firstelement464 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_ital_markup_in_text_formattedelement480 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_text_italcontent_in_text_formattedelement486 = new BitSet(new long[]{0x0000000000108002L});
+	public static final BitSet FOLLOW_NEWLINE_in_text_formattedelement495 = new BitSet(new long[]{0x0000000000100000L});
+	public static final BitSet FOLLOW_ital_markup_in_text_formattedelement501 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_bold_markup_in_text_formattedelement509 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_text_boldcontent_in_text_formattedelement516 = new BitSet(new long[]{0x0000000000028002L});
+	public static final BitSet FOLLOW_NEWLINE_in_text_formattedelement525 = new BitSet(new long[]{0x0000000000020000L});
+	public static final BitSet FOLLOW_bold_markup_in_text_formattedelement531 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_NEWLINE_in_text_boldcontent550 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_text_boldcontentpart_in_text_boldcontent562 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_EOF_in_text_boldcontent573 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_NEWLINE_in_text_italcontent589 = new BitSet(new long[]{0xFFFFFFFFFFEF7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_text_italcontentpart_in_text_italcontent601 = new BitSet(new long[]{0xFFFFFFFFFFEF7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_EOF_in_text_italcontent612 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_onestar_in_text_element627 = new BitSet(new long[]{0xFFFFFFFFFFED7FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_text_unformattedelement_in_text_element634 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_text_unformattedelement_in_text_element645 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_onestar_in_text_element648 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_text_formattedelement_in_text_element659 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_ital_markup_in_text_boldcontentpart676 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_text_bolditalcontent_in_text_boldcontentpart683 = new BitSet(new long[]{0x0000000000100002L});
+	public static final BitSet FOLLOW_ital_markup_in_text_boldcontentpart690 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_text_formattedcontent_in_text_boldcontentpart702 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_bold_markup_in_text_italcontentpart718 = new BitSet(new long[]{0xFFFFFFFFFFEFFFF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_text_bolditalcontent_in_text_italcontentpart725 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_bold_markup_in_text_italcontentpart731 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_text_formattedcontent_in_text_italcontentpart743 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_NEWLINE_in_text_bolditalcontent761 = new BitSet(new long[]{0xFFFFFFFFFFEF7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_text_formattedcontent_in_text_bolditalcontent772 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_EOF_in_text_bolditalcontent782 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_onestar_in_text_formattedcontent796 = new BitSet(new long[]{0xFFFFFFFFFFED7FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_text_unformattedelement_in_text_formattedcontent805 = new BitSet(new long[]{0xFFFFFFFFFFEFFFF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_onestar_in_text_formattedcontent810 = new BitSet(new long[]{0xFFFFFFFFFFEDFFF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_text_linebreak_in_text_formattedcontent815 = new BitSet(new long[]{0xFFFFFFFFFFED7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_text_lineseparator_in_text_linebreak835 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_text_first_inlineelement_in_text_inlineelement853 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_nowiki_inline_in_text_inlineelement864 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_link_in_text_first_inlineelement887 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_image_in_text_first_inlineelement898 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_extension_in_text_first_inlineelement908 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_text_first_unformatted_in_text_first_unformattedelement928 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_text_first_inlineelement_in_text_first_unformattedelement939 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_text_first_unformmatted_text_in_text_first_unformatted961 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_forced_linebreak_in_text_first_unformatted970 = new BitSet(new long[]{0x0000000006000002L});
+	public static final BitSet FOLLOW_escaped_in_text_first_unformatted982 = new BitSet(new long[]{0x0000000006000002L});
+	public static final BitSet FOLLOW_set_in_text_first_unformmatted_text1010 = new BitSet(new long[]{0xFFFFFFFFF8007FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_text_unformatted_in_text_unformattedelement1125 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_text_inlineelement_in_text_unformattedelement1136 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_text_unformated_text_in_text_unformatted1158 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_forced_linebreak_in_text_unformatted1167 = new BitSet(new long[]{0x0000000006000002L});
+	public static final BitSet FOLLOW_escaped_in_text_unformatted1179 = new BitSet(new long[]{0x0000000006000002L});
+	public static final BitSet FOLLOW_set_in_text_unformated_text1206 = new BitSet(new long[]{0xFFFFFFFFF80D7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_heading_markup_in_heading1309 = new BitSet(new long[]{0xFFFFFFFFFBFFFFF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_heading_content_in_heading1314 = new BitSet(new long[]{0x0000000080048000L});
+	public static final BitSet FOLLOW_heading_markup_in_heading1321 = new BitSet(new long[]{0x0000000080008000L});
+	public static final BitSet FOLLOW_blanks_in_heading1329 = new BitSet(new long[]{0x0000000000008000L});
+	public static final BitSet FOLLOW_paragraph_separator_in_heading1336 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_heading_markup_in_heading_content1346 = new BitSet(new long[]{0xFFFFFFFFFBFF7FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_heading_content_in_heading_content1351 = new BitSet(new long[]{0x0000000000040002L});
+	public static final BitSet FOLLOW_heading_markup_in_heading_content1356 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_heading_text_in_heading_content1368 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_heading_cellcontent_in_heading_text1389 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_onestar_in_heading_cellcontent1406 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_heading_cellcontentpart_in_heading_cellcontent1415 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_onestar_in_heading_cellcontent1427 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_heading_formattedelement_in_heading_cellcontentpart1448 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_heading_unformattedelement_in_heading_cellcontentpart1459 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_ital_markup_in_heading_formattedelement1475 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_heading_italcontent_in_heading_formattedelement1485 = new BitSet(new long[]{0x0000000000100002L});
+	public static final BitSet FOLLOW_ital_markup_in_heading_formattedelement1494 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_bold_markup_in_heading_formattedelement1502 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_heading_boldcontent_in_heading_formattedelement1509 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_bold_markup_in_heading_formattedelement1519 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_onestar_in_heading_boldcontent1536 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_heading_boldcontentpart_in_heading_boldcontent1545 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_onestar_in_heading_boldcontent1550 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_EOF_in_heading_boldcontent1558 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_onestar_in_heading_italcontent1572 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_heading_italcontentpart_in_heading_italcontent1581 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_onestar_in_heading_italcontent1586 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_EOF_in_heading_italcontent1594 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_heading_formattedcontent_in_heading_boldcontentpart1612 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_ital_markup_in_heading_boldcontentpart1619 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_heading_bolditalcontent_in_heading_boldcontentpart1626 = new BitSet(new long[]{0x0000000000100002L});
+	public static final BitSet FOLLOW_ital_markup_in_heading_boldcontentpart1633 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_bold_markup_in_heading_italcontentpart1650 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_heading_bolditalcontent_in_heading_italcontentpart1657 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_bold_markup_in_heading_italcontentpart1664 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_heading_formattedcontent_in_heading_italcontentpart1676 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_onestar_in_heading_bolditalcontent1692 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_heading_formattedcontent_in_heading_bolditalcontent1701 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_onestar_in_heading_bolditalcontent1706 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_EOF_in_heading_bolditalcontent1714 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_heading_unformattedelement_in_heading_formattedcontent1734 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_heading_unformatted_text_in_heading_unformattedelement1757 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_heading_inlineelement_in_heading_unformattedelement1769 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_link_in_heading_inlineelement1790 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_image_in_heading_inlineelement1800 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_nowiki_inline_in_heading_inlineelement1811 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_set_in_heading_unformatted_text1836 = new BitSet(new long[]{0xFFFFFFFFFB1B7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_list_ordelem_in_list_ord1895 = new BitSet(new long[]{0x0000000000018002L});
+	public static final BitSet FOLLOW_end_of_list_in_list_ord1905 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_list_ordelem_markup_in_list_ordelem1938 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_list_elem_in_list_ordelem1946 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_list_unordelem_in_list_unord1969 = new BitSet(new long[]{0x0000000000028002L});
+	public static final BitSet FOLLOW_end_of_list_in_list_unord1979 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_list_unordelem_markup_in_list_unordelem2012 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_list_elem_in_list_unordelem2019 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_list_elem_markup_in_list_elem2042 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_list_elemcontent_in_list_elem2053 = new BitSet(new long[]{0x0000000000008000L});
+	public static final BitSet FOLLOW_list_elemseparator_in_list_elem2058 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_list_ordelem_markup_in_list_elem_markup2068 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_list_unordelem_markup_in_list_elem_markup2073 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_onestar_in_list_elemcontent2087 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_list_elemcontentpart_in_list_elemcontent2096 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_onestar_in_list_elemcontent2101 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_text_unformattedelement_in_list_elemcontentpart2122 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_list_formatted_elem_in_list_elemcontentpart2133 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_bold_markup_in_list_formatted_elem2150 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_onestar_in_list_formatted_elem2153 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_list_boldcontentpart_in_list_formatted_elem2162 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_onestar_in_list_formatted_elem2172 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_bold_markup_in_list_formatted_elem2181 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_ital_markup_in_list_formatted_elem2189 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_onestar_in_list_formatted_elem2194 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_list_italcontentpart_in_list_formatted_elem2203 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_onestar_in_list_formatted_elem2212 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_ital_markup_in_list_formatted_elem2221 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_ital_markup_in_list_boldcontentpart2247 = new BitSet(new long[]{0xFFFFFFFFFFED7FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_list_bolditalcontent_in_list_boldcontentpart2254 = new BitSet(new long[]{0x0000000000100002L});
+	public static final BitSet FOLLOW_ital_markup_in_list_boldcontentpart2261 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_text_unformattedelement_in_list_boldcontentpart2276 = new BitSet(new long[]{0xFFFFFFFFFFED7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_text_unformattedelement_in_list_bolditalcontent2307 = new BitSet(new long[]{0xFFFFFFFFFFED7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_bold_markup_in_list_italcontentpart2336 = new BitSet(new long[]{0xFFFFFFFFFFED7FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_list_bolditalcontent_in_list_italcontentpart2343 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_bold_markup_in_list_italcontentpart2350 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_text_unformattedelement_in_list_italcontentpart2364 = new BitSet(new long[]{0xFFFFFFFFFFED7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_table_row_in_table2394 = new BitSet(new long[]{0x0000000000080002L});
+	public static final BitSet FOLLOW_table_cell_in_table_row2420 = new BitSet(new long[]{0x0000000000088000L});
+	public static final BitSet FOLLOW_table_rowseparator_in_table_row2428 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_table_headercell_in_table_cell2449 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_table_normalcell_in_table_cell2460 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_table_headercell_markup_in_table_headercell2476 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_table_cellcontent_in_table_headercell2483 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_table_cell_markup_in_table_normalcell2499 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_table_cellcontent_in_table_normalcell2506 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_onestar_in_table_cellcontent2522 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_table_cellcontentpart_in_table_cellcontent2531 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_onestar_in_table_cellcontent2536 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_table_formattedelement_in_table_cellcontentpart2557 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_table_unformattedelement_in_table_cellcontentpart2568 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_ital_markup_in_table_formattedelement2584 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_table_italcontent_in_table_formattedelement2594 = new BitSet(new long[]{0x0000000000100002L});
+	public static final BitSet FOLLOW_ital_markup_in_table_formattedelement2603 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_bold_markup_in_table_formattedelement2611 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_table_boldcontent_in_table_formattedelement2618 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_bold_markup_in_table_formattedelement2628 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_onestar_in_table_boldcontent2645 = new BitSet(new long[]{0xFFFFFFFFFFF57FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_table_boldcontentpart_in_table_boldcontent2654 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_onestar_in_table_boldcontent2659 = new BitSet(new long[]{0xFFFFFFFFFFF57FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_EOF_in_table_boldcontent2667 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_onestar_in_table_italcontent2681 = new BitSet(new long[]{0xFFFFFFFFFFE77FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_table_italcontentpart_in_table_italcontent2690 = new BitSet(new long[]{0xFFFFFFFFFFE77FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_onestar_in_table_italcontent2695 = new BitSet(new long[]{0xFFFFFFFFFFE77FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_EOF_in_table_italcontent2703 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_table_formattedcontent_in_table_boldcontentpart2721 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_ital_markup_in_table_boldcontentpart2728 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_table_bolditalcontent_in_table_boldcontentpart2735 = new BitSet(new long[]{0x0000000000100002L});
+	public static final BitSet FOLLOW_ital_markup_in_table_boldcontentpart2742 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_bold_markup_in_table_italcontentpart2759 = new BitSet(new long[]{0xFFFFFFFFFFE77FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_table_bolditalcontent_in_table_italcontentpart2766 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_bold_markup_in_table_italcontentpart2773 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_table_formattedcontent_in_table_italcontentpart2785 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_onestar_in_table_bolditalcontent2801 = new BitSet(new long[]{0xFFFFFFFFFFE57FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_table_formattedcontent_in_table_bolditalcontent2810 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_onestar_in_table_bolditalcontent2815 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_EOF_in_table_bolditalcontent2823 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_table_unformattedelement_in_table_formattedcontent2843 = new BitSet(new long[]{0xFFFFFFFFFFE57FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_table_unformatted_in_table_unformattedelement2866 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_table_inlineelement_in_table_unformattedelement2878 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_link_in_table_inlineelement2899 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_image_in_table_inlineelement2909 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_extension_in_table_inlineelement2920 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_nowiki_inline_in_table_inlineelement2930 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_table_unformatted_text_in_table_unformatted2952 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_forced_linebreak_in_table_unformatted2961 = new BitSet(new long[]{0x0000000006000002L});
+	public static final BitSet FOLLOW_escaped_in_table_unformatted2974 = new BitSet(new long[]{0x0000000006000002L});
+	public static final BitSet FOLLOW_set_in_table_unformatted_text3000 = new BitSet(new long[]{0xFFFFFFFFF8057FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_nowikiblock_open_markup_in_nowiki_block3097 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_nowiki_block_contents_in_nowiki_block3104 = new BitSet(new long[]{0x0000000008000000L});
+	public static final BitSet FOLLOW_nowikiblock_close_markup_in_nowiki_block3110 = new BitSet(new long[]{0x0000000000008000L});
+	public static final BitSet FOLLOW_paragraph_separator_in_nowiki_block3113 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_nowiki_open_markup_in_nowikiblock_open_markup3125 = new BitSet(new long[]{0x0000000000008000L});
+	public static final BitSet FOLLOW_newline_in_nowikiblock_open_markup3128 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_NOWIKI_BLOCK_CLOSE_in_nowikiblock_close_markup3140 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_nowiki_open_markup_in_nowiki_inline3155 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_nowiki_inline_contents_in_nowiki_inline3162 = new BitSet(new long[]{0x0000000010000000L});
+	public static final BitSet FOLLOW_nowiki_close_markup_in_nowiki_inline3167 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_set_in_nowiki_block_contents3186 = new BitSet(new long[]{0xFFFFFFFFF7FFFFF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_set_in_nowiki_inline_contents3219 = new BitSet(new long[]{0xFFFFFFFFEFFF7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_horizontalrule_markup_in_horizontalrule3256 = new BitSet(new long[]{0x0000000080008000L});
+	public static final BitSet FOLLOW_blanks_in_horizontalrule3261 = new BitSet(new long[]{0x0000000000008000L});
+	public static final BitSet FOLLOW_paragraph_separator_in_horizontalrule3267 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_link_open_markup_in_link3289 = new BitSet(new long[]{0xFFFFFFFFDFF77FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_link_address_in_link3295 = new BitSet(new long[]{0x0000000020080000L});
+	public static final BitSet FOLLOW_link_description_markup_in_link3301 = new BitSet(new long[]{0xFFFFFFFFDE5F7FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_link_description_in_link3311 = new BitSet(new long[]{0x0000000020000000L});
+	public static final BitSet FOLLOW_link_close_markup_in_link3319 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_link_interwiki_uri_in_link_address3338 = new BitSet(new long[]{0x0000100000000000L});
+	public static final BitSet FOLLOW_44_in_link_address3341 = new BitSet(new long[]{0xFFFFFFFFDFF77FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_link_interwiki_pagename_in_link_address3348 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_link_uri_in_link_address3359 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_45_in_link_interwiki_uri3375 = new BitSet(new long[]{0x0000400000000000L});
+	public static final BitSet FOLLOW_46_in_link_interwiki_uri3377 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_47_in_link_interwiki_uri3382 = new BitSet(new long[]{0x0001000000000000L});
+	public static final BitSet FOLLOW_48_in_link_interwiki_uri3384 = new BitSet(new long[]{0x0002000000000000L});
+	public static final BitSet FOLLOW_49_in_link_interwiki_uri3386 = new BitSet(new long[]{0x0004000000000000L});
+	public static final BitSet FOLLOW_50_in_link_interwiki_uri3388 = new BitSet(new long[]{0x0008000000000000L});
+	public static final BitSet FOLLOW_51_in_link_interwiki_uri3390 = new BitSet(new long[]{0x0010000000000000L});
+	public static final BitSet FOLLOW_52_in_link_interwiki_uri3392 = new BitSet(new long[]{0x0002000000000000L});
+	public static final BitSet FOLLOW_49_in_link_interwiki_uri3394 = new BitSet(new long[]{0x0010000000000000L});
+	public static final BitSet FOLLOW_52_in_link_interwiki_uri3396 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_53_in_link_interwiki_uri3401 = new BitSet(new long[]{0x0040000000000000L});
+	public static final BitSet FOLLOW_54_in_link_interwiki_uri3403 = new BitSet(new long[]{0x0010000000000000L});
+	public static final BitSet FOLLOW_52_in_link_interwiki_uri3405 = new BitSet(new long[]{0x0080000000000000L});
+	public static final BitSet FOLLOW_55_in_link_interwiki_uri3407 = new BitSet(new long[]{0x0002000000000000L});
+	public static final BitSet FOLLOW_49_in_link_interwiki_uri3409 = new BitSet(new long[]{0x0100000000000000L});
+	public static final BitSet FOLLOW_56_in_link_interwiki_uri3411 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_57_in_link_interwiki_uri3416 = new BitSet(new long[]{0x0001000000000000L});
+	public static final BitSet FOLLOW_48_in_link_interwiki_uri3418 = new BitSet(new long[]{0x0001000000000000L});
+	public static final BitSet FOLLOW_48_in_link_interwiki_uri3420 = new BitSet(new long[]{0x0400000000000000L});
+	public static final BitSet FOLLOW_58_in_link_interwiki_uri3422 = new BitSet(new long[]{0x0040000000000000L});
+	public static final BitSet FOLLOW_54_in_link_interwiki_uri3424 = new BitSet(new long[]{0x0800000000000000L});
+	public static final BitSet FOLLOW_59_in_link_interwiki_uri3426 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_60_in_link_interwiki_uri3431 = new BitSet(new long[]{0x2000000000000000L});
+	public static final BitSet FOLLOW_61_in_link_interwiki_uri3433 = new BitSet(new long[]{0x4000000000000000L});
+	public static final BitSet FOLLOW_62_in_link_interwiki_uri3435 = new BitSet(new long[]{0x0008000000000000L});
+	public static final BitSet FOLLOW_51_in_link_interwiki_uri3437 = new BitSet(new long[]{0x0010000000000000L});
+	public static final BitSet FOLLOW_52_in_link_interwiki_uri3439 = new BitSet(new long[]{0x0002000000000000L});
+	public static final BitSet FOLLOW_49_in_link_interwiki_uri3441 = new BitSet(new long[]{0x0010000000000000L});
+	public static final BitSet FOLLOW_52_in_link_interwiki_uri3443 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_63_in_link_interwiki_uri3448 = new BitSet(new long[]{0x0800000000000000L});
+	public static final BitSet FOLLOW_59_in_link_interwiki_uri3450 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000001L});
+	public static final BitSet FOLLOW_64_in_link_interwiki_uri3452 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000002L});
+	public static final BitSet FOLLOW_65_in_link_interwiki_uri3454 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000004L});
+	public static final BitSet FOLLOW_66_in_link_interwiki_uri3456 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000001L});
+	public static final BitSet FOLLOW_64_in_link_interwiki_uri3458 = new BitSet(new long[]{0x0040000000000000L});
+	public static final BitSet FOLLOW_54_in_link_interwiki_uri3460 = new BitSet(new long[]{0x0040000000000000L});
+	public static final BitSet FOLLOW_54_in_link_interwiki_uri3462 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_63_in_link_interwiki_uri3467 = new BitSet(new long[]{0x0800000000000000L});
+	public static final BitSet FOLLOW_59_in_link_interwiki_uri3469 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000008L});
+	public static final BitSet FOLLOW_67_in_link_interwiki_uri3471 = new BitSet(new long[]{0x0010000000000000L});
+	public static final BitSet FOLLOW_52_in_link_interwiki_uri3473 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000001L});
+	public static final BitSet FOLLOW_64_in_link_interwiki_uri3475 = new BitSet(new long[]{0x0008000000000000L});
+	public static final BitSet FOLLOW_51_in_link_interwiki_uri3477 = new BitSet(new long[]{0x0010000000000000L});
+	public static final BitSet FOLLOW_52_in_link_interwiki_uri3479 = new BitSet(new long[]{0x0002000000000000L});
+	public static final BitSet FOLLOW_49_in_link_interwiki_uri3481 = new BitSet(new long[]{0x0010000000000000L});
+	public static final BitSet FOLLOW_52_in_link_interwiki_uri3483 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_63_in_link_interwiki_uri3488 = new BitSet(new long[]{0x0001000000000000L});
+	public static final BitSet FOLLOW_48_in_link_interwiki_uri3490 = new BitSet(new long[]{0x0010000000000000L});
+	public static final BitSet FOLLOW_52_in_link_interwiki_uri3492 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000010L});
+	public static final BitSet FOLLOW_68_in_link_interwiki_uri3494 = new BitSet(new long[]{0x8000000000000000L});
+	public static final BitSet FOLLOW_63_in_link_interwiki_uri3496 = new BitSet(new long[]{0x0001000000000000L});
+	public static final BitSet FOLLOW_48_in_link_interwiki_uri3498 = new BitSet(new long[]{0x0010000000000000L});
+	public static final BitSet FOLLOW_52_in_link_interwiki_uri3500 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000010L});
+	public static final BitSet FOLLOW_68_in_link_interwiki_uri3502 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_69_in_link_interwiki_uri3507 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000008L});
+	public static final BitSet FOLLOW_67_in_link_interwiki_uri3509 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000008L});
+	public static final BitSet FOLLOW_67_in_link_interwiki_uri3511 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000040L});
+	public static final BitSet FOLLOW_70_in_link_interwiki_uri3513 = new BitSet(new long[]{0x0004000000000000L});
+	public static final BitSet FOLLOW_50_in_link_interwiki_uri3515 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000080L});
+	public static final BitSet FOLLOW_71_in_link_interwiki_uri3517 = new BitSet(new long[]{0x0800000000000000L});
+	public static final BitSet FOLLOW_59_in_link_interwiki_uri3519 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_69_in_link_interwiki_uri3524 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000100L});
+	public static final BitSet FOLLOW_72_in_link_interwiki_uri3526 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000001L});
+	public static final BitSet FOLLOW_64_in_link_interwiki_uri3528 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000010L});
+	public static final BitSet FOLLOW_68_in_link_interwiki_uri3530 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000001L});
+	public static final BitSet FOLLOW_64_in_link_interwiki_uri3532 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_62_in_link_interwiki_uri3537 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000040L});
+	public static final BitSet FOLLOW_70_in_link_interwiki_uri3539 = new BitSet(new long[]{0x0008000000000000L});
+	public static final BitSet FOLLOW_51_in_link_interwiki_uri3541 = new BitSet(new long[]{0x0010000000000000L});
+	public static final BitSet FOLLOW_52_in_link_interwiki_uri3543 = new BitSet(new long[]{0x0002000000000000L});
+	public static final BitSet FOLLOW_49_in_link_interwiki_uri3545 = new BitSet(new long[]{0x0010000000000000L});
+	public static final BitSet FOLLOW_52_in_link_interwiki_uri3547 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_62_in_link_interwiki_uri3552 = new BitSet(new long[]{0x0004000000000000L});
+	public static final BitSet FOLLOW_50_in_link_interwiki_uri3554 = new BitSet(new long[]{0x0002000000000000L});
+	public static final BitSet FOLLOW_49_in_link_interwiki_uri3556 = new BitSet(new long[]{0x0010000000000000L});
+	public static final BitSet FOLLOW_52_in_link_interwiki_uri3558 = new BitSet(new long[]{0x0008000000000000L});
+	public static final BitSet FOLLOW_51_in_link_interwiki_uri3560 = new BitSet(new long[]{0x0010000000000000L});
+	public static final BitSet FOLLOW_52_in_link_interwiki_uri3562 = new BitSet(new long[]{0x0002000000000000L});
+	public static final BitSet FOLLOW_49_in_link_interwiki_uri3564 = new BitSet(new long[]{0x0010000000000000L});
+	public static final BitSet FOLLOW_52_in_link_interwiki_uri3566 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_62_in_link_interwiki_uri3571 = new BitSet(new long[]{0x0004000000000000L});
+	public static final BitSet FOLLOW_50_in_link_interwiki_uri3573 = new BitSet(new long[]{0x0100000000000000L});
+	public static final BitSet FOLLOW_56_in_link_interwiki_uri3575 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000200L});
+	public static final BitSet FOLLOW_73_in_link_interwiki_uri3577 = new BitSet(new long[]{0x0040000000000000L});
+	public static final BitSet FOLLOW_54_in_link_interwiki_uri3579 = new BitSet(new long[]{0x0800000000000000L});
+	public static final BitSet FOLLOW_59_in_link_interwiki_uri3581 = new BitSet(new long[]{0x0008000000000000L});
+	public static final BitSet FOLLOW_51_in_link_interwiki_uri3583 = new BitSet(new long[]{0x0010000000000000L});
+	public static final BitSet FOLLOW_52_in_link_interwiki_uri3585 = new BitSet(new long[]{0x0002000000000000L});
+	public static final BitSet FOLLOW_49_in_link_interwiki_uri3587 = new BitSet(new long[]{0x0010000000000000L});
+	public static final BitSet FOLLOW_52_in_link_interwiki_uri3589 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_74_in_link_interwiki_uri3594 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000001L});
+	public static final BitSet FOLLOW_64_in_link_interwiki_uri3596 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000008L});
+	public static final BitSet FOLLOW_67_in_link_interwiki_uri3598 = new BitSet(new long[]{0x0800000000000000L});
+	public static final BitSet FOLLOW_59_in_link_interwiki_uri3600 = new BitSet(new long[]{0x0001000000000000L});
+	public static final BitSet FOLLOW_48_in_link_interwiki_uri3602 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000800L});
+	public static final BitSet FOLLOW_75_in_link_interwiki_uri3604 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_61_in_link_interwiki_uri3609 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000010L});
+	public static final BitSet FOLLOW_68_in_link_interwiki_uri3611 = new BitSet(new long[]{0x0010000000000000L});
+	public static final BitSet FOLLOW_52_in_link_interwiki_uri3613 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000200L});
+	public static final BitSet FOLLOW_73_in_link_interwiki_uri3615 = new BitSet(new long[]{0x2000000000000000L});
+	public static final BitSet FOLLOW_61_in_link_interwiki_uri3617 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000010L});
+	public static final BitSet FOLLOW_68_in_link_interwiki_uri3619 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000001L});
+	public static final BitSet FOLLOW_64_in_link_interwiki_uri3621 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000200L});
+	public static final BitSet FOLLOW_73_in_link_interwiki_uri3623 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_76_in_link_interwiki_uri3628 = new BitSet(new long[]{0x0010000000000000L});
+	public static final BitSet FOLLOW_52_in_link_interwiki_uri3630 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000008L});
+	public static final BitSet FOLLOW_67_in_link_interwiki_uri3632 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000008L});
+	public static final BitSet FOLLOW_67_in_link_interwiki_uri3634 = new BitSet(new long[]{0x0040000000000000L});
+	public static final BitSet FOLLOW_54_in_link_interwiki_uri3636 = new BitSet(new long[]{0x0000000000000000L,0x0000000000002000L});
+	public static final BitSet FOLLOW_77_in_link_interwiki_uri3638 = new BitSet(new long[]{0x0008000000000000L});
+	public static final BitSet FOLLOW_51_in_link_interwiki_uri3640 = new BitSet(new long[]{0x0010000000000000L});
+	public static final BitSet FOLLOW_52_in_link_interwiki_uri3642 = new BitSet(new long[]{0x0002000000000000L});
+	public static final BitSet FOLLOW_49_in_link_interwiki_uri3644 = new BitSet(new long[]{0x0010000000000000L});
+	public static final BitSet FOLLOW_52_in_link_interwiki_uri3646 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_76_in_link_interwiki_uri3651 = new BitSet(new long[]{0x0008000000000000L});
+	public static final BitSet FOLLOW_51_in_link_interwiki_uri3653 = new BitSet(new long[]{0x0010000000000000L});
+	public static final BitSet FOLLOW_52_in_link_interwiki_uri3655 = new BitSet(new long[]{0x0002000000000000L});
+	public static final BitSet FOLLOW_49_in_link_interwiki_uri3657 = new BitSet(new long[]{0x0010000000000000L});
+	public static final BitSet FOLLOW_52_in_link_interwiki_uri3659 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_78_in_link_interwiki_uri3664 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000080L});
+	public static final BitSet FOLLOW_71_in_link_interwiki_uri3666 = new BitSet(new long[]{0x0800000000000000L});
+	public static final BitSet FOLLOW_59_in_link_interwiki_uri3668 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000040L});
+	public static final BitSet FOLLOW_70_in_link_interwiki_uri3670 = new BitSet(new long[]{0x0001000000000000L});
+	public static final BitSet FOLLOW_48_in_link_interwiki_uri3672 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000008L});
+	public static final BitSet FOLLOW_67_in_link_interwiki_uri3674 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_51_in_link_interwiki_uri3679 = new BitSet(new long[]{0x0010000000000000L});
+	public static final BitSet FOLLOW_52_in_link_interwiki_uri3681 = new BitSet(new long[]{0x0002000000000000L});
+	public static final BitSet FOLLOW_49_in_link_interwiki_uri3683 = new BitSet(new long[]{0x0010000000000000L});
+	public static final BitSet FOLLOW_52_in_link_interwiki_uri3685 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000200L});
+	public static final BitSet FOLLOW_73_in_link_interwiki_uri3687 = new BitSet(new long[]{0x0800000000000000L});
+	public static final BitSet FOLLOW_59_in_link_interwiki_uri3689 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000008L});
+	public static final BitSet FOLLOW_67_in_link_interwiki_uri3691 = new BitSet(new long[]{0x0010000000000000L});
+	public static final BitSet FOLLOW_52_in_link_interwiki_uri3693 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000001L});
+	public static final BitSet FOLLOW_64_in_link_interwiki_uri3695 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_79_in_link_interwiki_uri3700 = new BitSet(new long[]{0x0008000000000000L});
+	public static final BitSet FOLLOW_51_in_link_interwiki_uri3702 = new BitSet(new long[]{0x0010000000000000L});
+	public static final BitSet FOLLOW_52_in_link_interwiki_uri3704 = new BitSet(new long[]{0x0002000000000000L});
+	public static final BitSet FOLLOW_49_in_link_interwiki_uri3706 = new BitSet(new long[]{0x0010000000000000L});
+	public static final BitSet FOLLOW_52_in_link_interwiki_uri3708 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_set_in_link_interwiki_pagename3728 = new BitSet(new long[]{0xFFFFFFFFDFF77FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_link_descriptionpart_in_link_description3771 = new BitSet(new long[]{0xFFFFFFFFDE5F7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_image_in_link_description3783 = new BitSet(new long[]{0xFFFFFFFFDE5F7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_bold_markup_in_link_descriptionpart3808 = new BitSet(new long[]{0xFFFFFFFFDE1F7FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_onestar_in_link_descriptionpart3811 = new BitSet(new long[]{0xFFFFFFFFDE1D7FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_link_bold_descriptionpart_in_link_descriptionpart3819 = new BitSet(new long[]{0xFFFFFFFFDE1F7FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_onestar_in_link_descriptionpart3824 = new BitSet(new long[]{0xFFFFFFFFDE1F7FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_bold_markup_in_link_descriptionpart3834 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_ital_markup_in_link_descriptionpart3839 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_onestar_in_link_descriptionpart3842 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_link_ital_descriptionpart_in_link_descriptionpart3851 = new BitSet(new long[]{0xFFFFFFFFDE1F7FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_onestar_in_link_descriptionpart3856 = new BitSet(new long[]{0xFFFFFFFFDE1F7FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_ital_markup_in_link_descriptionpart3865 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_onestar_in_link_descriptionpart3870 = new BitSet(new long[]{0xFFFFFFFFDE0D7FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_link_descriptiontext_in_link_descriptionpart3879 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_onestar_in_link_descriptionpart3882 = new BitSet(new long[]{0xFFFFFFFFDE0D7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_ital_markup_in_link_bold_descriptionpart3902 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_link_boldital_description_in_link_bold_descriptionpart3909 = new BitSet(new long[]{0x0000000000100000L});
+	public static final BitSet FOLLOW_ital_markup_in_link_bold_descriptionpart3914 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_link_descriptiontext_in_link_bold_descriptionpart3923 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_bold_markup_in_link_ital_descriptionpart3939 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_link_boldital_description_in_link_ital_descriptionpart3946 = new BitSet(new long[]{0x0000000000020000L});
+	public static final BitSet FOLLOW_bold_markup_in_link_ital_descriptionpart3949 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_link_descriptiontext_in_link_ital_descriptionpart3960 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_onestar_in_link_boldital_description3976 = new BitSet(new long[]{0xFFFFFFFFDE0D7FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_link_descriptiontext_in_link_boldital_description3985 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_onestar_in_link_boldital_description3988 = new BitSet(new long[]{0xFFFFFFFFDE0D7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_link_descriptiontext_simple_in_link_descriptiontext4011 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_forced_linebreak_in_link_descriptiontext4021 = new BitSet(new long[]{0x0000000006000002L});
+	public static final BitSet FOLLOW_escaped_in_link_descriptiontext4033 = new BitSet(new long[]{0x0000000006000002L});
+	public static final BitSet FOLLOW_set_in_link_descriptiontext_simple4058 = new BitSet(new long[]{0xFFFFFFFFD80D7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_set_in_link_uri4158 = new BitSet(new long[]{0xFFFFFFFFDFF77FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_image_open_markup_in_image4199 = new BitSet(new long[]{0xFFFFFFFFBFF77FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_image_uri_in_image4205 = new BitSet(new long[]{0x0000000040080000L});
+	public static final BitSet FOLLOW_image_alternative_in_image4215 = new BitSet(new long[]{0x0000000040000000L});
+	public static final BitSet FOLLOW_image_close_markup_in_image4224 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_set_in_image_uri4243 = new BitSet(new long[]{0xFFFFFFFFBFF77FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_image_alternative_markup_in_image_alternative4278 = new BitSet(new long[]{0xFFFFFFFFBE1F7FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_image_alternativepart_in_image_alternative4287 = new BitSet(new long[]{0xFFFFFFFFBE1F7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_bold_markup_in_image_alternativepart4313 = new BitSet(new long[]{0x0000000000120000L});
+	public static final BitSet FOLLOW_onestar_in_image_alternativepart4316 = new BitSet(new long[]{0xFFFFFFFFBE1F7FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_image_bold_alternativepart_in_image_alternativepart4325 = new BitSet(new long[]{0x0000000000120000L});
+	public static final BitSet FOLLOW_onestar_in_image_alternativepart4330 = new BitSet(new long[]{0xFFFFFFFFBE1F7FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_bold_markup_in_image_alternativepart4337 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_ital_markup_in_image_alternativepart4344 = new BitSet(new long[]{0x0000000000020000L});
+	public static final BitSet FOLLOW_onestar_in_image_alternativepart4347 = new BitSet(new long[]{0xFFFFFFFFBE0F7FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_image_ital_alternativepart_in_image_alternativepart4357 = new BitSet(new long[]{0x0000000000120000L});
+	public static final BitSet FOLLOW_onestar_in_image_alternativepart4362 = new BitSet(new long[]{0xFFFFFFFFBE1F7FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_ital_markup_in_image_alternativepart4369 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_onestar_in_image_alternativepart4376 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_image_alternativetext_in_image_alternativepart4383 = new BitSet(new long[]{0xFFFFFFFFBE0F7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_onestar_in_image_alternativepart4388 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_ital_markup_in_image_bold_alternativepart4414 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_link_boldital_description_in_image_bold_alternativepart4421 = new BitSet(new long[]{0x0000000000100000L});
+	public static final BitSet FOLLOW_ital_markup_in_image_bold_alternativepart4426 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_onestar_in_image_bold_alternativepart4431 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_image_alternativetext_in_image_bold_alternativepart4440 = new BitSet(new long[]{0xFFFFFFFFBE0F7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_onestar_in_image_bold_alternativepart4443 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_bold_markup_in_image_ital_alternativepart4472 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_link_boldital_description_in_image_ital_alternativepart4479 = new BitSet(new long[]{0x0000000000020000L});
+	public static final BitSet FOLLOW_bold_markup_in_image_ital_alternativepart4484 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_onestar_in_image_ital_alternativepart4489 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_image_alternativetext_in_image_ital_alternativepart4498 = new BitSet(new long[]{0xFFFFFFFFBE0F7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_onestar_in_image_ital_alternativepart4501 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_onestar_in_image_boldital_alternative4522 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_image_alternativetext_in_image_boldital_alternative4531 = new BitSet(new long[]{0xFFFFFFFFBE0F7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_onestar_in_image_boldital_alternative4534 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_image_alternative_simple_text_in_image_alternativetext4557 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_forced_linebreak_in_image_alternativetext4565 = new BitSet(new long[]{0x0000000002000002L});
+	public static final BitSet FOLLOW_set_in_image_alternative_simple_text4592 = new BitSet(new long[]{0xFFFFFFFFBC0D7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_extension_markup_in_extension4685 = new BitSet(new long[]{0xFFFFFFFF7EFF7FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_extension_handler_in_extension4688 = new BitSet(new long[]{0x0000000080000000L});
+	public static final BitSet FOLLOW_blanks_in_extension4691 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_extension_statement_in_extension4694 = new BitSet(new long[]{0x0000000001000000L});
+	public static final BitSet FOLLOW_extension_markup_in_extension4699 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_set_in_extension_handler4710 = new BitSet(new long[]{0xFFFFFFFF7EFF7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_escaped_in_extension_handler4743 = new BitSet(new long[]{0xFFFFFFFF7EFF7FF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_set_in_extension_statement4757 = new BitSet(new long[]{0xFFFFFFFFFEFFFFF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_escaped_in_extension_statement4778 = new BitSet(new long[]{0xFFFFFFFFFEFFFFF2L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_TABLE_OF_CONTENTS_TEXT_in_table_of_contents4801 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_STAR_in_onestar4824 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_ESCAPE_in_escaped4846 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_newline_in_paragraph_separator4870 = new BitSet(new long[]{0x0000000000008002L});
+	public static final BitSet FOLLOW_EOF_in_paragraph_separator4878 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_blanks_in_whitespaces4890 = new BitSet(new long[]{0x0000000080008002L});
+	public static final BitSet FOLLOW_newline_in_whitespaces4894 = new BitSet(new long[]{0x0000000080008002L});
+	public static final BitSet FOLLOW_BLANKS_in_blanks4907 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_newline_in_text_lineseparator4917 = new BitSet(new long[]{0x0000000080000002L});
+	public static final BitSet FOLLOW_blanks_in_text_lineseparator4922 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_EOF_in_text_lineseparator4930 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_NEWLINE_in_newline4940 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_STAR_in_bold_markup4950 = new BitSet(new long[]{0x0000000000020000L});
+	public static final BitSet FOLLOW_STAR_in_bold_markup4953 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_ITAL_in_ital_markup4963 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_EQUAL_in_heading_markup4973 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_POUND_in_list_ordelem_markup4983 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_STAR_in_list_unordelem_markup4993 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_newline_in_list_elemseparator5003 = new BitSet(new long[]{0x0000000080000002L});
+	public static final BitSet FOLLOW_blanks_in_list_elemseparator5008 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_EOF_in_list_elemseparator5016 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_newline_in_end_of_list5026 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_EOF_in_end_of_list5031 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_PIPE_in_table_cell_markup5041 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_PIPE_in_table_headercell_markup5051 = new BitSet(new long[]{0x0000000000040000L});
+	public static final BitSet FOLLOW_EQUAL_in_table_headercell_markup5054 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_newline_in_table_rowseparator5064 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_EOF_in_table_rowseparator5069 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_NOWIKI_OPEN_in_nowiki_open_markup5079 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_NOWIKI_CLOSE_in_nowiki_close_markup5089 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_DASH_in_horizontalrule_markup5099 = new BitSet(new long[]{0x0000000200000000L});
+	public static final BitSet FOLLOW_DASH_in_horizontalrule_markup5102 = new BitSet(new long[]{0x0000000200000000L});
+	public static final BitSet FOLLOW_DASH_in_horizontalrule_markup5105 = new BitSet(new long[]{0x0000000200000000L});
+	public static final BitSet FOLLOW_DASH_in_horizontalrule_markup5108 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_LINK_OPEN_in_link_open_markup5118 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_LINK_CLOSE_in_link_close_markup5128 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_PIPE_in_link_description_markup5138 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_IMAGE_OPEN_in_image_open_markup5148 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_IMAGE_CLOSE_in_image_close_markup5158 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_PIPE_in_image_alternative_markup5168 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_EXTENSION_in_extension_markup5178 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_FORCED_LINEBREAK_in_forced_linebreak5188 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_NOWIKI_OPEN_in_synpred1332 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF0L,0x000000000000FFFFL});
+	public static final BitSet FOLLOW_set_in_synpred1335 = new BitSet(new long[]{0x0000000000000002L});
 
 }

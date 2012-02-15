@@ -26,7 +26,7 @@ scope CountLevel {
 
 @header {
 /**
- * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -78,7 +78,7 @@ import com.liferay.portal.parsers.creole.ast.WikiPageNode;
 
 @lexer::header {
 /**
- * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -107,7 +107,7 @@ import com.liferay.portal.parsers.creole.ast.WikiPageNode;
 	}
 }
 
-				
+
 wikipage
 	:	( whitespaces )?  p=paragraphs  { _wikipage = new WikiPageNode($p.sections); } EOF
 	;
@@ -122,7 +122,7 @@ paragraph returns [ASTNode node = null]
 	:	n=nowiki_block { $node = $n.nowikiNode; }
 	|	blanks  paragraph_separator
 	|	( blanks )?
-			(	tof = table_of_contents {$node = $tof.tableOfContents;}			
+			(	tof = table_of_contents {$node = $tof.tableOfContents;}
 			|	h =  heading { $node = $h.header;}
 			|	{ input.LA(1) == DASH && input.LA(2) == DASH &&
 				input.LA(3) == DASH && input.LA(4) == DASH }?
@@ -220,7 +220,7 @@ text_first_unformatted returns [CollectionNode items = new CollectionNode()]
 	;
 
 text_first_unformmatted_text returns [StringBundler text = new StringBundler()]
-	:	
+	:
 	 (c =  ~(	POUND
 			|	STAR
 			|	EQUAL
@@ -259,17 +259,17 @@ text_unformated_text returns [StringBundler text = new StringBundler()]
 			|	NEWLINE
 			|	EOF ) { $text.append($c.text);} ) +
 	;
-	
+
 //////////////////////////////   H E A D I N G   //////////////////////////////
 
 heading returns [ASTNode header]
 	scope {
-	       CollectionNode items;	
+	       CollectionNode items;
 	       int nestedLevel;
 	       String text;
 	}	
 	@init {
-		$heading::items = new CollectionNode();	
+		$heading::items = new CollectionNode();
 		$heading::text = new String();
 	}
 	:	heading_markup  {$heading::nestedLevel++;} heading_content { $header = new HeadingNode($heading::items,$heading::nestedLevel); }  ( heading_markup )?  ( blanks )?
@@ -347,13 +347,13 @@ list_ord returns [OrderedListNode orderedList = new OrderedListNode()]
 	;
 list_ordelem returns [ASTNode item = null]
 	scope  CountLevel;
-	@init{		
+	@init{
 		$CountLevel::level = 0;
 		$CountLevel::groups = new String();
 	}
 	:	om = list_ordelem_markup  {++$CountLevel::level; $CountLevel::currentMarkup = $om.text; $CountLevel::groups += $om.text;}  elem=list_elem { $item = new OrderedListItemNode($CountLevel::level, $elem.items);}
 	;
-	
+
 list_unord returns [UnorderedListNode unorderedList = new UnorderedListNode()]
 	:	( elem = list_unordelem { $unorderedList.addChildASTNode($elem.item); } )+  ( end_of_list )?
 	;
@@ -364,10 +364,10 @@ list_unordelem returns [UnorderedListItemNode  item = null]
 	}
 	:	um = list_unordelem_markup {++$CountLevel::level; $CountLevel::currentMarkup = $um.text;$CountLevel::groups += $um.text;}  elem=list_elem { $item = new UnorderedListItemNode($CountLevel::level, $elem.items);}
 	;
-list_elem  returns [CollectionNode  items = null] 	
+list_elem  returns [CollectionNode  items = null]
 	:	( m = list_elem_markup {
 			             ++$CountLevel::level;
-			             if(!$m.text.equals($CountLevel::currentMarkup)) {			             	
+			             if(!$m.text.equals($CountLevel::currentMarkup)) {
 				$CountLevel::groups+= GROUPING_SEPARATOR;
 			             }
 			             $CountLevel::groups+= $m.text;
@@ -394,13 +394,13 @@ list_formatted_elem returns [CollectionNode contents = new CollectionNode()]
 	:	bold_markup  onestar  ( boldContents = list_boldcontentpart  { 
 						BoldTextNode add = null;
 						if($boldContents.contents instanceof CollectionNode){
-						     add = new BoldTextNode($boldContents.contents); 		     
-						}else{						
+						     add = new BoldTextNode($boldContents.contents);
+						}else{
 						    CollectionNode c = new CollectionNode();
 						    c.add($boldContents.contents);
-						    add = new BoldTextNode(c); 		     
+						    add = new BoldTextNode(c);
 						}
-						$contents.add(add);						
+						$contents.add(add);
 						} 
 				onestar )*
 		( bold_markup )?
@@ -423,17 +423,17 @@ scope {
 	List<ASTNode> elements;
 }
 @init{
-	$list_boldcontentpart::elements = new ArrayList<ASTNode>();		
+	$list_boldcontentpart::elements = new ArrayList<ASTNode>();
 }
 	:	ital_markup  c = list_bolditalcontent  {$contents = new ItalicTextNode($c.text);} ( ital_markup )? 
 	|	( t = text_unformattedelement { $list_boldcontentpart::elements.add($t.contents); } )+ {$contents = new CollectionNode($list_boldcontentpart::elements); }
 	/*|	would be equivalent ??? ( t = text_unformattedelement { $contents.add($t.contents); } )*/
 	;
-	
+
 list_bolditalcontent returns [ASTNode  text = null]
 	:	( t = text_unformattedelement { $text = $t.contents; } )+
 	;	
-	
+
 list_italcontentpart returns [ASTNode  contents  = null]
 scope {
 	List<ASTNode> elements;
@@ -529,7 +529,7 @@ table_unformatted_text returns [StringBundler text = new StringBundler()]
 
 nowiki_block returns [NoWikiSectionNode nowikiNode]
 	:	nowikiblock_open_markup  contents = nowiki_block_contents {$nowikiNode = new NoWikiSectionNode($contents.text.toString());}
-		nowikiblock_close_markup  paragraph_separator 		
+		nowikiblock_close_markup  paragraph_separator
 	;
 	
 nowikiblock_open_markup
@@ -545,9 +545,9 @@ nowiki_inline returns [NoWikiSectionNode nowiki = null]
 		nowiki_close_markup {$nowiki = new NoWikiSectionNode($t.text.toString());}
 	;	
 nowiki_block_contents returns [StringBundler contents = new StringBundler()]
-	:	(c=~( NOWIKI_BLOCK_CLOSE | EOF ) {$contents.append($c.text);})*
+	:(c=~( NOWIKI_BLOCK_CLOSE | EOF ) {$contents.append($c.text);})*
 	;
-	
+
 nowiki_inline_contents returns [StringBundler text = new StringBundler()]
 	:	(c = ~( NOWIKI_CLOSE| NEWLINE | EOF )  { $text.append($c.text); })*
 	;
@@ -642,7 +642,7 @@ link_boldital_description returns [CollectionNode text = new CollectionNode()]
 					for (ASTNode item:$t.text.getASTNodes()) {
 						$text.add(item);
 					}
-				                   })+
+				})+
 	;
 link_descriptiontext returns [CollectionNode text = new CollectionNode()]
 	:		t = link_descriptiontext_simple { $text.add(new UnformattedTextNode($t.text.toString()));}
@@ -650,7 +650,7 @@ link_descriptiontext returns [CollectionNode text = new CollectionNode()]
 		|	e = escaped {$text.add($e.scaped);} )+
 	;
 link_descriptiontext_simple returns [StringBundler text = new StringBundler()]
-	:	( c = ~(	LINK_CLOSE
+	:	( c = ~(LINK_CLOSE
 			|	ITAL
 			|	STAR
 			|	LINK_OPEN
@@ -756,7 +756,7 @@ image_alternative_simple_text returns [StringBundler text = new StringBundler()]
 
 extension returns [ASTNode node = null]
 	:	extension_markup  extension_handler  blanks  extension_statement 
-		extension_markup	
+		extension_markup
 	;
 extension_handler
 	:	(~( EXTENSION  |  BLANKS  |  ESCAPE  |  NEWLINE  |  EOF ) | escaped )+
@@ -882,6 +882,7 @@ BLANKS					: ( SPACE | TABULATOR )+;
 fragment SPACE			: ' ';
 fragment TABULATOR		: '\t';
 
+BRACE_CLOSE				: NEWLINE '}' NEWLINE;
 COLON_SLASH				: ':'  '/';
 ITAL					: '//';
 NOWIKI_OPEN				: '{{{';

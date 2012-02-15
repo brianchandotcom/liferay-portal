@@ -66,7 +66,7 @@ public class RateDLFolderDocumentCommentAPTest extends BaseTestCase {
 
 		assertTrue(selenium.isPartialText(
 				"//div[@class='aui-rating-label-element']", "0 Votes"));
-		selenium.clickAt("//a[@title=' Rate this as good. ']",
+		selenium.clickAt("//a[contains(@title,'Rate this as good.')]",
 			RuntimeVariables.replace("Rate this as good."));
 
 		for (int second = 0;; second++) {
@@ -91,7 +91,7 @@ public class RateDLFolderDocumentCommentAPTest extends BaseTestCase {
 			selenium.getText("//div[@class='aui-rating-label-element']"));
 		assertTrue(selenium.isElementPresent(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up aui-rating-element-on']"));
-		selenium.clickAt("//a[@title=' Rate this as bad. ']",
+		selenium.clickAt("//a[contains(@title,'Rate this as bad.')]",
 			RuntimeVariables.replace("Rate this as bad."));
 
 		for (int second = 0;; second++) {
@@ -116,7 +116,7 @@ public class RateDLFolderDocumentCommentAPTest extends BaseTestCase {
 			selenium.getText("//div[@class='aui-rating-label-element']"));
 		assertTrue(selenium.isElementPresent(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down aui-rating-element-on']"));
-		selenium.clickAt("//a[@title=' Rate this as bad. ']",
+		selenium.clickAt("//a[contains(@title,'Rate this as bad.')]",
 			RuntimeVariables.replace("Rate this as bad."));
 		assertFalse(selenium.isElementPresent(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up aui-rating-element-on']"));

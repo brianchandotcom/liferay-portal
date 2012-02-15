@@ -49,7 +49,7 @@ public class RateDLFolderDocumentAPTest extends BaseTestCase {
 		String voteCount = selenium.getFirstNumberIncrement(
 				"xPath=(//div[@class='aui-rating-label-element'])[2]");
 		RuntimeVariables.setValue("voteCount", voteCount);
-		selenium.clickAt("//a[@title=' Rate this 5 stars out of 5. ']",
+		selenium.clickAt("//a[contains(@title,'Rate this 5 stars out of 5.')]",
 			RuntimeVariables.replace("5 Stars"));
 
 		for (int second = 0;; second++) {

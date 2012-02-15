@@ -66,8 +66,8 @@ public class RateBlogsEntryCommentAPTest extends BaseTestCase {
 
 		assertTrue(selenium.isPartialText(
 				"//div[@class='aui-rating-label-element']", "0 Votes"));
-		assertEquals(RuntimeVariables.replace("Rate this as good."),
-			selenium.getText("//div[@id='zyfa_ratingThumbContent']/a[1]"));
+		assertTrue(selenium.isVisible(
+				"//div[@id='zyfa_ratingThumbContent']/a[1]"));
 		selenium.clickAt("//div[@id='zyfa_ratingThumbContent']/a[1]",
 			RuntimeVariables.replace("Rate this as good."));
 
@@ -93,8 +93,8 @@ public class RateBlogsEntryCommentAPTest extends BaseTestCase {
 			selenium.getText("//div[@class='aui-rating-label-element']"));
 		assertTrue(selenium.isElementPresent(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up aui-rating-element-on']"));
-		assertEquals(RuntimeVariables.replace("Rate this as bad."),
-			selenium.getText("//div[@id='zyfa_ratingThumbContent']/a[2]"));
+		assertTrue(selenium.isVisible(
+				"//div[@id='zyfa_ratingThumbContent']/a[2]"));
 		selenium.clickAt("//div[@id='zyfa_ratingThumbContent']/a[2]",
 			RuntimeVariables.replace("Rate this as bad."));
 

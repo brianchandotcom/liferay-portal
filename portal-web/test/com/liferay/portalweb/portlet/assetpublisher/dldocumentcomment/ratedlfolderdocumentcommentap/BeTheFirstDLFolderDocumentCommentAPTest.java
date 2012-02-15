@@ -95,15 +95,12 @@ public class BeTheFirstDLFolderDocumentCommentAPTest extends BaseTestCase {
 				"//div[@class='lfr-message-response portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("xpath=(//span[@class='user-name'])[1]"));
-		assertEquals(RuntimeVariables.replace(
-				"DM Folder Document Comment Body..."),
-			selenium.getText("xpath=(//h1[@class='header-title']/span)[1]"));
-		assertEquals(RuntimeVariables.replace("DM Folder Document Comment Body"),
-			selenium.getText("//td[2]/div[1]"));
+		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
+			selenium.getText("//h1[@class='header-title']/span"));
+		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
+			selenium.getText("//div[2]/div/a"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("xpath=(//span[@class='user-name'])[2]"));
-		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
-			selenium.getText("xpath=(//h1[@class='header-title']/span)[2]"));
 		assertEquals(RuntimeVariables.replace("DM Folder Document Comment Body"),
 			selenium.getText("//div/div[3]/div/div[1]"));
 	}

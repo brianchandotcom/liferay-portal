@@ -1,0 +1,7 @@
+{{{
+public interface Foo {
+void foo();
+}
+
+}}}
+Outside preserve

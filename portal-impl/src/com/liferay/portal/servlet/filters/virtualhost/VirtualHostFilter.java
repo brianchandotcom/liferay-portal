@@ -164,6 +164,12 @@ public class VirtualHostFilter extends BasePortalFilter {
 			friendlyURL = friendlyURL.substring(contextPath.length());
 		}
 
+		int pos = friendlyURL.indexOf(StringPool.SEMICOLON);
+
+		if (pos != -1) {
+			friendlyURL = friendlyURL.substring(0, pos);
+		}
+
 		friendlyURL = StringUtil.replace(
 			friendlyURL, StringPool.DOUBLE_SLASH, StringPool.SLASH);
 
@@ -173,7 +179,7 @@ public class VirtualHostFilter extends BasePortalFilter {
 
 		for (String languageId : languageIds) {
 			if (StringUtil.startsWith(friendlyURL, languageId)) {
-				int pos = friendlyURL.indexOf(CharPool.SLASH, 1);
+				pos = friendlyURL.indexOf(CharPool.SLASH, 1);
 
 				if (((pos != -1) && (pos != languageId.length())) ||
 					((pos == -1) &&

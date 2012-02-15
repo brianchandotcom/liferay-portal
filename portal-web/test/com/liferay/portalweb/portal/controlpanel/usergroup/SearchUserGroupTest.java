@@ -56,7 +56,7 @@ public class SearchUserGroupTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//input[@id='_127_name']")) {
+				if (selenium.isVisible("//input[@id='_127_keywords']")) {
 					break;
 				}
 			}
@@ -66,7 +66,7 @@ public class SearchUserGroupTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.type("//input[@id='_127_name']",
+		selenium.type("//input[@id='_127_keywords']",
 			RuntimeVariables.replace("Selenium"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
@@ -74,10 +74,10 @@ public class SearchUserGroupTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("This is a selenium user group."),
 			selenium.getText("//td[3]/a"));
-		selenium.type("//input[@id='_127_name']",
+		selenium.type("//input[@id='_127_keywords']",
 			RuntimeVariables.replace("Selenium1"));
 		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isTextPresent("//td[3]/a"));

@@ -104,9 +104,6 @@ public class AddFolderDocumentTitleNullTest extends BaseTestCase {
 		selenium.type("//input[@id='_20_file']",
 			RuntimeVariables.replace(
 				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\documentlibrary\\dependencies\\test_document.txt"));
-		selenium.type("//input[@id='_20_file']",
-			RuntimeVariables.replace(
-				"L:\\projects\\trunk-portal\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\documentlibrary\\dependencies\\test_document.txt"));
 		selenium.type("//input[@id='_20_title']", RuntimeVariables.replace(""));
 		selenium.type("//textarea[@id='_20_description']",
 			RuntimeVariables.replace("DL Folder Document Description"));

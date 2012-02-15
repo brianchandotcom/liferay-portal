@@ -80,6 +80,41 @@ public class AddDocumentTest extends BaseTestCase {
 		selenium.type("//input[@id='_20_file']",
 			RuntimeVariables.replace(
 				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\permissions\\documentlibrary\\content\\dependencies\\TestDocument.txt"));
+		selenium.select("//select[@id='_20_inputPermissionsViewRole']",
+			RuntimeVariables.replace("Owner"));
+		selenium.clickAt("link=More Options \u00bb",
+			RuntimeVariables.replace("More Options \u00bb"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//input[@id='_20_guestPermissions_ADD_DISCUSSION']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertTrue(selenium.isChecked(
+				"//input[@id='_20_guestPermissions_ADD_DISCUSSION']"));
+		selenium.clickAt("//input[@id='_20_guestPermissions_ADD_DISCUSSION']",
+			RuntimeVariables.replace("Add Discussion"));
+		assertFalse(selenium.isChecked(
+				"//input[@id='_20_guestPermissions_ADD_DISCUSSION']"));
+		assertTrue(selenium.isChecked(
+				"//input[@id='_20_groupPermissions_ADD_DISCUSSION']"));
+		selenium.clickAt("//input[@id='_20_groupPermissions_ADD_DISCUSSION']",
+			RuntimeVariables.replace("Add Discussion"));
+		assertFalse(selenium.isChecked(
+				"//input[@id='_20_groupPermissions_ADD_DISCUSSION']"));
+		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");

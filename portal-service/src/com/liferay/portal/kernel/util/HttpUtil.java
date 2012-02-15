@@ -123,6 +123,10 @@ public class HttpUtil {
 		return getHttp().getParameterMap(queryString);
 	}
 
+	public static String getPath(String url) {
+		return getHttp().getPath(url);
+	}
+
 	public static String getProtocol(ActionRequest actionRequest) {
 		return getHttp().getProtocol(actionRequest);
 	}

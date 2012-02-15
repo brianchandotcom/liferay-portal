@@ -91,6 +91,8 @@ public interface Http {
 
 	public Map<String, String[]> getParameterMap(String queryString);
 
+	public String getPath(String url);
+
 	public String getProtocol(ActionRequest actionRequest);
 
 	public String getProtocol(boolean secure);

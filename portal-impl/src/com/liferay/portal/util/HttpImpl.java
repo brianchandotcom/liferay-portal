@@ -468,6 +468,28 @@ public class HttpImpl implements Http {
 		return parameterMapFromString(queryString);
 	}
 
+	public String getPath(String url) {
+		if (Validator.isNull(url)) {
+			return url;
+		}
+
+		if (url.startsWith(Http.HTTP)) {
+			int pos = url.indexOf(
+				StringPool.SLASH, Http.HTTPS_WITH_SLASH.length());
+
+			url.substring(pos, url.length());
+		}
+
+		int pos = url.indexOf(CharPool.QUESTION);
+
+		if (pos == -1) {
+			return url;
+		}
+		else {
+			return url.substring(0, pos);
+		}
+	}
+
 	public String getProtocol(ActionRequest actionRequest) {
 		return getProtocol(actionRequest.isSecure());
 	}

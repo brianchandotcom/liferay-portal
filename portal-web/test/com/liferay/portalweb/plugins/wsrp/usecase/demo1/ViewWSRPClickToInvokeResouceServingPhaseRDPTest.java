@@ -78,6 +78,7 @@ public class ViewWSRPClickToInvokeResouceServingPhaseRDPTest
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
@@ -137,8 +138,14 @@ public class ViewWSRPClickToInvokeResouceServingPhaseRDPTest
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("logo(2).png"),
+			selenium.getText("xPath=(//a[@class='document-link']/span[2])[1]"));
+		assertEquals(RuntimeVariables.replace("logo.png"),
 			selenium.getText("xPath=(//a[@class='document-link']/span[2])[2]"));
-		selenium.clickAt("xPath=(//a[@class='document-link']/span[2])[2]",
+		selenium.clickAt("xPath=(//a[@class='document-link']/span[2])[1]",
+			RuntimeVariables.replace("logo(2).png"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		selenium.clickAt("xPath=(//a[@class='document-link']/span[2])[1]",
 			RuntimeVariables.replace("logo(2).png"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();

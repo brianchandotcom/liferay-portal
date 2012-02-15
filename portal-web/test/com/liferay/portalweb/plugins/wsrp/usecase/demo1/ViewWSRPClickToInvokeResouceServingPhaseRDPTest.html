@@ -59,6 +59,11 @@
 	<td>Documents and Media Test Page</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//span[@title='Add']/ul/li/strong/a/span</td>
 	<td>Add</td>
@@ -105,12 +110,22 @@
 </tr>
 <tr>
 	<td>assertText</td>
+	<td>xPath=(//a[@class='document-link']/span[2])[1]</td>
+	<td>logo(2).png</td>
+</tr>
+<tr>
+	<td>assertText</td>
 	<td>xPath=(//a[@class='document-link']/span[2])[2]</td>
+	<td>logo.png</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>xPath=(//a[@class='document-link']/span[2])[1]</td>
 	<td>logo(2).png</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>xPath=(//a[@class='document-link']/span[2])[2]</td>
+	<td>xPath=(//a[@class='document-link']/span[2])[1]</td>
 	<td>logo(2).png</td>
 </tr>
 <tr>

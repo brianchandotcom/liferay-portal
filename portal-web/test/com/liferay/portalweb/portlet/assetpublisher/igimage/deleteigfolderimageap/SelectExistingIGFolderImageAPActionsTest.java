@@ -102,7 +102,7 @@ public class SelectExistingIGFolderImageAPActionsTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Documents and Media Document')]/a")) {
 					break;
 				}
 			}
@@ -114,9 +114,9 @@ public class SelectExistingIGFolderImageAPActionsTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Documents and Media Document"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Documents and Media Document')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Documents and Media Document')]/a"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("IG Folder Image Name"),

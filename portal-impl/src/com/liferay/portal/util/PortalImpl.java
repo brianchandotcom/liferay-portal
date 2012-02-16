@@ -5391,16 +5391,6 @@ public class PortalImpl implements Portal {
 		if (Validator.isNotNull(redirect) && (oldPath != null) &&
 			!oldPath.equals(newPath)) {
 
-			String redirectPath = HttpUtil.getPath(redirect);
-
-			if (!redirectPath.endsWith(oldPath)) {
-				return redirect;
-			}
-
-			int pos = redirect.indexOf(redirectPath);
-
-			String prefix = redirect.substring(0, pos);
-
 			String queryString = HttpUtil.getQueryString(redirect);
 
 			String redirectParam = HttpUtil.getParameter(
@@ -5415,11 +5405,25 @@ public class PortalImpl implements Portal {
 					queryString, redirectParam, newRedirectParam);
 			}
 
+			String redirectPath = HttpUtil.getPath(redirect);
+
+			int pos = redirect.indexOf(redirectPath);
+
+			String prefix = redirect.substring(0, pos);
+
 			pos = redirectPath.lastIndexOf(oldPath);
 
-			prefix += redirectPath.substring(0, pos);
+			if (pos != -1) {
+				prefix += redirectPath.substring(0, pos);
+				String suffix = redirectPath.substring(
+					pos + oldPath.length(), redirectPath.length());
 
-			redirect = prefix + newPath;
+				redirect = prefix + newPath + suffix;
+			}
+			else {
+				redirect = prefix + redirectPath;
+			}
+
 
 			if (Validator.isNotNull(queryString)) {
 				redirect += StringPool.QUESTION + queryString;

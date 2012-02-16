@@ -477,7 +477,7 @@ public class HttpImpl implements Http {
 			int pos = url.indexOf(
 				StringPool.SLASH, Http.HTTPS_WITH_SLASH.length());
 
-			url.substring(pos, url.length());
+			url = url.substring(pos, url.length());
 		}
 
 		int pos = url.indexOf(CharPool.QUESTION);

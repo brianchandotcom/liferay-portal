@@ -16,7 +16,7 @@ package com.liferay.portalweb.portal;
 
 import com.liferay.portalweb.portal.dbupgrade.viewsampledatalatest.login.LoginTests;
 import com.liferay.portalweb.portal.dbupgrade.viewsampledatalatest.serveradministration.executegeneratecustomroles.ExecuteGenerateCustomRolesTests;
-import com.liferay.portalweb.portal.dbupgrade.viewsampledatalatest.stagingcommunity.StagingCommunity525LatestTestPlan;
+import com.liferay.portalweb.portal.dbupgrade.viewsampledatalatest.stagingcommunity.StagingCommunity525LatestNoPublishTestPlan;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -31,7 +31,7 @@ public class DBUpgradeStagingCommunity525LatestConvertTestSuite
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(LoginTests.suite());
-		testSuite.addTest(StagingCommunity525LatestTestPlan.suite());
+		testSuite.addTest(StagingCommunity525LatestNoPublishTestPlan.suite());
 		testSuite.addTest(ExecuteGenerateCustomRolesTests.suite());
 
 		testSuite.addTestSuite(StopSeleniumTest.class);

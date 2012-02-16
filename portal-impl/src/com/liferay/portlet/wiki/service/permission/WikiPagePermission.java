@@ -123,12 +123,6 @@ public class WikiPagePermission {
 			if (redirectPage != null) {
 				page = redirectPage;
 			}
-
-			if (!WikiNodePermission.contains(
-					permissionChecker, page.getNode(), actionId)) {
-
-				return false;
-			}
 		}
 
 		if (page.isPending()) {
@@ -155,6 +149,12 @@ public class WikiPagePermission {
 		}
 
 		if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
+			if (!WikiNodePermission.contains(
+					permissionChecker, page.getNode(), ActionKeys.VIEW)) {
+
+				return false;
+			}
+
 			WikiPage parentPage = page.getParentPage();
 
 			if ((parentPage != null) &&

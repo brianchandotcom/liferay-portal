@@ -219,6 +219,24 @@ public class DLSyncWrapper implements DLSync, ModelWrapper<DLSync> {
 	}
 
 	/**
+	* Returns the description of this d l sync.
+	*
+	* @return the description of this d l sync
+	*/
+	public java.lang.String getDescription() {
+		return _dlSync.getDescription();
+	}
+
+	/**
+	* Sets the description of this d l sync.
+	*
+	* @param description the description of this d l sync
+	*/
+	public void setDescription(java.lang.String description) {
+		_dlSync.setDescription(description);
+	}
+
+	/**
 	* Returns the event of this d l sync.
 	*
 	* @return the event of this d l sync

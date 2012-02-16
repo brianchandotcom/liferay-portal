@@ -526,6 +526,7 @@
 		<column name="repositoryId" type="long" />
 		<column name="parentFolderId" type="long" />
 		<column name="name" type="String" />
+		<column name="description" type="String" />
 		<column name="event" type="String" />
 		<column name="type" type="String" />
 		<column name="version" type="String" />

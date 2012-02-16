@@ -34,7 +34,7 @@ import java.util.Date;
 public class DLSyncCacheModel implements CacheModel<DLSync>, Serializable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{syncId=");
 		sb.append(syncId);
@@ -54,6 +54,8 @@ public class DLSyncCacheModel implements CacheModel<DLSync>, Serializable {
 		sb.append(parentFolderId);
 		sb.append(", name=");
 		sb.append(name);
+		sb.append(", description=");
+		sb.append(description);
 		sb.append(", event=");
 		sb.append(event);
 		sb.append(", type=");
@@ -104,6 +106,13 @@ public class DLSyncCacheModel implements CacheModel<DLSync>, Serializable {
 			dlSyncImpl.setName(name);
 		}
 
+		if (description == null) {
+			dlSyncImpl.setDescription(StringPool.BLANK);
+		}
+		else {
+			dlSyncImpl.setDescription(description);
+		}
+
 		if (event == null) {
 			dlSyncImpl.setEvent(StringPool.BLANK);
 		}
@@ -139,6 +148,7 @@ public class DLSyncCacheModel implements CacheModel<DLSync>, Serializable {
 	public long repositoryId;
 	public long parentFolderId;
 	public String name;
+	public String description;
 	public String event;
 	public String type;
 	public String version;

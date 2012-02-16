@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.process;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedInputStream;
+import com.liferay.portal.kernel.io.unsync.UnsyncBufferedOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -24,78 +25,89 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import java.io.EOFException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.Serializable;
 import java.io.StreamCorruptedException;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * @author Shuyang Zhou
  */
 public class ProcessExecutor {
 
-	public static <T extends Serializable> T execute(
-			ProcessCallable<T> processCallable, String classPath)
+	public static <T extends Serializable> Future<T> execute(
+			String classPath, List<String> arguments,
+			ProcessCallable<? extends Serializable> processCallable)
+		throws ProcessException {
+
+		return execute("java", classPath, arguments, processCallable);
+	}
+
+	public static <T extends Serializable> Future<T> execute(
+			String classPath,
+			ProcessCallable<? extends Serializable> processCallable)
+		throws ProcessException {
+
+		return execute("java", classPath, Collections.<String>emptyList(),
+			processCallable);
+	}
+
+	public static <T extends Serializable> Future<T> execute(
+			String java, String classPath, List<String> arguments,
+			ProcessCallable<? extends Serializable> processCallable)
 		throws ProcessException {
 
 		try {
+			List<String> commandList = new ArrayList<String>(
+				arguments.size() + 4);
+
+			commandList.add(java);
+			commandList.add("-cp");
+			commandList.add(classPath);
+			commandList.addAll(arguments);
+			commandList.add(ProcessExecutor.class.getName());
+
 			ProcessBuilder processBuilder = new ProcessBuilder(
-				"java", "-cp", classPath, ProcessExecutor.class.getName());
+				commandList.toArray(new String[commandList.size()]));
 
 			Process process = processBuilder.start();
 
-			_writeObject(process.getOutputStream(), processCallable);
+			ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+				process.getOutputStream());
+
+			try {
+				objectOutputStream.writeObject(processCallable);
+			}
+			finally {
+				objectOutputStream.close();
+			}
 
 			ExecutorService executorService = _getExecutorService();
 
 			SubprocessReactor subprocessReactor = new SubprocessReactor(
-				process.getInputStream());
+				process);
 
-			Future<ProcessCallable<?>> futureResponseProcessCallable =
-				executorService.submit(subprocessReactor);
+			Future<ProcessCallable<? extends Serializable>>
+				futureResponseProcessCallable =
+					executorService.submit(subprocessReactor);
 
-			int exitCode = process.waitFor();
-
-			if (exitCode != 0) {
-				throw new ProcessException(
-					"Subprocess terminated with exit code " + exitCode);
-			}
-
-			ProcessCallable<?> responseProcessCallable =
-				futureResponseProcessCallable.get();
-
-			if (responseProcessCallable instanceof ReturnProcessCallable<?>) {
-				return (T)responseProcessCallable.call();
-			}
-
-			if (responseProcessCallable instanceof ExceptionProcessCallable) {
-				ExceptionProcessCallable exceptionProcessCallable =
-					(ExceptionProcessCallable)responseProcessCallable;
-
-				throw exceptionProcessCallable.call();
-			}
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Subprocess reactor exited without a valid return " +
-						"because the subprocess terminated with an exception");
-			}
-
-			return null;
+			return new ProcessExecutionFutureResult<T>(
+				futureResponseProcessCallable, process);
 		}
-		catch (ProcessException pe) {
-			throw pe;
-		}
-		catch (Exception e) {
-			throw new ProcessException(e);
+		catch (IOException ioe) {
+			throw new ProcessException(ioe);
 		}
 	}
 
@@ -103,10 +115,12 @@ public class ProcessExecutor {
 		throws ClassNotFoundException, IOException {
 
 		ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-			System.out);
+			new UnsyncBufferedOutputStream(System.out));
 
 		ProcessOutputStream outProcessOutputStream = new ProcessOutputStream(
 			objectOutputStream, false);
+
+		ProcessContext.setProcessOutputStream(outProcessOutputStream);
 
 		PrintStream outPrintStream = new PrintStream(
 			outProcessOutputStream, true);
@@ -122,8 +136,11 @@ public class ProcessExecutor {
 		System.setErr(errPrintStream);
 
 		try {
+			ObjectInputStream objectInputStream = new ObjectInputStream(
+				System.in);
+
 			ProcessCallable<?> processCallable =
-				(ProcessCallable<?>)_readObject(System.in, false);
+				(ProcessCallable<?>)objectInputStream.readObject();
 
 			Serializable result = processCallable.call();
 
@@ -158,6 +175,30 @@ public class ProcessExecutor {
 		}
 	}
 
+	/**
+	 * ProcessContext needs to be initialied at the beginning of main method,
+	 * before invoking the ProcessCallable. This will ensure all context
+	 * variables are setted before main thread forking other threads.
+	 * Therefore variables setting happens-before any reading, memory visibility
+	 * ensured. QED
+	 */
+	public static class ProcessContext {
+
+		private ProcessContext() {
+		}
+
+		public static ProcessOutputStream getProcessOutputStream() {
+			return _processOutputStream;
+		}
+
+		private static void setProcessOutputStream(
+			ProcessOutputStream processOutputStream) {
+			_processOutputStream = processOutputStream;
+		}
+
+		private static ProcessOutputStream _processOutputStream;
+	}
+
 	private static ExecutorService _getExecutorService() {
 		if (_executorService != null) {
 			return _executorService;
@@ -175,51 +216,94 @@ public class ProcessExecutor {
 		return _executorService;
 	}
 
-	private static Object _readObject(InputStream inputStream, boolean close)
-		throws ClassNotFoundException, IOException {
-
-		ObjectInputStream objectInputStream = new ObjectInputStream(
-			inputStream);
-
-		try {
-			return objectInputStream.readObject();
-		}
-		finally {
-			if (close) {
-				objectInputStream.close();
-			}
-		}
-	}
-
-	private static void _writeObject(OutputStream outputStream, Object object)
-		throws IOException {
-
-		ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-			outputStream);
-
-		try {
-			objectOutputStream.writeObject(object);
-		}
-		finally {
-			objectOutputStream.close();
-		}
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(ProcessExecutor.class);
 
 	private static volatile ExecutorService _executorService;
 
+	private static class ProcessExecutionFutureResult<T> implements Future<T> {
+
+		public ProcessExecutionFutureResult(
+			Future<ProcessCallable<? extends Serializable>>
+				futureResponseProcessCallable,
+			Process process) {
+			_futureResponseProcessCallable = futureResponseProcessCallable;
+			_process = process;
+		}
+
+		public boolean cancel(boolean mayInterruptIfRunning) {
+			if (_futureResponseProcessCallable.isCancelled() ||
+				_futureResponseProcessCallable.isDone()) {
+				return false;
+			}
+
+			_futureResponseProcessCallable.cancel(true);
+			_process.destroy();
+
+			return true;
+		}
+
+		public boolean isCancelled() {
+			return _futureResponseProcessCallable.isCancelled();
+		}
+
+		public boolean isDone() {
+			return _futureResponseProcessCallable.isDone();
+		}
+
+		public T get() throws InterruptedException, ExecutionException {
+			ProcessCallable<?> responseProcessCallable =
+				_futureResponseProcessCallable.get();
+
+			return get(responseProcessCallable);
+		}
+
+		public T get(long timeout, TimeUnit unit)
+			throws InterruptedException, ExecutionException, TimeoutException {
+
+			ProcessCallable<?> responseProcessCallable =
+				_futureResponseProcessCallable.get(timeout, unit);
+
+			return get(responseProcessCallable);
+		}
+
+		private T get(ProcessCallable<?> responseProcessCallable)
+			throws ExecutionException {
+
+			try {
+				if (responseProcessCallable instanceof
+					ReturnProcessCallable<?>) {
+					return (T)responseProcessCallable.call();
+				}
+				else {
+					ExceptionProcessCallable exceptionProcessCallable =
+						(ExceptionProcessCallable)responseProcessCallable;
+
+					throw exceptionProcessCallable.call();
+				}
+			}
+			catch (ProcessException pe) {
+				throw new ExecutionException(pe);
+			}
+		}
+
+		private final Future<ProcessCallable<?>> _futureResponseProcessCallable;
+		private final Process _process;
+
+	}
+
 	private static class SubprocessReactor
 		implements Callable<ProcessCallable<? extends Serializable>> {
 
-		public SubprocessReactor(InputStream inputStream) {
-			_unsyncBufferedInputStream = new UnsyncBufferedInputStream(
-				inputStream);
+		public SubprocessReactor(Process process) {
+			_process = process;
 		}
 
 		public ProcessCallable<? extends Serializable> call() throws Exception {
 			try {
 				ObjectInputStream objectInputStream = null;
+
+				UnsyncBufferedInputStream unsyncBufferedInputStream =
+					new UnsyncBufferedInputStream(_process.getInputStream());
 
 				UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 					new UnsyncByteArrayOutputStream();
@@ -229,11 +313,11 @@ public class ProcessExecutor {
 
 						// Be ready for a bad header
 
-						_unsyncBufferedInputStream.mark(4);
+						unsyncBufferedInputStream.mark(4);
 
 						objectInputStream =
 							new PortalClassLoaderObjectInputStream(
-								_unsyncBufferedInputStream);
+								unsyncBufferedInputStream);
 
 						// Found the beginning of the object input stream. Flush
 						// out corrupted log if necessary.
@@ -254,10 +338,10 @@ public class ProcessExecutor {
 
 						// Collecting bad header as log information
 
-						_unsyncBufferedInputStream.reset();
+						unsyncBufferedInputStream.reset();
 
 						unsyncByteArrayOutputStream.write(
-							_unsyncBufferedInputStream.read());
+							unsyncBufferedInputStream.read());
 					}
 				}
 
@@ -284,12 +368,28 @@ public class ProcessExecutor {
 				}
 			}
 			catch (EOFException eofe) {
+				throw new ProcessException(
+					"Subprocess piping back ended prematurely.", eofe);
 			}
+			finally {
+				try {
+					int exitCode = _process.waitFor();
 
-			return null;
+					if (exitCode != 0) {
+						throw new ProcessException(
+							"Subprocess terminated with exit code " + exitCode);
+					}
+				}
+				catch (InterruptedException ie) {
+					_process.destroy();
+
+					throw new ProcessException(
+						"Force killed Subprocess on interruption", ie);
+				}
+			}
 		}
 
-		private final UnsyncBufferedInputStream _unsyncBufferedInputStream;
+		private final Process _process;
 
 	}
 

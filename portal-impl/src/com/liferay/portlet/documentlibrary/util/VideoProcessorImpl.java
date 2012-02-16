@@ -57,6 +57,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.Vector;
+import java.util.concurrent.Future;
 
 import org.apache.commons.lang.time.StopWatch;
 
@@ -323,8 +324,10 @@ public class VideoProcessorImpl
 							PropsValues.
 								DL_FILE_ENTRY_THUMBNAIL_VIDEO_FRAME_PERCENTAGE);
 
-					ProcessExecutor.execute(
-						processCallable, ClassPathUtil.getPortalClassPath());
+					Future<String> future = ProcessExecutor.execute(
+						ClassPathUtil.getPortalClassPath(), processCallable);
+
+					future.get();
 				}
 				else {
 					LiferayConverter liferayConverter =
@@ -469,8 +472,10 @@ public class VideoProcessorImpl
 						PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO, false),
 					PropsUtil.getProperties(PropsKeys.XUGGLER_FFPRESET, true));
 
-			ProcessExecutor.execute(
-				processCallable, ClassPathUtil.getPortalClassPath());
+			Future<String> future = ProcessExecutor.execute(
+				ClassPathUtil.getPortalClassPath(), processCallable);
+
+			future.get();
 		}
 		else {
 			LiferayConverter liferayConverter = new LiferayVideoConverter(

@@ -42,6 +42,7 @@
 			</supports>
 			<site-member-defaults>
 				<action-key>ADD_DISCUSSION</action-key>
+				<action-key>CUSTOMIZE</action-key>
 				<action-key>VIEW</action-key>
 			</site-member-defaults>
 			<guest-defaults>

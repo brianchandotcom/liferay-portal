@@ -14,7 +14,7 @@
 
 package com.liferay.portalweb.portal;
 
-import com.liferay.portalweb.portal.dbupgrade.viewsampledatalatest.announcementsdelivery.AnnouncementsDelivery6012LatestTests;
+import com.liferay.portalweb.portal.dbupgrade.viewsampledatalatest.announcementsdelivery.AnnouncementsDelivery6012LatestTestPlan;
 import com.liferay.portalweb.portal.dbupgrade.viewsampledatalatest.login.LoginTests;
 
 import junit.framework.Test;
@@ -30,7 +30,7 @@ public class DBUpgradeAnnouncementsDelivery6012LatestTestSuite
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(LoginTests.suite());
-		testSuite.addTest(AnnouncementsDelivery6012LatestTests.suite());
+		testSuite.addTest(AnnouncementsDelivery6012LatestTestPlan.suite());
 
 		testSuite.addTestSuite(StopSeleniumTest.class);
 

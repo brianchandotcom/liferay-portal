@@ -1,4 +1,6 @@
 (function() {
+	var CLASS_ESCAPED = 'escaped';
+
 	var NEW_LINE = '\n';
 
 	var REGEX_HEADER = /^h([1-6])$/i;
@@ -14,6 +16,8 @@
 	var STR_BLANK = '';
 
 	var STR_EQUALS = '=';
+
+	var STR_ESCAPE = '~';
 
 	var STR_LIST_ITEM_ESCAPE_CHARACTERS = '\\\\';
 
@@ -299,6 +303,9 @@
 				else if (tagName == 'a') {
 					instance._handleLink(element, listTagsIn, listTagsOut);
 				}
+				else if (tagName == 'span') {
+					instance._handleSpan(element, listTagsIn, listTagsOut);
+				}
 				else if (tagName == 'strong' || tagName == 'b') {
 					instance._handleStrong(element, listTagsIn, listTagsOut);
 				}
@@ -467,6 +474,14 @@
 			listTagsOut.push('}}}', NEW_LINE);
 		},
 
+		_handleSpan: function(element, listTagsIn, listTagsOut) {
+			var instance = this;
+
+			if (instance._hasClass(element, CLASS_ESCAPED)) {
+				listTagsIn.push(STR_ESCAPE);
+			}
+		},
+
 		_handleStrong: function(element, listTagsIn, listTagsOut) {
 			var instance = this;
 
@@ -528,6 +543,10 @@
 			var instance = this;
 
 			instance._listsStack.push(TAG_UNORDERED_LIST_ITEM);
+		},
+
+		_hasClass: function(element, className) {
+			return (' ' + element.className + ' ').indexOf(' ' + className + ' ') > -1;
 		},
 
 		_isDataAvailable: function() {

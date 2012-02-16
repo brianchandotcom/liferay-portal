@@ -2388,6 +2388,8 @@ message.boards.subscribe.by.default=false</echo>
 				<or>
 					<equals arg1="${sql.version}" arg2="6.0.5" />
 					<equals arg1="${sql.version}" arg2="6.0.6" />
+					<equals arg1="${sql.version}" arg2="6.0.10" />
+					<equals arg1="${sql.version}" arg2="6.0.11" />
 					<equals arg1="${sql.version}" arg2="6.0.12" />
 				</or>
 				<then>

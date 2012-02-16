@@ -1972,6 +1972,7 @@
 			<basic name="repositoryId" />
 			<basic name="parentFolderId" />
 			<basic name="name" />
+			<basic name="description" />
 			<basic name="event" />
 			<basic name="type">
 				<column name="TYPE_" />

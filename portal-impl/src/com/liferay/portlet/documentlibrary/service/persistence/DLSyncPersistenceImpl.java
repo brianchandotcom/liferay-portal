@@ -404,6 +404,7 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 		dlSyncImpl.setRepositoryId(dlSync.getRepositoryId());
 		dlSyncImpl.setParentFolderId(dlSync.getParentFolderId());
 		dlSyncImpl.setName(dlSync.getName());
+		dlSyncImpl.setDescription(dlSync.getDescription());
 		dlSyncImpl.setEvent(dlSync.getEvent());
 		dlSyncImpl.setType(dlSync.getType());
 		dlSyncImpl.setVersion(dlSync.getVersion());

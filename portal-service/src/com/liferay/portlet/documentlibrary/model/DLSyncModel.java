@@ -188,6 +188,21 @@ public interface DLSyncModel extends BaseModel<DLSync> {
 	public void setName(String name);
 
 	/**
+	 * Returns the description of this d l sync.
+	 *
+	 * @return the description of this d l sync
+	 */
+	@AutoEscape
+	public String getDescription();
+
+	/**
+	 * Sets the description of this d l sync.
+	 *
+	 * @param description the description of this d l sync
+	 */
+	public void setDescription(String description);
+
+	/**
 	 * Returns the event of this d l sync.
 	 *
 	 * @return the event of this d l sync

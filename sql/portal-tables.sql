@@ -667,6 +667,7 @@ create table DLSync (
 	repositoryId LONG,
 	parentFolderId LONG,
 	name VARCHAR(255) null,
+	description STRING null,
 	event VARCHAR(75) null,
 	type_ VARCHAR(75) null,
 	version VARCHAR(75) null

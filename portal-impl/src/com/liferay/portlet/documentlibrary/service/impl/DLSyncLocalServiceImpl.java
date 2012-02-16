@@ -29,7 +29,8 @@ public class DLSyncLocalServiceImpl extends DLSyncLocalServiceBaseImpl {
 
 	public DLSync addSync(
 			long fileId, String fileUuid, long companyId, long repositoryId,
-			long parentFolderId, String name, String type, String version)
+			long parentFolderId, String name, String description,
+			String type, String version)
 		throws SystemException {
 
 		Date now = new Date();
@@ -40,6 +41,7 @@ public class DLSyncLocalServiceImpl extends DLSyncLocalServiceBaseImpl {
 
 		dlSync.setCompanyId(companyId);
 		dlSync.setCreateDate(now);
+		dlSync.setDescription(description);
 		dlSync.setModifiedDate(now);
 		dlSync.setFileId(fileId);
 		dlSync.setFileUuid(fileUuid);
@@ -56,8 +58,8 @@ public class DLSyncLocalServiceImpl extends DLSyncLocalServiceBaseImpl {
 	}
 
 	public DLSync updateSync(
-			long fileId, long parentFolderId, String name, String event,
-			String version)
+			long fileId, long parentFolderId, String name, String description,
+			String event, String version)
 		throws PortalException, SystemException {
 
 		DLSync dlSync = null;
@@ -77,6 +79,7 @@ public class DLSyncLocalServiceImpl extends DLSyncLocalServiceBaseImpl {
 		dlSync.setParentFolderId(parentFolderId);
 		dlSync.setEvent(event);
 		dlSync.setName(name);
+		dlSync.setDescription(description);
 		dlSync.setVersion(version);
 
 		dlSyncPersistence.update(dlSync, false);

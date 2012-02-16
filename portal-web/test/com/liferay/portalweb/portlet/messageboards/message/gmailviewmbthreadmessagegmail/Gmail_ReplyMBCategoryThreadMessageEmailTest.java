@@ -112,10 +112,14 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 					RuntimeVariables.replace("Sign In"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-				assertEquals(RuntimeVariables.replace("liferay.qa.server.trunk"),
-					selenium.getText("//td[5]/div/span"));
-				selenium.clickAt("//td[5]/div/span",
-					RuntimeVariables.replace("liferay.qa.server.trunk"));
+				assertTrue(selenium.isPartialText("//td[5]/div/span",
+						"liferay.qa.server"));
+				assertEquals(RuntimeVariables.replace("MB Message Subject"),
+					selenium.getText("//td[6]/div/div/div/span"));
+				assertTrue(selenium.isPartialText(
+						"//td[6]/div/div/div/span[2]", "MB Message Body"));
+				selenium.clickAt("//td[6]/div/div/div/span[2]",
+					RuntimeVariables.replace("MB Message Body"));
 				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {

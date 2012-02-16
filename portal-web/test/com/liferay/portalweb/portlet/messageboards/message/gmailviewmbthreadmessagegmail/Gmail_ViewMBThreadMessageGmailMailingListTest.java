@@ -157,8 +157,7 @@ public class Gmail_ViewMBThreadMessageGmailMailingListTest extends BaseTestCase 
 					}
 
 					try {
-						if (selenium.isVisible(
-									"//div[@title='My groups']/a/span")) {
+						if (selenium.isVisible("//td/a/span")) {
 							break;
 						}
 					}
@@ -169,8 +168,8 @@ public class Gmail_ViewMBThreadMessageGmailMailingListTest extends BaseTestCase 
 				}
 
 				assertEquals(RuntimeVariables.replace("My groups"),
-					selenium.getText("//div[@title='My groups']/a/span"));
-				selenium.click("//div[@title='My groups']/a/span");
+					selenium.getText("//td/a/span"));
+				selenium.click("//td/a/span");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -178,7 +177,7 @@ public class Gmail_ViewMBThreadMessageGmailMailingListTest extends BaseTestCase 
 					}
 
 					try {
-						if (selenium.isVisible("link=liferay-mailinglist")) {
+						if (selenium.isVisible("//tr[2]/td/div/div/a")) {
 							break;
 						}
 					}
@@ -188,7 +187,28 @@ public class Gmail_ViewMBThreadMessageGmailMailingListTest extends BaseTestCase 
 					Thread.sleep(1000);
 				}
 
-				selenium.click("link=liferay-mailinglist");
+				selenium.click("//tr[2]/td/div/div/a");
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (RuntimeVariables.replace("liferay-mailinglist")
+												.equals(selenium.getText(
+										"//span/span[2]/span"))) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("liferay-mailinglist"),
+					selenium.getText("//span/span[2]/span"));
 				assertTrue(selenium.isElementPresent("//div[3]/div/div[2]/a"));
 				selenium.click("//div[3]/div/div[2]/a");
 				assertEquals(RuntimeVariables.replace("me"),

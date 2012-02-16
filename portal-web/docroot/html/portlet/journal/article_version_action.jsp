@@ -30,7 +30,7 @@ JournalArticle article = (JournalArticle)row.getObject();
 
 		sb.append(themeDisplay.getPathMain());
 		sb.append("/journal/view_article_content?cmd=");
-		sb.append(Constants.PREVIEW);
+		sb.append(Constants.VIEW);
 		sb.append("&groupId=");
 		sb.append(article.getGroupId());
 		sb.append("&articleId=");

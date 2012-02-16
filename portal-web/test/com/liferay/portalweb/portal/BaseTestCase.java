@@ -46,6 +46,22 @@ public class BaseTestCase extends LiferaySeleneseTestCase {
 			return;
 		}
 
+		if (className.contains(".sampledata525.")) {
+			return;
+		}
+
+		if (className.contains(".sampledata527.")) {
+			return;
+		}
+
+		if (className.contains(".sampledata528.")) {
+			return;
+		}
+
+		if (className.contains(".sampledata529.")) {
+			return;
+		}
+
 		String location = selenium.getLocation();
 
 		if (location.contains("/documents/")) {

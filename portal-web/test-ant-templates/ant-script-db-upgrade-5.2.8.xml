@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 
-<project name="portal-test-${test.ant.script.command}-5.2.9" basedir="../../." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
+<project name="portal-test-${test.ant.script.command}-5.2.8" basedir="../../." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="../../build-test-db-upgrade.xml" />
 
-	<target name="test-${test.ant.script.command}-5.2.9-tomcat-db2-firefox">
+	<target name="test-${test.ant.script.command}-5.2.8-tomcat-db2-firefox">
 		<ant antfile="build-dist.xml" target="build-dist-tomcat" />
 
 		<antcall target="prepare-vm-server">
@@ -15,43 +15,43 @@
 
 		<antcall target="prepare-db-db2-common">
 			<param name="skip.prepare-bundle" value="true" />
-			<param name="sql.version" value="5.2.9" />
+			<param name="sql.version" value="5.2.8" />
 		</antcall>
 
 		<antcall target="run-versioned-upgrade-test">
-			<param name="file.name" value="liferay-portal-tomcat-6.0.29-5.2-ee-sp5.zip" />
+			<param name="file.name" value="liferay-portal-tomcat-6.0-5.2-ee-sp4.zip" />
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
-			<param name="lp.version" value="5.2.9" />
+			<param name="lp.version" value="5.2.8" />
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets.ee}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}529TestSuite" />
-			<param name="tomcat.folder.dir" value="liferay-portal-5.2-ee-sp5/tomcat-6.0.29" />
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}528TestSuite" />
+			<param name="tomcat.folder.dir" value="liferay-portal-5.2-ee-sp4/tomcat-6.0.18" />
 		</antcall>
 
 		<antcall target="prepare-db-db2-common">
 			<param name="include.upgrade.process" value="true" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="skip.rebuild-database" value="true" />
-			<param name="sql.version" value="5.2.9" />
+			<param name="sql.version" value="5.2.8" />
 		</antcall>
 
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}529LatestConvertTestSuite" />
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}528LatestConvertTestSuite" />
 		</antcall>
 
 		<antcall target="prepare-db-db2-common">
 			<param name="set.permission.algorithm.6" value="true" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="skip.rebuild-database" value="true" />
-			<param name="sql.version" value="5.2.9" />
+			<param name="sql.version" value="5.2.8" />
 		</antcall>
 
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}529LatestTestSuite" />
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}528LatestTestSuite" />
 		</antcall>
 
 		<antcall target="stop-vm">
@@ -59,52 +59,52 @@
 		</antcall>
 	</target>
 
-	<target name="test-${test.ant.script.command}-5.2.9-tomcat-mysql-firefox">
+	<target name="test-${test.ant.script.command}-5.2.8-tomcat-mysql-firefox">
 		<ant antfile="build-dist.xml" target="build-dist-tomcat" />
 
 		<antcall target="prepare-db-mysql-common">
 			<param name="skip.prepare-bundle" value="true" />
-			<param name="sql.version" value="5.2.9" />
+			<param name="sql.version" value="5.2.8" />
 		</antcall>
 
 		<antcall target="run-versioned-upgrade-test">
-			<param name="file.name" value="liferay-portal-tomcat-6.0.29-5.2-ee-sp5.zip" />
+			<param name="file.name" value="liferay-portal-tomcat-6.0-5.2-ee-sp4.zip" />
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
-			<param name="lp.version" value="5.2.9" />
+			<param name="lp.version" value="5.2.8" />
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets.ee}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}529TestSuite" />
-			<param name="tomcat.folder.dir" value="liferay-portal-5.2-ee-sp5/tomcat-6.0.29" />
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}528TestSuite" />
+			<param name="tomcat.folder.dir" value="liferay-portal-5.2-ee-sp4/tomcat-6.0.18" />
 		</antcall>
 
 		<antcall target="prepare-db-mysql-common">
 			<param name="include.upgrade.process" value="true" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="skip.rebuild-database" value="true" />
-			<param name="sql.version" value="5.2.9" />
+			<param name="sql.version" value="5.2.8" />
 		</antcall>
 
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}529LatestConvertTestSuite" />
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}528LatestConvertTestSuite" />
 		</antcall>
 
 		<antcall target="prepare-db-mysql-common">
 			<param name="set.permission.algorithm.6" value="true" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="skip.rebuild-database" value="true" />
-			<param name="sql.version" value="5.2.9" />
+			<param name="sql.version" value="5.2.8" />
 		</antcall>
 
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}529LatestTestSuite" />
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}528LatestTestSuite" />
 		</antcall>
 	</target>
 
-	<target name="test-${test.ant.script.command}-5.2.9-tomcat-oracle-10-firefox">
+	<target name="test-${test.ant.script.command}-5.2.8-tomcat-oracle-10-firefox">
 		<ant antfile="build-dist.xml" target="build-dist-tomcat" />
 
 		<antcall target="prepare-vm-server">
@@ -116,43 +116,43 @@
 
 		<antcall target="prepare-db-oracle-10-common">
 			<param name="skip.prepare-bundle" value="true" />
-			<param name="sql.version" value="5.2.9" />
+			<param name="sql.version" value="5.2.8" />
 		</antcall>
 
 		<antcall target="run-versioned-upgrade-test">
-			<param name="file.name" value="liferay-portal-tomcat-6.0.29-5.2-ee-sp5.zip" />
+			<param name="file.name" value="liferay-portal-tomcat-6.0-5.2-ee-sp4.zip" />
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
-			<param name="lp.version" value="5.2.9" />
+			<param name="lp.version" value="5.2.8" />
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets.ee}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}529TestSuite" />
-			<param name="tomcat.folder.dir" value="liferay-portal-5.2-ee-sp5/tomcat-6.0.29" />
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}528TestSuite" />
+			<param name="tomcat.folder.dir" value="liferay-portal-5.2-ee-sp4/tomcat-6.0.18" />
 		</antcall>
 
 		<antcall target="prepare-db-oracle-10-common">
 			<param name="include.upgrade.process" value="true" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="skip.rebuild-database" value="true" />
-			<param name="sql.version" value="5.2.9" />
+			<param name="sql.version" value="5.2.8" />
 		</antcall>
 
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}529LatestConvertTestSuite" />
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}528LatestConvertTestSuite" />
 		</antcall>
 
 		<antcall target="prepare-db-oracle-10-common">
 			<param name="set.permission.algorithm.6" value="true" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="skip.rebuild-database" value="true" />
-			<param name="sql.version" value="5.2.9" />
+			<param name="sql.version" value="5.2.8" />
 		</antcall>
 
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}529LatestTestSuite" />
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}528LatestTestSuite" />
 		</antcall>
 
 		<antcall target="stop-vm">
@@ -160,7 +160,7 @@
 		</antcall>
 	</target>
 
-	<target name="test-${test.ant.script.command}-5.2.9-tomcat-oracle-11-firefox">
+	<target name="test-${test.ant.script.command}-5.2.8-tomcat-oracle-11-firefox">
 		<ant antfile="build-dist.xml" target="build-dist-tomcat" />
 
 		<antcall target="prepare-vm-server">
@@ -172,43 +172,43 @@
 
 		<antcall target="prepare-db-oracle-11-common">
 			<param name="skip.prepare-bundle" value="true" />
-			<param name="sql.version" value="5.2.9" />
+			<param name="sql.version" value="5.2.8" />
 		</antcall>
 
 		<antcall target="run-versioned-upgrade-test">
-			<param name="file.name" value="liferay-portal-tomcat-6.0.29-5.2-ee-sp5.zip" />
+			<param name="file.name" value="liferay-portal-tomcat-6.0-5.2-ee-sp4.zip" />
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
-			<param name="lp.version" value="5.2.9" />
+			<param name="lp.version" value="5.2.8" />
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets.ee}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}529TestSuite" />
-			<param name="tomcat.folder.dir" value="liferay-portal-5.2-ee-sp5/tomcat-6.0.29" />
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}528TestSuite" />
+			<param name="tomcat.folder.dir" value="liferay-portal-5.2-ee-sp4/tomcat-6.0.18" />
 		</antcall>
 
 		<antcall target="prepare-db-oracle-11-common">
 			<param name="include.upgrade.process" value="true" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="skip.rebuild-database" value="true" />
-			<param name="sql.version" value="5.2.9" />
+			<param name="sql.version" value="5.2.8" />
 		</antcall>
 
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}529LatestConvertTestSuite" />
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}528LatestConvertTestSuite" />
 		</antcall>
 
 		<antcall target="prepare-db-oracle-11-common">
 			<param name="set.permission.algorithm.6" value="true" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="skip.rebuild-database" value="true" />
-			<param name="sql.version" value="5.2.9" />
+			<param name="sql.version" value="5.2.8" />
 		</antcall>
 
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}529LatestTestSuite" />
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}528LatestTestSuite" />
 		</antcall>
 
 		<antcall target="stop-vm">
@@ -216,7 +216,7 @@
 		</antcall>
 	</target>
 
-	<target name="test-${test.ant.script.command}-5.2.9-tomcat-postgresql-8.4-firefox">
+	<target name="test-${test.ant.script.command}-5.2.8-tomcat-postgresql-8.4-firefox">
 		<ant antfile="build-dist.xml" target="build-dist-tomcat" />
 
 		<antcall target="prepare-vm-server">
@@ -228,43 +228,43 @@
 
 		<antcall target="prepare-db-postgresql-8.4-common">
 			<param name="skip.prepare-bundle" value="true" />
-			<param name="sql.version" value="5.2.9" />
+			<param name="sql.version" value="5.2.8" />
 		</antcall>
 
 		<antcall target="run-versioned-upgrade-test">
-			<param name="file.name" value="liferay-portal-tomcat-6.0.29-5.2-ee-sp5.zip" />
+			<param name="file.name" value="liferay-portal-tomcat-6.0-5.2-ee-sp4.zip" />
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
-			<param name="lp.version" value="5.2.9" />
+			<param name="lp.version" value="5.2.8" />
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets.ee}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}529TestSuite" />
-			<param name="tomcat.folder.dir" value="liferay-portal-5.2-ee-sp5/tomcat-6.0.29" />
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}528TestSuite" />
+			<param name="tomcat.folder.dir" value="liferay-portal-5.2-ee-sp4/tomcat-6.0.18" />
 		</antcall>
 
 		<antcall target="prepare-db-postgresql-8.4-common">
 			<param name="include.upgrade.process" value="true" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="skip.rebuild-database" value="true" />
-			<param name="sql.version" value="5.2.9" />
+			<param name="sql.version" value="5.2.8" />
 		</antcall>
 
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}529LatestConvertTestSuite" />
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}528LatestConvertTestSuite" />
 		</antcall>
 
 		<antcall target="prepare-db-postgresql-8.4-common">
 			<param name="set.permission.algorithm.6" value="true" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="skip.rebuild-database" value="true" />
-			<param name="sql.version" value="5.2.9" />
+			<param name="sql.version" value="5.2.8" />
 		</antcall>
 
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}529LatestTestSuite" />
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}528LatestTestSuite" />
 		</antcall>
 
 		<antcall target="stop-vm">
@@ -272,7 +272,7 @@
 		</antcall>
 	</target>
 
-	<target name="test-${test.ant.script.command}-5.2.9-tomcat-postgresql-9.0-firefox">
+	<target name="test-${test.ant.script.command}-5.2.8-tomcat-postgresql-9.0-firefox">
 		<ant antfile="build-dist.xml" target="build-dist-tomcat" />
 
 		<antcall target="prepare-vm-server">
@@ -284,43 +284,43 @@
 
 		<antcall target="prepare-db-postgresql-9.0-common">
 			<param name="skip.prepare-bundle" value="true" />
-			<param name="sql.version" value="5.2.9" />
+			<param name="sql.version" value="5.2.8" />
 		</antcall>
 
 		<antcall target="run-versioned-upgrade-test">
-			<param name="file.name" value="liferay-portal-tomcat-6.0.29-5.2-ee-sp5.zip" />
+			<param name="file.name" value="liferay-portal-tomcat-6.0-5.2-ee-sp4.zip" />
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
-			<param name="include.upgrade.process" value="true" />
-			<param name="lp.version" value="5.2.9" />
+			<param name="lp.version" value="5.2.8" />
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets.ee}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}529TestSuite" />
-			<param name="tomcat.folder.dir" value="liferay-portal-5.2-ee-sp5/tomcat-6.0.29" />
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}528TestSuite" />
+			<param name="tomcat.folder.dir" value="liferay-portal-5.2-ee-sp4/tomcat-6.0.18" />
 		</antcall>
 
 		<antcall target="prepare-db-postgresql-9.0-common">
+			<param name="include.upgrade.process" value="true" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="skip.rebuild-database" value="true" />
-			<param name="sql.version" value="5.2.9" />
+			<param name="sql.version" value="5.2.8" />
 		</antcall>
 
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}529LatestConvertTestSuite" />
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}528LatestConvertTestSuite" />
 		</antcall>
 
 		<antcall target="prepare-db-postgresql-9.0-common">
 			<param name="set.permission.algorithm.6" value="true" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="skip.rebuild-database" value="true" />
-			<param name="sql.version" value="5.2.9" />
+			<param name="sql.version" value="5.2.8" />
 		</antcall>
 
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}529LatestTestSuite" />
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}528LatestTestSuite" />
 		</antcall>
 
 		<antcall target="stop-vm">
@@ -328,7 +328,7 @@
 		</antcall>
 	</target>
 
-	<target name="test-${test.ant.script.command}-5.2.9-tomcat-sql-server-2005-firefox">
+	<target name="test-${test.ant.script.command}-5.2.8-tomcat-sql-server-2005-firefox">
 		<ant antfile="build-dist.xml" target="build-dist-tomcat" />
 
 		<antcall target="prepare-vm-server">
@@ -340,43 +340,43 @@
 
 		<antcall target="prepare-db-sql-server-2005-common">
 			<param name="skip.prepare-bundle" value="true" />
-			<param name="sql.version" value="5.2.9" />
+			<param name="sql.version" value="5.2.8" />
 		</antcall>
 
 		<antcall target="run-versioned-upgrade-test">
-			<param name="file.name" value="liferay-portal-tomcat-6.0.29-5.2-ee-sp5.zip" />
+			<param name="file.name" value="liferay-portal-tomcat-6.0-5.2-ee-sp4.zip" />
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
-			<param name="lp.version" value="5.2.9" />
+			<param name="lp.version" value="5.2.8" />
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets.ee}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}529TestSuite" />
-			<param name="tomcat.folder.dir" value="liferay-portal-5.2-ee-sp5/tomcat-6.0.29" />
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}528TestSuite" />
+			<param name="tomcat.folder.dir" value="liferay-portal-5.2-ee-sp4/tomcat-6.0.18" />
 		</antcall>
 
 		<antcall target="prepare-db-sql-server-2005-common">
 			<param name="include.upgrade.process" value="true" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="skip.rebuild-database" value="true" />
-			<param name="sql.version" value="5.2.9" />
+			<param name="sql.version" value="5.2.8" />
 		</antcall>
 
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}529LatestConvertTestSuite" />
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}528LatestConvertTestSuite" />
 		</antcall>
 
 		<antcall target="prepare-db-sql-server-2005-common">
 			<param name="set.permission.algorithm.6" value="true" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="skip.rebuild-database" value="true" />
-			<param name="sql.version" value="5.2.9" />
+			<param name="sql.version" value="5.2.8" />
 		</antcall>
 
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}529LatestTestSuite" />
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}528LatestTestSuite" />
 		</antcall>
 
 		<antcall target="stop-vm">
@@ -384,7 +384,7 @@
 		</antcall>
 	</target>
 
-	<target name="test-${test.ant.script.command}-5.2.9-tomcat-sql-server-2008-firefox">
+	<target name="test-${test.ant.script.command}-5.2.8-tomcat-sql-server-2008-firefox">
 		<ant antfile="build-dist.xml" target="build-dist-tomcat" />
 
 		<antcall target="prepare-vm-server">
@@ -396,43 +396,43 @@
 
 		<antcall target="prepare-db-sql-server-2008-common">
 			<param name="skip.prepare-bundle" value="true" />
-			<param name="sql.version" value="5.2.9" />
+			<param name="sql.version" value="5.2.8" />
 		</antcall>
 
 		<antcall target="run-versioned-upgrade-test">
-			<param name="file.name" value="liferay-portal-tomcat-6.0.29-5.2-ee-sp5.zip" />
+			<param name="file.name" value="liferay-portal-tomcat-6.0-5.2-ee-sp4.zip" />
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
-			<param name="lp.version" value="5.2.9" />
+			<param name="lp.version" value="5.2.8" />
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets.ee}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}529TestSuite" />
-			<param name="tomcat.folder.dir" value="liferay-portal-5.2-ee-sp5/tomcat-6.0.29" />
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}528TestSuite" />
+			<param name="tomcat.folder.dir" value="liferay-portal-5.2-ee-sp4/tomcat-6.0.18" />
 		</antcall>
 
 		<antcall target="prepare-db-sql-server-2008-common">
 			<param name="include.upgrade.process" value="true" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="skip.rebuild-database" value="true" />
-			<param name="sql.version" value="5.2.9" />
+			<param name="sql.version" value="5.2.8" />
 		</antcall>
 
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}529LatestConvertTestSuite" />
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}528LatestConvertTestSuite" />
 		</antcall>
 
 		<antcall target="prepare-db-sql-server-2008-common">
 			<param name="set.permission.algorithm.6" value="true" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="skip.rebuild-database" value="true" />
-			<param name="sql.version" value="5.2.9" />
+			<param name="sql.version" value="5.2.8" />
 		</antcall>
 
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}529LatestTestSuite" />
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}528LatestTestSuite" />
 		</antcall>
 
 		<antcall target="stop-vm">
@@ -440,7 +440,7 @@
 		</antcall>
 	</target>
 
-	<target name="test-${test.ant.script.command}-5.2.9-tomcat-sybase-firefox">
+	<target name="test-${test.ant.script.command}-5.2.8-tomcat-sybase-firefox">
 		<ant antfile="build-dist.xml" target="build-dist-tomcat" />
 
 		<antcall target="prepare-vm-server">
@@ -452,43 +452,43 @@
 
 		<antcall target="prepare-db-sybase-common">
 			<param name="skip.prepare-bundle" value="true" />
-			<param name="sql.version" value="5.2.9" />
+			<param name="sql.version" value="5.2.8" />
 		</antcall>
 
 		<antcall target="run-versioned-upgrade-test">
-			<param name="file.name" value="liferay-portal-tomcat-6.0.29-5.2-ee-sp5.zip" />
+			<param name="file.name" value="liferay-portal-tomcat-6.0-5.2-ee-sp4.zip" />
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
-			<param name="lp.version" value="5.2.9" />
+			<param name="lp.version" value="5.2.8" />
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets.ee}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}529TestSuite" />
-			<param name="tomcat.folder.dir" value="liferay-portal-5.2-ee-sp5/tomcat-6.0.29" />
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}528TestSuite" />
+			<param name="tomcat.folder.dir" value="liferay-portal-5.2-ee-sp4/tomcat-6.0.18" />
 		</antcall>
 
 		<antcall target="prepare-db-sybase-common">
 			<param name="include.upgrade.process" value="true" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="skip.rebuild-database" value="true" />
-			<param name="sql.version" value="5.2.9" />
+			<param name="sql.version" value="5.2.8" />
 		</antcall>
 
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}529LatestConvertTestSuite" />
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}528LatestConvertTestSuite" />
 		</antcall>
 
 		<antcall target="prepare-db-sybase-common">
 			<param name="set.permission.algorithm.6" value="true" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="skip.rebuild-database" value="true" />
-			<param name="sql.version" value="5.2.9" />
+			<param name="sql.version" value="5.2.8" />
 		</antcall>
 
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}529LatestTestSuite" />
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}528LatestTestSuite" />
 		</antcall>
 
 		<antcall target="stop-vm">

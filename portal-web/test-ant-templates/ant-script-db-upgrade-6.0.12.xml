@@ -29,6 +29,7 @@
 		</antcall>
 
 		<antcall target="prepare-db-db2-common">
+			<param name="include.upgrade.process" value="true" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="skip.rebuild-database" value="true" />
 			<param name="sql.version" value="6.0.12" />
@@ -64,6 +65,7 @@
 		</antcall>
 
 		<antcall target="prepare-db-mysql-common">
+			<param name="include.upgrade.process" value="true" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="skip.rebuild-database" value="true" />
 			<param name="sql.version" value="6.0.12" />
@@ -102,6 +104,7 @@
 		</antcall>
 
 		<antcall target="prepare-db-oracle-10-common">
+			<param name="include.upgrade.process" value="true" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="skip.rebuild-database" value="true" />
 			<param name="sql.version" value="6.0.12" />
@@ -144,6 +147,7 @@
 		</antcall>
 
 		<antcall target="prepare-db-oracle-11-common">
+			<param name="include.upgrade.process" value="true" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="skip.rebuild-database" value="true" />
 			<param name="sql.version" value="6.0.12" />
@@ -186,6 +190,7 @@
 		</antcall>
 
 		<antcall target="prepare-db-postgresql-8.4-common">
+			<param name="include.upgrade.process" value="true" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="skip.rebuild-database" value="true" />
 			<param name="sql.version" value="6.0.12" />
@@ -228,6 +233,7 @@
 		</antcall>
 
 		<antcall target="prepare-db-postgresql-9.0-common">
+			<param name="include.upgrade.process" value="true" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="skip.rebuild-database" value="true" />
 			<param name="sql.version" value="6.0.12" />
@@ -270,6 +276,7 @@
 		</antcall>
 
 		<antcall target="prepare-db-sql-server-2005-common">
+			<param name="include.upgrade.process" value="true" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="skip.rebuild-database" value="true" />
 			<param name="sql.version" value="6.0.12" />
@@ -312,6 +319,7 @@
 		</antcall>
 
 		<antcall target="prepare-db-sql-server-2008-common">
+			<param name="include.upgrade.process" value="true" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="skip.rebuild-database" value="true" />
 			<param name="sql.version" value="6.0.12" />
@@ -354,6 +362,7 @@
 		</antcall>
 
 		<antcall target="prepare-db-sybase-common">
+			<param name="include.upgrade.process" value="true" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="skip.rebuild-database" value="true" />
 			<param name="sql.version" value="6.0.12" />

@@ -245,43 +245,11 @@
 
 		<for list="${test.ant.script.versions}" param="test.ant.script.version">
 			<sequential>
-				<if>
-					<equals arg1="@{test.ant.script.version}" arg2="5.2.7" />
-					<then>
-						<antcall target="create-ant-script">
-							<param name="ant.script.template" value="ant-script-db-upgrade-smoke-5.2.7.xml" />
-							<param name="ant.script.file.name" value="build-test-db-upgrade-smoke-5.2.7.xml" />
-							<param name="test.ant.script.version" value="@{test.ant.script.version}" />
-						</antcall>
-					</then>
-					<elseif>
-						<equals arg1="@{test.ant.script.version}" arg2="5.2.8" />
-						<then>
-							<antcall target="create-ant-script">
-								<param name="ant.script.template" value="ant-script-db-upgrade-smoke-5.2.8.xml" />
-								<param name="ant.script.file.name" value="build-test-db-upgrade-smoke-5.2.8.xml" />
-								<param name="test.ant.script.version" value="@{test.ant.script.version}" />
-							</antcall>
-						</then>
-					</elseif>
-					<elseif>
-						<equals arg1="@{test.ant.script.version}" arg2="latest" />
-
-						<then>
-							<antcall target="create-ant-script">
-								<param name="ant.script.template" value="ant-script-db-upgrade-smoke-latest.xml" />
-								<param name="ant.script.file.name" value="build-test-db-upgrade-smoke-latest.xml" />
-							</antcall>
-						</then>
-					</elseif>
-					<else>
-						<antcall target="create-ant-script">
-							<param name="ant.script.template" value="ant-script-db-upgrade-smoke.xml" />
-							<param name="ant.script.file.name" value="build-test-db-upgrade-smoke-@{test.ant.script.version}.xml" />
-							<param name="test.ant.script.version" value="@{test.ant.script.version}" />
-						</antcall>
-					</else>
-				</if>
+				<antcall target="create-ant-script">
+					<param name="ant.script.template" value="ant-script-db-upgrade-smoke.xml" />
+					<param name="ant.script.file.name" value="build-test-db-upgrade-smoke-@{test.ant.script.version}.xml" />
+					<param name="test.ant.script.version" value="@{test.ant.script.version}" />
+				</antcall>
 			</sequential>
 		</for>
 	</target>
@@ -584,123 +552,123 @@
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-address" />
 			<param name="test.ant.script.suite" value="Address" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12" />
+			<param name="test.ant.script.versions" value="5.2.3,5.2.5,5.2.7,5.2.8,5.2.9,6.0.6,6.0.10,6.0.11,6.0.12" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-announcements" />
 			<param name="test.ant.script.suite" value="Announcements" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12" />
+			<param name="test.ant.script.versions" value="5.2.3,5.2.5,5.2.7,5.2.8,5.2.9,6.0.6,6.0.10,6.0.11,6.0.12" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-announcements-delivery" />
 			<param name="test.ant.script.suite" value="AnnouncementsDelivery" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12" />
+			<param name="test.ant.script.versions" value="5.2.3,5.2.5,5.2.7,5.2.8,5.2.9,6.0.6,6.0.10,6.0.11,6.0.12" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-bookmarks" />
 			<param name="test.ant.script.suite" value="Bookmarks" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12" />
+			<param name="test.ant.script.versions" value="5.2.3,5.2.5,5.2.7,5.2.8,5.2.9,6.0.6,6.0.10,6.0.11,6.0.12" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-calendar" />
 			<param name="test.ant.script.suite" value="Calendar" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12" />
+			<param name="test.ant.script.versions" value="5.2.3,5.2.5,5.2.7,5.2.8,5.2.9,6.0.6,6.0.10,6.0.11,6.0.12" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-community" />
 			<param name="test.ant.script.suite" value="Community" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12" />
+			<param name="test.ant.script.versions" value="5.2.3,5.2.5,5.2.7,5.2.8,5.2.9,6.0.6,6.0.10,6.0.11,6.0.12" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-document-library" />
 			<param name="test.ant.script.suite" value="DocumentLibrary" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12" />
+			<param name="test.ant.script.versions" value="5.2.3,5.2.5,5.2.7,5.2.8,5.2.9,6.0.6,6.0.10,6.0.11,6.0.12" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-expando" />
 			<param name="test.ant.script.plugin.portlets" value="web-form-portlet" />
 			<param name="test.ant.script.suite" value="Expando" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12" />
+			<param name="test.ant.script.versions" value="5.2.3,5.2.5,5.2.7,5.2.8,5.2.9,6.0.6,6.0.10,6.0.11,6.0.12" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-groups" />
 			<param name="test.ant.script.suite" value="Groups" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12" />
+			<param name="test.ant.script.versions" value="5.2.3,5.2.5,5.2.7,5.2.8,5.2.9,6.0.6,6.0.10,6.0.11,6.0.12" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-message-boards" />
 			<param name="test.ant.script.suite" value="MessageBoards" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12" />
+			<param name="test.ant.script.versions" value="5.2.3,5.2.5,5.2.7,5.2.8,5.2.9,6.0.6,6.0.10,6.0.11,6.0.12" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-organizations" />
 			<param name="test.ant.script.suite" value="Organizations" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12" />
+			<param name="test.ant.script.versions" value="5.2.3,5.2.5,5.2.7,5.2.8,5.2.9,6.0.6,6.0.10,6.0.11,6.0.12" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-portlet-permissions" />
 			<param name="test.ant.script.suite" value="PortletPermissions" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12" />
+			<param name="test.ant.script.versions" value="5.2.3,5.2.5,5.2.7,5.2.8,5.2.9,6.0.6,6.0.10,6.0.11,6.0.12" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-shopping" />
 			<param name="test.ant.script.suite" value="Shopping" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12" />
+			<param name="test.ant.script.versions" value="5.2.3,5.2.5,5.2.7,5.2.8,5.2.9,6.0.6,6.0.10,6.0.11,6.0.12" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade-smoke">
 			<param name="test.ant.script.command" value="db-upgrade-smoke" />
 			<param name="test.ant.script.evaluate.logs" value="true" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12,latest" />
+			<param name="test.ant.script.versions" value="5.2.3,5.2.5,5.2.7,5.2.8,5.2.9,6.0.6,6.0.10,6.0.11,6.0.12,latest" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-social" />
 			<param name="test.ant.script.plugin.portlets" value="social-networking-portlet" />
 			<param name="test.ant.script.suite" value="Social" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12" />
+			<param name="test.ant.script.versions" value="5.2.3,5.2.5,5.2.7,5.2.8,5.2.9,6.0.6,6.0.10,6.0.11,6.0.12" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-staging-community" />
 			<param name="test.ant.script.suite" value="StagingCommunity" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12" />
+			<param name="test.ant.script.versions" value="5.2.3,5.2.5,5.2.7,5.2.8,5.2.9,6.0.6,6.0.10,6.0.11,6.0.12" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-staging-organization" />
 			<param name="test.ant.script.suite" value="StagingOrganization" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12" />
+			<param name="test.ant.script.versions" value="5.2.3,5.2.5,5.2.7,5.2.8,5.2.9,6.0.6,6.0.10,6.0.11,6.0.12" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-tags" />
 			<param name="test.ant.script.suite" value="Tags" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12" />
+			<param name="test.ant.script.versions" value="5.2.3,5.2.5,5.2.7,5.2.8,5.2.9,6.0.6,6.0.10,6.0.11,6.0.12" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-web-content" />
 			<param name="test.ant.script.suite" value="WebContent" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12" />
+			<param name="test.ant.script.versions" value="5.2.3,5.2.5,5.2.7,5.2.8,5.2.9,6.0.6,6.0.10,6.0.11,6.0.12" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-wiki" />
 			<param name="test.ant.script.suite" value="Wiki" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12" />
+			<param name="test.ant.script.versions" value="5.2.3,5.2.5,5.2.7,5.2.8,5.2.9,6.0.6,6.0.10,6.0.11,6.0.12" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
@@ -2445,13 +2413,80 @@ message.boards.subscribe.by.default=false</echo>
 		</if>
 
 		<if>
-			<equals arg1="${sql.version}" arg2="6.0.12" />
+			<equals arg1="${include.upgrade.process}" arg2="true" />
 			<then>
-				<echo file="portal-impl/src/portal-ext.properties" append="true">
+				<if>
+					<equals arg1="${sql.version}" arg2="5.2.5" />
+					<then>
+						<echo file="portal-impl/src/portal-ext.properties" append="true">
+
+upgrade.processes=\
+	com.liferay.portal.upgrade.UpgradeProcess_5_2_5_to_6_0_0,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_0_1,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_0_2,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_0_3,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_0_5,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_0_6,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_0_11,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_0_12,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_0_12_to_6_1_0,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_1_1</echo>
+					</then>
+					<elseif>
+						<equals arg1="${sql.version}" arg2="5.2.7" />
+						<then>
+							<echo file="portal-impl/src/portal-ext.properties" append="true">
+
+upgrade.processes=\
+	com.liferay.portal.upgrade.UpgradeProcess_5_2_7_to_6_0_0,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_0_1,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_0_2,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_0_3,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_0_5,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_0_6,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_0_11,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_0_12,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_0_12_to_6_1_0,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_1_1</echo>
+						</then>
+					</elseif>
+					<elseif>
+						<equals arg1="${sql.version}" arg2="5.2.8" />
+						<then>
+							<echo file="portal-impl/src/portal-ext.properties" append="true">
+
+upgrade.processes=\
+	com.liferay.portal.upgrade.UpgradeProcess_5_2_8_to_6_0_5,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_0_6,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_0_11,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_0_12,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_0_12_to_6_1_0,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_1_1</echo>
+						</then>
+					</elseif>
+					<elseif>
+						<equals arg1="${sql.version}" arg2="5.2.9" />
+						<then>
+							<echo file="portal-impl/src/portal-ext.properties" append="true">
+
+upgrade.processes=\
+	com.liferay.portal.upgrade.UpgradeProcess_5_2_9_to_6_0_11,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_0_12,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_0_12_to_6_1_0,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_1_1</echo>
+						</then>
+					</elseif>
+					<elseif>
+						<equals arg1="${sql.version}" arg2="6.0.12" />
+						<then>
+							<echo file="portal-impl/src/portal-ext.properties" append="true">
 
 upgrade.processes=\
 	com.liferay.portal.upgrade.UpgradeProcess_6_0_12_to_6_1_0,\
 	com.liferay.portal.upgrade.UpgradeProcess_6_1_1</echo>
+						</then>
+					</elseif>
+				</if>
 			</then>
 		</if>
 

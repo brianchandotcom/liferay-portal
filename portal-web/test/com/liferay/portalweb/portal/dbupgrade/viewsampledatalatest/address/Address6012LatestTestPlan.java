@@ -15,7 +15,7 @@
 package com.liferay.portalweb.portal.dbupgrade.viewsampledatalatest.address;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.dbupgrade.viewsampledatalatest.address.myaccount.MyAccountTests;
+import com.liferay.portalweb.portal.dbupgrade.viewsampledatalatest.address.myaccount.MyAccountLegacyTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -28,7 +28,7 @@ public class Address6012LatestTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest (MyAccountTests.suite());
+		testSuite.addTest (MyAccountLegacyTests.suite());
 
 		return testSuite;
 	}

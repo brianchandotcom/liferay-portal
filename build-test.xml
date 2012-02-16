@@ -255,7 +255,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="0" />
+		<property name="build-test-ant-scripts.version" value="1" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -2328,7 +2328,9 @@ message.boards.subscribe.by.default=false</echo>
 			<elseif>
 				<or>
 					<equals arg1="${sql.version}" arg2="5.2.3" />
+					<equals arg1="${sql.version}" arg2="5.2.4" />
 					<equals arg1="${sql.version}" arg2="5.2.5" />
+					<equals arg1="${sql.version}" arg2="5.2.6" />
 					<equals arg1="${sql.version}" arg2="5.2.7" />
 					<equals arg1="${sql.version}" arg2="5.2.8" />
 					<equals arg1="${sql.version}" arg2="5.2.9" />
@@ -2416,9 +2418,25 @@ message.boards.subscribe.by.default=false</echo>
 			<equals arg1="${include.upgrade.process}" arg2="true" />
 			<then>
 				<if>
-					<equals arg1="${sql.version}" arg2="5.2.5" />
+					<equals arg1="${sql.version}" arg2="5.2.4" />
 					<then>
 						<echo file="portal-impl/src/portal-ext.properties" append="true">
+
+upgrade.processes=\
+	com.liferay.portal.upgrade.UpgradeProcess_5_2_5,\
+	com.liferay.portal.upgrade.UpgradeProcess_5_2_5_to_6_0_0,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_0_1,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_0_2,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_0_3,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_0_5,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_0_6,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_1_0,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_1_1</echo>
+					</then>
+					<elseif>
+						<equals arg1="${sql.version}" arg2="5.2.5" />
+						<then>
+							<echo file="portal-impl/src/portal-ext.properties" append="true">
 
 upgrade.processes=\
 	com.liferay.portal.upgrade.UpgradeProcess_5_2_5_to_6_0_0,\
@@ -2427,11 +2445,27 @@ upgrade.processes=\
 	com.liferay.portal.upgrade.UpgradeProcess_6_0_3,\
 	com.liferay.portal.upgrade.UpgradeProcess_6_0_5,\
 	com.liferay.portal.upgrade.UpgradeProcess_6_0_6,\
-	com.liferay.portal.upgrade.UpgradeProcess_6_0_11,\
-	com.liferay.portal.upgrade.UpgradeProcess_6_0_12,\
-	com.liferay.portal.upgrade.UpgradeProcess_6_0_12_to_6_1_0,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_1_0,\
 	com.liferay.portal.upgrade.UpgradeProcess_6_1_1</echo>
-					</then>
+						</then>
+					</elseif>
+					<elseif>
+						<equals arg1="${sql.version}" arg2="5.2.6" />
+						<then>
+							<echo file="portal-impl/src/portal-ext.properties" append="true">
+
+upgrade.processes=\
+	com.liferay.portal.upgrade.UpgradeProcess_5_2_7,\
+	com.liferay.portal.upgrade.UpgradeProcess_5_2_7_to_6_0_0,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_0_1,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_0_2,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_0_3,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_0_5,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_0_6,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_1_0,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_1_1</echo>
+						</then>
+					</elseif>
 					<elseif>
 						<equals arg1="${sql.version}" arg2="5.2.7" />
 						<then>
@@ -2444,9 +2478,7 @@ upgrade.processes=\
 	com.liferay.portal.upgrade.UpgradeProcess_6_0_3,\
 	com.liferay.portal.upgrade.UpgradeProcess_6_0_5,\
 	com.liferay.portal.upgrade.UpgradeProcess_6_0_6,\
-	com.liferay.portal.upgrade.UpgradeProcess_6_0_11,\
-	com.liferay.portal.upgrade.UpgradeProcess_6_0_12,\
-	com.liferay.portal.upgrade.UpgradeProcess_6_0_12_to_6_1_0,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_1_0,\
 	com.liferay.portal.upgrade.UpgradeProcess_6_1_1</echo>
 						</then>
 					</elseif>
@@ -2471,6 +2503,28 @@ upgrade.processes=\
 
 upgrade.processes=\
 	com.liferay.portal.upgrade.UpgradeProcess_5_2_9_to_6_0_11,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_0_12,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_0_12_to_6_1_0,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_1_1</echo>
+						</then>
+					</elseif>
+					<elseif>
+						<equals arg1="${sql.version}" arg2="6.0.10" />
+						<then>
+							<echo file="portal-impl/src/portal-ext.properties" append="true">
+
+upgrade.processes=\
+	com.liferay.portal.upgrade.UpgradeProcess_6_0_12,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_0_12_to_6_1_0,\
+	com.liferay.portal.upgrade.UpgradeProcess_6_1_1</echo>
+						</then>
+					</elseif>
+					<elseif>
+						<equals arg1="${sql.version}" arg2="6.0.11" />
+						<then>
+							<echo file="portal-impl/src/portal-ext.properties" append="true">
+
+upgrade.processes=\
 	com.liferay.portal.upgrade.UpgradeProcess_6_0_12,\
 	com.liferay.portal.upgrade.UpgradeProcess_6_0_12_to_6_1_0,\
 	com.liferay.portal.upgrade.UpgradeProcess_6_1_1</echo>

@@ -284,16 +284,15 @@ public class DDMImpl implements DDM {
 					"classPK", String.valueOf(baseModel.getPrimaryKeyObj()));
 
 				fieldValue = recordFileJSONObject.toString();
-
-				Fields fields = new Fields();
-
-				Field field = new Field(structureId, fieldName, fieldValue);
-
-				fields.put(field);
-
-				StorageEngineUtil.update(
-					storageId, fields, true, serviceContext);
 			}
+
+			Fields fields = new Fields();
+
+			Field field = new Field(structureId, fieldName, fieldValue);
+
+			fields.put(field);
+
+			StorageEngineUtil.update(storageId, fields, true, serviceContext);
 		}
 		finally {
 			StreamUtil.cleanUp(inputStream);

@@ -82,7 +82,15 @@ public class ViewArticleContentAction extends Action {
 
 			String output = null;
 
-			if (cmd.equals(Constants.PREVIEW)) {
+			if (cmd.equals(Constants.VIEW)) {
+				JournalArticle article = JournalArticleServiceUtil.getArticle(
+					groupId, articleId, version);
+
+				output = JournalArticleLocalServiceUtil.getArticleContent(
+					article, article.getTemplateId(), null, languageId,
+					themeDisplay);
+			}
+			else if (cmd.equals(Constants.PREVIEW)) {
 				uploadServletRequest = PortalUtil.getUploadServletRequest(
 					request);
 

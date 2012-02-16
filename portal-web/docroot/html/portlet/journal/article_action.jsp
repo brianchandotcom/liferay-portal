@@ -57,10 +57,12 @@ JournalArticle article = (JournalArticle)row.getObject();
 	<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.VIEW) %>">
 
 		<%
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append(themeDisplay.getPathMain());
-		sb.append("/journal/view_article_content?groupId=");
+		sb.append("/journal/view_article_content?cmd=");
+		sb.append(Constants.VIEW);
+		sb.append("&groupId=");
 		sb.append(article.getGroupId());
 		sb.append("&articleId=");
 		sb.append(article.getArticleId());
@@ -69,7 +71,7 @@ JournalArticle article = (JournalArticle)row.getObject();
 		%>
 
 		<liferay-ui:icon
-			image="preview"
+			image="view"
 			target="_blank"
 			url="<%= sb.toString() %>"
 		/>

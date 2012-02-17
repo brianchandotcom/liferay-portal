@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.LogWrapper;
 import com.liferay.portal.kernel.process.ProcessExecutor.ProcessContext;
 import com.liferay.portal.kernel.process.log.ProcessOutputStream;
 import com.liferay.portal.kernel.test.TestCase;
+import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 
@@ -644,10 +645,19 @@ public class ProcessExecutorTest extends TestCase {
 
 		Thread executorThread = (Thread)threadField.get(worker);
 
-		// Wait until executorThread is waiting on subprocess to exit.
-		while (executorThread.getState() != Thread.State.WAITING);
-
 		Logger logger = _getLogger();
+
+		if (OSDetector.isWindows()) {
+			logger.log(Level.WARNING, "Can not do Thread.State checking on " +
+				"Windows! Blindly waiting 10 seconds for blocking on" +
+				"Process.waitFor(), on slow machine this may not be enough, " +
+				"which will cause this test to fail");
+			Thread.sleep(10000);
+		}
+		else {
+			// Wait until executorThread is waiting on subprocess to exit.
+			while (executorThread.getState() != Thread.State.WAITING);
+		}
 
 		Level oldLevel = logger.getLevel();
 

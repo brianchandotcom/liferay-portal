@@ -51,6 +51,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
+import java.util.concurrent.Future;
 
 import org.apache.commons.lang.time.StopWatch;
 
@@ -260,8 +261,10 @@ public class AudioProcessorImpl
 						srcFile.getCanonicalPath(),
 						destFile.getCanonicalPath());
 
-				ProcessExecutor.execute(
-					processCallable, ClassPathUtil.getPortalClassPath());
+				Future<String> future = ProcessExecutor.execute(
+					ClassPathUtil.getPortalClassPath(), processCallable);
+
+				future.get();
 			}
 			else {
 				LiferayConverter liferayConverter = new LiferayAudioConverter(

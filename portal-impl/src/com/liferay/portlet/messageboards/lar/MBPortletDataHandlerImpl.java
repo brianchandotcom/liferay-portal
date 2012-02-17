@@ -392,6 +392,11 @@ public class MBPortletDataHandlerImpl extends BasePortletDataHandler {
 			}
 		}
 
+		MBThread thread = message.getThread();
+
+		messageElement.addAttribute(
+			"question", String.valueOf(thread.getQuestion()));
+
 		portletDataContext.addClassedModel(
 			messageElement, path, message, _NAMESPACE);
 	}
@@ -802,6 +807,14 @@ public class MBPortletDataHandlerImpl extends BasePortletDataHandler {
 					message.getBody(), message.getFormat(), inputStreamOVPs,
 					message.getAnonymous(), message.getPriority(),
 					message.getAllowPingbacks(), serviceContext);
+			}
+
+			importedMessage.setAnswer(message.getAnswer());
+
+			if (importedMessage.isRoot()) {
+				MBThreadLocalServiceUtil.updateQuestion(
+					importedMessage.getThreadId(), Boolean.valueOf(
+						messageElement.attributeValue("question")));
 			}
 
 			threadPKs.put(message.getThreadId(), importedMessage.getThreadId());

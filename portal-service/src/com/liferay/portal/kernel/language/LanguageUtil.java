@@ -201,6 +201,21 @@ public class LanguageUtil {
 		return getLanguage().getLocale(languageCode);
 	}
 
+	public static String getTimeDescription(Locale locale, long milliseconds) {
+		return getLanguage().getTimeDescription(locale, milliseconds);
+	}
+
+	public static String getTimeDescription(
+		Locale locale, long milliseconds, boolean approximate) {
+
+		return getLanguage().getTimeDescription(
+			locale, milliseconds, approximate);
+	}
+
+	public static String getTimeDescription(Locale locale, Long milliseconds) {
+		return getLanguage().getTimeDescription(locale, milliseconds);
+	}
+
 	public static String getTimeDescription(
 		PageContext pageContext, long milliseconds) {
 

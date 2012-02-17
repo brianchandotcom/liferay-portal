@@ -443,6 +443,41 @@ public class LanguageImpl implements Language {
 		return _getInstance()._getLocale(languageCode);
 	}
 
+	public String getTimeDescription(Locale locale, long milliseconds) {
+		return getTimeDescription(locale, milliseconds, false);
+	}
+
+	public String getTimeDescription(
+		Locale locale, long milliseconds, boolean approximate) {
+
+		String description = Time.getDescription(milliseconds, approximate);
+
+		String value = null;
+
+		try {
+			int pos = description.indexOf(CharPool.SPACE);
+
+			String x = description.substring(0, pos);
+
+			value = x.concat(StringPool.SPACE).concat(
+				get(
+					locale,
+					description.substring(
+						pos + 1, description.length()).toLowerCase()));
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
+		}
+
+		return value;
+	}
+
+	public String getTimeDescription(Locale locale, Long milliseconds) {
+		return getTimeDescription(locale, milliseconds.longValue());
+	}
+
 	public String getTimeDescription(
 		PageContext pageContext, long milliseconds) {
 

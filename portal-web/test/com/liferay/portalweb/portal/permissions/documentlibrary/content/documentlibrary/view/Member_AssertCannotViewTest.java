@@ -50,7 +50,7 @@ public class Member_AssertCannotViewTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
-				"You do not have the required permissions."),
+				"You do not have the roles required to access this portlet."),
 			selenium.getText("//div[@class='portlet-msg-error']"));
 	}
 }

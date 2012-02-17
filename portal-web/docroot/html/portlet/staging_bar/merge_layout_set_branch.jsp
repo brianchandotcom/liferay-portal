@@ -59,7 +59,7 @@ if (layoutSetBranches.contains(layoutSetBranch)) {
 
 				<liferay-ui:search-container-column-text
 					name="branch"
-					property="name"
+					value="<%= LanguageUtil.get(pageContext, curLayoutSetBranch.getName()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text

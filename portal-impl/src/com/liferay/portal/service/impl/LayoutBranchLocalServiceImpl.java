@@ -41,6 +41,8 @@ public class LayoutBranchLocalServiceImpl
 			boolean master, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		validate(0, layoutSetBranchId, plid, name);
+
 		User user = userPersistence.findByPrimaryKey(
 			serviceContext.getUserId());
 		LayoutSetBranch layoutSetBranch =
@@ -73,10 +75,6 @@ public class LayoutBranchLocalServiceImpl
 
 		LayoutRevision layoutRevision =
 			layoutRevisionPersistence.findByPrimaryKey(layoutRevisionId);
-
-		validate(
-			0, layoutRevision.getLayoutSetBranchId(), layoutRevision.getPlid(),
-			name);
 
 		LayoutBranch layoutBranch = addLayoutBranch(
 			layoutRevision.getLayoutSetBranchId(), layoutRevision.getPlid(),

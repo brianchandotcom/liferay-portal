@@ -19,7 +19,12 @@ import com.liferay.portal.NoSuchLayoutSetBranchException;
 import com.liferay.portal.RequiredLayoutSetBranchException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.staging.StagingUtil;
+import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Image;
@@ -37,8 +42,10 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.LayoutSetBranchLocalServiceBaseImpl;
 
+import java.text.Format;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Raymond Augé
@@ -378,17 +385,46 @@ public class LayoutSetBranchLocalServiceImpl
 		LayoutSetBranch layoutSetBranch =
 			layoutSetBranchPersistence.findByPrimaryKey(layoutSetBranchId);
 
+		LayoutSetBranch mergeLayoutSetBranch =
+			layoutSetBranchPersistence.findByPrimaryKey(mergeLayoutSetBranchId);
+
 		List<LayoutRevision> layoutRevisions =
 			layoutRevisionLocalService.getLayoutRevisions(
 				mergeLayoutSetBranchId, true);
 
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+		serviceContext.setWorkflowAction(WorkflowConstants.STATUS_DRAFT);
 
-		for (LayoutRevision layoutRevision : layoutRevisions) {
+		Locale locale = serviceContext.getLocale();
+
+		Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
+			locale);
+		
+		String date = dateFormatDateTime.format(new Date());
+		
+		for (LayoutRevision layoutRevision : layoutRevisions) {					
+			String layoutBranchName = getLayoutBranchName(
+				layoutSetBranch.getLayoutSetBranchId(), locale,
+				layoutRevision.getLayoutBranch().getName(),
+				mergeLayoutSetBranch.getName(), layoutRevision.getPlid());
+
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(mergeLayoutSetBranch.getDescription());
+			sb.append(StringPool.SPACE);
+			sb.append(LanguageUtil.format(
+				locale,"merged-from-x-x",
+				new String[] {mergeLayoutSetBranch.getName(), date}));
+			
+			LayoutBranch layoutBranch = 
+				layoutBranchLocalService.addLayoutBranch(
+					layoutSetBranch.getLayoutSetBranchId(),
+					layoutRevision.getPlid(), layoutBranchName, sb.toString(),
+					false, serviceContext);
+
 			layoutRevisionLocalService.addLayoutRevision(
 				layoutRevision.getUserId(),
 				layoutSetBranch.getLayoutSetBranchId(),
-				layoutRevision.getLayoutBranchId(),
+				layoutBranch.getLayoutBranchId(),
 				LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID,
 				false, layoutRevision.getPlid(),
 				layoutRevision.getLayoutRevisionId(),
@@ -425,6 +461,43 @@ public class LayoutSetBranchLocalServiceImpl
 		layoutSetBranchPersistence.update(layoutSetBranch, false);
 
 		return layoutSetBranch;
+	}
+	
+	protected String getLayoutBranchName(
+			long layoutSetBranchId, Locale locale, String mergeBranchName,
+			String mergeLayoutSetBranchName, long plid)
+		throws SystemException {
+		
+		LayoutBranch layoutBranch =
+			layoutBranchPersistence.fetchByL_P_N(
+				layoutSetBranchId, plid, mergeBranchName);
+
+		if (layoutBranch == null) {
+			return mergeBranchName;
+		}
+		
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(LanguageUtil.get(locale, mergeBranchName));
+		sb.append(StringPool.SPACE);
+		sb.append(StringPool.OPEN_PARENTHESIS);
+		sb.append(LanguageUtil.get(locale, mergeLayoutSetBranchName));
+		sb.append(StringPool.CLOSE_PARENTHESIS);
+		
+		String layoutBranchName = sb.toString();
+	
+		for (int i = 1;; i++) {
+			layoutBranch = layoutBranchPersistence.fetchByL_P_N(
+				layoutSetBranchId, plid, layoutBranchName);
+
+			if (layoutBranch == null) {
+				break;
+			}
+
+			layoutBranchName = sb.toString() + StringPool.SPACE + i;
+		}
+		
+		return layoutBranchName;
 	}
 
 	protected void validate(

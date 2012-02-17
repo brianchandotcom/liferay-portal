@@ -110,6 +110,13 @@ public interface Language {
 
 	public Locale getLocale(String languageCode);
 
+	public String getTimeDescription(Locale locale, long milliseconds);
+
+	public String getTimeDescription(
+		Locale locale, long milliseconds, boolean approximate);
+
+	public String getTimeDescription(Locale locale, Long milliseconds);
+
 	public String getTimeDescription(
 		PageContext pageContext, long milliseconds);
 

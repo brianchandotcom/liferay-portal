@@ -149,6 +149,12 @@ public class WikiPagePermission {
 		}
 
 		if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
+			if (!WikiNodePermission.contains(
+					permissionChecker, page.getNode(), ActionKeys.VIEW)) {
+
+				return false;
+			}
+
 			WikiPage parentPage = page.getParentPage();
 
 			if ((parentPage != null) &&

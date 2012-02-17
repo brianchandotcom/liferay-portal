@@ -181,7 +181,8 @@ public class ProcessExecutor {
 			return _processOutputStream;
 		}
 
-		public static void setProcessOutputStream(
+		// This method should only be called inside subprocess main.
+		private static void setProcessOutputStream(
 			ProcessOutputStream processOutputStream) {
 
 			_processOutputStream = processOutputStream;

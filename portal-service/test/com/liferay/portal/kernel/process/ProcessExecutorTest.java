@@ -290,6 +290,10 @@ public class ProcessExecutorTest extends TestCase {
 
 		processExecutor.destroy();
 
+		// Destroy after destroyed
+
+		processExecutor.destroy();
+
 		assertNull(_getExecutorService());
 	}
 

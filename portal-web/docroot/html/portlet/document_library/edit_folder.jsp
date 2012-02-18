@@ -142,7 +142,7 @@ if (workflowEnabled) {
 			}
 			%>
 
-			<aui:field-wrapper label='<%= rootFolder ? "" : (workflowEnabled ? "document-type-restrictions-and-workflow" : "document-type-restrictions") %>' helpMessage='<%= rootFolder ? "" : "document-type-restrictions-help" %>'>
+			<aui:field-wrapper helpMessage='<%= rootFolder ? "" : "document-type-restrictions-help" %>' label='<%= rootFolder ? "" : (workflowEnabled ? "document-type-restrictions-and-workflow" : "document-type-restrictions") %>'>
 				<c:if test="<%= !rootFolder %>">
 					<aui:input checked="<%= !dlFolder.isOverrideFileEntryTypes() %>" id="useFileEntryTypes" label='<%= workflowEnabled ? "use-document-type-restrictions-and-workflow-of-the-parent-folder" : "use-document-type-restrictions-of-the-parent-folder" %>' name="overrideFileEntryTypes" type="radio" value="<%= false %>" />
 
@@ -185,8 +185,8 @@ if (workflowEnabled) {
 
 					<c:if test="<%= !rootFolder %>">
 						<liferay-ui:search-container
-							id='<%= renderResponse.getNamespace() + "fileEntryTypeSearchContainer" %>'
 							headerNames="<%= headerNames %>"
+							id='<%= renderResponse.getNamespace() + "fileEntryTypeSearchContainer" %>'
 						>
 							<liferay-ui:search-container-results
 								results="<%= fileEntryTypes %>"
@@ -253,7 +253,7 @@ if (workflowEnabled) {
 							url='<%= "javascript:" + renderResponse.getNamespace() + "openFileEntryTypeSelector();" %>'
 						/>
 
-						<aui:select cssClass='<%= !fileEntryTypes.isEmpty() ? "default-document-type" : "default-document-type aui-helper-hidden" %>' label="default-document-type" helpMessage="default-document-type-help" name="defaultFileEntryTypeId">
+						<aui:select cssClass='<%= !fileEntryTypes.isEmpty() ? "default-document-type" : "default-document-type aui-helper-hidden" %>' helpMessage="default-document-type-help" label="default-document-type" name="defaultFileEntryTypeId">
 
 							<%
 							for (DLFileEntryType fileEntryType : fileEntryTypes) {

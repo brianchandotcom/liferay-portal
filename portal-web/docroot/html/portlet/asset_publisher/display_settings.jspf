@@ -81,7 +81,7 @@
 
 	<aui:input name="preferences--showAvailableLocales--" type="checkbox" value="<%= showAvailableLocales %>" />
 
-	<aui:input label="set-as-the-default-asset-publisher-for-this-page" helpMessage="set-as-the-default-asset-publisher-for-this-page-help" name="defaultAssetPublisher" type="checkbox" value="<%= defaultAssetPublisher %>" />
+	<aui:input helpMessage="set-as-the-default-asset-publisher-for-this-page-help" label="set-as-the-default-asset-publisher-for-this-page" name="defaultAssetPublisher" type="checkbox" value="<%= defaultAssetPublisher %>" />
 
 	<aui:field-wrapper helpMessage='<%= !openOfficeServerEnabled ? "enabling-openoffice-integration-provides-document-conversion-functionality" : StringPool.BLANK %>' label="enable-conversion-to">
 		<div class="aui-field-row">
@@ -177,13 +177,13 @@
 		%>
 
 		<liferay-ui:input-move-boxes
-			leftTitle="current"
-			rightTitle="available"
 			leftBoxName="currentMetadataFields"
-			rightBoxName="availableMetadataFields"
-			leftReorder="true"
 			leftList="<%= leftList %>"
+			leftReorder="true"
+			leftTitle="current"
+			rightBoxName="availableMetadataFields"
 			rightList="<%= rightList %>"
+			rightTitle="available"
 		/>
 	</aui:field-wrapper>
 </aui:fieldset>

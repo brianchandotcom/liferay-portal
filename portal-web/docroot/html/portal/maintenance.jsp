@@ -28,7 +28,7 @@ if (session.getId().equals(MaintenanceUtil.getSessionId())) {
 <html>
 
 <head>
-	<meta http-equiv="refresh" content="30; url=<%= PortalUtil.getPortalURL(request) %>">
+	<meta content="30; url=<%= PortalUtil.getPortalURL(request) %>" http-equiv="refresh">
 </head>
 
 <body>

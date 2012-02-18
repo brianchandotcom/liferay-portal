@@ -104,9 +104,9 @@ request.setAttribute("record_set_action.jsp-selRecordSet", selRecordSet);
 
 			</aui:select>
 
-			<aui:input helpMessage="check-to-allow-users-to-add-records-to-the-list" name="editable" type="checkbox" value="<%= editable %>" onChange='<%= "document." + renderResponse.getNamespace() + "fm." + renderResponse.getNamespace() + "editable.value = this.checked;" %>' />
+			<aui:input helpMessage="check-to-allow-users-to-add-records-to-the-list" name="editable" onChange='<%= "document." + renderResponse.getNamespace() + "fm." + renderResponse.getNamespace() + "editable.value = this.checked;" %>' type="checkbox" value="<%= editable %>" />
 
-			<aui:input helpMessage="check-to-view-the-list-records-in-a-spreadsheet" label="spreadsheet-view" name="spreadsheet" type="checkbox" value="<%= spreadsheet %>" onChange='<%= "document." + renderResponse.getNamespace() + "fm." + renderResponse.getNamespace() + "spreadsheet.value = this.checked;" %>' />
+			<aui:input helpMessage="check-to-view-the-list-records-in-a-spreadsheet" label="spreadsheet-view" name="spreadsheet" onChange='<%= "document." + renderResponse.getNamespace() + "fm." + renderResponse.getNamespace() + "spreadsheet.value = this.checked;" %>' type="checkbox" value="<%= spreadsheet %>" />
 		</aui:fieldset>
 	</c:if>
 

@@ -30,7 +30,7 @@ if (organizationId > 0) {
 }
 %>
 
-<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>" var="organizationSelectorURL">
+<portlet:renderURL var="organizationSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="struts_action" value="/portlet_configuration/select_organization" />
 	<portlet:param name="tabs1" value="organizations" />
 </portlet:renderURL>

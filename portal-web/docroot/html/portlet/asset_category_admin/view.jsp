@@ -73,7 +73,7 @@
 		<aui:layout cssClass="categories-admin-content">
 			<aui:column columnWidth="25" cssClass="vocabulary-list-container">
 				<div class="results-header">
-					<aui:input cssClass="select-vocabularies" inline="<%= true %>" label="" name="checkAllVocabularies" type="checkbox" title='<%= LanguageUtil.get(pageContext, "check-all-vocabularies") %>' />
+					<aui:input cssClass="select-vocabularies" inline="<%= true %>" label="" name="checkAllVocabularies" title='<%= LanguageUtil.get(pageContext, "check-all-vocabularies") %>' type="checkbox" />
 
 					<liferay-ui:message key="vocabularies" />
 				</div>
@@ -85,7 +85,7 @@
 
 			<aui:column columnWidth="75" cssClass="vocabulary-categories-container">
 				<div class="results-header">
-					<aui:input cssClass="select-categories" inline="<%= true %>" label="" name="checkAllCategories" type="checkbox" title='<%= LanguageUtil.get(pageContext, "check-all-categories") %>' />
+					<aui:input cssClass="select-categories" inline="<%= true %>" label="" name="checkAllCategories" title='<%= LanguageUtil.get(pageContext, "check-all-categories") %>' type="checkbox" />
 
 					<liferay-ui:message key="categories" />
 				</div>

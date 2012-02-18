@@ -146,7 +146,7 @@ if (folder != null) {
 								</a>
 							</c:if>
 
-							<a class="browse-folder" data-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= rootFolderId %>" data-navigation="home" data-view-folders="<%= Boolean.FALSE.toString() %>" data-title="<%= LanguageUtil.get(pageContext, "home") %>" href="<%= viewDocumentsHomeURL.toString() %>">
+							<a class="browse-folder" data-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= rootFolderId %>" data-navigation="home" data-title="<%= LanguageUtil.get(pageContext, "home") %>" data-view-folders="<%= Boolean.FALSE.toString() %>" href="<%= viewDocumentsHomeURL.toString() %>">
 								<liferay-ui:icon image="../aui/home" message="" />
 
 								<span class="entry-title">
@@ -240,7 +240,7 @@ if (folder != null) {
 
 								<li class="folder file-entry-type <%= (fileEntryTypeId == fileEntryType.getFileEntryTypeId()) ? "selected" : StringPool.BLANK %>">
 									<a class="browse-folder" data-file-entry-type-id="<%= fileEntryType.getFileEntryTypeId() %>" data-view-folders="<%= Boolean.FALSE.toString() %>" href="<%= viewFileEntryTypeURL.toString() %>">
-										<liferay-ui:icon message="" image="copy" />
+										<liferay-ui:icon image="copy" message="" />
 
 										<span class="entry-title">
 											<%= fileEntryType.getName() %>
@@ -327,7 +327,7 @@ if (folder != null) {
 							</a>
 
 							<a class="browse-folder" data-direction-right="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= String.valueOf(parentFolderId) %>" href="<%= viewURL.toString() %>">
-								<liferay-ui:icon src='<%= themeDisplay.getPathThemeImages() + "/arrows/01_up.png" %>' message="up" />
+								<liferay-ui:icon message="up" src='<%= themeDisplay.getPathThemeImages() + "/arrows/01_up.png" %>' />
 
 								<%= LanguageUtil.get(pageContext, "up") %>
 							</a>
@@ -362,7 +362,7 @@ if (folder != null) {
 									</a>
 								</c:if>
 
-								<a class="browse-folder" data-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= String.valueOf(curFolder.getFolderId()) %>" data-view-folders="<%= Boolean.FALSE.toString() %>" data-title="<%= curFolder.getName() %>" href="<%= viewURL.toString() %>">
+								<a class="browse-folder" data-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= String.valueOf(curFolder.getFolderId()) %>" data-title="<%= curFolder.getName() %>" data-view-folders="<%= Boolean.FALSE.toString() %>" href="<%= viewURL.toString() %>">
 									<c:choose>
 										<c:when test="<%= (foldersCount + fileEntriesCount) > 0 %>">
 											<liferay-ui:icon image="folder_full_document" />

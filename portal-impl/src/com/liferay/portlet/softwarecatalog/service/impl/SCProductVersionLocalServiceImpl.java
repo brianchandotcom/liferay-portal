@@ -16,6 +16,8 @@ package com.liferay.portlet.softwarecatalog.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -102,7 +104,14 @@ public class SCProductVersionLocalServiceImpl
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(SCProductEntry.class);
 
-		indexer.reindex(productEntry);
+		if (indexer != null) {
+			indexer.reindex(productEntry);
+		}
+		else {
+			_log.error(
+				"No indexer for " + SCProductEntry.class.getSimpleName() +
+					" was found");
+		}
 
 		return productVersion;
 	}
@@ -209,7 +218,14 @@ public class SCProductVersionLocalServiceImpl
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(SCProductEntry.class);
 
-		indexer.reindex(productEntry);
+		if (indexer != null) {
+			indexer.reindex(productEntry);
+		}
+		else {
+			_log.error(
+				"No indexer for " + SCProductEntry.class.getSimpleName() +
+					" was found");
+		}
 
 		return productVersion;
 	}
@@ -275,5 +291,8 @@ public class SCProductVersionLocalServiceImpl
 			throw new ProductVersionFrameworkVersionException();
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		SCProductVersionLocalServiceImpl.class);
 
 }

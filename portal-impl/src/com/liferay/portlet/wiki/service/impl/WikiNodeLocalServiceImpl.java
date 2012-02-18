@@ -181,7 +181,14 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(WikiPage.class);
 
-		indexer.delete(node);
+		if (indexer != null) {
+			indexer.delete(node);
+		}
+		else {
+			_log.error(
+				"No indexer for " + WikiPage.class.getSimpleName() +
+					" was found");
+		}
 
 		// Subscriptions
 

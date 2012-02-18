@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -94,7 +96,14 @@ public class OrganizationLocalServiceImpl
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(Organization.class);
 
-		indexer.reindex(organizationIds);
+		if (indexer != null) {
+			indexer.reindex(organizationIds);
+		}
+		else {
+			_log.error(
+				"No indexer for " + Organization.class.getSimpleName() +
+					" was found");
+		}
 
 		PermissionCacheUtil.clearCache();
 	}
@@ -217,7 +226,14 @@ public class OrganizationLocalServiceImpl
 			Indexer indexer = IndexerRegistryUtil.getIndexer(
 				Organization.class);
 
-			indexer.reindex(organization);
+			if (indexer != null) {
+				indexer.reindex(organization);
+			}
+			else {
+				_log.error(
+					"No indexer for " + Organization.class.getSimpleName() +
+						" was found");
+			}
 		}
 
 		return organization;
@@ -420,7 +436,14 @@ public class OrganizationLocalServiceImpl
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(Organization.class);
 
-		indexer.delete(organization);
+		if (indexer != null) {
+			indexer.delete(organization);
+		}
+		else {
+			_log.error(
+				"No indexer for " + Organization.class.getSimpleName() +
+					" was found");
+		}
 	}
 
 	/**
@@ -1337,7 +1360,18 @@ public class OrganizationLocalServiceImpl
 			Indexer indexer = IndexerRegistryUtil.getIndexer(
 				Organization.class);
 
-			return indexer.search(searchContext);
+			Hits hits = null;
+
+			if (indexer != null) {
+				hits = indexer.search(searchContext);
+			}
+			else {
+				_log.error(
+					"No indexer for " + Organization.class.getSimpleName() +
+						" was found");
+			}
+
+			return hits;
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -1451,7 +1485,14 @@ public class OrganizationLocalServiceImpl
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(Organization.class);
 
-		indexer.reindex(organizationIds);
+		if (indexer != null) {
+			indexer.reindex(organizationIds);
+		}
+		else {
+			_log.error(
+				"No indexer for " + Organization.class.getSimpleName() +
+					" was found");
+		}
 
 		PermissionCacheUtil.clearCache();
 	}
@@ -1471,7 +1512,14 @@ public class OrganizationLocalServiceImpl
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(Organization.class);
 
-		indexer.reindex(organizationIds);
+		if (indexer != null) {
+			indexer.reindex(organizationIds);
+		}
+		else {
+			_log.error(
+				"No indexer for " + Organization.class.getSimpleName() +
+					" was found");
+		}
 
 		PermissionCacheUtil.clearCache();
 	}
@@ -1624,13 +1672,21 @@ public class OrganizationLocalServiceImpl
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(Organization.class);
 
-		if (oldParentOrganizationId != parentOrganizationId) {
-			long[] organizationIds = getReindexOrganizationIds(organization);
+		if (indexer != null) {
+			if (oldParentOrganizationId != parentOrganizationId) {
+				long[] organizationIds =
+					getReindexOrganizationIds(organization);
 
-			indexer.reindex(organizationIds);
+				indexer.reindex(organizationIds);
+			}
+			else {
+				indexer.reindex(organization);
+			}
 		}
 		else {
-			indexer.reindex(organization);
+			_log.error(
+				"No indexer for " + Organization.class.getSimpleName() +
+					" was found");
 		}
 
 		return organization;
@@ -1867,5 +1923,8 @@ public class OrganizationLocalServiceImpl
 			companyId, 0, parentOrganizationId, name, type, countryId,
 			statusId);
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		OrganizationLocalServiceImpl.class);
 
 }

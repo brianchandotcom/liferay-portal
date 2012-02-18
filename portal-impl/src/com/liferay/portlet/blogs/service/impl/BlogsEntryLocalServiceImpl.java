@@ -294,7 +294,14 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(BlogsEntry.class);
 
-		indexer.delete(entry);
+		if (indexer != null) {
+			indexer.delete(entry);
+		}
+		else {
+			_log.error(
+				"No indexer for " + BlogsEntry.class.getSimpleName() +
+					" was found");
+		}
 
 		// Workflow
 
@@ -754,7 +761,14 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 			// Indexer
 
-			indexer.reindex(entry);
+			if (indexer != null) {
+				indexer.reindex(entry);
+			}
+			else {
+				_log.error(
+					"No indexer for " + entry.getClass().getSimpleName() +
+						" was found");
+			}
 
 			// Subscriptions
 
@@ -781,7 +795,14 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 			// Indexer
 
-			indexer.delete(entry);
+			if (indexer != null) {
+				indexer.delete(entry);
+			}
+			else {
+				_log.error(
+					"No indexer for " + entry.getClass().getSimpleName() +
+						" was found");
+			}
 		}
 
 		return entry;

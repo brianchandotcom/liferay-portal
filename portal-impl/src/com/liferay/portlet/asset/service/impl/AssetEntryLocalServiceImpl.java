@@ -366,7 +366,12 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 			Indexer indexer = IndexerRegistryUtil.getIndexer(className);
 
-			indexer.reindex(className, entry.getClassPK());
+			if (indexer != null) {
+				indexer.reindex(className, entry.getClassPK());
+			}
+			else {
+				_log.error("No indexer for " + className + " was found");
+			}
 		}
 	}
 

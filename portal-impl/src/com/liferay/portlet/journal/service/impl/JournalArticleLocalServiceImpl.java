@@ -319,7 +319,15 @@ public class JournalArticleLocalServiceImpl
 				Indexer indexer = IndexerRegistryUtil.getIndexer(
 					JournalArticle.class);
 
-				indexer.reindex(article);
+				if (indexer != null) {
+					indexer.reindex(article);
+				}
+				else {
+					_log.error(
+						"No indexer for " +
+							JournalArticle.class.getSimpleName() +
+								" was found");
+				}
 			}
 		}
 		else {
@@ -417,7 +425,15 @@ public class JournalArticleLocalServiceImpl
 				Indexer indexer = IndexerRegistryUtil.getIndexer(
 					JournalArticle.class);
 
-				indexer.delete(article);
+				if (indexer != null) {
+					indexer.delete(article);
+				}
+				else {
+					_log.error(
+						"No indexer for " +
+							JournalArticle.class.getSimpleName() +
+								" was found");
+				}
 			}
 
 			updatePreviousApprovedArticle(article);
@@ -1713,7 +1729,18 @@ public class JournalArticleLocalServiceImpl
 			Indexer indexer = IndexerRegistryUtil.getIndexer(
 				JournalArticle.class);
 
-			return indexer.search(searchContext);
+			Hits hits = null;
+
+			if (indexer != null) {
+				hits = indexer.search(searchContext);
+			}
+			else {
+				_log.error(
+					"No indexer for " + JournalArticle.class.getSimpleName() +
+						" was found");
+			}
+
+			return hits;
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -2097,7 +2124,14 @@ public class JournalArticleLocalServiceImpl
 			Indexer indexer = IndexerRegistryUtil.getIndexer(
 				JournalArticle.class);
 
-			indexer.reindex(article);
+			if (indexer != null) {
+				indexer.reindex(article);
+			}
+			else {
+				_log.error(
+					"No indexer for " + JournalArticle.class.getSimpleName() +
+						" was found");
+			}
 		}
 
 		return article;
@@ -2442,7 +2476,15 @@ public class JournalArticleLocalServiceImpl
 				Indexer indexer = IndexerRegistryUtil.getIndexer(
 					JournalArticle.class);
 
-				indexer.reindex(article);
+				if (indexer != null) {
+					indexer.reindex(article);
+				}
+				else {
+					_log.error(
+						"No indexer for " +
+							JournalArticle.class.getSimpleName() +
+								" was found");
+				}
 			}
 			else if (oldStatus == WorkflowConstants.STATUS_APPROVED) {
 				updatePreviousApprovedArticle(article);
@@ -3241,7 +3283,15 @@ public class JournalArticleLocalServiceImpl
 				Indexer indexer = IndexerRegistryUtil.getIndexer(
 					JournalArticle.class);
 
-				indexer.delete(article);
+				if (indexer != null) {
+					indexer.delete(article);
+				}
+				else {
+					_log.error(
+						"No indexer for " +
+							JournalArticle.class.getSimpleName() +
+								" was found");
+				}
 			}
 
 			assetEntryLocalService.updateVisible(
@@ -3259,7 +3309,15 @@ public class JournalArticleLocalServiceImpl
 				Indexer indexer = IndexerRegistryUtil.getIndexer(
 					JournalArticle.class);
 
-				indexer.reindex(previousApprovedArticle);
+				if (indexer != null) {
+					indexer.reindex(previousApprovedArticle);
+				}
+				else {
+					_log.error(
+						"No indexer for " +
+							JournalArticle.class.getSimpleName() +
+								" was found");
+				}
 			}
 		}
 	}

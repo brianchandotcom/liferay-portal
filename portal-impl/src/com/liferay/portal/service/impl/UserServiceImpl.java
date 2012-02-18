@@ -20,6 +20,8 @@ import com.liferay.portal.UserEmailAddressException;
 import com.liferay.portal.UserScreenNameException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -561,7 +563,14 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			if (indexingEnabled) {
 				Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
-				indexer.reindex(user);
+				if (indexer != null) {
+					indexer.reindex(user);
+				}
+				else {
+					_log.error(
+						"No indexer for " + User.class.getSimpleName() +
+							" was found");
+				}
 			}
 
 			return user;
@@ -1817,5 +1826,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			throw new UserScreenNameException();
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(UserServiceImpl.class);
 
 }

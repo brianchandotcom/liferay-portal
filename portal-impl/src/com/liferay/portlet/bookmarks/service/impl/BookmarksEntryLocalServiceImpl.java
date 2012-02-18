@@ -16,6 +16,8 @@ package com.liferay.portlet.bookmarks.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -104,7 +106,14 @@ public class BookmarksEntryLocalServiceImpl
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(BookmarksEntry.class);
 
-		indexer.reindex(entry);
+		if (indexer != null) {
+			indexer.reindex(entry);
+		}
+		else {
+			_log.error(
+				"No indexer for " + BookmarksEntry.class.getSimpleName() +
+					" was found");
+		}
 
 		return entry;
 	}
@@ -148,7 +157,14 @@ public class BookmarksEntryLocalServiceImpl
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(BookmarksEntry.class);
 
-		indexer.delete(entry);
+		if (indexer != null) {
+			indexer.delete(entry);
+		}
+		else {
+			_log.error(
+				"No indexer for " + BookmarksEntry.class.getSimpleName() +
+					" was found");
+		}
 	}
 
 	public void deleteEntry(long entryId)
@@ -315,7 +331,14 @@ public class BookmarksEntryLocalServiceImpl
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(BookmarksEntry.class);
 
-		indexer.reindex(entry);
+		if (indexer != null) {
+			indexer.reindex(entry);
+		}
+		else {
+			_log.error(
+				"No indexer for " + BookmarksEntry.class.getSimpleName() +
+					" was found");
+		}
 
 		return entry;
 	}
@@ -344,5 +367,8 @@ public class BookmarksEntryLocalServiceImpl
 			throw new EntryURLException();
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		BookmarksEntryLocalServiceImpl.class);
 
 }

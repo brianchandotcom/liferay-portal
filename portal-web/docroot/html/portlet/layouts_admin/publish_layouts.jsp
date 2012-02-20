@@ -175,7 +175,7 @@ if (selGroup.isStaged() && selGroup.isStagedRemotely()) {
 portletURL.setParameter("struts_action", "/layouts_admin/edit_layouts");
 portletURL.setParameter("pagesRedirect", currentURL);
 portletURL.setParameter("groupId", String.valueOf(liveGroupId));
-portletURL.setParameter("private", String.valueOf(privateLayout));
+portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 
 PortletURL selectURL = renderResponse.createRenderURL();
 
@@ -330,6 +330,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 					<liferay-util:param name="selectableTree" value="1" />
 					<liferay-util:param name="treeId" value="<%= treeKey %>" />
 					<liferay-util:param name="incomplete" value="<%= String.valueOf(false) %>" />
+					<liferay-util:param name="tabs1" value='<%= (privateLayout) ? "private-pages" : "public-pages" %>' />
 				</liferay-util:include>
 			</div>
 

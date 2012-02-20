@@ -16,6 +16,8 @@ package com.liferay.portlet.messageboards.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -208,7 +210,14 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(MBMessage.class);
 
-		indexer.delete(category);
+		if (indexer != null) {
+			indexer.delete(category);
+		}
+		else {
+			_log.error(
+				"No indexer for " + MBMessage.class.getSimpleName() +
+					" was found");
+		}
 
 		// Threads
 
@@ -550,7 +559,14 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 				Indexer indexer = IndexerRegistryUtil.getIndexer(
 					MBMessage.class);
 
-				indexer.reindex(message);
+				if (indexer != null) {
+					indexer.reindex(message);
+				}
+				else {
+					_log.error(
+						"No indexer for " + message.getClass().getSimpleName() +
+							" was found");
+				}
 			}
 		}
 
@@ -572,5 +588,8 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			throw new CategoryNameException();
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		MBCategoryLocalServiceImpl.class);
 
 }

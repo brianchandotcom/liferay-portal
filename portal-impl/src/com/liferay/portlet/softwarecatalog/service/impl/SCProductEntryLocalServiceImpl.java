@@ -16,6 +16,8 @@ package com.liferay.portlet.softwarecatalog.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.plugin.Version;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -144,7 +146,14 @@ public class SCProductEntryLocalServiceImpl
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(SCProductEntry.class);
 
-		indexer.reindex(productEntry);
+		if (indexer != null) {
+			indexer.reindex(productEntry);
+		}
+		else {
+			_log.error(
+				"No indexer for " + SCProductEntry.class.getSimpleName() +
+					" was found");
+		}
 
 		return productEntry;
 	}
@@ -255,7 +264,14 @@ public class SCProductEntryLocalServiceImpl
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(SCProductEntry.class);
 
-		indexer.delete(productEntry);
+		if (indexer != null) {
+			indexer.delete(productEntry);
+		}
+		else {
+			_log.error(
+				"No indexer for " + SCProductEntry.class.getSimpleName() +
+					" was found");
+		}
 	}
 
 	public List<SCProductEntry> getCompanyProductEntries(
@@ -445,7 +461,14 @@ public class SCProductEntryLocalServiceImpl
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(SCProductEntry.class);
 
-		indexer.reindex(productEntry);
+		if (indexer != null) {
+			indexer.reindex(productEntry);
+		}
+		else {
+			_log.error(
+				"No indexer for " + SCProductEntry.class.getSimpleName() +
+					" was found");
+		}
 
 		return productEntry;
 	}
@@ -699,5 +722,8 @@ public class SCProductEntryLocalServiceImpl
 			}
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		SCProductEntryLocalServiceImpl.class);
 
 }

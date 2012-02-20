@@ -16,6 +16,8 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -147,14 +149,21 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 				Indexer indexer = IndexerRegistryUtil.getIndexer(
 					Organization.class);
 
-				if (parentOrganizationId > 0) {
-					indexer.reindex(
-						new String[] {
-							String.valueOf(organization.getCompanyId())
-						});
+				if (indexer != null) {
+					if (parentOrganizationId > 0) {
+						indexer.reindex(
+							new String[] {
+								String.valueOf(organization.getCompanyId())
+							});
+					}
+					else {
+						indexer.reindex(organization);
+					}
 				}
 				else {
-					indexer.reindex(organization);
+					_log.error(
+						"No indexer for " + Organization.class.getSimpleName() +
+							" was found");
 				}
 			}
 
@@ -610,5 +619,8 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 			type, recursable, regionId, countryId, statusId, comments, site,
 			serviceContext);
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		OrganizationServiceImpl.class);
 
 }

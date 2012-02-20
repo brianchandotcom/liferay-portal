@@ -1096,7 +1096,14 @@ public class DLFileEntryLocalServiceImpl
 				Indexer indexer = IndexerRegistryUtil.getIndexer(
 					DLFileEntry.class);
 
-				indexer.delete(dlFileEntry);
+				if (indexer != null) {
+					indexer.delete(dlFileEntry);
+				}
+				else {
+					_log.error(
+						"No indexer for " + DLFileEntry.class.getSimpleName() +
+							" was found");
+				}
 			}
 		}
 
@@ -1360,7 +1367,14 @@ public class DLFileEntryLocalServiceImpl
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(DLFileEntry.class);
 
-		indexer.delete(dlFileEntry);
+		if (indexer != null) {
+			indexer.delete(dlFileEntry);
+		}
+		else {
+			_log.error(
+				"No indexer for " + DLFileEntry.class.getSimpleName() +
+					" was found");
+		}
 	}
 
 	protected String getExtension(String title, String sourceFileName) {
@@ -1496,7 +1510,14 @@ public class DLFileEntryLocalServiceImpl
 	protected void reindex(DLFileEntry dlFileEntry) throws SearchException {
 		Indexer indexer = IndexerRegistryUtil.getIndexer(DLFileEntry.class);
 
-		indexer.reindex(dlFileEntry);
+		if (indexer != null) {
+			indexer.reindex(dlFileEntry);
+		}
+		else {
+			_log.error(
+				"No indexer for " + DLFileEntry.class.getSimpleName() +
+					" was found");
+		}
 	}
 
 	protected void startWorkflowInstance(

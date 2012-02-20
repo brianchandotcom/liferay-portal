@@ -521,7 +521,14 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(MBMessage.class);
 
-		indexer.delete(message);
+		if (indexer != null) {
+			indexer.delete(message);
+		}
+		else {
+			_log.error(
+				"No indexer for " + MBMessage.class.getSimpleName() +
+					" was found");
+		}
 
 		// Attachments
 
@@ -1644,7 +1651,13 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			// Indexer
 
 			if (!message.isDiscussion()) {
-				indexer.reindex(message);
+				if (indexer != null) {
+					indexer.reindex(message);
+				}
+				else {
+					_log.error("No indexer for " +
+						message.getClass().getSimpleName() + " was found");
+				}
 			}
 
 			// Ping
@@ -1683,7 +1696,13 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 				// Indexer
 
-				indexer.delete(message);
+				if (indexer != null) {
+					indexer.delete(message);
+				}
+				else {
+					_log.error("No indexer for " +
+						message.getClass().getSimpleName() + " was found");
+				}
 			}
 		}
 

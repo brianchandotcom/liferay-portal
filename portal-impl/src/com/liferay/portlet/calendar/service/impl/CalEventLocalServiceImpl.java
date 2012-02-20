@@ -250,7 +250,14 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(CalEvent.class);
 
-		indexer.reindex(event);
+		if (indexer != null) {
+			indexer.reindex(event);
+		}
+		else {
+			_log.error(
+				"No indexer for " + CalEvent.class.getSimpleName() +
+					" was found");
+		}
 
 		// Pool
 
@@ -396,7 +403,14 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(CalEvent.class);
 
-		indexer.delete(event);
+		if (indexer != null) {
+			indexer.delete(event);
+		}
+		else {
+			_log.error(
+				"No indexer for " + CalEvent.class.getSimpleName() +
+					" was found");
+		}
 
 		// Pool
 
@@ -826,7 +840,14 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(CalEvent.class);
 
-		indexer.reindex(event);
+		if (indexer != null) {
+			indexer.reindex(event);
+		}
+		else {
+			_log.error(
+				"No indexer for " + CalEvent.class.getSimpleName() +
+					" was found");
+		}
 
 		// Pool
 

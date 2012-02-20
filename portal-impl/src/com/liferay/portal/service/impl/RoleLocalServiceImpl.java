@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.ImportExportThreadLocal;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.spring.aop.Skip;
@@ -161,7 +163,14 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			if (!ImportExportThreadLocal.isImportInProcess()) {
 				Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
-				indexer.reindex(userId);
+				if (indexer != null) {
+					indexer.reindex(userId);
+				}
+				else {
+					_log.error(
+						"No indexer for " + User.class.getSimpleName() +
+							" was found");
+				}
 			}
 		}
 
@@ -186,7 +195,14 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
-		indexer.reindex(userId);
+		if (indexer != null) {
+			indexer.reindex(userId);
+		}
+		else {
+			_log.error(
+				"No indexer for " + User.class.getSimpleName() +
+					" was found");
+		}
 
 		PermissionCacheUtil.clearCache();
 	}
@@ -1119,7 +1135,14 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
-		indexer.reindex(userId);
+		if (indexer != null) {
+			indexer.reindex(userId);
+		}
+		else {
+			_log.error(
+				"No indexer for " + User.class.getSimpleName() +
+					" was found");
+		}
 
 		PermissionCacheUtil.clearCache();
 	}
@@ -1143,7 +1166,14 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
-		indexer.reindex(userId);
+		if (indexer != null) {
+			indexer.reindex(userId);
+		}
+		else {
+			_log.error(
+				"No indexer for " + User.class.getSimpleName() +
+					" was found");
+		}
 
 		PermissionCacheUtil.clearCache();
 	}
@@ -1293,6 +1323,8 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		catch (NoSuchRoleException nsge) {
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(RoleLocalServiceImpl.class);
 
 	private Map<String, Role> _systemRolesMap = new HashMap<String, Role>();
 

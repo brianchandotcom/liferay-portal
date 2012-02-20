@@ -481,7 +481,14 @@ public class PortletImporter {
 
 				Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
-				indexer.reindex(userId);
+				if (indexer != null) {
+					indexer.reindex(userId);
+				}
+				else {
+					_log.error(
+						"No indexer for " + User.class.getSimpleName() +
+							" was found");
+				}
 			}
 		}
 

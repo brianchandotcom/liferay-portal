@@ -313,7 +313,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
-		indexer.reindex(userIds);
+		if (indexer != null) {
+			indexer.reindex(userIds);
+		}
+		else {
+			_log.error(
+				"No indexer for " + User.class.getSimpleName() +
+					" was found");
+		}
 
 		PermissionCacheUtil.clearCache();
 	}
@@ -334,7 +341,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
-		indexer.reindex(userIds);
+		if (indexer != null) {
+			indexer.reindex(userIds);
+		}
+		else {
+			_log.error(
+				"No indexer for " + User.class.getSimpleName() +
+					" was found");
+		}
 
 		PermissionCacheUtil.clearCache();
 	}
@@ -370,7 +384,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
-		indexer.reindex(userIds);
+		if (indexer != null) {
+			indexer.reindex(userIds);
+		}
+		else {
+			_log.error(
+				"No indexer for " + User.class.getSimpleName() +
+					" was found");
+		}
 
 		PermissionCacheUtil.clearCache();
 	}
@@ -391,7 +412,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
-		indexer.reindex(userIds);
+		if (indexer != null) {
+			indexer.reindex(userIds);
+		}
+		else {
+			_log.error(
+				"No indexer for " + User.class.getSimpleName() +
+					" was found");
+		}
 
 		PermissionCacheUtil.clearCache();
 	}
@@ -495,7 +523,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
-		indexer.reindex(userIds);
+		if (indexer != null) {
+			indexer.reindex(userIds);
+		}
+		else {
+			_log.error(
+				"No indexer for " + User.class.getSimpleName() +
+					" was found");
+		}
 
 		PermissionCacheUtil.clearCache();
 	}
@@ -1573,7 +1608,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
-		indexer.reindex(userId);
+		if (indexer != null) {
+			indexer.reindex(userId);
+		}
+		else {
+			_log.error(
+				"No indexer for " + User.class.getSimpleName() +
+					" was found");
+		}
 
 		PermissionCacheUtil.clearCache();
 	}
@@ -1611,7 +1653,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
-		indexer.delete(user);
+		if (indexer != null) {
+			indexer.delete(user);
+		}
+		else {
+			_log.error(
+				"No indexer for " + User.class.getSimpleName() +
+					" was found");
+		}
 
 		// Browser tracker
 
@@ -1741,7 +1790,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
-		indexer.reindex(userId);
+		if (indexer != null) {
+			indexer.reindex(userId);
+		}
+		else {
+			_log.error(
+				"No indexer for " + User.class.getSimpleName() +
+					" was found");
+		}
 
 		PermissionCacheUtil.clearCache();
 	}
@@ -3339,7 +3395,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
-		indexer.reindex(userIds);
+		if (indexer != null) {
+			indexer.reindex(userIds);
+		}
+		else {
+			_log.error(
+				"No indexer for " + User.class.getSimpleName() +
+					" was found");
+		}
 
 		PermissionCacheUtil.clearCache();
 	}
@@ -3365,7 +3428,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
-		indexer.reindex(userIds);
+		if (indexer != null) {
+			indexer.reindex(userIds);
+		}
+		else {
+			_log.error(
+				"No indexer for " + User.class.getSimpleName() +
+					" was found");
+		}
 
 		PermissionCacheUtil.clearCache();
 	}
@@ -3388,7 +3458,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
-		indexer.reindex(userIds);
+		if (indexer != null) {
+			indexer.reindex(userIds);
+		}
+		else {
+			_log.error(
+				"No indexer for " + User.class.getSimpleName() +
+					" was found");
+		}
 
 		PermissionCacheUtil.clearCache();
 	}
@@ -3417,7 +3494,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
-		indexer.reindex(userIds);
+		if (indexer != null) {
+			indexer.reindex(userIds);
+		}
+		else {
+			_log.error(
+				"No indexer for " + User.class.getSimpleName() +
+					" was found");
+		}
 
 		PermissionCacheUtil.clearCache();
 	}
@@ -3457,7 +3541,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
-		indexer.reindex(users);
+		if (indexer != null) {
+			indexer.reindex(users);
+		}
+		else {
+			_log.error(
+				"No indexer for " + User.class.getSimpleName() +
+					" was found");
+		}
 
 		PermissionCacheUtil.clearCache();
 	}
@@ -3483,7 +3574,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
-		indexer.reindex(userIds);
+		if (indexer != null) {
+			indexer.reindex(userIds);
+		}
+		else {
+			_log.error(
+				"No indexer for " + User.class.getSimpleName() +
+					" was found");
+		}
 
 		PermissionCacheUtil.clearCache();
 	}
@@ -3503,7 +3601,15 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
-		indexer.reindex(userIds);
+		if (indexer != null) {
+			indexer.reindex(userIds);
+
+		}
+		else {
+			_log.error(
+				"No indexer for " + User.class.getSimpleName() +
+					" was found");
+		}
 
 		PermissionCacheUtil.clearCache();
 	}
@@ -3523,7 +3629,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
-		indexer.reindex(userIds);
+		if (indexer != null) {
+			indexer.reindex(userIds);
+		}
+		else {
+			_log.error(
+				"No indexer for " + User.class.getSimpleName() +
+					" was found");
+		}
 
 		PermissionCacheUtil.clearCache();
 	}
@@ -3891,7 +4004,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 			Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
-			indexer.reindex(user);
+			if (indexer != null) {
+				indexer.reindex(user);
+			}
+			else {
+				_log.error(
+					"No indexer for " + User.class.getSimpleName() +
+						" was found");
+			}
 		}
 
 		user.setStatus(WorkflowConstants.STATUS_DRAFT);
@@ -4733,7 +4853,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		if ((serviceContext == null) || serviceContext.isIndexingEnabled()) {
 			Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
-			indexer.reindex(user);
+			if (indexer != null) {
+				indexer.reindex(user);
+			}
+			else {
+				_log.error(
+					"No indexer for " + User.class.getSimpleName() +
+						" was found");
+			}
 		}
 
 		// Email address verification
@@ -5096,7 +5223,15 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		Callable<Void> callable = new Callable<Void>() {
 
 			public Void call() throws Exception {
-				indexer.reindex(user);
+
+				if (indexer != null) {
+					indexer.reindex(user);
+				}
+				else {
+					_log.error(
+						"No indexer for " + User.class.getSimpleName() +
+							" was found");
+				}
 
 				return null;
 			}
@@ -5162,7 +5297,18 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 			Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
-			return indexer.search(searchContext);
+			Hits hits = null;
+
+			if (indexer != null) {
+				hits = indexer.search(searchContext);
+			}
+			else {
+				_log.error(
+					"No indexer for " + User.class.getSimpleName() +
+						" was found");
+			}
+
+			return hits;
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -5293,7 +5439,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		if (indexingEnabled) {
 			Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
-			indexer.reindex(new long[] {userId});
+			if (indexer != null) {
+				indexer.reindex(new long[] {userId});
+			}
+			else {
+				_log.error(
+					"No indexer for " + User.class.getSimpleName() +
+						" was found");
+			}
 		}
 
 		PermissionCacheUtil.clearCache();
@@ -5332,7 +5485,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		if (indexingEnabled) {
 			Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
-			indexer.reindex(new long[] {userId});
+			if (indexer != null) {
+				indexer.reindex(new long[] {userId});
+			}
+			else {
+				_log.error(
+					"No indexer for " + User.class.getSimpleName() +
+						" was found");
+			}
 		}
 
 		PermissionCacheUtil.clearCache();

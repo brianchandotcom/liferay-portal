@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.UserIdStrategy;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -519,7 +521,14 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
-		indexer.reindex(userId);
+		if (indexer != null) {
+			indexer.reindex(userId);
+		}
+		else {
+			_log.error(
+				"No indexer for " + User.class.getSimpleName() +
+					" was found");
+		}
 
 		PermissionCacheUtil.clearCache();
 	}
@@ -726,5 +735,8 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		catch (NoSuchUserGroupException nsuge) {
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		UserGroupLocalServiceImpl.class);
 
 }

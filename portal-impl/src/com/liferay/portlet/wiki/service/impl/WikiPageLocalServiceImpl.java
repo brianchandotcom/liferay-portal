@@ -16,6 +16,8 @@ package com.liferay.portlet.wiki.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -464,7 +466,14 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(WikiPage.class);
 
-		indexer.delete(page);
+		if (indexer != null) {
+			indexer.delete(page);
+		}
+		else {
+			_log.error(
+				"No indexer for " + WikiPage.class.getSimpleName() +
+					" was found");
+		}
 
 		// Attachments
 
@@ -1097,10 +1106,17 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(WikiPage.class);
 
-		indexer.delete(
-			new Object[] {page.getCompanyId(), page.getNodeId(), title});
+		if (indexer != null) {
+			indexer.delete(
+				new Object[] {page.getCompanyId(), page.getNodeId(), title});
 
-		indexer.reindex(page);
+			indexer.reindex(page);
+		}
+		else {
+			_log.error(
+				"No indexer for " + WikiPage.class.getSimpleName() +
+					" was found");
+		}
 	}
 
 	public void movePage(
@@ -1430,7 +1446,14 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 			Indexer indexer = IndexerRegistryUtil.getIndexer(WikiPage.class);
 
-			indexer.reindex(page);
+			if (indexer != null) {
+				indexer.reindex(page);
+			}
+			else {
+				_log.error(
+					"No indexer for " + WikiPage.class.getSimpleName() +
+						" was found");
+			}
 
 			// Cache
 
@@ -1758,5 +1781,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		validate(nodeId, content, format);
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		WikiPageLocalServiceImpl.class);
 
 }

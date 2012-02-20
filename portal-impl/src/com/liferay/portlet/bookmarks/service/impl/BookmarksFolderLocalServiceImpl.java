@@ -16,6 +16,8 @@ package com.liferay.portlet.bookmarks.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -299,7 +301,14 @@ public class BookmarksFolderLocalServiceImpl
 			Indexer indexer = IndexerRegistryUtil.getIndexer(
 				BookmarksEntry.class);
 
-			indexer.reindex(entry);
+			if (indexer != null) {
+				indexer.reindex(entry);
+			}
+			else {
+				_log.error(
+					"No indexer for " + BookmarksEntry.class.getSimpleName() +
+						" was found");
+			}
 		}
 
 		deleteFolder(fromFolder);
@@ -312,5 +321,8 @@ public class BookmarksFolderLocalServiceImpl
 			throw new FolderNameException();
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		BookmarksFolderLocalServiceImpl.class);
 
 }

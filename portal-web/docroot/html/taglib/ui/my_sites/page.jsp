@@ -198,6 +198,7 @@ List<Group> mySites = user.getMySites(true, max);
 
 								boolean showPrivateSiteStaging = false;
 								boolean showPublicSiteStaging = false;
+
 								long stagingGroupId = 0;
 
 								if (mySite.hasStagingGroup()) {
@@ -205,22 +206,18 @@ List<Group> mySites = user.getMySites(true, max);
 
 									stagingGroupId = stagingGroup.getGroupId();
 
-									if ((mySite.getPublicLayoutsPageCount() == 0) && stagingGroup.getPublicLayoutsPageCount() > 0) {
-										if (GroupPermissionUtil.contains(permissionChecker, mySite.getGroupId(), ActionKeys.VIEW_STAGING)) {
-											showPublicSiteStaging = true;
-										}
+									if ((mySite.getPublicLayoutsPageCount() == 0) && (stagingGroup.getPublicLayoutsPageCount() > 0) && GroupPermissionUtil.contains(permissionChecker, mySite.getGroupId(), ActionKeys.VIEW_STAGING)) {
+										showPublicSiteStaging = true;
 									}
 
-									if ((mySite.getPrivateLayoutsPageCount() == 0) && stagingGroup.getPrivateLayoutsPageCount() > 0) {
-										if (GroupPermissionUtil.contains(permissionChecker, mySite.getGroupId(), ActionKeys.VIEW_STAGING)) {
-											showPrivateSiteStaging = true;
-										}
+									if ((mySite.getPrivateLayoutsPageCount() == 0) && (stagingGroup.getPrivateLayoutsPageCount() > 0) && GroupPermissionUtil.contains(permissionChecker, mySite.getGroupId(), ActionKeys.VIEW_STAGING)) {
+										showPrivateSiteStaging = true;
 									}
 								}
 								%>
 
 								<c:if test="<%= showPublicSite && ((mySite.getPublicLayoutsPageCount() > 0) || showPublicSiteStaging) %>">
-									
+
 									<%
 									if (showPublicSiteStaging) {
 										portletURL.setParameter("groupId", String.valueOf(stagingGroupId));

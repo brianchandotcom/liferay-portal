@@ -67,6 +67,18 @@ public class QueryPos {
 		}
 	}
 
+	public void add(Date[] values) {
+		add(values, _DEFAULT_ARRAY_COUNT);
+	}
+
+	public void add(Date[] values, int count) {
+		for (int i = 0; i < values.length; i++) {
+			for (int j = 0; j < count; j++) {
+				add(CalendarUtil.getTimestamp(values[i]));
+			}
+		}
+	}
+
 	public void add(double value) {
 		_query.setDouble(_pos++, value);
 	}
@@ -229,6 +241,9 @@ public class QueryPos {
 		}
 		else if (clazz == Date.class) {
 			add(CalendarUtil.getTimestamp((Date)obj));
+		}
+		else if (clazz == Date[].class) {
+			add((Date[])obj);
 		}
 		else if (clazz == Double.class) {
 			add(((Double)obj).doubleValue());

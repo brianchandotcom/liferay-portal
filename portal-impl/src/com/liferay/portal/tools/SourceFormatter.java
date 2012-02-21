@@ -1275,6 +1275,28 @@ public class SourceFormatter {
 					"* Copyright (c) 2000-2012 Liferay, Inc."
 				});
 
+			if (line.startsWith(StringPool.SPACE) && !line.startsWith(" *")) {
+				if (!line.startsWith(StringPool.FOUR_SPACES)) {
+					while (line.startsWith(StringPool.SPACE)) {
+						line = StringUtil.replaceFirst(
+							line, StringPool.SPACE, StringPool.BLANK);
+					}
+				}
+				else {
+					int pos = 0;
+					String temp = line;
+
+					while (temp.startsWith(StringPool.FOUR_SPACES)) {
+						line = StringUtil.replaceFirst(
+							line, StringPool.FOUR_SPACES, StringPool.TAB);
+
+						pos++;
+
+						temp = line.substring(pos);
+					}
+				}
+			}
+
 			line = _replacePrimitiveWrapperInstantiation(
 				fileName, line, lineCount);
 

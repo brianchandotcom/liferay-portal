@@ -66,9 +66,9 @@ public class XMLMergerTask extends Task {
 		}
 	}
 
- 	private File _masterFile;
- 	private File _slaveFile;
- 	private File _outputFile;
- 	private String _type;
+	private File _masterFile;
+	private File _slaveFile;
+	private File _outputFile;
+	private String _type;
 
 }

@@ -26,7 +26,7 @@ import org.apache.velocity.runtime.resource.ResourceCache;
 public class LiferayResourceCache implements ResourceCache {
 
 	public Iterator<Object> enumerateKeys() {
- 		throw new RuntimeException("enumerateKeys is not implemented");
+		throw new RuntimeException("enumerateKeys is not implemented");
 	}
 
 	public Resource get(Object key) {

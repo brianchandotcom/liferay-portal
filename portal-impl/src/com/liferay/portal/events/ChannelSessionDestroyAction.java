@@ -52,7 +52,7 @@ public class ChannelSessionDestroyAction extends SessionAction {
 				}
 			}
 
- 			if ((user == null) || user.isDefaultUser()) {
+			if ((user == null) || user.isDefaultUser()) {
 				return;
 			}
 

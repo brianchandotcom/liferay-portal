@@ -57,18 +57,18 @@ public class PanelTag extends IncludeTag {
 			parentId = panelFloatingContainerTag.getId();
 		}
 
- 		request.setAttribute("liferay-ui:panel:helpMessage", _helpMessage);
- 		request.setAttribute("liferay-ui:panel:id", _id);
- 		request.setAttribute("liferay-ui:panel:parentId", parentId);
- 		request.setAttribute("liferay-ui:panel:title", _title);
+		request.setAttribute("liferay-ui:panel:helpMessage", _helpMessage);
+		request.setAttribute("liferay-ui:panel:id", _id);
+		request.setAttribute("liferay-ui:panel:parentId", parentId);
+		request.setAttribute("liferay-ui:panel:title", _title);
 		request.setAttribute(
 			"liferay-ui:panel:collapsible", String.valueOf(_collapsible));
- 		request.setAttribute("liferay-ui:panel:defaultState", _defaultState);
- 		request.setAttribute(
+		request.setAttribute("liferay-ui:panel:defaultState", _defaultState);
+		request.setAttribute(
 			"liferay-ui:panel:persistState", String.valueOf(_persistState));
- 		request.setAttribute(
+		request.setAttribute(
 			"liferay-ui:panel:extended", String.valueOf(_extended));
- 		request.setAttribute("liferay-ui:panel:cssClass", _cssClass);
+		request.setAttribute("liferay-ui:panel:cssClass", _cssClass);
 
 		super.doStartTag();
 

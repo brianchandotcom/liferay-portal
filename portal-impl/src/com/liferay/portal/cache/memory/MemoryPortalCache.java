@@ -36,7 +36,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class MemoryPortalCache implements PortalCache {
 
 	public MemoryPortalCache(String name, int initialCapacity) {
- 		_name = name;
+		_name = name;
 		_map = new ConcurrentHashMap<Serializable, Object>(initialCapacity);
 	}
 

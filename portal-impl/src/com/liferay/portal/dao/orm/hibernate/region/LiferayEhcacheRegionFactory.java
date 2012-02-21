@@ -226,7 +226,7 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 	}
 
 	protected void reconfigureCache(Ehcache replacementCache) {
- 		String cacheName = replacementCache.getName();
+		String cacheName = replacementCache.getName();
 
 		Ehcache ehcache = manager.getEhcache(cacheName);
 

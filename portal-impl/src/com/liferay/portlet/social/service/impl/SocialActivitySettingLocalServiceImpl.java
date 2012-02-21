@@ -263,7 +263,7 @@ public class SocialActivitySettingLocalServiceImpl
 				try {
 					jsonObject = JSONFactoryUtil.createJSONObject(
 						activitySetting.getValue());
- 				}
+				}
 				catch (Exception e) {
 					jsonObject = JSONFactoryUtil.createJSONObject();
 				}

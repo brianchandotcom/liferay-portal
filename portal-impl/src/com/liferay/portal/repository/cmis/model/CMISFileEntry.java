@@ -424,7 +424,7 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 			return false;
 		}
 
- 		AllowableActions allowableActions = _document.getAllowableActions();
+		AllowableActions allowableActions = _document.getAllowableActions();
 
 		Set<Action> allowableActionsSet =
 			allowableActions.getAllowableActions();

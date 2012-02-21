@@ -645,7 +645,7 @@ public class ClusterSchedulerEngine
 	}
 
 	protected Object callMaster(MethodKey methodKey, Object... arguments)
- 		throws Exception {
+		throws Exception {
 
 		MethodHandler methodHandler = new MethodHandler(methodKey, arguments);
 

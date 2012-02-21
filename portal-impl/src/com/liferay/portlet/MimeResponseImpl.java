@@ -128,7 +128,7 @@ public abstract class MimeResponseImpl
 		_response.setBufferSize(bufferSize);
 	}
 
- 	public void setContentType(String contentType) {
+	public void setContentType(String contentType) {
 		if (Validator.isNull(contentType)) {
 			throw new IllegalArgumentException("Content type cannot be null");
 		}
@@ -165,8 +165,8 @@ public abstract class MimeResponseImpl
 		_response.setContentType(contentType);
 	}
 
- 	@Override
- 	protected void init(
+	@Override
+	protected void init(
 		PortletRequestImpl portletRequestImpl, HttpServletResponse response,
 		String portletName, long companyId, long plid) {
 

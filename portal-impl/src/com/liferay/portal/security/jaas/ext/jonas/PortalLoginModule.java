@@ -90,6 +90,6 @@ public class PortalLoginModule extends BasicLoginModule {
 	private static final String _JROLE =
 		"org.objectweb.jonas.security.auth.JRole";
 
- 	private static Log _log = LogFactoryUtil.getLog(PortalLoginModule.class);
+	private static Log _log = LogFactoryUtil.getLog(PortalLoginModule.class);
 
 }

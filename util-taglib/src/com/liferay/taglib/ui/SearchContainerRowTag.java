@@ -274,7 +274,7 @@ public class SearchContainerRowTag<R>
 
 				model = repositoryModel.toEscapedModel();
 			}
- 		}
+		}
 
 		if (Validator.isNull(_keyProperty)) {
 			String primaryKey = String.valueOf(model);

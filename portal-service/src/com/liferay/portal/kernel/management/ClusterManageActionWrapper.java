@@ -31,7 +31,7 @@ import java.util.List;
 public class ClusterManageActionWrapper
 	implements ManageAction<FutureClusterResponses> {
 
- 	public ClusterManageActionWrapper(
+	public ClusterManageActionWrapper(
 		ClusterGroup clusterGroup, ManageAction<?> manageAction) {
 
 		_clusterGroup = clusterGroup;

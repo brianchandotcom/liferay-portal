@@ -31,6 +31,6 @@ public class WikiTestPlan extends BaseTestSuite {
 		testSuite.addTest(WikiPageTests.suite());
 
 		return testSuite;
- 	}
+	}
 
 }

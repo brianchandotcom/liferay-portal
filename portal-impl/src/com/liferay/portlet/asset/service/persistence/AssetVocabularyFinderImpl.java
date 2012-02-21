@@ -62,7 +62,7 @@ public class AssetVocabularyFinderImpl
 	}
 
 	public List<AssetVocabulary> findByG_N(long groupId, String name, int start,
- 			int end, OrderByComparator obc)
+			int end, OrderByComparator obc)
 		throws SystemException {
 
 		return doFindByG_N(groupId, name, start, end, obc, false);

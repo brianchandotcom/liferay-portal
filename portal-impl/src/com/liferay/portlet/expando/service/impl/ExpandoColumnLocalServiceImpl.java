@@ -432,6 +432,8 @@ public class ExpandoColumnLocalServiceImpl
 			(type != ExpandoColumnConstants.INTEGER_ARRAY) &&
 			(type != ExpandoColumnConstants.LONG) &&
 			(type != ExpandoColumnConstants.LONG_ARRAY) &&
+			(type != ExpandoColumnConstants.NUMBER) &&
+			(type != ExpandoColumnConstants.NUMBER_ARRAY) &&
 			(type != ExpandoColumnConstants.SHORT) &&
 			(type != ExpandoColumnConstants.SHORT_ARRAY) &&
 			(type != ExpandoColumnConstants.STRING) &&
@@ -480,6 +482,12 @@ public class ExpandoColumnLocalServiceImpl
 			}
 			else if (type == ExpandoColumnConstants.LONG_ARRAY) {
 				value.setLongArray((long[])defaultData);
+			}
+			else if (type == ExpandoColumnConstants.NUMBER) {
+				value.setNumber((Number)defaultData);
+			}
+			else if (type == ExpandoColumnConstants.NUMBER_ARRAY) {
+				value.setNumberArray((Number[])defaultData);
 			}
 			else if (type == ExpandoColumnConstants.SHORT) {
 				value.setShort((Short)defaultData);

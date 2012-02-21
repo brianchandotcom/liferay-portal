@@ -16,6 +16,7 @@ package com.liferay.portal.tools.samplesqlbuilder;
 
 import com.liferay.counter.model.Counter;
 import com.liferay.counter.model.impl.CounterModelImpl;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.KeyValuePair;
@@ -36,6 +37,7 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.Permission;
+import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.Resource;
 import com.liferay.portal.model.ResourceCode;
 import com.liferay.portal.model.ResourceConstants;
@@ -49,12 +51,14 @@ import com.liferay.portal.model.impl.ContactImpl;
 import com.liferay.portal.model.impl.GroupImpl;
 import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.model.impl.PermissionImpl;
+import com.liferay.portal.model.impl.PortletPreferencesImpl;
 import com.liferay.portal.model.impl.ResourceCodeImpl;
 import com.liferay.portal.model.impl.ResourceImpl;
 import com.liferay.portal.model.impl.ResourcePermissionImpl;
 import com.liferay.portal.model.impl.RoleImpl;
 import com.liferay.portal.model.impl.UserImpl;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.impl.AssetEntryImpl;
 import com.liferay.portlet.blogs.model.BlogsEntry;
@@ -82,6 +86,10 @@ import com.liferay.portlet.dynamicdatamapping.model.impl.DDMContentImpl;
 import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStorageLinkImpl;
 import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureImpl;
 import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureLinkImpl;
+import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.model.JournalArticleResource;
+import com.liferay.portlet.journal.model.impl.JournalArticleImpl;
+import com.liferay.portlet.journal.model.impl.JournalArticleResourceImpl;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
@@ -118,9 +126,9 @@ public class DataFactory {
 
 	public DataFactory(
 		String baseDir, int maxGroupsCount, int maxUserToGroupCount,
-		SimpleCounter counter, SimpleCounter dlDateCounter,
-		SimpleCounter permissionCounter, SimpleCounter resourceCounter,
-		SimpleCounter resourceCodeCounter,
+		int maxWebContentSize, SimpleCounter counter,
+		SimpleCounter dlDateCounter, SimpleCounter permissionCounter,
+		SimpleCounter resourceCounter, SimpleCounter resourceCodeCounter,
 		SimpleCounter resourcePermissionCounter,
 		SimpleCounter socialActivityCounter) {
 
@@ -144,6 +152,7 @@ public class DataFactory {
 			initResourceCodes();
 			initRoles();
 			initUserNames();
+			initWebContent(maxWebContentSize);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -385,6 +394,32 @@ public class DataFactory {
 		return group;
 	}
 
+	public JournalArticle addJournalArticle(
+		long groupId, long companyId, long resourcePrimKey, String articleId) {
+
+		JournalArticle journalArticle = new JournalArticleImpl();
+
+		journalArticle.setArticleId(articleId);
+		journalArticle.setCompanyId(companyId);
+		journalArticle.setContent(_webContent);
+		journalArticle.setGroupId(groupId);
+		journalArticle.setId(_counter.get());
+		journalArticle.setResourcePrimKey(resourcePrimKey);
+
+		return journalArticle;
+	}
+
+	public JournalArticleResource addJournalArticleResource(long groupId) {
+		JournalArticleResource journalArticleResource =
+			new JournalArticleResourceImpl();
+
+		journalArticleResource.setArticleId(String.valueOf(_counter.get()));
+		journalArticleResource.setGroupId(groupId);
+		journalArticleResource.setResourcePrimKey(_counter.get());
+
+		return journalArticleResource;
+	}
+
 	public Layout addLayout(
 		int layoutId, String name, String friendlyURL, String column1,
 		String column2) {
@@ -513,6 +548,21 @@ public class DataFactory {
 		}
 
 		return permissions;
+	}
+
+	public PortletPreferences addPortletPreferences(
+		long plid, long ownerId, String portletId, String preferences) {
+
+		PortletPreferences portletPreferences = new PortletPreferencesImpl();
+
+		portletPreferences.setOwnerId(ownerId);
+		portletPreferences.setOwnerType(PortletKeys.PREFS_OWNER_TYPE_LAYOUT);
+		portletPreferences.setPlid(plid);
+		portletPreferences.setPortletId(portletId);
+		portletPreferences.setPortletPreferencesId(_counter.get());
+		portletPreferences.setPreferences(preferences);
+
+		return portletPreferences;
 	}
 
 	public Resource addResource(String name, String primKey) {
@@ -757,6 +807,10 @@ public class DataFactory {
 		return _guestRole;
 	}
 
+	public ClassName getJournalArticleClassName() {
+		return _journalArticleClassName;
+	}
+
 	public ClassName getMBMessageClassName() {
 		return _mbMessageClassName;
 	}
@@ -845,6 +899,9 @@ public class DataFactory {
 			}
 			else if (model.equals(Group.class.getName())) {
 				_groupClassName = className;
+			}
+			else if (model.equals(JournalArticle.class.getName())) {
+				_journalArticleClassName = className;
 			}
 			else if (model.equals(MBMessage.class.getName())) {
 				_mbMessageClassName = className;
@@ -1182,6 +1239,20 @@ public class DataFactory {
 		_userNames[1] = lastNames;
 	}
 
+	public void initWebContent(int maxWebContentSize) throws Exception {
+		if (maxWebContentSize <= 0) {
+			maxWebContentSize = 1;
+		}
+
+		byte[] bytes = new byte[maxWebContentSize];
+
+		for (int i = 0; i < maxWebContentSize; i++) {
+			bytes[i] = CharPool.NUMBER_0;
+		}
+
+		_webContent = new String(bytes, "UTF-8");
+	}
+
 	public IntegerWrapper newInteger() {
 		return new IntegerWrapper();
 	}
@@ -1226,6 +1297,7 @@ public class DataFactory {
 	private Role _guestRole;
 	private Map<String, Long> _individualResourceCodeIds;
 	private Map<Long, String> _individualResourceNames;
+	private ClassName _journalArticleClassName;
 	private int _maxGroupsCount;
 	private int _maxUserToGroupCount;
 	private ClassName _mbMessageClassName;
@@ -1250,6 +1322,7 @@ public class DataFactory {
 	private ClassName _userClassName;
 	private Object[] _userNames;
 	private Role _userRole;
+	private String _webContent;
 	private ClassName _wikiPageClassName;
 
 }

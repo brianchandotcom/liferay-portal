@@ -31,6 +31,8 @@
 			<arg value="sample.sql.mb.thread.count=${sample.sql.mb.thread.count}" />
 			<arg value="sample.sql.user.count=${sample.sql.user.count}" />
 			<arg value="sample.sql.user.to.group.count=${sample.sql.user.to.group.count}" />
+			<arg value="sample.sql.web.content.page.count=${sample.sql.web.content.page.count}" />
+			<arg value="sample.sql.web.content.size=${sample.sql.web.content.size}" />
 			<arg value="sample.sql.wiki.node.count=${sample.sql.wiki.node.count}" />
 			<arg value="sample.sql.wiki.page.comment.count=${sample.sql.wiki.page.comment.count}" />
 			<arg value="sample.sql.wiki.page.count=${sample.sql.wiki.page.count}" />

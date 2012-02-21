@@ -107,6 +107,10 @@ public class SampleSQLBuilder {
 			arguments.get("sample.sql.user.count"));
 		int maxUserToGroupCount = GetterUtil.getInteger(
 			arguments.get("sample.sql.user.to.group.count"));
+		int maxWebContentPageCount = GetterUtil.getInteger(
+			arguments.get("sample.sql.web.content.page.count"));
+		int maxWebContentSize = GetterUtil.getInteger(
+			arguments.get("sample.sql.web.content.size"));
 		int maxWikiNodeCount = GetterUtil.getInteger(
 			arguments.get("sample.sql.wiki.node.count"));
 		int maxWikiPageCommentCount = GetterUtil.getInteger(
@@ -121,8 +125,9 @@ public class SampleSQLBuilder {
 			maxBlogsEntryCommentCount, maxBlogsEntryCount, maxDLFileEntryCount,
 			dlFileEntrySize, maxDLFolderCount, maxDLFolderDepth, maxGroupCount,
 			maxMBCategoryCount, maxMBMessageCount, maxMBThreadCount,
-			maxUserCount, maxUserToGroupCount, maxWikiNodeCount,
-			maxWikiPageCommentCount, maxWikiPageCount, securityEnabled);
+			maxUserCount, maxUserToGroupCount, maxWebContentPageCount,
+			maxWebContentSize, maxWikiNodeCount, maxWikiPageCommentCount,
+			maxWikiPageCount, securityEnabled);
 	}
 
 	public SampleSQLBuilder(
@@ -131,7 +136,8 @@ public class SampleSQLBuilder {
 		int maxBlogsEntryCount, int maxDLFileEntryCount, int dlFileEntrySize,
 		int maxDLFolderCount, int maxDLFolderDepth, int maxGroupCount,
 		int maxMBCategoryCount, int maxMBMessageCount, int maxMBThreadCount,
-		int maxUserCount, int maxUserToGroupCount, int maxWikiNodeCount,
+		int maxUserCount, int maxUserToGroupCount, int maxWebContentPageCount,
+		int maxWebContentSize, int maxWikiNodeCount,
 		int maxWikiPageCommentCount, int maxWikiPageCount,
 		boolean securityEnabled) {
 
@@ -151,6 +157,7 @@ public class SampleSQLBuilder {
 			_maxMBThreadCount = maxMBThreadCount;
 			_maxUserCount = maxUserCount;
 			_maxUserToGroupCount = maxUserToGroupCount;
+			_maxWebContentPageCount = maxWebContentPageCount;
 			_maxWikiNodeCount = maxWikiNodeCount;
 			_maxWikiPageCommentCount = maxWikiPageCommentCount;
 			_maxWikiPageCount = maxWikiPageCount;
@@ -177,10 +184,10 @@ public class SampleSQLBuilder {
 			_userScreenNameIncrementer = new SimpleCounter();
 
 			_dataFactory = new DataFactory(
-				baseDir, _maxGroupCount, _maxUserToGroupCount, _counter,
-				_dlDateCounter, _permissionCounter, _resourceCounter,
-				_resourceCodeCounter, _resourcePermissionCounter,
-				_socialActivityCounter);
+				baseDir, _maxGroupCount, _maxUserToGroupCount,
+				maxWebContentSize, _counter, _dlDateCounter, _permissionCounter,
+				_resourceCounter, _resourceCodeCounter,
+				_resourcePermissionCounter, _socialActivityCounter);
 
 			_db = DBFactoryUtil.getDB(_dbType);
 
@@ -319,13 +326,13 @@ public class SampleSQLBuilder {
 		processTemplate(_tplMBMessage, context);
 	}
 
-	public void insertResourcePermission(String name, long primKey)
+	public void insertResourcePermission(String name, String primKey)
 		throws Exception {
 
 		Map<String, Object> context = getContext();
 
 		put(context, "resourceName", name);
-		put(context, "resourcePrimkey", String.valueOf(primKey));
+		put(context, "resourcePrimkey", primKey);
 
 		processTemplate(_tplResourcePermission, context);
 	}
@@ -366,6 +373,21 @@ public class SampleSQLBuilder {
 		put(context, "user", user);
 
 		processTemplate(_tplUser, context);
+	}
+
+	public void insertWebContent(long groupId, List<Layout> webContentLayouts)
+		throws Exception {
+
+		if (webContentLayouts == null || webContentLayouts.isEmpty()) {
+			return;
+		}
+
+		Map<String, Object> context = getContext();
+
+		put(context, "groupId", groupId);
+		put(context, "webContentLayouts", webContentLayouts);
+
+		processTemplate(_tplWebContent, context);
 	}
 
 	public void insertWikiPage(WikiNode wikiNode, WikiPage wikiPage)
@@ -490,6 +512,7 @@ public class SampleSQLBuilder {
 				_writerCompanyCSV = getWriter("company.csv");
 				_writerDocumentLibraryCSV = getWriter("document_library.csv");
 				_writerMessageBoardsCSV = getWriter("message_boards.csv");
+				_writerPagesCSV = getWriter("pages.csv");
 				_writerRepositoryCSV = getWriter("repository.csv");
 				_writerUsersCSV = getWriter("users.csv");
 				_writerWikiCSV = getWriter("wiki.csv");
@@ -502,6 +525,7 @@ public class SampleSQLBuilder {
 				_writerCompanyCSV.close();
 				_writerDocumentLibraryCSV.close();
 				_writerMessageBoardsCSV.close();
+				_writerPagesCSV.close();
 				_writerRepositoryCSV.close();
 				_writerUsersCSV.close();
 				_writerWikiCSV.close();
@@ -539,6 +563,7 @@ public class SampleSQLBuilder {
 		put(context, "maxMBThreadCount", _maxMBThreadCount);
 		put(context, "maxUserCount", _maxUserCount);
 		put(context, "maxUserToGroupCount", _maxUserToGroupCount);
+		put(context, "maxWebContentPageCount", _maxWebContentPageCount);
 		put(context, "maxWikiNodeCount", _maxWikiNodeCount);
 		put(context, "maxWikiPageCommentCount", _maxWikiPageCommentCount);
 		put(context, "maxWikiPageCount", _maxWikiPageCount);
@@ -550,6 +575,7 @@ public class SampleSQLBuilder {
 		put(context, "writerCompanyCSV", _writerCompanyCSV);
 		put(context, "writerDocumentLibraryCSV", _writerDocumentLibraryCSV);
 		put(context, "writerMessageBoardsCSV", _writerMessageBoardsCSV);
+		put(context, "writerPagesCSV", _writerPagesCSV);
 		put(context, "writerRepositoryCSV", _writerRepositoryCSV);
 		put(context, "writerUsersCSV", _writerUsersCSV);
 		put(context, "writerWikiCSV", _writerWikiCSV);
@@ -691,6 +717,7 @@ public class SampleSQLBuilder {
 	private int _maxMBThreadCount;
 	private int _maxUserCount;
 	private int _maxUserToGroupCount;
+	private int _maxWebContentPageCount;
 	private int _maxWikiNodeCount;
 	private int _maxWikiPageCommentCount;
 	private int _maxWikiPageCount;
@@ -716,12 +743,14 @@ public class SampleSQLBuilder {
 	private String _tplSample = _TPL_ROOT + "sample.ftl";
 	private String _tplSecurity = _TPL_ROOT + "security.ftl";
 	private String _tplUser = _TPL_ROOT + "user.ftl";
+	private String _tplWebContent = _TPL_ROOT + "web_content.ftl";
 	private String _tplWikiPage = _TPL_ROOT + "wiki_page.ftl";
 	private SimpleCounter _userScreenNameIncrementer;
 	private Writer _writerBlogsCSV;
 	private Writer _writerCompanyCSV;
 	private Writer _writerDocumentLibraryCSV;
 	private Writer _writerMessageBoardsCSV;
+	private Writer _writerPagesCSV;
 	private Writer _writerRepositoryCSV;
 	private Writer _writerSampleSQL;
 	private Writer _writerUsersCSV;

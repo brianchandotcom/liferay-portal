@@ -17,6 +17,8 @@ package com.liferay.portal.upgrade.v6_0_3;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -75,6 +77,29 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
+		List<Long> tableIds = new ArrayList<Long>();
+
+		try {
+			long classNameId = PortalUtil.getClassNameId(DLFileEntry.class);
+
+			con = DataAccess.getConnection();
+
+			ps = con.prepareStatement(
+				"select tableId from ExpandoTable where classNameId = " +
+					classNameId);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long tableId = rs.getLong("tableId");
+
+				tableIds.add(tableId);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+
 		try {
 			con = DataAccess.getConnection();
 
@@ -107,13 +132,17 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 					latestFileVersionId = fileVersionIds.get(0);
 				}
 
-				runSQL(
-					"update ExpandoRow set classPK = " + latestFileVersionId +
-						" where classPK = " + fileEntryId);
+				for (long tableId : tableIds) {
+					runSQL(
+						"update ExpandoRow set classPK = " + latestFileVersionId +
+							" where tableId = " + tableId + " and classPK = " +
+								fileEntryId);
 
-				runSQL(
-					"update ExpandoValue set classPK = " + latestFileVersionId +
-						" where classPK = " + fileEntryId);
+					runSQL(
+						"update ExpandoValue set classPK = " + latestFileVersionId +
+							" where tableId = " + tableId + " and classPK = " +
+								fileEntryId);
+				}
 			}
 		}
 		finally {

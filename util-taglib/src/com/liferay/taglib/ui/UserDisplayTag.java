@@ -32,7 +32,12 @@ public class UserDisplayTag extends TagSupport {
 	@Override
 	public int doEndTag() throws JspException {
 		try {
+			HttpServletRequest request =
+				(HttpServletRequest)pageContext.getRequest();
+
 			PortalIncludeUtil.include(pageContext, getEndPage());
+
+			request.removeAttribute("liferay-ui:user-display:url");
 
 			return EVAL_PAGE;
 		}

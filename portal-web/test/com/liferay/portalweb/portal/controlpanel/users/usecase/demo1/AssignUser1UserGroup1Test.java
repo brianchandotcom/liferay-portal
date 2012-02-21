@@ -54,7 +54,7 @@ public class AssignUser1UserGroup1Test extends BaseTestCase {
 					RuntimeVariables.replace("User Groups"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-				selenium.type("//input[@id='_127_name']",
+				selenium.type("//input[@id='_127_keywords']",
 					RuntimeVariables.replace("User Group 1"));
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
@@ -92,7 +92,7 @@ public class AssignUser1UserGroup1Test extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a")) {
 							break;
 						}
 					}
@@ -104,8 +104,8 @@ public class AssignUser1UserGroup1Test extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Assign Members"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a",
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a",
 					RuntimeVariables.replace("Assign Members"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();

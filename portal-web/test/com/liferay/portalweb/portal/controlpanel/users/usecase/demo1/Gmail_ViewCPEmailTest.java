@@ -139,11 +139,11 @@ public class Gmail_ViewCPEmailTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace(
-						"http://localhost:8080/group/control_panel: Your New Account"),
+						"http://localhost:8080: Your New Account"),
 					selenium.getText("//td[6]/div/div/div/span[1]"));
 				selenium.clickAt("//td[6]/div/div/div/span[1]",
 					RuntimeVariables.replace(
-						"http://localhost:8080/group/control_panel: Your New Account"));
+						"http://localhost:8080: Your New Account"));
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {

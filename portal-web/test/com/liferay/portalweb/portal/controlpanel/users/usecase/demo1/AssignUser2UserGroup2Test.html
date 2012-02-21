@@ -105,27 +105,32 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//input[@id='_125_name']</td>
-	<td></td>
+	<td>//input[@id='_125_keywords']</td>
+	<td>Search Field</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='_125_name']</td>
-	<td>User Group 2</td>
+	<td>//input[@id='_125_keywords']</td>
+	<td>2</td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>clickAtAndWait</td>
 	<td>//input[@type='submit']</td>
 	<td>Submit</td>
 </tr>
 <tr>
+	<td>waitForText</td>
+	<td>//tr[3]/td/a</td>
+	<td>User Group 2</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>link=User Group 2</td>
+	<td>//tr[3]/td/a</td>
 	<td>User Group 2</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>link=User Group 2</td>
+	<td>//tr[3]/td/a</td>
 	<td>User Group 2</td>
 </tr>
 <tr>
@@ -153,7 +158,6 @@
 	<td>//tr[3]/td[1]</td>
 	<td>User Group 2</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

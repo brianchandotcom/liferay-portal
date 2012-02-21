@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewRecordTest extends BaseTestCase {
-	public void testViewRecord() throws Exception {
+public class ViewRecordSpreadsheetViewTest extends BaseTestCase {
+	public void testViewRecordSpreadsheetView() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -67,8 +67,7 @@ public class ViewRecordTest extends BaseTestCase {
 			selenium.getText("//tr[3]/td[1]"));
 		assertEquals(RuntimeVariables.replace("Date"),
 			selenium.getText("//tr[1]/th[2]"));
-		assertEquals(RuntimeVariables.replace("1/10/12"),
-			selenium.getText("//tr[3]/td[2]"));
+		assertTrue(selenium.isPartialText("//tr[3]/td[2]", "/10/"));
 		assertEquals(RuntimeVariables.replace("Decimal"),
 			selenium.getText("//tr[1]/th[3]"));
 		assertEquals(RuntimeVariables.replace("1.23"),
@@ -135,8 +134,11 @@ public class ViewRecordTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Boolean true"),
 			selenium.getText("//div[@class='aui-fieldset-content ']/div[1]"));
-		assertEquals(RuntimeVariables.replace("Date 1/10/12"),
-			selenium.getText("//div[@class='aui-fieldset-content ']/div[2]"));
+		assertEquals(RuntimeVariables.replace("Date"),
+			selenium.getText(
+				"//div[@class='aui-fieldset-content ']/div[2]/label"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='aui-fieldset-content ']/div[2]", "/10/"));
 		assertEquals(RuntimeVariables.replace("Decimal 1.23"),
 			selenium.getText("//div[@class='aui-fieldset-content ']/div[3]"));
 		assertEquals(RuntimeVariables.replace(
@@ -223,11 +225,10 @@ public class ViewRecordTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("True"),
 			selenium.getText("//td[1]/div"));
-		assertEquals(RuntimeVariables.replace("2012-01-10"),
-			selenium.getText("//td[2]/div"));
+		assertTrue(selenium.isPartialText("//td[2]/div", "-10"));
 		assertEquals(RuntimeVariables.replace("1.23"),
 			selenium.getText("//td[3]/div"));
-		assertEquals(RuntimeVariables.replace("(File)"),
+		assertEquals(RuntimeVariables.replace("document.txt"),
 			selenium.getText("//td[4]/div"));
 		assertEquals(RuntimeVariables.replace("document2.txt"),
 			selenium.getText("//td[5]/div"));

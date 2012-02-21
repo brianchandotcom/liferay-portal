@@ -120,7 +120,7 @@ public class AssignUser2UserGroup2Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//input[@id='_125_name']")) {
+				if (selenium.isVisible("//input[@id='_125_keywords']")) {
 					break;
 				}
 			}
@@ -130,13 +130,33 @@ public class AssignUser2UserGroup2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.type("//input[@id='_125_name']",
-			RuntimeVariables.replace("User Group 2"));
+		selenium.type("//input[@id='_125_keywords']",
+			RuntimeVariables.replace("2"));
 		selenium.clickAt("//input[@type='submit']",
 			RuntimeVariables.replace("Submit"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("User Group 2")
+										.equals(selenium.getText("//tr[3]/td/a"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("User Group 2"),
-			selenium.getText("link=User Group 2"));
-		selenium.clickAt("link=User Group 2",
+			selenium.getText("//tr[3]/td/a"));
+		selenium.clickAt("//tr[3]/td/a",
 			RuntimeVariables.replace("User Group 2"));
 		selenium.selectWindow("null");
 

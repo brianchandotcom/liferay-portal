@@ -227,7 +227,7 @@ public class ViewRecordTest extends BaseTestCase {
 			selenium.getText("//td[2]/div"));
 		assertEquals(RuntimeVariables.replace("1.23"),
 			selenium.getText("//td[3]/div"));
-		assertEquals(RuntimeVariables.replace("(File)"),
+		assertEquals(RuntimeVariables.replace("document.txt"),
 			selenium.getText("//td[4]/div"));
 		assertEquals(RuntimeVariables.replace("document2.txt"),
 			selenium.getText("//td[5]/div"));

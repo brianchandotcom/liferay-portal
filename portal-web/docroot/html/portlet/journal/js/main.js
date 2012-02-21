@@ -1779,8 +1779,8 @@ AUI.add(
 							'dynamic-element',
 							{
 								'instance-id': instanceId,
-								name: encodeURI(fieldInstance.get('variableName')),
-								type: type,
+								name: encodeURIComponent(fieldInstance.get('variableName')),
+								type: encodeURIComponent(type),
 								'index-type': indexType
 							}
 						);
@@ -1789,8 +1789,8 @@ AUI.add(
 						typeElement = instance._createDynamicNode(
 							'dynamic-element',
 							{
-								name: encodeURI(fieldInstance.get('variableName')),
-								type: type,
+								name: encodeURIComponent(fieldInstance.get('variableName')),
+								type: encodeURIComponent(type),
 								'index-type': indexType,
 								repeatable: fieldInstance.get('repeatable')
 							}
@@ -1942,15 +1942,15 @@ AUI.add(
 					A.each(
 						optionsList,
 						function(item, index, collection) {
-							var optionKey = instance._formatOptionsKey(item.text());
+							var optionKey = item.text();
 							var optionValue = item.val();
 
 							if (!generateArticleContent) {
 								var typeElementOption = instance._createDynamicNode(
 									'dynamic-element',
 									{
-										name: optionKey,
-										type: optionValue,
+										name: encodeURIComponent(optionKey),
+										type: encodeURIComponent(optionValue),
 										'repeatable': fieldInstance.get('repeatable')
 									}
 								);
@@ -1988,7 +1988,7 @@ AUI.add(
 					var iconParent = icon.get('parentNode');
 					var select = iconParent.get('parentNode').one('select');
 					var keyInput = iconParent.one('input.journal-list-key');
-					var key = instance._formatOptionsKey(keyInput.val());
+					var key = keyInput.val();
 					var valueInput = iconParent.one('input.journal-list-value');
 					var value = valueInput.val();
 
@@ -2519,10 +2519,6 @@ AUI.add(
 				fieldInstance.get('fieldLabel');
 
 				return fieldInstance;
-			},
-
-			_formatOptionsKey: function(s) {
-				return s.replace(/\W+/g, ' ').replace(/^\W+|\W+$/g, '').replace(/ /g, '_');
 			},
 
 			_getNamespacedId: function(id, namespace, prefix) {

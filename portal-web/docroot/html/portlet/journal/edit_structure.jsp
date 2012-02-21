@@ -84,7 +84,7 @@ if (Validator.isNull(xsd)) {
 // Bug with dom4j requires you to remove "\r\n" and "  " or else root.elements()
 // and root.content() will return different number of objects
 
-xsd = JS.decodeURIComponent(xsd);
+xsd = JournalUtil.processXMLAttributes(xsd);
 xsd = StringUtil.replace(xsd, StringPool.RETURN_NEW_LINE, StringPool.BLANK);
 xsd = StringUtil.replace(xsd, StringPool.DOUBLE_SPACE, StringPool.BLANK);
 

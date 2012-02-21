@@ -48,6 +48,7 @@ import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalStructure;
 import com.liferay.portlet.journal.model.JournalStructureConstants;
 import com.liferay.portlet.journal.service.base.JournalStructureLocalServiceBaseImpl;
+import com.liferay.portlet.journal.util.JournalUtil;
 import com.liferay.portlet.journal.util.comparator.StructurePKComparator;
 
 import java.util.ArrayList;
@@ -79,6 +80,7 @@ public class JournalStructureLocalServiceImpl
 		Date now = new Date();
 
 		try {
+			xsd = JournalUtil.processXMLAttributes(xsd);
 			xsd = DDMXMLUtil.formatXML(xsd);
 		}
 		catch (Exception e) {
@@ -468,6 +470,7 @@ public class JournalStructureLocalServiceImpl
 		structureId = structureId.trim().toUpperCase();
 
 		try {
+			xsd = JournalUtil.processXMLAttributes(xsd);
 			xsd = DDMXMLUtil.formatXML(xsd);
 		}
 		catch (Exception e) {
@@ -559,17 +562,6 @@ public class JournalStructureLocalServiceImpl
 				throw new StructureXsdException();
 			}
 			else {
-				char[] c = elType.toCharArray();
-
-				for (int i = 0; i < c.length; i++) {
-					if ((!Validator.isChar(c[i])) &&
-						(!Validator.isDigit(c[i])) && (c[i] != CharPool.DASH) &&
-						(c[i] != CharPool.UNDERLINE)) {
-
-						throw new StructureXsdException();
-					}
-				}
-
 				String completePath = elName;
 
 				Element parentElement = element.getParent();

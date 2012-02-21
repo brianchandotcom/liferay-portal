@@ -1230,8 +1230,6 @@ public class SourceFormatter {
 	private static String _formatJavaContent(String fileName, String content)
 		throws IOException {
 
-		boolean longLogFactoryUtil = false;
-
 		StringBundler sb = new StringBundler();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
@@ -1490,10 +1488,6 @@ public class SourceFormatter {
 					fileName, "{:" + fileName + " " + lineCount);
 			}
 
-			if (line.endsWith("private static Log _log =")) {
-				longLogFactoryUtil = true;
-			}
-
 			excluded = _lineLengthExclusionsProperties.getProperty(
 				StringUtil.replace(
 					fileName, "\\", "/") + StringPool.AT + lineCount);
@@ -1569,13 +1563,6 @@ public class SourceFormatter {
 
 		if (newContent.endsWith("\n")) {
 			newContent = newContent.substring(0, newContent.length() - 1);
-		}
-
-		if (longLogFactoryUtil) {
-			newContent = StringUtil.replace(
-				newContent,
-				"private static Log _log =\n\t\tLogFactoryUtil.getLog(",
-				"private static Log _log = LogFactoryUtil.getLog(\n\t\t");
 		}
 
 		return newContent;

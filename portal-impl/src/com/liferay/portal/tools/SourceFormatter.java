@@ -1503,7 +1503,7 @@ public class SourceFormatter {
 					StringUtil.replace(fileName, "\\", "/"));
 			}
 
-			String combinedLines = null;
+			String[] combinedLines = null;
 
 			if ((excluded == null) &&
 				!line.startsWith("import ") && !line.startsWith("package ") &&
@@ -1531,9 +1531,20 @@ public class SourceFormatter {
 			}
 
 			if (Validator.isNotNull(combinedLines)) {
-				previousLine = combinedLines;
+				previousLine = combinedLines[0];
 
-				if (line.endsWith(StringPool.OPEN_CURLY_BRACE)) {
+				if (combinedLines.length > 1) {
+					String addedToPreviousLine = combinedLines[1];
+
+					if (Validator.isNotNull(addedToPreviousLine)) {
+						sb.append(previousLine);
+						sb.append("\n");
+
+						previousLine = StringUtil.replaceFirst(
+							line, addedToPreviousLine, StringPool.BLANK);
+					}
+				}
+				else if (line.endsWith(StringPool.OPEN_CURLY_BRACE)) {
 					lineToSkipIfEmpty = lineCount + 1;
 				}
 			}
@@ -2178,7 +2189,9 @@ public class SourceFormatter {
 		return line.substring(pos + 1);
 	}
 
-	private static String _getCombinedLines(String line, String previousLine) {
+	private static String[] _getCombinedLines(
+		String line, String previousLine) {
+
 		if (Validator.isNull(previousLine)) {
 			return null;
 		}
@@ -2191,13 +2204,17 @@ public class SourceFormatter {
 				previousLine.endsWith(StringPool.COLON) &&
 				line.endsWith(StringPool.OPEN_CURLY_BRACE)) {
 
-				return previousLine + StringPool.SPACE + line;
+				return new String[] {
+					previousLine + StringPool.SPACE + line
+				};
 			}
 
 			if (previousLine.endsWith(StringPool.EQUAL) &&
 				line.endsWith(StringPool.SEMICOLON)) {
 
-				return previousLine + StringPool.SPACE + line;
+				return new String[] {
+					previousLine + StringPool.SPACE + line
+				};
 			}
 
 			if ((trimmedPreviousLine.startsWith("if ") ||
@@ -2205,7 +2222,57 @@ public class SourceFormatter {
 				(previousLine.endsWith("||") || previousLine.endsWith("&&")) &&
 				line.endsWith(StringPool.OPEN_CURLY_BRACE)) {
 
-				return previousLine + StringPool.SPACE + line;
+				return new String[] {
+					previousLine + StringPool.SPACE + line
+				};
+			}
+		}
+
+		if (previousLine.endsWith(StringPool.EQUAL) &&
+			line.endsWith(StringPool.SEMICOLON)) {
+
+			int pos = line.indexOf(StringPool.DASH);
+
+			if (pos == -1) {
+				pos = line.indexOf(StringPool.PLUS);
+			}
+
+			if (pos == -1) {
+				pos = line.indexOf(StringPool.STAR);
+			}
+
+			if (pos != -1) {
+				String linePart = line.substring(0, pos);
+
+				int openParenthesisCount = StringUtil.count(
+					linePart, StringPool.OPEN_PARENTHESIS);
+				int closeParenthesisCount = StringUtil.count(
+					linePart, StringPool.CLOSE_PARENTHESIS);
+
+				if (openParenthesisCount == closeParenthesisCount) {
+					return null;
+				}
+			}
+
+			int x = line.indexOf(StringPool.OPEN_PARENTHESIS);
+			int y = line.indexOf(StringPool.CLOSE_PARENTHESIS);
+			int z = line.indexOf(StringPool.QUOTE);
+
+			if ((x > 0) && ((x + 1) != y) && ((z == -1) || (z > x))) {
+				if ((line.charAt(x - 1) != CharPool.SPACE) &&
+					(previousLineLength + 1 + x) < 80) {
+
+					String addToPreviousLine  = line.substring(0, x + 1);
+
+					if (addToPreviousLine.contains(StringPool.SPACE)) {
+						return null;
+					}
+
+					return new String[] {
+						previousLine + StringPool.SPACE + addToPreviousLine,
+						addToPreviousLine
+					};
+				}
 			}
 		}
 
@@ -2218,7 +2285,7 @@ public class SourceFormatter {
 		}
 
 		if (line.endsWith(StringPool.SEMICOLON)) {
-			return previousLine + line;
+			return new String[] {previousLine + line};
 		}
 
 		if ((line.endsWith(StringPool.OPEN_CURLY_BRACE) ||
@@ -2229,7 +2296,7 @@ public class SourceFormatter {
 			 trimmedPreviousLine.startsWith("protected ") ||
 			 trimmedPreviousLine.startsWith("public "))) {
 
-			return previousLine + line;
+			return new String[] {previousLine + line};
 		}
 
 		return null;

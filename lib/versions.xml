@@ -537,7 +537,7 @@
 	</library>
 	<library>
 		<file-name>development/junit.jar</file-name>
-		<version>4.5</version>
+		<version>4.8.2</version>
 		<project-name>JUnit</project-name>
 		<project-url>http://www.junit.org/index.htm</project-url>
 		<licenses>
@@ -591,6 +591,17 @@
 		</licenses>
 	</library>
 	<library>
+		<file-name>development/mockito.jar</file-name>
+		<version>1.9.0</version>
+		<project-name>Mockito</project-name>
+		<project-url>http://code.google.com/p/mockito/</project-url>
+		<licenses>
+			<license>
+				<license-name>MIT License</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
 		<file-name>development/myfaces-api.jar</file-name>
 		<version>1.1.5</version>
 		<project-name>MyFaces</project-name>
@@ -632,7 +643,7 @@
 	</library>
 	<library>
 		<file-name>development/objenesis.jar</file-name>
-		<version>1.0</version>
+		<version>1.2</version>
 		<project-name>Objenesis</project-name>
 		<project-url>http://code.google.com/p/objenesis</project-url>
 		<licenses>
@@ -682,6 +693,17 @@
 		<licenses>
 			<license>
 				<license-name>BSD Style License</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>development/powermock-mockito.jar</file-name>
+		<version>1.4.11</version>
+		<project-name>Powermock</project-name>
+		<project-url>http://code.google.com/p/powermock/</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
 			</license>
 		</licenses>
 	</library>
@@ -1948,7 +1970,7 @@
 	</library>
 	<library>
 		<file-name>portal/javassist.jar</file-name>
-		<version>3.11.0</version>
+		<version>3.15.0-GA</version>
 		<project-name>Javassist</project-name>
 		<project-url>http://www.csg.is.titech.ac.jp/~chiba/javassist</project-url>
 		<licenses>

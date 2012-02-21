@@ -269,20 +269,24 @@ boolean allowTrackbacks = PropsValues.BLOGS_TRACKBACK_ENABLED && BeanParamUtil.g
 	}
 
 	function <portlet:namespace />manageAttachments() {
-		document.<portlet:namespace />fm.encoding = "multipart/form-data";
-		document.<portlet:namespace />fm.<portlet:namespace />attachments.value = "true";
+		var form = document.<portlet:namespace />fm;
+
+		form.encoding = "multipart/form-data";
+		form.<portlet:namespace />attachments.value = "true";
 	}
 
 	function <portlet:namespace />previewEntry() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (entry == null) ? Constants.ADD : Constants.UPDATE %>";
-		document.<portlet:namespace />fm.<portlet:namespace />preview.value = "true";
-		document.<portlet:namespace />fm.<portlet:namespace />workflowAction.value = "<%= WorkflowConstants.ACTION_SAVE_DRAFT %>";
+		var form = document.<portlet:namespace />fm;
+
+		form.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (entry == null) ? Constants.ADD : Constants.UPDATE %>";
+		form.<portlet:namespace />preview.value = "true";
+		form.<portlet:namespace />workflowAction.value = "<%= WorkflowConstants.ACTION_SAVE_DRAFT %>";
 
 		if (window.<portlet:namespace />editor) {
-			document.<portlet:namespace />fm.<portlet:namespace />content.value = window.<portlet:namespace />editor.getHTML();
+			form.<portlet:namespace />content.value = window.<portlet:namespace />editor.getHTML();
 		}
 
-		submitForm(document.<portlet:namespace />fm);
+		submitForm(form);
 	}
 
 	Liferay.provide(
@@ -291,7 +295,9 @@ boolean allowTrackbacks = PropsValues.BLOGS_TRACKBACK_ENABLED && BeanParamUtil.g
 		function(draft, ajax) {
 			var A = AUI();
 
-			var title = document.<portlet:namespace />fm.<portlet:namespace />title.value;
+			var form = document.<portlet:namespace />fm;
+
+			var title = form.<portlet:namespace />title.value;
 			var content = window.<portlet:namespace />editor.getHTML();
 
 			var publishButton = A.one('#<portlet:namespace />publishButton');
@@ -317,26 +323,25 @@ boolean allowTrackbacks = PropsValues.BLOGS_TRACKBACK_ENABLED && BeanParamUtil.g
 				var url = '<portlet:actionURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/blogs/edit_entry" /><portlet:param name="ajax" value="true" /><portlet:param name="preview" value="false" /></portlet:actionURL>';
 
 				var data = {
-					<portlet:namespace />assetTagNames: document.<portlet:namespace />fm.<portlet:namespace />assetTagNames.value,
+					<portlet:namespace />assetTagNames: form.<portlet:namespace />assetTagNames.value,
 					<portlet:namespace /><%= Constants.CMD %>: '<%= Constants.ADD %>',
 					<portlet:namespace />content: content,
-					<portlet:namespace />displayDateAmPm: document.<portlet:namespace />fm.<portlet:namespace />displayDateAmPm.value,
-					<portlet:namespace />displayDateDay: document.<portlet:namespace />fm.<portlet:namespace />displayDateDay.value,
-					<portlet:namespace />displayDateHour: document.<portlet:namespace />fm.<portlet:namespace />displayDateHour.value,
-					<portlet:namespace />displayDateMinute: document.<portlet:namespace />fm.<portlet:namespace />displayDateMinute.value,
-					<portlet:namespace />displayDateMonth: document.<portlet:namespace />fm.<portlet:namespace />displayDateMonth.value,
-					<portlet:namespace />displayDateYear: document.<portlet:namespace />fm.<portlet:namespace />displayDateYear.value,
-					<portlet:namespace />entryId: document.<portlet:namespace />fm.<portlet:namespace />entryId.value,
-					<portlet:namespace />redirect: document.<portlet:namespace />fm.<portlet:namespace />redirect.value,
-					<portlet:namespace />referringPortletResource: document.<portlet:namespace />fm.<portlet:namespace />referringPortletResource.value,
+					<portlet:namespace />displayDateAmPm: form.<portlet:namespace />displayDateAmPm.value,
+					<portlet:namespace />displayDateDay: form.<portlet:namespace />displayDateDay.value,
+					<portlet:namespace />displayDateHour: form.<portlet:namespace />displayDateHour.value,
+					<portlet:namespace />displayDateMinute: form.<portlet:namespace />displayDateMinute.value,
+					<portlet:namespace />displayDateMonth: form.<portlet:namespace />displayDateMonth.value,
+					<portlet:namespace />displayDateYear: form.<portlet:namespace />displayDateYear.value,
+					<portlet:namespace />entryId: form.<portlet:namespace />entryId.value,
+					<portlet:namespace />redirect: form.<portlet:namespace />redirect.value,
+					<portlet:namespace />referringPortletResource: form.<portlet:namespace />referringPortletResource.value,
 					<portlet:namespace />title: title,
 					<portlet:namespace />workflowAction: <%= WorkflowConstants.ACTION_SAVE_DRAFT %>
 				};
 
-				var customAttributes = A.all("[name*='<portlet:namespace />ExpandoAttribute']");
+				var customAttributes = A.one(form).all('[name^=<portlet:namespace />ExpandoAttribute]');
 
-				A.each(
-					customAttributes,
+				customAttributes.each(
 					function(item, index, collection) {
 						data[item.get('name')] = item.get('value');
 					}
@@ -370,8 +375,8 @@ boolean allowTrackbacks = PropsValues.BLOGS_TRACKBACK_ENABLED && BeanParamUtil.g
 								var message = instance.get('responseData');
 
 								if (message) {
-									document.<portlet:namespace />fm.<portlet:namespace />entryId.value = message.entryId;
-									document.<portlet:namespace />fm.<portlet:namespace />redirect.value = message.redirect;
+									form.<portlet:namespace />entryId.value = message.entryId;
+									form.<portlet:namespace />redirect.value = message.redirect;
 
 									var tabs1BackButton = A.one('#<portlet:namespace />tabs1TabsBack');
 
@@ -412,17 +417,17 @@ boolean allowTrackbacks = PropsValues.BLOGS_TRACKBACK_ENABLED && BeanParamUtil.g
 			else {
 				<portlet:namespace />clearSaveDraftIntervalId();
 
-				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (entry == null) ? Constants.ADD : Constants.UPDATE %>";
-				document.<portlet:namespace />fm.<portlet:namespace />content.value = content;
+				form.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (entry == null) ? Constants.ADD : Constants.UPDATE %>";
+				form.<portlet:namespace />content.value = content;
 
 				if (draft) {
-					document.<portlet:namespace />fm.<portlet:namespace />workflowAction.value = <%= WorkflowConstants.ACTION_SAVE_DRAFT %>;
+					form.<portlet:namespace />workflowAction.value = <%= WorkflowConstants.ACTION_SAVE_DRAFT %>;
 				}
 				else {
-					document.<portlet:namespace />fm.<portlet:namespace />workflowAction.value = <%= WorkflowConstants.ACTION_PUBLISH %>;
+					form.<portlet:namespace />workflowAction.value = <%= WorkflowConstants.ACTION_PUBLISH %>;
 				}
 
-				submitForm(document.<portlet:namespace />fm);
+				submitForm(form);
 			}
 		},
 		['aui-io']

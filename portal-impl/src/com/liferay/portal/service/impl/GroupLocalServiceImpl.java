@@ -281,7 +281,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 
 		if ((classNameId <= 0) || className.equals(Group.class.getName())) {
-			validateName(groupId, user.getCompanyId(), name);
+			validateName(groupId, user.getCompanyId(), name, site);
 		}
 
 		validateFriendlyURL(
@@ -1914,7 +1914,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			StringPool.BLANK, friendlyURL);
 
 		if ((classNameId <= 0) || className.equals(Group.class.getName())) {
-			validateName(group.getGroupId(), group.getCompanyId(), name);
+			validateName(group.getGroupId(), group.getCompanyId(), name,
+				group.getSite());
 		}
 		else if (className.equals(Organization.class.getName())) {
 			name = getOrgGroupName(classPK, name);
@@ -2501,7 +2502,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 	}
 
-	protected void validateName(long groupId, long companyId, String name)
+	protected void validateName(long groupId, long companyId, String name,
+			boolean site)
 		throws PortalException, SystemException {
 
 		if ((Validator.isNull(name)) || (Validator.isNumber(name)) ||
@@ -2519,6 +2521,12 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			}
 		}
 		catch (NoSuchGroupException nsge) {
+		}
+
+		Company company = companyLocalService.getCompany(companyId);
+
+		if (site && company.getName().equals(name)) {
+			throw new DuplicateGroupException();
 		}
 	}
 

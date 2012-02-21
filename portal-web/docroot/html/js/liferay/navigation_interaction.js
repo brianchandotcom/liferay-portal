@@ -73,10 +73,19 @@ AUI.add(
 
 						var focusManager = instance._focusManager;
 
-						focusManager.set(ACTIVE_DESCENDANT, 0);
-						focusManager.blur();
+						var hideMenu = function() {
+							Liferay.fire('hideNavigationMenu', MAP_HOVER);
+						};
 
-						Liferay.fire('hideNavigationMenu', MAP_HOVER);
+						if (focusManager.get(ACTIVE_DESCENDANT)) {
+							focusManager.set(ACTIVE_DESCENDANT, 0);
+							focusManager.blur();
+
+							hideMenu();
+						}
+						else {
+							A.later(0, instance, hideMenu);
+						}
 					},
 
 					_handleKey: function(event, direction) {

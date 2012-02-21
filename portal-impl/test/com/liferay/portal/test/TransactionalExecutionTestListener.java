@@ -45,8 +45,8 @@ public class TransactionalExecutionTestListener
 	public void runAfterTest(TestContext testContext) {
 		Method testMethod = testContext.getMethod();
 
-		TransactionContext transactionContext =
-			_transactionContextCache.remove(testMethod);
+		TransactionContext transactionContext = _transactionContextCache.remove(
+			testMethod);
 
 		if (transactionContext != null &&
 				!transactionContext._transactionStatus.isCompleted()) {

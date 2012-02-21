@@ -100,8 +100,8 @@ public class ProcessExecutor {
 				process);
 
 			Future<ProcessCallable<? extends Serializable>>
-				futureResponseProcessCallable =
-					executorService.submit(subprocessReactor);
+				futureResponseProcessCallable = executorService.submit(
+					subprocessReactor);
 
 			return new ProcessExecutionFutureResult<T>(
 				futureResponseProcessCallable, process);

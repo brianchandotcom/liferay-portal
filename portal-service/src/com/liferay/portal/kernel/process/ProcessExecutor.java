@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.util.NamedThreadFactory;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import java.io.EOFException;
+import java.io.FileDescriptor;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -41,6 +43,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author Shuyang Zhou
@@ -114,18 +117,33 @@ public class ProcessExecutor {
 	public static void main(String[] arguments)
 		throws ClassNotFoundException, IOException {
 
-		ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-			new UnsyncBufferedOutputStream(System.out));
+		PrintStream oldOut = System.out;
 
-		ProcessOutputStream outProcessOutputStream = new ProcessOutputStream(
-			objectOutputStream, false);
+		ObjectOutputStream objectOutputStream = null;
+		ProcessOutputStream outProcessOutputStream = null;
 
-		ProcessContext._setProcessOutputStream(outProcessOutputStream);
+		// Lock up to prevent concurrent writing
+		synchronized (oldOut) {
+			// Flush out data
+			oldOut.flush();
 
-		PrintStream outPrintStream = new PrintStream(
-			outProcessOutputStream, true);
+			// Open FileOutputStream on FileDescriptor.out
+			FileOutputStream fileOutputStream = new FileOutputStream(
+				FileDescriptor.out);
 
-		System.setOut(outPrintStream);
+			objectOutputStream = new ObjectOutputStream(
+				new UnsyncBufferedOutputStream(fileOutputStream));
+
+			outProcessOutputStream = new ProcessOutputStream(
+				objectOutputStream, false);
+
+			ProcessContext._setProcessOutputStream(outProcessOutputStream);
+
+			PrintStream outPrintStream = new PrintStream(
+				outProcessOutputStream, true);
+
+			System.setOut(outPrintStream);
+		}
 
 		ProcessOutputStream errProcessOutputStream = new ProcessOutputStream(
 			objectOutputStream, true);
@@ -144,12 +162,12 @@ public class ProcessExecutor {
 
 			Serializable result = processCallable.call();
 
-			outPrintStream.flush();
+			System.out.flush();
 
 			outProcessOutputStream.writeProcessCallable(
 				new ReturnProcessCallable<Serializable>(result));
 
-			outProcessOutputStream.close();
+			outProcessOutputStream.flush();
 		}
 		catch (ProcessException pe) {
 			errPrintStream.flush();
@@ -157,7 +175,7 @@ public class ProcessExecutor {
 			errProcessOutputStream.writeProcessCallable(
 				new ExceptionProcessCallable(pe));
 
-			errProcessOutputStream.close();
+			errProcessOutputStream.flush();
 		}
 	}
 
@@ -177,8 +195,45 @@ public class ProcessExecutor {
 
 	public static class ProcessContext {
 
+		public static boolean attach(
+			String message, long interval, ShutdownHook shutdownHook) {
+
+			HeartbeatThread attachThread = new HeartbeatThread(
+				message, interval, shutdownHook);
+
+			boolean result = _attachThreadReference.compareAndSet(
+				null, attachThread);
+
+			if (result) {
+				attachThread.start();
+			}
+
+			return result;
+		}
+
+		public static void detach() throws InterruptedException {
+			HeartbeatThread attachThread = _attachThreadReference.getAndSet(
+				null);
+
+			if (attachThread != null) {
+				attachThread.detach();
+				attachThread.join();
+			}
+		}
+
 		public static ProcessOutputStream getProcessOutputStream() {
 			return _processOutputStream;
+		}
+
+		public static boolean isAttached() {
+			HeartbeatThread attachThread = _attachThreadReference.get();
+
+			if (attachThread != null) {
+				return true;
+			}
+			else {
+				return false;
+			}
 		}
 
 		private static void _setProcessOutputStream(
@@ -190,7 +245,22 @@ public class ProcessExecutor {
 		private ProcessContext() {
 		}
 
+		private static AtomicReference<HeartbeatThread> _attachThreadReference =
+			new AtomicReference<HeartbeatThread>();
+
 		private static ProcessOutputStream _processOutputStream;
+
+	}
+
+	public static interface ShutdownHook {
+
+		public static final int BROKEN_PIPE_CODE = 1;
+
+		public static final int INTERRUPTION_CODE = 2;
+
+		public static final int UNKNOW_CODE = 3;
+
+		public boolean shutdown(int shutdownCode, Throwable shutdownError);
 
 	}
 
@@ -214,6 +284,95 @@ public class ProcessExecutor {
 	private static Log _log = LogFactoryUtil.getLog(ProcessExecutor.class);
 
 	private static volatile ExecutorService _executorService;
+
+	private static class HeartbeatThread extends Thread {
+
+		public HeartbeatThread(
+			String message, long interval, ShutdownHook shutdownHook) {
+
+			if (shutdownHook == null) {
+				throw new IllegalArgumentException("Missing ShutdownHook");
+			}
+
+			_interval = interval;
+			_shutdownHook = shutdownHook;
+
+			_pringBackProcessCallable = new PingbackProcessCallable(message);
+
+			setName(HeartbeatThread.class.getSimpleName());
+			setDaemon(true);
+		}
+
+		public void detach() {
+			_detach = true;
+			interrupt();
+		}
+
+		public void run() {
+			ProcessOutputStream processOutputStream =
+				ProcessContext.getProcessOutputStream();
+
+			int shutdownCode = 0;
+			Throwable shutdownError = null;
+
+			while (!_detach) {
+				try {
+					sleep(_interval);
+
+					processOutputStream.writeProcessCallable(
+						_pringBackProcessCallable);
+				}
+				catch (InterruptedException ie) {
+					if (_detach) {
+						return;
+					}
+					else {
+						shutdownError = ie;
+
+						shutdownCode = ShutdownHook.INTERRUPTION_CODE;
+					}
+				}
+				catch (IOException ioe) {
+					shutdownError = ioe;
+
+					shutdownCode = ShutdownHook.BROKEN_PIPE_CODE;
+				}
+				catch (Throwable throwable) {
+					shutdownError = throwable;
+
+					shutdownCode = ShutdownHook.UNKNOW_CODE;
+				}
+
+				// No need to put into finally, since we already catch Throwable
+				if (shutdownCode != 0) {
+					_detach = _shutdownHook.shutdown(
+						shutdownCode, shutdownError);
+				}
+			}
+		}
+
+		private volatile boolean _detach;
+
+		private final long _interval;
+		private final ProcessCallable<String> _pringBackProcessCallable;
+		private final ShutdownHook _shutdownHook;
+
+	}
+
+	private static class PingbackProcessCallable
+		implements ProcessCallable<String> {
+
+		public PingbackProcessCallable(String pingMessage) {
+			_pingMessage = pingMessage;
+		}
+
+		public String call() throws ProcessException {
+			return _pingMessage;
+		}
+
+		private final String _pingMessage;
+
+	}
 
 	private static class ProcessExecutionFutureResult<T> implements Future<T> {
 

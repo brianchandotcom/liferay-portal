@@ -342,11 +342,8 @@ public class DLIndexer extends BaseIndexer {
 
 			document.addKeyword(Field.ASSET_CATEGORY_IDS, assetCategoryIds);
 
-			String[] assetCategoryNames = StringUtil.split(
-				ListUtil.toString(
-					assetCategories, AssetCategory.NAME_ACCESSOR));
-
-			document.addKeyword(Field.ASSET_CATEGORY_NAMES, assetCategoryNames);
+			addLocalizedAssetCategoryTitles(
+				document, Field.ASSET_CATEGORY_TITLES, assetCategories);
 
 			String[] assetTagNames = AssetTagLocalServiceUtil.getTagNames(
 				DLFileEntry.class.getName(), fileEntryId);

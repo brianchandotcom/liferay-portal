@@ -129,8 +129,8 @@
 			<ref bean="org.apache.lucene.analysis.standard.StandardAnalyzer" />
 		</constructor-arg>
 		<constructor-arg>
-			<util:map>
-				<entry key="assetCategoryNames" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
+			<util:map map-class="java.util.LinkedHashMap">
+				<entry key="assetCategoryTitles(_.+)?" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
 				<entry key="assetTagNames" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
 				<entry key="entryClassName" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
 				<entry key="extension" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />

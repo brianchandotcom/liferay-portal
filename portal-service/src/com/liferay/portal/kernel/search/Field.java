@@ -29,7 +29,7 @@ public class Field implements Serializable {
 
 	public static final String ASSET_CATEGORY_IDS = "assetCategoryIds";
 
-	public static final String ASSET_CATEGORY_NAMES = "assetCategoryNames";
+	public static final String ASSET_CATEGORY_TITLES = "assetCategoryTitles";
 
 	public static final String ASSET_TAG_NAMES = "assetTagNames";
 
@@ -60,7 +60,7 @@ public class Field implements Serializable {
 	public static final String GROUP_ROLE_ID = "groupRoleId";
 
 	public static final String[] KEYWORDS = {
-		Field.ASSET_CATEGORY_NAMES, Field.ASSET_TAG_NAMES, Field.COMMENTS,
+		Field.ASSET_CATEGORY_TITLES, Field.ASSET_TAG_NAMES, Field.COMMENTS,
 		Field.CONTENT, Field.DESCRIPTION, Field.PROPERTIES, Field.TITLE,
 		Field.URL, Field.USER_NAME
 	};

@@ -17,7 +17,6 @@ package com.liferay.portlet.wiki.engine.creole;
 import com.liferay.portal.parsers.creole.ast.WikiPageNode;
 import com.liferay.portal.parsers.creole.parser.Creole10Lexer;
 import com.liferay.portal.parsers.creole.parser.Creole10Parser;
-import com.liferay.portal.util.BaseTestCase;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,7 +30,7 @@ import org.junit.Assert;
 /**
  * @author Miguel Pastor
  */
-public abstract class AbstractWikiParserTests extends BaseTestCase {
+public abstract class AbstractWikiParserTests {
 
 	protected Creole10Parser getCreole10Parser(String fileName)
 		throws IOException {

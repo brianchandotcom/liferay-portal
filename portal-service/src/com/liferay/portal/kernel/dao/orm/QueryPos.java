@@ -67,6 +67,10 @@ public class QueryPos {
 		}
 	}
 
+	public void add(Date value) {
+		add(CalendarUtil.getTimestamp(value));
+	}
+
 	public void add(Date[] values) {
 		add(values, _DEFAULT_ARRAY_COUNT);
 	}
@@ -241,9 +245,6 @@ public class QueryPos {
 		}
 		else if (clazz == Date.class) {
 			add(CalendarUtil.getTimestamp((Date)obj));
-		}
-		else if (clazz == Date[].class) {
-			add((Date[])obj);
 		}
 		else if (clazz == Double.class) {
 			add(((Double)obj).doubleValue());

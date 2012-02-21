@@ -32,6 +32,10 @@ public class UpgradeAsset extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		runSQL(
+			"create unique index IX_1E9D371D on AssetEntry " +
+				"(classNameId, classPK)");
+
 		updateAssetEntry("com.liferay.portal.model.User", "User_", "userId");
 		updateAssetEntry(
 			"com.liferay.portlet.blogs.model.BlogsEntry", "BlogsEntry",

@@ -129,8 +129,7 @@ public class GmailServer_TearDownMailingListMessageTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible(
-									"//div[@title='My groups']/a/span")) {
+						if (selenium.isVisible("//td/a/span")) {
 							break;
 						}
 					}
@@ -141,8 +140,8 @@ public class GmailServer_TearDownMailingListMessageTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("My groups"),
-					selenium.getText("//div[@title='My groups']/a/span"));
-				selenium.click("//div[@title='My groups']/a/span");
+					selenium.getText("//td/a/span"));
+				selenium.click("//td/a/span");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -150,7 +149,7 @@ public class GmailServer_TearDownMailingListMessageTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("link=liferay-mailinglist")) {
+						if (selenium.isVisible("//tr[2]/td/div/div/a")) {
 							break;
 						}
 					}
@@ -160,7 +159,7 @@ public class GmailServer_TearDownMailingListMessageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.click("link=liferay-mailinglist");
+				selenium.click("//tr[2]/td/div/div/a");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -170,7 +169,7 @@ public class GmailServer_TearDownMailingListMessageTest extends BaseTestCase {
 					try {
 						if (RuntimeVariables.replace("liferay-mailinglist")
 												.equals(selenium.getText(
-										"//div/span[2]/span"))) {
+										"//span/span[2]/span"))) {
 							break;
 						}
 					}
@@ -181,7 +180,7 @@ public class GmailServer_TearDownMailingListMessageTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("liferay-mailinglist"),
-					selenium.getText("//div/span[2]/span"));
+					selenium.getText("//span/span[2]/span"));
 				Thread.sleep(10000);
 
 				boolean MLMessage1Present = selenium.isElementPresent(

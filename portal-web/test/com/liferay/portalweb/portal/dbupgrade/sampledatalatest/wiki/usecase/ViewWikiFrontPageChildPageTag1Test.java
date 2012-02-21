@@ -57,8 +57,9 @@ public class ViewWikiFrontPageChildPageTag1Test extends BaseTestCase {
 			RuntimeVariables.replace("wiki tag 1"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Pages with tag wiki tag 1."),
-			selenium.getText("//h1[@class='header-title']/span"));
+		assertEquals(RuntimeVariables.replace("Pages with tag wiki tag 1 ."),
+			selenium.getText(
+				"//h1[@class='taglib-categorization-filter entry-title']"));
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage Title"),
 			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Approved"),

@@ -49,8 +49,9 @@ public class Member_AssertCannotViewWCEntryTest extends BaseTestCase {
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("No Web Content was found."),
-			selenium.getText("//div[@class='portlet-msg-info']"));
+		assertEquals(RuntimeVariables.replace(
+				"You do not have the roles required to access this portlet."),
+			selenium.getText("//div[@class='portlet-msg-error']"));
 		assertFalse(selenium.isTextPresent("Web Content Name"));
 	}
 }

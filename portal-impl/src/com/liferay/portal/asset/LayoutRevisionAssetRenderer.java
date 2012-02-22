@@ -89,7 +89,6 @@ public class LayoutRevisionAssetRenderer extends BaseAssetRenderer {
 		return _layoutRevision.getHTMLTitle(locale);
 	}
 
-	
 	@Override
 	public String getURLViewInContext(
 		LiferayPortletRequest liferayPortletRequest,
@@ -117,7 +116,7 @@ public class LayoutRevisionAssetRenderer extends BaseAssetRenderer {
 
 		return sb.toString();
 	}
-	
+
 	public long getUserId() {
 		return _layoutRevision.getUserId();
 	}
@@ -128,7 +127,7 @@ public class LayoutRevisionAssetRenderer extends BaseAssetRenderer {
 
 	@Override
 	public boolean isPreviewInContext() {
-		return false;
+		return true;
 	}
 
 	public String render(

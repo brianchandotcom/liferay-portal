@@ -198,10 +198,9 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 								<liferay-ui:icon image="view" method="get" url="<%= viewFullContentURL %>" target='<%= assetRenderer.isPreviewInContext() ? "_blank" : StringPool.BLANK %>' />
 							</c:if>
 
-							<%
-							String taglibEditURL = null;
+							<c:if test="<%= editPortletURL != null %>">
 
-							if (editPortletURL != null) {
+								<%
 								editPortletURL.setWindowState(LiferayWindowState.POP_UP);
 								editPortletURL.setPortletMode(PortletMode.VIEW);
 
@@ -211,22 +210,22 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 								editPortletURLString = HttpUtil.addParameter(editPortletURLString, "refererPlid", plid);
 
 								editPortletURL.setParameter("redirect", currentURL);
+								%>
 
-								taglibEditURL = "javascript:Liferay.Util.openWindow({dialog: {width: 960}, id: '" + renderResponse.getNamespace() + "', title: '" + LanguageUtil.format(pageContext, "edit-x", HtmlUtil.escape(assetRenderer.getTitle(locale))) + "', uri:'" + HtmlUtil.escapeURL(editPortletURLString) + "'});";
-							}
-							else if (assetRenderer.isPreviewInContext()) {
-								taglibEditURL = assetRenderer.getURLViewInContext((LiferayPortletRequest)renderRequest, (LiferayPortletResponse)renderResponse, null);
-							}
-							%>
+								<c:choose>
+									<c:when test="<%= assetRenderer.hasEditPermission(permissionChecker) && showEditURL %>">
 
-							<c:choose>
-								<c:when test="<%= assetRenderer.hasEditPermission(permissionChecker) && showEditURL %>">
-									<liferay-ui:icon image="edit" url="<%= taglibEditURL %>" target='<%= assetRenderer.isPreviewInContext() ? "_blank" : StringPool.BLANK %>' />
-								</c:when>
-								<c:when test="<%= assetRenderer.hasEditPermission(permissionChecker) && !showEditURL && !workflowTask.isCompleted() %>">
-									<liferay-ui:icon-help message="please-assign-the-task-to-yourself-to-be-able-to-edit-the-content" />
-								</c:when>
-							</c:choose>
+										<%
+										String taglibEditURL = "javascript:Liferay.Util.openWindow({dialog: {width: 960}, id: '" + renderResponse.getNamespace() + "', title: '" + LanguageUtil.format(pageContext, "edit-x", HtmlUtil.escape(assetRenderer.getTitle(locale))) + "', uri:'" + HtmlUtil.escapeURL(editPortletURLString) + "'});";
+										%>
+
+										<liferay-ui:icon image="edit" url="<%= taglibEditURL %>" />
+									</c:when>
+									<c:when test="<%= assetRenderer.hasEditPermission(permissionChecker) && !showEditURL && !workflowTask.isCompleted() %>">
+										<liferay-ui:icon-help message="please-assign-the-task-to-yourself-to-be-able-to-edit-the-content" />
+									</c:when>
+								</c:choose>
+							</c:if>
 						</liferay-ui:icon-list>
 					</div>
 

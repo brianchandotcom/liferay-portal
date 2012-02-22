@@ -41,6 +41,8 @@ public class UpgradeScopes extends BaseUpgradePortletPreferences {
 			String portletId, String xml)
 		throws Exception {
 
+		boolean changed = false;
+
 		PortletPreferences portletPreferences =
 			PortletPreferencesFactoryUtil.fromXML(
 				companyId, ownerId, ownerType, plid, portletId, xml);
@@ -50,9 +52,16 @@ public class UpgradeScopes extends BaseUpgradePortletPreferences {
 
 		if (!hasScopeType) {
 			portletPreferences.setValue("lfrScopeType", "layout");
+
+			changed = true;
 		}
 
-		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
+		if (changed) {
+			return PortletPreferencesFactoryUtil.toXML(portletPreferences);
+		}
+		else {
+			return xml;
+		}
 	}
 
 }

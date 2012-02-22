@@ -72,22 +72,25 @@ if (Validator.isNotNull(onChangeMethod)) {
 
 <div class="<%= cssClass %>" id="<%= name %>_container">
 	<table bgcolor="#FFFFFF" cellpadding="0" cellspacing="0" height="100%" width="100%">
-	<tr>
-		<td bgcolor="#FFFFFF" height="100%">
-			<textarea id="<%= name %>" name="<%= name %>" style="font-family: monospace; height: 100%; min-height: 8em; min-width: 10em; width: 100%;"
+		<tr>
+			<td bgcolor="#FFFFFF" height="100%">
+				<textarea
+					id="<%= name %>"
+					name="<%= name %>"
 
-			<%
-			if (Validator.isNotNull(onChangeMethod)) {
-			%>
+					<%
+					if (Validator.isNotNull(onChangeMethod)) {
+					%>
 
-				onChange="<%= HtmlUtil.escape(onChangeMethod) %>(this.value)"
+					onChange="<%= HtmlUtil.escape(onChangeMethod) %>(this.value)"
 
-			<%
-			}
-			%>
+					<%
+					}
+					%>
 
-			></textarea>
-		</td>
-	</tr>
+ 					style="font-family: monospace; height: 100%; min-height: 8em; min-width: 10em; width: 100%;"
+				></textarea>
+			</td>
+		</tr>
 	</table>
 </div>

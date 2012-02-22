@@ -259,7 +259,7 @@ if (Validator.isNotNull(content)) {
 							</aui:fieldset>
 						</aui:column>
 
-						<aui:column columnWidth="50 cssClass="article-template"">
+						<aui:column columnWidth="50" cssClass="article-template">
 							<label class="article-template-label"><liferay-ui:message key="template" />:</label>
 
 							<aui:fieldset cssClass="article-template-toolbar">

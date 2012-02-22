@@ -970,7 +970,7 @@ if ((layout.isTypePanel() || layout.isTypeControlPanel()) && !portletDisplay.get
 
 			<c:choose>
 				<c:when test="<%= useDefaultTemplate || portletException %>">
-					<tiles:insert flush="false"> template='<%= StrutsUtil.TEXT_HTML_DIR + "/common/themes/portlet.jsp" %>'
+					<tiles:insert flush="false" template='<%= StrutsUtil.TEXT_HTML_DIR + "/common/themes/portlet.jsp" %>'>
 						<tiles:put name="portlet_content" value="<%= portletContent %>" />
 					</tiles:insert>
 				</c:when>

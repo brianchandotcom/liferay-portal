@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextUtil;
 import com.liferay.portal.struts.JSONAction;
@@ -71,6 +72,28 @@ public class JSONServiceAction extends JSONAction {
 		}
 	}
 
+	protected void checkMethodPublicAccess(
+		HttpServletRequest request, String methodName, String[] publicMethods)
+		throws PrincipalException {
+
+		if (publicMethods.length > 0) {
+			if (publicMethods[0] != null && publicMethods[0].equals("ALL")) {
+				return;
+			}
+
+			for (String publicMethod : publicMethods) {
+				if (methodName.startsWith(publicMethod)) {
+					return;
+				}
+			}
+		}
+
+		String remoteUser = request.getRemoteUser();
+		if (remoteUser == null) {
+			throw new PrincipalException();
+		}
+	}
+
 	@Override
 	public String getJSON(
 			ActionMapping actionMapping, ActionForm actionForm,
@@ -79,6 +102,10 @@ public class JSONServiceAction extends JSONAction {
 
 		String className = ParamUtil.getString(request, "serviceClassName");
 		String methodName = ParamUtil.getString(request, "serviceMethodName");
+
+		checkMethodPublicAccess(request, methodName,
+			PropsValues.JSON_SERVICE_PUBLIC_METHODS);
+
 		String[] serviceParameters = getStringArrayFromJSON(
 			request, "serviceParameters");
 		String[] serviceParameterTypes = getStringArrayFromJSON(

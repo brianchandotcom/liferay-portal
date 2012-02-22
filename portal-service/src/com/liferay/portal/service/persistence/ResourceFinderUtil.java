@@ -21,6 +21,18 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @author Brian Wing Shun Chan
  */
 public class ResourceFinderUtil {
+	public static java.util.List<com.liferay.portal.model.Resource> findByContainerResource(
+		long codeId, long classNameId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().findByContainerResource(codeId, classNameId);
+	}
+
+	public static java.util.List<com.liferay.portal.model.Resource> findByMissingAction(
+		long codeId, java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().findByMissingAction(codeId, actionId);
+	}
+
 	public static java.util.List<com.liferay.portal.model.Resource> findByName(
 		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException {

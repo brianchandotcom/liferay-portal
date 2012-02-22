@@ -123,6 +123,10 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 		return false;
 	}
 
+	public boolean isPreviewInContext() {
+		return false;
+	}
+
 	public boolean isPrintable() {
 		return false;
 	}

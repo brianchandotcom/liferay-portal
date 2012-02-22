@@ -93,6 +93,8 @@ public interface AssetRenderer {
 
 	public boolean isLocalizable();
 
+	public boolean isPreviewInContext();
+
 	public boolean isPrintable();
 
 	public String render(

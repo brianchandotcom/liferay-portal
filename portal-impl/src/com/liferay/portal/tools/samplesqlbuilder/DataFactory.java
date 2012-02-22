@@ -1244,13 +1244,13 @@ public class DataFactory {
 			maxWebContentSize = 1;
 		}
 
-		byte[] bytes = new byte[maxWebContentSize];
+		char[] chars = new char[maxWebContentSize];
 
 		for (int i = 0; i < maxWebContentSize; i++) {
-			bytes[i] = CharPool.NUMBER_0;
+			chars[i] = (char)(CharPool.LOWER_CASE_A + (i % 26));
 		}
 
-		_webContent = new String(bytes, "UTF-8");
+		_webContent = new String(chars);
 	}
 
 	public IntegerWrapper newInteger() {

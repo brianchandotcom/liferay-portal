@@ -21,8 +21,8 @@ import freemarker.cache.TemplateLoader;
 import java.io.Reader;
 import java.io.StringReader;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Michael C. Han
@@ -66,7 +66,7 @@ public class StringTemplateLoader implements TemplateLoader {
 	}
 
 	private Map<String, StringTemplateSource> _templates =
-		new HashMap<String, StringTemplateSource>();
+		new ConcurrentHashMap<String, StringTemplateSource>();
 
 	private class StringTemplateSource {
 

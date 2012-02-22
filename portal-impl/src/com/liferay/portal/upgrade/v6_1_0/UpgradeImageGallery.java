@@ -626,7 +626,9 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			ps = con.prepareStatement(
 				"select folderId from DLFolder where groupId = " + groupId +
 					" and parentFolderId = " + parentFolderId +
-						" and name = '" + name + "'");
+						" and name = ?");
+
+			ps.setString(1, name);
 
 			rs = ps.executeQuery();
 

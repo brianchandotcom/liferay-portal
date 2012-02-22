@@ -793,7 +793,6 @@
 				<name>helpMessage</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
-				<defaultValue>a-new-version-will-be-created-automatically-if-this-content-is-modified</defaultValue>
 			</attribute>
 			<attribute>
 				<name>id</name>

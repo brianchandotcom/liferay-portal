@@ -27,9 +27,9 @@ String type = displayTerms.getType();
 %>
 
 <liferay-ui:search-toggle
-	id="toggle_id_directory_organization_search"
-	displayTerms="<%= displayTerms %>"
 	buttonLabel="search"
+	displayTerms="<%= displayTerms %>"
+	id="toggle_id_directory_organization_search"
 >
 	<aui:fieldset>
 		<aui:input name="<%= displayTerms.NAME %>" size="20" type="text" value="<%= displayTerms.getName() %>" />

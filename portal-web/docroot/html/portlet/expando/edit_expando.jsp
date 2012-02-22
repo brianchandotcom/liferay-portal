@@ -153,27 +153,27 @@ portletURL.setParameter("modelResource", modelResource);
 
 					<aui:field-wrapper label="default-value">
 						<liferay-ui:input-date
-							dayValue="<%= defaultValueDate.get(Calendar.DATE) %>"
 							dayParam="defaultValueDay"
+							dayValue="<%= defaultValueDate.get(Calendar.DATE) %>"
 							disabled="<%= false %>"
 							firstDayOfWeek="<%= defaultValueDate.getFirstDayOfWeek() - 1 %>"
 							monthParam="defaultValueMonth"
 							monthValue="<%= defaultValueDate.get(Calendar.MONTH) %>"
 							yearParam="defaultValueYear"
-							yearValue="<%= defaultValueDate.get(Calendar.YEAR) %>"
-							yearRangeStart="<%= defaultValueDate.get(Calendar.YEAR) - 100 %>"
 							yearRangeEnd="<%= defaultValueDate.get(Calendar.YEAR) + 100 %>"
+							yearRangeStart="<%= defaultValueDate.get(Calendar.YEAR) - 100 %>"
+							yearValue="<%= defaultValueDate.get(Calendar.YEAR) %>"
 						/>
 
 						<liferay-ui:input-time
-							hourParam="defaultValueHour"
-							hourValue="<%= defaultValueDate.get(Calendar.HOUR) %>"
-							minuteParam="defaultValueMinute"
-							minuteValue="<%= defaultValueDate.get(Calendar.MINUTE) %>"
-							minuteInterval="<%= 1 %>"
 							amPmParam="defaultValueAmPm"
 							amPmValue="<%= defaultValueDate.get(Calendar.AM_PM) %>"
 							disabled="<%= false %>"
+							hourParam="defaultValueHour"
+							hourValue="<%= defaultValueDate.get(Calendar.HOUR) %>"
+							minuteInterval="<%= 1 %>"
+							minuteParam="defaultValueMinute"
+							minuteValue="<%= defaultValueDate.get(Calendar.MINUTE) %>"
 						/>
 					</aui:field-wrapper>
 				</c:when>

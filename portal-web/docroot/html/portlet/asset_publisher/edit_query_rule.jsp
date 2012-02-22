@@ -60,17 +60,17 @@ if (queryLogicIndex >= 0) {
 
 	<div class="aui-field tags-selector <%= Validator.equals(queryName, "assetTags") ? StringPool.BLANK : "aui-helper-hidden" %>">
 		<liferay-ui:asset-tags-selector
-			hiddenInput='<%= "queryTagNames" + index %>'
 			curTags='<%= Validator.equals(queryName, "assetTags") ? queryValues : null %>'
 			focus="<%= false %>"
+			hiddenInput='<%= "queryTagNames" + index %>'
 		/>
 	</div>
 
 	<div class="aui-field categories-selector <%= Validator.equals(queryName, "assetCategories") ? StringPool.BLANK : "aui-helper-hidden" %>">
 		<liferay-ui:asset-categories-selector
-			hiddenInput='<%= "queryCategoryIds" + index %>'
 			curCategoryIds='<%= Validator.equals(queryName, "assetCategories") ? queryValues : null %>'
 			focus="<%= false %>"
+			hiddenInput='<%= "queryCategoryIds" + index %>'
 		/>
 	</div>
 </div>

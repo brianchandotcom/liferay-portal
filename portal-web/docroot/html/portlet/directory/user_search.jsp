@@ -25,9 +25,9 @@ UserDisplayTerms displayTerms = (UserDisplayTerms)searchContainer.getDisplayTerm
 %>
 
 <liferay-ui:search-toggle
-	id="toggle_id_directory_user_search"
-	displayTerms="<%= displayTerms %>"
 	buttonLabel="search"
+	displayTerms="<%= displayTerms %>"
+	id="toggle_id_directory_user_search"
 >
 	<aui:fieldset>
 		<aui:column>

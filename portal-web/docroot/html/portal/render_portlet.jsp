@@ -853,7 +853,7 @@ if ((layout.isTypePanel() || layout.isTypeControlPanel()) && !portletDisplay.get
 	}
 	%>
 
-	<div id="p_p_id<%= HtmlUtil.escapeAttribute(renderResponseImpl.getNamespace()) %>" class="<%= cssClasses %>" <%= freeformStyles %>>
+	<div class="<%= cssClasses %>" id="p_p_id<%= HtmlUtil.escapeAttribute(renderResponseImpl.getNamespace()) %>" <%= freeformStyles %>>
 		<span id="p_<%= HtmlUtil.escapeAttribute(portletId) %>"></span>
 
 		<div class="portlet-body">
@@ -919,7 +919,7 @@ if ((layout.isTypePanel() || layout.isTypeControlPanel()) && !portletDisplay.get
 				}
 		%>
 
-				<tiles:insert template="<%= templatePath %>" flush="false">
+				<tiles:insert flush="false" template="<%= templatePath %>">
 					<tiles:put name="portlet_content" value="/portal/portlet_error.jsp" />
 				</tiles:insert>
 
@@ -930,7 +930,7 @@ if ((layout.isTypePanel() || layout.isTypeControlPanel()) && !portletDisplay.get
 					renderRequestImpl.setAttribute(WebKeys.PORTLET_CONTENT, stringResponse.getString());
 		%>
 
-					<tiles:insert template='<%= StrutsUtil.TEXT_HTML_DIR + "/common/themes/portlet.jsp" %>' flush="false">
+					<tiles:insert flush="false" template='<%= StrutsUtil.TEXT_HTML_DIR + "/common/themes/portlet.jsp" %>'>
 						<tiles:put name="portlet_content" value="<%= StringPool.BLANK %>" />
 					</tiles:insert>
 
@@ -970,7 +970,7 @@ if ((layout.isTypePanel() || layout.isTypeControlPanel()) && !portletDisplay.get
 
 			<c:choose>
 				<c:when test="<%= useDefaultTemplate || portletException %>">
-					<tiles:insert template='<%= StrutsUtil.TEXT_HTML_DIR + "/common/themes/portlet.jsp" %>' flush="false">
+					<tiles:insert flush="false" template='<%= StrutsUtil.TEXT_HTML_DIR + "/common/themes/portlet.jsp" %>'>
 						<tiles:put name="portlet_content" value="<%= portletContent %>" />
 					</tiles:insert>
 				</c:when>

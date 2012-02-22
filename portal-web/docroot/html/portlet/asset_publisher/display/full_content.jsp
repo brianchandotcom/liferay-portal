@@ -84,7 +84,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 					</c:if>
 
 					<div class="locale-actions">
-						<liferay-ui:language languageIds="<%= availableLocales %>" displayStyle="<%= 0 %>" />
+						<liferay-ui:language displayStyle="<%= 0 %>" languageIds="<%= availableLocales %>" />
 					</div>
 				</c:if>
 			</c:if>

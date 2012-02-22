@@ -23,9 +23,9 @@ AssetDisplayTerms displayTerms = (AssetDisplayTerms)searchContainer.getDisplayTe
 %>
 
 <liferay-ui:search-toggle
-	id="toggle_id_asset_search"
-	displayTerms="<%= displayTerms %>"
 	buttonLabel="search"
+	displayTerms="<%= displayTerms %>"
+	id="toggle_id_asset_search"
 >
 	<aui:fieldset>
 		<aui:input name="<%= displayTerms.TITLE %>" size="20" type="text" value="<%= displayTerms.getTitle() %>" />

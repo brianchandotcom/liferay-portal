@@ -191,7 +191,7 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 			<c:if test="<%= themeDisplay.isShowPageCustomizationIcon() %>">
 				<div class="aui-helper-hidden layout-customizable-controls" id="<portlet:namespace />layout-customizable-controls">
 					<span title='<liferay-ui:message key="customizable-help" />'>
-						<aui:input helpMessage='<%= group.isLayoutPrototype() ? "modifiable-help" : "customizable-help" %>' inputCssClass="layout-customizable-checkbox" id="TypeSettingsProperties--[COLUMN_ID]-customizable--" label='<%= (group.isLayoutSetPrototype() || group.isLayoutPrototype()) ? "modifiable" : "customizable" %>' name="TypeSettingsProperties--[COLUMN_ID]-customizable--" type="checkbox" useNamespace="<%= false %>" />
+						<aui:input helpMessage='<%= group.isLayoutPrototype() ? "modifiable-help" : "customizable-help" %>' id="TypeSettingsProperties--[COLUMN_ID]-customizable--" inputCssClass="layout-customizable-checkbox" label='<%= (group.isLayoutSetPrototype() || group.isLayoutPrototype()) ? "modifiable" : "customizable" %>' name="TypeSettingsProperties--[COLUMN_ID]-customizable--" type="checkbox" useNamespace="<%= false %>" />
 					</span>
 				</div>
 			</c:if>
@@ -373,7 +373,7 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 	%>
 
 	<c:if test="<%= !layoutPrototypes.isEmpty() %>">
-		<div id="layoutPrototypeTemplate" class="aui-html-template">
+		<div class="aui-html-template" id="layoutPrototypeTemplate">
 			<ul>
 
 				<%

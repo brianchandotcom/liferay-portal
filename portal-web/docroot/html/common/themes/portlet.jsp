@@ -18,9 +18,9 @@
 
 <portlet:defineObjects />
 
-<tiles:useAttribute id="tilesPortletContent" name="portlet_content" classname="java.lang.String" ignore="true" />
-<tiles:useAttribute id="tilesPortletDecorate" name="portlet_decorate" classname="java.lang.String" ignore="true" />
-<tiles:useAttribute id="tilesPortletPadding" name="portlet_padding" classname="java.lang.String" ignore="true" />
+<tiles:useAttribute classname="java.lang.String" id="tilesPortletContent" ignore="true" name="portlet_content" />
+<tiles:useAttribute classname="java.lang.String" id="tilesPortletDecorate" ignore="true" name="portlet_decorate" />
+<tiles:useAttribute classname="java.lang.String" id="tilesPortletPadding" ignore="true" name="portlet_padding" />
 
 <%
 Portlet portlet = (Portlet)request.getAttribute(WebKeys.RENDER_PORTLET);

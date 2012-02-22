@@ -122,13 +122,13 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 
 			<div class="<%= defaultScope ? "aui-helper-hidden" : "" %>" id="<portlet:namespace />scopesBoxes">
 				<liferay-ui:input-move-boxes
-					leftTitle="selected"
-					rightTitle="available"
 					leftBoxName="currentScopeIds"
-					rightBoxName="availableScopeIds"
-					leftReorder="true"
 					leftList="<%= scopesLeftList %>"
+					leftReorder="true"
+					leftTitle="selected"
+					rightBoxName="availableScopeIds"
 					rightList="<%= scopesRightList %>"
+					rightTitle="available"
 				/>
 			</div>
 		</liferay-util:buffer>
@@ -377,13 +377,13 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 
 							<div class="<%= anyAssetType ? "aui-helper-hidden" : "" %>" id="<portlet:namespace />classNamesBoxes">
 								<liferay-ui:input-move-boxes
-									leftTitle="selected"
-									rightTitle="available"
 									leftBoxName="currentClassNameIds"
-									rightBoxName="availableClassNameIds"
-									leftReorder="true"
 									leftList="<%= typesLeftList %>"
+									leftReorder="true"
+									leftTitle="selected"
+									rightBoxName="availableClassNameIds"
 									rightList="<%= typesRightList %>"
+									rightTitle="available"
 								/>
 							</div>
 
@@ -450,13 +450,13 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 
 								<div class="<%= assetSelectedClassTypeIds.length > 1 ? "" : "aui-helper-hidden" %>" id="<portlet:namespace /><%= className %>Boxes">
 									<liferay-ui:input-move-boxes
-										leftTitle="selected"
-										rightTitle="available"
 										leftBoxName='<%= className + "currentClassTypeIds" %>'
-										rightBoxName='<%= className + "availableClassTypeIds" %>'
-										leftReorder="true"
 										leftList="<%= subTypesLeftList %>"
+										leftReorder="true"
+										leftTitle="selected"
+										rightBoxName='<%= className + "availableClassTypeIds" %>'
 										rightList="<%= subTypesRightList %>"
+										rightTitle="available"
 									/>
 								</div>
 							</div>

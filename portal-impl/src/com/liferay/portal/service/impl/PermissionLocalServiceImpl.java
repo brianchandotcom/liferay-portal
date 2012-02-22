@@ -41,6 +41,7 @@ import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.base.PermissionLocalServiceBaseImpl;
 import com.liferay.portal.service.persistence.OrgGroupPermissionPK;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.comparator.PermissionComparator;
 
@@ -1518,18 +1519,28 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 			return;
 		}
 
-		List<Group> groups = groupPersistence.findByCompanyId(companyId);
+		Role role = rolePersistence.findByC_N(companyId, roleName);
 
-		for (Group group : groups) {
-			String primKey = Long.toString(group.getGroupId());
+		long classNameId = 0;
 
-			Resource resource = resourcePersistence.fetchByC_P(
-				resourceCode.getCodeId(), primKey);
+		if (role.getType() == RoleConstants.TYPE_SITE) {
+			classNameId = PortalUtil.getClassNameId(Group.class);
+		}
+		else if (role.getType() == RoleConstants.TYPE_ORGANIZATION) {
+			classNameId = PortalUtil.getClassNameId(Organization.class);
+		}
 
-			if (resource == null) {
-				continue;
-			}
+		List<Resource> resources = resourceFinder.findByContainerResource(
+			resourceCode.getCodeId(), classNameId);
 
+		if (resources.isEmpty()) {
+			return;
+		}
+
+		List<Permission> permissions = new ArrayList<Permission>(
+			resources.size());
+
+		for (Resource resource : resources) {
 			Permission permission = permissionPersistence.fetchByA_R(
 				actionId, resource.getResourceId());
 
@@ -1546,23 +1557,18 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 				permissionPersistence.update(permission, false);
 			}
 
-			if ((PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) ||
-				roleName.equals(RoleConstants.ORGANIZATION_USER) ||
-				roleName.equals(RoleConstants.OWNER) ||
-				roleName.equals(RoleConstants.SITE_MEMBER)) {
+			permissions.add(permission);
+		}
 
-				Role role = rolePersistence.findByC_N(companyId, roleName);
+		if ((PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) ||
+			!roleName.equals(RoleConstants.GUEST)) {
 
-				permissionPersistence.addRole(
-					permission.getPermissionId(), role);
-			}
-			else {
-				long defaultUserId = userLocalService.getDefaultUserId(
-					companyId);
+			rolePersistence.addPermissions(role.getRoleId(), permissions);
+		}
+		else {
+			long defaultUserId = userLocalService.getDefaultUserId(companyId);
 
-				permissionPersistence.addUser(
-					permission.getPermissionId(), defaultUserId);
-			}
+			userPersistence.addPermissions(defaultUserId, permissions);
 		}
 	}
 

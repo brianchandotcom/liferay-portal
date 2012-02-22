@@ -18,6 +18,10 @@ package com.liferay.portal.service.persistence;
  * @author Brian Wing Shun Chan
  */
 public interface ResourceFinder {
+	public java.util.List<com.liferay.portal.model.Resource> findByContainerResource(
+		long codeId, long classNameId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public java.util.List<com.liferay.portal.model.Resource> findByName(
 		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException;

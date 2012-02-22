@@ -114,6 +114,7 @@ else {
 					publishToLiveURL.setParameter("pagesRedirect", currentURL);
 					publishToLiveURL.setParameter("groupId", String.valueOf(groupId));
 					publishToLiveURL.setParameter("selPlid", String.valueOf(selPlid));
+					publishToLiveURL.setParameter("tabs1", (privateLayout) ? "private-pages" : "public-pages");
 				}
 				else {
 					publishToLiveURL = themeDisplay.getURLPublishToLive();

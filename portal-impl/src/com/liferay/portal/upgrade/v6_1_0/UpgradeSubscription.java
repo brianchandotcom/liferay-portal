@@ -98,7 +98,7 @@ public class UpgradeSubscription extends UpgradeProcess {
 			sb.append("MIN(modifiedDate) as modifiedDate from MBMessage ");
 			sb.append("where (companyId = " + companyId + ") and ");
 			sb.append("(classNameId != 0) and (parentMessageId != 0) ");
-			sb.append("group by userId, userName, classNameId, classPK");
+			sb.append("group by userId, classNameId, classPK");
 
 			String sql = sb.toString();
 

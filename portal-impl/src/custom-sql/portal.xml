@@ -1005,6 +1005,18 @@
 				(ResourceBlock.name = ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.service.persistence.ResourceFinder.findByContainerResource">
+		<![CDATA[
+			SELECT
+				{Resource_.*}
+			FROM
+				Resource_
+			INNER JOIN
+				Group_ ON
+					(Resource_.codeId = ?) AND
+					(Resource_.primKey = CAST_TEXT(Group_.groupId))
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.service.persistence.ResourceFinder.findByName">
 		<![CDATA[
 			SELECT

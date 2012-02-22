@@ -32,6 +32,9 @@ import java.util.List;
 public class ResourceFinderImpl
 	extends BasePersistenceImpl<Resource> implements ResourceFinder {
 
+	public static final String FIND_BY_CONTAINER_RESOURCE =
+		ResourceFinder.class.getName() + ".findByContainerResource";
+
 	public static final String FIND_BY_NAME =
 		ResourceFinder.class.getName() + ".findByName";
 
@@ -40,6 +43,38 @@ public class ResourceFinderImpl
 
 	public static final String FIND_BY_N_S =
 		ResourceFinder.class.getName() + ".findByN_S";
+
+	public List<Resource> findByContainerResource(long codeId, long classNameId)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_CONTAINER_RESOURCE);
+
+			if (classNameId != 0) {
+				sql = sql.concat(" WHERE Group_.classNameId = " + classNameId);
+			}
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addEntity("Resource_", ResourceImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(codeId);
+
+			return q.list(true);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
 
 	public List<Resource> findByName(String name) throws SystemException {
 		Session session = null;

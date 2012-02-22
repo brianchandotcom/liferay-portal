@@ -1066,31 +1066,61 @@ if (themeDisplay.isStatePopUp()) {
 %>
 
 		<aui:script use="aui-base">
+			var AArray =  A.Array;
+			var AObject = A.Object;
+
 			var dialog = Liferay.Util.getWindow();
 
-			dialog.on(
-				'visibleChange',
-				function(event) {
-					if (!event.newVal && event.src !== 'hideLink') {
-						var refreshWindow = dialog._refreshWindow || Liferay.Util.getTop();
+			var subs = dialog.getEvent('visibleChange').getSubs();
 
-						var topA = refreshWindow.AUI();
+			subs = A.merge(subs[0], subs[1]);
 
-						topA.use(
-							'aui-loading-mask',
-							function(A) {
-								new A.LoadingMask(
-									{
-										target: A.getBody()
-									}
-								).show();
-							}
-						);
+			var filteredSubs = [];
 
-						refreshWindow.location.href = '<%= closeRedirect %>';
+			var portletNamespace = '<portlet:namespace />';
+
+			A.each(
+				subs,
+				function(item) {
+					var fn = item.fn;
+
+					if (AObject.owns(fn, portletNamespace) && fn[portletNamespace]) {
+						filteredSubs.push(fn);
 					}
 				}
 			);
+
+			AArray.each(
+				filteredSubs,
+				function(item, index) {
+					dialog.detach('visibleChange', item);
+				}
+			);
+
+			var visibleChangeHandler = function(event) {
+				if (!event.newVal && event.src !== 'hideLink') {
+					var refreshWindow = dialog._refreshWindow || Liferay.Util.getTop();
+
+					var topA = refreshWindow.AUI();
+
+					topA.use(
+						'aui-loading-mask',
+						function(A) {
+							new A.LoadingMask(
+								{
+									target: A.getBody()
+								}
+							).show();
+						}
+					);
+
+					refreshWindow.location.href = '<%= closeRedirect %>';
+				}
+			};
+
+			visibleChangeHandler[portletNamespace] = true;
+
+			dialog.on('visibleChange', visibleChangeHandler);
 		</aui:script>
 
 <%

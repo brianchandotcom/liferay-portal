@@ -132,9 +132,8 @@ public class SetupWizardUtil {
 	public static void updateLanguage(
 		HttpServletRequest request, HttpServletResponse response) {
 
-		String languageId = _getParameter(
-			request, PropsKeys.COMPANY_DEFAULT_LOCALE,
-			PropsValues.COMPANY_DEFAULT_LOCALE);
+		String languageId = ParamUtil.getString(
+			request, "companyLocale", PropsValues.COMPANY_DEFAULT_LOCALE);
 
 		Locale locale = LocaleUtil.fromLanguageId(languageId);
 
@@ -144,8 +143,6 @@ public class SetupWizardUtil {
 		if (!availableLocales.contains(locale)) {
 			return;
 		}
-
-		PropsValues.COMPANY_DEFAULT_LOCALE = languageId;
 
 		HttpSession session = request.getSession();
 
@@ -174,7 +171,6 @@ public class SetupWizardUtil {
 
 		boolean databaseConfigured = _isDatabaseConfigured(unicodeProperties);
 
-		_processAdminProperties(request, unicodeProperties);
 		_processDatabaseProperties(
 			request, unicodeProperties, databaseConfigured);
 
@@ -199,7 +195,7 @@ public class SetupWizardUtil {
 			_reloadServletContext(request, unicodeProperties);
 		}
 
-		_updateCompany();
+		_updateCompany(request);
 		_updateAdminUser(request);
 
 		_initPlugins();
@@ -243,61 +239,6 @@ public class SetupWizardUtil {
 		}
 
 		return false;
-	}
-
-	private static void _processAdminProperties(
-			HttpServletRequest request, UnicodeProperties unicodeProperties)
-		throws Exception {
-
-		String companyName = _getParameter(
-			request, PropsKeys.COMPANY_DEFAULT_NAME, "Liferay");
-
-		PropsValues.COMPANY_DEFAULT_NAME = companyName;
-
-		FullNameGenerator fullNameGenerator =
-			FullNameGeneratorFactory.getInstance();
-
-		String firstName = _getParameter(
-			request, PropsKeys.DEFAULT_ADMIN_FIRST_NAME, "Test");
-
-		PropsValues.DEFAULT_ADMIN_FIRST_NAME = firstName;
-
-		String lastName = _getParameter(
-			request, PropsKeys.DEFAULT_ADMIN_LAST_NAME, "Test");
-
-		PropsValues.DEFAULT_ADMIN_LAST_NAME = lastName;
-
-		String fullName = fullNameGenerator.getFullName(
-			firstName, null, lastName);
-
-		PropsValues.ADMIN_EMAIL_FROM_NAME = fullName;
-
-		unicodeProperties.put(PropsKeys.ADMIN_EMAIL_FROM_NAME, fullName);
-
-		String emailAddress = _getParameter(
-			request, PropsKeys.ADMIN_EMAIL_FROM_ADDRESS, "test@liferay.com");
-
-		PropsValues.ADMIN_EMAIL_FROM_ADDRESS = emailAddress;
-		PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS = emailAddress;
-
-		unicodeProperties.put(
-			PropsKeys.DEFAULT_ADMIN_EMAIL_ADDRESS, emailAddress);
-
-		ScreenNameGenerator screenNameGenerator =
-			ScreenNameGeneratorFactory.getInstance();
-
-		String screenName = null;
-
-		try {
-			screenName = screenNameGenerator.generate(0, 0, emailAddress);
-		}
-		catch (Exception e) {
-			screenName = "test";
-		}
-
-		PropsValues.DEFAULT_ADMIN_SCREEN_NAME = screenName;
-
-		unicodeProperties.put(PropsKeys.DEFAULT_ADMIN_SCREEN_NAME, screenName);
 	}
 
 	private static void _processDatabaseProperties(
@@ -400,7 +341,35 @@ public class SetupWizardUtil {
 	private static void _updateAdminUser(HttpServletRequest request)
 		throws Exception {
 
-		// Email address
+		String firstName = ParamUtil.getString(
+			request, "adminFirstName", PropsValues.DEFAULT_ADMIN_FIRST_NAME);
+
+		String lastName = ParamUtil.getString(
+			request, "adminLastName", PropsValues.DEFAULT_ADMIN_LAST_NAME);
+
+		FullNameGenerator fullNameGenerator =
+			FullNameGeneratorFactory.getInstance();
+
+		String fullName = fullNameGenerator.getFullName(
+			firstName, null, lastName);
+
+		Company company = CompanyLocalServiceUtil.getCompanyById(
+			PortalInstances.getDefaultCompanyId());
+
+		String emailAddress = ParamUtil.getString(request, "adminEmailAddress",
+			PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + StringPool.AT +
+				company.getMx());
+
+		ScreenNameGenerator screenNameGenerator =
+			ScreenNameGeneratorFactory.getInstance();
+
+		String screenName = "test";
+
+		try {
+			screenName = screenNameGenerator.generate(0, 0, emailAddress);
+		}
+		catch (Exception e) {
+		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -409,24 +378,18 @@ public class SetupWizardUtil {
 
 		try {
 			user = UserLocalServiceUtil.getUserByEmailAddress(
-				PortalUtil.getDefaultCompanyId(),
-				PropsValues.ADMIN_EMAIL_FROM_ADDRESS);
+				PortalUtil.getDefaultCompanyId(), emailAddress);
 		}
 		catch (NoSuchUserException nsue) {
 			user = UserLocalServiceUtil.getUserByEmailAddress(
 				PortalUtil.getDefaultCompanyId(), "test@liferay.com");
 
 			user = UserLocalServiceUtil.updateEmailAddress(
-				user.getUserId(), StringPool.BLANK,
-				PropsValues.ADMIN_EMAIL_FROM_ADDRESS,
-				PropsValues.ADMIN_EMAIL_FROM_ADDRESS);
+				user.getUserId(), StringPool.BLANK, emailAddress, emailAddress);
 		}
 
-		// First and last name
-
-		String greeting = LanguageUtil.format(
-			themeDisplay.getLocale(), "welcome-x",
-			" " + PropsValues.ADMIN_EMAIL_FROM_NAME, false);
+		String greeting = LanguageUtil.format(themeDisplay.getLocale(),
+			"welcome-x", StringPool.BLANK + fullName, false);
 
 		Contact contact = user.getContact();
 
@@ -441,11 +404,10 @@ public class SetupWizardUtil {
 		user = UserLocalServiceUtil.updateUser(
 			user.getUserId(), StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, false, user.getReminderQueryQuestion(),
-			user.getReminderQueryAnswer(), user.getScreenName(),
-			user.getEmailAddress(), user.getFacebookId(), user.getOpenId(),
+			user.getReminderQueryAnswer(), screenName, emailAddress,
+			user.getFacebookId(), user.getOpenId(),
 			themeDisplay.getLanguageId(), user.getTimeZoneId(), greeting,
-			user.getComments(), PropsValues.DEFAULT_ADMIN_FIRST_NAME,
-			user.getMiddleName(), PropsValues.DEFAULT_ADMIN_LAST_NAME,
+			user.getComments(), firstName, user.getMiddleName(), lastName,
 			contact.getPrefixId(), contact.getSuffixId(), contact.isMale(),
 			birthdayMonth, birthdayDay, birthdayYear, contact.getSmsSn(),
 			contact.getAimSn(), contact.getFacebookSn(), contact.getIcqSn(),
@@ -462,21 +424,36 @@ public class SetupWizardUtil {
 
 		session.setAttribute(WebKeys.SETUP_WIZARD_PASSWORD_UPDATED, true);
 		session.setAttribute(WebKeys.USER_ID, user.getUserId());
+		session.setAttribute("adminEmailAddress", emailAddress);
 	}
 
-	private static void _updateCompany() throws Exception {
+	private static void _updateCompany(HttpServletRequest request)
+		throws Exception {
+
 		Company company = CompanyLocalServiceUtil.getCompanyById(
 			PortalInstances.getDefaultCompanyId());
 
 		Account account = company.getAccount();
 
-		String name = account.getName();
+		String currentName = account.getName();
 
-		if (!name.equals(PropsValues.COMPANY_DEFAULT_NAME)) {
-			account.setName(PropsValues.COMPANY_DEFAULT_NAME);
+		String newName = ParamUtil.getString(
+			request, "companyName", PropsValues.COMPANY_DEFAULT_NAME);
+
+		if (!currentName.equals(newName)) {
+			account.setName(newName);
 
 			AccountLocalServiceUtil.updateAccount(account);
 		}
+
+		String languageId = ParamUtil.getString(
+			request, "companyLocale", PropsValues.COMPANY_DEFAULT_LOCALE);
+
+		User defaultUser = company.getDefaultUser();
+
+		defaultUser.setLanguageId(languageId);
+
+		UserLocalServiceUtil.updateUser(defaultUser);
 	}
 
 	private static boolean _writePropertiesFile(

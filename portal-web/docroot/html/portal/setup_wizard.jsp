@@ -18,6 +18,14 @@
 
 <%@ page import="com.liferay.portal.setup.SetupWizardUtil" %>
 
+<%
+String emailAddress = (String)session.getAttribute("adminEmailAddress");
+
+if (Validator.isNull(emailAddress)) {
+	emailAddress = PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + StringPool.AT + company.getMx();
+}
+%>
+
 <style>
 	<%@ include file="/html/portal/setup_wizard_css.jspf" %>
 </style>
@@ -60,9 +68,9 @@
 						<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 
 						<aui:fieldset column="<%= true %>" cssClass="aui-w45" label="portal">
-							<aui:input label="portal-name" name='<%= "properties--" + PropsKeys.COMPANY_DEFAULT_NAME + "--" %>' suffix='<%= LanguageUtil.format(pageContext, "for-example-x", "Liferay") %>' value="<%= PropsValues.COMPANY_DEFAULT_NAME %>" />
+							<aui:input label="portal-name" name="companyName" suffix='<%= LanguageUtil.format(pageContext, "for-example-x", "Liferay") %>' value="<%= PropsValues.COMPANY_DEFAULT_NAME %>" />
 
-							<aui:select inlineField="<%= true %>" label="default-language" name='<%= "properties--" + PropsKeys.COMPANY_DEFAULT_LOCALE + "--" %>'>
+							<aui:select inlineField="<%= true %>" label="default-language" name="companyLocale">
 
 								<%
 								String languageId = GetterUtil.getString((String)session.getAttribute(WebKeys.SETUP_WIZARD_DEFAULT_LOCALE), PropsValues.COMPANY_DEFAULT_LOCALE);
@@ -84,11 +92,11 @@
 						</aui:fieldset>
 
 						<aui:fieldset column="<%= true %>" cssClass="aui-column-last aui-w50" label="administrator-user">
-							<aui:input label="first-name" name='<%= "properties--" + PropsKeys.DEFAULT_ADMIN_FIRST_NAME + "--" %>' value="<%= PropsValues.DEFAULT_ADMIN_FIRST_NAME %>" />
+							<aui:input label="first-name" name="adminFirstName" value="<%= PropsValues.DEFAULT_ADMIN_FIRST_NAME %>" />
 
-							<aui:input label="last-name" name='<%= "properties--" + PropsKeys.DEFAULT_ADMIN_LAST_NAME + "--" %>' value="<%= PropsValues.DEFAULT_ADMIN_LAST_NAME %>" />
+							<aui:input label="last-name" name="adminLastName" value="<%= PropsValues.DEFAULT_ADMIN_LAST_NAME %>" />
 
-							<aui:input label="email" name='<%= "properties--" + PropsKeys.ADMIN_EMAIL_FROM_ADDRESS + "--" %>' value="<%= PropsValues.ADMIN_EMAIL_FROM_ADDRESS %>">
+							<aui:input label="email" name="adminEmailAddress" value="<%= emailAddress %>">
 								<aui:validator name="email" />
 								<aui:validator name="required" />
 							</aui:input>
@@ -362,7 +370,7 @@
 							%>
 
 							<aui:form action="<%= loginURL %>" method="post" name="fm">
-								<aui:input name="login" type="hidden" value="<%= PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS %>" />
+								<aui:input name="login" type="hidden" value="<%= emailAddress %>" />
 								<aui:input name="password" type="hidden" value='<%= PropsValues.DEFAULT_ADMIN_PASSWORD %>' />
 
 								<p>

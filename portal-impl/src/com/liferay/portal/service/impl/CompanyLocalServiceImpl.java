@@ -388,18 +388,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			String password2 = password1;
 			boolean autoScreenName = false;
 			String screenName = PropsValues.DEFAULT_ADMIN_SCREEN_NAME;
-
-			String emailAddress = null;
-
-			if (companyPersistence.countAll() == 1) {
-				emailAddress = PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS;
-			}
-
-			if (Validator.isNull(emailAddress)) {
-				emailAddress =
-					PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + "@" + mx;
-			}
-
+			String emailAddress = PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX
+				+ StringPool.AT + mx;
 			long facebookId = 0;
 			String openId = StringPool.BLANK;
 			Locale locale = defaultUser.getLocale();

@@ -243,19 +243,21 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 	public void checkPermissions(String name, List<String> actionIds)
 		throws PortalException, SystemException {
 
-		List<Resource> resources = resourceFinder.findByN_S(
-			name, ResourceConstants.SCOPE_INDIVIDUAL);
+		List<Company> companies = companyPersistence.findAll();
 
-		for (Resource resource : resources) {
+		for (Company company : companies) {
+			long companyId = company.getCompanyId();
+
+			ResourceCode resourceCode = resourceCodePersistence.fetchByC_N_S(
+				companyId, name, ResourceConstants.SCOPE_INDIVIDUAL);
+
 			for (String actionId : actionIds) {
-				Permission permission = permissionPersistence.fetchByA_R(
-					actionId, resource.getResourceId());
+				List<Resource> resources = resourceFinder.findByMissingAction(
+					resourceCode.getCodeId(), actionId);
 
-				if (permission != null) {
-					continue;
+				for (Resource resource : resources) {
+					checkPermission(resource, actionId);
 				}
-
-				checkPermission(resource, actionId);
 			}
 		}
 

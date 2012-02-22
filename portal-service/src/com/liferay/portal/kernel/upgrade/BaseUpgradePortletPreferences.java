@@ -271,8 +271,10 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 						companyId, ownerId, ownerType, plid, portletId,
 						preferences);
 
-					updatePortletPreferences(
-						portletPreferencesId, newPreferences);
+					if (preferences != newPreferences) {
+						updatePortletPreferences(
+							portletPreferencesId, newPreferences);
+					}
 				}
 				else {
 					deletePortletPreferences(portletPreferencesId);

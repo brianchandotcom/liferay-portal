@@ -33,6 +33,8 @@ public class CamelCaseUpgradePortletPreferences
 			String portletId, String xml)
 		throws Exception {
 
+		boolean changed = false;
+
 		PortletPreferences portletPreferences =
 			PortletPreferencesFactoryUtil.fromXML(
 				companyId, ownerId, ownerType, plid, portletId, xml);
@@ -44,12 +46,21 @@ public class CamelCaseUpgradePortletPreferences
 
 			String newName = TextFormatter.format(oldName, TextFormatter.M);
 
-			portletPreferences.reset(oldName);
+			if (!newName.equals(oldName)) {
+				portletPreferences.reset(oldName);
 
-			portletPreferences.setValues(newName, values);
+				portletPreferences.setValues(newName, values);
+
+				changed = true;
+			}
 		}
 
-		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
+		if (changed) {
+			return PortletPreferencesFactoryUtil.toXML(portletPreferences);
+		}
+		else {
+			return xml;
+		}
 	}
 
 }

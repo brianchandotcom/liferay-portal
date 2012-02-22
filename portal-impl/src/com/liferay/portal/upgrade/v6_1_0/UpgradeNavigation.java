@@ -37,6 +37,8 @@ public class UpgradeNavigation extends BaseUpgradePortletPreferences {
 			String portletId, String xml)
 		throws Exception {
 
+		boolean changed = false;
+
 		PortletPreferences portletPreferences =
 			PortletPreferencesFactoryUtil.fromXML(
 				companyId, ownerId, ownerType, plid, portletId, xml);
@@ -53,9 +55,16 @@ public class UpgradeNavigation extends BaseUpgradePortletPreferences {
 
 			portletPreferences.setValue(
 				"display-style", _DISPLAY_STYLES[index]);
+
+			changed = true;
 		}
 
-		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
+		if (changed) {
+			return PortletPreferencesFactoryUtil.toXML(portletPreferences);
+		}
+		else {
+			return xml;
+		}
 	}
 
 	private static final String[] _DISPLAY_STYLES = {

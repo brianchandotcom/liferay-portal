@@ -74,6 +74,8 @@ public class UpgradeCamelCasePortletPreferences
 			String portletId, String xml)
 		throws Exception {
 
+		boolean changed = false;
+
 		PortletPreferences portletPreferences =
 			PortletPreferencesFactoryUtil.fromXML(
 				companyId, ownerId, ownerType, plid, portletId, xml);
@@ -103,10 +105,17 @@ public class UpgradeCamelCasePortletPreferences
 
 				portletPreferences.reset(oldName);
 				portletPreferences.setValues(newName, values);
+
+				changed = true;
 			}
 		}
 
-		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
+		if (changed) {
+			return PortletPreferencesFactoryUtil.toXML(portletPreferences);
+		}
+		else {
+			return xml;
+		}
 	}
 
 	private Map<String, String> _camelCasePreferenceNames =

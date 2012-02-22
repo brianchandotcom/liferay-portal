@@ -80,8 +80,8 @@
 />
 
 <liferay-ui:search-container-column-text
-	href="<%= rowURL %>"
 	buffer="buffer"
+	href="<%= rowURL %>"
 	name="hidden"
 >
 

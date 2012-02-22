@@ -28,8 +28,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 	<aui:fieldset>
 		<aui:select label="vocabularies" name="preferences--allAssetVocabularies--">
-			<aui:option selected='<%= allAssetVocabularies %>' label="all" value="<%= true %>" />
-			<aui:option selected='<%= !allAssetVocabularies %>' label="filter[action]" value="<%= false %>" />
+			<aui:option label="all" selected='<%= allAssetVocabularies %>' value="<%= true %>" />
+			<aui:option label="filter[action]" selected='<%= !allAssetVocabularies %>' value="<%= false %>" />
 		</aui:select>
 
 		<aui:input name="preferences--assetVocabularyIds--" type="hidden" />
@@ -74,13 +74,13 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 		<div class="<%= allAssetVocabularies ? "aui-helper-hidden" : "" %>" id="<portlet:namespace />assetVocabulariesBoxes">
 			<liferay-ui:input-move-boxes
-				leftTitle="current"
-				rightTitle="available"
 				leftBoxName="currentAssetVocabularyIds"
-				rightBoxName="availableAssetVocabularyIds"
-				leftReorder="true"
 				leftList="<%= typesLeftList %>"
+				leftReorder="true"
+				leftTitle="current"
+				rightBoxName="availableAssetVocabularyIds"
 				rightList="<%= typesRightList %>"
+				rightTitle="available"
 			/>
 		</div>
 	</aui:fieldset>

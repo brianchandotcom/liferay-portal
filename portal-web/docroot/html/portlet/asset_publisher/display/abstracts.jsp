@@ -85,7 +85,7 @@ viewURL = _checkViewURL(viewURL, currentURL, themeDisplay);
 					<a href="<%= viewURL %>"><img alt="" src="<%= assetRenderer.getIconPath(renderRequest) %>" /> <%= HtmlUtil.escape(title) %></a>
 				</c:when>
 				<c:otherwise>
-					<img src="<%= assetRenderer.getIconPath(renderRequest) %>" alt="" /> <%= HtmlUtil.escape(title) %>
+					<img alt="" src="<%= assetRenderer.getIconPath(renderRequest) %>" /> <%= HtmlUtil.escape(title) %>
 				</c:otherwise>
 			</c:choose>
 		</h3>

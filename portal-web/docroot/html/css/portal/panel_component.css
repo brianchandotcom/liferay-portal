@@ -116,3 +116,13 @@
 	border-top: none;
 	margin: -0.5em 0 10px;
 }
+
+.lfr-floating-container select{
+	display:inline-block;
+	vertical-align: top;
+}
+
+.lfr-floating-container .language-value{
+	display:inline-block;
+	vertical-align: top;
+}

@@ -47,6 +47,8 @@ import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowTask;
+import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.lar.LayoutExporter;
 import com.liferay.portal.messaging.LayoutsLocalPublisherRequest;
@@ -60,6 +62,7 @@ import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetBranchConstants;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.User;
+import com.liferay.portal.model.WorkflowInstanceLink;
 import com.liferay.portal.security.auth.HttpPrincipal;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -75,6 +78,7 @@ import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.WorkflowInstanceLinkLocalServiceUtil;
 import com.liferay.portal.service.http.GroupServiceHttp;
 import com.liferay.portal.service.http.LayoutServiceHttp;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
@@ -825,6 +829,47 @@ public class StagingImpl implements Staging {
 		}
 
 		return parameterMap;
+	}
+
+	public WorkflowTask getWorkflowTask(
+			long userId, LayoutRevision layoutRevision)
+		throws PortalException, SystemException {
+
+		WorkflowInstanceLink workflowInstanceLink =
+			WorkflowInstanceLinkLocalServiceUtil.fetchWorkflowInstanceLink(
+				layoutRevision.getCompanyId(), layoutRevision.getGroupId(),
+				LayoutRevision.class.getName(),
+				layoutRevision.getLayoutRevisionId());
+
+		if (workflowInstanceLink == null) {
+			return null;
+		}
+
+		List<WorkflowTask> workflowTasks =
+			WorkflowTaskManagerUtil.getWorkflowTasksByWorkflowInstance(
+				layoutRevision.getCompanyId(), userId,
+				workflowInstanceLink.getWorkflowInstanceId(), false, 0, 1,
+				null);
+
+		if (!workflowTasks.isEmpty()) {
+			return workflowTasks.get(0);
+		}
+
+		return null;
+	}
+
+	public boolean hasWorkflowTask(
+			long userId, LayoutRevision layoutRevision)
+		throws PortalException, SystemException {
+
+		WorkflowTask task = getWorkflowTask(
+			userId, layoutRevision);
+
+		if (task != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isIncomplete(Layout layout, long layoutSetBranchId) {

@@ -223,6 +223,12 @@ public class LayoutLocalServiceStagingAdvice
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
+		boolean isRevisionInProgress = StagingUtil.hasWorkflowTask(
+			serviceContext.getUserId(), layoutRevision);
+
+		serviceContext.setAttribute(
+			"isRevisionInProgress", isRevisionInProgress);
+
 		layoutRevisionLocalService.updateLayoutRevision(
 			serviceContext.getUserId(), layoutRevision.getLayoutRevisionId(),
 			layoutRevision.getLayoutBranchId(), layoutRevision.getName(),
@@ -281,6 +287,12 @@ public class LayoutLocalServiceStagingAdvice
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 		}
 
+		boolean isRevisionInProgress = StagingUtil.hasWorkflowTask(
+			serviceContext.getUserId(), layoutRevision);
+
+		serviceContext.setAttribute(
+			"isRevisionInProgress", isRevisionInProgress);
+
 		layoutRevisionLocalService.updateLayoutRevision(
 			serviceContext.getUserId(), layoutRevision.getLayoutRevisionId(),
 			layoutRevision.getLayoutBranchId(), layoutRevision.getName(),
@@ -328,6 +340,12 @@ public class LayoutLocalServiceStagingAdvice
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
+		boolean isRevisionInProgress = StagingUtil.hasWorkflowTask(
+			serviceContext.getUserId(), layoutRevision);
+
+		serviceContext.setAttribute(
+			"isRevisionInProgress", isRevisionInProgress);
+
 		if (!MergeLayoutPrototypesThreadLocal.isInProgress()) {
 			serviceContext.setWorkflowAction(
 				WorkflowConstants.ACTION_SAVE_DRAFT);
@@ -368,6 +386,12 @@ public class LayoutLocalServiceStagingAdvice
 			ServiceContextThreadLocal.getServiceContext();
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		boolean isRevisionInProgress = StagingUtil.hasWorkflowTask(
+			serviceContext.getUserId(), layoutRevision);
+
+		serviceContext.setAttribute(
+			"isRevisionInProgress", isRevisionInProgress);
 
 		layoutRevisionLocalService.updateLayoutRevision(
 			serviceContext.getUserId(), layoutRevision.getLayoutRevisionId(),

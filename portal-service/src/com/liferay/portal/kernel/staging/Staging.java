@@ -17,9 +17,11 @@ package com.liferay.portal.kernel.staging;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
@@ -122,6 +124,14 @@ public interface Staging {
 
 	public Map<String, String[]> getStagingParameters(
 		PortletRequest PortletRequest);
+
+	public WorkflowTask getWorkflowTask(
+		long userId, LayoutRevision layoutRevision)
+		throws PortalException, SystemException;
+
+	public boolean hasWorkflowTask(
+			long userId, LayoutRevision layoutRevision)
+			throws PortalException, SystemException;
 
 	public boolean isIncomplete(Layout layout, long layoutSetBranchId);
 

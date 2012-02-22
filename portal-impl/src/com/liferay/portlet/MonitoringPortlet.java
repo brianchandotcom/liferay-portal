@@ -101,14 +101,11 @@ public class MonitoringPortlet implements InvokerPortlet {
 		throws PortletException {
 
 		InvokerPortlet invokerPortlet = _invokerPortlet.create(
-			portletModel, portlet, portletContext);
+			portletModel, portlet, portletConfig, portletContext,
+			checkAuthToken, facesPortlet, strutsPortlet, strutsBridgePortlet);
 
 		MonitoringPortlet monitoringPortlet = new MonitoringPortlet(
 			invokerPortlet, _singleDestinationMessageSender);
-
-		monitoringPortlet.prepare(
-			portletModel, portlet, portletConfig, portletContext,
-			checkAuthToken, facesPortlet, strutsPortlet, strutsBridgePortlet);
 
 		return monitoringPortlet;
 	}
@@ -123,8 +120,6 @@ public class MonitoringPortlet implements InvokerPortlet {
 
 		MonitoringPortlet monitoringPortlet = new MonitoringPortlet(
 			invokerPortlet, _singleDestinationMessageSender);
-
-		monitoringPortlet.prepare(portletModel, portlet, portletContext);
 
 		return monitoringPortlet;
 	}

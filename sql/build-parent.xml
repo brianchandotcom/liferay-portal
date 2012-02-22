@@ -175,6 +175,8 @@
 			<arg value="sample.sql.mb.thread.count=1" />
 			<arg value="sample.sql.user.count=1" />
 			<arg value="sample.sql.user.to.group.count=1" />
+			<arg value="sample.sql.web.content.page.count=${sample.sql.web.content.page.count}" />
+			<arg value="sample.sql.web.content.size=${sample.sql.web.content.size}" />
 			<arg value="sample.sql.wiki.node.count=1" />
 			<arg value="sample.sql.wiki.page.comment.count=1" />
 			<arg value="sample.sql.wiki.page.count=1" />

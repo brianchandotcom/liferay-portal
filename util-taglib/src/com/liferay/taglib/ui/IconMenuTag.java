@@ -180,7 +180,9 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 	}
 
 	public void setMessage(String message) {
-		_message = message;
+		if (message != null) {
+			_message = message;
+		}
 	}
 
 	public void setShowArrow(boolean showArrow) {

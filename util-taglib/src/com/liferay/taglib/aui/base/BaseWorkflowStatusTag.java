@@ -106,7 +106,7 @@ public class BaseWorkflowStatusTag extends com.liferay.taglib.util.IncludeTag {
 	@Override
 	protected void cleanUp() {
 		_bean = null;
-		_helpMessage = "a-new-version-will-be-created-automatically-if-this-content-is-modified";
+		_helpMessage = null;
 		_id = null;
 		_model = null;
 		_status = null;
@@ -136,7 +136,7 @@ public class BaseWorkflowStatusTag extends com.liferay.taglib.util.IncludeTag {
 		"/html/taglib/aui/workflow_status/page.jsp";
 
 	private java.lang.Object _bean = null;
-	private java.lang.String _helpMessage = "a-new-version-will-be-created-automatically-if-this-content-is-modified";
+	private java.lang.String _helpMessage = null;
 	private java.lang.String _id = null;
 	private java.lang.Class<?> _model = null;
 	private java.lang.Integer _status = null;

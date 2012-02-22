@@ -56,7 +56,7 @@
 
 	<span class="workflow-status"><liferay-ui:message key="status" />: <strong class="workflow-status-<%= statusMessage %>"><liferay-ui:message key="<%= statusMessage %>" /><%= additionalText %></strong></span>
 
-	<c:if test="<%= (status == WorkflowConstants.STATUS_APPROVED) && Validator.isNotNull(version) %>">
+	<c:if test="<%= Validator.isNotNull(helpMessage) %>">
 		<liferay-ui:icon-help message="<%= helpMessage %>" />
 	</c:if>
 </div>

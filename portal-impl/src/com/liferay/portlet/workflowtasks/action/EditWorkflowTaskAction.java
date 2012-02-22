@@ -15,8 +15,10 @@
 package com.liferay.portlet.workflowtasks.action;
 
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowTaskDueDateException;
@@ -63,6 +65,17 @@ public class EditWorkflowTaskAction extends PortletAction {
 			}
 			else if (cmd.equals(Constants.UPDATE)) {
 				updateTask(actionRequest);
+			}
+
+			String closeRedirect = ParamUtil.getString(
+				actionRequest, "closeRedirect");
+
+			if (Validator.isNotNull(closeRedirect)) {
+				SessionMessages.add(
+					actionRequest,
+					portletConfig.getPortletName() +
+						SessionMessages.KEY_SUFFIX_CLOSE_REDIRECT,
+					closeRedirect);
 			}
 
 			sendRedirect(actionRequest, actionResponse);

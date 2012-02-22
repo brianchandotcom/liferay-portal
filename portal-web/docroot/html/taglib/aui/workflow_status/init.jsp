@@ -34,7 +34,7 @@ if ((dynamicAttributes != null) && !dynamicAttributes.isEmpty()) {
 }
 
 java.lang.Object bean = (java.lang.Object)request.getAttribute("aui:workflow-status:bean");
-java.lang.String helpMessage = GetterUtil.getString((java.lang.String)request.getAttribute("aui:workflow-status:helpMessage"), "a-new-version-will-be-created-automatically-if-this-content-is-modified");
+java.lang.String helpMessage = GetterUtil.getString((java.lang.String)request.getAttribute("aui:workflow-status:helpMessage"));
 java.lang.String id = GetterUtil.getString((java.lang.String)request.getAttribute("aui:workflow-status:id"));
 java.lang.Class<?> model = (java.lang.Class<?>)request.getAttribute("aui:workflow-status:model");
 java.lang.Integer status = GetterUtil.getInteger(String.valueOf(request.getAttribute("aui:workflow-status:status")));

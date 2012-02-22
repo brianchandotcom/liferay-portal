@@ -14,6 +14,8 @@
 
 package com.liferay.taglib.aui;
 
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.taglib.aui.base.BaseWorkflowStatusTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,6 +42,16 @@ public class WorkflowStatusTag extends BaseWorkflowStatusTag {
 			bean = pageContext.getAttribute("aui:model-context:bean");
 		}
 
+		String helpMessage = getHelpMessage();
+
+		if (Validator.isNull(helpMessage) &&
+			(getStatus() == WorkflowConstants.STATUS_APPROVED) &&
+			Validator.isNotNull(getVersion())) {
+
+			helpMessage =
+				"a-new-version-will-be-created-automatically-if-this-content-is-modified";
+		}
+
 		Class<?> model = getModel();
 
 		if (model == null) {
@@ -48,6 +60,7 @@ public class WorkflowStatusTag extends BaseWorkflowStatusTag {
 		}
 
 		setNamespacedAttribute(request, "bean", bean);
+		setNamespacedAttribute(request, "helpMessage", helpMessage);
 		setNamespacedAttribute(request, "model", model);
 	}
 

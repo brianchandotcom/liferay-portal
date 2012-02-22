@@ -49,29 +49,38 @@ headerTitle = headerTitle.concat(StringPool.COLON + StringPool.SPACE + workflowH
 
 PortletURL editPortletURL = workflowHandler.getURLEdit(classPK, liferayPortletRequest, liferayPortletResponse);
 
-PortletURL viewFullContentURL = renderResponse.createRenderURL();
-
-viewFullContentURL.setParameter("struts_action", "/workflow_tasks/view_content");
-viewFullContentURL.setParameter("redirect", currentURL);
-
-if (assetRendererFactory != null) {
-	viewFullContentURL.setParameter("type", assetRendererFactory.getType());
-}
-
-if (assetEntry != null) {
-	viewFullContentURL.setParameter("assetEntryId", String.valueOf(assetEntry.getEntryId()));
-	viewFullContentURL.setParameter("assetEntryVersionId", String.valueOf(classPK));
-}
-
 boolean showEditURL = false;
 
 if ((workflowTask.getAssigneeUserId() == user.getUserId()) && !workflowTask.isCompleted()) {
 	showEditURL = true;
 }
 
-viewFullContentURL.setParameter("showEditURL", String.valueOf(showEditURL));
+String viewFullContentURL = null;
 
-viewFullContentURL.setParameter("workflowAssetPreview", Boolean.TRUE.toString());
+if (assetRenderer.isPreviewInContext()) {
+	viewFullContentURL = assetRenderer.getURLViewInContext((LiferayPortletRequest)renderRequest, (LiferayPortletResponse)renderResponse, null);
+}
+else {
+	PortletURL viewFullContentPortletURL = renderResponse.createRenderURL();
+
+	viewFullContentPortletURL.setParameter("struts_action", "/workflow_tasks/view_content");
+	viewFullContentPortletURL.setParameter("redirect", currentURL);
+
+	if (assetRendererFactory != null) {
+		viewFullContentPortletURL.setParameter("type", assetRendererFactory.getType());
+	}
+
+	if (assetEntry != null) {
+		viewFullContentPortletURL.setParameter("assetEntryId", String.valueOf(assetEntry.getEntryId()));
+		viewFullContentPortletURL.setParameter("assetEntryVersionId", String.valueOf(classPK));
+	}
+
+	viewFullContentPortletURL.setParameter("showEditURL", String.valueOf(showEditURL));
+
+	viewFullContentPortletURL.setParameter("workflowAssetPreview", Boolean.TRUE.toString());
+
+	viewFullContentURL = viewFullContentPortletURL.toString();
+}
 
 request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 %>
@@ -186,7 +195,7 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 					<div class="task-content-actions">
 						<liferay-ui:icon-list>
 							<c:if test="<%= assetRenderer.hasViewPermission(permissionChecker) %>">
-								<liferay-ui:icon image="view" method="get" url="<%= viewFullContentURL.toString() %>" />
+								<liferay-ui:icon image="view" method="get" url="<%= viewFullContentURL %>" target='<%= assetRenderer.isPreviewInContext() ? "_blank" : StringPool.BLANK %>' />
 							</c:if>
 
 							<c:if test="<%= editPortletURL != null %>">

@@ -319,13 +319,13 @@ public class AuthPipeline {
 		for (int i = 0; i < authenticators.size(); i++) {
 			Authenticator curAuthenticator = authenticators.get(i);
 
-			if (curAuthenticator == authenticator) {
+			if (authenticator == curAuthenticator) {
 				authenticators.remove(i);
 
 				_authenticators.put(
-						key,
-						authenticators.toArray(
-							new Authenticator[authenticators.size()]));
+					key,
+					authenticators.toArray(
+						new Authenticator[authenticators.size()]));
 
 				break;
 			}

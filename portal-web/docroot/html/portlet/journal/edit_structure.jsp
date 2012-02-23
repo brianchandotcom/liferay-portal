@@ -239,12 +239,26 @@ int tabIndex = 1;
 	</liferay-ui:panel-container>
 
 	<aui:button-row>
-		<aui:button type="submit" />
 
-		<aui:button onClick='<%= renderResponse.getNamespace() + "saveAndContinueStructure();" %>' value="save-and-continue" />
+		<%
+		boolean hasSavePermission = false;
 
-		<c:if test="<%= structure != null %>">
-			<aui:button onClick='<%= renderResponse.getNamespace() + "saveAndEditDefaultValues();" %>' value="save-and-edit-default-values" />
+		if (structure != null) {
+			hasSavePermission = JournalStructurePermission.contains(permissionChecker, structure, ActionKeys.UPDATE);
+		}
+		else {
+			hasSavePermission = JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_STRUCTURE);
+		}
+		%>
+
+		<c:if test="<%= hasSavePermission %>">
+			<aui:button type="submit" />
+
+			<aui:button onClick='<%= renderResponse.getNamespace() + "saveAndContinueStructure();" %>' value="save-and-continue" />
+
+			<c:if test="<%= structure != null %>">
+				<aui:button onClick='<%= renderResponse.getNamespace() + "saveAndEditDefaultValues();" %>' value="save-and-edit-default-values" />
+			</c:if>
 		</c:if>
 
 		<aui:button href="<%= redirect %>" type="cancel" />

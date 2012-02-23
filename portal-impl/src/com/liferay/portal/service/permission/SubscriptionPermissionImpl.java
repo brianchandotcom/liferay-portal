@@ -31,6 +31,7 @@ import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalPermission;
 import com.liferay.portlet.messageboards.NoSuchDiscussionException;
 import com.liferay.portlet.messageboards.model.MBCategory;
+import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
@@ -64,74 +65,82 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 			return false;
 		}
 
+		MBDiscussion discussion = null;
+
 		try {
-			MBDiscussionLocalServiceUtil.getDiscussion(className, classPK);
+			discussion = MBDiscussionLocalServiceUtil.getDiscussion(
+				className, classPK);
 		}
 		catch (NoSuchDiscussionException nsde) {
-			if (className.equals(BlogsEntry.class.getName())) {
-				AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-					className, classPK);
+		}
 
-				if (assetEntry == null) {
-					return false;
-				}
+		if (discussion != null) {
+			return true;
+		}
 
-				long groupId = classPK;
+		if (className.equals(BlogsEntry.class.getName())) {
+			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+				className, classPK);
 
-				String classPKString = String.valueOf(classPK);
-
-				if (!classPKString.equals(assetEntry.getTitle())) {
-					BlogsEntry blogsEntry =
-						BlogsEntryLocalServiceUtil.getBlogsEntry(classPK);
-
-					groupId = blogsEntry.getGroupId();
-				}
-
-				return BlogsPermission.contains(
-					permissionChecker, groupId, ActionKeys.SUBSCRIBE);
+			if (assetEntry == null) {
+				return false;
 			}
-			else if (className.equals(JournalArticle.class.getName())) {
-				long groupId = classPK;
 
-				Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+			long groupId = classPK;
 
-				if (group == null) {
-					JournalArticle journalArticle =
-						JournalArticleLocalServiceUtil.getLatestArticle(classPK);
+			String classPKString = String.valueOf(classPK);
 
-					groupId = journalArticle.getGroupId();
-				}
+			if (!classPKString.equals(assetEntry.getTitle())) {
+				BlogsEntry blogsEntry =
+					BlogsEntryLocalServiceUtil.getBlogsEntry(classPK);
 
-				return JournalPermission.contains(
-					permissionChecker, groupId, ActionKeys.SUBSCRIBE);
+				groupId = blogsEntry.getGroupId();
 			}
-			else if (className.equals(MBCategory.class.getName())) {
-				Group group = GroupLocalServiceUtil.fetchGroup(classPK);
 
-				if (group == null) {
-					return MBCategoryPermission.contains(
-						permissionChecker, classPK, ActionKeys.SUBSCRIBE);
-				}
-				else {
-					return MBPermission.contains(
-						permissionChecker, classPK, ActionKeys.SUBSCRIBE);
-				}
-			}
-			else if (className.equals(MBThread.class.getName())) {
-				MBThread mbThread = MBThreadLocalServiceUtil.fetchThread(classPK);
+			return BlogsPermission.contains(
+				permissionChecker, groupId, ActionKeys.SUBSCRIBE);
+		}
+		else if (className.equals(JournalArticle.class.getName())) {
+			long groupId = classPK;
 
-				return MBMessagePermission.contains(
-					permissionChecker, mbThread.getRootMessageId(),
-					ActionKeys.SUBSCRIBE);
+			Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+
+			if (group == null) {
+				JournalArticle journalArticle =
+					JournalArticleLocalServiceUtil.getLatestArticle(classPK);
+
+				groupId = journalArticle.getGroupId();
 			}
-			else if (className.equals(WikiNode.class.getName())) {
-				return WikiNodePermission.contains(
+
+			return JournalPermission.contains(
+				permissionChecker, groupId, ActionKeys.SUBSCRIBE);
+		}
+		else if (className.equals(MBCategory.class.getName())) {
+			Group group = GroupLocalServiceUtil.fetchGroup(classPK);
+
+			if (group == null) {
+				return MBCategoryPermission.contains(
 					permissionChecker, classPK, ActionKeys.SUBSCRIBE);
 			}
-			else if (className.equals(WikiPage.class.getName())) {
-				return WikiPagePermission.contains(
+			else {
+				return MBPermission.contains(
 					permissionChecker, classPK, ActionKeys.SUBSCRIBE);
 			}
+		}
+		else if (className.equals(MBThread.class.getName())) {
+			MBThread mbThread = MBThreadLocalServiceUtil.fetchThread(classPK);
+
+			return MBMessagePermission.contains(
+				permissionChecker, mbThread.getRootMessageId(),
+				ActionKeys.SUBSCRIBE);
+		}
+		else if (className.equals(WikiNode.class.getName())) {
+			return WikiNodePermission.contains(
+				permissionChecker, classPK, ActionKeys.SUBSCRIBE);
+		}
+		else if (className.equals(WikiPage.class.getName())) {
+			return WikiPagePermission.contains(
+				permissionChecker, classPK, ActionKeys.SUBSCRIBE);
 		}
 
 		return true;

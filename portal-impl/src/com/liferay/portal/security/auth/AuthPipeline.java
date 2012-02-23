@@ -316,7 +316,7 @@ public class AuthPipeline {
 		List<Authenticator> authenticators = ListUtil.fromArray(
 			_authenticators.get(key));
 
-		if (authenticators.remove(authenticator)) {
+		if (ListUtil.remove(authenticators, authenticator)) {
 			_authenticators.put(
 				key,
 				authenticators.toArray(
@@ -328,7 +328,7 @@ public class AuthPipeline {
 		List<AuthFailure> authFailures = ListUtil.fromArray(
 			_authFailures.get(key));
 
-		if (authFailures.remove(authFailure)) {
+		if (ListUtil.remove(authFailures, authFailure)) {
 			_authFailures.put(
 				key,
 				authFailures.toArray(new AuthFailure[authFailures.size()]));

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ProtectedServletRequest;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstancePool;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
@@ -51,15 +52,7 @@ public class AutoLoginFilter extends BasePortalFilter {
 	}
 
 	public static void unregisterAutoLogin(AutoLogin autoLogin) {
-		for (int i = 0; i < _autoLogins.size(); i++) {
-			AutoLogin curAutoLogin = _autoLogins.get(i);
-
-			if (autoLogin == curAutoLogin) {
-				_autoLogins.remove(i);
-
-				break;
-			}
-		}
+		ListUtil.remove(_autoLogins, autoLogin);
 	}
 
 	public AutoLoginFilter() {

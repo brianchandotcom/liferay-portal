@@ -360,6 +360,7 @@
 
 		<reference package-path="com.liferay.mail" entity="Mail" />
 		<reference package-path="com.liferay.portal" entity="Company" />
+		<reference package-path="com.liferay.portal" entity="Subscription" />
 		<reference package-path="com.liferay.portlet.messageboards" entity="MBMessage" />
 	</entity>
 	<entity name="ShoppingOrderItem" local-service="true" remote-service="false">

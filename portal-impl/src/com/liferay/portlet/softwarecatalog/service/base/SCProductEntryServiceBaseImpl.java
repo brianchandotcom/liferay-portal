@@ -27,6 +27,7 @@ import com.liferay.portal.service.ImageLocalService;
 import com.liferay.portal.service.ImageService;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.ResourceService;
+import com.liferay.portal.service.SubscriptionLocalService;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.UserService;
 import com.liferay.portal.service.base.PrincipalBean;
@@ -35,6 +36,7 @@ import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.ImagePersistence;
 import com.liferay.portal.service.persistence.ResourceFinder;
 import com.liferay.portal.service.persistence.ResourcePersistence;
+import com.liferay.portal.service.persistence.SubscriptionPersistence;
 import com.liferay.portal.service.persistence.UserFinder;
 import com.liferay.portal.service.persistence.UserPersistence;
 
@@ -566,6 +568,44 @@ public abstract class SCProductEntryServiceBaseImpl extends PrincipalBean
 	}
 
 	/**
+	 * Returns the subscription local service.
+	 *
+	 * @return the subscription local service
+	 */
+	public SubscriptionLocalService getSubscriptionLocalService() {
+		return subscriptionLocalService;
+	}
+
+	/**
+	 * Sets the subscription local service.
+	 *
+	 * @param subscriptionLocalService the subscription local service
+	 */
+	public void setSubscriptionLocalService(
+		SubscriptionLocalService subscriptionLocalService) {
+		this.subscriptionLocalService = subscriptionLocalService;
+	}
+
+	/**
+	 * Returns the subscription persistence.
+	 *
+	 * @return the subscription persistence
+	 */
+	public SubscriptionPersistence getSubscriptionPersistence() {
+		return subscriptionPersistence;
+	}
+
+	/**
+	 * Sets the subscription persistence.
+	 *
+	 * @param subscriptionPersistence the subscription persistence
+	 */
+	public void setSubscriptionPersistence(
+		SubscriptionPersistence subscriptionPersistence) {
+		this.subscriptionPersistence = subscriptionPersistence;
+	}
+
+	/**
 	 * Returns the user local service.
 	 *
 	 * @return the user local service
@@ -876,6 +916,10 @@ public abstract class SCProductEntryServiceBaseImpl extends PrincipalBean
 	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = ResourceFinder.class)
 	protected ResourceFinder resourceFinder;
+	@BeanReference(type = SubscriptionLocalService.class)
+	protected SubscriptionLocalService subscriptionLocalService;
+	@BeanReference(type = SubscriptionPersistence.class)
+	protected SubscriptionPersistence subscriptionPersistence;
 	@BeanReference(type = UserLocalService.class)
 	protected UserLocalService userLocalService;
 	@BeanReference(type = UserService.class)

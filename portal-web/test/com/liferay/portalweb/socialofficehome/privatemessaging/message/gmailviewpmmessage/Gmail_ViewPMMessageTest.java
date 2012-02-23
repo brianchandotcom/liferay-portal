@@ -27,32 +27,18 @@ public class Gmail_ViewPMMessageTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.openWindow("http://www.gmail.com/",
 					RuntimeVariables.replace("gmail"));
 				selenium.waitForPopUp("gmail", RuntimeVariables.replace(""));
 				selenium.selectWindow("gmail");
-				Thread.sleep(60000);
+				Thread.sleep(80000);
 
-				boolean signedIn1 = selenium.isElementPresent(
-						"//div[2]/div/nobr/a[2]");
+				boolean SignedIn1 = selenium.isElementPresent("link=Sign out");
 
-				if (!signedIn1) {
+				if (!SignedIn1) {
 					label = 2;
-
-					continue;
-				}
-
-				assertEquals(RuntimeVariables.replace("Sign out"),
-					selenium.getText("//div[2]/div/nobr/a[2]"));
-				selenium.clickAt("//div[2]/div/nobr/a[2]",
-					RuntimeVariables.replace("Sign out"));
-
-			case 2:
-
-				boolean signedIn2 = selenium.isPartialText("//td/a", "Sign out");
-
-				if (!signedIn2) {
-					label = 3;
 
 					continue;
 				}
@@ -60,6 +46,27 @@ public class Gmail_ViewPMMessageTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Sign out"),
 					selenium.getText("//td/a"));
 				selenium.clickAt("//td/a", RuntimeVariables.replace("Sign out"));
+				selenium.clickAt("//span/a",
+					RuntimeVariables.replace("Sign in to Gmail"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+
+			case 2:
+
+				boolean signInAsADifferentUserPresent = selenium.isElementPresent(
+						"link=Sign out and sign in as a different user");
+
+				if (!signInAsADifferentUserPresent) {
+					label = 3;
+
+					continue;
+				}
+
+				selenium.clickAt("link=Sign out and sign in as a different user",
+					RuntimeVariables.replace(
+						"Sign out and sign in as a different user"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
 
 			case 3:
 
@@ -104,72 +111,38 @@ public class Gmail_ViewPMMessageTest extends BaseTestCase {
 					RuntimeVariables.replace("Sign In"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-				Thread.sleep(5000);
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isPartialText("//td[3]/div/span",
-									"liferay.qa")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				assertTrue(selenium.isPartialText("//td[3]/div/span",
-						"liferay.qa"));
-				selenium.clickAt("//td[3]/div/span",
-					RuntimeVariables.replace("liferay.qa"));
-				assertTrue(selenium.isPartialText("//h1/span[1]",
+				assertEquals(RuntimeVariables.replace("liferay.qa.server.trunk"),
+					selenium.getText(
+						"//div[3]/div[2]/div/table/tbody/tr/td[5]/div/span"));
+				assertEquals(RuntimeVariables.replace(
+						"Joe Bloggs sent you a message on Liferay"),
+					selenium.getText("//div/div/span/b"));
+				selenium.clickAt("//div/div/span/b",
+					RuntimeVariables.replace(
 						"Joe Bloggs sent you a message on Liferay"));
-				assertTrue(selenium.isPartialText(
-						"//div[5]/div/div/div/div[3]",
-						"Message Subject \n Message Body"));
 				Thread.sleep(5000);
+				assertEquals(RuntimeVariables.replace(
+						"Joe Bloggs sent you a message."),
+					selenium.getText("//div[2]/div[2]/div[3]"));
+				assertEquals(RuntimeVariables.replace("Message Subject"),
+					selenium.getText("//div[4]/table/tbody/tr/td[2]/div"));
+				assertEquals(RuntimeVariables.replace("Message Body"),
+					selenium.getText("//div[4]/table/tbody/tr/td[2]/div[2]"));
 
-				boolean signedIn3 = selenium.isElementPresent(
-						"//div[2]/div[2]/div/nobr/a[2]");
+				boolean SignedIn2 = selenium.isElementPresent("link=Sign out");
 
-				if (!signedIn3) {
+				if (!SignedIn2) {
 					label = 5;
 
 					continue;
 				}
 
 				assertEquals(RuntimeVariables.replace("Sign out"),
-					selenium.getText("//div[2]/div[2]/div/nobr/a[2]"));
-				selenium.clickAt("//div[2]/div[2]/div/nobr/a[2]",
-					RuntimeVariables.replace("Sign out"));
+					selenium.getText("//td/a"));
+				selenium.clickAt("//td/a", RuntimeVariables.replace("Sign out"));
 
 			case 5:
-
-				boolean signedIn4 = selenium.isElementPresent(
-						"//span[2]/span/span[1]");
-
-				if (!signedIn4) {
-					label = 6;
-
-					continue;
-				}
-
-				selenium.clickAt("//span[2]/span/span[1]",
-					RuntimeVariables.replace(
-						"liferay.qa.testing.trunk@gmail.com"));
-				assertEquals(RuntimeVariables.replace("Sign out"),
-					selenium.getText("link=Sign out"));
-				selenium.clickAt("link=Sign out",
-					RuntimeVariables.replace("Sign out"));
-
-			case 6:
-				Thread.sleep(5000);
-				Thread.sleep(5000);
+				Thread.sleep(10000);
 				selenium.close();
 				selenium.selectWindow("null");
 

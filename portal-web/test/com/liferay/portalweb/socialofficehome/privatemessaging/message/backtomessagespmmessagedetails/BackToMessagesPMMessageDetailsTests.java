@@ -26,19 +26,17 @@ import junit.framework.TestSuite;
 public class BackToMessagesPMMessageDetailsTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AddUserSOFriendTest.class);
-		testSuite.addTestSuite(SignOutSOTest.class);
-		testSuite.addTestSuite(SOFr_NewPasswordTest.class);
-		testSuite.addTestSuite(SignOutSOTest.class);
-		testSuite.addTestSuite(SOFr_SignInTest.class);
-		testSuite.addTestSuite(SOFr_AddAsFriendCCActionsTest.class);
-		testSuite.addTestSuite(SignOutSOTest.class);
+		testSuite.addTestSuite(AddSOUserTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SOUs_SignInTest.class);
+		testSuite.addTestSuite(SOUs_AddAsConnectionCCUserTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SOSignInTest.class);
-		testSuite.addTestSuite(ConfirmCCFriendRequestTest.class);
+		testSuite.addTestSuite(ConfirmNotificationsAddConnnectionTest.class);
 		testSuite.addTestSuite(AddPMMessageTest.class);
 		testSuite.addTestSuite(BackToMessagesPMMessageDetailsTest.class);
 		testSuite.addTestSuite(TearDownPMMessageTest.class);
-		testSuite.addTestSuite(TearDownSOUserTest.class);
+		testSuite.addTestSuite(TearDownUserTest.class);
 
 		return testSuite;
 	}

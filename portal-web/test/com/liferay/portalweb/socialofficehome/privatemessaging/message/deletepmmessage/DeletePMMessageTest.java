@@ -31,7 +31,8 @@ public class DeletePMMessageTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//nav/ul/li[1]/a/span")) {
+				if (selenium.isVisible(
+							"//nav/ul/li[contains(.,'Messages')]/a/span")) {
 					break;
 				}
 			}
@@ -41,37 +42,27 @@ public class DeletePMMessageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[2]/div[1]/ul/li[4]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("//div[2]/div[1]/ul/li[4]/a",
-			RuntimeVariables.replace("Private Messaging"));
+		selenium.clickAt("//nav/ul/li[contains(.,'Messages')]/a/span",
+			RuntimeVariables.replace("Messages"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Private Messaging"),
-			selenium.getText("//h1/span[2]"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//td[3]/div[1]/div/a"));
-		assertEquals(RuntimeVariables.replace("Message Subject\n Message Body"),
-			selenium.getText("//td[4]/a"));
+			selenium.getText("//span[@class='portlet-title-default']"));
+		assertEquals("Mark as Unread",
+			selenium.getValue("//input[@value='Mark as Unread']"));
+		assertEquals("Delete", selenium.getValue("//input[@value='Delete']"));
+		assertEquals(RuntimeVariables.replace("Social01 Office01 User01"),
+			selenium.getText("//span[@class='author-sender']"));
+		assertEquals(RuntimeVariables.replace("Message Subject"),
+			selenium.getText("//div[@class='subject']"));
+		assertEquals(RuntimeVariables.replace("Message Body"),
+			selenium.getText("//div[@class='body']"));
 		assertEquals(RuntimeVariables.replace("Showing 1 result."),
-			selenium.getText("//div[2]/div[2]/div/div"));
+			selenium.getText("//div[@class='search-results']"));
 		assertFalse(selenium.isChecked("//td[1]/span/span/span/input[2]"));
 		selenium.clickAt("//td[1]/span/span/span/input[2]",
 			RuntimeVariables.replace("Message"));
+		assertTrue(selenium.isChecked("//td[1]/span/span/span/input[2]"));
 		selenium.clickAt("//input[@value='Delete']",
 			RuntimeVariables.replace("Delete"));
 		selenium.waitForPageToLoad("30000");

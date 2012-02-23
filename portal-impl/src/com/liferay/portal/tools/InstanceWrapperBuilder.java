@@ -97,7 +97,8 @@ public class InstanceWrapperBuilder {
 
 		// Methods
 
-		sb.append("public static " + javaClass.getName() + "_IW getInstance() {");
+		sb.append(
+			"public static " + javaClass.getName() + "_IW getInstance() {");
 		sb.append("return _instance;");
 		sb.append("}\n");
 
@@ -136,11 +137,13 @@ public class InstanceWrapperBuilder {
 						sb.append(", ");
 					}
 				}
-				
+
 				sb.append("> ");
 			}
 
-			sb.append(_getTypeGenericsName(javaMethod.getReturns()) + " " + methodName + "(");
+			sb.append(
+				_getTypeGenericsName(
+					javaMethod.getReturns()) + " " + methodName + "(");
 
 			JavaParameter[] javaParameters = javaMethod.getParameters();
 
@@ -215,7 +218,9 @@ public class InstanceWrapperBuilder {
 
 		// Fields
 
-		sb.append("private static " + javaClass.getName() + "_IW _instance = new " + javaClass.getName() + "_IW();");
+		sb.append(
+			"private static " + javaClass.getName() + "_IW _instance = new " +
+				javaClass.getName() + "_IW();");
 
 		// Class close brace
 
@@ -223,7 +228,10 @@ public class InstanceWrapperBuilder {
 
 		// Write file
 
-		File file = new File(parentDir + "/" + StringUtil.replace(javaClass.getPackage().getName(), ".", "/") + "/" + javaClass.getName() + "_IW.java");
+		File file = new File(
+			parentDir + "/" +
+				StringUtil.replace(javaClass.getPackage().getName(), ".", "/") +
+					"/" + javaClass.getName() + "_IW.java");
 
 		ServiceBuilder.writeFile(file, sb.toString());
 	}

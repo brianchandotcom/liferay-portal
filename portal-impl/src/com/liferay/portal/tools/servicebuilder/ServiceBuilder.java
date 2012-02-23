@@ -147,7 +147,7 @@ public class ServiceBuilder {
 		try {
 			new ServiceBuilder(
 				fileName, hbmFileName, ormFileName, modelHintsFileName,
-				springFileName,	springBaseFileName, springClusterFileName,
+				springFileName, springBaseFileName, springClusterFileName,
 				springDynamicDataSourceFileName, springHibernateFileName,
 				springInfrastructureFileName, springShardDataSourceFileName,
 				apiDir, implDir, jsonFileName, remotingFileName, sqlDir,
@@ -590,8 +590,8 @@ public class ServiceBuilder {
 
 				_portletShortName = portletElement.attributeValue("short-name");
 
-				_portletPackageName =
-					TextFormatter.format(_portletName, TextFormatter.B);
+				_portletPackageName = TextFormatter.format(
+					_portletName, TextFormatter.B);
 
 				_outputPath += "/" + _portletPackageName;
 
@@ -809,7 +809,7 @@ public class ServiceBuilder {
 
 		String createMappingTableSQL = _getCreateMappingTableSQL(entityMapping);
 
-		createMappingTableSQL =  StringUtil.replace(
+		createMappingTableSQL = StringUtil.replace(
 			createMappingTableSQL, "\n", "");
 		createMappingTableSQL = StringUtil.replace(
 			createMappingTableSQL, "\t", "");
@@ -1573,9 +1573,7 @@ public class ServiceBuilder {
 		return StringUtil.replace(fileName, "/", ".");
 	}
 
-	private void _addElements(
-		Element element, Map<String, Element> elements) {
-
+	private void _addElements(Element element, Map<String, Element> elements) {
 		for (Map.Entry<String, Element> entry : elements.entrySet()) {
 			Element childElement = entry.getValue();
 
@@ -1768,7 +1766,7 @@ public class ServiceBuilder {
 
 			content = content.replaceAll(
 				"extends\\s+" + entity.getName() +
-					"ModelImpl\\s+implements\\s+" +	entity.getName(),
+					"ModelImpl\\s+implements\\s+" + entity.getName(),
 				"extends " + entity.getName() + "BaseImpl");
 
 			writeFileRaw(modelFile, content);
@@ -2313,7 +2311,7 @@ public class ServiceBuilder {
 			int lastMappedClassEnd = content.indexOf(
 				"</mapped-superclass>", lastMappedClassStart) + 20;
 
-			mappedClasses  = content.substring(0, lastMappedClassEnd);
+			mappedClasses = content.substring(0, lastMappedClassEnd);
 
 			content = content.substring(lastMappedClassEnd + 1);
 		}
@@ -3960,8 +3958,8 @@ public class ServiceBuilder {
 				String indexSpec =
 					entityMapping.getTable() + " (" + colDBName + ");";
 
-				String indexHash =
-					StringUtil.toHexString(indexSpec.hashCode()).toUpperCase();
+				String indexHash = StringUtil.toHexString(
+					indexSpec.hashCode()).toUpperCase();
 
 				String indexName = "IX_" + indexHash;
 
@@ -4466,10 +4464,8 @@ public class ServiceBuilder {
 		}
 
 		String dataSource = entityElement.attributeValue("data-source");
-		String sessionFactory = entityElement.attributeValue(
-			"session-factory");
-		String txManager = entityElement.attributeValue(
-			"tx-manager");
+		String sessionFactory = entityElement.attributeValue("session-factory");
+		String txManager = entityElement.attributeValue("tx-manager");
 		boolean cacheEnabled = GetterUtil.getBoolean(
 			entityElement.attributeValue("cache-enabled"), true);
 		boolean jsonEnabled = GetterUtil.getBoolean(
@@ -4717,8 +4713,7 @@ public class ServiceBuilder {
 			boolean finderDBIndex = GetterUtil.getBoolean(
 				finderElement.attributeValue("db-index"), true);
 
-			List<EntityColumn> finderColsList =
-				new ArrayList<EntityColumn>();
+			List<EntityColumn> finderColsList = new ArrayList<EntityColumn>();
 
 			List<Element> finderColumnElements = finderElement.elements(
 				"finder-column");
@@ -4727,8 +4722,7 @@ public class ServiceBuilder {
 				String finderColName = finderColumnElement.attributeValue(
 					"name");
 				boolean finderColCaseSensitive = GetterUtil.getBoolean(
-					finderColumnElement.attributeValue("case-sensitive"),
-					true);
+					finderColumnElement.attributeValue("case-sensitive"), true);
 				String finderColComparator = GetterUtil.getString(
 					finderColumnElement.attributeValue("comparator"), "=");
 				String finderColArrayableOperator =
@@ -4856,9 +4850,6 @@ public class ServiceBuilder {
 
 	private static final int _SESSION_TYPE_REMOTE = 0;
 
-	private static Pattern _setterPattern = Pattern.compile(
-		"public void set.*" + Pattern.quote("("));
-
 	private static final String _SQL_CREATE_TABLE = "create table ";
 
 	private static final String _TPL_ROOT =
@@ -4867,6 +4858,9 @@ public class ServiceBuilder {
 	private static Pattern _getterPattern = Pattern.compile(
 		"public .* get.*" + Pattern.quote("(") + "|public boolean is.*" +
 			Pattern.quote("("));
+
+	private static Pattern _setterPattern = Pattern.compile(
+		"public void set.*" + Pattern.quote("("));
 
 	private String _apiDir;
 	private String _author;
@@ -4911,7 +4905,7 @@ public class ServiceBuilder {
 	private String _sqlSequencesFileName;
 	private String _testDir;
 	private String _testOutputPath;
-	private String _tplBadAliasNames =  _TPL_ROOT + "bad_alias_names.txt";
+	private String _tplBadAliasNames = _TPL_ROOT + "bad_alias_names.txt";
 	private String _tplBadColumnNames = _TPL_ROOT + "bad_column_names.txt";
 	private String _tplBadJsonTypes = _TPL_ROOT + "bad_json_types.txt";
 	private String _tplBadTableNames = _TPL_ROOT + "bad_table_names.txt";

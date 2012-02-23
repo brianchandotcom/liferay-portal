@@ -1,4 +1,6 @@
 (function() {
+	var CSS_ESCAPED = 'escaped';
+
 	var NEW_LINE = '\n';
 
 	var REGEX_HEADER = /^h([1-6])$/i;
@@ -20,6 +22,8 @@
 	var STR_PIPE = '|';
 
 	var STR_SPACE = ' ';
+
+	var STR_TILDE = '~';
 
 	var TAG_BOLD = '**';
 
@@ -299,6 +303,9 @@
 				else if (tagName == 'a') {
 					instance._handleLink(element, listTagsIn, listTagsOut);
 				}
+				else if (tagName == 'span') {
+					instance._handleSpan(element, listTagsIn, listTagsOut);
+				}
 				else if (tagName == 'strong' || tagName == 'b') {
 					instance._handleStrong(element, listTagsIn, listTagsOut);
 				}
@@ -467,6 +474,14 @@
 			listTagsOut.push('}}}', NEW_LINE);
 		},
 
+		_handleSpan: function(element, listTagsIn, listTagsOut) {
+			var instance = this;
+
+			if (instance._hasClass(element, CSS_ESCAPED)) {
+				listTagsIn.push(STR_TILDE);
+			}
+		},
+
 		_handleStrong: function(element, listTagsIn, listTagsOut) {
 			var instance = this;
 
@@ -528,6 +543,10 @@
 			var instance = this;
 
 			instance._listsStack.push(TAG_UNORDERED_LIST_ITEM);
+		},
+
+		_hasClass: function(element, className) {
+			return (STR_SPACE + element.className + STR_SPACE).indexOf(STR_SPACE + className + STR_SPACE) > -1;
 		},
 
 		_isDataAvailable: function() {

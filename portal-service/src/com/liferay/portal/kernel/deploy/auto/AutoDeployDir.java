@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.deploy.auto;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.IntegerWrapper;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.io.File;
 
@@ -127,7 +128,7 @@ public class AutoDeployDir {
 	}
 
 	public void unregisterListener(AutoDeployListener autoDeployListener) {
-		_autoDeployListeners.remove(autoDeployListener);
+		ListUtil.remove(_autoDeployListeners, autoDeployListener);
 	}
 
 	protected void processFile(File file) {

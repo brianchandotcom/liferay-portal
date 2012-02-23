@@ -51,6 +51,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import jodd.util.Wildcard;
+
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 
@@ -70,22 +71,6 @@ public class JSONServiceAction extends JSONAction {
 			for (String invalidClassName : _invalidClassNames) {
 				_log.debug("Invalid class name " + invalidClassName);
 			}
-		}
-	}
-
-	protected void checkMethodPublicAccess(
-		HttpServletRequest request, String methodName, String[] publicMethods)
-		throws PrincipalException {
-
-		if (publicMethods.length > 0) {
-			if (Wildcard.matchOne(methodName, publicMethods) != -1) {
-				return;
-			}
-		}
-
-		String remoteUser = request.getRemoteUser();
-		if (remoteUser == null) {
-			throw new PrincipalException("Public access denied.");
 		}
 	}
 
@@ -159,6 +144,24 @@ public class JSONServiceAction extends JSONAction {
 		}
 
 		return null;
+	}
+
+	protected void checkMethodPublicAccess(
+			HttpServletRequest request, String methodName,
+			String[] publicMethods)
+		throws PrincipalException {
+
+		if (publicMethods.length > 0) {
+			if (Wildcard.matchOne(methodName, publicMethods) != -1) {
+				return;
+			}
+		}
+
+		String remoteUser = request.getRemoteUser();
+
+		if (remoteUser == null) {
+			throw new PrincipalException("Public access denied.");
+		}
 	}
 
 	protected Object getArgValue(

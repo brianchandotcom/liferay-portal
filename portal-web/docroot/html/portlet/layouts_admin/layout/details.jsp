@@ -127,7 +127,7 @@ StringBuilder friendlyURLBase = new StringBuilder();
 			</c:if>
 		</c:when>
 		<c:otherwise>
-			<aui:input name='<%= "name_" + defaultLanguageId %>' type="hidden" value="<%= HtmlUtil.escape(selLayout.getName(defaultLocale)) %>" />
+			<aui:input name='<%= "name_" + defaultLanguageId %>' type="hidden" value="<%= HtmlUtil.escapeAttribute(selLayout.getName(defaultLocale)) %>" />
 			<aui:input name="friendlyURL" type="hidden" value="<%= HtmlUtil.escape((selLayout != null) ? selLayout.getFriendlyURL() : StringPool.BLANK) %>" />
 		</c:otherwise>
 	</c:choose>

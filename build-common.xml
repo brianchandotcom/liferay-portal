@@ -297,12 +297,13 @@ Please set the environment variable ANT_OPTS to the recommended value of
 	<target name="compile">
 	</target>
 
-	<target name="compile-test">
-		<mkdir dir="test-classes" />
-		<mkdir dir="test-results" />
+	<target name="compile-test-macro" if="type">
+		<mkdir dir="test-classes/${type}" />
+		<mkdir dir="test-results/${type}" />
 
-		<copy todir="test-classes">
-			<fileset dir="test" includes="**/*.properties,**/dependencies/**" />
+		<copy todir="test-classes/${type}">
+			<fileset dir="test" includes="*.properties" />
+			<fileset dir="test/${type}" includes="**/*.properties,**/dependencies/**" />
 		</copy>
 
 		<javac
@@ -310,12 +311,27 @@ Please set the environment variable ANT_OPTS to the recommended value of
 			compiler="${javac.compiler}"
 			debug="${javac.debug}"
 			deprecation="${javac.deprecation}"
-			destdir="test-classes"
+			destdir="test-classes/${type}"
 			encoding="${javac.encoding}"
 			includeAntRuntime="false"
 			nowarn="${javac.nowarn}"
-			srcdir="test"
+			srcdir="test/${type}"
 		/>
+	</target>
+
+	<target name="compile-integration-test">
+		<ant target="compile-test-macro">
+			<property name="type" value="integration" />
+		</ant>
+	</target>
+	<target name="compile-unit-test">
+		<ant target="compile-test-macro">
+			<property name="type" value="unit" />
+		</ant>
+	</target>
+	<target name="compile-test">
+		<antcall target="compile-integration-test" inheritall="false" />
+		<antcall target="compile-unit-test" inheritall="false" />
 	</target>
 
 	<target name="format-javadoc">
@@ -455,6 +471,35 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		<antcall target="report-test-coverage" />
 	</target>
 
+	<target name="test-macro" if="type">
+		<!--
+		The perTest mode allow us to run our test in an isolated way. This makes our tests run in a little bit slower.
+		Because some of our integration tests are dependant each other; this is the easier way to isolate thier execution
+		-->
+		<junit dir="${project.dir}" fork="on" forkmode="perTest" outputtoformatters="false" printsummary="on" showoutput="true">
+			<sysproperty key="net.sourceforge.cobertura.datafile" file="test-coverage/cobertura.ser" />
+			<jvmarg line="${junit.debug.jpda}" />
+			<jvmarg value="-Xmx1024m" />
+			<jvmarg value="-XX:MaxPermSize=256m" />
+			<jvmarg value="-Duser.timezone=GMT" />
+			<jvmarg value="-Dexternal-properties=${test.properties}" />
+			<classpath location="test-coverage" />
+			<classpath refid="test.classpath" />
+			<formatter type="brief" usefile="false" />
+			<formatter type="xml" />
+			<batchtest todir="test-results/${type}">
+				<fileset dir="test-classes/${type}" includes="**/${class}.class">
+					<!--
+					We need to start Tomcat before the integration testing process
+					and shutdhown it at the end.
+					-->
+					<exclude name="**/ServiceHttpTestSuite.class" />
+					<exclude name="**/ServiceSoapTestSuite.class" />
+				</fileset>
+			</batchtest>
+		</junit>
+	</target>
+
 	<target name="test-class" depends="compile,instrument-test-coverage,compile-test" if="class">
 		<junit dir="${project.dir}" fork="on" forkmode="once" outputtoformatters="false" printsummary="on" showoutput="true">
 			<sysproperty key="net.sourceforge.cobertura.datafile" file="test-coverage/cobertura.ser" />
@@ -471,6 +516,34 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				<fileset dir="test-classes" includes="**/${class}.class" />
 			</batchtest>
 		</junit>
+
+		<antcall target="report-test-coverage" />
+	</target>
+
+	<target name="test-integration" depends="compile,instrument-test-coverage,compile-integration-test">
+
+		<property name="class" value="*TestSuite"/>
+		<ant target="test-macro">
+			<property name="type" value="integration" />
+		</ant>
+
+		<!-- Establish some convention over configuration rule in order to be able to run TestSuites and Single tests-->
+
+		<!--
+		<property name="class" value="*Test"/>
+		<ant target="test-macro">
+			<property name="type" value="integration" />
+		</ant>
+		-->
+
+		<antcall target="report-test-coverage" />
+	</target>
+
+	<target name="test-unit" depends="compile,instrument-test-coverage,compile-unit-test">
+		<property name="class" value="*Test"/>
+		<ant target="test-macro">
+			<property name="type" value="unit" />
+		</ant>
 
 		<antcall target="report-test-coverage" />
 	</target>

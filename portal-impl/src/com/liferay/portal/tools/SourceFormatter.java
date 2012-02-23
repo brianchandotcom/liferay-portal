@@ -2715,11 +2715,8 @@ public class SourceFormatter {
 		directoryScanner.setBasedir(basedir);
 
 		String[] excludes = {
-			"**\\InstanceWrapperBuilder.java", "**\\*_IW.java",
-			"**\\PropsKeys.java", "**\\PropsValues.java",
-			"**\\ServiceBuilder.java", "**\\SourceFormatter.java",
-			"**\\WebKeys.java", "**\\bin\\**", "**\\classes\\*",
-			"**\\counter\\service\\**", "**\\jsp\\*",
+			"**\\*_IW.java", "**\\PropsValues.java", "**\\bin\\**",
+			"**\\classes\\*", "**\\counter\\service\\**", "**\\jsp\\*",
 			"**\\model\\impl\\*BaseImpl.java", "**\\model\\impl\\*Model.java",
 			"**\\model\\impl\\*ModelImpl.java", "**\\portal\\service\\**",
 			"**\\portal-client\\**",

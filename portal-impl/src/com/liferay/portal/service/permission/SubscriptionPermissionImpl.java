@@ -29,8 +29,11 @@ import com.liferay.portlet.blogs.service.permission.BlogsPermission;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalPermission;
+import com.liferay.portlet.messageboards.NoSuchDiscussionException;
 import com.liferay.portlet.messageboards.model.MBCategory;
+import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBThread;
+import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
@@ -60,6 +63,19 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 
 		if (className == null) {
 			return false;
+		}
+
+		MBDiscussion discussion = null;
+
+		try {
+			discussion = MBDiscussionLocalServiceUtil.getDiscussion(
+				className, classPK);
+		}
+		catch (NoSuchDiscussionException nsde) {
+		}
+
+		if (discussion != null) {
+			return true;
 		}
 
 		if (className.equals(BlogsEntry.class.getName())) {

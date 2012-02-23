@@ -106,8 +106,18 @@
 	width: auto;
 }
 
+.lfr-floating-container .language-value {
+	display: inline-block;
+	vertical-align: top;
+}
+
 .lfr-floating-container .lfr-form-row {
 	border: none;
+}
+
+.lfr-floating-container select {
+	display: inline-block;
+	vertical-align: top;
 }
 
 .lfr-panel .lfr-panel-content .undo-queue {
@@ -115,14 +125,4 @@
 	border-right: none;
 	border-top: none;
 	margin: -0.5em 0 10px;
-}
-
-.lfr-floating-container select{
-	display:inline-block;
-	vertical-align: top;
-}
-
-.lfr-floating-container .language-value{
-	display:inline-block;
-	vertical-align: top;
 }

@@ -58,8 +58,8 @@ public class ImageToolImplTest extends BaseTestCase {
 
 	protected void testRead(String fileName) throws Exception {
 		fileName =
-			"portal-impl/test/com/liferay/portal/image/dependencies/" +
-				fileName;
+			"portal-impl/test/integration/" +
+				"com/liferay/portal/image/dependencies/" + fileName;
 
 		File file = new File(fileName);
 

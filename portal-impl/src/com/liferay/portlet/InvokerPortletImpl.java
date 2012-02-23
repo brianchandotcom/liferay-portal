@@ -131,49 +131,50 @@ public class InvokerPortletImpl implements InvokerPortlet {
 			((PortletSessionImpl)portletSession).getHttpSession());
 	}
 
-	public InvokerPortlet create(
+	public InvokerPortletImpl(
 			com.liferay.portal.model.Portlet portletModel, Portlet portlet,
 			PortletConfig portletConfig, PortletContext portletContext,
 			boolean checkAuthToken, boolean facesPortlet, boolean strutsPortlet,
 			boolean strutsBridgePortlet)
 		throws PortletException {
 
-		try {
-			InvokerPortlet invokerPortlet = (InvokerPortlet)clone();
-
-			invokerPortlet.prepare(
-				portletModel, portlet, portletConfig, portletContext,
-				checkAuthToken, facesPortlet, strutsPortlet,
-				strutsBridgePortlet);
-
-			return invokerPortlet;
-		}
-		catch (PortletException pe) {
-			throw pe;
-		}
-		catch (Exception e) {
-			throw new PortletException(e);
-		}
+		_initialize(
+			portletModel, portlet, portletConfig, portletContext,
+			checkAuthToken, facesPortlet, strutsPortlet, strutsBridgePortlet);
 	}
 
-	public InvokerPortlet create(
+	public InvokerPortletImpl(
 			com.liferay.portal.model.Portlet portletModel, Portlet portlet,
 			PortletContext portletContext)
 		throws PortletException {
 
-		try {
-			InvokerPortlet invokerPortlet = (InvokerPortlet)clone();
+		Map<String, String> initParams = portletModel.getInitParams();
 
-			invokerPortlet.prepare(portletModel, portlet, portletContext);
+		boolean checkAuthToken = GetterUtil.getBoolean(
+			initParams.get("check-auth-token"), true);
 
-			return invokerPortlet;
+		boolean facesPortlet = false;
+
+		if (ClassUtil.isSubclass(
+				portlet.getClass(), PortletDeployer.JSF_MYFACES) ||
+			ClassUtil.isSubclass(
+				portlet.getClass(), PortletDeployer.JSF_STANDARD) ||
+			ClassUtil.isSubclass(
+				portlet.getClass(), PortletDeployer.JSF_SUN)) {
+
+			facesPortlet = true;
 		}
-		catch (PortletException pe) {
-			throw pe;
-		}
-		catch (Exception e) {
-			throw new PortletException(e);
-		}
+
+		boolean strutsPortlet = ClassUtil.isSubclass(
+			portlet.getClass(), StrutsPortlet.class);
+
+		boolean strutsBridgePortlet = ClassUtil.isSubclass(
+			portlet.getClass(),
+			"org.apache.portals.bridges.struts.StrutsPortlet");
+
+		_initialize(
+			portletModel, portlet, null, portletContext,
+			checkAuthToken, facesPortlet, strutsPortlet, strutsBridgePortlet);
 	}
 
 	public void destroy() {
@@ -272,77 +273,6 @@ public class InvokerPortletImpl implements InvokerPortlet {
 
 	public boolean isStrutsPortlet() {
 		return _strutsPortlet;
-	}
-
-	public void prepare(
-			com.liferay.portal.model.Portlet portletModel, Portlet portlet,
-			PortletConfig portletConfig, PortletContext portletContext,
-			boolean checkAuthToken, boolean facesPortlet, boolean strutsPortlet,
-			boolean strutsBridgePortlet)
-		throws PortletException {
-
-		// From prepare
-
-		_portletModel = portletModel;
-		_portlet = portlet;
-		_portletId = _portletModel.getPortletId();
-		_portletContextImpl = (PortletContextImpl)portletContext;
-		_checkAuthToken = checkAuthToken;
-		_facesPortlet = facesPortlet;
-		_strutsPortlet = strutsPortlet;
-		_strutsBridgePortlet = strutsBridgePortlet;
-		_expCache = portletModel.getExpCache();
-		setPortletFilters();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Create instance cache wrapper for " +
-					_portletContextImpl.getPortlet().getPortletId());
-		}
-
-		// From init
-
-		_portletConfigImpl = (PortletConfigImpl)portletConfig;
-	}
-
-	public void prepare(
-			com.liferay.portal.model.Portlet portletModel, Portlet portlet,
-			PortletContext portletContext)
-		throws PortletException {
-
-		_portletModel = portletModel;
-		_portletId = _portletModel.getPortletId();
-		_portlet = portlet;
-		_portletContextImpl = (PortletContextImpl)portletContext;
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Create root cache wrapper for " +
-					_portletContextImpl.getPortlet().getPortletId());
-		}
-
-		Map<String, String> initParams = portletModel.getInitParams();
-
-		_checkAuthToken = GetterUtil.getBoolean(
-			initParams.get("check-auth-token"), true);
-
-		if (ClassUtil.isSubclass(
-				_portlet.getClass(), PortletDeployer.JSF_MYFACES) ||
-			ClassUtil.isSubclass(
-				_portlet.getClass(), PortletDeployer.JSF_STANDARD) ||
-			ClassUtil.isSubclass(
-				_portlet.getClass(), PortletDeployer.JSF_SUN)) {
-
-			_facesPortlet = true;
-		}
-
-		_strutsPortlet = ClassUtil.isSubclass(
-			portlet.getClass(), StrutsPortlet.class);
-		_strutsBridgePortlet = ClassUtil.isSubclass(
-			portlet.getClass(),
-			"org.apache.portals.bridges.struts.StrutsPortlet");
-		_expCache = portletModel.getExpCache();
-		setPortletFilters();
 	}
 
 	public void processAction(
@@ -765,14 +695,45 @@ public class InvokerPortletImpl implements InvokerPortlet {
 		return portlet.getPortletId();
 	}
 
+	private void _initialize(
+			com.liferay.portal.model.Portlet portletModel, Portlet portlet,
+			PortletConfig portletConfig, PortletContext portletContext,
+			boolean checkAuthToken, boolean facesPortlet, boolean strutsPortlet,
+			boolean strutsBridgePortlet)
+		throws PortletException {
+
+		_portletModel = portletModel;
+		_portlet = portlet;
+		_portletConfigImpl = (PortletConfigImpl)portletConfig;
+		_portletId = _portletModel.getPortletId();
+		_portletContextImpl = (PortletContextImpl)portletContext;
+		_checkAuthToken = checkAuthToken;
+		_facesPortlet = facesPortlet;
+		_strutsPortlet = strutsPortlet;
+		_strutsBridgePortlet = strutsBridgePortlet;
+		_expCache = portletModel.getExpCache();
+		setPortletFilters();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Create instance cache wrapper for " +
+					_portletContextImpl.getPortlet().getPortletId());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(InvokerPortletImpl.class);
 
-	private Map<String, List<ActionFilter>> _actionFiltersMap =
+	private static Map<String, List<ActionFilter>> _actionFiltersMap =
 		new HashMap<String, List<ActionFilter>>();
+	private static Map<String, List<EventFilter>> _eventFiltersMap =
+		new HashMap<String, List<EventFilter>>();
+	private static Map<String, List<RenderFilter>> _renderFiltersMap =
+		new HashMap<String, List<RenderFilter>>();
+	private static Map<String, List<ResourceFilter>> _resourceFiltersMap =
+		new HashMap<String, List<ResourceFilter>>();
+
 	private boolean _checkAuthToken;
 	private boolean _destroyable;
-	private Map<String, List<EventFilter>> _eventFiltersMap =
-		new HashMap<String, List<EventFilter>>();
 	private Integer _expCache;
 	private boolean _facesPortlet;
 	private Portlet _portlet;
@@ -780,10 +741,6 @@ public class InvokerPortletImpl implements InvokerPortlet {
 	private PortletContextImpl _portletContextImpl;
 	private String _portletId;
 	private com.liferay.portal.model.Portlet _portletModel;
-	private Map<String, List<RenderFilter>> _renderFiltersMap =
-		new HashMap<String, List<RenderFilter>>();
-	private Map<String, List<ResourceFilter>> _resourceFiltersMap =
-		new HashMap<String, List<ResourceFilter>>();
 	private boolean _strutsBridgePortlet;
 	private boolean _strutsPortlet;
 

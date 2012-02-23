@@ -93,37 +93,6 @@ public class MonitoringPortlet implements InvokerPortlet {
 		_singleDestinationMessageSender = singleDestinationMessageSender;
 	}
 
-	public InvokerPortlet create(
-			com.liferay.portal.model.Portlet portletModel, Portlet portlet,
-			PortletConfig portletConfig, PortletContext portletContext,
-			boolean checkAuthToken, boolean facesPortlet, boolean strutsPortlet,
-			boolean strutsBridgePortlet)
-		throws PortletException {
-
-		InvokerPortlet invokerPortlet = _invokerPortlet.create(
-			portletModel, portlet, portletConfig, portletContext,
-			checkAuthToken, facesPortlet, strutsPortlet, strutsBridgePortlet);
-
-		MonitoringPortlet monitoringPortlet = new MonitoringPortlet(
-			invokerPortlet, _singleDestinationMessageSender);
-
-		return monitoringPortlet;
-	}
-
-	public InvokerPortlet create(
-			com.liferay.portal.model.Portlet portletModel, Portlet portlet,
-			PortletContext portletContext)
-		throws PortletException {
-
-		InvokerPortlet invokerPortlet = _invokerPortlet.create(
-			portletModel, portlet, portletContext);
-
-		MonitoringPortlet monitoringPortlet = new MonitoringPortlet(
-			invokerPortlet, _singleDestinationMessageSender);
-
-		return monitoringPortlet;
-	}
-
 	public void destroy() {
 		_invokerPortlet.destroy();
 	}
@@ -182,26 +151,6 @@ public class MonitoringPortlet implements InvokerPortlet {
 
 	public boolean isStrutsPortlet() {
 		return _invokerPortlet.isStrutsPortlet();
-	}
-
-	public void prepare(
-			com.liferay.portal.model.Portlet portletModel, Portlet portlet,
-			PortletConfig portletConfig, PortletContext portletContext,
-			boolean checkAuthToken, boolean facesPortlet, boolean strutsPortlet,
-			boolean strutsBridgePortlet)
-		throws PortletException {
-
-		_invokerPortlet.prepare(
-			portletModel, portlet, portletConfig, portletContext,
-			checkAuthToken, facesPortlet, strutsPortlet, strutsBridgePortlet);
-	}
-
-	public void prepare(
-			com.liferay.portal.model.Portlet portletModel, Portlet portlet,
-			PortletContext portletContext)
-		throws PortletException {
-
-		_invokerPortlet.prepare(portletModel, portlet, portletContext);
 	}
 
 	public void processAction(

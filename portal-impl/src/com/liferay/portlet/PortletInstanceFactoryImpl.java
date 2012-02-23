@@ -164,7 +164,7 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 					rootInvokerPortletInstance.isStrutsBridgePortlet();
 
 				instanceInvokerPortletInstance =
-					_internalInvokerPortletPrototype.create(
+					_invokerPortletFactory.create(
 						portlet, portletInstance, portletConfig, portletContext,
 						checkAuthToken, facesPortlet, strutsPortlet,
 						strutsBridgePortlet);
@@ -197,10 +197,10 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 		PortletLocalServiceUtil.destroyPortlet(portlet);
 	}
 
-	public void setInternalInvokerPortletPrototype(
-		InvokerPortlet internalInvokerPortletPrototype) {
+	public void setInvokerPortletFactory(
+		InvokerPortletFactory invokerPortletFactory) {
 
-		_internalInvokerPortletPrototype = internalInvokerPortletPrototype;
+		_invokerPortletFactory = invokerPortletFactory;
 	}
 
 	protected InvokerPortlet init(
@@ -210,7 +210,7 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 
 		PortletContext portletContext = portletConfig.getPortletContext();
 
-		InvokerPortlet invokerPortlet = _internalInvokerPortletPrototype.create(
+		InvokerPortlet invokerPortlet = _invokerPortletFactory.create(
 			portlet, portletInstance, portletContext);
 
 		invokerPortlet.init(portletConfig);
@@ -218,7 +218,7 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 		return invokerPortlet;
 	}
 
-	private InvokerPortlet _internalInvokerPortletPrototype;
+	private InvokerPortletFactory _invokerPortletFactory;
 	private Map<String, Map<String, InvokerPortlet>> _pool;
 
 }

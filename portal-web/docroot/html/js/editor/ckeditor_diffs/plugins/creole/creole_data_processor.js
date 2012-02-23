@@ -1,5 +1,5 @@
 (function() {
-	var CLASS_ESCAPED = 'escaped';
+	var CSS_ESCAPED = 'escaped';
 
 	var NEW_LINE = '\n';
 
@@ -17,13 +17,13 @@
 
 	var STR_EQUALS = '=';
 
-	var STR_ESCAPE = '~';
-
 	var STR_LIST_ITEM_ESCAPE_CHARACTERS = '\\\\';
 
 	var STR_PIPE = '|';
 
 	var STR_SPACE = ' ';
+
+	var STR_TILDE = '~';
 
 	var TAG_BOLD = '**';
 
@@ -477,8 +477,8 @@
 		_handleSpan: function(element, listTagsIn, listTagsOut) {
 			var instance = this;
 
-			if (instance._hasClass(element, CLASS_ESCAPED)) {
-				listTagsIn.push(STR_ESCAPE);
+			if (instance._hasClass(element, CSS_ESCAPED)) {
+				listTagsIn.push(STR_TILDE);
 			}
 		},
 
@@ -546,7 +546,7 @@
 		},
 
 		_hasClass: function(element, className) {
-			return (' ' + element.className + ' ').indexOf(' ' + className + ' ') > -1;
+			return (STR_SPACE + element.className + STR_SPACE).indexOf(STR_SPACE + className + STR_SPACE) > -1;
 		},
 
 		_isDataAvailable: function() {

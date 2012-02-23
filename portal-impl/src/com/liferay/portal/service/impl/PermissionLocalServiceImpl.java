@@ -251,6 +251,10 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 			ResourceCode resourceCode = resourceCodePersistence.fetchByC_N_S(
 				companyId, name, ResourceConstants.SCOPE_INDIVIDUAL);
 
+			if (resourceCode == null) {
+				continue;
+			}
+
 			for (String actionId : actionIds) {
 				List<Resource> resources = resourceFinder.findByNoActions(
 					resourceCode.getCodeId(), actionId);

@@ -18,14 +18,6 @@
 
 <%@ page import="com.liferay.portal.setup.SetupWizardUtil" %>
 
-<%
-String emailAddress = (String)session.getAttribute("adminEmailAddress");
-
-if (Validator.isNull(emailAddress)) {
-	emailAddress = PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + StringPool.AT + company.getMx();
-}
-%>
-
 <style>
 	<%@ include file="/html/portal/setup_wizard_css.jspf" %>
 </style>
@@ -55,6 +47,10 @@ if (Validator.isNull(emailAddress)) {
 
 			<%
 			boolean propertiesFileUpdated = GetterUtil.getBoolean((Boolean)session.getAttribute(WebKeys.SETUP_WIZARD_PROPERTIES_UPDATED));
+
+			String defaultEmailAddress = PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + StringPool.AT + company.getMx();
+
+			String emailAddress = GetterUtil.getString((String)session.getAttribute(WebKeys.EMAIL_ADDRESS), defaultEmailAddress);
 			%>
 
 			<c:choose>

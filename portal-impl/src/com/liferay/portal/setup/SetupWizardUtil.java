@@ -196,7 +196,7 @@ public class SetupWizardUtil {
 		}
 
 		_updateCompany(request);
-		_updateAdminUser(request);
+		_updateAdminUser(request, unicodeProperties);
 
 		_initPlugins();
 	}
@@ -338,7 +338,8 @@ public class SetupWizardUtil {
 		}
 	}
 
-	private static void _updateAdminUser(HttpServletRequest request)
+	private static void _updateAdminUser(
+			HttpServletRequest request, UnicodeProperties unicodeProperties)
 		throws Exception {
 
 		String firstName = ParamUtil.getString(
@@ -371,6 +372,13 @@ public class SetupWizardUtil {
 		catch (Exception e) {
 		}
 
+		PropsValues.ADMIN_EMAIL_FROM_ADDRESS = emailAddress;
+		PropsValues.ADMIN_EMAIL_FROM_NAME = fullName;
+
+		unicodeProperties.put(
+			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS, emailAddress);
+		unicodeProperties.put(PropsKeys.ADMIN_EMAIL_FROM_NAME, fullName);
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -389,7 +397,7 @@ public class SetupWizardUtil {
 		}
 
 		String greeting = LanguageUtil.format(themeDisplay.getLocale(),
-			"welcome-x", StringPool.BLANK + fullName, false);
+			"welcome-x", StringPool.SPACE + fullName, false);
 
 		Contact contact = user.getContact();
 
@@ -424,7 +432,7 @@ public class SetupWizardUtil {
 
 		session.setAttribute(WebKeys.SETUP_WIZARD_PASSWORD_UPDATED, true);
 		session.setAttribute(WebKeys.USER_ID, user.getUserId());
-		session.setAttribute("adminEmailAddress", emailAddress);
+		session.setAttribute(WebKeys.EMAIL_ADDRESS, emailAddress);
 	}
 
 	private static void _updateCompany(HttpServletRequest request)

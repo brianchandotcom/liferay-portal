@@ -1381,6 +1381,8 @@ public class ProcessExecutorTest extends TestCase {
 		}
 
 		public Serializable call() throws ProcessException {
+			PortalClassLoaderUtil.setClassLoader(getClass().getClassLoader());
+
 			Logger logger = Logger.getLogger("");
 
 			logger.setLevel(Level.FINE);

@@ -254,7 +254,7 @@ public class ProcessExecutor {
 
 		public static final int INTERRUPTION_CODE = 2;
 
-		public static final int UNKNOW_CODE = 3;
+		public static final int UNKNOWN_CODE = 3;
 
 		public boolean shutdown(int shutdownCode, Throwable shutdownThrowable);
 
@@ -338,7 +338,7 @@ public class ProcessExecutor {
 				catch (Throwable throwable) {
 					shutdownThrowable = throwable;
 
-					shutdownCode = ShutdownHook.UNKNOW_CODE;
+					shutdownCode = ShutdownHook.UNKNOWN_CODE;
 				}
 
 				if (shutdownCode != 0) {

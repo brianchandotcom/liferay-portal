@@ -901,8 +901,7 @@ public class GroupFinderImpl
 					"[$JOIN$]", "[$WHERE$]"
 				},
 				new String[] {
-					StringPool.BLANK,
-					StringPool.BLANK
+					StringPool.BLANK, StringPool.BLANK
 				});
 		}
 

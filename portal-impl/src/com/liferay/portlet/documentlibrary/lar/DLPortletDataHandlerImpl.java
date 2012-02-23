@@ -508,8 +508,7 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 	public PortletDataHandlerControl[] getExportMetadataControls() {
 		return new PortletDataHandlerControl[] {
 			new PortletDataHandlerBoolean(
-				_NAMESPACE, "folders-and-documents", true,
-				_metadataControls)
+				_NAMESPACE, "folders-and-documents", true, _metadataControls)
 		};
 	}
 

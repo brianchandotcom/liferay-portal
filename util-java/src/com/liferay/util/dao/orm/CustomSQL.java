@@ -394,8 +394,8 @@ public class CustomSQL {
 				sql,
 				new String[] {
 					"Date >= ? AND ? IS NOT NULL",
-					"Date <= ? AND ? IS NOT NULL",
-					"Date >= ? OR ? IS NULL", "Date <= ? OR ? IS NULL"
+					"Date <= ? AND ? IS NOT NULL", "Date >= ? OR ? IS NULL",
+					"Date <= ? OR ? IS NULL"
 				},
 				new String[] {
 					"Date >= ? AND CAST(? AS TIMESTAMP) IS NOT NULL",

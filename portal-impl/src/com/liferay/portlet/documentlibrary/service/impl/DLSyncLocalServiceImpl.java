@@ -44,8 +44,8 @@ public class DLSyncLocalServiceImpl extends DLSyncLocalServiceBaseImpl {
 
 	public DLSync addSync(
 			long fileId, String fileUuid, long companyId, long repositoryId,
-			long parentFolderId, String name, String description,
-			String type, String version)
+			long parentFolderId, String name, String description, String type,
+			String version)
 		throws SystemException {
 
 		Date now = new Date();

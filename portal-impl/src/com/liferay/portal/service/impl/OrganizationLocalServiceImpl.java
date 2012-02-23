@@ -1160,9 +1160,8 @@ public class OrganizationLocalServiceImpl
 	public List<Organization> search(
 			long companyId, long parentOrganizationId, String name, String type,
 			String street, String city, String zip, Long regionId,
-			Long countryId,
-			LinkedHashMap<String, Object> params, boolean andOperator,
-			int start, int end)
+			Long countryId, LinkedHashMap<String, Object> params,
+			boolean andOperator, int start, int end)
 		throws SystemException {
 
 		return search(

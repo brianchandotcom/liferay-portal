@@ -348,9 +348,8 @@ public class OrganizationFinderImpl
 	public List<Organization> findByKeywords(
 			long companyId, long parentOrganizationId,
 			String parentOrganizationIdComparator, String keywords, String type,
-			Long regionId, Long countryId,
-			LinkedHashMap<String, Object> params, int start, int end,
-			OrderByComparator obc)
+			Long regionId, Long countryId, LinkedHashMap<String, Object> params,
+			int start, int end, OrderByComparator obc)
 		throws SystemException {
 
 		String[] names = null;

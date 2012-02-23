@@ -108,10 +108,8 @@ public class RecurrenceDailyByDayTest extends RecurrenceTestCase {
 			dtStart, duration, Recurrence.DAILY);
 
 		DayAndPosition[] days = {
-			new DayAndPosition(MONDAY, 0),
-			new DayAndPosition(TUESDAY, 0),
-			new DayAndPosition(WEDNESDAY, 0),
-			new DayAndPosition(THURSDAY, 0),
+			new DayAndPosition(MONDAY, 0), new DayAndPosition(TUESDAY, 0),
+			new DayAndPosition(WEDNESDAY, 0), new DayAndPosition(THURSDAY, 0),
 			new DayAndPosition(FRIDAY, 0)};
 
 		recurrence.setByDay(days);

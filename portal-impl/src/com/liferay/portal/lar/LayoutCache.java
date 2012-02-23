@@ -106,8 +106,8 @@ public class LayoutCache {
 
 			if (entityName.equals("user-group")) {
 				List<UserGroup> userGroups = UserGroupLocalServiceUtil.search(
-					companyId, null, null, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null);
+					companyId, null, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null);
 
 				for (int i = 0; i < userGroups.size(); i++) {
 					UserGroup userGroup = userGroups.get(i);

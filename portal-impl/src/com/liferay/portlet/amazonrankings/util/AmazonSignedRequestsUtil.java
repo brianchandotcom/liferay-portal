@@ -104,8 +104,7 @@ public class AmazonSignedRequestsUtil {
 		string = URLEncoder.encode(string, StringPool.UTF_8);
 
 		string = StringUtil.replace(
-			string,
-			new String[] {StringPool.ASTERISK, StringPool.PLUS, "%7E"},
+			string, new String[] {StringPool.ASTERISK, StringPool.PLUS, "%7E"},
 			new String[] {"%2A", "%2B", "~"});
 
 		return string;

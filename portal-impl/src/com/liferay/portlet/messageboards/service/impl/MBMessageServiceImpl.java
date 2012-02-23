@@ -706,9 +706,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 				value = StringUtil.replace(
 					value,
 					new String[] {
-						"@theme_images_path@",
-						"href=\"/",
-						"src=\"/"
+						"@theme_images_path@", "href=\"/", "src=\"/"
 					},
 					new String[] {
 						themeDisplay.getURLPortal() +

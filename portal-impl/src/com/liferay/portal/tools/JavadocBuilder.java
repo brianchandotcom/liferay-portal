@@ -304,8 +304,7 @@ public class JavadocBuilder {
 		}
 
 		cdata = StringUtil.replace(
-			cdata,
-			new String[] {"\n", "<p>", "</p>"},
+			cdata, new String[] {"\n", "<p>", "</p>"},
 			new String[] {" ", " <p> ", " </p> "});
 
 		while (cdata.contains("  ")) {

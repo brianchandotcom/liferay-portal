@@ -611,8 +611,8 @@ public class ResourceBlockLocalServiceImpl
 		throws PortalException, SystemException {
 
 		updateGroupScopePermissions(
-			companyId, groupId, name, roleId,
-			getActionIds(name, actionIds), ResourceBlockConstants.OPERATOR_SET);
+			companyId, groupId, name, roleId, getActionIds(name, actionIds),
+			ResourceBlockConstants.OPERATOR_SET);
 	}
 
 	public void setGroupScopePermissions(

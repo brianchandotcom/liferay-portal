@@ -19,28 +19,18 @@
 	<td>Notification Count</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>clickAt</td>
 	<td>//span[@class='notification-count']</td>
-	<td>1</td>
+	<td>Notification Count</td>
 </tr>
 <tr>
-	<td>mouseOver</td>
-	<td>//span[@class='notification-count']</td>
-	<td>1</td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//div[contains(@class, 'user-notification-events-container')]</td>
-	<td>Notifications Menu</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//div[contains(@class, 'user-notification-events-container')]</td>
-	<td>Notifications Menu</td>
+	<td>waitForVisible</td>
+	<td>//div[@class='title']</td>
+	<td>Social01 would like to add you as a connection.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[contains(@class, 'user-notification-event-content')]/div[2]/div/span</td>
+	<td>//div[@class='title']</td>
 	<td>Social01 would like to add you as a connection.</td>
 </tr>
 <tr>
@@ -54,14 +44,19 @@
 	<td>Ignore</td>
 </tr>
 <tr>
-	<td>waitForNotText</td>
+	<td>waitForVisible</td>
 	<td>//span[@class='notification-count']</td>
-	<td>1</td>
+	<td>Notification Count</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>clickAt</td>
 	<td>//span[@class='notification-count']</td>
-	<td>0</td>
+	<td>Notification Count</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Social01 would like to add you as a connection.</td>
+	<td></td>
 </tr>
 </tbody></table>
 </body>

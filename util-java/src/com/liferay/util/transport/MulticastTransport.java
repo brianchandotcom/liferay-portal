@@ -104,12 +104,16 @@ public class MulticastTransport extends Thread implements Transport {
 		}
 	}
 
-	public synchronized void sendMessage(String msg) throws IOException {
-		_outboundPacket.setData(msg.getBytes());
+	public synchronized void sendMessage(byte[] bytes) throws IOException {
+		_outboundPacket.setData(bytes);
 		_outboundPacket.setAddress(_address);
 		_outboundPacket.setPort(_port);
 
 		_socket.send(_outboundPacket);
+	}
+
+	public synchronized void sendMessage(String msg) throws IOException {
+		sendMessage(msg.getBytes());
 	}
 
 	private static Log _log = LogFactory.getLog(MulticastTransport.class);

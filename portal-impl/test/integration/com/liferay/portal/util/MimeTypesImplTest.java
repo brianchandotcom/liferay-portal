@@ -187,9 +187,9 @@ public class MimeTypesImplTest extends BaseTestCase {
 	}
 
 	protected InputStream getInputStream(String fileName) throws Exception {
-		return new FileInputStream(
-			"portal-impl/test/com/liferay/portal/util/dependencies/" +
-				fileName);
+		Class<?> clazz = getClass();
+
+		return clazz.getResourceAsStream("dependencies/" + fileName);
 	}
 
 }

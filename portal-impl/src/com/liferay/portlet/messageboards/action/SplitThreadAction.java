@@ -161,8 +161,7 @@ public class SplitThreadAction extends PortletAction {
 					message.getMessageId();
 
 			body = StringUtil.replace(
-				body,
-				new String[] {"${newThreadURL}", "[url=]"},
+				body, new String[] {"${newThreadURL}", "[url=]"},
 				new String[] {newThreadURL, "[url=" + newThreadURL + "]"});
 
 			serviceContext.setAddGroupPermissions(true);

@@ -471,8 +471,7 @@ public class JournalArticleLocalServiceImpl
 
 		if (content.indexOf("\\n") != -1) {
 			content = StringUtil.replace(
-				content,
-				new String[] {"\\n", "\\r"},
+				content, new String[] {"\\n", "\\r"},
 				new String[] {"\n", "\r"});
 
 			article.setContent(content);

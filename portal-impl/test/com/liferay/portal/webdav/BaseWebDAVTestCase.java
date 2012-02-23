@@ -104,8 +104,7 @@ public class BaseWebDAVTestCase extends TestCase {
 						stackTraceElement.getClassName(), CharPool.PERIOD);
 
 					testName = StringUtil.replace(
-						testName,
-						new String[] {"WebDAV", "Test"},
+						testName, new String[] {"WebDAV", "Test"},
 						new String[] {"", ""});
 
 					headers.put(

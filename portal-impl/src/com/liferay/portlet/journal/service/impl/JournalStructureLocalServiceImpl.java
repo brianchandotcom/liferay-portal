@@ -193,9 +193,7 @@ public class JournalStructureLocalServiceImpl
 
 		if ((xsd != null) && (xsd.indexOf("\\n") != -1)) {
 			xsd = StringUtil.replace(
-				xsd,
-				new String[] {"\\n", "\\r"},
-				new String[] {"\n", "\r"});
+				xsd, new String[] {"\\n", "\\r"}, new String[] {"\n", "\r"});
 
 			structure.setXsd(xsd);
 

@@ -438,8 +438,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 				value = StringUtil.replace(
 					entry.getContent(),
 					new String[] {
-						"href=\"/",
-						"src=\"/"
+						"href=\"/", "src=\"/"
 					},
 					new String[] {
 						"href=\"" + themeDisplay.getURLPortal() + "/",

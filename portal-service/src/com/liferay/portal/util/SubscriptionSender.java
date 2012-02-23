@@ -527,8 +527,7 @@ public class SubscriptionSender implements Serializable {
 		content = StringUtil.replace(
 			content,
 			new String[] {
-				"href=\"/",
-				"src=\"/"
+				"href=\"/", "src=\"/"
 			},
 			new String[] {
 				"href=\"" + getPortalURL(company) + "/",

@@ -139,8 +139,7 @@ public class MinifierFilter extends BasePortalFilter {
 				importContent = StringUtil.replace(
 					importContent,
 					new String[] {
-						"url('" + relativePath,
-						"url(\"" + relativePath,
+						"url('" + relativePath, "url(\"" + relativePath,
 						"url(" + relativePath
 					},
 					new String[] {
@@ -478,8 +477,7 @@ public class MinifierFilter extends BasePortalFilter {
 
 	protected String sterilizeQueryString(String queryString) {
 		return StringUtil.replace(
-			queryString,
-			new String[] {StringPool.SLASH, StringPool.BACK_SLASH},
+			queryString, new String[] {StringPool.SLASH, StringPool.BACK_SLASH},
 			new String[] {StringPool.UNDERLINE, StringPool.UNDERLINE});
 	}
 

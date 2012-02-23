@@ -99,8 +99,7 @@ public class HttpImplTest extends PowerMockito {
 	@Test
 	public void encodeSingleCharacterEncodedPath() {
 		Assert.assertEquals(
-			"http%3A//foo%23anchor",
-			_httpImpl.encodePath("http://foo#anchor"));
+			"http%3A//foo%23anchor", _httpImpl.encodePath("http://foo#anchor"));
 	}
 
 	private void _addParameter(

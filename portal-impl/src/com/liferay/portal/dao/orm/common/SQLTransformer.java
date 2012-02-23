@@ -183,8 +183,7 @@ public class SQLTransformer {
 
 	private String _replaceBoolean(String newSQL) {
 		return StringUtil.replace(
-			newSQL,
-			new String[] {"[$FALSE$]", "[$TRUE$]"},
+			newSQL, new String[] {"[$FALSE$]", "[$TRUE$]"},
 			new String[] {_db.getTemplateFalse(), _db.getTemplateTrue()});
 	}
 

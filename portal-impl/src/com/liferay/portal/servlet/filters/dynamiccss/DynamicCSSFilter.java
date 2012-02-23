@@ -224,8 +224,7 @@ public class DynamicCSSFilter extends BasePortalFilter {
 
 	protected String sterilizeQueryString(String queryString) {
 		return StringUtil.replace(
-			queryString,
-			new String[] {StringPool.SLASH, StringPool.BACK_SLASH},
+			queryString, new String[] {StringPool.SLASH, StringPool.BACK_SLASH},
 			new String[] {StringPool.UNDERLINE, StringPool.UNDERLINE});
 	}
 

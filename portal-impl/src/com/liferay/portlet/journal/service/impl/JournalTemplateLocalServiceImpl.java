@@ -219,9 +219,7 @@ public class JournalTemplateLocalServiceImpl
 
 		if ((xsl != null) && (xsl.indexOf("\\n") != -1)) {
 			xsl = StringUtil.replace(
-				xsl,
-				new String[] {"\\n", "\\r"},
-				new String[] {"\n", "\r"});
+				xsl, new String[] {"\\n", "\\r"}, new String[] {"\n", "\r"});
 
 			template.setXsl(xsl);
 

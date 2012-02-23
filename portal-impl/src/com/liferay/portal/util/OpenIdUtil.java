@@ -50,8 +50,7 @@ public class OpenIdUtil {
 		}
 
 		result = StringUtil.replace(
-			result,
-			new String[] {StringPool.SLASH, StringPool.UNDERLINE},
+			result, new String[] {StringPool.SLASH, StringPool.UNDERLINE},
 			new String[] {StringPool.PERIOD, StringPool.PERIOD});
 
 		return result;

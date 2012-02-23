@@ -693,13 +693,16 @@ body.portal-popup:after, body.portal-popup:before {
 	background: #FFF;
 }
 
+.portlet-document-library .portlet-content {
+	padding: 12px 0;
+}
+
 .portlet-description {
 	background-color: #E6F5F0;
-	border: #8DD4AE solid;
-	border-width: 1px 0;
-	padding: 10px 5px;
-	padding-left: 25px;
-	position: relative;
+	border-color: #8DD4AE;
+	font-weight: normal;
+	padding-bottom: 10px;
+	padding-top: 10px;
 
 	.warn {
 		display: block;
@@ -709,52 +712,6 @@ body.portal-popup:after, body.portal-popup:before {
 			color: #B00;
 		}
 	}
-}
-
-.portlet-description .hide-notices-control {
-	left: 3px;
-	margin: 0;
-	margin-top: -8px;
-	position: absolute;
-	top: 50%;
-	z-index: 10;
-}
-
-.portlet-description .hide-notices-control .aui-icon {
-	background-position: 0 0;
-	cursor: pointer;
-	display: inline-block;
-}
-
-.portlet-description .aui-icon-help {
-	background-image: url(../images/portlet/help.png);
-}
-
-.portlet-description .aui-icon-closethick {
-	background-color: #333;
-	background-image: url(../images/portlet/close_borderless.png);
-}
-
-.portlet-description .hide-all-notices {
-	color: #FFF;
-	display: inline-block;
-	font-size: 0.8em;
-	margin-left: 2px;
-	padding: 1px 10px;
-	text-shadow: 1px 1px 0 #000;
-	vertical-align: top;
-}
-
-.portlet-description .hide-all-notices a {
-	color: #FFF;
-}
-
-.hide-notices-hover .hide-all-notices {
-	background-color: #333;
-}
-
-.portlet-document-library .portlet-content {
-	padding: 12px 0;
 }
 
 /*----- Extras -----*/
@@ -773,10 +730,6 @@ input[type="text"], input[type="password"], select, textarea, .textarea, #breadc
 
 .export-dialog-tree .lfr-panel.lfr-extended.lfr-collapsible .lfr-panel-titlebar {
 	@include border-radius(4px 4px 0 0);
-}
-
-.portlet-description .aui-icon, .hide-notices-hover .hide-all-notices, .portlet-msg-info.dismissible .hide-notices-control {
-	@include border-radius(10px);
 }
 
 #breadcrumbs, .form-navigation, .lfr-panel.lfr-extended, .portlet-enterprise-admin .form-navigation, .lfr-asset-column-actions-content, .lfr-ctrl-panel-content .aui-column-content-center, .taglib-search-toggle {

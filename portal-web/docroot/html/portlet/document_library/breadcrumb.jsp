@@ -30,6 +30,6 @@ if (showSyncMessage || !PropsValues.DL_SHOW_LIFERAY_SYNC_MESSAGE) {
 }
 %>
 
-<img alt="<%= LanguageUtil.get(pageContext, "show-liferay-sync-tip") %>" class="<%= cssClass %>" id="<portlet:namespace />showSyncMessageIcon" src="<%= themeDisplay.getPathThemeImages() + "/document_library/sync.png" %>" title="<%= LanguageUtil.get(pageContext, "liferay-sync") %>" />
+<img alt="<%= LanguageUtil.get(pageContext, "show-liferay-sync-tip") %>" class="<%= cssClass %>" id="<portlet:namespace />showSyncMessageIcon" src="<%= themeDisplay.getPathThemeImages() + "/common/liferay_sync.png" %>" title="<%= LanguageUtil.get(pageContext, "liferay-sync") %>" />
 
 <liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showCurrentPortlet="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showParentGroups="<%= false %>" />

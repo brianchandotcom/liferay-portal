@@ -169,11 +169,11 @@ AUI.add(
 						instance._displayStyle = instance.ns('displayStyle');
 						instance._folderId = instance.ns('folderId');
 
-						var liferaySyncMessage = new Liferay.PersistentDismissibleMessage(
+						var liferaySyncMessage = new Liferay.Message(
 							{
-								contentBox: instance.byId('syncNotificationContainer'),
-								iconDismissSelector: '.hide-notices-control',
-								sessionDismissMessage: instance.NS + 'show-sync-message',
+								boundingBox: instance.byId('syncNotification'),
+								contentBox: instance.byId('syncNotificationContent'),
+								id: instance.NS + 'show-sync-message',
 								trigger: A.one('#' + instance.ns('showSyncMessageIcon')),
 								visible: instance.byId('syncNotification').test(':visible')
 							}
@@ -1512,6 +1512,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-paginator', 'dd-constrain', 'dd-delegate', 'dd-drag', 'dd-drop', 'dd-proxy', 'liferay-history-manager', 'liferay-list-view', 'liferay-persistent-dismissible-message', 'liferay-portlet-base']
+		requires: ['aui-paginator', 'dd-constrain', 'dd-delegate', 'dd-drag', 'dd-drop', 'dd-proxy', 'liferay-history-manager', 'liferay-list-view', 'liferay-message', 'liferay-portlet-base']
 	}
 );

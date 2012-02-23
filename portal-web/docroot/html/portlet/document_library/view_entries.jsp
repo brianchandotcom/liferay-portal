@@ -218,12 +218,8 @@ if (!showSyncMessage || !PropsValues.DL_SHOW_LIFERAY_SYNC_MESSAGE) {
 		</div>
 	</c:when>
 	<c:otherwise>
-		<div class="<%= cssClass %>" id="<portlet:namespace />syncNotificationContainer">
-			<div class="dismissible portlet-msg-info sync-notification" id="<portlet:namespace />syncNotification">
-				<span class="hide-notices-control">
-					<img alt="<%= LanguageUtil.get(pageContext, "hide-liferay-sync-tip") %>" class="aui-icon" src="<%= themeDisplay.getPathThemeImages() + "/portlet/close_borderless.png" %>" />
-				</span>
-
+		<div class="<%= cssClass %>" id="<portlet:namespace />syncNotification">
+			<div class="lfr-message-info sync-notification" id="<portlet:namespace />syncNotificationContent">
 				<a href="http://www.liferay.com/products/liferay-sync" target="_blank">
 					<liferay-ui:message key="access-these-files-offline-using-liferay-sync" />
 				</a>

@@ -2,7 +2,7 @@ Liferay.Util.portletTitleEdit = function() {
 };
 
 if (!themeDisplay.isStatePopUp()) {
-	AUI().ready('aui-io-request', 'aui-live-search', 'aui-overlay-context-panel', 'event-mouseenter', 'liferay-persistent-dismissible-message', 'node-focusmanager', 'transition',
+	AUI().ready('aui-io-request', 'aui-live-search', 'aui-overlay-context-panel', 'event-mouseenter', 'liferay-message', 'node-focusmanager', 'transition',
 		function(A) {
 			var body = A.getBody();
 
@@ -238,12 +238,16 @@ if (!themeDisplay.isStatePopUp()) {
 					searchPanelInput.attr('autocomplete', 'off');
 
 					if (portletInformationEl) {
-						instance._helpBox = new Liferay.PersistentDismissibleMessage(
+						instance._helpBox = new Liferay.Message(
 							{
 								contentBox: portletInformationEl,
-								sessionDismissAllMessage: 'enable-portlet-descriptions',
-								sessionDismissMessage: sessionKey,
+								id: sessionKey,
+								persistenceCategory: 'enable-portlet-descriptions',
+								strings: {
+									dismissAll: Liferay.Language.get('or-disable-for-all-portlets')
+								},
 								trigger: portletInformationIcon,
+								type: 'help',
 								visible: portletInformationEl.test(':visible')
 							}
 						).render();

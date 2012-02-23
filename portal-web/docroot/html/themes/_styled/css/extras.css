@@ -71,6 +71,10 @@ body > .lfr-menu-list, body > .lfr-menu-list ul, .lfr-actions, .aui-dialog-conte
 	@include border-top-right-radius(0);
 }
 
+.lfr-message .lfr-message-control {
+	@include border-radius(10px);
+}
+
 .lfr-token, .layout-customizable-controls, .lfr-translation-manager-delete-translation {
 	@include border-radius(8px);
 }

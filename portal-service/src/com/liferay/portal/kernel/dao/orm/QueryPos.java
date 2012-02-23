@@ -67,6 +67,22 @@ public class QueryPos {
 		}
 	}
 
+	public void add(Date value) {
+		add(CalendarUtil.getTimestamp(value));
+	}
+
+	public void add(Date[] values) {
+		add(values, _DEFAULT_ARRAY_COUNT);
+	}
+
+	public void add(Date[] values, int count) {
+		for (int i = 0; i < values.length; i++) {
+			for (int j = 0; j < count; j++) {
+				add(CalendarUtil.getTimestamp(values[i]));
+			}
+		}
+	}
+
 	public void add(double value) {
 		_query.setDouble(_pos++, value);
 	}

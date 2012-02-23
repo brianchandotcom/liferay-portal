@@ -14,44 +14,26 @@
 
 package com.liferay.portlet;
 
-import javax.portlet.EventPortlet;
 import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
-import javax.portlet.ResourceServingPortlet;
 
 /**
- * @author Michael Young
+ * @author Shuyang Zhou
  */
-public interface InvokerPortlet
-	extends EventPortlet, Portlet, ResourceServingPortlet {
+public interface InvokerPortletFactory {
 
-	public static final String INIT_INVOKER_PORTLET_NAME =
-		"com.liferay.portal.invokerPortletName";
+	public InvokerPortlet create(
+			com.liferay.portal.model.Portlet portletModel, Portlet portlet,
+			PortletConfig portletConfig, PortletContext portletContext,
+			boolean checkAuthToken, boolean facesPortlet, boolean strutsPortlet,
+			boolean strutsBridgePortlet)
+		throws PortletException;
 
-	public Integer getExpCache();
-
-	public Portlet getPortlet();
-
-	public ClassLoader getPortletClassLoader();
-
-	public PortletConfig getPortletConfig();
-
-	public PortletContext getPortletContext();
-
-	public Portlet getPortletInstance();
-
-	public boolean isCheckAuthToken();
-
-	public boolean isDestroyable();
-
-	public boolean isFacesPortlet();
-
-	public boolean isStrutsBridgePortlet();
-
-	public boolean isStrutsPortlet();
-
-	public void setPortletFilters() throws PortletException;
+	public InvokerPortlet create(
+			com.liferay.portal.model.Portlet portletModel, Portlet portlet,
+			PortletContext portletContext)
+		throws PortletException;
 
 }

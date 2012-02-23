@@ -155,9 +155,8 @@
 		<property name="destinationName" value="liferay/monitoring" />
 		<property name="messageSender" ref="com.liferay.portal.kernel.messaging.sender.MessageSender" />
 	</bean>
-	<bean id="com.liferay.portlet.MonitoringPortlet" class="com.liferay.portlet.MonitoringPortlet">
-		<property name="invokerPortlet" ref="com.liferay.portlet.InvokerPortletImpl" />
-		<property name="singleDestinationMessageSender" ref="messageSender.monitoring" />
+	<bean id="com.liferay.portlet.MonitoringPortletFactoryImpl" class="com.liferay.portlet.MonitoringPortletFactoryImpl">
+		<constructor-arg ref="messageSender.monitoring" />
 	</bean>
 	<bean id="com.liferay.portlet.PortletInstanceFactoryUtil" class="com.liferay.portlet.PortletInstanceFactoryUtil">
 		<property name="portletInstanceFactory">

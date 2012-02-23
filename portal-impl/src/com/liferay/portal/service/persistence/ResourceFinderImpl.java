@@ -121,8 +121,8 @@ public class ResourceFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			qPos.add(codeId);
 			qPos.add(actionId);
+			qPos.add(codeId);
 
 			return q.list(true);
 		}

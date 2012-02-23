@@ -50,6 +50,7 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import jodd.util.Wildcard;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 
@@ -77,20 +78,14 @@ public class JSONServiceAction extends JSONAction {
 		throws PrincipalException {
 
 		if (publicMethods.length > 0) {
-			if (publicMethods[0] != null && publicMethods[0].equals("ALL")) {
+			if (Wildcard.matchOne(methodName, publicMethods) != -1) {
 				return;
-			}
-
-			for (String publicMethod : publicMethods) {
-				if (methodName.startsWith(publicMethod)) {
-					return;
-				}
 			}
 		}
 
 		String remoteUser = request.getRemoteUser();
 		if (remoteUser == null) {
-			throw new PrincipalException();
+			throw new PrincipalException("Public access denied.");
 		}
 	}
 

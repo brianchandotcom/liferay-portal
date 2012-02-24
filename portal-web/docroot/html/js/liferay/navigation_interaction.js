@@ -11,6 +11,10 @@ AUI.add(
 
 		var NAME = 'liferaynavigationinteraction';
 
+		var hideMenu = function() {
+			Liferay.fire('hideNavigationMenu', MAP_HOVER);
+		};
+
 		var NavigationInteraction = A.Component.create(
 			{
 				EXTENDS: A.Plugin.Base,
@@ -73,18 +77,15 @@ AUI.add(
 
 						var focusManager = instance._focusManager;
 
-						var hideMenu = function() {
-							Liferay.fire('hideNavigationMenu', MAP_HOVER);
-						};
-
 						if (focusManager.get(ACTIVE_DESCENDANT)) {
 							focusManager.set(ACTIVE_DESCENDANT, 0);
+
 							focusManager.blur();
 
 							hideMenu();
 						}
 						else {
-							A.later(0, instance, hideMenu);
+							setTimeout(hideMenu, 0);
 						}
 					},
 

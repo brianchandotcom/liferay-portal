@@ -31,6 +31,7 @@ import com.liferay.portal.verify.VerifyProcessUtil;
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
  * @author Raymond Augé
+ * @author Mate Thurzo
  */
 public class StartupHelper {
 
@@ -74,9 +75,50 @@ public class StartupHelper {
 		}
 	}
 
-	public void upgradeProcess(int buildNumber) throws UpgradeException {
-		String[] upgradeProcessClassNames = PropsUtil.getArray(
-			PropsKeys.UPGRADE_PROCESSES);
+	public void upgradeProcess(int buildNumber, int newBuildNumber)
+		throws UpgradeException {
+
+		String[] upgradeProcessClassNames = null;
+
+		if (buildNumber == newBuildNumber) {
+			upgradeProcessClassNames = new String[] {};
+		}
+		else {
+			if (PropsUtil.get(PropsKeys.UPGRADE_PROCESSES).equals("auto")) {
+
+				String upgradePropertyKey =
+					"upgrade.processes." + buildNumber + ".to." +
+					newBuildNumber;
+
+				if (PropsUtil.getProperties().get(upgradePropertyKey) != null) {
+					upgradeProcessClassNames = PropsUtil.getArray(
+						upgradePropertyKey);
+				}
+
+				if (upgradeProcessClassNames == null) {
+					if (_log.isErrorEnabled()) {
+						_log.error("Cannot find appropriate upgrade path: " +
+							buildNumber + " to " + newBuildNumber);
+					}
+
+					throw new UpgradeException();
+				}
+
+				if (upgradeProcessClassNames.length == 0) {
+					if (_log.isInfoEnabled()) {
+						_log.info("Empty upgrade path found: " + buildNumber +
+							" to " + newBuildNumber);
+
+						_upgraded = true;
+						return;
+					}
+				}
+			}
+			else {
+				upgradeProcessClassNames = PropsUtil.getArray(
+					PropsKeys.UPGRADE_PROCESSES);
+			}
+		}
 
 		_upgraded = UpgradeProcessUtil.upgradeProcess(
 			buildNumber, upgradeProcessClassNames,

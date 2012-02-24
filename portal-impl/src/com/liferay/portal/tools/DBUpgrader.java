@@ -20,9 +20,11 @@ import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Time;
@@ -37,9 +39,13 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import org.apache.commons.lang.time.StopWatch;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
 /**
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
+ * @author Mate Thurzo
  */
 public class DBUpgrader {
 
@@ -85,7 +91,11 @@ public class DBUpgrader {
 
 		int buildNumber = ReleaseLocalServiceUtil.getBuildNumberOrCreate();
 
-		if (buildNumber > ReleaseInfo.getBuildNumber()) {
+		if (buildNumber == ReleaseInfo.getDefaultBuildNumber()) {
+			throw new UpgradeException("Wrong build number detected," +
+				" aborting database upgrade.");
+		}
+		else if (buildNumber > ReleaseInfo.getBuildNumber()) {
 			StringBundler sb = new StringBundler(6);
 
 			sb.append("Attempting to deploy an older Liferay Portal version. ");
@@ -110,13 +120,39 @@ public class DBUpgrader {
 		CustomSQLUtil.reloadCustomSQL();
 		SQLTransformer.reloadSQLTransformer();
 
+		// Defaulting build number to default for the upgrade
+
+		try {
+			if (buildNumber != ReleaseInfo.getBuildNumber()) {
+				_updateBuildNumber(buildNumber,
+					ReleaseInfo.getDefaultBuildNumber());
+			}
+		}
+		catch(Exception e) {
+			throw new UpgradeException(e);
+		}
+
 		// Upgrade build
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Update build " + buildNumber);
 		}
 
-		StartupHelperUtil.upgradeProcess(buildNumber);
+		try {
+			StartupHelperUtil.upgradeProcess(
+				buildNumber, ReleaseInfo.getBuildNumber());
+
+			if (buildNumber != ReleaseInfo.getBuildNumber()) {
+				_updateBuildNumber(buildNumber, ReleaseInfo.getBuildNumber());
+			}
+		}
+		catch (Exception e) {
+			if (!(e instanceof UpgradeException)) {
+				throw new UpgradeException(e);
+			}
+
+			throw e;
+		}
 
 		// Update company key
 
@@ -224,6 +260,41 @@ public class DBUpgrader {
 		DB db = DBFactoryUtil.getDB();
 
 		db.runSQL("update Company set key_ = null");
+	}
+
+	private static void _updateBuildNumber(int buildNumber, int newBuildNumber)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = DataAccess.getConnection();
+
+			StringBundler sql = new StringBundler();
+
+			sql.append("update Release_ set buildNumber = ?");
+
+			if (buildNumber > ReleaseInfo.RELEASE_6_0_0_BUILD_NUMBER) {
+				sql.append(" where servletContextName = ?");
+			}
+			else {
+				sql.append(" and releaseId = 1");
+			}
+
+			ps = con.prepareStatement(sql.toString());
+
+			ps.setInt(1, newBuildNumber);
+
+			if (buildNumber > ReleaseInfo.RELEASE_6_0_0_BUILD_NUMBER) {
+				ps.setString(2, ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
+			}
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
 	}
 
 	private static final String _DELETE_TEMP_IMAGES_1 =

@@ -153,8 +153,8 @@ public class UnsyncCharArrayReaderTest extends TestCase {
 		assertEquals(0, unsyncCharArrayReader.index);
 		assertEquals(0, unsyncCharArrayReader.markIndex);
 
-		unsyncCharArrayReader = new UnsyncCharArrayReader(_BUFFER, _SIZE / 2,
-			_SIZE /2);
+		unsyncCharArrayReader = new UnsyncCharArrayReader(
+			_BUFFER, _SIZE / 2, _SIZE / 2);
 
 		assertEquals(_BUFFER, unsyncCharArrayReader.buffer);
 		assertEquals(_SIZE, unsyncCharArrayReader.capacity);

@@ -215,8 +215,8 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			while (itr.hasNext() && (pages.size() < max)) {
 				WikiPage page = itr.next();
 
-				if (WikiPagePermission.contains(getPermissionChecker(), page,
-						ActionKeys.VIEW)) {
+				if (WikiPagePermission.contains(
+						getPermissionChecker(), page, ActionKeys.VIEW)) {
 
 					pages.add(page);
 				}

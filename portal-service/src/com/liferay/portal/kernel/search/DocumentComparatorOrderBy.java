@@ -19,8 +19,8 @@ package com.liferay.portal.kernel.search;
  */
 public class DocumentComparatorOrderBy {
 
-	public DocumentComparatorOrderBy(String name, boolean asc,
-									 boolean caseSensitive) {
+	public DocumentComparatorOrderBy(
+		String name, boolean asc, boolean caseSensitive) {
 
 		_name = name;
 		_asc = asc;

@@ -1143,9 +1143,11 @@ public class GroupFinderImpl
 				CustomSQLUtil.get(JOIN_BY_ROLE_RESOURCE_TYPE_PERMISSIONS)));
 		joinMap.put("site", _removeWhere(CustomSQLUtil.get(JOIN_BY_SITE)));
 		joinMap.put("type", _removeWhere(CustomSQLUtil.get(JOIN_BY_TYPE)));
-		joinMap.put("userGroupRole",
+		joinMap.put(
+			"userGroupRole",
 			_removeWhere(CustomSQLUtil.get(JOIN_BY_USER_GROUP_ROLE)));
-		joinMap.put("usersGroups",
+		joinMap.put(
+			"usersGroups",
 			_removeWhere(CustomSQLUtil.get(JOIN_BY_USERS_GROUPS)));
 
 		_joinMap = joinMap;

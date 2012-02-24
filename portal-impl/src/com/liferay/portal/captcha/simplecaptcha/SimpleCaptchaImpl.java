@@ -284,8 +284,8 @@ public class SimpleCaptchaImpl implements Captcha {
 			Integer count = (Integer)session.getAttribute(
 				WebKeys.CAPTCHA_COUNT);
 
-			session.setAttribute(WebKeys.CAPTCHA_COUNT,
-				incrementCounter(count));
+			session.setAttribute(
+				WebKeys.CAPTCHA_COUNT, incrementCounter(count));
 		}
 	}
 
@@ -309,8 +309,8 @@ public class SimpleCaptchaImpl implements Captcha {
 			Integer count = (Integer)portletSession.getAttribute(
 				WebKeys.CAPTCHA_COUNT);
 
-			portletSession.setAttribute(WebKeys.CAPTCHA_COUNT,
-				incrementCounter(count));
+			portletSession.setAttribute(
+				WebKeys.CAPTCHA_COUNT, incrementCounter(count));
 		}
 	}
 

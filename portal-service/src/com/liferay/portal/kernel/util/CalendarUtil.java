@@ -299,9 +299,10 @@ public class CalendarUtil {
 		}
 	}
 
-	public static boolean isAfter(int month1, int day1, int year1, int hour1,
-		int minute1, int amPm1, int month2, int day2, int year2, int hour2,
-		int minute2, int amPm2, TimeZone timeZone, Locale locale) {
+	public static boolean isAfter(
+		int month1, int day1, int year1, int hour1, int minute1, int amPm1,
+		int month2, int day2, int year2, int hour2, int minute2, int amPm2,
+		TimeZone timeZone, Locale locale) {
 
 		Calendar cal1 = CalendarFactoryUtil.getCalendar(timeZone, locale);
 

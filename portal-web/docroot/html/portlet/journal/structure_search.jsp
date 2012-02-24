@@ -70,7 +70,7 @@ boolean showPermissionsButton = false;
 
 if (portletName.equals(PortletKeys.JOURNAL)) {
 	showAddStructureButton = JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_STRUCTURE);
-	showPermissionsButton = GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);
+	showPermissionsButton = JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);
 }
 %>
 

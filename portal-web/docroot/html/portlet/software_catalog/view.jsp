@@ -241,7 +241,7 @@ portletURL.setParameter("tabs1", tabs1);
 		}
 
 		boolean showAddProductEntryButton = SCPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_PRODUCT_ENTRY);
-		boolean showPermissionsButton = GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);
+		boolean showPermissionsButton = SCPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);
 		%>
 
 		<div>
@@ -531,7 +531,7 @@ portletURL.setParameter("tabs1", tabs1);
 
 		<%
 		boolean showAddFrameworkVersionButton = SCPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_FRAMEWORK_VERSION);
-		boolean showPermissionsButton = GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);
+		boolean showPermissionsButton = SCPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);
 		%>
 
 		<c:if test="<%= showAddFrameworkVersionButton || showPermissionsButton %>">

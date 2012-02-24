@@ -67,7 +67,7 @@ TemplateDisplayTerms displayTerms = (TemplateDisplayTerms)searchContainer.getDis
 
 <%
 boolean showAddTemplateButton = JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_TEMPLATE);
-boolean showPermissionsButton = GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);
+boolean showPermissionsButton = JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);
 %>
 
 <c:if test="<%= showAddTemplateButton || showPermissionsButton %>">

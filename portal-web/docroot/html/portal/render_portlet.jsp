@@ -770,6 +770,8 @@ if (portlet.isActive() && portlet.isReady() && access && supportsMimeType) {
 		if (themeDisplay.isFacebook() || themeDisplay.isStateExclusive()) {
 			renderRequestImpl.setAttribute(WebKeys.STRING_SERVLET_RESPONSE, stringResponse);
 		}
+
+		renderResponseImpl.transferHeaders(stringResponse);
 	}
 	catch (UnavailableException ue) {
 		portletException = true;

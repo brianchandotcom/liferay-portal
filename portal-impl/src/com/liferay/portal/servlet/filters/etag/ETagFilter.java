@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.servlet.ByteBufferServletResponse;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
+import com.liferay.util.servlet.filters.CacheResponseUtil;
 
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
@@ -56,6 +57,9 @@ public class ETagFilter extends BasePortalFilter {
 			ETagFilter.class, request, byteBufferResponse, filterChain);
 
 		if (!ETagUtil.processETag(request, response, byteBufferResponse)) {
+			CacheResponseUtil.setHeaders(
+				response, byteBufferResponse.getHeaders());
+
 			ServletResponseUtil.write(
 				response, byteBufferResponse.getByteBuffer());
 		}

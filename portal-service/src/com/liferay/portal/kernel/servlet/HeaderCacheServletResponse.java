@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
@@ -31,6 +32,30 @@ public class HeaderCacheServletResponse extends HttpServletResponseWrapper {
 
 	public HeaderCacheServletResponse(HttpServletResponse response) {
 		super(response);
+	}
+
+	@Override
+	public void addCookie(Cookie cookie) {
+		List<Header> values = _headers.get("cookies");
+
+		if (values == null) {
+			values = new ArrayList<Header>();
+
+			_headers.put("cookies", values);
+		}
+
+		Header header = new Header();
+
+		header.setType(Header.COOKIE_TYPE);
+		header.setCookieValue(cookie);
+
+		if (values.contains(header)) {
+			return;
+		}
+
+		values.add(header);
+
+		super.addCookie(cookie);
 	}
 
 	@Override
@@ -47,6 +72,10 @@ public class HeaderCacheServletResponse extends HttpServletResponseWrapper {
 
 		header.setType(Header.DATE_TYPE);
 		header.setDateValue(value);
+
+		if (values.contains(header)) {
+			return;
+		}
 
 		values.add(header);
 
@@ -70,6 +99,10 @@ public class HeaderCacheServletResponse extends HttpServletResponseWrapper {
 
 		values.add(header);
 
+		if (values.contains(header)) {
+			return;
+		}
+
 		if (name.equals(HttpHeaders.CONTENT_TYPE)) {
 			setContentType(value);
 		}
@@ -91,6 +124,10 @@ public class HeaderCacheServletResponse extends HttpServletResponseWrapper {
 
 		header.setType(Header.INTEGER_TYPE);
 		header.setIntValue(value);
+
+		if (values.contains(header)) {
+			return;
+		}
 
 		values.add(header);
 

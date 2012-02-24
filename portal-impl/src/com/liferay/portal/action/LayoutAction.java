@@ -414,7 +414,7 @@ public class LayoutAction extends Action {
 		requestDispatcher.include(request, pipingServletResponse);
 
 		if (contentType != null) {
-			pipingServletResponse.setContentType(contentType);
+			response.setContentType(contentType);
 		}
 
 		request.setAttribute(
@@ -957,6 +957,8 @@ public class LayoutAction extends Action {
 				if (access) {
 					invokerPortlet.serveResource(
 						resourceRequestImpl, resourceResponseImpl);
+
+					resourceResponseImpl.transferHeaders(response);
 				}
 			}
 			finally {

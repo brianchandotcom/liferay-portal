@@ -690,7 +690,7 @@ public class JavadocFormatter {
 			},
 			indent + " * ");
 
-		if (docletTags.length() > 0) {
+		if (Validator.isNotNull(docletTags)) {
 			if (_initializeMissingJavadocs || Validator.isNotNull(comment)) {
 				sb.append(" *\n");
 			}
@@ -843,7 +843,7 @@ public class JavadocFormatter {
 			new String[] {"version", "see", "since", "deprecated"},
 			indent + " * ");
 
-		if (docletTags.length() > 0) {
+		if (Validator.isNotNull(docletTags)) {
 			if (_initializeMissingJavadocs || Validator.isNotNull(comment)) {
 				sb.append(indent);
 				sb.append(" *\n");
@@ -897,7 +897,7 @@ public class JavadocFormatter {
 			},
 			indent + " * ");
 
-		if (docletTags.length() > 0) {
+		if (Validator.isNotNull(docletTags)) {
 			if (_initializeMissingJavadocs || Validator.isNotNull(comment)) {
 				sb.append(indent);
 				sb.append(" *\n");

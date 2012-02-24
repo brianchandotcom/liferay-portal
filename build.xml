@@ -1021,6 +1021,14 @@ Plugins: ${lp.plugins.dir}</echo>
 		<ant antfile="build-test.xml" target="test" inheritAll="false" />
 	</target>
 
+	<target name="test-integration">
+		<ant antfile="build-test.xml" target="test-integration" inheritAll="false" />
+	</target>
+
+	<target name="test-unit">
+		<ant antfile="build-test.xml" target="test-unit" inheritAll="false" />
+	</target>
+
 	<target name="update-plugins-to-svn-revision">
 		<loadfile property="svn.info.revision.valid" srcfile="svn-revision" />
 

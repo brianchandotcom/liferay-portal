@@ -86,8 +86,8 @@ public class LDAPSettingsUtil {
 		String postfix = LDAPSettingsUtil.getPropertyPostfix(ldapServerId);
 
 		Properties contactMappings = PropertiesUtil.load(
-			PrefsPropsUtil.getString(companyId,
-				PropsKeys.LDAP_CONTACT_MAPPINGS + postfix));
+			PrefsPropsUtil.getString(
+				companyId, PropsKeys.LDAP_CONTACT_MAPPINGS + postfix));
 
 		LogUtil.debug(_log, contactMappings);
 

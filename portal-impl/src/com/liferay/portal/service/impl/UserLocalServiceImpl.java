@@ -2306,8 +2306,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		params.put("socialRelation", new Long[] {userId});
 
-		return searchCount(user.getCompanyId(), null,
-			WorkflowConstants.STATUS_APPROVED, params);
+		return searchCount(
+			user.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
+			params);
 	}
 
 	/**
@@ -2333,8 +2334,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		params.put("socialRelationType", new Long[] {userId, new Long(type)});
 
-		return searchCount(user.getCompanyId(), null,
-			WorkflowConstants.STATUS_APPROVED, params);
+		return searchCount(
+			user.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
+			params);
 	}
 
 	/**
@@ -2357,8 +2359,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		params.put("socialMutualRelation", new Long[] {userId1, userId2});
 
-		return searchCount(user1.getCompanyId(), null,
-			WorkflowConstants.STATUS_APPROVED, params);
+		return searchCount(
+			user1.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
+			params);
 	}
 
 	/**
@@ -2387,8 +2390,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			"socialMutualRelationType",
 			new Long[] {userId1, new Long(type), userId2, new Long(type)});
 
-		return searchCount(user1.getCompanyId(), null,
-			WorkflowConstants.STATUS_APPROVED, params);
+		return searchCount(
+			user1.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
+			params);
 	}
 
 	/**

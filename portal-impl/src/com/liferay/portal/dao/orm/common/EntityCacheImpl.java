@@ -223,8 +223,8 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 		if (_localCacheAvailable) {
 			Map<Serializable, Object> localCache = _localCache.get();
 
-			Serializable localCacheKey = _encodeLocalCacheKey(clazz,
-				primaryKey);
+			Serializable localCacheKey = _encodeLocalCacheKey(
+				clazz, primaryKey);
 
 			localCache.put(localCacheKey, result);
 		}
@@ -256,8 +256,8 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 		if (_localCacheAvailable) {
 			Map<Serializable, Object> localCache = _localCache.get();
 
-			Serializable localCacheKey = _encodeLocalCacheKey(clazz,
-				primaryKey);
+			Serializable localCacheKey = _encodeLocalCacheKey(
+				clazz, primaryKey);
 
 			localCache.remove(localCacheKey);
 		}

@@ -28,9 +28,9 @@ import org.apache.myfaces.context.servlet.ServletFacesContextImpl;
  */
 public class MyFacesContextImpl extends ServletFacesContextImpl {
 
-	public MyFacesContextImpl(PortletContext portletContext,
-							  PortletRequest portletRequest,
-							  PortletResponse portletResponse) {
+	public MyFacesContextImpl(
+		PortletContext portletContext, PortletRequest portletRequest,
+		PortletResponse portletResponse) {
 
 		super(portletContext, portletRequest, portletResponse);
 	}

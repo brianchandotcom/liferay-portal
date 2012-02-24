@@ -615,7 +615,8 @@ public class ProcessExecutorTest extends TestCase {
 
 			Throwable throwable = ee.getCause();
 
-			assertEquals(DummyExceptionProcessCallable.class.getName(),
+			assertEquals(
+				DummyExceptionProcessCallable.class.getName(),
 				throwable.getMessage());
 		}
 	}
@@ -1071,8 +1072,8 @@ public class ProcessExecutorTest extends TestCase {
 
 	private static Field _getObjectOutputStreamField() throws Exception {
 		Field objectOutputStreamField =
-			ReflectionUtil.getDeclaredField(ProcessOutputStream.class,
-				"_objectOutputStream");
+			ReflectionUtil.getDeclaredField(
+				ProcessOutputStream.class, "_objectOutputStream");
 
 		int modifiers = objectOutputStreamField.getModifiers();
 

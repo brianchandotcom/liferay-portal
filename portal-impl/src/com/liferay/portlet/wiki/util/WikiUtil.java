@@ -262,8 +262,9 @@ public class WikiUtil {
 
 		for (WikiNode node : nodes) {
 			if ((Arrays.binarySearch(hiddenNodes, node.getName()) < 0) &&
-				(WikiNodePermission.contains(permissionChecker, node,
-					ActionKeys.VIEW))) {
+				(WikiNodePermission.contains(
+					permissionChecker, node, ActionKeys.VIEW))) {
+
 				return node;
 			}
 		}

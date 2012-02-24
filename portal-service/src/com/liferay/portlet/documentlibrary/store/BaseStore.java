@@ -351,8 +351,8 @@ public abstract class BaseStore implements Store {
 			long companyId, long repositoryId, String fileName)
 		throws PortalException, SystemException {
 
-		return getFileAsStream(companyId, repositoryId, fileName,
-			StringPool.BLANK);
+		return getFileAsStream(
+			companyId, repositoryId, fileName, StringPool.BLANK);
 	}
 
 	/**

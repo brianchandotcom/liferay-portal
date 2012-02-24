@@ -33,8 +33,8 @@ public class SessionLayoutClone implements LayoutClone {
 		return (String) session.getAttribute(encodeKey(plid));
 	}
 
-	public void update(HttpServletRequest request, long plid,
-		String typeSettings) {
+	public void update(
+		HttpServletRequest request, long plid, String typeSettings) {
 
 		HttpSession session = getPortalSession(request);
 

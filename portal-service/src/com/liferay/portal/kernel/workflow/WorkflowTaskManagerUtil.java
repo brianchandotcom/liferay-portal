@@ -237,7 +237,7 @@ public class WorkflowTaskManagerUtil {
 	}
 
 	public static int searchCount(
-		long companyId, long userId, String taskName, String assetType,
+			long companyId, long userId, String taskName, String assetType,
 			Long[] assetPrimaryKey, Date dueDateGT, Date dueDateLT,
 			Boolean completed, Boolean searchByUserRoles, boolean andOperator)
 		throws WorkflowException {

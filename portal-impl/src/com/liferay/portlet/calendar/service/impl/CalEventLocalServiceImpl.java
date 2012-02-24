@@ -1195,6 +1195,10 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 				portletPreferencesLocalService.getPreferences(
 					event.getCompanyId(), ownerId, ownerType, plid, portletId);
 
+			if (!CalUtil.getEmailEventReminderEnabled(preferences)) {
+				return;
+			}
+
 			Company company = companyPersistence.findByPrimaryKey(
 				user.getCompanyId());
 

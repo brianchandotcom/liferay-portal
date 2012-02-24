@@ -25,15 +25,9 @@ AUI.add(
 
 		var CSS_ADMIN_DIALOG = 'portlet-asset-categories-admin-dialog';
 
-		var CSS_CATEGORY_NAME_INPUT = '.category-name input';
-
-		var CSS_COLUMN = '.aui-column';
-
 		var CSS_COLUMN_WIDTH_CATEGORY = 'aui-w40';
 
 		var CSS_COLUMN_WIDTH_CATEGORY_FULL = 'aui-w75';
-
-		var CSS_FLOATING_TRIGGER = '.lfr-floating-trigger';
 
 		var CSS_MESSAGE_ERROR = 'portlet-msg-error';
 
@@ -71,6 +65,12 @@ AUI.add(
 
 		var SELECTOR_BUTTON_CANCEL = '.aui-button-input-cancel';
 
+		var SELECTOR_CATEGORY_NAME_INPUT = '.category-name input';
+
+		var SELECTOR_CSS_COLUMN = '.aui-column';
+
+		var SELECTOR_FLOATING_TRIGGER = '.lfr-floating-trigger';
+
 		var SELECTOR_UPDATE_CATEGORY_FORM = 'form.update-category-form';
 
 		var SELECTOR_UPDATE_VOCABULARY_FORM = 'form.update-vocabulary-form';
@@ -78,9 +78,9 @@ AUI.add(
 		var SELECTOR_VOCABULARY_NAME_INPUT = '.vocabulary-name input';
 
 		var SELECTOR_VOCABULARY_SELECT_LIST = '.vocabulary-select-list';
-		
+
 		var STR_ACTION = 'action';
-		
+
 		var STR_AUTO_FIELDS_INSTANCE = 'autoFieldsInstance';
 
 		var STR_BOUNDING_BOX = 'boundingBox';
@@ -126,6 +126,8 @@ AUI.add(
 		var TPL_MESSAGES_CATEGORY = '<div class="aui-helper-hidden lfr-message-response" id="vocabulary-category-messages" />';
 
 		var TPL_MESSAGES_VOCABULARY = '<div class="aui-helper-hidden lfr-message-response" id="vocabulary-messages" />';
+
+		var TPL_SEARCH_QUERY = '%{0}%';
 
 		var TPL_VOCABULARY_LIST = '<li class="vocabulary-category results-row {cssClassSelected}" data-vocabulary="{titleCurrentValue}" data-vocabularyId="{vocabularyId}" tabIndex="0">' +
 			'<div class="vocabulary-content-wrapper">' +
@@ -278,7 +280,7 @@ AUI.add(
 
 						var boundingBox = contextPanel.get(STR_BOUNDING_BOX);
 
-						var autoFieldsTriggers = boundingBox.all(CSS_FLOATING_TRIGGER);
+						var autoFieldsTriggers = boundingBox.all(SELECTOR_FLOATING_TRIGGER);
 
 						autoFieldsTriggers.each(instance._alignToTriggers, instance);
 					},
@@ -300,7 +302,7 @@ AUI.add(
 
 						dragInstance.on(
 							'end',
-							function(event){
+							function(event) {
 								instance._alignFloatingPanels(contextPanel);
 							}
 						);
@@ -1091,7 +1093,7 @@ AUI.add(
 									function(item, index, collection) {
 										var vocabularyEl = document.createElement('option');
 
-										if ( item.vocabularyId == selectedVocabularyId ) {
+										if (item.vocabularyId == selectedVocabularyId) {
 											vocabularyEl.selected = true;
 										}
 
@@ -1128,7 +1130,7 @@ AUI.add(
 					_focusCategoryPanelAdd: function() {
 						var instance = this;
 
-						var inputCategoryAddNameNode = instance._inputCategoryNameNode || instance._categoryFormAdd.one(CSS_CATEGORY_NAME_INPUT);
+						var inputCategoryAddNameNode = instance._inputCategoryNameNode || instance._categoryFormAdd.one(SELECTOR_CATEGORY_NAME_INPUT);
 
 						Liferay.Util.focusFormField(inputCategoryAddNameNode);
 					},
@@ -1234,21 +1236,19 @@ AUI.add(
 
 						var query = instance._liveSearch.get(STR_QUERY);
 
+						var params = defaultParams;
+
 						if (query && instance._searchType.val() != STR_VOCABULARIES) {
-							Liferay.Service.Asset.AssetCategory.getVocabularyCategories(
-								A.merge(
-									{
-										groupId: themeDisplay.getParentGroupId(),
-										name: query
-									},
-									defaultParams
-								),
-								callback
+							params = A.mix(
+								{
+									groupId: themeDisplay.getParentGroupId(),
+									name: Lang.sub(TPL_SEARCH_QUERY, [query])
+								},
+								defaultParams
 							);
 						}
-						else {
-							Liferay.Service.Asset.AssetCategory.getVocabularyCategories(defaultParams, callback);
-						}
+
+						Liferay.Service.Asset.AssetCategory.getVocabularyCategories(params, callback);
 					},
 
 					_getVocabularyId: function(exp) {
@@ -1281,10 +1281,10 @@ AUI.add(
 						var node = A.one(exp);
 
 						if (node) {
-							var parentNode = node.ancestor(CSS_COLUMN);
+							var parentNode = node.ancestor(SELECTOR_CSS_COLUMN);
 
 							if (parentNode) {
-								parentNode.previous(CSS_COLUMN).replaceClass(CSS_COLUMN_WIDTH_CATEGORY, CSS_COLUMN_WIDTH_CATEGORY_FULL);
+								parentNode.previous(SELECTOR_CSS_COLUMN).replaceClass(CSS_COLUMN_WIDTH_CATEGORY, CSS_COLUMN_WIDTH_CATEGORY_FULL);
 								parentNode.hide();
 							}
 						}
@@ -1362,7 +1362,7 @@ AUI.add(
 							buttonChangeCategoryPermissions.on(EVENT_CLICK, instance._onChangePermissions, instance);
 						}
 
-						var inputCategoryNameNode = categoryFormEdit.one(CSS_CATEGORY_NAME_INPUT);
+						var inputCategoryNameNode = categoryFormEdit.one(SELECTOR_CATEGORY_NAME_INPUT);
 
 						Liferay.Util.focusFormField(inputCategoryNameNode);
 					},
@@ -1507,7 +1507,8 @@ AUI.add(
 								errorKey = Liferay.Language.get('that-category-already-exists');
 							}
 							else if ((exception.indexOf('CategoryNameException') > -1) ||
-									 (exception.indexOf('AssetCategoryException') > -1)) {
+									(exception.indexOf('AssetCategoryException') > -1)) {
+
 								errorKey = Liferay.Language.get('one-of-your-fields-contains-invalid-characters');
 							}
 							else if (exception.indexOf(EXCEPTION_NO_SUCH_VOCABULARY) > -1) {
@@ -1699,11 +1700,13 @@ AUI.add(
 					_onSearchTypeChange: function(event) {
 						var instance = this;
 
-						if (instance._searchInput.val()) {
+						var searchInput = instance._searchInput;
+
+						if (searchInput.val()) {
 							instance._processSearch();
 						}
 						else {
-							instance._searchInput.focus();
+							searchInput.focus();
 						}
 					},
 
@@ -1855,7 +1858,7 @@ AUI.add(
 						}
 					},
 
-					_onVocabularyListSelect: function(event){
+					_onVocabularyListSelect: function(event) {
 						var instance = this;
 
 						var vocabularyId = instance._getVocabularyId(event.target);
@@ -1913,7 +1916,7 @@ AUI.add(
 
 						var boundingBox = contextPanel.get(STR_BOUNDING_BOX);
 
-						var autoFieldsTriggers = boundingBox.all(CSS_FLOATING_TRIGGER);
+						var autoFieldsTriggers = boundingBox.all(SELECTOR_FLOATING_TRIGGER);
 
 						autoFieldsTriggers.each(
 							function(item, index, collection) {
@@ -2189,10 +2192,10 @@ AUI.add(
 						var element = A.one(exp);
 
 						if (element) {
-							var parentNode = element.ancestor(CSS_COLUMN);
+							var parentNode = element.ancestor(SELECTOR_CSS_COLUMN);
 
 							if (parentNode) {
-								parentNode.previous(CSS_COLUMN).replaceClass(CSS_COLUMN_WIDTH_CATEGORY_FULL, CSS_COLUMN_WIDTH_CATEGORY);
+								parentNode.previous(SELECTOR_CSS_COLUMN).replaceClass(CSS_COLUMN_WIDTH_CATEGORY_FULL, CSS_COLUMN_WIDTH_CATEGORY);
 
 								parentNode.show();
 
@@ -2404,7 +2407,7 @@ AUI.add(
 
 								result = A.some(
 									children,
-									function(item, index, collection){
+									function(item, index, collection) {
 										return (item.get(STR_LABEL) === categoryName);
 									}
 								);

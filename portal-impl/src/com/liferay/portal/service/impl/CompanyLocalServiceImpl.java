@@ -185,13 +185,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		Company company = companyPersistence.fetchByWebId(webId);
 
 		if (company == null) {
-			String virtualHostname = webId;
-
-			if (webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
-				virtualHostname = _DEFAULT_VIRTUAL_HOST;
-			}
-
-			String homeURL = null;
 			String name = webId;
 			String legalName = null;
 			String legalId = null;
@@ -224,16 +217,17 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			shardLocalService.addShard(
 				Company.class.getName(), companyId, shardName);
 
-			// Company
+			// Account
 
-			updateCompany(
-				companyId, virtualHostname, mx, homeURL, name, legalName,
-				legalId, legalType, sicCode, tickerSymbol, industry, type,
-				size);
+			updateAccount(
+				company, name, legalName, legalId, legalType, sicCode,
+				tickerSymbol, industry, type, size);
 
 			// Virtual host
 
-			updateVirtualHost(companyId, virtualHostname);
+			if (webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
+				updateVirtualHost(companyId, _DEFAULT_VIRTUAL_HOST);
+			}
 
 			// Demo settings
 
@@ -920,7 +914,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		// Company
 
 		virtualHostname = virtualHostname.trim().toLowerCase();
-		Date now = new Date();
 
 		Company company = companyPersistence.findByPrimaryKey(companyId);
 
@@ -937,36 +930,9 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		// Account
 
-		Account account = accountPersistence.fetchByPrimaryKey(
-			company.getAccountId());
-
-		if (account == null) {
-			long accountId = counterLocalService.increment();
-
-			account = accountPersistence.create(accountId);
-
-			account.setCreateDate(now);
-			account.setCompanyId(companyId);
-			account.setUserId(0);
-			account.setUserName(StringPool.BLANK);
-
-			company.setAccountId(accountId);
-
-			companyPersistence.update(company, false);
-		}
-
-		account.setModifiedDate(now);
-		account.setName(name);
-		account.setLegalName(legalName);
-		account.setLegalId(legalId);
-		account.setLegalType(legalType);
-		account.setSicCode(sicCode);
-		account.setTickerSymbol(tickerSymbol);
-		account.setIndustry(industry);
-		account.setType(type);
-		account.setSize(size);
-
-		accountPersistence.update(account, false);
+		updateAccount(
+			company, name, legalName, legalId, legalType, sicCode, tickerSymbol,
+			industry, type, size);
 
 		// Virtual host
 
@@ -1202,6 +1168,46 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		return company;
 	}
 
+	protected void updateAccount(
+			Company company, String name, String legalName, String legalId,
+			String legalType, String sicCode, String tickerSymbol,
+			String industry, String type, String size)
+		throws PortalException, SystemException {
+
+		Date now = new Date();
+
+		Account account = accountPersistence.fetchByPrimaryKey(
+			company.getAccountId());
+
+		if (account == null) {
+			long accountId = counterLocalService.increment();
+
+			account = accountPersistence.create(accountId);
+
+			account.setCreateDate(now);
+			account.setCompanyId(company.getCompanyId());
+			account.setUserId(0);
+			account.setUserName(StringPool.BLANK);
+
+			company.setAccountId(accountId);
+
+			companyPersistence.update(company, false);
+		}
+
+		account.setModifiedDate(now);
+		account.setName(name);
+		account.setLegalName(legalName);
+		account.setLegalId(legalId);
+		account.setLegalType(legalType);
+		account.setSicCode(sicCode);
+		account.setTickerSymbol(tickerSymbol);
+		account.setIndustry(industry);
+		account.setType(type);
+		account.setSize(size);
+
+		accountPersistence.update(account, false);
+
+	}
 	protected void updateVirtualHost(long companyId, String virtualHostname)
 		throws CompanyVirtualHostException, SystemException {
 

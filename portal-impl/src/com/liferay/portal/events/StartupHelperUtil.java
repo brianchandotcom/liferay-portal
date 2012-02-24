@@ -21,6 +21,7 @@ import com.liferay.portal.verify.VerifyException;
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
  * @author Raymond Augé
+ * @author Mate Thurzo
  */
 public class StartupHelperUtil {
 
@@ -44,8 +45,10 @@ public class StartupHelperUtil {
 		getStartupHelper().updateIndexes();
 	}
 
-	public static void upgradeProcess(int buildNumber) throws UpgradeException {
-		getStartupHelper().upgradeProcess(buildNumber);
+	public static void upgradeProcess(int buildNumber, int newBuildNumber)
+		throws UpgradeException {
+
+		getStartupHelper().upgradeProcess(buildNumber, newBuildNumber);
 	}
 
 	public static void verifyProcess(boolean verified) throws VerifyException {

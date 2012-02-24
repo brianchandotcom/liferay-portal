@@ -2285,14 +2285,10 @@ public class SourceFormatter {
 			int x = trimmedLine.indexOf(StringPool.COMMA);
 
 			if (x != -1) {
-				while (x > 0) {
+				while ((x > 0) && ((previousLineLength + 1 + x) < 80)) {
 					String addToPreviousLine = trimmedLine.substring(0, x + 1);
 
 					if (_isValidJavaParameter(addToPreviousLine)) {
-						if ((previousLineLength + 1 + x) >= 80) {
-							break;
-						}
-
 						if (trimmedLine.equals(addToPreviousLine)) {
 							return new String[] {
 								previousLine + StringPool.SPACE +

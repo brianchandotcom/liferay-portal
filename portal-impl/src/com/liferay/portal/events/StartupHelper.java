@@ -80,38 +80,44 @@ public class StartupHelper {
 
 		String[] upgradeProcessClassNames = null;
 
-		if (PropsUtil.get(PropsKeys.UPGRADE_PROCESSES).equals("auto")) {
-			String upgradePropertyKey =
-				"upgrade.processes." + buildNumber + ".to." + newBuildNumber;
-
-			if (PropsUtil.getProperties().get(upgradePropertyKey) != null) {
-				upgradeProcessClassNames = PropsUtil.getArray(
-					upgradePropertyKey);
-			}
-
-			if (upgradeProcessClassNames == null) {
-
-				if (_log.isErrorEnabled()) {
-					_log.error("Cannot find appropriate upgrade path: " +
-						buildNumber + " to " + newBuildNumber);
-				}
-
-				throw new UpgradeException();
-			}
-
-			if (upgradeProcessClassNames.length == 0) {
-				if (_log.isInfoEnabled()) {
-					_log.info("Empty upgrade path found: " + buildNumber +
-						" to " + newBuildNumber);
-
-					_upgraded = true;
-					return;
-				}
-			}
+		if (buildNumber == newBuildNumber) {
+			upgradeProcessClassNames = new String[] {};
 		}
 		else {
-			upgradeProcessClassNames = PropsUtil.getArray(
-				PropsKeys.UPGRADE_PROCESSES);
+			if (PropsUtil.get(PropsKeys.UPGRADE_PROCESSES).equals("auto")) {
+
+				String upgradePropertyKey =
+					"upgrade.processes." + buildNumber + ".to." +
+					newBuildNumber;
+
+				if (PropsUtil.getProperties().get(upgradePropertyKey) != null) {
+					upgradeProcessClassNames = PropsUtil.getArray(
+						upgradePropertyKey);
+				}
+
+				if (upgradeProcessClassNames == null) {
+					if (_log.isErrorEnabled()) {
+						_log.error("Cannot find appropriate upgrade path: " +
+							buildNumber + " to " + newBuildNumber);
+					}
+
+					throw new UpgradeException();
+				}
+
+				if (upgradeProcessClassNames.length == 0) {
+					if (_log.isInfoEnabled()) {
+						_log.info("Empty upgrade path found: " + buildNumber +
+							" to " + newBuildNumber);
+
+						_upgraded = true;
+						return;
+					}
+				}
+			}
+			else {
+				upgradeProcessClassNames = PropsUtil.getArray(
+					PropsKeys.UPGRADE_PROCESSES);
+			}
 		}
 
 		_upgraded = UpgradeProcessUtil.upgradeProcess(

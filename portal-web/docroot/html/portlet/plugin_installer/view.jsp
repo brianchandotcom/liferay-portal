@@ -74,12 +74,12 @@
 		String portletURLString = portletURL.toString();
 		%>
 
-		<aui:form action="<%= portletURL %>" method="get" name="fm">
-			<liferay-portlet:renderURLParams varImpl="portletURL" />
+		<aui:form action="<%= portletURL %>" name="fm">
 			<aui:input name="<%= Constants.CMD %>" type="hidden" />
 			<aui:input name="<%= Constants.PROGRESS_ID %>" type="hidden" value="<%= uploadProgressId %>" />
 			<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
 			<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
+			<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 
 			<c:if test="<%= Validator.isNull(moduleId) || Validator.isNull(repositoryURL) %>">
 				<aui:input name="redirect" type="hidden" value="<%= portletURLString %>" />
@@ -122,8 +122,6 @@
 
 		<aui:script>
 			function <portlet:namespace />installPluginPackage(cmd) {
-				document.<portlet:namespace />fm.method = "post";
-
 				if (cmd == "localDeploy") {
 					document.<portlet:namespace />fm.encoding = "multipart/form-data";
 				}
@@ -133,19 +131,13 @@
 			}
 
 			function <portlet:namespace />reloadRepositories() {
-				document.<portlet:namespace />fm.method = "post";
 				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "reloadRepositories";
 				submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/plugin_installer/install_plugin" /></portlet:actionURL>");
 			}
 
 			function <portlet:namespace />saveDeployConfiguration() {
-				document.<portlet:namespace />fm.method = "post";
 				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'deployConfiguration';
 				submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/plugin_installer/install_plugin" /></portlet:actionURL>");
-			}
-
-			function <portlet:namespace />searchPlugins() {
-				submitForm(document.<portlet:namespace />fm);
 			}
 		</aui:script>
 

@@ -1534,6 +1534,18 @@ public class SourceFormatter {
 				}
 			}
 
+			int lineTabCount = StringUtil.count(line, StringPool.TAB);
+			int previousLineTabCount = StringUtil.count(
+				previousLine, StringPool.TAB);
+
+			if (previousLine.endsWith(StringPool.COMMA) &&
+				previousLine.contains(StringPool.OPEN_PARENTHESIS) &&
+				((lineTabCount - previousLineTabCount) == 1)) {
+
+				_sourceFormatterHelper.printError(
+					fileName, "line break: " + fileName + " " + lineCount);
+			}
+
 			if (Validator.isNotNull(combinedLines)) {
 				previousLine = combinedLines[0];
 

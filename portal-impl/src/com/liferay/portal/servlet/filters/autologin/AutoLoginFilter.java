@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
+import com.liferay.portal.model.UserTracker;
 import com.liferay.portal.security.auth.AutoLogin;
 import com.liferay.portal.security.pwd.PwdEncryptor;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -91,14 +92,17 @@ public class AutoLoginFilter extends BasePortalFilter {
 				if (user.isLockout()) {
 					return null;
 				}
-				else if (PropsValues.LIVE_USERS_ENABLED &&
-					session.getAttribute(WebKeys.USER) == null &&
-					UserTrackerLocalServiceUtil.fetchUserTracker(
-						userId) == null) {
+				else if (PropsValues.LIVE_USERS_ENABLED) {
+					UserTracker userTracker =
+						UserTrackerLocalServiceUtil.fetchUserTracker(userId);
 
-					session.invalidate();
+					if (userTracker == null &&
+						session.getAttribute(WebKeys.USER) == null) {
 
-					return null;
+						session.invalidate();
+
+						return null;
+					}
 				}
 			}
 			else {

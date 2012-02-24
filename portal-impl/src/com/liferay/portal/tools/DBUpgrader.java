@@ -116,7 +116,8 @@ public class DBUpgrader {
 			_log.debug("Update build " + buildNumber);
 		}
 
-		StartupHelperUtil.upgradeProcess(buildNumber);
+		StartupHelperUtil.upgradeProcess(
+			buildNumber, ReleaseInfo.getBuildNumber());
 
 		// Update company key
 

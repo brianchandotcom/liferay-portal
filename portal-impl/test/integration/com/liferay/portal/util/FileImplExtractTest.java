@@ -16,8 +16,7 @@ package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.util.FileUtil;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 /**
  * @author Igor Spasic
@@ -114,16 +113,12 @@ public class FileImplExtractTest extends BaseTestCase {
 	}
 
 	protected String extractText(String fileName) {
-		FileInputStream fileInputStream = null;
+		InputStream fileInputStream = null;
 
-		try {
-			fileInputStream = new FileInputStream(
-				"portal-impl/test/com/liferay/portal/util/dependencies/" +
-					fileName);
-		}
-		catch (FileNotFoundException fnfe) {
-			return null;
-		}
+		Class<?> clazz = getClass();
+
+		fileInputStream = clazz.getResourceAsStream(
+			"dependencies/" + fileName);
 
 		String text = FileUtil.extractText(fileInputStream, fileName);
 

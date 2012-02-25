@@ -3719,27 +3719,9 @@ file.
 
 		<antcall target="revert-test-properties" />
 
-		<ant dir="portal-service" target="test" inheritAll="false" />
+		<antcall target="test-integration" inheritAll="false"/>
 
-		<ant dir="portal-impl" target="test-class" inheritAll="false">
-			<property name="class" value="ServiceTestSuite" />
-		</ant>
-
-		<ant dir="portal-impl" target="test-class" inheritAll="false">
-			<property name="class" value="PersistenceTestSuite" />
-		</ant>
-
-		<ant dir="portal-impl" target="test-class" inheritAll="false">
-			<property name="class" value="RepositoryTestSuite" />
-		</ant>
-
-		<ant dir="portal-impl" target="test-class" inheritAll="false">
-			<property name="class" value="WebDAVTestSuite" />
-		</ant>
-
-		<ant dir="portal-impl" target="test-class" inheritAll="false">
-			<property name="class" value="MiscTestSuite" />
-		</ant>
+		<antcall target="test-unit" inheritAll="false"/>
 
 		<ant dir="sql" target="test-sample-sql" inheritAll="false" />
 
@@ -3747,5 +3729,17 @@ file.
 
 		<ant antfile="build-test-plugins.xml" target="test-create" inheritAll="false" />
 		<ant antfile="build-test-plugins.xml" target="test-service-builder" inheritAll="false" />
+	</target>
+
+	<target name="test-integration">
+		<ant dir="portal-service" target="test-integration" inheritAll="false" />
+
+		<ant dir="portal-impl" target="test-integration" inheritAll="false" />
+	</target>
+
+	<target name="test-unit">
+		<ant dir="portal-service" target="test-unit" inheritAll="false" />
+
+		<ant dir="portal-impl" target="test-unit" inheritAll="false" />
 	</target>
 </project>

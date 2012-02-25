@@ -188,8 +188,8 @@ public class KMPSearch {
 		return search(text, 0, text.length(), pattern, nexts);
 	}
 
-	public static int search(CharSequence text, CharSequence pattern,
-		int[] nexts) {
+	public static int search(
+		CharSequence text, CharSequence pattern, int[] nexts) {
 
 		return search(text, 0, text.length(), pattern, nexts);
 	}

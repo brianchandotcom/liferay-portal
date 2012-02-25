@@ -440,7 +440,8 @@ public class DLFileEntryFinderImpl
 
 				if (inlineSQLHelper && InlineSQLHelperUtil.isEnabled()) {
 
-					sql = StringUtil.replace(sql, "[$JOIN$]",
+					sql = StringUtil.replace(
+						sql, "[$JOIN$]",
 						CustomSQLUtil.get(
 							DLFolderFinderImpl.JOIN_FV_BY_DL_FILE_ENTRY));
 				}

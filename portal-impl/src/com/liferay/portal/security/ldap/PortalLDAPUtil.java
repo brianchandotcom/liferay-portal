@@ -184,8 +184,8 @@ public class PortalLDAPUtil {
 			String fullDistinguishedName)
 		throws Exception {
 
-		return getGroupAttributes(ldapServerId, companyId, ldapContext,
-			fullDistinguishedName, false);
+		return getGroupAttributes(
+			ldapServerId, companyId, ldapContext, fullDistinguishedName, false);
 	}
 
 	public static Attributes getGroupAttributes(

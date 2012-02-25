@@ -266,9 +266,9 @@ public class FileEntryAtomCollectionAdapter
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		DLAppServiceUtil.updateFileEntry(fileEntry.getFileEntryId(),
-			title, mimeType, title, summary, null, true, contentInputStream,
-			contentDecoded.length, serviceContext);
+		DLAppServiceUtil.updateFileEntry(
+			fileEntry.getFileEntryId(), title, mimeType, title, summary, null,
+			true, contentInputStream, contentDecoded.length, serviceContext);
 	}
 
 	@Override
@@ -292,9 +292,9 @@ public class FileEntryAtomCollectionAdapter
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		DLAppServiceUtil.updateFileEntry(fileEntry.getFileEntryId(),
-			slug, mimeType, title, description, null, true, contentInputStream,
-			content.length, serviceContext);
+		DLAppServiceUtil.updateFileEntry(
+			fileEntry.getFileEntryId(), slug, mimeType, title, description,
+			null, true, contentInputStream, content.length, serviceContext);
 	}
 
 	protected static final String COLLECTION_NAME = "files";

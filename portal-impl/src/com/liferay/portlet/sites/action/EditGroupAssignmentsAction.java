@@ -122,8 +122,9 @@ public class EditGroupAssignmentsAction extends PortletAction {
 			}
 		}
 
-		return mapping.findForward(getForward(renderRequest,
-			"portlet.sites_admin.edit_site_assignments"));
+		return mapping.findForward(
+			getForward(
+				renderRequest, "portlet.sites_admin.edit_site_assignments"));
 	}
 
 	protected void updateGroupOrganizations(ActionRequest actionRequest)

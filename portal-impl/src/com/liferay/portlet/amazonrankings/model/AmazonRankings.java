@@ -24,15 +24,13 @@ import java.util.Date;
 public class AmazonRankings
 	implements Comparable<AmazonRankings>, Serializable {
 
-	public AmazonRankings(String isbn, String productName, String catalog,
-							   String[] authors, Date releaseDate,
-							   String releaseDateAsString, String manufacturer,
-							   String smallImageURL, String mediumImageURL,
-							   String largeImageURL, double listPrice,
-							   double ourPrice, double usedPrice,
-							   double collectiblePrice,
-							   double thirdPartyNewPrice, int salesRank,
-							   String media, String availability) {
+	public AmazonRankings(
+		String isbn, String productName, String catalog, String[] authors,
+		Date releaseDate, String releaseDateAsString, String manufacturer,
+		String smallImageURL, String mediumImageURL, String largeImageURL,
+		double listPrice, double ourPrice, double usedPrice,
+		double collectiblePrice, double thirdPartyNewPrice, int salesRank,
+		String media, String availability) {
 
 		_isbn = isbn;
 		_productName = productName;

@@ -19,16 +19,16 @@ package com.liferay.portlet.unitconverter.model;
  */
 public class Conversion {
 
-	public Conversion(int type, int fromId, int toId,
-					  double fromValue) {
+	public Conversion(int type, int fromId, int toId, double fromValue) {
 		_type = type;
 		_fromId = fromId;
 		_toId = toId;
 		_fromValue = fromValue;
 	}
 
-	public Conversion(int type, int fromId, int toId,
-					  double fromValue, double toValue) {
+	public Conversion(
+		int type, int fromId, int toId, double fromValue, double toValue) {
+
 		_type = type;
 		_fromId = fromId;
 		_toId = toId;

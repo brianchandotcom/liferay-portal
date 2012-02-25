@@ -157,8 +157,8 @@ public class UserAtomCollectionAdapter
 
 			AtomUtil.saveAtomPagerInRequest(atomRequestContext, atomPager);
 
-			List<User> users = UserLocalServiceUtil.getCompanyUsers(companyId,
-				atomPager.getStart(), atomPager.getEnd() + 1);
+			List<User> users = UserLocalServiceUtil.getCompanyUsers(
+				companyId, atomPager.getStart(), atomPager.getEnd() + 1);
 
 			return users;
 		}

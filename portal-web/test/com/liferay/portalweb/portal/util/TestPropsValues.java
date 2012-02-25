@@ -43,6 +43,9 @@ public class TestPropsValues extends com.liferay.portal.util.TestPropsValues {
 	public static final String SELENIUM_DOWNLOAD_FILE = TestPropsUtil.get(
 		"selenium.download.file.executable");
 
+	public static final String SELENIUM_UPLOAD_FILE = TestPropsUtil.get(
+		"selenium.upload.file.executable");
+
 	public static final String SELENIUM_EXECUTABLE_DIR = TestPropsUtil.get(
 		"selenium.executable.dir");
 

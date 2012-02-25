@@ -25,10 +25,12 @@ public class LiferaySeleneseTestCase extends SeleneseTestCase {
 		super();
 	}
 
+/* not sure what this is for
 	public LiferaySeleneseTestCase(String name) {
 		super(name);
 	}
+*/
 
-	protected LiferaySelenium selenium;
+	protected LiferayDefaultSelenium selenium;
 
 }

@@ -19,6 +19,14 @@ import com.liferay.portalweb.portal.util.LiferaySeleneseTestCase;
 import com.liferay.portalweb.portal.util.SeleniumUtil;
 import com.liferay.portalweb.portal.util.TestPropsValues;
 
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.JavascriptExecutor;
+import java.util.concurrent.TimeUnit;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -37,6 +45,7 @@ public class BaseTestCase extends LiferaySeleneseTestCase {
 	public void tearDown() throws Exception {
 	}
 
+
 	protected void loadRequiredJavaScriptModules() {
 		Class<?> clazz = getClass();
 
@@ -46,29 +55,9 @@ public class BaseTestCase extends LiferaySeleneseTestCase {
 			return;
 		}
 
-		if (className.contains(".sampledata525.")) {
-			return;
-		}
-
-		if (className.contains(".sampledata527.")) {
-			return;
-		}
-
-		if (className.contains(".sampledata528.")) {
-			return;
-		}
-
-		if (className.contains(".sampledata529.")) {
-			return;
-		}
-
-		String location = selenium.getLocation();
+		String location = selenium.getCurrentUrl();
 
 		if (location.contains("/documents/")) {
-			return;
-		}
-
-		if (location.contains("/journal/rss/")) {
 			return;
 		}
 
@@ -76,7 +65,8 @@ public class BaseTestCase extends LiferaySeleneseTestCase {
 			return;
 		}
 
-		selenium.getEval("window.Liferay.fire(\'initDockbar\');");
+		JavascriptExecutor js = (JavascriptExecutor) selenium;
+		js.executeScript("window.Liferay.fire(\'initDockbar\');");
 	}
-
+	
 }

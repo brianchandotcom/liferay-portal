@@ -94,13 +94,13 @@ String redirect = ParamUtil.getString(request, "redirect");
 					%>
 
 					<liferay-ui:input-move-boxes
-						leftTitle="current"
-						rightTitle="available"
 						leftBoxName="currentFolderColumns"
-						rightBoxName="availableFolderColumns"
-						leftReorder="true"
 						leftList="<%= leftList %>"
+						leftReorder="true"
+						leftTitle="current"
+						rightBoxName="availableFolderColumns"
 						rightList="<%= rightList %>"
+						rightTitle="available"
 					/>
 				</aui:field-wrapper>
 			</aui:fieldset>
@@ -147,13 +147,13 @@ String redirect = ParamUtil.getString(request, "redirect");
 					%>
 
 					<liferay-ui:input-move-boxes
-						leftTitle="current"
-						rightTitle="available"
 						leftBoxName="currentEntryColumns"
-						rightBoxName="availableEntryColumns"
-						leftReorder="true"
 						leftList="<%= leftList %>"
+						leftReorder="true"
+						leftTitle="current"
+						rightBoxName="availableEntryColumns"
 						rightList="<%= rightList %>"
+						rightTitle="available"
 					/>
 				</aui:field-wrapper>
 			</aui:fieldset>

@@ -16,6 +16,7 @@ package com.liferay.util.servlet.filters;
 
 import com.liferay.portal.kernel.servlet.Header;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.io.IOException;
 
@@ -34,12 +35,15 @@ public class CacheResponseUtil {
 
 		for (Map.Entry<String, List<Header>> entry : headers.entrySet()) {
 			String headerKey = entry.getKey();
-			List<Header> headerValues = entry.getValue();
+			List<Header> headerValues = ListUtil.copy(entry.getValue());
 
 			for (Header header : headerValues) {
 				int type = header.getType();
 
-				if (type == Header.DATE_TYPE) {
+				if (type == Header.COOKIE_TYPE) {
+					response.addCookie(header.getCookieValue());
+				}
+				else if (type == Header.DATE_TYPE) {
 					response.setDateHeader(headerKey, header.getDateValue());
 				}
 				else if (type == Header.INTEGER_TYPE) {

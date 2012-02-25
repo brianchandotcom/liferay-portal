@@ -1066,61 +1066,33 @@ if (themeDisplay.isStatePopUp()) {
 %>
 
 		<aui:script use="aui-base">
-			var AArray =  A.Array;
-			var AObject = A.Object;
-
 			var dialog = Liferay.Util.getWindow();
 
-			var subs = dialog.getEvent('visibleChange').getSubs();
+			dialog.detach('<portlet:namespace />hideRefreshDialog|*');
 
-			subs = A.merge(subs[0], subs[1]);
+			dialog.on(
+				'<portlet:namespace />hideRefreshDialog|visibleChange',
+				function(event) {
+					if (!event.newVal && event.src !== 'hideLink') {
+						var refreshWindow = dialog._refreshWindow || Liferay.Util.getTop();
 
-			var filteredSubs = [];
+						var topA = refreshWindow.AUI();
 
-			var portletNamespace = '<portlet:namespace />';
+						topA.use(
+							'aui-loading-mask',
+							function(A) {
+								new A.LoadingMask(
+									{
+										target: A.getBody()
+									}
+								).show();
+							}
+						);
 
-			A.each(
-				subs,
-				function(item) {
-					var fn = item.fn;
-
-					if (AObject.owns(fn, portletNamespace) && fn[portletNamespace]) {
-						filteredSubs.push(fn);
+						refreshWindow.location.href = '<%= closeRedirect %>';
 					}
 				}
 			);
-
-			AArray.each(
-				filteredSubs,
-				function(item, index) {
-					dialog.detach('visibleChange', item);
-				}
-			);
-
-			var visibleChangeHandler = function(event) {
-				if (!event.newVal && event.src !== 'hideLink') {
-					var refreshWindow = dialog._refreshWindow || Liferay.Util.getTop();
-
-					var topA = refreshWindow.AUI();
-
-					topA.use(
-						'aui-loading-mask',
-						function(A) {
-							new A.LoadingMask(
-								{
-									target: A.getBody()
-								}
-							).show();
-						}
-					);
-
-					refreshWindow.location.href = '<%= closeRedirect %>';
-				}
-			};
-
-			visibleChangeHandler[portletNamespace] = true;
-
-			dialog.on('visibleChange', visibleChangeHandler);
 		</aui:script>
 
 <%

@@ -29,7 +29,7 @@ String movie = ParamUtil.getString(request, "movie");
 
 <head>
 	<title><%= HtmlUtil.escape(title) %></title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 
 	<script src="<%= themeDisplay.getCDNHost() + themeDisplay.getPathJavaScript() %>/misc/swfobject.js" type="text/javascript"></script>
 </head>

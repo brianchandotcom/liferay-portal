@@ -113,8 +113,8 @@ String defaultLanguageId = LocalizationUtil.getDefaultLocale(script);
 	</div>
 </div>
 
-<div id="<portlet:namespace />formBuilder" class="aui-diagram-builder">
-	<div id="<portlet:namespace />formBuilderContent" class="aui-diagram-builder-content aui-helper-clearfix">
+<div class="aui-diagram-builder" id="<portlet:namespace />formBuilder">
+	<div class="aui-diagram-builder-content aui-helper-clearfix" id="<portlet:namespace />formBuilderContent">
 		<div class="aui-diagram-builder-tabs">
 			<div class="aui-diagram-builder-tabs-content">
 				<ul class="aui-tabview-list aui-widget-hd">

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.service.WorkflowInstanceLinkLocalServiceUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -151,6 +152,9 @@ public class EditWorkflowInstanceAction extends PortletAction {
 
 		WorkflowInstanceLinkLocalServiceUtil.deleteWorkflowInstanceLink(
 			companyId, groupId, className, classPK);
+
+		SubscriptionLocalServiceUtil.deleteSubscriptions(
+			companyId, WorkflowInstance.class.getName(), workflowInstanceId);
 
 		Layout layout = themeDisplay.getLayout();
 

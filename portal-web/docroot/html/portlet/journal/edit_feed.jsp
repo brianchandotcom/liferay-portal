@@ -372,15 +372,29 @@ if (feed != null) {
 	</liferay-ui:panel-container>
 
 	<aui:button-row>
-		<aui:button type="submit" />
 
-		<c:if test="<%= feed != null %>">
+		<%
+		boolean hasSavePermission = false;
 
-			<%
-			String taglibPreviewButton = "Liferay.Util.openWindow({dialog: {align: Liferay.Util.Window.ALIGN_CENTER, height: 450}, title: '" + UnicodeLanguageUtil.get(pageContext, "feed") + "', uri: '" + feedURL + "'});";
-			%>
+		if (feed != null) {
+			hasSavePermission = JournalFeedPermission.contains(permissionChecker, feed, ActionKeys.UPDATE);
+		}
+		else {
+			hasSavePermission = JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_FEED);
+		}
+		%>
 
-			<aui:button onClick="<%= taglibPreviewButton %>" value="preview" />
+		<c:if test="<%= hasSavePermission %>">
+			<aui:button type="submit" />
+
+			<c:if test="<%= feed != null %>">
+
+				<%
+				String taglibPreviewButton = "Liferay.Util.openWindow({dialog: {align: Liferay.Util.Window.ALIGN_CENTER, height: 450}, title: '" + UnicodeLanguageUtil.get(pageContext, "feed") + "', uri: '" + feedURL + "'});";
+				%>
+
+				<aui:button onClick="<%= taglibPreviewButton %>" value="preview" />
+			</c:if>
 		</c:if>
 
 		<aui:button href="<%= redirect %>" type="cancel" />

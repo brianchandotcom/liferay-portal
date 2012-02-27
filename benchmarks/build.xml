@@ -21,6 +21,8 @@
 			<arg value="sample.sql.db.type=${sample.sql.db.type}" />
 			<arg value="sample.sql.blogs.entry.comment.count=${sample.sql.blogs.entry.comment.count}" />
 			<arg value="sample.sql.blogs.entry.count=${sample.sql.blogs.entry.count}" />
+			<arg value="sample.sql.ddl.record.count=${sample.sql.ddl.record.count}" />
+			<arg value="sample.sql.ddl.recordset.count=${sample.sql.ddl.recordset.count}" />
 			<arg value="sample.sql.dl.file.entry.count=${sample.sql.dl.file.entry.count}" />
 			<arg value="sample.sql.dl.file.entry.size=${sample.sql.dl.file.entry.size}" />
 			<arg value="sample.sql.dl.folder.count=${sample.sql.dl.folder.count}" />

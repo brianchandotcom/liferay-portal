@@ -78,6 +78,12 @@ import com.liferay.portlet.documentlibrary.model.impl.DLFileRankImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFolderImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLSyncImpl;
+import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
+import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
+import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
+import com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordImpl;
+import com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordSetImpl;
+import com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordVersionImpl;
 import com.liferay.portlet.dynamicdatamapping.model.DDMContent;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -210,6 +216,48 @@ public class DataFactory {
 		contact.setLastName(lastName);
 
 		return contact;
+	}
+
+	public DDLRecord addDDLRecord(
+		long groupId, long companyId, long userId, long ddlRecordSetId) {
+
+		DDLRecord ddlRecord = new DDLRecordImpl();
+
+		ddlRecord.setRecordId(_counter.get());
+		ddlRecord.setGroupId(groupId);
+		ddlRecord.setCompanyId(companyId);
+		ddlRecord.setUserId(userId);
+		ddlRecord.setCreateDate(newCreateDate());
+		ddlRecord.setRecordSetId(ddlRecordSetId);
+
+		return ddlRecord;
+	}
+
+	public DDLRecordSet addDDLRecordSet(
+		long groupId, long companyId, long userId, long ddmStructureId) {
+
+		DDLRecordSet ddlRecordSet = new DDLRecordSetImpl();
+
+		ddlRecordSet.setRecordSetId(_counter.get());
+		ddlRecordSet.setGroupId(groupId);
+		ddlRecordSet.setCompanyId(companyId);
+		ddlRecordSet.setUserId(userId);
+		ddlRecordSet.setDDMStructureId(ddmStructureId);
+
+		return ddlRecordSet;
+	}
+
+	public DDLRecordVersion addDDLRecordVersion(DDLRecord ddlRecord) {
+		DDLRecordVersion ddlRecordVersion = new DDLRecordVersionImpl();
+
+		ddlRecordVersion.setRecordVersionId(_counter.get());
+		ddlRecordVersion.setGroupId(ddlRecord.getGroupId());
+		ddlRecordVersion.setCompanyId(ddlRecord.getCompanyId());
+		ddlRecordVersion.setUserId(ddlRecord.getUserId());
+		ddlRecordVersion.setRecordSetId(ddlRecord.getRecordSetId());
+		ddlRecordVersion.setRecordId(ddlRecord.getRecordId());
+
+		return ddlRecordVersion;
 	}
 
 	public DDMContent addDDMContent(long groupId, long companyId, long userId) {
@@ -779,6 +827,10 @@ public class DataFactory {
 		return _simpleDateFormat.format(date);
 	}
 
+	public ClassName getDDLRecordSetClassName() {
+		return _ddlRecordSetClassName;
+	}
+
 	public ClassName getDDMContentClassName() {
 		return _ddmContentClassName;
 	}
@@ -890,6 +942,9 @@ public class DataFactory {
 
 			if (model.equals(BlogsEntry.class.getName())) {
 				_blogsEntryClassName = className;
+			}
+			else if (model.equals(DDLRecordSet.class.getName())) {
+				_ddlRecordSetClassName = className;
 			}
 			else if (model.equals(DDMContent.class.getName())) {
 				_ddmContentClassName = className;
@@ -1287,6 +1342,7 @@ public class DataFactory {
 	private Company _company;
 	private SimpleCounter _counter;
 	private List<CounterModelImpl> _counters;
+	private ClassName _ddlRecordSetClassName;
 	private ClassName _ddmContentClassName;
 	private User _defaultUser;
 	private SimpleCounter _dlDateCounter;

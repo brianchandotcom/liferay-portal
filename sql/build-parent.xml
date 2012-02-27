@@ -165,6 +165,8 @@
 			<arg value="sample.sql.db.type=hypersonic" />
 			<arg value="sample.sql.blogs.entry.comment.count=1" />
 			<arg value="sample.sql.blogs.entry.count=1" />
+			<arg value="sample.sql.ddl.record.count=1" />
+			<arg value="sample.sql.ddl.recordset.count=1" />
 			<arg value="sample.sql.dl.file.entry.count=1" />
 			<arg value="sample.sql.dl.file.entry.size=1" />
 			<arg value="sample.sql.dl.folder.count=1" />

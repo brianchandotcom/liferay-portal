@@ -44,6 +44,8 @@
 
 	<#include "blogs.ftl">
 
+	<#include "ddl.ftl">
+
 	<#include "dl.ftl">
 
 	<#include "mb.ftl">

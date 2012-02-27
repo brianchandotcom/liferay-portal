@@ -181,16 +181,6 @@ public class SetupWizardUtil {
 
 		PropsUtil.addProperties(unicodeProperties);
 
-		HttpSession session = request.getSession();
-
-		session.setAttribute(
-			WebKeys.SETUP_WIZARD_PROPERTIES, unicodeProperties);
-
-		boolean propertiesFileUpdated = _writePropertiesFile(unicodeProperties);
-
-		session.setAttribute(
-			WebKeys.SETUP_WIZARD_PROPERTIES_UPDATED, propertiesFileUpdated);
-
 		if (!databaseConfigured) {
 			_reloadServletContext(request, unicodeProperties);
 		}
@@ -199,6 +189,16 @@ public class SetupWizardUtil {
 		_updateAdminUser(request, unicodeProperties);
 
 		_initPlugins();
+
+		boolean propertiesFileCreated = _writePropertiesFile(unicodeProperties);
+
+		HttpSession session = request.getSession();
+
+		session.setAttribute(
+			WebKeys.SETUP_WIZARD_PROPERTIES, unicodeProperties);
+		session.setAttribute(
+			WebKeys.SETUP_WIZARD_PROPERTIES_FILE_CREATED,
+			propertiesFileCreated);
 	}
 
 	private static String _getParameter(
@@ -387,42 +387,44 @@ public class SetupWizardUtil {
 		try {
 			user = UserLocalServiceUtil.getUserByEmailAddress(
 				PortalUtil.getDefaultCompanyId(), emailAddress);
+
+			String greeting = LanguageUtil.format(themeDisplay.getLocale(),
+				"welcome-x", StringPool.SPACE + fullName, false);
+
+			Contact contact = user.getContact();
+
+			Calendar birthdayCal = CalendarFactoryUtil.getCalendar();
+
+			birthdayCal.setTime(contact.getBirthday());
+
+			int birthdayMonth = birthdayCal.get(Calendar.MONTH);
+			int birthdayDay = birthdayCal.get(Calendar.DAY_OF_MONTH);
+			int birthdayYear = birthdayCal.get(Calendar.YEAR);
+
+			user = UserLocalServiceUtil.updateUser(
+				user.getUserId(), StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK, false, user.getReminderQueryQuestion(),
+				user.getReminderQueryAnswer(), screenName, emailAddress,
+				user.getFacebookId(), user.getOpenId(),
+				themeDisplay.getLanguageId(), user.getTimeZoneId(), greeting,
+				user.getComments(), firstName, user.getMiddleName(), lastName,
+				contact.getPrefixId(), contact.getSuffixId(), contact.isMale(),
+				birthdayMonth, birthdayDay, birthdayYear, contact.getSmsSn(),
+				contact.getAimSn(), contact.getFacebookSn(), contact.getIcqSn(),
+				contact.getJabberSn(), contact.getMsnSn(),
+				contact.getMySpaceSn(), contact.getSkypeSn(),
+				contact.getTwitterSn(), contact.getYmSn(),
+				contact.getJobTitle(), null, null, null, null, null,
+				new ServiceContext());
 		}
 		catch (NoSuchUserException nsue) {
+			CompanyLocalServiceUtil.createAdminUser(
+				PortalUtil.getDefaultCompanyId(), themeDisplay.getLocale(),
+				firstName, lastName, emailAddress, screenName);
+
 			user = UserLocalServiceUtil.getUserByEmailAddress(
-				PortalUtil.getDefaultCompanyId(), "test@liferay.com");
-
-			user = UserLocalServiceUtil.updateEmailAddress(
-				user.getUserId(), StringPool.BLANK, emailAddress, emailAddress);
+				PortalUtil.getDefaultCompanyId(), emailAddress);
 		}
-
-		String greeting = LanguageUtil.format(themeDisplay.getLocale(),
-			"welcome-x", StringPool.SPACE + fullName, false);
-
-		Contact contact = user.getContact();
-
-		Calendar birthdayCal = CalendarFactoryUtil.getCalendar();
-
-		birthdayCal.setTime(contact.getBirthday());
-
-		int birthdayMonth = birthdayCal.get(Calendar.MONTH);
-		int birthdayDay = birthdayCal.get(Calendar.DAY_OF_MONTH);
-		int birthdayYear = birthdayCal.get(Calendar.YEAR);
-
-		user = UserLocalServiceUtil.updateUser(
-			user.getUserId(), StringPool.BLANK, StringPool.BLANK,
-			StringPool.BLANK, false, user.getReminderQueryQuestion(),
-			user.getReminderQueryAnswer(), screenName, emailAddress,
-			user.getFacebookId(), user.getOpenId(),
-			themeDisplay.getLanguageId(), user.getTimeZoneId(), greeting,
-			user.getComments(), firstName, user.getMiddleName(), lastName,
-			contact.getPrefixId(), contact.getSuffixId(), contact.isMale(),
-			birthdayMonth, birthdayDay, birthdayYear, contact.getSmsSn(),
-			contact.getAimSn(), contact.getFacebookSn(), contact.getIcqSn(),
-			contact.getJabberSn(), contact.getMsnSn(), contact.getMySpaceSn(),
-			contact.getSkypeSn(), contact.getTwitterSn(), contact.getYmSn(),
-			contact.getJobTitle(), null, null, null, null, null,
-			new ServiceContext());
 
 		// Password
 
@@ -472,7 +474,9 @@ public class SetupWizardUtil {
 				PropsValues.LIFERAY_HOME, PROPERTIES_FILE_NAME,
 				unicodeProperties.toString());
 
-			return true;
+			return FileUtil.exists(
+				PropsValues.LIFERAY_HOME + StringPool.SLASH +
+					PROPERTIES_FILE_NAME);
 		}
 		catch (IOException ioe) {
 			_log.error(ioe, ioe);

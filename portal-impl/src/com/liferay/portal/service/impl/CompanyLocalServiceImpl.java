@@ -57,6 +57,7 @@ import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.VirtualHost;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.base.CompanyLocalServiceBaseImpl;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalInstances;
@@ -382,66 +383,14 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		// Default admin
 
 		if (userPersistence.countByCompanyId(companyId) == 1) {
-			long creatorUserId = 0;
-			boolean autoPassword = false;
-			String password1 = PropsValues.DEFAULT_ADMIN_PASSWORD;
-			String password2 = password1;
-			boolean autoScreenName = false;
-			String screenName = PropsValues.DEFAULT_ADMIN_SCREEN_NAME;
 			String emailAddress =
 				PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX.concat(
 					StringPool.AT.concat(mx));
-			long facebookId = 0;
-			String openId = StringPool.BLANK;
-			Locale locale = defaultUser.getLocale();
-			String firstName = PropsValues.DEFAULT_ADMIN_FIRST_NAME;
-			String middleName = PropsValues.DEFAULT_ADMIN_MIDDLE_NAME;
-			String lastName = PropsValues.DEFAULT_ADMIN_LAST_NAME;
-			int prefixId = 0;
-			int suffixId = 0;
-			boolean male = true;
-			int birthdayMonth = Calendar.JANUARY;
-			int birthdayDay = 1;
-			int birthdayYear = 1970;
-			String jobTitle = StringPool.BLANK;
 
-			Group guestGroup = groupLocalService.getGroup(
-				companyId, GroupConstants.GUEST);
-
-			long[] groupIds = new long[] {guestGroup.getGroupId()};
-
-			long[] organizationIds = null;
-
-			Role adminRole = roleLocalService.getRole(
-				companyId, RoleConstants.ADMINISTRATOR);
-
-			Role powerUserRole = roleLocalService.getRole(
-				companyId, RoleConstants.POWER_USER);
-
-			long[] roleIds = new long[] {
-				adminRole.getRoleId(), powerUserRole.getRoleId()
-			};
-
-			long[] userGroupIds = null;
-			boolean sendEmail = false;
-			ServiceContext serviceContext = new ServiceContext();
-
-			User defaultAdminUser = userLocalService.addUser(
-				creatorUserId, companyId, autoPassword, password1, password2,
-				autoScreenName, screenName, emailAddress, facebookId, openId,
-				locale, firstName, middleName, lastName, prefixId, suffixId,
-				male, birthdayMonth, birthdayDay, birthdayYear, jobTitle,
-				groupIds, organizationIds, roleIds, userGroupIds, sendEmail,
-				serviceContext);
-
-			userLocalService.updateEmailAddressVerified(
-				defaultAdminUser.getUserId(), true);
-
-			userLocalService.updateLastLogin(
-				defaultAdminUser.getUserId(), defaultAdminUser.getLoginIP());
-
-			userLocalService.updatePasswordReset(
-				defaultAdminUser.getUserId(), false);
+			createAdminUser(companyId, defaultUser.getLocale(),
+				PropsValues.DEFAULT_ADMIN_FIRST_NAME,
+				PropsValues.DEFAULT_ADMIN_LAST_NAME, emailAddress,
+				PropsValues.DEFAULT_ADMIN_SCREEN_NAME);
 		}
 
 		// Portlets
@@ -477,6 +426,97 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			companyPersistence.update(company, false);
 		}
+	}
+
+	/**
+	 * Creates an admin user in the company, using first name, last name and
+	 * email address.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  defaultLocale the default locale of the admin user
+	 * @param  firstName the first name of the admin user
+	 * @param  lastName the last name of the admin user
+	 * @param  emailAddress the email address of the admin user
+	 * @param  screenName the screen name of the admin user
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void createAdminUser(long companyId, Locale defaultLocale,
+			String firstName, String lastName, String emailAddress,
+			String screenName)
+		throws PortalException, SystemException {
+
+		User user = UserLocalServiceUtil.fetchUserByScreenName(
+			companyId, screenName);
+
+		int screenNameIndex = 0;
+		String newScreenName = screenName;
+
+		while (user != null) {
+			screenNameIndex++;
+
+			newScreenName = screenName + screenNameIndex;
+
+			user = UserLocalServiceUtil.fetchUserByScreenName(
+				companyId, newScreenName);
+		}
+
+		screenName = newScreenName;
+		
+		long creatorUserId = 0;
+		boolean autoPassword = false;
+		String password1 = PropsValues.DEFAULT_ADMIN_PASSWORD;
+		String password2 = password1;
+		boolean autoScreenName = false;
+		long facebookId = 0;
+		String openId = StringPool.BLANK;
+		Locale locale = defaultLocale;
+		String middleName = PropsValues.DEFAULT_ADMIN_MIDDLE_NAME;
+		int prefixId = 0;
+		int suffixId = 0;
+		boolean male = true;
+		int birthdayMonth = Calendar.JANUARY;
+		int birthdayDay = 1;
+		int birthdayYear = 1970;
+		String jobTitle = StringPool.BLANK;
+
+		Group guestGroup = groupLocalService.getGroup(
+			companyId, GroupConstants.GUEST);
+
+		long[] groupIds = new long[] {guestGroup.getGroupId()};
+
+		long[] organizationIds = null;
+
+		Role adminRole = roleLocalService.getRole(
+			companyId, RoleConstants.ADMINISTRATOR);
+
+		Role powerUserRole = roleLocalService.getRole(
+			companyId, RoleConstants.POWER_USER);
+
+		long[] roleIds = new long[] {
+			adminRole.getRoleId(), powerUserRole.getRoleId()
+		};
+
+		long[] userGroupIds = null;
+		boolean sendEmail = false;
+		ServiceContext serviceContext = new ServiceContext();
+
+		User defaultAdminUser = userLocalService.addUser(
+			creatorUserId, companyId, autoPassword, password1, password2,
+			autoScreenName, screenName, emailAddress, facebookId, openId,
+			locale, firstName, middleName, lastName, prefixId, suffixId,
+			male, birthdayMonth, birthdayDay, birthdayYear, jobTitle,
+			groupIds, organizationIds, roleIds, userGroupIds, sendEmail,
+			serviceContext);
+
+		userLocalService.updateEmailAddressVerified(
+			defaultAdminUser.getUserId(), true);
+
+		userLocalService.updateLastLogin(
+			defaultAdminUser.getUserId(), defaultAdminUser.getLoginIP());
+
+		userLocalService.updatePasswordReset(
+			defaultAdminUser.getUserId(), false);
 	}
 
 	/**

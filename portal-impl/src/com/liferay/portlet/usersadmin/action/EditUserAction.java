@@ -67,6 +67,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.model.Website;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.service.EmailAddressServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -82,6 +83,11 @@ import com.liferay.portlet.admin.util.AdminUtil;
 import com.liferay.portlet.announcements.model.AnnouncementsDelivery;
 import com.liferay.portlet.announcements.model.AnnouncementsEntryConstants;
 import com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryImpl;
+import com.liferay.portlet.announcements.service.AnnouncementsDeliveryLocalServiceUtil;
+import com.liferay.portlet.asset.model.AssetCategory;
+import com.liferay.portlet.asset.model.AssetTag;
+import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.sites.util.SitesUtil;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
@@ -615,16 +621,78 @@ public class EditUserAction extends PortletAction {
 
 		long[] userGroupIds = getLongArray(
 			actionRequest, "userGroupsSearchContainerPrimaryKeys");
-		List<Address> addresses = UsersAdminUtil.getAddresses(actionRequest);
-		List<EmailAddress> emailAddresses = UsersAdminUtil.getEmailAddresses(
-			actionRequest);
-		List<Phone> phones = UsersAdminUtil.getPhones(actionRequest);
-		List<Website> websites = UsersAdminUtil.getWebsites(actionRequest);
+
+		List<Address> addresses = user.getAddresses();
+
+		if (actionRequest.getParameter("addressesIndexes") != null) {
+			addresses = UsersAdminUtil.getAddresses(actionRequest);
+		}
+
+		List<EmailAddress> emailAddresses =
+			EmailAddressServiceUtil.getEmailAddresses(
+				User.class.getName(), user.getUserId());
+
+		if (actionRequest.getParameter("emailAddressesIndexes") != null) {
+			emailAddresses = UsersAdminUtil.getEmailAddresses(actionRequest);
+		}
+
+		List<Phone> phones = user.getPhones();
+
+		if (actionRequest.getParameter("phonesIndexes") != null) {
+			phones = UsersAdminUtil.getPhones(actionRequest);
+		}
+
+		List<Website> websites = user.getWebsites();
+
+		if (actionRequest.getParameter("websitesIndexes") != null) {
+			websites = UsersAdminUtil.getWebsites(actionRequest);
+		}
+
 		List<AnnouncementsDelivery> announcementsDeliveries =
-			getAnnouncementsDeliveries(actionRequest);
+			AnnouncementsDeliveryLocalServiceUtil.getUserDeliveries(
+				user.getUserId());
+
+		if (actionRequest.getParameter(
+			"announcementsType" + AnnouncementsEntryConstants.TYPES[0] +
+				"Email") != null) {
+
+			announcementsDeliveries = getAnnouncementsDeliveries(actionRequest);
+		}
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			User.class.getName(), actionRequest);
+
+		if (actionRequest.getParameter("assetCategoryNames") == null ) {
+			List<AssetCategory> assetCategories =
+				AssetCategoryLocalServiceUtil.getCategories(
+					User.class.getName(), user.getUserId());
+
+			long[] assetCategoryIds = new long[assetCategories.size()];
+
+			for (int i = 0; i < assetCategories.size(); i++) {
+				AssetCategory assetCategory = assetCategories.get(i);
+
+				assetCategoryIds[i] = assetCategory.getCategoryId();
+			}
+
+			serviceContext.setAssetCategoryIds(assetCategoryIds);
+		}
+
+		if (actionRequest.getParameter("assetTagNames") == null ) {
+			List<AssetTag> assetTags =
+				AssetTagLocalServiceUtil.getTags(
+					User.class.getName(), user.getUserId());
+
+			String[] assetTagNames = new String[assetTags.size()];
+
+			for (int i = 0; i < assetTags.size(); i++) {
+				AssetTag assetTag = assetTags.get(i);
+
+				assetTagNames[i] = assetTag.getName();
+			}
+
+			serviceContext.setAssetTagNames(assetTagNames);
+		}
 
 		user = UserServiceUtil.updateUser(
 			user.getUserId(), oldPassword, newPassword1, newPassword2,

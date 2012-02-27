@@ -622,74 +622,71 @@ public class EditUserAction extends PortletAction {
 		long[] userGroupIds = getLongArray(
 			actionRequest, "userGroupsSearchContainerPrimaryKeys");
 
-		List<Address> addresses = user.getAddresses();
+		List<Address> addresses = null;
 
 		if (actionRequest.getParameter("addressesIndexes") != null) {
 			addresses = UsersAdminUtil.getAddresses(actionRequest);
 		}
+		else {
+			addresses = user.getAddresses();
+		}
 
-		List<EmailAddress> emailAddresses =
-			EmailAddressServiceUtil.getEmailAddresses(
-				User.class.getName(), user.getUserId());
+		List<EmailAddress> emailAddresses = null;
 
 		if (actionRequest.getParameter("emailAddressesIndexes") != null) {
 			emailAddresses = UsersAdminUtil.getEmailAddresses(actionRequest);
 		}
+		else {
+			emailAddresses = EmailAddressServiceUtil.getEmailAddresses(
+				User.class.getName(), user.getUserId());
+		}
 
-		List<Phone> phones = user.getPhones();
+		List<Phone> phones = null;
 
 		if (actionRequest.getParameter("phonesIndexes") != null) {
 			phones = UsersAdminUtil.getPhones(actionRequest);
 		}
+		else {
+			phones = user.getPhones();
+		}
 
-		List<Website> websites = user.getWebsites();
+		List<Website> websites = null;
 
 		if (actionRequest.getParameter("websitesIndexes") != null) {
 			websites = UsersAdminUtil.getWebsites(actionRequest);
 		}
+		else {
+			websites = user.getWebsites();
+		}
 
-		List<AnnouncementsDelivery> announcementsDeliveries =
-			AnnouncementsDeliveryLocalServiceUtil.getUserDeliveries(
-				user.getUserId());
+		List<AnnouncementsDelivery> announcementsDeliveries = null;
 
 		if (actionRequest.getParameter(
-			"announcementsType" + AnnouncementsEntryConstants.TYPES[0] +
-				"Email") != null) {
+				"announcementsType" + AnnouncementsEntryConstants.TYPES[0] +
+					"Email") != null) {
 
 			announcementsDeliveries = getAnnouncementsDeliveries(actionRequest);
+		}
+		else {
+			announcementsDeliveries =
+				AnnouncementsDeliveryLocalServiceUtil.getUserDeliveries(
+					user.getUserId());
 		}
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			User.class.getName(), actionRequest);
 
 		if (actionRequest.getParameter("assetCategoryNames") == null ) {
-			List<AssetCategory> assetCategories =
-				AssetCategoryLocalServiceUtil.getCategories(
+			long[] assetCategoryIds =
+				AssetCategoryLocalServiceUtil.getCategoryIds(
 					User.class.getName(), user.getUserId());
-
-			long[] assetCategoryIds = new long[assetCategories.size()];
-
-			for (int i = 0; i < assetCategories.size(); i++) {
-				AssetCategory assetCategory = assetCategories.get(i);
-
-				assetCategoryIds[i] = assetCategory.getCategoryId();
-			}
 
 			serviceContext.setAssetCategoryIds(assetCategoryIds);
 		}
 
 		if (actionRequest.getParameter("assetTagNames") == null ) {
-			List<AssetTag> assetTags =
-				AssetTagLocalServiceUtil.getTags(
-					User.class.getName(), user.getUserId());
-
-			String[] assetTagNames = new String[assetTags.size()];
-
-			for (int i = 0; i < assetTags.size(); i++) {
-				AssetTag assetTag = assetTags.get(i);
-
-				assetTagNames[i] = assetTag.getName();
-			}
+			String[] assetTagNames = AssetTagLocalServiceUtil.getTagNames(
+				User.class.getName(), user.getUserId());
 
 			serviceContext.setAssetTagNames(assetTagNames);
 		}

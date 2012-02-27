@@ -296,6 +296,33 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</then>
 	</if>
 
+	<target name="aggregate-cobertura-reports">
+		<cobertura-merge datafile="${sonar.cobertura.reportPath}">
+			<fileset dir="${project.dir}">
+				<include name="**/cobertura.ser"/>
+			</fileset>
+		</cobertura-merge>
+
+		<cobertura-report
+			datafile="${sonar.cobertura.reportPath}"
+			destdir="${sonar.cobertura.report.folder}"
+			format="${junit.cobertura.report.format}"
+		>
+			<fileset dir="${project.dir}/portal-impl/src">
+				<include name="**/*.java" />
+			</fileset>
+			<fileset dir="${project.dir}/portal-service/src">
+				<include name="**/*.java" />
+			</fileset>
+			<fileset dir="${project.dir}/util-java/src">
+				<include name="**/*.java" />
+			</fileset>
+			<fileset dir="${project.dir}/util-taglib/src">
+				<include name="**/*.java" />
+			</fileset>
+		</cobertura-report>
+	</target>
+
 	<target name="compile">
 	</target>
 
@@ -424,6 +451,34 @@ Please set the environment variable ANT_OPTS to the recommended value of
 
 	<target name="setproxy" if="setproxy.proxy.host">
 		<setproxy proxyhost="${setproxy.proxy.host}" proxyport="${setproxy.proxy.port}" />
+	</target>
+
+	<taskdef uri="antlib:org.sonar.ant" resource="org/sonar/ant/antlib.xml">
+		<classpath path="lib/development/sonar-ant-task.jar" />
+	</taskdef>
+
+	<target name="sonar">
+		<antcall target="aggregate-cobertura-reports" />
+	
+		<copy todir="${sonar.surefire.reportsPath}" failonerror="false">
+			<fileset dir="${project.dir}/portal-impl/test-results">
+				<include name="**/*.xml" />
+			</fileset>
+			<fileset dir="${project.dir}/portal-service/test-results">
+				<include name="**/*.xml" />
+			</fileset>
+			<fileset dir="${project.dir}/util-java/test-results">
+				<include name="**/*.xml" />
+			</fileset>
+			<fileset dir="${project.dir}/util-taglib/test-results">
+				<include name="**/*.xml" />
+			</fileset>
+		</copy>
+
+		<sonar:sonar key="com.liferay:liferay-portal" version="0.1-SNAPSHOT" xmlns:sonar="antlib:org.sonar.ant" />
+
+		<delete dir="${sonar.cobertura.report.folder}" />
+		<delete dir="${sonar.surefire.reportsPath}" />
 	</target>
 
 	<target name="test">

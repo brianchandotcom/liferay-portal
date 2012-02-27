@@ -2502,8 +2502,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 	}
 
-	protected void validateName(long groupId, long companyId, String name,
-			boolean site)
+	protected void validateName(
+			long groupId, long companyId, String name, boolean site)
 		throws PortalException, SystemException {
 
 		if ((Validator.isNull(name)) || (Validator.isNumber(name)) ||

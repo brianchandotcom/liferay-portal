@@ -918,7 +918,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		Company company = companyPersistence.findByPrimaryKey(companyId);
 
 		validate(company.getWebId(), virtualHostname, mx);
-		validate(name);
+		validate(name, companyId);
 
 		if (PropsValues.MAIL_MX_UPDATE) {
 			company.setMx(mx);
@@ -1236,8 +1236,12 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		}
 	}
 
-	protected void validate(String name) throws PortalException {
-		if (Validator.isNull(name)) {
+	protected void validate(String name, long companyId)
+		throws PortalException, SystemException {
+
+		Group group = groupLocalService.fetchGroup(companyId, name);
+
+		if (Validator.isNull(name) || group != null) {
 			throw new AccountNameException();
 		}
 	}

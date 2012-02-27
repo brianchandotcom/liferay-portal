@@ -919,10 +919,16 @@ if ((layout.isTypePanel() || layout.isTypeControlPanel()) && !portletDisplay.get
 				if (definition != null) {
 					templatePath = StrutsUtil.TEXT_HTML_DIR + definition.getPath();
 				}
+				
+				String portletContent = "/portal/portlet_error.jsp";
+
+				if (!access && !portletException) {
+					portletContent = "/portal/portlet_access_denied.jsp";
+				}
 		%>
 
 				<tiles:insert template="<%= templatePath %>" flush="false">
-					<tiles:put name="portlet_content" value="/portal/portlet_error.jsp" />
+					<tiles:put name="portlet_content" value="<%= portletContent %>" />
 				</tiles:insert>
 
 		<%

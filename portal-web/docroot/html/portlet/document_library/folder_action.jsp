@@ -420,7 +420,7 @@ if (row == null && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || 
 	</div>
 </div>
 
-<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>" var="viewSlideShowURL">
+<portlet:renderURL var="viewSlideShowURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="struts_action" value="/image_gallery_display/view_slide_show" />
 	<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 </portlet:renderURL>

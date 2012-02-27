@@ -161,7 +161,7 @@ alter table JournalArticle add statusDate DATE;
 COMMIT_TRANSACTION;
 
 update JournalArticle set status = 0 where approved = TRUE;
-update JournalArticle set status = 0 where approved = FALSE;
+update JournalArticle set status = 2 where approved = FALSE;
 update JournalArticle set statusByUserId = approvedByUserId;
 update JournalArticle set statusByUserName = approvedByUserName;
 update JournalArticle set statusDate = approvedDate where expired = FALSE;

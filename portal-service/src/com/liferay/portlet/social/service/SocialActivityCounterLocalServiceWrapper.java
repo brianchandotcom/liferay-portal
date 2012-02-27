@@ -270,6 +270,17 @@ public class SocialActivityCounterLocalServiceWrapper
 			startPeriod, endPeriod);
 	}
 
+	public com.liferay.portlet.social.model.SocialActivityCounter addActivityCounter(
+		long groupId, long classNameId, long classPK, java.lang.String name,
+		int ownerType, int currentValue, int totalValue, int startPeriod,
+		int endPeriod, long previousActivityCounterId, int periodLength)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _socialActivityCounterLocalService.addActivityCounter(groupId,
+			classNameId, classPK, name, ownerType, currentValue, totalValue,
+			startPeriod, endPeriod, previousActivityCounterId, periodLength);
+	}
+
 	public void addActivityCounters(
 		com.liferay.portlet.social.model.SocialActivity activity)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -280,12 +291,12 @@ public class SocialActivityCounterLocalServiceWrapper
 	public com.liferay.portlet.social.model.SocialActivityCounter createActivityCounter(
 		long groupId, long classNameId, long classPK, java.lang.String name,
 		int ownerType, int currentValue, int totalValue, int startPeriod,
-		int endPeriod)
+		int endPeriod, long previousActivityCounterId, int periodLength)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _socialActivityCounterLocalService.createActivityCounter(groupId,
 			classNameId, classPK, name, ownerType, currentValue, totalValue,
-			startPeriod, endPeriod);
+			startPeriod, endPeriod, previousActivityCounterId, periodLength);
 	}
 
 	public void deleteActivityCounters(

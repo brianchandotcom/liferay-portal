@@ -67,6 +67,17 @@ public class SocialActivityCounterLocalServiceImpl
 			int endPeriod)
 		throws PortalException, SystemException {
 
+		return addActivityCounter(
+			groupId, classNameId, classPK, name, ownerType, currentValue,
+			totalValue, startPeriod, endPeriod, 0, 0);
+	}
+
+	public SocialActivityCounter addActivityCounter(
+			long groupId, long classNameId, long classPK, String name,
+			int ownerType, int currentValue, int totalValue, int startPeriod,
+			int endPeriod, long previousActivityCounterId, int periodLength)
+		throws PortalException, SystemException {
+
 		SocialActivityCounter activityCounter = null;
 
 		String lockKey = getLockKey(
@@ -101,7 +112,8 @@ public class SocialActivityCounterLocalServiceImpl
 
 						activityCounter = createActivityCounter(
 							groupId, classNameId, classPK, name, ownerType,
-							currentValue, totalValue, startPeriod, endPeriod);
+							currentValue, totalValue, startPeriod, endPeriod,
+							previousActivityCounterId, periodLength);
 					}
 					else {
 						activityCounter =
@@ -109,7 +121,8 @@ public class SocialActivityCounterLocalServiceImpl
 								createActivityCounter(
 									groupId, classNameId, classPK, name,
 									ownerType, currentValue, totalValue,
-									startPeriod, endPeriod);
+									startPeriod, endPeriod,
+									previousActivityCounterId, periodLength);
 
 					}
 				}
@@ -229,10 +242,31 @@ public class SocialActivityCounterLocalServiceImpl
 	public SocialActivityCounter createActivityCounter(
 			long groupId, long classNameId, long classPK, String name,
 			int ownerType, int currentValue, int totalValue, int startPeriod,
-			int endPeriod)
+			int endPeriod, long previousActivityCounterId, int periodLength)
 		throws PortalException, SystemException {
 
-		SocialActivityCounter activityCounter =
+		SocialActivityCounter activityCounter = null;
+
+		if (previousActivityCounterId != 0) {
+			activityCounter =
+				socialActivityCounterPersistence.findByPrimaryKey(
+					previousActivityCounterId);
+
+			if (periodLength ==
+					SocialActivityCounterConstants.PERIOD_LENGTH_SYSTEM) {
+
+				activityCounter.setEndPeriod(
+					SocialCounterPeriodUtil.getStartPeriod() - 1);
+			}
+			else {
+				activityCounter.setEndPeriod(
+					activityCounter.getStartPeriod() + periodLength - 1);
+			}
+
+			socialActivityCounterPersistence.update(activityCounter, false);
+		}
+
+		activityCounter =
 			socialActivityCounterPersistence.fetchByG_C_C_N_O_E(
 				groupId, classNameId, classPK, name, ownerType, endPeriod,
 				false);
@@ -294,8 +328,16 @@ public class SocialActivityCounterLocalServiceImpl
 			if (latestContributionActivityCounter.getStartPeriod() !=
 					startPeriod) {
 
-				latestContributionActivityCounter = addNewPeriod(
-					latestContributionActivityCounter,
+				latestContributionActivityCounter = addActivityCounter(
+					latestContributionActivityCounter.getGroupId(),
+					latestContributionActivityCounter.getClassNameId(),
+					latestContributionActivityCounter.getClassPK(),
+					latestContributionActivityCounter.getName(),
+					latestContributionActivityCounter.getOwnerType(), 0,
+					latestContributionActivityCounter.getTotalValue(),
+					SocialCounterPeriodUtil.getStartPeriod(),
+					SocialActivityCounterConstants.END_PERIOD_UNDEFINED,
+					latestContributionActivityCounter.getActivityCounterId(),
 					SocialActivityCounterConstants.PERIOD_LENGTH_SYSTEM);
 			}
 
@@ -502,35 +544,6 @@ public class SocialActivityCounterLocalServiceImpl
 		return true;
 	}
 
-	protected SocialActivityCounter addNewPeriod(
-			SocialActivityCounter activityCounter, int periodLength)
-		throws PortalException, SystemException {
-
-		if (activityCounter == null) {
-			return null;
-		}
-
-		if (periodLength ==
-				SocialActivityCounterConstants.PERIOD_LENGTH_SYSTEM) {
-
-			activityCounter.setEndPeriod(
-				SocialCounterPeriodUtil.getStartPeriod() - 1);
-		}
-		else {
-			activityCounter.setEndPeriod(
-				activityCounter.getStartPeriod() + periodLength - 1);
-		}
-
-		socialActivityCounterPersistence.update(activityCounter, false);
-
-		return addActivityCounter(
-			activityCounter.getGroupId(), activityCounter.getClassNameId(),
-			activityCounter.getClassPK(), activityCounter.getName(),
-			activityCounter.getOwnerType(), 0, activityCounter.getTotalValue(),
-			SocialCounterPeriodUtil.getStartPeriod(),
-			SocialActivityCounterConstants.END_PERIOD_UNDEFINED);
-	}
-
 	protected boolean checkActivityLimit(
 			User user, SocialActivity activity,
 			SocialActivityCounterDefinition activityCounterDefinition)
@@ -629,7 +642,14 @@ public class SocialActivityCounterLocalServiceImpl
 		}
 
 		if (!activityCounter.isActivePeriod(periodLength)) {
-			activityCounter = addNewPeriod(activityCounter, periodLength);
+			activityCounter = addActivityCounter(
+				activityCounter.getGroupId(), activityCounter.getClassNameId(),
+				activityCounter.getClassPK(), activityCounter.getName(),
+				activityCounter.getOwnerType(), 0,
+				activityCounter.getTotalValue(),
+				SocialCounterPeriodUtil.getStartPeriod(),
+				SocialActivityCounterConstants.END_PERIOD_UNDEFINED,
+				activityCounter.getActivityCounterId(), periodLength);
 		}
 
 		activityCounter.setCurrentValue(

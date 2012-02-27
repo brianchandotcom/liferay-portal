@@ -97,11 +97,11 @@ public class HeaderCacheServletResponse extends HttpServletResponseWrapper {
 		header.setStringValue(value);
 		header.setType(Header.STRING_TYPE);
 
-		values.add(header);
-
 		if (values.contains(header)) {
 			return;
 		}
+
+		values.add(header);
 
 		if (name.equals(HttpHeaders.CONTENT_TYPE)) {
 			setContentType(value);

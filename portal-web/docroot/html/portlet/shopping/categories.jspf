@@ -106,7 +106,7 @@ portletURL.setParameter("categoryId", String.valueOf(categoryId));
 		}
 
 		boolean showAddCategoryButton = ShoppingCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.ADD_CATEGORY);
-		boolean showPermissionsButton = GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);
+		boolean showPermissionsButton = ShoppingCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.PERMISSIONS);
 		boolean showSearch = !results.isEmpty();
 		%>
 

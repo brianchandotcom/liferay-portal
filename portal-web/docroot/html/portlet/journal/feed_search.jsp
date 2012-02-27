@@ -38,7 +38,7 @@ FeedDisplayTerms displayTerms = (FeedDisplayTerms)searchContainer.getDisplayTerm
 
 <%
 boolean showAddFeedButtonButton = JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_FEED);
-boolean showPermissionsButton = GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);
+boolean showPermissionsButton = JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);
 %>
 
 <c:if test="<%= showAddFeedButtonButton || showPermissionsButton %>">

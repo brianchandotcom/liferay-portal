@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.ObjectValuePair;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringComparator;
 import com.liferay.portal.kernel.util.StringPool;
@@ -86,6 +85,11 @@ public class SeleneseToJavaBuilder {
 		Set<String> fileNames = getFileNames();
 
 		for (String fileName : fileNames) {
+			if (fileName.length() > 169) {
+				System.out.println(
+					"Exceeds 185 characters: portal-web/test/" + fileName);
+			}
+
 			if (fileName.endsWith("Test.html")) {
 				testHtmlCount++;
 
@@ -462,13 +466,6 @@ public class SeleneseToJavaBuilder {
 		sb.append("import com.liferay.portalweb.portal.BaseTestCase;\n");
 		sb.append(
 			"import com.liferay.portalweb.portal.util.RuntimeVariables;\n");
-		sb.append("import com.liferay.portalweb.portal.util.TestPropsValues;\n");
-		sb.append("import org.openqa.selenium.Alert;\n");
-		sb.append("import org.openqa.selenium.By;\n");
-		sb.append("import org.openqa.selenium.firefox.FirefoxDriver;\n");
-		sb.append("import java.util.concurrent.TimeUnit;\n");
-		sb.append("import org.openqa.selenium.WebDriver;\n");
-		sb.append("import org.openqa.selenium.WebElement;\n");
 
 		sb.append("public class ");
 		sb.append(testName);
@@ -585,12 +582,12 @@ public class SeleneseToJavaBuilder {
 			String param2 = fixParam(params[1]);
 			String param3 = fixParam(params[2]);
 
-			if (param1.equals("addSelection") ||
-				param1.equals("keyPress") ||
-				param1.equals("mouseMoveAt") ||
-				param1.equals("select") ||
-				param1.equals("uploadFile")) {
-
+			if (param1.equals("addSelection") || param1.equals("clickAt") ||
+				param1.equals("doubleClickAt") || param1.equals("keyPress") ||
+				param1.equals("mouseMoveAt") || param1.equals("openWindow") ||
+				param1.equals("select") || param1.equals("type") ||
+				param1.equals("typeKeys") || param1.equals("uploadFile") ||
+				param1.equals("waitForPopUp")) {
 
 				sb.append("selenium.");
 				sb.append(param1);
@@ -628,97 +625,6 @@ public class SeleneseToJavaBuilder {
 
 				sb.append("));");
 			}
-			
-			else if (param1.equals("clickAt") || 
-					 param1.equals("clickAtAndWait") ||
-					 param1.equals("clickAndWait") ||
-					 param1.equals("click")) {
-				sb.append("selenium.click(");
-
-				String param2value = param2;
-
-				if (param2.startsWith("${")) {
-
-					param2value = param2.substring(2, param2.length() - 1);
-					sb.append("RuntimeVariables.getValue(\"");
-					sb.append(param2value);
-					sb.append("\"));");
-				}
-				else {
-					sb.append("\"");
-					sb.append(param2value);
-					sb.append("\");");
-				}
-			}
-
-			else if (param1.equals("type")) {
-				sb.append("selenium.clearAndType(");
-				
-				String param2value = param2;
-
-				if (param2.startsWith("${")) {
-					param2value = param2.substring(2, param2.length() - 1);
-					
-					sb.append("RuntimeVariables.getValue(\"");
-					sb.append(param2value);
-					sb.append("\"), ");
-				}
-				else {
-					sb.append("\"");
-					sb.append(param2value);
-					sb.append("\", ");
-				}
-
-				if (param3.startsWith("${")) {
-					sb.append("RuntimeVariables.getValue(\"");
-
-					String text = param3.substring(2, param3.length() - 1);
-
-					sb.append(text);
-					sb.append("\")");
-					sb.append(");");
-				}
-				else {
-					sb.append("\"");
-					sb.append(param3);
-					sb.append("\");");
-				}				
-			}
-
-			else if (param1.equals("typeKeys")) {
-				sb.append("selenium.type(");
-
-				String param2value = param2;
-
-				if (param2.startsWith("${")) {
-					param2value = param2.substring(2, param2.length() - 1);
-					
-					sb.append("RuntimeVariables.getValue(\"");
-					sb.append(param2value);
-					sb.append("\"), ");
-				}
-				else {
-					sb.append("\"");
-					sb.append(param2value);
-					sb.append("\", ");
-				}
-
-				if (param3.startsWith("${")) {
-					sb.append("RuntimeVariables.getValue(\"");
-
-					String text = param3.substring(2, param3.length() - 1);
-
-					sb.append(text);
-					sb.append("\")");
-					sb.append(");");
-				}
-				else {
-					sb.append("\"");
-					sb.append(param3);
-					sb.append("\");");
-				}					
-			}
-
 			else if (param1.equals("assertAlert") ||
 					 param1.equals("assertNotAlert")) {
 
@@ -731,8 +637,7 @@ public class SeleneseToJavaBuilder {
 
 				sb.append("(\"");
 				sb.append(param2);
-				sb.append("\", selenium.getConfirmationText());");
-				sb.append("selenium.acceptConfirmation();");
+				sb.append("\", selenium.getAlert());");
 			}
 			else if (param1.equals("assertChecked") ||
 					 param1.equals("assertNotChecked")) {
@@ -748,17 +653,13 @@ public class SeleneseToJavaBuilder {
 				sb.append(param2);
 				sb.append("\"));");
 			}
-
 			else if (param1.equals("assertConfirmation")) {
+				param2 = StringUtil.replace(param2, "?", "[\\\\s\\\\S]");
 
-				sb.append("selenium.assertConfirmation(");
-				sb.append("\"");
+				sb.append("assertTrue(selenium.getConfirmation().matches(\"^");
 				sb.append(param2);
-				sb.append("\");");				
-
-				sb.append("selenium.switchTo().alert().accept();");
+				sb.append("$\"));");
 			}
-
 			else if (param1.equals("assertLocation") ||
 					 param1.equals("assertNotLocation")) {
 
@@ -773,7 +674,6 @@ public class SeleneseToJavaBuilder {
 				sb.append(param2);
 				sb.append("\"), selenium.getLocation());");
 			}
-
 			else if (param1.equals("assertElementNotPresent") ||
 					 param1.equals("assertElementPresent")) {
 
@@ -784,13 +684,10 @@ public class SeleneseToJavaBuilder {
 					sb.append("assertTrue");
 				}
 
-				sb.append("(selenium.isElementPresent(");
-
-				sb.append("\"");
+				sb.append("(selenium.isElementPresent(\"");
 				sb.append(param2);
 				sb.append("\"));");
 			}
-			
 			else if (param1.equals("assertNotPartialText") ||
 					 param1.equals("assertPartialText")) {
 
@@ -801,8 +698,7 @@ public class SeleneseToJavaBuilder {
 					sb.append("assertTrue");
 				}
 
-				sb.append("(selenium.isPartialText(");
-				sb.append("\"");
+				sb.append("(selenium.isPartialText(\"");
 				sb.append(param2);
 				sb.append("\", ");
 
@@ -812,18 +708,16 @@ public class SeleneseToJavaBuilder {
 					String text = param3.substring(2, param3.length() - 1);
 
 					sb.append(text);
-					sb.append("\"))"); 
+					sb.append("\")");
 				}
 				else {
 					sb.append("\"");
 					sb.append(param3);
-					sb.append("\")");
+					sb.append("\"");
 				}
 
-				sb.append(");");
-
+				sb.append("));");
 			}
-
 			else if (param1.equals("assertNotSelectedLabel") ||
 					 param1.equals("assertSelectedLabel")) {
 
@@ -870,7 +764,6 @@ public class SeleneseToJavaBuilder {
 				sb.append(param2);
 				sb.append("\"), \',\'));");
 			}
-
 			else if (param1.equals("assertNotText") ||
 					 param1.equals("assertText")) {
 
@@ -880,18 +773,12 @@ public class SeleneseToJavaBuilder {
 				else if (param1.equals("assertText")) {
 					sb.append("assertEquals");
 				}
-			
-				sb.append("(selenium.getWebElement(");
-				
-				sb.append("\"");
+
+				sb.append("(RuntimeVariables.replace(\"");
+				sb.append(param3);
+				sb.append("\"), selenium.getText(\"");
 				sb.append(param2);
-				sb.append("\")");
-				sb.append(".getText(), ");
-
-				sb.append("RuntimeVariables.replace(\"");
-				sb.append(param3);				
 				sb.append("\"));");
-
 			}
 			else if (param1.equals("assertNotValue") ||
 					 param1.equals("assertValue")) {
@@ -909,7 +796,6 @@ public class SeleneseToJavaBuilder {
 				sb.append(param2);
 				sb.append("\"));");
 			}
-
 			else if (param1.equals("assertNotVisible") ||
 					 param1.equals("assertVisible")) {
 
@@ -920,18 +806,16 @@ public class SeleneseToJavaBuilder {
 					sb.append("assertTrue");
 				}
 
-				sb.append("(selenium.isVisible(");
-				
-				sb.append("\"");
+				sb.append("(");
+				sb.append("selenium.isVisible(\"");
 				sb.append(param2);
 				sb.append("\"));");
-
 			}
 			else if (param1.equals("assertSelectOptions")) {
 				String[] expectedArray = StringUtil.split(param3);
 
 				sb.append("String[] actualArray = ");
-				sb.append("selenium.getSelectedOptions(\"");
+				sb.append("selenium.getSelectOptions(\"");
 				sb.append(param2);
 				sb.append("\");");
 
@@ -961,72 +845,28 @@ public class SeleneseToJavaBuilder {
 				sb.append(param2);
 				sb.append("\"));");
 			}
+			else if (param1.equals("captureEntirePageScreenshot")) {
+				int pos = param2.lastIndexOf("\\");
 
-			else if (param1.equals("open") || param1.equals("openWindow")) {
-				sb.append("selenium.open(");
+				String dirName = param2.substring(0, pos + 1);
 
-				String param2value = param2;
-				
-				if (param2.startsWith("${")) {
-
-					param2value = param2.substring(2, param2.length() - 1);
-
-					sb.append("RuntimeVariables.getValue(\"");
-					sb.append(param2value);
-					sb.append("\"));");
-				} else {
-					sb.append("\"");
-					sb.append(param2value);
-					sb.append("\");");
-				}
+				sb.append("FileUtil.mkdirs(RuntimeVariables.replace(\"");
+				sb.append(dirName);
+				sb.append("\"));");
+				sb.append("selenium.captureEntirePageScreenshot(");
+				sb.append("RuntimeVariables.replace(\"");
+				sb.append(param2);
+				sb.append("\"), \"\");");
 			}
-			
-			else if (param1.equals("setTimeout")) {
-				sb.append("selenium.setTimeOut("); 			
-			
-				if (param2.startsWith("${")) {
-					sb.append("RuntimeVariables.getValue(\"");
-
-					String text = param2.substring(2, param2.length() - 1);
-
-					sb.append(text);
-					sb.append("\")");
-				}
-				else {
-					sb.append("\"");
-					sb.append(param2);
-					sb.append("\"");
-				}		
-				
-				sb.append(");");
-			}
-			
-			else if (param1.equals("doubleClickAt") || param1.equals("doubleClick")) {
-				sb.append("selenium.doubleClick(");
-
-				if (param2.startsWith("${")) {
-					sb.append("RuntimeVariables.getValue(\"");
-
-					String text = param2.substring(2, param2.length() - 1);
-
-					sb.append(text);
-					sb.append("\")");
-				}
-				else {
-					sb.append("\"");
-					sb.append(param2);
-					sb.append("\"");
-				}	
-				sb.append(");");
-			}
-
-			else if (param1.equals("check") ||
+			else if (param1.equals("check") || param1.equals("click") ||
+					 param1.equals("doubleClick") ||
 					 param1.equals("downloadFile") ||
 					 param1.equals("mouseDown") || param1.equals("mouseMove") ||
 					 param1.equals("mouseOver") || param1.equals("mouseUp") ||
-					 param1.equals("selectFrame") ||
+					 param1.equals("open") || param1.equals("selectFrame") ||
+					 param1.equals("selectPopUp") ||
 					 param1.equals("selectWindow") ||
-					 param1.equals("uncheck")) {
+					 param1.equals("setTimeout") || param1.equals("uncheck")) {
 
 				sb.append("selenium.");
 				sb.append(param1);
@@ -1048,8 +888,20 @@ public class SeleneseToJavaBuilder {
 
 				sb.append(");");
 
+				if (param1.equals("open")) {
+					sb.append("loadRequiredJavaScriptModules();");
+				}
 			}
-			else if (param1.equals("keyPressAndWait") ||
+			else if (param1.equals("clickAndWait")) {
+				sb.append("selenium.click(RuntimeVariables.replace(\"");
+				sb.append(param2);
+				sb.append("\"));");
+				sb.append("selenium.waitForPageToLoad(\"30000\");");
+
+				sb.append("loadRequiredJavaScriptModules();");
+			}
+			else if (param1.equals("clickAtAndWait") ||
+					 param1.equals("keyPressAndWait") ||
 					 param1.equals("selectAndWait")) {
 
 				sb.append("selenium.");
@@ -1062,11 +914,13 @@ public class SeleneseToJavaBuilder {
 				sb.append("\", RuntimeVariables.replace(\"");
 				sb.append(param3);
 				sb.append("\"));");
+				sb.append("selenium.waitForPageToLoad(\"30000\");");
 
 				sb.append("loadRequiredJavaScriptModules();");
 			}
 			else if (param1.equals("close") || param1.equals("refresh") ||
 					 param1.equals("setBrowserOption") ||
+					 param1.equals("windowFocus") ||
 					 param1.equals("windowMaximize")) {
 
 				sb.append("selenium.");
@@ -1119,6 +973,9 @@ public class SeleneseToJavaBuilder {
 				sb.append("selenium.");
 				sb.append(text);
 				sb.append("();");
+				sb.append("selenium.waitForPageToLoad(\"30000\");");
+
+				sb.append("loadRequiredJavaScriptModules();");
 			}
 			else if (param1.equals("store")) {
 				sb.append("boolean ");
@@ -1126,31 +983,13 @@ public class SeleneseToJavaBuilder {
 				sb.append(" = ");
 
 				if (param2.startsWith("eval(")) {
-					String[] eval = param2.split("'");
-					String locator = eval[1];
-					
-					sb.append("(selenium.findElements(By.");
+					String eval = param2.substring(5, param2.length() - 1);
 
-					String param2value = locator;
+					eval = StringUtil.replace(eval, "'", "\"");
+					sb.append(eval);
+				}
 
-					if (param2value.startsWith("//")) {
-						sb.append("xpath(");
-					} else if (param2value.startsWith("link=")) {
-						sb.append("linkText(");
-						param2value = param2value.substring(5, param2value.length());
-					} else if (param2value.startsWith("name=")) {
-						sb.append("name(");
-						param2value = param2value.substring(5, param2value.length());
-					} else {
-						sb.append("id(");
-					}
-
-					sb.append("\"");
-					sb.append(param2value);
-					sb.append("\")");
-					sb.append(").size() != 0)");
-					}
-				sb.append(";");				
+				sb.append(";");
 			}
 			else if (param1.equals("storeAttribute")) {
 				sb.append("String ");
@@ -1164,6 +1003,13 @@ public class SeleneseToJavaBuilder {
 				sb.append("\", ");
 				sb.append(param3);
 				sb.append(");");
+			}
+			else if (param1.equals("storeChecked")) {
+				sb.append("boolean ");
+				sb.append(param3);
+				sb.append(" = selenium.isChecked(\"");
+				sb.append(param2);
+				sb.append("\");");
 			}
 			else if (param1.equals("storeCurrentDay")) {
 				sb.append("String ");
@@ -1187,13 +1033,6 @@ public class SeleneseToJavaBuilder {
 				sb.append(param2);
 				sb.append(");");
 			}
-			else if (param1.equals("storeChecked")) {
-			    sb.append("boolean ");
-			    sb.append(param3);
-			    sb.append(" = selenium.isChecked(\"");
-			    sb.append(param2);
-			    sb.append("\");");
-			}
 			else if (param1.equals("storeCurrentYear")) {
 				sb.append("String ");
 				sb.append(param2);
@@ -1205,7 +1044,6 @@ public class SeleneseToJavaBuilder {
 				sb.append(param2);
 				sb.append(");");
 			}
-			// modified
 			else if (param1.equals("storeElementPresent")) {
 				sb.append("boolean ");
 				sb.append(param3);
@@ -1293,7 +1131,7 @@ public class SeleneseToJavaBuilder {
 					sb.append("verifyTrue");
 				}
 
-				sb.append("(selenium.isVisible(\"");
+				sb.append("(selenium.isElementPresent(\"");
 				sb.append(param2);
 				sb.append("\"));");
 			}
@@ -1316,33 +1154,8 @@ public class SeleneseToJavaBuilder {
 				sb.append(param2);
 				sb.append("\", selenium.getTitle());");
 			}
-
-			else if (param1.equals("waitForConfirmation")) {    
-			    sb.append("for (int second = 0;; second++) {");
-			    sb.append("if (second >= 90) {");
-			    sb.append("fail(\"timeout\");");
-			    sb.append("}");
-
-			    sb.append("try {");
-			    sb.append("if (");
-			         		       
-			    sb.append("\"");
-			    sb.append(param2);
-			    sb.append("\".equals(selenium.getConfirmationText())");
-
-			    sb.append(") {");
-			    sb.append("selenium.acceptConfirmation();");     
-			    sb.append("break;");
-			    sb.append("}");
-			    sb.append("}");
-			    sb.append("catch (Exception e) {");
-			    sb.append("}");
-
-			    sb.append("Thread.sleep(1000);");
-			    sb.append("}");   
-			}
-
-			else if (param1.equals("waitForElementNotPresent") ||
+			else if (param1.equals("waitForConfirmation") ||
+					 param1.equals("waitForElementNotPresent") ||
 					 param1.equals("waitForElementPresent") ||
 					 param1.equals("waitForNotPartialText") ||
 					 param1.equals("waitForNotSelectedLabel") ||
@@ -1380,22 +1193,18 @@ public class SeleneseToJavaBuilder {
 				}
 
 				if (param1.equals("waitForConfirmation")) {
-					String param2value = StringUtil.replace(param2, "?", "[\\\\s\\\\S]");								
-					
 					sb.append("\"");
-					sb.append(param2value);
-					sb.append("\".equals(selenium.getConfirmationText())");
+					sb.append(param2);
+					sb.append("\".equals(selenium.getConfirmation())");
 				}
 				else if (param1.equals("waitForElementNotPresent") ||
 						 param1.equals("waitForElementPresent")) {
 
-					sb.append("selenium.isElementPresent(");
-
-					sb.append("\"");
+					sb.append("selenium.isElementPresent");
+					sb.append("(\"");
 					sb.append(param2);
 					sb.append("\")");
 				}
-				
 				else if (param1.equals("waitForNotPartialText") ||
 						 param1.equals("waitForPartialText")) {
 
@@ -1416,9 +1225,9 @@ public class SeleneseToJavaBuilder {
 						sb.append(param3);
 						sb.append("\"");
 					}
+
 					sb.append(")");
 				}
-
 				else if (param1.equals("waitForNotSelectedLabel") ||
 						 param1.equals("waitForSelectedLabel"))
 				{
@@ -1448,43 +1257,32 @@ public class SeleneseToJavaBuilder {
 					sb.append(param2);
 					sb.append("\"))");
 				}
-
 				else if (param1.equals("waitForNotText") ||
 						 param1.equals("waitForText")) {
 
-					sb.append("selenium.isText(");
-					sb.append("\"");
-					sb.append(param2);
-					sb.append("\", ");
 					sb.append("RuntimeVariables.replace(\"");
 					sb.append(param3);
+					sb.append("\").equals(selenium.getText(\"");
+					sb.append(param2);
 					sb.append("\"))");
 				}
-				
 				else if (param1.equals("waitForNotValue") ||
 						 param1.equals("waitForValue")) {
 
-					sb.append("selenium.isValue(");
-					sb.append("\"");
-					sb.append(param2);
-					sb.append("\", ");
-					
 					sb.append("RuntimeVariables.replace(\"");
 					sb.append(param3);
+					sb.append("\").equals(selenium.getValue(\"");
+					sb.append(param2);
 					sb.append("\"))");
 				}
-				
 				else if (param1.equals("waitForNotVisible") ||
 						 param1.equals("waitForVisible")) {
 
-					sb.append("selenium.isVisible(");
-					
-					sb.append("\"");
+					sb.append("selenium.isVisible");
+					sb.append("(\"");
 					sb.append(param2);
 					sb.append("\")");
-
 				}
-
 				else if (param1.equals("waitForTextNotPresent") ||
 						 param1.equals("waitForTextPresent")) {
 
@@ -1676,6 +1474,6 @@ public class SeleneseToJavaBuilder {
 			}
 		}
 
-	};
+	}
 
 }

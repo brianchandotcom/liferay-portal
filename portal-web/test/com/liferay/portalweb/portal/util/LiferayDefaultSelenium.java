@@ -75,7 +75,11 @@ public class LiferayDefaultSelenium
 	}
 
 	public boolean assertConfirmation(String param2) {
-		return getConfirmationText().matches("^" + param2 + "$");	
+		return getConfirmation().matches("^" + param2 + "$");	
+	}
+
+	public void captureEntirePageScreenshot(String param2, String param3) {
+		// do nothing?
 	}
 
 	public void check(String param2) {
@@ -100,21 +104,46 @@ public class LiferayDefaultSelenium
 		Actions actions = new Actions(this);
 		WebElement element = getWebElement(param2);
 
-		String [] coords = param3.split(",");
-		int x = Integer.parseInt(coords[0]);
-		int y = Integer.parseInt(coords[1]);
+		if (param3.contains(",")) {
+			String [] coords = param3.split(",");
+			int x = Integer.parseInt(coords[0]);
+			int y = Integer.parseInt(coords[1]);
 
-		actions.moveToElement(element, x, y);
-		actions.click();
+			actions.moveToElement(element, x, y);
+			actions.click();		
+		} else {
+			element.click();
+		}
 	}
 
 	public void doubleClick(String param2) {
-		Actions actions = new Actions(this);		
+		Actions actions = new Actions(this);
 		WebElement element = getWebElement(param2);
 		actions.doubleClick(element);
 		actions.build();
 		actions.perform();
 	}
+
+	// edit this to account for coords
+	public void doubleClickAt(String param2, String param3) {
+		Actions actions = new Actions(this);		
+		WebElement element = getWebElement(param2);
+
+		if (param3.contains(",")) {
+			String [] coords = param3.split(",");
+			int x = Integer.parseInt(coords[0]);
+			int y = Integer.parseInt(coords[1]);
+
+			actions.moveToElement(element, x, y);
+			actions.doubleClick(element);
+			actions.build();
+			actions.perform();			
+		} else {
+			actions.doubleClick(element);
+			actions.build();
+			actions.perform();
+		}
+	}	
 
 	public void downloadFile(String value) {
 		if (!_BROWSER_TYPE.equals("*chrome") &&
@@ -174,7 +203,7 @@ public class LiferayDefaultSelenium
 		return element.getAttribute(a[last]);
 	}
 
-	public String getConfirmationText() {
+	public String getConfirmation() {
 		WebDriver.TargetLocator targetLocator = switchTo();
 		Alert alert = targetLocator.alert();
 		return alert.getText();
@@ -422,6 +451,10 @@ public class LiferayDefaultSelenium
 		}
 	}
 
+	public void loadRequiredJavaScriptModules() {
+		// do nothing
+	}
+
 	public void longImplicitWait() {
 		manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	}
@@ -484,6 +517,10 @@ public class LiferayDefaultSelenium
 		}
 	}
 
+	public void openWindow(String param2, String param3) {
+		open(param2);
+	}
+
 	public void refresh() {
 		navigate().refresh();
 	}
@@ -529,6 +566,10 @@ public class LiferayDefaultSelenium
   		 }
  	}
 
+ 	public void selectPopUp(String param2) {
+ 		// do nothing
+ 	}
+
 	public void selectWindow(String param2) {
 		if (param2.startsWith("title=")) {
 			Set<String> availableWindows = getWindowHandles(); 
@@ -571,7 +612,7 @@ public class LiferayDefaultSelenium
 		}
 	}
 
-	public void setTimeOut(String param2) {
+	public void setTimeout(String param2) {
 		manage().timeouts().implicitlyWait(
 			Long.valueOf(param2), TimeUnit.MILLISECONDS);
 	}
@@ -582,11 +623,17 @@ public class LiferayDefaultSelenium
 	}
 
 	public void type(String param2, String param3) {
+		clearAndType(param2, param3);
+	}
+
+	public void typeKeys(String param2, String param3) {
 		WebElement element = getWebElement(param2);
+		
 		if (element.isEnabled()) {
 			element.sendKeys(param3);			
 		}
 	}
+
 
 	public void uncheck(String param2) {
 		WebElement element = getWebElement(param2);
@@ -595,10 +642,26 @@ public class LiferayDefaultSelenium
 		} 
 	}
 
+	public void windowFocus() {
+		// do nothing
+	}
+
 	public void windowMaximize () {
 		WebDriverBackedSelenium selenium1 = new WebDriverBackedSelenium(
 			this, getCurrentUrl());
 		selenium1.windowMaximize();
+	}
+
+	public void waitForPageToLoad(String duration) {
+		// do nothing
+	}
+
+	public void waitForPopUp(String param2, String param3) {
+		// do nothing
+	}
+
+	public void waitForTable(String param2) {
+		// do nothing
 	}
 
 	public void uploadFile(String location, String value) {

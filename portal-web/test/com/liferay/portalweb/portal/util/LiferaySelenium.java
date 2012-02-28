@@ -36,6 +36,8 @@ public interface LiferaySelenium extends WebDriver {
 
 	public boolean assertConfirmation(String param2);
 
+	public void captureEntirePageScreenshot(String param2, String param3);
+
 	public void check(String param2);
 
 	public void click(String param2);
@@ -46,13 +48,15 @@ public interface LiferaySelenium extends WebDriver {
 
 	public void doubleClick(String param2);
 
+	public void doubleClickAt(String param2, String param3);
+
 	public void downloadFile(String value);
 
 	public void dragAndDropToObject(String param2, String param3);	
 
 	public String getAttribute(String param2);
 
-	public String getConfirmationText();
+	public String getConfirmation();
 
 	public String getElementText(String param2);
 
@@ -92,6 +96,8 @@ public interface LiferaySelenium extends WebDriver {
 
 	public void keyPress(String param2, String param3);
 
+	public void loadRequiredJavaScriptModules();
+
 	public void longImplicitWait();	
 
 	public void mouseDown(String param2);
@@ -106,6 +112,8 @@ public interface LiferaySelenium extends WebDriver {
 
 	public void open(String param2);
 
+	public void openWindow(String param2, String param3);
+
 	public void refresh();
 
 	public void select(String param2, String param3);
@@ -114,19 +122,31 @@ public interface LiferaySelenium extends WebDriver {
 
 	public void selectFrame(String param2);
 
+	public void selectPopUp(String param2);
+
 	public void selectWindow(String param2);
 
 	public void setBrowserOption();
 
-	public void setTimeOut(String param2);
+	public void setTimeout(String param2);
 
 	public void shortImplicitWait();
 
 	public void type(String param2, String param3);
 
+	public void typeKeys(String param2, String param3);
+
 	public void uncheck(String param2);
 
 	public void uploadFile(String locator, String value);
+
+	public void waitForPageToLoad(String duration);
+
+	public void waitForPopUp(String param2, String param3);
+
+	public void waitForTable(String param2);
+
+	public void windowFocus();
 
 	public void windowMaximize();
 

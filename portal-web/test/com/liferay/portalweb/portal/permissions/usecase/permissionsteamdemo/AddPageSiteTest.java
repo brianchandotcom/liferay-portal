@@ -60,8 +60,9 @@ public class AddPageSiteTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[7]/span/ul/li/strong/a/span"));
-				selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -93,7 +94,9 @@ public class AddPageSiteTest extends BaseTestCase {
 					RuntimeVariables.replace("Public Pages"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-				selenium.clickAt("//div/span/button[1]",
+				assertEquals(RuntimeVariables.replace("Add Page"),
+					selenium.getText("//div/span/button[1]/span[2]"));
+				selenium.clickAt("//div/span/button[1]/span[2]",
 					RuntimeVariables.replace("Add Page"));
 
 				for (int second = 0;; second++) {

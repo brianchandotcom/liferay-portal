@@ -31,7 +31,7 @@ public class SignOutTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Sign Out")) {
+				if (selenium.isVisible("link=Sign Out")) {
 					break;
 				}
 			}

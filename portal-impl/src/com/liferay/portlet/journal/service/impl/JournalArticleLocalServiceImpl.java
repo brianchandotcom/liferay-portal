@@ -635,6 +635,12 @@ public class JournalArticleLocalServiceImpl
 
 		if (articlesCount == 1) {
 
+			// Subscriptions
+
+			subscriptionLocalService.deleteSubscriptions(
+				article.getCompanyId(), JournalArticle.class.getName(),
+				article.getResourcePrimKey());
+
 			// Ratings
 
 			ratingsStatsLocalService.deleteStats(

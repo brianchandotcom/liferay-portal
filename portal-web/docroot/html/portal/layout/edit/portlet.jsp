@@ -16,10 +16,10 @@
 
 <%@ include file="/html/portal/layout/edit/init.jsp" %>
 
-<div id="<portlet:namespace />copyPortletsFromPage" class="aui-helper-hidden">
+<div class="aui-helper-hidden" id="<portlet:namespace />copyPortletsFromPage">
 
 	<p>
-		<liferay-ui:message key="the-portlets-in-page-x-will-be-replaced-with-the-portlets-in-the-page-you-select-below" arguments="<%= HtmlUtil.escape(selLayout.getName(locale)) %>" />
+		<liferay-ui:message arguments="<%= HtmlUtil.escape(selLayout.getName(locale)) %>" key="the-portlets-in-page-x-will-be-replaced-with-the-portlets-in-the-page-you-select-below" />
 	</p>
 
 	<aui:select label="copy-from-page" name="copyLayoutId" showEmptyOption="<%= true %>">

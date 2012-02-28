@@ -21,9 +21,9 @@ RecordSetDisplayTerms displayTerms = new RecordSetDisplayTerms(renderRequest);
 %>
 
 <liferay-ui:search-toggle
-	id="toggle_id_dynamic_data_lists_record_set_search"
-	displayTerms="<%= displayTerms %>"
 	buttonLabel="search"
+	displayTerms="<%= displayTerms %>"
+	id="toggle_id_dynamic_data_lists_record_set_search"
 >
 
 	<aui:fieldset>

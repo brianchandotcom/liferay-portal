@@ -37,10 +37,10 @@ import com.liferay.portal.service.ResourceCodeLocalServiceUtil;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
-import org.apache.commons.lang.time.StopWatch;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+
+import org.apache.commons.lang.time.StopWatch;
 
 /**
  * @author Michael C. Han
@@ -92,8 +92,14 @@ public class DBUpgrader {
 		int buildNumber = ReleaseLocalServiceUtil.getBuildNumberOrCreate();
 
 		if (buildNumber == ReleaseInfo.getDefaultBuildNumber()) {
-			throw new UpgradeException("Wrong build number detected," +
-				" aborting database upgrade.");
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("The database contains changes from a previous ");
+			sb.append("upgrade attempt. Please restore the old database and");
+			sb.append("filesystem from the backups and start the upgrade ");
+			sb.append("again.");
+
+			throw new IllegalStateException(sb.toString());
 		}
 		else if (buildNumber > ReleaseInfo.getBuildNumber()) {
 			StringBundler sb = new StringBundler(6);
@@ -255,12 +261,6 @@ public class DBUpgrader {
 		db.runSQL(_DELETE_TEMP_IMAGES_2);
 	}
 
-	private static void _updateCompanyKey() throws Exception {
-		DB db = DBFactoryUtil.getDB();
-
-		db.runSQL("update Company set key_ = null");
-	}
-
 	private static void _updateBuildNumber(int buildNumber, int newBuildNumber)
 		throws Exception {
 
@@ -294,6 +294,12 @@ public class DBUpgrader {
 		finally {
 			DataAccess.cleanUp(con, ps);
 		}
+	}
+
+	private static void _updateCompanyKey() throws Exception {
+		DB db = DBFactoryUtil.getDB();
+
+		db.runSQL("update Company set key_ = null");
 	}
 
 	private static final String _DELETE_TEMP_IMAGES_1 =

@@ -576,6 +576,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-io', 'aui-task-manager', 'cookie', 'liferay-notice']
+		requires: ['aui-io-request', 'aui-task-manager', 'cookie', 'liferay-notice']
 	}
 );

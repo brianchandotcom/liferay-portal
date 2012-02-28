@@ -78,7 +78,7 @@
 			'portlet-url': ['aui-base', 'aui-io-request', 'querystring-stringify-simple'],
 			'ratings': ['aui-io-request', 'aui-rating'],
 			'search-container': ['aui-base', 'event-mouseenter'],
-			'session': ['aui-io', 'aui-task-manager', 'cookie', 'liferay-notice'],
+			'session': ['aui-io-request', 'aui-task-manager', 'cookie', 'liferay-notice'],
 			'service-datasource': ['aui-base', 'datasource-local'],
 			'staging': ['aui-dialog', 'aui-io-plugin'],
 			'staging-branch': ['liferay-staging'],
@@ -86,7 +86,7 @@
 			'token-list': ['aui-base', 'aui-template'],
 			'translation-manager': ['aui-base'],
 			'undo-manager': ['aui-data-set', 'base'],
-			'upload': ['aui-base', 'aui-swf', 'collection', 'swfupload'],
+			'upload': ['aui-io-request', 'aui-swf', 'collection', 'swfupload'],
 			'util-list-fields': ['aui-base'],
 			'util-window': ['aui-dialog', 'aui-dialog-iframe']
 		};

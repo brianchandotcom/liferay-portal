@@ -1079,6 +1079,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-swf', 'collection', 'swfupload']
+		requires: ['aui-io-request', 'aui-swf', 'collection', 'swfupload']
 	}
 );

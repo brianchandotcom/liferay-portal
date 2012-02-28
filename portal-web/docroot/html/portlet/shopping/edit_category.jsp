@@ -63,7 +63,7 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 
 					parentCategoryName = parentCategory.getName();
 				}
-				catch (NoSuchCategoryException nscce) {
+				catch (NoSuchCategoryException nsce) {
 				}
 				%>
 

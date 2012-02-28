@@ -115,7 +115,7 @@ private String _testURL(String url) {
 
 		httpURLConnection.getResponseCode();
 	}
-	catch (MalformedURLException e) {
+	catch (MalformedURLException murle) {
 		return "fail";
 	}
 	catch (Exception e) {

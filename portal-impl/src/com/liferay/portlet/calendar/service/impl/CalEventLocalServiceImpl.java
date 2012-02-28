@@ -383,6 +383,12 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 			event.getCompanyId(), CalEvent.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL, event.getEventId());
 
+		// Subscriptions
+
+		subscriptionLocalService.deleteSubscriptions(
+			event.getCompanyId(), CalEvent.class.getName(),
+			event.getEventId());
+
 		// Asset
 
 		assetEntryLocalService.deleteEntry(

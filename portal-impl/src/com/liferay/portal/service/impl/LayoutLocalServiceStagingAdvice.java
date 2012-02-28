@@ -177,8 +177,10 @@ public class LayoutLocalServiceStagingAdvice
 		validateParentLayoutId(
 			groupId, privateLayout, layoutId, parentLayoutId);
 
-		Layout layout = layoutPersistence.findByG_P_L(
+		Layout originalLayout = layoutPersistence.findByG_P_L(
 			groupId, privateLayout, layoutId);
+
+		Layout layout = wrapLayout(originalLayout);
 
 		LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(
 			layout);
@@ -190,36 +192,36 @@ public class LayoutLocalServiceStagingAdvice
 				friendlyURL, iconImage, iconBytes, serviceContext);
 		}
 
-		if (parentLayoutId != layout.getParentLayoutId()) {
-			layout.setPriority(
+		if (parentLayoutId != originalLayout.getParentLayoutId()) {
+			originalLayout.setPriority(
 				getNextPriority(groupId, privateLayout, parentLayoutId));
 		}
 
-		layout.setParentLayoutId(parentLayoutId);
+		originalLayout.setParentLayoutId(parentLayoutId);
 		layoutRevision.setNameMap(nameMap);
 		layoutRevision.setTitleMap(titleMap);
 		layoutRevision.setDescriptionMap(descriptionMap);
 		layoutRevision.setKeywordsMap(keywordsMap);
 		layoutRevision.setRobotsMap(robotsMap);
-		layout.setType(type);
-		layout.setHidden(hidden);
-		layout.setFriendlyURL(friendlyURL);
+		originalLayout.setType(type);
+		originalLayout.setHidden(hidden);
+		originalLayout.setFriendlyURL(friendlyURL);
 
 		if (iconImage != null) {
-			layout.setIconImage(iconImage.booleanValue());
+			originalLayout.setIconImage(iconImage.booleanValue());
 
 			if (iconImage.booleanValue()) {
-				long iconImageId = layout.getIconImageId();
+				long iconImageId = originalLayout.getIconImageId();
 
 				if (iconImageId <= 0) {
 					iconImageId = counterLocalService.increment();
 
-					layout.setIconImageId(iconImageId);
+					originalLayout.setIconImageId(iconImageId);
 				}
 			}
 		}
 
-		layoutPersistence.update(layout, false);
+		layoutPersistence.update(originalLayout, false);
 
 		boolean hasWorkflowTask = StagingUtil.hasWorkflowTask(
 			serviceContext.getUserId(), layoutRevision);
@@ -244,17 +246,17 @@ public class LayoutLocalServiceStagingAdvice
 		if (iconImage != null) {
 			if ((iconBytes != null) && (iconBytes.length > 0)) {
 				imageLocalService.updateImage(
-					layout.getIconImageId(), iconBytes);
+					originalLayout.getIconImageId(), iconBytes);
 			}
 		}
 
 		// Expando
 
-		ExpandoBridge expandoBridge = layout.getExpandoBridge();
+		ExpandoBridge expandoBridge = originalLayout.getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
 
-		return wrapLayout(layout);
+		return layout;
 	}
 
 	@Override

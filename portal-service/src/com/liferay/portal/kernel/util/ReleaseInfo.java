@@ -75,6 +75,10 @@ public class ReleaseInfo {
 		return _CODE_NAME;
 	}
 
+	public static final int getDefaultBuildNumber() {
+		return _DEFAULT_BUILD_NUMBER;
+	}
+
 	public static final String getName() {
 		return _NAME;
 	}
@@ -113,6 +117,8 @@ public class ReleaseInfo {
 	private static final String _CODE_NAME = "Newton";
 
 	private static final String _DATE = "January 18, 2012";
+
+	private static final short _DEFAULT_BUILD_NUMBER = 0;
 
 	private static final String _NAME = "Liferay Portal Community Edition";
 

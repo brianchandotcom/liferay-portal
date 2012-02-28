@@ -49,7 +49,8 @@ public class SearchEngineUtil {
 
 	/**
 	 * @deprecated Use {@link
-	 *             addDocument(String searchEngineId, long companyId, Document document)}.
+	 *             addDocument(String searchEngineId, long companyId,
+	 *             Document document)}.
 	 */
 	public static void addDocument(long companyId, Document document)
 		throws SearchException {
@@ -71,7 +72,7 @@ public class SearchEngineUtil {
 
 		_searchPermissionChecker.addPermissionFields(companyId, document);
 
-		SearchEngine searchEngine = _searchEngines.get(searchEngineId);
+		SearchEngine searchEngine = getSearchEngine(searchEngineId);
 
 		IndexWriter indexWriter = searchEngine.getIndexWriter();
 
@@ -90,6 +91,7 @@ public class SearchEngineUtil {
 	public static void addDocuments(
 			long companyId, Collection<Document> documents)
 		throws SearchException {
+
 		addDocuments(getSearchEngine(documents), companyId, documents);
 	}
 
@@ -110,7 +112,7 @@ public class SearchEngineUtil {
 			_searchPermissionChecker.addPermissionFields(companyId, document);
 		}
 
-		SearchEngine searchEngine = _searchEngines.get(searchEngineId);
+		SearchEngine searchEngine = getSearchEngine(searchEngineId);
 
 		IndexWriter indexWriter = searchEngine.getIndexWriter();
 
@@ -122,13 +124,18 @@ public class SearchEngineUtil {
 		indexWriter.addDocuments(searchContext, documents);
 	}
 
+	/**
+	 * @deprecated Use {@link setSearchEngine(
+	 *             String searchEngineId, SearchEngine searchEngine)}.
+	 */
 	public static void addSearchEngine(SearchEngine searchEngine) {
-		_searchEngines.put(searchEngine.getName(), searchEngine);
+		_searchEngines.put(getDefaultSearchEngineId(), searchEngine);
 	}
 
 	/**
 	 * @deprecated Use {@link
-	 *     deleteDocument(String searchEngineId, long companyId, String uid)}.
+	 *             deleteDocument(String searchEngineId, long companyId,
+	 *             String uid)}.
 	 */
 	public static void deleteDocument(long companyId, String uid)
 		throws SearchException {
@@ -147,7 +154,7 @@ public class SearchEngineUtil {
 			return;
 		}
 
-		SearchEngine searchEngine = _searchEngines.get(searchEngineId);
+		SearchEngine searchEngine = getSearchEngine(searchEngineId);
 
 		IndexWriter indexWriter = searchEngine.getIndexWriter();
 
@@ -180,7 +187,7 @@ public class SearchEngineUtil {
 			return;
 		}
 
-		SearchEngine searchEngine = _searchEngines.get(searchEngineId);
+		SearchEngine searchEngine = getSearchEngine(searchEngineId);
 
 		IndexWriter indexWriter = searchEngine.getIndexWriter();
 
@@ -213,7 +220,7 @@ public class SearchEngineUtil {
 			return;
 		}
 
-		SearchEngine searchEngine = _searchEngines.get(searchEngineId);
+		SearchEngine searchEngine = getSearchEngine(searchEngineId);
 
 		if (searchEngine == null) {
 			return;
@@ -227,6 +234,14 @@ public class SearchEngineUtil {
 		searchContext.setSearchEngineId(searchEngineId);
 
 		indexWriter.deletePortletDocuments(searchContext, portletId);
+	}
+
+	public static String getDefaultSearchEngineId() {
+		if (_defaultSearchEngineId == null) {
+			return SYSTEM_ENGINE_ID;
+		}
+
+		return _defaultSearchEngineId;
 	}
 
 	public static String[] getEntryClassNames() {
@@ -245,17 +260,17 @@ public class SearchEngineUtil {
 	}
 
 	/**
- 	 * @deprecated Search Engine Selection needs a searchEngineId. Use {@link
- 	 *     getSearchEngine(String searchEngineId)}.
+	 * @deprecated Search Engine Selection needs a searchEngineId. Use {@link
+	 *     getSearchEngine(String searchEngineId)}.
 	 */
 	public static SearchEngine getSearchEngine() {
-		return getSearchEngine(SYSTEM_ENGINE_ID);
+		return getSearchEngine(getDefaultSearchEngineId());
 	}
 
 	private static String getSearchEngine(Document document) {
-	    String documentClassName = document.get("entryClassName");
+		String documentClassName = document.get("entryClassName");
 
-	    Indexer indexer = IndexerRegistryUtil.getIndexer(documentClassName);
+		Indexer indexer = IndexerRegistryUtil.getIndexer(documentClassName);
 
 		String searchEngineId = indexer.getSearchEngineId();
 
@@ -266,18 +281,38 @@ public class SearchEngineUtil {
 		return searchEngineId;
 	}
 
- 	private static String getSearchEngine(Collection<Document> documents) {
+	 private static String getSearchEngine(Collection<Document> documents) {
 		if (!documents.isEmpty()) {
 			Document document = documents.iterator().next();
 
 			return getSearchEngine(document);
-		} else {
-			return SYSTEM_ENGINE_ID;
 		}
+
+		return getDefaultSearchEngineId();
 	}
 
 	public static SearchEngine getSearchEngine(String searchEngineId) {
-		return _searchEngines.get(searchEngineId);
+		SearchEngine searchEngine = _searchEngines.get(searchEngineId);
+
+		if (searchEngine == null) {
+			if (getDefaultSearchEngineId().equals(searchEngineId)) {
+				throw new IllegalStateException(
+					"There is no default search engine configured with name: " +
+						getDefaultSearchEngineId());
+			}
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"There is no search engine configured with the name: " +
+						searchEngineId);
+			}
+		}
+
+		return searchEngine;
+	}
+
+	public static Map<String, SearchEngine> getSearchEngines() {
+		return _searchEngines;
 	}
 
 	public static SearchPermissionChecker getSearchPermissionChecker() {
@@ -298,7 +333,7 @@ public class SearchEngineUtil {
 		return _indexReadOnly;
 	}
 
-        public static SearchEngine removeSearchEngine(String searchEngineName) {
+	public static SearchEngine removeSearchEngine(String searchEngineName) {
 		return _searchEngines.remove(searchEngineName);
 	}
 
@@ -308,9 +343,8 @@ public class SearchEngineUtil {
 			Query query, int start, int end)
 		throws SearchException {
 
-                //TODO should get the searchEngineID based on what?
 		SearchContext searchContext = new SearchContext();
-                searchContext.setSearchEngineId(SearchEngineUtil.SYSTEM_ENGINE_ID);
+		searchContext.setSearchEngineId(getDefaultSearchEngineId());
 
 		if (userId > 0) {
 			query = _searchPermissionChecker.getPermissionQuery(
@@ -327,9 +361,8 @@ public class SearchEngineUtil {
 			Query query, Sort sort, int start, int end)
 		throws SearchException {
 
-                //TODO should get the searchEngineID based on what?
 		SearchContext searchContext = new SearchContext();
-                searchContext.setSearchEngineId(SearchEngineUtil.SYSTEM_ENGINE_ID);
+		searchContext.setSearchEngineId(getDefaultSearchEngineId());
 
 		if (userId > 0) {
 			query = _searchPermissionChecker.getPermissionQuery(
@@ -345,9 +378,8 @@ public class SearchEngineUtil {
 			Query query, Sort[] sorts, int start, int end)
 		throws SearchException {
 
-                //TODO should get the searchEngineID based on what?
 		SearchContext searchContext = new SearchContext();
-		searchContext.setSearchEngineId(SearchEngineUtil.SYSTEM_ENGINE_ID);
+		searchContext.setSearchEngineId(getDefaultSearchEngineId());
 
 		if (userId > 0) {
 			query = _searchPermissionChecker.getPermissionQuery(
@@ -361,7 +393,7 @@ public class SearchEngineUtil {
 	public static Hits search(long companyId, Query query, int start, int end)
 		throws SearchException {
 
-		return search(SYSTEM_ENGINE_ID, companyId, query, start, end);
+		return search(getDefaultSearchEngineId(), companyId, query, start, end);
 	}
 
 	@Deprecated
@@ -369,7 +401,8 @@ public class SearchEngineUtil {
 			long companyId, Query query, Sort sort, int start, int end)
 		throws SearchException {
 
-		return search(SYSTEM_ENGINE_ID, companyId, query, sort, start, end);
+		return search(
+			getDefaultSearchEngineId(), companyId, query, sort, start, end);
 	}
 
 	@Deprecated
@@ -377,7 +410,8 @@ public class SearchEngineUtil {
 			long companyId, Query query, Sort[] sorts, int start, int end)
 		throws SearchException {
 
-		return search(SYSTEM_ENGINE_ID, companyId, query, sorts, start, end);
+		return search(
+			getDefaultSearchEngineId(), companyId, query, sorts, start, end);
 	}
 
 	public static Hits search(SearchContext searchContext, Query query)
@@ -387,7 +421,7 @@ public class SearchEngineUtil {
 			_log.debug("Search query " + query.toString());
 		}
 
-		SearchEngine searchEngine = _searchEngines.get(
+		SearchEngine searchEngine = getSearchEngine(
 			searchContext.getSearchEngineId());
 
 		IndexSearcher indexSearcher = searchEngine.getIndexSearcher();
@@ -404,7 +438,7 @@ public class SearchEngineUtil {
 			_log.debug("Search query " + query.toString());
 		}
 
-		SearchEngine searchEngine = _searchEngines.get(searchEngineId);
+		SearchEngine searchEngine = getSearchEngine(searchEngineId);
 
 		IndexSearcher indexSearcher = searchEngine.getIndexSearcher();
 
@@ -422,7 +456,7 @@ public class SearchEngineUtil {
 			_log.debug("Search query " + query.toString());
 		}
 
-		SearchEngine searchEngine = _searchEngines.get(searchEngineId);
+		SearchEngine searchEngine = getSearchEngine(searchEngineId);
 
 		IndexSearcher indexSearcher = searchEngine.getIndexSearcher();
 
@@ -439,7 +473,7 @@ public class SearchEngineUtil {
 			_log.debug("Search query " + query.toString());
 		}
 
-		SearchEngine searchEngine = _searchEngines.get(searchEngineId);
+		SearchEngine searchEngine = getSearchEngine(searchEngineId);
 
 		IndexSearcher indexSearcher = searchEngine.getIndexSearcher();
 
@@ -451,9 +485,20 @@ public class SearchEngineUtil {
 		_indexReadOnly = indexReadOnly;
 	}
 
+	public static void setDefaultSearchEngineId(String defaultSearchEngineId) {
+		_defaultSearchEngineId = defaultSearchEngineId;
+	}
+
+	public static void setSearchEngine(
+		String searchEngineId, SearchEngine searchEngine) {
+
+		_searchEngines.put(searchEngineId, searchEngine);
+	}
+
 	/**
 	 * @deprecated Use {@link
-	 *     updateDocument(String searchEngineId, long companyId, Document document)}.
+	 *             updateDocument(String searchEngineId, long companyId,
+	 *             Document document)}.
 	 */
 	public static void updateDocument(long companyId, Document document)
 		throws SearchException {
@@ -475,7 +520,7 @@ public class SearchEngineUtil {
 
 		_searchPermissionChecker.addPermissionFields(companyId, document);
 
-		SearchEngine searchEngine = _searchEngines.get(searchEngineId);
+		SearchEngine searchEngine = getSearchEngine(searchEngineId);
 
 		IndexWriter indexWriter = searchEngine.getIndexWriter();
 
@@ -489,11 +534,13 @@ public class SearchEngineUtil {
 
 	/**
 	 * @deprecated Use {@link
-	 *     updateDocuments(String searchEngineId, long companyId,Collection<Document> documents)}.
+	 *             updateDocuments(String searchEngineId, long companyId,
+	 *             Collection<Document> documents)}.
 	 */
 	public static void updateDocuments(
 			long companyId, Collection<Document> documents)
 		throws SearchException {
+
 		updateDocuments(getSearchEngine(documents), companyId, documents);
 	}
 
@@ -514,7 +561,7 @@ public class SearchEngineUtil {
 			_searchPermissionChecker.addPermissionFields(companyId, document);
 		}
 
-		SearchEngine searchEngine = _searchEngines.get(searchEngineId);
+		SearchEngine searchEngine = getSearchEngine(searchEngineId);
 
 		IndexWriter indexWriter = searchEngine.getIndexWriter();
 
@@ -550,20 +597,7 @@ public class SearchEngineUtil {
 
 	@Deprecated
 	public void setSearchEngine(SearchEngine searchEngine) {
-        //TODO Might need some vodoo in case no engines is specified.
-		_searchEngines.put(SYSTEM_ENGINE_ID, searchEngine);
-	}
-
-	public void setSearchEngine(String searchEngineId, SearchEngine searchEngine) {
-		if (_searchEngines.containsKey(searchEngineId)) {
-			//TODO throw execption like "SearchEngineAllreadyRegistered"
-		} else {
-			_searchEngines.put(searchEngineId, searchEngine);
-		}
-	}
-
-	public void setSearchEngines(Map<String, SearchEngine> searchEngines) {
-		_searchEngines.putAll(searchEngines);
+		_searchEngines.put(getDefaultSearchEngineId(), searchEngine);
 	}
 
 	public void setSearchPermissionChecker(
@@ -577,6 +611,7 @@ public class SearchEngineUtil {
 	private static Set<String> _excludedEntryClassNames = new HashSet<String>();
 	private static boolean _indexReadOnly = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.INDEX_READ_ONLY));
+	private static String _defaultSearchEngineId;
 	private static Map<String, SearchEngine> _searchEngines =
 		new ConcurrentHashMap<String, SearchEngine>();
 	private static SearchPermissionChecker _searchPermissionChecker;

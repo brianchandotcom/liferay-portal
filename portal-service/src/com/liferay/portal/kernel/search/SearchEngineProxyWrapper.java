@@ -30,6 +30,10 @@ public class SearchEngineProxyWrapper implements SearchEngine {
 		_searchEngine = searchEngine;
 	}
 
+	public BooleanQueryFactory getBooleanQueryFactory() {
+		return _searchEngine.getBooleanQueryFactory();
+	}
+
 	public Priority getClusteredWritePriority() {
 		return _searchEngine.getClusteredWritePriority();
 	}
@@ -42,12 +46,16 @@ public class SearchEngineProxyWrapper implements SearchEngine {
 		return _indexWriter;
 	}
 
-	public String getName() {
-		return _searchEngine.getName();
-	}
-
 	public SearchEngine getSearchEngine() {
 		return _searchEngine;
+	}
+
+	public TermQueryFactory getTermQueryFactory() {
+		return _searchEngine.getTermQueryFactory();
+	}
+
+	public TermRangeQueryFactory getTermRangeQueryFactory() {
+		return _searchEngine.getTermRangeQueryFactory();
 	}
 
 	public String getVendor() {

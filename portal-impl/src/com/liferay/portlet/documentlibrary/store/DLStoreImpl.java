@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.TermQuery;
@@ -303,9 +305,18 @@ public class DLStoreImpl implements DLStore {
 		throws SystemException {
 
 		try {
+			Indexer indexer = IndexerRegistryUtil.getIndexer(DLFileEntry.class);
+
 			SearchContext searchContext = new SearchContext();
 
-			searchContext.setSearchEngineId(SearchEngineUtil.SYSTEM_ENGINE_ID);
+			searchContext.setCompanyId(companyId);
+			searchContext.setGroupIds(new long[] {groupId});
+			searchContext.setUserId(userId);
+			searchContext.setEntryClassNames(
+				new String[] {DLFileEntry.class.getName()});
+			searchContext.setSearchEngineId(indexer.getSearchEngineId());
+			searchContext.setStart(start);
+			searchContext.setEnd(end);
 
 			BooleanQuery contextQuery = BooleanQueryFactoryUtil.create(
 				searchContext);
@@ -372,9 +383,7 @@ public class DLStoreImpl implements DLStore {
 				fullQuery.add(searchQuery, BooleanClauseOccur.MUST);
 			}
 
-			return SearchEngineUtil.search(
-				companyId, new long[] {groupId}, userId,
-				DLFileEntry.class.getName(), fullQuery, start, end);
+			return SearchEngineUtil.search(searchContext, fullQuery);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -503,9 +512,9 @@ public class DLStoreImpl implements DLStore {
 			String[] fileExtensions = PrefsPropsUtil.getStringArray(
 				PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA);
 
-			for (int i = 0; i < fileExtensions.length; i++) {
-				if (StringPool.STAR.equals(fileExtensions[i]) ||
-					StringUtil.endsWith(fileName, fileExtensions[i])) {
+			for (String fileExtension : fileExtensions) {
+				if (StringPool.STAR.equals(fileExtension) ||
+					StringUtil.endsWith(fileName, fileExtension)) {
 
 					validFileExtension = true;
 

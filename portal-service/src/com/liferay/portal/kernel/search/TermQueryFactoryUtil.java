@@ -14,14 +14,13 @@
 
 package com.liferay.portal.kernel.search;
 
-import com.liferay.portal.kernel.bean.BeanReference;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Michael C. Han
+ * @author Raymond Augé
  */
-public class TermQueryFactoryUtil
-	extends BaseQueryFactoryUtil<TermQueryFactory> {
+public class TermQueryFactoryUtil {
 
 	public static TermQuery create(
 		SearchContext searchContext, String field, long value) {
@@ -38,10 +37,12 @@ public class TermQueryFactoryUtil
 	public static TermQueryFactory getTermQueryFactory(
 		SearchContext searchContext) {
 
-		return _termQueryFactoryUtil.getQueryFactory(searchContext);
-	}
+		String searchEngineId = searchContext.getSearchEngineId();
 
-	@BeanReference(type = TermQueryFactoryUtil.class)
-	private static TermQueryFactoryUtil _termQueryFactoryUtil;
+		SearchEngine searchEngine = SearchEngineUtil.getSearchEngine(
+			searchEngineId);
+
+		return searchEngine.getTermQueryFactory();
+	}
 
 }

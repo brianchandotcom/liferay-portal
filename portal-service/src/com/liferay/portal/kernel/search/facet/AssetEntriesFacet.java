@@ -65,7 +65,10 @@ public class AssetEntriesFacet extends MultiValueFacet {
 		for (String entryClassName : entryClassNames) {
 			Indexer indexer = IndexerRegistryUtil.getIndexer(entryClassName);
 
-			if (indexer == null) {
+			if ((indexer == null) ||
+				(!searchContext.getSearchEngineId().equals(
+					indexer.getSearchEngineId()))) {
+
 				continue;
 			}
 

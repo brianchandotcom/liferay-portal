@@ -23,14 +23,15 @@ import com.liferay.portal.kernel.search.SearchEngine;
 public abstract class BaseSearchEngineMessageListener
 	extends ProxyMessageListener {
 
-	public String getSearchEngineName() {
-		return searchEngine.getName();
+	public void setSearchEngineId(String searchEngineId) {
+		this.searchEngineId = searchEngineId;
 	}
 
 	public void setSearchEngine(SearchEngine searchEngine) {
 		this.searchEngine = searchEngine;
 	}
 
+	protected String searchEngineId;
 	protected SearchEngine searchEngine;
 
 }

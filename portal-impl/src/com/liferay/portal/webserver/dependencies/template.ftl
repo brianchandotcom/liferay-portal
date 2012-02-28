@@ -43,9 +43,11 @@
 
 </table>
 
+<#if serverInfo??>
 <hr />
 
 <i>${serverInfo}</i>
+</#if>
 
 </body>
 

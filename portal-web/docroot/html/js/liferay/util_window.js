@@ -154,11 +154,13 @@ AUI.add(
 				dialog.render();
 			}
 			else {
-				dialog.show();
+				if(!dialog.get('visible')) {
+					dialog.show();
 
+					dialog.iframe.set('uri', uri);
+				}
+				
 				dialog._syncUIPosAlign();
-
-				dialog.iframe.set('uri', uri);
 			}
 
 			if (dialog.get('stack')) {

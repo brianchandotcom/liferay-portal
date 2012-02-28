@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.cluster.Priority;
  */
 public interface SearchEngine {
 
+	public BooleanClauseFactory getBooleanClauseFactory();
+
 	public BooleanQueryFactory getBooleanQueryFactory();
 
 	public Priority getClusteredWritePriority();

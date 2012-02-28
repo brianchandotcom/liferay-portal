@@ -41,10 +41,6 @@
 	<bean id="com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilderUtil" class="com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilderUtil">
 		<property name="repositorySearchQueryBuilder" ref="com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilder" />
 	</bean>
-	<bean id="com.liferay.portal.kernel.search.BooleanClauseFactory" class="com.liferay.portal.search.generic.BooleanClauseFactoryImpl" />
-	<bean id="com.liferay.portal.kernel.search.BooleanClauseFactoryUtil" class="com.liferay.portal.kernel.search.BooleanClauseFactoryUtil">
-		<property name="booleanClauseFactory" ref="com.liferay.portal.kernel.search.BooleanClauseFactory" />
-	</bean>
 	<bean id="com.liferay.portal.kernel.search.QueryTranslator" class="com.liferay.portal.search.lucene.QueryTranslatorImpl" />
 	<bean id="com.liferay.portal.kernel.search.QueryTranslatorUtil" class="com.liferay.portal.kernel.search.QueryTranslatorUtil">
 		<property name="queryTranslator" ref="com.liferay.portal.kernel.search.QueryTranslator" />
@@ -72,6 +68,9 @@
 
 	<bean id="com.liferay.portal.search.generic.GenericSearchEngineImpl" class="com.liferay.portal.kernel.search.BaseSearchEngine">
 		<property name="luceneBased" value="false" />
+		<property name="booleanClauseFactory" >
+			<bean class="com.liferay.portal.search.generic.BooleanClauseFactoryImpl" />
+		</property>
 		<property name="booleanQueryFactory" >
 			<bean class="com.liferay.portal.search.generic.BooleanQueryFactoryImpl" />
 		</property>
@@ -96,6 +95,9 @@
 		<property name="indexWriter" ref="com.liferay.portal.search.lucene.LuceneIndexWriterImpl" />
 		<property name="luceneBased" value="true" />
 		<property name="vendor" value="Lucene" />
+		<property name="booleanClauseFactory" >
+			<bean class="com.liferay.portal.search.generic.BooleanClauseFactoryImpl" />
+		</property>
 		<property name="booleanQueryFactory" >
 			<bean class="com.liferay.portal.search.lucene.BooleanQueryFactoryImpl" />
 		</property>

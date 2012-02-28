@@ -30,6 +30,10 @@ public class SearchEngineProxyWrapper implements SearchEngine {
 		_searchEngine = searchEngine;
 	}
 
+	public BooleanClauseFactory getBooleanClauseFactory() {
+		return _searchEngine.getBooleanClauseFactory();
+	}
+
 	public BooleanQueryFactory getBooleanQueryFactory() {
 		return _searchEngine.getBooleanQueryFactory();
 	}

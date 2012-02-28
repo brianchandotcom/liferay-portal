@@ -99,7 +99,7 @@ public class MultiValueFacet extends BaseFacet {
 		}
 
 		return BooleanClauseFactoryUtil.create(
-			facetQuery, BooleanClauseOccur.MUST.getName());
+			searchContext, facetQuery, BooleanClauseOccur.MUST.getName());
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(MultiValueFacet.class);

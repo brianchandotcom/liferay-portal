@@ -123,7 +123,7 @@ public class AssetEntriesFacet extends MultiValueFacet {
 		}
 
 		return BooleanClauseFactoryUtil.create(
-			facetQuery, BooleanClauseOccur.MUST.getName());
+			searchContext, facetQuery, BooleanClauseOccur.MUST.getName());
 	}
 
 	protected void initFacetClause() {

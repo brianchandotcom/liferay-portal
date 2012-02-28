@@ -207,7 +207,7 @@ String signature = ParamUtil.getString(request, "signature");
 
 			<div class="aui-helper-hidden lfr-api-results" id="serviceResults">
 				<liferay-ui:tabs
-					names="result,javascript-example,curl-example"
+					names="result,javascript-example,curl-example,url-example"
 					refresh="<%= false %>"
 				>
 					<liferay-ui:section>
@@ -218,6 +218,9 @@ String signature = ParamUtil.getString(request, "signature");
 					</liferay-ui:section>
 					<liferay-ui:section>
 						<pre class="lfr-code-block" id="curlExample"></pre>
+					</liferay-ui:section>
+					<liferay-ui:section>
+						<pre class="lfr-code-block" id="urlExample"></pre>
 					</liferay-ui:section>
 				</liferay-ui:tabs>
 			</div>
@@ -318,9 +321,11 @@ String signature = ParamUtil.getString(request, "signature");
 
 			var curlTpl = A.Template.from('#curlTpl');
 			var scriptTpl = A.Template.from('#scriptTpl');
+			var urlTpl = A.Template.from('#urlTpl');
 
 			var curlExample = A.one('#curlExample');
 			var jsExample = A.one('#jsExample');
+			var urlExample = A.one('#urlExample');
 
 			var serviceOutput = A.one('#serviceOutput');
 			var serviceResults = A.one('#serviceResults');
@@ -330,7 +335,7 @@ String signature = ParamUtil.getString(request, "signature");
 				function(event) {
 					event.halt();
 
-					var output = A.all([curlExample, jsExample, serviceOutput]);
+					var output = A.all([curlExample, jsExample, urlExample, serviceOutput]);
 
 					output.empty().addClass('loading-results');
 
@@ -357,10 +362,14 @@ String signature = ParamUtil.getString(request, "signature");
 					var stringType = tplDataTypes.string;
 					var arrayType = tplDataTypes.array;
 
+					var ignoreFields = {
+						formDate: true
+					};
+
 					formQueryString.replace(
 						REGEX_QUERY_STRING,
 						function(match, key, value) {
-							if (value) {
+							if (value && !ignoreFields[key]) {
 								value = decodeURIComponent(value.replace(/\+/g, ' '));
 
 								if (stringType[key]) {
@@ -386,6 +395,7 @@ String signature = ParamUtil.getString(request, "signature");
 
 					curlTpl.render(tplData, curlExample);
 					scriptTpl.render(tplData, jsExample);
+					urlTpl.render(tplData, urlExample);
 
 					serviceResults.show();
 				}
@@ -410,6 +420,10 @@ curl <%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() %>/api/secu
   -u test@liferay.com:test <tpl if="data.length">\\
   <tpl for="data">-d {key}={value} <tpl if="!$last">\\
   </tpl></tpl></tpl>
+</textarea>
+
+<textarea class="aui-helper-hidden" id="urlTpl">
+<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() %>/api/secure/jsonws<%= jsonWebServiceActionMapping.getServletContextPath() + jsonWebServiceActionMapping.getPath() %><tpl if="data.length">/<tpl for="data">{key}/{value}<tpl if="!$last">/</tpl></tpl></tpl>
 </textarea>
 	</c:when>
 	<c:otherwise>

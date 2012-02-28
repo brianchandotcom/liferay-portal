@@ -17,12 +17,23 @@ package com.liferay.portalweb.portal.util;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portalweb.portal.util.TestPropsValues;
 
+import com.thoughtworks.selenium.Selenium;
+
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
 /**
  * @author Brian Wing Shun Chan
  */
 public class SeleniumUtil {
 
-	public static LiferaySelenium getSelenium() {
+	public static LiferayDefaultSelenium getSelenium() {
 		return _instance._getSelenium();
 	}
 
@@ -42,7 +53,7 @@ public class SeleniumUtil {
 		_timestamp = Time.getTimestamp();
 	}
 
-	private LiferaySelenium _getSelenium() {
+	private LiferayDefaultSelenium _getSelenium() {
 		if (_selenium == null) {
 			_startSelenium();
 		}
@@ -55,30 +66,36 @@ public class SeleniumUtil {
 	}
 
 	private void _startSelenium() {
+
 		String seleniumHost = TestPropsValues.SELENIUM_HOST;
 		int seleniumPort = TestPropsValues.SELENIUM_PORT;
 		String browserType = TestPropsValues.BROWSER_TYPE;
 		String portalURL = TestPropsValues.PORTAL_URL;
 
-		_selenium = new LiferayDefaultSelenium(
-			seleniumHost, seleniumPort, browserType, portalURL);
-
+		_selenium = new LiferayDefaultSelenium();
+		_selenium.get(portalURL);
+/*
 		_selenium.start();
 
 		_selenium.setContext(this.getClass().getName());
+*/
 	}
 
 	private void _stopSelenium() {
+/*
 		if (_selenium != null) {
 			_selenium.stop();
 		}
 
 		_selenium = null;
+*/
+		_selenium.close();
+
 	}
 
 	private static SeleniumUtil _instance = new SeleniumUtil();
 
-	private LiferaySelenium _selenium;
 	private String _timestamp;
+	private LiferayDefaultSelenium _selenium;
 
 }

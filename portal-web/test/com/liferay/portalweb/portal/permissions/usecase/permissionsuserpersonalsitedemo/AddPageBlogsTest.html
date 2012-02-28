@@ -1,0 +1,58 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>AddPageBlogsTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">AddPageBlogsTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//nav[@id='navigation']</td>
+	<td>Navigation</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//a[@id='addPage']</td>
+	<td>Add Page</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//a[@id='addPage']</td>
+	<td>Add Page</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@type='text']</td>
+	<td>Page Name</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@type='text']</td>
+	<td>Blogs Test Page</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//button[@id='save']</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Blogs Test Page</td>
+	<td>Blogs Test Page</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Blogs Test Page</td>
+	<td>Blogs Test Page</td>
+</tr>
+</tbody></table>
+</body>
+</html>

@@ -113,6 +113,11 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 		%>
 
 		<c:if test="<%= (userGroupGroup != null) || !layoutSetPrototypes.isEmpty() %>">
+
+			<%
+			boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE);
+			%>
+
 			<c:choose>
 				<c:when test="<%= ((userGroupGroup == null) || (publicLayoutSetPrototype == null)) && !layoutSetPrototypes.isEmpty() %>">
 					<aui:select label="public-pages" name="publicLayoutSetPrototypeId">
@@ -131,7 +136,7 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 					</aui:select>
 
 					<c:choose>
-						<c:when test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE) %>">
+						<c:when test="<%= hasUnlinkLayoutSetPrototypePermission %>">
 							<div class="aui-helper-hidden" id="<portlet:namespace />publicLayoutSetPrototypeIdOptions">
 								<aui:input helpMessage="enable-propagation-of-changes-from-the-site-template-help" label="enable-propagation-of-changes-from-the-site-template" name="publicLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= publicLayoutSetPrototypeLinkEnabled %>" />
 							</div>
@@ -169,7 +174,7 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 								</c:choose>
 
 								<c:choose>
-									<c:when test="<%= (publicLayoutSetPrototype != null) && PortalPermissionUtil.contains(permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE) %>">
+									<c:when test="<%= (publicLayoutSetPrototype != null) && hasUnlinkLayoutSetPrototypePermission %>">
 										<aui:input label='<%= LanguageUtil.format(pageContext, "enable-propagation-of-changes-from-the-site-template-x", publicLayoutSetPrototype.getName(user.getLanguageId())) %>' name="publicLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= publicLayoutSetPrototypeLinkEnabled %>" />
 									</c:when>
 									<c:when test="<%= publicLayoutSetPrototype != null %>">
@@ -202,7 +207,7 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 					</aui:select>
 
 					<c:choose>
-						<c:when test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE) %>">
+						<c:when test="<%= hasUnlinkLayoutSetPrototypePermission %>">
 							<div class="aui-helper-hidden" id="<portlet:namespace />privateLayoutSetPrototypeIdOptions">
 								<aui:input helpMessage="enable-propagation-of-changes-from-the-site-template-help" label="enable-propagation-of-changes-from-the-site-template" name="privateLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
 							</div>
@@ -239,7 +244,7 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 								</c:choose>
 
 								<c:choose>
-									<c:when test="<%= (privateLayoutSetPrototype != null) && PortalPermissionUtil.contains(permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE) %>">
+									<c:when test="<%= (privateLayoutSetPrototype != null) && hasUnlinkLayoutSetPrototypePermission %>">
 										<aui:input label='<%= LanguageUtil.format(pageContext, "enable-propagation-of-changes-from-the-site-template-x", privateLayoutSetPrototype.getName(user.getLanguageId())) %>' name="privateLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
 									</c:when>
 									<c:when test="<%= privateLayoutSetPrototype != null %>">

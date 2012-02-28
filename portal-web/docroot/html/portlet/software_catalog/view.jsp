@@ -25,7 +25,9 @@ if (themeDisplay.isSignedIn()) {
 	tabs1Values += ",my_products";
 }
 
-if (PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_LICENSE)) {
+boolean hasAddLicensePermission = PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_LICENSE);
+
+if (hasAddLicensePermission) {
 	tabs1Values += ",licenses";
 }
 
@@ -643,7 +645,7 @@ portletURL.setParameter("tabs1", tabs1);
 		}
 		%>
 
-		<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_LICENSE) %>">
+		<c:if test="<%= hasAddLicensePermission %>">
 			<div>
 				<input type="button" value="<liferay-ui:message key="add-license" />" onClick="location.href = '<portlet:renderURL><portlet:param name="struts_action" value="/software_catalog/edit_license" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>';" />
 			</div>

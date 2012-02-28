@@ -31,9 +31,14 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view");
 		<a href="<%= viewUsersURL %>"><liferay-ui:message key="view-all" /></a>
 	</span>
 
-	<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_ORGANIZATION) || PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER) %>">
+	<%
+	boolean hasAddOrganizationPermission = PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_ORGANIZATION);
+	boolean hasAddUserPermission = PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER);
+	%>
+
+	<c:if test="<%= hasAddOrganizationPermission || hasAddUserPermission %>">
 		<liferay-ui:icon-menu align="left" cssClass='<%= "lfr-toolbar-button add-button " + (toolbarItem.equals("add") ? "current" : StringPool.BLANK) %>' direction="down" extended="<%= false %>" icon='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>' message="add" showWhenSingleIcon="<%= true %>">
-			<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER) %>">
+			<c:if test="<%= hasAddUserPermission %>">
 				<portlet:renderURL var="addUserURL">
 					<portlet:param name="struts_action" value="/users_admin/edit_user" />
 					<portlet:param name="redirect" value="<%= viewUsersURL %>" />
@@ -46,7 +51,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view");
 				/>
 			</c:if>
 
-			<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_ORGANIZATION) %>">
+			<c:if test="<%= hasAddOrganizationPermission %>">
 
 				<%
 				for (String organizationType : PropsValues.ORGANIZATIONS_TYPES) {

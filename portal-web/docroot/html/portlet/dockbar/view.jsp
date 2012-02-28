@@ -34,6 +34,9 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 		portlets.add(portlet);
 	}
 }
+
+boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE);
+boolean hasLayoutCustomizePermission = LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE);
 %>
 
 <div class="dockbar" data-namespace="<portlet:namespace />" id="dockbar">
@@ -42,7 +45,7 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 			<a href="javascript:;"><img alt='<liferay-ui:message key="pin-the-dockbar" />' src="<%= HtmlUtil.escape(themeDisplay.getPathThemeImages()) %>/spacer.png" /></a>
 		</li>
 
-		<c:if test="<%= !group.isControlPanel() && (!group.hasStagingGroup() || group.isStagingGroup()) && (GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ADD_LAYOUT) || LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE) || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE))) %>">
+		<c:if test="<%= !group.isControlPanel() && (!group.hasStagingGroup() || group.isStagingGroup()) && (GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ADD_LAYOUT) || hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission)) %>">
 			<li class="add-content has-submenu" id="<portlet:namespace />addContent">
 				<a class="menu-button" href="javascript:;">
 					<span>
@@ -65,7 +68,7 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 								<li class="last common-items">
 									<div class="aui-menugroup">
 										<div class="aui-menugroup-content">
-											<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE) || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE)) %>">
+											<c:if test="<%= hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission) %>">
 												<span class="aui-menu-label"><liferay-ui:message key="applications" /></span>
 
 												<ul>
@@ -201,7 +204,7 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 			<span></span>
 		</li>
 
-		<c:if test="<%= !group.isControlPanel() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE) || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE)) %>">
+		<c:if test="<%= !group.isControlPanel() && hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission) %>">
 			<li class="toggle-controls" id="<portlet:namespace />toggleControls">
 				<a href="javascript:;">
 					<liferay-ui:message key="edit-controls" />
@@ -447,7 +450,7 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 			<c:otherwise>
 				<liferay-ui:message key="this-is-the-default-page-without-your-customizations" />
 
-				<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE) %>">
+				<c:if test="<%= hasLayoutUpdatePermission %>">
 					<liferay-ui:icon-help message="customizable-admin-help" />
 				</c:if>
 			</c:otherwise>

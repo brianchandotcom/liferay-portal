@@ -59,6 +59,8 @@ if (!company.isSiteLogo()) {
 }
 
 String[][] categorySections = {mainSections};
+
+boolean hasExportImportLayoutsPermission = GroupPermissionUtil.contains(permissionChecker, liveGroupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
 %>
 
 <div class="lfr-header-row">
@@ -68,7 +70,7 @@ String[][] categorySections = {mainSections};
 		</liferay-util:include>
 
 		<aui:button-row cssClass="edit-toolbar" id='<%= liferayPortletResponse.getNamespace() + "layoutSetToolbar" %>'>
-			<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, liveGroupId, ActionKeys.EXPORT_IMPORT_LAYOUTS) %>">
+			<c:if test="<%= hasExportImportLayoutsPermission %>">
 				<c:if test="<%= SessionErrors.contains(liferayPortletRequest, LayoutImportException.class.getName()) || SessionErrors.contains(liferayPortletRequest, LARFileException.class.getName()) || SessionErrors.contains(liferayPortletRequest, LARTypeException.class.getName()) %>">
 					<liferay-util:html-top>
 						<div class="aui-helper-hidden" id="<portlet:namespace />importPage">
@@ -181,7 +183,7 @@ String[][] categorySections = {mainSections};
 		);
 	</c:if>
 
-	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, liveGroupId, ActionKeys.EXPORT_IMPORT_LAYOUTS) %>">
+	<c:if test="<%= hasExportImportLayoutsPermission %>">
 		layoutSetToolbarChildren.push(
 			{
 				type: 'ToolbarSpacer'

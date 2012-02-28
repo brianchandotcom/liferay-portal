@@ -45,11 +45,11 @@ for (int i = 1; i <= maxDayOfMonth; i++) {
 				</div>
 
 				<liferay-ui:calendar
-					month="<%= selMonth %>"
-					day="<%= selDay %>"
-					year="<%= selYear %>"
-					headerFormat="<%= dateFormatDate %>"
 					data="<%= data %>"
+					day="<%= selDay %>"
+					headerFormat="<%= dateFormatDate %>"
+					month="<%= selMonth %>"
+					year="<%= selYear %>"
 				/>
 			</div>
 		</td>

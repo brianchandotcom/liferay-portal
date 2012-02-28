@@ -62,7 +62,7 @@ boolean mergeWithParentFolderDisabled = ParamUtil.getBoolean(request, "mergeWith
 
 					parentFolderName = parentFolder.getName();
 				}
-				catch (NoSuchFolderException nscce) {
+				catch (NoSuchFolderException nsfe) {
 				}
 				%>
 

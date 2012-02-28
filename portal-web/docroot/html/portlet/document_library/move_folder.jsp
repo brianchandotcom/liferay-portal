@@ -63,7 +63,7 @@ long parentFolderId = BeanParamUtil.getLong(folder, request, "parentFolderId", D
 					parentFolderName = parentFolder.getName();
 				}
 			}
-			catch (NoSuchFolderException nscce) {
+			catch (NoSuchFolderException nsfe) {
 			}
 			%>
 

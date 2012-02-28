@@ -77,7 +77,7 @@ catch (NoSuchMailingListException nsmle) {
 
 				parentCategoryName = parentCategory.getName();
 			}
-			catch (NoSuchCategoryException nscce) {
+			catch (NoSuchCategoryException nsce) {
 			}
 			%>
 

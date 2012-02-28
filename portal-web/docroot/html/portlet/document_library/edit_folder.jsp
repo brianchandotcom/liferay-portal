@@ -86,7 +86,7 @@ if (workflowEnabled) {
 					parentFolderName = parentFolder.getName();
 				}
 			}
-			catch (NoSuchFolderException nscce) {
+			catch (NoSuchFolderException nsfe) {
 			}
 			%>
 

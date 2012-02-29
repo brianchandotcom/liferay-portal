@@ -29,15 +29,15 @@ import java.util.Set;
  */
 public class ClusterRequest implements Serializable {
 
-	public static ClusterRequest createClusterNotifyRequest(
+	public static ClusterRequest createClusterRequest(
+		ClusterMessageType clusterMessageType,
 		ClusterNode originatingClusterNode) {
 
 		ClusterRequest clusterRequest = new ClusterRequest();
 
-		clusterRequest.setClusterMessageType(ClusterMessageType.NOTIFY);
+		clusterRequest.setClusterMessageType(clusterMessageType);
 		clusterRequest.setMulticast(true);
 		clusterRequest.setOriginatingClusterNode(originatingClusterNode);
-		clusterRequest.setParallelized(true);
 		clusterRequest.setSkipLocal(true);
 		clusterRequest.setUuid(PortalUUIDUtil.generate());
 
@@ -159,10 +159,6 @@ public class ClusterRequest implements Serializable {
 		return _multicast;
 	}
 
-	public boolean isParallelized() {
-		return _parallelized;
-	}
-
 	public boolean isSkipLocal() {
 		return _skipLocal;
 	}
@@ -191,10 +187,6 @@ public class ClusterRequest implements Serializable {
 		_originatingClusterNode = originatingClusterNode;
 	}
 
-	public void setParallelized(boolean parallelized) {
-		_parallelized = parallelized;
-	}
-
 	public void setServletContextName(String servletContextName) {
 		_servletContextName = servletContextName;
 	}
@@ -209,28 +201,30 @@ public class ClusterRequest implements Serializable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{clusterMessageType=");
 		sb.append(_clusterMessageType);
-		sb.append(", methodHandler=");
-		sb.append(_methodHandler);
 		sb.append(", multicast=");
 		sb.append(_multicast);
-
-		if (_clusterMessageType.equals(ClusterMessageType.NOTIFY)) {
-			sb.append(", originatingClusterNode=");
-			sb.append(_originatingClusterNode);
-		}
-
 		sb.append(", servletContextName=");
 		sb.append(_servletContextName);
-		sb.append(", parallelized=");
-		sb.append(_parallelized);
 		sb.append(", skipLocal=");
 		sb.append(_skipLocal);
 		sb.append(", uuid=");
 		sb.append(_uuid);
+
+		if (_clusterMessageType.equals(ClusterMessageType.NOTIFY) ||
+			_clusterMessageType.equals(ClusterMessageType.UPDATE)) {
+
+			sb.append(", originatingClusterNode=");
+			sb.append(_originatingClusterNode);
+		}
+		else {
+			sb.append(", methodHandler=");
+			sb.append(_methodHandler);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -245,7 +239,6 @@ public class ClusterRequest implements Serializable {
 	private MethodHandler _methodHandler;
 	private boolean _multicast;
 	private ClusterNode _originatingClusterNode;
-	private boolean _parallelized;
 	private String _servletContextName;
 	private boolean _skipLocal;
 	private Set<Address> _targetClusterNodeAddresses;

@@ -54,7 +54,7 @@ Format timeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("HH:mm", local
 			<li>
 				<h4><%= LanguageUtil.get(pageContext,ListTypeServiceUtil.getListType(orgLabor.getTypeId()).getName()) %></h4>
 
-				<table class="org-labor-table" border="1">
+				<table border="1" class="org-labor-table">
 				<tr>
 					<td class="no-color"></td>
 

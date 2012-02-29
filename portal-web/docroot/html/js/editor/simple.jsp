@@ -74,7 +74,7 @@ if (Validator.isNotNull(onChangeMethod)) {
 	<table bgcolor="#FFFFFF" cellpadding="0" cellspacing="0" height="100%" width="100%">
 	<tr>
 		<td bgcolor="#FFFFFF" height="100%">
-			<textarea style="font-family: monospace; height: 100%; min-height: 8em; min-width: 10em; width: 100%;" id="<%= name %>" name="<%= name %>"
+			<textarea id="<%= name %>" name="<%= name %>"
 
 			<%
 			if (Validator.isNotNull(onChangeMethod)) {
@@ -86,7 +86,7 @@ if (Validator.isNotNull(onChangeMethod)) {
 			}
 			%>
 
-			></textarea>
+			style="font-family: monospace; height: 100%; min-height: 8em; min-width: 10em; width: 100%;"></textarea>
 		</td>
 	</tr>
 	</table>

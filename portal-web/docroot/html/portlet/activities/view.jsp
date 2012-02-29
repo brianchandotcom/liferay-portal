@@ -43,7 +43,7 @@ String taglibFeedLinkMessage = LanguageUtil.format(pageContext, "subscribe-to-x'
 <liferay-ui:social-activities
 	activities="<%= activities %>"
 	feedEnabled="<%= true %>"
-	feedTitle="<%= HtmlUtil.escape(taglibFeedTitle) %>"
 	feedLink="<%= rssURL.toString() %>"
 	feedLinkMessage="<%= HtmlUtil.escape(taglibFeedLinkMessage) %>"
+	feedTitle="<%= HtmlUtil.escape(taglibFeedTitle) %>"
 />

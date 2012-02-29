@@ -88,6 +88,12 @@ String editorContent = emailBody;
 
 				<dl>
 					<dt>
+						[$BLOGS_ENTRY_STATUS_BY_USER_NAME$]
+					</dt>
+					<dd>
+						<liferay-ui:message key="the-user-who-updated-the-blog-entry" />
+					</dd>
+					<dt>
 						[$BLOGS_ENTRY_USER_ADDRESS$]
 					</dt>
 					<dd>

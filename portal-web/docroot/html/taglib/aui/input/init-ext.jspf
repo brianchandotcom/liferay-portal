@@ -23,8 +23,6 @@ String baseType = GetterUtil.getString((String)request.getAttribute("aui:input:b
 String forLabel = namespace + GetterUtil.getString((String)request.getAttribute("aui:input:forLabel"));
 boolean required = GetterUtil.getBoolean((String)request.getAttribute("aui:input:required"));
 
-id = namespace + id;
-
 if (Validator.isNull(label) && changesContext) {
 	StringBundler sb = new StringBundler(5);
 

@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.text.Format;
@@ -61,6 +62,10 @@ public class InputFieldTag extends IncludeTag {
 		_formName = formName;
 	}
 
+	public void setId(String id) {
+		_id = id;
+	}
+
 	public void setIgnoreRequestValue(boolean ignoreRequestValue) {
 		_ignoreRequestValue = ignoreRequestValue;
 	}
@@ -88,6 +93,7 @@ public class InputFieldTag extends IncludeTag {
 		_fieldParam = null;
 		_format = null;
 		_formName = "fm";
+		_id = null;
 		_ignoreRequestValue = false;
 		_languageId = null;
 		_model = null;
@@ -101,6 +107,18 @@ public class InputFieldTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		String fieldParam = _fieldParam;
+
+		if (Validator.isNull(fieldParam)) {
+			fieldParam = _field;
+		}
+
+		String id = _id;
+
+		if (Validator.isNull(id)) {
+			id = fieldParam;
+		}
+
 		request.setAttribute("liferay-ui:input-field:bean", _bean);
 		request.setAttribute("liferay-ui:input-field:cssClass", _cssClass);
 		request.setAttribute(
@@ -110,7 +128,8 @@ public class InputFieldTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:input-field:disabled", String.valueOf(_disabled));
 		request.setAttribute("liferay-ui:input-field:field", _field);
-		request.setAttribute("liferay-ui:input-field:fieldParam", _fieldParam);
+		request.setAttribute("liferay-ui:input-field:fieldParam", fieldParam);
+		request.setAttribute("liferay-ui:input-field:id", id);
 		request.setAttribute("liferay-ui:input-field:format", _format);
 		request.setAttribute("liferay-ui:input-field:formName", _formName);
 		request.setAttribute(
@@ -133,6 +152,7 @@ public class InputFieldTag extends IncludeTag {
 	private String _fieldParam;
 	private Format _format;
 	private String _formName = "fm";
+	private String _id;
 	private boolean _ignoreRequestValue;
 	private String _languageId;
 	private Class<?> _model;

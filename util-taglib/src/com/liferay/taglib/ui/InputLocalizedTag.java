@@ -40,6 +40,10 @@ public class InputLocalizedTag extends IncludeTag {
 		_formName = formName;
 	}
 
+	public void setId(String id) {
+		_id = id;
+	}
+
 	public void setIgnoreRequestValue(boolean ignoreRequestValue) {
 		_ignoreRequestValue = ignoreRequestValue;
 	}
@@ -65,6 +69,7 @@ public class InputLocalizedTag extends IncludeTag {
 		_cssClass = null;
 		_disabled = false;
 		_formName = null;
+		_id = null;
 		_ignoreRequestValue = false;
 		_languageId = null;
 		_name = null;
@@ -85,6 +90,12 @@ public class InputLocalizedTag extends IncludeTag {
 			formName = "fm";
 		}
 
+		String id = _id;
+
+		if (Validator.isNull(id)) {
+			id = _name;
+		}
+
 		request.setAttribute("liferay-ui:input-localized:cssClass", _cssClass);
 		request.setAttribute(
 			"liferay-ui:input-localized:defaultLanguageId", _defaultLanguageId);
@@ -94,6 +105,7 @@ public class InputLocalizedTag extends IncludeTag {
 			"liferay-ui:input-localized:dynamicAttributes",
 			getDynamicAttributes());
 		request.setAttribute("liferay-ui:input-localized:formName", formName);
+		request.setAttribute("liferay-ui:input-localized:id", id);
 		request.setAttribute(
 			"liferay-ui:input-localized:ignoreRequestValue",
 			String.valueOf(_ignoreRequestValue));
@@ -111,6 +123,7 @@ public class InputLocalizedTag extends IncludeTag {
 	private String _defaultLanguageId;
 	private boolean _disabled;
 	private String _formName;
+	private String _id;
 	private boolean _ignoreRequestValue;
 	private String _languageId;
 	private String _name;

@@ -22,6 +22,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_input_
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-localized:cssClass"));
 String defaultLanguageId = (String)request.getAttribute("liferay-ui:input-localized:defaultLanguageId");
 boolean disabled = GetterUtil.getBoolean((String) request.getAttribute("liferay-ui:input-localized:disabled"));
+String id = (String)request.getAttribute("liferay-ui:input-localized:id");
 Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("liferay-ui:input-localized:dynamicAttributes");
 String formName = (String)request.getAttribute("liferay-ui:input-localized:formName");
 boolean ignoreRequestValue = GetterUtil.getBoolean((String) request.getAttribute("liferay-ui:input-localized:ignoreRequestValue"));
@@ -62,10 +63,10 @@ if (Validator.isNull(mainLanguageValue)) {
 <span class="taglib-input-localized">
 	<c:choose>
 		<c:when test='<%= type.equals("input") %>'>
-			<input class="language-value <%= cssClass %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<portlet:namespace /><%= name + StringPool.UNDERLINE + mainLanguageId %>" name="<portlet:namespace /><%= name + StringPool.UNDERLINE + mainLanguageId %>" type="text" value="<%= HtmlUtil.escape(mainLanguageValue) %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %> />
+			<input class="language-value <%= cssClass %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<portlet:namespace /><%= id + StringPool.UNDERLINE + mainLanguageId %>" name="<portlet:namespace /><%= name + StringPool.UNDERLINE + mainLanguageId %>" type="text" value="<%= HtmlUtil.escape(mainLanguageValue) %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %> />
 		</c:when>
 		<c:when test='<%= type.equals("textarea") %>'>
-			<textarea class="language-value <%= cssClass %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<portlet:namespace /><%= name + StringPool.UNDERLINE + mainLanguageId %>" name="<portlet:namespace /><%= name + StringPool.UNDERLINE + mainLanguageId %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>><%= HtmlUtil.escape(mainLanguageValue) %></textarea>
+			<textarea class="language-value <%= cssClass %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<portlet:namespace /><%= id + StringPool.UNDERLINE + mainLanguageId %>" name="<portlet:namespace /><%= name + StringPool.UNDERLINE + mainLanguageId %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>><%= HtmlUtil.escape(mainLanguageValue) %></textarea>
 		</c:when>
 	</c:choose>
 
@@ -161,10 +162,10 @@ if (Validator.isNull(mainLanguageValue)) {
 
 								<c:choose>
 									<c:when test='<%= type.equals("input") %>'>
-										<input class="language-value" <%= disabled ? "disabled=\"disabled\"" : "" %> name="<portlet:namespace /><%= name + StringPool.UNDERLINE + curLanguageId %>" type="text" value="<%= HtmlUtil.escape(languageValue) %>" />
+										<input class="language-value" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<portlet:namespace /><%= id + StringPool.UNDERLINE + curLanguageId %>" name="<portlet:namespace /><%= name + StringPool.UNDERLINE + curLanguageId %>" type="text" value="<%= HtmlUtil.escape(languageValue) %>" />
 									</c:when>
 									<c:when test='<%= type.equals("textarea") %>'>
-										<textarea class="language-value" <%= disabled ? "disabled=\"disabled\"" : "" %> name="<portlet:namespace /><%= name + StringPool.UNDERLINE + curLanguageId %>"><%= HtmlUtil.escape(languageValue) %></textarea>
+										<textarea class="language-value" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<portlet:namespace /><%= id + StringPool.UNDERLINE + curLanguageId %>" name="<portlet:namespace /><%= name + StringPool.UNDERLINE + curLanguageId %>"><%= HtmlUtil.escape(languageValue) %></textarea>
 									</c:when>
 								</c:choose>
 							</div>
@@ -188,6 +189,7 @@ if (Validator.isNull(mainLanguageValue)) {
 			var selectedValue = target.val();
 
 			var newName = '<portlet:namespace /><%= name %>_';
+			var newId = '<portlet:namespace /><%= id %>_';
 
 			var currentRow = target.ancestor('.lfr-form-row');
 
@@ -196,6 +198,7 @@ if (Validator.isNull(mainLanguageValue)) {
 
 			if (selectedValue) {
 				newName ='<portlet:namespace /><%= name %>_' + selectedValue;
+				newId ='<portlet:namespace /><%= id %>_' + selectedValue;
 
 				imgSrc = 'language/' + selectedValue;
 			}
@@ -204,7 +207,7 @@ if (Validator.isNull(mainLanguageValue)) {
 
 			if (inputField) {
 				inputField.attr('name', newName);
-				inputField.attr('id', newName);
+				inputField.attr('id', newId);
 			}
 
 			if (img) {

@@ -248,7 +248,8 @@ public class OrganizationIndexer extends BaseIndexer {
 				long companyId = entry.getKey();
 				Collection<Document> documents = entry.getValue();
 
-				SearchEngineUtil.updateDocuments(companyId, documents);
+				SearchEngineUtil.updateDocuments(
+					getSearchEngineId(), companyId, documents);
 			}
 		}
 		else if (obj instanceof Organization) {
@@ -257,7 +258,7 @@ public class OrganizationIndexer extends BaseIndexer {
 			Document document = getDocument(organization);
 
 			SearchEngineUtil.updateDocument(
-				organization.getCompanyId(), document);
+				getSearchEngineId(), organization.getCompanyId(), document);
 		}
 	}
 
@@ -315,7 +316,8 @@ public class OrganizationIndexer extends BaseIndexer {
 			documents.add(document);
 		}
 
-		SearchEngineUtil.updateDocuments(companyId, documents);
+		SearchEngineUtil.updateDocuments(
+			getSearchEngineId(), companyId, documents);
 	}
 
 	private static final boolean _PERMISSION_AWARE = true;

@@ -165,7 +165,8 @@ public class SCIndexer extends BaseIndexer {
 
 		Document document = getDocument(productEntry);
 
-		SearchEngineUtil.updateDocument(productEntry.getCompanyId(), document);
+		SearchEngineUtil.updateDocument(
+			getSearchEngineId(), productEntry.getCompanyId(), document);
 	}
 
 	@Override
@@ -239,7 +240,8 @@ public class SCIndexer extends BaseIndexer {
 			documents.add(document);
 		}
 
-		SearchEngineUtil.updateDocuments(companyId, documents);
+		SearchEngineUtil.updateDocuments(
+			getSearchEngineId(), companyId, documents);
 	}
 
 }

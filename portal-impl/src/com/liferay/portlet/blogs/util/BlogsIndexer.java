@@ -148,7 +148,8 @@ public class BlogsIndexer extends BaseIndexer {
 
 		Document document = getDocument(entry);
 
-		SearchEngineUtil.updateDocument(entry.getCompanyId(), document);
+		SearchEngineUtil.updateDocument(
+			getSearchEngineId(), entry.getCompanyId(), document);
 	}
 
 	@Override
@@ -203,7 +204,8 @@ public class BlogsIndexer extends BaseIndexer {
 			documents.add(document);
 		}
 
-		SearchEngineUtil.updateDocuments(companyId, documents);
+		SearchEngineUtil.updateDocuments(
+			getSearchEngineId(), companyId, documents);
 	}
 
 	private static final boolean _FILTER_SEARCH = true;

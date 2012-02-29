@@ -320,7 +320,7 @@ public class EditServerAction extends PortletAction {
 
 					try {
 						SearchEngineUtil.deletePortletDocuments(
-							companyId, portletId);
+							indexer.getSearchEngineId(), companyId, portletId);
 
 						indexer.reindex(
 							new String[] {String.valueOf(companyId)});

@@ -48,6 +48,7 @@ import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.documentlibrary.SourceFileNameException;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 
@@ -305,7 +306,8 @@ public class DLStoreImpl implements DLStore {
 		throws SystemException {
 
 		try {
-			Indexer indexer = IndexerRegistryUtil.getIndexer(DLFileEntry.class);
+			Indexer indexer = IndexerRegistryUtil.getIndexer(
+				DLFileEntryConstants.getClassName());
 
 			SearchContext searchContext = new SearchContext();
 

@@ -154,8 +154,7 @@ public class MBIndexer extends BaseIndexer {
 	protected void doDelete(Object obj) throws Exception {
 		SearchContext searchContext = new SearchContext();
 
-		searchContext.setSearchEngineId(
-			SearchEngineUtil.getDefaultSearchEngineId());
+		searchContext.setSearchEngineId(getSearchEngineId());
 
 		if (obj instanceof MBCategory) {
 			MBCategory category = (MBCategory)obj;
@@ -283,7 +282,8 @@ public class MBIndexer extends BaseIndexer {
 
 		Document document = getDocument(message);
 
-		SearchEngineUtil.updateDocument(message.getCompanyId(), document);
+		SearchEngineUtil.updateDocument(
+			getSearchEngineId(), message.getCompanyId(), document);
 	}
 
 	@Override
@@ -400,7 +400,8 @@ public class MBIndexer extends BaseIndexer {
 			documents.add(document);
 		}
 
-		SearchEngineUtil.updateDocuments(companyId, documents);
+		SearchEngineUtil.updateDocuments(
+			getSearchEngineId(), companyId, documents);
 	}
 
 	protected void reindexRoot(long companyId) throws Exception {

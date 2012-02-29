@@ -87,7 +87,8 @@ public abstract class BaseIndexer implements Indexer {
 
 	public void delete(long companyId, String uid) throws SearchException {
 		try {
-			SearchEngineUtil.deleteDocument(getSearchEngineId(), companyId, uid);
+			SearchEngineUtil.deleteDocument(
+				getSearchEngineId(), companyId, uid);
 		}
 		catch (SearchException se) {
 			throw se;

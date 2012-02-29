@@ -602,6 +602,8 @@ public class LiferayRepository
 		Indexer indexer = IndexerRegistryUtil.getIndexer(
 			DLFileEntryConstants.getClassName());
 
+		searchContext.setSearchEngineId(indexer.getSearchEngineId());
+
 		BooleanQuery fullQuery = indexer.getFullQuery(searchContext);
 
 		return SearchEngineUtil.search(searchContext, fullQuery);

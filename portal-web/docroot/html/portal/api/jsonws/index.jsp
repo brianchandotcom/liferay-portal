@@ -16,6 +16,14 @@
 
 <%@ include file="/html/portal/api/jsonws/init.jsp" %>
 
+<%
+String contextPath = request.getParameter("contextPath");
+
+if (contextPath == null) {
+	contextPath = ContextPathUtil.getContextPath(application);
+}
+%>
+
 <style>
 	<%@ include file="/html/portal/api/jsonws/css.jspf" %>
 </style>
@@ -24,7 +32,7 @@
 	<header id="banner" role="banner">
 		<hgroup id="heading">
 			<h1 class="site-title">
-				<a class="logo" href="./" title="JSONWS API">
+				<a class="logo" href="<%= contextPath %>/api/jsonws" title="JSONWS API">
 					<img alt="JSONWS API" height="<%= themeDisplay.getCompanyLogoHeight() %>" src="<%= HtmlUtil.escape(themeDisplay.getCompanyLogo()) %>" width="<%= themeDisplay.getCompanyLogoWidth() %>" />
 				</a>
 

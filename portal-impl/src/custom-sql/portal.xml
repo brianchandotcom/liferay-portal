@@ -92,7 +92,7 @@
 			FROM
 				Group_
 			WHERE
-				(Group_.type_ != 4) AND
+				(Group_.type_ != 4 OR Group_.type_ IS NULL) AND
 				(friendlyURL = '' OR friendlyURL IS NULL)
 		]]>
 	</sql>

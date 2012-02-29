@@ -245,6 +245,10 @@ hr, .separator {
 	text-shadow: 1px 1px #FFF;
 }
 
+.signed-in.controls-visible .portlet-title {
+	padding-right: 80px;
+}
+
 .lfr-portlet-title-editable {
 	margin-top: -4px;
 	z-index: 9999;

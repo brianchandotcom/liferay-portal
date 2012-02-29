@@ -2121,6 +2121,8 @@ public interface PropsKeys {
 
 	public static final String WEB_SERVER_SERVLET_DIRECTORY_INDEXING_ENABLED = "web.server.servlet.directory.indexing.enabled";
 
+	public static final String WEB_SERVER_SERVLET_VERSION_VERBOSITY = "web.server.servlet.version.verbosity";
+
 	public static final String WEBDAV_IGNORE = "webdav.ignore";
 
 	public static final String WEBDAV_NONCE_EXPIRATION = "webdav.nonce.expiration";

@@ -1047,7 +1047,13 @@ public class WebServerServlet extends HttpServlet {
 		freeMarkerContext.put("dateFormat", _dateFormat);
 		freeMarkerContext.put("entries", webServerEntries);
 		freeMarkerContext.put("path", HttpUtil.encodePath(path));
-		freeMarkerContext.put("serverInfo", ReleaseInfo.getServerInfo());
+
+		if (!PropsValues.WEB_SERVER_SERVLET_VERSION_VERBOSITY.equals(
+				"partial")) {
+
+			freeMarkerContext.put("serverInfo", ReleaseInfo.getServerInfo());
+		}
+
 		freeMarkerContext.put("validator", Validator_IW.getInstance());
 
 		String html = FreeMarkerUtil.process(_TEMPLATE_FTL, freeMarkerContext);

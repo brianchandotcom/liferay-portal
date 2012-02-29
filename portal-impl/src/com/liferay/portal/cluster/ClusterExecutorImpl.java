@@ -156,9 +156,7 @@ public class ClusterExecutorImpl
 			return Collections.emptyList();
 		}
 
-		removeExpiredInstances();
-
-		return new ArrayList<Address>(_clusterNodeAddresses.values());
+		return getAddresses(_controlChannel);
 	}
 
 	public List<ClusterNode> getClusterNodes() {
@@ -243,9 +241,7 @@ public class ClusterExecutorImpl
 			return false;
 		}
 
-		removeExpiredInstances();
-
-		return _clusterNodeAddresses.containsValue(address);
+		return getAddresses(_controlChannel).contains(address);
 	}
 
 	public boolean isClusterNodeAlive(String clusterNodeId) {

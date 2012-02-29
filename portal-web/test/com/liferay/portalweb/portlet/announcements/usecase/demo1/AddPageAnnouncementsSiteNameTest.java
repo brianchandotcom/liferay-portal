@@ -31,7 +31,7 @@ public class AddPageAnnouncementsSiteNameTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Site Name")) {
+				if (selenium.isElementPresent("link=Site Name")) {
 					break;
 				}
 			}

@@ -209,24 +209,29 @@ public class JavadocFormatter {
 	}
 
 	private String _addDocletTags(
-		Element parentElement, String[] names, String indent,
+		Element parentElement, String[] tagNames, String indent,
 		boolean publicAccess) {
 
-		StringBundler sb = new StringBundler();
+		ArrayList<String> allTags = new ArrayList<String>();
+		ArrayList<String> commonCommentedTags = new ArrayList<String>();
+		ArrayList<String> nonCommonTags = new ArrayList<String>();
 
-		int maxNameLength = 0;
+		// Aggregate the tag names into the following lists ...
+		//   - allTags: superset of all of the tags found for the element's
+		//     comments and the element's signature
+		//   - commonCommentedTags: param, return, and throws tags that have
+		//     comments
+		//   - nonCommonTags: any tags other than the common tags
 
-		for (String name : names) {
-			if (name.length() < maxNameLength) {
-				continue;
-			}
-
-			List<Element> elements = parentElement.elements(name);
+		for (String tagName : tagNames) {
+			List<Element> elements = parentElement.elements(tagName);
 
 			for (Element element : elements) {
 				Element commentElement = element.element("comment");
 
 				String comment = null;
+
+				// Get comment by comment element's text or the element's text
 
 				if (commentElement != null) {
 					comment = commentElement.getText();
@@ -235,28 +240,73 @@ public class JavadocFormatter {
 					comment = element.getText();
 				}
 
-				if (Validator.isNull(comment) &&
-					(!publicAccess || !_initializeMissingJavadocs) &&
-					(name.equals("param") || name.equals("return") ||
-					 name.equals("throws"))) {
+				if (tagName.equals("param") || tagName.equals("return") ||
+					tagName.equals("throws")) {
 
-					continue;
+					if (Validator.isNotNull(comment)) {
+						commonCommentedTags.add(tagName);
+					}
+				}
+				else {
+					nonCommonTags.add(tagName);
 				}
 
-				maxNameLength = name.length();
-
-				break;
+				allTags.add(tagName);
 			}
 		}
 
-		// There should be one space after the name and an @ before it
+		// Aggregate the tag names to be measured for max tag name length based
+		// on the following logic:
+		//
+		// - If init mode, consider length of all existing tags and common tags
+		//   of signature.
+		// - If format-only mode (i.e. not init mode), consider length of all
+		//   existing tags.
+
+		ArrayList<String> tagsToMeasure = new ArrayList<String>();
+
+		if (_initializeMissingJavadocs) {
+
+			// Consider length of ALL tags
+
+			tagsToMeasure.addAll(allTags);
+
+		}
+		else {
+
+			// Only consider the length of commented tags and non-common tags
+
+			tagsToMeasure.addAll(commonCommentedTags);
+			tagsToMeasure.addAll(nonCommonTags);
+		}
+
+		// Determine the longest tag name
+
+		int maxNameLength = 0;
+
+		for (String tagName : tagsToMeasure) {
+			if (tagName.length() > maxNameLength) {
+				maxNameLength = tagName.length();
+			}
+		}
+
+		// Populate the comments based on the following logic
+		//
+		// - If init mode, write ALL of the common tags of signature and all
+		//   non-common tags.
+		// - If format-only mode (i.e. not init mode), format the names and
+		//   comments, but leave the comment contents as-is.
+
+		StringBundler sb = new StringBundler();
+
+		// There should be  an @ sign before the tag name and a space after it
 
 		maxNameLength += 2;
 
 		String nameIndent = _getSpacesIndent(maxNameLength);
 
-		for (String name : names) {
-			List<Element> elements = parentElement.elements(name);
+		for (String tagName : tagNames) {
+			List<Element> elements = parentElement.elements(tagName);
 
 			for (Element element : elements) {
 				Element commentElement = element.element("comment");
@@ -270,41 +320,46 @@ public class JavadocFormatter {
 					comment = element.getText();
 				}
 
-				if (Validator.isNull(comment) &&
-					(!publicAccess || !_initializeMissingJavadocs) &&
-					(name.equals("param") || name.equals("return") ||
-					 name.equals("throws"))) {
-
-					continue;
-				}
+				String elementName = null;
 
 				if (commentElement != null) {
-					String elementName = element.elementText("name");
-
-					if (Validator.isNotNull(elementName)) {
-						if (Validator.isNotNull(comment)) {
-							comment = elementName + " " + comment;
-						}
-						else {
-							comment = elementName;
-						}
-					}
+					elementName = element.elementText("name");
 				}
 
-				if (Validator.isNull(comment)) {
-					sb.append(indent);
-					sb.append(StringPool.AT);
-					sb.append(name);
-					sb.append(StringPool.NEW_LINE);
-				}
-				else {
-					comment = _wrapText(comment, indent + nameIndent);
+				if (Validator.isNotNull(comment)) {
 
-					String firstLine = indent + "@" + name;
-
-					comment = firstLine + comment.substring(firstLine.length());
+					comment = _assembleTagComment(
+						tagName, elementName, comment, indent, nameIndent);
 
 					sb.append(comment);
+				} else {
+
+					if (_initializeMissingJavadocs && publicAccess) {
+
+						// Write out all tags
+
+						comment = _assembleTagComment(
+							tagName, elementName, comment, indent, nameIndent);
+
+						sb.append(comment);
+					} else {
+
+						if (!tagName.equals("param") &&
+							!tagName.equals("return") &&
+							!tagName.equals("throws")) {
+
+							// Write out non-common tag
+
+							comment = _assembleTagComment(
+								tagName, elementName, comment, indent,
+								nameIndent);
+
+							sb.append(comment);
+						}
+						else {
+							// Don't write out empty common tag
+						}
+					}
 				}
 			}
 		}
@@ -483,6 +538,57 @@ public class JavadocFormatter {
 		for (Type exceptionType : exceptionTypes) {
 			_addThrowsElement(methodElement, exceptionType, throwsDocletTags);
 		}
+	}
+
+	private String _assembleTagComment(
+		String tagName, String elementName, String comment, String commentStart,
+		String nameIndent) {
+
+		String commentStartPlusTag = commentStart + StringPool.AT + tagName;
+
+		if (Validator.isNotNull(elementName)) {
+
+			if (Validator.isNotNull(elementName)) {
+
+				if (Validator.isNotNull(comment)) {
+					comment = elementName  + StringPool.SPACE + comment;
+				}
+				else {
+					comment = elementName;
+				}
+			}
+
+			// <name indent> elementName [comment]
+
+			comment = _wrapText(comment, commentStart + nameIndent);
+
+			// * @tagName <name indent> elementName [comment]
+
+			comment = commentStartPlusTag +
+				comment.substring(commentStartPlusTag.length());
+
+		} else {
+
+			if (Validator.isNotNull(comment)) {
+
+				// <name indent> comment
+
+				comment = _wrapText(comment, commentStart + nameIndent);
+
+				// * @tagName <name indent> comment
+
+				comment = commentStartPlusTag +
+					comment.substring(commentStartPlusTag.length());
+			}
+			else {
+
+				// * @tagName
+
+				comment = commentStartPlusTag + "\n";
+			}
+		}
+
+		return comment;
 	}
 
 	private void _format(String fileName) throws Exception {

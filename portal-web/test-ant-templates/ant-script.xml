@@ -9,6 +9,7 @@
 		</antcall>
 
 		<ant antfile="build-test-geronimo.xml" target="run-selenium-geronimo">
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -27,6 +28,7 @@
 
 		<ant antfile="build-test-geronimo.xml" target="run-selenium-geronimo">
 			<property name="test.database.minimal" value="true" />
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -44,6 +46,7 @@
 		</antcall>
 
 		<ant antfile="build-test-glassfish.xml" target="run-selenium-glassfish">
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -62,6 +65,7 @@
 
 		<ant antfile="build-test-glassfish.xml" target="run-selenium-glassfish">
 			<property name="test.database.minimal" value="true" />
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -79,6 +83,7 @@
 		</antcall>
 
 		<ant antfile="build-test-jboss.xml" target="run-selenium-jboss">
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -97,6 +102,7 @@
 
 		<ant antfile="build-test-jboss.xml" target="run-selenium-jboss">
 			<property name="test.database.minimal" value="true" />
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -114,6 +120,7 @@
 		</antcall>
 
 		<ant antfile="build-test-jetty.xml" target="run-selenium-jetty">
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -132,6 +139,7 @@
 
 		<ant antfile="build-test-jetty.xml" target="run-selenium-jetty">
 			<property name="test.database.minimal" value="true" />
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -149,6 +157,7 @@
 		</antcall>
 
 		<ant antfile="build-test-jonas.xml" target="run-selenium-jonas">
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -167,6 +176,7 @@
 
 		<ant antfile="build-test-jonas.xml" target="run-selenium-jonas">
 			<property name="test.database.minimal" value="true" />
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -191,6 +201,7 @@
 		</antcall>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -220,6 +231,7 @@
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
 			<property name="test.database.minimal" value="true" />
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -241,6 +253,7 @@
 		</antcall>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -259,6 +272,7 @@
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
 			<property name="test.database.minimal" value="true" />
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -276,6 +290,7 @@
 		</antcall>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -293,6 +308,7 @@
 		</antcall>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -311,6 +327,7 @@
 		</antcall>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -330,6 +347,7 @@
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
 			<property name="test.database.minimal" value="true" />
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -348,6 +366,7 @@
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
 			<property name="test.database.minimal" value="true" />
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -367,6 +386,7 @@
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
 			<property name="test.database.minimal" value="true" />
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -392,6 +412,7 @@
 		</antcall>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -421,6 +442,7 @@
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
 			<property name="test.database.minimal" value="true" />
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -449,6 +471,7 @@
 		</antcall>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -478,6 +501,7 @@
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
 			<property name="test.database.minimal" value="true" />
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -506,6 +530,7 @@
 		</antcall>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -535,6 +560,7 @@
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
 			<property name="test.database.minimal" value="true" />
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -563,6 +589,7 @@
 		</antcall>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -592,6 +619,7 @@
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
 			<property name="test.database.minimal" value="true" />
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -620,6 +648,7 @@
 		</antcall>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -649,6 +678,7 @@
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
 			<property name="test.database.minimal" value="true" />
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -677,6 +707,7 @@
 		</antcall>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -706,6 +737,7 @@
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
 			<property name="test.database.minimal" value="true" />
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -734,6 +766,7 @@
 		</antcall>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -763,6 +796,7 @@
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
 			<property name="test.database.minimal" value="true" />
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -784,6 +818,7 @@
 		</antcall>
 
 		<ant antfile="build-test-weblogic-10.3.xml" target="run-selenium-weblogic-10.3">
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -802,6 +837,7 @@
 
 		<ant antfile="build-test-weblogic-10.3.xml" target="run-selenium-weblogic-10.3">
 			<property name="test.database.minimal" value="true" />
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -820,6 +856,7 @@
 		</antcall>
 
 		<ant antfile="build-test-websphere-6.1.xml" target="run-selenium-websphere-6.1">
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -839,6 +876,7 @@
 
 		<ant antfile="build-test-websphere-6.1.xml" target="run-selenium-websphere-6.1">
 			<property name="test.database.minimal" value="true" />
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -857,6 +895,7 @@
 		</antcall>
 
 		<ant antfile="build-test-websphere-7.0.xml" target="run-selenium-websphere-7.0">
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -875,6 +914,7 @@
 		</antcall>
 
 		<ant antfile="build-test-websphere-8.0.xml" target="run-selenium-websphere-8.0">
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -894,6 +934,7 @@
 
 		<ant antfile="build-test-websphere-7.0.xml" target="run-selenium-websphere-7.0">
 			<property name="test.database.minimal" value="true" />
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -913,6 +954,7 @@
 
 		<ant antfile="build-test-websphere-8.0.xml" target="run-selenium-websphere-8.0">
 			<property name="test.database.minimal" value="true" />
+			${test.ant.script.file.database.collate}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}

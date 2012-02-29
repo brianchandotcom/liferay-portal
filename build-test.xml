@@ -65,6 +65,16 @@
 		</if>
 
 		<if>
+			<isset property="test.ant.script.database.collate" />
+			<then>
+				<property name="test.ant.script.file.database.collate" value="&lt;property name=&quot;test.database.collate&quot; value=&quot;true&quot; /&gt;" />
+			</then>
+			<else>
+				<property name="test.ant.script.file.database.collate" value=" " />
+			</else>
+		</if>
+
+		<if>
 			<isset property="test.ant.script.database.minimal" />
 			<then>
 				<property name="test.ant.script.file.database.minimal" value="&lt;property name=&quot;test.database.minimal&quot; value=&quot;true&quot; /&gt;" />
@@ -1797,6 +1807,7 @@
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="tags-blogs" />
+			<param name="test.ant.script.database.collate" value="true" />
 			<param name="test.ant.script.suite" value="TagsBlogsTestSuite" />
 		</antcall>
 
@@ -3029,31 +3040,46 @@ file.
 				<if>
 					<isset property="test.database.minimal" />
 					<then>
-						<ant dir="sql" target="rebuild-mysql" inheritAll="false">
-							<property name="minimal.suffix" value="-minimal" />
-						</ant>
+						<property name="sql.dir" value="sql\create-minimal\" />
+						<property name="sql.file" value="create-minimal-mysql.sql" />
 					</then>
 					<else>
-						<ant dir="sql" target="rebuild-mysql" inheritAll="false" />
+						<property name="sql.dir" value="sql\create\" />
+						<property name="sql.file" value="create-mysql.sql" />
 					</else>
 				</if>
 			</then>
-			<else>
-				<copy file="${sql.dir}${sql.file}" tofile="${sql.file}" />
+		</if>
 
+		<tstamp>
+			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+		</tstamp>
+
+		<copy file="${sql.dir}${sql.file}" tofile="${sql.file}" />
+
+		<if>
+			<isset property="test.database.collate" />
+			<then>
+				<replace file="${sql.file}">
+					<replacefilter token="drop database if exists lportal;" value="drop database if exists ${db.schema};"/>
+					<replacefilter token="create database lportal character set utf8;" value="create database ${db.schema} character set utf8 collate utf8_bin;"/>
+					<replacefilter token="use lportal;" value="use ${db.schema};"/>
+				</replace>
+			</then>
+			<else>
 				<replace file="${sql.file}">
 					<replacefilter token="drop database if exists lportal;" value="drop database if exists ${db.schema};"/>
 					<replacefilter token="create database lportal character set utf8;" value="create database ${db.schema} character set utf8;"/>
 					<replacefilter token="use lportal;" value="use ${db.schema};"/>
 				</replace>
-
-				<exec executable="cmd">
-					<arg line="/c mysql &lt; ${sql.file}" />
-				</exec>
-
-				<delete file="${sql.file}" />
 			</else>
 		</if>
+
+		<exec executable="cmd">
+			<arg line="/c mysql &lt; ${sql.file}" />
+		</exec>
+
+		<delete file="${sql.file}" />
 	</target>
 
 	<target name="rebuild-database-oracle">

@@ -14,9 +14,15 @@
 
 package com.liferay.portal.upgrade.v6_1_0;
 
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  * @author Miguel Pastor
@@ -27,26 +33,31 @@ public class UpgradeCommunityProperties extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		for (int i = 0; i < _OLD_PORTLET_PREFERENCES.length; i++) {
 			updatePreferences(
-				"PortletPreferences", _OLD_PORTLET_PREFERENCES[i],
-				_NEW_PORTLET_PREFERENCES[i]);
+				"PortletPreferences", "portletPreferencesId",
+				_OLD_PORTLET_PREFERENCES[i], _NEW_PORTLET_PREFERENCES[i]);
 		}
 
 		for (int i = 0; i < _OLD_PORTAL_PREFERENCES.length; i++) {
 			updatePreferences(
-				"PortalPreferences", _OLD_PORTAL_PREFERENCES[i],
-				_NEW_PORTAL_PREFERENCES[i]);
+				"PortalPreferences", "portalPreferencesId",
+				_OLD_PORTAL_PREFERENCES[i], _NEW_PORTAL_PREFERENCES[i]);
 		}
 	}
 
 	protected void updatePreferences(
-			String tableName, String oldValue, String newValue)
+			String tableName, String primaryKeyColumnName, String oldValue,
+			String newValue)
 		throws Exception {
 
-		StringBundler sb = new StringBundler();
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("update ");
 		sb.append(tableName);
-		sb.append(" set preferences = replace(CAST_TEXT(preferences), '");
+		sb.append(" set preferences = replace(preferences, '");
 		sb.append(oldValue);
 		sb.append("', '");
 		sb.append(newValue);
@@ -54,7 +65,72 @@ public class UpgradeCommunityProperties extends UpgradeProcess {
 		sb.append(oldValue);
 		sb.append("%'");
 
-		runSQL(sb.toString());
+		try {
+			runSQL(sb.toString());
+		}
+		catch (Exception e) {
+			con = DataAccess.getConnection();
+
+			sb = new StringBundler(7);
+
+			sb.append("select ");
+			sb.append(primaryKeyColumnName);
+			sb.append(", preferences from ");
+			sb.append(tableName);
+			sb.append(" where preferences like '%");
+			sb.append(oldValue);
+			sb.append("%'");
+
+			ps = con.prepareStatement(sb.toString());
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long id = rs.getLong(primaryKeyColumnName);
+				String preferences = rs.getString("preferences");
+
+				updatePreferences(
+					tableName, primaryKeyColumnName, oldValue, newValue, id,
+					preferences);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected void updatePreferences(
+			String tableName, String primaryKeyColumnName, String oldValue,
+			String newValue, long id, String preferences)
+		throws Exception {
+
+		preferences = StringUtil.replace(preferences, oldValue, newValue);
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("update ");
+		sb.append(tableName);
+		sb.append(" set preferences = ? where ");
+		sb.append(primaryKeyColumnName);
+		sb.append(" = ?");
+
+		try {
+			con = DataAccess.getConnection();
+
+			ps = con.prepareStatement(sb.toString());
+
+			ps.setString(1, preferences);
+			ps.setLong(2, id);
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
 	}
 
 	private static final String[] _NEW_PORTAL_PREFERENCES = {

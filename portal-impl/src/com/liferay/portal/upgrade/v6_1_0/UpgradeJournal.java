@@ -14,11 +14,16 @@
 
 package com.liferay.portal.upgrade.v6_1_0;
 
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.upgrade.v6_1_0.util.JournalArticleTable;
 import com.liferay.portal.upgrade.v6_1_0.util.JournalStructureTable;
 import com.liferay.portal.upgrade.v6_1_0.util.JournalTemplateTable;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -63,10 +68,58 @@ public class UpgradeJournal extends UpgradeProcess {
 	}
 
 	protected void updateStructureXsd() throws Exception {
-		runSQL(
-			"update JournalStructure set xsd = replace(CAST_TEXT(xsd), " +
-				"'image_gallery', 'document_library') where xsd like " +
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			runSQL(
+				"update JournalStructure set xsd = replace(xsd, " +
+					"'image_gallery', 'document_library') where xsd like " +
+						"'%image_gallery%'");
+		}
+		catch (Exception e) {
+			con = DataAccess.getConnection();
+
+			ps = con.prepareStatement(
+				"select id_, xsd from JournalStructure where xsd like " +
 					"'%image_gallery%'");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long id = rs.getLong("id_");
+				String xsd = rs.getString("xsd");
+
+				updateStructureXsd(id, xsd);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected void updateStructureXsd(long id, String xsd) throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		xsd = StringUtil.replace(xsd, "image_gallery", "document_library");
+
+		try {
+			con = DataAccess.getConnection();
+
+			ps = con.prepareStatement(
+				"update JournalStructure set xsd = ? where id_ = ?");
+
+			ps.setString(1, xsd);
+			ps.setLong(2, id);
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
 	}
 
 }

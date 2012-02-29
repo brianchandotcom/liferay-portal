@@ -151,7 +151,7 @@ public class JSONServiceAction extends JSONAction {
 			String[] publicMethods)
 		throws PrincipalException {
 
-		if (publicMethods.length > 0) {
+		if (methodName != null && publicMethods.length > 0) {
 			if (Wildcard.matchOne(methodName, publicMethods) != -1) {
 				return;
 			}

@@ -15,12 +15,14 @@
 package com.liferay.portal.jsonwebservice;
 
 import com.liferay.portal.action.JSONServiceAction;
+import com.liferay.portal.jsonwebservice.action.JSONWebServiceInvokerAction;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionMapping;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.lang.reflect.Method;
@@ -69,18 +71,35 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
+		JSONWebServiceAction jsonWebServiceAction = null;
+
+		String path = GetterUtil.getString(request.getPathInfo());
+
 		try {
-			JSONWebServiceAction jsonWebServiceAction =
-				JSONWebServiceActionsManagerUtil.getJSONWebServiceAction(
-					request);
+			if (path.equals("/invoke")) {
+				jsonWebServiceAction = new JSONWebServiceInvokerAction(request);
+			}
+			else {
+				jsonWebServiceAction =
+					JSONWebServiceActionsManagerUtil.getJSONWebServiceAction(
+						request);
+			}
 
 			JSONWebServiceActionMapping jsonWebServiceActionMapping =
 				jsonWebServiceAction.getJSONWebServiceActionMapping();
 
-			Method actionMethod = jsonWebServiceActionMapping.getActionMethod();
+			String actionMethodName = null;
+
+			if (jsonWebServiceActionMapping != null) {
+
+				Method actionMethod =
+					jsonWebServiceActionMapping.getActionMethod();
+
+				actionMethodName = actionMethod.getName();
+			}
 
 			checkMethodPublicAccess(
-				request, actionMethod.getName(),
+				request, actionMethodName,
 				PropsValues.JSONWS_WEB_SERVICE_PUBLIC_METHODS);
 
 			Object returnObj = jsonWebServiceAction.invoke();

@@ -51,7 +51,7 @@ else if (tabs2.equals("message-updated-email")) {
 }
 %>
 
-<liferay-portlet:renderURL var="portletURL" portletConfiguration="true">
+<liferay-portlet:renderURL portletConfiguration="true" var="portletURL">
 	<portlet:param name="tabs2" value="<%= tabs2 %>" />
 	<portlet:param name="redirect" value="<%= redirect %>" />
 </liferay-portlet:renderURL>
@@ -401,7 +401,7 @@ else if (tabs2.equals("message-updated-email")) {
 					</table>
 				</td>
 				<td>
-					<table id="<portlet:namespace />localized-priorities-table" class='<%= (currentLocale.equals(defaultLocale) ? "aui-helper-hidden" : "") + " lfr-table" %>'>
+					<table class='<%= (currentLocale.equals(defaultLocale) ? "aui-helper-hidden" : "") + " lfr-table" %>' id="<portlet:namespace />localized-priorities-table">
 					<tr>
 						<td class="lfr-label">
 							<liferay-ui:message key="name" />

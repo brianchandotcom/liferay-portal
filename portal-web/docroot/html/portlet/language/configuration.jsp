@@ -62,13 +62,13 @@ String redirect = ParamUtil.getString(request, "redirect");
 		%>
 
 		<liferay-ui:input-move-boxes
-			leftTitle="current"
-			rightTitle="available"
 			leftBoxName="currentLanguageIds"
-			rightBoxName="availableLanguageIds"
-			leftReorder="true"
 			leftList="<%= leftList %>"
+			leftReorder="true"
+			leftTitle="current"
+			rightBoxName="availableLanguageIds"
 			rightList="<%= rightList %>"
+			rightTitle="available"
 		/>
 	</aui:fieldset>
 

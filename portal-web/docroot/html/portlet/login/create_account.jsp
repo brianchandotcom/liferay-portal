@@ -158,7 +158,7 @@ boolean male = ParamUtil.getBoolean(request, "male", true);
 			</c:if>
 
 			<c:if test="<%= PropsValues.CAPTCHA_CHECK_PORTAL_CREATE_ACCOUNT %>">
-				<portlet:actionURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>" var="captchaURL">
+				<portlet:actionURL var="captchaURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
 					<portlet:param name="struts_action" value="/login/captcha" />
 				</portlet:actionURL>
 

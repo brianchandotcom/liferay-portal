@@ -26,7 +26,7 @@ String emailFromName = ParamUtil.getString(request, "emailFromName", LoginUtil.g
 String emailFromAddress = ParamUtil.getString(request, "emailFromAddress", LoginUtil.getEmailFromAddress(preferences, company.getCompanyId()));
 %>
 
-<liferay-portlet:renderURL var="portletURL" portletConfiguration="true">
+<liferay-portlet:renderURL portletConfiguration="true" var="portletURL">
 	<portlet:param name="tabs1" value="<%= tabs1 %>" />
 	<portlet:param name="tabs2" value="<%= tabs2 %>" />
 	<portlet:param name="redirect" value="<%= redirect %>" />

@@ -72,11 +72,17 @@ public class BaseTestCase extends LiferaySeleneseTestCase {
 			return;
 		}
 
-		if (!location.contains(TestPropsValues.PORTAL_URL)) {
-			return;
+		if (location.contains(TestPropsValues.PORTAL_URL) ||
+			location.contains("www.able.com") ||
+			location.contains("www.baker.com") ||
+			location.contains("www.charlie.com") ||
+			location.contains("www.dog.com") ||
+			location.contains("www.easy.com") ||
+			location.contains("www.fox.com")) {
+
+			selenium.getEval("window.Liferay.fire(\'initDockbar\');");
 		}
 
-		selenium.getEval("window.Liferay.fire(\'initDockbar\');");
 	}
 
 }

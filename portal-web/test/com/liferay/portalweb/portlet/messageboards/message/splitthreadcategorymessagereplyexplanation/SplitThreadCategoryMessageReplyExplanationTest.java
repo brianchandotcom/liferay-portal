@@ -104,28 +104,6 @@ public class SplitThreadCategoryMessageReplyExplanationTest extends BaseTestCase
 		selenium.type("//input[@id='_19_subject']",
 			RuntimeVariables.replace("MB Explanation Post Subject"));
 		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//td[@id='cke_contents__19_editor']/iframe")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.selectFrame("//td[@id='cke_contents__19_editor']/iframe");
-		selenium.type("//body",
-			RuntimeVariables.replace("MB Explanation Post Body"));
-		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='OK']", RuntimeVariables.replace("OK"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
@@ -175,7 +153,26 @@ public class SplitThreadCategoryMessageReplyExplanationTest extends BaseTestCase
 				"MB Category Thread Message Reply Body"));
 		assertEquals(RuntimeVariables.replace("MB Explanation Post Subject"),
 			selenium.getText("xPath=(//div[@class='subject']/a/strong)[2]"));
-		assertEquals(RuntimeVariables.replace("MB Explanation Post Body"),
-			selenium.getText("xpath=(//div[@class='thread-body'])[2]"));
+		assertTrue(selenium.isPartialText(
+				"xpath=(//div[@class='thread-body'])[2]",
+				"The new thread can be found at http://localhost:8080/web/guest/message-boards-test-page/-/message_boards/view_message"));
+		assertTrue(selenium.isPartialText(
+				"xpath=(//div[@class='thread-body'])[2]",
+				"The new thread can be found at http://localhost:8080/web/guest/message-boards-test-page/-/message_boards/view_message"));
+		assertTrue(selenium.isPartialText("//div[@class='thread-body']/a",
+				"http://localhost:8080/web/guest/message-boards-test-page/-/message_boards/view_message"));
+		selenium.clickAt("//div[@class='thread-body']/a",
+			RuntimeVariables.replace("Link to new thread"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace(
+				"RE: MB Category Thread Message Subject"),
+			selenium.getText("//h1[@class='header-title']/span"));
+		assertEquals(RuntimeVariables.replace(
+				"RE: MB Category Thread Message Subject"),
+			selenium.getText("//div[@class='subject']/a/strong"));
+		assertEquals(RuntimeVariables.replace(
+				"MB Category Thread Message Reply Body"),
+			selenium.getText("//div[@class='thread-body']"));
 	}
 }

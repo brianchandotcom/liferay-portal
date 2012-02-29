@@ -104,26 +104,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//td[@id='cke_contents__19_editor']/iframe</td>
-	<td>CK Editor</td>
-</tr>
-<tr>
-	<td>selectFrame</td>
-	<td>//td[@id='cke_contents__19_editor']/iframe</td>
-	<td>CK Editor</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>//body</td>
-	<td>MB Explanation Post Body</td>
-</tr>
-<tr>
-	<td>selectFrame</td>
-	<td>relative=top</td>
-	<td>top</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='OK']</td>
 	<td>OK</td>
@@ -189,11 +169,40 @@
 	<td>MB Explanation Post Subject</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>assertPartialText</td>
 	<td>xpath=(//div[@class='thread-body'])[2]</td>
-	<td>MB Explanation Post Body</td>
+	<td>The new thread can be found at http://localhost:8080/web/guest/message-boards-test-page/-/message_boards/view_message</td>
 </tr>
-
+<tr>
+	<td>assertPartialText</td>
+	<td>xpath=(//div[@class='thread-body'])[2]</td>
+	<td>The new thread can be found at http://localhost:8080/web/guest/message-boards-test-page/-/message_boards/view_message</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//div[@class='thread-body']/a</td>
+	<td>http://localhost:8080/web/guest/message-boards-test-page/-/message_boards/view_message</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='thread-body']/a</td>
+	<td>Link to new thread</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1[@class='header-title']/span</td>
+	<td>RE: MB Category Thread Message Subject</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='subject']/a/strong</td>
+	<td>RE: MB Category Thread Message Subject</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='thread-body']</td>
+	<td>MB Category Thread Message Reply Body</td>
+</tr>
 </tbody></table>
 </body>
 </html>

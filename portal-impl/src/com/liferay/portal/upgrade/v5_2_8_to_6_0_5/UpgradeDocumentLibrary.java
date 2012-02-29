@@ -28,12 +28,17 @@ import com.liferay.portal.upgrade.v6_0_0.util.DLFileEntryTitleUpgradeColumnImpl;
 import com.liferay.portal.upgrade.v6_0_0.util.DLFileEntryVersionUpgradeColumnImpl;
 import com.liferay.portal.upgrade.v6_0_0.util.DLFileRankTable;
 import com.liferay.portal.upgrade.v6_0_0.util.DLFileShortcutTable;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Jorge Ferrer
@@ -192,6 +197,29 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
+		List<Long> tableIds = new ArrayList<Long>();
+
+		try {
+			long classNameId = PortalUtil.getClassNameId(DLFileEntry.class);
+
+			con = DataAccess.getConnection();
+
+			ps = con.prepareStatement(
+				"select tableId from ExpandoTable where classNameId = " +
+					classNameId);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long tableId = rs.getLong("tableId");
+
+				tableIds.add(tableId);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+
 		try {
 			con = DataAccess.getConnection();
 
@@ -218,13 +246,17 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 				long fileVersionId = getLatestFileVersionId(folderId, name);
 
-				runSQL(
-					"update ExpandoRow set classPK = " + fileVersionId +
-						 " where classPK = " + fileEntryId);
+				for (long tableId : tableIds) {
+					runSQL(
+						"update ExpandoRow set classPK = " + fileVersionId +
+							" where tableId = " + tableId + " and classPK = " +
+								fileEntryId);
 
-				runSQL(
-					"update ExpandoValue set classPK = " + fileVersionId +
-						 " where classPK = " + fileEntryId);
+					runSQL(
+						"update ExpandoValue set classPK = " + fileVersionId +
+							" where tableId = " + tableId + " and classPK = " +
+								fileEntryId);
+				}
 			}
 		}
 		finally {

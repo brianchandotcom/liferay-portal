@@ -200,8 +200,6 @@ page import="com.liferay.util.xml.XMLFormatter" %>
 
 <%@ page import="java.io.Serializable" %>
 
-<%@ page import="java.math.BigDecimal" %>
-
 <%@ page import="java.text.DateFormat" %><%@
 page import="java.text.DecimalFormat" %><%@
 page import="java.text.Format" %><%@
@@ -246,8 +244,6 @@ page import="javax.portlet.ResourceURL" %><%@
 page import="javax.portlet.UnavailableException" %><%@
 page import="javax.portlet.ValidatorException" %><%@
 page import="javax.portlet.WindowState" %>
-
-<%@ page import="org.apache.commons.math.util.MathUtils" %>
 
 <liferay-theme:defineObjects />
 

@@ -33,7 +33,7 @@ public class AddPageDictionaryTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//a[@id='addPage']")) {
+				if (selenium.isElementPresent("//a[@id='addPage']")) {
 					break;
 				}
 			}
@@ -64,7 +64,8 @@ public class AddPageDictionaryTest extends BaseTestCase {
 
 		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace("Dictionary Test Page"));
-		selenium.clickAt("save", RuntimeVariables.replace(""));
+		selenium.clickAt("//button[@id='save']",
+			RuntimeVariables.replace("Save"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -83,7 +84,7 @@ public class AddPageDictionaryTest extends BaseTestCase {
 		}
 
 		selenium.clickAt("link=Dictionary Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Dictionary Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 	}

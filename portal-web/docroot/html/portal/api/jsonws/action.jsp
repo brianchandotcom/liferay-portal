@@ -323,6 +323,31 @@ String signature = ParamUtil.getString(request, "signature");
 			var scriptTpl = A.Template.from('#scriptTpl');
 			var urlTpl = A.Template.from('#urlTpl');
 
+			var tplDataTypes = Liferay.TPL_DATA_TYPES;
+
+			var stringType = tplDataTypes.string;
+			var arrayType = tplDataTypes.array;
+
+			var formatDataType = function(key, value) {
+				value = decodeURIComponent(value.replace(/\+/g, ' '));
+
+				if (stringType[key]) {
+					value = '\'' + value + '\'';
+				}
+				else if (arrayType[key]) {
+					value = '[' + value + ']';
+				}
+
+				return value;
+			};
+
+			curlTpl.formatDataType = formatDataType;
+			scriptTpl.formatDataType = formatDataType;
+
+			urlTpl.toURIParam = function(value) {
+				return A.Lang.String.uncamelize(value, '-').toLowerCase();
+			};
+
 			var curlExample = A.one('#curlExample');
 			var jsExample = A.one('#jsExample');
 			var urlExample = A.one('#urlExample');
@@ -357,11 +382,6 @@ String signature = ParamUtil.getString(request, "signature");
 
 					var data = [];
 
-					var tplDataTypes = Liferay.TPL_DATA_TYPES;
-
-					var stringType = tplDataTypes.string;
-					var arrayType = tplDataTypes.array;
-
 					var ignoreFields = {
 						formDate: true
 					};
@@ -370,15 +390,6 @@ String signature = ParamUtil.getString(request, "signature");
 						REGEX_QUERY_STRING,
 						function(match, key, value) {
 							if (value && !ignoreFields[key]) {
-								value = decodeURIComponent(value.replace(/\+/g, ' '));
-
-								if (stringType[key]) {
-									value = '\'' + value + '\'';
-								}
-								else if (arrayType[key]) {
-									value = '[' + value + ']';
-								}
-
 								data.push(
 									{
 										key: key,
@@ -406,7 +417,7 @@ String signature = ParamUtil.getString(request, "signature");
 Liferay.Service(
   '<%= jsonWebServiceActionMapping.getServletContextPath() + jsonWebServiceActionMapping.getPath() %>',
   <tpl if="data.length">data: {
-<%= StringPool.FOUR_SPACES %><tpl for="data">{key}: {value}<tpl if="!$last">,
+<%= StringPool.FOUR_SPACES %><tpl for="data">{key}: {[this.formatDataType(values.key, values.value)]}<tpl if="!$last">,
 <%= StringPool.FOUR_SPACES %></tpl></tpl>
   },
   </tpl>function(obj) {
@@ -418,12 +429,12 @@ Liferay.Service(
 <textarea class="aui-helper-hidden" id="curlTpl">
 curl <%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() %>/api/secure/jsonws<%= jsonWebServiceActionMapping.getServletContextPath() + jsonWebServiceActionMapping.getPath() %> \\
   -u test@liferay.com:test <tpl if="data.length">\\
-  <tpl for="data">-d {key}={value} <tpl if="!$last">\\
+  <tpl for="data">-d {key}={[this.formatDataType(values.key, values.value)]} <tpl if="!$last">\\
   </tpl></tpl></tpl>
 </textarea>
 
 <textarea class="aui-helper-hidden" id="urlTpl">
-<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() %>/api/secure/jsonws<%= jsonWebServiceActionMapping.getServletContextPath() + jsonWebServiceActionMapping.getPath() %><tpl if="data.length">/<tpl for="data">{key}/{value}<tpl if="!$last">/</tpl></tpl></tpl>
+<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() %>/api/secure/jsonws<%= jsonWebServiceActionMapping.getServletContextPath() + jsonWebServiceActionMapping.getPath() %><tpl if="data.length">/<tpl for="data">{key:this.toURIParam}/{value}<tpl if="!$last">/</tpl></tpl></tpl>
 </textarea>
 	</c:when>
 	<c:otherwise>

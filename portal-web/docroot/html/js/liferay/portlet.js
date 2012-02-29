@@ -647,7 +647,7 @@
 				Liferay.Util.openWindow(
 					{
 						cache: false,
-						id: namespacedId + 'configurationIframeDialog', 
+						id: namespacedId + 'configurationIframeDialog',
 						dialog: {
 							align: Util.Window.ALIGN_CENTER,
 							after: {

@@ -159,7 +159,7 @@ AUI.add(
 
 					dialog.iframe.set('uri', uri);
 				}
-				
+
 				dialog._syncUIPosAlign();
 			}
 

@@ -2638,17 +2638,6 @@
 		</licenses>
 	</library>
 	<library>
-		<file-name>portal/primrose.jar</file-name>
-		<version>3.0.14</version>
-		<project-name>Primrose</project-name>
-		<project-url>http://www.primrose.org.uk</project-url>
-		<licenses>
-			<license>
-				<license-name>LGPL 2.1</license-name>
-			</license>
-		</licenses>
-	</library>
-	<library>
 		<file-name>portal/quartz.jar</file-name>
 		<version>2.1.0</version>
 		<project-name>Quartz</project-name>

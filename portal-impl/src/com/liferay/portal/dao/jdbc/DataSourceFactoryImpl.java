@@ -48,8 +48,6 @@ import org.apache.commons.dbcp.BasicDataSourceFactory;
 import org.apache.tomcat.jdbc.pool.PoolProperties;
 import org.apache.tomcat.jdbc.pool.jmx.ConnectionPool;
 
-import uk.org.primrose.pool.datasource.GenericDataSourceFactory;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
@@ -115,13 +113,6 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 			}
 
 			dataSource = initDataSourceDBCP(properties);
-		}
-		else if (liferayPoolProvider.equalsIgnoreCase("primrose")) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Initializing Primrose data source");
-			}
-
-			dataSource = initDataSourcePrimrose(properties);
 		}
 		else {
 			if (_log.isDebugEnabled()) {
@@ -200,12 +191,6 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 				continue;
 			}
 
-			// Ignore Primrose properties
-
-			if (isPropertyPrimrose(key)) {
-				continue;
-			}
-
 			// Ignore Tomcat
 
 			if (isPropertyTomcat(key)) {
@@ -232,42 +217,6 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 		return BasicDataSourceFactory.createDataSource(properties);
 	}
 
-	protected DataSource initDataSourcePrimrose(Properties properties)
-		throws Exception {
-
-		String poolName = PwdGenerator.getPassword(PwdGenerator.KEY2, 8);
-
-		properties.setProperty("poolName", poolName);
-
-		Enumeration<String> enu =
-			(Enumeration<String>)properties.propertyNames();
-
-		while (enu.hasMoreElements()) {
-			String key = enu.nextElement();
-
-			String value = properties.getProperty(key);
-
-			// Map org.apache.commons.dbcp.BasicDataSource to Primrose
-
-			if (key.equalsIgnoreCase("driverClassName")) {
-				key = "driverClass";
-			}
-			else if (key.equalsIgnoreCase("url")) {
-				key = "driverURL";
-			}
-			else if (key.equalsIgnoreCase("username")) {
-				key = "user";
-			}
-
-			properties.setProperty(key, value);
-		}
-
-		GenericDataSourceFactory genericDataSourceFactory =
-			new GenericDataSourceFactory();
-
-		return genericDataSourceFactory.loadPool(poolName, properties);
-	}
-
 	protected DataSource initDataSourceTomcat(Properties properties)
 		throws Exception {
 
@@ -286,12 +235,6 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 			// Ignore C3P0 properties
 
 			if (isPropertyC3PO(key)) {
-				continue;
-			}
-
-			// Ignore Primrose properties
-
-			if (isPropertyPrimrose(key)) {
 				continue;
 			}
 
@@ -367,19 +310,6 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 	protected boolean isPropertyLiferay(String key) {
 		if (key.equalsIgnoreCase("jndi.name") ||
 			key.equalsIgnoreCase("liferay.pool.provider")) {
-
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	protected boolean isPropertyPrimrose(String key) {
-		if (key.equalsIgnoreCase("base") ||
-			key.equalsIgnoreCase("connectionTransactionIsolation") ||
-			key.equalsIgnoreCase("idleTime") ||
-			key.equalsIgnoreCase("numberOfConnectionsToInitializeWith")) {
 
 			return true;
 		}

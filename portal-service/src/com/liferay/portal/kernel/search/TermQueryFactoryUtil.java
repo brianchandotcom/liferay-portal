@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.search;
 
-
 /**
  * @author Brian Wing Shun Chan
  * @author Michael C. Han

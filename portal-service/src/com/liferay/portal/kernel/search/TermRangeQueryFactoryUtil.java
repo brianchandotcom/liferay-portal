@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.search;
 
-
 /**
  * @author Raymond Augé
  * @author Michael C. Han

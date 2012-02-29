@@ -38,9 +38,9 @@ import java.util.Set;
 public abstract class AbstractSearchEngineConfigurator {
 
 	public void afterPropertiesSet() {
-		Set<Entry<String,SearchEngine>> entrySet = _searchEngines.entrySet();
+		Set<Entry<String, SearchEngine>> entrySet = _searchEngines.entrySet();
 
-		for (Entry<String,SearchEngine> entry : entrySet) {
+		for (Entry<String, SearchEngine> entry : entrySet) {
 			initSearchEngine(entry.getKey(), entry.getValue());
 		}
 

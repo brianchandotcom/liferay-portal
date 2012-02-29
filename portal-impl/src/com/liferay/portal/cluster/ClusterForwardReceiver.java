@@ -53,13 +53,6 @@ public class ClusterForwardReceiver extends BaseReceiver {
 		}
 	}
 
-	@Override
-	public void viewAccepted(View view) {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Accepted view " + view);
-		}
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(
 		ClusterForwardReceiver.class);
 

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.cluster;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import org.jgroups.Address;
 import org.jgroups.Message;
 import org.jgroups.Receiver;
@@ -31,6 +33,10 @@ public class BaseReceiver implements Receiver {
 		return null;
 	}
 
+	public View getView() {
+		return view;
+	}
+
 	public void receive(Message message) {
 	}
 
@@ -41,6 +47,15 @@ public class BaseReceiver implements Receiver {
 	}
 
 	public void viewAccepted(View view) {
+		if (_log.isInfoEnabled()) {
+			_log.info("Accepted view " + view);
+		}
+
+		this.view = view;
 	}
+
+	protected volatile View view;
+
+	private static Log _log = LogFactoryUtil.getLog(BaseReceiver.class);
 
 }

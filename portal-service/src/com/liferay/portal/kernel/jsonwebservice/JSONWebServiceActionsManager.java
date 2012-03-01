@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.jsonwebservice;
 import java.lang.reflect.Method;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,6 +28,10 @@ public interface JSONWebServiceActionsManager {
 
 	public JSONWebServiceAction getJSONWebServiceAction(
 		HttpServletRequest request);
+
+	public JSONWebServiceAction getJSONWebServiceAction(
+		HttpServletRequest request, String path, String method,
+		Map<String, Object> parameters);
 
 	public JSONWebServiceActionMapping getJSONWebServiceActionMapping(
 		String signature);

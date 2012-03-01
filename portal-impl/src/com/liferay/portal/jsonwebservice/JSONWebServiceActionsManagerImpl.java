@@ -33,6 +33,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -80,7 +81,44 @@ public class JSONWebServiceActionsManagerImpl
 			new JSONWebServiceActionParameters();
 
 		jsonWebServiceActionParameters.collectAll(
-			request, pathParameters, jsonRpcRequest);
+			request, pathParameters, jsonRpcRequest, null);
+
+		String[] parameterNames =
+			jsonWebServiceActionParameters.getParameterNames();
+
+		HttpSession session = request.getSession();
+
+		ServletContext servletContext = session.getServletContext();
+
+		String servletContextPath = ContextPathUtil.getContextPath(
+			servletContext);
+
+		int jsonWebServiceActionConfigIndex =
+			_getJSONWebServiceActionConfigIndex(
+				servletContextPath, path, method, parameterNames);
+
+		if (jsonWebServiceActionConfigIndex == -1) {
+			throw new RuntimeException(
+				"No JSON web service action associated with path " + path +
+					" and method " + method + " for /" + servletContextPath);
+		}
+
+		JSONWebServiceActionConfig jsonWebServiceActionConfig =
+			_jsonWebServiceActionConfigs.get(jsonWebServiceActionConfigIndex);
+
+		return new JSONWebServiceActionImpl(
+			jsonWebServiceActionConfig, jsonWebServiceActionParameters);
+	}
+
+	public JSONWebServiceAction getJSONWebServiceAction(
+			HttpServletRequest request, String path, String method,
+			Map<String, Object> parameters) {
+
+		JSONWebServiceActionParameters jsonWebServiceActionParameters =
+			new JSONWebServiceActionParameters();
+
+		jsonWebServiceActionParameters.collectAll(
+			request, null, null, parameters);
 
 		String[] parameterNames =
 			jsonWebServiceActionParameters.getParameterNames();

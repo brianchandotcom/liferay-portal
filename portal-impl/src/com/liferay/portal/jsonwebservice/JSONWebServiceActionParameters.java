@@ -40,7 +40,7 @@ public class JSONWebServiceActionParameters {
 
 	public void collectAll(
 		HttpServletRequest request, String pathParameters,
-		JSONRPCRequest jsonRpcRequest) {
+		JSONRPCRequest jsonRpcRequest, Map<String, Object> mapParameters) {
 
 		_jsonRpcRequest = jsonRpcRequest;
 
@@ -57,6 +57,7 @@ public class JSONWebServiceActionParameters {
 		_collectFromPath(pathParameters);
 		_collectFromRequestParameters(request);
 		_collectFromJSONRPCRequest(jsonRpcRequest);
+		_collectFromMap(mapParameters);
 	}
 
 	public List<KeyValue<String, Object>> getInnerParameters(String baseName) {
@@ -126,6 +127,20 @@ public class JSONWebServiceActionParameters {
 			String value = jsonRpcRequest.getParameter(parameterName);
 
 			parameterName = CamelCaseUtil.normalizeCamelCase(parameterName);
+
+			_parameters.put(parameterName, value);
+		}
+	}
+
+	private void _collectFromMap(Map<String, Object> mapParameters) {
+		if (mapParameters == null) {
+			return;
+		}
+
+		for (Map.Entry<String, Object> entry : mapParameters.entrySet()) {
+			String parameterName = entry.getKey();
+
+			Object value = entry.getValue();
 
 			_parameters.put(parameterName, value);
 		}

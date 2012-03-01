@@ -19,6 +19,6 @@ package com.liferay.portal.kernel.cluster;
  */
 public enum ClusterMessageType {
 
-	EXECUTE, NOTIFY
+	EXECUTE, NOTIFY, UPDATE
 
 }

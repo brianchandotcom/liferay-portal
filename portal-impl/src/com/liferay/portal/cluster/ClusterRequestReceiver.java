@@ -23,23 +23,21 @@ import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
-import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
-import com.liferay.portal.kernel.util.NamedThreadFactory;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import org.jgroups.Channel;
 import org.jgroups.ChannelException;
 import org.jgroups.Message;
+import org.jgroups.View;
 
 /**
  * @author Michael C. Han
@@ -49,20 +47,6 @@ public class ClusterRequestReceiver extends BaseReceiver {
 
 	public ClusterRequestReceiver(ClusterExecutorImpl clusterExecutorImpl) {
 		_clusterExecutorImpl = clusterExecutorImpl;
-	}
-
-	public void destroy() {
-		_parallelExecutorService.shutdownNow();
-		_serialExecutorService.shutdownNow();
-	}
-
-	public void initialize() {
-		_parallelExecutorService = PortalExecutorManagerUtil.getPortalExecutor(
-			ClusterRequestReceiver.class.getName() + "_parallel");
-		_serialExecutorService = Executors.newSingleThreadExecutor(
-			new NamedThreadFactory(
-				ClusterRequestReceiver.class.getName() + "_serial",
-				Thread.NORM_PRIORITY, PortalClassLoaderUtil.getClassLoader()));
 	}
 
 	@Override
@@ -94,15 +78,7 @@ public class ClusterRequestReceiver extends BaseReceiver {
 		if (obj instanceof ClusterRequest) {
 			ClusterRequest clusterRequest = (ClusterRequest)obj;
 
-			RequestTask requestTask = new RequestTask(
-				clusterRequest, sourceAddress, localAddress);
-
-			if (clusterRequest.isParallelized()) {
-				_parallelExecutorService.execute(requestTask);
-			}
-			else {
-				_serialExecutorService.execute(requestTask);
-			}
+			processClusterRequest(clusterRequest, sourceAddress, localAddress);
 		}
 		else if (obj instanceof ClusterNodeResponse) {
 			ClusterNodeResponse clusterNodeResponse = (ClusterNodeResponse)obj;
@@ -113,6 +89,79 @@ public class ClusterRequestReceiver extends BaseReceiver {
 		else if (_log.isWarnEnabled()) {
 			_log.warn(
 				"Unable to process message content of type " + obj.getClass());
+		}
+	}
+
+	public void viewAccepted(View view) {
+		super.viewAccepted(view);
+
+		if (_lastView == null) {
+			_lastView = view;
+
+			return;
+		}
+
+		List<Address> departAddresses = getDepartAddresses(view);
+
+		List<Address> newAddresses = getNewAddresses(view);
+
+		_lastView = view;
+
+		if (!newAddresses.isEmpty()) {
+			_clusterExecutorImpl.sendNotifyRequest();
+		}
+
+		if (!departAddresses.isEmpty()) {
+			_clusterExecutorImpl.memberRemoved(departAddresses);
+		}
+	}
+
+	protected List<Address> getDepartAddresses(View view) {
+		List<org.jgroups.Address> currentJGroupsAddresses = view.getMembers();
+		List<org.jgroups.Address> lastJGroupsAddresses = _lastView.getMembers();
+
+		List<org.jgroups.Address> departJGroupsAddresses =
+			new ArrayList<org.jgroups.Address>(lastJGroupsAddresses);
+
+		departJGroupsAddresses.removeAll(currentJGroupsAddresses);
+
+		if (departJGroupsAddresses.isEmpty()) {
+			return Collections.emptyList();
+		}
+		else {
+			List<Address> departAddresses = new ArrayList<Address>(
+				departJGroupsAddresses.size());
+
+			for (org.jgroups.Address departJGroupsAddress :
+				departJGroupsAddresses) {
+				departAddresses.add(new AddressImpl(departJGroupsAddress));
+			}
+
+			return departAddresses;
+		}
+	}
+
+	protected List<Address> getNewAddresses(View view) {
+		List<org.jgroups.Address> currentJGroupsAddresses = view.getMembers();
+		List<org.jgroups.Address> lastJGroupsAddresses = _lastView.getMembers();
+
+		List<org.jgroups.Address> newJGroupsAddresses =
+			new ArrayList<org.jgroups.Address>(currentJGroupsAddresses);
+
+		newJGroupsAddresses.removeAll(lastJGroupsAddresses);
+
+		if (newJGroupsAddresses.isEmpty()) {
+			return Collections.emptyList();
+		}
+		else {
+			List<Address> newAddresses = new ArrayList<Address>(
+				newJGroupsAddresses.size());
+
+			for (org.jgroups.Address newJGroupsAddress : newJGroupsAddresses) {
+				newAddresses.add(new AddressImpl(newJGroupsAddress));
+			}
+
+			return newAddresses;
 		}
 	}
 
@@ -168,18 +217,28 @@ public class ClusterRequestReceiver extends BaseReceiver {
 		ClusterMessageType clusterMessageType =
 			clusterRequest.getClusterMessageType();
 
-		if (clusterMessageType.equals(ClusterMessageType.NOTIFY)) {
+		ClusterNodeResponse clusterNodeResponse = new ClusterNodeResponse();
+
+		Address address = new AddressImpl(localAddress);
+
+		clusterNodeResponse.setAddress(address);
+
+		ClusterNode localClusterNode =
+			_clusterExecutorImpl.getLocalClusterNode();
+
+		clusterNodeResponse.setClusterNode(localClusterNode);
+
+		if (clusterMessageType.equals(ClusterMessageType.NOTIFY) ||
+			clusterMessageType.equals(ClusterMessageType.UPDATE)) {
+
 			ClusterNode originatingClusterNode =
 				clusterRequest.getOriginatingClusterNode();
 
 			if (originatingClusterNode != null) {
-				long expirationTime =
-					System.currentTimeMillis() +
-						(PropsValues.CLUSTER_EXECUTOR_HEARTBEAT_INTERVAL * 2);
+				_clusterExecutorImpl.memberJoined(
+					new AddressImpl(sourceAddress), originatingClusterNode);
 
-				_clusterExecutorImpl.notify(
-					new AddressImpl(sourceAddress), originatingClusterNode,
-					expirationTime);
+				clusterNodeResponse.setClusterMessageType(clusterMessageType);
 			}
 			else {
 				if (_log.isWarnEnabled()) {
@@ -187,64 +246,49 @@ public class ClusterRequestReceiver extends BaseReceiver {
 						"Content of notify message does not contain cluster " +
 							"node information");
 				}
-			}
 
-			return;
-		}
-
-		ClusterNodeResponse clusterNodeResponse = new ClusterNodeResponse();
-
-		Address address = new AddressImpl(localAddress);
-
-		clusterNodeResponse.setAddress(address);
-
-		clusterNodeResponse.setClusterMessageType(ClusterMessageType.EXECUTE);
-
-		try {
-			ClusterNode localClusterNode =
-				_clusterExecutorImpl.getLocalClusterNode();
-
-			clusterNodeResponse.setClusterNode(localClusterNode);
-		}
-		catch (Exception e) {
-			clusterNodeResponse.setException(e);
-		}
-
-		clusterNodeResponse.setMulticast(clusterRequest.isMulticast());
-		clusterNodeResponse.setUuid(clusterRequest.getUuid());
-
-		MethodHandler methodHandler = clusterRequest.getMethodHandler();
-
-		if (methodHandler != null) {
-			try {
-				ClusterInvokeThreadLocal.setEnabled(false);
-
-				Object returnValue = invoke(
-					clusterRequest.getServletContextName(),
-					clusterRequest.getBeanIdentifier(), methodHandler);
-
-				if (returnValue instanceof Serializable) {
-					clusterNodeResponse.setResult(returnValue);
-				}
-				else if (returnValue != null) {
-					clusterNodeResponse.setException(
-						new ClusterException(
-							"Return value is not serializable"));
-				}
-			}
-			catch (Exception e) {
-				clusterNodeResponse.setException(e);
-
-				_log.error("Failed to invoke method " + methodHandler, e);
-			}
-			finally {
-				ClusterInvokeThreadLocal.setEnabled(true);
+				return;
 			}
 		}
 		else {
-			clusterNodeResponse.setException(
+			clusterNodeResponse.setClusterMessageType(
+				ClusterMessageType.EXECUTE);
+			clusterNodeResponse.setMulticast(clusterRequest.isMulticast());
+			clusterNodeResponse.setUuid(clusterRequest.getUuid());
+
+			MethodHandler methodHandler = clusterRequest.getMethodHandler();
+
+			if (methodHandler != null) {
+				try {
+					ClusterInvokeThreadLocal.setEnabled(false);
+
+					Object returnValue = invoke(
+						clusterRequest.getServletContextName(),
+						clusterRequest.getBeanIdentifier(), methodHandler);
+
+					if (returnValue instanceof Serializable) {
+						clusterNodeResponse.setResult(returnValue);
+					}
+					else if (returnValue != null) {
+						clusterNodeResponse.setException(
+							new ClusterException(
+								"Return value is not serializable"));
+					}
+				}
+				catch (Exception e) {
+					clusterNodeResponse.setException(e);
+
+					_log.error("Failed to invoke method " + methodHandler, e);
+				}
+				finally {
+					ClusterInvokeThreadLocal.setEnabled(true);
+				}
+			}
+			else {
+				clusterNodeResponse.setException(
 				new ClusterException(
 					"Payload is not of type " + MethodHandler.class.getName()));
+			}
 		}
 
 		Channel controlChannel = _clusterExecutorImpl.getControlChannel();
@@ -265,6 +309,30 @@ public class ClusterRequestReceiver extends BaseReceiver {
 	protected void processClusterResponse(
 		ClusterNodeResponse clusterNodeResponse,
 		org.jgroups.Address sourceAddress, org.jgroups.Address localAddress) {
+
+		ClusterMessageType clusterMessageType =
+			clusterNodeResponse.getClusterMessageType();
+
+		if (clusterMessageType.equals(ClusterMessageType.NOTIFY) ||
+			clusterMessageType.equals(ClusterMessageType.UPDATE)) {
+
+			ClusterNode clusterNode = clusterNodeResponse.getClusterNode();
+
+			if (clusterNode != null) {
+				Address joinAddress = new AddressImpl(sourceAddress);
+
+				_clusterExecutorImpl.memberJoined(joinAddress, clusterNode);
+			}
+			else {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Response of notify message does not contain cluster " +
+							"node information");
+				}
+			}
+
+			return;
+		}
 
 		String uuid = clusterNodeResponse.getUuid();
 
@@ -313,29 +381,6 @@ public class ClusterRequestReceiver extends BaseReceiver {
 		ClusterRequestReceiver.class);
 
 	private ClusterExecutorImpl _clusterExecutorImpl;
-	private ExecutorService _parallelExecutorService;
-	private ExecutorService _serialExecutorService;
-
-	private class RequestTask implements Runnable {
-
-		public RequestTask(
-			ClusterRequest clusterRequest, org.jgroups.Address sourceAddress,
-			org.jgroups.Address localAddress) {
-
-			_clusterRequest = clusterRequest;
-			_sourceAddress = sourceAddress;
-			_localAddress = localAddress;
-		}
-
-		public void run() {
-			processClusterRequest(
-				_clusterRequest, _sourceAddress, _localAddress);
-		}
-
-		private ClusterRequest _clusterRequest;
-		private org.jgroups.Address _localAddress;
-		private org.jgroups.Address _sourceAddress;
-
-	}
+	private volatile View _lastView;
 
 }

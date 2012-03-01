@@ -84,7 +84,9 @@ public class JGroupsManager implements CacheManagerPeerProvider, CachePeer {
 	}
 
 	public List<Address> getBusMembership() {
-		return _jChannel.getView().getMembers();
+		BaseReceiver receiver = (BaseReceiver)_jChannel.getReceiver();
+
+		return receiver.getView().getMembers();
 	}
 
 	@SuppressWarnings("rawtypes")

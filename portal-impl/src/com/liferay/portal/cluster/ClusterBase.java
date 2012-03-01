@@ -117,7 +117,9 @@ public abstract class ClusterBase {
 	}
 
 	protected List<Address> getAddresses(JChannel channel) {
-		View view = channel.getView();
+		BaseReceiver baseReceiver = (BaseReceiver)channel.getReceiver();
+
+		View view = baseReceiver.getView();
 
 		Vector<org.jgroups.Address> jGroupsAddresses = view.getMembers();
 

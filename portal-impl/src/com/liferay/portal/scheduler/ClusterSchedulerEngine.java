@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.ClusterEvent;
 import com.liferay.portal.kernel.cluster.ClusterEventListener;
-import com.liferay.portal.kernel.cluster.ClusterEventType;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponses;
@@ -998,15 +997,10 @@ public class ClusterSchedulerEngine
 		implements ClusterEventListener {
 
 		public void processClusterEvent(ClusterEvent clusterEvent) {
-			ClusterEventType clusterEventType =
-				clusterEvent.getClusterEventType();
-
-			if (!clusterEventType.equals(ClusterEventType.DEPART)) {
-				return;
-			}
-
 			try {
-				updateMemorySchedulerClusterMaster();
+				Lock lock = updateMemorySchedulerClusterMaster();
+
+				isMemorySchedulerClusterLockOwner(lock);
 			}
 			catch (Exception e) {
 				_log.error("Unable to update memory scheduler cluster lock", e);

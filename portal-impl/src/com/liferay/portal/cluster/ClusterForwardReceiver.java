@@ -22,7 +22,6 @@ import java.util.List;
 
 import org.jgroups.Address;
 import org.jgroups.Message;
-import org.jgroups.View;
 
 /**
  * @author Shuyang Zhou
@@ -50,13 +49,6 @@ public class ClusterForwardReceiver extends BaseReceiver {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Block received message " + message);
 			}
-		}
-	}
-
-	@Override
-	public void viewAccepted(View view) {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Accepted view " + view);
 		}
 	}
 

@@ -91,7 +91,6 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 			String actionMethodName = null;
 
 			if (jsonWebServiceActionMapping != null) {
-
 				Method actionMethod =
 					jsonWebServiceActionMapping.getActionMethod();
 

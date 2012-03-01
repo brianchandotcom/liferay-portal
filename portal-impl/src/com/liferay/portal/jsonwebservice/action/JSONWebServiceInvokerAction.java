@@ -64,26 +64,29 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 	public Object invoke() throws Exception {
 		Object deserializedCommand = JSONFactoryUtil.looseDeserialize(_command);
 
-		boolean batchMode = false;
 		List list = null;
 
+		boolean batchMode = false;
+
 		if (deserializedCommand instanceof List) {
-			list = (List) deserializedCommand;
+			list = (List)deserializedCommand;
 
 			batchMode = true;
-		} else if (deserializedCommand instanceof Map) {
+		}
+		else if (deserializedCommand instanceof Map) {
 			list = new ArrayList(1);
 
 			list.add(deserializedCommand);
 
 			batchMode = false;
-		} else {
+		}
+		else {
 			throw new IllegalArgumentException("Invalid argument type");
 		}
 
 		for (int i = 0; i < list.size(); i++) {
 			Map<String, Map<String, Object>> map =
-				(Map<String, Map<String, Object>>) list.get(i);
+				(Map<String, Map<String, Object>>)list.get(i);
 
 			if (map.isEmpty()) {
 				throw new IllegalArgumentException("Invalid input");
@@ -92,8 +95,8 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 			Map.Entry<String, Map<String, Object>> entry =
 				map.entrySet().iterator().next();
 
-			Statement statement =
-				_parseStatement(entry.getKey(), entry.getValue());
+			Statement statement = _parseStatement(
+				entry.getKey(), entry.getValue());
 
 			Object result = _executeStatement(statement);
 
@@ -121,7 +124,6 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 	}
 
 	private Object _executeStatement(Statement statement) throws Exception {
-
 		JSONWebServiceAction action =
 			JSONWebServiceActionsManagerUtil.getJSONWebServiceAction(
 				_request, statement.method, null, statement.parameters);
@@ -182,7 +184,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 
 		// name and method
 
-		int index = assignment.indexOf('=');
+		int index = assignment.indexOf(StringPool.EQUAL);
 
 		if (index == -1) {
 			statement.method = assignment.trim();
@@ -190,12 +192,11 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 		else {
 			String name = assignment.substring(0, index).trim();
 
-			int bracketIndex = name.indexOf('[');
+			int bracketIndex = name.indexOf(StringPool.OPEN_BRACKET);
 
 			if (bracketIndex != -1) {
-
-				String whiteSpaceList =
-					name.substring(bracketIndex + 1, name.length() - 1);
+				String whiteSpaceList = name.substring(
+					bracketIndex + 1, name.length() - 1);
 
 				statement.whitelist = StringUtil.split(whiteSpaceList);
 
@@ -211,15 +212,14 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 
 		// variables
 
-		Iterator<String> iterator =
-			statement.parameters.keySet().iterator();
+		Iterator<String> iterator = statement.parameters.keySet().iterator();
 
 		while (iterator.hasNext()) {
 			String key = iterator.next();
 
 			if (key.startsWith(StringPool.DOLLAR)) {	// variable
 				Map<String, Object> innerMap =
-					(Map<String, Object>) statement.parameters.get(key);
+					(Map<String, Object>)statement.parameters.get(key);
 
 				iterator.remove();
 
@@ -245,8 +245,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 				flag.setValue(innerValue);
 
 				if (statement.flags == null) {
-					statement.flags =
-						new ArrayList<KeyValue<String, String>>();
+					statement.flags = new ArrayList<KeyValue<String, String>>();
 				}
 
 				statement.flags.add(flag);
@@ -259,12 +258,11 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 	}
 
 	private void _populateFlags(String name, Object object) {
-
 		if (name == null) {
 			return;
 		}
 
-		name += '.';
+		name += StringPool.PERIOD;
 
 		int nameLength = name.length();
 
@@ -276,7 +274,6 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 			}
 
 			for (KeyValue<String, String> flag : statementFlags) {
-
 				String flagReference = flag.getValue();
 
 				if (flagReference == null) {

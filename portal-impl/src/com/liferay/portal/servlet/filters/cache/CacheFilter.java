@@ -158,10 +158,8 @@ public class CacheFilter extends BasePortalFilter {
 		if (pos != -1) {
 			friendlyURL = pathInfo.substring(0, pos);
 		}
-		else {
-			if (pathInfo.length() > 1) {
-				friendlyURL = pathInfo.substring(0);
-			}
+		else if (pathInfo.length() > 1) {
+			friendlyURL = pathInfo;
 		}
 
 		if (Validator.isNull(friendlyURL)) {

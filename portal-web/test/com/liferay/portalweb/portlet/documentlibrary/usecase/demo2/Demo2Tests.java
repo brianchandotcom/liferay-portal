@@ -19,7 +19,6 @@ import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.documentlibrary.document.addfolderdocument.TearDownDLDocumentTest;
 import com.liferay.portalweb.portlet.documentlibrary.portlet.addportlet.AddPageDMTest;
 import com.liferay.portalweb.portlet.documentlibrary.portlet.addportlet.AddPortletDMTest;
-import com.liferay.portalweb.portlet.documentlibrary.usecase.demo1.ConfigureDMMaximumFileSizeCPTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

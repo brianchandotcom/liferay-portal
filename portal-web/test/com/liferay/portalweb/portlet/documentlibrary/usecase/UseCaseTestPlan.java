@@ -21,6 +21,8 @@ import com.liferay.portalweb.portlet.documentlibrary.usecase.demo3.Demo3Tests;
 import com.liferay.portalweb.portlet.documentlibrary.usecase.demo4.Demo4Tests;
 import com.liferay.portalweb.portlet.documentlibrary.usecase.demo5.Demo5Tests;
 import com.liferay.portalweb.portlet.documentlibrary.usecase.demo6.Demo6Tests;
+import com.liferay.portalweb.portlet.documentlibrary.usecase.demo7.Demo7Tests;
+import com.liferay.portalweb.portlet.documentlibrary.usecase.demo8.Demo8Tests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -39,6 +41,8 @@ public class UseCaseTestPlan extends BaseTestSuite {
 		testSuite.addTest(Demo4Tests.suite());
 		testSuite.addTest(Demo5Tests.suite());
 		testSuite.addTest(Demo6Tests.suite());
+		testSuite.addTest(Demo7Tests.suite());
+		testSuite.addTest(Demo8Tests.suite());
 
 		return testSuite;
 	}

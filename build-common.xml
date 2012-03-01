@@ -70,6 +70,8 @@
 	<taskdef classpathref="lib.classpath" resource="com/orangevolt/tools/ant/taskdefs.properties" />
 	<taskdef classpathref="lib.classpath" resource="tasks.properties" />
 
+	<taskdef name="jarjar" classname="com.tonicsystems.jarjar.JarJarTask" classpath="${project.dir}/lib/development/jarjar.jar"/>
+
 	<property name="doc.dir" value="${project.dir}/api" />
 
 	<propertycopy name="app.server.version" from="app.server.${app.server.type}.version" silent="true" />

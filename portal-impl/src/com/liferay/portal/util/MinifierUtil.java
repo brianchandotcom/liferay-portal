@@ -14,14 +14,16 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.mozilla.javascript.ErrorReporter;
-import com.liferay.mozilla.javascript.EvaluatorException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.yahoo.platform.yui.compressor.CssCompressor;
-import com.liferay.yahoo.platform.yui.compressor.JavaScriptCompressor;
+
+import com.yahoo.platform.yui.compressor.CssCompressor;
+import com.yahoo.platform.yui.compressor.JavaScriptCompressor;
+
+import com.yahoo.platform.yui.mozilla.javascript.ErrorReporter;
+import com.yahoo.platform.yui.mozilla.javascript.EvaluatorException;
 
 /**
  * @author Brian Wing Shun Chan

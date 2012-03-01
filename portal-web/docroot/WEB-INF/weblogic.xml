@@ -12,6 +12,9 @@
 		<precompile-continue>true</precompile-continue>
 	</jsp-descriptor>
 	<container-descriptor>
+		<prefer-application-packages>
+			<package-name>org.mozilla.*</package-name>
+		</prefer-application-packages>
 		<optimistic-serialization>true</optimistic-serialization>
 		<show-archived-real-path-enabled>true</show-archived-real-path-enabled>
 	</container-descriptor>

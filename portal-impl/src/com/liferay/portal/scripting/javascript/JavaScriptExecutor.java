@@ -14,10 +14,6 @@
 
 package com.liferay.portal.scripting.javascript;
 
-import com.liferay.mozilla.javascript.Context;
-import com.liferay.mozilla.javascript.Script;
-import com.liferay.mozilla.javascript.Scriptable;
-import com.liferay.mozilla.javascript.ScriptableObject;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.scripting.BaseScriptingExecutor;
 import com.liferay.portal.kernel.scripting.ScriptingException;
@@ -25,6 +21,11 @@ import com.liferay.portal.kernel.scripting.ScriptingException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+
+import org.mozilla.javascript.Context;
+import org.mozilla.javascript.Script;
+import org.mozilla.javascript.Scriptable;
+import org.mozilla.javascript.ScriptableObject;
 
 /**
  * @author Alberto Montero

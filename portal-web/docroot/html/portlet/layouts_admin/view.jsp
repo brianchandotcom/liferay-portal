@@ -222,8 +222,8 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 				var historyKey = location.hash.replace(prefix, '');
 
 				if (location.hash.indexOf(prefix) == -1) {
-					location.hash = '';
 					historyKey = '';
+					location.hash = '';
 				}
 
 				var requestUri = A.Lang.sub(

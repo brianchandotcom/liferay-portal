@@ -19,8 +19,9 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeColumn;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
-import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.upgrade.v5_2_8_to_6_0_5.util.DLFileEntryTable;
 import com.liferay.portal.upgrade.v5_2_8_to_6_0_5.util.DLFileVersionTable;
 import com.liferay.portal.upgrade.v6_0_0.util.DLFileEntryNameUpgradeColumnImpl;
@@ -28,17 +29,13 @@ import com.liferay.portal.upgrade.v6_0_0.util.DLFileEntryTitleUpgradeColumnImpl;
 import com.liferay.portal.upgrade.v6_0_0.util.DLFileEntryVersionUpgradeColumnImpl;
 import com.liferay.portal.upgrade.v6_0_0.util.DLFileRankTable;
 import com.liferay.portal.upgrade.v6_0_0.util.DLFileShortcutTable;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Timestamp;
 
 /**
  * @author Jorge Ferrer
@@ -46,6 +43,53 @@ import java.util.List;
  * @author Douglas Wong
  */
 public class UpgradeDocumentLibrary extends UpgradeProcess {
+
+	protected void addFileVersion(
+			long groupId, long companyId, long userId, String userName,
+			long folderId, String name, double version, int size)
+		throws Exception {
+
+		Timestamp now = new Timestamp(System.currentTimeMillis());
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = DataAccess.getConnection();
+
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("insert into DLFileVersion (fileVersionId, groupId, ");
+			sb.append("companyId, userId, userName, createDate, folderId, ");
+			sb.append("name, version, size_, status, statusByUserId, ");
+			sb.append("statusByUserName, statusDate) values (?, ?, ?, ?, ?, ");
+			sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+			String sql = sb.toString();
+
+			ps = con.prepareStatement(sql);
+
+			ps.setLong(1, increment());
+			ps.setLong(2, groupId);
+			ps.setLong(3, companyId);
+			ps.setLong(4, userId);
+			ps.setString(5, userName);
+			ps.setTimestamp(6, now);
+			ps.setLong(7, folderId);
+			ps.setString(8, name);
+			ps.setDouble(9, version);
+			ps.setInt(10, size);
+			ps.setInt(11, WorkflowConstants.STATUS_APPROVED);
+			ps.setLong(12, userId);
+			ps.setString(13, userName);
+			ps.setTimestamp(14, now);
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
+	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -86,6 +130,8 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
 		}
+
+		synchronizeFileVersions();
 
 		// DLFileEntry
 
@@ -150,180 +196,47 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		upgradeTable.setIndexesSQL(DLFileVersionTable.TABLE_SQL_ADD_INDEXES);
 
 		upgradeTable.updateTable();
-
-		// File entries
-
-		updateFileEntries();
-
-		// File versions
-
-		updateFileVersions();
 	}
 
-	protected long getLatestFileVersionId(long folderId, String name)
-		throws Exception {
-
+	protected void synchronizeFileVersions() throws Exception {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		long fileVersionId = 0;
-
 		try {
 			con = DataAccess.getConnection();
 
-			ps = con.prepareStatement(
-				"select fileVersionId from DLFileVersion where folderId = ? " +
-					"and name = ? order by version desc");
+			StringBundler sb = new StringBundler(5);
 
-			ps.setLong(1, folderId);
-			ps.setString(2, name);
+			sb.append("select * from DLFileEntry dlFileEntry where version ");
+			sb.append("not in (select version from DLFileVersion ");
+			sb.append("dlFileVersion where (dlFileVersion.folderId = ");
+			sb.append("dlFileEntry.folderId) and (dlFileVersion.name = ");
+			sb.append("dlFileEntry.name))");
 
-			rs = ps.executeQuery();
+			String sql = sb.toString();
 
-			if (rs.next()) {
-				fileVersionId = rs.getLong("fileVersionId");
-			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
-
-		return fileVersionId;
-	}
-
-	protected void updateFileEntries() throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		List<Long> tableIds = new ArrayList<Long>();
-
-		try {
-			long classNameId = PortalUtil.getClassNameId(DLFileEntry.class);
-
-			con = DataAccess.getConnection();
-
-			ps = con.prepareStatement(
-				"select tableId from ExpandoTable where classNameId = " +
-					classNameId);
+			ps = con.prepareStatement(sql);
 
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				long tableId = rs.getLong("tableId");
-
-				tableIds.add(tableId);
-			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
-
-		try {
-			con = DataAccess.getConnection();
-
-			ps = con.prepareStatement(
-				"select uuid_, fileEntryId, groupId, folderId, name, title " +
-					"from DLFileEntry");
-
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				String uuid_ = rs.getString("uuid_");
-				long fileEntryId = rs.getLong("fileEntryId");
+				long companyId = rs.getLong("companyId");
 				long groupId = rs.getLong("groupId");
+				long userId = rs.getLong("userId");
+				String userName = rs.getString("userName");
 				long folderId = rs.getLong("folderId");
 				String name = rs.getString("name");
-				String title = rs.getString("title");
+				double version = rs.getDouble("version");
+				int size = rs.getInt("size_");
 
-				String extension = FileUtil.getExtension(title);
-
-				runSQL(
-					"update DLFileEntry set extension = '" + extension +
-						"' where uuid_ = '" + uuid_ + "' and groupId = " +
-							groupId);
-
-				long fileVersionId = getLatestFileVersionId(folderId, name);
-
-				for (long tableId : tableIds) {
-					runSQL(
-						"update ExpandoRow set classPK = " + fileVersionId +
-							" where tableId = " + tableId + " and classPK = " +
-								fileEntryId);
-
-					runSQL(
-						"update ExpandoValue set classPK = " + fileVersionId +
-							" where tableId = " + tableId + " and classPK = " +
-								fileEntryId);
-				}
+				addFileVersion(
+					groupId, companyId, userId, userName, folderId, name,
+					version, size);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
-	}
-
-	protected void updateFileVersion(
-			long fileVersionId, String extension, String title, String
-			description, String extraSettings)
-		throws Exception {
-
-		Connection con = null;
-		PreparedStatement ps = null;
-
-		try {
-			con = DataAccess.getConnection();
-
-			ps = con.prepareStatement(
-				"update DLFileVersion set extension = ?, title = ?, " +
-					"description = ?, extraSettings = ? where fileVersionId " +
-						"= ?");
-
-			ps.setString(1, extension);
-			ps.setString(2, title);
-			ps.setString(3, description);
-			ps.setString(4, extraSettings);
-			ps.setLong(5, fileVersionId);
-
-			ps.executeUpdate();
 		}
 		finally {
 			DataAccess.cleanUp(con, ps);
-		}
-	}
-
-	protected void updateFileVersions() throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getConnection();
-
-			ps = con.prepareStatement(
-				"select folderId, name, extension, title, description, " +
-					"extraSettings from DLFileEntry");
-
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				long folderId = rs.getLong("folderId");
-				String name = rs.getString("name");
-				String extension = rs.getString("extension");
-				String title = rs.getString("title");
-				String description = rs.getString("description");
-				String extraSettings = rs.getString("extraSettings");
-
-				long fileVersionId = getLatestFileVersionId(folderId, name);
-
-				updateFileVersion(
-					fileVersionId, extension, title, description,
-					extraSettings);
-			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
 

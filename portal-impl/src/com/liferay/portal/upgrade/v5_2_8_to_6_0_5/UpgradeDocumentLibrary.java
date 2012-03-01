@@ -20,7 +20,9 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeColumn;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.upgrade.v5_2_8_to_6_0_5.util.DLFileEntryTable;
 import com.liferay.portal.upgrade.v5_2_8_to_6_0_5.util.DLFileVersionTable;
 import com.liferay.portal.upgrade.v6_0_0.util.DLFileEntryNameUpgradeColumnImpl;
@@ -36,6 +38,7 @@ import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +49,75 @@ import java.util.List;
  * @author Douglas Wong
  */
 public class UpgradeDocumentLibrary extends UpgradeProcess {
+
+	protected void addFileVersion(
+		long groupId, long companyId, long userId, String userName,
+		long folderId, String name, double version, int size)
+		throws Exception {
+
+		Timestamp now = new Timestamp(System.currentTimeMillis());
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getConnection();
+
+			ps = con.prepareStatement(
+				"select fileVersionId from DLFileVersion where folderId = ? " +
+					"and name = ? and version = ?");
+
+			ps.setLong(1, folderId);
+			ps.setString(2, name);
+			ps.setDouble(3, version);
+
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				return;
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+
+		try {
+			con = DataAccess.getConnection();
+
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("insert into DLFileVersion (fileVersionId, groupId, ");
+			sb.append("companyId, userId, userName, createDate, folderId, ");
+			sb.append("name, version, size_, status, statusByUserId, ");
+			sb.append("statusByUserName, statusDate) values (?, ?, ?, ?, ?, ");
+			sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+			String sql = sb.toString();
+
+			ps = con.prepareStatement(sql);
+
+			ps.setLong(1, increment());
+			ps.setLong(2, groupId);
+			ps.setLong(3, companyId);
+			ps.setLong(4, userId);
+			ps.setString(5, userName);
+			ps.setTimestamp(6, now);
+			ps.setLong(7, folderId);
+			ps.setString(8, name);
+			ps.setDouble(9, version);
+			ps.setInt(10, size);
+			ps.setInt(11, WorkflowConstants.STATUS_APPROVED);
+			ps.setLong(12, userId);
+			ps.setString(13, userName);
+			ps.setTimestamp(14, now);
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
+	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -63,8 +135,12 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			while (rs.next()) {
 				long companyId = rs.getLong("companyId");
 				long groupId = rs.getLong("groupId");
+				long userId = rs.getLong("userId");
+				String userName = rs.getString("userName");
 				long folderId = rs.getLong("folderId");
 				String name = rs.getString("name");
+				double version = rs.getDouble("version");
+				int size = rs.getInt("size_");
 
 				long repositoryId = folderId;
 
@@ -81,6 +157,10 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 					DLStoreUtil.updateFile(
 						companyId, repositoryId, name, newName);
 				}
+
+				addFileVersion(
+					groupId, companyId, userId, userName, folderId, name,
+					version, size);
 			}
 		}
 		finally {

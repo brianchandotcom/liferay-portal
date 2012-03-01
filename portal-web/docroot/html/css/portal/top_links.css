@@ -24,6 +24,6 @@
 }
 
 .top-links-navigation li {
-	display: inline-block;
+	display: inline;
 	list-style-type: none;
 }

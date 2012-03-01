@@ -189,7 +189,8 @@ public class OrganizationLocalServiceImpl
 
 			// User
 
-			userPersistence.addOrganization(userId, organizationId);
+			userLocalService.addOrganizationUsers(
+				organizationId, new long[] {userId});
 		}
 
 		// Resources

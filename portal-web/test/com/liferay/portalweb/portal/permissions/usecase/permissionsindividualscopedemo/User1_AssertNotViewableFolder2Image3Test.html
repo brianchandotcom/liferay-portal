@@ -35,17 +35,22 @@
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
+	<td>xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]</td>
 	<td>DL Folder 2 Image 2 Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
+	<td>xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]</td>
 	<td>DL Folder 2 Image 2 Title</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
 	<td>xpath=(//a[contains(@class,'document-link')])[2]</td>
+	<td>DL Folder 2 Image 3 Title</td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]</td>
 	<td>DL Folder 2 Image 3 Title</td>
 </tr>
 <tr>

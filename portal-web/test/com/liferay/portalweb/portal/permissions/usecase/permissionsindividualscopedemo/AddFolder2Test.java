@@ -85,6 +85,9 @@ public class AddFolder2Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("DL Folder 1 Name"),
+			selenium.getText(
+				"xpath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"));
 		assertEquals(RuntimeVariables.replace("DL Folder 2 Name"),
 			selenium.getText(
 				"xpath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"));

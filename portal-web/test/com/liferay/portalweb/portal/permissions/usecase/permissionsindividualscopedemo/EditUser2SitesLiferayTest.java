@@ -128,6 +128,8 @@ public class EditUser2SitesLiferayTest extends BaseTestCase {
 			RuntimeVariables.replace("Select"));
 		Thread.sleep(5000);
 		selenium.selectWindow("Users and Organizations");
+		assertEquals(RuntimeVariables.replace("Liferay"),
+			selenium.getText("//a[contains(text(),'Liferay')]"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -135,8 +137,7 @@ public class EditUser2SitesLiferayTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible(
-							"//form[@id='_125_fm']/div[3]/div/div/table/tbody/tr[3]/td/a")) {
+				if (selenium.isVisible("//a[contains(.,'Liferay')]")) {
 					break;
 				}
 			}
@@ -147,9 +148,8 @@ public class EditUser2SitesLiferayTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Liferay"),
-			selenium.getText(
-				"//form[@id='_125_fm']/div[3]/div/div/table/tbody/tr[3]/td/a"));
-		selenium.clickAt("//form[@id='_125_fm']/div[3]/div/div/table/tbody/tr[3]/td/a",
+			selenium.getText("//a[contains(.,'Liferay')]"));
+		selenium.clickAt("//a[contains(.,'Liferay')]",
 			RuntimeVariables.replace("Liferay"));
 		selenium.selectWindow("null");
 

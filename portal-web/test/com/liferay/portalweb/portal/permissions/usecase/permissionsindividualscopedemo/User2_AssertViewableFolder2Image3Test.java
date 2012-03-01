@@ -60,7 +60,7 @@ public class User2_AssertViewableFolder2Image3Test extends BaseTestCase {
 			try {
 				if (RuntimeVariables.replace("DL Folder 2 Image 2 Title")
 										.equals(selenium.getText(
-								"//a[contains(@class,'document-link')]/span[@class='entry-title']"))) {
+								"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"))) {
 					break;
 				}
 			}
@@ -72,7 +72,7 @@ public class User2_AssertViewableFolder2Image3Test extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("DL Folder 2 Image 2 Title"),
 			selenium.getText(
-				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"));
 		assertEquals(RuntimeVariables.replace("DL Folder 2 Image 3 Title"),
 			selenium.getText(
 				"xpath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"));

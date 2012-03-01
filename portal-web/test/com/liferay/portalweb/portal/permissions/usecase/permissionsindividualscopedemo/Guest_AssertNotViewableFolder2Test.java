@@ -46,10 +46,9 @@ public class Guest_AssertNotViewableFolder2Test extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
-				"//a[contains(@class,'document-link')]"));
+				"xpath=(//a[contains(@class,'document-link')])[1]"));
 		assertEquals(RuntimeVariables.replace("DL Folder 1 Name"),
-			selenium.getText(
-				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+			selenium.getText("xpath=(//a[contains(@class,'document-link')])[1]"));
 		assertFalse(selenium.isElementPresent(
 				"xpath=(//a[contains(@class,'document-link')])[2]"));
 		assertFalse(selenium.isElementPresent(

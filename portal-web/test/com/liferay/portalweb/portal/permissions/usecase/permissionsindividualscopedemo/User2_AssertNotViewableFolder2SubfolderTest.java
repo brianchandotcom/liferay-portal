@@ -78,6 +78,8 @@ public class User2_AssertNotViewableFolder2SubfolderTest extends BaseTestCase {
 				"xpath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"));
 		assertFalse(selenium.isElementPresent(
 				"xpath=(//a[contains(@class,'document-link')])[3]"));
+		assertFalse(selenium.isElementPresent(
+				"xpath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[3]"));
 		assertFalse(selenium.isTextPresent("DL Folder 2 SubFolder Name"));
 	}
 }

@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -1369,11 +1370,17 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			message.setPriority(priority);
 		}
 
-		if (!message.isPending() &&
-			(serviceContext.getWorkflowAction() ==
+		if ((serviceContext.getWorkflowAction() ==
 				WorkflowConstants.ACTION_SAVE_DRAFT)) {
 
-			message.setStatus(WorkflowConstants.STATUS_DRAFT);
+			if (message.isPending() || message.isDraft()) {
+			}
+			else if (message.isApproved()) {
+				message.setStatus(WorkflowConstants.STATUS_DRAFT_FROM_APPROVED);
+			}
+			else {
+				message.setStatus(WorkflowConstants.STATUS_DRAFT);
+			}
 		}
 
 		// Attachments
@@ -1454,7 +1461,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		// Workflow
 
-		serviceContext.setAttribute("update", Boolean.TRUE.toString());
+		if (message.getStatus() != WorkflowConstants.STATUS_DRAFT) {
+			serviceContext.setAttribute("update", Boolean.TRUE.toString());
+		}
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			companyId, message.getGroupId(), userId,
@@ -1571,69 +1580,71 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 						true);
 				}
 
-				if (!message.isDiscussion()) {
+				boolean update = ParamUtil.getBoolean(serviceContext, "update");
+
+				if (!update) {
 
 					// Social
 
-					if (!message.isAnonymous() && !user.isDefaultUser()) {
-						long receiverUserId = 0;
+					if (!message.isDiscussion() ) {
+						if (!message.isAnonymous() && !user.isDefaultUser()) {
+							long receiverUserId = 0;
 
-						MBMessage parentMessage =
-							mbMessagePersistence.fetchByPrimaryKey(
-								message.getParentMessageId());
+							MBMessage parentMessage =
+								mbMessagePersistence.fetchByPrimaryKey(
+									message.getParentMessageId());
 
-						if (parentMessage != null) {
-							receiverUserId = parentMessage.getUserId();
-						}
-
-						socialActivityLocalService.addActivity(
-							userId, message.getGroupId(),
-							MBMessage.class.getName(), message.getMessageId(),
-							MBActivityKeys.ADD_MESSAGE, StringPool.BLANK,
-							receiverUserId);
-
-						if ((parentMessage != null) &&
-							(receiverUserId != userId)) {
+							if (parentMessage != null) {
+								receiverUserId = parentMessage.getUserId();
+							}
 
 							socialActivityLocalService.addActivity(
-								userId, parentMessage.getGroupId(),
+								userId, message.getGroupId(),
 								MBMessage.class.getName(),
-								parentMessage.getMessageId(),
-								MBActivityKeys.REPLY_MESSAGE, StringPool.BLANK,
-								0);
+								message.getMessageId(),
+								MBActivityKeys.ADD_MESSAGE, StringPool.BLANK,
+								receiverUserId);
+
+							if ((parentMessage != null) &&
+								(receiverUserId != userId)) {
+
+								socialActivityLocalService.addActivity(
+									userId, parentMessage.getGroupId(),
+									MBMessage.class.getName(),
+									parentMessage.getMessageId(),
+									MBActivityKeys.REPLY_MESSAGE,
+									StringPool.BLANK, 0);
+							}
 						}
 					}
-				}
-				else {
+					else {
+						String className = (String)serviceContext.getAttribute(
+							"className");
+						long classPK = GetterUtil.getLong(
+							(String)serviceContext.getAttribute("classPK"));
+						long parentMessageId = message.getParentMessageId();
 
-					// Social
+						if (parentMessageId !=
+								MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID) {
 
-					String className = (String)serviceContext.getAttribute(
-						"className");
-					long classPK = GetterUtil.getLong(
-						(String)serviceContext.getAttribute("classPK"));
-					long parentMessageId = message.getParentMessageId();
+							AssetEntry assetEntry =
+								assetEntryLocalService.fetchEntry(
+									className, classPK);
 
-					if (parentMessageId !=
-							MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID) {
+							if (assetEntry != null) {
+								JSONObject extraDataJSONObject =
+									JSONFactoryUtil.createJSONObject();
 
-						AssetEntry assetEntry =
-							assetEntryLocalService.fetchEntry(
-								className, classPK);
+								extraDataJSONObject.put(
+									"messageId", message.getMessageId());
 
-						if (assetEntry != null) {
-							JSONObject extraDataJSONObject =
-								JSONFactoryUtil.createJSONObject();
-
-							extraDataJSONObject.put(
-								"messageId", message.getMessageId());
-
-							socialActivityLocalService.addActivity(
-								userId, assetEntry.getGroupId(), className,
-								classPK,
-								SocialActivityConstants.TYPE_ADD_COMMENT,
-								extraDataJSONObject.toString(),
-								assetEntry.getUserId());
+								socialActivityLocalService.addActivity(
+									userId, assetEntry.getGroupId(), className,
+									classPK,
+									SocialActivityConstants.TYPE_ADD_COMMENT,
+									extraDataJSONObject.toString(),
+									assetEntry.getUserId());
+							}
 						}
 					}
 				}
@@ -1862,8 +1873,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				defaultPreferences);
 		}
 
-		boolean update = GetterUtil.getBoolean(
-			(String)serviceContext.getAttribute("update"));
+		boolean update = ParamUtil.getBoolean(serviceContext, "update");
 
 		if (!update && MBUtil.getEmailMessageAddedEnabled(preferences)) {
 		}

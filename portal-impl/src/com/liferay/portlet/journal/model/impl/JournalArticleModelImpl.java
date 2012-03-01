@@ -941,7 +941,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	}
 
 	public boolean isDraft() {
-		if (getStatus() == WorkflowConstants.STATUS_DRAFT) {
+		if ((getStatus() == WorkflowConstants.STATUS_DRAFT) ||
+				(getStatus() == WorkflowConstants.STATUS_DRAFT_FROM_APPROVED)) {
 			return true;
 		}
 		else {

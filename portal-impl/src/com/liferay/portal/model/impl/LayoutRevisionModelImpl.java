@@ -1067,7 +1067,8 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	}
 
 	public boolean isDraft() {
-		if (getStatus() == WorkflowConstants.STATUS_DRAFT) {
+		if ((getStatus() == WorkflowConstants.STATUS_DRAFT) ||
+				(getStatus() == WorkflowConstants.STATUS_DRAFT_FROM_APPROVED)) {
 			return true;
 		}
 		else {

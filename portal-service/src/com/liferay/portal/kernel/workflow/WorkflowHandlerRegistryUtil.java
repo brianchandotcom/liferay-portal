@@ -18,6 +18,7 @@ import com.liferay.portal.NoSuchWorkflowDefinitionLinkException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.model.WorkflowDefinitionLink;
 import com.liferay.portal.service.ServiceContext;
 
 import java.io.Serializable;
@@ -96,11 +97,23 @@ public class WorkflowHandlerRegistryUtil {
 				"No workflow handler found for " + className);
 		}
 
+		WorkflowDefinitionLink workflowDefinitionLink = null;
+
+		if (WorkflowThreadLocal.isEnabled() &&
+			WorkflowEngineManagerUtil.isDeployed()) {
+
+			try {
+				workflowDefinitionLink =
+					workflowHandler.getWorkflowDefinitionLink(
+						companyId, groupId, classPK);
+			}
+			catch (NoSuchWorkflowDefinitionLinkException nswdle) {
+			}
+		}
+
 		int status = WorkflowConstants.STATUS_PENDING;
 
-		if (!WorkflowThreadLocal.isEnabled() ||
-			!WorkflowEngineManagerUtil.isDeployed()) {
-
+		if (workflowDefinitionLink == null) {
 			status = WorkflowConstants.STATUS_APPROVED;
 		}
 
@@ -124,18 +137,9 @@ public class WorkflowHandlerRegistryUtil {
 
 		workflowHandler.updateStatus(status, workflowContext);
 
-		if (WorkflowThreadLocal.isEnabled() &&
-			WorkflowEngineManagerUtil.isDeployed()) {
-
-			try {
-				workflowHandler.startWorkflowInstance(
-					companyId, groupId, userId, classPK, model,
-					workflowContext);
-			}
-			catch (NoSuchWorkflowDefinitionLinkException nswdle) {
-				workflowHandler.updateStatus(
-					WorkflowConstants.STATUS_APPROVED, workflowContext);
-			}
+		if (workflowDefinitionLink != null) {
+			workflowHandler.startWorkflowInstance(
+				companyId, groupId, userId, classPK, model, workflowContext);
 		}
 	}
 

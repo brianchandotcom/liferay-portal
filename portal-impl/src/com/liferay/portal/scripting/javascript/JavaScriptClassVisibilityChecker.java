@@ -14,10 +14,11 @@
 
 package com.liferay.portal.scripting.javascript;
 
-import com.liferay.mozilla.javascript.ClassShutter;
 import com.liferay.portal.scripting.ClassVisibilityChecker;
 
 import java.util.Set;
+
+import org.mozilla.javascript.ClassShutter;
 
 /**
  * @author Alberto Montero

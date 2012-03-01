@@ -2362,20 +2362,6 @@
 		</comments>
 	</library>
 	<library>
-		<file-name>portal/liferay-rhino.jar</file-name>
-		<version>1.6 R7</version>
-		<project-name>Rhino</project-name>
-		<project-url>http://www.mozilla.org/rhino</project-url>
-		<licenses>
-			<license>
-				<license-name>MPL 1.1</license-name>
-			</license>
-		</licenses>
-		<comments>
-			See LPS-3169
-		</comments>
-	</library>
-	<library>
 		<file-name>portal/liferay-yuicompressor.jar</file-name>
 		<version>2.4.2</version>
 		<project-name>YUI Compressor</project-name>
@@ -2669,6 +2655,20 @@
 				<license-name>Public Domain</license-name>
 			</license>
 		</licenses>
+	</library>
+	<library>
+		<file-name>portal/rhino.jar</file-name>
+		<version>1.6 R7</version>
+		<project-name>Rhino</project-name>
+		<project-url>http://www.mozilla.org/rhino</project-url>
+		<licenses>
+			<license>
+				<license-name>MPL 1.1</license-name>
+			</license>
+		</licenses>
+		<comments>
+			See LPS-3169
+		</comments>
 	</library>
 	<library>
 		<file-name>portal/ridl.jar</file-name>

@@ -826,6 +826,17 @@
 		</licenses>
 	</library>
 	<library>
+		<file-name>development/sonar-ant-task.jar</file-name>
+		<version>1.3</version>
+		<project-name>Sonar Source</project-name>
+		<project-url>http://www.sonarsource.org</project-url>
+		<licenses>
+			<license>
+				<license-name>LGPL 2.1</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
 		<file-name>development/spring-instrument.jar</file-name>
 		<version>3.0.6</version>
 		<project-name>Spring</project-name>

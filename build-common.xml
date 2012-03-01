@@ -541,9 +541,14 @@ Please set the environment variable ANT_OPTS to the recommended value of
 	<target name="test-integration" depends="compile,instrument-test-coverage,compile-test-integration">
 		<property name="class" value="*TestSuite" />
 
-		<ant target="test-cmd">
-			<property name="test.type" value="integration" />
-		</ant>
+		<if>
+			<available file="test-classes/integration" type="dir" />
+			<then>
+				<ant target="test-cmd">
+					<property name="test.type" value="integration" />
+				</ant>
+			</then>
+		</if>
 
 		<antcall target="report-test-coverage" />
 	</target>
@@ -551,9 +556,14 @@ Please set the environment variable ANT_OPTS to the recommended value of
 	<target name="test-unit" depends="compile,instrument-test-coverage,compile-test-unit">
 		<property name="class" value="*Test" />
 
-		<ant target="test-cmd">
-			<property name="test.type" value="unit" />
-		</ant>
+		<if>
+			<available file="test-classes/unit" type="dir" />
+			<then>
+				<ant target="test-cmd">
+					<property name="test.type" value="unit" />
+				</ant>
+			</then>
+		</if>
 
 		<antcall target="report-test-coverage" />
 	</target>

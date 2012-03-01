@@ -188,17 +188,9 @@ public class ClusterExecutorImpl
 			_log.error("Unable to determine local network address", se);
 		}
 
-		try {
-			memberJoined(_localAddress, _localClusterNode);
+		memberJoined(_localAddress, _localClusterNode);
 
-			ClusterRequest clusterRequest = ClusterRequest.createClusterRequest(
-				ClusterMessageType.NOTIFY, _localClusterNode);
-
-			_controlChannel.send(null, null, clusterRequest);
-		}
-		catch (Exception ce) {
-			_log.error("Unable to send multicast message ", ce);
-		}
+		sendNotifyRequest();
 	}
 
 	public boolean isClusterNodeAlive(Address address) {
@@ -459,6 +451,18 @@ public class ClusterExecutorImpl
 				"Unable to send multicast message " + clusterRequest, ce);
 
 			throw new SystemException("Unable to send multicast request", ce);
+		}
+	}
+
+	protected void sendNotifyRequest() {
+		ClusterRequest clusterRequest = ClusterRequest.createClusterRequest(
+			ClusterMessageType.NOTIFY, _localClusterNode);
+
+		try {
+			_controlChannel.send(null, null, clusterRequest);
+		}
+		catch (ChannelException ce) {
+			_log.error("Unable to send multicast message ", ce);
 		}
 	}
 

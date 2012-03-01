@@ -998,15 +998,10 @@ public class ClusterSchedulerEngine
 		implements ClusterEventListener {
 
 		public void processClusterEvent(ClusterEvent clusterEvent) {
-			ClusterEventType clusterEventType =
-				clusterEvent.getClusterEventType();
-
-			if (!clusterEventType.equals(ClusterEventType.DEPART)) {
-				return;
-			}
-
 			try {
-				updateMemorySchedulerClusterMaster();
+				Lock lock = updateMemorySchedulerClusterMaster();
+
+				isMemorySchedulerClusterLockOwner(lock);
 			}
 			catch (Exception e) {
 				_log.error("Unable to update memory scheduler cluster lock", e);

@@ -103,13 +103,17 @@ public class ClusterRequestReceiver extends BaseReceiver {
 
 		List<Address> departAddresses = getDepartAddresses(view);
 
+		List<Address> newAddresses = getNewAddresses(view);
+
 		_lastView = view;
 
-		if (departAddresses.isEmpty()) {
-			return;
+		if (!newAddresses.isEmpty()) {
+			_clusterExecutorImpl.sendNotifyRequest();
 		}
 
-		_clusterExecutorImpl.memberRemoved(departAddresses);
+		if (!departAddresses.isEmpty()) {
+			_clusterExecutorImpl.memberRemoved(departAddresses);
+		}
 	}
 
 	protected List<Address> getDepartAddresses(View view) {
@@ -134,6 +138,30 @@ public class ClusterRequestReceiver extends BaseReceiver {
 			}
 
 			return departAddresses;
+		}
+	}
+
+	protected List<Address> getNewAddresses(View view) {
+		List<org.jgroups.Address> currentJGroupsAddresses = view.getMembers();
+		List<org.jgroups.Address> lastJGroupsAddresses = _lastView.getMembers();
+
+		List<org.jgroups.Address> newJGroupsAddresses =
+			new ArrayList<org.jgroups.Address>(currentJGroupsAddresses);
+
+		newJGroupsAddresses.removeAll(lastJGroupsAddresses);
+
+		if (newJGroupsAddresses.isEmpty()) {
+			return Collections.emptyList();
+		}
+		else {
+			List<Address> newAddresses = new ArrayList<Address>(
+				newJGroupsAddresses.size());
+
+			for (org.jgroups.Address newJGroupsAddress : newJGroupsAddresses) {
+				newAddresses.add(new AddressImpl(newJGroupsAddress));
+			}
+
+			return newAddresses;
 		}
 	}
 

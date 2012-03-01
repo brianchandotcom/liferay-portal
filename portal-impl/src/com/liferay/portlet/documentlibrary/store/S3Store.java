@@ -311,8 +311,7 @@ public class S3Store extends BaseStore {
 
 				x = oldKey.indexOf(CharPool.SLASH, x + 1);
 
-				String newKey =
-					newPrefix + oldKey.substring(x + 1, oldKey.length());
+				String newKey = newPrefix + oldKey.substring(x + 1);
 
 				S3Object newS3Object = new S3Object(_s3Bucket, newKey);
 
@@ -364,8 +363,7 @@ public class S3Store extends BaseStore {
 
 				x = oldKey.indexOf(CharPool.SLASH, x + 1);
 
-				String newKey =
-					newPrefix + oldKey.substring(x + 1, oldKey.length());
+				String newKey = newPrefix + oldKey.substring(x + 1);
 
 				S3Object newS3Object = new S3Object(_s3Bucket, newKey);
 
@@ -447,7 +445,7 @@ public class S3Store extends BaseStore {
 
 			int x = headKey.lastIndexOf(CharPool.SLASH);
 
-			return headKey.substring(x + 1, headKey.length());
+			return headKey.substring(x + 1);
 		}
 		else {
 			throw new NoSuchFileException(fileName);

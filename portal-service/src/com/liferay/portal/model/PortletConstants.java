@@ -72,8 +72,7 @@ public class PortletConstants {
 			return null;
 		}
 		else {
-			return portletId.substring(
-				pos + INSTANCE_SEPARATOR.length(), portletId.length());
+			return portletId.substring(pos + INSTANCE_SEPARATOR.length());
 		}
 	}
 

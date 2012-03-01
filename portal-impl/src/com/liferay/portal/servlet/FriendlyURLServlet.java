@@ -227,7 +227,7 @@ public class FriendlyURLServlet extends HttpServlet {
 		friendlyURL = null;
 
 		if ((pos != -1) && ((pos + 1) != path.length())) {
-			friendlyURL = path.substring(pos, path.length());
+			friendlyURL = path.substring(pos);
 		}
 
 		if (Validator.isNull(friendlyURL)) {

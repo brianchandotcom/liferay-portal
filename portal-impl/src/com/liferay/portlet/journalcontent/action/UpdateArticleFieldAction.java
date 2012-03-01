@@ -89,7 +89,7 @@ public class UpdateArticleFieldAction extends Action {
 		String fieldData = ParamUtil.getString(request, "fieldData");
 
 		if (fieldName.startsWith("journal-content-field-name-")) {
-			fieldName = fieldName.substring(27, fieldName.length());
+			fieldName = fieldName.substring(27);
 		}
 
 		JournalArticle article = JournalArticleLocalServiceUtil.getArticle(

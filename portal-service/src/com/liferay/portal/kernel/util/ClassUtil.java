@@ -158,7 +158,7 @@ public class ClassUtil {
 
 		if (ServerDetector.isJBoss()) {
 			if (path.startsWith("file:") && !path.startsWith("file:/")) {
-				path = path.substring(5, path.length());
+				path = path.substring(5);
 
 				path = "file:/".concat(path);
 
@@ -175,11 +175,11 @@ public class ClassUtil {
 		String parentPath = path.substring(0, pos);
 
 		if (parentPath.startsWith("jar:")) {
-			parentPath = parentPath.substring(4, parentPath.length());
+			parentPath = parentPath.substring(4);
 		}
 
 		if (parentPath.startsWith("file:/")) {
-			parentPath = parentPath.substring(6, parentPath.length());
+			parentPath = parentPath.substring(6);
 		}
 
 		if (_log.isDebugEnabled()) {

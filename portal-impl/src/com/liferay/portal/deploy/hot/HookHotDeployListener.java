@@ -1326,8 +1326,7 @@ public class HookHotDeployListener
 		for (String customJsp : customJsps) {
 			int pos = customJsp.indexOf(customJspDir);
 
-			String portalJsp = customJsp.substring(
-				pos + customJspDir.length(), customJsp.length());
+			String portalJsp = customJsp.substring(pos + customJspDir.length());
 
 			if (customJspGlobal) {
 				File portalJspFile = new File(portalWebDir + portalJsp);

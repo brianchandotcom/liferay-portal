@@ -81,7 +81,7 @@ public class DLFolderImpl extends DLFolderBaseImpl {
 
 		// Remove leading /
 
-		path = path.substring(1, path.length());
+		path = path.substring(1);
 
 		return StringUtil.split(path, CharPool.SLASH);
 	}

@@ -664,7 +664,7 @@ public class DLUtil {
 				// Strip starting period
 
 				String extension = fileIcons[i];
-				extension = extension.substring(1, extension.length());
+				extension = extension.substring(1);
 
 				_fileIcons.add(extension);
 			}

@@ -193,7 +193,7 @@ public class PortletRequestProcessor extends TilesRequestProcessor {
 			int pos = forward.indexOf(CharPool.QUESTION);
 
 			if (pos != -1) {
-				queryString = forward.substring(pos + 1, forward.length());
+				queryString = forward.substring(pos + 1);
 				forward = forward.substring(0, pos);
 			}
 

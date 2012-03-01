@@ -250,7 +250,7 @@ public class BaseDeployer implements Deployer {
 			String jarFullName = jars.get(i);
 
 			String jarName = jarFullName.substring(
-				jarFullName.lastIndexOf("/") + 1, jarFullName.length());
+				jarFullName.lastIndexOf("/") + 1);
 
 			if ((!appServerType.equals(ServerDetector.TOMCAT_ID)) ||
 				(appServerType.equals(ServerDetector.TOMCAT_ID) &&
@@ -951,7 +951,7 @@ public class BaseDeployer implements Deployer {
 			Validator.isNotNull(jbossPrefix) &&
 			displayName.startsWith(jbossPrefix)) {
 
-			displayName = displayName.substring(1, displayName.length());
+			displayName = displayName.substring(1);
 		}
 
 		return displayName;

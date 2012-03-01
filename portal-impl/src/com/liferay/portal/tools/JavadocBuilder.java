@@ -341,7 +341,7 @@ public class JavadocBuilder {
 
 		pos = fileName.indexOf("/", pos);
 
-		String srcFile = fileName.substring(pos + 1, fileName.length());
+		String srcFile = fileName.substring(pos + 1);
 		String className = StringUtil.replace(
 			srcFile.substring(0, srcFile.length() - 5), "/", ".");
 

@@ -36,7 +36,7 @@ public class BaseServiceSoapTestCase extends BaseTestCase {
 			int pos = url.indexOf("://");
 
 			String protocol = url.substring(0, pos + 3);
-			String host = url.substring(pos + 3, url.length());
+			String host = url.substring(pos + 3);
 
 			url =
 				protocol + userId + ":" + password + "@" + host +

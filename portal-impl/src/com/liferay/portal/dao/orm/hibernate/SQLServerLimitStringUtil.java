@@ -45,7 +45,7 @@ public class SQLServerLimitStringUtil {
 		if (orderByPos > 0) {
 			selectFromWhere = sql.substring(fromPos, orderByPos);
 
-			orderBy = sql.substring(orderByPos + 9, sql.length());
+			orderBy = sql.substring(orderByPos + 9);
 		}
 		else {
 			selectFromWhere = sql.substring(fromPos);

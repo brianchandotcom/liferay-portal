@@ -1417,7 +1417,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 
 		return path.substring(0, pos).concat("-expando").concat(
-			path.substring(pos, path.length()));
+			path.substring(pos));
 	}
 
 	protected String getPrimaryKeyString(Class<?> clazz, long classPK) {

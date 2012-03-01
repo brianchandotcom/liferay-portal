@@ -871,7 +871,7 @@ public class ServiceBuilder {
 		}
 		else {
 			String refPackage = name.substring(0, pos);
-			String refEntity = name.substring(pos + 1, name.length());
+			String refEntity = name.substring(pos + 1);
 
 			if (refPackage.equals(_packagePath)) {
 				pos = _ejbList.indexOf(new Entity(refEntity));
@@ -2634,7 +2634,7 @@ public class ServiceBuilder {
 
 				newContent =
 					content.substring(0, x) + "<beans>" + sb.toString() +
-						"</beans>" + content.substring(y, content.length());
+						"</beans>" + content.substring(y);
 			}
 		}
 
@@ -4241,7 +4241,7 @@ public class ServiceBuilder {
 			pos = fileName.indexOf(_apiDir + "/") + _apiDir.length();
 		}
 
-		String srcFile = fileName.substring(pos + 1, fileName.length());
+		String srcFile = fileName.substring(pos + 1);
 		String className = StringUtil.replace(
 			srcFile.substring(0, srcFile.length() - 5), "/", ".");
 

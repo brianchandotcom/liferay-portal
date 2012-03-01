@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.users.user.addusermultiple;
+package com.liferay.portalweb.portal.controlpanel.users.user.adduser;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,10 +20,13 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddUser1Test extends BaseTestCase {
-	public void testAddUser1() throws Exception {
+public class AddUser2Test extends BaseTestCase {
+	public void testAddUser2() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -49,7 +52,10 @@ public class AddUser1Test extends BaseTestCase {
 			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
+			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -58,7 +64,7 @@ public class AddUser1Test extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
 					break;
 				}
 			}
@@ -70,64 +76,33 @@ public class AddUser1Test extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("User"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.select("//select[@id='_125_prefixId']",
-			RuntimeVariables.replace("label=Mr."));
 		selenium.type("//input[@id='_125_screenName']",
-			RuntimeVariables.replace("selenium01"));
+			RuntimeVariables.replace("usersn2"));
 		selenium.type("//input[@id='_125_emailAddress']",
-			RuntimeVariables.replace("test01@selenium.com"));
+			RuntimeVariables.replace("userea2@liferay.com"));
 		selenium.type("//input[@id='_125_firstName']",
-			RuntimeVariables.replace("selen01"));
-		selenium.type("//input[@id='_125_middleName']",
-			RuntimeVariables.replace("lenn"));
+			RuntimeVariables.replace("userfn2"));
 		selenium.type("//input[@id='_125_lastName']",
-			RuntimeVariables.replace("nium01"));
-		selenium.select("//select[@id='_125_suffixId']",
-			RuntimeVariables.replace("label=Phd."));
-		selenium.select("//select[@id='_125_birthdayMonth']",
-			RuntimeVariables.replace("label=April"));
-		selenium.select("//select[@id='_125_birthdayDay']",
-			RuntimeVariables.replace("label=10"));
-		selenium.select("//select[@id='_125_birthdayYear']",
-			RuntimeVariables.replace("label=1986"));
-		selenium.select("//select[@id='_125_male']",
-			RuntimeVariables.replace("label=Male"));
+			RuntimeVariables.replace("userln2"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals("selenium01",
+		assertEquals("usersn2",
 			selenium.getValue("//input[@id='_125_screenName']"));
-		assertEquals("test01@selenium.com",
+		assertEquals("userea2@liferay.com",
 			selenium.getValue("//input[@id='_125_emailAddress']"));
-		assertEquals("selen01",
+		assertEquals("userfn2",
 			selenium.getValue("//input[@id='_125_firstName']"));
-		assertEquals("lenn", selenium.getValue("//input[@id='_125_middleName']"));
-		assertEquals("nium01", selenium.getValue("//input[@id='_125_lastName']"));
+		assertEquals("userln2",
+			selenium.getValue("//input[@id='_125_lastName']"));
 	}
 }

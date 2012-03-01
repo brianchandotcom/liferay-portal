@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
@@ -29,79 +39,49 @@
 	<td>Users and Organizations</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//span[@title='Add']/ul/li/strong/a/span</td>
+	<td>Add</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>link=Add</td>
+	<td>//span[@title='Add']/ul/li/strong/a/span</td>
 	<td>Add</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
 	<td>User</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
 	<td>User</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
 	<td>User</td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>//select[@id='_125_prefixId']</td>
-	<td>label=Mrs.</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@id='_125_screenName']</td>
-	<td>selenium02</td>
+	<td>usersn2</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@id='_125_emailAddress']</td>
-	<td>test02@selenium.com</td>
+	<td>userea2@liferay.com</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@id='_125_firstName']</td>
-	<td>selen02</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>//input[@id='_125_middleName']</td>
-	<td>lenn</td>
+	<td>userfn2</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@id='_125_lastName']</td>
-	<td>nium02</td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>//select[@id='_125_suffixId']</td>
-	<td>label=Phd.</td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>//select[@id='_125_birthdayMonth']</td>
-	<td>label=September</td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>//select[@id='_125_birthdayDay']</td>
-	<td>label=24</td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>//select[@id='_125_birthdayYear']</td>
-	<td>label=1984</td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>//select[@id='_125_male']</td>
-	<td>label=Female</td>
+	<td>userln2</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -109,11 +89,6 @@
 	<td>Save</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
-</tr>
-<tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
@@ -121,29 +96,23 @@
 <tr>
 	<td>assertValue</td>
 	<td>//input[@id='_125_screenName']</td>
-	<td>selenium02</td>
+	<td>usersn2</td>
 </tr>
 <tr>
 	<td>assertValue</td>
 	<td>//input[@id='_125_emailAddress']</td>
-	<td>test02@selenium.com</td>
+	<td>userea2@liferay.com</td>
 </tr>
 <tr>
 	<td>assertValue</td>
 	<td>//input[@id='_125_firstName']</td>
-	<td>selen02</td>
-</tr>
-<tr>
-	<td>assertValue</td>
-	<td>//input[@id='_125_middleName']</td>
-	<td>lenn</td>
+	<td>userfn2</td>
 </tr>
 <tr>
 	<td>assertValue</td>
 	<td>//input[@id='_125_lastName']</td>
-	<td>nium02</td>
+	<td>userln2</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

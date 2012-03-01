@@ -29,6 +29,9 @@ public class TearDownUserTest extends BaseTestCase {
 			case 1:
 				selenium.open("/web/guest/home/");
 				loadRequiredJavaScriptModules();
+				assertEquals(RuntimeVariables.replace("Go to"),
+					selenium.getText("//li[@id='_145_mySites']/a/span"));
+				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -36,7 +39,7 @@ public class TearDownUserTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent("link=Control Panel")) {
+						if (selenium.isVisible("link=Control Panel")) {
 							break;
 						}
 					}
@@ -54,22 +57,62 @@ public class TearDownUserTest extends BaseTestCase {
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
+				selenium.clickAt("link=Search All Users",
+					RuntimeVariables.replace("Search All Users"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
 
-				boolean usersPresent = selenium.isElementPresent(
-						"xPath=(//input[@name='_125_allRowIds'])[2]");
+				boolean basic1Visible = selenium.isVisible("link=\u00ab Basic");
 
-				if (!usersPresent) {
+				if (!basic1Visible) {
 					label = 2;
 
 					continue;
 				}
 
+				selenium.clickAt("link=\u00ab Basic",
+					RuntimeVariables.replace("\u00ab Basic"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("//input[@name='_125_keywords']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertTrue(selenium.isVisible("//input[@name='_125_keywords']"));
+
+			case 2:
+				selenium.type("//input[@name='_125_keywords']",
+					RuntimeVariables.replace("userfn*"));
+				selenium.clickAt("//input[@value='Search']",
+					RuntimeVariables.replace("Search"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+
+				boolean usersPresent = selenium.isElementPresent(
+						"//input[@name='_125_allRowIds']");
+
+				if (!usersPresent) {
+					label = 3;
+
+					continue;
+				}
+
 				assertFalse(selenium.isChecked(
-						"xPath=(//input[@name='_125_allRowIds'])[2]"));
-				selenium.clickAt("xPath=(//input[@name='_125_allRowIds'])[2]",
+						"//input[@name='_125_allRowIds']"));
+				selenium.clickAt("//input[@name='_125_allRowIds']",
 					RuntimeVariables.replace("Select All"));
-				assertTrue(selenium.isChecked(
-						"xPath=(//input[@name='_125_allRowIds'])[2]"));
+				assertTrue(selenium.isChecked("//input[@name='_125_allRowIds']"));
 				selenium.clickAt("//input[@value='Deactivate']",
 					RuntimeVariables.replace("Deactivate"));
 				selenium.waitForPageToLoad("30000");
@@ -98,7 +141,39 @@ public class TearDownUserTest extends BaseTestCase {
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 
-			case 2:
+			case 3:
+				assertEquals(RuntimeVariables.replace("No users were found."),
+					selenium.getText("//div[@class='portlet-msg-info']"));
+				selenium.open("/web/guest/home/");
+				loadRequiredJavaScriptModules();
+				assertEquals(RuntimeVariables.replace("Go to"),
+					selenium.getText("//li[@id='_145_mySites']/a/span"));
+				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("link=Control Panel")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.clickAt("link=Control Panel",
+					RuntimeVariables.replace("Control Panel"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+				selenium.clickAt("link=Users and Organizations",
+					RuntimeVariables.replace("Users and Organizations"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Search All Users",
 					RuntimeVariables.replace("Search All Users"));
 				selenium.waitForPageToLoad("30000");
@@ -108,15 +183,13 @@ public class TearDownUserTest extends BaseTestCase {
 						"link=Advanced \u00bb");
 
 				if (!advancedVisible) {
-					label = 3;
+					label = 4;
 
 					continue;
 				}
 
 				selenium.clickAt("link=Advanced \u00bb",
 					RuntimeVariables.replace("Advanced"));
-
-			case 3:
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -134,6 +207,7 @@ public class TearDownUserTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
+			case 4:
 				selenium.select("//select[@id='_125_status']",
 					RuntimeVariables.replace("Inactive"));
 				selenium.clickAt("//input[@value='Search']",
@@ -145,7 +219,7 @@ public class TearDownUserTest extends BaseTestCase {
 						"//input[@name='_125_allRowIds']");
 
 				if (!usersNotDeleted) {
-					label = 4;
+					label = 5;
 
 					continue;
 				}
@@ -165,14 +239,14 @@ public class TearDownUserTest extends BaseTestCase {
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 
-			case 4:
+			case 5:
 				assertEquals(RuntimeVariables.replace("No users were found."),
 					selenium.getText("//div[@class='portlet-msg-info']"));
 
-				boolean basicVisible = selenium.isVisible("link=\u00ab Basic");
+				boolean basic2Visible = selenium.isVisible("link=\u00ab Basic");
 
-				if (!basicVisible) {
-					label = 5;
+				if (!basic2Visible) {
+					label = 6;
 
 					continue;
 				}
@@ -180,7 +254,7 @@ public class TearDownUserTest extends BaseTestCase {
 				selenium.clickAt("link=\u00ab Basic",
 					RuntimeVariables.replace("Basic"));
 
-			case 5:
+			case 6:
 			case 100:
 				label = -1;
 			}

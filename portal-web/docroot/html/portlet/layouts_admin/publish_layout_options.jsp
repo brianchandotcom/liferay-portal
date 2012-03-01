@@ -48,7 +48,7 @@ Layout curLayout = (Layout)row.getObject();
 		</c:if>
 
 		<c:if test="<%= !curLayout.getChildren().isEmpty() %>">
-			<aui:input label="include-all-descendent-pages" name='<%= "includeChildren_" + curLayout.getPlid() %>' type="checkbox" value="1" />
+			<aui:input checked="<%= true %>" label="include-all-descendent-pages" name='<%= "includeChildren_" + curLayout.getPlid() %>' type="checkbox" value="1" />
 		</c:if>
 	</div>
 </div>

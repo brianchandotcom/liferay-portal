@@ -119,12 +119,17 @@ public class JSONWebServiceServlet extends JSONServlet {
 			String queryString = request.getQueryString();
 
 			if (Validator.isNull(queryString)) {
-				String servletContextPath = ContextPathUtil.getContextPath(
-					servletContext);
-
-				queryString =
-					"contextPath=" + HttpUtil.encodeURL(servletContextPath);
+				queryString = StringPool.BLANK;
 			}
+			else {
+				queryString += StringPool.AMPERSAND;
+			}
+
+			String servletContextPath = ContextPathUtil.getContextPath(
+				servletContext);
+
+			queryString +=
+				"contextPath=" + HttpUtil.encodeURL(servletContextPath);
 
 			apiPath = serverURL + apiPath + StringPool.QUESTION + queryString;
 

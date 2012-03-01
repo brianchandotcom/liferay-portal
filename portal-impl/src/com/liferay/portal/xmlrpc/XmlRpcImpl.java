@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.xmlrpc.Response;
 import com.liferay.portal.kernel.xmlrpc.Success;
 import com.liferay.portal.kernel.xmlrpc.XmlRpc;
 import com.liferay.portal.kernel.xmlrpc.XmlRpcException;
+import com.liferay.portal.util.PropsValues;
 
 /**
  * @author Alexander Chow
@@ -81,7 +82,16 @@ public class XmlRpcImpl implements XmlRpc {
 
 		Http.Options options = new Http.Options();
 
-		options.addHeader(HttpHeaders.USER_AGENT, ReleaseInfo.getServerInfo());
+		if (_HTTP_HEADER_VERSION_VERBOSITY_DEFAULT) {
+		}
+		else if (_HTTP_HEADER_VERSION_VERBOSITY_PARTIAL) {
+			options.addHeader(HttpHeaders.USER_AGENT, ReleaseInfo.getName());
+		}
+		else {
+			options.addHeader(
+				HttpHeaders.USER_AGENT, ReleaseInfo.getServerInfo());
+		}
+
 		options.setBody(requestXML, ContentTypes.TEXT_XML, StringPool.UTF8);
 		options.setLocation(url);
 		options.setPost(true);
@@ -90,6 +100,13 @@ public class XmlRpcImpl implements XmlRpc {
 
 		return XmlRpcParser.parseResponse(responseXML);
 	}
+
+	private static final boolean _HTTP_HEADER_VERSION_VERBOSITY_DEFAULT =
+		PropsValues.HTTP_HEADER_VERSION_VERBOSITY.equalsIgnoreCase(
+			ReleaseInfo.getName());
+
+	private static final boolean _HTTP_HEADER_VERSION_VERBOSITY_PARTIAL =
+		PropsValues.HTTP_HEADER_VERSION_VERBOSITY.equalsIgnoreCase("partial");
 
 	private static Log _log = LogFactoryUtil.getLog(XmlRpcImpl.class);
 

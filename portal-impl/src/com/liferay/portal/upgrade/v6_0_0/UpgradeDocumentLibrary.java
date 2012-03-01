@@ -108,12 +108,8 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			while (rs.next()) {
 				long companyId = rs.getLong("companyId");
 				long groupId = rs.getLong("groupId");
-				long userId = rs.getLong("userId");
-				String userName = rs.getString("userName");
 				long folderId = rs.getLong("folderId");
 				String name = rs.getString("name");
-				double version = rs.getDouble("version");
-				int size = rs.getInt("size_");
 
 				long repositoryId = folderId;
 
@@ -135,15 +131,13 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 						_log.error(nsfe);
 					}
 				}
-
-				addFileVersion(
-					groupId, companyId, userId, userName, folderId, name,
-					version, size);
 			}
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
 		}
+
+		synchronizeFileVersions();
 
 		// DLFileEntry
 
@@ -197,6 +191,48 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		upgradeTable.setIndexesSQL(DLFileVersionTable.TABLE_SQL_ADD_INDEXES);
 
 		upgradeTable.updateTable();
+	}
+
+	protected void synchronizeFileVersions() throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getConnection();
+
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("select * from DLFileEntry dlFileEntry where version ");
+			sb.append("not in (select version from DLFileVersion ");
+			sb.append("dlFileVersion where (dlFileVersion.folderId = ");
+			sb.append("dlFileEntry.folderId) and (dlFileVersion.name = ");
+			sb.append("dlFileEntry.name))");
+
+			String sql = sb.toString();
+
+			ps = con.prepareStatement(sql);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long companyId = rs.getLong("companyId");
+				long groupId = rs.getLong("groupId");
+				long userId = rs.getLong("userId");
+				String userName = rs.getString("userName");
+				long folderId = rs.getLong("folderId");
+				String name = rs.getString("name");
+				double version = rs.getDouble("version");
+				int size = rs.getInt("size_");
+
+				addFileVersion(
+					groupId, companyId, userId, userName, folderId, name,
+					version, size);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

@@ -22,7 +22,6 @@ import java.util.List;
 
 import org.jgroups.Address;
 import org.jgroups.Message;
-import org.jgroups.View;
 
 /**
  * @author Shuyang Zhou

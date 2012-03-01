@@ -16,6 +16,7 @@ package com.liferay.portal.cluster;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 import org.jgroups.Address;
 import org.jgroups.Message;
 import org.jgroups.Receiver;

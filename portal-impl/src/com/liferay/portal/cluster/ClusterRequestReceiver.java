@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Collections;
 import java.util.List;
 
 import org.jgroups.Channel;
@@ -112,6 +112,31 @@ public class ClusterRequestReceiver extends BaseReceiver {
 		_clusterExecutorImpl.memberRemoved(departAddresses);
 	}
 
+	protected List<Address> getDepartAddresses(View view) {
+		List<org.jgroups.Address> currentJGroupsAddresses = view.getMembers();
+		List<org.jgroups.Address> lastJGroupsAddresses = _lastView.getMembers();
+
+		List<org.jgroups.Address> departJGroupsAddresses =
+			new ArrayList<org.jgroups.Address>(lastJGroupsAddresses);
+
+		departJGroupsAddresses.removeAll(currentJGroupsAddresses);
+
+		if (departJGroupsAddresses.isEmpty()) {
+			return Collections.emptyList();
+		}
+		else {
+			List<Address> departAddresses = new ArrayList<Address>(
+				departJGroupsAddresses.size());
+
+			for (org.jgroups.Address departJGroupsAddress :
+				departJGroupsAddresses) {
+				departAddresses.add(new AddressImpl(departJGroupsAddress));
+			}
+
+			return departAddresses;
+		}
+	}
+
 	protected Object invoke(
 			String servletContextName, String beanIdentifier,
 			MethodHandler methodHandler)
@@ -157,37 +182,6 @@ public class ClusterRequestReceiver extends BaseReceiver {
 		}
 	}
 
-	protected List<Address> getDepartAddresses(View view) {
-		List<Address> departAddresses = new ArrayList<Address>();
-
-		List<org.jgroups.Address> jGroupsAddresses = view.getMembers();
-		List<org.jgroups.Address> lastJGroupsAddresses =
-			_lastView.getMembers();
-
-		List<org.jgroups.Address> tempAddresses =
-			new ArrayList<org.jgroups.Address>(jGroupsAddresses.size());
-
-		tempAddresses.addAll(jGroupsAddresses);
-
-		List<org.jgroups.Address> lastAddresses =
-			new ArrayList<org.jgroups.Address>(lastJGroupsAddresses.size());
-
-		lastAddresses.addAll(lastJGroupsAddresses);
-
-		tempAddresses.retainAll(lastJGroupsAddresses);
-		lastAddresses.removeAll(tempAddresses);
-
-		if (!lastAddresses.isEmpty()) {
-			Iterator<org.jgroups.Address> itr = lastAddresses.iterator();
-
-			while (itr.hasNext()) {
-				departAddresses.add(new AddressImpl(itr.next()));
-			}
-		}
-
-		return departAddresses;
-	}
-
 	protected void processClusterRequest(
 		ClusterRequest clusterRequest, org.jgroups.Address sourceAddress,
 		org.jgroups.Address localAddress) {
@@ -201,15 +195,10 @@ public class ClusterRequestReceiver extends BaseReceiver {
 
 		clusterNodeResponse.setAddress(address);
 
-		try {
-			ClusterNode localClusterNode =
-				_clusterExecutorImpl.getLocalClusterNode();
+		ClusterNode localClusterNode =
+			_clusterExecutorImpl.getLocalClusterNode();
 
-			clusterNodeResponse.setClusterNode(localClusterNode);
-		}
-		catch (Exception e) {
-			clusterNodeResponse.setException(e);
-		}
+		clusterNodeResponse.setClusterNode(localClusterNode);
 
 		if (clusterMessageType.equals(ClusterMessageType.NOTIFY) ||
 			clusterMessageType.equals(ClusterMessageType.UPDATE)) {
@@ -364,6 +353,6 @@ public class ClusterRequestReceiver extends BaseReceiver {
 		ClusterRequestReceiver.class);
 
 	private ClusterExecutorImpl _clusterExecutorImpl;
-	private View _lastView;
+	private volatile View _lastView;
 
 }

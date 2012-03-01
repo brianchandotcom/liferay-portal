@@ -203,13 +203,11 @@ searchContainer.setTotal(total);
 request.setAttribute("view_entries.jsp-total", String.valueOf(total));
 %>
 
-<c:choose>
-	<c:when test="<%= results.isEmpty() %>">
-		<div class="portlet-msg-info">
-			<liferay-ui:message key="there-are-no-documents-or-media-files-in-this-folder" />
-		</div>
-	</c:when>
-</c:choose>
+<c:if test="<%= results.isEmpty() %>">
+	<div class="portlet-msg-info">
+		<liferay-ui:message key="there-are-no-documents-or-media-files-in-this-folder" />
+	</div>
+</c:if>
 
 <%
 boolean showSyncMessage = GetterUtil.getBoolean(SessionClicks.get(request, liferayPortletResponse.getNamespace() + "show-sync-message", "true"));

@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>DefinePermissionsRoleBlogsEditorTest</title>
+<title>TearDownPermissionsSiteMemberTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">DefinePermissionsRoleBlogsEditorTest</td></tr>
+<tr><td rowspan="1" colspan="3">TearDownPermissionsSiteMemberTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -14,13 +14,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>waitForVisible</td>
+	<td>//div[@id='dockbar']/ul[2]/li/a/span</td>
 	<td>Go To</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>mouseOver</td>
+	<td>//div[@id='dockbar']/ul[2]/li/a/span</td>
 	<td>Go To</td>
 </tr>
 <tr>
@@ -41,7 +41,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_128_keywords']</td>
-	<td>Blogs</td>
+	<td>Member</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -51,12 +51,12 @@
 <tr>
 	<td>assertText</td>
 	<td>//tr[3]/td/a</td>
-	<td>Blogs Editor</td>
+	<td>Site Member</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//tr[3]/td/a</td>
-	<td>Blogs Editor</td>
+	<td>Site Member</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -70,8 +70,8 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@value='com.liferay.portlet.blogs.model.BlogsEntryUPDATE']</td>
-	<td>Blogs Entry Update</td>
+	<td>//input[@value='com.liferay.portlet.blogsADD_ENTRY']</td>
+	<td>Blogs Add Entry</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>

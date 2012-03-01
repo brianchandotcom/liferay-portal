@@ -36,8 +36,7 @@ public class TearDownBlogsEntryTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible(
-									"//div[@id='dockbar']/ul[2]/li/a/span")) {
+						if (selenium.isVisible("link=Blogs Test Page")) {
 							break;
 						}
 					}
@@ -47,26 +46,8 @@ public class TearDownBlogsEntryTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.mouseOver("//div[@id='dockbar']/ul[2]/li/a/span");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("link=Blogs Page")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.clickAt("link=Blogs Page",
-					RuntimeVariables.replace("Blogs Page"));
+				selenium.clickAt("link=Blogs Test Page",
+					RuntimeVariables.replace("Blogs Test Page"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 

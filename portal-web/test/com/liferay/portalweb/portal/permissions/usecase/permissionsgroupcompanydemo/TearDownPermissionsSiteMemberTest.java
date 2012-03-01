@@ -20,9 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DefinePermissionsRoleBlogsEditorTest extends BaseTestCase {
-	public void testDefinePermissionsRoleBlogsEditor()
-		throws Exception {
+public class TearDownPermissionsSiteMemberTest extends BaseTestCase {
+	public void testTearDownPermissionsSiteMember() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -32,7 +31,7 @@ public class DefinePermissionsRoleBlogsEditorTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("//li[@id='_145_mySites']/a/span")) {
+				if (selenium.isVisible("//div[@id='dockbar']/ul[2]/li/a/span")) {
 					break;
 				}
 			}
@@ -42,10 +41,7 @@ public class DefinePermissionsRoleBlogsEditorTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//li[@id='_145_mySites']/a/span",
-			RuntimeVariables.replace("Go To"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
+		selenium.mouseOver("//div[@id='dockbar']/ul[2]/li/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -71,15 +67,14 @@ public class DefinePermissionsRoleBlogsEditorTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_128_keywords']",
-			RuntimeVariables.replace("Blogs"));
+			RuntimeVariables.replace("Member"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Blogs Editor"),
+		assertEquals(RuntimeVariables.replace("Site Member"),
 			selenium.getText("//tr[3]/td/a"));
-		selenium.clickAt("//tr[3]/td/a",
-			RuntimeVariables.replace("Blogs Editor"));
+		selenium.clickAt("//tr[3]/td/a", RuntimeVariables.replace("Site Member"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Define Permissions",
@@ -90,8 +85,8 @@ public class DefinePermissionsRoleBlogsEditorTest extends BaseTestCase {
 			RuntimeVariables.replace("label=Blogs"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.clickAt("//input[@value='com.liferay.portlet.blogs.model.BlogsEntryUPDATE']",
-			RuntimeVariables.replace("Blogs Entry Update"));
+		selenium.clickAt("//input[@value='com.liferay.portlet.blogsADD_ENTRY']",
+			RuntimeVariables.replace("Blogs Add Entry"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

@@ -31,7 +31,7 @@ public class AddPortletBlogsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Blogs Page")) {
+				if (selenium.isVisible("link=Blogs Test Page")) {
 					break;
 				}
 			}
@@ -41,8 +41,8 @@ public class AddPortletBlogsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Blogs Page",
-			RuntimeVariables.replace("Blogs Page"));
+		selenium.clickAt("link=Blogs Test Page",
+			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
@@ -75,7 +75,7 @@ public class AddPortletBlogsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("//section")) {
+				if (selenium.isVisible("//section")) {
 					break;
 				}
 			}
@@ -85,6 +85,6 @@ public class AddPortletBlogsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertTrue(selenium.isElementPresent("//section"));
+		assertTrue(selenium.isVisible("//section"));
 	}
 }

@@ -36,8 +36,8 @@ public class TearDownUserTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible(
-									"//div[@id='dockbar']/ul[2]/li/a/span")) {
+						if (selenium.isElementPresent(
+									"//li[@id='_145_mySites']/a/span")) {
 							break;
 						}
 					}
@@ -47,7 +47,10 @@ public class TearDownUserTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.mouseOver("//div[@id='dockbar']/ul[2]/li/a/span");
+				selenium.clickAt("//li[@id='_145_mySites']/a/span",
+					RuntimeVariables.replace("Go To"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {

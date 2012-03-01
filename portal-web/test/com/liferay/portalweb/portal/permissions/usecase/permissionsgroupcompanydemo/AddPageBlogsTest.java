@@ -63,7 +63,7 @@ public class AddPageBlogsTest extends BaseTestCase {
 		}
 
 		selenium.type("//input[@type='text']",
-			RuntimeVariables.replace("Blogs Page"));
+			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.clickAt("//button[@id='save']",
 			RuntimeVariables.replace("Save"));
 
@@ -73,7 +73,7 @@ public class AddPageBlogsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Blogs Page")) {
+				if (selenium.isVisible("link=Blogs Test Page")) {
 					break;
 				}
 			}
@@ -83,8 +83,8 @@ public class AddPageBlogsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Blogs Page",
-			RuntimeVariables.replace("Blogs Page"));
+		selenium.clickAt("link=Blogs Test Page",
+			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 	}

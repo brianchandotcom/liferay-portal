@@ -31,7 +31,7 @@ public class User1_AddBlogsEntry2Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Blogs Page")) {
+				if (selenium.isElementPresent("link=Blogs Test Page")) {
 					break;
 				}
 			}
@@ -41,8 +41,8 @@ public class User1_AddBlogsEntry2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Blogs Page",
-			RuntimeVariables.replace("Blogs Page"));
+		selenium.clickAt("link=Blogs Test Page",
+			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.clickAt("//input[@value='Add Blog Entry']",

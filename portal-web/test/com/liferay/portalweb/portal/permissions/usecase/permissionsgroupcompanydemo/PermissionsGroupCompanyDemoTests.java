@@ -15,6 +15,7 @@
 package com.liferay.portalweb.portal.permissions.usecase.permissionsgroupcompanydemo;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.util.TearDownPageTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -47,7 +48,9 @@ public class PermissionsGroupCompanyDemoTests extends BaseTestSuite {
 		testSuite.addTestSuite(SignInTest.class);
 		testSuite.addTestSuite(TearDownBlogsEntryTest.class);
 		testSuite.addTestSuite(TearDownBlogsEditorRoleTest.class);
+		testSuite.addTestSuite(TearDownPermissionsSiteMemberTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
+		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;
 	}

@@ -477,7 +477,7 @@ public class HttpImpl implements Http {
 			int pos = url.indexOf(
 				StringPool.SLASH, Http.HTTPS_WITH_SLASH.length());
 
-			url = url.substring(pos, url.length());
+			url = url.substring(pos);
 		}
 
 		int pos = url.indexOf(CharPool.QUESTION);
@@ -533,7 +533,7 @@ public class HttpImpl implements Http {
 			return StringPool.BLANK;
 		}
 		else {
-			return url.substring(pos + 1, url.length());
+			return url.substring(pos + 1);
 		}
 	}
 
@@ -785,10 +785,10 @@ public class HttpImpl implements Http {
 
 	public String removeProtocol(String url) {
 		if (url.startsWith(Http.HTTP_WITH_SLASH)) {
-			return url.substring(Http.HTTP_WITH_SLASH.length(), url.length());
+			return url.substring(Http.HTTP_WITH_SLASH.length());
 		}
 		else if (url.startsWith(Http.HTTPS_WITH_SLASH)) {
-			return url.substring(Http.HTTPS_WITH_SLASH.length(), url.length());
+			return url.substring(Http.HTTPS_WITH_SLASH.length());
 		}
 		else {
 			return url;

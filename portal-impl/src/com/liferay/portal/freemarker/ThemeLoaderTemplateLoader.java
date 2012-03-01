@@ -46,8 +46,7 @@ public class ThemeLoaderTemplateLoader extends URLTemplateLoader {
 				String themesPath = themeLoader.getThemesPath();
 
 				if (templateName.startsWith(themesPath)) {
-					name = templateName.substring(
-						themesPath.length(), templateName.length());
+					name = templateName.substring(themesPath.length());
 				}
 
 				if (_log.isDebugEnabled()) {

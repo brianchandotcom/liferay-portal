@@ -52,7 +52,7 @@ public class StrutsURLEncoder implements URLEncoder {
 
 			if (pos != -1) {
 				String param = params[i].substring(0, pos);
-				String value = params[i].substring(pos + 1, params[i].length());
+				String value = params[i].substring(pos + 1);
 
 				if (param.equals("windowState")) {
 					try {
@@ -145,7 +145,7 @@ public class StrutsURLEncoder implements URLEncoder {
 
 			if (pos != -1) {
 				strutsAction = path.substring(0, pos);
-				queryString = path.substring(pos + 1, path.length());
+				queryString = path.substring(pos + 1);
 			}
 
 			// Set the Struts action
@@ -158,13 +158,11 @@ public class StrutsURLEncoder implements URLEncoder {
 			}
 
 			if (Validator.isNotNull(_contextPath)) {
-				strutsAction = strutsAction.substring(
-					_contextPath.length(), strutsAction.length());
+				strutsAction = strutsAction.substring(_contextPath.length());
 			}
 
 			if (strutsAction.startsWith(_servletMapping)) {
-				strutsAction = strutsAction.substring(
-					_servletMapping.length(), strutsAction.length());
+				strutsAction = strutsAction.substring(_servletMapping.length());
 			}
 
 			if (!strutsAction.startsWith(StringPool.SLASH)) {

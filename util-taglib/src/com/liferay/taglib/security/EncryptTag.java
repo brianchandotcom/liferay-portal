@@ -105,8 +105,7 @@ public class EncryptTag extends TagSupport {
 					int x = paramAndValue.indexOf(CharPool.EQUAL);
 
 					String param = paramAndValue.substring(0, x);
-					String value = paramAndValue.substring(
-						x + 1, paramAndValue.length());
+					String value = paramAndValue.substring(x + 1);
 
 					sb.append(param).append(StringPool.EQUAL);
 

@@ -223,7 +223,7 @@ public class LangBuilder {
 
 			if (pos != -1) {
 				String key = line.substring(0, pos);
-				String value = line.substring(pos + 1, line.length());
+				String value = line.substring(pos + 1);
 
 				if (((state == 1) && !key.startsWith("lang.")) ||
 					((state == 2) && !key.startsWith("javax.portlet.")) ||

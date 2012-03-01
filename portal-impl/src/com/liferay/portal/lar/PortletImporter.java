@@ -168,7 +168,7 @@ public class PortletImporter {
 			if (value.equalsIgnoreCase("assetCategories") &&
 				name.startsWith(prefix)) {
 
-				String index = name.substring(prefix.length(), name.length());
+				String index = name.substring(prefix.length());
 
 				String queryValuesName = "queryValues" + index;
 

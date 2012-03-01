@@ -818,7 +818,7 @@ public class ShoppingUtil {
 			return StringPool.BLANK;
 		}
 		else {
-			return itemId.substring(pos + 1, itemId.length());
+			return itemId.substring(pos + 1);
 		}
 	}
 

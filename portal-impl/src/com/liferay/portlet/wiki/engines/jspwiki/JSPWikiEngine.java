@@ -97,10 +97,10 @@ public class JSPWikiEngine implements WikiEngine {
 				}
 
 				if (title.endsWith("]]")) {
-					title = title.substring(title.length() - 2, title.length());
+					title = title.substring(title.length() - 2);
 				}
 				else if (title.startsWith("[")) {
-					title = title.substring(title.length() - 1, title.length());
+					title = title.substring(title.length() - 1);
 				}
 
 				Boolean existsObj = links.get(title);
@@ -242,7 +242,7 @@ public class JSPWikiEngine implements WikiEngine {
 				int pos = linkValues.indexOf(CharPool.PIPE);
 
 				if (pos != -1) {
-					name = linkValues.substring(pos + 1, linkValues.length());
+					name = linkValues.substring(pos + 1);
 					url = linkValues.substring(0, pos);
 				}
 

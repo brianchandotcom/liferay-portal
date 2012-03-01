@@ -120,7 +120,7 @@ public class ViewAction extends PortletAction {
 				int pos = src.indexOf("://");
 
 				String protocol = src.substring(0, pos + 3);
-				String url = src.substring(pos + 3, src.length());
+				String url = src.substring(pos + 3);
 
 				src = protocol + userName + ":" + password + "@" + url;
 			}

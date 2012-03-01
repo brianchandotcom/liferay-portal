@@ -92,7 +92,7 @@ public class EditWorkflowDefinitionLinkAction extends PortletAction {
 				continue;
 			}
 
-			String className = name.substring(_PREFIX.length(), name.length());
+			String className = name.substring(_PREFIX.length());
 			String workflowDefinition = ParamUtil.getString(
 				actionRequest, name);
 

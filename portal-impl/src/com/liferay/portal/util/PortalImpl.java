@@ -4271,8 +4271,7 @@ public class PortalImpl implements Portal {
 		String layoutFriendlyURL = null;
 
 		if ((pos != -1) && ((pos + 1) != friendlyURL.length())) {
-			layoutFriendlyURL = friendlyURL.substring(
-				pos, friendlyURL.length());
+			layoutFriendlyURL = friendlyURL.substring(pos);
 		}
 
 		if (Validator.isNull(layoutFriendlyURL)) {
@@ -5416,8 +5415,7 @@ public class PortalImpl implements Portal {
 			if (pos != -1) {
 				prefix += redirectPath.substring(0, pos);
 
-				String suffix = redirectPath.substring(
-					pos + oldPath.length(), redirectPath.length());
+				String suffix = redirectPath.substring(pos + oldPath.length());
 
 				redirect = prefix + newPath + suffix;
 			}

@@ -206,7 +206,7 @@ public class CompanyImpl extends CompanyBaseImpl {
 			return false;
 		}
 
-		String mx = emailAddress.substring(pos + 1, emailAddress.length());
+		String mx = emailAddress.substring(pos + 1);
 
 		if (mx.equals(getMx())) {
 			return true;

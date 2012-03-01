@@ -132,8 +132,7 @@ public class EditEntryAction extends PortletAction {
 				}
 
 				if (pos < redirect.length()) {
-					newRedirect +=
-						"?" + redirect.substring(pos + 1, redirect.length());
+					newRedirect += "?" + redirect.substring(pos + 1);
 				}
 
 				redirect = newRedirect;

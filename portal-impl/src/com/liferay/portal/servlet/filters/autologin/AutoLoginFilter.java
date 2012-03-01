@@ -167,7 +167,7 @@ public class AutoLoginFilter extends BasePortalFilter {
 		if ((!contextPath.equals(StringPool.SLASH)) &&
 			(path.indexOf(contextPath) != -1)) {
 
-			path = path.substring(contextPath.length(), path.length());
+			path = path.substring(contextPath.length());
 		}
 
 		if (PortalInstances.isAutoLoginIgnorePath(path)) {

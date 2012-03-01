@@ -403,7 +403,7 @@ public class EditArticleAction extends PortletAction {
 				byte[] bytes = FileUtil.getBytes(file);
 
 				if ((bytes != null) && (bytes.length > 0)) {
-					name = name.substring(imagePrefix.length(), name.length());
+					name = name.substring(imagePrefix.length());
 
 					images.put(name, bytes);
 				}

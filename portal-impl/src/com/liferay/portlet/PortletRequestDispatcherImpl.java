@@ -183,7 +183,7 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher {
 
 			if (pos != -1) {
 				pathNoQueryString = _path.substring(0, pos);
-				queryString = _path.substring(pos + 1, _path.length());
+				queryString = _path.substring(pos + 1);
 
 				Map<String, String[]> queryParams =
 					new HashMap<String, String[]>();

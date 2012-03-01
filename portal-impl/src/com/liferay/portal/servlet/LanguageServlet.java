@@ -51,7 +51,7 @@ public class LanguageServlet extends HttpServlet {
 		}
 
 		if (Validator.isNotNull(path) && path.startsWith(StringPool.SLASH)) {
-			path = path.substring(1, path.length());
+			path = path.substring(1);
 		}
 
 		String[] pathArray = StringUtil.split(path, CharPool.SLASH);

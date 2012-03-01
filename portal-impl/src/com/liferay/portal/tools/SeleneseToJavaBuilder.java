@@ -247,8 +247,7 @@ public class SeleneseToJavaBuilder {
 
 			z = testCaseName.lastIndexOf("../", z);
 
-			importClassName += testCaseName.substring(
-				z + 2, testCaseName.length());
+			importClassName += testCaseName.substring(z + 2);
 
 			count = StringUtil.count(fileName, "/") - 2;
 

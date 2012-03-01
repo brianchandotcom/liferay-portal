@@ -83,7 +83,7 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer{
 		}
 
 		/*if (friendlyURL.startsWith(StringPool.DASH)) {
-			friendlyURL = friendlyURL.substring(1, friendlyURL.length());
+			friendlyURL = friendlyURL.substring(1);
 		}
 
 		if (friendlyURL.endsWith(StringPool.DASH)) {

@@ -72,7 +72,7 @@ public class CompanyWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 			String name = group.getFriendlyURL();
 
-			name = name.substring(1, name.length());
+			name = name.substring(1);
 
 			resources.add(new BaseResourceImpl(parentPath, name, name));
 		}

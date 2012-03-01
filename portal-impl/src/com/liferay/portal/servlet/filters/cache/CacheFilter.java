@@ -160,7 +160,7 @@ public class CacheFilter extends BasePortalFilter {
 		}
 		else {
 			if (pathInfo.length() > 1) {
-				friendlyURL = pathInfo.substring(0, pathInfo.length());
+				friendlyURL = pathInfo.substring(0);
 			}
 		}
 
@@ -211,7 +211,7 @@ public class CacheFilter extends BasePortalFilter {
 		friendlyURL = null;
 
 		if ((pos != -1) && ((pos + 1) != pathInfo.length())) {
-			friendlyURL = pathInfo.substring(pos, pathInfo.length());
+			friendlyURL = pathInfo.substring(pos);
 		}
 
 		if (Validator.isNull(friendlyURL)) {

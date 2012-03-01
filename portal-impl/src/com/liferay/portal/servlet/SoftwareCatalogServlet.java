@@ -185,8 +185,7 @@ public class SoftwareCatalogServlet extends HttpServlet {
 			String name = enu.nextElement();
 
 			if (name.startsWith(prefix)) {
-				String settingName = name.substring(
-					prefix.length(), name.length());
+				String settingName = name.substring(prefix.length());
 
 				String value = ParamUtil.getString(request, name);
 

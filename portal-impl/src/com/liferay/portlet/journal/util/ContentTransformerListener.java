@@ -152,8 +152,7 @@ public class ContentTransformerListener extends BaseTransformerListener {
 
 					if (pos != -1) {
 						String articleId = text.substring(0, pos);
-						String elementName = text.substring(
-							pos + 1, text.length());
+						String elementName = text.substring(pos + 1);
 
 						JournalArticle article =
 							JournalArticleLocalServiceUtil.getArticle(

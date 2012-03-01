@@ -446,8 +446,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 			pos = fullFileName.lastIndexOf(CharPool.BACK_SLASH);
 		}
 
-		String shortFileName = fullFileName.substring(
-			pos + 1, fullFileName.length());
+		String shortFileName = fullFileName.substring(pos + 1);
 
 		return shortFileName;
 	}

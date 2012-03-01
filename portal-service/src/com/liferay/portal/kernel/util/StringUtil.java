@@ -361,7 +361,7 @@ public class StringUtil {
 			return false;
 		}
 
-		String temp = s.substring(s.length() - end.length(), s.length());
+		String temp = s.substring(s.length() - end.length());
 
 		if (temp.equalsIgnoreCase(end)) {
 			return true;

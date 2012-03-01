@@ -68,7 +68,7 @@ public class LiferayFileItem extends DiskFileItem implements FileItem {
 			return _fileName;
 		}
 		else {
-			return _fileName.substring(pos + 1, _fileName.length());
+			return _fileName.substring(pos + 1);
 		}
 	}
 

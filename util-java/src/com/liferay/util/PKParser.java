@@ -29,7 +29,7 @@ public class PKParser {
 
 	public PKParser(String pk) {
 		if (pk.startsWith(StringPool.OPEN_CURLY_BRACE)) {
-			pk = pk.substring(1, pk.length());
+			pk = pk.substring(1);
 		}
 
 		if (pk.endsWith(StringPool.CLOSE_CURLY_BRACE)) {

@@ -28,7 +28,7 @@
 
 	<%
 	String nodeId = ParamUtil.getString(request, "nodeId");
-	String title = ParamUtil.getString(request, "title");
+	String title = HtmlUtil.escape(ParamUtil.getString(request, "title"));
 
 	WikiNode node = null;
 

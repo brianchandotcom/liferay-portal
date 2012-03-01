@@ -821,7 +821,7 @@ public class EditArticleAction extends PortletAction {
 
 		JournalContentSearchLocalServiceUtil.updateContentSearch(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			portletResource, articleId);
+			portletResource, articleId, true);
 	}
 
 }

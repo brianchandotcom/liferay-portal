@@ -105,7 +105,7 @@ portletURL.setParameter("typeSelection", typeSelection);
 
 			// User name
 
-			row.addText(HtmlUtil.escape(PortalUtil.getUserName(entry.getUserId(), entry.getUserName())), rowHREF);
+			row.addText(HtmlUtil.escape(PortalUtil.getUserName(assetRenderer.getUserId(), StringPool.BLANK)), rowHREF);
 
 			// Modified date
 

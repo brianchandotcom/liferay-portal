@@ -139,7 +139,7 @@ if (assetEntryIndex % 2 == 0) {
 			value = String.valueOf(assetEntry.getPriority());
 		}
 		else if (metadataFields[m].equals("author")) {
-			value = HtmlUtil.escape(PortalUtil.getUserName(assetEntry.getUserId(), assetEntry.getUserName()));
+			value = HtmlUtil.escape(PortalUtil.getUserName(assetRenderer.getUserId(), StringPool.BLANK));
 		}
 		else if (metadataFields[m].equals("view-count")) {
 			value = String.valueOf(assetEntry.getViewCount());

@@ -46,7 +46,7 @@ for (int j = 0; j < metadataFields.length; j++) {
 		value = LanguageUtil.get(pageContext, "priority") + StringPool.COLON + StringPool.SPACE + assetEntry.getPriority();
 	}
 	else if (metadataFields[j].equals("author")) {
-		value = LanguageUtil.get(pageContext, "by") + StringPool.SPACE + HtmlUtil.escape(PortalUtil.getUserName(assetEntry.getUserId(), assetEntry.getUserName()));
+		value = LanguageUtil.get(pageContext, "by") + StringPool.SPACE + HtmlUtil.escape(PortalUtil.getUserName(assetRenderer.getUserId(), StringPool.BLANK));
 	}
 	else if (metadataFields[j].equals("view-count")) {
 		int viewCount = assetEntry.getViewCount();

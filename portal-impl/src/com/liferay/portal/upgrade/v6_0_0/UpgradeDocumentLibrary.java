@@ -54,6 +54,28 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 		Connection con = null;
 		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getConnection();
+
+			ps = con.prepareStatement(
+				"select fileVersionId from DLFileVersion where folderId = ? " +
+					"and name = ? and version = ?");
+
+			ps.setLong(1, folderId);
+			ps.setString(2, name);
+			ps.setDouble(3, version);
+
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				return;
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
 
 		try {
 			con = DataAccess.getConnection();

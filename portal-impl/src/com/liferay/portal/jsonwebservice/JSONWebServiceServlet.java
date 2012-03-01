@@ -122,13 +122,14 @@ public class JSONWebServiceServlet extends JSONServlet {
 				queryString = StringPool.BLANK;
 			}
 			else {
-				queryString += '&';
+				queryString += StringPool.AMPERSAND;
 			}
+
 			String servletContextPath = ContextPathUtil.getContextPath(
-					servletContext);
+				servletContext);
 
 			queryString +=
-					"contextPath=" + HttpUtil.encodeURL(servletContextPath);
+				"contextPath=" + HttpUtil.encodeURL(servletContextPath);
 
 			apiPath = serverURL + apiPath + StringPool.QUESTION + queryString;
 

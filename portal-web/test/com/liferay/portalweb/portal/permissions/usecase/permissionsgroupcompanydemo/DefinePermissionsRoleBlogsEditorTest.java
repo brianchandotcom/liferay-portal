@@ -32,7 +32,7 @@ public class DefinePermissionsRoleBlogsEditorTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("//li[@id='_145_mySites']/a/span")) {
+				if (selenium.isVisible("//li[@id='_145_mySites']/a/span")) {
 					break;
 				}
 			}
@@ -42,10 +42,7 @@ public class DefinePermissionsRoleBlogsEditorTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//li[@id='_145_mySites']/a/span",
-			RuntimeVariables.replace("Go To"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -53,7 +50,7 @@ public class DefinePermissionsRoleBlogsEditorTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}

@@ -31,7 +31,7 @@ public class TearDownPermissionsSiteMemberTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@id='dockbar']/ul[2]/li/a/span")) {
+				if (selenium.isVisible("//li[@id='_145_mySites']/a/span")) {
 					break;
 				}
 			}
@@ -41,7 +41,7 @@ public class TearDownPermissionsSiteMemberTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.mouseOver("//div[@id='dockbar']/ul[2]/li/a/span");
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -49,7 +49,7 @@ public class TearDownPermissionsSiteMemberTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}

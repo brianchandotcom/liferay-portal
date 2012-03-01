@@ -36,28 +36,6 @@ public class TearDownUserTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent(
-									"//li[@id='_145_mySites']/a/span")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.clickAt("//li[@id='_145_mySites']/a/span",
-					RuntimeVariables.replace("Go To"));
-				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
 						if (selenium.isElementPresent("link=Control Panel")) {
 							break;
 						}

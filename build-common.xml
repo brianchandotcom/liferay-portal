@@ -488,13 +488,23 @@ Please set the environment variable ANT_OPTS to the recommended value of
 	</target>
 
 	<target name="test-class" depends="compile,instrument-test-coverage,compile-test">
-		<resourcecount property="integration.test.count">
-			<fileset id="integration.test.class" dir="test-classes/integration" includes="**/${class}.class" />
-		</resourcecount>
+		<if>
+			<available file="test/integration" type="dir" />
+			<then>
+				<resourcecount property="integration.test.count">
+					<fileset id="integration.test.class" dir="test-classes/integration" includes="**/${class}.class" />
+				</resourcecount>
+			</then>
+		</if>
 
-		<resourcecount property="unit.test.count">
-			<fileset id="unit.test.class" dir="test-classes/unit" includes="**/${class}.class" />
-		</resourcecount>
+		<if>
+			<available file="test/unit" type="dir" />
+			<then>
+				<resourcecount property="unit.test.count">
+					<fileset id="unit.test.class" dir="test-classes/unit" includes="**/${class}.class" />
+				</resourcecount>
+			</then>
+		</if>
 
 		<if>
 			<equals arg1="${integration.test.count}" arg2="1" />

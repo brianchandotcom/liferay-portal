@@ -104,7 +104,7 @@ if (question != null) {
 
 boolean showEditPollIcon = (question != null) && PollsQuestionPermission.contains(permissionChecker, question, ActionKeys.UPDATE);
 boolean showSelectPollIcon = PortletPermissionUtil.contains(permissionChecker, layout, portletDisplay.getId(), ActionKeys.CONFIGURATION);
-boolean showAddPollIcon = PortletPermissionUtil.contains(permissionChecker, layout, portletDisplay.getId(), ActionKeys.CONFIGURATION) && PollsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_QUESTION);
+boolean showAddPollIcon = showSelectPollIcon && PollsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_QUESTION);
 boolean showIconsActions = themeDisplay.isSignedIn() && (showEditPollIcon || showSelectPollIcon || showAddPollIcon);
 %>
 

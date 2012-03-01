@@ -100,6 +100,8 @@ List<Group> mySites = user.getMySites(true, max);
 				defaultLayout = LayoutLocalServiceUtil.getLayout(mySite.getDefaultPublicPlid());
 			}
 
+			boolean hasViewPermission = LayoutPermissionUtil.contains(permissionChecker, defaultLayout, true, ActionKeys.VIEW);
+
 			if (mySite.getPublicLayoutsPageCount() == 0) {
 				if (mySite.isRegularSite()) {
 					showPublicSite = PropsValues.MY_SITES_SHOW_PUBLIC_SITES_WITH_NO_LAYOUTS;
@@ -112,7 +114,7 @@ List<Group> mySites = user.getMySites(true, max);
 					}
 				}
 			}
-			else if ((defaultLayout != null ) && !LayoutPermissionUtil.contains(permissionChecker, defaultLayout, true, ActionKeys.VIEW)) {
+			else if ((defaultLayout != null ) && !hasViewPermission) {
 				showPublicSite = false;
 			}
 
@@ -134,7 +136,7 @@ List<Group> mySites = user.getMySites(true, max);
 					}
 				}
 			}
-			else if ((defaultLayout != null ) && !LayoutPermissionUtil.contains(permissionChecker, defaultLayout, true, ActionKeys.VIEW)) {
+			else if ((defaultLayout != null ) && !hasViewPermission) {
 				showPrivateSite = false;
 			}
 		%>
@@ -213,11 +215,13 @@ List<Group> mySites = user.getMySites(true, max);
 
 									stagingGroupId = stagingGroup.getGroupId();
 
-									if ((mySite.getPublicLayoutsPageCount() == 0) && (stagingGroup.getPublicLayoutsPageCount() > 0) && GroupPermissionUtil.contains(permissionChecker, mySite.getGroupId(), ActionKeys.VIEW_STAGING)) {
+									boolean hasViewStagingPermission = GroupPermissionUtil.contains(permissionChecker, mySite.getGroupId(), ActionKeys.VIEW_STAGING);
+
+									if ((mySite.getPublicLayoutsPageCount() == 0) && (stagingGroup.getPublicLayoutsPageCount() > 0) && hasViewStagingPermission) {
 										showPublicSiteStaging = true;
 									}
 
-									if ((mySite.getPrivateLayoutsPageCount() == 0) && (stagingGroup.getPrivateLayoutsPageCount() > 0) && GroupPermissionUtil.contains(permissionChecker, mySite.getGroupId(), ActionKeys.VIEW_STAGING)) {
+									if ((mySite.getPrivateLayoutsPageCount() == 0) && (stagingGroup.getPrivateLayoutsPageCount() > 0) && hasViewStagingPermission) {
 										showPrivateSiteStaging = true;
 									}
 								}

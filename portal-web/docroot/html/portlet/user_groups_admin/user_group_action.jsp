@@ -40,7 +40,11 @@ UserGroup userGroup = (UserGroup)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= UserGroupPermissionUtil.contains(permissionChecker, userGroup.getUserGroupId(), ActionKeys.PERMISSIONS) %>">
+	<%
+	boolean showPermissionsButton = UserGroupPermissionUtil.contains(permissionChecker, userGroup.getUserGroupId(), ActionKeys.PERMISSIONS);
+	%>
+
+	<c:if test="<%= showPermissionsButton %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= UserGroup.class.getName() %>"
 			modelResourceDescription="<%= userGroup.getName() %>"
@@ -54,7 +58,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= UserGroupPermissionUtil.contains(permissionChecker, userGroup.getUserGroupId(), ActionKeys.PERMISSIONS) %>">
+	<c:if test="<%= showPermissionsButton %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= Group.class.getName() %>"
 			modelResourceDescription='<%= LanguageUtil.format(pageContext, "site-for-user-group-x", userGroup.getName()) %>'
@@ -87,7 +91,11 @@ UserGroup userGroup = (UserGroup)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= (userGroupGroup.getPublicLayoutsPageCount() > 0) && GroupPermissionUtil.contains(permissionChecker, userGroupGroup.getGroupId(), ActionKeys.VIEW) %>">
+	<%
+	boolean showViewButton = GroupPermissionUtil.contains(permissionChecker, userGroupGroup.getGroupId(), ActionKeys.VIEW);
+	%>
+
+	<c:if test="<%= (userGroupGroup.getPublicLayoutsPageCount() > 0) && showViewButton %>">
 		<portlet:actionURL var="viewPublicPagesURL">
 			<portlet:param name="struts_action" value="/sites_admin/page" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -103,7 +111,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= (userGroupGroup.getPrivateLayoutsPageCount() > 0) && GroupPermissionUtil.contains(permissionChecker, userGroupGroup.getGroupId(), ActionKeys.VIEW) %>">
+	<c:if test="<%= (userGroupGroup.getPrivateLayoutsPageCount() > 0) && showViewButton %>">
 		<portlet:actionURL var="viewPrivatePagesURL">
 			<portlet:param name="struts_action" value="/sites_admin/page" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

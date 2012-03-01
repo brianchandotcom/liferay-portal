@@ -23,10 +23,12 @@ Group group = (Group)row.getObject();
 
 boolean organizationUser = GetterUtil.getBoolean(row.getParameter("organizationUser"));
 boolean userGroupUser = GetterUtil.getBoolean(row.getParameter("userGroupUser"));
+
+boolean hasUpdatePermission = GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.UPDATE);
 %>
 
 <liferay-ui:icon-menu>
-	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.UPDATE) %>">
+	<c:if test="<%= hasUpdatePermission %>">
 		<liferay-portlet:renderURL doAsGroupId="<%= group.getGroupId() %>" portletName="<%= PortletKeys.SITE_SETTINGS %>" var="editURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 		</liferay-portlet:renderURL>
@@ -109,7 +111,7 @@ boolean userGroupUser = GetterUtil.getBoolean(row.getParameter("userGroupUser"))
 		/>
 	</c:if>
 
-	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.UPDATE) %>">
+	<c:if test="<%= hasUpdatePermission %>">
 		<portlet:actionURL var="activateURL">
 			<portlet:param name="struts_action" value="/sites_admin/edit_site" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= group.isActive() ? Constants.DEACTIVATE : Constants.RESTORE %>" />

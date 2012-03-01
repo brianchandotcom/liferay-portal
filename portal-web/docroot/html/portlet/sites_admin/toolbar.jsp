@@ -41,8 +41,12 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 			<portlet:param name="redirect" value="<%= viewSitesURL %>" />
 		</liferay-portlet:renderURL>
 
+		<%
+		boolean hasAddLayoutSetPrototypePermission = PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_LAYOUT_SET_PROTOTYPE);
+		%>
+
 		<c:choose>
-			<c:when test="<%= layoutSetPrototypes.isEmpty() && !PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_LAYOUT_SET_PROTOTYPE) %>">
+			<c:when test="<%= layoutSetPrototypes.isEmpty() && !hasAddLayoutSetPrototypePermission %>">
 				<span class="lfr-toolbar-button add-button <%= toolbarItem.equals("add") ? "current" : StringPool.BLANK %>">
 					<a href="<%= addSiteURL %>"><liferay-ui:message key="add" /></a>
 				</span>
@@ -79,7 +83,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 					}
 					%>
 
-					<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_LAYOUT_SET_PROTOTYPE) %>">
+					<c:if test="<%= hasAddLayoutSetPrototypePermission %>">
 						<liferay-portlet:renderURL varImpl="manageSiteTemplateURL" portletName="<%= PortletKeys.LAYOUT_SET_PROTOTYPE %>">
 							<portlet:param name="struts_action" value="/layout_set_prototypes/view" />
 							<portlet:param name="redirect" value="<%= viewSitesURL %>" />

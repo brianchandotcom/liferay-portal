@@ -647,7 +647,6 @@
 				Liferay.Util.openWindow(
 					{
 						cache: false,
-						id: namespacedId + 'configurationIframeDialog',
 						dialog: {
 							align: Util.Window.ALIGN_CENTER,
 							after: {
@@ -661,6 +660,7 @@
 							id: namespacedId + 'configurationIframe',
 							uri: configurationURL
 						},
+						id: namespacedId + 'configurationIframeDialog',
 						title: titleHtml + ' - ' + Liferay.Language.get('configuration'),
 						uri: configurationURL
 					}

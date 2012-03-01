@@ -360,7 +360,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 			newenvironment="true"
 		>
 			<jvmarg value="-Xmx128m" />
-			<arg line="--limit ${limit} --init ${init}" />
+			<arg line="--limit ${limit} --init ${init} --update ${update}" />
 		</java>
 	</target>
 

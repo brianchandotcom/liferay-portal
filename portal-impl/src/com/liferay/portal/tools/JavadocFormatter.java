@@ -83,14 +83,21 @@ public class JavadocFormatter {
 			"limit");
 		CmdLineParser.Option initOption = cmdLineParser.addStringOption(
 			"init");
+		CmdLineParser.Option updateOption = cmdLineParser.addStringOption(
+			"update");
 
 		cmdLineParser.parse(args);
 
 		String limit = (String)cmdLineParser.getOptionValue(limitOption);
 		String init = (String)cmdLineParser.getOptionValue(initOption);
+		String update = (String)cmdLineParser.getOptionValue(updateOption);
 
 		if (Validator.isNotNull(init) && !init.startsWith("$")) {
 			_initializeMissingJavadocs = GetterUtil.getBoolean(init);
+		}
+
+		if (Validator.isNotNull(update) && !update.startsWith("$")) {
+			_updateJavadocs = GetterUtil.getBoolean(update);
 		}
 
 		DirectoryScanner ds = new DirectoryScanner();
@@ -255,6 +262,15 @@ public class JavadocFormatter {
 		if (_initializeMissingJavadocs) {
 			maxTagNameLengthTags.addAll(allTagNames);
 		}
+		else if (_updateJavadocs) {
+			if (!commonTagNamesWithComments.isEmpty()) {
+				maxTagNameLengthTags.addAll(allTagNames);
+			}
+			else {
+				maxTagNameLengthTags.addAll(commonTagNamesWithComments);
+				maxTagNameLengthTags.addAll(customTagNames);
+			}
+		}
 		else {
 			maxTagNameLengthTags.addAll(commonTagNamesWithComments);
 			maxTagNameLengthTags.addAll(customTagNames);
@@ -311,6 +327,35 @@ public class JavadocFormatter {
 							tagNameIndent);
 
 						sb.append(comment);
+					}
+					else if (_updateJavadocs && publicAccess) {
+						if (!tagName.equals("param") &&
+							!tagName.equals("return") &&
+							!tagName.equals("throws")) {
+
+							// Write out custom tag name
+
+							comment = _assembleTagComment(
+								tagName, elementName, comment, indent,
+								tagNameIndent);
+
+							sb.append(comment);
+						}
+						else if (!commonTagNamesWithComments.isEmpty()) {
+
+							// Write out all tags
+
+							comment = _assembleTagComment(
+								tagName, elementName, comment, indent,
+								tagNameIndent);
+
+							sb.append(comment);
+						}
+						else {
+
+							// Skip empty common tag name
+
+						}
 					}
 					else {
 						if (!tagName.equals("param") &&
@@ -1457,5 +1502,6 @@ public class JavadocFormatter {
 	private boolean _initializeMissingJavadocs;
 	private Map<String, Tuple> _javadocxXmlTuples =
 		new HashMap<String, Tuple>();
+	private boolean _updateJavadocs;
 
 }

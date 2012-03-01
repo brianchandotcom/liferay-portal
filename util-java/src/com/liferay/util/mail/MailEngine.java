@@ -117,7 +117,7 @@ public class MailEngine {
 			Message message = new MimeMessage(
 				session, new UnsyncByteArrayInputStream(bytes));
 
-			_send(session, message, null, 0);
+			_send(session, message, null, _DEFAULT_MAIL_BATCH_SIZE);
 		}
 		catch (Exception e) {
 			throw new MailEngineException(e);
@@ -510,7 +510,8 @@ public class MailEngine {
 
 				transport.connect(smtpHost, smtpPort, user, password);
 
-				int currentBatch = 0;
+				int curBatch = 0;
+
 				Address[] portion = null;
 				Address[] recipientAddresses = null;
 
@@ -522,33 +523,33 @@ public class MailEngine {
 				}
 
 				portion = _getNextBatch(
-					recipientAddresses, currentBatch, batchSize);
+					recipientAddresses, curBatch, batchSize);
 
 				while (Validator.isNotNull(portion)) {
 					transport.sendMessage(message, portion);
 
-					currentBatch++;
+					curBatch++;
 
 					portion = _getNextBatch(
-						recipientAddresses, currentBatch, batchSize);
+						recipientAddresses, curBatch, batchSize);
 				}
 
 				transport.close();
 			}
 			else {
 				if (Validator.isNotNull(bulkAddresses)) {
+					int curBatch = 0;
 
-					int currentBatch = 0;
 					Address[] portion = _getNextBatch(
-						bulkAddresses, currentBatch, batchSize);
+						bulkAddresses, curBatch, batchSize);
 
 					while (Validator.isNotNull(portion)) {
 						Transport.send(message, portion);
 
-						currentBatch++;
+						curBatch++;
 
 						portion = _getNextBatch(
-							bulkAddresses, currentBatch, batchSize);
+							bulkAddresses, curBatch, batchSize);
 					}
 				}
 				else {

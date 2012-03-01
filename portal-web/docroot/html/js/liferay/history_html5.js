@@ -56,7 +56,7 @@ AUI.add(
 
 					var uriData = [
 						LOCATION.search.substr(1),
-						LOCATION.hash.substr(1)
+						LOCATION.hash
 					];
 
 					var hash = uriData[1];

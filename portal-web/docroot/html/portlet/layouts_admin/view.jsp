@@ -218,10 +218,18 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 			function(event) {
 				event.preventDefault();
 
+				var prefix = '#_LFR_FN_<portlet:namespace />';
+				var historyKey = location.hash.replace(prefix, '');
+
+				if (location.hash.indexOf(prefix) == -1) {
+					location.hash = '';
+					historyKey = '';
+				}
+
 				var requestUri = A.Lang.sub(
 					event.currentTarget.get('href'),
 					{
-						historyKey: location.hash.replace('#_LFR_FN_<portlet:namespace />', '')
+						historyKey: historyKey
 					}
 				);
 

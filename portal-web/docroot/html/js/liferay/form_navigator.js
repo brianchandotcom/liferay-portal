@@ -160,13 +160,19 @@ AUI.add(
 				if (id) {
 					id = id.charAt(0) != '#' ? '#' + id : id;
 
-					var li = currentNavItem || instance._navigation.one('[href$=' + id + ']').get('parentNode');
+					if (!currentNavItem) {
+						var link = instance._navigation.one('[href$=' + id + ']');
+
+						if (link) {
+							currentNavItem = link.get('parentNode');	
+						}
+					}
 
 					id = id.split('#');
 
 					var namespacedId = id[1];
 
-					if (namespacedId) {
+					if (currentNavItem && namespacedId) {
 						Liferay.fire('formNavigator:reveal' + namespacedId);
 
 						var section = A.one('#' + namespacedId);
@@ -176,7 +182,7 @@ AUI.add(
 							selected.removeClass(CSS_SELECTED);
 						}
 
-						li.addClass(CSS_SELECTED);
+						currentNavItem.addClass(CSS_SELECTED);
 
 						instance._sections.removeClass(CSS_SELECTED).addClass(CSS_HIDDEN);
 

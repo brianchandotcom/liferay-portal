@@ -97,10 +97,10 @@ public class JSPWikiEngine implements WikiEngine {
 				}
 
 				if (title.endsWith("]]")) {
-					title = title.substring(title.length() - 2);
+					title = title.substring(0, title.length() - 2);
 				}
-				else if (title.startsWith("[")) {
-					title = title.substring(title.length() - 1);
+				else if (title.endsWith("]")) {
+					title = title.substring(0, title.length() - 1);
 				}
 
 				Boolean existsObj = links.get(title);

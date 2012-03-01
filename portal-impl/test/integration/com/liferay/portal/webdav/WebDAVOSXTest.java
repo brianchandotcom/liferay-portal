@@ -351,7 +351,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 		WebDAVOSXTest._OFFICE_TEST_FILE_PREFIX + "OSX_Test.docx";
 
 	private static final String _OFFICE_TEST_FILE_PREFIX =
-		"portal-impl/test/com/liferay/portal/webdav/dependencies/";
+		"portal-impl/test/integration/com/liferay/portal/webdav/dependencies/";
 
 	private static final String _OFFICE_TEST_META_DOCX =
 		_OFFICE_TEST_FILE_PREFIX + "OSX_Test_Meta.docx";

@@ -660,6 +660,7 @@
 							id: namespacedId + 'configurationIframe',
 							uri: configurationURL
 						},
+						id: namespacedId + 'configurationIframeDialog',
 						title: titleHtml + ' - ' + Liferay.Language.get('configuration'),
 						uri: configurationURL
 					}

@@ -563,15 +563,11 @@ public class JavadocFormatter {
 		String indentAndTagName = indent + StringPool.AT + tagName;
 
 		if (Validator.isNotNull(elementName)) {
-
-			if (Validator.isNotNull(elementName)) {
-
-				if (Validator.isNotNull(comment)) {
-					comment = elementName  + StringPool.SPACE + comment;
-				}
-				else {
-					comment = elementName;
-				}
+			if (Validator.isNotNull(comment)) {
+				comment = elementName  + StringPool.SPACE + comment;
+			}
+			else {
+				comment = elementName;
 			}
 
 			// <name indent> elementName [comment]

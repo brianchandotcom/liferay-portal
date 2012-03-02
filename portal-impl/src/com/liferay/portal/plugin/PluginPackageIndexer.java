@@ -198,7 +198,8 @@ public class PluginPackageIndexer extends BaseIndexer {
 
 		Document document = getDocument(pluginPackage);
 
-		SearchEngineUtil.updateDocument(CompanyConstants.SYSTEM, document);
+		SearchEngineUtil.updateDocument(
+			getSearchEngineId(), CompanyConstants.SYSTEM, document);
 	}
 
 	@Override
@@ -208,7 +209,7 @@ public class PluginPackageIndexer extends BaseIndexer {
 	@Override
 	protected void doReindex(String[] ids) throws Exception {
 		SearchEngineUtil.deletePortletDocuments(
-			CompanyConstants.SYSTEM, PORTLET_ID);
+			getSearchEngineId(), CompanyConstants.SYSTEM, PORTLET_ID);
 
 		Collection<Document> documents = new ArrayList<Document>();
 
@@ -220,7 +221,8 @@ public class PluginPackageIndexer extends BaseIndexer {
 			documents.add(document);
 		}
 
-		SearchEngineUtil.updateDocuments(CompanyConstants.SYSTEM, documents);
+		SearchEngineUtil.updateDocuments(
+			getSearchEngineId(), CompanyConstants.SYSTEM, documents);
 	}
 
 	@Override

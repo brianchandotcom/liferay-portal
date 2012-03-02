@@ -142,7 +142,8 @@ public class BookmarksIndexer extends BaseIndexer {
 
 		Document document = getDocument(entry);
 
-		SearchEngineUtil.updateDocument(entry.getCompanyId(), document);
+		SearchEngineUtil.updateDocument(
+			getSearchEngineId(), entry.getCompanyId(), document);
 	}
 
 	@Override
@@ -186,7 +187,8 @@ public class BookmarksIndexer extends BaseIndexer {
 			documents.add(document);
 		}
 
-		SearchEngineUtil.updateDocuments(companyId, documents);
+		SearchEngineUtil.updateDocuments(
+			getSearchEngineId(), companyId, documents);
 	}
 
 	protected void reindexFolders(long companyId) throws Exception {

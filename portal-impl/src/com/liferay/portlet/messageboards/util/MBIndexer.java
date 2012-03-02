@@ -154,7 +154,7 @@ public class MBIndexer extends BaseIndexer {
 	protected void doDelete(Object obj) throws Exception {
 		SearchContext searchContext = new SearchContext();
 
-		searchContext.setSearchEngineId(SearchEngineUtil.SYSTEM_ENGINE_ID);
+		searchContext.setSearchEngineId(getSearchEngineId());
 
 		if (obj instanceof MBCategory) {
 			MBCategory category = (MBCategory)obj;
@@ -168,14 +168,15 @@ public class MBIndexer extends BaseIndexer {
 				"categoryId", category.getCategoryId());
 
 			Hits hits = SearchEngineUtil.search(
-				category.getCompanyId(), booleanQuery, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+				getSearchEngineId(), category.getCompanyId(), booleanQuery,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 			for (int i = 0; i < hits.getLength(); i++) {
 				Document document = hits.doc(i);
 
 				SearchEngineUtil.deleteDocument(
-					category.getCompanyId(), document.get(Field.UID));
+					getSearchEngineId(), category.getCompanyId(),
+					document.get(Field.UID));
 			}
 		}
 		else if (obj instanceof MBMessage) {
@@ -186,7 +187,8 @@ public class MBIndexer extends BaseIndexer {
 			document.addUID(PORTLET_ID, message.getMessageId());
 
 			SearchEngineUtil.deleteDocument(
-				message.getCompanyId(), document.get(Field.UID));
+				getSearchEngineId(), message.getCompanyId(),
+				document.get(Field.UID));
 		}
 		else if (obj instanceof MBThread) {
 			MBThread thread = (MBThread)obj;
@@ -202,14 +204,15 @@ public class MBIndexer extends BaseIndexer {
 			booleanQuery.addRequiredTerm("threadId", thread.getThreadId());
 
 			Hits hits = SearchEngineUtil.search(
-				message.getCompanyId(), booleanQuery, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+				getSearchEngineId(), message.getCompanyId(), booleanQuery,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 			for (int i = 0; i < hits.getLength(); i++) {
 				Document document = hits.doc(i);
 
 				SearchEngineUtil.deleteDocument(
-					message.getCompanyId(), document.get(Field.UID));
+					getSearchEngineId(), message.getCompanyId(),
+					document.get(Field.UID));
 			}
 		}
 	}
@@ -279,7 +282,8 @@ public class MBIndexer extends BaseIndexer {
 
 		Document document = getDocument(message);
 
-		SearchEngineUtil.updateDocument(message.getCompanyId(), document);
+		SearchEngineUtil.updateDocument(
+			getSearchEngineId(), message.getCompanyId(), document);
 	}
 
 	@Override
@@ -396,7 +400,8 @@ public class MBIndexer extends BaseIndexer {
 			documents.add(document);
 		}
 
-		SearchEngineUtil.updateDocuments(companyId, documents);
+		SearchEngineUtil.updateDocuments(
+			getSearchEngineId(), companyId, documents);
 	}
 
 	protected void reindexRoot(long companyId) throws Exception {

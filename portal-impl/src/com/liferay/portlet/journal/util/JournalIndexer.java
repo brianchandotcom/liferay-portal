@@ -278,12 +278,14 @@ public class JournalIndexer extends BaseIndexer {
 				  JournalArticleConstants.VERSION_DEFAULT))) {
 
 			SearchEngineUtil.deleteDocument(
-				article.getCompanyId(), document.get(Field.UID));
+				getSearchEngineId(), article.getCompanyId(),
+				document.get(Field.UID));
 
 			return;
 		}
 
-		SearchEngineUtil.updateDocument(article.getCompanyId(), document);
+		SearchEngineUtil.updateDocument(
+			getSearchEngineId(), article.getCompanyId(), document);
 	}
 
 	@Override
@@ -526,7 +528,8 @@ public class JournalIndexer extends BaseIndexer {
 			documents.add(document);
 		}
 
-		SearchEngineUtil.updateDocuments(companyId, documents);
+		SearchEngineUtil.updateDocuments(
+			getSearchEngineId(), companyId, documents);
 	}
 
 	private static final String _FIELD_NAMESPACE = "web_content";

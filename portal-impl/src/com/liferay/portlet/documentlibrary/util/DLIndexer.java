@@ -268,7 +268,8 @@ public class DLIndexer extends BaseIndexer {
 		document.addUID(PORTLET_ID, dlFileEntry.getFileEntryId());
 
 		SearchEngineUtil.deleteDocument(
-			dlFileEntry.getCompanyId(), document.get(Field.UID));
+			getSearchEngineId(), dlFileEntry.getCompanyId(),
+			document.get(Field.UID));
 	}
 
 	@Override
@@ -467,7 +468,7 @@ public class DLIndexer extends BaseIndexer {
 
 		if (document != null) {
 			SearchEngineUtil.updateDocument(
-				dlFileEntry.getCompanyId(), document);
+				getSearchEngineId(), dlFileEntry.getCompanyId(), document);
 		}
 	}
 
@@ -541,7 +542,8 @@ public class DLIndexer extends BaseIndexer {
 			}
 		}
 
-		SearchEngineUtil.updateDocuments(companyId, documents);
+		SearchEngineUtil.updateDocuments(
+			getSearchEngineId(), companyId, documents);
 	}
 
 	protected void reindexFolders(long companyId) throws Exception {

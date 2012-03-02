@@ -22,13 +22,19 @@ import com.liferay.portal.kernel.cluster.Priority;
  */
 public interface SearchEngine {
 
+	public BooleanClauseFactory getBooleanClauseFactory();
+
+	public BooleanQueryFactory getBooleanQueryFactory();
+
 	public Priority getClusteredWritePriority();
 
 	public IndexSearcher getIndexSearcher();
 
 	public IndexWriter getIndexWriter();
 
-	public String getName();
+	public TermQueryFactory getTermQueryFactory();
+
+	public TermRangeQueryFactory getTermRangeQueryFactory();
 
 	public String getVendor();
 

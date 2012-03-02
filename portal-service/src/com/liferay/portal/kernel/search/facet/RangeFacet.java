@@ -100,7 +100,8 @@ public class RangeFacet extends BaseFacet {
 			searchContext, fieldName, startString, endString, true, true);
 
 		return BooleanClauseFactoryUtil.create(
-			facetTermRangeQuery, BooleanClauseOccur.MUST.getName());
+			searchContext, facetTermRangeQuery,
+			BooleanClauseOccur.MUST.getName());
 	}
 
 }

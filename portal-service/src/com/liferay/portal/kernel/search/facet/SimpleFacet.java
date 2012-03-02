@@ -59,7 +59,8 @@ public class SimpleFacet extends BaseFacet {
 		}
 
 		return BooleanClauseFactoryUtil.create(
-			getFieldName(), value, BooleanClauseOccur.MUST.getName());
+			searchContext, getFieldName(), value,
+			BooleanClauseOccur.MUST.getName());
 	}
 
 }

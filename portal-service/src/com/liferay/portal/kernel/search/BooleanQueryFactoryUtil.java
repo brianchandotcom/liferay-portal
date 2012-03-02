@@ -14,13 +14,11 @@
 
 package com.liferay.portal.kernel.search;
 
-import com.liferay.portal.kernel.bean.BeanReference;
-
 /**
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
-public class BooleanQueryFactoryUtil
-	extends BaseQueryFactoryUtil<BooleanQueryFactory> {
+public class BooleanQueryFactoryUtil {
 
 	public static BooleanQuery create(SearchContext searchContext) {
 		return getBooleanQueryFactory(searchContext).create();
@@ -29,10 +27,12 @@ public class BooleanQueryFactoryUtil
 	public static BooleanQueryFactory getBooleanQueryFactory(
 		SearchContext searchContext) {
 
-		return _booleanQueryFactoryUtil.getQueryFactory(searchContext);
-	}
+		String searchEngineId = searchContext.getSearchEngineId();
 
-	@BeanReference(type = BooleanQueryFactoryUtil.class)
-	private static BooleanQueryFactoryUtil _booleanQueryFactoryUtil;
+		SearchEngine searchEngine = SearchEngineUtil.getSearchEngine(
+			searchEngineId);
+
+		return searchEngine.getBooleanQueryFactory();
+	}
 
 }

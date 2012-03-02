@@ -807,6 +807,8 @@ public interface PropsKeys {
 
 	public static final String INDEX_READ_ONLY = "index.read.only";
 
+	public static final String INDEX_SEARCH_ENGINE_ID = "index.search.engine.id";
+
 	public static final String INDEX_SEARCH_HIGHLIGHT_ENABLED = "index.search.highlight.enabled";
 
 	public static final String INDEX_SEARCH_HIGHLIGHT_FRAGMENT_SIZE = "index.search.highlight.fragment.size";

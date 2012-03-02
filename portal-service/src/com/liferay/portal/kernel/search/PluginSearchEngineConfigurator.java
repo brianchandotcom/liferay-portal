@@ -26,6 +26,15 @@ import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 public class PluginSearchEngineConfigurator
 	extends AbstractSearchEngineConfigurator {
 
+	public void setDefaultSearchEngineId(String defaultSearchEngineId) {
+		_defaultSearchEngineId = defaultSearchEngineId;
+	}
+
+	@Override
+	protected String getDefaultSearchEngineId() {
+		return _defaultSearchEngineId;
+	}
+
 	@Override
 	protected IndexSearcher getIndexSearcher() {
 		BeanLocator beanLocator = PortalBeanLocatorUtil.getBeanLocator();
@@ -59,5 +68,7 @@ public class PluginSearchEngineConfigurator
 
 		return classLoader;
 	}
+
+	private String _defaultSearchEngineId;
 
 }

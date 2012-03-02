@@ -109,7 +109,7 @@ public class WikiIndexer extends BaseIndexer {
 	protected void doDelete(Object obj) throws Exception {
 		SearchContext searchContext = new SearchContext();
 
-		searchContext.setSearchEngineId(SearchEngineUtil.SYSTEM_ENGINE_ID);
+		searchContext.setSearchEngineId(getSearchEngineId());
 
 		if (obj instanceof Object[]) {
 			Object[] array = (Object[])obj;
@@ -122,7 +122,8 @@ public class WikiIndexer extends BaseIndexer {
 
 			document.addUID(PORTLET_ID, nodeId, title);
 
-			SearchEngineUtil.deleteDocument(companyId, document.get(Field.UID));
+			SearchEngineUtil.deleteDocument(
+				getSearchEngineId(), companyId, document.get(Field.UID));
 
 		}
 		else if (obj instanceof WikiNode) {
@@ -136,14 +137,15 @@ public class WikiIndexer extends BaseIndexer {
 			booleanQuery.addRequiredTerm("nodeId", node.getNodeId());
 
 			Hits hits = SearchEngineUtil.search(
-				node.getCompanyId(), booleanQuery, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+				getSearchEngineId(), node.getCompanyId(), booleanQuery,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 			for (int i = 0; i < hits.getLength(); i++) {
 				Document document = hits.doc(i);
 
 				SearchEngineUtil.deleteDocument(
-					node.getCompanyId(), document.get(Field.UID));
+					getSearchEngineId(), node.getCompanyId(),
+					document.get(Field.UID));
 			}
 		}
 		else if (obj instanceof WikiPage) {
@@ -154,7 +156,8 @@ public class WikiIndexer extends BaseIndexer {
 			document.addUID(PORTLET_ID, page.getNodeId(), page.getTitle());
 
 			SearchEngineUtil.deleteDocument(
-				page.getCompanyId(), document.get(Field.UID));
+				getSearchEngineId(), page.getCompanyId(),
+				document.get(Field.UID));
 		}
 	}
 
@@ -209,7 +212,8 @@ public class WikiIndexer extends BaseIndexer {
 
 		Document document = getDocument(page);
 
-		SearchEngineUtil.updateDocument(page.getCompanyId(), document);
+		SearchEngineUtil.updateDocument(
+			getSearchEngineId(), page.getCompanyId(), document);
 	}
 
 	@Override
@@ -287,7 +291,8 @@ public class WikiIndexer extends BaseIndexer {
 			documents.add(document);
 		}
 
-		SearchEngineUtil.updateDocuments(companyId, documents);
+		SearchEngineUtil.updateDocuments(
+			getSearchEngineId(), companyId, documents);
 	}
 
 	private static final boolean _PERMISSION_AWARE = true;

@@ -19,26 +19,27 @@ package com.liferay.portal.kernel.search;
  */
 public class BooleanClauseFactoryUtil {
 
-	public static BooleanClause create(Query query, String occur) {
-		return getBooleanClauseFactory().create(query, occur);
+	public static BooleanClause create(
+		SearchContext searchContext, Query query, String occur) {
+
+		return getBooleanClauseFactory(searchContext).create(query, occur);
 	}
 
 	public static BooleanClause create(
-		String field, String value, String occur) {
+		SearchContext searchContext, String field, String value, String occur) {
 
-		return getBooleanClauseFactory().create(field, value, occur);
+		return getBooleanClauseFactory(searchContext).create(field, value, occur);
 	}
 
-	public static BooleanClauseFactory getBooleanClauseFactory() {
-		return _booleanClauseFactory;
+	public static BooleanClauseFactory getBooleanClauseFactory(
+		SearchContext searchContext) {
+
+		String searchEngineId = searchContext.getSearchEngineId();
+
+		SearchEngine searchEngine = SearchEngineUtil.getSearchEngine(
+			searchEngineId);
+
+		return searchEngine.getBooleanClauseFactory();
 	}
-
-	public void setBooleanClauseFactory(
-		BooleanClauseFactory booleanClauseFactory) {
-
-		_booleanClauseFactory = booleanClauseFactory;
-	}
-
-	private static BooleanClauseFactory _booleanClauseFactory;
 
 }

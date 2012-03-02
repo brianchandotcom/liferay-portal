@@ -106,7 +106,8 @@ public class CalIndexer extends BaseIndexer {
 
 		Document document = getDocument(event);
 
-		SearchEngineUtil.updateDocument(event.getCompanyId(), document);
+		SearchEngineUtil.updateDocument(
+			getSearchEngineId(), event.getCompanyId(), document);
 	}
 
 	@Override
@@ -159,7 +160,8 @@ public class CalIndexer extends BaseIndexer {
 			documents.add(document);
 		}
 
-		SearchEngineUtil.updateDocuments(companyId, documents);
+		SearchEngineUtil.updateDocuments(
+			getSearchEngineId(), companyId, documents);
 	}
 
 	private static final boolean _PERMISSION_AWARE = true;

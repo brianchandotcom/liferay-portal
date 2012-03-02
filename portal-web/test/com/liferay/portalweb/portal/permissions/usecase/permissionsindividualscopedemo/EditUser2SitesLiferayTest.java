@@ -93,9 +93,9 @@ public class EditUser2SitesLiferayTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Userfn2"),
+		assertEquals(RuntimeVariables.replace("userfn2"),
 			selenium.getText("//td[2]/a"));
-		assertEquals(RuntimeVariables.replace("Userln2"),
+		assertEquals(RuntimeVariables.replace("userln2"),
 			selenium.getText("//td[3]/a"));
 		assertEquals(RuntimeVariables.replace("usersn2"),
 			selenium.getText("//td[4]/a"));

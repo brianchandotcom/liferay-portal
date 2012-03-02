@@ -45,8 +45,7 @@ public class User_ViewCanDeleteEntrySiteTest extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Test Site Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertTrue(selenium.isElementPresent("link=Delete"));
 		assertEquals(RuntimeVariables.replace("Delete"),
-			selenium.getText("//span/a/span"));
+			selenium.getText("//td[contains(.,'Delete')]/span/a/span"));
 	}
 }

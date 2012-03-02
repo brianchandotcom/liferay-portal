@@ -31,25 +31,6 @@ public class AssignUserScopedRegularRoleTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@id='dockbar']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("//div[@id='dockbar']",
-			RuntimeVariables.replace("Dock Bar"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
 				if (selenium.isElementPresent("link=Control Panel")) {
 					break;
 				}

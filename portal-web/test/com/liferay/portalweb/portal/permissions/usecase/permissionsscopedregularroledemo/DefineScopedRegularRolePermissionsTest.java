@@ -32,44 +32,6 @@ public class DefineScopedRegularRolePermissionsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@id='dockbar']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("//div[@id='dockbar']",
-			RuntimeVariables.replace("Dock Bar"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//li[@id='_145_mySites']/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("//li[@id='_145_mySites']/a/span",
-			RuntimeVariables.replace("Go To"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
 				if (selenium.isElementPresent("link=Control Panel")) {
 					break;
 				}
@@ -147,8 +109,8 @@ public class DefineScopedRegularRolePermissionsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Community Name"),
-			selenium.getText("//tr[5]/td/a"));
-		selenium.clickAt("//tr[5]/td/a",
+			selenium.getText("//tr[contains(.,'Community Name')]/td/a"));
+		selenium.clickAt("//tr[contains(.,'Community Name')]/td/a",
 			RuntimeVariables.replace("Community Name"));
 		selenium.selectWindow("null");
 

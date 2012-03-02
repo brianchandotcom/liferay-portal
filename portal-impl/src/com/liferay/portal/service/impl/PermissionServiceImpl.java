@@ -642,7 +642,7 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 				role = rolePersistence.findByPrimaryKey(roleId);
 			}
 
-			if (role != null && role.isTeam()) {
+			if ((role != null) && role.isTeam()) {
 				Team team = teamPersistence.findByPrimaryKey(role.getClassPK());
 
 				TeamPermissionUtil.check(

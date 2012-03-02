@@ -14,7 +14,7 @@
  */
 --%>
 
-<div id="<portlet:namespace />journalComponentList" class="journal-article-component-list aui-helper-hidden">
+<div class="journal-article-component-list aui-helper-hidden" id="<portlet:namespace />journalComponentList">
 	<div class="component-group form-controls">
 		<div class="component-group-title">
 			<liferay-ui:message key="form-controls" />

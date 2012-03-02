@@ -16,7 +16,7 @@
 
 <div id="<portlet:namespace />saveStructureTemplateDialogWrapper" style="display: none;">
 	<aui:fieldset>
-		<div id="<portlet:namespace />saveStructureTemplateDialog" class="save-structure-template-dialog">
+		<div class="save-structure-template-dialog" id="<portlet:namespace />saveStructureTemplateDialog">
 			<div class="portlet-msg-success save-structure-message aui-helper-hidden" id="<portlet:namespace />saveStructureMessage">
 				<liferay-ui:message key="your-request-processed-successfully" />
 			</div>
@@ -25,7 +25,7 @@
 
 			<aui:input cssClass="save-structure-name lfr-input-text-container" label="structure-name" name="saveStructureStructureName" size="50" type="text" />
 
-			<aui:input cssClass="save-structure-description" cols="80" label="description" name="saveStructureStructureDescription" rows="6" type="textarea" />
+			<aui:input cols="80" cssClass="save-structure-description" label="description" name="saveStructureStructureDescription" rows="6" type="textarea" />
 
 			<aui:a href="#" id="showStructureIdContainer"><liferay-ui:message key="change-structure-id" /> &raquo;</aui:a>
 
@@ -115,7 +115,7 @@
 		<div dataType="document_library">
 			<aui:input cssClass="lfr-input-text-container" inlineField="<%= true %>" label="" name="text" size="55" type="text" />
 
-			<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>" var="selectDLURL">
+			<portlet:renderURL var="selectDLURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 				<portlet:param name="struts_action" value="/journal/select_document_library" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 			</portlet:renderURL>

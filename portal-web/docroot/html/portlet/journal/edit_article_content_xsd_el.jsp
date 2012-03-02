@@ -116,16 +116,16 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 				</c:if>
 
 				<c:if test='<%= elType.equals("text_box") %>'>
-					<aui:input cssClass="lfr-textarea-container" cols="60" ignoreRequestValue="<%= true %>" label="" name="textArea" rows="10" type="textarea" value="<%= elContent %>" />
+					<aui:input cols="60" cssClass="lfr-textarea-container" ignoreRequestValue="<%= true %>" label="" name="textArea" rows="10" type="textarea" value="<%= elContent %>" />
 				</c:if>
 
 				<c:if test='<%= elType.equals("text_area") %>'>
 					<liferay-ui:input-editor
-						name='<%= renderResponse.getNamespace() + "structure_el_" + elInstanceId + "_content" %>'
 						editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>"
-						toolbarSet="liferay-article"
-						initMethod='<%= "initEditor" + elInstanceId %>'
 						height="460"
+						initMethod='<%= "initEditor" + elInstanceId %>'
+						name='<%= renderResponse.getNamespace() + "structure_el_" + elInstanceId + "_content" %>'
+						toolbarSet="liferay-article"
 						width="500"
 					/>
 
@@ -173,7 +173,7 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 					}
 					%>
 
-					<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>" var="selectDLURL">
+					<portlet:renderURL var="selectDLURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 						<portlet:param name="struts_action" value="/journal/select_document_library" />
 						<portlet:param name="groupId" value="<%= String.valueOf(dlScopeGroupId) %>" />
 					</portlet:renderURL>

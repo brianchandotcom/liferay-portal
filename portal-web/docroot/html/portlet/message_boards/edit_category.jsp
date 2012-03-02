@@ -88,7 +88,7 @@ catch (NoSuchMailingListException nsmle) {
 
 			<aui:a href="<%= viewCategoryURL %>" id="parentCategoryName"><%= parentCategoryName %></aui:a>
 
-			<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>" var="selectCategoryURL">
+			<portlet:renderURL var="selectCategoryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 				<portlet:param name="struts_action" value="/message_boards/select_category" />
 				<portlet:param name="mbCategoryId" value="<%= String.valueOf((category == null) ? MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID : category.getParentCategoryId()) %>" />
 			</portlet:renderURL>
@@ -204,7 +204,7 @@ catch (NoSuchMailingListException nsmle) {
 	<br />
 
 	<c:if test="<%= (category == null) && PropsValues.CAPTCHA_CHECK_PORTLET_MESSAGE_BOARDS_EDIT_CATEGORY %>">
-		<portlet:actionURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>" var="captchaURL">
+		<portlet:actionURL var="captchaURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
 			<portlet:param name="struts_action" value="/message_boards/captcha" />
 		</portlet:actionURL>
 

@@ -118,7 +118,7 @@ String[][] categorySections = {mainSections};
 		<c:when test="<%= incomplete %>">
 			<liferay-ui:message arguments="<%= new Object[] {selLayout.getName(locale), layoutSetBranchName} %>" key="the-page-x-is-not-enabled-in-x,-but-is-available-in-other-pages-variations" />
 
-			<aui:input name="incompleteLayoutRevisionId" value="<%= layoutRevision.getLayoutRevisionId() %>" type="hidden" />
+			<aui:input name="incompleteLayoutRevisionId" type="hidden" value="<%= layoutRevision.getLayoutRevisionId() %>" />
 
 			<%
 			String taglibEnableOnClick = "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveLayout('enable');";

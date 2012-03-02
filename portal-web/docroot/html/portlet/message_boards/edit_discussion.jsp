@@ -84,7 +84,7 @@ if (message != null) {
 			<aui:workflow-status status="<%= message.getStatus() %>" />
 		</c:if>
 
-		<aui:input name="body" type="textarea" style='<%= "height: " + ModelHintsConstants.TEXTAREA_DISPLAY_HEIGHT + "px; width: " + ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH + "px;" %>' wrap="soft" />
+		<aui:input name="body" style='<%= "height: " + ModelHintsConstants.TEXTAREA_DISPLAY_HEIGHT + "px; width: " + ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH + "px;" %>' type="textarea" wrap="soft" />
 	</aui:fieldset>
 
 	<c:if test="<%= curParentMessage != null %>">

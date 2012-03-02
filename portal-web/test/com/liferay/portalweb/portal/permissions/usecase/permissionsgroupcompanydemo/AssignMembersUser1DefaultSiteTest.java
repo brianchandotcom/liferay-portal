@@ -73,10 +73,10 @@ public class AssignMembersUser1DefaultSiteTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Userfn1"),
+		assertEquals(RuntimeVariables.replace("userfn1"),
 			selenium.getText("//tbody/tr[3]/td[2]/a"));
 		selenium.clickAt("//tbody/tr[3]/td[2]/a",
-			RuntimeVariables.replace("Userfn1"));
+			RuntimeVariables.replace("userfn1"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isPartialText("//a[@id='_125_sitesLink']", "Sites"));

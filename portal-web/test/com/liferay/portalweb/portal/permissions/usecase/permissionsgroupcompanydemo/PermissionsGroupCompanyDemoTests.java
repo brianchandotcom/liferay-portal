@@ -15,6 +15,11 @@
 package com.liferay.portalweb.portal.permissions.usecase.permissionsgroupcompanydemo;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUser1Test;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUser2Test;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.EditUser1PasswordTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.EditUser2PasswordTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.TearDownUserTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPageBlogsTest;
 import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPortletBlogsTest;
@@ -31,9 +36,9 @@ public class PermissionsGroupCompanyDemoTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPageBlogsTest.class);
 		testSuite.addTestSuite(AddPortletBlogsTest.class);
 		testSuite.addTestSuite(AddUser1Test.class);
-		testSuite.addTestSuite(AddUser1PasswordTest.class);
+		testSuite.addTestSuite(EditUser1PasswordTest.class);
 		testSuite.addTestSuite(AddUser2Test.class);
-		testSuite.addTestSuite(AddUser2PasswordTest.class);
+		testSuite.addTestSuite(EditUser2PasswordTest.class);
 		testSuite.addTestSuite(AssignMembersUser1DefaultSiteTest.class);
 		testSuite.addTestSuite(AddRegularRoleBlogsEditorTest.class);
 		testSuite.addTestSuite(DefinePermissionsRoleSiteMemberTest.class);

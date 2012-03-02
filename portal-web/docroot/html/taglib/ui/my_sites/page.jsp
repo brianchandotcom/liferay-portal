@@ -100,7 +100,11 @@ List<Group> mySites = user.getMySites(true, max);
 				defaultLayout = LayoutLocalServiceUtil.getLayout(mySite.getDefaultPublicPlid());
 			}
 
-			boolean hasViewPermission = LayoutPermissionUtil.contains(permissionChecker, defaultLayout, true, ActionKeys.VIEW);
+			boolean hasViewPermission = false;
+
+			if (defaultLayout != null) {
+				hasViewPermission = LayoutPermissionUtil.contains(permissionChecker, defaultLayout, true, ActionKeys.VIEW);
+			}
 
 			if (mySite.getPublicLayoutsPageCount() == 0) {
 				if (mySite.isRegularSite()) {

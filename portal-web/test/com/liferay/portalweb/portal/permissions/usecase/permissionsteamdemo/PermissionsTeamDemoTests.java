@@ -15,6 +15,11 @@
 package com.liferay.portalweb.portal.permissions.usecase.permissionsteamdemo;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUser1Test;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUser2Test;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.EditUser1PasswordTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.EditUser2PasswordTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.TearDownUserTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -28,9 +33,9 @@ public class PermissionsTeamDemoTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddSiteTest.class);
 		testSuite.addTestSuite(AddPageSiteTest.class);
 		testSuite.addTestSuite(AddUser1Test.class);
-		testSuite.addTestSuite(AddUser1PasswordTest.class);
+		testSuite.addTestSuite(EditUser1PasswordTest.class);
 		testSuite.addTestSuite(AddUser2Test.class);
-		testSuite.addTestSuite(AddUser2PasswordTest.class);
+		testSuite.addTestSuite(EditUser2PasswordTest.class);
 		testSuite.addTestSuite(AssignMembersUser1SiteTest.class);
 		testSuite.addTestSuite(AssignMembersUser2SiteTest.class);
 		testSuite.addTestSuite(AssignRoleSiteAdministratorUser1Test.class);

@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class User_ViewOnPermissionsBlogsUPSTest extends BaseTestCase {
 	public void testUser_ViewOnPermissionsBlogsUPS() throws Exception {
-		selenium.open("/web/usersn1/home/");
+		selenium.open("/web/usersn/home/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {

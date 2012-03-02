@@ -45,7 +45,7 @@ public class User_SignInTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_58_login']",
-			RuntimeVariables.replace("userea1@liferay.com"));
+			RuntimeVariables.replace("userea@liferay.com"));
 		selenium.type("//input[@id='_58_password']",
 			RuntimeVariables.replace("test"));
 		selenium.clickAt("//input[@id='_58_rememberMeCheckbox']",

@@ -372,7 +372,7 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String SETUP_WIZARD_PROPERTIES = "SETUP_WIZARD_PROPERTIES";
 
-	public static final String SETUP_WIZARD_PROPERTIES_UPDATED = "SETUP_WIZARD_PROPERTIES_UPDATED";
+	public static final String SETUP_WIZARD_PROPERTIES_FILE_CREATED = "SETUP_WIZARD_PROPERTIES_FILE_CREATED";
 
 	public static final String SHOPPING_CATEGORY = "SHOPPING_CATEGORY";
 

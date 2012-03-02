@@ -46,11 +46,15 @@
 		<div id="main-content">
 
 			<%
-			boolean propertiesFileUpdated = GetterUtil.getBoolean((Boolean)session.getAttribute(WebKeys.SETUP_WIZARD_PROPERTIES_UPDATED));
+			String defaultEmailAddress = PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + StringPool.AT + company.getMx();
+
+			String emailAddress = GetterUtil.getString((String)session.getAttribute(WebKeys.EMAIL_ADDRESS), defaultEmailAddress);
+
+			UnicodeProperties unicodeProperties = (UnicodeProperties)session.getAttribute(WebKeys.SETUP_WIZARD_PROPERTIES);
 			%>
 
 			<c:choose>
-				<c:when test="<%= !propertiesFileUpdated && !SetupWizardUtil.isSetupFinished() %>">
+				<c:when test="<%= unicodeProperties == null %>">
 
 					<%
 					boolean defaultDatabase = SetupWizardUtil.isDefaultDatabase(request);
@@ -60,9 +64,9 @@
 						<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 
 						<aui:fieldset column="<%= true %>" cssClass="aui-w45" label="portal">
-							<aui:input label="portal-name" name='<%= "properties--" + PropsKeys.COMPANY_DEFAULT_NAME + "--" %>' suffix='<%= LanguageUtil.format(pageContext, "for-example-x", "Liferay") %>' value="<%= PropsValues.COMPANY_DEFAULT_NAME %>" />
+							<aui:input label="portal-name" name="companyName" suffix='<%= LanguageUtil.format(pageContext, "for-example-x", "Liferay") %>' value="<%= PropsValues.COMPANY_DEFAULT_NAME %>" />
 
-							<aui:select inlineField="<%= true %>" label="default-language" name='<%= "properties--" + PropsKeys.COMPANY_DEFAULT_LOCALE + "--" %>'>
+							<aui:select inlineField="<%= true %>" label="default-language" name="companyLocale">
 
 								<%
 								String languageId = GetterUtil.getString((String)session.getAttribute(WebKeys.SETUP_WIZARD_DEFAULT_LOCALE), PropsValues.COMPANY_DEFAULT_LOCALE);
@@ -84,11 +88,11 @@
 						</aui:fieldset>
 
 						<aui:fieldset column="<%= true %>" cssClass="aui-column-last aui-w50" label="administrator-user">
-							<aui:input label="first-name" name='<%= "properties--" + PropsKeys.DEFAULT_ADMIN_FIRST_NAME + "--" %>' value="<%= PropsValues.DEFAULT_ADMIN_FIRST_NAME %>" />
+							<aui:input label="first-name" name="adminFirstName" value="<%= PropsValues.DEFAULT_ADMIN_FIRST_NAME %>" />
 
-							<aui:input label="last-name" name='<%= "properties--" + PropsKeys.DEFAULT_ADMIN_LAST_NAME + "--" %>' value="<%= PropsValues.DEFAULT_ADMIN_LAST_NAME %>" />
+							<aui:input label="last-name" name="adminLastName" value="<%= PropsValues.DEFAULT_ADMIN_LAST_NAME %>" />
 
-							<aui:input label="email" name='<%= "properties--" + PropsKeys.ADMIN_EMAIL_FROM_ADDRESS + "--" %>' value="<%= PropsValues.ADMIN_EMAIL_FROM_ADDRESS %>">
+							<aui:input label="email" name="adminEmailAddress" value="<%= emailAddress %>">
 								<aui:validator name="email" />
 								<aui:validator name="required" />
 							</aui:input>
@@ -346,10 +350,12 @@
 
 					<%
 					SetupWizardUtil.setSetupFinished(true);
+
+					boolean propertiesFileCreated = GetterUtil.getBoolean((Boolean)session.getAttribute(WebKeys.SETUP_WIZARD_PROPERTIES_FILE_CREATED));
 					%>
 
 					<c:choose>
-						<c:when test="<%= propertiesFileUpdated %>">
+						<c:when test="<%= propertiesFileCreated %>">
 
 							<%
 							PortletURL loginURL = new PortletURLImpl(request, PortletKeys.LOGIN, plid, PortletRequest.ACTION_PHASE);
@@ -362,7 +368,7 @@
 							%>
 
 							<aui:form action="<%= loginURL %>" method="post" name="fm">
-								<aui:input name="login" type="hidden" value="<%= PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS %>" />
+								<aui:input name="login" type="hidden" value="<%= emailAddress %>" />
 								<aui:input name="password" type="hidden" value='<%= PropsValues.DEFAULT_ADMIN_PASSWORD %>' />
 
 								<p>
@@ -387,7 +393,7 @@
 								<c:if test="<%= !passwordUpdated %>">
 									<p>
 										<span class="aui-field-hint">
-											<liferay-ui:message arguments="<%= PropsValues.DEFAULT_ADMIN_PASSWORD %>" key="your-password-is-x.-don't-forget-to-change-it-in-my-account" />
+											<liferay-ui:message arguments="<%= PropsValues.DEFAULT_ADMIN_PASSWORD %>" key="your-password-is-x.-you-will-be-required-to-change-it-the-next-time-you-log-into-the-portal" />
 										</span>
 									</p>
 								</c:if>
@@ -406,10 +412,6 @@
 									<liferay-ui:message arguments="<%= taglibArguments %>" key="sorry,-we-were-not-able-to-save-the-configuration-file-in-x" />
 								</span>
 							</p>
-
-							<%
-							UnicodeProperties unicodeProperties = (UnicodeProperties)session.getAttribute(WebKeys.SETUP_WIZARD_PROPERTIES);
-							%>
 
 							<aui:input inputCssClass="properties-text" label="" name="portal-ext" type="textarea" value="<%= unicodeProperties.toSortedString() %>" wrap="soft" />
 						</c:otherwise>

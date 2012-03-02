@@ -36,6 +36,8 @@ public class Demo7Tests extends BaseTestSuite {
 		testSuite.addTestSuite(ViewDMMusicSiteStagingTest.class);
 		testSuite.addTestSuite(PublishToLiveNowPageDMMusicTest.class);
 		testSuite.addTestSuite(ViewPublishToLiveNowPageDMMusicTest.class);
+		testSuite.addTestSuite(TearDownSiteStagingTest.class);
+		testSuite.addTestSuite(TearDownDMDocumentSiteTest.class);
 		testSuite.addTestSuite(TearDownSiteTest.class);
 
 		return testSuite;

@@ -2660,11 +2660,6 @@ executable ZIP file.
 				<delete dir="${selenium.output.dir}" />
 
 				<mkdir dir="${selenium.output.dir}" />
-
-				<unzip
-					dest="${selenium.output.dir}"
-					src="${selenium.output.zip}"
-				/>
 			</then>
 		</if>
 

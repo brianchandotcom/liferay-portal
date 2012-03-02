@@ -3051,10 +3051,6 @@ file.
 			</then>
 		</if>
 
-		<tstamp>
-			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
-		</tstamp>
-
 		<copy file="${sql.dir}${sql.file}" tofile="${sql.file}" />
 
 		<if>

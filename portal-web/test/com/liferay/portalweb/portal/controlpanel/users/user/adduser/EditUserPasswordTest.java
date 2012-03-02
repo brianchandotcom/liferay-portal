@@ -91,8 +91,6 @@ public class EditUserPasswordTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				assertTrue(selenium.isVisible("//input[@name='_125_keywords']"));
-
 			case 2:
 				selenium.type("//input[@name='_125_keywords']",
 					RuntimeVariables.replace("userfn"));
@@ -141,14 +139,13 @@ public class EditUserPasswordTest extends BaseTestCase {
 					RuntimeVariables.replace("Sign Out"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-				assertTrue(selenium.isVisible("//input[@value='Sign In']"));
 				selenium.type("//input[@id='_58_login']",
 					RuntimeVariables.replace("userea@liferay.com"));
 				selenium.type("//input[@id='_58_password']",
 					RuntimeVariables.replace("password"));
 
 				boolean rememberMe1NotChecked = selenium.isChecked(
-						"_58_rememberMeCheckbox");
+						"//input[@id='_58_rememberMeCheckbox']");
 
 				if (rememberMe1NotChecked) {
 					label = 3;
@@ -157,7 +154,9 @@ public class EditUserPasswordTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//input[@id='_58_rememberMeCheckbox']",
-					RuntimeVariables.replace("Remember Me Check Box"));
+					RuntimeVariables.replace("Remember Me"));
+				assertTrue(selenium.isChecked(
+						"//input[@id='_58_rememberMeCheckbox']"));
 
 			case 3:
 				selenium.clickAt("//input[@value='Sign In']",
@@ -182,7 +181,7 @@ public class EditUserPasswordTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace(
 						"Please choose a reminder query."),
 					selenium.getText("//div[@class='portlet-msg-info']"));
-				selenium.type("reminderQueryAnswer",
+				selenium.type("//input[@id='reminderQueryAnswer']",
 					RuntimeVariables.replace("test"));
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
@@ -192,14 +191,13 @@ public class EditUserPasswordTest extends BaseTestCase {
 					RuntimeVariables.replace("Sign Out"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-				assertTrue(selenium.isVisible("//input[@value='Sign In']"));
 				selenium.type("//input[@id='_58_login']",
 					RuntimeVariables.replace("test@liferay.com"));
 				selenium.type("//input[@id='_58_password']",
 					RuntimeVariables.replace("test"));
 
 				boolean rememberMe2NotChecked = selenium.isChecked(
-						"_58_rememberMeCheckbox");
+						"//input[@id='_58_rememberMeCheckbox']");
 
 				if (rememberMe2NotChecked) {
 					label = 4;
@@ -208,14 +206,15 @@ public class EditUserPasswordTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//input[@id='_58_rememberMeCheckbox']",
-					RuntimeVariables.replace("Remember Me Check Box"));
+					RuntimeVariables.replace("Remember Me"));
+				assertTrue(selenium.isChecked(
+						"//input[@id='_58_rememberMeCheckbox']"));
 
 			case 4:
 				selenium.clickAt("//input[@value='Sign In']",
 					RuntimeVariables.replace("Sign In"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-				assertTrue(selenium.isVisible("link=Sign Out"));
 
 			case 100:
 				label = -1;

@@ -46,12 +46,12 @@
 <tr>
 	<td>storeVisible</td>
 	<td>link=« Basic</td>
-	<td>basic1Visible</td>
+	<td>basicVisible</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${basic1Visible}</td>
-	<td>Basic1NotVisible</td>
+	<td>!${basicVisible}</td>
+	<td>BasicNotVisible</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -64,13 +64,8 @@
 	<td>Search Field</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
-	<td>//input[@name='_125_keywords']</td>
-	<td>Search Field</td>
-</tr>
-<tr>
 	<td>label</td>
-	<td>Basic1NotVisible</td>
+	<td>BasicNotVisible</td>
 	<td></td>
 </tr>
 <tr>
@@ -174,16 +169,6 @@
 	<td>Search All Users</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isVisible('link=Advanced »'))</td>
-	<td>advancedVisible</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${advancedVisible}</td>
-	<td>AdvancedNotVisible</td>
-</tr>
-<tr>
 	<td>clickAt</td>
 	<td>link=Advanced »</td>
 	<td>Advanced</td>
@@ -192,11 +177,6 @@
 	<td>waitForVisible</td>
 	<td>//select[@id='_125_status']</td>
 	<td>Status</td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>AdvancedNotVisible</td>
-	<td></td>
 </tr>
 <tr>
 	<td>select</td>
@@ -244,6 +224,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
@@ -259,24 +244,9 @@
 	<td>No users were found.</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isVisible('link=« Basic'))</td>
-	<td>basic2Visible</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${basic2Visible}</td>
-	<td>Basic2NotVisible</td>
-</tr>
-<tr>
 	<td>clickAt</td>
 	<td>link=« Basic</td>
 	<td>Basic</td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>Basic2NotVisible</td>
-	<td></td>
 </tr>
 </tbody></table>
 </body>

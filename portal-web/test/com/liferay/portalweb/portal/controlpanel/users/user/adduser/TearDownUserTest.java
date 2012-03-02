@@ -62,9 +62,9 @@ public class TearDownUserTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 
-				boolean basic1Visible = selenium.isVisible("link=\u00ab Basic");
+				boolean basicVisible = selenium.isVisible("link=\u00ab Basic");
 
-				if (!basic1Visible) {
+				if (!basicVisible) {
 					label = 2;
 
 					continue;
@@ -88,8 +88,6 @@ public class TearDownUserTest extends BaseTestCase {
 
 					Thread.sleep(1000);
 				}
-
-				assertTrue(selenium.isVisible("//input[@name='_125_keywords']"));
 
 			case 2:
 				selenium.type("//input[@name='_125_keywords']",
@@ -178,16 +176,6 @@ public class TearDownUserTest extends BaseTestCase {
 					RuntimeVariables.replace("Search All Users"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-
-				boolean advancedVisible = selenium.isVisible(
-						"link=Advanced \u00bb");
-
-				if (!advancedVisible) {
-					label = 4;
-
-					continue;
-				}
-
 				selenium.clickAt("link=Advanced \u00bb",
 					RuntimeVariables.replace("Advanced"));
 
@@ -207,7 +195,6 @@ public class TearDownUserTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-			case 4:
 				selenium.select("//select[@id='_125_status']",
 					RuntimeVariables.replace("Inactive"));
 				selenium.clickAt("//input[@value='Search']",
@@ -219,7 +206,7 @@ public class TearDownUserTest extends BaseTestCase {
 						"//input[@name='_125_allRowIds']");
 
 				if (!usersNotDeleted) {
-					label = 5;
+					label = 4;
 
 					continue;
 				}
@@ -235,26 +222,34 @@ public class TearDownUserTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to permanently delete the selected users[\\s\\S]$"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='portlet-msg-success']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 
-			case 5:
+			case 4:
 				assertEquals(RuntimeVariables.replace("No users were found."),
 					selenium.getText("//div[@class='portlet-msg-info']"));
-
-				boolean basic2Visible = selenium.isVisible("link=\u00ab Basic");
-
-				if (!basic2Visible) {
-					label = 6;
-
-					continue;
-				}
-
 				selenium.clickAt("link=\u00ab Basic",
 					RuntimeVariables.replace("Basic"));
 
-			case 6:
 			case 100:
 				label = -1;
 			}

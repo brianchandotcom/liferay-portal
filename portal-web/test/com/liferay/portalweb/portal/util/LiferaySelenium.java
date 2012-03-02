@@ -21,7 +21,7 @@ import com.thoughtworks.selenium.Selenium;
  */
 public interface LiferaySelenium extends Selenium {
 
-	public void downloadFile(String value);
+	public void downloadTempFile(String value);
 
 	public String getCurrentDay();
 

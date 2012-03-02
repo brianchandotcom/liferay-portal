@@ -37,7 +37,7 @@ public class LiferayDefaultSelenium
 		super(serverHost, serverPort, browserStartCommand, browserURL);
 	}
 
-	public void downloadFile(String value) {
+	public void downloadTempFile(String value) {
 		if (!_BROWSER_TYPE.equals("*chrome") &&
 			!_BROWSER_TYPE.equals("*firefox") &&
 			!_BROWSER_TYPE.equals("*iehta") &&

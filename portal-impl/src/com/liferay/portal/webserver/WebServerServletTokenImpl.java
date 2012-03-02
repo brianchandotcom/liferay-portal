@@ -21,6 +21,7 @@ import com.liferay.portlet.journalcontent.util.JournalContentUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @since  6.1, replaced com.liferay.portal.servlet.ImageServletTokenImpl
  */
 public class WebServerServletTokenImpl implements WebServerServletToken {
 

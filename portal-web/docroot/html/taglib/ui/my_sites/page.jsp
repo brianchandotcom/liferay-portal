@@ -100,8 +100,6 @@ List<Group> mySites = user.getMySites(true, max);
 				defaultLayout = LayoutLocalServiceUtil.getLayout(mySite.getDefaultPublicPlid());
 			}
 
-			boolean hasViewPermission = LayoutPermissionUtil.contains(permissionChecker, defaultLayout, true, ActionKeys.VIEW);
-
 			if (mySite.getPublicLayoutsPageCount() == 0) {
 				if (mySite.isRegularSite()) {
 					showPublicSite = PropsValues.MY_SITES_SHOW_PUBLIC_SITES_WITH_NO_LAYOUTS;
@@ -114,7 +112,7 @@ List<Group> mySites = user.getMySites(true, max);
 					}
 				}
 			}
-			else if ((defaultLayout != null ) && !hasViewPermission) {
+			else if ((defaultLayout != null ) && !LayoutPermissionUtil.contains(permissionChecker, defaultLayout, true, ActionKeys.VIEW)) {
 				showPublicSite = false;
 			}
 
@@ -136,7 +134,7 @@ List<Group> mySites = user.getMySites(true, max);
 					}
 				}
 			}
-			else if ((defaultLayout != null ) && !hasViewPermission) {
+			else if ((defaultLayout != null ) && !LayoutPermissionUtil.contains(permissionChecker, defaultLayout, true, ActionKeys.VIEW)) {
 				showPrivateSite = false;
 			}
 		%>

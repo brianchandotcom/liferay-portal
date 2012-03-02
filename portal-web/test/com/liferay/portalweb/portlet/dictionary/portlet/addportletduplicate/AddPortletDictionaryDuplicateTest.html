@@ -16,44 +16,43 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>link=Dictionary Test Page</td>
-	<td></td>
+	<td>Dictionary Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Dictionary Test Page</td>
-	<td></td>
+	<td>Dictionary Test Page</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//a[@id='_145_addApplication']</td>
+	<td>More</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_145_addApplication</td>
-	<td></td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>//a[@id='_145_addApplication']</td>
+	<td>More</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>layout_configuration_content</td>
-	<td></td>
+	<td>//input[@id='layout_configuration_content']</td>
+	<td>Search applications (searches as you type).</td>
 </tr>
 <tr>
 	<td>typeKeys</td>
-	<td>layout_configuration_content</td>
+	<td>//input[@id='layout_configuration_content']</td>
 	<td>d</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
 	<td>//div[@title='Dictionary']</td>
-	<td></td>
+	<td>Dictionary</td>
 </tr>
 <tr>
 	<td>assertNotVisible</td>
 	<td>//div[@title='Dictionary']/p/a</td>
-	<td></td>
+	<td>Add</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

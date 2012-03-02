@@ -42,7 +42,7 @@ public class RemovePortletDictionaryTest extends BaseTestCase {
 		}
 
 		selenium.clickAt("link=Dictionary Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Dictionary Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.click("//img[@alt='Remove']");

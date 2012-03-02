@@ -464,6 +464,11 @@ public class SetupWizardUtil {
 		defaultUser.setLanguageId(languageId);
 
 		UserLocalServiceUtil.updateUser(defaultUser);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		themeDisplay.setCompany(company);
 	}
 
 	private static boolean _writePropertiesFile(

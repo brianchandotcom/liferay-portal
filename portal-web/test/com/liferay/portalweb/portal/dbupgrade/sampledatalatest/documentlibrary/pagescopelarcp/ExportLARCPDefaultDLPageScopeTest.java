@@ -99,6 +99,6 @@ public class ExportLARCPDefaultDLPageScopeTest extends BaseTestCase {
 		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Export']",
 			RuntimeVariables.replace("Export"));
-		selenium.downloadFile("DL_Page_Scope.Default.CP.lar");
+		selenium.downloadTempFile("DL_Page_Scope.Default.CP.lar");
 	}
 }

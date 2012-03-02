@@ -52,7 +52,7 @@ public class ViewActionResponseNormalStateMiscTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Download File"),
 			selenium.getText("//p[2]/a"));
 		selenium.clickAt("//p[2]/a", RuntimeVariables.replace("Download File"));
-		selenium.downloadFile("Portlet_Response_Normal_State.png");
+		selenium.downloadTempFile("Portlet_Response_Normal_State.png");
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 

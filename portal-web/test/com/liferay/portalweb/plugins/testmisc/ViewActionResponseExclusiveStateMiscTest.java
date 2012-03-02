@@ -52,7 +52,7 @@ public class ViewActionResponseExclusiveStateMiscTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Download File"),
 			selenium.getText("//p[3]/a"));
 		selenium.clickAt("//p[3]/a", RuntimeVariables.replace("Download File"));
-		selenium.downloadFile("Portlet_Response_Exclusive_State.png");
+		selenium.downloadTempFile("Portlet_Response_Exclusive_State.png");
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 

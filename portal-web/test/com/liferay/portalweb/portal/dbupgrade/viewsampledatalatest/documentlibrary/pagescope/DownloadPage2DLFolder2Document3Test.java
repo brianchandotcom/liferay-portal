@@ -119,7 +119,7 @@ public class DownloadPage2DLFolder2Document3Test extends BaseTestCase {
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
-		selenium.downloadFile("DL_Folder2_Document3_Title.txt");
+		selenium.downloadTempFile("DL_Folder2_Document3_Title.txt");
 		Thread.sleep(5000);
 		selenium.open("/web/document-library-page-scope-community/");
 		loadRequiredJavaScriptModules();

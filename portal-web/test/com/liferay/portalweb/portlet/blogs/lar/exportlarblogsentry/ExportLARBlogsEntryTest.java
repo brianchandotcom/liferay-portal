@@ -103,6 +103,6 @@ public class ExportLARBlogsEntryTest extends BaseTestCase {
 		assertTrue(selenium.isChecked("//input[@id='_86_CATEGORIESCheckbox']"));
 		selenium.clickAt("//input[@value='Export']",
 			RuntimeVariables.replace("Export"));
-		selenium.downloadFile("Blogs_Entry.Portlet.lar");
+		selenium.downloadTempFile("Blogs_Entry.Portlet.lar");
 	}
 }

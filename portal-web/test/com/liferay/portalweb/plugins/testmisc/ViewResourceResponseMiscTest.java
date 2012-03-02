@@ -54,7 +54,7 @@ public class ViewResourceResponseMiscTest extends BaseTestCase {
 			selenium.getText("//p[4]/a[2]"));
 		selenium.clickAt("//p[4]/a[2]",
 			RuntimeVariables.replace("Download File"));
-		selenium.downloadFile("Portlet_Response_Resource_Response.png");
+		selenium.downloadTempFile("Portlet_Response_Resource_Response.png");
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 

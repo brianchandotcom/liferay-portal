@@ -105,6 +105,6 @@ public class ExportLARPrivatePagesSiteBWCTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Export']",
 			RuntimeVariables.replace("Export"));
 		Thread.sleep(5000);
-		selenium.downloadFile("World_Cup_Private_Pages.lar");
+		selenium.downloadTempFile("World_Cup_Private_Pages.lar");
 	}
 }

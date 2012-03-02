@@ -54,7 +54,7 @@ public class ViewWSRPClickToInvokeResouceServingPhaseRDPTest
 			selenium.getText("//div[@class='portlet-body']/p[4]/a[2]"));
 		selenium.clickAt("//div[@class='portlet-body']/p[4]/a[2]",
 			RuntimeVariables.replace("Download File"));
-		selenium.downloadFile("logo(2).png");
+		selenium.downloadTempFile("logo(2).png");
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 

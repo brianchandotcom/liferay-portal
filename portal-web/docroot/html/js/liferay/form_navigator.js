@@ -34,7 +34,7 @@ AUI.add(
 			}
 
 			if (options.modifiedSections) {
-				instance._modifiedSections = A.all('[name=' + options.modifiedSections+ ']');
+				instance._modifiedSections = A.all('[name=' + options.modifiedSections + ']');
 
 				if (!instance._modifiedSections) {
 					instance._modifiedSections = A.Node.create('<input name="' + options.modifiedSections + '" type="hidden" />');
@@ -164,7 +164,7 @@ AUI.add(
 						var link = instance._navigation.one('[href$=' + id + ']');
 
 						if (link) {
-							currentNavItem = link.get('parentNode');	
+							currentNavItem = link.get('parentNode');
 						}
 					}
 

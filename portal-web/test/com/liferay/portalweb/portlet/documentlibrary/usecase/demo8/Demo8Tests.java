@@ -15,11 +15,6 @@
 package com.liferay.portalweb.portlet.documentlibrary.usecase.demo8;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portlet.documentlibrary.usecase.demo7.AddSiteTest;
-import com.liferay.portalweb.portlet.documentlibrary.usecase.demo7.ExportLARSiteTest;
-import com.liferay.portalweb.portlet.documentlibrary.usecase.demo7.ImportLARSiteTest;
-import com.liferay.portalweb.portlet.documentlibrary.usecase.demo7.TearDownSiteTest;
-import com.liferay.portalweb.portlet.documentlibrary.usecase.demo7.ViewDMMusicSiteTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -39,10 +34,12 @@ public class Demo8Tests extends BaseTestSuite {
 		testSuite.addTestSuite(AddDMMusicSiteTest.class);
 		testSuite.addTestSuite(ViewDMMusicSiteTest.class);
 		testSuite.addTestSuite(ExportLARSiteTest.class);
+		testSuite.addTestSuite(TearDownDMDocumentSiteTest.class);
 		testSuite.addTestSuite(TearDownSiteTest.class);
 		testSuite.addTestSuite(AddSiteTest.class);
 		testSuite.addTestSuite(ImportLARSiteTest.class);
 		testSuite.addTestSuite(ViewDMMusicSiteTest.class);
+		testSuite.addTestSuite(TearDownDMDocumentSiteTest.class);
 		testSuite.addTestSuite(TearDownSiteTest.class);
 
 		return testSuite;

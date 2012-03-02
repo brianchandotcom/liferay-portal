@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>ImportLARSiteTest</title>
+<title>ExportLARSiteTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">ImportLARSiteTest</td></tr>
+<tr><td rowspan="1" colspan="3">ExportLARSiteTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -75,13 +75,13 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//button[.='Import']</td>
-	<td>Import</td>
+	<td>//button[.='Export']</td>
+	<td>Export</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//button[.='Import']</td>
-	<td>Import</td>
+	<td>//button[.='Export']</td>
+	<td>Export</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -90,28 +90,38 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//iframe[@id='_156_importDialog']</td>
-	<td>Import</td>
+	<td>//iframe[@id='_156_exportDialog']</td>
+	<td>Export</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
-	<td>//iframe[@id='_156_importDialog']</td>
-	<td>Import</td>
+	<td>//iframe[@id='_156_exportDialog']</td>
+	<td>Export</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//input[@id='_156_importFileName']</td>
-	<td>Import a LAR file to overwrite the selected data.</td>
+	<td>//input[@id='_156_exportFileName']</td>
+	<td>Export the selected data to the given LAR file name.</td>
 </tr>
 <tr>
-	<td>uploadFile</td>
-	<td>//input[@id='_156_importFileName']</td>
-	<td>Document_Library_DEMO.lar</td>
+	<td>type</td>
+	<td>//input[@id='_156_exportFileName']</td>
+	<td>DocumentsAndMedia_DEMO.lar</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@value='Import']</td>
-	<td>Import</td>
+	<td>//input[@value='Export']</td>
+	<td>Export</td>
+</tr>
+<tr>
+	<td>downloadFile</td>
+	<td>DocumentsAndMedia_DEMO.lar</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>selectFrame</td>

@@ -102,7 +102,7 @@ public class User_EditDMFolderDocumentDocSATest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.uploadFile("//input[@id='_20_file']",
-			RuntimeVariables.replace("Document_2.doc"));
+			RuntimeVariables.replace("_Document_2.doc"));
 		selenium.type("//input[@id='_20_title']",
 			RuntimeVariables.replace("DM Document Title Edit"));
 		selenium.clickAt("//input[@value='Save']",

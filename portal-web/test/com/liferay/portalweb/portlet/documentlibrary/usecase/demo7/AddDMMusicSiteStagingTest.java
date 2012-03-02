@@ -48,6 +48,7 @@ public class AddDMMusicSiteStagingTest extends BaseTestCase {
 		selenium.clickAt("link=Staging", RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
@@ -78,7 +79,7 @@ public class AddDMMusicSiteStagingTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.uploadFile("//input[@id='_20_file']",
-			RuntimeVariables.replace("Document_1.mp3"));
+			RuntimeVariables.replace("_Document_1.mp3"));
 		selenium.type("//input[@id='_20_title']",
 			RuntimeVariables.replace("DM Music Title"));
 		selenium.type("//textarea[@id='_20_description']",

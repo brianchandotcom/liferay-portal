@@ -102,7 +102,7 @@ public class User_AddDMFolderDocumentDocSATest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.uploadFile("//input[@id='_20_file']",
-			RuntimeVariables.replace("Document_1.doc"));
+			RuntimeVariables.replace("_Document_1.doc"));
 		selenium.type("//input[@id='_20_title']",
 			RuntimeVariables.replace("DM Document Title"));
 		selenium.type("//textarea[@id='_20_description']",

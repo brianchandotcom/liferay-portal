@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.documentlibrary.usecase.demo7;
+package com.liferay.portalweb.portlet.documentlibrary.usecase.demo8;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -127,10 +127,10 @@ public class ExportLARSiteTest extends BaseTestCase {
 		}
 
 		selenium.type("//input[@id='_156_exportFileName']",
-			RuntimeVariables.replace("Document_Library_DEMO.lar"));
+			RuntimeVariables.replace("DocumentsAndMedia_DEMO.lar"));
 		selenium.clickAt("//input[@value='Export']",
 			RuntimeVariables.replace("Export"));
-		selenium.downloadFile("Document_Library_DEMO.lar");
+		selenium.downloadFile("DocumentsAndMedia_DEMO.lar");
 		Thread.sleep(5000);
 		selenium.selectFrame("relative=top");
 	}

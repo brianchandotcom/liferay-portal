@@ -54,7 +54,7 @@ public class ViewWSRPClickToInvokeResourceServingPhaseDPTest
 			selenium.getText("//div[@class='portlet-body']/p[4]/a[2]"));
 		selenium.clickAt("//div[@class='portlet-body']/p[4]/a[2]",
 			RuntimeVariables.replace("Download File"));
-		selenium.downloadFile("logo.png");
+		selenium.downloadTempFile("logo.png");
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -108,7 +108,7 @@ public class ViewWSRPClickToInvokeResourceServingPhaseDPTest
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.uploadFile("//input[@id='_20_file']",
+		selenium.uploadTempFile("//input[@id='_20_file']",
 			RuntimeVariables.replace("logo.png"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));

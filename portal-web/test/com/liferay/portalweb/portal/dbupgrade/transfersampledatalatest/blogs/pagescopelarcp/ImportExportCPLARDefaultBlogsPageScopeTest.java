@@ -98,7 +98,7 @@ public class ImportExportCPLARDefaultBlogsPageScopeTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.uploadFile("//input[@id='_86_importFileName']",
+		selenium.uploadTempFile("//input[@id='_86_importFileName']",
 			RuntimeVariables.replace("Blogs_Page_Scope.Default.CP.lar"));
 		assertFalse(selenium.isChecked(
 				"//input[@id='_86_DELETE_PORTLET_DATACheckbox']"));

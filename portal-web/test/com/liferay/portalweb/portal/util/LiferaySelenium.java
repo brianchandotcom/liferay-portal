@@ -21,7 +21,7 @@ import com.thoughtworks.selenium.Selenium;
  */
 public interface LiferaySelenium extends Selenium {
 
-	public void downloadFile(String value);
+	public void downloadTempFile(String value);
 
 	public String getCurrentDay();
 
@@ -39,6 +39,6 @@ public interface LiferaySelenium extends Selenium {
 
 	public void setBrowserOption();
 
-	public void uploadFile(String locator, String value);
+	public void uploadTempFile(String locator, String value);
 
 }

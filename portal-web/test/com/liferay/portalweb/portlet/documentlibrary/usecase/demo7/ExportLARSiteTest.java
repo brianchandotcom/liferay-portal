@@ -130,7 +130,7 @@ public class ExportLARSiteTest extends BaseTestCase {
 			RuntimeVariables.replace("Document_Library_DEMO.lar"));
 		selenium.clickAt("//input[@value='Export']",
 			RuntimeVariables.replace("Export"));
-		selenium.downloadFile("Document_Library_DEMO.lar");
+		selenium.downloadTempFile("Document_Library_DEMO.lar");
 		Thread.sleep(5000);
 		selenium.selectFrame("relative=top");
 	}

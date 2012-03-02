@@ -585,7 +585,7 @@ public class SeleneseToJavaBuilder {
 				param1.equals("doubleClickAt") || param1.equals("keyPress") ||
 				param1.equals("mouseMoveAt") || param1.equals("openWindow") ||
 				param1.equals("select") || param1.equals("type") ||
-				param1.equals("typeKeys") || param1.equals("uploadFile") ||
+				param1.equals("typeKeys") || param1.equals("uploadTempFile") ||
 				param1.equals("waitForPopUp")) {
 
 				sb.append("selenium.");
@@ -859,7 +859,7 @@ public class SeleneseToJavaBuilder {
 			}
 			else if (param1.equals("check") || param1.equals("click") ||
 					 param1.equals("doubleClick") ||
-					 param1.equals("downloadFile") ||
+					 param1.equals("downloadTempFile") ||
 					 param1.equals("mouseDown") || param1.equals("mouseMove") ||
 					 param1.equals("mouseOver") || param1.equals("mouseUp") ||
 					 param1.equals("open") || param1.equals("selectFrame") ||

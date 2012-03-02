@@ -119,7 +119,7 @@ public class DownloadPage2DLFolder2Document3Test extends BaseTestCase {
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
-		selenium.downloadFile("DL_Folder2_Document3_Title.txt");
+		selenium.downloadTempFile("DL_Folder2_Document3_Title.txt");
 		Thread.sleep(5000);
 		selenium.open("/web/document-library-page-scope-community/");
 		loadRequiredJavaScriptModules();
@@ -194,7 +194,7 @@ public class DownloadPage2DLFolder2Document3Test extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.uploadFile("//input[@id='_20_file']",
+		selenium.uploadTempFile("//input[@id='_20_file']",
 			RuntimeVariables.replace("DL_Folder2_Document3_Title.txt"));
 		selenium.type("//input[@id='_20_title']",
 			RuntimeVariables.replace("Temp_DL_Folder2_Document3_Title.txt"));

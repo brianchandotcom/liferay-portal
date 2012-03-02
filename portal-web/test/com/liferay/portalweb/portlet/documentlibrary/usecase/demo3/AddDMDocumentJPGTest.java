@@ -75,7 +75,7 @@ public class AddDMDocumentJPGTest extends BaseTestCase {
 			RuntimeVariables.replace("Basic Document"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.uploadFile("//input[@id='_20_file']",
+		selenium.uploadTempFile("//input[@id='_20_file']",
 			RuntimeVariables.replace("Document_1.jpg"));
 		selenium.type("//input[@id='_20_title']",
 			RuntimeVariables.replace("DM Document Title"));

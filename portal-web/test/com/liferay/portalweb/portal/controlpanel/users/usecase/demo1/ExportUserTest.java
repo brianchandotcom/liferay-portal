@@ -54,6 +54,6 @@ public class ExportUserTest extends BaseTestCase {
 				"//span[@class='lfr-toolbar-button export-button']/a"));
 		selenium.clickAt("//span[@class='lfr-toolbar-button export-button']/a",
 			RuntimeVariables.replace("Export All Users"));
-		selenium.downloadFile("users.csv");
+		selenium.downloadTempFile("users.csv");
 	}
 }

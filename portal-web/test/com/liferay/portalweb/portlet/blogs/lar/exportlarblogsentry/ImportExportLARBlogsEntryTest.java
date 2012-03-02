@@ -77,7 +77,7 @@ public class ImportExportLARBlogsEntryTest extends BaseTestCase {
 		selenium.clickAt("link=Import", RuntimeVariables.replace("Import"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.uploadFile("//input[@id='_86_importFileName']",
+		selenium.uploadTempFile("//input[@id='_86_importFileName']",
 			RuntimeVariables.replace("Blogs_Entry.Portlet.lar"));
 		assertTrue(selenium.isChecked(
 				"//input[@id='_86_PORTLET_SETUPCheckbox']"));

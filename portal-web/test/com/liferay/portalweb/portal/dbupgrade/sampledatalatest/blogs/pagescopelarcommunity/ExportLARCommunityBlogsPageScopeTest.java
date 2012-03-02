@@ -125,6 +125,6 @@ public class ExportLARCommunityBlogsPageScopeTest extends BaseTestCase {
 		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Export']",
 			RuntimeVariables.replace("Export"));
-		selenium.downloadFile("Blogs_Page_Scope.Community.lar");
+		selenium.downloadTempFile("Blogs_Page_Scope.Community.lar");
 	}
 }

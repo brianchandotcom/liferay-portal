@@ -99,7 +99,7 @@ public class ImportExportPortletLARPage2BlogsPageScopeTest extends BaseTestCase 
 		selenium.clickAt("link=Import", RuntimeVariables.replace("Import"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.uploadFile("//input[@id='_86_importFileName']",
+		selenium.uploadTempFile("//input[@id='_86_importFileName']",
 			RuntimeVariables.replace("Blogs_Page_Scope.Page2.Portlet.lar"));
 		assertFalse(selenium.isChecked(
 				"//input[@id='_86_PORTLET_ARCHIVED_SETUPSCheckbox']"));

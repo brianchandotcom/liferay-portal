@@ -126,7 +126,7 @@ public class ImportLARSiteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.uploadFile("//input[@id='_156_importFileName']",
+		selenium.uploadTempFile("//input[@id='_156_importFileName']",
 			RuntimeVariables.replace("Document_Library_DEMO.lar"));
 		selenium.clickAt("//input[@value='Import']",
 			RuntimeVariables.replace("Import"));

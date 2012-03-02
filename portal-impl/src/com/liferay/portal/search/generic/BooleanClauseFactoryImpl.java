@@ -19,6 +19,9 @@ import com.liferay.portal.kernel.search.BooleanClauseFactory;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanClauseOccurImpl;
 import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchEngine;
+import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.TermQueryFactory;
 
 /**
@@ -26,15 +29,8 @@ import com.liferay.portal.kernel.search.TermQueryFactory;
  */
 public class BooleanClauseFactoryImpl implements BooleanClauseFactory {
 
-	public BooleanClause create(Query query, String occur) {
-		BooleanClauseOccur booleanClauseOccur = new BooleanClauseOccurImpl(
-			occur);
-
-		return new BooleanClauseImpl(query, booleanClauseOccur);
-	}
-
-	public BooleanClause create(String field, String value, String occur) {
-		Query query = _termQueryFactory.create(field, value);
+	public BooleanClause create(
+		SearchContext searchContext, Query query, String occur) {
 
 		BooleanClauseOccur booleanClauseOccur = new BooleanClauseOccurImpl(
 			occur);
@@ -42,6 +38,22 @@ public class BooleanClauseFactoryImpl implements BooleanClauseFactory {
 		return new BooleanClauseImpl(query, booleanClauseOccur);
 	}
 
-	private TermQueryFactory _termQueryFactory = new TermQueryFactoryImpl();
+	public BooleanClause create(
+		SearchContext searchContext, String field, String value, String occur) {
+
+		String searchEngineId = searchContext.getSearchEngineId();
+
+		SearchEngine searchEngine = SearchEngineUtil.getSearchEngine(
+			searchEngineId);
+
+		TermQueryFactory termQueryFactory = searchEngine.getTermQueryFactory();
+
+		Query query = termQueryFactory.create(field, value);
+
+		BooleanClauseOccur booleanClauseOccur = new BooleanClauseOccurImpl(
+			occur);
+
+		return new BooleanClauseImpl(query, booleanClauseOccur);
+	}
 
 }

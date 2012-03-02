@@ -48,7 +48,6 @@ import java.lang.reflect.Modifier;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -117,8 +116,6 @@ public class ProcessExecutorTest extends TestCase {
 
 			ServerThread.exit(parentSocket);
 
-			assertFalse(ServerThread.isAlive(parentSocket));
-
 			// Test alive 10 times for child process
 
 			for (int i = 0; i < 10; i++) {
@@ -130,8 +127,6 @@ public class ProcessExecutorTest extends TestCase {
 			// Kill child
 
 			ServerThread.exit(childSocket);
-
-			assertFalse(ServerThread.isAlive(childSocket));
 		}
 		finally {
 			serverSocket.close();
@@ -163,8 +158,6 @@ public class ProcessExecutorTest extends TestCase {
 			// Kill parent
 
 			ServerThread.exit(parentSocket);
-
-			assertFalse(ServerThread.isAlive(parentSocket));
 
 			if (_log.isInfoEnabled()) {
 				_log.info("Waiting subprocess to exit");
@@ -218,8 +211,6 @@ public class ProcessExecutorTest extends TestCase {
 
 			ServerThread.exit(parentSocket);
 
-			assertFalse(ServerThread.isAlive(parentSocket));
-
 			_log.info("Waiting subprocess to exit...");
 
 			long startTime = System.currentTimeMillis();
@@ -267,13 +258,9 @@ public class ProcessExecutorTest extends TestCase {
 
 			ServerThread.interruptHeartbeatThread(childSocket);
 
-			assertFalse(ServerThread.isAlive(childSocket));
-
 			// Kill parent
 
 			ServerThread.exit(parentSocket);
-
-			assertFalse(ServerThread.isAlive(parentSocket));
 		}
 		finally {
 			serverSocket.close();
@@ -306,13 +293,9 @@ public class ProcessExecutorTest extends TestCase {
 
 			ServerThread.interruptHeartbeatThread(childSocket);
 
-			assertFalse(ServerThread.isAlive(childSocket));
-
 			// Kill parent
 
 			ServerThread.exit(parentSocket);
-
-			assertFalse(ServerThread.isAlive(parentSocket));
 		}
 		finally {
 			serverSocket.close();
@@ -369,8 +352,6 @@ public class ProcessExecutorTest extends TestCase {
 			// Kill parent
 
 			ServerThread.exit(parentSocket);
-
-			assertFalse(ServerThread.isAlive(parentSocket));
 		}
 		finally {
 			serverSocket.close();
@@ -1673,15 +1654,13 @@ public class ProcessExecutorTest extends TestCase {
 			OutputStream outputStream = socket.getOutputStream();
 
 			outputStream.write(_CODE_EXIT);
-			outputStream.close();
+			socket.shutdownOutput();
 
-			try {
-				int code = inputStream.read();
+			int code = inputStream.read();
 
-				fail("Failed to exit subprocess with response code " + code);
-			}
-			catch (SocketException se) {
-			}
+			assertEquals(-1, code);
+
+			socket.close();
 		}
 
 		public static void interruptHeartbeatThread(Socket socket)
@@ -1691,15 +1670,13 @@ public class ProcessExecutorTest extends TestCase {
 			OutputStream outputStream = socket.getOutputStream();
 
 			outputStream.write(_CODE_INTERRUPT);
-			outputStream.close();
+			socket.shutdownOutput();
 
-			try {
-				int code = inputStream.read();
+			int code = inputStream.read();
 
-				fail("Failed to exit subprocess with response code " + code);
-			}
-			catch (SocketException se) {
-			}
+			assertEquals(-1, code);
+
+			socket.close();
 		}
 
 		public static boolean isAlive(Socket socket) {

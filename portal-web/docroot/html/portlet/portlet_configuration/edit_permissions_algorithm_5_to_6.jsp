@@ -210,10 +210,12 @@ definePermissionsURL.setParameter(Constants.CMD, Constants.VIEW);
 			roles.remove(siteOwner);
 		}
 
-		Role selRole = null;
+		long selRoleId = 0;
 
 		if (modelResource.equals(Role.class.getName())) {
-			selRole = RoleLocalServiceUtil.getRole(Long.valueOf(resourcePrimKey));
+			selRoleId = Long.valueOf(resourcePrimKey);
+
+			Role selRole = RoleLocalServiceUtil.getRole(selRoleId);
 
 			roles.remove(selRole);
 		}
@@ -231,7 +233,7 @@ definePermissionsURL.setParameter(Constants.CMD, Constants.VIEW);
 			for (Team team : teams) {
 				Role role = RoleLocalServiceUtil.getTeamRole(team.getCompanyId(), team.getTeamId());
 
-				if (selRole != null && selRole.equals(role)) {
+				if (role.getRoleId() == selRoleId) {
 					continue;
 				}
 
@@ -246,12 +248,8 @@ definePermissionsURL.setParameter(Constants.CMD, Constants.VIEW);
 
 			String name = role.getName();
 
-			if (!name.equals(RoleConstants.GUEST) && !RolePermissionUtil.contains(permissionChecker, groupId, role.getRoleId(), ActionKeys.VIEW)) {
-				if (role.isTeam() && TeamPermissionUtil.contains(permissionChecker, role.getClassPK(), ActionKeys.PERMISSIONS)) {
-				}
-				else {
-					itr.remove();
-				}
+			if (!name.equals(RoleConstants.GUEST) && !RolePermissionUtil.contains(permissionChecker, groupId, role.getRoleId(), ActionKeys.VIEW) && (!role.isTeam() || !TeamPermissionUtil.contains(permissionChecker, role.getClassPK(), ActionKeys.PERMISSIONS))) {
+				itr.remove();
 			}
 
 			if (name.equals(RoleConstants.GUEST) && modelResource.equals(Layout.class.getName())) {

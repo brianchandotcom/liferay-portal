@@ -98,7 +98,8 @@ public class SA_AddScopeSitePageTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//input[@id='_156_name_en_US']")) {
+						if (selenium.isVisible(
+									"//input[@name='_156_name_en_US']")) {
 							break;
 						}
 					}
@@ -108,7 +109,7 @@ public class SA_AddScopeSitePageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.type("//input[@id='_156_name_en_US']",
+				selenium.type("//input[@name='_156_name_en_US']",
 					RuntimeVariables.replace("Scope Site Test Page"));
 				selenium.clickAt("//input[@value='Add Page']",
 					RuntimeVariables.replace("Add Page"));

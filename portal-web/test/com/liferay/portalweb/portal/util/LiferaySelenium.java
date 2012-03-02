@@ -39,6 +39,8 @@ public interface LiferaySelenium extends Selenium {
 
 	public void setBrowserOption();
 
+	public void uploadCommonFile(String locator, String value);
+
 	public void uploadTempFile(String locator, String value);
 
 }

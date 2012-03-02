@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ImportLARSiteTest extends BaseTestCase {
-	public void testImportLARSite() throws Exception {
+public class TearDownSiteStagingTest extends BaseTestCase {
+	public void testTearDownSiteStaging() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Go to"),
@@ -69,7 +69,7 @@ public class ImportLARSiteTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Pages')]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit Settings')]/a")) {
 					break;
 				}
 			}
@@ -79,18 +79,17 @@ public class ImportLARSiteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Manage Pages"),
+		assertEquals(RuntimeVariables.replace("Edit Settings"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Pages')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit Settings')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Pages')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit Settings')]/a"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Import"),
-			selenium.getText("//button[.='Import']"));
-		selenium.clickAt("//button[.='Import']",
-			RuntimeVariables.replace("Import"));
-		Thread.sleep(5000);
+		assertTrue(selenium.isPartialText("//a[@id='_165_stagingLink']",
+				"Staging"));
+		selenium.clickAt("//a[@id='_165_stagingLink']",
+			RuntimeVariables.replace("Staging"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -98,7 +97,7 @@ public class ImportLARSiteTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//iframe[@id='_156_importDialog']")) {
+				if (selenium.isVisible("//input[@id='_165_none']")) {
 					break;
 				}
 			}
@@ -108,28 +107,15 @@ public class ImportLARSiteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.selectFrame("//iframe[@id='_156_importDialog']");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='_156_importFileName']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.uploadTempFile("//input[@id='_156_importFileName']",
-			RuntimeVariables.replace("Document_Library_DEMO.lar"));
-		selenium.clickAt("//input[@value='Import']",
-			RuntimeVariables.replace("Import"));
-		selenium.selectFrame("relative=top");
+		selenium.clickAt("//input[@id='_165_none']",
+			RuntimeVariables.replace("None"));
+		assertTrue(selenium.isChecked("//input[@id='_165_none']"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 	}
 }

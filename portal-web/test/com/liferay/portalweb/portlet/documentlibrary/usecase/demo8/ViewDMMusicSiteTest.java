@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewPublishToLiveNowPageDMMusicTest extends BaseTestCase {
-	public void testViewPublishToLiveNowPageDMMusic() throws Exception {
+public class ViewDMMusicSiteTest extends BaseTestCase {
+	public void testViewDMMusicSite() throws Exception {
 		selenium.open("/web/site-name/");
 		loadRequiredJavaScriptModules();
 
@@ -66,7 +66,7 @@ public class ViewPublishToLiveNowPageDMMusicTest extends BaseTestCase {
 			selenium.getText("//span[@class='workflow-status']"));
 		assertEquals(RuntimeVariables.replace("DM Music Description"),
 			selenium.getText("//blockquote[@class='lfr-asset-description']"));
-		assertEquals(RuntimeVariables.replace("Download (6,356.5k)"),
+		assertEquals(RuntimeVariables.replace("Download (8,527.7k)"),
 			selenium.getText("//span[@class='download-document']/span/a/span"));
 	}
 }

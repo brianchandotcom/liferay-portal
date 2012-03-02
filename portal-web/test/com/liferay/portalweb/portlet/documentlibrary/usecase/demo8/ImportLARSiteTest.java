@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.documentlibrary.usecase.demo7;
+package com.liferay.portalweb.portlet.documentlibrary.usecase.demo8;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ExportLARSiteTest extends BaseTestCase {
-	public void testExportLARSite() throws Exception {
+public class ImportLARSiteTest extends BaseTestCase {
+	public void testImportLARSite() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Go to"),
@@ -86,10 +86,10 @@ public class ExportLARSiteTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Pages')]/a"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Export"),
-			selenium.getText("//button[.='Export']"));
-		selenium.clickAt("//button[.='Export']",
-			RuntimeVariables.replace("Export"));
+		assertEquals(RuntimeVariables.replace("Import"),
+			selenium.getText("//button[.='Import']"));
+		selenium.clickAt("//button[.='Import']",
+			RuntimeVariables.replace("Import"));
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
@@ -98,7 +98,7 @@ public class ExportLARSiteTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//iframe[@id='_156_exportDialog']")) {
+				if (selenium.isVisible("//iframe[@id='_156_importDialog']")) {
 					break;
 				}
 			}
@@ -108,7 +108,7 @@ public class ExportLARSiteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.selectFrame("//iframe[@id='_156_exportDialog']");
+		selenium.selectFrame("//iframe[@id='_156_importDialog']");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -116,7 +116,7 @@ public class ExportLARSiteTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//input[@id='_156_exportFileName']")) {
+				if (selenium.isVisible("//input[@id='_156_importFileName']")) {
 					break;
 				}
 			}
@@ -126,12 +126,12 @@ public class ExportLARSiteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.type("//input[@id='_156_exportFileName']",
-			RuntimeVariables.replace("Document_Library_DEMO.lar"));
-		selenium.clickAt("//input[@value='Export']",
-			RuntimeVariables.replace("Export"));
-		selenium.downloadTempFile("Document_Library_DEMO.lar");
-		Thread.sleep(5000);
+		selenium.uploadTempFile("//input[@id='_156_importFileName']",
+			RuntimeVariables.replace("DocumentsAndMedia_DEMO.lar"));
+		selenium.clickAt("//input[@value='Import']",
+			RuntimeVariables.replace("Import"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 		selenium.selectFrame("relative=top");
 	}
 }

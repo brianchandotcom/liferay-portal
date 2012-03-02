@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.permissions.usecase.permissionsteamdemo;
+package com.liferay.portalweb.portal.permissions.usecase.permissionsindividualscopedemo;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AssignMembersUser2SiteTest extends BaseTestCase {
-	public void testAssignMembersUser2Site() throws Exception {
+public class EditUser2SitesLiferayTest extends BaseTestCase {
+	public void testEditUser2SitesLiferay() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -31,7 +31,45 @@ public class AssignMembersUser2SiteTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("//div[@id='dockbar']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dock Bar"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//li[@id='_145_mySites']/a/span")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.clickAt("//li[@id='_145_mySites']/a/span",
+			RuntimeVariables.replace("Go To"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -56,9 +94,12 @@ public class AssignMembersUser2SiteTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("userfn2"),
-			selenium.getText("//tbody/tr[3]/td[2]/a"));
-		selenium.clickAt("//tbody/tr[3]/td[2]/a",
-			RuntimeVariables.replace("userfn2"));
+			selenium.getText("//td[2]/a"));
+		assertEquals(RuntimeVariables.replace("userln2"),
+			selenium.getText("//td[3]/a"));
+		assertEquals(RuntimeVariables.replace("usersn2"),
+			selenium.getText("//td[4]/a"));
+		selenium.clickAt("//td[4]/a", RuntimeVariables.replace("usersn2"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isPartialText("//a[@id='_125_sitesLink']", "Sites"));
@@ -71,7 +112,7 @@ public class AssignMembersUser2SiteTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@id='_125_sites']/span/a/span")) {
+				if (selenium.isVisible("//div[4]/span/a/span")) {
 					break;
 				}
 			}
@@ -82,11 +123,13 @@ public class AssignMembersUser2SiteTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Select"),
-			selenium.getText("//div[@id='_125_sites']/span/a/span"));
-		selenium.clickAt("//div[@id='_125_sites']/span/a/span",
+			selenium.getText("//div[4]/span/a/span"));
+		selenium.clickAt("//div[4]/span/a/span",
 			RuntimeVariables.replace("Select"));
 		Thread.sleep(5000);
-		selenium.selectWindow("title=Users and Organizations");
+		selenium.selectWindow("Users and Organizations");
+		assertEquals(RuntimeVariables.replace("Liferay"),
+			selenium.getText("//a[contains(text(),'Liferay')]"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -94,7 +137,7 @@ public class AssignMembersUser2SiteTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//input[@id='_125_name']")) {
+				if (selenium.isVisible("//a[contains(.,'Liferay')]")) {
 					break;
 				}
 			}
@@ -104,15 +147,10 @@ public class AssignMembersUser2SiteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.type("//input[@id='_125_name']",
-			RuntimeVariables.replace("Site Name"));
-		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace("Search"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Site Name"),
-			selenium.getText("//tr[3]/td/a"));
-		selenium.clickAt("//tr[3]/td/a", RuntimeVariables.replace("Site Name"));
+		assertEquals(RuntimeVariables.replace("Liferay"),
+			selenium.getText("//a[contains(.,'Liferay')]"));
+		selenium.clickAt("//a[contains(.,'Liferay')]",
+			RuntimeVariables.replace("Liferay"));
 		selenium.selectWindow("null");
 
 		for (int second = 0;; second++) {
@@ -121,9 +159,8 @@ public class AssignMembersUser2SiteTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("Site Name")
-										.equals(selenium.getText(
-								"//div[@id='_125_sites']/div/div/div/table/tr/td"))) {
+				if (selenium.isVisible(
+							"//div[@id='_125_sites']/div/div/div/table/tr/td")) {
 					break;
 				}
 			}
@@ -133,7 +170,7 @@ public class AssignMembersUser2SiteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Site Name"),
+		assertEquals(RuntimeVariables.replace("Liferay"),
 			selenium.getText("//div[@id='_125_sites']/div/div/div/table/tr/td"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
@@ -142,5 +179,7 @@ public class AssignMembersUser2SiteTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("Liferay"),
+			selenium.getText("//tr[3]/td[1]"));
 	}
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.permissions.usecase.permissionsuserpersonalsitedemo;
+package com.liferay.portalweb.portal.permissions.usecase.permissionsindividualscopedemo;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class User_SignInTest extends BaseTestCase {
-	public void testUser_SignIn() throws Exception {
+public class Guest_AssertNotViewableFolder2Test extends BaseTestCase {
+	public void testGuest_AssertNotViewableFolder2() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -31,7 +31,7 @@ public class User_SignInTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Welcome")) {
+				if (selenium.isVisible("link=Documents and Media Test Page")) {
 					break;
 				}
 			}
@@ -41,18 +41,18 @@ public class User_SignInTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Welcome", RuntimeVariables.replace("Welcome"));
+		selenium.clickAt("link=Documents and Media Test Page",
+			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.type("//input[@id='_58_login']",
-			RuntimeVariables.replace("userea@liferay.com"));
-		selenium.type("//input[@id='_58_password']",
-			RuntimeVariables.replace("test"));
-		selenium.clickAt("//input[@id='_58_rememberMeCheckbox']",
-			RuntimeVariables.replace("Remember Me"));
-		selenium.clickAt("//input[@value='Sign In']",
-			RuntimeVariables.replace("Sign In"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
+		assertTrue(selenium.isElementPresent(
+				"xpath=(//a[contains(@class,'document-link')])[1]"));
+		assertEquals(RuntimeVariables.replace("DL Folder 1 Name"),
+			selenium.getText("xpath=(//a[contains(@class,'document-link')])[1]"));
+		assertFalse(selenium.isElementPresent(
+				"xpath=(//a[contains(@class,'document-link')])[2]"));
+		assertFalse(selenium.isElementPresent(
+				"xpath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"));
+		assertFalse(selenium.isTextPresent("DL Folder 2 Name"));
 	}
 }

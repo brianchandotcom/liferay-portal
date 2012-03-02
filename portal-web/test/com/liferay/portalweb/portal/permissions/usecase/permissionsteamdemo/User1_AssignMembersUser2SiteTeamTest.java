@@ -129,7 +129,7 @@ public class User1_AssignMembersUser2SiteTeamTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Userfn2 Userln2"),
+		assertEquals(RuntimeVariables.replace("userfn2 userln2"),
 			selenium.getText("//tr[3]/td[2]"));
 		selenium.clickAt("//tr[3]/td[1]/input", RuntimeVariables.replace(""));
 		selenium.clickAt("//input[@value='Update Associations']",

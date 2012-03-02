@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.permissions.usecase.permissionsteamdemo;
+package com.liferay.portalweb.portal.permissions.usecase.permissionsindividualscopedemo;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUser1Test;
@@ -20,6 +20,9 @@ import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUser2Test
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.EditUser1PasswordTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.EditUser2PasswordTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.TearDownUserTest;
+import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.documentlibrary.portlet.addportlet.AddPageDMTest;
+import com.liferay.portalweb.portlet.documentlibrary.portlet.addportlet.AddPortletDMTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -27,31 +30,41 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class PermissionsTeamDemoTests extends BaseTestSuite {
+public class PermissionsIndividualScopeDemoTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AddSiteTest.class);
-		testSuite.addTestSuite(AddPageSiteTest.class);
 		testSuite.addTestSuite(AddUser1Test.class);
 		testSuite.addTestSuite(EditUser1PasswordTest.class);
 		testSuite.addTestSuite(AddUser2Test.class);
 		testSuite.addTestSuite(EditUser2PasswordTest.class);
-		testSuite.addTestSuite(AssignMembersUser1SiteTest.class);
-		testSuite.addTestSuite(AssignMembersUser2SiteTest.class);
-		testSuite.addTestSuite(AssignRoleSiteAdministratorUser1Test.class);
+		testSuite.addTestSuite(EditUser2SitesLiferayTest.class);
+		testSuite.addTestSuite(AddPageDMTest.class);
+		testSuite.addTestSuite(AddPortletDMTest.class);
+		testSuite.addTestSuite(AddFolder1Test.class);
+		testSuite.addTestSuite(AddFolder1Image1Test.class);
+		testSuite.addTestSuite(AddFolder2Test.class);
+		testSuite.addTestSuite(ConfigureViewPermissionFolder2Test.class);
+		testSuite.addTestSuite(AddFolder2Image2Test.class);
+		testSuite.addTestSuite(AddFolder2Image3ViewableBySiteMemberTest.class);
+		testSuite.addTestSuite(AddFolder2SubfolderViewableByOwnerTest.class);
+		testSuite.addTestSuite(AddFolder2SubfolderImage4ViewableBySiteMemberTest.class);
+		testSuite.addTestSuite(SearchFolderImageTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(Guest_AssertNotViewableFolder2Test.class);
+		testSuite.addTestSuite(Guest_SearchFolderImageTest.class);
 		testSuite.addTestSuite(User1_SignInTest.class);
-		testSuite.addTestSuite(User1_AddSiteTeamTest.class);
-		testSuite.addTestSuite(User1_AssignMembersUser2SiteTeamTest.class);
-		testSuite.addTestSuite(User1_AddPortletMBSiteTest.class);
-		testSuite.addTestSuite(User1_ConfigureMBPermissionsTeamAddCategoryOnTest.class);
+		testSuite.addTestSuite(User1_AssertNotViewableFolder2Image3Test.class);
+		testSuite.addTestSuite(User1_SearchFolderImageTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(User2_SignInTest.class);
-		testSuite.addTestSuite(User2_AddMBCategoryTest.class);
+		testSuite.addTestSuite(User2_AssertViewableFolder2Image3Test.class);
+		testSuite.addTestSuite(User2_AssertNotViewableFolder2SubfolderTest.class);
+		testSuite.addTestSuite(User2_SearchFolderImageTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SignInTest.class);
+		testSuite.addTestSuite(TearDownDLDocumentTest.class);
+		testSuite.addTestSuite(TearDownPageTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
-		testSuite.addTestSuite(TearDownSitesTest.class);
 
 		return testSuite;
 	}

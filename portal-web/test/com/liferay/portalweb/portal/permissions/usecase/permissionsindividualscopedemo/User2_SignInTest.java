@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.permissions.usecase.permissionsuserpersonalsitedemo;
+package com.liferay.portalweb.portal.permissions.usecase.permissionsindividualscopedemo;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class User_SignInTest extends BaseTestCase {
-	public void testUser_SignIn() throws Exception {
+public class User2_SignInTest extends BaseTestCase {
+	public void testUser2_SignIn() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -45,7 +45,7 @@ public class User_SignInTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_58_login']",
-			RuntimeVariables.replace("userea@liferay.com"));
+			RuntimeVariables.replace("userea2@liferay.com"));
 		selenium.type("//input[@id='_58_password']",
 			RuntimeVariables.replace("test"));
 		selenium.clickAt("//input[@id='_58_rememberMeCheckbox']",

@@ -37,10 +37,13 @@ FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIB
 
 boolean versionSpecific = false;
 
+boolean isCompanyAdmin = permissionChecker.isCompanyAdmin();
+boolean isGroupAdmin = permissionChecker.isGroupAdmin(scopeGroupId);
+
 if (fileVersion != null) {
 	versionSpecific = true;
 }
-else if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
+else if ((user.getUserId() == fileEntry.getUserId()) || isCompanyAdmin || isGroupAdmin || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
 	fileVersion = fileEntry.getLatestFileVersion();
 }
 else {
@@ -594,7 +597,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							boolean comparableFileEntry = DocumentConversionUtil.isComparableVersion(extension);
 							boolean showNonApprovedDocuments = false;
 
-							if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId)) {
+							if ((user.getUserId() == fileEntry.getUserId()) || isCompanyAdmin || isGroupAdmin) {
 								showNonApprovedDocuments = true;
 							}
 

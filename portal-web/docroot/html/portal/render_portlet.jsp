@@ -607,7 +607,7 @@ if (lifecycle.equals(PortletRequest.RENDER_PHASE)) {
 
 		if (key.startsWith(portletNamespace) || publicRenderParameterNames.contains(key)) {
 			if (key.startsWith(portletNamespace)) {
-				key = key.substring(portletNamespace.length(), key.length());
+				key = key.substring(portletNamespace.length());
 			}
 
 			String[] values = (String[])entry.getValue();

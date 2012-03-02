@@ -15,10 +15,13 @@
 package com.liferay.portalweb.portal.util;
 
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import com.thoughtworks.selenium.CommandProcessor;
 import com.thoughtworks.selenium.DefaultSelenium;
+
+import java.io.File;
 
 /**
  * @author Brian Wing Shun Chan
@@ -35,6 +38,16 @@ public class LiferayDefaultSelenium
 		String browserURL) {
 
 		super(serverHost, serverPort, browserStartCommand, browserURL);
+
+		File file = new File(StringPool.PERIOD);
+
+		String absolutePath = file.getAbsolutePath();
+
+		if (absolutePath.endsWith(StringPool.PERIOD)) {
+			absolutePath = absolutePath.substring(0, absolutePath.length() - 1);
+
+			_sourceDir = absolutePath;
+		}
 	}
 
 	public void downloadTempFile(String value) {
@@ -144,6 +157,14 @@ public class LiferayDefaultSelenium
 		_timeout = timeout;
 	}
 
+	public void uploadCommonFile(String location, String value) {
+		String text =
+			_sourceDir + "portal-web\\test\\com\\liferay\\portalweb\\" +
+			"dependencies\\" + value;
+
+		super.type(location, text);
+	}
+
 	public void uploadTempFile(String location, String value) {
 		String text = TestPropsValues.OUTPUT_DIR + value;
 
@@ -195,6 +216,7 @@ public class LiferayDefaultSelenium
 	private static final String _SELENIUM_EXECUTABLE_DIR =
 		TestPropsValues.SELENIUM_EXECUTABLE_DIR;
 
+	private String _sourceDir;
 	private String _timeout = "90000";
 
 }

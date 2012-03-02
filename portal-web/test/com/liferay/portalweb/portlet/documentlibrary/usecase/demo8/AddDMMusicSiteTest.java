@@ -74,7 +74,7 @@ public class AddDMMusicSiteTest extends BaseTestCase {
 			RuntimeVariables.replace("Music"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.uploadTempFile("//input[@id='_20_file']",
+		selenium.uploadCommonFile("//input[@id='_20_file']",
 			RuntimeVariables.replace("Document_1.mp3"));
 		selenium.type("//input[@id='_20_title']",
 			RuntimeVariables.replace("DM Music Title"));

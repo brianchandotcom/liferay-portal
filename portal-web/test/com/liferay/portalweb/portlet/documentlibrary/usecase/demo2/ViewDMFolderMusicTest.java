@@ -118,7 +118,7 @@ public class ViewDMFolderMusicTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("DM Music Description"),
 					selenium.getText(
 						"//blockquote[@class='lfr-asset-description']"));
-				assertEquals(RuntimeVariables.replace("Download (6,356.5k)"),
+				assertEquals(RuntimeVariables.replace("Download (8,527.7k)"),
 					selenium.getText(
 						"//span[@class='download-document']/span/a/span"));
 				assertEquals(RuntimeVariables.replace("Song Information"),
@@ -202,19 +202,7 @@ public class ViewDMFolderMusicTest extends BaseTestCase {
 
 				assertTrue(selenium.isPartialText(
 						"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[1]",
-						"Title Feel Good Inc"));
-				assertTrue(selenium.isPartialText(
-						"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[2]",
 						"Content Type audio/mpeg"));
-				assertTrue(selenium.isPartialText(
-						"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[3]",
-						"Author Gorilla"));
-				assertTrue(selenium.isPartialText(
-						"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[4]",
-						"Album Demon Day"));
-				assertTrue(selenium.isPartialText(
-						"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[5]",
-						"Artist Gorilla"));
 
 			case 100:
 				label = -1;

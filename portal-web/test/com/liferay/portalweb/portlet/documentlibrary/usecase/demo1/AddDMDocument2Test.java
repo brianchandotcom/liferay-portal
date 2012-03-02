@@ -75,9 +75,8 @@ public class AddDMDocument2Test extends BaseTestCase {
 			RuntimeVariables.replace("Basic Document"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.type("//input[@id='_20_file']",
-			RuntimeVariables.replace(
-				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\documentlibrary\\dependencies\\test_document.txt"));
+		selenium.uploadCommonFile("//input[@id='_20_file']",
+			RuntimeVariables.replace("Document_1.txt"));
 		selenium.type("//input[@id='_20_title']",
 			RuntimeVariables.replace("DM Document2 Title"));
 		selenium.type("//textarea[@id='_20_description']",

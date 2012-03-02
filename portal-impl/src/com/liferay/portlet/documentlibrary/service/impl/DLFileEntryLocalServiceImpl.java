@@ -677,10 +677,7 @@ public class DLFileEntryLocalServiceImpl
 		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
 			fileEntryId);
 
-		DLFileVersion dlFileVersion = dlFileVersionLocalService.getFileVersion(
-			fileEntryId, dlFileEntry.getVersion());
-
-		dlFileEntry.setFileVersion(dlFileVersion);
+		setFileVersion(dlFileEntry);
 
 		return dlFileEntry;
 	}
@@ -691,10 +688,7 @@ public class DLFileEntryLocalServiceImpl
 		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByG_F_T(
 			groupId, folderId, title);
 
-		DLFileVersion dlFileVersion = dlFileVersionLocalService.getFileVersion(
-			dlFileEntry.getFileEntryId(), dlFileEntry.getVersion());
-
-		dlFileEntry.setFileVersion(dlFileVersion);
+		setFileVersion(dlFileEntry);
 
 		return dlFileEntry;
 	}
@@ -706,10 +700,7 @@ public class DLFileEntryLocalServiceImpl
 		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByG_F_N(
 			groupId, folderId, name);
 
-		DLFileVersion dlFileVersion = dlFileVersionLocalService.getFileVersion(
-			dlFileEntry.getFileEntryId(), dlFileEntry.getVersion());
-
-		dlFileEntry.setFileVersion(dlFileVersion);
+		setFileVersion(dlFileEntry);
 
 		return dlFileEntry;
 	}
@@ -720,10 +711,7 @@ public class DLFileEntryLocalServiceImpl
 		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByUUID_G(
 			uuid, groupId);
 
-		DLFileVersion dlFileVersion = dlFileVersionLocalService.getFileVersion(
-			dlFileEntry.getFileEntryId(), dlFileEntry.getVersion());
-
-		dlFileEntry.setFileVersion(dlFileVersion);
+		setFileVersion(dlFileEntry);
 
 		return dlFileEntry;
 	}
@@ -780,6 +768,12 @@ public class DLFileEntryLocalServiceImpl
 		else {
 			return dlFileEntryPersistence.countByG_U(groupId, userId);
 		}
+	}
+
+	public List<DLFileEntry> getMisversionedFileEntries()
+		throws SystemException {
+
+		return dlFileEntryFinder.findByMisversionedFileEntries();
 	}
 
 	public List<DLFileEntry> getNoAssetFileEntries() throws SystemException {
@@ -1499,6 +1493,20 @@ public class DLFileEntryLocalServiceImpl
 			DLFileEntry.class);
 
 		indexer.reindex(dlFileEntry);
+	}
+
+	protected void setFileVersion(DLFileEntry dlFileEntry)
+		throws PortalException, SystemException {
+
+		try {
+			DLFileVersion dlFileVersion =
+				dlFileVersionLocalService.getFileVersion(
+					dlFileEntry.getFileEntryId(), dlFileEntry.getVersion());
+
+			dlFileEntry.setFileVersion(dlFileVersion);
+		}
+		catch (NoSuchFileVersionException nsfve) {
+		}
 	}
 
 	protected void startWorkflowInstance(

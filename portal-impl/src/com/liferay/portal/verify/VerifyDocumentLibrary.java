@@ -14,27 +14,86 @@
 
 package com.liferay.portal.verify;
 
+import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
+import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
+import com.liferay.portlet.documentlibrary.util.comparator.FileVersionVersionComparator;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 /**
  * @author Raymond Augé
  * @author Douglas Wong
+ * @author Alexander Chow
  */
 public class VerifyDocumentLibrary extends VerifyProcess {
+
+	protected void addFileVersion(DLFileEntry dlFileEntry)
+		throws SystemException {
+
+		long fileVersionId = CounterLocalServiceUtil.increment();
+
+		DLFileVersion dlFileVersion =
+			DLFileVersionLocalServiceUtil.createDLFileVersion(fileVersionId);
+
+		dlFileVersion.setGroupId(dlFileEntry.getGroupId());
+		dlFileVersion.setCompanyId(dlFileEntry.getCompanyId());
+
+		long versionUserId = dlFileEntry.getVersionUserId();
+
+		if (versionUserId <= 0) {
+			versionUserId = dlFileEntry.getUserId();
+		}
+
+		dlFileVersion.setUserId(versionUserId);
+
+		String versionUserName = GetterUtil.getString(
+			dlFileEntry.getVersionUserName(), dlFileEntry.getUserName());
+
+		dlFileVersion.setUserName(versionUserName);
+
+		Date now = new Date();
+
+		dlFileVersion.setCreateDate(dlFileEntry.getModifiedDate());
+		dlFileVersion.setModifiedDate(dlFileEntry.getModifiedDate());
+		dlFileVersion.setRepositoryId(dlFileEntry.getRepositoryId());
+		dlFileVersion.setFolderId(dlFileEntry.getFolderId());
+		dlFileVersion.setFileEntryId(dlFileEntry.getFileEntryId());
+		dlFileVersion.setExtension(dlFileEntry.getExtension());
+		dlFileVersion.setMimeType(dlFileEntry.getMimeType());
+		dlFileVersion.setTitle(dlFileEntry.getTitle());
+		dlFileVersion.setDescription(dlFileEntry.getDescription());
+		dlFileVersion.setExtraSettings(dlFileEntry.getExtraSettings());
+		dlFileVersion.setFileEntryTypeId(dlFileEntry.getFileEntryTypeId());
+		dlFileVersion.setVersion(dlFileEntry.getVersion());
+		dlFileVersion.setSize(dlFileEntry.getSize());
+		dlFileVersion.setStatus(WorkflowConstants.STATUS_APPROVED);
+		dlFileVersion.setStatusByUserId(versionUserId);
+		dlFileVersion.setStatusByUserName(versionUserName);
+		dlFileVersion.setStatusDate(now);
+
+		DLFileVersionLocalServiceUtil.updateDLFileVersion(dlFileVersion);
+	}
 
 	protected void checkFileEntryType() throws Exception {
 		DLFileEntryType dlFileEntryType =
@@ -54,13 +113,74 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 		dlFileEntryType.setModifiedDate(now);
 		dlFileEntryType.setName(DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT);
 
-		DLFileEntryTypeLocalServiceUtil.updateDLFileEntryType(
-			dlFileEntryType, false);
+		DLFileEntryTypeLocalServiceUtil.updateDLFileEntryType(dlFileEntryType);
+	}
+
+	protected void checkMisversionedFileEntries() throws Exception {
+		List<DLFileEntry> dlFileEntries =
+			DLFileEntryLocalServiceUtil.getMisversionedFileEntries();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Processing " + dlFileEntries.size() +
+					" file entries with invalid version");
+		}
+
+		for (DLFileEntry dlFileEntry : dlFileEntries) {
+			copyFile(dlFileEntry);
+
+			addFileVersion(dlFileEntry);
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Fixed misversioned file entries");
+		}
+	}
+
+	protected void copyFile(DLFileEntry dlFileEntry)
+		throws PortalException, SystemException {
+
+		long companyId = dlFileEntry.getCompanyId();
+		long dataRepositoryId = dlFileEntry.getDataRepositoryId();
+		String name = dlFileEntry.getName();
+		String version = dlFileEntry.getVersion();
+
+		if (DLStoreUtil.hasFile(companyId, dataRepositoryId, name, version)) {
+			return;
+		}
+
+		FileVersionVersionComparator comparator =
+			new FileVersionVersionComparator();
+
+		List<DLFileVersion> dlFileVersions = dlFileEntry.getFileVersions(
+			WorkflowConstants.STATUS_APPROVED);
+
+		if (dlFileVersions.isEmpty()) {
+			dlFileVersions = dlFileEntry.getFileVersions(
+				WorkflowConstants.STATUS_ANY);
+		}
+
+		if (dlFileVersions.isEmpty()) {
+			DLStoreUtil.addFile(companyId, dataRepositoryId, name, new byte[0]);
+
+			return;
+		}
+
+		dlFileVersions = ListUtil.copy(dlFileVersions);
+
+		Collections.sort(dlFileVersions, comparator);
+
+		DLFileVersion dlFileVersion = dlFileVersions.get(0);
+
+		DLStoreUtil.copyFileVersion(
+			companyId, dataRepositoryId, name, dlFileVersion.getVersion(),
+			version);
 	}
 
 	@Override
 	protected void doVerify() throws Exception {
 		checkFileEntryType();
+		checkMisversionedFileEntries();
 		removeOrphanedFileEntries();
 		updateAssets();
 	}

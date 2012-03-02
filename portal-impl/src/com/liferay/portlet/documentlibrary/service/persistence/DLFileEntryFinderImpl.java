@@ -64,6 +64,9 @@ public class DLFileEntryFinderImpl
 	public static final String FIND_BY_EXTRA_SETTINGS =
 		DLFileEntryFinder.class.getName() + ".findByExtraSettings";
 
+	public static final String FIND_BY_MISVERSIONED_FILE_ENTRIES =
+		DLFileEntryFinder.class.getName() + ".findByMisversionedFileEntries";
+
 	public static final String FIND_BY_NO_ASSETS =
 		DLFileEntryFinder.class.getName() + ".findByNoAssets";
 
@@ -282,6 +285,30 @@ public class DLFileEntryFinderImpl
 
 			return (List<DLFileEntry>)QueryUtil.list(
 				q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	public List<DLFileEntry> findByMisversionedFileEntries()
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_MISVERSIONED_FILE_ENTRIES);
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addEntity("DLFileEntry", DLFileEntryImpl.class);
+
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

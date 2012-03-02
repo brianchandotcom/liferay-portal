@@ -65,6 +65,11 @@ public class DLFileEntryFinderUtil {
 		return getFinder().findByExtraSettings(start, end);
 	}
 
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> findByMisversionedFileEntries()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().findByMisversionedFileEntries();
+	}
+
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> findByNoAssets()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder().findByNoAssets();

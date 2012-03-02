@@ -533,6 +533,11 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 		return _dlFileEntryLocalService.getGroupFileEntriesCount(groupId, userId);
 	}
 
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getMisversionedFileEntries()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryLocalService.getMisversionedFileEntries();
+	}
+
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getNoAssetFileEntries()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _dlFileEntryLocalService.getNoAssetFileEntries();

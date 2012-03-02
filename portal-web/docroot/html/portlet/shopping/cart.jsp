@@ -277,7 +277,7 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 			int pos = fieldsArray[j].indexOf("=");
 
 			String fieldName = fieldsArray[j].substring(0, pos);
-			String fieldValue = fieldsArray[j].substring(pos + 1, fieldsArray[j].length());
+			String fieldValue = fieldsArray[j].substring(pos + 1);
 
 			sb.append("<br />");
 			sb.append(fieldName);

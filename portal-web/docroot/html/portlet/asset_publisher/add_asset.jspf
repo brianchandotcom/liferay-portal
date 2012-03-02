@@ -47,7 +47,7 @@ addPortletURLs = getAddPortletURLs(liferayPortletRequest, liferayPortletResponse
 				int pos = className.indexOf(_CLASSNAME_SEPARATOR);
 
 				if (pos != -1) {
-					message = className.substring(pos + _CLASSNAME_SEPARATOR.length(), className.length());
+					message = className.substring(pos + _CLASSNAME_SEPARATOR.length());
 
 					className = className.substring(0, pos);
 				}

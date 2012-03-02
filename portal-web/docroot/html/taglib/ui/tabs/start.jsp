@@ -45,7 +45,7 @@ if (url != null) {
 			z = url.length();
 		}
 
-		url = url.substring(0, y) + url.substring(z, url.length());
+		url = url.substring(0, y) + url.substring(z);
 	}
 
 	// Strip trailing &

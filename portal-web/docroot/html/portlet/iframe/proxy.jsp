@@ -43,7 +43,7 @@ for (String hiddenVariable : hiddenVariablesList) {
 
 	if (pos != -1) {
 		hiddenKey = hiddenVariable.substring(0, pos);
-		hiddenValue = hiddenVariable.substring(pos + 1, hiddenVariable.length());
+		hiddenValue = hiddenVariable.substring(pos + 1);
 	}
 %>
 

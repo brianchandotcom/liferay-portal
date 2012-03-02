@@ -161,6 +161,10 @@ public class ActionUtil {
 
 		try {
 			page = WikiPageServiceUtil.getPage(nodeId, title, version);
+
+			if (page.isDraft()) {
+				throw new NoSuchPageException();
+			}
 		}
 		catch (NoSuchPageException nspe) {
 			if (title.equals(WikiPageConstants.FRONT_PAGE) && (version == 0)) {

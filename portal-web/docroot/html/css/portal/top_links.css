@@ -24,6 +24,13 @@
 }
 
 .top-links-navigation li {
-	display: inline;
+	display: inline-block;
 	list-style-type: none;
+}
+
+.ie6, .ie7 {
+	.top-links-navigation li {
+		display: inline;
+		zoom: 1;
+	}
 }

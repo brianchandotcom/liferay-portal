@@ -28,6 +28,8 @@ String device = (String)request.getAttribute("edit_pages.jsp-device");
 boolean editable = (Boolean)request.getAttribute("edit_pages.jsp-editable");
 
 Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSettings();
+
+boolean isOmniadmin = permissionChecker.isOmniadmin();
 %>
 
 <div class="lfr-theme-list">
@@ -203,7 +205,7 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 					<%= LanguageUtil.format(pageContext, "available-themes-x", (themes.size() - 1)) %>
 				</span>
 
-				<c:if test="<%= permissionChecker.isOmniadmin() && PrefsPropsUtil.getBoolean(PropsKeys.AUTO_DEPLOY_ENABLED, PropsValues.AUTO_DEPLOY_ENABLED) %>">
+				<c:if test="<%= isOmniadmin && PrefsPropsUtil.getBoolean(PropsKeys.AUTO_DEPLOY_ENABLED, PropsValues.AUTO_DEPLOY_ENABLED) %>">
 
 					<%
 					PortletURL installPluginsURL = PortletURLFactoryUtil.create(request, PortletKeys.PLUGIN_INSTALLER, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
@@ -251,7 +253,7 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 	</c:if>
 </div>
 
-<c:if test="<%= editable && permissionChecker.isOmniadmin() && PrefsPropsUtil.getBoolean(PropsKeys.AUTO_DEPLOY_ENABLED, PropsValues.AUTO_DEPLOY_ENABLED) %>">
+<c:if test="<%= editable && isOmniadmin && PrefsPropsUtil.getBoolean(PropsKeys.AUTO_DEPLOY_ENABLED, PropsValues.AUTO_DEPLOY_ENABLED) %>">
 	<aui:script use="aui-base">
 		if (window.parent) {
 			var installMoreLink = A.one('#<portlet:namespace />installMore');

@@ -112,7 +112,9 @@ pageContext.setAttribute("portletURL", portletURL);
 
 	headerNames.add("active");
 
-	if (permissionChecker.isGroupAdmin(themeDisplay.getScopeGroupId())) {
+	boolean isGroupAdmin = permissionChecker.isGroupAdmin(themeDisplay.getScopeGroupId());
+
+	if (isGroupAdmin) {
 		headerNames.add("pending-requests");
 	}
 
@@ -303,7 +305,7 @@ pageContext.setAttribute("portletURL", portletURL);
 
 		// Restricted number of petitions
 
-		if (permissionChecker.isGroupAdmin(themeDisplay.getScopeGroupId())) {
+		if (isGroupAdmin) {
 			if (group.getType() == GroupConstants.TYPE_SITE_RESTRICTED) {
 				int pendingRequests = MembershipRequestLocalServiceUtil.searchCount(group.getGroupId(), MembershipRequestConstants.STATUS_PENDING);
 

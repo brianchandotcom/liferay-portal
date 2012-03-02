@@ -31,7 +31,10 @@ String dlFileEntryTypeName = LanguageUtil.get(pageContext, "basic-document");
 
 int status = WorkflowConstants.STATUS_APPROVED;
 
-if (permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId)) {
+boolean isCompanyAdmin = permissionChecker.isCompanyAdmin();
+boolean isGroupAdmin = permissionChecker.isGroupAdmin(scopeGroupId);
+
+if (isCompanyAdmin || isGroupAdmin) {
 	status = WorkflowConstants.STATUS_ANY;
 }
 
@@ -300,7 +303,7 @@ for (int i = 0; i < results.size(); i++) {
 						<%
 						FileVersion latestFileVersion = fileEntry.getFileVersion();
 
-						if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
+						if ((user.getUserId() == fileEntry.getUserId()) || isCompanyAdmin || isGroupAdmin || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
 							latestFileVersion = fileEntry.getLatestFileVersion();
 						}
 						%>

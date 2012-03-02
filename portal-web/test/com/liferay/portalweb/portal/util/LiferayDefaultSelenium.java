@@ -144,7 +144,7 @@ public class LiferayDefaultSelenium
 		_timeout = timeout;
 	}
 
-	public void uploadFile(String location, String value) {
+	public void uploadTempFile(String location, String value) {
 		String text = TestPropsValues.OUTPUT_DIR + value;
 
 		super.type(location, text);

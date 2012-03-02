@@ -67,7 +67,7 @@
 			<%
 			WikiPage draftPage = WikiPageLocalServiceUtil.getDraftPage(node.getNodeId(), title);
 
-			boolean editableDraft = true;
+			boolean editableDraft = false;
 
 			if (permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId) || (draftPage.getUserId() == user.getUserId())) {
 				editableDraft = true;

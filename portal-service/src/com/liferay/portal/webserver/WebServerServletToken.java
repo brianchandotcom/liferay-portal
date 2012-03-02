@@ -16,6 +16,7 @@ package com.liferay.portal.webserver;
 
 /**
  * @author Brian Wing Shun Chan
+ * @since  6.1, replaced com.liferay.portal.kernel.servlet.ImageServletToken
  */
 public interface WebServerServletToken {
 

@@ -86,7 +86,7 @@ public class ImportExportCPLARWikiUseCaseTest extends BaseTestCase {
 		selenium.clickAt("link=Import", RuntimeVariables.replace("Import"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.uploadFile("//input[@id='_86_importFileName']",
+		selenium.uploadTempFile("//input[@id='_86_importFileName']",
 			RuntimeVariables.replace("Wiki_Use_Case.CP.lar"));
 		assertFalse(selenium.isChecked(
 				"//input[@id='_86_DELETE_PORTLET_DATACheckbox']"));

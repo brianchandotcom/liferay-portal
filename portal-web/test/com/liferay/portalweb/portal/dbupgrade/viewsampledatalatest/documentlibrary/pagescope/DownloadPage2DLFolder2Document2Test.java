@@ -194,7 +194,7 @@ public class DownloadPage2DLFolder2Document2Test extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.uploadFile("//input[@id='_20_file']",
+		selenium.uploadTempFile("//input[@id='_20_file']",
 			RuntimeVariables.replace("DL_Folder2_Document2_Title.xls"));
 		selenium.type("//input[@id='_20_title']",
 			RuntimeVariables.replace("Temp_DL_Folder2_Document2_Title.xls"));

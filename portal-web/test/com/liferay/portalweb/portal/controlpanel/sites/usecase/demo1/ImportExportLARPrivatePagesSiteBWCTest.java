@@ -88,7 +88,7 @@ public class ImportExportLARPrivatePagesSiteBWCTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.uploadFile("//input[@id='_156_importFileName']",
+		selenium.uploadTempFile("//input[@id='_156_importFileName']",
 			RuntimeVariables.replace("World_Cup_Private_Pages.lar"));
 		assertFalse(selenium.isChecked(
 				"//input[@id='_156_DELETE_MISSING_LAYOUTSCheckbox']"));

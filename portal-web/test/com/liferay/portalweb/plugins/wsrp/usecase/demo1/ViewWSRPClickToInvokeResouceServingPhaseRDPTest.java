@@ -108,7 +108,7 @@ public class ViewWSRPClickToInvokeResouceServingPhaseRDPTest
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.uploadFile("//input[@id='_20_file']",
+		selenium.uploadTempFile("//input[@id='_20_file']",
 			RuntimeVariables.replace("logo(2).png"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));

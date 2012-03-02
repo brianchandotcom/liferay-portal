@@ -19,6 +19,14 @@ import com.liferay.portalweb.portal.util.LiferaySeleneseTestCase;
 import com.liferay.portalweb.portal.util.SeleniumUtil;
 import com.liferay.portalweb.portal.util.TestPropsValues;
 
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.JavascriptExecutor;
+import java.util.concurrent.TimeUnit;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -62,7 +70,7 @@ public class BaseTestCase extends LiferaySeleneseTestCase {
 			return;
 		}
 
-		String location = selenium.getLocation();
+		String location = selenium.getCurrentUrl();
 
 		if (location.contains("/documents/")) {
 			return;
@@ -80,9 +88,9 @@ public class BaseTestCase extends LiferaySeleneseTestCase {
 			location.contains("www.easy.com") ||
 			location.contains("www.fox.com")) {
 
-			selenium.getEval("window.Liferay.fire(\'initDockbar\');");
+			JavascriptExecutor js = (JavascriptExecutor) selenium;
+			js.executeScript("window.Liferay.fire(\'initDockbar\');");
 		}
-
 	}
 
 }

@@ -60,20 +60,12 @@ public class SeleniumUtil {
 		String browserType = TestPropsValues.BROWSER_TYPE;
 		String portalURL = TestPropsValues.PORTAL_URL;
 
-		_selenium = new LiferayDefaultSelenium(
-			seleniumHost, seleniumPort, browserType, portalURL);
-
-		_selenium.start();
-
-		_selenium.setContext(this.getClass().getName());
+		_selenium = new LiferayDefaultSelenium();
+		_selenium.get(portalURL);
 	}
 
 	private void _stopSelenium() {
-		if (_selenium != null) {
-			_selenium.stop();
-		}
-
-		_selenium = null;
+		_selenium.close();
 	}
 
 	private static SeleniumUtil _instance = new SeleniumUtil();

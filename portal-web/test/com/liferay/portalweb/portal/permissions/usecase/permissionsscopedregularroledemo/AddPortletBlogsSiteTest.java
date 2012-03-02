@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.blogs.portlet.addportletblogs;
+package com.liferay.portalweb.portal.permissions.usecase.permissionsscopedregularroledemo;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,9 +20,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddPortletBlogsTest extends BaseTestCase {
-	public void testAddPortletBlogs() throws Exception {
-		selenium.open("/web/guest/home/");
+public class AddPortletBlogsSiteTest extends BaseTestCase {
+	public void testAddPortletBlogsSite() throws Exception {
+		selenium.open("/web/community-name/blogs-test-site-page/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -31,7 +31,7 @@ public class AddPortletBlogsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Blogs Test Page")) {
+				if (selenium.isVisible("link=Blogs Test Site Page")) {
 					break;
 				}
 			}
@@ -41,8 +41,8 @@ public class AddPortletBlogsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Blogs Test Page",
-			RuntimeVariables.replace("Blogs Test Page"));
+		selenium.clickAt("link=Blogs Test Site Page",
+			RuntimeVariables.replace("Blogs Test Site Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 
@@ -106,7 +106,7 @@ public class AddPortletBlogsTest extends BaseTestCase {
 		}
 
 		selenium.clickAt("//div[@title='Blogs']/p/a",
-			RuntimeVariables.replace("Add"));
+			RuntimeVariables.replace("Blogs"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

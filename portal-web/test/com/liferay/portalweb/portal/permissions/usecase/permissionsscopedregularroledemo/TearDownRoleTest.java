@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.sites.site.addsite;
+package com.liferay.portalweb.portal.permissions.usecase.permissionsscopedregularroledemo;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class TearDownSitesTest extends BaseTestCase {
-	public void testTearDownSites() throws Exception {
+public class TearDownRoleTest extends BaseTestCase {
+	public void testTearDownRole() throws Exception {
 		int label = 1;
 
 		while (label >= 1) {
@@ -89,28 +89,197 @@ public class TearDownSitesTest extends BaseTestCase {
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-				selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
+				selenium.clickAt("link=Roles", RuntimeVariables.replace("Roles"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-				selenium.type("//input[@id='_134_name']",
-					RuntimeVariables.replace("Community Name"));
+				selenium.type("//input[@id='_128_keywords']",
+					RuntimeVariables.replace("RegularRole"));
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 
-				boolean community1Present = selenium.isElementPresent(
-						"//td[7]/span/ul/li/strong/a/span");
+				boolean role1Present = selenium.isElementPresent(
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
-				if (!community1Present) {
+				if (!role1Present) {
+					label = 6;
+
+					continue;
+				}
+
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+					RuntimeVariables.replace("Actions"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[@class='last']/a")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[@class='last']/a"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[@class='last']/a"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+				assertTrue(selenium.getConfirmation()
+								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+
+				boolean role2Present = selenium.isElementPresent(
+						"//span[@title='Actions']/ul/li/strong/a/span");
+
+				if (!role2Present) {
+					label = 5;
+
+					continue;
+				}
+
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+					RuntimeVariables.replace("Actions"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[@class='last']/a")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[@class='last']/a"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[@class='last']/a"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+				assertTrue(selenium.getConfirmation()
+								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+
+				boolean role3Present = selenium.isElementPresent(
+						"//span[@title='Actions']/ul/li/strong/a/span");
+
+				if (!role3Present) {
+					label = 4;
+
+					continue;
+				}
+
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+					RuntimeVariables.replace("Actions"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[@class='last']/a")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[@class='last']/a"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[@class='last']/a"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+				assertTrue(selenium.getConfirmation()
+								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+
+				boolean role4Present = selenium.isElementPresent(
+						"//span[@title='Actions']/ul/li/strong/a/span");
+
+				if (!role4Present) {
+					label = 3;
+
+					continue;
+				}
+
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+					RuntimeVariables.replace("Actions"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[@class='last']/a")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[@class='last']/a"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[@class='last']/a"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+				assertTrue(selenium.getConfirmation()
+								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+
+				boolean role5Present = selenium.isElementPresent(
+						"//span[@title='Actions']/ul/li/strong/a/span");
+
+				if (!role5Present) {
 					label = 2;
 
 					continue;
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[7]/span/ul/li/strong/a/span"));
-				selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -141,177 +310,9 @@ public class TearDownSitesTest extends BaseTestCase {
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
 			case 2:
-
-				boolean community2Present = selenium.isElementPresent(
-						"//td[7]/span/ul/li/strong/a/span");
-
-				if (!community2Present) {
-					label = 3;
-
-					continue;
-				}
-
-				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[7]/span/ul/li/strong/a/span"));
-				selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
-					RuntimeVariables.replace("Actions"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[@class='last']/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[@class='last']/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[@class='last']/a"));
-				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-
 			case 3:
-
-				boolean community3Present = selenium.isElementPresent(
-						"//td[7]/span/ul/li/strong/a/span");
-
-				if (!community3Present) {
-					label = 4;
-
-					continue;
-				}
-
-				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[7]/span/ul/li/strong/a/span"));
-				selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
-					RuntimeVariables.replace("Actions"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[@class='last']/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[@class='last']/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[@class='last']/a"));
-				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-
 			case 4:
-
-				boolean community4Present = selenium.isElementPresent(
-						"//td[7]/span/ul/li/strong/a/span");
-
-				if (!community4Present) {
-					label = 5;
-
-					continue;
-				}
-
-				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[7]/span/ul/li/strong/a/span"));
-				selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
-					RuntimeVariables.replace("Actions"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[@class='last']/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[@class='last']/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[@class='last']/a"));
-				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-
 			case 5:
-
-				boolean community5Present = selenium.isElementPresent(
-						"//td[7]/span/ul/li/strong/a/span");
-
-				if (!community5Present) {
-					label = 6;
-
-					continue;
-				}
-
-				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[7]/span/ul/li/strong/a/span"));
-				selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
-					RuntimeVariables.replace("Actions"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[@class='last']/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[@class='last']/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[@class='last']/a"));
-				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-
 			case 6:
 			case 100:
 				label = -1;

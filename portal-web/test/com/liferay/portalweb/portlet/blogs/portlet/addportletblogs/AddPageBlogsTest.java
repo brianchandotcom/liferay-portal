@@ -24,8 +24,44 @@ public class AddPageBlogsTest extends BaseTestCase {
 	public void testAddPageBlogs() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-		selenium.clickAt("//nav[@id='navigation']",
-			RuntimeVariables.replace("Navigation"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@id='dockbar']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dock Bar"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent("//a[@class='menu-button']/span")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.clickAt("//a[@class='menu-button']/span",
+			RuntimeVariables.replace("Add Menu Dock"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

@@ -1722,7 +1722,6 @@ public class ProcessExecutorTest extends TestCase {
 			_mainThread = mainThread;
 			_socket = new Socket("localhost", serverPort);
 
-			setDaemon(true);
 			setName(name);
 		}
 
@@ -1734,7 +1733,9 @@ public class ProcessExecutorTest extends TestCase {
 
 				int command = 0;
 
-				while ((command = inputStream.read()) != -1) {
+				while (((command = inputStream.read()) != -1) &&
+					_mainThread.isAlive()) {
+
 					switch (command) {
 						case _CODE_ECHO :
 							outputStream.write(_CODE_ECHO);
@@ -1744,7 +1745,6 @@ public class ProcessExecutorTest extends TestCase {
 							break;
 
 						case _CODE_EXIT :
-							_socket.close();
 
 							break;
 
@@ -1753,8 +1753,6 @@ public class ProcessExecutorTest extends TestCase {
 
 							heartbeatThread.interrupt();
 							heartbeatThread.join();
-
-							_socket.close();
 
 							break;
 
@@ -1783,8 +1781,9 @@ public class ProcessExecutorTest extends TestCase {
 					_socket.close();
 
 					_mainThread.interrupt();
+					_mainThread.join();
 				}
-				catch (IOException ioe) {
+				catch (Exception e) {
 				}
 			}
 		}

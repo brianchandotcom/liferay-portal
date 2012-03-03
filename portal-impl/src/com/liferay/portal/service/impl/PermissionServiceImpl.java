@@ -33,6 +33,7 @@ import com.liferay.portal.service.base.PermissionServiceBaseImpl;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
+import com.liferay.portal.service.permission.TeamPermissionUtil;
 import com.liferay.portal.service.permission.UserPermissionUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.permission.BlogsEntryPermission;
@@ -633,14 +634,32 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 		else if (!permissionChecker.hasPermission(
 					groupId, name, primKey, ActionKeys.PERMISSIONS)) {
 
-			List<String> resourceActions =
-				ResourceActionsUtil.getResourceActions(name);
+			Role role = null;
 
-			if (!resourceActions.contains(ActionKeys.DEFINE_PERMISSIONS) ||
-				!permissionChecker.hasPermission(
-					groupId, name, primKey, ActionKeys.DEFINE_PERMISSIONS)) {
+			if (name.equals(Role.class.getName())) {
+				long roleId = GetterUtil.getLong(primKey);
 
-				throw new PrincipalException();
+				role = rolePersistence.findByPrimaryKey(roleId);
+			}
+
+			if ((role != null) && role.isTeam()) {
+				Team team = teamPersistence.findByPrimaryKey(role.getClassPK());
+
+				TeamPermissionUtil.check(
+					permissionChecker, team.getTeamId(),
+					ActionKeys.PERMISSIONS);
+			}
+			else {
+				List<String> resourceActions =
+					ResourceActionsUtil.getResourceActions(name);
+
+				if (!resourceActions.contains(ActionKeys.DEFINE_PERMISSIONS) ||
+					!permissionChecker.hasPermission(
+						groupId, name, primKey,
+						ActionKeys.DEFINE_PERMISSIONS)) {
+
+					throw new PrincipalException();
+				}
 			}
 		}
 	}

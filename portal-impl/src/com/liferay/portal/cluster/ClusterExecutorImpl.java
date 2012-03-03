@@ -191,6 +191,11 @@ public class ClusterExecutorImpl
 		memberJoined(_localAddress, _localClusterNode);
 
 		sendNotifyRequest();
+
+		ClusterRequestReceiver clusterRequestReceiver =
+			(ClusterRequestReceiver)_controlChannel.getReceiver();
+
+		clusterRequestReceiver.openLatch();
 	}
 
 	public boolean isClusterNodeAlive(Address address) {

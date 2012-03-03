@@ -33,6 +33,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 import org.jgroups.Channel;
 import org.jgroups.ChannelException;
@@ -46,12 +47,23 @@ import org.jgroups.View;
 public class ClusterRequestReceiver extends BaseReceiver {
 
 	public ClusterRequestReceiver(ClusterExecutorImpl clusterExecutorImpl) {
+		_countDownLatch = new CountDownLatch(1);
 		_clusterExecutorImpl = clusterExecutorImpl;
+	}
+
+	public void openLatch() {
+		_countDownLatch.countDown();
 	}
 
 	@Override
 	public void receive(Message message) {
-		org.jgroups.Address sourceAddress = message.getSrc();
+		try {
+			_countDownLatch.await();
+		}
+		catch (InterruptedException ie) {
+			_log.error("Latch opened prematurely by interruption, " +
+				"dependence may not be ready yet.");
+		}
 
 		Channel controlChannel = _clusterExecutorImpl.getControlChannel();
 
@@ -66,6 +78,8 @@ public class ClusterRequestReceiver extends BaseReceiver {
 
 			return;
 		}
+
+		org.jgroups.Address sourceAddress = message.getSrc();
 
 		if (localAddress.equals(sourceAddress)) {
 			boolean isProcessed = processLocalMessage(obj, sourceAddress);
@@ -106,6 +120,14 @@ public class ClusterRequestReceiver extends BaseReceiver {
 		List<Address> newAddresses = getNewAddresses(view);
 
 		_lastView = view;
+
+		try {
+			_countDownLatch.await();
+		}
+		catch (InterruptedException ie) {
+			_log.error("Latch opened prematurely by interruption, " +
+				"dependence may not be ready yet.");
+		}
 
 		if (!newAddresses.isEmpty()) {
 			_clusterExecutorImpl.sendNotifyRequest();
@@ -385,6 +407,7 @@ public class ClusterRequestReceiver extends BaseReceiver {
 		ClusterRequestReceiver.class);
 
 	private ClusterExecutorImpl _clusterExecutorImpl;
+	private CountDownLatch _countDownLatch;
 	private volatile View _lastView;
 
 }

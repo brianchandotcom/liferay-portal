@@ -508,14 +508,15 @@ public class PortletImporter {
 	 *      String, int)}
 	 */
 	protected String getAssetCategoryName(
-			String uuid, long parentCategoryId, String name, int count)
+			String uuid, long groupId, long parentCategoryId, String name,
+			int count)
 		throws Exception {
 
 		AssetCategory assetCategory = null;
 
 		try {
-			assetCategory = AssetCategoryUtil.findByP_N_First(
-				parentCategoryId, name, null);
+			assetCategory = AssetCategoryUtil.findByG_P_N_First(
+				groupId, parentCategoryId, name, null);
 		}
 		catch (NoSuchCategoryException nsce) {
 			return name;
@@ -527,7 +528,8 @@ public class PortletImporter {
 
 		name = StringUtil.appendParentheticalSuffix(name, count);
 
-		return getAssetCategoryName(uuid, parentCategoryId, name, ++count);
+		return getAssetCategoryName(
+			uuid, groupId, parentCategoryId, name, ++count);
 	}
 
 	protected String getAssetCategoryPath(
@@ -693,7 +695,8 @@ public class PortletImporter {
 
 			if (existingAssetCategory == null) {
 				String name = getAssetCategoryName(
-					null, parentAssetCategoryId, assetCategory.getName(), 2);
+					null, portletDataContext.getGroupId(),
+					parentAssetCategoryId, assetCategory.getName(), 2);
 
 				serviceContext.setUuid(assetCategory.getUuid());
 
@@ -706,8 +709,8 @@ public class PortletImporter {
 			}
 			else {
 				String name = getAssetCategoryName(
-					assetCategory.getUuid(), parentAssetCategoryId,
-					assetCategory.getName(), 2);
+					assetCategory.getUuid(), assetCategory.getGroupId(),
+					parentAssetCategoryId, assetCategory.getName(), 2);
 
 				importedAssetCategory =
 					AssetCategoryLocalServiceUtil.updateCategory(

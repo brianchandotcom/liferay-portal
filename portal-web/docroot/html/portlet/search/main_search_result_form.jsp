@@ -23,11 +23,12 @@ Document document = (Document)row.getObject();
 
 String className = document.get(Field.ENTRY_CLASS_NAME);
 
-AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
-
-AssetRenderer assetRenderer = null;
-
+String entryTitle = null;
+String entrySummary = null;
 PortletURL viewFullContentURL = null;
+String viewURL = null;
+
+AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
 
 if (assetRendererFactory != null) {
 	long classPK = GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK));
@@ -40,7 +41,7 @@ if (assetRendererFactory != null) {
 
 	AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(className, classPK);
 
-	assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
+	AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
 
 	viewFullContentURL = _getViewFullContentURL(request, themeDisplay, PortletKeys.ASSET_PUBLISHER, document);
 
@@ -55,49 +56,45 @@ if (assetRendererFactory != null) {
 
 		viewFullContentURL.setParameter("urlTitle", assetRenderer.getUrlTitle());
 	}
+
+	if (viewInContext) {
+		String viewFullContentURLString = viewFullContentURL.toString();
+
+		viewFullContentURLString = HttpUtil.setParameter(viewFullContentURLString, "redirect", currentURL);
+
+		viewURL = assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, viewFullContentURLString);
+	}
+	else {
+		viewURL = viewFullContentURL.toString();
+	}
+
+	entryTitle = assetRenderer.getTitle(locale);
+	entrySummary = assetRenderer.getSummary(locale);
 }
 else {
 	String portletId = document.get(Field.PORTLET_ID);
 
 	viewFullContentURL = _getViewFullContentURL(request, themeDisplay, portletId, document);
-}
 
-String viewURL = null;
-
-if (viewInContext) {
-	String viewFullContentURLString = viewFullContentURL.toString();
-
-	viewFullContentURLString = HttpUtil.setParameter(viewFullContentURLString, "redirect", currentURL);
-
-	viewURL = assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, viewFullContentURLString);
-}
-else {
 	viewURL = viewFullContentURL.toString();
-}
 
-if (Validator.isNull(viewURL)) {
-	viewURL = viewFullContentURL.toString();
-}
-
-viewURL = _checkViewURL(themeDisplay, viewURL, currentURL);
-
-String entryTitle = null;
-String entrySummary = null;
-
-if (assetRenderer != null) {
-	entryTitle = assetRenderer.getTitle(locale);
-	entrySummary = StringUtil.shorten(assetRenderer.getSummary(locale), 200);
-}
-else {
 	Indexer indexer = IndexerRegistryUtil.getIndexer(className);
 
 	String snippet = document.get(Field.SNIPPET);
 
 	Summary summary = indexer.getSummary(document, locale, snippet, viewFullContentURL);
 
+	if (viewInContext) {
+		viewURL = viewFullContentURL.toString();
+	}
+
 	entryTitle = summary.getTitle();
-	entrySummary = StringUtil.shorten(summary.getContent(), 200);
+	entrySummary = summary.getContent();
 }
+
+entrySummary = StringUtil.shorten(entrySummary, 200);
+
+viewURL = _checkViewURL(themeDisplay, viewURL, currentURL);
 
 String[] queryTerms = (String[])request.getAttribute("search.jsp-queryTerms");
 
@@ -118,7 +115,6 @@ PortletURL portletURL = (PortletURL)request.getAttribute("search.jsp-portletURL"
 			<%= StringUtil.highlight(HtmlUtil.escape(entryTitle), queryTerms) %>
 		</a>
 	</span>
-
 
 	<%
 	String[] assetCategoryIds = document.getValues(Field.ASSET_CATEGORY_IDS);

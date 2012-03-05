@@ -22,9 +22,12 @@ import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterMessageType;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
+import com.liferay.portal.kernel.cluster.ClusterNodeResponses;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
+import com.liferay.portal.kernel.cluster.ClusterResponseCallback;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InetAddressUtil;
@@ -47,8 +50,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import org.jgroups.ChannelException;
 import org.jgroups.JChannel;
@@ -88,6 +95,9 @@ public class ClusterExecutorImpl
 		if (!isEnabled()) {
 			return;
 		}
+
+		PortalExecutorManagerUtil.shutdown(
+			CLUSTER_EXECUTOR_CALLBACK_THREAD_POOL, true);
 
 		_controlChannel.close();
 	}
@@ -130,6 +140,36 @@ public class ClusterExecutorImpl
 		}
 
 		return futureClusterResponses;
+	}
+
+	public void execute(
+			ClusterRequest clusterRequest,
+			ClusterResponseCallback clusterResponseCallback)
+		throws SystemException {
+
+		FutureClusterResponses futureClusterResponses = execute(clusterRequest);
+
+		ClusterResponseCallbackJob clusterResponseCallbackJob =
+			new ClusterResponseCallbackJob(
+				clusterResponseCallback, futureClusterResponses);
+
+		_executorService.execute(clusterResponseCallbackJob);
+	}
+
+	public void execute(
+			ClusterRequest clusterRequest,
+			ClusterResponseCallback clusterResponseCallback, long timeout,
+			TimeUnit timeUnit)
+		throws SystemException {
+
+		FutureClusterResponses futureClusterResponses = execute(clusterRequest);
+
+		ClusterResponseCallbackJob clusterResponseCallbackJob =
+			new ClusterResponseCallbackJob(
+				clusterResponseCallback, futureClusterResponses, timeout,
+				timeUnit);
+
+		_executorService.execute(clusterResponseCallbackJob);
 	}
 
 	public List<ClusterEventListener> getClusterEventListeners() {
@@ -176,6 +216,9 @@ public class ClusterExecutorImpl
 		if (!isEnabled()) {
 			return;
 		}
+
+		_executorService = PortalExecutorManagerUtil.getPortalExecutor(
+			CLUSTER_EXECUTOR_CALLBACK_THREAD_POOL);
 
 		PortalUtil.addPortalPortEventListener(this);
 
@@ -492,6 +535,11 @@ public class ClusterExecutorImpl
 		}
 	}
 
+	// Public thread pool name to allow user customize setting in
+	// executor-spring.xml
+	static public final String CLUSTER_EXECUTOR_CALLBACK_THREAD_POOL =
+		"CLUSTER_EXECUTOR_CALLBACK_THREAD_POOL";
+
 	private static final String _DEFAULT_CLUSTER_NAME =
 		"LIFERAY-CONTROL-CHANNEL";
 
@@ -502,6 +550,7 @@ public class ClusterExecutorImpl
 	private Map<String, Address> _clusterNodeAddresses =
 		new ConcurrentHashMap<String, Address>();
 	private JChannel _controlChannel;
+	private ExecutorService _executorService;
 	private Map<String, FutureClusterResponses> _futureClusterResponses =
 		new WeakValueConcurrentHashMap<String, FutureClusterResponses>();
 	private Map<Address, ClusterNode> _liveInstances =
@@ -509,5 +558,65 @@ public class ClusterExecutorImpl
 	private Address _localAddress;
 	private ClusterNode _localClusterNode;
 	private boolean _shortcutLocalMethod;
+
+	private class ClusterResponseCallbackJob implements Runnable {
+
+		public ClusterResponseCallbackJob(
+			ClusterResponseCallback clusterResponseCallback,
+			FutureClusterResponses futureClusterResponses) {
+
+			_clusterResponseCallback = clusterResponseCallback;
+			_futureClusterResponses = futureClusterResponses;
+			_timeout = -1;
+			_timeUnit = TimeUnit.SECONDS;
+			_timeoutGet = false;
+		}
+
+		public ClusterResponseCallbackJob(
+			ClusterResponseCallback clusterResponseCallback,
+			FutureClusterResponses futureClusterResponses, long timeout,
+			TimeUnit timeUnit) {
+
+			_clusterResponseCallback = clusterResponseCallback;
+			_futureClusterResponses = futureClusterResponses;
+			_timeout = timeout;
+			_timeUnit = timeUnit;
+			_timeoutGet = true;
+		}
+
+		public void run() {
+			BlockingQueue<ClusterNodeResponse> blockingQueue =
+				_futureClusterResponses.getPartialResults();
+
+			_clusterResponseCallback.callback(blockingQueue);
+
+			ClusterNodeResponses clusterNodeResponses = null;
+
+			try {
+				if (_timeoutGet) {
+					clusterNodeResponses = _futureClusterResponses.get(
+						_timeout, _timeUnit);
+				}
+				else {
+					clusterNodeResponses = _futureClusterResponses.get();
+				}
+
+				_clusterResponseCallback.callback(clusterNodeResponses);
+			}
+			catch (InterruptedException ie) {
+				_clusterResponseCallback.processInterruptedException(ie);
+			}
+			catch (TimeoutException te) {
+				_clusterResponseCallback.processTimeoutException(te);
+			}
+		}
+
+		private final ClusterResponseCallback _clusterResponseCallback;
+		private final FutureClusterResponses _futureClusterResponses;
+		private final TimeUnit _timeUnit;
+		private final long _timeout;
+		private final boolean _timeoutGet;
+
+	}
 
 }

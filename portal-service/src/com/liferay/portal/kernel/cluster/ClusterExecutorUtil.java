@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Tina Tian
@@ -64,6 +65,40 @@ public class ClusterExecutorUtil {
 		}
 
 		return _clusterExecutor.execute(clusterRequest);
+	}
+
+	public static void execute(
+			ClusterRequest clusterRequest,
+			ClusterResponseCallback clusterResponseCallback)
+		throws SystemException {
+
+		if ((_clusterExecutor == null) || !_clusterExecutor.isEnabled()) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("ClusterExecutorUtil has not been initialized");
+			}
+
+			return;
+		}
+
+		_clusterExecutor.execute(clusterRequest, clusterResponseCallback);
+	}
+
+	public static void execute(
+			ClusterRequest clusterRequest,
+			ClusterResponseCallback clusterResponseCallback, long timeout,
+			TimeUnit timeUnit)
+		throws SystemException {
+
+		if ((_clusterExecutor == null) || !_clusterExecutor.isEnabled()) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("ClusterExecutorUtil has not been initialized");
+			}
+
+			return;
+		}
+
+		_clusterExecutor.execute(
+			clusterRequest, clusterResponseCallback, timeout, timeUnit);
 	}
 
 	public static List<Address> getClusterNodeAddresses() {

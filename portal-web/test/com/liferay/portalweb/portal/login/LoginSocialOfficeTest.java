@@ -158,7 +158,23 @@ public class LoginSocialOfficeTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("link=Control Panel")) {
+						if (selenium.isVisible("link=Welcome")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isElementPresent("link=Control Panel")) {
 							break;
 						}
 					}

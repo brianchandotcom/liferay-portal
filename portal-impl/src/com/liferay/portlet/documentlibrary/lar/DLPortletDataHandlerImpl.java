@@ -898,7 +898,7 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 	 *      int)}
 	 */
 	protected static String getFileEntryTypeName(
-			String uuid, long companyId, long groupId, String name, int count)
+			String uuid, long groupId, String name, int count)
 		throws Exception {
 
 		DLFileEntryType dlFileEntryType = DLFileEntryTypeUtil.fetchByG_N(
@@ -916,7 +916,7 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		name = StringUtil.appendParentheticalSuffix(name, count);
 
-		return getFileEntryTypeName(uuid, companyId, groupId, name, ++count);
+		return getFileEntryTypeName(uuid, groupId, name, ++count);
 	}
 
 	protected static String getFileEntryTypePath(
@@ -1063,8 +1063,8 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 			dlFileEntryType.getUserUuid());
 
 		String name = getFileEntryTypeName(
-			dlFileEntryType.getUuid(), portletDataContext.getCompanyId(),
-			portletDataContext.getScopeGroupId(), dlFileEntryType.getName(), 2);
+			dlFileEntryType.getUuid(), portletDataContext.getScopeGroupId(),
+			dlFileEntryType.getName(), 2);
 
 		List<Element> structureElements = fileEntryTypeElement.elements(
 			"structure");

@@ -503,7 +503,7 @@ public class PortletImporter {
 
 	/**
 	 * @see {@link DLPortletDataHandlerImpl#getFileEntryTypeName(String, long,
-	 *      long, String, int)}
+	 *      String, int)}
 	 * @see {@link DLPortletDataHandlerImpl#getFolderName(String, long, long,
 	 *      String, int)}
 	 */
@@ -563,7 +563,7 @@ public class PortletImporter {
 
 	/**
 	 * @see {@link DLPortletDataHandlerImpl#getFileEntryTypeName(String, long,
-	 *      long, String, int)}
+	 *      String, int)}
 	 * @see {@link DLPortletDataHandlerImpl#getFolderName(String, long, long,
 	 *      String, int)}
 	 */

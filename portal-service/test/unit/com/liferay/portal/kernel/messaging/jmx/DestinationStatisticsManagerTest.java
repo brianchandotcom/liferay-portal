@@ -21,24 +21,26 @@ import java.lang.management.ManagementFactory;
 
 import javax.management.MBeanServer;
 
-import org.jmock.Mockery;
-import org.jmock.integration.junit4.JUnit4Mockery;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Michael C. Han
  */
+@RunWith(PowerMockRunner.class)
 public class DestinationStatisticsManagerTest extends TestCase {
 
 	@Override
 	public void setUp() throws Exception {
 		_mBeanServer = ManagementFactory.getPlatformMBeanServer();
-		_mockery = new JUnit4Mockery();
 	}
 
+	@Test
 	public void testRegisterMBean() throws Exception {
 		_mBeanServer.registerMBean(
-			new DestinationStatisticsManager(
-				_mockery.mock(Destination.class)),
+			new DestinationStatisticsManager(_destination),
 			DestinationStatisticsManager.createObjectName("test"));
 
 		assertTrue(
@@ -46,7 +48,8 @@ public class DestinationStatisticsManagerTest extends TestCase {
 				DestinationStatisticsManager.createObjectName("test")));
 	}
 
+	@Mock
+	private Destination _destination;
 	private MBeanServer _mBeanServer;
-	private Mockery _mockery;
 
 }

@@ -18,27 +18,26 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portlet.PortletPreferencesImpl;
 
 import java.util.Locale;
 
 import javax.portlet.PortletPreferences;
-import javax.portlet.PortletRequest;
 
-import org.jmock.Expectations;
-import org.jmock.Mockery;
-import org.jmock.integration.junit4.JUnit4Mockery;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.mock.web.portlet.MockPortletRequest;
 
 /**
  * @author Connor McKay
  */
-public class LocalizationImplTest extends BaseTestCase {
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class LocalizationImplTest {
 
-	public LocalizationImplTest() {
-		InitUtil.initWithSpring();
-	}
-
-	@Override
+	@Before
 	public void setUp() throws Exception {
 		_english = new Locale("en", "US");
 		_englishId = LocaleUtil.toLanguageId(_english);
@@ -47,6 +46,7 @@ public class LocalizationImplTest extends BaseTestCase {
 		_germanId = LocaleUtil.toLanguageId(_german);
 	}
 
+	@Test
 	public void testChunkedText() {
 		StringBundler sb = new StringBundler();
 
@@ -65,16 +65,17 @@ public class LocalizationImplTest extends BaseTestCase {
 		String translation = LocalizationUtil.getLocalization(
 			sb.toString(), "es_ES");
 
-		assertNotNull(translation);
-		assertEquals("foo&bar", translation);
-		assertEquals(7, translation.length());
+		Assert.assertNotNull(translation);
+		Assert.assertEquals("foo&bar", translation);
+		Assert.assertEquals(7, translation.length());
 
 		translation = LocalizationUtil.getLocalization(sb.toString(), "en_US");
 
-		assertNotNull(translation);
-		assertEquals(18, translation.length());
+		Assert.assertNotNull(translation);
+		Assert.assertEquals(18, translation.length());
 	}
 
+	@Test
 	public void testLocalizationsXML() {
 		String xml = StringPool.BLANK;
 
@@ -83,12 +84,13 @@ public class LocalizationImplTest extends BaseTestCase {
 		xml = LocalizationUtil.updateLocalization(
 			xml, "greeting", _germanHello, _germanId, _englishId);
 
-		assertEquals(
+		Assert.assertEquals(
 			_englishHello, LocalizationUtil.getLocalization(xml, _englishId));
-		assertEquals(
+		Assert.assertEquals(
 			_germanHello, LocalizationUtil.getLocalization(xml, _germanId));
 	}
 
+	@Test
 	public void testLongTranslationText() {
 		StringBundler sb = new StringBundler();
 
@@ -114,20 +116,21 @@ public class LocalizationImplTest extends BaseTestCase {
 
 		int totalSize = loops * 10;
 
-		assertTrue(sb.length() > totalSize);
+		Assert.assertTrue(sb.length() > totalSize);
 
 		String translation = LocalizationUtil.getLocalization(
 			sb.toString(), "es_ES");
 
-		assertNotNull(translation);
-		assertEquals(totalSize, translation.length());
+		Assert.assertNotNull(translation);
+		Assert.assertEquals(totalSize, translation.length());
 
 		translation = LocalizationUtil.getLocalization(sb.toString(), "en_US");
 
-		assertNotNull(translation);
-		assertEquals(18, translation.length());
+		Assert.assertNotNull(translation);
+		Assert.assertEquals(18, translation.length());
 	}
 
+	@Test
 	public void testPreferencesLocalization() throws Exception {
 		PortletPreferences preferences = new PortletPreferencesImpl();
 
@@ -136,44 +139,33 @@ public class LocalizationImplTest extends BaseTestCase {
 		LocalizationUtil.setPreferencesValue(
 			preferences, "greeting", _germanId, _germanHello);
 
-		assertEquals(
+		Assert.assertEquals(
 			_englishHello,
 			LocalizationUtil.getPreferencesValue(
 				preferences, "greeting", _englishId));
-		assertEquals(
+		Assert.assertEquals(
 			_germanHello,
 			LocalizationUtil.getPreferencesValue(
 				preferences, "greeting", _germanId));
 	}
 
+	@Test
 	public void testSetLocalizedPreferencesValues() throws Exception {
-		final PortletRequest request = _mockery.mock(PortletRequest.class);
+		MockPortletRequest request = new MockPortletRequest();
 
-		Expectations expectations = new Expectations() {
-			{
-				oneOf(request).getParameter("greeting_en_US");
-				will(returnValue(_englishHello));
-
-				oneOf(request).getParameter("greeting_de_DE");
-				will(returnValue(_germanHello));
-
-				allowing(request).getParameter(with(aNonNull(String.class)));
-				will(returnValue(null));
-			}
-		};
-
-		_mockery.checking(expectations);
+		request.setParameter("greeting_" + _englishId, _englishHello);
+		request.setParameter("greeting_" + _germanId, _germanHello);
 
 		PortletPreferences preferences = new PortletPreferencesImpl();
 
 		LocalizationUtil.setLocalizedPreferencesValues(
 			request, preferences, "greeting");
 
-		assertEquals(
+		Assert.assertEquals(
 			_englishHello,
 			LocalizationUtil.getPreferencesValue(
 				preferences, "greeting", _englishId));
-		assertEquals(
+		Assert.assertEquals(
 			_germanHello,
 			LocalizationUtil.getPreferencesValue(
 				preferences, "greeting", _germanId));
@@ -185,6 +177,5 @@ public class LocalizationImplTest extends BaseTestCase {
 	private Locale _german;
 	private String _germanHello = "Hallo Welt";
 	private String _germanId;
-	private Mockery _mockery = new JUnit4Mockery();
 
 }

@@ -412,28 +412,6 @@
 		</licenses>
 	</library>
 	<library>
-		<file-name>development/jmock.jar</file-name>
-		<version>2.5.1</version>
-		<project-name>jMock</project-name>
-		<project-url>http://www.jmock.org</project-url>
-		<licenses>
-			<license>
-				<license-name>BSD Style License</license-name>
-			</license>
-		</licenses>
-	</library>
-	<library>
-		<file-name>development/jmock-junit4.jar</file-name>
-		<version>2.5.1</version>
-		<project-name>jMock</project-name>
-		<project-url>http://www.jmock.org</project-url>
-		<licenses>
-			<license>
-				<license-name>BSD Style License</license-name>
-			</license>
-		</licenses>
-	</library>
-	<library>
 		<file-name>development/jms.jar</file-name>
 		<version>1.1</version>
 		<project-name>Java Message Services</project-name>

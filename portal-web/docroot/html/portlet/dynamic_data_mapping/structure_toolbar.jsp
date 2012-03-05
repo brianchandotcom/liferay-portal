@@ -21,19 +21,19 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 %>
 
 <div class="lfr-portlet-toolbar">
-	<portlet:renderURL var="selectStructureURL">
+	<portlet:renderURL var="viewStructureURL">
 		<portlet:param name="struts_action" value="/dynamic_data_mapping/select_structure" />
 	</portlet:renderURL>
 
 	<span class="lfr-toolbar-button view-button <%= toolbarItem.equals("view-all") ? "current" : StringPool.BLANK %>">
-		<a href="<%= selectStructureURL %>"><liferay-ui:message key="view-all" /></a>
+		<a href="<%= viewStructureURL %>"><liferay-ui:message key="view-all" /></a>
 	</span>
 
 	<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ddmResource, ActionKeys.ADD_STRUCTURE) %>">
 		<portlet:renderURL var="addStructureURL">
 			<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" />
-			<portlet:param name="redirect" value="<%= selectStructureURL %>" />
-			<portlet:param name="backURL" value="<%= selectStructureURL %>" />
+			<portlet:param name="redirect" value="<%= viewStructureURL %>" />
+			<portlet:param name="backURL" value="<%= viewStructureURL %>" />
 		</portlet:renderURL>
 
 		<span class="lfr-toolbar-button add-button <%= toolbarItem.equals("add") ? "current" : StringPool.BLANK %>">

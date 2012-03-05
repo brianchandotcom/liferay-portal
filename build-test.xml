@@ -3066,8 +3066,8 @@ file.
 			</else>
 		</if>
 
-		<exec executable="cmd">
-			<arg line="/c mysql &lt; ${sql.file}" />
+		<exec executable="${mysql.executable}" input="${sql.file}">
+			<arg line="-u${mysql.user.name} -p${mysql.user.password}" />
 		</exec>
 
 		<delete file="${sql.file}" />

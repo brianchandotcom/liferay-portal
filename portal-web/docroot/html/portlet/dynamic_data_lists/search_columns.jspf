@@ -25,6 +25,7 @@
 	href="<%= rowURL %>"
 	name="name"
 	orderable="<%= false %>"
+	value="<%= recordSet.getName(locale) %>"
 />
 
 <liferay-ui:search-container-column-text

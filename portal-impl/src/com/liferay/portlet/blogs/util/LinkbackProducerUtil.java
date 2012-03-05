@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xmlrpc.Response;
 import com.liferay.portal.kernel.xmlrpc.XmlRpcException;
 import com.liferay.portal.kernel.xmlrpc.XmlRpcUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.xml.StAXReaderUtil;
 
 import java.util.ArrayList;
@@ -110,7 +111,16 @@ public class LinkbackProducerUtil {
 
 		Http.Options options = new Http.Options();
 
-		options.addHeader(HttpHeaders.USER_AGENT, ReleaseInfo.getServerInfo());
+		if (_HTTP_HEADER_VERSION_VERBOSITY_DEFAULT) {
+		}
+		else if (_HTTP_HEADER_VERSION_VERBOSITY_PARTIAL) {
+			options.addHeader(HttpHeaders.USER_AGENT, ReleaseInfo.getName());
+		}
+		else {
+			options.addHeader(
+				HttpHeaders.USER_AGENT, ReleaseInfo.getServerInfo());
+		}
+
 		options.setLocation(trackback);
 		options.setParts(parts);
 		options.setPost(true);
@@ -180,8 +190,17 @@ public class LinkbackProducerUtil {
 		try {
 			Http.Options options = new Http.Options();
 
-			options.addHeader(
-				HttpHeaders.USER_AGENT, ReleaseInfo.getServerInfo());
+			if (_HTTP_HEADER_VERSION_VERBOSITY_DEFAULT) {
+			}
+			else if (_HTTP_HEADER_VERSION_VERBOSITY_PARTIAL) {
+				options.addHeader(
+					HttpHeaders.USER_AGENT, ReleaseInfo.getName());
+			}
+			else {
+				options.addHeader(
+					HttpHeaders.USER_AGENT, ReleaseInfo.getServerInfo());
+			}
+
 			options.setLocation(targetUri);
 			options.setHead(true);
 
@@ -221,6 +240,13 @@ public class LinkbackProducerUtil {
 
 		return serverUri;
 	}
+
+	private static final boolean _HTTP_HEADER_VERSION_VERBOSITY_DEFAULT =
+		PropsValues.HTTP_HEADER_VERSION_VERBOSITY.equalsIgnoreCase(
+			ReleaseInfo.getName());
+
+	private static final boolean _HTTP_HEADER_VERSION_VERBOSITY_PARTIAL =
+		PropsValues.HTTP_HEADER_VERSION_VERBOSITY.equalsIgnoreCase("partial");
 
 	private static Log _log = LogFactoryUtil.getLog(LinkbackProducerUtil.class);
 

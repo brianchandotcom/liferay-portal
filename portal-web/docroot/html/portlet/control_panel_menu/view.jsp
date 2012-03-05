@@ -276,7 +276,7 @@
 					%>
 
 							<li class="<%= ppid.equals(portletId) ? "selected-portlet" : "" %>">
-								<a href="<liferay-portlet:renderURL doAsGroupId="<%= themeDisplay.getScopeGroupId() %>" portletName="<%= portlet.getRootPortletId() %>" windowState="<%= WindowState.MAXIMIZED.toString() %>" />">
+								<a href="<liferay-portlet:renderURL doAsGroupId="<%= themeDisplay.getScopeGroupId() %>" portletName="<%= portlet.getRootPortletId() %>" windowState="<%= WindowState.MAXIMIZED.toString() %>" />" id="<portlet:namespace />portlet_<%= portletId %>">
 									<c:choose>
 										<c:when test="<%= Validator.isNull(portlet.getIcon()) %>">
 											<liferay-ui:icon src='<%= themeDisplay.getPathContext() + "/html/icons/default.png" %>' />

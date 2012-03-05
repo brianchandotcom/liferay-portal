@@ -1,0 +1,58 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>AddPortletBlogTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">AddPortletBlogTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Blog Community Social Activity Blogs Public Page</td>
+	<td>Blog Community Social Activity Blogs Public Page</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Blog Community Social Activity Blogs Public Page</td>
+	<td>Blog Community Social Activity Blogs Public Page</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//a[@id='_145_addApplication']</td>
+	<td>More</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//a[@id='_145_addApplication']</td>
+	<td>More</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//div[@title='Blogs']/p/a</td>
+	<td>Blogs</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@title='Blogs']/p/a</td>
+	<td>Blogs</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//section</td>
+	<td>Portlet</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//section</td>
+	<td>Portlet</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[6]/div/div[1]/button</td>
+	<td>close</td>
+</tr>
+</tbody></table>
+</body>
+</html>

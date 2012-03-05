@@ -159,7 +159,8 @@ public class AddChildPageBreadcrumbTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//input[@id='_88_name_en_US']")) {
+						if (selenium.isVisible(
+									"//input[@id='_88_addLayoutName_en_US']")) {
 							break;
 						}
 					}
@@ -169,7 +170,7 @@ public class AddChildPageBreadcrumbTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.type("//input[@id='_88_name_en_US']",
+				selenium.type("//input[@id='_88_addLayoutName_en_US']",
 					RuntimeVariables.replace("Child Test Page"));
 				selenium.clickAt("//input[@value='Add Page']",
 					RuntimeVariables.replace("Add Page"));

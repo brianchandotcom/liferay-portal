@@ -46,45 +46,22 @@ for (String previewFileURL : previewFileURLs) {
 
 <c:choose>
 	<c:when test="<%= supportedAudio %>">
-		<aui:script use="aui-node,aui-swf">
-			var nodeAudio = A.config.doc.createElement('audio');
-
-			if (!!nodeAudio.canPlayType) {
-				var previewNode = A.one('#<portlet:namespace />previewFileContent');
-
-				var audioId = A.guid();
-
-				var audioObject = '<audio id="' + audioId + '" controls="controls" style="width: 100%;">';
-
-				<c:if test="<%= Validator.isNotNull(mp3PreviewFileURL) %>">
-					audioObject += '<source src="<%= mp3PreviewFileURL %>" type="audio/mp3" />';
-				</c:if>
-				<c:if test="<%= Validator.isNotNull(oggPreviewFileURL) %>">
-					audioObject += '<source src="<%= oggPreviewFileURL %>" type="audio/ogg" />';
-				</c:if>
-
-				audioObject += '</audio>';
-
-				A.one('#<portlet:namespace />previewFileContent').html(audioObject);
-			}
-			else {
-				new A.SWF(
-					{
-						boundingBox: '#<portlet:namespace />previewFileContent',
-						fixedAttributes: {
-							allowFullScreen: true,
-							bgColor: '#000000'
-						},
-						flashVars: {
-							'mp3': '<%= previewFileURLs[0] %>'
-						},
-						height: 27,
-						url: '<%= themeDisplay.getCDNHost() + themeDisplay.getPathJavaScript() %>/misc/video_player/mpw_player.swf',
-						useExpressInstall: true,
-						version: 9
-					}
-				);
-			}
+		<aui:script use="aui-audio">
+			new A.Audio(
+				{
+					contentBox: '#<portlet:namespace />previewFileContent',
+					fixedAttributes: {
+						allowfullscreen: 'true'
+					},
+					height: 32
+					<c:if test="<%= Validator.isNotNull(mp3PreviewFileURL) %>">
+						,url: '<%= mp3PreviewFileURL %>'
+					</c:if>
+					<c:if test="<%= Validator.isNotNull(oggPreviewFileURL) %>">
+						,oggUrl: '<%= oggPreviewFileURL %>',
+					</c:if>
+				}
+			).render();
 		</aui:script>
 	</c:when>
 	<c:when test="<%= supportedVideo %>">

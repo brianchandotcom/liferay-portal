@@ -66,8 +66,8 @@ request.setAttribute("view_file_entry.jsp-videoThumbnailURL", videoThumbnailURL)
 		</div>
 	</c:when>
 	<c:when test="<%= supportedVideo %>">
-		<div class="lfr-preview-video" id="<portlet:namespace />previewFile">
-			<div class="lfr-preview-video-content" id="<portlet:namespace />previewFileContent"></div>
+		<div class="lfr-preview-file lfr-preview-video" id="<portlet:namespace />previewFile">
+			<div class="lfr-preview-file-content lfr-preview-video-content" id="<portlet:namespace />previewFileContent"></div>
 		</div>
 	</c:when>
 </c:choose>

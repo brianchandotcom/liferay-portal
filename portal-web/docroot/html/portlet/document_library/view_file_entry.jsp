@@ -293,6 +293,11 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 									previewFileURLs[i] = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, previewQueryString + "&type=" + PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS[i]);
 								}
 							}
+							else {
+								previewFileURLs = new String[1];
+
+								previewFileURLs[0] = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, previewQueryString);
+							}
 
 							previewFileURL = previewFileURLs[0];
 
@@ -326,8 +331,8 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 										<liferay-util:include page="/html/portlet/document_library/player.jsp" />
 									</c:when>
 									<c:when test="<%= hasImages %>">
-										<div class="lfr-preview-image" id="<portlet:namespace />previewFile">
-											<div class="lfr-preview-image-content" id="<portlet:namespace />previewFileContent">
+										<div class="lfr-preview-file lfr-preview-image" id="<portlet:namespace />previewFile">
+											<div class="lfr-preview-file-content lfr-preview-image-content" id="<portlet:namespace />previewFileContent">
 												<div class="lfr-preview-file-image-current-column">
 													<div class="lfr-preview-file-image-container">
 														<img class="lfr-preview-file-image-current" src="<%= previewFileURL %>" />
@@ -337,8 +342,12 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 										</div>
 									</c:when>
 									<c:when test="<%= hasVideo %>">
-										<div class="lfr-preview-video" id="<portlet:namespace />previewFile">
-											<div class="lfr-preview-video-content" id="<portlet:namespace />previewFileContent"></div>
+										<div class="lfr-preview-file lfr-preview-video" id="<portlet:namespace />previewFile">
+											<div class="lfr-preview-file-content lfr-preview-video-content">
+												<div class="lfr-preview-file-video-current-column">
+													<div id="<portlet:namespace />previewFileContent"></div>
+												</div>
+											</div>
 										</div>
 
 										<liferay-util:include page="/html/portlet/document_library/player.jsp" />

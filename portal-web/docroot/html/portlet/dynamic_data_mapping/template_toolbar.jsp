@@ -25,14 +25,14 @@ long structureId = ParamUtil.getLong(request, "structureId");
 %>
 
 <div class="lfr-portlet-toolbar">
-	<portlet:renderURL var="viewEntriesURL">
+	<portlet:renderURL var="viewTemplatesURL">
 		<portlet:param name="struts_action" value="/dynamic_data_mapping/view_template" />
 		<portlet:param name="backURL" value="<%= backURL %>" />
 		<portlet:param name="structureId" value="<%= String.valueOf(structureId) %>" />
 	</portlet:renderURL>
 
 	<span class="lfr-toolbar-button view-button <%= toolbarItem.equals("view-all") ? "current" : StringPool.BLANK %>">
-		<a href="<%= viewEntriesURL %>"><liferay-ui:message key="view-all" /></a>
+		<a href="<%= viewTemplatesURL %>"><liferay-ui:message key="view-all" /></a>
 	</span>
 
 	<%
@@ -40,10 +40,10 @@ long structureId = ParamUtil.getLong(request, "structureId");
 	%>
 
 	<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ddmResource, ActionKeys.ADD_TEMPLATE) && (Validator.isNull(templateTypeValue) || templateTypeValue.equals(DDMTemplateConstants.TEMPLATE_TYPE_DETAIL)) %>">
-		<portlet:renderURL var="addEntryURL">
+		<portlet:renderURL var="addTemplateURL">
 			<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="backURL" value="<%= currentURL %>" />
+			<portlet:param name="redirect" value="<%= viewTemplatesURL %>" />
+			<portlet:param name="backURL" value="<%= viewTemplatesURL %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
 			<portlet:param name="structureId" value="<%= String.valueOf(structureId) %>" />
 			<portlet:param name="structureAvailableFields" value='<%= renderResponse.getNamespace() + "structureAvailableFields" %>' />
@@ -56,15 +56,15 @@ long structureId = ParamUtil.getLong(request, "structureId");
 		%>
 
 		<span class="lfr-toolbar-button add-template <%= toolbarItem.equals("add-detail-template") ? "current" : StringPool.BLANK %>">
-			<a href="<%= addEntryURL %>"><liferay-ui:message key="<%= message %>" /></a>
+			<a href="<%= addTemplateURL %>"><liferay-ui:message key="<%= message %>" /></a>
 		</span>
 	</c:if>
 
 	<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ddmResource, ActionKeys.ADD_TEMPLATE) && (Validator.isNull(templateTypeValue) || templateTypeValue.equals(DDMTemplateConstants.TEMPLATE_TYPE_LIST)) %>">
-		<portlet:renderURL var="addEntryURL">
+		<portlet:renderURL var="addTemplateURL">
 			<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="backURL" value="<%= currentURL %>" />
+			<portlet:param name="redirect" value="<%= viewTemplatesURL %>" />
+			<portlet:param name="backURL" value="<%= viewTemplatesURL %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
 			<portlet:param name="structureId" value="<%= String.valueOf(structureId) %>" />
 			<portlet:param name="type" value="list" />
@@ -77,7 +77,7 @@ long structureId = ParamUtil.getLong(request, "structureId");
 		%>
 
 		<span class="lfr-toolbar-button view-templates <%= toolbarItem.equals("add-list-template") ? "current" : StringPool.BLANK %>">
-			<a href="<%= addEntryURL %>"><liferay-ui:message key="<%= message %>" /></a>
+			<a href="<%= addTemplateURL %>"><liferay-ui:message key="<%= message %>" /></a>
 		</span>
 	</c:if>
 </div>

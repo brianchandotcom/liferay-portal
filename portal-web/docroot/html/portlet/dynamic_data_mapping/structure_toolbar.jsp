@@ -14,30 +14,30 @@
  */
 --%>
 
-<%@ include file="/html/portlet/layout_set_prototypes/init.jsp" %>
+<%@ include file="/html/portlet/dynamic_data_mapping/init.jsp" %>
 
 <%
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 %>
 
 <div class="lfr-portlet-toolbar">
-	<portlet:renderURL var="viewLayoutSetPrototypesURL">
-		<portlet:param name="struts_action" value="/layout_set_prototypes/view" />
+	<portlet:renderURL var="viewStructureURL">
+		<portlet:param name="struts_action" value="/dynamic_data_mapping/select_structure" />
 	</portlet:renderURL>
 
 	<span class="lfr-toolbar-button view-button <%= toolbarItem.equals("view-all") ? "current" : StringPool.BLANK %>">
-		<a href="<%= viewLayoutSetPrototypesURL %>"><liferay-ui:message key="view-all" /></a>
+		<a href="<%= viewStructureURL %>"><liferay-ui:message key="view-all" /></a>
 	</span>
 
-	<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_LAYOUT_SET_PROTOTYPE) %>">
-		<portlet:renderURL var="addLayoutSetPrototypeURL">
-			<portlet:param name="struts_action" value="/layout_set_prototypes/edit_layout_set_prototype" />
-			<portlet:param name="redirect" value="<%= viewLayoutSetPrototypesURL %>" />
-			<portlet:param name="backURL" value="<%= viewLayoutSetPrototypesURL %>" />
+	<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ddmResource, ActionKeys.ADD_STRUCTURE) %>">
+		<portlet:renderURL var="addStructureURL">
+			<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" />
+			<portlet:param name="redirect" value="<%= viewStructureURL %>" />
+			<portlet:param name="backURL" value="<%= viewStructureURL %>" />
 		</portlet:renderURL>
 
 		<span class="lfr-toolbar-button add-button <%= toolbarItem.equals("add") ? "current" : StringPool.BLANK %>">
-			<a href="<%= addLayoutSetPrototypeURL %>"><liferay-ui:message key="add" /></a>
+			<a href="<%= addStructureURL %>"><liferay-ui:message key="add" /></a>
 		</span>
 	</c:if>
 </div>

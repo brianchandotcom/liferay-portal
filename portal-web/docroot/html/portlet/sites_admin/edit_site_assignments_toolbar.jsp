@@ -42,12 +42,6 @@ if (group == null) {
 	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ASSIGN_MEMBERS) %>">
 		<liferay-ui:icon-menu align="left" cssClass='<%= "lfr-toolbar-button " + (toolbarItem.equals("add-role") ? "current" : StringPool.BLANK) %>' direction="down" extended="<%= false %>" icon='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>' message="add-members">
 
-			<liferay-portlet:renderURL varImpl="assignMembersURL">
-				<liferay-portlet:param name="struts_action" value="/sites_admin/edit_site_assignments" />
-				<liferay-portlet:param name="redirect" value="<%= currentURL %>" />
-				<liferay-portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-			</liferay-portlet:renderURL>
-
 			<%
 			assignMembersURL.setParameter("tabs1", "users");
 			assignMembersURL.setParameter("tabs2", "available");

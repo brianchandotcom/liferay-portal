@@ -21,19 +21,19 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 %>
 
 <div class="lfr-portlet-toolbar">
-	<portlet:renderURL var="viewEntriesURL">
+	<portlet:renderURL var="viewRecordsURL">
 		<portlet:param name="struts_action" value="/dynamic_data_lists/view" />
 	</portlet:renderURL>
 
 	<span class="lfr-toolbar-button view-button <%= toolbarItem.equals("view-all") ? "current" : StringPool.BLANK %>">
-		<a href="<%= viewEntriesURL %>"><liferay-ui:message key="view-all" /></a>
+		<a href="<%= viewRecordsURL %>"><liferay-ui:message key="view-all" /></a>
 	</span>
 
 	<c:if test="<%= DDLPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_RECORD_SET) %>">
 		<portlet:renderURL var="addRecordSetURL">
 			<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record_set" />
-			<portlet:param name="redirect" value="<%= viewEntriesURL %>" />
-			<portlet:param name="backURL" value="<%= viewEntriesURL %>" />
+			<portlet:param name="redirect" value="<%= viewRecordsURL %>" />
+			<portlet:param name="backURL" value="<%= viewRecordsURL %>" />
 		</portlet:renderURL>
 
 		<span class="lfr-toolbar-button add-button <%= toolbarItem.equals("add") ? "current" : StringPool.BLANK %>">

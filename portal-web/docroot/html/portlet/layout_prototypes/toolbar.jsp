@@ -21,19 +21,19 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 %>
 
 <div class="lfr-portlet-toolbar">
-	<portlet:renderURL var="viewRolesURL">
+	<portlet:renderURL var="viewLayoutPrototypesURL">
 		<portlet:param name="struts_action" value="/layout_prototypes/view" />
 	</portlet:renderURL>
 
 	<span class="lfr-toolbar-button view-button <%= toolbarItem.equals("view-all") ? "current" : StringPool.BLANK %>">
-		<a href="<%= viewRolesURL %>"><liferay-ui:message key="view-all" /></a>
+		<a href="<%= viewLayoutPrototypesURL %>"><liferay-ui:message key="view-all" /></a>
 	</span>
 
 	<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_LAYOUT_PROTOTYPE) %>">
 		<portlet:renderURL var="addLayoutPrototypeURL">
 			<portlet:param name="struts_action" value="/layout_prototypes/edit_layout_prototype" />
-			<portlet:param name="redirect" value="<%= viewRolesURL %>" />
-			<portlet:param name="backURL" value="<%= viewRolesURL %>" />
+			<portlet:param name="redirect" value="<%= viewLayoutPrototypesURL %>" />
+			<portlet:param name="backURL" value="<%= viewLayoutPrototypesURL %>" />
 		</portlet:renderURL>
 
 		<span class="lfr-toolbar-button add-button <%= toolbarItem.equals("add") ? "current" : StringPool.BLANK %>">

@@ -67,7 +67,9 @@ public class EditFeedAction extends PortletAction {
 				deleteFeeds(actionRequest);
 			}
 
-			sendRedirect(actionRequest, actionResponse);
+			if (Validator.isNotNull(cmd)) {
+				sendRedirect(actionRequest, actionResponse);
+			}
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchFeedException ||

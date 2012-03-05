@@ -17,15 +17,14 @@ package com.liferay.portal.kernel.messaging.jmx;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.test.TestCase;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.powermock.modules.junit4.PowerMockRunner;
-
 import java.lang.management.ManagementFactory;
 
 import javax.management.MBeanServer;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Michael C. Han

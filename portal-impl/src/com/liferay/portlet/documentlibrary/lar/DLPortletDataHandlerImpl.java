@@ -892,8 +892,8 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 	}
 
 	/**
-	 * @see {@link PortletImporter#getAssetCategoryName(String, long, String,
-	 *      int)}
+	 * @see {@link PortletImporter#getAssetCategoryName(String, long, long,
+	 *      String, int)}
 	 * @see {@link PortletImporter#getAssetVocabularyName(String, long, String,
 	 *      int)}
 	 */
@@ -963,8 +963,8 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 	}
 
 	/**
-	 * @see {@link PortletImporter#getAssetCategoryName(String, long, String,
-	 *      int)}
+	 * @see {@link PortletImporter#getAssetCategoryName(String, long, long,
+	 *      String, int)}
 	 * @see {@link PortletImporter#getAssetVocabularyName(String, long, String,
 	 *      int)}
 	 */

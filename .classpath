@@ -50,8 +50,6 @@
 	<classpathentry kind="lib" path="lib/development/jetty-server.jar"/>
 	<classpathentry kind="lib" path="lib/development/jetty-util.jar"/>
 	<classpathentry kind="lib" path="lib/development/jhighlight.jar"/>
-	<classpathentry kind="lib" path="lib/development/jmock.jar"/>
-	<classpathentry kind="lib" path="lib/development/jmock-junit4.jar"/>
 	<classpathentry kind="lib" path="lib/development/jms.jar"/>
 	<classpathentry kind="lib" path="lib/development/jndi.jar"/>
 	<classpathentry kind="lib" path="lib/development/jnet.jar"/>

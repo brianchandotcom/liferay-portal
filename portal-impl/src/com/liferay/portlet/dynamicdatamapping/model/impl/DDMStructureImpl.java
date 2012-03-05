@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.model.CacheField;
 import com.liferay.portlet.dynamicdatamapping.StructureFieldException;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -187,7 +188,6 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		return null;
 	}
 
-	@Override
 	public Map<String, Map<String, String>> getFieldsMap() {
 		return _getFieldsMap(getDefaultLocale());
 	}
@@ -213,9 +213,10 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		_document = document;
 	}
 
-	@Override
-	public void setFieldsMap(Map<String, Map<String, String>> fieldsMap) {
-		_fieldsMap = fieldsMap;
+	public void setLocalizedFieldsMap(
+		Map<String, Map<String, Map<String, String>>> localizedFieldsMap) {
+
+		_localizedFieldsMap = localizedFieldsMap;
 	}
 
 	@Override
@@ -223,7 +224,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		super.setXsd(xsd);
 
 		_document = null;
-		_fieldsMap = null;
+		_localizedFieldsMap.clear();
 	}
 
 	private Map<String, String> _getField(Element element, String locale) {
@@ -263,10 +264,10 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	}
 
 	private Map<String, Map<String, String>> _getFieldsMap(String locale) {
-		if (_fieldsMap == null) {
+		if (_localizedFieldsMap.get(locale) == null) {
 			synchronized (this) {
-				if (_fieldsMap == null) {
-					_fieldsMap =
+				if (_localizedFieldsMap.get(locale) == null) {
+					Map<String, Map<String, String>> fieldsMap =
 						new LinkedHashMap<String, Map<String, String>>();
 
 					XPath xPathSelector = SAXReaderUtil.createXPath(
@@ -281,13 +282,15 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 						String name = element.attributeValue("name");
 
-						_fieldsMap.put(name, _getField(element, locale));
+						fieldsMap.put(name, _getField(element, locale));
 					}
+
+					_localizedFieldsMap.put(locale, fieldsMap);
 				}
 			}
 		}
 
-		return _fieldsMap;
+		return _localizedFieldsMap.get(locale);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(DDMStructureImpl.class);
@@ -295,7 +298,8 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	@CacheField
 	private Document _document;
 
-	@CacheField
-	private Map<String, Map<String, String>> _fieldsMap;
+	private Map<String, Map<String, Map<String, String>>> _localizedFieldsMap =
+		Collections.synchronizedMap(
+			new LinkedHashMap<String, Map<String, Map<String, String>>>());
 
 }

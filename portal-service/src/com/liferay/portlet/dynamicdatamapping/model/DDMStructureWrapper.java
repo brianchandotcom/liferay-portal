@@ -733,9 +733,9 @@ public class DDMStructureWrapper implements DDMStructure,
 		_ddmStructure.setDocument(document);
 	}
 
-	public void setFieldsMap(
-		java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>> fieldsMap) {
-		_ddmStructure.setFieldsMap(fieldsMap);
+	public void setLocalizedFieldsMap(
+		java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>> localizedFieldsMap) {
+		_ddmStructure.setLocalizedFieldsMap(localizedFieldsMap);
 	}
 
 	/**

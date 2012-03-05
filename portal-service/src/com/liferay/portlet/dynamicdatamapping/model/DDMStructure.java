@@ -81,8 +81,8 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 
 	public void setDocument(com.liferay.portal.kernel.xml.Document document);
 
-	public void setFieldsMap(
-		java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>> fieldsMap);
+	public void setLocalizedFieldsMap(
+		java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>> localizedFieldsMap);
 
 	public void setXsd(java.lang.String xsd);
 }

@@ -151,8 +151,6 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 
 		ddmStructureImpl.setDocument(_document);
 
-		ddmStructureImpl.setFieldsMap(_fieldsMap);
-
 		return ddmStructureImpl;
 	}
 
@@ -172,5 +170,4 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 	public String storageType;
 	public int type;
 	public com.liferay.portal.kernel.xml.Document _document;
-	public java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>> _fieldsMap;
 }

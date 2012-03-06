@@ -96,7 +96,7 @@ public class SA_AddPageTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//input[@id='_156_name_en_US']")) {
+				if (selenium.isVisible("//input[@name='_156_name_en_US']")) {
 					break;
 				}
 			}
@@ -106,7 +106,7 @@ public class SA_AddPageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.type("//input[@id='_156_name_en_US']",
+		selenium.type("//input[@name='_156_name_en_US']",
 			RuntimeVariables.replace("Announcements Permissions Page"));
 		selenium.clickAt("//input[@value='Add Page']",
 			RuntimeVariables.replace("Add Page"));

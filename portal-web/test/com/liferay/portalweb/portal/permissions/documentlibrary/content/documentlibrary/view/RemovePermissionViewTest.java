@@ -69,8 +69,9 @@ public class RemovePermissionViewTest extends BaseTestCase {
 			RuntimeVariables.replace("\\13"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.uncheck(
-			"//input[@value='com.liferay.portlet.documentlibraryVIEW']");
+		assertTrue(selenium.isChecked("//input[@value='20VIEW']"));
+		selenium.uncheck("//input[@value='20VIEW']");
+		assertFalse(selenium.isChecked("//input[@value='20VIEW']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

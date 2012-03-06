@@ -82,7 +82,8 @@ public class SOUs_ViewUnblockCCUserTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@class='contacts-profile']")) {
+				if (selenium.isVisible(
+							"//div[contains(@class, 'contacts-profile')]")) {
 					break;
 				}
 			}
@@ -94,10 +95,10 @@ public class SOUs_ViewUnblockCCUserTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText(
-				"//div[@class='contacts-profile']/div/div[2]/div/a"));
+				"//div[contains(@class, 'contacts-profile')]/div/div[2]/div/a"));
 		assertEquals(RuntimeVariables.replace("test@liferay.com"),
 			selenium.getText(
-				"//div[@class='contacts-profile']/div/div[2]/div[3]"));
+				"//div[contains(@class, 'contacts-profile')]/div/div[2]/div[3]"));
 		assertFalse(selenium.isElementPresent(
 				"//div[contains(@class, 'contacts-center-home-content')]"));
 

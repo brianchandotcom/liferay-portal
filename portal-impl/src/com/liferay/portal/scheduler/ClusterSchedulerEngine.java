@@ -17,6 +17,7 @@ package com.liferay.portal.scheduler;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.cluster.Address;
+import com.liferay.portal.kernel.cluster.BaseClusterResponseCallback;
 import com.liferay.portal.kernel.cluster.ClusterEvent;
 import com.liferay.portal.kernel.cluster.ClusterEventListener;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
@@ -59,6 +60,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -141,7 +143,7 @@ public class ClusterSchedulerEngine
 		StorageType storageType = getStorageType(groupName);
 
 		if (storageType.equals(StorageType.MEMORY_CLUSTERED)) {
-			String masterAddressString = getMasterAddressString();
+			String masterAddressString = getMasterAddressString(false);
 
 			boolean master = _localClusterNodeAddress.equals(
 				masterAddressString);
@@ -166,7 +168,7 @@ public class ClusterSchedulerEngine
 	public List<SchedulerResponse> getScheduledJobs()
 		throws SchedulerException {
 
-		String masterAddressString = getMasterAddressString();
+		String masterAddressString = getMasterAddressString(false);
 		boolean master = _localClusterNodeAddress.equals(masterAddressString);
 
 		if (!master) {
@@ -189,7 +191,7 @@ public class ClusterSchedulerEngine
 		StorageType storageType = getStorageType(groupName);
 
 		if (storageType.equals(StorageType.MEMORY_CLUSTERED)) {
-			String masterAddressString = getMasterAddressString();
+			String masterAddressString = getMasterAddressString(false);
 
 			boolean master = _localClusterNodeAddress.equals(
 				masterAddressString);
@@ -225,7 +227,7 @@ public class ClusterSchedulerEngine
 
 			ClusterExecutorUtil.addClusterEventListener(_clusterEventListener);
 
-			String masterAddressString = getMasterAddressString();
+			String masterAddressString = getMasterAddressString(false);
 
 			boolean master = _localClusterNodeAddress.equals(
 				masterAddressString);
@@ -520,7 +522,7 @@ public class ClusterSchedulerEngine
 	}
 
 	public Lock updateMemorySchedulerClusterMaster() throws SchedulerException {
-		getMasterAddressString();
+		getMasterAddressString(false);
 
 		return null;
 	}
@@ -593,7 +595,9 @@ public class ClusterSchedulerEngine
 		return groupName.concat(StringPool.PERIOD).concat(jobName);
 	}
 
-	protected String getMasterAddressString() throws SchedulerException {
+	protected String getMasterAddressString(boolean asynchronous)
+		throws SchedulerException {
+
 		String owner = null;
 		Lock lock = null;
 
@@ -643,7 +647,7 @@ public class ClusterSchedulerEngine
 			slaveToMaster();
 		}
 		else {
-			masterToSlave(lock.getOwner());
+			masterToSlave(lock.getOwner(), asynchronous);
 		}
 
 		return lock.getOwner();
@@ -713,7 +717,7 @@ public class ClusterSchedulerEngine
 			return false;
 		}
 
-		String masterAddressString = getMasterAddressString();
+		String masterAddressString = getMasterAddressString(false);
 
 		boolean master = _localClusterNodeAddress.equals(masterAddressString);
 
@@ -724,41 +728,43 @@ public class ClusterSchedulerEngine
 		return true;
 	}
 
-	protected void masterToSlave(String masterAddressString)
+	protected void masterToSlave(
+			String masterAddressString, boolean asynchronous)
 		throws SchedulerException {
+
+		if (asynchronous) {
+			MethodHandler methodHandler = new MethodHandler(
+				_getScheduledJobsMethodKey3, StorageType.MEMORY_CLUSTERED);
+
+			Address address = (Address)getDeserializedObject(
+				masterAddressString);
+
+			ClusterRequest clusterRequest = ClusterRequest.createUnicastRequest(
+				methodHandler, address);
+
+			clusterRequest.setBeanIdentifier(_beanIdentifier);
+
+			try {
+				ClusterExecutorUtil.execute(
+					clusterRequest,
+					new MemorySchedulerClusterResponseCallback(address), 20,
+					TimeUnit.SECONDS);
+
+				return;
+			}
+			catch (Exception e) {
+				throw new SchedulerException(
+					"Unable to load scheduled jobs from cluster node " +
+						address.getDescription(),
+					e);
+			}
+		}
 
 		List<SchedulerResponse> schedulerResponses = callMaster(
 			masterAddressString, _getScheduledJobsMethodKey3,
 			StorageType.MEMORY_CLUSTERED);
 
-		_writeLock.lock();
-
-		try {
-			for (SchedulerResponse schedulerResponse :
-				_schedulerEngine.getScheduledJobs()) {
-
-				if (StorageType.MEMORY_CLUSTERED ==
-					schedulerResponse.getStorageType()) {
-					_schedulerEngine.delete(
-						schedulerResponse.getJobName(),
-						schedulerResponse.getGroupName());
-				}
-			}
-
-			initMemoryClusteredJobs(schedulerResponses);
-
-			if (_log.isInfoEnabled()) {
-				_log.info("Current node switched from master to slave.");
-			}
-		}
-		catch (Exception e) {
-			throw new SchedulerException(e);
-		}
-		finally {
-			_master = false;
-
-			_writeLock.unlock();
-		}
+		_doMasterToSlave(schedulerResponses);
 	}
 
 	protected void removeMemoryClusteredJobs(String groupName) {
@@ -865,6 +871,40 @@ public class ClusterSchedulerEngine
 		}
 	}
 
+	private void _doMasterToSlave(List<SchedulerResponse> schedulerResponses)
+		throws SchedulerException {
+
+		_writeLock.lock();
+
+		try {
+			for (SchedulerResponse schedulerResponse :
+				_schedulerEngine.getScheduledJobs()) {
+
+				if (StorageType.MEMORY_CLUSTERED ==
+					schedulerResponse.getStorageType()) {
+
+					_schedulerEngine.delete(
+						schedulerResponse.getJobName(),
+						schedulerResponse.getGroupName());
+				}
+			}
+
+			initMemoryClusteredJobs(schedulerResponses);
+
+			if (_log.isInfoEnabled()) {
+				_log.info("Current node switched from master to slave.");
+			}
+		}
+		catch (Exception e) {
+			throw new SchedulerException(e);
+		}
+		finally {
+			_master = false;
+
+			_writeLock.unlock();
+		}
+	}
+
 	@BeanReference(
 		name="com.liferay.portal.scheduler.ClusterSchedulerEngineService")
 	protected SchedulerEngine schedulerEngine;
@@ -902,12 +942,48 @@ public class ClusterSchedulerEngine
 
 		public void processClusterEvent(ClusterEvent clusterEvent) {
 			try {
-				getMasterAddressString();
+				getMasterAddressString(true);
 			}
 			catch (Exception e) {
 				_log.error("Unable to update memory scheduler cluster lock", e);
 			}
 		}
+
+	}
+
+	private class MemorySchedulerClusterResponseCallback
+		extends BaseClusterResponseCallback {
+
+		public MemorySchedulerClusterResponseCallback(Address address) {
+			_address = address;
+		}
+
+		public void callback(ClusterNodeResponses clusterNodeResponses) {
+			try {
+				ClusterNodeResponse clusterNodeResponse = 
+					clusterNodeResponses.getClusterResponse(_address);
+
+				List<SchedulerResponse> schedulerResponses =
+					(List<SchedulerResponse>)clusterNodeResponse.getResult();
+
+				_doMasterToSlave(schedulerResponses);
+			}
+			catch (Exception e) {
+				_log.error(
+					"Unable to load memory clustered jobs from cluster node " +
+						_address.getDescription(),
+					e);
+			}
+		}
+
+		public void processTimeoutException(TimeoutException timeoutException) {
+			_log.error(
+				"Unable to load memory clustered jobs from cluster node " +
+					_address.getDescription(),
+				timeoutException);
+		}
+
+		private Address _address;
 
 	}
 

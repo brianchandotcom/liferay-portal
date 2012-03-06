@@ -331,6 +331,90 @@ public class SourceFormatter {
 		}
 	}
 
+	private static void _checkIfClause(
+		String ifClause, String fileName, int lineCount) {
+
+		if (ifClause.contains(StringPool.DOUBLE_SLASH) ||
+			ifClause.contains("/*") || ifClause.contains("*/")) {
+
+			return;
+		}
+
+		int quoteCount = StringUtil.count(ifClause, StringPool.QUOTE);
+
+		if ((quoteCount % 2) == 1) {
+			return;
+		}
+
+		ifClause = _stripQuotes(ifClause);
+
+		int level = 0;
+		int max = StringUtil.count(ifClause, StringPool.OPEN_PARENTHESIS);
+		int previousParenthesisPos = -1;
+
+		int levels[] = new int[max];
+
+		for (int i = 0; i < ifClause.length(); i++) {
+			char c = ifClause.charAt(i);
+
+			if ((c == CharPool.OPEN_PARENTHESIS) ||
+				(c == CharPool.CLOSE_PARENTHESIS)) {
+
+				if (previousParenthesisPos != -1) {
+					String s = ifClause.substring(
+						previousParenthesisPos + 1, i);
+
+					_checkMissingParentheses(s, fileName, lineCount);
+				}
+
+				previousParenthesisPos = i;
+	
+				if (c == CharPool.OPEN_PARENTHESIS) {
+					levels[level] = i;
+
+					level += 1;
+				}
+				else {
+					int posOpenParenthesis = levels[level - 1];
+
+					if (level > 1) {
+						char previousChar = ifClause.charAt(
+							posOpenParenthesis - 1);
+
+						if (!Character.isLetterOrDigit(previousChar)) {
+							String s = ifClause.substring(
+								posOpenParenthesis + 1, i);
+
+							if (Validator.isNotNull(s) &&
+								!s.contains(StringPool.SPACE)) {
+
+								/*
+								_sourceFormatterHelper.printError(
+									fileName,
+									"redundant parentheses: " + fileName + " " +
+										lineCount);
+								*/
+							}
+						}
+
+						char nextChar = ifClause.charAt(i + 1);
+
+						if ((previousChar == CharPool.OPEN_PARENTHESIS) &&
+							(nextChar == CharPool.CLOSE_PARENTHESIS)) {
+
+							_sourceFormatterHelper.printError(
+								fileName,
+								"redundant parentheses: " + fileName + " " +
+									lineCount);
+						}
+					}
+
+					level -= 1;
+				}
+			}
+		}
+	}
+
 	private static void _checkJSPAttributes(
 		String fileName, String line, int lineCount) {
 
@@ -392,6 +476,26 @@ public class SourceFormatter {
 			line = StringUtil.trimLeading(line);
 
 			previousAttribute = attribute;
+		}
+	}
+
+	private static void _checkMissingParentheses(
+		String s, String fileName, int lineCount) {
+
+		if (Validator.isNull(s)) {
+			return;
+		}
+
+		boolean containsAndOrOperator = (s.contains("&&") || s.contains("||"));
+
+		boolean containsCompareOperator =
+			(s.contains(" == ") || s.contains(" != ") || s.contains(" < ") ||
+			 s.contains(" > ") || s.contains(" =< ") || s.contains(" => ") ||
+			 s.contains(" <= ") || s.contains(" >= "));
+
+		if (containsAndOrOperator && containsCompareOperator) {
+			_sourceFormatterHelper.printError(
+				fileName, "missing parentheses: " + fileName + " " + lineCount);
 		}
 	}
 
@@ -1266,6 +1370,8 @@ public class SourceFormatter {
 		boolean readMethodParameterTypes = false;
 		boolean hasSameMethodName = false;
 
+		String ifClause = StringPool.BLANK;
+
 		while ((line = unsyncBufferedReader.readLine()) != null) {
 			lineCount++;
 
@@ -1311,6 +1417,19 @@ public class SourceFormatter {
 				fileName, line, lineCount);
 
 			String trimmedLine = StringUtil.trimLeading(line);
+
+			if (trimmedLine.startsWith("if (") ||
+				trimmedLine.startsWith("else if (") ||
+				Validator.isNotNull(ifClause)) {
+
+				ifClause = ifClause + StringPool.SPACE + trimmedLine;
+
+				if (ifClause.endsWith(") {")) {
+					_checkIfClause(ifClause, fileName, lineCount);
+
+					ifClause = StringPool.BLANK;
+				}
+			}
 
 			String excluded =
 				_javaTermAlphabetizeExclusionsProperties.getProperty(
@@ -2963,17 +3082,7 @@ public class SourceFormatter {
 			return false;
 		}
 
-		String[] parts = StringUtil.split(javaParameter, CharPool.QUOTE);
-
-		int i = 1;
-
-		while (i < parts.length) {
-			javaParameter = StringUtil.replaceFirst(
-				javaParameter, StringPool.QUOTE + parts[i] + StringPool.QUOTE,
-				StringPool.BLANK);
-
-			i = i + 2;
-		}
+		javaParameter = _stripQuotes(javaParameter);
 
 		int openParenthesisCount = StringUtil.count(
 			javaParameter, StringPool.OPEN_PARENTHESIS);
@@ -3097,6 +3206,22 @@ public class SourceFormatter {
 		content = beforeImports + imports + "\n" + afterImports;
 
 		return content;
+	}
+
+	private static String _stripQuotes(String s) {
+		String[] parts = StringUtil.split(s, CharPool.QUOTE);
+
+		int i = 1;
+
+		while (i < parts.length) {
+			s = StringUtil.replaceFirst(
+				s, StringPool.QUOTE + parts[i] + StringPool.QUOTE,
+				StringPool.BLANK);
+
+			i = i + 2;
+		}
+
+		return s;
 	}
 
 	private static final String[] _TAG_LIBRARIES = new String[] {

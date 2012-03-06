@@ -76,9 +76,9 @@ public class AddCategoryItemTest extends BaseTestCase {
 				"//input[@id='_34_requiresShippingCheckbox']"));
 		selenium.type("//input[@id='_34_stockQuantity']",
 			RuntimeVariables.replace("50"));
-		selenium.type("//input[@id='_34_price0']",
+		selenium.type("//input[@id='_34_price']",
 			RuntimeVariables.replace("$9.99"));
-		selenium.type("//input[@id='_34_minQuantity0']",
+		selenium.type("//input[@id='_34_minQuantity']",
 			RuntimeVariables.replace("1"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

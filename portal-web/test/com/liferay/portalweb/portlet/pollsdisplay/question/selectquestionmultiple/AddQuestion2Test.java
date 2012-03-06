@@ -56,9 +56,9 @@ public class AddQuestion2Test extends BaseTestCase {
 			RuntimeVariables.replace("PD Question2 Title"));
 		selenium.type("//textarea[@id='_25_description_en_US']",
 			RuntimeVariables.replace("PD Question2 Description"));
-		selenium.type("//input[@id='_25_choiceDescriptiona_en_US']",
+		selenium.type("//input[@name='_25_choiceDescriptiona_en_US']",
 			RuntimeVariables.replace("PD Question2 ChoiceA"));
-		selenium.type("//input[@id='_25_choiceDescriptionb_en_US']",
+		selenium.type("//input[@name='_25_choiceDescriptionb_en_US']",
 			RuntimeVariables.replace("PD Question2 ChoiceB"));
 		selenium.clickAt("//input[@value='Add Choice']",
 			RuntimeVariables.replace("Add Choice"));

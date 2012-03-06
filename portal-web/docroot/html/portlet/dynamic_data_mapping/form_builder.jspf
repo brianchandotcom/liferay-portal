@@ -156,7 +156,7 @@ for (int i = 0; i < availableLocales.length; i++) {
 JSONObject localesMapJSONObject = JSONFactoryUtil.createJSONObject();
 
 for (int i = 0; i < locales.length; i++) {
-	localesMapJSONObject.put(LocaleUtil.toLanguageId(locales[i]), UnicodeFormatter.toString(locales[i].getDisplayName(locale)));
+	localesMapJSONObject.put(LocaleUtil.toLanguageId(locales[i]), locales[i].getDisplayName(locale));
 }
 %>
 

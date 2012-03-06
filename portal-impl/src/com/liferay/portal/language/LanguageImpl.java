@@ -672,8 +672,8 @@ public class LanguageImpl implements Language {
 
 			String portletName = portletConfig.getPortletName();
 
-			if (((value == null) || (value.equals(defaultValue))) &&
-				(portletName.equals(PortletKeys.PORTLET_CONFIGURATION))) {
+			if (((value == null) || value.equals(defaultValue)) &&
+				portletName.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 
 				value = _getPortletConfigurationValue(pageContext, locale, key);
 			}

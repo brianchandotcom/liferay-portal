@@ -738,9 +738,9 @@ public class PortletExporter {
 			return;
 		}
 
-		if ((!portlet.isInstanceable()) &&
-			(!portlet.isPreferencesUniquePerLayout()) &&
-			(portletDataContext.hasNotUniquePerLayout(portletId))) {
+		if (!portlet.isInstanceable() &&
+			!portlet.isPreferencesUniquePerLayout() &&
+			portletDataContext.hasNotUniquePerLayout(portletId)) {
 
 			return;
 		}
@@ -1126,7 +1126,7 @@ public class PortletExporter {
 		}
 
 		if ((layoutTypePortlet == null) ||
-			(layoutTypePortlet.hasPortletId(portletId))) {
+			layoutTypePortlet.hasPortletId(portletId)) {
 
 			exportPortletPreference(
 				portletDataContext, ownerId, ownerType, defaultUser,

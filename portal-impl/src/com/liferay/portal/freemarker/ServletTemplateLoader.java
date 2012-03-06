@@ -69,7 +69,7 @@ public class ServletTemplateLoader extends URLTemplateLoader {
 				url = servletContext.getResource(templateName);
 
 				if ((url == null) &&
-					(templateName.endsWith("/init_custom.ftl"))) {
+					templateName.endsWith("/init_custom.ftl")) {
 
 					if (_log.isWarnEnabled()) {
 						_log.warn(

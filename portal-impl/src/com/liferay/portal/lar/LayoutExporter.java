@@ -131,7 +131,7 @@ public class LayoutExporter {
 				portlet.getPortletDataHandlerInstance();
 
 			if ((portletDataHandler == null) ||
-				(!portletDataHandler.isAlwaysExportable())) {
+				!portletDataHandler.isAlwaysExportable()) {
 
 				itr.remove();
 			}
@@ -933,7 +933,7 @@ public class LayoutExporter {
 	protected void exportThemeFiles(String path, File dir, ZipWriter zipWriter)
 		throws Exception {
 
-		if ((dir == null) || (!dir.exists())) {
+		if ((dir == null) || !dir.exists()) {
 			return;
 		}
 

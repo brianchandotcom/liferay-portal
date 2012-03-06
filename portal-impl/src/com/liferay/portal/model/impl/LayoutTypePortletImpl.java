@@ -205,7 +205,7 @@ public class LayoutTypePortletImpl
 			return null;
 		}
 
-		if ((portlet.isInstanceable()) &&
+		if (portlet.isInstanceable() &&
 			(PortletConstants.getInstanceId(portlet.getPortletId()) == null)) {
 
 			portletId = portletId + getFullInstanceSeparator();
@@ -240,7 +240,7 @@ public class LayoutTypePortletImpl
 			}
 
 			if ((columnValue == null) &&
-				(columnId.startsWith(_nestedPortletsNamespace))) {
+				columnId.startsWith(_nestedPortletsNamespace)) {
 
 				addNestedColumn(columnId);
 			}
@@ -333,7 +333,7 @@ public class LayoutTypePortletImpl
 			endPortlets = new ArrayList<Portlet>();
 		}
 
-		if ((startPortlets.isEmpty()) && (endPortlets.isEmpty())) {
+		if (startPortlets.isEmpty() && endPortlets.isEmpty()) {
 			return portlets;
 		}
 

@@ -46,7 +46,7 @@ public class CyrusHook implements Hook {
 				File file = new File(home + "/" + userId + ".procmail.forward");
 
 				if ((filters.size() > 0) || (emailAddresses.size() > 0) ||
-					(leaveCopy)) {
+					leaveCopy) {
 
 					StringBundler sb = new StringBundler();
 

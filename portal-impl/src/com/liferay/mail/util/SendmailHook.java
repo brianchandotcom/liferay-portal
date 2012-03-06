@@ -194,7 +194,7 @@ public class SendmailHook implements Hook {
 				}
 			}
 
-			if ((emailAddress != null) && (!emailAddress.equals(""))) {
+			if ((emailAddress != null) && !emailAddress.equals("")) {
 				sb.append(emailAddress);
 				sb.append(" ");
 				sb.append(userId);

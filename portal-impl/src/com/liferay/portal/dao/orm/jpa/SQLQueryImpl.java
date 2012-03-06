@@ -247,7 +247,7 @@ public class SQLQueryImpl extends QueryImpl implements SQLQuery {
 
 				list = newList;
 			}
-			else if ((_scalars.size() == 1)) {
+			else if (_scalars.size() == 1) {
 				List<Object> newList = new ArrayList<Object>();
 
 				for (Object value : list) {

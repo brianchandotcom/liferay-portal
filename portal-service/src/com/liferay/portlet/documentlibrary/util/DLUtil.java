@@ -268,10 +268,10 @@ public class DLUtil {
 		if ((splitVersion1.length != 2) && (splitVersion2.length != 2)) {
 			return 0;
 		}
-		else if ((splitVersion1.length != 2)) {
+		else if (splitVersion1.length != 2) {
 			return -1;
 		}
-		else if ((splitVersion2.length != 2)) {
+		else if (splitVersion2.length != 2) {
 			return 1;
 		}
 

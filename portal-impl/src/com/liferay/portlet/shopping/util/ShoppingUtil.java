@@ -1060,8 +1060,8 @@ public class ShoppingUtil {
 			int minQty = temp.getMinQuantity();
 			int maxQty = temp.getMaxQuantity();
 
-			if ((temp.getStatus() !=
-					ShoppingItemPriceConstants.STATUS_INACTIVE)) {
+			if (temp.getStatus() !=
+					ShoppingItemPriceConstants.STATUS_INACTIVE) {
 
 				if ((count >= minQty) && ((count <= maxQty) || (maxQty == 0))) {
 					return temp;

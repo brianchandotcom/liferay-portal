@@ -1784,8 +1784,8 @@ public class OrganizationLocalServiceImpl
 				"Invalid organization type " + type);
 		}
 
-		if ((parentOrganizationId ==
-				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID)) {
+		if (parentOrganizationId ==
+				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) {
 
 			if (!OrganizationImpl.isRootable(type)) {
 				throw new OrganizationParentException(

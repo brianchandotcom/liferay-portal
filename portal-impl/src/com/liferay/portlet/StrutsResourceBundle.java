@@ -51,11 +51,11 @@ public class StrutsResourceBundle extends ResourceBundle {
 			throw new NullPointerException();
 		}
 
-		if ((key.equals(JavaConstants.JAVAX_PORTLET_DESCRIPTION) ||
-			 key.equals(JavaConstants.JAVAX_PORTLET_KEYWORDS) ||
-			 key.equals(JavaConstants.JAVAX_PORTLET_LONG_TITLE) ||
-			 key.equals(JavaConstants.JAVAX_PORTLET_SHORT_TITLE) ||
-			 key.equals(JavaConstants.JAVAX_PORTLET_TITLE))) {
+		if (key.equals(JavaConstants.JAVAX_PORTLET_DESCRIPTION) ||
+			key.equals(JavaConstants.JAVAX_PORTLET_KEYWORDS) ||
+			key.equals(JavaConstants.JAVAX_PORTLET_LONG_TITLE) ||
+			key.equals(JavaConstants.JAVAX_PORTLET_SHORT_TITLE) ||
+			key.equals(JavaConstants.JAVAX_PORTLET_TITLE)) {
 
 			key = key.concat(StringPool.PERIOD).concat(_portletName);
 		}

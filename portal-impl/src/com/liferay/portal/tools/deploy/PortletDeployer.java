@@ -456,8 +456,8 @@ public class PortletDeployer extends BaseDeployer {
 		renderKitFactoryEl = factoryEl.element("render-kit-factory");
 		facesContextFactoryEl = factoryEl.element("faces-context-factory");
 
-		if ((appServerType.equals("orion") && (_sunFacesPortlet) &&
-			 (renderKitFactoryEl == null))) {
+		if (appServerType.equals("orion") && (_sunFacesPortlet) &&
+			 (renderKitFactoryEl == null)) {
 
 			renderKitFactoryEl = factoryEl.addElement("render-kit-factory");
 

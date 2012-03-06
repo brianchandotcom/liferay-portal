@@ -166,7 +166,7 @@ public class LayoutAction extends Action {
 		Boolean layoutDefault = (Boolean)request.getAttribute(
 			WebKeys.LAYOUT_DEFAULT);
 
-		if ((layoutDefault != null) && (layoutDefault.booleanValue())) {
+		if ((layoutDefault != null) && layoutDefault.booleanValue()) {
 			Layout requestedLayout = (Layout)request.getAttribute(
 				WebKeys.REQUESTED_LAYOUT);
 
@@ -765,7 +765,7 @@ public class LayoutAction extends Action {
 
 		if (layout.isTypeControlPanel() &&
 			((windowState == null) || windowState.equals(WindowState.NORMAL) ||
-			 (Validator.isNull(windowState.toString())))) {
+			 Validator.isNull(windowState.toString()))) {
 
 			windowState = WindowState.MAXIMIZED;
 		}
@@ -814,7 +814,7 @@ public class LayoutAction extends Action {
 
 					if (invokerPortlet.isStrutsPortlet() ||
 						((invokerPortletConfigImpl != null) &&
-						 (!invokerPortletConfigImpl.isWARFile()))) {
+						 !invokerPortletConfigImpl.isWARFile())) {
 
 						uploadServletRequest = new UploadServletRequestImpl(
 							request);

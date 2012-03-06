@@ -38,7 +38,7 @@ public class ClusterForwardReceiver extends BaseReceiver {
 
 	@Override
 	public void receive(Message message) {
-		if ((!_localTransportAddresses.contains(message.getSrc())) ||
+		if (!_localTransportAddresses.contains(message.getSrc()) ||
 			(message.getDest() != null)) {
 
 			_clusterForwardMessageListener.receive(

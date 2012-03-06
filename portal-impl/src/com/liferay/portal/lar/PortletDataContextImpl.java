@@ -1221,7 +1221,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 			return true;
 		}
 		else if ((_startDate.compareTo(modifiedDate) <= 0) &&
-				 (_endDate.after(modifiedDate))) {
+				 _endDate.after(modifiedDate)) {
 
 			return true;
 		}

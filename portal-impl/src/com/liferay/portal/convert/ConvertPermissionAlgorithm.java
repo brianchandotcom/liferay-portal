@@ -138,7 +138,7 @@ public class ConvertPermissionAlgorithm extends ConvertProcess {
 				long userId = PermissionView.getPrimaryKey(values);
 
 				if ((scope == ResourceConstants.SCOPE_INDIVIDUAL) &&
-					(_guestUsersSet.contains(userId))) {
+					_guestUsersSet.contains(userId)) {
 
 					long roleId = _guestRolesMap.get(companyId).getRoleId();
 

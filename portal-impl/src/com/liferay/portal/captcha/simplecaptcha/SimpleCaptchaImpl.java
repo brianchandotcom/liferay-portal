@@ -277,7 +277,7 @@ public class SimpleCaptchaImpl implements Captcha {
 
 	protected void incrementCounter(HttpServletRequest request) {
 		if ((PropsValues.CAPTCHA_MAX_CHALLENGES > 0) &&
-			(Validator.isNotNull(request.getRemoteUser()))) {
+			Validator.isNotNull(request.getRemoteUser())) {
 
 			HttpSession session = request.getSession();
 
@@ -302,7 +302,7 @@ public class SimpleCaptchaImpl implements Captcha {
 
 	protected void incrementCounter(PortletRequest portletRequest) {
 		if ((PropsValues.CAPTCHA_MAX_CHALLENGES > 0) &&
-			(Validator.isNotNull(portletRequest.getRemoteUser()))) {
+			Validator.isNotNull(portletRequest.getRemoteUser())) {
 
 			PortletSession portletSession = portletRequest.getPortletSession();
 

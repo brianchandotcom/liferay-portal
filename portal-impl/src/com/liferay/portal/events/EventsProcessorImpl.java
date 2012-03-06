@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InstancePool;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -117,7 +116,7 @@ public class EventsProcessorImpl implements EventsProcessor {
 	public void unregisterEvent(String key, Object event) {
 		List<Object> events = _getEvents(key);
 
-		ListUtil.remove(events, event);
+		events.remove(event);
 	}
 
 	private List<Object> _getEvents(String key) {

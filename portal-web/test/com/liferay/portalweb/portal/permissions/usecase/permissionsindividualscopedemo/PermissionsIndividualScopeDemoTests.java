@@ -17,9 +17,9 @@ package com.liferay.portalweb.portal.permissions.usecase.permissionsindividualsc
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUser1Test;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUser2Test;
-import com.liferay.portalweb.portal.controlpanel.users.user.adduser.EditUser1PasswordTest;
-import com.liferay.portalweb.portal.controlpanel.users.user.adduser.EditUser2PasswordTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.TearDownUserTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.edituserpassword.EditUser1PasswordTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.edituserpassword.EditUser2PasswordTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.documentlibrary.portlet.addportlet.AddPageDMTest;
 import com.liferay.portalweb.portlet.documentlibrary.portlet.addportlet.AddPortletDMTest;

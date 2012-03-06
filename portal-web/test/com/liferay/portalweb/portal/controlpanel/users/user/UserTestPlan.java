@@ -65,7 +65,6 @@ import com.liferay.portalweb.portal.controlpanel.users.user.adduserinstantmessen
 import com.liferay.portalweb.portal.controlpanel.users.user.adduserlastnamenull.AddUserLastNameNullTests;
 import com.liferay.portalweb.portal.controlpanel.users.user.addusermultiple.AddUserMultipleTests;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduseropenid.AddUserOpenIDTests;
-import com.liferay.portalweb.portal.controlpanel.users.user.adduserpassword.AddUserPasswordTests;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduserpassword1null.AddUserPassword1NullTests;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduserpassword2null.AddUserPassword2NullTests;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduserpassworddifferent.AddUserPasswordDifferentTests;
@@ -86,10 +85,12 @@ import com.liferay.portalweb.portal.controlpanel.users.user.changeuserpassword.C
 import com.liferay.portalweb.portal.controlpanel.users.user.changeuserpasswordinvalid.ChangeUserPasswordInvalidTests;
 import com.liferay.portalweb.portal.controlpanel.users.user.deactivateuser.DeactivateUserTests;
 import com.liferay.portalweb.portal.controlpanel.users.user.deleteuser.DeleteUserTests;
+import com.liferay.portalweb.portal.controlpanel.users.user.edituserpassword.EditUserPasswordTests;
 import com.liferay.portalweb.portal.controlpanel.users.user.restoreuser.RestoreUserTests;
 import com.liferay.portalweb.portal.controlpanel.users.user.searchuser.SearchUserTests;
 import com.liferay.portalweb.portal.controlpanel.users.user.searchuserfullnamecp.SearchUserFullNameCPTests;
 import com.liferay.portalweb.portal.controlpanel.users.user.searchuserquotes.SearchUserQuotesTests;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -152,7 +153,6 @@ public class UserTestPlan extends BaseTestSuite {
 		testSuite.addTest(AddUserLastNameNullTests.suite());
 		testSuite.addTest(AddUserMultipleTests.suite());
 		testSuite.addTest(AddUserOpenIDTests.suite());
-		testSuite.addTest(AddUserPasswordTests.suite());
 		testSuite.addTest(AddUserPassword1NullTests.suite());
 		testSuite.addTest(AddUserPassword2NullTests.suite());
 		testSuite.addTest(AddUserPasswordDifferentTests.suite());
@@ -173,10 +173,12 @@ public class UserTestPlan extends BaseTestSuite {
 		testSuite.addTest(ChangeUserPasswordInvalidTests.suite());
 		testSuite.addTest(DeactivateUserTests.suite());
 		testSuite.addTest(DeleteUserTests.suite());
+		testSuite.addTest(EditUserPasswordTests.suite());
 		testSuite.addTest(RestoreUserTests.suite());
 		testSuite.addTest(SearchUserTests.suite());
 		testSuite.addTest(SearchUserFullNameCPTests.suite());
 		testSuite.addTest(SearchUserQuotesTests.suite());
+		testSuite.addTest(SignInTests.suite());
 
 		return testSuite;
 	}

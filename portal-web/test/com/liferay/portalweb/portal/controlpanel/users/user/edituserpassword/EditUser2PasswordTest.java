@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.users.user.adduser;
+package com.liferay.portalweb.portal.controlpanel.users.user.edituserpassword;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class EditUser1PasswordTest extends BaseTestCase {
-	public void testEditUser1Password() throws Exception {
+public class EditUser2PasswordTest extends BaseTestCase {
+	public void testEditUser2Password() throws Exception {
 		int label = 1;
 
 		while (label >= 1) {
@@ -93,14 +93,14 @@ public class EditUser1PasswordTest extends BaseTestCase {
 
 			case 2:
 				selenium.type("//input[@name='_125_keywords']",
-					RuntimeVariables.replace("userfn1"));
+					RuntimeVariables.replace("userfn2"));
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-				assertEquals(RuntimeVariables.replace("userfn1"),
+				assertEquals(RuntimeVariables.replace("userfn2"),
 					selenium.getText("//td/a"));
-				selenium.clickAt("//td/a", RuntimeVariables.replace("userfn1"));
+				selenium.clickAt("//td/a", RuntimeVariables.replace("userfn2"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isPartialText(
@@ -140,7 +140,7 @@ public class EditUser1PasswordTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				selenium.type("//input[@id='_58_login']",
-					RuntimeVariables.replace("userea1@liferay.com"));
+					RuntimeVariables.replace("userea2@liferay.com"));
 				selenium.type("//input[@id='_58_password']",
 					RuntimeVariables.replace("password"));
 

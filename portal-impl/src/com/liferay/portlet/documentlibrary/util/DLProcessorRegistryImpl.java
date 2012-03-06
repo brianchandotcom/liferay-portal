@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.InstancePool;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.xml.Element;
@@ -173,7 +172,7 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 	}
 
 	public void unregister(DLProcessor dlProcessor) {
-		ListUtil.remove(_dlProcessors, dlProcessor);
+		_dlProcessors.remove(dlProcessor);
 	}
 
 	private FileVersion _getLatestFileVersion(FileEntry fileEntry) {

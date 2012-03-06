@@ -414,7 +414,7 @@ public abstract class BaseIndexer implements Indexer {
 		List<IndexerPostProcessor> indexerPostProcessorsList =
 			ListUtil.fromArray(_indexerPostProcessors);
 
-		ListUtil.remove(indexerPostProcessorsList, indexerPostProcessor);
+		indexerPostProcessorsList.remove(indexerPostProcessor);
 
 		_indexerPostProcessors = indexerPostProcessorsList.toArray(
 			new IndexerPostProcessor[indexerPostProcessorsList.size()]);

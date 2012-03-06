@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.spring.context.PortletContextLoaderListener;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -244,7 +243,7 @@ public class HotDeployUtil {
 	}
 
 	private void _unregisterListener(HotDeployListener listener) {
-		ListUtil.remove(_listeners, listener);
+		_listeners.remove(listener);
 	}
 
 	private void _unregisterListeners() {

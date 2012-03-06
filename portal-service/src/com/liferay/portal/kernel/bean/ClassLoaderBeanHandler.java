@@ -51,7 +51,19 @@ public class ClassLoaderBeanHandler implements InvocationHandler {
 				currentThread.setContextClassLoader(_classLoader);
 			}
 
-			return method.invoke(_bean, args);
+			if ((method.getDeclaringClass() == Object.class) &&
+				method.getName().equals("equals")) {
+
+				if (proxy == args[0]) {
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+			else {
+				return method.invoke(_bean, args);
+			}
 		}
 		catch (InvocationTargetException ite) {
 			throw ite.getTargetException();

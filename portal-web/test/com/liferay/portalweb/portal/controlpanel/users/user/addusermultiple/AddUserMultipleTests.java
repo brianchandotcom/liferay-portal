@@ -18,9 +18,6 @@ import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUser1Test;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUser2Test;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUser3Test;
-import com.liferay.portalweb.portal.controlpanel.users.user.adduser.EditUser1PasswordTest;
-import com.liferay.portalweb.portal.controlpanel.users.user.adduser.EditUser2PasswordTest;
-import com.liferay.portalweb.portal.controlpanel.users.user.adduser.EditUser3PasswordTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.TearDownUserTest;
 
 import junit.framework.Test;
@@ -33,11 +30,8 @@ public class AddUserMultipleTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddUser1Test.class);
-		testSuite.addTestSuite(EditUser1PasswordTest.class);
 		testSuite.addTestSuite(AddUser2Test.class);
-		testSuite.addTestSuite(EditUser2PasswordTest.class);
 		testSuite.addTestSuite(AddUser3Test.class);
-		testSuite.addTestSuite(EditUser3PasswordTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
 
 		return testSuite;

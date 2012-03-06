@@ -22,56 +22,37 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class User3_SignInTest extends BaseTestCase {
 	public void testUser3_SignIn() throws Exception {
-		int label = 1;
+		selenium.open("/web/guest/home/");
+		loadRequiredJavaScriptModules();
 
-		while (label >= 1) {
-			switch (label) {
-			case 1:
-				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//input[@id='_58_login']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.type("//input[@id='_58_login']",
-					RuntimeVariables.replace("user3@liferay.com"));
-				selenium.type("//input[@id='_58_password']",
-					RuntimeVariables.replace("test"));
-
-				boolean rememberMeCheckboxChecked1 = selenium.isChecked(
-						"_58_rememberMeCheckbox");
-
-				if (rememberMeCheckboxChecked1) {
-					label = 2;
-
-					continue;
-				}
-
-				selenium.clickAt("//input[@id='_58_rememberMeCheckbox']",
-					RuntimeVariables.replace("Remember Me Checkbox"));
-
-			case 2:
-				selenium.clickAt("//input[@value='Sign In']",
-					RuntimeVariables.replace("Sign In"));
-				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
-
-			case 100:
-				label = -1;
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
 			}
+
+			try {
+				if (selenium.isVisible("link=Welcome")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
 		}
+
+		selenium.clickAt("link=Welcome", RuntimeVariables.replace("Welcome"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		selenium.type("//input[@id='_58_login']",
+			RuntimeVariables.replace("user3@liferay.com"));
+		selenium.type("//input[@id='_58_password']",
+			RuntimeVariables.replace("test"));
+		selenium.clickAt("//input[@id='_58_rememberMeCheckbox']",
+			RuntimeVariables.replace("Remember Me"));
+		selenium.clickAt("//input[@value='Sign In']",
+			RuntimeVariables.replace("Sign In"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 	}
 }

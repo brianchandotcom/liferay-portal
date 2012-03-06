@@ -15,6 +15,8 @@
 package com.liferay.portalweb.plugins.kaleo.wiki.wikipage.viewwikipageassignedtomyroles;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.wiki.portlet.addportlet.AddPageWikiTest;
 import com.liferay.portalweb.portlet.wiki.portlet.addportlet.AddPortletWikiTest;

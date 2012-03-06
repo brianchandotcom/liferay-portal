@@ -15,6 +15,8 @@
 package com.liferay.portalweb.portlet.announcements.usecase.demo1;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.announcements.announcementsentry.addannouncementsentrygeneral.AddPageAnnouncementsTest;
 import com.liferay.portalweb.portlet.announcements.announcementsentry.addannouncementsentrygeneral.AddPortletAnnouncementsTest;

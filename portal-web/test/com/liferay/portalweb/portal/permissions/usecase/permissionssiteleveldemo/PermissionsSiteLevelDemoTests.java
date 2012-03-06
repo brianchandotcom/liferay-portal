@@ -17,9 +17,13 @@ package com.liferay.portalweb.portal.permissions.usecase.permissionssiteleveldem
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUser1Test;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUser2Test;
-import com.liferay.portalweb.portal.controlpanel.users.user.adduser.EditUser1PasswordTest;
-import com.liferay.portalweb.portal.controlpanel.users.user.adduser.EditUser2PasswordTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.TearDownUserTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.edituserpassword.EditUser1PasswordTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.edituserpassword.EditUser2PasswordTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.User1_SignInTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.User2_SignInTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

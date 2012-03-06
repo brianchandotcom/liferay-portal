@@ -15,6 +15,7 @@
 package com.liferay.portalweb.portlet.messageboards.message.gmailviewmbthreadmessagegmail;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.TearDownUserTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

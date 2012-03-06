@@ -31,7 +31,7 @@ public class User_SignInTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Sign In")) {
+				if (selenium.isVisible("link=Welcome")) {
 					break;
 				}
 			}
@@ -41,17 +41,15 @@ public class User_SignInTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Sign In", RuntimeVariables.replace("Sign In"));
+		selenium.clickAt("link=Welcome", RuntimeVariables.replace("Welcome"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_58_login']",
 			RuntimeVariables.replace("userea@liferay.com"));
 		selenium.type("//input[@id='_58_password']",
 			RuntimeVariables.replace("test"));
-		assertFalse(selenium.isChecked("//input[@id='_58_rememberMeCheckbox']"));
 		selenium.clickAt("//input[@id='_58_rememberMeCheckbox']",
 			RuntimeVariables.replace("Remember Me"));
-		assertTrue(selenium.isChecked("//input[@id='_58_rememberMeCheckbox']"));
 		selenium.clickAt("//input[@value='Sign In']",
 			RuntimeVariables.replace("Sign In"));
 		selenium.waitForPageToLoad("30000");

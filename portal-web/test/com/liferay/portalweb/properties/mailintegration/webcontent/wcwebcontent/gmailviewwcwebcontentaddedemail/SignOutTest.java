@@ -33,7 +33,7 @@ public class SignOutTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Sign Out")) {
+				if (selenium.isVisible("link=Sign Out")) {
 					break;
 				}
 			}
@@ -43,12 +43,26 @@ public class SignOutTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.click(RuntimeVariables.replace("link=Sign Out"));
+		selenium.clickAt("link=Sign Out", RuntimeVariables.replace("Sign Out"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertTrue(selenium.isVisible("//input[@id='_58_login']"));
-		assertTrue(selenium.isVisible("//input[@id='_58_password']"));
-		assertTrue(selenium.isVisible("//input[@id='_58_rememberMeCheckbox']"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//input[@value='Sign In']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertTrue(selenium.isVisible("//input[@value='Sign In']"));
 	}
 }

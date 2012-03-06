@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.permissions.documentsandmedia.document.useradddmdocumentinline;
+package com.liferay.portalweb.portal.permissions.usecase.permissionsscopedregularroledemo;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;

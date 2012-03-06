@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.blogs.portlet.addportletblogs;
+package com.liferay.portalweb.portal.permissions.usecase.permissionsscopedregularroledemo;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddPageBlogsTest extends BaseTestCase {
-	public void testAddPageBlogs() throws Exception {
+public class User_ViewCannotDeleteEntryTest extends BaseTestCase {
+	public void testUser_ViewCannotDeleteEntry() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -31,47 +31,7 @@ public class AddPageBlogsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("//a[@id='addPage']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("//a[@id='addPage']",
-			RuntimeVariables.replace("Add Page"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@type='text']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.type("//input[@type='text']",
-			RuntimeVariables.replace("Blogs Test Page"));
-		selenium.clickAt("//button[@id='save']",
-			RuntimeVariables.replace("Save"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Blogs Test Page")) {
+				if (selenium.isElementPresent("link=Blogs Test Page")) {
 					break;
 				}
 			}
@@ -85,5 +45,8 @@ public class AddPageBlogsTest extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
+		assertFalse(selenium.isElementPresent(
+				"//td[contains(.,'Delete')]/span/a/span"));
+		assertFalse(selenium.isTextPresent("Delete"));
 	}
 }

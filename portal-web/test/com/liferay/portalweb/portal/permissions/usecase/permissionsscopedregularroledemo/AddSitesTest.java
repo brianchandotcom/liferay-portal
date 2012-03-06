@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.permissions.documentsandmedia.document.useradddmdocumentinline;
+package com.liferay.portalweb.portal.permissions.usecase.permissionsscopedregularroledemo;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddRegularRoleTest extends BaseTestCase {
-	public void testAddRegularRole() throws Exception {
+public class AddSitesTest extends BaseTestCase {
+	public void testAddSites() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -45,7 +45,7 @@ public class AddRegularRoleTest extends BaseTestCase {
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.clickAt("link=Roles", RuntimeVariables.replace("Roles"));
+		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
@@ -57,7 +57,7 @@ public class AddRegularRoleTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li/a")) {
 					break;
 				}
 			}
@@ -67,15 +67,15 @@ public class AddRegularRoleTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Regular Role"),
+		assertEquals(RuntimeVariables.replace("Blank Site"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.type("//input[@id='_128_name']",
-			RuntimeVariables.replace("RegularRole Name"));
+		selenium.type("//input[@id='_134_name']",
+			RuntimeVariables.replace("Community Name"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -83,6 +83,35 @@ public class AddRegularRoleTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isVisible("link=RegularRole Name"));
+		assertEquals(RuntimeVariables.replace("Community Name"),
+			selenium.getText("//h1[@class='header-title']/span"));
+		selenium.open("/web/guest/home/");
+		loadRequiredJavaScriptModules();
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent("link=Control Panel")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Community Name"),
+			selenium.getText("//td[1]/a"));
 	}
 }

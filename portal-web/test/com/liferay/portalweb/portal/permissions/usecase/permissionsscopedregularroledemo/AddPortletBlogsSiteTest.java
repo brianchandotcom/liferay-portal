@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.blogs.portlet.addportletblogs;
+package com.liferay.portalweb.portal.permissions.usecase.permissionsscopedregularroledemo;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,9 +20,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddPageBlogsTest extends BaseTestCase {
-	public void testAddPageBlogs() throws Exception {
-		selenium.open("/web/guest/home/");
+public class AddPortletBlogsSiteTest extends BaseTestCase {
+	public void testAddPortletBlogsSite() throws Exception {
+		selenium.open("/web/community-name/blogs-test-site-page/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -31,7 +31,7 @@ public class AddPageBlogsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("//a[@id='addPage']")) {
+				if (selenium.isVisible("link=Blogs Test Site Page")) {
 					break;
 				}
 			}
@@ -41,49 +41,50 @@ public class AddPageBlogsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//a[@id='addPage']",
-			RuntimeVariables.replace("Add Page"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@type='text']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.type("//input[@type='text']",
-			RuntimeVariables.replace("Blogs Test Page"));
-		selenium.clickAt("//button[@id='save']",
-			RuntimeVariables.replace("Save"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Blogs Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("link=Blogs Test Page",
-			RuntimeVariables.replace("Blogs Test Page"));
+		selenium.clickAt("link=Blogs Test Site Page",
+			RuntimeVariables.replace("Blogs Test Site Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
+		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
+				"More"));
+		selenium.clickAt("//a[@id='_145_addApplication']",
+			RuntimeVariables.replace("More"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent("//div[@title='Blogs']/p/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.clickAt("//div[@title='Blogs']/p/a",
+			RuntimeVariables.replace("Blogs"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//section")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertTrue(selenium.isVisible("//section"));
 	}
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.permissions.documentsandmedia.document.useradddmdocumentinline;
+package com.liferay.portalweb.portal.permissions.usecase.permissionsscopedregularroledemo;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,9 +20,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddRegularRoleTest extends BaseTestCase {
-	public void testAddRegularRole() throws Exception {
-		selenium.open("/web/guest/home/");
+public class AddBlogsEntrySiteTest extends BaseTestCase {
+	public void testAddBlogsEntrySite() throws Exception {
+		selenium.open("/web/community-name/blogs-test-site-page/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -31,7 +31,7 @@ public class AddRegularRoleTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Blogs Test Site Page")) {
 					break;
 				}
 			}
@@ -41,14 +41,16 @@ public class AddRegularRoleTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Control Panel",
-			RuntimeVariables.replace("Control Panel"));
+		selenium.clickAt("link=Blogs Test Site Page",
+			RuntimeVariables.replace("Blogs Test Site Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.clickAt("link=Roles", RuntimeVariables.replace("Roles"));
+		selenium.clickAt("//input[@value='Add Blog Entry']",
+			RuntimeVariables.replace("Add Blog Entry"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
+		selenium.type("//input[@id='_33_title']",
+			RuntimeVariables.replace("Blogs Entry Title"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -57,7 +59,7 @@ public class AddRegularRoleTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
+							"//td[@id='cke_contents__33_editor']/iframe")) {
 					break;
 				}
 			}
@@ -67,22 +69,19 @@ public class AddRegularRoleTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Regular Role"),
-			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		selenium.type("//input[@id='_128_name']",
-			RuntimeVariables.replace("RegularRole Name"));
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
+		selenium.selectFrame("//td[@id='cke_contents__33_editor']/iframe");
+		selenium.type("//body", RuntimeVariables.replace("Blogs Entry Content"));
+		selenium.selectFrame("relative=top");
+		selenium.clickAt("//input[@value='Publish']",
+			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isVisible("link=RegularRole Name"));
+		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
+			selenium.getText("//div[@class='entry-title']/h2/a"));
+		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
+			selenium.getText("//div[@class='entry-body']/p"));
 	}
 }

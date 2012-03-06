@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.blogs.portlet.addportletblogs;
+package com.liferay.portalweb.portal.permissions.usecase.permissionsscopedregularroledemo;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddPageBlogsTest extends BaseTestCase {
-	public void testAddPageBlogs() throws Exception {
+public class SignInTest extends BaseTestCase {
+	public void testSignIn() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -31,7 +31,7 @@ public class AddPageBlogsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("//a[@id='addPage']")) {
+				if (selenium.isVisible("link=Welcome")) {
 					break;
 				}
 			}
@@ -41,48 +41,19 @@ public class AddPageBlogsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//a[@id='addPage']",
-			RuntimeVariables.replace("Add Page"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@type='text']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.type("//input[@type='text']",
-			RuntimeVariables.replace("Blogs Test Page"));
-		selenium.clickAt("//button[@id='save']",
-			RuntimeVariables.replace("Save"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Blogs Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("link=Blogs Test Page",
-			RuntimeVariables.replace("Blogs Test Page"));
+		selenium.clickAt("link=Welcome", RuntimeVariables.replace("Welcome"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		selenium.type("//input[@id='_58_login']",
+			RuntimeVariables.replace("test@liferay.com"));
+		selenium.type("//input[@id='_58_password']",
+			RuntimeVariables.replace("test"));
+		assertFalse(selenium.isChecked("//input[@id='_58_rememberMeCheckbox']"));
+		selenium.clickAt("//input[@id='_58_rememberMeCheckbox']",
+			RuntimeVariables.replace("Remember Me"));
+		assertTrue(selenium.isChecked("//input[@id='_58_rememberMeCheckbox']"));
+		selenium.clickAt("//input[@value='Sign In']",
+			RuntimeVariables.replace("Sign In"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 	}

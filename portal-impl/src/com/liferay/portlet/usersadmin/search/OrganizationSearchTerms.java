@@ -108,8 +108,8 @@ public class OrganizationSearchTerms extends OrganizationDisplayTerms {
 
 	public boolean hasSearchTerms() {
 		if (isAdvancedSearch()) {
-			if (Validator.isNotNull(city) || countryId > 0 ||
-				Validator.isNotNull(name) || regionId > 0 ||
+			if (Validator.isNotNull(city) || (countryId > 0) ||
+				Validator.isNotNull(name) || (regionId > 0) ||
 				Validator.isNotNull(street) || Validator.isNotNull(type) ||
 				Validator.isNotNull(zip)) {
 

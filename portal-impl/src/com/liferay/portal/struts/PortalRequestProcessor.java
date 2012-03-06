@@ -929,7 +929,7 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 						throw new PrincipalException();
 					}
 				}
-				else if (portlet != null && !portlet.isActive()) {
+				else if ((portlet != null) && !portlet.isActive()) {
 					SessionErrors.add(
 						request, PortletActiveException.class.getName());
 

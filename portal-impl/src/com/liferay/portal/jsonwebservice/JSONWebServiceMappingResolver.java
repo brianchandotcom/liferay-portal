@@ -57,7 +57,7 @@ public class JSONWebServiceMappingResolver {
 			path = jsonWebServiceAnnotation.value().trim();
 		}
 
-		if (path == null || path.length() == 0) {
+		if ((path == null) || (path.length() == 0)) {
 			path = CamelCaseUtil.fromCamelCase(method.getName());
 		}
 
@@ -73,7 +73,7 @@ public class JSONWebServiceMappingResolver {
 				pathFromClass = jsonWebServiceAnnotation.value().trim();
 			}
 
-			if (pathFromClass == null || pathFromClass.length() == 0) {
+			if ((pathFromClass == null) || (pathFromClass.length() == 0)) {
 				pathFromClass = _classNameToPath(clazz);
 			}
 

@@ -147,7 +147,7 @@ public class TunnelUtil {
 	private static HttpURLConnection _getConnection(HttpPrincipal httpPrincipal)
 		throws IOException {
 
-		if (httpPrincipal == null || httpPrincipal.getUrl() == null) {
+		if ((httpPrincipal == null) || (httpPrincipal.getUrl() == null)) {
 			return null;
 		}
 

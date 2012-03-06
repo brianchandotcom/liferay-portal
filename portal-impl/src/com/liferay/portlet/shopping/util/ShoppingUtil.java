@@ -349,7 +349,7 @@ public class ShoppingUtil {
 			double[] range = ShoppingPreferences.INSURANCE_RANGE;
 
 			for (int i = 0; i < range.length - 1; i++) {
-				if (subtotal > range[i] && subtotal <= range[i + 1]) {
+				if ((subtotal > range[i]) && (subtotal <= range[i + 1])) {
 					int rangeId = i / 2;
 					if (MathUtil.isOdd(i)) {
 						rangeId = (i + 1) / 2;
@@ -427,7 +427,7 @@ public class ShoppingUtil {
 			double[] range = ShoppingPreferences.SHIPPING_RANGE;
 
 			for (int i = 0; i < range.length - 1; i++) {
-				if (subtotal > range[i] && subtotal <= range[i + 1]) {
+				if ((subtotal > range[i]) && (subtotal <= range[i + 1])) {
 					int rangeId = i / 2;
 					if (MathUtil.isOdd(i)) {
 						rangeId = (i + 1) / 2;

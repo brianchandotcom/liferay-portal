@@ -97,8 +97,8 @@ public class UserPermissionImpl implements UserPermission {
 
 				Contact contact = user.getContact();
 
-				if (((PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5 ||
-					  PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) &&
+				if ((((PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) ||
+					  (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6)) &&
 					 (permissionChecker.hasOwnerPermission(
 						permissionChecker.getCompanyId(), User.class.getName(),
 						userId, contact.getUserId(), actionId))) ||

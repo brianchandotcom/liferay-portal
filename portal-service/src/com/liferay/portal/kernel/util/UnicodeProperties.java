@@ -252,7 +252,7 @@ public class UnicodeProperties extends HashMap<String, String> {
 	}
 
 	private boolean _isComment(String line) {
-		return line.length() == 0 || line.startsWith(StringPool.POUND);
+		return (line.length() == 0) || line.startsWith(StringPool.POUND);
 	}
 
 	private static final String _SAFE_NEWLINE_CHARACTER =

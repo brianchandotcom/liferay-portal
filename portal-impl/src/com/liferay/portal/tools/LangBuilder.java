@@ -483,7 +483,7 @@ public class LangBuilder {
 				messages.add(key + "=" + value);
 			}
 			else {
-				if (begin == true && line.equals("")) {
+				if ((begin == true) && line.equals("")) {
 					_sortAndWrite(unsyncBufferedWriter, messages);
 				}
 

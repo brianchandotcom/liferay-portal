@@ -30,10 +30,10 @@ public class State {
 	public int compareTo(Object obj) {
 		State state = (State)obj;
 
-		if (getId() != null && state.getId() != null) {
+		if ((getId() != null) && (state.getId() != null)) {
 			return getId().toLowerCase().compareTo(state.getId().toLowerCase());
 		}
-		else if (getName() != null && state.getName() != null) {
+		else if ((getName() != null) && (state.getName() != null)) {
 			return getName().toLowerCase().compareTo(
 				state.getName().toLowerCase());
 		}

@@ -101,7 +101,7 @@ public class ScrollableResultsImpl implements ScrollableResults {
 	}
 
 	public boolean scroll(int i) throws ORMException {
-		if (_current + i < 1 || _current + i > _last ) {
+		if ((_current + i < 1) || (_current + i > _last)) {
 			return false;
 		}
 

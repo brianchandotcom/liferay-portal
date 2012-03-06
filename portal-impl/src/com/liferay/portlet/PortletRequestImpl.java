@@ -797,7 +797,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 				String[] values = _publicRenderParameters.get(
 					PortletQNameUtil.getPublicRenderParameterName(qName));
 
-				if ((values) == null || (values.length == 0) ||
+				if ((values == null) || (values.length == 0) ||
 					(Validator.isNull(values[0]))) {
 
 					continue;

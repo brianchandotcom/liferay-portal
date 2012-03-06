@@ -39,7 +39,7 @@ public class MethodTargetClassKey {
 
 		MethodTargetClassKey methodTargetClassKey = (MethodTargetClassKey)obj;
 
-		if (_targetClass == methodTargetClassKey._targetClass &&
+		if ((_targetClass == methodTargetClassKey._targetClass) &&
 			Validator.equals(_method, methodTargetClassKey._method)) {
 
 			return true;
@@ -57,7 +57,7 @@ public class MethodTargetClassKey {
 	}
 
 	public Method getTargetMethod() {
-		if (_targetMethod == null && _targetClass != null) {
+		if ((_targetMethod == null) && (_targetClass != null)) {
 			try {
 				_targetMethod = _targetClass.getDeclaredMethod(
 					_method.getName(), _method.getParameterTypes());

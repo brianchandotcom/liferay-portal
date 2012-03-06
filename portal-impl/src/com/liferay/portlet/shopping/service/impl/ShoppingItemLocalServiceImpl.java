@@ -842,7 +842,7 @@ public class ShoppingItemLocalServiceImpl
 		// Small image
 
 		if (smallImage && Validator.isNull(smallImageURL) &&
-			smallImageFile != null && smallImageBytes != null) {
+			(smallImageFile != null) && (smallImageBytes != null)) {
 
 			String smallImageName = smallImageFile.getName();
 
@@ -879,7 +879,7 @@ public class ShoppingItemLocalServiceImpl
 		// Medium image
 
 		if (mediumImage && Validator.isNull(mediumImageURL) &&
-			mediumImageFile != null && mediumImageBytes != null) {
+			(mediumImageFile != null) && (mediumImageBytes != null)) {
 
 			String mediumImageName = mediumImageFile.getName();
 
@@ -916,7 +916,7 @@ public class ShoppingItemLocalServiceImpl
 		// Large image
 
 		if (largeImage && Validator.isNull(largeImageURL) &&
-			largeImageFile != null && largeImageBytes != null) {
+			(largeImageFile != null) && (largeImageBytes != null)) {
 
 			String largeImageName = largeImageFile.getName();
 

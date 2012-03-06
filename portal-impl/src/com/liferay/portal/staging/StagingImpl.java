@@ -893,7 +893,7 @@ public class StagingImpl implements Staging {
 		catch (Exception e) {
 		}
 
-		if (layoutRevision == null ||
+		if ((layoutRevision == null) ||
 			(layoutRevision.getStatus() ==
 				WorkflowConstants.STATUS_INCOMPLETE)) {
 

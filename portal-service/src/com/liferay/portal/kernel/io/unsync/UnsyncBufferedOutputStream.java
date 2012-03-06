@@ -70,7 +70,7 @@ public class UnsyncBufferedOutputStream extends UnsyncFilterOutputStream {
 			return;
 		}
 
-		if (count > 0 && length > buffer.length - count) {
+		if ((count > 0) && (length > buffer.length - count)) {
 			outputStream.write(buffer, 0, count);
 
 			count = 0;

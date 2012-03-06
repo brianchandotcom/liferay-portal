@@ -48,8 +48,8 @@ public class TransactionalExecutionTestListener
 		TransactionContext transactionContext = _transactionContextCache.remove(
 			testMethod);
 
-		if (transactionContext != null &&
-				!transactionContext._transactionStatus.isCompleted()) {
+		if ((transactionContext != null) &&
+			!transactionContext._transactionStatus.isCompleted()) {
 
 			_rollbackTransaction(transactionContext);
 		}

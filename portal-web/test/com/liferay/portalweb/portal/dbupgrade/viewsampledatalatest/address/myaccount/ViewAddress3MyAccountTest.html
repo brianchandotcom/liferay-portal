@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
@@ -45,8 +55,8 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//input[@id='_2_addressStreet1_0']</td>
-	<td></td>
+	<td>xPath=(//input[@id='_2_street1'])[3]</td>
+	<td>Street 1</td>
 </tr>
 <tr>
 	<td>waitForSelectedLabel</td>
@@ -60,7 +70,7 @@
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>//input[@id='_2_addressStreet1_2']</td>
+	<td>xPath=(//input[@id='_2_street1'])[3]</td>
 	<td>1220 Brea Canyon Rd</td>
 </tr>
 <tr>
@@ -70,28 +80,38 @@
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>//input[@id='_2_addressStreet2_2']</td>
+	<td>xPath=(//input[@id='_2_street2'])[3]</td>
 	<td>Ste 12</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>//input[@id='_2_addressZip2']</td>
+	<td>xPath=(//input[@id='_2_zip'])[3]</td>
 	<td>91789</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>//input[@id='_2_addressStreet3_2']</td>
+	<td>xPath=(//input[@id='_2_street3'])[3]</td>
 	<td>Walnut</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>//input[@id='_2_addressCity2']</td>
+	<td>xPath=(//input[@id='_2_city'])[3]</td>
 	<td>Los Angeles</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
 	<td>//select[@id='_2_addressCountryId2']</td>
 	<td>United States</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_2_addressPrimary2']</td>
+	<td>Primary Button</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>xPath=(//input[@id='_2_mailingCheckbox'])[3]</td>
+	<td>Mailing Checkbox</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>

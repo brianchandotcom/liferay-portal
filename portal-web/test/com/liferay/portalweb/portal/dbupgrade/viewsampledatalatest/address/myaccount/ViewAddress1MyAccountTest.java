@@ -24,6 +24,9 @@ public class ViewAddress1MyAccountTest extends BaseTestCase {
 	public void testViewAddress1MyAccount() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -77,7 +80,7 @@ public class ViewAddress1MyAccountTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//input[@id='_2_addressStreet1_0']")) {
+				if (selenium.isVisible("//input[@id='_2_street1']")) {
 					break;
 				}
 			}
@@ -122,21 +125,17 @@ public class ViewAddress1MyAccountTest extends BaseTestCase {
 		}
 
 		assertEquals("1220 Brea Canyon Rd",
-			selenium.getValue("//input[@id='_2_addressStreet1_0']"));
-		assertEquals("Ste 12",
-			selenium.getValue("//input[@id='_2_addressStreet2_0']"));
+			selenium.getValue("//input[@id='_2_street1']"));
+		assertEquals("Ste 12", selenium.getValue("//input[@id='_2_street2']"));
 		assertEquals("Business",
 			selenium.getSelectedLabel("//select[@id='_2_addressTypeId0']"));
-		assertEquals("91789", selenium.getValue("//input[@id='_2_addressZip0']"));
-		assertEquals("Walnut",
-			selenium.getValue("//input[@id='_2_addressStreet3_0']"));
-		assertEquals("Los Angeles",
-			selenium.getValue("//input[@id='_2_addressCity0']"));
+		assertEquals("91789", selenium.getValue("//input[@id='_2_zip']"));
+		assertEquals("Walnut", selenium.getValue("//input[@id='_2_street3']"));
+		assertEquals("Los Angeles", selenium.getValue("//input[@id='_2_city']"));
 		assertEquals("United States",
 			selenium.getSelectedLabel("//select[@id='_2_addressCountryId0']"));
 		assertTrue(selenium.isChecked("//input[@id='_2_addressPrimary0']"));
-		assertTrue(selenium.isChecked(
-				"//input[@id='_2_addressMailing0Checkbox']"));
+		assertTrue(selenium.isChecked("//input[@id='_2_mailingCheckbox']"));
 		assertEquals("California",
 			selenium.getSelectedLabel("//select[@id='_2_addressRegionId0']"));
 	}

@@ -50,18 +50,18 @@ public class AssignUserScopedRegularRoleTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_125_keywords']",
-			RuntimeVariables.replace("usersn1"));
+			RuntimeVariables.replace("usersn"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("userfn1"),
+		assertEquals(RuntimeVariables.replace("userfn"),
 			selenium.getText("//td[2]/a"));
-		assertEquals(RuntimeVariables.replace("userln1"),
+		assertEquals(RuntimeVariables.replace("userln"),
 			selenium.getText("//td[3]/a"));
-		assertEquals(RuntimeVariables.replace("usersn1"),
+		assertEquals(RuntimeVariables.replace("usersn"),
 			selenium.getText("//td[4]/a"));
-		selenium.clickAt("//td[4]/a", RuntimeVariables.replace("usersn1"));
+		selenium.clickAt("//td[4]/a", RuntimeVariables.replace("usersn"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isPartialText("//a[@id='_125_rolesLink']", "Roles"));

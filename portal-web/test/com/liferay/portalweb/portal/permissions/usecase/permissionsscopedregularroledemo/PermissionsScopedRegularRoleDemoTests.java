@@ -15,18 +15,9 @@
 package com.liferay.portalweb.portal.permissions.usecase.permissionsscopedregularroledemo;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.AddSitesTest;
-import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.TearDownSitesTest;
-import com.liferay.portalweb.portal.controlpanel.users.user.adduser.TearDownUserTest;
-import com.liferay.portalweb.portal.permissions.documentsandmedia.document.useradddmdocumentinline.AddRegularRoleTest;
-import com.liferay.portalweb.portal.permissions.documentsandmedia.document.useradddmdocumentinline.AddUserPasswordTest;
-import com.liferay.portalweb.portal.permissions.documentsandmedia.document.useradddmdocumentinline.AddUserTest;
-import com.liferay.portalweb.portal.permissions.documentsandmedia.document.useradddmdocumentinline.SignInTest;
-import com.liferay.portalweb.portal.permissions.documentsandmedia.document.useradddmdocumentinline.SignOutTest;
-import com.liferay.portalweb.portal.permissions.documentsandmedia.document.useradddmdocumentinline.User_SignInTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUserTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.EditUserPasswordTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
-import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.AddBlogsEntryTest;
-import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.TearDownBlogsEntryTest;
 import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPageBlogsTest;
 import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPortletBlogsTest;
 
@@ -49,7 +40,7 @@ public class PermissionsScopedRegularRoleDemoTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddRegularRoleTest.class);
 		testSuite.addTestSuite(DefineScopedRegularRolePermissionsTest.class);
 		testSuite.addTestSuite(AddUserTest.class);
-		testSuite.addTestSuite(AddUserPasswordTest.class);
+		testSuite.addTestSuite(EditUserPasswordTest.class);
 		testSuite.addTestSuite(AssignUserScopedRegularRoleTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(User_SignInTest.class);

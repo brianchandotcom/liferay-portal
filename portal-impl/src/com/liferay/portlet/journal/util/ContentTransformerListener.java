@@ -143,7 +143,7 @@ public class ContentTransformerListener extends BaseTransformerListener {
 
 				// [@articleId;elementName@]
 
-				if (Validator.isNotNull(text) && text.length() >= 7 &&
+				if (Validator.isNotNull(text) && (text.length() >= 7) &&
 					text.startsWith("[@") && text.endsWith("@]")) {
 
 					text = text.substring(2, text.length() - 2);

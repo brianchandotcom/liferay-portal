@@ -1735,7 +1735,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 			throw new EventEndDateException();
 		}
 
-		if (!allDay && durationHour <= 0 && durationMinute <= 0) {
+		if (!allDay && (durationHour <= 0) && (durationMinute <= 0)) {
 			throw new EventDurationException();
 		}
 

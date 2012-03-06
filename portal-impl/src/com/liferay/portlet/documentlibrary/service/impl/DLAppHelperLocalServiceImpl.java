@@ -230,7 +230,7 @@ public class DLAppHelperLocalServiceImpl
 
 		// File rank
 
-		if (userId > 0 && incrementCounter) {
+		if ((userId > 0) && incrementCounter) {
 			dlFileRankLocalService.updateFileRank(
 				fileEntry.getGroupId(), fileEntry.getCompanyId(), userId,
 				fileEntry.getFileEntryId(), new ServiceContext());

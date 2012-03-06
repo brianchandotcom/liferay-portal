@@ -74,7 +74,7 @@ public class BaseCmisSearchQueryBuilder implements CMISSearchQueryBuilder {
 		Sort[] sorts = searchContext.getSorts();
 
 		if (queryConfig.isScoreEnabled() ||
-			((sorts != null) && sorts.length > 0)) {
+			((sorts != null) && (sorts.length > 0))) {
 
 			sb.append(" ORDER BY ");
 		}

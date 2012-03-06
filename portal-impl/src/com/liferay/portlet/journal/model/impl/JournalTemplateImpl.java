@@ -28,7 +28,7 @@ public class JournalTemplateImpl extends JournalTemplateBaseImpl {
 	}
 
 	public String getSmallImageType() throws PortalException, SystemException {
-		if (_smallImageType == null && isSmallImage()) {
+		if ((_smallImageType == null) && isSmallImage()) {
 			Image smallImage = ImageLocalServiceUtil.getImage(
 				getSmallImageId());
 

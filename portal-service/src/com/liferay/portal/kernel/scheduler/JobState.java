@@ -67,7 +67,7 @@ public class JobState implements Cloneable, Serializable {
 	}
 
 	public void clearExceptions() {
-		if (_exceptions != null && !_exceptions.isEmpty()) {
+		if ((_exceptions != null) && !_exceptions.isEmpty()) {
 			_exceptions.clear();
 		}
 	}

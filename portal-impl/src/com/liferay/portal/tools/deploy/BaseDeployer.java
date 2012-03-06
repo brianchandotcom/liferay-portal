@@ -1749,7 +1749,7 @@ public class BaseDeployer implements Deployer {
 			y = x;
 		}
 		else {
-			if (liferayWebXmlEnabled && webXmlVersion > 2.3) {
+			if (liferayWebXmlEnabled && (webXmlVersion > 2.3)) {
 				webXmlFiltersContent = webXmlContent.substring(x, y + 17);
 
 				y = y + 17;

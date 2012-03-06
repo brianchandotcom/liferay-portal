@@ -348,7 +348,7 @@ public class ImageToolImpl implements ImageTool {
 		int numBits = 32;
 		int mask = 0x80000000;
 
-		while (mask != 0 && (intValue & mask) == 0) {
+		while ((mask != 0) && ((intValue & mask) == 0)) {
 			numBits--;
 			mask >>>= 1;
 		}

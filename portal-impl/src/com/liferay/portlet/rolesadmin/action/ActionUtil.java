@@ -89,7 +89,7 @@ public class ActionUtil {
 				organizationId = organization.getParentOrganizationId();
 			}
 
-			if (roleId > 0 && (role == null)) {
+			if ((roleId > 0) && (role == null)) {
 				role = RoleServiceUtil.getRole(roleId);
 			}
 		}

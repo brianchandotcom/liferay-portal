@@ -170,15 +170,15 @@ public class Base64 {
 	}
 
 	protected static char getChar(int sixbit) {
-		if (sixbit >= 0 && sixbit <= 25) {
+		if ((sixbit >= 0) && (sixbit <= 25)) {
 			return (char)(65 + sixbit);
 		}
 
-		if (sixbit >= 26 && sixbit <= 51) {
+		if ((sixbit >= 26) && (sixbit <= 51)) {
 			return (char)(97 + (sixbit - 26));
 		}
 
-		if (sixbit >= 52 && sixbit <= 61) {
+		if ((sixbit >= 52) && (sixbit <= 61)) {
 			return (char)(48 + (sixbit - 52));
 		}
 
@@ -198,7 +198,7 @@ public class Base64 {
 			return (c - 97) + 26;
 		}
 
-		if (c >= CharPool.NUMBER_0 && c <= CharPool.NUMBER_9) {
+		if ((c >= CharPool.NUMBER_0) && (c <= CharPool.NUMBER_9)) {
 			return (c - 48) + 52;
 		}
 

@@ -183,7 +183,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		int fileEntriesCount = 0;
 
-		if ((status == WorkflowConstants.STATUS_ANY)) {
+		if (status == WorkflowConstants.STATUS_ANY) {
 			fileEntriesCount = dlFileEntryPersistence.countByG_F(
 				groupId, folderId);
 		}

@@ -47,7 +47,7 @@ public class AverageStatistics extends BaseStatistics {
 			if (_countStatistics.getCount() < getLowerBound()) {
 				span = getLowerBound();
 			}
-			else if ((_countStatistics.getCount() > getUpperBound())) {
+			else if (_countStatistics.getCount() > getUpperBound()) {
 				span = getUpperBound();
 			}
 			else {

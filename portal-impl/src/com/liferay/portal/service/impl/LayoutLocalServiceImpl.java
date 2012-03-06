@@ -2175,7 +2175,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				portletPreferencesDynamicQuery);
 
 		for (PortletPreferences portletPreferences : portletPreferencesList) {
-			if ((portletPreferences.getPortletId() == null)) {
+			if (portletPreferences.getPortletId() == null) {
 				continue;
 			}
 

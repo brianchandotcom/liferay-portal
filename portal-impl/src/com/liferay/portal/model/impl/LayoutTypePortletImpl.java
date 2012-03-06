@@ -1606,7 +1606,7 @@ public class LayoutTypePortletImpl
 			PortletLayoutListener portletLayoutListener =
 				portlet.getPortletLayoutListenerInstance();
 
-			if ((portletLayoutListener != null)) {
+			if (portletLayoutListener != null) {
 				portletLayoutListener.onRemoveFromLayout(portletId, getPlid());
 			}
 		}

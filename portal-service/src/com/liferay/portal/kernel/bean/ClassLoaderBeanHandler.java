@@ -51,8 +51,8 @@ public class ClassLoaderBeanHandler implements InvocationHandler {
 				currentThread.setContextClassLoader(_classLoader);
 			}
 
-			if ((method.getDeclaringClass() == Object.class)) {
-				String methodName = method.getName(); 
+			if (method.getDeclaringClass() == Object.class) {
+				String methodName = method.getName();
 
 				if (methodName.equals("equals")) {
 					if (proxy == args[0]) {

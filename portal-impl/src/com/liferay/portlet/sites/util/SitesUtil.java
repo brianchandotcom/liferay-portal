@@ -793,8 +793,8 @@ public class SitesUtil {
 			if (!owner.equals(lock.getOwner())) {
 				Date createDate = lock.getCreateDate();
 
-				if (((System.currentTimeMillis() - createDate.getTime()) >=
-					PropsValues.LAYOUT_PROTOTYPE_MERGE_LOCK_MAX_TIME)) {
+				if ((System.currentTimeMillis() - createDate.getTime()) >=
+						PropsValues.LAYOUT_PROTOTYPE_MERGE_LOCK_MAX_TIME) {
 
 					// Acquire lock if the lock is older than the lock max time
 

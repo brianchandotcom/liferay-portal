@@ -388,7 +388,7 @@ public class EditLayoutsAction extends PortletAction {
 		if (cmd.equals(Constants.ADD)) {
 			long parentPlid = ParamUtil.getLong(portletRequest, "parentPlid");
 
-			if ((parentPlid == LayoutConstants.DEFAULT_PARENT_LAYOUT_ID)) {
+			if (parentPlid == LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
 				if (!GroupPermissionUtil.contains(
 						permissionChecker, group.getGroupId(),
 						ActionKeys.ADD_LAYOUT)) {

@@ -76,7 +76,7 @@ public class PhoneNumberConverter implements Converter, StateHolder {
 
 				throw new ConverterException(facesMessage);
 			}
-			else if ((integerChars.length() == 10)) {
+			else if (integerChars.length() == 10) {
 				StringBuilder unitedStatesPhoneNumber = new StringBuilder(
 					_unitedStatesFormat.length());
 

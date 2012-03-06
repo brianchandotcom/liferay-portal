@@ -15,6 +15,7 @@
 package com.liferay.portalweb.socialofficehome.contactscenter.contacts.sousremoveasconnectionccuser;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

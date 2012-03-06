@@ -15,6 +15,8 @@
 package com.liferay.portalweb.portal.controlpanel.sites.site.joinsiteinactive;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

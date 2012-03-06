@@ -51,7 +51,7 @@ public class SignOutTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//input[@id='_58_login']")) {
+				if (selenium.isVisible("//input[@value='Sign In']")) {
 					break;
 				}
 			}
@@ -60,5 +60,7 @@ public class SignOutTest extends BaseTestCase {
 
 			Thread.sleep(1000);
 		}
+
+		assertTrue(selenium.isVisible("//input[@value='Sign In']"));
 	}
 }

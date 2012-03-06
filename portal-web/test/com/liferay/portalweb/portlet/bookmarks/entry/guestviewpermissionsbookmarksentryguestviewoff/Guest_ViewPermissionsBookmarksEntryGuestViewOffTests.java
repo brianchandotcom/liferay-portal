@@ -15,6 +15,8 @@
 package com.liferay.portalweb.portlet.bookmarks.entry.guestviewpermissionsbookmarksentryguestviewoff;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.bookmarks.portlet.addportlet.AddPageBookmarksTest;
 import com.liferay.portalweb.portlet.bookmarks.portlet.addportlet.AddPortletBookmarksTest;

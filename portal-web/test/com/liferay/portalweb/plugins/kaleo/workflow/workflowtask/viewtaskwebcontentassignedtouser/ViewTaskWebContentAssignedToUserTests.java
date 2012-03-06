@@ -15,6 +15,9 @@
 package com.liferay.portalweb.plugins.kaleo.workflow.workflowtask.viewtaskwebcontentassignedtouser;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUserTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.TearDownUserTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.edituserpassword.EditUserPasswordTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -28,6 +31,7 @@ public class ViewTaskWebContentAssignedToUserTests extends BaseTestSuite {
 		testSuite.addTestSuite(ConfigureWebContentSingleApproverTest.class);
 		testSuite.addTestSuite(AddWebContentTest.class);
 		testSuite.addTestSuite(AddUserTest.class);
+		testSuite.addTestSuite(EditUserPasswordTest.class);
 		testSuite.addTestSuite(AssignMembersRolePortalContentReviewerTest.class);
 		testSuite.addTestSuite(AssignToUserTaskMWTActionsTest.class);
 		testSuite.addTestSuite(ViewTaskWebContentAssignedToUserTest.class);

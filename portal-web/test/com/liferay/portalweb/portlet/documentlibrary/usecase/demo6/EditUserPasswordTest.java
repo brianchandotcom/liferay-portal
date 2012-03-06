@@ -22,134 +22,203 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class EditUserPasswordTest extends BaseTestCase {
 	public void testEditUserPassword() throws Exception {
-		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
-		selenium.clickAt("//div[@id='dockbar']",
-			RuntimeVariables.replace("Dockbar"));
-		assertEquals(RuntimeVariables.replace("Go to"),
-			selenium.getText("//li[@id='_145_mySites']/a/span"));
-		selenium.clickAt("//li[@id='_145_mySites']/a/span",
-			RuntimeVariables.replace("Go to"));
+		int label = 1;
 
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
+		while (label >= 1) {
+			switch (label) {
+			case 1:
+				selenium.open("/web/guest/home/");
+				loadRequiredJavaScriptModules();
+				assertEquals(RuntimeVariables.replace("Go to"),
+					selenium.getText("//li[@id='_145_mySites']/a/span"));
+				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
-			try {
-				if (selenium.isVisible("link=Control Panel")) {
-					break;
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("link=Control Panel")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
 				}
-			}
-			catch (Exception e) {
-			}
 
-			Thread.sleep(1000);
-		}
+				selenium.clickAt("link=Control Panel",
+					RuntimeVariables.replace("Control Panel"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+				selenium.clickAt("link=Users and Organizations",
+					RuntimeVariables.replace("Users and Organizations"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+				assertEquals(RuntimeVariables.replace("Search All Users"),
+					selenium.getText("//a[@id='_125_allUsersLink']"));
+				selenium.clickAt("//a[@id='_125_allUsersLink']",
+					RuntimeVariables.replace("Search All Users"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
 
-		selenium.clickAt("link=Control Panel",
-			RuntimeVariables.replace("Control Panel"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		selenium.clickAt("link=Users and Organizations",
-			RuntimeVariables.replace("Users and Organizations"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Search All Users"),
-			selenium.getText("//a[@id='_125_allUsersLink']"));
-		selenium.clickAt("//a[@id='_125_allUsersLink']",
-			RuntimeVariables.replace("Search All Users"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		selenium.type("//input[@name='_125_keywords']",
-			RuntimeVariables.replace("usersn"));
-		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace("Search"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("userfn"),
-			selenium.getText("//td[2]/a"));
-		assertEquals(RuntimeVariables.replace("userln"),
-			selenium.getText("//td[3]/a"));
-		assertEquals(RuntimeVariables.replace("usersn"),
-			selenium.getText("//td[4]/a"));
-		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("userfn"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		assertTrue(selenium.isPartialText("//a[@id='_125_passwordLink']",
-				"Password"));
-		selenium.clickAt("//a[@id='_125_passwordLink']",
-			RuntimeVariables.replace("Password"));
+				boolean basicVisible = selenium.isVisible("link=\ufffd Basic");
 
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
+				if (!basicVisible) {
+					label = 2;
 
-			try {
-				if (selenium.isVisible("//input[@id='_125_password1']")) {
-					break;
+					continue;
 				}
-			}
-			catch (Exception e) {
-			}
 
-			Thread.sleep(1000);
+				selenium.clickAt("link=\ufffd Basic",
+					RuntimeVariables.replace("\ufffd Basic"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("//input[@name='_125_keywords']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+			case 2:
+				selenium.type("//input[@name='_125_keywords']",
+					RuntimeVariables.replace("userfn"));
+				selenium.clickAt("//input[@value='Search']",
+					RuntimeVariables.replace("Search"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+				assertEquals(RuntimeVariables.replace("userfn"),
+					selenium.getText("//td/a"));
+				selenium.clickAt("//td/a", RuntimeVariables.replace("userfn"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+				assertTrue(selenium.isPartialText(
+						"//a[@id='_125_passwordLink']", "Password"));
+				selenium.clickAt("//a[@id='_125_passwordLink']",
+					RuntimeVariables.replace("Password"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("//input[@id='_125_password1']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.type("//input[@id='_125_password1']",
+					RuntimeVariables.replace("password"));
+				selenium.type("//input[@id='_125_password2']",
+					RuntimeVariables.replace("password"));
+				selenium.clickAt("//input[@value='Save']",
+					RuntimeVariables.replace("Save"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
+				selenium.clickAt("link=Sign Out",
+					RuntimeVariables.replace("Sign Out"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+				selenium.type("//input[@id='_58_login']",
+					RuntimeVariables.replace("userea@liferay.com"));
+				selenium.type("//input[@id='_58_password']",
+					RuntimeVariables.replace("password"));
+
+				boolean rememberMe1NotChecked = selenium.isChecked(
+						"//input[@id='_58_rememberMeCheckbox']");
+
+				if (rememberMe1NotChecked) {
+					label = 3;
+
+					continue;
+				}
+
+				selenium.clickAt("//input[@id='_58_rememberMeCheckbox']",
+					RuntimeVariables.replace("Remember Me"));
+				assertTrue(selenium.isChecked(
+						"//input[@id='_58_rememberMeCheckbox']"));
+
+			case 3:
+				selenium.clickAt("//input[@value='Sign In']",
+					RuntimeVariables.replace("Sign In"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+				selenium.clickAt("//input[@value='I Agree']",
+					RuntimeVariables.replace("I Agree"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+				assertEquals(RuntimeVariables.replace(
+						"Please set a new password."),
+					selenium.getText("//div[@class='portlet-msg-info']"));
+				selenium.type("//input[@id='password1']",
+					RuntimeVariables.replace("test"));
+				selenium.type("//input[@id='password2']",
+					RuntimeVariables.replace("test"));
+				selenium.clickAt("//input[@value='Save']",
+					RuntimeVariables.replace("Save"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+				assertEquals(RuntimeVariables.replace(
+						"Please choose a reminder query."),
+					selenium.getText("//div[@class='portlet-msg-info']"));
+				selenium.type("//input[@id='reminderQueryAnswer']",
+					RuntimeVariables.replace("test"));
+				selenium.clickAt("//input[@value='Save']",
+					RuntimeVariables.replace("Save"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+				selenium.clickAt("link=Sign Out",
+					RuntimeVariables.replace("Sign Out"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+				selenium.type("//input[@id='_58_login']",
+					RuntimeVariables.replace("test@liferay.com"));
+				selenium.type("//input[@id='_58_password']",
+					RuntimeVariables.replace("test"));
+
+				boolean rememberMe2NotChecked = selenium.isChecked(
+						"//input[@id='_58_rememberMeCheckbox']");
+
+				if (rememberMe2NotChecked) {
+					label = 4;
+
+					continue;
+				}
+
+				selenium.clickAt("//input[@id='_58_rememberMeCheckbox']",
+					RuntimeVariables.replace("Remember Me"));
+				assertTrue(selenium.isChecked(
+						"//input[@id='_58_rememberMeCheckbox']"));
+
+			case 4:
+				selenium.clickAt("//input[@value='Sign In']",
+					RuntimeVariables.replace("Sign In"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+
+			case 100:
+				label = -1;
+			}
 		}
-
-		selenium.type("//input[@id='_125_password1']",
-			RuntimeVariables.replace("password"));
-		selenium.type("//input[@id='_125_password2']",
-			RuntimeVariables.replace("password"));
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
-		selenium.clickAt("link=Sign Out", RuntimeVariables.replace("Sign Out"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		selenium.type("//input[@id='_58_login']",
-			RuntimeVariables.replace("userea@liferay.com"));
-		selenium.type("//input[@id='_58_password']",
-			RuntimeVariables.replace("password"));
-		selenium.clickAt("//input[@value='Sign In']",
-			RuntimeVariables.replace("Sign In"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		selenium.click(RuntimeVariables.replace("//input[@value='I Agree']"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		selenium.type("//input[@id='password1']",
-			RuntimeVariables.replace("test"));
-		selenium.type("//input[@id='password2']",
-			RuntimeVariables.replace("test"));
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		selenium.type("//input[@id='reminderQueryAnswer']",
-			RuntimeVariables.replace("test"));
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		selenium.clickAt("link=Sign Out", RuntimeVariables.replace("Sign Out"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		selenium.type("//input[@id='_58_login']",
-			RuntimeVariables.replace("test@liferay.com"));
-		selenium.type("//input[@id='_58_password']",
-			RuntimeVariables.replace("test"));
-		assertFalse(selenium.isChecked("//input[@id='_58_rememberMeCheckbox']"));
-		selenium.clickAt("//input[@id='_58_rememberMeCheckbox']",
-			RuntimeVariables.replace("Remember Me"));
-		assertTrue(selenium.isChecked("//input[@id='_58_rememberMeCheckbox']"));
-		selenium.clickAt("//input[@value='Sign In']",
-			RuntimeVariables.replace("Sign In"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 	}
 }

@@ -3066,7 +3066,7 @@ file.
 			</else>
 		</if>
 
-		<exec executable="${mysql.executable}" input="${sql.file}">
+		<exec executable="${mysql.shell.command}" input="${sql.file}">
 			<arg line="-u${mysql.user.name} -p${mysql.user.password}" />
 		</exec>
 

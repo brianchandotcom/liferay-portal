@@ -131,7 +131,7 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 		List<DLContent> dlContents = dlContentPersistence.findByC_R_P(
 			companyId, repositoryId, path, 0, 1, orderByComparator);
 
-		if (dlContents == null || dlContents.isEmpty()) {
+		if ((dlContents == null) || dlContents.isEmpty()) {
 			throw new NoSuchContentException(path);
 		}
 

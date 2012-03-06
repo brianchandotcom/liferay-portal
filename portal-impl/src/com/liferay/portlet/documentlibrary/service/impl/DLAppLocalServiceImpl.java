@@ -169,7 +169,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		if (file == null || !file.exists() || (file.length() == 0)) {
+		if ((file == null) || !file.exists() || (file.length() == 0)) {
 			return addFileEntry(
 				userId, repositoryId, folderId, sourceFileName, mimeType, title,
 				description, changeLog, null, 0, serviceContext);
@@ -1367,7 +1367,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			boolean majorVersion, File file, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		if (file == null || !file.exists() || file.length() == 0) {
+		if ((file == null) || !file.exists() || (file.length() == 0)) {
 			return updateFileEntry(
 				userId, fileEntryId, sourceFileName, mimeType, title,
 				description, changeLog, majorVersion, null, 0, serviceContext);

@@ -41,7 +41,7 @@ public class InheritableMap<K, V> extends HashMap<K, V> {
 
 	@Override
 	public boolean containsKey(Object key) {
-		if (_parentMap != null && _parentMap.containsKey(key)) {
+		if ((_parentMap != null) && _parentMap.containsKey(key)) {
 		 	return true;
 		}
 		else {

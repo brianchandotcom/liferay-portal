@@ -135,7 +135,8 @@ public class ClassLoaderProxy {
 						methods[i].getParameterTypes();
 
 					if (methods[i].getName().equals(methodName) &&
-						methodParameterTypes.length == parameterTypes.size()) {
+						(methodParameterTypes.length ==
+							parameterTypes.size())) {
 
 						boolean correctParams = true;
 

@@ -185,7 +185,7 @@ public class DiffImpl implements com.liferay.portal.kernel.util.Diff {
 
 		List<String> changedLines = new ArrayList<String>();
 
-		if (margin == 0 || startPos == 0) {
+		if ((margin == 0) || (startPos == 0)) {
 			return changedLines;
 		}
 
@@ -359,7 +359,7 @@ public class DiffImpl implements com.liferay.portal.kernel.util.Diff {
 	private static int _checkOverlapping(
 		List<DiffResult> results, int startPos, int margin) {
 
-		if (results.size() == 0 || (startPos - margin) < 0) {
+		if ((results.size() == 0) || ((startPos - margin) < 0)) {
 			return margin;
 		}
 

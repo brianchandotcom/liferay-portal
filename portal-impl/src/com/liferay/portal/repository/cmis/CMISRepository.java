@@ -708,7 +708,7 @@ public class CMISRepository extends BaseCmisRepository {
 	public int getFoldersAndFileEntriesCount(long folderId, String[] mimeTypes)
 		throws PortalException, SystemException {
 
-		if ((mimeTypes != null) && mimeTypes.length > 0) {
+		if ((mimeTypes != null) && (mimeTypes.length > 0)) {
 			List<Folder> folders = getFolders(folderId);
 
 			Session session = getSession();

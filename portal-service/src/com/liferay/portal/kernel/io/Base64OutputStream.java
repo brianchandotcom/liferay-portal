@@ -167,15 +167,15 @@ public class Base64OutputStream extends OutputStream {
 	}
 
 	protected char getChar(int sixbit) {
-		if (sixbit >= 0 && sixbit <= 25) {
+		if ((sixbit >= 0) && (sixbit <= 25)) {
 			return (char)(65 + sixbit);
 		}
 
-		if (sixbit >= 26 && sixbit <= 51) {
+		if ((sixbit >= 26) && (sixbit <= 51)) {
 			return (char)(97 + (sixbit - 26));
 		}
 
-		if (sixbit >= 52 && sixbit <= 61) {
+		if ((sixbit >= 52) && (sixbit <= 61)) {
 			return (char)(48 + (sixbit - 52));
 		}
 

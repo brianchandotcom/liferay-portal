@@ -96,8 +96,8 @@ public class ClassUtil {
 					classes.add(st.sval);
 				}
 			}
-			else if (st.ttype != StreamTokenizer.TT_NUMBER &&
-					 st.ttype != StreamTokenizer.TT_EOL) {
+			else if ((st.ttype != StreamTokenizer.TT_NUMBER) &&
+					 (st.ttype != StreamTokenizer.TT_EOL)) {
 
 				if (Character.isUpperCase((char)st.ttype)) {
 					classes.add(String.valueOf((char)st.ttype));
@@ -194,7 +194,7 @@ public class ClassUtil {
 			return true;
 		}
 
-		if (a == null || b == null) {
+		if ((a == null) || (b == null)) {
 			return false;
 		}
 
@@ -218,7 +218,7 @@ public class ClassUtil {
 	}
 
 	public static boolean isSubclass(Class<?> a, String s) {
-		if (a == null || s == null) {
+		if ((a == null) || (s == null)) {
 			return false;
 		}
 

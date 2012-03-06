@@ -1038,7 +1038,7 @@
 		</action>
 
 		<action path="/login/facebook_connect_oauth" type="com.liferay.portlet.login.action.FacebookConnectAction">
-			<forward name="portlet.login.error" path="portlet.login.login" />
+			<forward name="portlet.login.login" path="portlet.login.login" />
 		</action>
 
 		<action path="/login/forgot_password" type="com.liferay.portlet.login.action.ForgotPasswordAction">

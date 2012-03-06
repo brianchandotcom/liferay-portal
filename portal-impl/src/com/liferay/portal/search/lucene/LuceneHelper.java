@@ -101,9 +101,7 @@ public interface LuceneHelper {
 	public void loadIndex(long companyId, InputStream inputStream)
 		throws IOException;
 
-	public Address selectBootupClusterAddress(
-			long companyId, long localLastGeneration)
-		throws SystemException;
+	public void loadIndexesFromCluster(long companyId) throws SystemException;
 
 	public void shutdown();
 

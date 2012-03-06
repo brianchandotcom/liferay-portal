@@ -365,12 +365,10 @@ public class LuceneHelperUtil {
 		getLuceneHelper().loadIndex(companyId, inputStream);
 	}
 
-	public static Address selectBootupClusterAddress(
-			long companyId, long localLastGeneration)
+	public static void loadIndexesFromCluster(long companyId)
 		throws SystemException {
 
-		return getLuceneHelper().selectBootupClusterAddress(
-			companyId, localLastGeneration);
+		getLuceneHelper().loadIndexesFromCluster(companyId);
 	}
 
 	public static void shutdown() {

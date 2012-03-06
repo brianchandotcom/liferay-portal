@@ -24,6 +24,9 @@ public class ViewAddress3MyAccountTest extends BaseTestCase {
 	public void testViewAddress3MyAccount() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -77,7 +80,7 @@ public class ViewAddress3MyAccountTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//input[@id='_2_addressStreet1_0']")) {
+				if (selenium.isVisible("xPath=(//input[@id='_2_street1'])[3]")) {
 					break;
 				}
 			}
@@ -122,18 +125,22 @@ public class ViewAddress3MyAccountTest extends BaseTestCase {
 		}
 
 		assertEquals("1220 Brea Canyon Rd",
-			selenium.getValue("//input[@id='_2_addressStreet1_2']"));
+			selenium.getValue("xPath=(//input[@id='_2_street1'])[3]"));
 		assertEquals("Business",
 			selenium.getSelectedLabel("//select[@id='_2_addressTypeId2']"));
 		assertEquals("Ste 12",
-			selenium.getValue("//input[@id='_2_addressStreet2_2']"));
-		assertEquals("91789", selenium.getValue("//input[@id='_2_addressZip2']"));
+			selenium.getValue("xPath=(//input[@id='_2_street2'])[3]"));
+		assertEquals("91789",
+			selenium.getValue("xPath=(//input[@id='_2_zip'])[3]"));
 		assertEquals("Walnut",
-			selenium.getValue("//input[@id='_2_addressStreet3_2']"));
+			selenium.getValue("xPath=(//input[@id='_2_street3'])[3]"));
 		assertEquals("Los Angeles",
-			selenium.getValue("//input[@id='_2_addressCity2']"));
+			selenium.getValue("xPath=(//input[@id='_2_city'])[3]"));
 		assertEquals("United States",
 			selenium.getSelectedLabel("//select[@id='_2_addressCountryId2']"));
+		assertFalse(selenium.isChecked("//input[@id='_2_addressPrimary2']"));
+		assertFalse(selenium.isChecked(
+				"xPath=(//input[@id='_2_mailingCheckbox'])[3]"));
 		assertEquals("California",
 			selenium.getSelectedLabel("//select[@id='_2_addressRegionId2']"));
 	}

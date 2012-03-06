@@ -24,6 +24,9 @@ public class ViewAddress2MyAccountTest extends BaseTestCase {
 	public void testViewAddress2MyAccount() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -77,7 +80,7 @@ public class ViewAddress2MyAccountTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//input[@id='_2_addressStreet1_2']")) {
+				if (selenium.isVisible("xPath=(//input[@id='_2_street1'])[2]")) {
 					break;
 				}
 			}
@@ -122,18 +125,22 @@ public class ViewAddress2MyAccountTest extends BaseTestCase {
 		}
 
 		assertEquals("123 Lets",
-			selenium.getValue("//input[@id='_2_addressStreet1_1']"));
+			selenium.getValue("xPath=(//input[@id='_2_street1'])[2]"));
 		assertEquals("Other",
 			selenium.getSelectedLabel("//select[@id='_2_addressTypeId1']"));
 		assertEquals("897 Hope",
-			selenium.getValue("//input[@id='_2_addressStreet2_1']"));
-		assertEquals("00000", selenium.getValue("//input[@id='_2_addressZip1']"));
+			selenium.getValue("xPath=(//input[@id='_2_street2'])[2]"));
+		assertEquals("00000",
+			selenium.getValue("xPath=(//input[@id='_2_zip'])[2]"));
 		assertEquals("7896 This",
-			selenium.getValue("//input[@id='_2_addressStreet3_1']"));
+			selenium.getValue("xPath=(//input[@id='_2_street3'])[2]"));
 		assertEquals("Works",
-			selenium.getValue("//input[@id='_2_addressCity1']"));
+			selenium.getValue("xPath=(//input[@id='_2_city'])[2]"));
 		assertEquals("Canada",
 			selenium.getSelectedLabel("//select[@id='_2_addressCountryId1']"));
+		assertFalse(selenium.isChecked("//input[@id='_2_addressPrimary1']"));
+		assertFalse(selenium.isChecked(
+				"xPath=(//input[@id='_2_mailingCheckbox'])[2]"));
 		assertEquals("Ontario",
 			selenium.getSelectedLabel("//select[@id='_2_addressRegionId1']"));
 	}

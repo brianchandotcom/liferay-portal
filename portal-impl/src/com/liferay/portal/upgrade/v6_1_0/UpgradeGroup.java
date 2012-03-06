@@ -104,14 +104,39 @@ public class UpgradeGroup extends UpgradeProcess {
 				long classPK = rs.getLong("classPK");
 				String name = rs.getString("name");
 
-				runSQL(
-					"update Group_ set name = '" + classPK +
-						_ORGANIZATION_NAME_DELIMETER + name +
-							"' where groupId = " + groupId);
+				updateName(groupId, classPK, name);
 			}
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected void updateName(long groupId, long classPK, String name)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = DataAccess.getConnection();
+
+			ps = con.prepareStatement(
+				"update Group_ set name = ? where groupId = ?");
+
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(classPK);
+			sb.append(_ORGANIZATION_NAME_DELIMETER);
+			sb.append(name);
+
+			ps.setString(1, sb.toString());
+			ps.setLong(2, groupId);
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
 		}
 	}
 

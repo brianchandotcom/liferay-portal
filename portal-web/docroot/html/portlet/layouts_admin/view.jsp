@@ -69,8 +69,8 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 		<liferay-ui:tabs
 			names="<%= tabs1Names %>"
 			param="tabs1"
-			value="<%= tabs1 %>"
 			url="<%= tabs1URL %>"
+			value="<%= tabs1 %>"
 		/>
 
 		<%
@@ -94,7 +94,7 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 		%>
 
 		<div class="layout-breadcrumb">
-			<liferay-ui:breadcrumb displayStyle="horizontal" showPortletBreadcrumb="<%= true %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showParentGroups="<%= false %>" />
+			<liferay-ui:breadcrumb displayStyle="horizontal" showGuestGroup="<%= false %>" showLayout="<%= false %>" showParentGroups="<%= false %>" showPortletBreadcrumb="<%= true %>" />
 		</div>
 	</c:otherwise>
 </c:choose>
@@ -136,7 +136,7 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 
 						<c:choose>
 							<c:when test="<%= layoutSetBranches.size() > 1 %>">
-								<liferay-ui:icon-menu align="left" cssClass="layoutset-branches-menu" direction="down" extended="<%= true %>" message="<%= layoutSetBranch.getName() %>" icon='<%= themeDisplay.getPathThemeImages() + "/dock/staging.png" %>' >
+								<liferay-ui:icon-menu align="left" cssClass="layoutset-branches-menu" direction="down" extended="<%= true %>" icon='<%= themeDisplay.getPathThemeImages() + "/dock/staging.png" %>' message="<%= layoutSetBranch.getName() %>" >
 
 									<%
 									for (int i = 0; i < layoutSetBranches.size(); i++) {

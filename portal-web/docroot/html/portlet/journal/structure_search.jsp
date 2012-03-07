@@ -27,9 +27,9 @@ StructureDisplayTerms displayTerms = (StructureDisplayTerms)searchContainer.getD
 %>
 
 <liferay-ui:search-toggle
-	id="toggle_id_journal_structure_search"
-	displayTerms="<%= displayTerms %>"
 	buttonLabel="search"
+	displayTerms="<%= displayTerms %>"
+	id="toggle_id_journal_structure_search"
 >
 	<aui:fieldset>
 		<aui:input label="id" name="<%= displayTerms.STRUCTURE_ID %>" size="20" type="text" value="<%= displayTerms.getStructureId() %>" />

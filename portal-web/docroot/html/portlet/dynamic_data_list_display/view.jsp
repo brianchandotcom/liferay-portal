@@ -80,7 +80,7 @@ boolean showEditListTemplateIcon = (listDDMTemplateId != 0) && DDMTemplatePermis
 	<div class="lfr-meta-actions icons-container">
 		<div class="icon-actions">
 			<c:if test="<%= showAddTemplateIcon %>">
-				<liferay-portlet:renderURL windowState="<%= WindowState.MAXIMIZED.toString() %>" var="addDetailTemplateURL" portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>">
+				<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="addDetailTemplateURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 					<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="portletResource" value="<%= portletDisplay.getId() %>" />
@@ -97,7 +97,7 @@ boolean showEditListTemplateIcon = (listDDMTemplateId != 0) && DDMTemplatePermis
 					url="<%= addDetailTemplateURL %>"
 				/>
 
-				<liferay-portlet:renderURL windowState="<%= WindowState.MAXIMIZED.toString() %>" var="addListTemplateURL" portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>">
+				<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="addListTemplateURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 					<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="portletResource" value="<%= portletDisplay.getId() %>" />
@@ -115,7 +115,7 @@ boolean showEditListTemplateIcon = (listDDMTemplateId != 0) && DDMTemplatePermis
 			</c:if>
 
 			<c:if test="<%= showEditDetailTemplateIcon %>">
-				<liferay-portlet:renderURL windowState="<%= WindowState.MAXIMIZED.toString() %>" var="editDetailTemplateURL" portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>">
+				<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="editDetailTemplateURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 					<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="portletResourceNamespace" value="<%= renderResponse.getNamespace() %>" />
@@ -132,7 +132,7 @@ boolean showEditListTemplateIcon = (listDDMTemplateId != 0) && DDMTemplatePermis
 			</c:if>
 
 			<c:if test="<%= showEditListTemplateIcon %>">
-				<liferay-portlet:renderURL windowState="<%= WindowState.MAXIMIZED.toString() %>" var="editListTemplateURL" portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>">
+				<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="editListTemplateURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 					<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="templateId" value="<%= String.valueOf(listDDMTemplateId) %>" />
@@ -158,7 +158,7 @@ boolean showEditListTemplateIcon = (listDDMTemplateId != 0) && DDMTemplatePermis
 			</c:if>
 
 			<c:if test="<%= showAddListIcon %>">
-				<liferay-portlet:renderURL windowState="<%= WindowState.MAXIMIZED.toString() %>" var="addListURL" portletName="<%= PortletKeys.DYNAMIC_DATA_LISTS %>">
+				<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_LISTS %>" var="addListURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 					<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record_set" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="portletResource" value="<%= portletDisplay.getId() %>" />

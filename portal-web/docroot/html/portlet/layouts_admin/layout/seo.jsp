@@ -59,13 +59,13 @@ if (selLayout != null) {
 		<aui:input helpMessage="(0.0 - 1.0)" label="page-priority" name="TypeSettingsProperties--sitemap-priority--" size="3" type="text" value="<%= sitemapPriority %>" />
 
 		<aui:select label="change-frequency" name="TypeSettingsProperties--sitemap-changefreq--">
-			<aui:option selected='<%= changeFrequency.equals("always") %>' label="always" />
-			<aui:option selected='<%= changeFrequency.equals("hourly") %>' label="hourly" />
-			<aui:option selected='<%= changeFrequency.equals("daily") %>' label="daily" />
-			<aui:option selected='<%= changeFrequency.equals("weekly") %>' label="weekly" />
-			<aui:option selected='<%= changeFrequency.equals("monthly") %>' label="monthly" />
-			<aui:option selected='<%= changeFrequency.equals("yearly") %>' label="yearly" />
-			<aui:option selected='<%= changeFrequency.equals("never") %>' label="never" />
+			<aui:option label="always" selected='<%= changeFrequency.equals("always") %>' />
+			<aui:option label="daily" selected='<%= changeFrequency.equals("daily") %>' />
+			<aui:option label="hourly" selected='<%= changeFrequency.equals("hourly") %>' />
+			<aui:option label="monthly" selected='<%= changeFrequency.equals("monthly") %>' />
+			<aui:option label="never" selected='<%= changeFrequency.equals("never") %>' />
+			<aui:option label="weekly" selected='<%= changeFrequency.equals("weekly") %>' />
+			<aui:option label="yearly" selected='<%= changeFrequency.equals("yearly") %>' />
 		</aui:select>
 	</aui:fieldset>
 </c:if>

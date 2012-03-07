@@ -39,6 +39,6 @@ String tabs1Names = StringUtil.replace(tabs1Values, StringPool.UNDERLINE, String
 
 <liferay-ui:tabs
 	names="<%= tabs1Names %>"
-	tabsValues="<%= tabs1Values %>"
 	portletURL="<%= tabs1URL %>"
+	tabsValues="<%= tabs1Values %>"
 />

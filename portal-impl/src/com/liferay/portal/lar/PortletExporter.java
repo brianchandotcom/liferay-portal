@@ -401,6 +401,13 @@ public class PortletExporter {
 		Element assetCategoryElement = assetCategoriesElement.addElement(
 			"category");
 
+		Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
+			assetCategory.getCompanyId());
+
+		if (assetCategory.getGroupId() == companyGroup.getGroupId()) {
+			assetCategoryElement.addAttribute("global", "true");
+		}
+
 		assetCategoryElement.addAttribute("path", path);
 
 		assetCategory.setUserUuid(assetCategory.getUserUuid());
@@ -559,6 +566,13 @@ public class PortletExporter {
 
 		Element assetVocabularyElement = assetVocabulariesElement.addElement(
 			"vocabulary");
+
+		Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
+			assetVocabulary.getCompanyId());
+
+		if (assetVocabulary.getGroupId() == companyGroup.getGroupId()) {
+			assetVocabularyElement.addAttribute("global", "true");
+		}
 
 		assetVocabularyElement.addAttribute("path", path);
 

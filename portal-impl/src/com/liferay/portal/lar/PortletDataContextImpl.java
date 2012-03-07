@@ -181,10 +181,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 			AssetCategoryLocalServiceUtil.getCategories(
 				clazz.getName(), classPK);
 
-		if (assetCategories.isEmpty()) {
-			return;
-		}
-
 		_assetCategoryUuidsMap.put(
 			getPrimaryKeyString(clazz, classPK),
 			StringUtil.split(
@@ -272,10 +268,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		String[] tagNames = AssetTagLocalServiceUtil.getTagNames(
 			clazz.getName(), classPK);
-
-		if (tagNames.length == 0) {
-			return;
-		}
 
 		_assetTagNamesMap.put(getPrimaryKeyString(clazz, classPK), tagNames);
 	}

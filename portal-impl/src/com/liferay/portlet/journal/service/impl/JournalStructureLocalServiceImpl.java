@@ -674,8 +674,8 @@ public class JournalStructureLocalServiceImpl
 
 		while (parentStructure != null) {
 			if ((parentStructure != null) &&
-				parentStructure.getStructureId().equals(structureId) ||
-				parentStructure.getParentStructureId().equals(structureId)) {
+				(parentStructure.getStructureId().equals(structureId) ||
+				 parentStructure.getParentStructureId().equals(structureId))) {
 
 				throw new StructureInheritanceException();
 			}

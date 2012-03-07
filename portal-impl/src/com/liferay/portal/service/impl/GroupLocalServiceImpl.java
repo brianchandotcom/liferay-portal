@@ -714,7 +714,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 
 		if (!group.isStagingGroup() &&
-			group.isOrganization() || group.isRegularSite()) {
+			(group.isOrganization() || group.isRegularSite())) {
 
 			resourceLocalService.deleteResource(
 				group.getCompanyId(), Group.class.getName(),

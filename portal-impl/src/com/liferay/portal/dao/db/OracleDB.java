@@ -225,13 +225,13 @@ public class OracleDB extends BaseDB {
 		StringBuffer sb = new StringBuffer();
 
 		while (matcher.find()) {
-			int size = GetterUtil.getInteger(matcher.group()) * 4;
+			int size = GetterUtil.getInteger(matcher.group());
 
 			if (size > 4000) {
 				size = 4000;
 			}
 
-			matcher.appendReplacement(sb, "VARCHAR(" + size + ")");
+			matcher.appendReplacement(sb, "VARCHAR(" + size + " CHAR)");
 		}
 
 		matcher.appendTail(sb);

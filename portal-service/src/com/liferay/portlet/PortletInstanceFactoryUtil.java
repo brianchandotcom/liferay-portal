@@ -40,6 +40,10 @@ public class PortletInstanceFactoryUtil {
 		return getPortletInstanceFactory().create(portlet, servletContext);
 	}
 
+	public static void delete(Portlet portlet) {
+		getPortletInstanceFactory().delete(portlet);
+	}
+
 	public static void destroy(Portlet portlet) {
 		getPortletInstanceFactory().destroy(portlet);
 	}

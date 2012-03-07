@@ -59,6 +59,7 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortalPreferences;
+import com.liferay.portlet.PortletInstanceFactoryUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.sites.util.SitesUtil;
 import com.liferay.util.JS;
@@ -940,6 +941,8 @@ public class LayoutTypePortletImpl
 
 				return;
 			}
+
+			PortletInstanceFactoryUtil.delete(portlet);
 
 			PermissionChecker permissionChecker =
 				PermissionThreadLocal.getPermissionChecker();

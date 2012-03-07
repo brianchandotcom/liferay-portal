@@ -182,6 +182,17 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 		return instanceInvokerPortletInstance;
 	}
 
+	public void delete(Portlet portlet) {
+		if (PortletConstants.getInstanceId(portlet.getPortletId()) != null) {
+			Map<String, InvokerPortlet> portletInstances = _pool.get(
+				portlet.getRootPortletId());
+
+			if (portletInstances != null) {
+				portletInstances.remove(portlet.getPortletId());
+			}
+		}
+	}
+
 	public void destroy() {
 
 		// LPS-10473

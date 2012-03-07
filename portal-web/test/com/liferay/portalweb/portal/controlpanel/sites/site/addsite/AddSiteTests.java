@@ -25,8 +25,8 @@ import junit.framework.TestSuite;
 public class AddSiteTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AddSitesTest.class);
-		testSuite.addTestSuite(TearDownSitesTest.class);
+		testSuite.addTestSuite(AddSiteTest.class);
+		testSuite.addTestSuite(TearDownSiteTest.class);
 
 		return testSuite;
 	}

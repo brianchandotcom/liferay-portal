@@ -12,14 +12,11 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.sites;
+package com.liferay.portalweb.portal.controlpanel.sites.siteportlet.addportletsite;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.controlpanel.sites.lar.LARTestPlan;
-import com.liferay.portalweb.portal.controlpanel.sites.site.SiteTestPlan;
-import com.liferay.portalweb.portal.controlpanel.sites.sitepage.SitePageTestPlan;
-import com.liferay.portalweb.portal.controlpanel.sites.siteportlet.SitePortletTestPlan;
-import com.liferay.portalweb.portal.controlpanel.sites.usecase.UseCaseTestPlan;
+import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.AddSiteTest;
+import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.TearDownSiteTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -27,18 +24,14 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SitesTestPlan extends BaseTestSuite {
-
+public class AddPortletSiteTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(SiteTestPlan.suite());
-		testSuite.addTest(SitePageTestPlan.suite());
-		testSuite.addTest(SitePortletTestPlan.suite());
-		testSuite.addTest(LARTestPlan.suite());
-		testSuite.addTest(UseCaseTestPlan.suite());
+		testSuite.addTestSuite(AddSiteTest.class);
+		testSuite.addTestSuite(AddPageBlogsSiteTest.class);
+		testSuite.addTestSuite(AddPortletBlogsSiteTest.class);
+		testSuite.addTestSuite(TearDownSiteTest.class);
 
 		return testSuite;
 	}
-
 }

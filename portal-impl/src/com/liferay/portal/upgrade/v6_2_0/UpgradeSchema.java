@@ -37,65 +37,67 @@ public class UpgradeSchema extends UpgradeProcess {
 	protected void updateOracleVarchar2Length() throws Exception {
 		DB db = DBFactoryUtil.getDB();
 
-		if (db.getType().equals(DB.TYPE_ORACLE)) {
-			Connection con = null;
-			Statement st = null;
-			ResultSet rs = null;
+		if (!db.getType().equals(DB.TYPE_ORACLE)) {
+			return;
+		}
 
-			try {
-				con = DataAccess.getConnection();
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
 
-				st = con.createStatement();
-				rs = st.executeQuery(_SELECT_VARCHAR2_COLUMNS);
+		try {
+			con = DataAccess.getConnection();
 
-				while (rs.next()) {
-					String tableName = rs.getString(1);
-					String columnName = rs.getString(2);
-					int dataLength = rs.getInt(3);
+			st = con.createStatement();
+			rs = st.executeQuery(_SELECT_VARCHAR2_COLUMNS);
 
-					if (dataLength != 4000) {
-						dataLength = dataLength / 4;
-					}
+			while (rs.next()) {
+				String tableName = rs.getString(1);
+				String columnName = rs.getString(2);
+				int dataLength = rs.getInt(3);
 
-					try {
-						StringBundler sb = new StringBundler(7);
+				if (dataLength != 4000) {
+					dataLength = dataLength / 4;
+				}
 
-						sb.append("alter table ");
-						sb.append(tableName);
-						sb.append(" modify ( ");
-						sb.append(columnName);
-						sb.append(" varchar2(");
-						sb.append(dataLength);
-						sb.append(" char))");
+				try {
+					StringBundler sb = new StringBundler(7);
 
-						runSQL(sb.toString());
-					}
-					catch (SQLException e) {
-						if (e.getErrorCode() == 1441) {
-							if (_log.isWarnEnabled()) {
-								StringBundler sb = new StringBundler(8);
+					sb.append("alter table ");
+					sb.append(tableName);
+					sb.append(" modify ( ");
+					sb.append(columnName);
+					sb.append(" varchar2(");
+					sb.append(dataLength);
+					sb.append(" char))");
 
-								sb.append("Cannot decrease column length ");
-								sb.append("because some value is too big. ");
-								sb.append("Skiping upgrade for table ");
-								sb.append(tableName);
-								sb.append(" and column ");
-								sb.append(columnName);
-								sb.append(". Read the Upgrade chapter in the ");
-								sb.append("User Guide for more details.");
+					runSQL(sb.toString());
+				}
+				catch (SQLException e) {
+					if (e.getErrorCode() == 1441) {
+						if (_log.isWarnEnabled()) {
+							StringBundler sb = new StringBundler(8);
 
-								_log.warn(sb.toString());
-							}
+							sb.append("Cannot decrease column length ");
+							sb.append("because some value is too big. ");
+							sb.append("Skiping upgrade for table ");
+							sb.append(tableName);
+							sb.append(" and column ");
+							sb.append(columnName);
+							sb.append(". Read the Upgrade chapter in the ");
+							sb.append("User Guide for more details.");
+
+							_log.warn(sb.toString());
 						}
-						else {
-							throw e;
-						}
+					}
+					else {
+						throw e;
 					}
 				}
 			}
-			finally {
-				DataAccess.cleanUp(con, st, rs);
-			}
+		}
+		finally {
+			DataAccess.cleanUp(con, st, rs);
 		}
 	}
 
@@ -104,4 +106,5 @@ public class UpgradeSchema extends UpgradeProcess {
 			"where data_type = 'VARCHAR2'";
 
 	private static Log _log = LogFactoryUtil.getLog(UpgradeSchema.class);
+
 }

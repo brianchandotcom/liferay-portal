@@ -74,7 +74,7 @@ public class ToggleTag extends IncludeTag {
 		String clickValue = SessionClicks.get(request, id, null);
 
 		if (defaultShowContent) {
-			if ((clickValue != null) && (clickValue.equals("none"))) {
+			if ((clickValue != null) && clickValue.equals("none")) {
 				defaultStateValue = "none";
 				defaultImage = showImage;
 				defaultMessage = showMessage;
@@ -86,7 +86,7 @@ public class ToggleTag extends IncludeTag {
 			}
 		}
 		else {
-			if ((clickValue == null) || (clickValue.equals("none"))) {
+			if ((clickValue == null) || clickValue.equals("none")) {
 				defaultStateValue = "none";
 				defaultImage = showImage;
 				defaultMessage = showMessage;

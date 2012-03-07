@@ -145,7 +145,7 @@ public class ShoppingUtil {
 		// alternative shipping and shipping price is greater than 0
 
 		if ((preferences != null) &&
-			(preferences.useAlternativeShipping()) && (shipping > 0)) {
+			preferences.useAlternativeShipping() && (shipping > 0)) {
 
 			double altShippingDelta = 0.0;
 
@@ -218,8 +218,7 @@ public class ShoppingUtil {
 				if (((categoryIdsSet.size() > 0) &&
 					 (categoryIdsSet.contains(
 						String.valueOf(item.getCategoryId())))) ||
-					((skusSet.size() > 0) &&
-					 (skusSet.contains(item.getSku())))) {
+					((skusSet.size() > 0) && skusSet.contains(item.getSku()))) {
 
 					newItems.put(cartItem, count);
 				}
@@ -502,7 +501,7 @@ public class ShoppingUtil {
 		}
 
 		if ((preferences != null) &&
-			(preferences.getTaxState().equals(stateId))) {
+			preferences.getTaxState().equals(stateId)) {
 
 			double subtotal = 0.0;
 
@@ -960,7 +959,7 @@ public class ShoppingUtil {
 
 	public static String getPpPaymentStatus(String ppPaymentStatus) {
 		if ((ppPaymentStatus == null) || (ppPaymentStatus.length() < 2) ||
-			(ppPaymentStatus.equals("checkout"))) {
+			ppPaymentStatus.equals("checkout")) {
 
 			return ShoppingOrderConstants.STATUS_CHECKOUT;
 		}

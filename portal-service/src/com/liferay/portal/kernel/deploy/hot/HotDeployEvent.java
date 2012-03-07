@@ -90,7 +90,7 @@ public class HotDeployEvent {
 				properties.getProperty("required-deployment-contexts"));
 
 			if ((requiredDeploymentContexts.length > 0) &&
-				(_log.isInfoEnabled())) {
+				_log.isInfoEnabled()) {
 
 				_log.info(
 					"Plugin " + _servletContext.getServletContextName() +

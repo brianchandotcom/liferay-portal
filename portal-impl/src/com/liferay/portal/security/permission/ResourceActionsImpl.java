@@ -136,7 +136,7 @@ public class ResourceActionsImpl implements ResourceActions {
 
 		String value = LanguageUtil.get(locale, key, null);
 
-		if ((value == null) || (value.equals(key))) {
+		if ((value == null) || value.equals(key)) {
 			value = PortletResourceBundles.getString(locale, key);
 		}
 
@@ -152,7 +152,7 @@ public class ResourceActionsImpl implements ResourceActions {
 
 		String value = LanguageUtil.get(pageContext, key, null);
 
-		if ((value == null) || (value.equals(key))) {
+		if ((value == null) || value.equals(key)) {
 			value = PortletResourceBundles.getString(pageContext, key);
 		}
 
@@ -235,7 +235,7 @@ public class ResourceActionsImpl implements ResourceActions {
 
 		String value = LanguageUtil.get(locale, key, null);
 
-		if ((value == null) || (value.equals(key))) {
+		if ((value == null) || value.equals(key)) {
 			value = PortletResourceBundles.getString(locale, key);
 		}
 
@@ -251,7 +251,7 @@ public class ResourceActionsImpl implements ResourceActions {
 
 		String value = LanguageUtil.get(pageContext, key, null);
 
-		if ((value == null) || (value.equals(key))) {
+		if ((value == null) || value.equals(key)) {
 			value = PortletResourceBundles.getString(pageContext, key);
 		}
 

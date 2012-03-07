@@ -680,8 +680,8 @@ public class JournalTemplateLocalServiceImpl
 	}
 
 	protected void validate(String templateId) throws PortalException {
-		if ((Validator.isNull(templateId)) ||
-			(Validator.isNumber(templateId)) ||
+		if (Validator.isNull(templateId) ||
+			Validator.isNumber(templateId) ||
 			(templateId.indexOf(CharPool.SPACE) != -1)) {
 
 			throw new TemplateIdException();

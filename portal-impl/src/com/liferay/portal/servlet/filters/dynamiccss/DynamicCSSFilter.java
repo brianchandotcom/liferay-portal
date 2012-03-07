@@ -117,7 +117,7 @@ public class DynamicCSSFilter extends BasePortalFilter {
 			cacheCommonFileName + "_E_CONTENT_TYPE");
 		File cacheDataFile = new File(cacheCommonFileName + "_E_DATA");
 
-		if ((cacheDataFile.exists()) &&
+		if (cacheDataFile.exists() &&
 			(cacheDataFile.lastModified() >= file.lastModified())) {
 
 			if (cacheContentTypeFile.exists()) {

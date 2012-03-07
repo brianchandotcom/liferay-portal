@@ -39,7 +39,7 @@ public class Tuple implements Serializable {
 
 		for (int i = 0; i < _array.length; i++) {
 			if ((tuple._array != null) && (_array[i] != null) &&
-				(!_array[i].equals(tuple._array[i]))) {
+				!_array[i].equals(tuple._array[i])) {
 
 				return false;
 			}

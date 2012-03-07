@@ -277,9 +277,8 @@ public class CreateAccountAction extends PortletAction {
 		Boolean openIdLoginPending = (Boolean)session.getAttribute(
 			WebKeys.OPEN_ID_LOGIN_PENDING);
 
-		if ((openIdLoginPending != null) &&
-			(openIdLoginPending.booleanValue()) &&
-			(Validator.isNotNull(openId))) {
+		if ((openIdLoginPending != null) && openIdLoginPending.booleanValue() &&
+			Validator.isNotNull(openId)) {
 
 			sendEmail = false;
 			openIdPending = true;

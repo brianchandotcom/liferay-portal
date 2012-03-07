@@ -130,7 +130,7 @@ public abstract class AnnotationChainableMethodAdvice<T extends Annotation>
 			AnnotationChainableMethodAdvice<?> annotationChainableMethodAdvice =
 				entry.getValue();
 
-			if ((!annotationClasses.contains(annotationClass)) &&
+			if (!annotationClasses.contains(annotationClass) &&
 				(annotationChainableMethodAdvice != null)) {
 
 				ServiceBeanAopProxy.removeMethodInterceptor(

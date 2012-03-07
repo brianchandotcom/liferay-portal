@@ -382,9 +382,9 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 
 		String portalURL = null;
 
-		if ((PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS) &&
-			(!PropsValues.SESSION_ENABLE_PHISHING_PROTECTION) &&
-			(httpsInitial != null) && (!httpsInitial.booleanValue())) {
+		if (PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS &&
+			!PropsValues.SESSION_ENABLE_PHISHING_PROTECTION &&
+			(httpsInitial != null) && !httpsInitial.booleanValue()) {
 
 			portalURL = PortalUtil.getPortalURL(request, false);
 		}
@@ -451,10 +451,10 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 
 	protected boolean isPortletPath(String path) {
 		if ((path != null) &&
-			(!path.equals(_PATH_C)) &&
-			(!path.startsWith(_PATH_COMMON)) &&
+			!path.equals(_PATH_C) &&
+			!path.startsWith(_PATH_COMMON) &&
 			(path.indexOf(_PATH_J_SECURITY_CHECK) == -1) &&
-			(!path.startsWith(_PATH_PORTAL))) {
+			!path.startsWith(_PATH_PORTAL)) {
 
 			return true;
 		}
@@ -575,10 +575,10 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 		UserTracker userTracker = LiveUsers.getUserTracker(
 			themeDisplay.getCompanyId(), session.getId());
 
-		if ((userTracker != null) && (!path.equals(_PATH_C)) &&
+		if ((userTracker != null) && !path.equals(_PATH_C) &&
 			(path.indexOf(_PATH_J_SECURITY_CHECK) == -1) &&
 			(path.indexOf(_PATH_PORTAL_PROTECTED) == -1) &&
-			(!_trackerIgnorePaths.contains(path))) {
+			!_trackerIgnorePaths.contains(path)) {
 
 			String fullPath = null;
 
@@ -685,7 +685,7 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 		// Authenticated users can always log out
 
 		if (((remoteUser != null) || (user != null)) &&
-			(path.equals(_PATH_PORTAL_LOGOUT))) {
+			path.equals(_PATH_PORTAL_LOGOUT)) {
 
 			return path;
 		}
@@ -702,7 +702,7 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 		// Authenticated users can always agree to terms of use
 
 		if (((remoteUser != null) || (user != null)) &&
-			(path.equals(_PATH_PORTAL_UPDATE_TERMS_OF_USE))) {
+			path.equals(_PATH_PORTAL_UPDATE_TERMS_OF_USE)) {
 
 			return path;
 		}

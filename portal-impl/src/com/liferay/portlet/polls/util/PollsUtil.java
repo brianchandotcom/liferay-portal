@@ -82,7 +82,7 @@ public class PollsUtil {
 			Boolean hasVoted = (Boolean)session.getAttribute(
 				PollsQuestion.class.getName() + "." + questionId);
 
-			if ((hasVoted != null) && (hasVoted.booleanValue())) {
+			if ((hasVoted != null) && hasVoted.booleanValue()) {
 				return true;
 			}
 			else {

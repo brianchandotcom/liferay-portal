@@ -161,7 +161,7 @@ public class VelocityEngineImpl implements VelocityEngine {
 			VelocityContext velocityContext, Writer writer)
 		throws Exception {
 
-		if ((Validator.isNotNull(velocityTemplateContent)) &&
+		if (Validator.isNotNull(velocityTemplateContent) &&
 			(!PropsValues.LAYOUT_TEMPLATE_CACHE_ENABLED ||
 			 !resourceExists(velocityTemplateId))) {
 

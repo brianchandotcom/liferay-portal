@@ -407,7 +407,7 @@ public class MBPortletDataHandlerImpl extends BasePortletDataHandler {
 			long categoryId)
 		throws Exception {
 
-		if ((!portletDataContext.hasDateRange()) ||
+		if (!portletDataContext.hasDateRange() ||
 			(categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) ||
 			(categoryId == MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
 

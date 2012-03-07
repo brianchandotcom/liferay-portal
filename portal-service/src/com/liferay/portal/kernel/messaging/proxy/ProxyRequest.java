@@ -46,7 +46,7 @@ public class ProxyRequest implements Serializable {
 		}
 
 		if ((messagingProxy != null) &&
-			(messagingProxy.mode().equals(ProxyMode.SYNC))) {
+			messagingProxy.mode().equals(ProxyMode.SYNC)) {
 
 			_synchronous = true;
 		}

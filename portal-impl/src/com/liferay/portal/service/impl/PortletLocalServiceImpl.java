@@ -323,7 +323,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 				portlet.getCustomAttributesDisplayInstances();
 
 			if ((portletCustomAttributesDisplays != null) &&
-				(!portletCustomAttributesDisplays.isEmpty())) {
+				!portletCustomAttributesDisplays.isEmpty()) {
 
 				customAttributesDisplays.addAll(
 					portletCustomAttributesDisplays);
@@ -1063,19 +1063,19 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 			PortletApp portletApp = portlet.getPortletApp();
 
-			if ((servletContextName != null) && (portletApp.isWARFile()) &&
+			if ((servletContextName != null) && portletApp.isWARFile() &&
 				(portletId.endsWith(
 					PortletConstants.WAR_SEPARATOR +
 						PortalUtil.getJsSafePortletId(servletContextName)) &&
-				 (!portletIds.contains(portletId)))) {
+				 !portletIds.contains(portletId))) {
 
 				undefinedPortletIds.add(portletId);
 			}
 			else if ((servletContextName == null) &&
-					 (!portletApp.isWARFile()) &&
+					 !portletApp.isWARFile() &&
 					 (portletId.indexOf(
 						PortletConstants.WAR_SEPARATOR) == -1) &&
-					 (!portletIds.contains(portletId))) {
+					 !portletIds.contains(portletId)) {
 
 				undefinedPortletIds.add(portletId);
 			}

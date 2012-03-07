@@ -84,7 +84,7 @@ public class ShoppingCouponLocalServiceImpl
 				new CouponEndDateException());
 		}
 
-		if ((endDate != null) && (startDate.after(endDate))) {
+		if ((endDate != null) && startDate.after(endDate)) {
 			throw new CouponDateException();
 		}
 
@@ -205,7 +205,7 @@ public class ShoppingCouponLocalServiceImpl
 				new CouponEndDateException());
 		}
 
-		if ((endDate != null) && (startDate.after(endDate))) {
+		if ((endDate != null) && startDate.after(endDate)) {
 			throw new CouponDateException();
 		}
 
@@ -251,8 +251,7 @@ public class ShoppingCouponLocalServiceImpl
 		throws PortalException, SystemException {
 
 		if (!autoCode) {
-			if ((Validator.isNull(code)) ||
-				(Validator.isNumber(code)) ||
+			if (Validator.isNull(code) || Validator.isNumber(code) ||
 				(code.indexOf(CharPool.SPACE) != -1)) {
 
 				throw new CouponCodeException();

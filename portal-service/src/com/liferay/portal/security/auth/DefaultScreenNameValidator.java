@@ -28,8 +28,8 @@ public class DefaultScreenNameValidator implements ScreenNameValidator {
 
 	public boolean validate(long companyId, String screenName) {
 		if (Validator.isEmailAddress(screenName) ||
-			(screenName.equalsIgnoreCase(CYRUS)) ||
-			(screenName.equalsIgnoreCase(POSTFIX)) ||
+			screenName.equalsIgnoreCase(CYRUS) ||
+			screenName.equalsIgnoreCase(POSTFIX) ||
 			(screenName.indexOf(CharPool.SLASH) != -1) ||
 			(screenName.indexOf(CharPool.UNDERLINE) != -1)) {
 

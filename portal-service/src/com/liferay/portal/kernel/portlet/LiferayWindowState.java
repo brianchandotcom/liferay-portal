@@ -33,7 +33,7 @@ public class LiferayWindowState extends WindowState {
 	public static boolean isExclusive(HttpServletRequest request) {
 		String state = _getWindowState(request);
 
-		if ((state != null) && (state.equals(EXCLUSIVE.toString()))) {
+		if ((state != null) && state.equals(EXCLUSIVE.toString())) {
 			return true;
 		}
 		else {
@@ -44,9 +44,7 @@ public class LiferayWindowState extends WindowState {
 	public static boolean isMaximized(HttpServletRequest request) {
 		String state = _getWindowState(request);
 
-		if ((state != null) &&
-			(state.equals(WindowState.MAXIMIZED.toString()))) {
-
+		if ((state != null) && state.equals(WindowState.MAXIMIZED.toString())) {
 			return true;
 		}
 		else {
@@ -57,7 +55,7 @@ public class LiferayWindowState extends WindowState {
 	public static boolean isPopUp(HttpServletRequest request) {
 		String state = _getWindowState(request);
 
-		if ((state != null) && (state.equals(POP_UP.toString()))) {
+		if ((state != null) && state.equals(POP_UP.toString())) {
 			return true;
 		}
 		else {
@@ -71,7 +69,7 @@ public class LiferayWindowState extends WindowState {
 		// Changes to EXCLUSIVE are always preserved
 
 		if ((newWindowState != null) &&
-			(newWindowState.equals(LiferayWindowState.EXCLUSIVE))) {
+			newWindowState.equals(LiferayWindowState.EXCLUSIVE)) {
 
 			return true;
 		}
@@ -79,7 +77,7 @@ public class LiferayWindowState extends WindowState {
 		// Some window states are automatically preserved
 
 		if ((oldWindowState != null) &&
-			(oldWindowState.equals(LiferayWindowState.POP_UP))) {
+			oldWindowState.equals(LiferayWindowState.POP_UP)) {
 
 			return false;
 		}

@@ -106,7 +106,7 @@ public class AUIUtil {
 	}
 
 	public static String buildData(Map<String, Object> data) {
-		if ((data == null) || (data.isEmpty())) {
+		if ((data == null) || data.isEmpty()) {
 			return StringPool.BLANK;
 		}
 

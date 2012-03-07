@@ -50,7 +50,7 @@ public class SimpleFacet extends BaseFacet {
 		String valueParam = GetterUtil.getString(
 			searchContext.getAttribute(getFieldName()));
 
-		if ((!isStatic()) && Validator.isNotNull(valueParam)) {
+		if (!isStatic() && Validator.isNotNull(valueParam)) {
 			value = valueParam;
 		}
 

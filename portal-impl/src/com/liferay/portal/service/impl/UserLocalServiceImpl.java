@@ -5711,7 +5711,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		for (char c : screenName.toCharArray()) {
-			if ((!Validator.isChar(c)) && (!Validator.isDigit(c)) &&
+			if (!Validator.isChar(c) && !Validator.isDigit(c) &&
 				(c != CharPool.DASH) && (c != CharPool.PERIOD) &&
 				(c != CharPool.UNDERLINE)) {
 

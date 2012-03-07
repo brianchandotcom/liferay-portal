@@ -735,7 +735,7 @@ public class ShoppingOrderLocalServiceImpl
 			}
 		}
 
-		if ((!shoppingPrefs.usePayPal()) &&
+		if (!shoppingPrefs.usePayPal() &&
 			(shoppingPrefs.getCcTypes().length > 0)) {
 
 			if (Validator.isNull(ccName)) {

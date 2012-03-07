@@ -311,7 +311,7 @@ public class PortletDeployer extends BaseDeployer {
 					String paramValue = initParam.elementText("param-value");
 
 					if ((paramName != null) &&
-						(paramName.equals("servlet-class"))) {
+						paramName.equals("servlet-class")) {
 
 						sb.append("<servlet-class>");
 						sb.append(paramValue);
@@ -329,7 +329,7 @@ public class PortletDeployer extends BaseDeployer {
 					String paramDesc = initParam.elementText("description");
 
 					if ((paramName != null) &&
-						(!paramName.equals("servlet-class"))) {
+						!paramName.equals("servlet-class")) {
 
 						sb.append("<init-param>");
 						sb.append("<param-name>");
@@ -456,7 +456,7 @@ public class PortletDeployer extends BaseDeployer {
 		renderKitFactoryEl = factoryEl.element("render-kit-factory");
 		facesContextFactoryEl = factoryEl.element("faces-context-factory");
 
-		if (appServerType.equals("orion") && (_sunFacesPortlet) &&
+		if (appServerType.equals("orion") && _sunFacesPortlet &&
 			(renderKitFactoryEl == null)) {
 
 			renderKitFactoryEl = factoryEl.addElement("render-kit-factory");
@@ -470,7 +470,7 @@ public class PortletDeployer extends BaseDeployer {
 			facesContextFactoryEl.addText(MYFACES_CONTEXT_FACTORY);
 		}
 
-		if (!appServerType.equals("orion") && (_sunFacesPortlet)) {
+		if (!appServerType.equals("orion") && _sunFacesPortlet) {
 			factoryEl.detach();
 		}
 

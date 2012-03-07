@@ -81,7 +81,7 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 
 		boolean instanceable = false;
 
-		if ((portlet.isInstanceable()) &&
+		if (portlet.isInstanceable() &&
 			(PortletConstants.getInstanceId(portlet.getPortletId()) != null)) {
 
 			instanceable = true;

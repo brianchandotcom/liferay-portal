@@ -82,7 +82,7 @@ public class I18nFilter extends BasePortalFilter {
 
 		String requestURI = request.getRequestURI();
 
-		if ((Validator.isNotNull(contextPath)) &&
+		if (Validator.isNotNull(contextPath) &&
 			(requestURI.indexOf(contextPath) != -1)) {
 
 			requestURI = requestURI.substring(contextPath.length());

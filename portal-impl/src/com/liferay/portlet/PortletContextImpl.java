@@ -140,7 +140,7 @@ public class PortletContextImpl implements PortletContext {
 	}
 
 	public URL getResource(String path) throws MalformedURLException {
-		if ((path == null) || (!path.startsWith(StringPool.SLASH))) {
+		if ((path == null) || !path.startsWith(StringPool.SLASH)) {
 			throw new MalformedURLException();
 		}
 

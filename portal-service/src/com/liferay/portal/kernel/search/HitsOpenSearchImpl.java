@@ -187,9 +187,7 @@ public abstract class HitsOpenSearchImpl extends BaseOpenSearchImpl {
 				long entryClassPK = GetterUtil.getLong(
 					result.get(Field.ENTRY_CLASS_PK));
 
-				if ((Validator.isNotNull(entryClassName)) &&
-					(entryClassPK > 0)) {
-
+				if (Validator.isNotNull(entryClassName) && (entryClassPK > 0)) {
 					RatingsStats stats = RatingsStatsLocalServiceUtil.getStats(
 						entryClassName, entryClassPK);
 

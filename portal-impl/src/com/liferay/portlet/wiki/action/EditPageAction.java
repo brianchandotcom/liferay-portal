@@ -218,7 +218,7 @@ public class EditPageAction extends PortletAction {
 					page = WikiPageServiceUtil.getPage(nodeId, title, false);
 				}
 				catch (NoSuchPageException nspe2) {
-					if ((title.equals(WikiPageConstants.FRONT_PAGE)) &&
+					if (title.equals(WikiPageConstants.FRONT_PAGE) &&
 						(version == 0)) {
 
 						ServiceContext serviceContext = new ServiceContext();

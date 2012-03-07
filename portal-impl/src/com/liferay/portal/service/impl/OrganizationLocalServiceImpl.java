@@ -1841,7 +1841,7 @@ public class OrganizationLocalServiceImpl
 				companyId, name);
 
 			if ((organization != null) &&
-				(organization.getName().equalsIgnoreCase(name))) {
+				organization.getName().equalsIgnoreCase(name)) {
 
 				if ((organizationId <= 0) ||
 					(organization.getOrganizationId() != organizationId)) {

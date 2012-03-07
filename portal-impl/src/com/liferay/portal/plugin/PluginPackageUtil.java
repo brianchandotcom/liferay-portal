@@ -302,7 +302,7 @@ public class PluginPackageUtil {
 
 		for (PluginPackage pluginPackage : pluginPackages) {
 			if ((latestPluginPackage == null) ||
-				(pluginPackage.isLaterVersionThan(latestPluginPackage))) {
+				pluginPackage.isLaterVersionThan(latestPluginPackage)) {
 
 				latestPluginPackage = pluginPackage;
 			}

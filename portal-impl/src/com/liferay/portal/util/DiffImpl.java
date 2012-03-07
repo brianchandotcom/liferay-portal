@@ -375,7 +375,7 @@ public class DiffImpl implements com.liferay.portal.kernel.util.Diff {
 		int currentChangedLine = startPos - margin;
 
 		if ((lastDiff.getChangedLines().size() == 1) &&
-			(lastDiff.getChangedLines().get(0).equals(CONTEXT_LINE))) {
+			lastDiff.getChangedLines().get(0).equals(CONTEXT_LINE)) {
 
 			currentChangedLine = currentChangedLine + 1;
 		}

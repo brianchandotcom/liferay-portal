@@ -1120,7 +1120,7 @@ public class ServiceBuilder {
 		for (JavaMethod method : methods) {
 			JavaParameter[] parameters = method.getParameters();
 
-			if ((method.getName().equals(methodName)) &&
+			if (method.getName().equals(methodName) &&
 				(parameters.length == args.size())) {
 
 				for (int i = 0; i < parameters.length; i++) {
@@ -1330,7 +1330,7 @@ public class ServiceBuilder {
 			JavaParameter[] parameters = method.getParameters();
 
 			if ((parameters.length == 1) &&
-				(parameters[0].getName().equals("primaryKey"))) {
+				parameters[0].getName().equals("primaryKey")) {
 
 				return true;
 			}
@@ -1371,7 +1371,7 @@ public class ServiceBuilder {
 		else if (methodName.equals("getPermissionChecker")) {
 			return false;
 		}
-		else if ((methodName.equals("getUser")) &&
+		else if (methodName.equals("getUser") &&
 				 (method.getParameters().length == 0)) {
 
 			return false;
@@ -1381,19 +1381,19 @@ public class ServiceBuilder {
 
 			return false;
 		}
-		else if ((methodName.endsWith("Finder")) &&
+		else if (methodName.endsWith("Finder") &&
 				 (methodName.startsWith("get") ||
 				  methodName.startsWith("set"))) {
 
 			return false;
 		}
-		else if ((methodName.endsWith("Persistence")) &&
+		else if (methodName.endsWith("Persistence") &&
 				 (methodName.startsWith("get") ||
 				  methodName.startsWith("set"))) {
 
 			return false;
 		}
-		else if ((methodName.endsWith("Service")) &&
+		else if (methodName.endsWith("Service") &&
 				 (methodName.startsWith("get") ||
 				  methodName.startsWith("set"))) {
 
@@ -3333,7 +3333,7 @@ public class ServiceBuilder {
 			String entityName = indexSQLSuffix.split(" ")[0];
 
 			if ((prevEntityName != null) &&
-				(!prevEntityName.equals(entityName))) {
+				!prevEntityName.equals(entityName)) {
 
 				sb.append("\n");
 			}
@@ -3365,7 +3365,7 @@ public class ServiceBuilder {
 			String entityName = finderName.split("\\.")[0];
 
 			if ((prevEntityName != null) &&
-				(!prevEntityName.equals(entityName))) {
+				!prevEntityName.equals(entityName)) {
 
 				sb.append("\n");
 			}
@@ -4192,7 +4192,7 @@ public class ServiceBuilder {
 			}
 
 			if (((i + 1) != regularColList.size()) ||
-				(entity.hasCompoundPK())) {
+				entity.hasCompoundPK()) {
 
 				sb.append(",");
 			}
@@ -4594,7 +4594,7 @@ public class ServiceBuilder {
 			boolean asc = true;
 
 			if ((orderElement.attribute("by") != null) &&
-				(orderElement.attributeValue("by").equals("desc"))) {
+				orderElement.attributeValue("by").equals("desc")) {
 
 				asc = false;
 			}

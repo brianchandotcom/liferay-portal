@@ -41,7 +41,7 @@ public class VerifyProcessUtil {
 
 		if ((verifyFrequency == VerifyProcess.ALWAYS) ||
 			((verifyFrequency == VerifyProcess.ONCE) && !verified) ||
-			(ranUpgradeProcess)) {
+			ranUpgradeProcess) {
 
 			return _verifyProcess(ranUpgradeProcess);
 		}

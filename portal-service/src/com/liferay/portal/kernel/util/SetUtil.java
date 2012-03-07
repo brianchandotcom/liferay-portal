@@ -160,7 +160,7 @@ public class SetUtil {
 
 	@SuppressWarnings("rawtypes")
 	public static <E> Set<E> fromCollection(Collection<E> c) {
-		if ((c != null) && (Set.class.isAssignableFrom(c.getClass()))) {
+		if ((c != null) && Set.class.isAssignableFrom(c.getClass())) {
 			return (Set)c;
 		}
 

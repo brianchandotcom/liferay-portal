@@ -89,7 +89,7 @@ public class SearchContainerRowTag<R>
 
 		_rowIndex++;
 
-		if (_rowIndex < (_results.size())) {
+		if (_rowIndex < _results.size()) {
 			processRow();
 
 			return EVAL_BODY_AGAIN;
@@ -142,7 +142,7 @@ public class SearchContainerRowTag<R>
 		_resultRows = searchContainer.getResultRows();
 		_results = searchContainer.getResults();
 
-		if ((_results != null) && (!_results.isEmpty())) {
+		if ((_results != null) && !_results.isEmpty()) {
 			processRow();
 
 			return EVAL_BODY_INCLUDE;

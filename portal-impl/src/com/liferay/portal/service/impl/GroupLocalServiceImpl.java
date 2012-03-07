@@ -714,7 +714,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 
 		if (!group.isStagingGroup() &&
-			(group.isOrganization()) || group.isRegularSite()) {
+			group.isOrganization() || group.isRegularSite()) {
 
 			resourceLocalService.deleteResource(
 				group.getCompanyId(), Group.class.getName(),
@@ -2465,10 +2465,10 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			long groupClassNameId = PortalUtil.getClassNameId(Group.class);
 
 			if (((classNameId != groupClassNameId) &&
-				 (!groupIdFriendlyURL.equals(String.valueOf(classPK))) &&
-				 (!PropsValues.USERS_SCREEN_NAME_ALLOW_NUMERIC)) ||
+				 !groupIdFriendlyURL.equals(String.valueOf(classPK)) &&
+				 !PropsValues.USERS_SCREEN_NAME_ALLOW_NUMERIC) ||
 				((classNameId == groupClassNameId) &&
-				 (!groupIdFriendlyURL.equals(String.valueOf(groupId))))) {
+				 !groupIdFriendlyURL.equals(String.valueOf(groupId)))) {
 
 				GroupFriendlyURLException gfurle =
 					new GroupFriendlyURLException(
@@ -2506,7 +2506,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			long groupId, long companyId, String name, boolean site)
 		throws PortalException, SystemException {
 
-		if ((Validator.isNull(name)) || (Validator.isNumber(name)) ||
+		if (Validator.isNull(name) || Validator.isNumber(name) ||
 			(name.indexOf(CharPool.STAR) != -1) ||
 			(name.indexOf(_ORGANIZATION_NAME_DELIMETER) != -1)) {
 

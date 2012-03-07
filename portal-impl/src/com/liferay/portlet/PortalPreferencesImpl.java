@@ -74,7 +74,7 @@ public class PortalPreferencesImpl
 		if ((getCompanyId() == portalPreferences.getCompanyId()) &&
 			(getOwnerId() == portalPreferences.getOwnerId()) &&
 			(getOwnerType() == portalPreferences.getOwnerType()) &&
-			(getMap().equals(portalPreferences.getMap()))) {
+			getMap().equals(portalPreferences.getMap())) {
 
 			return true;
 		}
@@ -157,7 +157,7 @@ public class PortalPreferencesImpl
 	}
 
 	public void setValue(String namespace, String key, String value) {
-		if (Validator.isNull(key) || (key.equals(_RANDOM_KEY))) {
+		if (Validator.isNull(key) || key.equals(_RANDOM_KEY)) {
 			return;
 		}
 
@@ -181,7 +181,7 @@ public class PortalPreferencesImpl
 	}
 
 	public void setValues(String namespace, String key, String[] values) {
-		if (Validator.isNull(key) || (key.equals(_RANDOM_KEY))) {
+		if (Validator.isNull(key) || key.equals(_RANDOM_KEY)) {
 			return;
 		}
 

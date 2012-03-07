@@ -307,9 +307,9 @@ public class PortletAction extends Action {
 			HttpServletRequest request = PortalUtil.getHttpServletRequest(
 				actionRequest);
 
-			if ((BrowserSnifferUtil.isIe(request)) &&
+			if (BrowserSnifferUtil.isIe(request) &&
 				(BrowserSnifferUtil.getMajorVersion(request) == 6.0) &&
-				(redirect.contains(StringPool.POUND))) {
+				redirect.contains(StringPool.POUND)) {
 
 				String redirectToken = "&#";
 

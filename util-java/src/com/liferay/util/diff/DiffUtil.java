@@ -361,7 +361,7 @@ public class DiffUtil {
 		int currentChangedLine = startPos - margin;
 
 		if ((lastDiff.getChangedLines().size() == 1) &&
-			(lastDiff.getChangedLines().get(0).equals(CONTEXT_LINE))) {
+			lastDiff.getChangedLines().get(0).equals(CONTEXT_LINE)) {
 
 			currentChangedLine = currentChangedLine + 1;
 		}

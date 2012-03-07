@@ -379,7 +379,7 @@ public class SCProductEntryLocalServiceImpl
 				}
 
 				if ((oldestDate != null) &&
-					(oldestDate.after(productVersion.getModifiedDate()))) {
+					oldestDate.after(productVersion.getModifiedDate())) {
 
 					continue;
 				}

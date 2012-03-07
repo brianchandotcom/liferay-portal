@@ -236,7 +236,7 @@ public class PortletPreferencesFactoryImpl
 
 		if (portletMode.equals(LiferayPortletMode.EDIT_GUEST.toString()) ||
 			((layoutTypePortlet != null) &&
-			 (layoutTypePortlet.hasModeEditGuestPortletId(portletId)))) {
+			 layoutTypePortlet.hasModeEditGuestPortletId(portletId))) {
 
 			modeEditGuest = true;
 		}

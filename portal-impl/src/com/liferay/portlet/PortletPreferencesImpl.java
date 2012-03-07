@@ -83,8 +83,8 @@ public class PortletPreferencesImpl
 			(getOwnerId() == portletPreferences.getOwnerId()) &&
 			(getOwnerType() == portletPreferences.getOwnerType()) &&
 			(getPlid() == portletPreferences.getPlid()) &&
-			(getPortletId().equals(portletPreferences.getPortletId())) &&
-			(getMap().equals(portletPreferences.getMap()))) {
+			getPortletId().equals(portletPreferences.getPortletId()) &&
+			getMap().equals(portletPreferences.getMap())) {
 
 			return true;
 		}

@@ -198,7 +198,7 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 	protected void validate(long teamId, long groupId, String name)
 		throws PortalException, SystemException {
 
-		if ((Validator.isNull(name)) || (Validator.isNumber(name)) ||
+		if (Validator.isNull(name) || Validator.isNumber(name) ||
 			(name.indexOf(CharPool.COMMA) != -1) ||
 			(name.indexOf(CharPool.STAR) != -1)) {
 

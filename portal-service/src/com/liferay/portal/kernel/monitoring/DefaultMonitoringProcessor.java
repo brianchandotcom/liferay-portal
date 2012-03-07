@@ -51,7 +51,7 @@ public class DefaultMonitoringProcessor
 
 		Level level = _levels.get(namespace);
 
-		if ((level != null) && (level.equals(Level.OFF))) {
+		if ((level != null) && level.equals(Level.OFF)) {
 			return;
 		}
 

@@ -326,8 +326,8 @@ public class ImageToolImpl implements ImageTool {
 		else if (contentType.contains(TYPE_GIF)) {
 			encodeGIF(renderedImage, os);
 		}
-		else if ((contentType.contains(TYPE_JPEG)) ||
-				 (contentType.contains("jpeg"))) {
+		else if (contentType.contains(TYPE_JPEG) ||
+				 contentType.contains("jpeg")) {
 
 			ImageIO.write(renderedImage, "jpeg", os);
 		}

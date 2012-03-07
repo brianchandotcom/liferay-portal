@@ -674,8 +674,8 @@ public class JournalStructureLocalServiceImpl
 
 		while (parentStructure != null) {
 			if ((parentStructure != null) &&
-				(parentStructure.getStructureId().equals(structureId)) ||
-				(parentStructure.getParentStructureId().equals(structureId))) {
+				parentStructure.getStructureId().equals(structureId) ||
+				parentStructure.getParentStructureId().equals(structureId)) {
 
 				throw new StructureInheritanceException();
 			}
@@ -693,8 +693,8 @@ public class JournalStructureLocalServiceImpl
 	protected void validateStructureId(String structureId)
 		throws PortalException {
 
-		if ((Validator.isNull(structureId)) ||
-			(Validator.isNumber(structureId)) ||
+		if (Validator.isNull(structureId) ||
+			Validator.isNumber(structureId) ||
 			(structureId.indexOf(CharPool.SPACE) != -1)) {
 
 			throw new StructureIdException();

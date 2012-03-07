@@ -109,7 +109,7 @@ public class ContentTransformerListener extends BaseTransformerListener {
 				String type = GetterUtil.getString(
 					element.attributeValue("type"));
 
-				if ((!name.startsWith("reserved-")) &&
+				if (!name.startsWith("reserved-") &&
 					(type.equals("text") || type.equals("text_area") ||
 					 type.equals("text_box"))) {
 
@@ -168,7 +168,7 @@ public class ContentTransformerListener extends BaseTransformerListener {
 				// Make sure to point images to the full path
 
 				else if ((text != null) &&
-						 (text.startsWith("/image/journal/article?img_id"))) {
+						 text.startsWith("/image/journal/article?img_id")) {
 
 					dynamicContent.setText("@cdn_host@@root_path@" + text);
 				}

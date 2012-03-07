@@ -113,8 +113,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		virtualHostname = virtualHostname.trim().toLowerCase();
 
-		if ((Validator.isNull(webId)) ||
-			(webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) ||
+		if (Validator.isNull(webId) ||
+			webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID) ||
 			(companyPersistence.fetchByWebId(webId) != null)) {
 
 			throw new CompanyWebIdException();
@@ -410,7 +410,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		Company company = companyPersistence.findByPrimaryKey(companyId);
 
-		if ((Validator.isNull(company.getKey())) &&
+		if (Validator.isNull(company.getKey()) &&
 			(company.getKeyObj() == null)) {
 
 			try {

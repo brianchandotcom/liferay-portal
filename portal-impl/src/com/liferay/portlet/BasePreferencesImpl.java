@@ -203,7 +203,7 @@ public abstract class BasePreferencesImpl implements Serializable {
 	public abstract void store() throws IOException, ValidatorException;
 
 	protected String getActualValue(String value) {
-		if ((value == null) || (value.equals(_NULL_VALUE))) {
+		if ((value == null) || value.equals(_NULL_VALUE)) {
 			return null;
 		}
 		else {

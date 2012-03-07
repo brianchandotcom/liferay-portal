@@ -435,7 +435,7 @@ public class DLUtil {
 
 		String previewURL = sb.toString();
 
-		if ((themeDisplay != null) && (themeDisplay.isAddSessionIdToURL())) {
+		if ((themeDisplay != null) && themeDisplay.isAddSessionIdToURL()) {
 			return PortalUtil.getURLWithSessionId(
 				previewURL, themeDisplay.getSessionId());
 		}

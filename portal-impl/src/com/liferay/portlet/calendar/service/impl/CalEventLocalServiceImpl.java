@@ -1276,22 +1276,22 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 				mailService.sendEmail(message);
 			}
 			else if ((remindBy == CalEventConstants.REMIND_BY_AIM) &&
-					 (Validator.isNotNull(contact.getAimSn()))) {
+					 Validator.isNotNull(contact.getAimSn())) {
 
 				AIMConnector.send(contact.getAimSn(), body);
 			}
 			else if ((remindBy == CalEventConstants.REMIND_BY_ICQ) &&
-					 (Validator.isNotNull(contact.getIcqSn()))) {
+					 Validator.isNotNull(contact.getIcqSn())) {
 
 				ICQConnector.send(contact.getIcqSn(), body);
 			}
 			else if ((remindBy == CalEventConstants.REMIND_BY_MSN) &&
-					 (Validator.isNotNull(contact.getMsnSn()))) {
+					 Validator.isNotNull(contact.getMsnSn())) {
 
 				MSNConnector.send(contact.getMsnSn(), body);
 			}
 			else if ((remindBy == CalEventConstants.REMIND_BY_YM) &&
-					 (Validator.isNotNull(contact.getYmSn()))) {
+					 Validator.isNotNull(contact.getYmSn())) {
 
 				YMConnector.send(contact.getYmSn(), body);
 			}

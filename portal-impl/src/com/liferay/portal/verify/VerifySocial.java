@@ -81,7 +81,7 @@ public class VerifySocial extends VerifyProcess {
 				if ((curGroupId == groupId) && (curUserId == userId) &&
 					(curClassNameId == classNameId) &&
 					(curClassPK == classPK) && (curType == type) &&
-					(curExtraData.equals(extraData)) &&
+					curExtraData.equals(extraData) &&
 					(curReceiverUserId == receiverUserId)) {
 
 					SocialActivityLocalServiceUtil.deleteActivity(
@@ -154,7 +154,7 @@ public class VerifySocial extends VerifyProcess {
 				if ((curGroupId == groupId) && (curUserId == userId) &&
 					(curClassNameId == classNameId) &&
 					(curClassPK == classPK) && (curType == type) &&
-					(curExtraData.equals(extraData)) &&
+					curExtraData.equals(extraData) &&
 					(curReceiverUserId == receiverUserId)) {
 
 					SocialRequestLocalServiceUtil.deleteRequest(curRequestId);

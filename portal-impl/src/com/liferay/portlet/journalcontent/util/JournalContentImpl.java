@@ -153,15 +153,15 @@ public class JournalContentImpl implements JournalContent {
 				groupId, articleId, templateId, viewMode, languageId, page,
 				xmlRequest, themeDisplay);
 
-			if ((articleDisplay != null) && (articleDisplay.isCacheable()) &&
-				(lifecycleRender)) {
+			if ((articleDisplay != null) && articleDisplay.isCacheable() &&
+				lifecycleRender) {
 
 				portalCache.put(key, articleDisplay);
 			}
 		}
 
 		try {
-			if ((PropsValues.JOURNAL_ARTICLE_VIEW_PERMISSION_CHECK_ENABLED) &&
+			if (PropsValues.JOURNAL_ARTICLE_VIEW_PERMISSION_CHECK_ENABLED &&
 				(articleDisplay != null) && (themeDisplay != null) &&
 				(!JournalArticlePermission.contains(
 					themeDisplay.getPermissionChecker(), groupId, articleId,

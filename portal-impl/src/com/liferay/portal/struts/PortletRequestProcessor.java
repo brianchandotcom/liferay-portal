@@ -199,7 +199,7 @@ public class PortletRequestProcessor extends TilesRequestProcessor {
 
 			ActionForward actionForward = actionMapping.findForward(forward);
 
-			if ((actionForward != null) && (actionForward.getRedirect())) {
+			if ((actionForward != null) && actionForward.getRedirect()) {
 				String forwardPath = actionForward.getPath();
 
 				if (forwardPath.startsWith(StringPool.SLASH)) {

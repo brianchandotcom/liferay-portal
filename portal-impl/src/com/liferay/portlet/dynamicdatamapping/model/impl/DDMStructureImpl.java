@@ -232,7 +232,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 		List<String> availableLocales = getAvailableLocales();
 
-		if ((locale != null) && !(availableLocales.contains(locale))) {
+		if ((locale != null) && !availableLocales.contains(locale)) {
 			locale = getDefaultLocale();
 		}
 

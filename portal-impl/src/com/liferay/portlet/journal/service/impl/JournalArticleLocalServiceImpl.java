@@ -2589,7 +2589,7 @@ public class JournalArticleLocalServiceImpl
 		Element elParent = el.getParent();
 
 		for (;;) {
-			if ((elParent == null) || (elParent.getName().equals("root"))) {
+			if ((elParent == null) || elParent.getName().equals("root")) {
 				break;
 			}
 
@@ -2840,7 +2840,7 @@ public class JournalArticleLocalServiceImpl
 			}
 
 			if ((version > JournalArticleConstants.VERSION_DEFAULT) &&
-				(incrementVersion)) {
+				incrementVersion) {
 
 				Image oldImage = null;
 
@@ -3398,7 +3398,7 @@ public class JournalArticleLocalServiceImpl
 	protected void validate(long groupId, String articleId)
 		throws PortalException, SystemException {
 
-		if ((Validator.isNull(articleId)) ||
+		if (Validator.isNull(articleId) ||
 			(articleId.indexOf(CharPool.SPACE) != -1)) {
 
 			throw new ArticleIdException();

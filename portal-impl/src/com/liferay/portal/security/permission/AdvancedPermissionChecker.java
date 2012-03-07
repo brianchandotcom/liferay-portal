@@ -978,7 +978,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		// Check if the layout manager has permission to do this action for the
 		// current portlet
 
-		if ((Validator.isNotNull(name)) && (Validator.isNotNull(primKey)) &&
+		if (Validator.isNotNull(name) && Validator.isNotNull(primKey) &&
 			(primKey.indexOf(PortletConstants.LAYOUT_SEPARATOR) != -1)) {
 
 			hasLayoutManagerPermission =

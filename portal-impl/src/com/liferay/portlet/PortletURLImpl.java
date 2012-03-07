@@ -1022,9 +1022,9 @@ public class PortletURLImpl
 
 		if (PropsValues.PORTLET_URL_ANCHOR_ENABLE) {
 			if (_anchor && (_windowState != null) &&
-				(!_windowState.equals(WindowState.MAXIMIZED)) &&
-				(!_windowState.equals(LiferayWindowState.EXCLUSIVE)) &&
-				(!_windowState.equals(LiferayWindowState.POP_UP))) {
+				!_windowState.equals(WindowState.MAXIMIZED) &&
+				!_windowState.equals(LiferayWindowState.EXCLUSIVE) &&
+				!_windowState.equals(LiferayWindowState.POP_UP)) {
 
 				String lastString = sb.stringAt(sb.index() - 1);
 
@@ -1130,9 +1130,9 @@ public class PortletURLImpl
 
 		if (PropsValues.PORTLET_URL_ANCHOR_ENABLE) {
 			if (_anchor && (_windowState != null) &&
-				(!_windowState.equals(WindowState.MAXIMIZED)) &&
-				(!_windowState.equals(LiferayWindowState.EXCLUSIVE)) &&
-				(!_windowState.equals(LiferayWindowState.POP_UP))) {
+				!_windowState.equals(WindowState.MAXIMIZED) &&
+				!_windowState.equals(LiferayWindowState.EXCLUSIVE) &&
+				!_windowState.equals(LiferayWindowState.POP_UP)) {
 
 				sb.append("wsrp-fragmentID");
 				sb.append(StringPool.EQUAL);
@@ -1229,7 +1229,7 @@ public class PortletURLImpl
 
 	protected boolean isBlankValue(String[] value) {
 		if ((value != null) && (value.length == 1) &&
-			(value[0].equals(StringPool.BLANK))) {
+			value[0].equals(StringPool.BLANK)) {
 
 			return true;
 		}

@@ -49,7 +49,7 @@ public class CopyMethodImpl implements Method {
 
 		int status = HttpServletResponse.SC_FORBIDDEN;
 
-		if ((!destination.equals(webDavRequest.getPath())) &&
+		if (!destination.equals(webDavRequest.getPath()) &&
 			(WebDAVUtil.getGroupId(companyId, destination) ==
 				webDavRequest.getGroupId())) {
 

@@ -346,7 +346,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		String articleId = article.getArticleId();
 		boolean autoArticleId = false;
 
-		if ((Validator.isNumber(articleId)) ||
+		if (Validator.isNumber(articleId) ||
 			(JournalArticleUtil.fetchByG_A_V(
 				portletDataContext.getScopeGroupId(), articleId,
 				JournalArticleConstants.VERSION_DEFAULT) != null)) {
@@ -815,7 +815,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		String feedId = feed.getFeedId();
 		boolean autoFeedId = false;
 
-		if ((Validator.isNumber(feedId)) ||
+		if (Validator.isNumber(feedId) ||
 			(JournalFeedUtil.fetchByG_F(
 				portletDataContext.getScopeGroupId(), feedId) != null)) {
 
@@ -1021,7 +1021,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		String structureId = structure.getStructureId();
 		boolean autoStructureId = false;
 
-		if ((Validator.isNumber(structureId)) ||
+		if (Validator.isNumber(structureId) ||
 			(JournalStructureUtil.fetchByG_S(
 				portletDataContext.getScopeGroupId(), structureId) != null)) {
 
@@ -1161,7 +1161,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		String templateId = template.getTemplateId();
 		boolean autoTemplateId = false;
 
-		if ((Validator.isNumber(templateId)) ||
+		if (Validator.isNumber(templateId) ||
 			(JournalTemplateUtil.fetchByG_T(
 				portletDataContext.getScopeGroupId(), templateId) != null)) {
 

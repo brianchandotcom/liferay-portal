@@ -52,7 +52,7 @@ public class DiffResult {
 		DiffResult diffResult = (DiffResult)obj;
 
 		if ((diffResult.getLineNumber() == _lineNumber) &&
-			(diffResult.getChangedLines().equals(_changedLines))) {
+			diffResult.getChangedLines().equals(_changedLines)) {
 
 			return true;
 		}

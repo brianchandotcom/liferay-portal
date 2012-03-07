@@ -669,8 +669,8 @@ public class MediaWikiImporter implements WikiImporter {
 		while (line != null) {
 			String[] array = StringUtil.split(line);
 
-			if ((array.length == 2) && (Validator.isNotNull(array[0])) &&
-				(Validator.isNotNull(array[1]))) {
+			if ((array.length == 2) && Validator.isNotNull(array[0]) &&
+				Validator.isNotNull(array[1])) {
 
 				usersMap.put(array[0], array[1]);
 			}

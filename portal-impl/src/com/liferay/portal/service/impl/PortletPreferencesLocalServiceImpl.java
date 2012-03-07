@@ -399,7 +399,7 @@ public class PortletPreferencesLocalServiceImpl
 			PreferencesKey preferencesKey = (PreferencesKey)obj;
 
 			if ((preferencesKey._plid == _plid) &&
-				(preferencesKey._portletId.equals(_portletId))) {
+				preferencesKey._portletId.equals(_portletId)) {
 
 				return true;
 			}

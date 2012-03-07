@@ -129,7 +129,7 @@ public class RSSAction extends PortletAction {
 
 		String rss = StringPool.BLANK;
 
-		if ((nodeId > 0) && (Validator.isNotNull(title))) {
+		if ((nodeId > 0) && Validator.isNotNull(title)) {
 			rss = WikiPageServiceUtil.getPagesRSS(
 				companyId, nodeId, title, max, type, version, displayStyle,
 				feedURL.toString(), entryURL.toString(), locale);

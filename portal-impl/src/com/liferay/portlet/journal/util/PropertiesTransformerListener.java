@@ -76,7 +76,7 @@ public class PropertiesTransformerListener extends BaseTransformerListener {
 		String templateId = tokens.get("template_id");
 
 		if ((templateId == null) ||
-			((templateId != null) && (templateId.equals(_GLOBAL_PROPERTIES)))) {
+			((templateId != null) && templateId.equals(_GLOBAL_PROPERTIES))) {
 
 			// Return the original string if no template ID is specified or if
 			// the template ID is GLOBAL-PROPERTIES to prevent an infinite loop.

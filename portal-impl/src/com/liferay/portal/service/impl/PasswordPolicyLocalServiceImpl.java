@@ -337,7 +337,7 @@ public class PasswordPolicyLocalServiceImpl
 	protected void validate(long passwordPolicyId, long companyId, String name)
 		throws PortalException, SystemException {
 
-		if ((Validator.isNull(name)) || (Validator.isNumber(name)) ||
+		if (Validator.isNull(name) || Validator.isNumber(name) ||
 			(name.indexOf(CharPool.COMMA) != -1) ||
 			(name.indexOf(CharPool.STAR) != -1)) {
 

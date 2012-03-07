@@ -478,7 +478,7 @@ public class Table {
 
 				Object[][] columns = getColumns();
 
-				if ((values.length) != (columns.length)) {
+				if (values.length != columns.length) {
 					throw new UpgradeException(
 						"Column lengths differ between temp file and schema. " +
 							"Attempted to insert row " + line + ".");

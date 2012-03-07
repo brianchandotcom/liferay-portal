@@ -493,7 +493,15 @@ public class SourceFormatter {
 			 s.contains(" > ") || s.contains(" =< ") || s.contains(" => ") ||
 			 s.contains(" <= ") || s.contains(" >= "));
 
-		if (containsAndOrOperator && containsCompareOperator) {
+		boolean containsMathOperator =
+			(s.contains(" = ") || s.contains(" - ") || s.contains(" + ") ||
+			 s.contains(" & ") || s.contains(" % ") || s.contains(" * ") ||
+			 s.contains(" / "));
+
+		if (containsCompareOperator &&
+			(containsAndOrOperator ||
+			 (containsMathOperator && !s.contains(StringPool.OPEN_BRACKET)))) {
+
 			_sourceFormatterHelper.printError(
 				fileName, "missing parentheses: " + fileName + " " + lineCount);
 		}

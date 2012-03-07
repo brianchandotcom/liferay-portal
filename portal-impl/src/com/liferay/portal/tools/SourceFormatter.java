@@ -1469,23 +1469,9 @@ public class SourceFormatter {
 
 						boolean isMethod = _isInJavaTermTypeGroup(
 							javaTermType, _TYPE_METHOD);
-						boolean isPrivateMethodOrVariable =
-							_isInJavaTermTypeGroup(
-								javaTermType, _TYPE_PRIVATE_METHOD_OR_VARIABLE);
 
 						if (isMethod) {
 							readMethodParameterTypes = true;
-						}
-
-						if ((isPrivateMethodOrVariable &&
-							!javaTermName.startsWith(StringPool.UNDERLINE) &&
-							!javaTermName.equals("serialVersionUID")) ||
-							(!isPrivateMethodOrVariable &&
-							 javaTermName.startsWith(StringPool.UNDERLINE))) {
-
-							_sourceFormatterHelper.printError(
-								fileName,
-								"underscore: " + fileName + " " + lineCount);
 						}
 
 						if (_isInJavaTermTypeGroup(
@@ -3276,14 +3262,6 @@ public class SourceFormatter {
 	private static final int _TYPE_METHOD_PUBLIC = 6;
 
 	private static final int _TYPE_METHOD_PUBLIC_STATIC = 4;
-
-	private static final int[] _TYPE_PRIVATE_METHOD_OR_VARIABLE = {
-		SourceFormatter._TYPE_METHOD_PRIVATE,
-		SourceFormatter._TYPE_METHOD_PRIVATE_STATIC,
-		SourceFormatter._TYPE_VARIABLE_PRIVATE,
-		SourceFormatter._TYPE_VARIABLE_PRIVATE_STATIC,
-		SourceFormatter._TYPE_VARIABLE_PRIVATE_STATIC_FINAL
-	};
 
 	private static final int[] _TYPE_VARIABLE_NOT_STATIC = {
 		SourceFormatter._TYPE_VARIABLE_PRIVATE,

@@ -809,7 +809,7 @@ public class Recurrence implements Serializable {
 			return false;
 		}
 
-		if (getRecurrenceCount(candidate) % interval != 0) {
+		if ((getRecurrenceCount(candidate) % interval) != 0) {
 
 			// Not a repetition of the interval
 

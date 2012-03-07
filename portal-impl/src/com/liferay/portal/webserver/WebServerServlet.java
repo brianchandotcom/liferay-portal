@@ -157,7 +157,7 @@ public class WebServerServlet extends HttpServlet {
 						folderId = folder.getFolderId();
 					}
 					catch (NoSuchFolderException nsfe) {
-						if (i != pathArray.length - 1) {
+						if (i != (pathArray.length - 1)) {
 							return false;
 						}
 
@@ -719,7 +719,7 @@ public class WebServerServlet extends HttpServlet {
 				folderId = folder.getFolderId();
 			}
 			catch (NoSuchFolderException nsfe) {
-				if (i != pathArray.length - 1) {
+				if (i != (pathArray.length - 1)) {
 					throw nsfe;
 				}
 

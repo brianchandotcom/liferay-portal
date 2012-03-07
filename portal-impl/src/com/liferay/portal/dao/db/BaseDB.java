@@ -1001,7 +1001,7 @@ public abstract class BaseDB implements DB {
 				sb.append("\\b");
 			}
 
-			if (i < TEMPLATE.length - 1) {
+			if (i < (TEMPLATE.length - 1)) {
 				sb.append(StringPool.PIPE);
 			}
 		}

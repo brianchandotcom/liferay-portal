@@ -76,7 +76,9 @@ public class RandomAccessInputStream extends InputStream {
 			throw new NullPointerException();
 		}
 
-		if ((offset < 0) || (length < 0) || (offset + length > bytes.length)) {
+		if ((offset < 0) || (length < 0) ||
+			((offset + length) > bytes.length)) {
+
 			throw new IndexOutOfBoundsException();
 		}
 

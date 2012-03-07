@@ -1010,7 +1010,7 @@ public class PortletURLImpl
 				sb.append(StringPool.EQUAL);
 				sb.append(processValue(key, values[i]));
 
-				if ((i + 1 < values.length) || itr.hasNext()) {
+				if (((i + 1) < values.length) || itr.hasNext()) {
 					sb.append(StringPool.AMPERSAND);
 				}
 			}
@@ -1175,7 +1175,7 @@ public class PortletURLImpl
 				parameterSb.append(StringPool.EQUAL);
 				parameterSb.append(HttpUtil.encodeURL(values[i]));
 
-				if ((i + 1 < values.length) || itr.hasNext()) {
+				if (((i + 1) < values.length) || itr.hasNext()) {
 					parameterSb.append(StringPool.AMPERSAND);
 				}
 			}
@@ -1343,7 +1343,7 @@ public class PortletURLImpl
 					sb.append(StringPool.EQUAL);
 					sb.append(newURL);
 
-					if (i < params.length - 1) {
+					if (i < (params.length - 1)) {
 						sb.append(StringPool.AMPERSAND);
 					}
 				}
@@ -1351,7 +1351,7 @@ public class PortletURLImpl
 			else {
 				sb.append(param);
 
-				if (i < params.length - 1) {
+				if (i < (params.length - 1)) {
 					sb.append(StringPool.AMPERSAND);
 				}
 			}

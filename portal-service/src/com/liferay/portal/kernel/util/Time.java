@@ -120,27 +120,27 @@ public class Time {
 			}
 		}
 		else {
-			if (milliseconds % WEEK == 0) {
+			if ((milliseconds % WEEK) == 0) {
 				x = (int)(milliseconds / WEEK);
 
 				s = x + " Week";
 			}
-			else if (milliseconds % DAY == 0) {
+			else if ((milliseconds % DAY) == 0) {
 				x = (int)(milliseconds / DAY);
 
 				s = x + " Day";
 			}
-			else if (milliseconds % HOUR == 0) {
+			else if ((milliseconds % HOUR) == 0) {
 				x = (int)(milliseconds / HOUR);
 
 				s = x + " Hour";
 			}
-			else if (milliseconds % MINUTE == 0) {
+			else if ((milliseconds % MINUTE) == 0) {
 				x = (int)(milliseconds / MINUTE);
 
 				s = x + " Minute";
 			}
-			else if (milliseconds % SECOND == 0) {
+			else if ((milliseconds % SECOND) == 0) {
 				x = (int)(milliseconds / SECOND);
 
 				s = x + " Second";

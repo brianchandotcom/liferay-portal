@@ -31,7 +31,7 @@ public class AddBookmarksFolderTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Bookmarks Entry Page")) {
+				if (selenium.isVisible("link=Bookmarks Folder Page")) {
 					break;
 				}
 			}
@@ -41,8 +41,8 @@ public class AddBookmarksFolderTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Bookmarks Entry Page",
-			RuntimeVariables.replace("Bookmarks Entry Page"));
+		selenium.clickAt("link=Bookmarks Folder Page",
+			RuntimeVariables.replace("Bookmarks Folder Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[2]/ul/li[2]/a",

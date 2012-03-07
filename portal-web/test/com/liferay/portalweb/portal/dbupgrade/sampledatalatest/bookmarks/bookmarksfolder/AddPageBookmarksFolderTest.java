@@ -86,7 +86,7 @@ public class AddPageBookmarksFolderTest extends BaseTestCase {
 		selenium.clickAt("//div/span/button[1]",
 			RuntimeVariables.replace("Add Page"));
 		selenium.type("//input[@id='_156_name_en_US']",
-			RuntimeVariables.replace("Bookmarks Entry Page"));
+			RuntimeVariables.replace("Bookmarks Folder Page"));
 		selenium.clickAt("//input[@value='Add Page']",
 			RuntimeVariables.replace("Add Page"));
 		selenium.waitForPageToLoad("30000");

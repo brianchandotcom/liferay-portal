@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.cluster;
 import com.liferay.portal.kernel.exception.SystemException;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Shuyang Zhou
@@ -29,6 +30,17 @@ public interface ClusterExecutor {
 	public void destroy();
 
 	public FutureClusterResponses execute(ClusterRequest clusterRequest)
+		throws SystemException;
+
+	public void execute(
+			ClusterRequest clusterRequest,
+			ClusterResponseCallback clusterResponseCallback)
+		throws SystemException;
+
+	public void execute(
+			ClusterRequest clusterRequest,
+			ClusterResponseCallback clusterResponseCallback, long timeout,
+			TimeUnit timeUnit)
 		throws SystemException;
 
 	public List<ClusterEventListener> getClusterEventListeners();

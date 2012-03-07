@@ -14,13 +14,15 @@
 
 package com.liferay.portal.liveusers.messaging;
 
+import com.liferay.portal.kernel.cluster.BaseClusterResponseCallback;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponses;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
-import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -30,6 +32,7 @@ import com.liferay.portal.liveusers.LiveUsers;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * @author Brian Wing Shun Chan
@@ -45,25 +48,9 @@ public class LiveUsersMessageListener extends BaseMessageListener {
 		ClusterRequest clusterRequest = ClusterRequest.createUnicastRequest(
 			_getLocalClusterUsersMethodHandler, clusterNodeId);
 
-		FutureClusterResponses futureClusterResponses =
-			ClusterExecutorUtil.execute(clusterRequest);
-
-		ClusterNodeResponses clusterNodeResponses = futureClusterResponses.get(
+		ClusterExecutorUtil.execute(
+			clusterRequest, new LiveUsersClusterResponseCallback(clusterNodeId),
 			20000, TimeUnit.MILLISECONDS);
-
-		ClusterNodeResponse clusterNodeResponse =
-			clusterNodeResponses.getClusterResponse(clusterNodeId);
-
-		Object result = clusterNodeResponse.getResult();
-
-		if (result == null) {
-			return;
-		}
-
-		Map<Long, Map<Long, Set<String>>> clusterUsers =
-			(Map<Long, Map<Long, Set<String>>>)result;
-
-		LiveUsers.addClusterNode(clusterNodeId, clusterUsers);
 	}
 
 	protected void doCommandRemoveClusterNode(JSONObject jsonObject)
@@ -119,8 +106,50 @@ public class LiveUsersMessageListener extends BaseMessageListener {
 		}
 	}
 
+	private static Log _log = LogFactoryUtil.getLog(
+		LiveUsersMessageListener.class);
 	private static MethodHandler _getLocalClusterUsersMethodHandler =
 		new MethodHandler(
 			new MethodKey(LiveUsers.class.getName(), "getLocalClusterUsers"));
+
+	private class LiveUsersClusterResponseCallback
+		extends BaseClusterResponseCallback {
+
+		public LiveUsersClusterResponseCallback(String clusterNodeId) {
+			_clusterNodeId = clusterNodeId;
+		}
+
+		public void callback(ClusterNodeResponses clusterNodeResponses) {
+			ClusterNodeResponse clusterNodeResponse =
+				clusterNodeResponses.getClusterResponse(_clusterNodeId);
+
+			try {
+				Object result = clusterNodeResponse.getResult();
+
+				if (result == null) {
+					return;
+				}
+
+				Map<Long, Map<Long, Set<String>>> clusterUsers =
+					(Map<Long, Map<Long, Set<String>>>)result;
+
+				LiveUsers.addClusterNode(_clusterNodeId, clusterUsers);
+			}
+			catch (Exception ex) {
+				_log.error(
+					"Unable to add cluster node with Id :" + _clusterNodeId,
+					ex);
+			}
+		}
+
+		public void processTimeoutException(TimeoutException timeoutException) {
+			_log.error(
+				"Uanble to add cluster node with Id :" + _clusterNodeId,
+				timeoutException);
+		}
+
+		private String _clusterNodeId;
+
+	}
 
 }

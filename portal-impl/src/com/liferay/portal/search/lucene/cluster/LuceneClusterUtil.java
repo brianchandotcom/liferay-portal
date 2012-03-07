@@ -30,10 +30,7 @@ public class LuceneClusterUtil {
 	public static void loadIndexesFromCluster(long companyId)
 		throws SystemException {
 
-		Address bootupAddress = LuceneHelperUtil.selectBootupClusterAddress(
-			companyId, LuceneHelperUtil.getLastGeneration(companyId));
-
-		loadIndexesFromCluster(new long[] {companyId}, bootupAddress);
+		LuceneHelperUtil.loadIndexesFromCluster(companyId);
 	}
 
 	public static void loadIndexesFromCluster(

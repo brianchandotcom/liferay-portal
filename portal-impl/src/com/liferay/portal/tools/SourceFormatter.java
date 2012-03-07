@@ -348,6 +348,10 @@ public class SourceFormatter {
 
 		ifClause = _stripQuotes(ifClause);
 
+		ifClause = StringUtil.replace(
+			ifClause, new String[] {"'('", "')'"},
+			new String[] {StringPool.BLANK, StringPool.BLANK});
+
 		int level = 0;
 		int max = StringUtil.count(ifClause, StringPool.OPEN_PARENTHESIS);
 		int previousParenthesisPos = -1;
@@ -378,26 +382,25 @@ public class SourceFormatter {
 					int posOpenParenthesis = levels[level - 1];
 
 					if (level > 1) {
+						char nextChar = ifClause.charAt(i + 1);
 						char previousChar = ifClause.charAt(
 							posOpenParenthesis - 1);
 
-						if (!Character.isLetterOrDigit(previousChar)) {
+						if (!Character.isLetterOrDigit(nextChar) &&
+							!Character.isLetterOrDigit(previousChar)) {
+
 							String s = ifClause.substring(
 								posOpenParenthesis + 1, i);
 
 							if (Validator.isNotNull(s) &&
 								!s.contains(StringPool.SPACE)) {
 
-								/*
 								_sourceFormatterHelper.printError(
 									fileName,
 									"redundant parentheses: " + fileName + " " +
 										lineCount);
-								*/
 							}
 						}
-
-						char nextChar = ifClause.charAt(i + 1);
 
 						if ((previousChar == CharPool.OPEN_PARENTHESIS) &&
 							(nextChar == CharPool.CLOSE_PARENTHESIS)) {
@@ -1428,6 +1431,7 @@ public class SourceFormatter {
 
 			if (trimmedLine.startsWith("if (") ||
 				trimmedLine.startsWith("else if (") ||
+				trimmedLine.startsWith("while (") ||
 				Validator.isNotNull(ifClause)) {
 
 				ifClause = ifClause + StringPool.SPACE + trimmedLine;

@@ -416,7 +416,7 @@ String signature = ParamUtil.getString(request, "signature");
 <textarea class="aui-helper-hidden" id="scriptTpl">
 Liferay.Service(
   '<%= jsonWebServiceActionMapping.getServletContextPath() + jsonWebServiceActionMapping.getPath() %>',
-  <tpl if="data.length">data: {
+  <tpl if="data.length">{
 <%= StringPool.FOUR_SPACES %><tpl for="data">{key}: {[this.formatDataType(values.key, values.value)]}<tpl if="!$last">,
 <%= StringPool.FOUR_SPACES %></tpl></tpl>
   },

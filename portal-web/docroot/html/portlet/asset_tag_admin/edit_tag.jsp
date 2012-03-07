@@ -102,9 +102,9 @@ else {
 
 								<div class="lfr-form-row lfr-form-row-inline">
 									<div class="row-fields">
-										<aui:input fieldParam='<%= "key" + tagPropertiesIndex %>' name="key" />
+										<aui:input fieldParam='<%= "key" + tagPropertiesIndex %>' id='<%= "key" + tagPropertiesIndex %>' name="key" />
 
-										<aui:input fieldParam='<%= "value" + tagPropertiesIndex %>' name="value" />
+										<aui:input fieldParam='<%= "value" + tagPropertiesIndex %>' id='<%= "key" + tagPropertiesIndex %>' name="value" />
 									</div>
 								</div>
 

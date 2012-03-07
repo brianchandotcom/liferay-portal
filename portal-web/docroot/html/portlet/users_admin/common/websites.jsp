@@ -86,7 +86,7 @@ else {
 			<div class="row-fields">
 				<aui:input name='<%= "websiteId" + websitesIndex %>' type="hidden" value="<%= website.getWebsiteId() %>" />
 
-				<aui:input fieldParam='<%= "websiteUrl" + websitesIndex %>' name="url" />
+				<aui:input fieldParam='<%= "websiteUrl" + websitesIndex %>' id='<%= "websiteUrl" + websitesIndex %>' name="url" />
 
 				<aui:select label="type" name='<%= "websiteTypeId" + websitesIndex %>' listType="<%= className + ListTypeConstants.WEBSITE %>" />
 

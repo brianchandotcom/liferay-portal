@@ -24,6 +24,9 @@ public class ViewAnnouncementDeliveryTest extends BaseTestCase {
 	public void testViewAnnouncementDelivery() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -92,19 +95,19 @@ public class ViewAnnouncementDeliveryTest extends BaseTestCase {
 				"//input[@id='_2_announcementsTypegeneralEmailCheckbox']"));
 		assertTrue(selenium.isChecked(
 				"//input[@id='_2_announcementsTypegeneralSmsCheckbox']"));
-		assertTrue(selenium.isElementPresent(
+		assertTrue(selenium.isVisible(
 				"//input[@id='_2_announcementsTypegeneralWebsiteCheckbox' and @disabled='']"));
 		assertTrue(selenium.isChecked(
 				"//input[@id='_2_announcementsTypenewsEmailCheckbox']"));
 		assertTrue(selenium.isChecked(
 				"//input[@id='_2_announcementsTypenewsSmsCheckbox']"));
-		assertTrue(selenium.isElementPresent(
+		assertTrue(selenium.isVisible(
 				"//input[@id='_2_announcementsTypenewsWebsiteCheckbox' and @disabled='']"));
 		assertTrue(selenium.isChecked(
 				"//input[@id='_2_announcementsTypetestEmailCheckbox']"));
 		assertTrue(selenium.isChecked(
 				"//input[@id='_2_announcementsTypetestSmsCheckbox']"));
-		assertTrue(selenium.isElementPresent(
+		assertTrue(selenium.isVisible(
 				"//input[@id='_2_announcementsTypetestWebsiteCheckbox' and @disabled='']"));
 	}
 }

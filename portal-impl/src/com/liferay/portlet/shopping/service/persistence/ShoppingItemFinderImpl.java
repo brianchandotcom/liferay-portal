@@ -67,7 +67,7 @@ public class ShoppingItemFinderImpl
 				for (int i = 0; i < categoryIds.length; i++) {
 					query.append("ShoppingItem.categoryId = ? ");
 
-					if (i + 1 < categoryIds.length) {
+					if ((i + 1) < categoryIds.length) {
 						query.append("OR ");
 					}
 				}
@@ -134,7 +134,7 @@ public class ShoppingItemFinderImpl
 				for (int i = 0; i < categoryIds.length; i++) {
 					query.append("ShoppingItem.categoryId = ? ");
 
-					if (i + 1 < categoryIds.length) {
+					if ((i + 1) < categoryIds.length) {
 						query.append("OR ");
 					}
 				}
@@ -204,7 +204,7 @@ public class ShoppingItemFinderImpl
 				for (int i = 0; i < categoryIds.length; i++) {
 					query.append("ShoppingItem.categoryId = ? ");
 
-					if (i + 1 < categoryIds.length) {
+					if ((i + 1) < categoryIds.length) {
 						query.append("OR ");
 					}
 				}
@@ -279,7 +279,7 @@ public class ShoppingItemFinderImpl
 				for (int i = 0; i < categoryIds.length; i++) {
 					query.append("ShoppingItem.categoryId = ? ");
 
-					if (i + 1 < categoryIds.length) {
+					if ((i + 1) < categoryIds.length) {
 						query.append("OR ");
 					}
 				}
@@ -338,7 +338,7 @@ public class ShoppingItemFinderImpl
 				for (int i = 0; i < categoryIds.length; i++) {
 					query.append("ShoppingItem.categoryId = ? ");
 
-					if (i + 1 < categoryIds.length) {
+					if ((i + 1) < categoryIds.length) {
 						query.append("OR ");
 					}
 				}
@@ -402,7 +402,7 @@ public class ShoppingItemFinderImpl
 				for (int i = 0; i < categoryIds.length; i++) {
 					query.append("ShoppingItem.categoryId = ? ");
 
-					if (i + 1 < categoryIds.length) {
+					if ((i + 1) < categoryIds.length) {
 						query.append("OR ");
 					}
 				}

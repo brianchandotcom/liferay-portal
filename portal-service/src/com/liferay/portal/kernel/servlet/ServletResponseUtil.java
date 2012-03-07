@@ -87,7 +87,7 @@ public class ServletResponseUtil {
 				start = length - end;
 				end = length - 1;
 			}
-			else if ((end == -1) || (end > length - 1)) {
+			else if ((end == -1) || (end > (length - 1))) {
 				end = length - 1;
 			}
 

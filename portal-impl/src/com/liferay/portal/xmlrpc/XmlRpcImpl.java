@@ -69,7 +69,7 @@ public class XmlRpcImpl implements XmlRpc {
 				for (int i = 0; i < arguments.length; i++) {
 					sb.append(arguments[i]);
 
-					if (i < arguments.length - 1) {
+					if (i < (arguments.length - 1)) {
 						sb.append(", ");
 					}
 				}

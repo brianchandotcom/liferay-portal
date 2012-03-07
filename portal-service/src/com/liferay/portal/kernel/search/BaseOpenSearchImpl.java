@@ -287,7 +287,7 @@ public abstract class BaseOpenSearchImpl implements OpenSearch {
 
 		int totalPages = 0;
 
-		if (total % itemsPerPage == 0) {
+		if ((total % itemsPerPage) == 0) {
 			totalPages = total / itemsPerPage;
 		}
 		else {

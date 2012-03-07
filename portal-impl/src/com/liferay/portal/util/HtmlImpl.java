@@ -464,7 +464,7 @@ public class HtmlImpl implements Html {
 	}
 
 	protected boolean isScriptTag(String text, int pos) {
-		if (pos + _TAG_SCRIPT.length + 1 <= text.length()) {
+		if ((pos + _TAG_SCRIPT.length + 1) <= text.length()) {
 			char item;
 
 			for (int i = 0; i < _TAG_SCRIPT.length; i++) {

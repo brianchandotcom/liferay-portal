@@ -142,7 +142,7 @@ public class VerifyResourcePermissions extends VerifyProcess {
 		}
 
 		if (_log.isInfoEnabled() &&
-			(resourcePermission.getResourcePermissionId() % 100 == 0)) {
+			((resourcePermission.getResourcePermissionId() % 100) == 0)) {
 
 			_log.info("Processed 100 resource permissions for " + name);
 		}

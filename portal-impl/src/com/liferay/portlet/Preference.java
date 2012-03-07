@@ -80,7 +80,7 @@ public class Preference implements Cloneable, Serializable {
 		for (int i = 0; i < _values.length; i++) {
 			sb.append(_values[i]);
 
-			if (i < _values.length - 1) {
+			if (i < (_values.length - 1)) {
 				sb.append(StringPool.COMMA);
 			}
 		}

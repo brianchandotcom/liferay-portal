@@ -141,7 +141,7 @@ public class Differ {
 					_firstBlockNumber = blockNumber;
 					_lastBlockNumber = blockNumber;
 				}
-				else if (_lastBlockNumber + 1 == blockNumber) {
+				else if ((_lastBlockNumber + 1) == blockNumber) {
 
 					// The blocks must be sequential in a reference range block
 

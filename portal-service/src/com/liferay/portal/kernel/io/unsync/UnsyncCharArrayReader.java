@@ -163,7 +163,7 @@ public class UnsyncCharArrayReader extends Reader {
 			return 0;
 		}
 
-		if (index + skip > capacity) {
+		if ((index + skip) > capacity) {
 			skip = capacity - index;
 		}
 

@@ -493,7 +493,7 @@ public class CharPipe {
 
 					int write = remaining;
 
-					if (remaining > buffer.length - count) {
+					if (remaining > (buffer.length - count)) {
 						write = buffer.length - count;
 					}
 

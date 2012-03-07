@@ -36,7 +36,7 @@ public class VerifyCounter extends VerifyProcess {
 		long counterResourceId = CounterLocalServiceUtil.increment(
 			Resource.class.getName());
 
-		if (latestResourceId > counterResourceId - 1) {
+		if (latestResourceId > (counterResourceId - 1)) {
 			CounterLocalServiceUtil.reset(
 				Resource.class.getName(), latestResourceId);
 		}
@@ -49,7 +49,7 @@ public class VerifyCounter extends VerifyProcess {
 		long counterPermissionId = CounterLocalServiceUtil.increment(
 			Permission.class.getName());
 
-		if (latestPermissionId > counterPermissionId - 1) {
+		if (latestPermissionId > (counterPermissionId - 1)) {
 			CounterLocalServiceUtil.reset(
 				Permission.class.getName(), latestPermissionId);
 		}

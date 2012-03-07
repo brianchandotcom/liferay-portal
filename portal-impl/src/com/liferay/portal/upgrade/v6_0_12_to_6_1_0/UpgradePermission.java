@@ -100,7 +100,7 @@ public class UpgradePermission extends UpgradeProcess {
 					companyId, name, primKey);
 
 				if (_log.isInfoEnabled() &&
-					(resourceBlock.getResourceBlockId() % 100 == 0)) {
+					((resourceBlock.getResourceBlockId() % 100) == 0)) {
 
 					_log.info("Processed 100 resource blocks for " + name);
 				}

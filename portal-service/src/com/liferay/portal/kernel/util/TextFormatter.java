@@ -274,7 +274,7 @@ public class TextFormatter {
 		StringBuilder sb = new StringBuilder(s);
 
 		for (int i = 0; i < s.length(); i++) {
-			if ((i + 1 != s.length()) &&
+			if (((i + 1) != s.length()) &&
 				(Character.isLowerCase(s.charAt(i + 1)))) {
 
 				break;

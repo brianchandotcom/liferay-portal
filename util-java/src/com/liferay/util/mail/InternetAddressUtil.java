@@ -106,7 +106,7 @@ public class InternetAddressUtil {
 			for (int i = 0; i < addresses.length; i++) {
 				sb.append(toString(addresses[i]));
 
-				if (i < addresses.length - 1) {
+				if (i < (addresses.length - 1)) {
 					sb.append(StringPool.COMMA);
 					sb.append(StringPool.NBSP);
 				}

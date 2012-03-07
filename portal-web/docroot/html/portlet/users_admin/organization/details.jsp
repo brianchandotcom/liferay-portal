@@ -284,7 +284,7 @@ if (parentOrganization != null) {
 	);
 </aui:script>
 
-<aui:script use="aui-io-request,liferay-dynamic-select,liferay-search-container">
+<aui:script use="liferay-dynamic-select,liferay-search-container">
 	new Liferay.DynamicSelect(
 		[
 			{

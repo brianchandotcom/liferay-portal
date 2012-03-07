@@ -144,7 +144,7 @@ Liferay = window.Liferay || {};
 
 		config.method = method;
 
-		return A.io.request(Service.URL_BASE + service, config);
+		return Service._ioRequest(Service.URL_BASE + service, config);
 	};
 
 	Service.URL_BASE = themeDisplay.getPathContext() + '/api/jsonws/';
@@ -188,10 +188,26 @@ Liferay = window.Liferay || {};
 					config.sync = true;
 				}
 
-				A.io.request(instance.actionUrl, config);
+				instance._ioRequest(instance.actionUrl, config);
 
 				if (xHR) {
 					return eval('(' + xHR.responseText + ')');
+				}
+			},
+
+			_ioRequest: function(uri, config) {
+				var instance = this;
+
+				if (A.io && A.io.request) {
+					A.io.request(uri, config);
+				}
+				else {
+					A.use(
+						'aui-io-request',
+						function(A) {
+							A.io.request(uri, config);
+						}
+					);
 				}
 			},
 

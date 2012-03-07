@@ -60,12 +60,12 @@ if (selLayout != null) {
 
 		<aui:select label="change-frequency" name="TypeSettingsProperties--sitemap-changefreq--">
 			<aui:option label="always" selected='<%= changeFrequency.equals("always") %>' />
-			<aui:option label="daily" selected='<%= changeFrequency.equals("daily") %>' />
 			<aui:option label="hourly" selected='<%= changeFrequency.equals("hourly") %>' />
-			<aui:option label="monthly" selected='<%= changeFrequency.equals("monthly") %>' />
-			<aui:option label="never" selected='<%= changeFrequency.equals("never") %>' />
+			<aui:option label="daily" selected='<%= changeFrequency.equals("daily") %>' />
 			<aui:option label="weekly" selected='<%= changeFrequency.equals("weekly") %>' />
+			<aui:option label="monthly" selected='<%= changeFrequency.equals("monthly") %>' />
 			<aui:option label="yearly" selected='<%= changeFrequency.equals("yearly") %>' />
+			<aui:option label="never" selected='<%= changeFrequency.equals("never") %>' />
 		</aui:select>
 	</aui:fieldset>
 </c:if>

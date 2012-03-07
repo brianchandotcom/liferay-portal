@@ -48,6 +48,7 @@ if (!selectableTree) {
 	var TreeUtil = {
 		DEFAULT_PARENT_LAYOUT_ID: <%= LayoutConstants.DEFAULT_PARENT_LAYOUT_ID %>,
 		OPEN_NODES: '<%= SessionTreeJSClicks.getOpenNodes(request, treeId) %>'.split(','),
+		PREFIX_LAYOUT: '_layout_',
 		PREFIX_LAYOUT_ID: '_layoutId_',
 		PREFIX_PLID: '_plid_',
 
@@ -90,8 +91,12 @@ if (!selectableTree) {
 			</c:choose>
 		},
 
-		createId: function(layoutId, plid) {
+		createListItemId: function(layoutId, plid) {
 			return '<%= HtmlUtil.escape(treeId) %>' + TreeUtil.PREFIX_LAYOUT_ID + layoutId + TreeUtil.PREFIX_PLID + plid;
+		},
+
+		createLinkId: function(friendlyURL) {
+			return '<%= HtmlUtil.escape(treeId) %>' + TreeUtil.PREFIX_LAYOUT + friendlyURL.substring(1);
 		},
 
 		createLink: function(data) {
@@ -113,7 +118,7 @@ if (!selectableTree) {
 				}
 			);
 
-			return '<a class="' + className + '" data-uuid="' + data.uuid + '" href="' + href + '" title="' + data.title + '">' + data.label + '</a>';
+			return '<a class="' + className + '" data-uuid="' + data.uuid + '" href="' + href + '" id="' + data.id + '" title="' + data.title + '">' + data.label + '</a>';
 		},
 
 		extractLayoutId: function(node) {
@@ -145,7 +150,7 @@ if (!selectableTree) {
 						alwaysShowHitArea: node.hasChildren,
 						draggable: node.updateable,
 						expanded : node.selLayoutAncestor,
-						id: TreeUtil.createId(node.layoutId, node.plid),
+						id: TreeUtil.createListItemId(node.layoutId, node.plid),
 						type: '<%= selectableTree ? "task" : "io" %>'
 					};
 
@@ -177,6 +182,7 @@ if (!selectableTree) {
 						newNode.label = TreeUtil.createLink(
 							{
 								cssClass: cssClass,
+								id: TreeUtil.createLinkId(node.friendlyURL),
 								label: newNode.label,
 								plid: node.plid,
 								title: title,
@@ -261,7 +267,7 @@ if (!selectableTree) {
 	};
 
 	var getLayoutsURL = themeDisplay.getPathMain() + '/layouts_admin/get_layouts';
-	var rootId = TreeUtil.createId(TreeUtil.DEFAULT_PARENT_LAYOUT_ID, 0);
+	var rootId = TreeUtil.createListItemId(TreeUtil.DEFAULT_PARENT_LAYOUT_ID, 0);
 	var rootLabel = '<%= HtmlUtil.escapeJS(rootNodeName) %>';
 	var treeElId = '<portlet:namespace /><%= HtmlUtil.escape(treeId) %>Output';
 

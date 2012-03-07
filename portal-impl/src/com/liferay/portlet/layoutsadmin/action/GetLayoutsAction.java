@@ -73,6 +73,7 @@ public class GetLayoutsAction extends JSONAction {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 			jsonObject.put("contentDisplayPage", layout.isContentDisplayPage());
+			jsonObject.put("friendlyURL", layout.getFriendlyURL());
 			jsonObject.put("hasChildren", layout.hasChildren());
 			jsonObject.put("layoutId", layout.getLayoutId());
 			jsonObject.put("name", layout.getName(themeDisplay.getLocale()));

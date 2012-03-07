@@ -33,7 +33,7 @@ public class KMPSearch {
 		int i = 0;
 		int j = -1;
 
-		while (i < length - 1) {
+		while (i < (length - 1)) {
 			if ((j == -1) || (pattern[i] == pattern[j])) {
 				i++;
 				j++;
@@ -58,7 +58,7 @@ public class KMPSearch {
 		int i = 0;
 		int j = -1;
 
-		while (i < length - 1) {
+		while (i < (length - 1)) {
 			if ((j == -1) || (pattern[i] == pattern[j])) {
 				i++;
 				j++;
@@ -83,7 +83,7 @@ public class KMPSearch {
 		int i = 0;
 		int j = -1;
 
-		while (i < length - 1) {
+		while (i < (length - 1)) {
 			if ((j == -1) || (pattern.charAt(i) == pattern.charAt(j))) {
 				i++;
 				j++;
@@ -122,7 +122,7 @@ public class KMPSearch {
 		int i = 0;
 		int j = 0;
 
-		while (i < length && j < patternLength) {
+		while ((i < length) && (j < patternLength)) {
 			if ((j == -1) || (text[i + offset] == pattern[j])) {
 				i++;
 				j++;
@@ -164,7 +164,7 @@ public class KMPSearch {
 		int i = 0;
 		int j = 0;
 
-		while (i < length && j < patternLength) {
+		while ((i < length) && (j < patternLength)) {
 			if ((j == -1) || (text[i + offset] == pattern[j])) {
 				i++;
 				j++;
@@ -209,7 +209,7 @@ public class KMPSearch {
 		int i = 0;
 		int j = 0;
 
-		while (i < length && j < patternLength) {
+		while ((i < length) && (j < patternLength)) {
 			if (j == -1) {
 				i++;
 				j++;

@@ -181,7 +181,7 @@ public class ConcurrentLRUCache<K, V> {
 
 		Iterator<Entry<K, ValueWrapper>> itr = valueWrappers.iterator();
 
-		while (cleanUpSize-- > 0 && itr.hasNext()) {
+		while ((cleanUpSize-- > 0) && itr.hasNext()) {
 			Entry<K, ValueWrapper> entry = itr.next();
 
 			_cache.remove(entry.getKey());

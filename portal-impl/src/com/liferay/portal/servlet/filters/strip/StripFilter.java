@@ -14,6 +14,8 @@
 
 package com.liferay.portal.servlet.filters.strip;
 
+import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
+import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
 import com.liferay.portal.kernel.concurrent.ConcurrentLRUCache;
 import com.liferay.portal.kernel.io.OutputStreamWriter;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
@@ -232,7 +234,11 @@ public class StripFilter extends BasePortalFilter {
 		String minifiedContent = content;
 
 		if (PropsValues.MINIFIER_INLINE_CONTENT_CACHE_SIZE > 0) {
-			String key = String.valueOf(content.hashCode());
+			CacheKeyGenerator cacheKeyGenerator =
+				CacheKeyGeneratorUtil.getCacheKeyGenerator(
+					StripFilter.class.getName());
+
+			String key = String.valueOf(cacheKeyGenerator.getCacheKey(content));
 
 			minifiedContent = _minifierCache.get(key);
 

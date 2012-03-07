@@ -174,6 +174,23 @@ public class AddSuborganizationTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//input[@id='_125_addressStreet1_0']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
 				selenium.type("//input[@id='_125_addressStreet1_0']",
 					RuntimeVariables.replace("11111 Main Street USA"));
 				selenium.select("//select[@id='_125_addressTypeId0']",
@@ -182,7 +199,7 @@ public class AddSuborganizationTest extends BaseTestCase {
 					RuntimeVariables.replace("90210"));
 				selenium.type("//input[@id='_125_addressCity0']",
 					RuntimeVariables.replace("Cerritos"));
-				selenium.clickAt("//input[@id='_125_addressPrimary0']",
+				selenium.clickAt("//input[@name='_125_addressPrimary']",
 					RuntimeVariables.replace("Primary"));
 
 				for (int second = 0;; second++) {

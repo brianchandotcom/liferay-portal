@@ -78,12 +78,10 @@ public class EditMBCategoryMailingListActiveActionsTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isChecked(
-				"//input[@id='_19_mailingListActiveCheckbox']"));
-		selenium.clickAt("//input[@id='_19_mailingListActiveCheckbox']",
+		assertFalse(selenium.isChecked("//input[@id='_19_activeCheckbox']"));
+		selenium.clickAt("//input[@id='_19_activeCheckbox']",
 			RuntimeVariables.replace("Active"));
-		assertTrue(selenium.isChecked(
-				"//input[@id='_19_mailingListActiveCheckbox']"));
+		assertTrue(selenium.isChecked("//input[@id='_19_activeCheckbox']"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

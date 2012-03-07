@@ -64,7 +64,7 @@ public class AddQuestion2Test extends BaseTestCase {
 			RuntimeVariables.replace("Add Choice"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.type("//input[@id='_25_choiceDescriptionc_en_US']",
+		selenium.type("//input[@name='_25_choiceDescriptionc_en_US']",
 			RuntimeVariables.replace("PD Question2 ChoiceC"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

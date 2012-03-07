@@ -57,6 +57,10 @@ public class AssignMembersUser2SiteTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("userfn2"),
 			selenium.getText("//tbody/tr[3]/td[2]/a"));
+		assertEquals(RuntimeVariables.replace("userln2"),
+			selenium.getText("//tbody/tr[3]/td[3]/a"));
+		assertEquals(RuntimeVariables.replace("usersn2"),
+			selenium.getText("//tbody/tr[3]/td[4]/a"));
 		selenium.clickAt("//tbody/tr[3]/td[2]/a",
 			RuntimeVariables.replace("userfn2"));
 		selenium.waitForPageToLoad("30000");

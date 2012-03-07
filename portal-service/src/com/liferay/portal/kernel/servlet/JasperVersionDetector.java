@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
 
@@ -106,15 +107,14 @@ public class JasperVersionDetector {
 	}
 
 	private boolean _isValidJasperVersion(String jasperVersion) {
-		if ((jasperVersion == null) || (jasperVersion.length() == 0)) {
+		if (Validator.isNull(jasperVersion) ||
+			!Validator.isDigit(jasperVersion.charAt(0))) {
+
 			return false;
 		}
-
-		if (!Character.isDigit(jasperVersion.charAt(0))) {
-			return false;
+		else {
+			return true;
 		}
-
-		return true;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

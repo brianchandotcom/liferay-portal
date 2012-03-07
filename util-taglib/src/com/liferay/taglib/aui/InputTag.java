@@ -128,6 +128,13 @@ public class InputTag extends BaseInputTag {
 			bean = pageContext.getAttribute("aui:model-context:bean");
 		}
 
+		Class<?> model = getModel();
+
+		if (model == null) {
+			model = (Class<?>)pageContext.getAttribute(
+				"aui:model-context:model");
+		}
+
 		String defaultLanguageId = getDefaultLanguageId();
 
 		if (Validator.isNull(defaultLanguageId)) {
@@ -169,7 +176,9 @@ public class InputTag extends BaseInputTag {
 		String id = getId();
 		String type = getType();
 
-		if (Validator.isNull(id)) {
+		if (Validator.isNull(id) &&
+			(model == null) || Validator.isNotNull(type)) {
+
 			if (!Validator.equals(type, "assetTags") &&
 				!Validator.equals(type, "radio")) {
 
@@ -184,13 +193,6 @@ public class InputTag extends BaseInputTag {
 
 		if (label == null) {
 			label = TextFormatter.format(name, TextFormatter.K);
-		}
-
-		Class<?> model = getModel();
-
-		if (model == null) {
-			model = (Class<?>)pageContext.getAttribute(
-				"aui:model-context:model");
 		}
 
 		_forLabel = id;

@@ -22,7 +22,7 @@
 	<div class="lfr-header-row">
 		<div class="lfr-header-row-content">
 			<div class="toolbar">
-				<aui:input cssClass="select-tags aui-state-default" inline="<%= true %>" label="" name="checkAllTags" type="checkbox" title='<%= LanguageUtil.get(pageContext, "check-all-tags") %>' />
+				<aui:input cssClass="select-tags aui-state-default" inline="<%= true %>" label="" name="checkAllTags" title='<%= LanguageUtil.get(pageContext, "check-all-tags") %>' type="checkbox" />
 
 				<liferay-ui:icon-menu
 					align="left"

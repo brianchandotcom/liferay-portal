@@ -138,7 +138,7 @@ public class VirtualLayout extends LayoutWrapper {
 			pos = layoutURL.indexOf(StringPool.QUESTION);
 
 			if (pos > 0) {
-				sb.append(layoutURL.substring(pos, layoutURL.length()));
+				sb.append(layoutURL.substring(pos));
 			}
 
 			return sb.toString();

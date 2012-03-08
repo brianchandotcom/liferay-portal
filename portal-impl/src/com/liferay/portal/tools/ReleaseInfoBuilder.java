@@ -55,9 +55,7 @@ public class ReleaseInfoBuilder {
 
 			int y = content.indexOf("\"", x);
 
-			content =
-				content.substring(0, x) + version +
-					content.substring(y, content.length());
+			content = content.substring(0, x) + version + content.substring(y);
 
 			// Get build
 
@@ -68,9 +66,7 @@ public class ReleaseInfoBuilder {
 
 			int build = GetterUtil.getInteger(content.substring(x, y)) + 1;
 
-			content =
-				content.substring(0, x) + build +
-					content.substring(y, content.length());
+			content = content.substring(0, x) + build + content.substring(y);
 
 			// Get date
 
@@ -83,9 +79,7 @@ public class ReleaseInfoBuilder {
 
 			y = content.indexOf("\"", x);
 
-			content =
-				content.substring(0, x) + date +
-					content.substring(y, content.length());
+			content = content.substring(0, x) + date + content.substring(y);
 
 			// Update ReleaseInfo.java
 
@@ -101,9 +95,7 @@ public class ReleaseInfoBuilder {
 			y = content.indexOf(", FALSE);", x);
 			x = content.lastIndexOf(" ", y - 1) + 1;
 
-			content =
-				content.substring(0, x) + build +
-				content.substring(y, content.length());
+			content = content.substring(0, x) + build + content.substring(y);
 
 			_fileUtil.write(file, content);
 		}

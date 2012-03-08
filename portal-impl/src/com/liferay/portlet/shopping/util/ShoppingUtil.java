@@ -965,7 +965,7 @@ public class ShoppingUtil {
 		}
 		else {
 			return Character.toUpperCase(ppPaymentStatus.charAt(0)) +
-				ppPaymentStatus.substring(1, ppPaymentStatus.length());
+				ppPaymentStatus.substring(1);
 		}
 	}
 

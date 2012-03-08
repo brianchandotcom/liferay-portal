@@ -342,7 +342,7 @@ public class HtmlImpl implements Html {
 		}
 
 		if (y == -1) {
-			sb.append(text.substring(x, text.length()));
+			sb.append(text.substring(x));
 		}
 
 		return sb.toString();

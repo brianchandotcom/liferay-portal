@@ -47,7 +47,7 @@ public class IdReplacer {
 			int y = _getEndPos(chars, x + begin.length());
 
 			if ((x == -1) || (y == -1)) {
-				sb.append(s.substring(pos, s.length()));
+				sb.append(s.substring(pos));
 
 				break;
 			}
@@ -103,7 +103,7 @@ public class IdReplacer {
 			int y = s.indexOf(end, x + begin.length());
 
 			if ((x == -1) || (y == -1)) {
-				sb.append(s.substring(pos, s.length()));
+				sb.append(s.substring(pos));
 
 				break;
 			}

@@ -229,8 +229,7 @@ public class UploadPortletRequestImpl
 			String name = enu.nextElement();
 
 			if (name.startsWith(_namespace)) {
-				parameterNames.add(
-					name.substring(_namespace.length(), name.length()));
+				parameterNames.add(name.substring(_namespace.length()));
 			}
 			else {
 				parameterNames.add(name);

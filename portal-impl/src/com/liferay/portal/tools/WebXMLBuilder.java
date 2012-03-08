@@ -105,7 +105,7 @@ public class WebXMLBuilder {
 
 				mergedContent =
 					mergedContent.substring(0, z) + filterMappings +
-						mergedContent.substring(z, mergedContent.length());
+						mergedContent.substring(z);
 
 				customContent =
 					customContent.substring(0, x) +
@@ -116,7 +116,7 @@ public class WebXMLBuilder {
 
 			mergedContent =
 				mergedContent.substring(0, z) + customContent +
-					mergedContent.substring(z, mergedContent.length());
+					mergedContent.substring(z);
 
 			mergedContent = organizeWebXML(mergedContent);
 

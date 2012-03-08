@@ -1807,7 +1807,7 @@ public class StringUtil {
 			int y = s.indexOf(end, x + begin.length());
 
 			if ((x == -1) || (y == -1)) {
-				sb.append(s.substring(pos, s.length()));
+				sb.append(s.substring(pos));
 
 				break;
 			}
@@ -1855,7 +1855,7 @@ public class StringUtil {
 			int y = s.indexOf(end, x + begin.length());
 
 			if ((x == -1) || (y == -1)) {
-				sb.append(s.substring(pos, s.length()));
+				sb.append(s.substring(pos));
 
 				break;
 			}
@@ -2712,7 +2712,7 @@ public class StringUtil {
 			int y = s.indexOf(end, x + begin.length());
 
 			if ((x == -1) || (y == -1)) {
-				sb.append(s.substring(pos, s.length()));
+				sb.append(s.substring(pos));
 
 				break;
 			}

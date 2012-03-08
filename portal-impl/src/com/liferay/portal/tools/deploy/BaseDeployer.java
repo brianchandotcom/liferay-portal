@@ -1829,8 +1829,7 @@ public class BaseDeployer implements Deployer {
 		int pos = content.indexOf("</web-app>");
 
 		String newContent =
-			content.substring(0, pos) + extraContent +
-				content.substring(pos, content.length());
+			content.substring(0, pos) + extraContent + content.substring(pos);
 
 		// Replace old package names
 

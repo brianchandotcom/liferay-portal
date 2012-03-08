@@ -377,7 +377,7 @@ public class RuntimePortletImpl implements RuntimePortlet {
 			}
 
 			if (y == -1) {
-				sb.append(content.substring(x, content.length()));
+				sb.append(content.substring(x));
 			}
 
 			return sb.toString();

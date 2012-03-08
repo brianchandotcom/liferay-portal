@@ -94,8 +94,7 @@ public class NamespaceServletRequest extends DynamicServletRequest {
 			String name = enu.nextElement();
 
 			if (name.startsWith(_attrNamespace)) {
-				names.add(
-					name.substring(_attrNamespace.length(), name.length()));
+				names.add(name.substring(_attrNamespace.length()));
 			}
 			else if (_isReservedParam(name)) {
 				names.add(name);

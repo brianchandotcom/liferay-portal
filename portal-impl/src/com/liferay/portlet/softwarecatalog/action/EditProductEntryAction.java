@@ -161,7 +161,7 @@ public class EditProductEntryAction extends PortletAction {
 				getSortedParameterNames(uploadPortletRequest, imagePrefix)) {
 
 			int priority = GetterUtil.getInteger(
-				name.substring(imagePrefix.length(), name.length()));
+				name.substring(imagePrefix.length()));
 
 			boolean preserveScreenshot = ParamUtil.getBoolean(
 				uploadPortletRequest, "preserveScreenshot" + priority);

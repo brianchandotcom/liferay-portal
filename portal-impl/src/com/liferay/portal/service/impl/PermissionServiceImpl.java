@@ -625,8 +625,7 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 			long plid = GetterUtil.getLong(primKey.substring(0, pos));
 
 			String portletId = primKey.substring(
-				pos + PortletConstants.LAYOUT_SEPARATOR.length(),
-				primKey.length());
+				pos + PortletConstants.LAYOUT_SEPARATOR.length());
 
 			PortletPermissionUtil.check(
 				permissionChecker, plid, portletId, ActionKeys.CONFIGURATION);

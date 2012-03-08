@@ -69,8 +69,7 @@ public class ActionCommandCache {
 
 			sb.append(_packagePrefix);
 			sb.append(Character.toUpperCase(actionCommandName.charAt(0)));
-			sb.append(
-				actionCommandName.substring(1, actionCommandName.length()));
+			sb.append(actionCommandName.substring(1));
 			sb.append(_ACTION_COMMAND_POSTFIX);
 
 			className = sb.toString();

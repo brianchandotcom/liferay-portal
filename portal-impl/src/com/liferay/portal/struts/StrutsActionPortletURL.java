@@ -63,9 +63,7 @@ public class StrutsActionPortletURL extends PortletURLImplWrapper {
 					if (!value.startsWith(_strutsPath)) {
 						int pos = value.lastIndexOf(CharPool.SLASH);
 
-						value =
-							_strutsPath +
-								value.substring(pos + 1, value.length());
+						value = _strutsPath + value.substring(pos + 1);
 
 						values[i] = value;
 					}

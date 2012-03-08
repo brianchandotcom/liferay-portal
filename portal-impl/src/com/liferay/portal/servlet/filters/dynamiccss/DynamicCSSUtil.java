@@ -319,7 +319,7 @@ public class DynamicCSSUtil {
 				_CSS_IMPORT_END, importX + _CSS_IMPORT_BEGIN.length());
 
 			if ((importX == -1) || (importY == -1)) {
-				sb.append(content.substring(pos, content.length()));
+				sb.append(content.substring(pos));
 
 				break;
 			}

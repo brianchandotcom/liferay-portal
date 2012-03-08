@@ -373,7 +373,7 @@ public class SQLTransformer {
 			from = to + 1;
 		}
 
-		sb.append(queryString.substring(from, queryString.length()));
+		sb.append(queryString.substring(from));
 
 		return sb.toString();
 	}

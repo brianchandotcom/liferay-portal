@@ -78,8 +78,7 @@ public class UpdateArticleFieldAction extends Action {
 			if ((x != -1) && (y != -1)) {
 				groupId = GetterUtil.getLong(containerId.substring(0, x));
 				articleId = containerId.substring(x + 1, y);
-				version = GetterUtil.getDouble(
-					containerId.substring(y, containerId.length()));
+				version = GetterUtil.getDouble(containerId.substring(y));
 			}
 		}
 

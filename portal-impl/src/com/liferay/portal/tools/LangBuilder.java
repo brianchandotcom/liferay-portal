@@ -466,8 +466,7 @@ public class LangBuilder {
 			if (pos != -1) {
 				String key = line.substring(0, pos);
 
-				String value = _fixTranslation(
-					line.substring(pos + 1, line.length()));
+				String value = _fixTranslation(line.substring(pos + 1));
 
 				value = _fixEnglishTranslation(key, value);
 

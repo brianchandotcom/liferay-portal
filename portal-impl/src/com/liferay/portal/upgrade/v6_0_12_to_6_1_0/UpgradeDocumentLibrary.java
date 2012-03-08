@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
+import com.liferay.portal.upgrade.v6_1_0.util.DLFileVersionTable;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionImpl;
@@ -30,6 +31,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import java.util.Set;
 
@@ -112,6 +114,16 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
+		}
+		
+		try {
+			runSQL("alter table DLFileVersion add column uuid_ VARCHAR(75) null first");
+		}
+		catch (SQLException sqle) {
+			upgradeTable(
+				DLFileVersionTable.TABLE_NAME, DLFileVersionTable.TABLE_COLUMNS,
+				DLFileVersionTable.TABLE_SQL_CREATE,
+				DLFileVersionTable.TABLE_SQL_ADD_INDEXES);
 		}
 	}
 

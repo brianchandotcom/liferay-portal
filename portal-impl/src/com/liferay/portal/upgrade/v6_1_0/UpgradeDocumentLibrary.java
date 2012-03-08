@@ -293,6 +293,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			runSQL("alter_column_type DLFileVersion extraSettings TEXT null");
 			runSQL("alter_column_type DLFileVersion title VARCHAR(255) null");
 			runSQL("alter table DLFileVersion drop column name");
+			runSQL("alter table DLFileVersion add column uuid_ VARCHAR(75) null first");
 		}
 		catch (SQLException sqle) {
 			upgradeTable(

@@ -177,7 +177,7 @@ public class InputTag extends BaseInputTag {
 		String type = getType();
 
 		if (Validator.isNull(id) &&
-			(model == null) || Validator.isNotNull(type)) {
+			((model == null) || Validator.isNotNull(type))) {
 
 			if (!Validator.equals(type, "assetTags") &&
 				!Validator.equals(type, "radio")) {

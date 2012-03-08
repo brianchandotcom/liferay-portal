@@ -15,8 +15,12 @@
 package com.liferay.portalweb.portal.permissions.documentsandmedia.portlet.userviewdmportletscopesite;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUserTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.edituserpassword.EditUserPasswordTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.User_SignInTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.User_SignOutTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.documentlibrary.portlet.addportlet.AddPageDMTest;
 import com.liferay.portalweb.portlet.documentlibrary.portlet.addportlet.AddPortletDMTest;
@@ -31,7 +35,7 @@ public class User_ViewDmPortletScopeSiteTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddUserTest.class);
-		testSuite.addTestSuite(AddUserPasswordTest.class);
+		testSuite.addTestSuite(EditUserPasswordTest.class);
 		testSuite.addTestSuite(AddRegularRoleTest.class);
 		testSuite.addTestSuite(AssignMembersRegularRoleUserTest.class);
 		testSuite.addTestSuite(AddPageDMTest.class);

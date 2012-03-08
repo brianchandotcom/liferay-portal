@@ -149,7 +149,7 @@ public class User_AddDmDocumentTest extends BaseTestCase {
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertTrue(selenium.isPartialText(
 				"//span[@class='user-date']/span/span",
-				"Uploaded by userfn1 usermn1 userln1"));
+				"Uploaded by userfn userln"));
 		assertEquals(RuntimeVariables.replace("Version 1.0"),
 			selenium.getText("//h3[contains(@class,'version')]"));
 		assertEquals(RuntimeVariables.replace("Status: Approved"),

@@ -36,7 +36,7 @@ public class AssignMembersRegularRoleUserTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("link=Control Panel")) {
+						if (selenium.isElementPresent("link=Control Panel")) {
 							break;
 						}
 					}
@@ -128,14 +128,14 @@ public class AssignMembersRegularRoleUserTest extends BaseTestCase {
 
 			case 2:
 				selenium.type("//input[@name='_128_keywords']",
-					RuntimeVariables.replace("usersn1"));
+					RuntimeVariables.replace("usersn"));
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-				assertEquals(RuntimeVariables.replace("userfn1 usermn1 userln1"),
+				assertEquals(RuntimeVariables.replace("userfn userln"),
 					selenium.getText("//tr[3]/td[2]"));
-				assertEquals(RuntimeVariables.replace("usersn1"),
+				assertEquals(RuntimeVariables.replace("usersn"),
 					selenium.getText("//tr[3]/td[3]"));
 				assertFalse(selenium.isChecked("//input[@name='_128_rowIds']"));
 				selenium.clickAt("//input[@name='_128_rowIds']",

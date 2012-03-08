@@ -59,6 +59,10 @@ public class EditFeedAction extends PortletAction {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
+		if (Validator.isNull(cmd)) {
+			return;
+		}
+
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				updateFeed(actionRequest);
@@ -67,9 +71,7 @@ public class EditFeedAction extends PortletAction {
 				deleteFeeds(actionRequest);
 			}
 
-			if (Validator.isNotNull(cmd)) {
-				sendRedirect(actionRequest, actionResponse);
-			}
+			sendRedirect(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchFeedException ||

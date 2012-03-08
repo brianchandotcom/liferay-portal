@@ -61,12 +61,12 @@ public class TearDownRoleTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Message Boards Administrator"),
-					selenium.getText("//tbody/tr[3]/td/a"));
+					selenium.getText("//tr[3]/td[1]/a"));
 				assertEquals(RuntimeVariables.replace("Regular"),
-					selenium.getText("//tbody/tr[3]/td[2]/a"));
+					selenium.getText("//tr[3]/td[2]/a"));
 				assertEquals(RuntimeVariables.replace(
 						"This is the Message Boards Administrator Role."),
-					selenium.getText("//tbody/tr[3]/td[3]/a"));
+					selenium.getText("//tr[3]/td[3]/a"));
 
 				boolean role1Present = selenium.isElementPresent(
 						"//span[@title='Actions']/ul/li/strong/a/span");
@@ -90,7 +90,7 @@ public class TearDownRoleTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[@class='last']/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a")) {
 							break;
 						}
 					}
@@ -102,13 +102,16 @@ public class TearDownRoleTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[@class='last']/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[@class='last']/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 2:
 				selenium.type("//input[@id='_128_keywords']",
@@ -118,12 +121,12 @@ public class TearDownRoleTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Member"),
-					selenium.getText("//tbody/tr[3]/td/a"));
+					selenium.getText("//tr[3]/td[1]/a"));
 				assertEquals(RuntimeVariables.replace("Regular"),
-					selenium.getText("//tbody/tr[3]/td[2]/a"));
+					selenium.getText("//tr[3]/td[2]/a"));
 				assertEquals(RuntimeVariables.replace(
 						"This is the Member Role."),
-					selenium.getText("//tbody/tr[3]/td[3]/a"));
+					selenium.getText("//tr[3]/td[3]/a"));
 
 				boolean role2Present = selenium.isElementPresent(
 						"//span[@title='Actions']/ul/li/strong/a/span");
@@ -147,7 +150,7 @@ public class TearDownRoleTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[@class='last']/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a")) {
 							break;
 						}
 					}
@@ -159,13 +162,16 @@ public class TearDownRoleTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[@class='last']/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[@class='last']/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 3:
 			case 100:

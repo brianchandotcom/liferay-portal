@@ -121,8 +121,8 @@ portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 
 		<liferay-ui:search-container-column-text
 			cssClass="stats"
-			name="statistics"
 			href="<%= rowURL %>"
+			name="statistics"
 		>
 
 			<%

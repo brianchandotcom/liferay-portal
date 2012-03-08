@@ -409,7 +409,7 @@ portletURL.setParameter("tabs1", tabs1);
 							<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
 						</portlet:renderURL>
 
-						<tr class="<%= className %>" style="font-size: x-small;" onMouseEnter="this.className = '<%= classHoverName %>';" onMouseLeave="this.className = '<%= className %>';">
+						<tr class="<%= className %>" onMouseEnter="this.className = '<%= classHoverName %>';" onMouseLeave="this.className = '<%= className %>';" style="font-size: x-small;">
 							<td>
 								<aui:a href="<%= editArticleURL %>"><%= article.getArticleId() %></aui:a>
 							</td>
@@ -458,7 +458,7 @@ portletURL.setParameter("tabs1", tabs1);
 							<portlet:param name="structureId" value="<%= structure.getStructureId() %>" />
 						</portlet:renderURL>
 
-						<tr class="<%= className %>" style="font-size: x-small;" onMouseEnter="this.className = '<%= classHoverName %>';" onMouseLeave="this.className = '<%= className %>';">
+						<tr class="<%= className %>" onMouseEnter="this.className = '<%= classHoverName %>';" onMouseLeave="this.className = '<%= className %>';" style="font-size: x-small;">
 							<td>
 								<aui:a href="<%= editStructureURL %>"><%= structure.getId() %></aui:a>
 							</td>
@@ -507,7 +507,7 @@ portletURL.setParameter("tabs1", tabs1);
 							<portlet:param name="templateId" value="<%= template.getTemplateId() %>" />
 						</portlet:renderURL>
 
-						<tr class="<%= className %>" style="font-size: x-small;" onMouseEnter="this.className = '<%= classHoverName %>';" onMouseLeave="this.className = '<%= className %>';">
+						<tr class="<%= className %>" onMouseEnter="this.className = '<%= classHoverName %>';" onMouseLeave="this.className = '<%= className %>';" style="font-size: x-small;">
 							<td>
 								<aui:a href="<%= editTemplateURL %>"><%= template.getId() %></aui:a>
 							</td>

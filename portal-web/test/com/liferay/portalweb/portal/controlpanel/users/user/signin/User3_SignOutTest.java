@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.permissions.usecase.permissionsscopedregularroledemo;
+package com.liferay.portalweb.portal.controlpanel.users.user.signin;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class User_SignInTest extends BaseTestCase {
-	public void testUser_SignIn() throws Exception {
+public class User3_SignOutTest extends BaseTestCase {
+	public void testUser3_SignOut() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -31,7 +31,7 @@ public class User_SignInTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Welcome")) {
+				if (selenium.isVisible("link=Sign Out")) {
 					break;
 				}
 			}
@@ -41,20 +41,26 @@ public class User_SignInTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Welcome", RuntimeVariables.replace("Welcome"));
+		selenium.clickAt("link=Sign Out", RuntimeVariables.replace("Sign Out"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.type("//input[@id='_58_login']",
-			RuntimeVariables.replace("userea@liferay.com"));
-		selenium.type("//input[@id='_58_password']",
-			RuntimeVariables.replace("test"));
-		assertFalse(selenium.isChecked("//input[@id='_58_rememberMeCheckbox']"));
-		selenium.clickAt("//input[@id='_58_rememberMeCheckbox']",
-			RuntimeVariables.replace("Remember Me"));
-		assertTrue(selenium.isChecked("//input[@id='_58_rememberMeCheckbox']"));
-		selenium.clickAt("//input[@value='Sign In']",
-			RuntimeVariables.replace("Sign In"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//input[@value='Sign In']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertTrue(selenium.isVisible("//input[@value='Sign In']"));
 	}
 }

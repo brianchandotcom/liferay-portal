@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.permissions.documentsandmedia.document.useradddmdocumentscopesite;
+package com.liferay.portalweb.portal.controlpanel.users.user.signin;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -51,7 +51,7 @@ public class User_SignOutTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//input[@id='_58_login']")) {
+				if (selenium.isVisible("//input[@value='Sign In']")) {
 					break;
 				}
 			}
@@ -60,5 +60,7 @@ public class User_SignOutTest extends BaseTestCase {
 
 			Thread.sleep(1000);
 		}
+
+		assertTrue(selenium.isVisible("//input[@value='Sign In']"));
 	}
 }

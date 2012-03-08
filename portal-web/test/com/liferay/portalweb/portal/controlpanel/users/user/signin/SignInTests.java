@@ -32,7 +32,7 @@ public class SignInTests extends BaseTestSuite {
 		testSuite.addTestSuite(EditUserPasswordTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(User_SignInTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(User_SignOutTest.class);
 		testSuite.addTestSuite(SignInTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
 

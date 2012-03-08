@@ -74,8 +74,9 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 		throws PortletException {
 
 		boolean instanceable = false;
+		boolean deployed = !portlet.isUndeployedPortlet();
 
-		if (portlet.isInstanceable() &&
+		if (portlet.isInstanceable() && deployed &&
 			PortletConstants.isInstanceId(portlet.getPortletId())) {
 
 			instanceable = true;
@@ -83,25 +84,34 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 
 		String rootPortletId = portlet.getRootPortletId();
 
-		Map<String, InvokerPortlet> portletInstances = _pool.get(rootPortletId);
+		InvokerPortlet rootInvokerPortletInstance = null;
 
-		if (portletInstances == null) {
-			portletInstances = new ConcurrentHashMap<String, InvokerPortlet>();
+		Map<String, InvokerPortlet> portletInstances = null;
 
-			_pool.put(rootPortletId, portletInstances);
-		}
-		else if (instanceable) {
-			InvokerPortlet instanceInvokerPortletInstance =
-				portletInstances.get(portlet.getPortletId());
+		if (deployed) {
+			portletInstances = _pool.get(rootPortletId);
 
-			if (instanceInvokerPortletInstance != null) {
-				// Instanceable and hit cache
-				return instanceInvokerPortletInstance;
+			if (portletInstances == null) {
+				portletInstances =
+					new ConcurrentHashMap<String, InvokerPortlet>();
+
+				_pool.put(rootPortletId, portletInstances);
+			}
+			else {
+				if (instanceable) {
+					InvokerPortlet instanceInvokerPortletInstance =
+						portletInstances.get(portlet.getPortletId());
+
+					if (instanceInvokerPortletInstance != null) {
+						// Instanceable and hit cache
+						return instanceInvokerPortletInstance;
+					}
+				}
+
+				rootInvokerPortletInstance = portletInstances.get(
+					rootPortletId);
 			}
 		}
-
-		InvokerPortlet rootInvokerPortletInstance = portletInstances.get(
-			rootPortletId);
 
 		if (rootInvokerPortletInstance == null) {
 			PortletBag portletBag = PortletBagPool.get(rootPortletId);
@@ -131,7 +141,9 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 			rootInvokerPortletInstance = init(
 				portlet, portletConfig, portletBag.getPortletInstance());
 
-			portletInstances.put(rootPortletId, rootInvokerPortletInstance);
+			if (deployed) {
+				portletInstances.put(rootPortletId, rootInvokerPortletInstance);
+			}
 		}
 
 		if (!instanceable) {
@@ -159,8 +171,10 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 				checkAuthToken, facesPortlet, strutsPortlet,
 				strutsBridgePortlet);
 
-		portletInstances.put(
-			portlet.getPortletId(), instanceInvokerPortletInstance);
+		if (deployed) {
+			portletInstances.put(
+				portlet.getPortletId(), instanceInvokerPortletInstance);
+		}
 
 		return instanceInvokerPortletInstance;
 	}

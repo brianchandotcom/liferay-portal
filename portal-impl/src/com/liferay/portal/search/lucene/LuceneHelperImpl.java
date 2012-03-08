@@ -499,7 +499,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 
 			try {
 				_luceneIndexThreadPoolExecutor.awaitTermination(
-					60, java.util.concurrent.TimeUnit.SECONDS);
+					60, TimeUnit.SECONDS);
 			}
 			catch (InterruptedException ie) {
 				_log.error("Lucene indexer shutdown interrupted", ie);
@@ -574,8 +574,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 
 		try {
 			ClusterNodeResponse clusterNodeResponse = clusterNodeResponses.poll(
-				_BOOTUP_CLUSTER_NODE_RESPONSE_TIMEOUT,
-				java.util.concurrent.TimeUnit.MILLISECONDS);
+				_BOOTUP_CLUSTER_NODE_RESPONSE_TIMEOUT, TimeUnit.MILLISECONDS);
 
 			String transientToken = (String)clusterNodeResponse.getResult();
 

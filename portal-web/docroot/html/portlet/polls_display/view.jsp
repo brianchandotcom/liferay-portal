@@ -134,7 +134,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && (hasConfigurationPermiss
 				</liferay-portlet:renderURL>
 
 				<%
-				String editQuestionURL = "javascript:Liferay.Util.openWindow({dialog: {width: 960}, id: '" + liferayPortletResponse.getNamespace() + "', title: '" + ResourceActionsUtil.getModelResource(locale, PollsQuestion.class.getName()) + "', uri:'" + HtmlUtil.escapeURL(editPollURL.toString()) + "'});";
+				String editQuestionURL = "javascript:Liferay.Util.openWindow({dialog: {width: 960}, id: '" + liferayPortletResponse.getNamespace() + "editQuestion', title: '" + ResourceActionsUtil.getModelResource(locale, PollsQuestion.class.getName()) + "', uri:'" + HtmlUtil.escapeURL(editPollURL.toString()) + "'});";
 				%>
 
 				<liferay-ui:icon
@@ -163,7 +163,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && (hasConfigurationPermiss
 				</liferay-portlet:renderURL>
 
 				<%
-				String addQuestionURL = "javascript:Liferay.Util.openWindow({dialog: {width: 960}, id: '" + liferayPortletResponse.getNamespace() + "', title: '" + ResourceActionsUtil.getModelResource(locale, PollsQuestion.class.getName()) + "', uri:'" + HtmlUtil.escapeURL(addPollURL.toString()) + "'});";
+				String addQuestionURL = "javascript:Liferay.Util.openWindow({dialog: {width: 960}, id: '" + liferayPortletResponse.getNamespace() + "editQuestion', title: '" + ResourceActionsUtil.getModelResource(locale, PollsQuestion.class.getName()) + "', uri:'" + HtmlUtil.escapeURL(addPollURL.toString()) + "'});";
 				%>
 
 				<liferay-ui:icon

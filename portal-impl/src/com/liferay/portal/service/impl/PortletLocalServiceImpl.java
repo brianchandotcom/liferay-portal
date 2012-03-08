@@ -468,7 +468,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			portlet.setPortletInfo(
 				new PortletInfo(portletId, portletId, portletId, portletId));
 
-			if (PortletConstants.getInstanceId(portletId) != null) {
+			if (PortletConstants.isInstanceId(portletId)) {
 				portlet.setInstanceable(true);
 			}
 

@@ -372,7 +372,7 @@ for (int i = 0; i < results.size(); i++) {
 	portletURL="<%= portletURL %>"
 />
 
-<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" paginate='<%= type.equals("history") ? false : true %>' />
+<liferay-ui:search-iterator paginate='<%= type.equals("history") ? false : true %>' searchContainer="<%= searchContainer %>" />
 
 <c:if test='<%= type.equals("history") %>'>
 	<aui:script>

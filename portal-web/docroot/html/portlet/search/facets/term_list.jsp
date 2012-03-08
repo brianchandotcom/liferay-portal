@@ -30,7 +30,7 @@ int maxTerms = dataJSONObject.getInt("maxTerms");
 
 	<ul class="lfr-component term-list">
 		<li class="facet-value default <%= Validator.isNull(fieldParam) ? "current-term" : StringPool.BLANK %>">
-			<a href="javascript:;" data-value=""><liferay-ui:message key="any-term" /></a>
+			<a data-value="" href="javascript:;"><liferay-ui:message key="any-term" /></a>
 		</li>
 
 		<%
@@ -56,7 +56,7 @@ int maxTerms = dataJSONObject.getInt("maxTerms");
 		%>
 
 			<li class="facet-value <%= fieldParam.equals(termCollector.getTerm()) ? "current-term" : StringPool.BLANK %>">
-				<a href="javascript:;" data-value="<%= termCollector.getTerm() %>"><%= termCollector.getTerm() %></a> <span class="frequency">(<%= termCollector.getFrequency() %>)</span>
+				<a data-value="<%= termCollector.getTerm() %>" href="javascript:;"><%= termCollector.getTerm() %></a> <span class="frequency">(<%= termCollector.getFrequency() %>)</span>
 			</li>
 
 		<%

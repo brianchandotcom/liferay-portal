@@ -87,7 +87,7 @@ if (timeFormatPattern.indexOf("a") == -1) {
 
 	<c:choose>
 		<c:when test="<%= ! timeFormatAmPm %>">
-			<input type="hidden" name="<%= amPmParam %>" value="<%= Calendar.AM %>" />
+			<input name="<%= amPmParam %>" type="hidden" value="<%= Calendar.AM %>" />
 		</c:when>
 		<c:otherwise>
 			<select <%= disabled ? "disabled=\"disabled\"" : "" %> name="<%= amPmParam %>">

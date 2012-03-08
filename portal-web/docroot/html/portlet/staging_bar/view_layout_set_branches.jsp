@@ -118,7 +118,7 @@ request.setAttribute("view_layout_set_branches.jsp-currentLayoutSetBranchId", St
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" paginate="<%= false %>" />
+		<liferay-ui:search-iterator paginate="<%= false %>" searchContainer="<%= searchContainer %>" />
 	</liferay-ui:search-container>
 </div>
 

@@ -84,7 +84,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 					%>
 
 					<c:if test="<%= hasAddLayoutSetPrototypePermission %>">
-						<liferay-portlet:renderURL varImpl="manageSiteTemplateURL" portletName="<%= PortletKeys.LAYOUT_SET_PROTOTYPE %>">
+						<liferay-portlet:renderURL portletName="<%= PortletKeys.LAYOUT_SET_PROTOTYPE %>" varImpl="manageSiteTemplateURL">
 							<portlet:param name="struts_action" value="/layout_set_prototypes/view" />
 							<portlet:param name="redirect" value="<%= viewSitesURL %>" />
 							<portlet:param name="backURL" value="<%= viewSitesURL %>" />

@@ -108,7 +108,7 @@ if (selUser != null) {
 			<aui:field-wrapper label="public-pages">
 				<c:choose>
 					<c:when test="<%= selUser != null %>">
-						<liferay-portlet:actionURL var="publicPagesURL" portletName="<%= PortletKeys.SITE_REDIRECTOR %>">
+						<liferay-portlet:actionURL portletName="<%= PortletKeys.SITE_REDIRECTOR %>" var="publicPagesURL">
 							<portlet:param name="struts_action" value="/my_sites/view" />
 							<portlet:param name="groupId" value="<%= String.valueOf(selUser.getGroup().getGroupId()) %>" />
 							<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
@@ -178,7 +178,7 @@ if (selUser != null) {
 			<aui:field-wrapper label="private-pages">
 				<c:choose>
 					<c:when test="<%= selUser != null %>">
-						<liferay-portlet:actionURL var="privatePagesURL" portletName="<%= PortletKeys.SITE_REDIRECTOR %>">
+						<liferay-portlet:actionURL portletName="<%= PortletKeys.SITE_REDIRECTOR %>" var="privatePagesURL">
 							<portlet:param name="struts_action" value="/my_sites/view" />
 							<portlet:param name="groupId" value="<%= String.valueOf(selUser.getGroup().getGroupId()) %>" />
 							<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />

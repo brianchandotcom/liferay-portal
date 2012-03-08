@@ -21,4 +21,4 @@ String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:
 String url = (String)request.getAttribute("liferay-ui:input-resource:url");
 %>
 
-<input class="form-text lfr-input-resource <%= cssClass %>" readonly="true" type="text" value="<%= HtmlUtil.escapeAttribute(url) %>" onClick="Liferay.Util.selectAndCopy(this);" />
+<input class="form-text lfr-input-resource <%= cssClass %>" onClick="Liferay.Util.selectAndCopy(this);" readonly="true" type="text" value="<%= HtmlUtil.escapeAttribute(url) %>" />

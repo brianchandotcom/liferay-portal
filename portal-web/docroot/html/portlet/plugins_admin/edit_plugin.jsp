@@ -69,7 +69,7 @@ if (pluginType.equals(Plugin.TYPE_PORTLET)) {
 
 		<c:choose>
 			<c:when test="<%= pluginType.equals(Plugin.TYPE_PORTLET) %>">
-				<aui:field-wrapper label="permissions" helpMessage="edit-plugin-permissions-help">
+				<aui:field-wrapper helpMessage="edit-plugin-permissions-help" label="permissions">
 
 					<%
 					List curActions = ResourceActionsUtil.getResourceActions(portlet.getPortletId(), null);

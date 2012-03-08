@@ -36,7 +36,7 @@
 					for (int i = -10; i <= 10; i++) {
 					%>
 
-						<aui:option selected="<%= (curYear - selYear + i) == 0 %>" label="<%= curYear + i %>" />
+						<aui:option label="<%= curYear + i %>" selected="<%= (curYear - selYear + i) == 0 %>" />
 
 					<%
 					}

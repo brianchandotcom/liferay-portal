@@ -32,7 +32,7 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 
 	<ul class="lfr-component <%= (showAssetCount && displayStyle.equals("cloud")) ? "tag-cloud" : "tag-list" %>">
 		<li class="facet-value default <%= Validator.isNull(fieldParam) ? "current-term" : StringPool.BLANK %>">
-			<a href="javascript:;" data-value=""><img alt="" src="<%= themeDisplay.getPathThemeImages() %>/common/<%= facetConfiguration.getLabel() %>.png" /><liferay-ui:message key="any" /> <liferay-ui:message key="<%= facetConfiguration.getLabel() %>" /></a>
+			<a data-value="" href="javascript:;"><img alt="" src="<%= themeDisplay.getPathThemeImages() %>/common/<%= facetConfiguration.getLabel() %>.png" /><liferay-ui:message key="any" /> <liferay-ui:message key="<%= facetConfiguration.getLabel() %>" /></a>
 		</li>
 
 		<%
@@ -92,7 +92,7 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 		%>
 
 			<li class="facet-value tag-popularity-<%= popularity %> <%= fieldParam.equals(termCollector.getTerm()) ? "current-term" : StringPool.BLANK %>">
-				<a href="javascript:;" data-value="<%= termCollector.getTerm() %>"><%= termCollector.getTerm() %></a>
+				<a data-value="<%= termCollector.getTerm() %>" href="javascript:;"><%= termCollector.getTerm() %></a>
 
 				<c:if test="<%= showAssetCount %>">
 					<span class="frequency">(<%= termCollector.getFrequency() %>)</span>

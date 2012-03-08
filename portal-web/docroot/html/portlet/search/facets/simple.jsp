@@ -17,5 +17,5 @@
 <%@ include file="/html/portlet/search/facets/init.jsp" %>
 
 <div class="<%= cssClass %>" id="<%= randomNamespace %>facet">
-	<aui:input name="<%= facet.getFieldName() %>" label="" type="text" value="<%= fieldParam %>" />
+	<aui:input label="" name="<%= facet.getFieldName() %>" type="text" value="<%= fieldParam %>" />
 </div>

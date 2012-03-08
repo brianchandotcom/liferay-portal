@@ -18,9 +18,9 @@
 PluginPackage pluginPackage = PluginPackageUtil.getPluginPackageByModuleId(moduleId, repositoryURL);
 %>
 
-<aui:input type="hidden" name="redirect" value="<%= currentURL %>" />
-<aui:input type="hidden" name="url" value="<%= pluginPackage.getDownloadURL() %>" />
-<aui:input type="hidden" name="deploymentContext" value="<%= pluginPackage.getContext() %>" />
+<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+<aui:input name="url" type="hidden" value="<%= pluginPackage.getDownloadURL() %>" />
+<aui:input name="deploymentContext" type="hidden" value="<%= pluginPackage.getContext() %>" />
 
 <liferay-ui:header
 	backURL="<%= redirect %>"

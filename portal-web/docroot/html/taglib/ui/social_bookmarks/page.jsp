@@ -31,7 +31,7 @@
 			%>
 
 				<li class="<%= styleClass%>">
-					<liferay-ui:social-bookmark type="<%= typesArray[i] %>" url="<%= url %>" title="<%= title %>" target="<%= target %>" />
+					<liferay-ui:social-bookmark target="<%= target %>" title="<%= title %>" type="<%= typesArray[i] %>" url="<%= url %>" />
 				</li>
 
 			<%

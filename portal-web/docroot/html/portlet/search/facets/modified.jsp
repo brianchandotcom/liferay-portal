@@ -93,7 +93,7 @@ if (fieldParamSelection.equals("0")) {
 				}
 				%>
 
-				<aui:a href="javascript:;" cssClass='<%= randomNamespace + "custom-range-toggle" %>'>
+				<aui:a cssClass='<%= randomNamespace + "custom-range-toggle" %>' href="javascript:;">
 					<liferay-ui:message key="custom-range" />&hellip;
 				</aui:a>
 

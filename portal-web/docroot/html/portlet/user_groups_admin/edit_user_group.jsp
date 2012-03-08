@@ -151,7 +151,7 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 						<c:choose>
 							<c:when test="<%= userGroupGroup != null %>">
 
-								<liferay-portlet:actionURL var="publicPagesURL" portletName="<%= PortletKeys.SITE_REDIRECTOR %>">
+								<liferay-portlet:actionURL portletName="<%= PortletKeys.SITE_REDIRECTOR %>" var="publicPagesURL">
 									<portlet:param name="struts_action" value="/MY_SITES/view" />
 									<portlet:param name="groupId" value="<%= String.valueOf(userGroupGroup.getGroupId()) %>" />
 									<portlet:param name="publicLayout" value="<%= Boolean.TRUE.toString() %>" />
@@ -221,7 +221,7 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 					<aui:field-wrapper label="private-pages">
 						<c:choose>
 							<c:when test="<%= userGroupGroup != null %>">
-								<liferay-portlet:actionURL var="privatePagesURL" portletName="<%= PortletKeys.SITE_REDIRECTOR %>">
+								<liferay-portlet:actionURL portletName="<%= PortletKeys.SITE_REDIRECTOR %>" var="privatePagesURL">
 									<portlet:param name="struts_action" value="/MY_SITES/view" />
 									<portlet:param name="groupId" value="<%= String.valueOf(userGroupGroup.getGroupId()) %>" />
 									<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />

@@ -63,7 +63,7 @@ JournalArticleDisplay articleDisplay = JournalContentUtil.getDisplay(groupId, ar
 			<div>
 				<br />
 
-				<liferay-ui:language languageIds="<%= availableLocales %>" displayStyle="<%= 0 %>" />
+				<liferay-ui:language displayStyle="<%= 0 %>" languageIds="<%= availableLocales %>" />
 			</div>
 		</c:if>
 	</c:if>

@@ -64,7 +64,7 @@ String adminEmailVerificationBody = PrefsPropsUtil.getContent(company.getCompany
 
 			<liferay-ui:error key="emailUserAddedBody" message="please-enter-a-valid-body" />
 
-			<aui:field-wrapper label="body-with-password" helpMessage="account-created-notification-body-with-password-help">
+			<aui:field-wrapper helpMessage="account-created-notification-body-with-password-help" label="body-with-password">
 				<liferay-ui:input-editor editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>" initMethod='<%= "initEmailUserAddedBodyEditor" %>' name="emailUserAddedBody" toolbarSet="email" width="470" />
 
 				<aui:input name='<%= "settings--" + PropsKeys.ADMIN_EMAIL_USER_ADDED_BODY + "--" %>' type="hidden" value="<%= adminEmailUserAddedBody %>" />
@@ -72,7 +72,7 @@ String adminEmailVerificationBody = PrefsPropsUtil.getContent(company.getCompany
 
 			<liferay-ui:error key="emailUserAddedNoPasswordBody" message="please-enter-a-valid-body" />
 
-			<aui:field-wrapper label="body-without-password" helpMessage="account-created-notification-body-without-password-help">
+			<aui:field-wrapper helpMessage="account-created-notification-body-without-password-help" label="body-without-password">
 				<liferay-ui:input-editor editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>" initMethod='<%= "initEmailUserAddedNoPasswordBodyEditor" %>' name="emailUserAddedNoPasswordBody" toolbarSet="email" width="470" />
 
 				<aui:input name='<%= "settings--" + PropsKeys.ADMIN_EMAIL_USER_ADDED_NO_PASSWORD_BODY + "--" %>' type="hidden" value="<%= adminEmailUserAddedNoPasswordBody %>" />

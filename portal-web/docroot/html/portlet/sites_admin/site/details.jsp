@@ -115,7 +115,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 	<c:choose>
 		<c:when test="<%= showPrototypes && ((group != null) || (!layoutSetPrototypes.isEmpty() && (layoutSetPrototype == null))) %>">
 			<liferay-ui:panel-container extended="<%= false %>">
-				<liferay-ui:panel defaultState='<%= ((group != null) && (group.getPublicLayoutsPageCount() > 0)) ? "open" : "closed" %>' collapsible="<%= true %>" title="public-pages">
+				<liferay-ui:panel collapsible="<%= true %>" defaultState='<%= ((group != null) && (group.getPublicLayoutsPageCount() > 0)) ? "open" : "closed" %>' title="public-pages">
 					<c:choose>
 						<c:when test="<%= ((group == null) || (publicLayoutSetPrototype == null)) && !layoutSetPrototypes.isEmpty() %>">
 							<aui:select helpMessage="site-templates-with-an-incompatible-application-adapter-are-disabled" label="site-template" name="publicLayoutSetPrototypeId">
@@ -150,7 +150,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 						<c:otherwise>
 							<c:choose>
 								<c:when test="<%= group != null %>">
-									<liferay-portlet:actionURL var="publicPagesURL" portletName="<%= PortletKeys.SITE_REDIRECTOR %>">
+									<liferay-portlet:actionURL portletName="<%= PortletKeys.SITE_REDIRECTOR %>" var="publicPagesURL">
 										<portlet:param name="struts_action" value="/my_sites/view" />
 										<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 										<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
@@ -187,7 +187,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 						</c:otherwise>
 					</c:choose>
 				</liferay-ui:panel>
-				<liferay-ui:panel defaultState='<%= ((group != null) && (group.getPrivateLayoutsPageCount() > 0)) ? "open" : "closed" %>' collapsible="<%= true %>" title="private-pages">
+				<liferay-ui:panel collapsible="<%= true %>" defaultState='<%= ((group != null) && (group.getPrivateLayoutsPageCount() > 0)) ? "open" : "closed" %>' title="private-pages">
 					<c:choose>
 						<c:when test="<%= ((group == null) || (privateLayoutSetPrototype == null)) && !layoutSetPrototypes.isEmpty() %>">
 							<aui:select helpMessage="site-templates-with-an-incompatible-application-adapter-are-disabled" label="site-template" name="privateLayoutSetPrototypeId">
@@ -222,7 +222,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 						<c:otherwise>
 							<c:choose>
 								<c:when test="<%= group != null %>">
-									<liferay-portlet:actionURL var="privatePagesURL" portletName="<%= PortletKeys.SITE_REDIRECTOR %>">
+									<liferay-portlet:actionURL portletName="<%= PortletKeys.SITE_REDIRECTOR %>" var="privatePagesURL">
 										<portlet:param name="struts_action" value="/my_sites/view" />
 										<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 										<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />

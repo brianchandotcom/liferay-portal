@@ -30,7 +30,7 @@ portletURL.setParameter("struts_action", "/social_activity/view");
 
 <aui:form action="<%= saveActivitySettingsURL.toString() %>" cssClass="update-socialactivity-form" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" value="<%= currentURL %>" type="hidden" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input id="settingsJSON" name="settingsJSON" type="hidden" />
 
 	<h4>

@@ -85,7 +85,7 @@ editProductEntryURL.setParameter("productEntryId", String.valueOf(productEntryId
 			<liferay-ui:message key="version-name" />
 		</td>
 		<td>
-			<liferay-ui:input-field model="<%= SCProductVersion.class %>" bean="<%= productVersion %>" field="version" />
+			<liferay-ui:input-field bean="<%= productVersion %>" field="version" model="<%= SCProductVersion.class %>" />
 		</td>
 	</tr>
 	<tr>
@@ -93,7 +93,7 @@ editProductEntryURL.setParameter("productEntryId", String.valueOf(productEntryId
 			<liferay-ui:message key="change-log" />
 		</td>
 		<td>
-			<liferay-ui:input-field model="<%= SCProductVersion.class %>" bean="<%= productVersion %>" field="changeLog" />
+			<liferay-ui:input-field bean="<%= productVersion %>" field="changeLog" model="<%= SCProductVersion.class %>" />
 		</td>
 	</tr>
 	<tr>
@@ -131,7 +131,7 @@ editProductEntryURL.setParameter("productEntryId", String.valueOf(productEntryId
 			<liferay-ui:message key="download-page-url" />
 		</td>
 		<td>
-			<liferay-ui:input-field model="<%= SCProductVersion.class %>" bean="<%= productVersion %>" field="downloadPageURL" />
+			<liferay-ui:input-field bean="<%= productVersion %>" field="downloadPageURL" model="<%= SCProductVersion.class %>" />
 		</td>
 	</tr>
 	<tr>
@@ -139,7 +139,7 @@ editProductEntryURL.setParameter("productEntryId", String.valueOf(productEntryId
 			<liferay-ui:message key="direct-download-url" /> (<liferay-ui:message key="recommended" />)
 		</td>
 		<td>
-			<liferay-ui:input-field model="<%= SCProductVersion.class %>" bean="<%= productVersion %>" field="directDownloadURL" />
+			<liferay-ui:input-field bean="<%= productVersion %>" field="directDownloadURL" model="<%= SCProductVersion.class %>" />
 		</td>
 	</tr>
 	<tr>

@@ -76,7 +76,7 @@ int screenshotsCount = ParamUtil.getInteger(request, "screenshotsCount", product
 		<liferay-ui:message key="name" />
 	</td>
 	<td>
-		<liferay-ui:input-field model="<%= SCProductEntry.class %>" bean="<%= productEntry %>" field="name" />
+		<liferay-ui:input-field bean="<%= productEntry %>" field="name" model="<%= SCProductEntry.class %>" />
 	</td>
 </tr>
 <tr>
@@ -146,7 +146,7 @@ int screenshotsCount = ParamUtil.getInteger(request, "screenshotsCount", product
 		<liferay-ui:message key="author" />
 	</td>
 	<td>
-		<liferay-ui:input-field model="<%= SCProductEntry.class %>" bean="<%= productEntry %>" field="author" />
+		<liferay-ui:input-field bean="<%= productEntry %>" field="author" model="<%= SCProductEntry.class %>" />
 	</td>
 </tr>
 <tr>
@@ -154,7 +154,7 @@ int screenshotsCount = ParamUtil.getInteger(request, "screenshotsCount", product
 		<liferay-ui:message key="page-url" />
 	</td>
 	<td>
-		<liferay-ui:input-field model="<%= SCProductEntry.class %>" bean="<%= productEntry %>" field="pageURL" />
+		<liferay-ui:input-field bean="<%= productEntry %>" field="pageURL" model="<%= SCProductEntry.class %>" />
 	</td>
 </tr>
 <tr>
@@ -162,7 +162,7 @@ int screenshotsCount = ParamUtil.getInteger(request, "screenshotsCount", product
 		<liferay-ui:message key="tags" />
 	</td>
 	<td>
-		<liferay-ui:input-field model="<%= SCProductEntry.class %>" bean="<%= productEntry %>" field="tags" /> (<liferay-ui:message key="comma-delimited-list" />)
+		<liferay-ui:input-field bean="<%= productEntry %>" field="tags" model="<%= SCProductEntry.class %>" /> (<liferay-ui:message key="comma-delimited-list" />)
 	</td>
 </tr>
 <tr>
@@ -170,7 +170,7 @@ int screenshotsCount = ParamUtil.getInteger(request, "screenshotsCount", product
 		<liferay-ui:message key="short-description" />
 	</td>
 	<td>
-		<liferay-ui:input-field model="<%= SCProductEntry.class %>" bean="<%= productEntry %>" field="shortDescription" />
+		<liferay-ui:input-field bean="<%= productEntry %>" field="shortDescription" model="<%= SCProductEntry.class %>" />
 	</td>
 </tr>
 <tr>
@@ -178,7 +178,7 @@ int screenshotsCount = ParamUtil.getInteger(request, "screenshotsCount", product
 		<liferay-ui:message key="long-description" />
 	</td>
 	<td>
-		<liferay-ui:input-field model="<%= SCProductEntry.class %>" bean="<%= productEntry %>" field="longDescription" />
+		<liferay-ui:input-field bean="<%= productEntry %>" field="longDescription" model="<%= SCProductEntry.class %>" />
 	</td>
 </tr>
 
@@ -220,7 +220,7 @@ int screenshotsCount = ParamUtil.getInteger(request, "screenshotsCount", product
 		<liferay-ui:message key="site-id" />
 	</td>
 	<td>
-		<liferay-ui:input-field model="<%= SCProductEntry.class %>" bean="<%= productEntry %>" field="repoGroupId" />
+		<liferay-ui:input-field bean="<%= productEntry %>" field="repoGroupId" model="<%= SCProductEntry.class %>" />
 	</td>
 </tr>
 <tr>
@@ -228,7 +228,7 @@ int screenshotsCount = ParamUtil.getInteger(request, "screenshotsCount", product
 		<liferay-ui:message key="artifact-id" />
 	</td>
 	<td>
-		<liferay-ui:input-field model="<%= SCProductEntry.class %>" bean="<%= productEntry %>" field="repoArtifactId" />
+		<liferay-ui:input-field bean="<%= productEntry %>" field="repoArtifactId" model="<%= SCProductEntry.class %>" />
 	</td>
 </tr>
 </table>

@@ -16,7 +16,10 @@ package com.liferay.portalweb.portal.controlpanel.sites.site;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.sites.site.activatestagingsite.ActivateStagingSiteTests;
+import com.liferay.portalweb.portal.controlpanel.sites.site.addmemberssiteguestuser.AddMembersSiteGuestUserTests;
+import com.liferay.portalweb.portal.controlpanel.sites.site.addmemberssiteuser.AddMembersSiteUserTests;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.AddSiteTests;
+import com.liferay.portalweb.portal.controlpanel.sites.site.addsitemultiple.AddSiteMultipleTests;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsitenamecomma.AddSiteNameCommaTests;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsitenameduplicate.AddSiteNameDuplicateTests;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsitenamenull.AddSiteNameNullTests;
@@ -50,7 +53,10 @@ public class SiteTestPlan extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(ActivateStagingSiteTests.suite());
+		testSuite.addTest(AddMembersSiteGuestUserTests.suite());
+		testSuite.addTest(AddMembersSiteUserTests.suite());
 		testSuite.addTest(AddSiteTests.suite());
+		testSuite.addTest(AddSiteMultipleTests.suite());
 		testSuite.addTest(AddSiteNameCommaTests.suite());
 		testSuite.addTest(AddSiteNameDuplicateTests.suite());
 		testSuite.addTest(AddSiteNameNullTests.suite());

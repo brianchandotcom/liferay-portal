@@ -58,7 +58,7 @@ double version = ParamUtil.getDouble(request, "version");
 					<aui:input name="autoArticleId" type="hidden" value="<%= true %>" />
 				</c:when>
 				<c:otherwise>
-					<aui:input bean="<%= null %>" cssClass="lfr-input-text-container" label="" field="articleId" fieldParam="newArticleId" model="<%= JournalArticle.class %>" name="newArticleId" value="<%= newArticleId %>" />
+					<aui:input bean="<%= null %>" cssClass="lfr-input-text-container" field="articleId" fieldParam="newArticleId" label="" model="<%= JournalArticle.class %>" name="newArticleId" value="<%= newArticleId %>" />
 				</c:otherwise>
 			</c:choose>
 		</aui:field-wrapper>

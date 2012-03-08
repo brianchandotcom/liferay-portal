@@ -136,4 +136,4 @@ for (int i = 0; i < results.size(); i++) {
 }
 %>
 
-<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" paginate="<%= false %>" />
+<liferay-ui:search-iterator paginate="<%= false %>" searchContainer="<%= searchContainer %>" />

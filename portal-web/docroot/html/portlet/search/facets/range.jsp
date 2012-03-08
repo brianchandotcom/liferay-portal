@@ -30,7 +30,7 @@ JSONArray rangesJSONArray = dataJSONObject.getJSONArray("ranges");
 
 	<ul class="lfr-component range">
 		<li class="facet-value default <%= Validator.isNull(fieldParam) ? "current-term" : StringPool.BLANK %>">
-			<a href="javascript:;" data-value=""><liferay-ui:message key="any-range" /></a>
+			<a data-value="" href="javascript:;"><liferay-ui:message key="any-range" /></a>
 		</li>
 
 		<%
@@ -67,7 +67,7 @@ JSONArray rangesJSONArray = dataJSONObject.getJSONArray("ranges");
 		%>
 
 			<li class="facet-value <%= fieldParam.equals(range) ? "current-term" : StringPool.BLANK %>">
-				<a href="javascript:;" data-value="<%= HtmlUtil.escapeAttribute(range) %>"><liferay-ui:message key="<%= label %>" /></a> <span class="frequency">(<%= frequency %>)</span>
+				<a data-value="<%= HtmlUtil.escapeAttribute(range) %>" href="javascript:;"><liferay-ui:message key="<%= label %>" /></a> <span class="frequency">(<%= frequency %>)</span>
 			</li>
 
 		<%

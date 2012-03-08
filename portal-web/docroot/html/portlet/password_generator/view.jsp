@@ -64,7 +64,7 @@ catch (Exception e) {
 		<liferay-ui:message key="lower-case-letters" />
 	</td>
 	<td>
-		<liferay-ui:input-checkbox param="lowerCaseLetters" defaultValue="<%= lowerCaseLetters %>" />
+		<liferay-ui:input-checkbox defaultValue="<%= lowerCaseLetters %>" param="lowerCaseLetters" />
 	</td>
 </tr>
 <tr>
@@ -72,7 +72,7 @@ catch (Exception e) {
 		<liferay-ui:message key="upper-case-letters" />
 	</td>
 	<td>
-		<liferay-ui:input-checkbox param="upperCaseLetters" defaultValue="<%= upperCaseLetters %>" />
+		<liferay-ui:input-checkbox defaultValue="<%= upperCaseLetters %>" param="upperCaseLetters" />
 	</td>
 </tr>
 <tr>

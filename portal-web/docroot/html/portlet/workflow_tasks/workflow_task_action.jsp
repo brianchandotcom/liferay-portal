@@ -169,7 +169,7 @@ long[] pooledActorsIds = WorkflowTaskManagerUtil.getPooledActorsIds(company.getC
 </div>
 
 <div class="aui-helper-hidden" id="<%= randomId %>updateComments">
-	<aui:input cols="55" name="comment" type="textarea" rows="10" />
+	<aui:input cols="55" name="comment" rows="10" type="textarea" />
 </div>
 
 <aui:script use="liferay-workflow-tasks">

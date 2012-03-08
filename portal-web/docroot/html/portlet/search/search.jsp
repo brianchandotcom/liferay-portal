@@ -69,7 +69,7 @@ request.setAttribute("search.jsp-portletURL", portletURL);
 
 		<aui:button align="absmiddle" border="0" name="search" onClick='<%= renderResponse.getNamespace() + "search();" %>' src='<%= themeDisplay.getPathThemeImages() + "/common/search.png" %>' title="search" type="image" />
 
-		<portlet:renderURL var="clearSearchURL" copyCurrentRenderParameters="<%= false %>">
+		<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="clearSearchURL">
 			<portlet:param name="groupId" value="0" />
 		</portlet:renderURL>
 

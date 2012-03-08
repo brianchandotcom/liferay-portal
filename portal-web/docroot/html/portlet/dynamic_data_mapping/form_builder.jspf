@@ -100,7 +100,7 @@ String defaultLanguageId = LocalizationUtil.getDefaultLocale(script);
 
 							<%= LocaleUtil.fromLanguageId(availableLocales[i]).getDisplayName(locale) %>
 
-							<a href="javascript:;" class="lfr-translation-manager-translation-delete">x</a>
+							<a class="lfr-translation-manager-translation-delete" href="javascript:;">x</a>
 						</span>
 
 					<%

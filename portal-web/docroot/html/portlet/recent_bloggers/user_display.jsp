@@ -25,7 +25,7 @@ BlogsStatsUser statsUser = (BlogsStatsUser)objArray[0];
 String rowHREF = (String)objArray[1];
 %>
 
-<liferay-ui:user-display userId="<%= statsUser.getUserId() %>" url="<%= rowHREF %>">
+<liferay-ui:user-display url="<%= rowHREF %>" userId="<%= statsUser.getUserId() %>">
 	<div class="blogger-post-count">
 		<span><liferay-ui:message key="posts" />:</span> <%= statsUser.getEntryCount() %>
 	</div>

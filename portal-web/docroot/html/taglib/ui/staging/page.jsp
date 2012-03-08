@@ -146,13 +146,13 @@ else {
 				String publishLayoutSetBranchToLiveURL = publishToLiveURL.toString();
 				%>
 
-				<liferay-ui:icon url="<%= publishLayoutSetBranchToLiveURL %>" message="<%= publishNowMessage %>" id='<%= layoutSetBranchId + "publishNowLink" %>' image="maximize" />
+				<liferay-ui:icon id='<%= layoutSetBranchId + "publishNowLink" %>' image="maximize" message="<%= publishNowMessage %>" url="<%= publishLayoutSetBranchToLiveURL %>" />
 
 				<%
 				publishLayoutSetBranchToLiveURL = HttpUtil.addParameter(publishLayoutSetBranchToLiveURL, "schedule", String.valueOf(true));
 				%>
 
-				<liferay-ui:icon url="<%= publishLayoutSetBranchToLiveURL.toString() %>" message="<%= publishScheduleMessage %>" id='<%= layoutSetBranchId + "publishScheduleLink" %>' image="time" />
+				<liferay-ui:icon id='<%= layoutSetBranchId + "publishScheduleLink" %>' image="time" message="<%= publishScheduleMessage %>" url="<%= publishLayoutSetBranchToLiveURL.toString() %>" />
 
 				<aui:script use="aui-base">
 					var publishnowLink = A.one('#<portlet:namespace /><%= layoutSetBranchId + "publishNowLink" %>');
@@ -197,7 +197,7 @@ else {
 			</c:if>
 
 			<c:if test="<%= showManageBranches && !layoutSetBranches.isEmpty() %>">
-				<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>" var="layoutSetBranchesURL">
+				<portlet:renderURL var="layoutSetBranchesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 					<portlet:param name="struts_action" value="/staging_bar/view_layout_set_branches" />
 					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 					<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />

@@ -81,7 +81,7 @@ String subtype = BeanParamUtil.getString(role, request, "subtype");
 
 		<c:choose>
 			<c:when test="<%= (role != null) && PortalUtil.isSystemRole(role.getName()) %>">
-				<aui:input type="hidden" name="name" value="<%= role.getName() %>" />
+				<aui:input name="name" type="hidden" value="<%= role.getName() %>" />
 			</c:when>
 			<c:otherwise>
 				<aui:input label='<%= (role != null) ? "new-name" : "name" %>' name="name" />

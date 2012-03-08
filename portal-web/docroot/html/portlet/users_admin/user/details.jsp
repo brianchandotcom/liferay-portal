@@ -40,7 +40,7 @@ boolean deletePortrait = ParamUtil.getBoolean(request, "deletePortrait");
 <h3><liferay-ui:message key="details" /></h3>
 
 <aui:fieldset column="<%= true %>" cssClass="aui-w50">
-	<aui:select bean="<%= selContact %>" label="title[person]" model="<%= Contact.class %>" name="prefixId" listType="<%= ListTypeConstants.CONTACT_PREFIX %>" listTypeFieldName="prefixId" showEmptyOption="<%= true %>" />
+	<aui:select bean="<%= selContact %>" label="title[person]" listType="<%= ListTypeConstants.CONTACT_PREFIX %>" listTypeFieldName="prefixId" model="<%= Contact.class %>" name="prefixId" showEmptyOption="<%= true %>" />
 
 	<liferay-ui:success key="verificationEmailSent" message="your-email-verification-code-has-been-sent-and-the-new-email-address-will-be-applied-to-your-account-once-it-has-been-verified" />
 
@@ -122,13 +122,13 @@ boolean deletePortrait = ParamUtil.getBoolean(request, "deletePortrait");
 		</c:if>
 	</aui:input>
 
-	<aui:select bean="<%= selContact %>" label="suffix" model="<%= Contact.class %>" name="suffixId" listType="<%= ListTypeConstants.CONTACT_SUFFIX %>" listTypeFieldName="suffixId" showEmptyOption="<%= true %>" />
+	<aui:select bean="<%= selContact %>" label="suffix" listType="<%= ListTypeConstants.CONTACT_SUFFIX %>" listTypeFieldName="suffixId" model="<%= Contact.class %>" name="suffixId" showEmptyOption="<%= true %>" />
 </aui:fieldset>
 
 <aui:fieldset column="<%= true %>" cssClass="aui-w50">
 	<div>
 		<c:if test="<%= selUser != null %>">
-			<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>" var="editUserPortraitURL">
+			<portlet:renderURL var="editUserPortraitURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 				<portlet:param name="struts_action" value="/users_admin/edit_user_portrait" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="p_u_i_d" value="<%= String.valueOf(selUser.getUserId()) %>" />

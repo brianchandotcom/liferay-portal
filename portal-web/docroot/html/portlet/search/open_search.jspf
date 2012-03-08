@@ -306,7 +306,7 @@ for (int i = 0; i < portlets.size(); i++) {
 			<%= portletTitle %> (<%= openSearchSearchContainer.getTotal() %>)
 		</div>
 
-		<liferay-ui:search-iterator searchContainer="<%= openSearchSearchContainer %>" paginate="<%= false %>" />
+		<liferay-ui:search-iterator paginate="<%= false %>" searchContainer="<%= openSearchSearchContainer %>" />
 
 		<c:choose>
 			<c:when test="<%= (openSearchSearchContainer.getTotal() == resultRows.size()) || (Validator.isNotNull(primarySearch) && portlet.getOpenSearchClass().equals(primarySearch)) %>">

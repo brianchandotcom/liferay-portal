@@ -491,7 +491,7 @@ definePermissionsURL.setParameter(Constants.CMD, Constants.VIEW);
 
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" paginate="<%= false %>" />
+			<liferay-ui:search-iterator paginate="<%= false %>" searchContainer="<%= searchContainer %>" />
 		</liferay-ui:search-container>
 
 		<br />

@@ -67,7 +67,7 @@ String defaultControlPanelThemeId = PrefsPropsUtil.getString(company.getCompanyI
 <aui:fieldset>
 	<aui:input label="allow-site-administrators-to-use-their-own-logo" name='<%= "settings--" + PropsKeys.COMPANY_SECURITY_SITE_LOGO + "--" %>' type="checkbox" value="<%= companySecurityCommunityLogo %>" />
 
-	<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>" var="editCompanyLogoURL">
+	<portlet:renderURL var="editCompanyLogoURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 		<portlet:param name="struts_action" value="/portal_settings/edit_company_logo" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 	</portlet:renderURL>

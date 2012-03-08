@@ -46,7 +46,7 @@ String defaultLogoutPagePath = PrefsPropsUtil.getString(company.getCompanyId(), 
 
 	<liferay-ui:error exception="<%= CompanyMxException.class %>" message="please-enter-a-valid-mail-domain" />
 
-	<aui:input bean="<%= company %>" disabled="<%= !PropsValues.MAIL_MX_UPDATE %>" label="mail-domain" name="mx" model="<%= Company.class %>" />
+	<aui:input bean="<%= company %>" disabled="<%= !PropsValues.MAIL_MX_UPDATE %>" label="mail-domain" model="<%= Company.class %>" name="mx" />
 
 	<liferay-ui:error exception="<%= CompanyVirtualHostException.class %>" message="please-enter-a-valid-virtual-host" />
 
@@ -64,7 +64,7 @@ String defaultLogoutPagePath = PrefsPropsUtil.getString(company.getCompanyId(), 
 <h3><liferay-ui:message key="navigation" /></h3>
 
 <aui:fieldset column="<%= true %>" cssClass="aui-w50">
-	<aui:input bean="<%= company %>" helpMessage="home-url-help" label="home-url" name="homeURL" model="<%= Company.class %>" />
+	<aui:input bean="<%= company %>" helpMessage="home-url-help" label="home-url" model="<%= Company.class %>" name="homeURL" />
 </aui:fieldset>
 
 <aui:fieldset column="<%= true %>" cssClass="aui-w50">

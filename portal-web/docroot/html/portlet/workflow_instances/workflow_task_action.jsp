@@ -84,7 +84,7 @@ WorkflowTask workflowTask = (WorkflowTask)row.getObject();
 </liferay-ui:icon-menu>
 
 <div class="aui-helper-hidden" id="<%= randomId %>updateComments">
-	<aui:input cols="55" name="comment" type="textarea" rows="10" />
+	<aui:input cols="55" name="comment" rows="10" type="textarea" />
 </div>
 
 <aui:script use="aui-dialog">

@@ -19,4 +19,4 @@
 WikiPage wikiPage = (WikiPage)request.getAttribute("edit_page.jsp-wikiPage");
 %>
 
-<liferay-ui:input-field model="<%= WikiPage.class %>" bean="<%= wikiPage %>" field="content" />
+<liferay-ui:input-field bean="<%= wikiPage %>" field="content" model="<%= WikiPage.class %>" />

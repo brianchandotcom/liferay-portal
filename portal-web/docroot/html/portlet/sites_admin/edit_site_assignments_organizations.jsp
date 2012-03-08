@@ -197,7 +197,7 @@ organizationSearch.setEmptyResultsMessage(emptyResultsMessage);
 
 			<c:if test='<%= tabs2.equals("current") && (groupOrganization != null) %>'>
 				<div class="organizations-msg-info portlet-msg">
-					<liferay-ui:message key="this-site-belongs-to-x-which-is-an-organization-of-type-x" arguments="<%= new String[] {groupOrganization.getName(), LanguageUtil.get(pageContext, groupOrganization.getType())} %>" />
+					<liferay-ui:message arguments="<%= new String[] {groupOrganization.getName(), LanguageUtil.get(pageContext, groupOrganization.getType())} %>" key="this-site-belongs-to-x-which-is-an-organization-of-type-x" />
 				</div>
 			</c:if>
 

@@ -64,7 +64,7 @@ if (Validator.isNotNull(publicLayoutSet.getLayoutSetPrototypeUuid())) {
 					<liferay-ui:message arguments="<%= new Object[] {publicLayoutSetPrototype.getName(locale)} %>" key="these-pages-are-linked-to-site-template-x" />
 
 					<aui:field-wrapper label="site-template-settings">
-						<aui:input disabled="<%= true %>" name="active" value="<%= publicLayoutSetPrototype.isActive() %>" type="checkbox" />
+						<aui:input disabled="<%= true %>" name="active" type="checkbox" value="<%= publicLayoutSetPrototype.isActive() %>" />
 						<aui:input disabled="<%= true %>" name="site-template-allows-modifications" type="checkbox" value="<%= layoutsUpdateable %>" />
 					</aui:field-wrapper>
 				</c:when>

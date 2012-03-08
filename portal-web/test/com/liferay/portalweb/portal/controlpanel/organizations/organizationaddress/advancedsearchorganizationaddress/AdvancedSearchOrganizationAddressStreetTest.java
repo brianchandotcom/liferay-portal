@@ -37,7 +37,7 @@ public class AdvancedSearchOrganizationAddressStreetTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("link=Control Panel")) {
+						if (selenium.isElementPresent("link=Control Panel")) {
 							break;
 						}
 					}

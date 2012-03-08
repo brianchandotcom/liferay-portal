@@ -407,9 +407,9 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 			<aui:input name="threadIds" type="hidden" />
 
 			<liferay-ui:search-container
+				emptyResultsMessage="there-are-no-recent-posts"
 				headerNames="thread,started-by,posts,views,last-post"
 				iteratorURL="<%= portletURL %>"
-				emptyResultsMessage="there-are-no-recent-posts"
 				rowChecker="<%= new RowChecker(renderResponse) %>"
 			>
 				<liferay-ui:search-container-results>

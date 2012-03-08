@@ -383,7 +383,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 				</c:if>
 
 				<c:if test="<%= PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED %>">
-					<liferay-ui:panel cssClass="lfr-document-library-comments" collapsible="<%= true %>" extended="<%= true %>" persistState="<%= true %>" title="comments">
+					<liferay-ui:panel collapsible="<%= true %>" cssClass="lfr-document-library-comments" extended="<%= true %>" persistState="<%= true %>" title="comments">
 						<portlet:actionURL var="discussionURL">
 							<portlet:param name="struts_action" value="/document_library/edit_file_entry_discussion" />
 						</portlet:actionURL>
@@ -688,7 +688,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							}
 							%>
 
-							<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" paginate="<%= false %>" />
+							<liferay-ui:search-iterator paginate="<%= false %>" searchContainer="<%= searchContainer %>" />
 						</liferay-ui:panel>
 					</liferay-ui:panel-container>
 				</div>

@@ -46,8 +46,8 @@ List<String> attributeNames = Collections.list(expandoBridge.getAttributeNames()
 	iteratorURL="<%= portletURL %>"
 >
 	<liferay-ui:search-container-results
-		total="<%= attributeNames.size() %>"
 		results="<%= attributeNames %>"
+		total="<%= attributeNames.size() %>"
 	/>
 
 	<liferay-ui:search-container-row

@@ -100,6 +100,8 @@ if (hidePortletWhenEmpty) {
 			if (selected) {
 				var selectedChild = treeView.getNodeByChild(selected);
 
+				selectedChild.expand();
+
 				selectedChild.eachParent(
 					function(node) {
 						if (node instanceof A.TreeNode) {

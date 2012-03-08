@@ -94,7 +94,7 @@ public class DLAppHelperLocalServiceImpl
 	}
 
 	public void addFolder(Folder folder, ServiceContext serviceContext)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		if (!isStagingGroup(folder.getGroupId())) {
 			dlSyncLocalService.addSync(

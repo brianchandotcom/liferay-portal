@@ -16,7 +16,9 @@ package com.liferay.portlet.documentlibrary.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.model.DLSync;
 import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLSyncLocalServiceBaseImpl;
@@ -35,7 +37,7 @@ public class DLSyncLocalServiceImpl extends DLSyncLocalServiceBaseImpl {
 	public DLSync addSync(
 			long fileId, String fileUuid, long companyId, long repositoryId,
 			long parentFolderId, String name, String type, String version)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		return addSync(
 			fileId, fileUuid, companyId, repositoryId, parentFolderId, name,
@@ -46,7 +48,11 @@ public class DLSyncLocalServiceImpl extends DLSyncLocalServiceBaseImpl {
 			long fileId, String fileUuid, long companyId, long repositoryId,
 			long parentFolderId, String name, String description, String type,
 			String version)
-		throws SystemException {
+		throws PortalException, SystemException {
+
+		if (!isDefaultRepository(parentFolderId)) {
+			return null;
+		}
 
 		Date now = new Date();
 
@@ -90,6 +96,10 @@ public class DLSyncLocalServiceImpl extends DLSyncLocalServiceBaseImpl {
 			String event, String version)
 		throws PortalException, SystemException {
 
+		if (!isDefaultRepository(parentFolderId)) {
+			return null;
+		}
+
 		DLSync dlSync = null;
 
 		if (event == DLSyncConstants.EVENT_DELETE) {
@@ -113,6 +123,18 @@ public class DLSyncLocalServiceImpl extends DLSyncLocalServiceBaseImpl {
 		dlSyncPersistence.update(dlSync, false);
 
 		return dlSync;
+	}
+
+	protected boolean isDefaultRepository(long folderId)
+		throws PortalException, SystemException {
+
+		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			return true;
+		}
+
+		Folder folder = dlAppLocalService.getFolder(folderId);
+
+		return folder.isDefaultRepository();
 	}
 
 }

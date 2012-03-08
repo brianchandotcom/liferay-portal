@@ -267,7 +267,8 @@ public class DLSyncLocalServiceUtil {
 		long fileId, java.lang.String fileUuid, long companyId,
 		long repositoryId, long parentFolderId, java.lang.String name,
 		java.lang.String type, java.lang.String version)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .addSync(fileId, fileUuid, companyId, repositoryId,
 			parentFolderId, name, type, version);
@@ -278,7 +279,8 @@ public class DLSyncLocalServiceUtil {
 		long repositoryId, long parentFolderId, java.lang.String name,
 		java.lang.String description, java.lang.String type,
 		java.lang.String version)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .addSync(fileId, fileUuid, companyId, repositoryId,
 			parentFolderId, name, description, type, version);

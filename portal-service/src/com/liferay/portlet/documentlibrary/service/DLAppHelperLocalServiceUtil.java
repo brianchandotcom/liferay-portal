@@ -68,7 +68,8 @@ public class DLAppHelperLocalServiceUtil {
 	public static void addFolder(
 		com.liferay.portal.kernel.repository.model.Folder folder,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		getService().addFolder(folder, serviceContext);
 	}
 

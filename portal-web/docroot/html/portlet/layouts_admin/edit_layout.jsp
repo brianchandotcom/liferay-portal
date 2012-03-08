@@ -244,7 +244,7 @@ String[][] categorySections = {mainSections};
 													dialog: {
 														width: 700
 													},
-													id: '<portlet:namespace /><%= selPlid %>_permissions',
+													id: '<portlet:namespace /><%= selLayout.getFriendlyURL().substring(1) %>_permissions',
 													title: '<%= UnicodeLanguageUtil.get(pageContext, "permissions") %>',
 													uri: '<%= permissionURL %>'
 												}

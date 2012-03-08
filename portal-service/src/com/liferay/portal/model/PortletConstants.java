@@ -92,4 +92,15 @@ public class PortletConstants {
 		}
 	}
 
+	public static boolean isInstanceId(String portletId) {
+		int pos = portletId.indexOf(INSTANCE_SEPARATOR);
+
+		if (pos == -1) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+
 }

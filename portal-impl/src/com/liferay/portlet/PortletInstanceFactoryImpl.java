@@ -22,7 +22,6 @@ import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 
-import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -34,6 +33,7 @@ import javax.servlet.ServletContext;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 
@@ -46,33 +46,27 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 	}
 
 	public void clear(Portlet portlet, boolean resetRemotePortletBag) {
-		Map<String, InvokerPortlet> portletInstances = _pool.get(
-			portlet.getRootPortletId());
+		String rootPortletId = portlet.getRootPortletId();
+
+		Map<String, InvokerPortlet> portletInstances = _pool.remove(
+			rootPortletId);
 
 		if (portletInstances != null) {
-			Iterator<Map.Entry<String, InvokerPortlet>> itr =
-				portletInstances.entrySet().iterator();
 
-			while (itr.hasNext()) {
-				Map.Entry<String, InvokerPortlet> entry = itr.next();
+			InvokerPortlet rootInvokerPortletInstance = portletInstances.remove(
+				rootPortletId);
 
-				String portletId = entry.getKey();
-				InvokerPortlet invokerPortletInstance = entry.getValue();
-
-				if (PortletConstants.getInstanceId(portletId) == null) {
-					invokerPortletInstance.destroy();
-
-					break;
-				}
+			if (rootInvokerPortletInstance != null) {
+				rootInvokerPortletInstance.destroy();
 			}
-		}
 
-		_pool.remove(portlet.getRootPortletId());
+			portletInstances.clear();
+		}
 
 		PortletApp portletApp = portlet.getPortletApp();
 
 		if (resetRemotePortletBag && portletApp.isWARFile()) {
-			PortletBagPool.remove(portlet.getRootPortletId());
+			PortletBagPool.remove(rootPortletId);
 		}
 	}
 
@@ -80,110 +74,113 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 		throws PortletException {
 
 		boolean instanceable = false;
+		boolean deployed = !portlet.isUndeployedPortlet();
 
-		if (portlet.isInstanceable() &&
-			(PortletConstants.getInstanceId(portlet.getPortletId()) != null)) {
+		if (portlet.isInstanceable() && deployed &&
+			PortletConstants.isInstanceId(portlet.getPortletId())) {
 
 			instanceable = true;
 		}
 
-		Map<String, InvokerPortlet> portletInstances = _pool.get(
-			portlet.getRootPortletId());
-
-		if (portletInstances == null) {
-			portletInstances = new ConcurrentHashMap<String, InvokerPortlet>();
-
-			_pool.put(portlet.getRootPortletId(), portletInstances);
-		}
-
-		InvokerPortlet instanceInvokerPortletInstance = null;
-
-		if (instanceable) {
-			instanceInvokerPortletInstance = portletInstances.get(
-				portlet.getPortletId());
-		}
+		String rootPortletId = portlet.getRootPortletId();
 
 		InvokerPortlet rootInvokerPortletInstance = null;
 
-		if (instanceInvokerPortletInstance == null) {
-			rootInvokerPortletInstance = portletInstances.get(
-				portlet.getRootPortletId());
+		Map<String, InvokerPortlet> portletInstances = null;
 
-			if (rootInvokerPortletInstance == null) {
-				PortletBag portletBag = PortletBagPool.get(
-					portlet.getRootPortletId());
+		if (deployed) {
+			portletInstances = _pool.get(rootPortletId);
 
-				// Portlet bag should never be null unless the portlet has been
-				// undeployed
+			if (portletInstances == null) {
+				portletInstances =
+					new ConcurrentHashMap<String, InvokerPortlet>();
 
-				if (portletBag == null) {
-					PortletBagFactory portletBagFactory =
-						new PortletBagFactory();
+				_pool.put(rootPortletId, portletInstances);
+			}
+			else {
+				if (instanceable) {
+					InvokerPortlet instanceInvokerPortletInstance =
+						portletInstances.get(portlet.getPortletId());
 
-					portletBagFactory.setClassLoader(
-						PortalClassLoaderUtil.getClassLoader());
-					portletBagFactory.setServletContext(servletContext);
-					portletBagFactory.setWARFile(false);
-
-					try {
-						portletBag = portletBagFactory.create(portlet);
-					}
-					catch (Exception e) {
-						throw new PortletException(e);
+					if (instanceInvokerPortletInstance != null) {
+						// Instanceable and hit cache
+						return instanceInvokerPortletInstance;
 					}
 				}
 
-				PortletConfig portletConfig = PortletConfigFactoryUtil.create(
-					portlet, servletContext);
-
-				rootInvokerPortletInstance = init(
-					portlet, portletConfig, portletBag.getPortletInstance());
-
-				portletInstances.put(
-					portlet.getRootPortletId(), rootInvokerPortletInstance);
+				rootInvokerPortletInstance = portletInstances.get(
+					rootPortletId);
 			}
 		}
 
-		if (instanceable) {
-			if (instanceInvokerPortletInstance == null) {
-				javax.portlet.Portlet portletInstance =
-					rootInvokerPortletInstance.getPortletInstance();
+		if (rootInvokerPortletInstance == null) {
+			PortletBag portletBag = PortletBagPool.get(rootPortletId);
 
-				PortletConfig portletConfig = PortletConfigFactoryUtil.create(
-					portlet, servletContext);
+			// Portlet bag should never be null unless the portlet has been
+			// undeployed
 
-				PortletContext portletContext =
-					portletConfig.getPortletContext();
-				boolean checkAuthToken =
-					rootInvokerPortletInstance.isCheckAuthToken();
-				boolean facesPortlet =
-					rootInvokerPortletInstance.isFacesPortlet();
-				boolean strutsPortlet =
-					rootInvokerPortletInstance.isStrutsPortlet();
-				boolean strutsBridgePortlet =
-					rootInvokerPortletInstance.isStrutsBridgePortlet();
+			if (portletBag == null) {
+				PortletBagFactory portletBagFactory = new PortletBagFactory();
 
-				instanceInvokerPortletInstance =
-					_invokerPortletFactory.create(
-						portlet, portletInstance, portletConfig, portletContext,
-						checkAuthToken, facesPortlet, strutsPortlet,
-						strutsBridgePortlet);
+				portletBagFactory.setClassLoader(
+					PortalClassLoaderUtil.getClassLoader());
+				portletBagFactory.setServletContext(servletContext);
+				portletBagFactory.setWARFile(false);
 
-				portletInstances.put(
-					portlet.getPortletId(), instanceInvokerPortletInstance);
+				try {
+					portletBag = portletBagFactory.create(portlet);
+				}
+				catch (Exception e) {
+					throw new PortletException(e);
+				}
+			}
+
+			PortletConfig portletConfig = PortletConfigFactoryUtil.create(
+				portlet, servletContext);
+
+			rootInvokerPortletInstance = init(
+				portlet, portletConfig, portletBag.getPortletInstance());
+
+			if (deployed) {
+				portletInstances.put(rootPortletId, rootInvokerPortletInstance);
 			}
 		}
-		else {
-			if (rootInvokerPortletInstance != null) {
-				instanceInvokerPortletInstance = rootInvokerPortletInstance;
-			}
+
+		if (!instanceable) {
+			// Not instanceable, return root
+			return rootInvokerPortletInstance;
+		}
+
+		// Instanceable, missing cache, create a new one
+		javax.portlet.Portlet portletInstance =
+			rootInvokerPortletInstance.getPortletInstance();
+
+		PortletConfig portletConfig = PortletConfigFactoryUtil.create(
+			portlet, servletContext);
+
+		PortletContext portletContext = portletConfig.getPortletContext();
+		boolean checkAuthToken = rootInvokerPortletInstance.isCheckAuthToken();
+		boolean facesPortlet = rootInvokerPortletInstance.isFacesPortlet();
+		boolean strutsPortlet = rootInvokerPortletInstance.isStrutsPortlet();
+		boolean strutsBridgePortlet =
+			rootInvokerPortletInstance.isStrutsBridgePortlet();
+
+		InvokerPortlet instanceInvokerPortletInstance =
+			_invokerPortletFactory.create(
+				portlet, portletInstance, portletConfig, portletContext,
+				checkAuthToken, facesPortlet, strutsPortlet,
+				strutsBridgePortlet);
+
+		if (deployed) {
+			portletInstances.put(
+				portlet.getPortletId(), instanceInvokerPortletInstance);
 		}
 
 		return instanceInvokerPortletInstance;
 	}
 
 	public void delete(Portlet portlet) {
-		if (PortletConstants.getInstanceId(portlet.getPortletId()) != null) {
+		if (PortletConstants.isInstanceId(portlet.getPortletId())) {
 			Map<String, InvokerPortlet> portletInstances = _pool.get(
 				portlet.getRootPortletId());
 

@@ -207,7 +207,7 @@ public class LayoutTypePortletImpl
 		}
 
 		if (portlet.isInstanceable() &&
-			(PortletConstants.getInstanceId(portlet.getPortletId()) == null)) {
+			!PortletConstants.isInstanceId(portletId)) {
 
 			portletId = portletId + getFullInstanceSeparator();
 		}

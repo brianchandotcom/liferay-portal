@@ -63,6 +63,13 @@ public interface ChannelHub {
 	public Channel fetchChannel(long userId, boolean createIfAbsent)
 		throws ChannelException;
 
+	public List<NotificationEvent> fetchNotificationEvents(long userId)
+		throws ChannelException;
+
+	public List<NotificationEvent> fetchNotificationEvents(
+			long userId, boolean flush)
+		throws ChannelException;
+
 	public void flush() throws ChannelException;
 
 	public void flush(long userId) throws ChannelException;

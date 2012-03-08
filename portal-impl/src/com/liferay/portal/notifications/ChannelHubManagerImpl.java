@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.notifications.NotificationEvent;
 import com.liferay.portal.kernel.notifications.UnknownChannelHubException;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -151,6 +152,20 @@ public class ChannelHubManagerImpl implements ChannelHubManager {
 		return channelHub;
 	}
 
+	public List<NotificationEvent> fetchNotificationEvents(
+			long companyId, long userId, boolean flush) 
+		throws ChannelException {
+
+		ChannelHub channelHub = fetchChannelHub(companyId);
+		
+		if (channelHub == null) {
+			return Collections.emptyList();
+		}
+
+		return channelHub.fetchNotificationEvents(userId, flush);
+		
+	}
+
 	public void flush() throws ChannelException {
 		for (ChannelHub channelHub : _channelHubs.values()) {
 			channelHub.flush();
@@ -217,10 +232,12 @@ public class ChannelHubManagerImpl implements ChannelHubManager {
 	}
 
 	public List<NotificationEvent> getNotificationEvents(
-			long compnayId, long userId, boolean flush)
+			long companyId, long userId, boolean flush)
 		throws ChannelException {
 
-		return getChannelHub(compnayId).getNotificationEvents(userId, flush);
+		ChannelHub channelHub = getChannelHub(companyId);
+
+		return channelHub.getNotificationEvents(userId, flush);
 	}
 
 	public Collection<Long> getUserIds(long companyId) throws ChannelException {

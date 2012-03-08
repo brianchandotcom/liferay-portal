@@ -65,21 +65,9 @@ public class SynchronousPollerChannelListener implements ChannelListener {
 		catch (InterruptedException ie) {
 		}
 
-		List<NotificationEvent> notificationEvents = null;
-
-		try {
-			notificationEvents = ChannelHubManagerUtil.getNotificationEvents(
+		List<NotificationEvent> notificationEvents =
+			ChannelHubManagerUtil.fetchNotificationEvents(
 				_companyId, _userId, true);
-		}
-		catch (UnknownChannelException uce) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to complete processing because user session ended",
-					uce);
-			}
-
-			return null;
-		}
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 

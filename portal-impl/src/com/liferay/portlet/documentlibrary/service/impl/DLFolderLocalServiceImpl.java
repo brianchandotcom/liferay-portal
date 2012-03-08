@@ -582,10 +582,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			deleteFolder(curDLFolder);
 		}
 
-		// Folder
-
-		dlFolderPersistence.remove(dlFolder);
-
 		// Resources
 
 		resourceLocalService.deleteResource(
@@ -615,6 +611,10 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		// App helper
 
 		dlAppHelperLocalService.deleteFolder(new LiferayFolder(dlFolder));
+
+		// Folder
+
+		dlFolderPersistence.remove(dlFolder);
 
 		// Directory
 

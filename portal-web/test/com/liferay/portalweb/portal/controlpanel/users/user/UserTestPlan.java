@@ -86,6 +86,7 @@ import com.liferay.portalweb.portal.controlpanel.users.user.changeuserpasswordin
 import com.liferay.portalweb.portal.controlpanel.users.user.deactivateuser.DeactivateUserTests;
 import com.liferay.portalweb.portal.controlpanel.users.user.deleteuser.DeleteUserTests;
 import com.liferay.portalweb.portal.controlpanel.users.user.edituserpassword.EditUserPasswordTests;
+import com.liferay.portalweb.portal.controlpanel.users.user.editusersite.EditUserSiteTests;
 import com.liferay.portalweb.portal.controlpanel.users.user.restoreuser.RestoreUserTests;
 import com.liferay.portalweb.portal.controlpanel.users.user.searchuser.SearchUserTests;
 import com.liferay.portalweb.portal.controlpanel.users.user.searchuserfullnamecp.SearchUserFullNameCPTests;
@@ -174,6 +175,7 @@ public class UserTestPlan extends BaseTestSuite {
 		testSuite.addTest(DeactivateUserTests.suite());
 		testSuite.addTest(DeleteUserTests.suite());
 		testSuite.addTest(EditUserPasswordTests.suite());
+		testSuite.addTest(EditUserSiteTests.suite());
 		testSuite.addTest(RestoreUserTests.suite());
 		testSuite.addTest(SearchUserTests.suite());
 		testSuite.addTest(SearchUserFullNameCPTests.suite());

@@ -24,6 +24,8 @@ public class AddPageBlogsTest extends BaseTestCase {
 	public void testAddPageBlogs() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		selenium.clickAt("//nav[@id='navigation']",
+			RuntimeVariables.replace("Navigation"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

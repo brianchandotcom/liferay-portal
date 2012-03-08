@@ -45,7 +45,7 @@ public class SearchNullFolderEntryTest extends BaseTestCase {
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.type("_28_keywords1", RuntimeVariables.replace("Test1"));
+		selenium.type("_28_keywords", RuntimeVariables.replace("Test1"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");

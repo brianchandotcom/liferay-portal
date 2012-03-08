@@ -95,10 +95,12 @@ if (hidePortletWhenEmpty) {
 				}
 			).render();
 
-			var selected = assetCategoryList.one('.aui-tree-node strong');
+			var selected = assetCategoryList.one('.aui-tree-node .tag-selected');
 
 			if (selected) {
 				var selectedChild = treeView.getNodeByChild(selected);
+
+				selectedChild.expand();
 
 				selectedChild.eachParent(
 					function(node) {
@@ -136,9 +138,9 @@ private void _buildCategoriesNavigation(List<AssetCategory> categories, long cat
 		}
 
 		sb.append(portletURL.toString());
-		sb.append("\"><strong>");
+		sb.append("\">");
 		sb.append(title);
-		sb.append("</strong></a>");
+		sb.append("</a>");
 		sb.append("</span>");
 
 		if (!categoriesChildren.isEmpty()) {

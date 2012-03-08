@@ -149,9 +149,8 @@ private String _buildTagsNavigation(long groupId, String selectedTagName, Portle
 		}
 
 		sb.append(portletURL.toString());
-		sb.append("\"><strong>");
+		sb.append("\">");
 		sb.append(tagName);
-		sb.append("</strong>");
 
 		if (showAssetCount) {
 			sb.append("<span class=\"tag-asset-count\">");

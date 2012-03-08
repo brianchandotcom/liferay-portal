@@ -290,6 +290,7 @@
 
 .tag-selected {
 	color: #000;
+	font-weight: bold;
 	text-decoration: none;
 }
 

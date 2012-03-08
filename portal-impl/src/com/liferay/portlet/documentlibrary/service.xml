@@ -142,6 +142,9 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
+		<finder name="MimeType" return-type="Collection" db-index="false" >
+			<finder-column name="mimeType" />
+		</finder>
 		<finder name="G_U" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="userId" />

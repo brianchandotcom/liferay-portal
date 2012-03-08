@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -36,6 +35,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLAppLocalServiceBaseImpl;
+import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
 
 import java.io.File;
@@ -175,6 +175,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 				description, changeLog, null, 0, serviceContext);
 		}
 
+		mimeType = DLAppUtil.getMimeType(
+			sourceFileName, mimeType, title, file, null);
+
 		LocalRepository localRepository = getLocalRepository(repositoryId);
 
 		FileEntry fileEntry = localRepository.addFileEntry(
@@ -233,6 +236,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			is = new UnsyncByteArrayInputStream(new byte[0]);
 			size = 0;
 		}
+
+		mimeType = DLAppUtil.getMimeType(
+			sourceFileName, mimeType, title, null, is);
 
 		LocalRepository localRepository = getLocalRepository(repositoryId);
 
@@ -1373,6 +1379,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 				description, changeLog, majorVersion, null, 0, serviceContext);
 		}
 
+		mimeType = DLAppUtil.getMimeType(
+			sourceFileName, mimeType, title, file, null);
+
 		LocalRepository localRepository = getLocalRepository(0, fileEntryId, 0);
 
 		FileEntry fileEntry = localRepository.updateFileEntry(
@@ -1430,6 +1439,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			boolean majorVersion, InputStream is, long size,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
+
+		mimeType = DLAppUtil.getMimeType(
+			sourceFileName, mimeType, title, null, is);
 
 		LocalRepository localRepository = getLocalRepository(0, fileEntryId, 0);
 
@@ -1577,7 +1589,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 					fileEntry.getTitle(), destinationFileEntry.getMimeType(),
 					destinationFileEntry.getTitle(),
 					destinationFileEntry.getDescription(), StringPool.BLANK,
-					isMajorVersion(fileVersion, previousFileVersion),
+					DLAppUtil.isMajorVersion(fileVersion, previousFileVersion),
 					fileVersion.getContentStream(false), fileVersion.getSize(),
 					serviceContext);
 			}
@@ -1651,17 +1663,6 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		}
 
 		return localRepository;
-	}
-
-	protected boolean isMajorVersion(
-		FileVersion previousFileVersion, FileVersion currentFileVersion) {
-
-		long currentVersion = GetterUtil.getLong(
-			currentFileVersion.getVersion());
-		long previousVersion = GetterUtil.getLong(
-			previousFileVersion.getVersion());
-
-		return (currentVersion - previousVersion) >= 1;
 	}
 
 	protected FileEntry moveFileEntries(

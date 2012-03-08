@@ -85,9 +85,9 @@ public class DefineMemberRoleTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isChecked("//tbody/tr[7]/td[8]/input"));
-		selenium.check("//tbody/tr[7]/td[8]/input");
-		assertTrue(selenium.isChecked("//tbody/tr[7]/td[8]/input"));
+		assertFalse(selenium.isChecked("//tr[7]/td[8]/input"));
+		selenium.check("//tr[7]/td[8]/input");
+		assertTrue(selenium.isChecked("//tr[7]/td[8]/input"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

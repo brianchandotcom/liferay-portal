@@ -112,6 +112,14 @@ public class ChannelHubManagerUtil {
 			companyId, createIfAbsent);
 	}
 
+	public static List<NotificationEvent> fetchNotificationEvents(
+			long companyId, long userId, boolean flush)
+		throws ChannelException {
+
+		return getChannelHubManager().fetchNotificationEvents(
+			companyId, userId, flush);
+	}
+
 	public static void flush() throws ChannelException {
 		getChannelHubManager().flush();
 	}
@@ -158,18 +166,18 @@ public class ChannelHubManagerUtil {
 	}
 
 	public static List<NotificationEvent> getNotificationEvents(
-			long compnayId, long userId)
+			long companyId, long userId)
 		throws ChannelException {
 
-		return getChannelHubManager().getNotificationEvents(compnayId, userId);
+		return getChannelHubManager().getNotificationEvents(companyId, userId);
 	}
 
 	public static List<NotificationEvent> getNotificationEvents(
-			long compnayId, long userId, boolean flush)
+			long companyId, long userId, boolean flush)
 		throws ChannelException {
 
 		return getChannelHubManager().getNotificationEvents(
-			compnayId, userId, flush);
+			companyId, userId, flush);
 	}
 
 	public static Collection<Long> getUserIds(long companyId)

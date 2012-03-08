@@ -65,6 +65,10 @@ public interface ChannelHubManager {
 	public ChannelHub fetchChannelHub(long companyId, boolean createIfAbsent)
 		throws ChannelException;
 
+	public List<NotificationEvent> fetchNotificationEvents(
+			long companyId, long userId, boolean flush)
+		throws ChannelException;
+
 	public void flush() throws ChannelException;
 
 	public void flush(long companyId) throws ChannelException;
@@ -85,11 +89,11 @@ public interface ChannelHubManager {
 		throws ChannelException;
 
 	public List<NotificationEvent> getNotificationEvents(
-			long compnayId, long userId)
+			long companyId, long userId)
 		throws ChannelException;
 
 	public List<NotificationEvent> getNotificationEvents(
-			long compnayId, long userId, boolean flush)
+			long companyId, long userId, boolean flush)
 		throws ChannelException;
 
 	public Collection<Long> getUserIds(long companyId) throws ChannelException;

@@ -1242,13 +1242,16 @@ AUI.add(
 				return value;
 			},
 
-			openPopupWindow: function(url, title) {
+			openPopupWindow: function(url, title, id) {
+				var instance = this;
+
 				Liferay.Util.openWindow(
 					{
 						dialog: {
 							align: Liferay.Util.Window.ALIGN_CENTER,
 							width: 680
 						},
+						id: instance.portletNamespace + id,
 						title: title,
 						uri: url
 					}
@@ -2163,7 +2166,7 @@ AUI.add(
 							input.val(url);
 						};
 
-						instance.openPopupWindow(selectUrl, Liferay.Language.get('javax.portlet.title.20'));
+						instance.openPopupWindow(selectUrl, Liferay.Language.get('javax.portlet.title.20'), 'selectDocumentLibrary');
 					},
 					'.journal-documentlibrary-button .aui-button-input'
 				);
@@ -2363,7 +2366,7 @@ AUI.add(
 
 							var url = event.currentTarget.attr('href');
 
-							instance.openPopupWindow(url, 'ChangeStructure');
+							instance.openPopupWindow(url, 'ChangeStructure', 'changeStruture');
 						}
 					);
 				}

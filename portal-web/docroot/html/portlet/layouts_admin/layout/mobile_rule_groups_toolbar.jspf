@@ -126,6 +126,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "add");
 			function(event) {
 				config.dialog.title = '<%= UnicodeLanguageUtil.get(pageContext, "rule-groups") %>';
 
+				config.id = '<portlet:namespace />ruleGroups';
 				config.uri = '<%= selectRuleGroupURL %>';
 
 				Liferay.Util.openWindow(config);
@@ -142,6 +143,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "add");
 				config.dialog.title = '<%= UnicodeLanguageUtil.get(pageContext, "rule-groups-priorities") %>';
 				config.dialog.width = 460;
 
+				config.id = '<portlet:namespace />ruleGroupsPriorities';
 				config.uri = '<%= managePrioritiesURL %>';
 
 				Liferay.Util.openWindow(config);

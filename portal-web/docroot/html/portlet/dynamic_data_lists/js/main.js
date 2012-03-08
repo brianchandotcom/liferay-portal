@@ -73,6 +73,7 @@ AUI.add(
 
 						Liferay.Util.openWindow(
 							{
+								id: 'selectDocumentLibrary',
 								title: Liferay.Language.get('javax.portlet.title.20'),
 								uri: uri
 							}

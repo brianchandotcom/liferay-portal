@@ -414,6 +414,7 @@ int tabIndex = 1;
 				dialog: {
 					width: 680
 				},
+				id: '<portlet:namespace />parentStructureSelector',
 				title: '<%= UnicodeLanguageUtil.get(pageContext, "structure") %>',
 				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/journal/select_structure" /><portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" /></portlet:renderURL>'
 			}

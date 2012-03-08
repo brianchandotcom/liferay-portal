@@ -793,6 +793,17 @@
 		</comments>
 	</library>
 	<library>
+		<file-name>development/selenium-server-standalone-2.17.0.jar</file-name>
+		<version>2.17.0</version>
+		<project-name>Selenium WebDriver</project-name>
+		<project-url>http://seleniumhq.org/projects/webdriver</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>	
+	<library>
 		<file-name>development/servlet-api.jar</file-name>
 		<version>2.5</version>
 		<project-name>Java Servlet</project-name>

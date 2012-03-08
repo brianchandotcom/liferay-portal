@@ -182,7 +182,7 @@ public class AtomUtil {
 			int questionIndex = url.indexOf(CharPool.QUESTION);
 
 			if (questionIndex == -1) {
-				url += CharPool.AMPERSAND;
+				url += CharPool.QUESTION;
 			}
 			else {
 				url += CharPool.AMPERSAND;

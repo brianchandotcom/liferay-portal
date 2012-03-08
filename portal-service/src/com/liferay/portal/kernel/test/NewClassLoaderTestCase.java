@@ -31,7 +31,8 @@ import java.util.concurrent.Callable;
 public class NewClassLoaderTestCase extends TestCase {
 
 	public void setUp() throws Exception{
-		String[] paths = System.getProperty("java.class.path").split(":");
+		String[] paths = System.getProperty("java.class.path").split(
+			File.pathSeparator);
 
 		List<URL> urlList = new ArrayList<URL>();
 

@@ -162,6 +162,8 @@ public class DirectServletRegistry {
 				Long previousLastModified = _dependantTimestamps.get(dependant);
 
 				if (previousLastModified == null) {
+					_dependantTimestamps.put(dependant, lastModified);
+
 					previousLastModified = lastModified;
 				}
 
@@ -181,6 +183,8 @@ public class DirectServletRegistry {
 			if (reloadServlet) {
 				_servletInfos.remove(path);
 
+				_updateFileLastModified(path, servlet);
+
 				servlet = null;
 			}
 		}
@@ -198,6 +202,18 @@ public class DirectServletRegistry {
 		}
 
 		return servlet;
+	}
+
+	private void _updateFileLastModified(String path, Servlet servlet) {
+		ServletConfig servletConfig = servlet.getServletConfig();
+
+		ServletContext servletContext = servletConfig.getServletContext();
+
+		String rootPath = servletContext.getRealPath(StringPool.BLANK);
+
+		File file = new File(rootPath, path);
+
+		file.setLastModified(System.currentTimeMillis());
 	}
 
 	private static final boolean _DIRECT_SERVLET_CONTEXT_RELOAD =

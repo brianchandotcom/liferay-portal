@@ -230,6 +230,7 @@ update DLFileShortcut set repositoryId = groupId;
 drop index IX_B413F1EC on DLFileVersion;
 drop index IX_94E784D2 on DLFileVersion;
 drop index IX_2F8FED9C on DLFileVersion;
+alter table DLFileVersion add uuid_ VARCHAR(75) null;
 alter table DLFileVersion add modifiedDate DATE null;
 alter table DLFileVersion add repositoryId LONG;
 alter table DLFileVersion add fileEntryId LONG;

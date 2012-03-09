@@ -189,9 +189,9 @@
 												monthParam="startDateMonth"
 												monthValue="<%= yesterday.get(Calendar.MONTH) %>"
 												yearParam="startDateYear"
-												yearValue="<%= yesterday.get(Calendar.YEAR) %>"
-												yearRangeStart="<%= yesterday.get(Calendar.YEAR) - 100 %>"
 												yearRangeEnd="<%= yesterday.get(Calendar.YEAR) %>"
+												yearRangeStart="<%= yesterday.get(Calendar.YEAR) - 100 %>"
+												yearValue="<%= yesterday.get(Calendar.YEAR) %>"
 											/>
 
 											&nbsp;
@@ -202,9 +202,9 @@
 												disabled="<%= false %>"
 												hourParam='<%= "startDateHour" %>'
 												hourValue="<%= yesterday.get(Calendar.HOUR) %>"
+												minuteInterval="<%= 1 %>"
 												minuteParam='<%= "startDateMinute" %>'
 												minuteValue="<%= yesterday.get(Calendar.MINUTE) %>"
-												minuteInterval="<%= 1 %>"
 											/>
 										</aui:field-wrapper>
 									</li>
@@ -219,9 +219,9 @@
 												monthParam="endDateMonth"
 												monthValue="<%= today.get(Calendar.MONTH) %>"
 												yearParam="endDateYear"
-												yearValue="<%= today.get(Calendar.YEAR) %>"
-												yearRangeStart="<%= today.get(Calendar.YEAR) - 100 %>"
 												yearRangeEnd="<%= today.get(Calendar.YEAR) %>"
+												yearRangeStart="<%= today.get(Calendar.YEAR) - 100 %>"
+												yearValue="<%= today.get(Calendar.YEAR) %>"
 											/>
 
 											&nbsp;

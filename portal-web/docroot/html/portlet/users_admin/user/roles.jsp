@@ -46,8 +46,8 @@ userGroupRoles.addAll(organizationRoles);
 <h3><liferay-ui:message key="regular-roles" /></h3>
 
 <liferay-ui:search-container
-	id='<%= renderResponse.getNamespace() + "rolesSearchContainer" %>'
 	headerNames="title,null"
+	id='<%= renderResponse.getNamespace() + "rolesSearchContainer" %>'
 >
 	<liferay-ui:search-container-results
 		results="<%= roles %>"
@@ -92,8 +92,8 @@ userGroupRoles.addAll(organizationRoles);
 <h3><liferay-ui:message key="inherited-roles" /></h3>
 
 <liferay-ui:search-container
-	id='<%= renderResponse.getNamespace() + "inheritedRolesSearchContainer" %>'
 	headerNames="title,null"
+	id='<%= renderResponse.getNamespace() + "inheritedRolesSearchContainer" %>'
 >
 	<liferay-ui:search-container-results
 		results="<%= allGroups %>"
@@ -144,8 +144,8 @@ userGroupRoles.addAll(organizationRoles);
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:search-container
-			id='<%= renderResponse.getNamespace() + "organizationRolesSearchContainer" %>'
 			headerNames="title,organization,null"
+			id='<%= renderResponse.getNamespace() + "organizationRolesSearchContainer" %>'
 		>
 			<liferay-ui:search-container-results
 				results="<%= organizationRoles %>"
@@ -222,8 +222,8 @@ userGroupRoles.addAll(organizationRoles);
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:search-container
-			id='<%= renderResponse.getNamespace() + "communityRolesSearchContainer" %>'
 			headerNames="title,site,null"
+			id='<%= renderResponse.getNamespace() + "communityRolesSearchContainer" %>'
 		>
 			<liferay-ui:search-container-results
 				results="<%= communityRoles %>"

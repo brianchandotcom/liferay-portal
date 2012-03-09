@@ -95,10 +95,10 @@
 				</c:when>
 				<c:otherwise>
 					<liferay-ui:tabs
+						backURL="<%= backURL %>"
 						names="<%= tabs1Names %>"
 						param="tabs1"
 						url="<%= portletURLString %>"
-						backURL="<%= backURL %>"
 					/>
 
 					<c:choose>

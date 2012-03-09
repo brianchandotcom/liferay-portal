@@ -41,8 +41,8 @@ List<SocialRequest> requests = (List<SocialRequest>)request.getAttribute(WebKeys
 		<tr>
 			<td align="center" class="lfr-top">
 				<liferay-ui:user-display
-					userId="<%= socialRequest.getUserId() %>"
 					displayStyle="<%= 2 %>"
+					userId="<%= socialRequest.getUserId() %>"
 				/>
 			</td>
 			<td class="lfr-top" width="99%">

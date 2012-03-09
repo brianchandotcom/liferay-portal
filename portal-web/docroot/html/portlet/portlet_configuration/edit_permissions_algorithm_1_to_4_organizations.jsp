@@ -201,12 +201,12 @@ int organizationIdsPos = ParamUtil.getInteger(request, "organizationIdsPos");
 
 		<div class="assign-permissions">
 			<liferay-ui:input-move-boxes
-				leftTitle="what-they-can-do"
-				rightTitle="what-they-cant-do"
 				leftBoxName="current_actions"
-				rightBoxName="available_actions"
 				leftList="<%= leftList %>"
+				leftTitle="what-they-can-do"
+				rightBoxName="available_actions"
 				rightList="<%= rightList %>"
+				rightTitle="what-they-cant-do"
 			/>
 
 			<aui:button-row>

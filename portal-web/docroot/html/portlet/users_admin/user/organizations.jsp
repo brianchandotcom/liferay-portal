@@ -33,8 +33,8 @@ List<Organization> organizations = (List<Organization>)request.getAttribute("use
 <h3><liferay-ui:message key="organizations" /></h3>
 
 <liferay-ui:search-container
-	id='<%= renderResponse.getNamespace() + "organizationsSearchContainer" %>'
 	headerNames="name,type,roles,null"
+	id='<%= renderResponse.getNamespace() + "organizationsSearchContainer" %>'
 >
 	<liferay-ui:search-container-results
 		results="<%= organizations %>"

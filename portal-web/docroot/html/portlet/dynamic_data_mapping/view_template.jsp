@@ -39,8 +39,8 @@ portletURL.setParameter("structureId", String.valueOf(structureId));
 
 <c:if test="<%= (structure != null) %>">
 	<liferay-ui:header
-		title='<%= LanguageUtil.format(pageContext, (Validator.isNull(templateHeaderTitle) ? "templates-for-structure-x" : templateHeaderTitle), structure.getName(locale), false) %>'
 		backURL="<%= backURL %>"
+		title='<%= LanguageUtil.format(pageContext, (Validator.isNull(templateHeaderTitle) ? "templates-for-structure-x" : templateHeaderTitle), structure.getName(locale), false) %>'
 	/>
 </c:if>
 
@@ -121,8 +121,8 @@ portletURL.setParameter("structureId", String.valueOf(structureId));
 		/>
 
 		<liferay-ui:search-container-column-text
-			href="<%= rowHREF %>"
 			buffer="buffer"
+			href="<%= rowHREF %>"
 			name="modified-date"
 		>
 

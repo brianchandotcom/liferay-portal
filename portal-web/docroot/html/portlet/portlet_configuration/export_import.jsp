@@ -78,10 +78,10 @@ if (layout.isTypeControlPanel()) {
 		%>
 
 		<liferay-ui:tabs
+			backURL="<%= redirect %>"
 			names="<%= tabs2Names %>"
 			param="tabs2"
 			url="<%= portletURL.toString() %>"
-			backURL="<%= redirect %>"
 		/>
 
 		<liferay-ui:error exception="<%= LARFileException.class %>" message="please-specify-a-lar-file-to-import" />

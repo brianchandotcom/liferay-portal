@@ -18,12 +18,12 @@
 
 <div style="float: <%= align %>">
 	<liferay-ui:toggle
+		defaultShowContent="<%= defaultShowContent %>"
+		hideImage="<%= hideImage %>"
+		hideMessage="<%= hideMessage %>"
 		id="<%= id %>"
 		showImage="<%= showImage %>"
-		hideImage="<%= hideImage %>"
 		showMessage="<%= showMessage %>"
-		hideMessage="<%= hideMessage %>"
-		defaultShowContent="<%= defaultShowContent %>"
 		stateVar="<%= stateVar %>"
 	/>
 </div>

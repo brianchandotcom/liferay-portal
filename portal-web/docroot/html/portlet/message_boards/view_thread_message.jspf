@@ -26,9 +26,9 @@
 				</c:when>
 				<c:otherwise>
 					<liferay-ui:user-display
+						displayStyle="<%= 2 %>"
 						userId="<%= message.getUserId() %>"
 						userName="<%= HtmlUtil.escape(message.getUserName()) %>"
-						displayStyle="<%= 2 %>"
 					>
 
 						<%

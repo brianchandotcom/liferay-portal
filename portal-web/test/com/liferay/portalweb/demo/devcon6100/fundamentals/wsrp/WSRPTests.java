@@ -39,7 +39,7 @@ public class WSRPTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPageWSRPRemoteTMTest.class);
 		testSuite.addTestSuite(AddPortletWSRPRemoteTMTest.class);
 		testSuite.addTestSuite(ViewWSRPClickToInvokeResourceServingPhaseDPTest.class);
-		testSuite.addTestSuite(ViewWSRPClickToInvokeResouceServingPhaseRDPTest.class);
+		testSuite.addTestSuite(ViewWSRPClickToInvokeResourceServingPhaseRDPTest.class);
 		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownWSRPConsumerDPTest.class);
 		testSuite.addTestSuite(TearDownWSRPProducerDPTest.class);

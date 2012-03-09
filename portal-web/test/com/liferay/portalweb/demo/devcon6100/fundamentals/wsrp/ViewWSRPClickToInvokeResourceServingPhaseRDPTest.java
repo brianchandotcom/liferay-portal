@@ -20,9 +20,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewWSRPClickToInvokeResouceServingPhaseRDPTest
+public class ViewWSRPClickToInvokeResourceServingPhaseRDPTest
 	extends BaseTestCase {
-	public void testViewWSRPClickToInvokeResouceServingPhaseRDP()
+	public void testViewWSRPClickToInvokeResourceServingPhaseRDP()
 		throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
@@ -138,14 +138,12 @@ public class ViewWSRPClickToInvokeResouceServingPhaseRDPTest
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("logo(2).png"),
-			selenium.getText("xPath=(//a[@class='document-link']/span[2])[1]"));
+			selenium.getText(
+				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"));
 		assertEquals(RuntimeVariables.replace("logo.png"),
-			selenium.getText("xPath=(//a[@class='document-link']/span[2])[2]"));
-		selenium.clickAt("xPath=(//a[@class='document-link']/span[2])[1]",
-			RuntimeVariables.replace("logo(2).png"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		selenium.clickAt("xPath=(//a[@class='document-link']/span[2])[1]",
+			selenium.getText(
+				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"));
+		selenium.clickAt("xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]",
 			RuntimeVariables.replace("logo(2).png"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
@@ -172,5 +170,6 @@ public class ViewWSRPClickToInvokeResouceServingPhaseRDPTest
 
 		assertEquals(RuntimeVariables.replace("Download (2.0k)"),
 			selenium.getText("//span[@class='download-document']/span/a/span"));
+		Thread.sleep(20000);
 	}
 }

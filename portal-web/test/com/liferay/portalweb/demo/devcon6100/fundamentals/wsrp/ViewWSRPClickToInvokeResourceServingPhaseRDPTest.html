@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>ViewWSRPClickToInvokeResouceServingPhaseRDPTest</title>
+<title>ViewWSRPClickToInvokeResourceServingPhaseRDPTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">ViewWSRPClickToInvokeResouceServingPhaseRDPTest</td></tr>
+<tr><td rowspan="1" colspan="3">ViewWSRPClickToInvokeResourceServingPhaseRDPTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -110,22 +110,17 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//a[@class='document-link']/span[2])[1]</td>
+	<td>xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]</td>
 	<td>logo(2).png</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//a[@class='document-link']/span[2])[2]</td>
+	<td>xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]</td>
 	<td>logo.png</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>xPath=(//a[@class='document-link']/span[2])[1]</td>
-	<td>logo(2).png</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>xPath=(//a[@class='document-link']/span[2])[1]</td>
+	<td>xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]</td>
 	<td>logo(2).png</td>
 </tr>
 <tr>
@@ -142,6 +137,11 @@
 	<td>assertText</td>
 	<td>//span[@class='download-document']/span/a/span</td>
 	<td>Download (2.0k)</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>20000</td>
+	<td></td>
 </tr>
 </tbody></table>
 </body>

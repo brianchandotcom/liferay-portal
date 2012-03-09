@@ -38,7 +38,7 @@ if (Validator.isNull(recurrenceTypeParam) && (event != null)) {
 int dailyType = ParamUtil.getInteger(request, "dailyType");
 String dailyTypeParam = ParamUtil.getString(request, "dailyType");
 if (Validator.isNull(dailyTypeParam) && (event != null)) {
-	if ((event.getRepeating()) && (recurrence != null)) {
+	if (event.getRepeating() && (recurrence != null)) {
 		if (recurrence.getByDay() != null) {
 			dailyType = 1;
 		}
@@ -48,7 +48,7 @@ if (Validator.isNull(dailyTypeParam) && (event != null)) {
 int dailyInterval = ParamUtil.getInteger(request, "dailyInterval", 1);
 String dailyIntervalParam = ParamUtil.getString(request, "dailyInterval");
 if (Validator.isNull(dailyIntervalParam) && (event != null)) {
-	if ((event.getRepeating()) && (recurrence != null)) {
+	if (event.getRepeating() && (recurrence != null)) {
 		dailyInterval = recurrence.getInterval();
 	}
 }
@@ -56,7 +56,7 @@ if (Validator.isNull(dailyIntervalParam) && (event != null)) {
 int weeklyInterval = ParamUtil.getInteger(request, "weeklyInterval", 1);
 String weeklyIntervalParam = ParamUtil.getString(request, "weeklyInterval");
 if (Validator.isNull(weeklyIntervalParam) && (event != null)) {
-	if ((event.getRepeating()) && (recurrence != null)) {
+	if (event.getRepeating() && (recurrence != null)) {
 		weeklyInterval = recurrence.getInterval();
 	}
 }
@@ -64,7 +64,7 @@ if (Validator.isNull(weeklyIntervalParam) && (event != null)) {
 int monthlyType = ParamUtil.getInteger(request, "monthlyType");
 String monthlyTypeParam = ParamUtil.getString(request, "monthlyType");
 if (Validator.isNull(monthlyTypeParam) && (event != null)) {
-	if ((event.getRepeating()) && (recurrence != null)) {
+	if (event.getRepeating() && (recurrence != null)) {
 		if (recurrence.getByMonthDay() == null) {
 			monthlyType = 1;
 		}
@@ -74,7 +74,7 @@ if (Validator.isNull(monthlyTypeParam) && (event != null)) {
 int monthlyDay0 = ParamUtil.getInteger(request, "monthlyDay0", 15);
 String monthlyDay0Param = ParamUtil.getString(request, "monthlyDay0");
 if (Validator.isNull(monthlyDay0Param) && (event != null)) {
-	if ((event.getRepeating()) && (recurrence != null)) {
+	if (event.getRepeating() && (recurrence != null)) {
 		if (recurrence.getByMonthDay() != null) {
 			monthlyDay0 = recurrence.getByMonthDay()[0];
 		}
@@ -84,7 +84,7 @@ if (Validator.isNull(monthlyDay0Param) && (event != null)) {
 int monthlyInterval0 = ParamUtil.getInteger(request, "monthlyInterval0", 1);
 String monthlyInterval0Param = ParamUtil.getString(request, "monthlyInterval0");
 if (Validator.isNull(monthlyInterval0Param) && (event != null)) {
-	if ((event.getRepeating()) && (recurrence != null)) {
+	if (event.getRepeating() && (recurrence != null)) {
 		monthlyInterval0 = recurrence.getInterval();
 	}
 }
@@ -92,7 +92,7 @@ if (Validator.isNull(monthlyInterval0Param) && (event != null)) {
 int monthlyPos = ParamUtil.getInteger(request, "monthlyPos", 1);
 String monthlyPosParam = ParamUtil.getString(request, "monthlyPos");
 if (Validator.isNull(monthlyPosParam) && (event != null)) {
-	if ((event.getRepeating()) && (recurrence != null)) {
+	if (event.getRepeating() && (recurrence != null)) {
 		if (recurrence.getByMonth() != null) {
 			monthlyPos = recurrence.getByMonth()[0];
 		}
@@ -105,7 +105,7 @@ if (Validator.isNull(monthlyPosParam) && (event != null)) {
 int monthlyDay1 = ParamUtil.getInteger(request, "monthlyDay1", Calendar.SUNDAY);
 String monthlyDay1Param = ParamUtil.getString(request, "monthlyDay1");
 if (Validator.isNull(monthlyDay1Param) && (event != null)) {
-	if ((event.getRepeating()) && (recurrence != null)) {
+	if (event.getRepeating() && (recurrence != null)) {
 		if (recurrence.getByMonth() != null) {
 			monthlyDay1 = -1;
 		}
@@ -118,7 +118,7 @@ if (Validator.isNull(monthlyDay1Param) && (event != null)) {
 int monthlyInterval1 = ParamUtil.getInteger(request, "monthlyInterval1", 1);
 String monthlyInterval1Param = ParamUtil.getString(request, "monthlyInterval1");
 if (Validator.isNull(monthlyInterval1Param) && (event != null)) {
-	if ((event.getRepeating()) && (recurrence != null)) {
+	if (event.getRepeating() && (recurrence != null)) {
 		monthlyInterval1 = recurrence.getInterval();
 	}
 }
@@ -126,7 +126,7 @@ if (Validator.isNull(monthlyInterval1Param) && (event != null)) {
 int yearlyType = ParamUtil.getInteger(request, "yearlyType");
 String yearlyTypeParam = ParamUtil.getString(request, "yearlyType");
 if (Validator.isNull(yearlyTypeParam) && (event != null)) {
-	if ((event.getRepeating()) && (recurrence != null)) {
+	if (event.getRepeating() && (recurrence != null)) {
 		if (recurrence.getByMonthDay() == null) {
 			yearlyType = 1;
 		}
@@ -136,7 +136,7 @@ if (Validator.isNull(yearlyTypeParam) && (event != null)) {
 int yearlyMonth0 = ParamUtil.getInteger(request, "yearlyMonth0", Calendar.JANUARY);
 String yearlyMonth0Param = ParamUtil.getString(request, "yearlyMonth0");
 if (Validator.isNull(yearlyMonth0Param) && (event != null)) {
-	if ((event.getRepeating()) && (recurrence != null)) {
+	if (event.getRepeating() && (recurrence != null)) {
 		if (recurrence.getByMonth() == null) {
 			yearlyMonth0 = recurrence.getDtStart().get(Calendar.MONTH);
 		}
@@ -150,7 +150,7 @@ if (Validator.isNull(yearlyMonth0Param) && (event != null)) {
 int yearlyDay0 = ParamUtil.getInteger(request, "yearlyDay0", 15);
 String yearlyDay0Param = ParamUtil.getString(request, "yearlyDay0");
 if (Validator.isNull(yearlyDay0Param) && (event != null)) {
-	if ((event.getRepeating()) && (recurrence != null)) {
+	if (event.getRepeating() && (recurrence != null)) {
 		if (recurrence.getByMonthDay() == null) {
 			yearlyDay0 = recurrence.getDtStart().get(Calendar.DATE);
 		}
@@ -163,7 +163,7 @@ if (Validator.isNull(yearlyDay0Param) && (event != null)) {
 int yearlyInterval0 = ParamUtil.getInteger(request, "yearlyInterval0", 1);
 String yearlyInterval0Param = ParamUtil.getString(request, "yearlyInterval0");
 if (Validator.isNull(yearlyInterval0Param) && (event != null)) {
-	if ((event.getRepeating()) && (recurrence != null)) {
+	if (event.getRepeating() && (recurrence != null)) {
 		yearlyInterval0 = recurrence.getInterval();
 	}
 }
@@ -171,7 +171,7 @@ if (Validator.isNull(yearlyInterval0Param) && (event != null)) {
 int yearlyPos = ParamUtil.getInteger(request, "yearlyPos", 1);
 String yearlyPosParam = ParamUtil.getString(request, "yearlyPos");
 if (Validator.isNull(yearlyPosParam) && (event != null)) {
-	if ((event.getRepeating()) && (recurrence != null)) {
+	if (event.getRepeating() && (recurrence != null)) {
 		if (recurrence.getByDay() != null) {
 			yearlyPos = recurrence.getByDay()[0].getDayPosition();
 		}
@@ -181,7 +181,7 @@ if (Validator.isNull(yearlyPosParam) && (event != null)) {
 int yearlyDay1 = ParamUtil.getInteger(request, "yearlyDay1", Calendar.SUNDAY);
 String yearlyDay1Param = ParamUtil.getString(request, "yearlyDay1");
 if (Validator.isNull(yearlyDay1Param) && (event != null)) {
-	if ((event.getRepeating()) && (recurrence != null)) {
+	if (event.getRepeating() && (recurrence != null)) {
 		if (recurrence.getByDay() != null) {
 			yearlyDay1 = recurrence.getByDay()[0].getDayOfWeek();
 		}
@@ -191,7 +191,7 @@ if (Validator.isNull(yearlyDay1Param) && (event != null)) {
 int yearlyMonth1 = ParamUtil.getInteger(request, "yearlyMonth1", Calendar.JANUARY);
 String yearlyMonth1Param = ParamUtil.getString(request, "yearlyMonth1");
 if (Validator.isNull(yearlyMonth1Param) && (event != null)) {
-	if ((event.getRepeating()) && (recurrence != null)) {
+	if (event.getRepeating() && (recurrence != null)) {
 		if (recurrence.getByMonth() != null) {
 			yearlyMonth1 = recurrence.getByMonth()[0];
 		}
@@ -201,7 +201,7 @@ if (Validator.isNull(yearlyMonth1Param) && (event != null)) {
 int yearlyInterval1 = ParamUtil.getInteger(request, "yearlyInterval1", 1);
 String yearlyInterval1Param = ParamUtil.getString(request, "yearlyInterval1");
 if (Validator.isNull(yearlyInterval1Param) && (event != null)) {
-	if ((event.getRepeating()) && (recurrence != null)) {
+	if (event.getRepeating() && (recurrence != null)) {
 		yearlyInterval1 = recurrence.getInterval();
 	}
 }
@@ -406,7 +406,7 @@ private boolean _getWeeklyDayPos(HttpServletRequest req, int day, CalEvent event
 	String weeklyPosParam = ParamUtil.getString(req, "weeklyDayPos" + day);
 
 	if (Validator.isNull(weeklyPosParam) && (event != null)) {
-		if ((event.getRepeating()) && (recurrence != null)) {
+		if (event.getRepeating() && (recurrence != null)) {
 			DayAndPosition[] dayPositions = recurrence.getByDay();
 
 			if (dayPositions != null) {

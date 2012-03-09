@@ -32,7 +32,7 @@ if (event.getRepeating()) {
 
 int endDateType = ParamUtil.getInteger(request, "endDateType");
 
-if ((event.getRepeating()) && (recurrence != null)) {
+if (event.getRepeating() && (recurrence != null)) {
 	if (recurrence.getUntil() != null) {
 		endDateType = 2;
 	}

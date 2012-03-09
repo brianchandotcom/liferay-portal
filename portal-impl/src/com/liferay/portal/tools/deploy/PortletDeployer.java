@@ -273,8 +273,8 @@ public class PortletDeployer extends BaseDeployer {
 				"security-role-ref");
 
 			if ((servletClass != null) &&
-				(servletClass.equals(
-					"com.liferay.portal.servlet.SharedServletWrapper"))) {
+				servletClass.equals(
+					"com.liferay.portal.servlet.SharedServletWrapper")) {
 
 				sb.append("<servlet>");
 

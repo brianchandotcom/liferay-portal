@@ -1371,7 +1371,14 @@ public class SourceFormatter {
 				trimmedLine.startsWith("while (") ||
 				Validator.isNotNull(ifClause)) {
 
-				ifClause = ifClause + StringPool.SPACE + trimmedLine;
+				if (Validator.isNull(ifClause) ||
+					ifClause.endsWith(StringPool.OPEN_PARENTHESIS)) {
+
+					ifClause = ifClause + trimmedLine;
+				}
+				else {
+					ifClause = ifClause + StringPool.SPACE + trimmedLine;
+				}
 
 				if (ifClause.endsWith(") {")) {
 					_checkIfClause(ifClause, fileName, lineCount);

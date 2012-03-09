@@ -72,8 +72,8 @@ public class DeviceRecognitionProviderDestinationEventListener
 	protected boolean isProceed(
 		String destinationName, MessageListener messageListener) {
 
-		if ((!destinationName.equals(
-				DestinationNames.DEVICE_RECOGNITION_PROVIDER)) ||
+		if (!destinationName.equals(
+				DestinationNames.DEVICE_RECOGNITION_PROVIDER) ||
 			!(messageListener instanceof ProxyMessageListener)) {
 
 			return false;

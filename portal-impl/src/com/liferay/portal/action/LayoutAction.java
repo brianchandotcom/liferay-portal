@@ -806,8 +806,7 @@ public class LayoutAction extends Action {
 
 			try {
 				if ((contentType != null) &&
-					(contentType.startsWith(
-						ContentTypes.MULTIPART_FORM_DATA))) {
+					contentType.startsWith(ContentTypes.MULTIPART_FORM_DATA)) {
 
 					PortletConfigImpl invokerPortletConfigImpl =
 						(PortletConfigImpl)invokerPortlet.getPortletConfig();

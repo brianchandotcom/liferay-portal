@@ -461,7 +461,11 @@ public class StripFilter extends BasePortalFilter {
 		String minifiedContent = content;
 
 		if (PropsValues.MINIFIER_INLINE_CONTENT_CACHE_SIZE > 0) {
-			String key = String.valueOf(content.hashCode());
+			CacheKeyGenerator cacheKeyGenerator =
+				CacheKeyGeneratorUtil.getCacheKeyGenerator(
+					StripFilter.class.getName());
+
+			String key = String.valueOf(cacheKeyGenerator.getCacheKey(content));
 
 			minifiedContent = _minifierCache.get(key);
 

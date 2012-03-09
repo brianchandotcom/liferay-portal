@@ -21,9 +21,9 @@ WorkflowTaskDisplayTerms displayTerms = new WorkflowTaskDisplayTerms(renderReque
 %>
 
 <liferay-ui:search-toggle
-	id="toggle_id_workflow_task_search"
-	displayTerms="<%= displayTerms %>"
 	buttonLabel="search"
+	displayTerms="<%= displayTerms %>"
+	id="toggle_id_workflow_task_search"
 >
 
 	<aui:fieldset>

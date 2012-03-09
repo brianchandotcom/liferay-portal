@@ -239,8 +239,8 @@ List productScreenshots = SCProductScreenshotLocalServiceUtil.getProductScreensh
 </c:if>
 
 <liferay-ui:tabs
-	param="tabs2"
 	names="version-history,comments"
+	param="tabs2"
 	portletURL="<%= viewProductEntryURL %>"
 />
 

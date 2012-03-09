@@ -51,8 +51,8 @@ String backURL = ParamUtil.getString(request, "backURL");
 %>
 
 <liferay-ui:tabs
+	backURL="<%= backURL %>"
 	names="<%= tabs1Names %>"
 	url="<%= viewURL.toString() %>"
 	url1="<%= cartURL.toString() %>"
-	backURL="<%= backURL %>"
 />

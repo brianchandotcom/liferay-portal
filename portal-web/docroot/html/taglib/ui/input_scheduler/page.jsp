@@ -34,9 +34,9 @@
 				monthParam="schedulerStartDateMonth"
 				monthValue="<%= cal.get(Calendar.MONTH) %>"
 				yearParam="schedulerStartDateYear"
-				yearValue="<%= cal.get(Calendar.YEAR) %>"
-				yearRangeStart="<%= cal.get(Calendar.YEAR) %>"
 				yearRangeEnd="<%= cal.get(Calendar.YEAR) + 5 %>"
+				yearRangeStart="<%= cal.get(Calendar.YEAR) %>"
+				yearValue="<%= cal.get(Calendar.YEAR) %>"
 			/>
 
 			&nbsp;
@@ -46,9 +46,9 @@
 				amPmValue="<%= cal.get(Calendar.AM_PM) %>"
 				hourParam="schedulerStartDateHour"
 				hourValue="<%= cal.get(Calendar.HOUR) %>"
+				minuteInterval="<%= 1 %>"
 				minuteParam="schedulerStartDateMinute"
 				minuteValue="<%= cal.get(Calendar.MINUTE) %>"
-				minuteInterval="<%= 1 %>"
 			/>
 		</div>
 	</aui:field-wrapper>
@@ -69,21 +69,21 @@
 				monthParam="schedulerEndDateMonth"
 				monthValue="<%= cal.get(Calendar.MONTH) %>"
 				yearParam="schedulerEndDateYear"
-				yearValue="<%= cal.get(Calendar.YEAR) %>"
-				yearRangeStart="<%= cal.get(Calendar.YEAR) %>"
 				yearRangeEnd="<%= cal.get(Calendar.YEAR) + 5 %>"
+				yearRangeStart="<%= cal.get(Calendar.YEAR) %>"
+				yearValue="<%= cal.get(Calendar.YEAR) %>"
 			/>
 
 			&nbsp;
 
 			<liferay-ui:input-time
-				hourParam="schedulerEndDateHour"
-				hourValue="<%= cal.get(Calendar.HOUR) %>"
-				minuteParam="schedulerEndDateMinute"
-				minuteValue="<%= cal.get(Calendar.MINUTE) %>"
-				minuteInterval="<%= 1 %>"
 				amPmParam="schedulerEndDateAmPm"
 				amPmValue="<%= cal.get(Calendar.AM_PM) %>"
+				hourParam="schedulerEndDateHour"
+				hourValue="<%= cal.get(Calendar.HOUR) %>"
+				minuteInterval="<%= 1 %>"
+				minuteParam="schedulerEndDateMinute"
+				minuteValue="<%= cal.get(Calendar.MINUTE) %>"
 			/>
 		</div>
 

@@ -93,8 +93,8 @@
 
 		<liferay-ui:search-container-column-text
 			buffer="buffer"
-			name="asset-title"
 			href="<%= rowURL %>"
+			name="asset-title"
 		>
 
 			<%
@@ -105,8 +105,8 @@
 
 		<liferay-ui:search-container-column-text
 			buffer="buffer"
-			name="asset-type"
 			href="<%= rowURL %>"
+			name="asset-type"
 		>
 
 			<%
@@ -117,8 +117,8 @@
 
 		<liferay-ui:search-container-column-text
 			buffer="buffer"
-			name="last-activity-date"
 			href="<%= rowURL %>"
+			name="last-activity-date"
 		>
 
 			<%
@@ -138,8 +138,8 @@
 
 		<liferay-ui:search-container-column-text
 			buffer="buffer"
-			name="due-date"
 			href="<%= rowURL %>"
+			name="due-date"
 			orderable="<%= true %>"
 		>
 

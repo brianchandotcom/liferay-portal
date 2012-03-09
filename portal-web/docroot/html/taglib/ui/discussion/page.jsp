@@ -301,9 +301,9 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 							<aui:column cssClass="lfr-discussion-details">
 								<liferay-ui:user-display
+									displayStyle="<%= 2 %>"
 									userId="<%= message.getUserId() %>"
 									userName="<%= HtmlUtil.escape(message.getUserName()) %>"
-									displayStyle="<%= 2 %>"
 								/>
 							</aui:column>
 

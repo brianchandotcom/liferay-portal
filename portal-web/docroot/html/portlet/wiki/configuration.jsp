@@ -358,13 +358,13 @@ else if (tabs2.equals("page-updated-email")) {
 				%>
 
 				<liferay-ui:input-move-boxes
-					leftTitle="visible"
-					rightTitle="hidden"
 					leftBoxName="currentVisibleNodes"
-					rightBoxName="availableVisibleNodes"
-					leftReorder="true"
 					leftList="<%= leftList %>"
+					leftReorder="true"
+					leftTitle="visible"
+					rightBoxName="availableVisibleNodes"
 					rightList="<%= rightList %>"
+					rightTitle="hidden"
 				/>
 			</aui:fieldset>
 		</c:when>

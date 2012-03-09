@@ -31,8 +31,8 @@ String portletURLString = portletURL.toString();
 		/>
 
 		<liferay-ui:search-container
-			headerNames="session-id,user-id,name,screen-name,last-request,num-of-hits"
 			emptyResultsMessage="there-are-no-live-sessions"
+			headerNames="session-id,user-id,name,screen-name,last-request,num-of-hits"
 		>
 
 			<%

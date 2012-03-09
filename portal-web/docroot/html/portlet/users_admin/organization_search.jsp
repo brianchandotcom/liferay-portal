@@ -37,9 +37,9 @@ if (displayTerms.getParentOrganizationId() > 0) {
 %>
 
 <liferay-ui:search-toggle
-	id="toggle_id_users_admin_organization_search"
-	displayTerms="<%= displayTerms %>"
 	buttonLabel="search"
+	displayTerms="<%= displayTerms %>"
+	id="toggle_id_users_admin_organization_search"
 >
 	<aui:fieldset>
 		<aui:input name="<%= displayTerms.NAME %>" size="20" value="<%= displayTerms.getName() %>" />

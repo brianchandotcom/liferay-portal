@@ -51,8 +51,8 @@ portletURL.setParameter("tabs1", tabs1);
 
 <liferay-ui:tabs
 	names="<%= tabs1Names %>"
-	tabsValues="<%= tabs1Values %>"
 	portletURL="<%= portletURL %>"
+	tabsValues="<%= tabs1Values %>"
 />
 
 <c:choose>

@@ -129,12 +129,12 @@
 			%>
 
 			<liferay-ui:calendar
-				month="<%= month %>"
-				day="<%= day %>"
-				year="<%= year %>"
-				headerPattern="MMMM"
 				data="<%= data %>"
+				day="<%= day %>"
+				headerPattern="MMMM"
+				month="<%= month %>"
 				showAllPotentialWeeks="<%= true %>"
+				year="<%= year %>"
 			/>
 		</liferay-ui:table-iterator>
 	</td>

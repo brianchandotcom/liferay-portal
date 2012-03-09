@@ -110,13 +110,13 @@ else if (tabs3.equals("shipping-email")) {
 					%>
 
 					<liferay-ui:input-move-boxes
-						leftTitle="current"
-						rightTitle="available"
 						leftBoxName="current_cc_types"
-						rightBoxName="available_cc_types"
-						leftReorder="true"
 						leftList="<%= leftList %>"
+						leftReorder="true"
+						leftTitle="current"
+						rightBoxName="available_cc_types"
 						rightList="<%= rightList %>"
+						rightTitle="available"
 					/>
 				</aui:field-wrapper>
 

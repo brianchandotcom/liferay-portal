@@ -274,34 +274,34 @@ Map<String, String> hints = ModelHintsUtil.getHints(model, field);
 
 			<liferay-ui:input-date
 				cssClass="<%= cssClass %>"
+				dayNullable="<%= dayNullable %>"
 				dayParam='<%= fieldParam + "Day" %>'
 				dayValue="<%= day %>"
-				dayNullable="<%= dayNullable %>"
 				disabled="<%= disabled %>"
 				firstDayOfWeek="<%= firstDayOfWeek %>"
 				formName="<%= formName %>"
 				imageInputId='<%= fieldParam + "ImageInputId" %>'
+				monthNullable="<%= monthNullable %>"
 				monthParam='<%= fieldParam + "Month" %>'
 				monthValue="<%= month %>"
-				monthNullable="<%= monthNullable %>"
-				yearParam='<%= fieldParam + "Year" %>'
-				yearValue="<%= year %>"
 				yearNullable="<%= yearNullable %>"
-				yearRangeStart="<%= yearRangeStart %>"
+				yearParam='<%= fieldParam + "Year" %>'
 				yearRangeEnd="<%= yearRangeEnd %>"
+				yearRangeStart="<%= yearRangeStart %>"
+				yearValue="<%= year %>"
 			/>
 
 			<c:if test="<%= showTime %>">
 				<liferay-ui:input-time
 					amPmParam='<%= fieldParam + "AmPm" %>'
 					amPmValue="<%= amPm %>"
-					disabled="<%= disabled %>"
 					cssClass="<%= cssClass %>"
+					disabled="<%= disabled %>"
 					hourParam='<%= fieldParam + "Hour" %>'
 					hourValue="<%= hour %>"
+					minuteInterval="<%= 1 %>"
 					minuteParam='<%= fieldParam + "Minute" %>'
 					minuteValue="<%= minute %>"
-					minuteInterval="<%= 1 %>"
 				/>
 			</c:if>
 		</c:when>

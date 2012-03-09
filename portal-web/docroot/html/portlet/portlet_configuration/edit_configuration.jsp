@@ -39,9 +39,9 @@ String path = (String)request.getAttribute(WebKeys.CONFIGURATION_ACTION_PATH);
 
 	<div class="archived-setups">
 		<liferay-ui:icon
-			message="archive-restore-setup"
 			image="export"
 			label="<%= true %>"
+			message="archive-restore-setup"
 			url="<%= archivedSetupsURL %>"
 		/>
 	</div>

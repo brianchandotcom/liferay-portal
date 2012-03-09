@@ -135,8 +135,8 @@ boolean showMenu = displayAssetTypeFacet || displayAssetTagsFacet || displayAsse
 			<liferay-ui:search-container-row
 				className="com.liferay.portal.kernel.search.Document"
 				escapedModel="<%= false %>"
-				modelVar="document"
 				keyProperty="UID"
+				modelVar="document"
 				stringKey="<%= true %>"
 			>
 				<liferay-ui:search-container-column-jsp path='<%= displayResultsInDocumentForm ? "/html/portlet/search/main_search_document_form.jsp" : "/html/portlet/search/main_search_result_form.jsp" %>' />

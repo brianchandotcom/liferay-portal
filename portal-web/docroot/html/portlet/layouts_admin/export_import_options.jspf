@@ -114,9 +114,9 @@
 														monthParam="startDateMonth"
 														monthValue="<%= yesterday.get(Calendar.MONTH) %>"
 														yearParam="startDateYear"
-														yearValue="<%= yesterday.get(Calendar.YEAR) %>"
 														yearRangeEnd="<%= yesterday.get(Calendar.YEAR) %>"
 														yearRangeStart="<%= yesterday.get(Calendar.YEAR) - 100 %>"
+														yearValue="<%= yesterday.get(Calendar.YEAR) %>"
 													/>
 
 													&nbsp;
@@ -144,9 +144,9 @@
 														monthParam="endDateMonth"
 														monthValue="<%= today.get(Calendar.MONTH) %>"
 														yearParam="endDateYear"
-														yearValue="<%= today.get(Calendar.YEAR) %>"
 														yearRangeEnd="<%= today.get(Calendar.YEAR) %>"
 														yearRangeStart="<%= today.get(Calendar.YEAR) - 100 %>"
+														yearValue="<%= today.get(Calendar.YEAR) %>"
 													/>
 
 													&nbsp;

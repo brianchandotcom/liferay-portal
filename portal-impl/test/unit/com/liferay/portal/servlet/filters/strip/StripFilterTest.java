@@ -14,18 +14,36 @@
 
 package com.liferay.portal.servlet.filters.strip;
 
-import com.liferay.portal.kernel.test.TestCase;
+import com.liferay.portal.cache.key.HashCodeCacheKeyGenerator;
+import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
+import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
 import com.liferay.portal.util.MinifierUtil;
 
 import java.io.StringWriter;
 
 import java.nio.CharBuffer;
 
+import junit.framework.Assert;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.mockito.Mockito;
+import org.mockito.stubbing.OngoingStubbing;
+
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+
 /**
  * @author Shuyang Zhou
+ * @author Miguel Pastor
  */
-public class StripFilterTest extends TestCase {
+@PrepareForTest(CacheKeyGeneratorUtil.class)
+@RunWith(PowerMockRunner.class)
+public class StripFilterTest extends PowerMockito {
 
+	@Test
 	public void testHasMarker() {
 		StripFilter stripFilter = new StripFilter();
 
@@ -38,34 +56,35 @@ public class StripFilterTest extends TestCase {
 
 		char[] marker = "cdef".toCharArray();
 
-		assertFalse(stripFilter.hasMarker(charBuffer, marker));
-		assertEquals(2, charBuffer.position());
+		Assert.assertFalse(stripFilter.hasMarker(charBuffer, marker));
+		Assert.assertEquals(2, charBuffer.position());
 
 		// No match
 
 		charBuffer = CharBuffer.wrap("abcdef");
 		marker = "abce".toCharArray();
 
-		assertFalse(stripFilter.hasMarker(charBuffer, marker));
-		assertEquals(0, charBuffer.position());
+		Assert.assertFalse(stripFilter.hasMarker(charBuffer, marker));
+		Assert.assertEquals(0, charBuffer.position());
 
 		// Exact match
 
 		charBuffer = CharBuffer.wrap("abcdef");
 		marker = "abcd".toCharArray();
 
-		assertTrue(stripFilter.hasMarker(charBuffer, marker));
-		assertEquals(0, charBuffer.position());
+		Assert.assertTrue(stripFilter.hasMarker(charBuffer, marker));
+		Assert.assertEquals(0, charBuffer.position());
 
 		// Match ignore case
 
 		charBuffer = CharBuffer.wrap("aBcDef");
 		marker = "abcd".toCharArray();
 
-		assertTrue(stripFilter.hasMarker(charBuffer, marker));
-		assertEquals(0, charBuffer.position());
+		Assert.assertTrue(stripFilter.hasMarker(charBuffer, marker));
+		Assert.assertEquals(0, charBuffer.position());
 	}
 
+	@Test
 	public void testProcessCSS() throws Exception {
 		StripFilter stripFilter = new StripFilter();
 
@@ -77,8 +96,9 @@ public class StripFilterTest extends TestCase {
 
 		stripFilter.processCSS(null, null, charBuffer, stringWriter);
 
-		assertEquals("style type=\"text/css\">", stringWriter.toString());
-		assertEquals(22, charBuffer.position());
+		Assert.assertEquals(
+			"style type=\"text/css\">", stringWriter.toString());
+		Assert.assertEquals(22, charBuffer.position());
 
 		// Empty tag
 
@@ -87,20 +107,22 @@ public class StripFilterTest extends TestCase {
 
 		stripFilter.processCSS(null, null, charBuffer, stringWriter);
 
-		assertEquals(
+		Assert.assertEquals(
 			"style type=\"text/css\"></style>", stringWriter.toString());
-		assertEquals(30, charBuffer.position());
+		Assert.assertEquals(30, charBuffer.position());
 
 		// Minifier spaces
 
 		charBuffer = CharBuffer.wrap("style type=\"text/css\"> \r\t\n</style>");
 		stringWriter = new StringWriter();
 
+		_mockCacheGenerationUtil();
+
 		stripFilter.processCSS(null, null, charBuffer, stringWriter);
 
-		assertEquals(
+		Assert.assertEquals(
 			"style type=\"text/css\"></style>", stringWriter.toString());
-		assertEquals(34, charBuffer.position());
+		Assert.assertEquals(34, charBuffer.position());
 
 		// Minifier code
 
@@ -115,10 +137,10 @@ public class StripFilterTest extends TestCase {
 
 		stripFilter.processCSS(null, null, charBuffer, stringWriter);
 
-		assertEquals(
+		Assert.assertEquals(
 			"style type=\"text/css\">" + minifiedCode + "</style>",
 			stringWriter.toString());
-		assertEquals(code.length() + 30, charBuffer.position());
+		Assert.assertEquals(code.length() + 30, charBuffer.position());
 
 		// Minifier code with trailing spaces
 
@@ -128,14 +150,19 @@ public class StripFilterTest extends TestCase {
 
 		stripFilter.processCSS(null, null, charBuffer, stringWriter);
 
-		assertEquals(
+		Assert.assertEquals(
 			"style type=\"text/css\">" + minifiedCode + "</style> ",
 			stringWriter.toString());
-		assertEquals(code.length() + 34, charBuffer.position());
+		Assert.assertEquals(code.length() + 34, charBuffer.position());
+
+		verifyStatic(Mockito.times(3));
 	}
 
+	@Test
 	public void testProcessJavaScript() throws Exception {
 		StripFilter stripFilter = new StripFilter();
+
+		_mockCacheGenerationUtil();
 
 		// Missing close tag
 
@@ -145,8 +172,8 @@ public class StripFilterTest extends TestCase {
 		stripFilter.processJavaScript(
 			charBuffer, stringWriter, "script".toCharArray());
 
-		assertEquals("script>", stringWriter.toString());
-		assertEquals(7, charBuffer.position());
+		Assert.assertEquals("script>", stringWriter.toString());
+		Assert.assertEquals(7, charBuffer.position());
 
 		// Empty tag
 
@@ -156,8 +183,8 @@ public class StripFilterTest extends TestCase {
 		stripFilter.processJavaScript(
 			charBuffer, stringWriter, "script".toCharArray());
 
-		assertEquals("script></script>", stringWriter.toString());
-		assertEquals(16, charBuffer.position());
+		Assert.assertEquals("script></script>", stringWriter.toString());
+		Assert.assertEquals(16, charBuffer.position());
 
 		// Minifier spaces
 
@@ -167,8 +194,8 @@ public class StripFilterTest extends TestCase {
 		stripFilter.processJavaScript(
 			charBuffer, stringWriter, "script".toCharArray());
 
-		assertEquals("script></script>", stringWriter.toString());
-		assertEquals(20, charBuffer.position());
+		Assert.assertEquals("script></script>", stringWriter.toString());
+		Assert.assertEquals(20, charBuffer.position());
 
 		// Minifier code
 
@@ -181,10 +208,10 @@ public class StripFilterTest extends TestCase {
 		stripFilter.processJavaScript(
 			charBuffer, stringWriter, "script".toCharArray());
 
-		assertEquals(
+		Assert.assertEquals(
 			"script>/*<![CDATA[*/" + minifiedCode + "/*]]>*/</script>",
 			stringWriter.toString());
-		assertEquals(code.length() + 16, charBuffer.position());
+		Assert.assertEquals(code.length() + 16, charBuffer.position());
 
 		// Minifier code with trailing spaces
 
@@ -194,12 +221,15 @@ public class StripFilterTest extends TestCase {
 		stripFilter.processJavaScript(
 			charBuffer, stringWriter, "script".toCharArray());
 
-		assertEquals(
+		Assert.assertEquals(
 			"script>/*<![CDATA[*/" + minifiedCode + "/*]]>*/</script> ",
 			stringWriter.toString());
-		assertEquals(code.length() + 20, charBuffer.position());
+		Assert.assertEquals(code.length() + 20, charBuffer.position());
+
+		verifyStatic(Mockito.times(5));
 	}
 
+	@Test
 	public void testProcessPre() throws Exception {
 		StripFilter stripFilter = new StripFilter();
 
@@ -210,8 +240,8 @@ public class StripFilterTest extends TestCase {
 
 		stripFilter.processPre(charBuffer, stringWriter);
 
-		assertEquals("pre", stringWriter.toString());
-		assertEquals(3, charBuffer.position());
+		Assert.assertEquals("pre", stringWriter.toString());
+		Assert.assertEquals(3, charBuffer.position());
 
 		// Without trailing spaces
 
@@ -220,8 +250,8 @@ public class StripFilterTest extends TestCase {
 
 		stripFilter.processPre(charBuffer, stringWriter);
 
-		assertEquals("pre>a b </pre>", stringWriter.toString());
-		assertEquals(14, charBuffer.position());
+		Assert.assertEquals("pre>a b </pre>", stringWriter.toString());
+		Assert.assertEquals(14, charBuffer.position());
 
 		// With trailing spaces
 
@@ -230,10 +260,11 @@ public class StripFilterTest extends TestCase {
 
 		stripFilter.processPre(charBuffer, stringWriter);
 
-		assertEquals("pre>a b </pre> ", stringWriter.toString());
-		assertEquals(18, charBuffer.position());
+		Assert.assertEquals("pre>a b </pre> ", stringWriter.toString());
+		Assert.assertEquals(18, charBuffer.position());
 	}
 
+	@Test
 	public void testProcessTextArea() throws Exception {
 		StripFilter stripFilter = new StripFilter();
 
@@ -244,8 +275,8 @@ public class StripFilterTest extends TestCase {
 
 		stripFilter.processTextArea(charBuffer, stringWriter);
 
-		assertEquals("textarea ", stringWriter.toString());
-		assertEquals(9, charBuffer.position());
+		Assert.assertEquals("textarea ", stringWriter.toString());
+		Assert.assertEquals(9, charBuffer.position());
 
 		// Without trailing spaces
 
@@ -254,8 +285,9 @@ public class StripFilterTest extends TestCase {
 
 		stripFilter.processTextArea(charBuffer, stringWriter);
 
-		assertEquals("textarea >a b </textarea>", stringWriter.toString());
-		assertEquals(25, charBuffer.position());
+		Assert.assertEquals(
+			"textarea >a b </textarea>", stringWriter.toString());
+		Assert.assertEquals(25, charBuffer.position());
 
 		// With trailing spaces
 
@@ -264,10 +296,12 @@ public class StripFilterTest extends TestCase {
 
 		stripFilter.processTextArea(charBuffer, stringWriter);
 
-		assertEquals("textarea >a b </textarea> ", stringWriter.toString());
-		assertEquals(29, charBuffer.position());
+		Assert.assertEquals(
+			"textarea >a b </textarea> ", stringWriter.toString());
+		Assert.assertEquals(29, charBuffer.position());
 	}
 
+	@Test
 	public void testSkipWhiteSpace() throws Exception {
 		StripFilter stripFilter = new StripFilter();
 
@@ -278,8 +312,8 @@ public class StripFilterTest extends TestCase {
 
 		stripFilter.skipWhiteSpace(charBuffer, stringWriter, true);
 
-		assertEquals("", stringWriter.toString());
-		assertEquals(0, charBuffer.position());
+		Assert.assertEquals("", stringWriter.toString());
+		Assert.assertEquals(0, charBuffer.position());
 
 		// No leading space
 
@@ -288,8 +322,8 @@ public class StripFilterTest extends TestCase {
 
 		stripFilter.skipWhiteSpace(charBuffer, stringWriter, true);
 
-		assertEquals("", stringWriter.toString());
-		assertEquals(0, charBuffer.position());
+		Assert.assertEquals("", stringWriter.toString());
+		Assert.assertEquals(0, charBuffer.position());
 
 		// Single leading space
 
@@ -298,32 +332,32 @@ public class StripFilterTest extends TestCase {
 
 		stripFilter.skipWhiteSpace(charBuffer, stringWriter, true);
 
-		assertEquals(" ", stringWriter.toString());
-		assertEquals(1, charBuffer.position());
+		Assert.assertEquals(" ", stringWriter.toString());
+		Assert.assertEquals(1, charBuffer.position());
 
 		charBuffer = CharBuffer.wrap("\t");
 		stringWriter = new StringWriter();
 
 		stripFilter.skipWhiteSpace(charBuffer, stringWriter, true);
 
-		assertEquals(" ", stringWriter.toString());
-		assertEquals(1, charBuffer.position());
+		Assert.assertEquals(" ", stringWriter.toString());
+		Assert.assertEquals(1, charBuffer.position());
 
 		charBuffer = CharBuffer.wrap("\r");
 		stringWriter = new StringWriter();
 
 		stripFilter.skipWhiteSpace(charBuffer, stringWriter, true);
 
-		assertEquals(" ", stringWriter.toString());
-		assertEquals(1, charBuffer.position());
+		Assert.assertEquals(" ", stringWriter.toString());
+		Assert.assertEquals(1, charBuffer.position());
 
 		charBuffer = CharBuffer.wrap("\n");
 		stringWriter = new StringWriter();
 
 		stripFilter.skipWhiteSpace(charBuffer, stringWriter, true);
 
-		assertEquals(" ", stringWriter.toString());
-		assertEquals(1, charBuffer.position());
+		Assert.assertEquals(" ", stringWriter.toString());
+		Assert.assertEquals(1, charBuffer.position());
 
 		// Multiple leading spaces
 
@@ -332,8 +366,18 @@ public class StripFilterTest extends TestCase {
 
 		stripFilter.skipWhiteSpace(charBuffer, stringWriter, true);
 
-		assertEquals(" ", stringWriter.toString());
-		assertEquals(4, charBuffer.position());
+		Assert.assertEquals(" ", stringWriter.toString());
+		Assert.assertEquals(4, charBuffer.position());
+	}
+
+	private void _mockCacheGenerationUtil() {
+		mockStatic(CacheKeyGeneratorUtil.class);
+
+		OngoingStubbing<CacheKeyGenerator> ongoingStubbing = when(
+				CacheKeyGeneratorUtil.getCacheKeyGenerator(
+						StripFilter.class.getName()));
+
+		ongoingStubbing.thenReturn(new HashCodeCacheKeyGenerator());
 	}
 
 }

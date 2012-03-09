@@ -1956,10 +1956,12 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			signature = MBUtil.getEmailMessageAddedSignature(preferences);
 		}
 
-		String subject = message.getSubject();
-
 		if (!subjectPrefix.contains("[$MESSAGE_SUBJECT$]")) {
-			message.setSubject(subjectPrefix.trim() + " " + subject.trim());
+			String subject = message.getSubject();
+
+			subject = subjectPrefix.trim() + StringPool.SPACE + subject.trim();
+
+			message.setSubject(subject);
 		}
 
 		if (Validator.isNotNull(signature)) {

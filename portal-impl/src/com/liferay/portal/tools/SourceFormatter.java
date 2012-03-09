@@ -387,6 +387,7 @@ public class SourceFormatter {
 							posOpenParenthesis - 1);
 
 						if (!Character.isLetterOrDigit(nextChar) &&
+							(nextChar != CharPool.PERIOD) &&
 							!Character.isLetterOrDigit(previousChar)) {
 
 							String s = ifClause.substring(
@@ -1871,6 +1872,14 @@ public class SourceFormatter {
 					!trimmedLine.startsWith(StringPool.GREATER_THAN)) {
 
 					int pos = trimmedLine.indexOf(StringPool.EQUAL);
+
+					if ((trimmedLine.startsWith("if (") ||
+						 trimmedLine.startsWith("else if (") ||
+						 trimmedLine.startsWith("while (")) &&
+						trimmedLine.endsWith(") {")) {
+
+						_checkIfClause(trimmedLine, fileName, lineCount);
+					}
 
 					if (pos != -1) {
 						String attribute = trimmedLine.substring(0, pos);

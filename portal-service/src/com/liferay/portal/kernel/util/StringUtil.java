@@ -603,16 +603,14 @@ public class StringUtil {
 		StringBundler sb = new StringBundler(2 * queryTerms.length - 1);
 
 		for (int i = 0; i < queryTerms.length; i++) {
-			sb.append(queryTerms[i].trim());
+			sb.append(Pattern.quote(queryTerms[i].trim()));
 
 			if ((i + 1) < queryTerms.length) {
 				sb.append(StringPool.PIPE);
 			}
 		}
 
-		int flags =
-			Pattern.CANON_EQ | Pattern.CASE_INSENSITIVE | Pattern.LITERAL |
-				Pattern.UNICODE_CASE;
+		int flags = Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE;
 
 		Pattern pattern = Pattern.compile(sb.toString(), flags);
 

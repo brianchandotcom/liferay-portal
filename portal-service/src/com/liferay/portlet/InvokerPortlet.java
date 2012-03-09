@@ -44,8 +44,6 @@ public interface InvokerPortlet
 
 	public boolean isCheckAuthToken();
 
-	public boolean isDestroyable();
-
 	public boolean isFacesPortlet();
 
 	public boolean isStrutsBridgePortlet();

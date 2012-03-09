@@ -370,7 +370,7 @@ public class AssetVocabularyLocalServiceImpl
 	protected void validate(long groupId, String name)
 		throws PortalException, SystemException {
 
-		if (Validator.isNull(name)) {
+		if (Validator.isNull(name) || name.length() > 75) {
 			throw new VocabularyNameException();
 		}
 

@@ -359,7 +359,7 @@ int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCom
 					<%
 					String usersTitle = null;
 
-					if (Validator.isNotNull(keywords) || (organization == null && organizationsCount == 0)) {
+					if (Validator.isNotNull(keywords) || ((organization == null) && (organizationsCount == 0))) {
 						usersTitle = LanguageUtil.get(pageContext, "users");
 					}
 					else if (organization == null) {

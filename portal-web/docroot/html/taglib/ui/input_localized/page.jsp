@@ -98,7 +98,7 @@ if (Validator.isNull(mainLanguageValue)) {
 					String selLanguageId = LocaleUtil.toLanguageId(locales[i]);
 					String languageValue = LocalizationUtil.getLocalization(xml, selLanguageId, false);
 
-					if (Validator.isNotNull(languageValue) || ((!ignoreRequestValue) && (request.getParameter(name + StringPool.UNDERLINE + selLanguageId) != null))) {
+					if (Validator.isNotNull(languageValue) || (!ignoreRequestValue && (request.getParameter(name + StringPool.UNDERLINE + selLanguageId) != null))) {
 						languageIds.add(selLanguageId);
 					}
 				}
@@ -147,7 +147,7 @@ if (Validator.isNull(mainLanguageValue)) {
 										String selLanguageId = LocaleUtil.toLanguageId(curLocale);
 										String languageValue = LocalizationUtil.getLocalization(xml, selLanguageId, false);
 
-										if ((Validator.isNotNull(xml)) && Validator.isNotNull(languageValue)) {
+										if (Validator.isNotNull(xml) && Validator.isNotNull(languageValue)) {
 											optionStyle = "style=\"font-weight: bold\"";
 										}
 									%>

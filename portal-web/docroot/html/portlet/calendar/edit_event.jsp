@@ -74,7 +74,7 @@ if (Validator.isNull(recurrenceTypeParam) && (event != null)) {
 int endDateType = ParamUtil.getInteger(request, "endDateType");
 String endDateTypeParam = ParamUtil.getString(request, "endDateType");
 if (Validator.isNull(endDateTypeParam) && (event != null)) {
-	if ((event.getRepeating()) && (recurrence != null)) {
+	if (event.getRepeating() && (recurrence != null)) {
 		if (recurrence.getUntil() != null) {
 			endDateType = 2;
 		}
@@ -87,7 +87,7 @@ if (Validator.isNull(endDateTypeParam) && (event != null)) {
 int endDateOccurrence = ParamUtil.getInteger(request, "endDateOccurrence", 10);
 String endDateOccurrenceParam = ParamUtil.getString(request, "endDateOccurrence");
 if (Validator.isNull(endDateOccurrenceParam) && (event != null)) {
-	if ((event.getRepeating()) && (recurrence != null)) {
+	if (event.getRepeating() && (recurrence != null)) {
 		endDateOccurrence = recurrence.getOccurrence();
 	}
 }

@@ -43,7 +43,7 @@ if (Validator.isNotNull(viewUsersRedirect)) {
 
 	Organization organization = null;
 
-	if ((organizationId > 0)) {
+	if (organizationId > 0) {
 		try {
 			organization = OrganizationLocalServiceUtil.getOrganization(organizationId);
 		}

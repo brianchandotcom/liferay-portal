@@ -40,7 +40,7 @@
 
 	Organization userOrganization = null;
 
-	if ((userOrganizationId > 0)) {
+	if (userOrganizationId > 0) {
 		try {
 			userOrganization = OrganizationLocalServiceUtil.getOrganization(userOrganizationId);
 

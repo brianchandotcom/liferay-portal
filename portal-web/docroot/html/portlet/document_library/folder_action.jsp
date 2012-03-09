@@ -98,13 +98,13 @@ else {
 
 boolean showWhenSingleIcon = false;
 
-if (row == null || portletId.equals(PortletKeys.DOCUMENT_LIBRARY)) {
+if ((row == null) || portletId.equals(PortletKeys.DOCUMENT_LIBRARY)) {
 	showWhenSingleIcon = true;
 }
 
 boolean view = false;
 
-if (row == null && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY))) {
+if ((row == null) && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY))) {
 	view = true;
 }
 %>

@@ -38,7 +38,7 @@ for (int i = 0; i < urls.length; i++) {
 
 	boolean last = false;
 
-	if (i == urls.length - 1) {
+	if (i == (urls.length - 1)) {
 		last = true;
 	}
 %>

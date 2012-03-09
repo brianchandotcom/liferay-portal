@@ -101,7 +101,7 @@ int weekNumber = 1;
 	<tr>
 
 		<%
-		if (((selCal.getFirstDayOfWeek()) == Calendar.MONDAY)) {
+		if (selCal.getFirstDayOfWeek() == Calendar.MONDAY) {
 			if (dayOfWeek == 1) {
 				dayOfWeek += 6;
 			}
@@ -193,7 +193,7 @@ int weekNumber = 1;
 		<%
 		}
 
-		if (showAllPotentialWeeks && weekNumber < 6) {
+		if (showAllPotentialWeeks && (weekNumber < 6)) {
 		%>
 
 			<tr>

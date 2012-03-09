@@ -113,7 +113,7 @@ if (choiceName > 0) {
 					paramName = EditQuestionAction.CHOICE_DESCRIPTION_PREFIX + c;
 				}
 
-				if (question != null && (i - 1 < choices.size())) {
+				if ((question != null) && ((i - 1) < choices.size())) {
 					choice = (PollsChoice)choices.get(i - 1);
 				}
 			%>

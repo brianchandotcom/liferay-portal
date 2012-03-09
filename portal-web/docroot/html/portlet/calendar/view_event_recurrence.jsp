@@ -37,19 +37,19 @@ if (event.getRepeating()) {
 }
 
 int dailyType = ParamUtil.getInteger(request, "dailyType");
-if ((event.getRepeating()) && (recurrence != null)) {
+if (event.getRepeating() && (recurrence != null)) {
 	if (recurrence.getByDay() != null) {
 		dailyType = 1;
 	}
 }
 
 int dailyInterval = ParamUtil.getInteger(request, "dailyInterval", 1);
-if ((event.getRepeating()) && (recurrence != null)) {
+if (event.getRepeating() && (recurrence != null)) {
 	dailyInterval = recurrence.getInterval();
 }
 
 int weeklyInterval = ParamUtil.getInteger(request, "weeklyInterval", 1);
-if ((event.getRepeating()) && (recurrence != null)) {
+if (event.getRepeating() && (recurrence != null)) {
 	weeklyInterval = recurrence.getInterval();
 }
 
@@ -62,26 +62,26 @@ boolean weeklyPosFr = _getWeeklyDayPos(request, Calendar.FRIDAY, event, recurren
 boolean weeklyPosSa = _getWeeklyDayPos(request, Calendar.SATURDAY, event, recurrence);
 
 int monthlyType = ParamUtil.getInteger(request, "monthlyType");
-if ((event.getRepeating()) && (recurrence != null)) {
+if (event.getRepeating() && (recurrence != null)) {
 	if (recurrence.getByMonthDay() == null) {
 		monthlyType = 1;
 	}
 }
 
 int monthlyDay0 = ParamUtil.getInteger(request, "monthlyDay0", 15);
-if ((event.getRepeating()) && (recurrence != null)) {
+if (event.getRepeating() && (recurrence != null)) {
 	if (recurrence.getByMonthDay() != null) {
 		monthlyDay0 = recurrence.getByMonthDay()[0];
 	}
 }
 
 int monthlyInterval0 = ParamUtil.getInteger(request, "monthlyInterval0", 1);
-if ((event.getRepeating()) && (recurrence != null)) {
+if (event.getRepeating() && (recurrence != null)) {
 	monthlyInterval0 = recurrence.getInterval();
 }
 
 int monthlyPos = ParamUtil.getInteger(request, "monthlyPos", 1);
-if ((event.getRepeating()) && (recurrence != null)) {
+if (event.getRepeating() && (recurrence != null)) {
 	if (recurrence.getByMonth() != null) {
 		monthlyPos = recurrence.getByMonth()[0];
 	}
@@ -91,7 +91,7 @@ if ((event.getRepeating()) && (recurrence != null)) {
 }
 
 int monthlyDay1 = ParamUtil.getInteger(request, "monthlyDay1", Calendar.SUNDAY);
-if ((event.getRepeating()) && (recurrence != null)) {
+if (event.getRepeating() && (recurrence != null)) {
 	if (recurrence.getByMonth() != null) {
 		monthlyDay1 = -1;
 	}
@@ -101,19 +101,19 @@ if ((event.getRepeating()) && (recurrence != null)) {
 }
 
 int monthlyInterval1 = ParamUtil.getInteger(request, "monthlyInterval1", 1);
-if ((event.getRepeating()) && (recurrence != null)) {
+if (event.getRepeating() && (recurrence != null)) {
 	monthlyInterval1 = recurrence.getInterval();
 }
 
 int yearlyType = 0;
-if ((event.getRepeating()) && (recurrence != null)) {
+if (event.getRepeating() && (recurrence != null)) {
 	if (recurrence.getByMonthDay() == null) {
 		yearlyType = 1;
 	}
 }
 
 int yearlyMonth0 = ParamUtil.getInteger(request, "yearlyMonth0", Calendar.JANUARY);
-if ((event.getRepeating()) && (recurrence != null)) {
+if (event.getRepeating() && (recurrence != null)) {
 	if (recurrence.getByMonth() == null) {
 		yearlyMonth0 = recurrence.getDtStart().get(Calendar.MONTH);
 	}
@@ -123,7 +123,7 @@ if ((event.getRepeating()) && (recurrence != null)) {
 }
 
 int yearlyDay0 = ParamUtil.getInteger(request, "yearlyDay0", 15);
-if ((event.getRepeating()) && (recurrence != null)) {
+if (event.getRepeating() && (recurrence != null)) {
 	if (recurrence.getByMonthDay() == null) {
 		yearlyDay0 = recurrence.getDtStart().get(Calendar.DATE);
 	}
@@ -133,33 +133,33 @@ if ((event.getRepeating()) && (recurrence != null)) {
 }
 
 int yearlyInterval0 = ParamUtil.getInteger(request, "yearlyInterval0", 1);
-if ((event.getRepeating()) && (recurrence != null)) {
+if (event.getRepeating() && (recurrence != null)) {
 	yearlyInterval0 = recurrence.getInterval();
 }
 
 int yearlyPos = ParamUtil.getInteger(request, "yearlyPos", 1);
-if ((event.getRepeating()) && (recurrence != null)) {
+if (event.getRepeating() && (recurrence != null)) {
 	if (recurrence.getByDay() != null) {
 		yearlyPos = recurrence.getByDay()[0].getDayPosition();
 	}
 }
 
 int yearlyDay1 = ParamUtil.getInteger(request, "yearlyDay1", Calendar.SUNDAY);
-if ((event.getRepeating()) && (recurrence != null)) {
+if (event.getRepeating() && (recurrence != null)) {
 	if (recurrence.getByDay() != null) {
 		yearlyDay1 = recurrence.getByDay()[0].getDayOfWeek();
 	}
 }
 
 int yearlyMonth1 = ParamUtil.getInteger(request, "yearlyMonth1", Calendar.JANUARY);
-if ((event.getRepeating()) && (recurrence != null)) {
+if (event.getRepeating() && (recurrence != null)) {
 	if (recurrence.getByMonth() != null) {
 		yearlyMonth1 = recurrence.getByMonth()[0];
 	}
 }
 
 int yearlyInterval1 = ParamUtil.getInteger(request, "yearlyInterval1", 1);
-if ((event.getRepeating()) && (recurrence != null)) {
+if (event.getRepeating() && (recurrence != null)) {
 	yearlyInterval1 = recurrence.getInterval();
 }
 %>
@@ -256,7 +256,7 @@ private boolean _getWeeklyDayPos(HttpServletRequest req, int day, CalEvent event
 	String weeklyPosParam = ParamUtil.getString(req, "weeklyDayPos" + day);
 
 	if (Validator.isNull(weeklyPosParam) && (event != null)) {
-		if ((event.getRepeating()) && (recurrence != null)) {
+		if (event.getRepeating() && (recurrence != null)) {
 			DayAndPosition[] dayPositions = recurrence.getByDay();
 
 			if (dayPositions != null) {

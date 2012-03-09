@@ -19,7 +19,7 @@
 <%
 LayoutRevision layoutRevision = (LayoutRevision)request.getAttribute("view.jsp-layoutRevision");
 
-if (layoutRevision == null && layout != null) {
+if ((layoutRevision == null) && (layout != null)) {
 	layoutRevision = LayoutStagingUtil.getLayoutRevision(layout);
 }
 
@@ -228,7 +228,7 @@ else {
 
 								LayoutRevision pendingLayoutRevision = pendingLayoutRevisions.get(0);
 
-								if (pendingLayoutRevision != null && (pendingLayoutRevision.getUserId() == user.getUserId())) {
+								if ((pendingLayoutRevision != null) && (pendingLayoutRevision.getUserId() == user.getUserId())) {
 									submitMessage = "you-cannot-submit-your-changes-because-your-previous-submission-is-still-waiting-for-approval";
 								}
 								%>

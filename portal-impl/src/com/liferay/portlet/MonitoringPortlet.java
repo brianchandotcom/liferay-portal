@@ -137,10 +137,6 @@ public class MonitoringPortlet implements InvokerPortlet {
 		return _invokerPortlet.isCheckAuthToken();
 	}
 
-	public boolean isDestroyable() {
-		return _invokerPortlet.isDestroyable();
-	}
-
 	public boolean isFacesPortlet() {
 		return _invokerPortlet.isFacesPortlet();
 	}

@@ -1840,7 +1840,12 @@ public class SourceFormatter {
 
 		String line = null;
 
+		String previousLine = null;
+
+		String currentAttributeAndValue = null;
 		String previousAttribute = null;
+		String previousAttributeAndValue = null;
+
 		boolean readAttributes = false;
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
@@ -1876,22 +1881,24 @@ public class SourceFormatter {
 									fileName,
 									"attribute: " + fileName + " " + lineCount);
 							}
-							else if (previousAttribute.compareTo(
-										attribute) > 0) {
+							else if (Validator.isNull(
+										previousAttributeAndValue) &&
+									 (previousAttribute.compareTo(
+										 attribute) > 0)) {
 
-								/*
-								_sourceFormatterHelper.printError(
-									fileName,
-									"sort: " + fileName + " " + lineCount);
-								*/
+								previousAttributeAndValue = previousLine;
+								currentAttributeAndValue = line;
 							}
 						}
 
 						previousAttribute = attribute;
+						previousLine = line;
 					}
 				}
 				else {
 					previousAttribute = null;
+					previousLine = null;
+
 					readAttributes = false;
 				}
 			}
@@ -1972,6 +1979,13 @@ public class SourceFormatter {
 
 		content = _formatTaglibQuotes(fileName, content, StringPool.QUOTE);
 		content = _formatTaglibQuotes(fileName, content, StringPool.APOSTROPHE);
+
+		if (Validator.isNotNull(previousAttributeAndValue)) {
+			content = StringUtil.replaceFirst(
+				content,
+				previousAttributeAndValue + "\n" + currentAttributeAndValue,
+				currentAttributeAndValue + "\n" + previousAttributeAndValue);
+		}
 
 		return content;
 	}

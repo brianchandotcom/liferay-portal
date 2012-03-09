@@ -193,7 +193,7 @@ int weekNumber = 1;
 		<%
 		}
 
-		if (showAllPotentialWeeks && weekNumber < 6) {
+		if (showAllPotentialWeeks && (weekNumber < 6)) {
 		%>
 
 			<tr>

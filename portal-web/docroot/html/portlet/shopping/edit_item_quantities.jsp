@@ -26,7 +26,7 @@ for (int i = 0; i < 9; i++) {
 	String n = request.getParameter("n" + i);
 	String v = request.getParameter("v" + i);
 
-	if (n == null || v == null) {
+	if ((n == null) || (v == null)) {
 		break;
 	}
 

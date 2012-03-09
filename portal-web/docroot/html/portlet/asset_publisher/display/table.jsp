@@ -92,7 +92,7 @@ request.setAttribute("view.jsp-showIconLabel", false);
 <%
 String style = "class=\"portlet-section-body results-row\" onmouseover=\"this.className = 'portlet-section-body-hover results-row hover';\" onmouseout=\"this.className = 'portlet-section-body results-row';\"";
 
-if (assetEntryIndex % 2 == 0) {
+if ((assetEntryIndex % 2) == 0) {
 	style = "class=\"portlet-section-alternate results-row alt\" onmouseover=\"this.className = 'portlet-section-alternate-hover results-row alt hover';\" onmouseout=\"this.className = 'portlet-section-alternate results-row alt';\"";
 }
 %>

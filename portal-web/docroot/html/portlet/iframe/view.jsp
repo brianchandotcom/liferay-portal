@@ -80,7 +80,7 @@ if (windowState.equals(WindowState.MAXIMIZED)) {
 		var baseSrc = '<%= baseSrc %>';
 		var iframeSrc = '<%= iframeSrc %>';
 
-		if ((url == iframeSrc) || (url == iframeSrc + '/')) {
+		if ((url == iframeSrc) || (url == (iframeSrc + '/'))) {
 		}
 		else if (Liferay.Util.startsWith(url, baseSrc)) {
 			url = url.substring(baseSrc.length);

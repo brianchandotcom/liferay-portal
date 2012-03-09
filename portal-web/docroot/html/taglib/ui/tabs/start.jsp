@@ -168,7 +168,7 @@ String onClick = GetterUtil.getString((String)request.getAttribute("liferay-ui:t
 			cssClassName += " first";
 		}
 
-		if (i == values.length - 1) {
+		if (i == (values.length - 1)) {
 			cssClassName += " last";
 		}
 	%>

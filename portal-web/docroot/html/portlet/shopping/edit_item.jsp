@@ -266,7 +266,7 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 				for (int i = 0; i < pricesCount; i++) {
 					int curPriceId = i;
 
-					if (priceId > -1 && i >= priceId) {
+					if ((priceId > -1) && (i >= priceId)) {
 						curPriceId++;
 					}
 
@@ -332,7 +332,7 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 						if (itemPrices[curPriceId] != null) {
 							int status = itemPrices[curPriceId].getStatus();
 
-							if (status == ShoppingItemPriceConstants.STATUS_ACTIVE_DEFAULT || status == ShoppingItemPriceConstants.STATUS_ACTIVE) {
+							if ((status == ShoppingItemPriceConstants.STATUS_ACTIVE_DEFAULT) || (status == ShoppingItemPriceConstants.STATUS_ACTIVE)) {
 								active = true;
 							}
 							else {

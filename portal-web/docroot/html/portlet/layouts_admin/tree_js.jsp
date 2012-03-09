@@ -428,7 +428,7 @@ if (!selectableTree) {
 				var currentValue = History.get(HISTORY_SELECTED_PLID);
 
 				if (plid != currentValue) {
-					if (plid == DEFAULT_PLID && Lang.isValue(currentValue)) {
+					if ((plid == DEFAULT_PLID) && Lang.isValue(currentValue)) {
 						plid = null;
 					}
 

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -216,8 +217,23 @@ public class JavadocFormatter {
 	}
 
 	private String _addDocletTags(
-		Element parentElement, String[] tagNames, String indent,
-		boolean publicAccess) {
+		Element parentElement, AbstractBaseJavaEntity abstractBaseJavaEntity,
+		String[] tagNames, String indent, boolean publicAccess) {
+
+		int javaEntityType = JAVA_ENTITY_TYPE_UNKOWN;
+
+		if (abstractBaseJavaEntity instanceof JavaMethod) {
+			javaEntityType = JAVA_ENTITY_TYPE_METHOD;
+		}
+		else if (abstractBaseJavaEntity instanceof JavaField) {
+			javaEntityType = JAVA_ENTITY_TYPE_FIELD;
+		}
+		else if (abstractBaseJavaEntity instanceof JavaClass) {
+			javaEntityType = JAVA_ENTITY_TYPE_CLASS;
+		}
+		else {
+			javaEntityType = JAVA_ENTITY_TYPE_UNKOWN;
+		}
 
 		List<String> allTagNames = new ArrayList<String>();
 		List<String> commonTagNamesWithComments = new ArrayList<String>();
@@ -322,6 +338,77 @@ public class JavadocFormatter {
 
 						// Write out all tags
 
+						if (javaEntityType == JAVA_ENTITY_TYPE_METHOD) {
+
+							JavaMethod javaMethod =
+								(JavaMethod) abstractBaseJavaEntity;
+
+							JavaParameter javaParameter =
+								javaMethod.getParameterByName(elementName);
+
+							if (tagName.equals("param")) {
+								comment = _getMethodParamComment(
+									javaMethod, javaParameter);
+							}
+							else if (tagName.equals("return")) {
+								comment = _getMethodReturnComment(javaMethod);
+							}
+							else if (tagName.equals("deprecated")) {
+								comment = DEPRECATED_DESC;
+							}
+							else if (tagName.equals("see")) {
+								comment = SEE_DESC;
+							}
+							else if (tagName.equals("since")) {
+								comment = SINCE_DESC;
+							}
+							else {
+
+								// Use current comment
+
+							}
+						}
+						else if (javaEntityType == JAVA_ENTITY_TYPE_CLASS) {
+							if (tagName.equals("deprecated")) {
+								comment = DEPRECATED_DESC;
+							}
+							else if (tagName.equals("see")) {
+								comment = SEE_DESC;
+							}
+							else if (tagName.equals("since")) {
+								comment = SINCE_DESC;
+							}
+							else if (tagName.equals("version")) {
+								comment = VERSION_DESC;
+							}
+							else {
+
+								// Use current comment
+
+							}
+						}
+						else if (javaEntityType == JAVA_ENTITY_TYPE_FIELD) {
+							if (tagName.equals("deprecated")) {
+								comment = DEPRECATED_DESC;
+							}
+							else if (tagName.equals("see")) {
+								comment = SEE_DESC;
+							}
+							else if (tagName.equals("since")) {
+								comment = SINCE_DESC;
+							}
+							else {
+
+								// Use current comment
+
+							}
+						}
+						else {
+
+							// Use current comment
+
+						}
+
 						comment = _assembleTagComment(
 							tagName, elementName, comment, indent,
 							tagNameIndent);
@@ -420,6 +507,17 @@ public class JavadocFormatter {
 		_addDocletElements(methodElement, javaMethod, "deprecated");
 	}
 
+	private String _addRangeParagraphToMethodComment(String detailedComment) {
+		StringBundler details_sb = new StringBundler();
+
+		details_sb.append(detailedComment);
+		details_sb.append("\n\n<p>\n");
+		details_sb.append(METHOD_DESC_RANGE_PARAGRAPH);
+		details_sb.append("\n</p>");
+
+		return details_sb.toString();
+	}
+
 	private void _addParamElement(
 		Element methodElement, JavaParameter javaParameter,
 		DocletTag[] paramDocletTags) {
@@ -506,7 +604,7 @@ public class JavadocFormatter {
 
 	private void _addThrowsElement(
 		Element methodElement, Type exceptionType,
-		DocletTag[] throwsDocletTags) {
+		DocletTag[] throwsDocletTags, String defaultComment) {
 
 		JavaClass javaClass = exceptionType.getJavaClass();
 
@@ -532,8 +630,18 @@ public class JavadocFormatter {
 		DocUtil.add(throwsElement, "name", name);
 		DocUtil.add(throwsElement, "type", exceptionType.getValue());
 
-		if (value != null) {
-			value = value.substring(name.length());
+		if (Validator.isNotNull(defaultComment)) {
+
+			if (Validator.isNull(value)) {
+				value = defaultComment;
+			}
+			else {
+				value = value.substring(name.length());
+
+				if (value.trim().isEmpty()) {
+					value = defaultComment;
+				}
+			}
 		}
 
 		value = _trimMultilineText(value);
@@ -552,7 +660,39 @@ public class JavadocFormatter {
 		DocletTag[] throwsDocletTags = javaMethod.getTagsByName("throws");
 
 		for (Type exceptionType : exceptionTypes) {
-			_addThrowsElement(methodElement, exceptionType, throwsDocletTags);
+			String defaultComment = null;
+
+			if (_initializeMissingJavadocs && _hasPublicModifier(javaMethod)) {
+
+				String className =
+					exceptionType.getJavaClass().getFullyQualifiedName();
+
+				if (SYSTEM_CLASS_NAME.equals(className)) {
+					defaultComment = THROWS_DESC_SYSTEM_EXCEPTION;
+				}
+				else {
+					defaultComment = THROWS_DESC;
+				}
+			}
+
+			_addThrowsElement(methodElement, exceptionType, throwsDocletTags,
+				defaultComment);
+		}
+	}
+
+	private void _appendSplitText(
+		String[] splitText, int startIndex, StringBundler sb) {
+
+		for (int ii = startIndex; ii < splitText.length; ii++) {
+
+			sb.append(StringPool.SPACE);
+
+			if (Pattern.matches("^.*[a-z]+.*$", splitText[ii])) {
+				sb.append(splitText[ii].toLowerCase());
+			}
+			else {
+				sb.append(splitText[ii]);
+			}
 		}
 	}
 
@@ -616,7 +756,7 @@ public class JavadocFormatter {
 
 		if (fileName.endsWith("JavadocFormatter.java") ||
 			fileName.endsWith("SourceFormatter.java") ||
-			_isGenerated(originalContent)) {
+			_hasGeneratedTag(originalContent)) {
 
 			return;
 		}
@@ -802,12 +942,26 @@ public class JavadocFormatter {
 
 		String comment = rootElement.elementText("comment");
 
-		if (_initializeMissingJavadocs || Validator.isNotNull(comment)) {
-			sb.append(_wrapText(comment, indent + " * "));
+		if (Validator.isNull(comment)) {
+			if (_initializeMissingJavadocs) {
+				StringBundler desc_sb = new StringBundler(CLASS_DESC);
+
+				desc_sb.append("\n");
+				desc_sb.append("\n");
+				desc_sb.append(CLASS_DESC_DETAIL);
+				desc_sb.append("\n");
+				desc_sb.append("\n");
+				desc_sb.append(CLASS_USAGE_EXAMPLE);
+				desc_sb.append("\n");
+
+				comment = _wrapText(desc_sb.toString(), indent + " * ");
+
+				sb.append(comment);
+			}
 		}
 
 		String docletTags = _addDocletTags(
-			rootElement,
+			rootElement, javaClass,
 			new String[] {
 				"author", "version", "see", "since", "serial", "deprecated"
 			},
@@ -957,12 +1111,31 @@ public class JavadocFormatter {
 
 		String comment = fieldElement.elementText("comment");
 
+		if (Validator.isNull(comment)) {
+
+			if (_initializeMissingJavadocs && _hasPublicModifier(javaField)) {
+
+				comment = FIELD_DESC + "\n";
+
+			}
+			else {
+
+				// User current comment
+
+			}
+		}
+		else {
+
+			// User current comment
+
+		}
+
 		if (_initializeMissingJavadocs || Validator.isNotNull(comment)) {
 			sb.append(_wrapText(comment, indent + " * "));
 		}
 
 		String docletTags = _addDocletTags(
-			fieldElement,
+			fieldElement, javaField,
 			new String[] {"version", "see", "since", "deprecated"},
 			indent + " * ", _hasPublicModifier(javaField));
 
@@ -1014,12 +1187,81 @@ public class JavadocFormatter {
 
 		String comment = methodElement.elementText("comment");
 
+		if (Validator.isNull(comment)) {
+
+			if (_initializeMissingJavadocs && _hasPublicModifier(javaMethod)) {
+
+				String initialComment = METHOD_DESC_GENERAL;
+				String detailedComment = METHOD_DESC_DETAIL;
+
+				if (_isGetterFetcherSearcher(javaMethod)) {
+
+					if (_returnsCollection(javaMethod)) {
+
+						boolean hasRangeParams = _hasRangeParams(javaMethod);
+						boolean hasOrderParam = _hasOrderParam(javaMethod);
+
+						if (hasRangeParams && hasOrderParam) {
+							initialComment = METHOD_DESC_RETURNS_ORDERED_RANGE;
+
+							detailedComment =
+								_addRangeParagraphToMethodComment(
+									detailedComment);
+						}
+						else if (hasRangeParams) {
+							initialComment = METHOD_DESC_RETURNS_RANGE;
+
+							detailedComment =
+								_addRangeParagraphToMethodComment(
+									detailedComment);
+						}
+						else if (hasOrderParam) {
+							initialComment =
+								METHOD_DESC_RETURNS_ORDERED_COLLECTION;
+						}
+						else {
+							initialComment = METHOD_DESC_RETURNS_COLLECTION;
+						}
+					}
+					else {
+						if (javaMethod.getName().endsWith("Count")) {
+							initialComment = METHOD_DESC_RETURNS_COUNT;
+						}
+						else {
+							initialComment = METHOD_DESC_GETTER;
+						}
+					}
+				}
+				else if (_returnsBoolean(javaMethod)) {
+					initialComment = METHOD_DESC_RETURNS_BOOLEAN;
+				}
+				else {
+					initialComment = METHOD_DESC_GENERAL;
+				}
+
+				StringBundler desc_sb = new StringBundler(initialComment);
+
+				desc_sb.append("\n");
+				desc_sb.append("\n");
+				desc_sb.append(detailedComment);
+				desc_sb.append("\n");
+
+				comment = desc_sb.toString();
+			}
+			else {
+				comment = methodElement.elementText("comment");
+			}
+		}
+		else {
+			comment = methodElement.elementText("comment");
+		}
+
 		if (_initializeMissingJavadocs || Validator.isNotNull(comment)) {
 			sb.append(_wrapText(comment, indent + " * "));
 		}
 
 		String docletTags = _addDocletTags(
-			methodElement,
+			methodElement, javaMethod,
 			new String[] {
 				"version", "param", "return", "throws", "see", "since",
 				"deprecated"
@@ -1093,6 +1335,208 @@ public class JavadocFormatter {
 		return sb.toString();
 	}
 
+	private String _getMethodParamComment(JavaMethod javaMethod,
+		JavaParameter javaParameter) {
+
+		StringBundler sb = new StringBundler();
+
+		String paramName = javaParameter.getName();
+
+		if (javaParameter.getType().getJavaClass().isA("boolean")) {
+			sb.append(PARAM_BOOLEAN);
+		}
+		else if (paramName.endsWith("Id") ||
+				 paramName.endsWith("Pk") ||
+				 paramName.endsWith("PK")) {
+
+			sb.append(PARAM_ID);
+
+			if (javaMethod.getName().startsWith("update")) {
+				sb.append("something's ");
+			}
+
+			int index = -1;
+
+			if (paramName.endsWith("Id")) {
+				index = paramName.indexOf("Id");
+			}
+			else if (paramName.endsWith("Pk")) {
+				index = paramName.indexOf("Pk");
+			}
+			else if (paramName.endsWith("PK")) {
+				index = paramName.indexOf("PK");
+			}
+
+			if (index > 0) {
+				String text = _splitCamelCase(paramName.substring(0, index));
+				String[] splitText = StringUtil.split(text, StringPool.SPACE);
+
+				if (splitText.length >= 0) {
+					_appendSplitText(splitText, 0, sb);
+				}
+				else {
+					sb.append("something");
+				}
+			}
+			else {
+				sb.append("something");
+			}
+		}
+		else if (paramName.endsWith("Ids") ||
+				 paramName.endsWith("PKs")) {
+
+			sb.append(PARAM_IDS);
+
+			int index = -1;
+			if (paramName.endsWith("Ids")) {
+				index = paramName.indexOf("Ids");
+			}
+			else if (paramName.endsWith("PKs")) {
+				index = paramName.indexOf("PKs");
+			}
+
+			if (javaMethod.getName().startsWith("update")) {
+				sb.append("something's ");
+			}
+
+			if (index > 0) {
+				String text = _splitCamelCase(paramName.substring(0, index));
+				String[] splitText = StringUtil.split(text, StringPool.SPACE);
+
+				if (splitText.length >= 0) {
+					_appendSplitText(splitText, 0, sb);
+					sb.append('s');
+				}
+				else {
+					sb.append("somethings");
+				}
+			}
+			else {
+				sb.append("somethings");
+			}
+		}
+		else if (paramName.endsWith("start")) {
+			sb.append(PARAM_START);
+		}
+		else if (paramName.endsWith("end")) {
+			sb.append(PARAM_END);
+		}
+		else if (paramName.endsWith("Context")) {
+			sb.append(" the TODO ");
+
+			String text = _splitCamelCase(paramName);
+			String[] splitText = StringUtil.split(text, StringPool.SPACE);
+
+			if (splitText.length >= 0) {
+				_appendSplitText(splitText, 0, sb);
+			}
+			else {
+				sb.append("something");
+			}
+
+			if (javaMethod.getName().startsWith("update")) {
+				sb.append(" to be applied");
+			}
+
+			sb.append(". Must specify what? Can specify what? " +
+				"(optionally <code>null</code>)");
+		}
+		else if (javaParameter.getType().getJavaClass().isA(
+			"java.util.Comparator")) {
+
+			sb.append(PARAM_COMPARATOR);
+		}
+		else if (javaParameter.getType().getJavaClass().isA(
+			"com.liferay.portal.kernel.search.Sort")) {
+
+			sb.append(PARAM_SORTER);
+		}
+		else {
+			sb.append(" the TODO ");
+
+			String text = _splitCamelCase(paramName);
+			String[] splitText = StringUtil.split(text, StringPool.SPACE);
+
+			if (splitText.length >= 0) {
+				_appendSplitText(splitText, 0, sb);
+			}
+			else {
+				sb.append("something");
+			}
+
+			if (!paramName.startsWith("old")) {
+				if (javaMethod.getName().startsWith("update") ||
+					paramName.startsWith("new")) {
+
+					sb.append(" to be assigned?");
+					sb.append(" default and acceptable values?");
+				}
+				else {
+					sb.append(", default and acceptable values?");
+				}
+			}
+			else {
+				sb.append(", default and acceptable values?");
+			}
+
+			// Append appropriate option
+
+			Type paramType = javaParameter.getType();
+			if (!paramType.isPrimitive()) {
+				sb.append(" (optionally <code>null</code>)");
+			}
+			else if (paramType.getJavaClass().isA("int") ||
+					 paramType.getJavaClass().isA("long") ||
+					 paramType.getJavaClass().isA("double")) {
+
+				sb.append(" (optionally <code>0</code>)");
+			}
+		}
+
+		return sb.toString();
+	}
+
+	private String _getMethodReturnComment(JavaMethod javaMethod) {
+		String comment;
+
+		if (_isGetterFetcherSearcher(javaMethod)) {
+			if (_returnsCollection(javaMethod)) {
+
+				boolean hasRangeParams = _hasRangeParams(javaMethod);
+				boolean hasOrderParam = _hasOrderParam(javaMethod);
+
+				if (hasRangeParams && hasOrderParam) {
+					comment = RETURN_ORDERED_RANGE;
+				}
+				else if (hasRangeParams) {
+					comment = RETURN_RANGE;
+				}
+				else if (hasOrderParam) {
+					comment = RETURN_ORDERED_COLLECTION;
+				}
+				else {
+					comment = RETURN_COLLECTION;
+				}
+			}
+			else {
+				if (javaMethod.getName().endsWith("Count")) {
+					comment = RETURN_COUNT;
+				}
+				else {
+					comment = METHOD_DESC_GETTER;
+				}
+			}
+		}
+		else if (_returnsBoolean(javaMethod)) {
+			comment = RETURN_BOOLEAN;
+		}
+		else {
+			comment = RETURN_GENERAL;
+		}
+
+		return comment;
+	}
+
 	private String _getSpacesIndent(int length) {
 		String indent = StringPool.BLANK;
 
@@ -1137,13 +1581,31 @@ public class JavadocFormatter {
 		return false;
 	}
 
-	private boolean _isGenerated(String content) {
+	private boolean _hasGeneratedTag(String content) {
 		if (content.contains("* @generated") || content.contains("$ANTLR")) {
 			return true;
 		}
 		else {
 			return false;
 		}
+	}
+
+	private boolean _hasOrderParam(JavaMethod javaMethod) {
+		JavaParameter[] javaParameters = javaMethod.getParameters();
+
+		for (JavaParameter javaParameter : javaParameters) {
+			String paramClass = 
+				javaParameter.getType().getJavaClass().getName();
+
+			if (paramClass.equals("OrderByComparator")) {
+				return true;
+			}
+			else if (paramClass.equals("Sort")) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private boolean _hasPublicModifier(AbstractJavaEntity abstractJavaEntity) {
@@ -1160,6 +1622,52 @@ public class JavadocFormatter {
 		}
 
 		return false;
+	}
+
+	private boolean _hasRangeParams(JavaMethod javaMethod) {
+		JavaParameter[] javaParameters = javaMethod.getParameters();
+
+		boolean hasRangeStart = false;
+		boolean hasRangeEnd = false;
+
+		for (JavaParameter javaParameter : javaParameters) {
+			String type = javaParameter.getType().getValue();
+
+			if (hasRangeStart && hasRangeEnd) {
+				break;
+			}
+
+			if (type.equals("int")) {
+				if (!hasRangeStart && javaParameter.getName().equals("start")) {
+					hasRangeStart = true;
+				}
+				else if (!hasRangeEnd &&
+						 javaParameter.getName().equals("end")) {
+
+					hasRangeEnd = true;
+				}
+			}
+		}
+
+		return (hasRangeStart && hasRangeEnd);
+	}
+
+	private boolean _isGetterFetcherSearcher(JavaMethod javaMethod) {
+		Type returnType = javaMethod.getReturns();
+
+		if ((returnType == null) || returnType.isVoid()) {
+			return false;
+		}
+
+		if (javaMethod.getName().startsWith("get") ||
+			javaMethod.getName().startsWith("fetch") ||
+			javaMethod.getName().startsWith("search")) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	private boolean  _isOverrideMethod(
@@ -1280,6 +1788,83 @@ public class JavadocFormatter {
 		}
 
 		return sb.toString().trim();
+	}
+
+	private boolean _returnsBoolean(JavaMethod javaMethod) {
+		Type returnType = javaMethod.getReturns();
+
+		if ((returnType != null) &&
+			returnType.getJavaClass().isA("boolean")) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	private boolean _returnsCollection(JavaMethod javaMethod) {
+
+		Type returnType = javaMethod.getReturns();
+
+		if ((returnType == null) ||
+			returnType.isVoid() ||
+			returnType.isPrimitive()) {
+
+			return false;
+		}
+
+		JavaClass[] interfaces =
+			returnType.getJavaClass().getImplementedInterfaces();
+
+		if (interfaces == null) {
+			return false;
+		}
+
+		for (JavaClass theInterface : interfaces) {
+			if (theInterface.isA("java.util.Collection")) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private String _splitCamelCase(String s) {
+		String text =
+			s.replaceAll(
+				String.format("%s|%s|%s",
+					"(?<=[A-Z])(?=[A-Z][a-z])",
+					"(?<=[^A-Z])(?=[A-Z])",
+					"(?<=[A-Za-z])(?=[^A-Za-z])"
+				),
+				" "
+			);
+
+		String[] splitText = StringUtil.split(text, StringPool.BLANK);
+
+		if (splitText.length > 1) {
+			StringBundler sb = new StringBundler();
+
+			sb.append(splitText[0]);
+
+			for (int ii = 1; ii < splitText.length; ii++) {
+
+				sb.append(StringPool.BLANK);
+
+				if (Pattern.matches("^.*[a-z]+.*$", splitText[ii])) {
+					sb.append(splitText[ii].toLowerCase());
+				}
+				else {
+					sb.append(splitText[ii]);
+				}
+			}
+
+			return sb.toString();
+		}
+		else {
+			return text;
+		}
 	}
 
 	private String _trimMultilineText(String text) {
@@ -1489,6 +2074,108 @@ public class JavadocFormatter {
 
 		return text;
 	}
+
+	private static final String CLASS_DESC =
+		" TODO Initial description to introduce the class and its purpose.";
+	private static final String CLASS_DESC_DETAIL =
+		" TODO Detailed description to include class's abilities (optional).";
+	private static final String CLASS_USAGE_EXAMPLE =
+		" TODO Example usage expressed explicitly here and/or referred to " +
+		"in another class (optional).";
+
+	private static final String DEPRECATED_DESC =
+		" As of TODO some version, for some reason";
+
+	private static final String FIELD_DESC =
+		" TODO Field description. What does field represent or indicate?";
+
+	private static final int JAVA_ENTITY_TYPE_UNKOWN = 0;
+	private static final int JAVA_ENTITY_TYPE_CLASS = 1;
+	private static final int JAVA_ENTITY_TYPE_METHOD = 2;
+	private static final int JAVA_ENTITY_TYPE_FIELD = 3;
+
+	private static final String METHOD_DESC_DETAIL =
+		"TODO Detailed description, reference links and/or examples " +
+		"(optional).";
+
+	private static final String METHOD_DESC_GENERAL =
+		" TODO Initial description of method's purpose.";
+	private static final String METHOD_DESC_GETTER =
+		" Returns the TODO something matching condition";
+	private static final String METHOD_DESC_RANGE_PARAGRAPH =
+		"Useful when paginating results. Returns a maximum of <code>end - " +
+		"start</code> instances. <code>start</code> and <code>end</code> " +
+		"are not primary keys, they are indexes in the result set. Thus, " +
+		"<code>0</code> refers to the first result in the set. Setting both " +
+		"<code>start</code> and <code>end</code> to " +
+		"{@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will " +
+		"return the full result set.";
+	private static final String METHOD_DESC_RETURNS_BOOLEAN =
+		" Returns <code>true</code> if TODO some condition";
+	private static final String METHOD_DESC_RETURNS_COLLECTION =
+		" Returns all the TODO somethings matching condition";
+	private static final String METHOD_DESC_RETURNS_COUNT =
+		" Returns the number of TODO somethings matching condition";
+	private static final String METHOD_DESC_RETURNS_ORDERED_COLLECTION =
+		" Returns an ordered collection of all the TODO somethings matching " +
+		"the condition";
+	private static final String METHOD_DESC_RETURNS_ORDERED_RANGE =
+		" Returns an ordered range of all the TODO somethings matching the " +
+		"condition";
+	private static final String METHOD_DESC_RETURNS_RANGE =
+		" Returns a range of all the TODO somethings matching the condition";
+
+	private static final String PARAM_BOOLEAN =
+		" whether to TODO do something";
+	private static final String PARAM_COMPARATOR =
+		"the comparator to order the TODO somethings (optionally " +
+		"<code>null</code>)";
+	private static final String PARAM_END =
+		" the TODO upper bound of the range of results (not inclusive)";
+	private static final String PARAM_ID =
+		" the primary key of the TODO ";
+	private static final String PARAM_IDS =
+		" the primary keys of the TODO ";
+	private static final String PARAM_SORTER =
+		"the field and direction by which to sort TODO (optionally " +
+		"<code>null</code>)";
+	private static final String PARAM_START =
+		" the TODO lower bound of the range of results";
+
+	private static final String RETURN_BOOLEAN =
+		" <code>true</code> if TODO some condition is met; " +
+		"<code>false</code> otherwise";
+	private static final String RETURN_COLLECTION =
+		" the TODO somethings, any special return values?";
+	private static final String RETURN_COUNT =
+		" the number of TODO somethings matching the condition";
+	private static final String RETURN_GENERAL =
+		" the TODO something, any special return values?";
+	private static final String RETURN_ORDERED_COLLECTION =
+		" the ordered collection of TODO somethings matching the condition " +
+		"ordered by <code>someParam</code> or some means";
+	private static final String RETURN_ORDERED_RANGE =
+		" the ordered range of TODO somethings matching the condition " +
+		"ordered by <code>someParam</code> or some means";
+	private static final String RETURN_RANGE =
+		" the range of TODO somethings matching the condition";
+
+	private static final String SEE_DESC =
+		" TODO some reference";
+
+	private static final String SINCE_DESC =
+		" TODO some version (optionally, for some reason)";
+
+	private static final String SYSTEM_CLASS_NAME =
+		SystemException.class.getName();
+
+	private static final String THROWS_DESC =
+		" TODO list exceptional conditions that could have occurred";
+	private static final String THROWS_DESC_SYSTEM_EXCEPTION =
+		" if a system exception occurred";
+
+	private static final String VERSION_DESC =
+		" TODO some version";
 
 	private static FileImpl _fileUtil = FileImpl.getInstance();
 

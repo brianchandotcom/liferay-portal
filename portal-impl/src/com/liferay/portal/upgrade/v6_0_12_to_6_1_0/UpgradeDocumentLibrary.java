@@ -115,9 +115,9 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
 		}
-		
+
 		try {
-			runSQL("alter table DLFileVersion add column uuid_ VARCHAR(75) null first");
+			runSQL("alter table DLFileVersion add column uuid_ VARCHAR(75)");
 		}
 		catch (SQLException sqle) {
 			upgradeTable(

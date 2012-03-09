@@ -418,70 +418,6 @@ public class SourceFormatter {
 		}
 	}
 
-	private static void _checkJSPAttributes(
-		String fileName, String line, int lineCount) {
-
-		int x = line.indexOf(StringPool.SPACE);
-
-		if (x == -1) {
-			return;
-		}
-
-		line = line.substring(x + 1);
-
-		String previousAttribute = null;
-
-		for (x = 0;;) {
-			x = line.indexOf(StringPool.EQUAL);
-
-			if ((x == -1) || (line.length() <= (x + 1))) {
-				return;
-			}
-
-			String attribute = line.substring(0, x);
-
-			if (!_isJSPAttributName(attribute)) {
-				return;
-			}
-
-			if (Validator.isNotNull(previousAttribute) &&
-				(previousAttribute.compareTo(attribute) > 0)) {
-
-				//_sourceFormatterHelper.printError(
-				//	fileName, "sort: " + fileName + " " + lineCount);
-
-				return;
-			}
-
-			line = line.substring(x + 1);
-
-			char delimeter = line.charAt(0);
-
-			if ((delimeter != CharPool.APOSTROPHE) &&
-				(delimeter != CharPool.QUOTE)) {
-
-				_sourceFormatterHelper.printError(
-					fileName, "delimeter: " + fileName + " " + lineCount);
-
-				return;
-			}
-
-			line = line.substring(1);
-
-			int y = line.indexOf(delimeter);
-
-			if ((y == -1) || (line.length() <= (y + 1))) {
-				return;
-			}
-
-			line = line.substring(y + 1);
-
-			line = StringUtil.trimLeading(line);
-
-			previousAttribute = attribute;
-		}
-	}
-
 	private static void _checkMissingParentheses(
 		String s, String fileName, int lineCount) {
 
@@ -1758,7 +1694,18 @@ public class SourceFormatter {
 
 			String content = _fileUtil.read(file);
 
-			String newContent = _formatJSPContent(fileName, content);
+			String oldContent = content;
+			String newContent = StringPool.BLANK;
+
+			for (;;) {
+				newContent = _formatJSPContent(fileName, oldContent);
+
+				if (oldContent.equals(newContent)) {
+					break;
+				}
+
+				oldContent = newContent;
+			}
 
 			newContent = StringUtil.replace(
 				newContent,
@@ -1959,7 +1906,7 @@ public class SourceFormatter {
 					readAttributes = true;
 				}
 				else {
-					_checkJSPAttributes(fileName, trimmedLine, lineCount);
+					line = _sortJSPAttributes(fileName, line, lineCount);
 				}
 			}
 
@@ -3129,6 +3076,113 @@ public class SourceFormatter {
 		}
 
 		return newLine;
+	}
+
+	private static String _sortJSPAttributes(
+		String fileName, String line, int lineCount) {
+
+		String s = line;
+
+		int x = s.indexOf(StringPool.SPACE);
+
+		if (x == -1) {
+			return line;
+		}
+
+		s = s.substring(x + 1);
+
+		String previousAttribute = null;
+		String previousAttributeAndValue = null;
+
+		boolean wrongOrder = false;
+
+		for (x = 0;;) {
+			x = s.indexOf(StringPool.EQUAL);
+
+			if ((x == -1) || (s.length() <= (x + 1))) {
+				return line;
+			}
+
+			String attribute = s.substring(0, x);
+
+			if (!_isJSPAttributName(attribute)) {
+				return line;
+			}
+
+			if (Validator.isNotNull(previousAttribute) &&
+				(previousAttribute.compareTo(attribute) > 0)) {
+
+				wrongOrder = true;
+			}
+
+			s = s.substring(x + 1);
+
+			char delimeter = s.charAt(0);
+
+			if ((delimeter != CharPool.APOSTROPHE) &&
+				(delimeter != CharPool.QUOTE)) {
+
+				_sourceFormatterHelper.printError(
+					fileName, "delimeter: " + fileName + " " + lineCount);
+
+				return line;
+			}
+
+			s = s.substring(1);
+
+			int y = s.indexOf(delimeter);
+
+			if ((y == -1) || (s.length() <= (y + 1))) {
+				return line;
+			}
+
+			String value = s.substring(0, y);
+
+			if (value.contains("<%") && !value.contains("%>")) {
+				int z = s.indexOf("%>");
+
+				if (z == -1) {
+					return line;
+				}
+
+				y = s.substring(z).indexOf(delimeter);
+
+				value = s.substring(0, y + z);
+			}
+
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(attribute);
+			sb.append(StringPool.EQUAL);
+			sb.append(delimeter);
+			sb.append(value);
+			sb.append(delimeter);
+
+			String currentAttributeAndValue = sb.toString();
+
+			if (wrongOrder) {
+				if (line.contains(currentAttributeAndValue) &&
+					line.contains(previousAttributeAndValue)) {
+
+					line = StringUtil.replaceFirst(
+						line, previousAttributeAndValue,
+						currentAttributeAndValue);
+
+					line = StringUtil.replaceLast(
+						line, currentAttributeAndValue,
+						previousAttributeAndValue);
+				}
+
+				return line;
+			}
+
+			s = s.substring(y + 1);
+
+			s = StringUtil.trimLeading(s);
+
+			previousAttribute = attribute;
+			previousAttributeAndValue = currentAttributeAndValue;
+		}
 	}
 
 	private static String _stripJSPImports(String fileName, String content)

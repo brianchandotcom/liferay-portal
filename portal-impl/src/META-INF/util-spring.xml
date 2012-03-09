@@ -83,6 +83,9 @@
 				<entry key="com.liferay.portal.servlet.ComboServlet">
 					<bean class="com.liferay.portal.cache.key.HashCodeCacheKeyGenerator" />
 				</entry>
+				<entry key="com.liferay.portal.servlet.filters.strip.StripFilter">
+					<bean class="com.liferay.portal.cache.key.HashCodeCacheKeyGenerator" />
+				</entry>
 			</map>
 		</property>
 		<property name="defaultCacheKeyGenerator">

@@ -15,7 +15,7 @@
 package com.liferay.portalweb.portal.controlpanel.socialactivity;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.controlpanel.socialactivity.blogentry.SitesSABlogEntryDefaultValueTests;
+import com.liferay.portalweb.portal.controlpanel.socialactivity.usecase.UseCaseTestPlan;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -28,7 +28,7 @@ public class SocialActivityTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(SitesSABlogEntryDefaultValueTests.suite());
+		testSuite.addTest(UseCaseTestPlan.suite());
 
 		return testSuite;
 	}

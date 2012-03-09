@@ -39,7 +39,7 @@ while (true) {
 	boolean corruptIndex = (Boolean)tuple.getObject(1);
 
 	if (!corruptIndex) {
-		results = (List<User>)tuple.getObject(0);
+		results = (List<Organization>)tuple.getObject(0);
 		total = hits.getLength();
 
 		break;

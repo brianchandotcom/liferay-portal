@@ -1475,8 +1475,6 @@ public interface PropsKeys {
 
 	public static final String OPENOFFICE_SERVER_PORT = "openoffice.server.port";
 
-	public static final String ORGANIZATIONS_ASSIGNMENT_AUTO = "organizations.assignment.auto";
-
 	public static final String ORGANIZATIONS_ASSIGNMENT_STRICT = "organizations.assignment.strict";
 
 	public static final String ORGANIZATIONS_CHILDREN_TYPES = "organizations.children.types";

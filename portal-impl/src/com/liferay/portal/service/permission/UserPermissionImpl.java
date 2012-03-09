@@ -17,11 +17,16 @@ package com.liferay.portal.service.permission;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Contact;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
@@ -123,6 +128,42 @@ public class UserPermissionImpl implements UserPermission {
 					if (OrganizationPermissionUtil.contains(
 							permissionChecker, organizationId,
 							ActionKeys.MANAGE_USERS)) {
+
+						if (permissionChecker.getUserId() == user.getUserId()) {
+							return true;
+						}
+
+						Organization organization =
+							OrganizationLocalServiceUtil.getOrganization(
+								organizationId);
+
+						Group organizationGroup = organization.getGroup();
+
+						// Organization administrators can only manage normal
+						// users, owners can only manage normal users and
+						// administrators
+
+						if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+								user.getUserId(),
+								organizationGroup.getGroupId(),
+								RoleConstants.ORGANIZATION_OWNER, true)) {
+
+							continue;
+						}
+						else if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+									user.getUserId(),
+									organizationGroup.getGroupId(),
+									RoleConstants.ORGANIZATION_ADMINISTRATOR,
+									true)) {
+
+							if (!UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+									permissionChecker.getUserId(),
+									organizationGroup.getGroupId(),
+									RoleConstants.ORGANIZATION_OWNER, true)) {
+
+								continue;
+							}
+						}
 
 						return true;
 					}

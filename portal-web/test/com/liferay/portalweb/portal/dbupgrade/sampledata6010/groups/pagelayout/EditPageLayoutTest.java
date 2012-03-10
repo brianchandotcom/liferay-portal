@@ -91,9 +91,45 @@ public class EditPageLayoutTest extends BaseTestCase {
 		selenium.clickAt("main-content", RuntimeVariables.replace(""));
 		selenium.clickAt("dockbar", RuntimeVariables.replace(""));
 		selenium.clickAt("navigation", RuntimeVariables.replace(""));
-		assertTrue(selenium.isElementPresent(
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@id='column-1' and @class='aui-w50 portlet-column portlet-column-first aui-dd-drop']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertTrue(selenium.isVisible(
 				"//div[@id='column-1' and @class='aui-w50 portlet-column portlet-column-first aui-dd-drop']"));
-		assertTrue(selenium.isElementPresent(
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@id='column-2' and @class='aui-w50 portlet-column portlet-column-last aui-dd-drop']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertTrue(selenium.isVisible(
 				"//div[@id='column-2' and @class='aui-w50 portlet-column portlet-column-last aui-dd-drop']"));
 		assertEquals(RuntimeVariables.replace("Breadcrumb"),
 			selenium.getText(

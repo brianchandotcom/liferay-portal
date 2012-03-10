@@ -63,9 +63,47 @@ public class DragAndDropPortletTest extends BaseTestCase {
 		selenium.clickAt("navigation", RuntimeVariables.replace(""));
 		selenium.dragAndDropToObject("xPath=(//h1/span[2])[2]",
 			"//div[@id='column-2']");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Breadcrumb")
+										.equals(selenium.getText(
+								"//div[@id='column-1' and @class='aui-w30 portlet-column portlet-column-first aui-dd-drop']/div[1]/div[1]/section/header/h1/span[2]"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("Breadcrumb"),
 			selenium.getText(
 				"//div[@id='column-1' and @class='aui-w30 portlet-column portlet-column-first aui-dd-drop']/div[1]/div[1]/section/header/h1/span[2]"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Navigation")
+										.equals(selenium.getText(
+								"//div[@id='column-2' and @class='aui-w70 portlet-column portlet-column-last aui-dd-drop']/div[1]/div[1]/section/header/h1/span[2]"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("Navigation"),
 			selenium.getText(
 				"//div[@id='column-2' and @class='aui-w70 portlet-column portlet-column-last aui-dd-drop']/div[1]/div[1]/section/header/h1/span[2]"));

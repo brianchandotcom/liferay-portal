@@ -14,14 +14,16 @@
 
 package com.liferay.portal.upgrade.v6_1_0;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-
 import com.liferay.portal.kernel.cal.TZSRecurrence;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import org.jabsorb.JSONSerializer;
 
 /**
  * @author Matthew Kong
@@ -31,17 +33,17 @@ public class UpgradeCalendar extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		initSerializer();
+
 		updateCalEvent();
 	}
 
 	protected void initSerializer() throws Exception {
-		_jsonSerializer = new org.jabsorb.JSONSerializer();
+		_jsonSerializer = new JSONSerializer();
 
 		_jsonSerializer.registerDefaultSerializers();
 	}
 
 	protected void updateCalEvent() throws Exception {
-
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -94,4 +96,5 @@ public class UpgradeCalendar extends UpgradeProcess {
 	}
 
 	private org.jabsorb.JSONSerializer _jsonSerializer;
+
 }

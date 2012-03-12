@@ -170,6 +170,5 @@ public class ViewWSRPClickToInvokeResourceServingPhaseRDPTest
 
 		assertEquals(RuntimeVariables.replace("Download (2.0k)"),
 			selenium.getText("//span[@class='download-document']/span/a/span"));
-		Thread.sleep(20000);
 	}
 }

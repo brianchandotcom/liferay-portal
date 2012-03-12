@@ -266,7 +266,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="3" />
+		<property name="build-test-ant-scripts.version" value="4" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -1618,21 +1618,57 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
-			<param name="test.ant.script.command" value="properties-layout-types" />
+			<param name="test.ant.script.command" value="properties-blogs-entry-comments" />
+			<param name="test.ant.script.properties" value="blogs.entry.comments.enabled=false" />
+			<param name="test.ant.script.suite" value="PropertiesBlogsEntryCommentsTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="properties-blogs-entry-previous-next" />
+			<param name="test.ant.script.properties" value="blogs.entry.previous.and.next.navigation.enabled=false" />
+			<param name="test.ant.script.suite" value="PropertiesBlogsEntryPreviousNextTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="properties-blogs-pingback" />
+			<param name="test.ant.script.properties" value="blogs.pingback.enabled=false" />
+			<param name="test.ant.script.suite" value="PropertiesBlogsPingbackTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="properties-blogs-publish-to-live-by-default" />
+			<param name="test.ant.script.properties" value="blogs.publish.to.live.by.default=true" />
+			<param name="test.ant.script.suite" value="PropertiesBlogsPublishToLiveByDefaultTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="properties-blogs-trackback" />
+			<param name="test.ant.script.properties" value="blogs.trackback.enabled=false" />
+			<param name="test.ant.script.suite" value="PropertiesBlogsTrackbackTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="properties-manage-pages-page-layouts" />
 			<param name="test.ant.script.properties" value="layout.types=portlet,panel,embedded,article,url,link_to_layout" />
-			<param name="test.ant.script.suite" value="PropertiesLayoutTypesTestSuite" />
+			<param name="test.ant.script.suite" value="PropertiesManagePagesLayoutTypesTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
-			<param name="test.ant.script.command" value="properties-mail-integration" />
+			<param name="test.ant.script.command" value="properties-message-boards-mail-integration" />
 			<param name="test.ant.script.properties" value="pop.server.notifications.enabled=true$${line.separator}pop.server.notifications.interval=1$${line.separator}pop.server.subdomain=" />
-			<param name="test.ant.script.suite" value="PropertiesMailIntegrationTestSuite" />
+			<param name="test.ant.script.suite" value="PropertiesMessageBoardsMailIntegrationTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
-			<param name="test.ant.script.command" value="properties-users-screen-name-allow-numeric" />
+			<param name="test.ant.script.command" value="properties-users-screen-name-numeric" />
 			<param name="test.ant.script.properties" value="users.screen.name.allow.numeric=true" />
-			<param name="test.ant.script.suite" value="PropertiesUsersScreenNameAllowNumericTestSuite" />
+			<param name="test.ant.script.suite" value="PropertiesUsersScreenNameNumericTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="properties-web-content-mail-integration" />
+			<param name="test.ant.script.properties" value="pop.server.notifications.enabled=true$${line.separator}pop.server.notifications.interval=1$${line.separator}pop.server.subdomain=" />
+			<param name="test.ant.script.suite" value="PropertiesWebContentMailIntegrationTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">

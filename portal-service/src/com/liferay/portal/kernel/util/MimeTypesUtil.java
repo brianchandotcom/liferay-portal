@@ -30,8 +30,8 @@ public class MimeTypesUtil {
 		return getMimeTypes().getContentType(file);
 	}
 
-	public static String getContentType(File file, String title) {
-		return getMimeTypes().getContentType(file, title);
+	public static String getContentType(File file, String fileName) {
+		return getMimeTypes().getContentType(file, fileName);
 	}
 
 	/**

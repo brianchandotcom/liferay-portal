@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -66,6 +65,7 @@ import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
+import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelModifiedDateComparator;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -128,7 +128,7 @@ public class DLFileEntryLocalServiceImpl
 			user.getCompanyId(), folderId);
 		String name = String.valueOf(
 			counterLocalService.increment(DLFileEntry.class.getName()));
-		String extension = getExtension(title, sourceFileName);
+		String extension = DLAppUtil.getExtension(title, sourceFileName);
 		fileEntryTypeId = getFileEntryTypeId(
 			DLUtil.getGroupIds(groupId), folderId, fileEntryTypeId);
 		Date now = new Date();
@@ -662,6 +662,12 @@ public class DLFileEntryLocalServiceImpl
 			groupId, folderId, start, end, obc);
 	}
 
+	public List<DLFileEntry> getFileEntriesByMimeType(String mimeType)
+		throws SystemException {
+
+		return dlFileEntryPersistence.findByMimeType(mimeType);
+	}
+
 	public int getFileEntriesCount() throws SystemException {
 		return dlFileEntryPersistence.countAll();
 	}
@@ -964,7 +970,7 @@ public class DLFileEntryLocalServiceImpl
 		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
 			fileEntryId);
 
-		String extension = getExtension(title, sourceFileName);
+		String extension = DLAppUtil.getExtension(title, sourceFileName);
 
 		String extraSettings = StringPool.BLANK;
 
@@ -1357,16 +1363,6 @@ public class DLFileEntryLocalServiceImpl
 			DLFileEntry.class);
 
 		indexer.delete(dlFileEntry);
-	}
-
-	protected String getExtension(String title, String sourceFileName) {
-		String extension = FileUtil.getExtension(sourceFileName);
-
-		if (Validator.isNull(extension)) {
-			extension = FileUtil.getExtension(title);
-		}
-
-		return extension;
 	}
 
 	protected Long getFileEntryTypeId(

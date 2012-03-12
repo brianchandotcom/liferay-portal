@@ -27,7 +27,7 @@ public interface MimeTypes {
 
 	public String getContentType(File file);
 
-	public String getContentType(File file, String title);
+	public String getContentType(File file, String fileName);
 
 	public String getContentType(InputStream inputStream, String fileName);
 

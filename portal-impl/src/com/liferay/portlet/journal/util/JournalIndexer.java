@@ -195,7 +195,8 @@ public class JournalIndexer extends BaseIndexer {
 				}
 
 				document.addText(
-					Field.CONTENT.concat(StringPool.UNDERLINE).concat(languageId),
+					Field.CONTENT.concat(StringPool.UNDERLINE).concat(
+						languageId),
 					content);
 			}
 		}

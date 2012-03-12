@@ -24,13 +24,15 @@ import com.liferay.portlet.calendar.service.CalEventLocalServiceUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet; 
+import java.sql.ResultSet;
+
 import java.util.List;
 
 import org.jabsorb.JSONSerializer;
 
 /**
  * @author Juan Fernández
+ * @author Matthew Kong
  */
 public class VerifyCalendar extends VerifyProcess {
 
@@ -103,7 +105,7 @@ public class VerifyCalendar extends VerifyProcess {
 
 			ps = con.prepareStatement(
 				"select eventId, recurrence from CalEvent where recurrence " +
-				"not like '%serializable%'");
+					"not like '%serializable%'");
 
 			rs = ps.executeQuery();
 
@@ -125,4 +127,5 @@ public class VerifyCalendar extends VerifyProcess {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(VerifyCalendar.class);
+
 }

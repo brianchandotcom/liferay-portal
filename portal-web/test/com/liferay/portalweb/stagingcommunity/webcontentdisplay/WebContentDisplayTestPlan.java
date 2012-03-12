@@ -15,7 +15,6 @@
 package com.liferay.portalweb.stagingcommunity.webcontentdisplay;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.stagingcommunity.webcontentdisplay.usecase.UseCaseTestPlan;
 import com.liferay.portalweb.stagingcommunity.webcontentdisplay.wcwebcontent.WCWebContentTestPlan;
 
 import junit.framework.Test;
@@ -29,7 +28,6 @@ public class WebContentDisplayTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(UseCaseTestPlan.suite());
 		testSuite.addTest(WCWebContentTestPlan.suite());
 
 		return testSuite;

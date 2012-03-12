@@ -15,7 +15,6 @@
 package com.liferay.portalweb.portal.controlpanel.users;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.controlpanel.users.usecase.UseCaseTestPlan;
 import com.liferay.portalweb.portal.controlpanel.users.user.UserTestPlan;
 import com.liferay.portalweb.portal.controlpanel.users.useradditionalemailaddress.UserAdditionalEmailAddressTestPlan;
 import com.liferay.portalweb.portal.controlpanel.users.useraddress.UserAddressTestPlan;
@@ -34,7 +33,6 @@ public class UsersTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(UseCaseTestPlan.suite());
 		testSuite.addTest(UserTestPlan.suite());
 		testSuite.addTest(UserAdditionalEmailAddressTestPlan.suite());
 		testSuite.addTest(UserAddressTestPlan.suite());

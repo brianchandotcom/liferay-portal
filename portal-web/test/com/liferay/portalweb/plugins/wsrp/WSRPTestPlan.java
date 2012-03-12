@@ -15,7 +15,6 @@
 package com.liferay.portalweb.plugins.wsrp;
 
 import com.liferay.portalweb.plugins.wsrp.helloworld.HelloWorldTestPlan;
-import com.liferay.portalweb.plugins.wsrp.usecase.UseCaseTestPlan;
 import com.liferay.portalweb.portal.BaseTestSuite;
 
 import junit.framework.Test;
@@ -30,7 +29,6 @@ public class WSRPTestPlan extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(HelloWorldTestPlan.suite());
-		testSuite.addTest(UseCaseTestPlan.suite());
 
 		return testSuite;
 	}

@@ -19,7 +19,6 @@ import com.liferay.portalweb.portlet.blogs.blogsentry.BlogsEntryTestPlan;
 import com.liferay.portalweb.portlet.blogs.blogsentrycomment.BlogsEntryCommentTestPlan;
 import com.liferay.portalweb.portlet.blogs.lar.LARTestPlan;
 import com.liferay.portalweb.portlet.blogs.portlet.PortletTestPlan;
-import com.liferay.portalweb.portlet.blogs.usecase.UseCaseTestPlan;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -36,7 +35,6 @@ public class BlogsTestPlan extends BaseTestSuite {
 		testSuite.addTest(BlogsEntryCommentTestPlan.suite());
 		testSuite.addTest(LARTestPlan.suite());
 		testSuite.addTest(PortletTestPlan.suite());
-		testSuite.addTest(UseCaseTestPlan.suite());
 
 		return testSuite;
 	}

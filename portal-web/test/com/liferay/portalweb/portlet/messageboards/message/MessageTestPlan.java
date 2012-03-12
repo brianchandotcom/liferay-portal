@@ -44,10 +44,6 @@ import com.liferay.portalweb.portlet.messageboards.message.previewmbthreadmessag
 import com.liferay.portalweb.portlet.messageboards.message.previouscategorymessage.PreviousCategoryMessageTests;
 import com.liferay.portalweb.portlet.messageboards.message.ratecategorymessage.RateCategoryMessageTests;
 import com.liferay.portalweb.portlet.messageboards.message.searchcategorymessage.SearchCategoryMessageTests;
-import com.liferay.portalweb.portlet.messageboards.message.splitthreadcategorymessagereply.SplitThreadCategoryMessageReplyTests;
-import com.liferay.portalweb.portlet.messageboards.message.splitthreadcategorymessagereplybackbutton.SplitThreadCategoryMessageReplyBackButtonTests;
-import com.liferay.portalweb.portlet.messageboards.message.splitthreadcategorymessagereplyexplanation.SplitThreadCategoryMessageReplyExplanationTests;
-import com.liferay.portalweb.portlet.messageboards.message.splitthreadcategorymessagereplymultiple.SplitThreadCategoryMessageReplyMultipleTests;
 import com.liferay.portalweb.portlet.messageboards.message.unmarkcategorymessagequestionreply.UnmarkCategoryMessageQuestionReplyTests;
 import com.liferay.portalweb.portlet.messageboards.message.viewcategorymessagemyposts.ViewCategoryMessageMyPostsTests;
 import com.liferay.portalweb.portlet.messageboards.message.viewcategorymessagepostcount.ViewCategoryMessagePostCountTests;
@@ -97,12 +93,6 @@ public class MessageTestPlan extends BaseTestSuite {
 		testSuite.addTest(PreviousCategoryMessageTests.suite());
 		testSuite.addTest(RateCategoryMessageTests.suite());
 		testSuite.addTest(SearchCategoryMessageTests.suite());
-		testSuite.addTest(SplitThreadCategoryMessageReplyTests.suite());
-		testSuite.addTest(
-			SplitThreadCategoryMessageReplyBackButtonTests.suite());
-		testSuite.addTest(
-			SplitThreadCategoryMessageReplyExplanationTests.suite());
-		testSuite.addTest(SplitThreadCategoryMessageReplyMultipleTests.suite());
 		testSuite.addTest(UnmarkCategoryMessageQuestionReplyTests.suite());
 		testSuite.addTest(ViewCategoryMessageMyPostsTests.suite());
 		testSuite.addTest(ViewCategoryMessagePostCountTests.suite());

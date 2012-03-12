@@ -1,0 +1,148 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>EditKBAArticleSectionsPortletsAttachmentTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">EditKBAArticleSectionsPortletsAttachmentTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>link=Control Panel</td>
+	<td>Control Panel</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Control Panel</td>
+	<td>Control Panel</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Knowledge Base (Admin)</td>
+	<td>Knowledge Base (Admin)</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[3]</td>
+	<td>KB Admin Article</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='_1_WAR_knowledgebaseportlet_attachments']/div/div/a</td>
+	<td>Add Attachments »</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@id='_1_WAR_knowledgebaseportlet_attachments']/div/div/a</td>
+	<td>Add Attachments »</td>
+</tr>
+<tr>
+	<td>waitForPopUp</td>
+	<td>selectAttachments</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>selectWindow</td>
+	<td>name=selectAttachments</td>
+	<td>Select Attachments Window</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@id='_1_WAR_knowledgebaseportlet_file']</td>
+	<td>Browse</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_1_WAR_knowledgebaseportlet_file']</td>
+	<td>L:\portal\build\portal-web\test\com\liferay\portalweb\demo\devcon6100\fundamentals\knowledgebase\dependencies\test_image.jpg</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//a/span</td>
+	<td>test_image.jpg (12.9k)</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a/span</td>
+	<td>test_image.jpg (12.9k)</td>
+</tr>
+<tr>
+	<td>close</td>
+	<td>selectAttachments</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>selectWindow</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@id='_1_WAR_knowledgebaseportlet_attachments']/div/div/span/a/span</td>
+	<td>test_image.jpg (12.9k)</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='_1_WAR_knowledgebaseportlet_attachments']/div/div/span/a/span</td>
+	<td>test_image.jpg (12.9k)</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Publish']</td>
+	<td>Publish</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+</tbody></table>
+</body>
+</html>

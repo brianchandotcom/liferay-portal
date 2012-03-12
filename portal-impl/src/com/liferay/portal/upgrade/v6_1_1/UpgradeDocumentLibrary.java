@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -31,6 +32,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		updateFileEntries();
+		updateFileEntryTypes();
 	}
 
 	protected boolean hasFileEntry(long groupId, long folderId, String title)
@@ -126,6 +128,69 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 					"update DLFileVersion set title = '" + uniqueTitle +
 						"' where fileEntryId = " + fileEntryId +
 							" and DLFileVersion.version = '" + version + "'");
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected void updateFileEntryType(long fileEntryTypeId, long stuctureId)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getConnection();
+
+			ps = con.prepareStatement(
+				"select uuid_ from dlFileEntryType where fileEntryTypeId = "
+					+ String.valueOf(fileEntryTypeId));
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				String uuid = rs.getString("uuid_");
+
+				runSQL("update ddmStructure set structureKey = 'auto_" + uuid +
+					"' where structureId = " + stuctureId);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected void updateFileEntryTypes() throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getConnection();
+
+			ps = con.prepareStatement(
+				"select structureId, structureKey from ddmStructure where " +
+					"type_ = 1");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long structureId = rs.getLong("structureId");
+
+				String structureKey = rs.getString("structureKey");
+
+				try {
+					long fileEntryTypeId = Long.valueOf(StringUtil.extractLast(
+						structureKey, StringPool.UNDERLINE));
+
+					updateFileEntryType(fileEntryTypeId, structureId);
+				}
+				catch (NumberFormatException nfe) {
+					continue;
+				}
 			}
 		}
 		finally {

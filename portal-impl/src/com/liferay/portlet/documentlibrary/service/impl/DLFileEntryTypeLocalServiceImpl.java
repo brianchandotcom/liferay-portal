@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SortedArrayList;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -61,10 +63,14 @@ public class DLFileEntryTypeLocalServiceImpl
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		long fileEntryTypeId = counterLocalService.increment();
+		String fileEntryTypeUuid = serviceContext.getUuid();
+
+		if (Validator.isNull(fileEntryTypeUuid)) {
+			fileEntryTypeUuid = PortalUUIDUtil.generate();
+		}
 
 		long dynamicStructureId = updateDynamicStructure(
-			userId, fileEntryTypeId, groupId, name, description,
+			userId, fileEntryTypeUuid, groupId, name, description,
 			serviceContext);
 
 		if (dynamicStructureId > 0) {
@@ -74,12 +80,14 @@ public class DLFileEntryTypeLocalServiceImpl
 
 		Date now = new Date();
 
+		long fileEntryTypeId = counterLocalService.increment();
+
 		validate(fileEntryTypeId, groupId, name, ddmStructureIds);
 
 		DLFileEntryType dlFileEntryType = dlFileEntryTypePersistence.create(
 			fileEntryTypeId);
 
-		dlFileEntryType.setUuid(serviceContext.getUuid());
+		dlFileEntryType.setUuid(fileEntryTypeUuid);
 		dlFileEntryType.setGroupId(groupId);
 		dlFileEntryType.setCompanyId(user.getCompanyId());
 		dlFileEntryType.setUserId(user.getUserId());
@@ -136,8 +144,7 @@ public class DLFileEntryTypeLocalServiceImpl
 		throws PortalException, SystemException {
 
 		DDMStructure ddmStructure = ddmStructureLocalService.fetchStructure(
-			dlFileEntryType.getGroupId(),
-			"auto_" + dlFileEntryType.getFileEntryTypeId());
+			dlFileEntryType.getGroupId(), "auto_" + dlFileEntryType.getUuid());
 
 		if (ddmStructure != null) {
 			ddmStructureLocalService.deleteStructure(
@@ -320,8 +327,8 @@ public class DLFileEntryTypeLocalServiceImpl
 			dlFileEntryTypePersistence.findByPrimaryKey(fileEntryTypeId);
 
 		long dynamicStructureId = updateDynamicStructure(
-			userId, fileEntryTypeId, dlFileEntryType.getGroupId(), name,
-			description, serviceContext);
+			userId, dlFileEntryType.getUuid(), dlFileEntryType.getGroupId(),
+			name, description, serviceContext);
 
 		if (dynamicStructureId > 0) {
 			ddmStructureIds = ArrayUtil.append(
@@ -475,11 +482,11 @@ public class DLFileEntryTypeLocalServiceImpl
 	}
 
 	protected long updateDynamicStructure(
-			long userId, long fileEntryTypeId, long groupId, String name,
+			long userId, String fileEntryTypeUuid, long groupId, String name,
 			String description, ServiceContext serviceContext)
 		throws SystemException, PortalException {
 
-		String ddmStructureKey = "auto_" + fileEntryTypeId;
+		String ddmStructureKey = "auto_" + fileEntryTypeUuid;
 
 		Map<Locale, String> nameMap = new HashMap<Locale, String>();
 
@@ -510,6 +517,10 @@ public class DLFileEntryTypeLocalServiceImpl
 					DDMStructureConstants.TYPE_AUTO, serviceContext);
 			}
 			else {
+				if (Validator.isNull(xsd)) {
+					xsd = ddmStructure.getXsd();
+				}
+
 				ddmStructure = ddmStructureLocalService.updateStructure(
 					ddmStructure.getStructureId(), nameMap, descriptionMap, xsd,
 					serviceContext);

@@ -130,7 +130,8 @@ public class EditFileEntryTypeAction extends PortletAction {
 
 				DDMStructure ddmStructure =
 					DDMStructureLocalServiceUtil.fetchStructure(
-						fileEntryType.getGroupId(), "auto_" + fileEntryTypeId);
+						fileEntryType.getGroupId(),
+						"auto_" + fileEntryType.getUuid());
 
 				renderRequest.setAttribute(
 					WebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE, ddmStructure);

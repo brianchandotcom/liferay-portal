@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.properties.portlet.BlogPortlet;
+package com.liferay.portalweb.properties.blogs.entrypreviousnext.viewblogsentrypreviousnextno;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;

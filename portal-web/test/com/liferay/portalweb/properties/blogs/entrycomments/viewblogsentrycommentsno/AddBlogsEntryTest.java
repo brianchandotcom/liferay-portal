@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.properties.portlet.BlogPortlet;
+package com.liferay.portalweb.properties.blogs.entrycomments.viewblogsentrycommentsno;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,14 +20,37 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddBlogsEntry2Test extends BaseTestCase {
-	public void testAddBlogsEntry2() throws Exception {
+public class AddBlogsEntryTest extends BaseTestCase {
+	public void testAddBlogsEntry() throws Exception {
+		selenium.open("/web/guest/home/");
+		loadRequiredJavaScriptModules();
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=Blogs Test Page")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.clickAt("link=Blogs Test Page",
+			RuntimeVariables.replace("Blogs Test Page"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 		selenium.clickAt("//input[@value='Add Blog Entry']",
 			RuntimeVariables.replace("Add Blog Entry"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_33_title']",
-			RuntimeVariables.replace("Entry2"));
+			RuntimeVariables.replace("Blogs Entry Title"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -47,35 +70,18 @@ public class AddBlogsEntry2Test extends BaseTestCase {
 		}
 
 		selenium.selectFrame("//td[@id='cke_contents__33_editor']/iframe");
-		selenium.type("//body", RuntimeVariables.replace("Content"));
+		selenium.type("//body", RuntimeVariables.replace("Blogs Entry Content"));
 		selenium.selectFrame("relative=top");
-		assertTrue(selenium.isElementPresent("//body"));
-		assertTrue(selenium.isElementPresent("//body"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Entry2"),
+		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 			selenium.getText("//div[@class='entry-title']/h2/a"));
-		assertEquals(RuntimeVariables.replace("Content"),
+		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
 			selenium.getText("//div[@class='entry-body']/p"));
 	}
 }

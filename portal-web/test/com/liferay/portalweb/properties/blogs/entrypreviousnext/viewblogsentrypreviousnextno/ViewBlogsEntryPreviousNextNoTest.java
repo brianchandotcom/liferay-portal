@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.properties.portlet.BlogPortlet;
+package com.liferay.portalweb.properties.blogs.entrypreviousnext.viewblogsentrypreviousnextno;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddBlogPortletTest extends BaseTestCase {
-	public void testAddBlogPortlet() throws Exception {
+public class ViewBlogsEntryPreviousNextNoTest extends BaseTestCase {
+	public void testViewBlogsEntryPreviousNextNo() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -45,49 +45,13 @@ public class AddBlogPortletTest extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.click(RuntimeVariables.replace("//nav/ul/li[2]/a/span"));
+		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
+			selenium.getText("//div[@class='entry-title']/h2/a"));
+		selenium.clickAt("//div[@class='entry-title']/h2/a",
+			RuntimeVariables.replace("Blogs Entry2 Title"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
-				"More"));
-		selenium.clickAt("//a[@id='_145_addApplication']",
-			RuntimeVariables.replace("More"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("//div[@title='Blogs']/p/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("//div[@title='Blogs']/p/a",
-			RuntimeVariables.replace("Add"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//section")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertTrue(selenium.isVisible("//section"));
+		assertFalse(selenium.isTextPresent("Previous"));
+		assertFalse(selenium.isTextPresent("Next"));
 	}
 }

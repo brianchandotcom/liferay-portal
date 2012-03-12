@@ -5,9 +5,24 @@
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
-
-<thead><tr><td rowspan="1" colspan="3">AddBlogsEntry2Test</td></tr></thead><tbody>
-
+<thead>
+<tr><td rowspan="1" colspan="3">AddBlogsEntry2Test</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Blogs Test Page</td>
+	<td>Blogs Test Page</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Blogs Test Page</td>
+	<td>Blogs Test Page</td>
+</tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add Blog Entry']</td>
@@ -16,7 +31,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_33_title']</td>
-	<td>Entry2</td>
+	<td>Blogs Entry2 Title</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -31,7 +46,7 @@
 <tr>
 	<td>type</td>
 	<td>//body</td>
-	<td>Content</td>
+	<td>Blogs Entry2 Content</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
@@ -39,24 +54,9 @@
 	<td>top</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>//body</td>
-	<td>no Allow Pingbacks</td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>//body</td>
-	<td>no Allow Trackbacks</td>
-</tr>
-<tr>
-	<td>clickAt</td>
+	<td>clickAtAndWait</td>
 	<td>//input[@value='Publish']</td>
 	<td>Publish</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -66,15 +66,15 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='entry-title']/h2/a</td>
-	<td>Entry2</td>
+	<td>Blogs Entry2 Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='entry-body']/p</td>
-	<td>Content</td>
+	<td>Blogs Entry2 Content</td>
 </tr>
 
-</tbody>
-</table>
+
+</tbody></table>
 </body>
 </html>

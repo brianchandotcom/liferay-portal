@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.properties.portlet.BlogPortlet;
+package com.liferay.portalweb.properties.blogs.trackback.viewblogstrackbackno;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,11 +20,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AssertBlogsTest extends BaseTestCase {
-	public void testAssertBlogs() throws Exception {
+public class ViewBlogsTrackbackNoTest extends BaseTestCase {
+	public void testViewBlogsTrackbackNo() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-		selenium.clickAt("link=Blogs Test Page", RuntimeVariables.replace(""));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -32,7 +31,7 @@ public class AssertBlogsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Entry1")) {
+				if (selenium.isVisible("link=Blogs Test Page")) {
 					break;
 				}
 			}
@@ -42,8 +41,16 @@ public class AssertBlogsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Entry1", RuntimeVariables.replace(""));
-		assertFalse(selenium.isElementPresent("Comments"));
-		assertFalse(selenium.isElementPresent("Previous and Next"));
+		selenium.clickAt("link=Blogs Test Page",
+			RuntimeVariables.replace("Blogs Test Page"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		selenium.clickAt("//input[@value='Add Blog Entry']",
+			RuntimeVariables.replace("Add Blog Entry"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		assertFalse(selenium.isTextPresent("Allow Trackbacks"));
+		assertFalse(selenium.isElementPresent(
+				"//input[@id='_33_allowTrackbacksCheckbox']"));
 	}
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.properties.portlet.BlogPortlet;
+package com.liferay.portalweb.properties.blogs.entrypreviousnext.viewblogsentrypreviousnextno;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -45,15 +45,12 @@ public class AddBlogsEntry1Test extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.click(RuntimeVariables.replace("//nav/ul/li[2]/a/span"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//input[@value='Add Blog Entry']",
 			RuntimeVariables.replace("Add Blog Entry"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_33_title']",
-			RuntimeVariables.replace("Entry1"));
+			RuntimeVariables.replace("Blogs Entry1 Title"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -73,35 +70,18 @@ public class AddBlogsEntry1Test extends BaseTestCase {
 		}
 
 		selenium.selectFrame("//td[@id='cke_contents__33_editor']/iframe");
-		selenium.type("//body", RuntimeVariables.replace("Content"));
+		selenium.type("//body", RuntimeVariables.replace("Blogs Entry1 Content"));
 		selenium.selectFrame("relative=top");
-		assertTrue(selenium.isElementPresent("//body"));
-		assertTrue(selenium.isElementPresent("//body"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Entry1"),
+		assertEquals(RuntimeVariables.replace("Blogs Entry1 Title"),
 			selenium.getText("//div[@class='entry-title']/h2/a"));
-		assertEquals(RuntimeVariables.replace("Content"),
+		assertEquals(RuntimeVariables.replace("Blogs Entry1 Content"),
 			selenium.getText("//div[@class='entry-body']/p"));
 	}
 }

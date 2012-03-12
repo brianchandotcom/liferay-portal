@@ -12,9 +12,12 @@
  * details.
  */
 
-package com.liferay.portalweb.properties.portlet.BlogPortlet;
+package com.liferay.portalweb.properties.blogs.pingback.viewblogspingbackno;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPageBlogsTest;
+import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPortletBlogsTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -22,16 +25,12 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class BlogsPortletTests extends BaseTestSuite {
+public class ViewBlogsPingbackNoTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddPageBlogsTest.class);
-		testSuite.addTestSuite(AddBlogPortletTest.class);
-		testSuite.addTestSuite(AddBlogsEntry1Test.class);
-		testSuite.addTestSuite(AddBlogsEntry2Test.class);
-		testSuite.addTestSuite(AssertBlogsTest.class);
-		testSuite.addTestSuite(AssertBlogSatgingTest.class);
-		testSuite.addTestSuite(TearDownBlogsEntryTest.class);
+		testSuite.addTestSuite(AddPortletBlogsTest.class);
+		testSuite.addTestSuite(ViewBlogsPingbackNoTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

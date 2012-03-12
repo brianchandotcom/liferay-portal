@@ -12,22 +12,24 @@
  * details.
  */
 
-package com.liferay.portalweb.properties.portlet;
+package com.liferay.portalweb.properties.blogs.trackback;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.properties.portlet.BlogPortlet.BlogsPortletTests;
-
+import com.liferay.portalweb.properties.blogs.trackback.viewblogstrackbackno.ViewBlogsTrackbackNoTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-public class PortletTests extends BaseTestSuite {
 
-public static Test suite() {
+/**
+ * @author Brian Wing Shun Chan
+ */
+public class TrackbackTestPlan extends BaseTestSuite {
 
+	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(BlogsPortletTests.suite());
-		
+		testSuite.addTest(ViewBlogsTrackbackNoTests.suite());
+
 		return testSuite;
 	}
 

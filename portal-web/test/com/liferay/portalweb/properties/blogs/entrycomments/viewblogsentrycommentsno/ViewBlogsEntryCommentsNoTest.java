@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.properties.portlet.BlogPortlet;
+package com.liferay.portalweb.properties.blogs.entrycomments.viewblogsentrycommentsno;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,52 +20,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddPageBlogsTest extends BaseTestCase {
-	public void testAddPageBlogs() throws Exception {
+public class ViewBlogsEntryCommentsNoTest extends BaseTestCase {
+	public void testViewBlogsEntryCommentsNo() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-		selenium.clickAt("//nav[@id='navigation']",
-			RuntimeVariables.replace("Navigation"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("//a[@id='addPage']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("//a[@id='addPage']",
-			RuntimeVariables.replace("Add Page"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@type='text']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.type("//input[@type='text']",
-			RuntimeVariables.replace("Blogs Test Page"));
-		selenium.clickAt("//button[@id='save']",
-			RuntimeVariables.replace("Save"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -87,5 +45,21 @@ public class AddPageBlogsTest extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
+		assertFalse(selenium.isTextPresent("0 Comments"));
+		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
+			selenium.getText("//div[@class='entry-title']/h2/a"));
+		selenium.clickAt("//div[@class='entry-title']/h2/a",
+			RuntimeVariables.replace("Blogs Entry Title"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		assertFalse(selenium.isTextPresent("0 Comments"));
+		assertFalse(selenium.isElementPresent(
+				"//div[@class='lfr-panel-title']/span[contains(.,'Comments')]"));
+		assertFalse(selenium.isTextPresent("No comments yet."));
+		assertFalse(selenium.isTextPresent("Be the first."));
+		assertFalse(selenium.isTextPresent("Subscribe to Comments"));
+		assertFalse(selenium.isElementPresent(
+				"//fieldset[contains(@class,'add-comment')]/div/a"));
+		assertFalse(selenium.isElementPresent("//span[@class='subscribe-link']"));
 	}
 }

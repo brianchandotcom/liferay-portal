@@ -33,6 +33,7 @@ public class UpgradeCalendar extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		initSerializer();
+
 		updateCalEvent();
 	}
 
@@ -95,4 +96,5 @@ public class UpgradeCalendar extends UpgradeProcess {
 	}
 
 	private JSONSerializer _jsonSerializer;
+
 }

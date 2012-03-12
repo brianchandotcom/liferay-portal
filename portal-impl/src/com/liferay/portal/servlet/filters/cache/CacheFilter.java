@@ -115,15 +115,18 @@ public class CacheFilter extends BasePortalFilter {
 			if (queryString == null) {
 				String url = (String)request.getAttribute(
 					WebKeys.CURRENT_COMPLETE_URL);
-	
-				if (url.indexOf(StringPool.QUESTION) > -1) {
-					queryString = url.substring(
-						url.indexOf(StringPool.QUESTION)+1);
+
+				int questionMarkIndex = url.indexOf(StringPool.QUESTION);
+
+				if (questionMarkIndex > -1) {
+					queryString = url.substring(questionMarkIndex + 1);
 				}
 			}
 		}
 
-		sb.append(queryString);
+		if (queryString != null) {
+			sb.append(queryString);
+		}
 
 		// Language
 

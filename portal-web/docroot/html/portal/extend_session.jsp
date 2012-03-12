@@ -13,3 +13,15 @@
  * details.
  */
 --%>
+
+<%@ include file="/html/portal/init.jsp" %>
+
+<%
+for (String ctxName : ServletContextPool.keySet()) {
+	javax.servlet.ServletContext ctx = ServletContextPool.get(ctxName);
+	if (ctx != null) {
+		RequestDispatcher requestDispatcher = ctx.getRequestDispatcher("/");
+		requestDispatcher.include(request, response);
+	}
+}
+%>

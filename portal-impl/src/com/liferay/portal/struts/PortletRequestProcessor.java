@@ -84,17 +84,11 @@ public class PortletRequestProcessor extends TilesRequestProcessor {
 			Class<?> clazz = Class.forName(className);
 
 			Constructor<?> constructor = clazz.getConstructor(
-				new Class[] {
-					ActionServlet.class, ModuleConfig.class
-				}
-			);
+				ActionServlet.class, ModuleConfig.class);
 
 			PortletRequestProcessor portletReqProcessor =
 				(PortletRequestProcessor)constructor.newInstance(
-					new Object[] {
-						servlet, moduleConfig
-					}
-				);
+					servlet, moduleConfig);
 
 			return portletReqProcessor;
 		}

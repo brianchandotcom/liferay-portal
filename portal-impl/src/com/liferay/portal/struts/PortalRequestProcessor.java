@@ -148,7 +148,9 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 		Boolean basicAuthEnabled = (Boolean)session.getAttribute(
 			WebKeys.BASIC_AUTH_ENABLED);
 
-		session.removeAttribute(WebKeys.BASIC_AUTH_ENABLED);
+		if (basicAuthEnabled != null) {
+			session.removeAttribute(WebKeys.BASIC_AUTH_ENABLED);
+		}
 
 		String path = super.processPath(request, response);
 
@@ -189,35 +191,6 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 		for (String path : pathsArray) {
 			paths.add(path);
 		}
-	}
-
-	protected void callParentDoForward(
-			String uri, HttpServletRequest request,
-			HttpServletResponse response)
-		throws IOException, ServletException {
-
-		super.doForward(uri, request, response);
-	}
-
-	protected HttpServletRequest callParentProcessMultipart(
-		HttpServletRequest request) {
-
-		return super.processMultipart(request);
-	}
-
-	protected String callParentProcessPath(
-			HttpServletRequest request, HttpServletResponse response)
-		throws IOException {
-
-		return super.processPath(request, response);
-	}
-
-	protected boolean callParentProcessRoles(
-			HttpServletRequest request, HttpServletResponse response,
-			ActionMapping actionMapping)
-		throws IOException, ServletException {
-
-		return super.processRoles(request, response, actionMapping);
 	}
 
 	protected void cleanUp(HttpServletRequest request) throws Exception {
@@ -682,29 +655,18 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 			return _PATH_PORTAL_LAYOUT;
 		}
 
-		// Authenticated users can always log out
+		// Authenticated users
+		if ((remoteUser != null) || (user != null)) {
+			// can always log out
+			if (path.equals(_PATH_PORTAL_LOGOUT) ||
+				// can always extend or confirm their session
+				path.equals(_PATH_PORTAL_EXPIRE_SESSION) ||
+				path.equals(_PATH_PORTAL_EXTEND_SESSION) ||
+				// can always agree to terms of use
+				path.equals(_PATH_PORTAL_UPDATE_TERMS_OF_USE)) {
 
-		if (((remoteUser != null) || (user != null)) &&
-			path.equals(_PATH_PORTAL_LOGOUT)) {
-
-			return path;
-		}
-
-		// Authenticated users can always extend or confirm their session
-
-		if (((remoteUser != null) || (user != null)) &&
-			(path.equals(_PATH_PORTAL_EXPIRE_SESSION) ||
-			 path.equals(_PATH_PORTAL_EXTEND_SESSION))) {
-
-			return path;
-		}
-
-		// Authenticated users can always agree to terms of use
-
-		if (((remoteUser != null) || (user != null)) &&
-			path.equals(_PATH_PORTAL_UPDATE_TERMS_OF_USE)) {
-
-			return path;
+				return path;
+			}
 		}
 
 		// Authenticated users must still exist in the system
@@ -721,14 +683,14 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 			return _PATH_PORTAL_ERROR;
 		}
 
-		if (!path.equals(_PATH_PORTAL_JSON_SERVICE) &&
+		if ((user != null) && !path.equals(_PATH_PORTAL_JSON_SERVICE) &&
 			!path.equals(_PATH_PORTAL_RENDER_PORTLET) &&
 			!ParamUtil.getBoolean(request, "wsrp") &&
 			!themeDisplay.isImpersonated()) {
 
 			// Authenticated users should agree to Terms of Use
 
-			if ((user != null) && !user.isAgreedToTermsOfUse()) {
+			if (!user.isAgreedToTermsOfUse()) {
 				boolean termsOfUseRequired = false;
 
 				try {
@@ -757,7 +719,7 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 				_log.error(e, e);
 			}
 
-			if ((user != null) && !user.isEmailAddressVerified() &&
+			if (!user.isEmailAddressVerified() &&
 				emailAddressVerificationRequired &&
 				!path.equals(_PATH_PORTAL_UPDATE_EMAIL_ADDRESS)) {
 
@@ -766,25 +728,23 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 
 			// Authenticated users must have a current password
 
-			if ((user != null) && user.isPasswordReset()) {
+			if (user.isPasswordReset()) {
 				return _PATH_PORTAL_UPDATE_PASSWORD;
 			}
 
 			// Authenticated users must have an email address
 
-			if ((user != null) &&
-				(Validator.isNull(user.getEmailAddress()) ||
+			if (Validator.isNull(user.getEmailAddress()) ||
 				 (PropsValues.USERS_EMAIL_ADDRESS_REQUIRED &&
-				  Validator.isNull(user.getDisplayEmailAddress())))) {
+				  Validator.isNull(user.getDisplayEmailAddress()))) {
 
 				return _PATH_PORTAL_UPDATE_EMAIL_ADDRESS;
 			}
 
 			// Authenticated users should have a reminder query
 
-			if ((user != null) &&
-				(Validator.isNull(user.getReminderQueryQuestion()) ||
-				 Validator.isNull(user.getReminderQueryAnswer()))) {
+			if (Validator.isNull(user.getReminderQueryQuestion()) ||
+				 Validator.isNull(user.getReminderQueryAnswer())) {
 
 				if (PropsValues.USERS_REMINDER_QUERIES_ENABLED) {
 					return _PATH_PORTAL_UPDATE_REMINDER_QUERY;

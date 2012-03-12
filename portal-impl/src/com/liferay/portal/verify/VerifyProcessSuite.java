@@ -23,6 +23,7 @@ public class VerifyProcessSuite extends VerifyProcess {
 	protected void doVerify() throws Exception {
 		verify(new VerifyProperties());
 
+		verify(new VerifyDB2());
 		verify(new VerifyMySQL());
 		verify(new VerifyOracle());
 		verify(new VerifySQLServer());

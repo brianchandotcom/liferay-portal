@@ -102,7 +102,7 @@ public class CheckOutOrderTest extends BaseTestCase {
 				selenium.type("_34_ccNumber",
 					RuntimeVariables.replace("4111111111111111"));
 				selenium.select("_34_ccExpYear",
-					RuntimeVariables.replace("label=2011"));
+					RuntimeVariables.replace("label=2017"));
 				selenium.type("_34_comments",
 					RuntimeVariables.replace("Please take care of my order."));
 				selenium.clickAt("//input[@value='Continue']",

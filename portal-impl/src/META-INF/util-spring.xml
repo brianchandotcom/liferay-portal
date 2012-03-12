@@ -736,6 +736,10 @@
 	<bean id="com.liferay.portlet.rolesadmin.util.RolesAdminUtil" class="com.liferay.portlet.rolesadmin.util.RolesAdminUtil">
 		<property name="rolesAdmin" ref="com.liferay.portlet.rolesadmin.util.RolesAdmin" />
 	</bean>
+	<bean id="com.liferay.portlet.sitesadmin.util.SitesAdmin" class="com.liferay.portlet.sitesadmin.util.SitesAdminImpl" />
+	<bean id="com.liferay.portlet.sitesadmin.util.SitesAdminUtil" class="com.liferay.portlet.sitesadmin.util.SitesAdminUtil">
+		<property name="sitesAdmin" ref="com.liferay.portlet.sitesadmin.util.SitesAdmin" />
+	</bean>
 	<bean id="com.liferay.portlet.usersadmin.util.UsersAdmin" class="com.liferay.portlet.usersadmin.util.UsersAdminImpl" />
 	<bean id="com.liferay.portlet.usersadmin.util.UsersAdminUtil" class="com.liferay.portlet.usersadmin.util.UsersAdminUtil">
 		<property name="usersAdmin" ref="com.liferay.portlet.usersadmin.util.UsersAdmin" />

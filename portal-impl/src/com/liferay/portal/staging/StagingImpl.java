@@ -88,6 +88,8 @@ import com.liferay.portal.util.SessionClicks;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portlet.sitesadmin.util.SitesAdmin;
+import com.liferay.portlet.sitesadmin.util.SitesAdminUtil;
 
 import java.io.File;
 
@@ -1333,12 +1335,19 @@ public class StagingImpl implements Staging {
 			return;
 		}
 
-		int stagingType = ParamUtil.getInteger(portletRequest, "stagingType");
+		int stagingType = SitesAdminUtil.getStagingType(
+			liveGroup, portletRequest);
 
-		boolean branchingPublic = ParamUtil.getBoolean(
-			portletRequest, "branchingPublic");
 		boolean branchingPrivate = ParamUtil.getBoolean(
-			portletRequest, "branchingPrivate");
+			portletRequest, "branchingPrivate",
+			GetterUtil.getBoolean(
+				liveGroup.getTypeSettingsProperty("branchingPrivate"),
+				SitesAdmin.DEFAULT_BRANCHING_PRIVATE));
+		boolean branchingPublic = ParamUtil.getBoolean(
+			portletRequest, "branchingPublic",
+			GetterUtil.getBoolean(
+				liveGroup.getTypeSettingsProperty("branchingPublic"),
+				SitesAdmin.DEFAULT_BRANCHING_PUBLIC));
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -1356,15 +1365,26 @@ public class StagingImpl implements Staging {
 		}
 		else if (stagingType == StagingConstants.TYPE_REMOTE_STAGING) {
 			String remoteAddress = ParamUtil.getString(
-				portletRequest, "remoteAddress");
+				portletRequest, "remoteAddress",
+				liveGroup.getTypeSettingsProperty("remoteAddress"));
 
 			remoteAddress = stripProtocolFromRemoteAddress(remoteAddress);
 
 			long remoteGroupId = ParamUtil.getLong(
-				portletRequest, "remoteGroupId");
-			int remotePort = ParamUtil.getInteger(portletRequest, "remotePort");
+				portletRequest, "remoteGroupId",
+				GetterUtil.getLong(
+					liveGroup.getTypeSettingsProperty("remoteGroupId"),
+					SitesAdmin.DEFAULT_REMOTE_GROUP_ID));
+			int remotePort = ParamUtil.getInteger(
+				portletRequest, "remotePort",
+				GetterUtil.getInteger(
+					liveGroup.getTypeSettingsProperty("remotePort"),
+					SitesAdmin.DEFAULT_REMOTE_PORT));
 			boolean secureConnection = ParamUtil.getBoolean(
-				portletRequest, "secureConnection");
+				portletRequest, "secureConnection",
+				GetterUtil.getBoolean(
+					liveGroup.getTypeSettingsProperty("secureConnection"),
+					SitesAdmin.DEFAULT_SECURE_CONNECTION));
 
 			enableRemoteStaging(
 				userId, scopeGroup, liveGroup, branchingPublic,

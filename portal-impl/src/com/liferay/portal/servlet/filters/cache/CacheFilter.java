@@ -116,10 +116,10 @@ public class CacheFilter extends BasePortalFilter {
 				String url = (String)request.getAttribute(
 					WebKeys.CURRENT_COMPLETE_URL);
 
-				int questionMarkIndex = url.indexOf(StringPool.QUESTION);
+				int pos = url.indexOf(StringPool.QUESTION);
 
-				if (questionMarkIndex > -1) {
-					queryString = url.substring(questionMarkIndex + 1);
+				if (pos > -1) {
+					queryString = url.substring(pos + 1);
 				}
 			}
 		}

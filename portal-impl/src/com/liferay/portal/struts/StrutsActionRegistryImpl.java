@@ -35,9 +35,9 @@ public class StrutsActionRegistryImpl implements StrutsActionRegistry {
 			return action;
 		}
 
-		for (String curPath : _actions.keySet()) {
-			if (path.startsWith(curPath)) {
-				return _actions.get(curPath);
+		for (Map.Entry<String, Action> entry : _actions.entrySet()) {
+			if (path.startsWith(entry.getKey())) {
+				return entry.getValue();
 			}
 		}
 

@@ -27,7 +27,7 @@ List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolder
 %>
 
 <liferay-ui:search-container
-	id='<%= renderResponse.getNamespace() + "fileEntryTypesSearchContainer" %>'
+	id="fileEntryTypesSearchContainer"
 >
 	<liferay-ui:search-container-results
 		results="<%= fileEntryTypes %>"

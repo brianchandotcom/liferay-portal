@@ -32,7 +32,7 @@ List<UserGroup> userGroups = (List<UserGroup>)request.getAttribute("user.userGro
 
 <liferay-ui:search-container
 	headerNames="name,null"
-	id='<%= renderResponse.getNamespace() + "userGroupsSearchContainer" %>'
+	id="userGroupsSearchContainer"
 >
 	<liferay-ui:search-container-results
 		results="<%= userGroups %>"

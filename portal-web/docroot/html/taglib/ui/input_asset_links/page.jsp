@@ -104,7 +104,7 @@ assetBrowserURL.setParameter("groupId", scopeGroupId.toString());
 
 <liferay-ui:search-container
 	headerNames="type,title,null"
-	id='<%= portletResponse.getNamespace() + "assetLinkSearchContainer" %>'
+	id="assetLinkSearchContainer"
 >
 	<liferay-ui:search-container-results
 		results="<%= assetLinks %>"

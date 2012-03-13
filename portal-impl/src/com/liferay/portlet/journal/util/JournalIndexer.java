@@ -181,16 +181,16 @@ public class JournalIndexer extends BaseIndexer {
 		if (Validator.isNull(article.getStructureId())) {
 			Locale defaultLocale = LocaleUtil.getDefault();
 
-			String defaultLangaugeId = LocaleUtil.toLanguageId(defaultLocale);
+			String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 			String[] languageIds = getLanguageIds(
-				defaultLangaugeId, article.getContent());
+				defaultLanguageId, article.getContent());
 
 			for (String languageId : languageIds) {
 				String content = extractContent(
 					article.getContentByLocale(languageId));
 
-				if (languageId.equals(defaultLangaugeId)) {
+				if (languageId.equals(defaultLanguageId)) {
 					document.addText(Field.CONTENT, content);
 				}
 
@@ -323,12 +323,12 @@ public class JournalIndexer extends BaseIndexer {
 	}
 
 	protected String[] getLanguageIds(
-		String defaultLangaugeId, String content) {
+		String defaultLanguageId, String content) {
 
 		String[] languageIds = LocalizationUtil.getAvailableLocales(content);
 
 		if (languageIds.length == 0) {
-			languageIds = new String[] {defaultLangaugeId};
+			languageIds = new String[] {defaultLanguageId};
 		}
 
 		return languageIds;

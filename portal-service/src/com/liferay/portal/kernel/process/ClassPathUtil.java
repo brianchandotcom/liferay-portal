@@ -137,7 +137,7 @@ public class ClassPathUtil {
 		}
 
 		if (ServerDetector.isJBoss()) {
-			if (protocol.equals("vfs")) {
+			if (protocol.equals("vfs") || protocol.equals("vfsfile")) {
 				int pos = path.indexOf(".jar/");
 
 				if (pos != -1) {

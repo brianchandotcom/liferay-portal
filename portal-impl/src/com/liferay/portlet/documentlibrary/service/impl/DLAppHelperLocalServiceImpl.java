@@ -85,7 +85,7 @@ public class DLAppHelperLocalServiceImpl
 
 			WorkflowHandlerRegistryUtil.startWorkflowInstance(
 				dlFileVersion.getCompanyId(), dlFileVersion.getGroupId(),
-				userId, DLFileEntry.class.getName(),
+				userId, DLFileEntryConstants.getClassName(),
 				dlFileVersion.getFileVersionId(), dlFileVersion, serviceContext,
 				workflowContext);
 		}

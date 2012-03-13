@@ -266,7 +266,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="3" />
+		<property name="build-test-ant-scripts.version" value="4" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -554,8 +554,7 @@
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="db-sharding-wsrp" />
-			<param name="test.ant.script.plugin.portlets" value="test-misc-portlet,wsrp-portlet" />
-			<param name="test.ant.script.properties" value="mime.types.content.disposition.inline=pdf" />
+			<param name="test.ant.script.plugin.portlets" value="wsrp-portlet" />
 			<param name="test.ant.script.suite" value="PluginsWSRPTestSuite" />
 			<param name="test.ant.script.template" value="ant-script-db-sharding.xml" />
 		</antcall>
@@ -683,6 +682,48 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="demo-components-blogs" />
+			<param name="test.ant.script.suite" value="DemoComponentsBlogsTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="demo-components-message-boards" />
+			<param name="test.ant.script.suite" value="DemoComponentsMessageBoardsTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="demo-devcon-6100-dynamic-data" />
+			<param name="test.ant.script.plugin.portlets" value="kaleo-designer-portlet,kaleo-forms-portlet" />
+			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
+			<param name="test.ant.script.suite" value="DemoDevcon6100DynamicDataTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="demo-devcon-6100-fundamentals" />
+			<param name="test.ant.script.plugin.portlets" value="knowledge-base-portlet,test-misc-portlet,wsrp-portlet" />
+			<param name="test.ant.script.plugin.portlets.properties" value="admin.kb.article.sections=Application Server,Authentication,Content Management,Database,Development,Plugins,Portlets,Security,Server Configuration,User Interface$${line.separator}admin.kb.article.default.sections=" />
+			<param name="test.ant.script.properties" value="mime.types.content.disposition.inline=pdf" />
+			<param name="test.ant.script.suite" value="DemoDevcon6100FundamentalsTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="demo-devcon-6100-media" />
+			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
+			<param name="test.ant.script.suite" value="DemoDevcon6100MediaTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="demo-devcon-6100-site-management" />
+			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
+			<param name="test.ant.script.suite" value="DemoDevcon6100SiteManagementTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="demo-devcon-6100-user-admin" />
+			<param name="test.ant.script.suite" value="DemoDevcon6100UserAdminTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="kaleo-asset-publisher" />
 			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
 			<param name="test.ant.script.suite" value="KaleoAssetPublisherTestSuite" />
@@ -692,13 +733,6 @@
 			<param name="test.ant.script.command" value="kaleo-blogs" />
 			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
 			<param name="test.ant.script.suite" value="KaleoBlogsTestSuite" />
-		</antcall>
-
-		<antcall target="build-test-ant-script">
-			<param name="test.ant.script.command" value="kaleo-dynamic-data-lists" />
-			<param name="test.ant.script.plugin.portlets" value="kaleo-designer-portlet,kaleo-forms-portlet" />
-			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
-			<param name="test.ant.script.suite" value="KaleoDynamicDataListsTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
@@ -847,11 +881,6 @@
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="permissions-message-boards" />
 			<param name="test.ant.script.suite" value="PermissionsMessageBoardsTestSuite" />
-		</antcall>
-
-		<antcall target="build-test-ant-script">
-			<param name="test.ant.script.command" value="permissions-use-case" />
-			<param name="test.ant.script.suite" value="PermissionsUseCaseTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
@@ -1339,8 +1368,7 @@
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="plugins-wsrp" />
-			<param name="test.ant.script.plugin.portlets" value="test-misc-portlet,wsrp-portlet" />
-			<param name="test.ant.script.properties" value="mime.types.content.disposition.inline=pdf" />
+			<param name="test.ant.script.plugin.portlets" value="wsrp-portlet" />
 			<param name="test.ant.script.suite" value="PluginsWSRPTestSuite" />
 		</antcall>
 
@@ -1423,7 +1451,6 @@
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="portal-web-document-library" />
-			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
 			<param name="test.ant.script.suite" value="PortalWebDocumentLibraryTestSuite" />
 		</antcall>
 

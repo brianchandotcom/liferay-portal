@@ -37,7 +37,7 @@ import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -305,7 +305,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			serviceContext);
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			DLFileEntry.class.getName(), fileEntry.getFileEntryId());
+			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
 
 		assertEqualsSorted(assetTagNames, assetEntry.getTagNames());
 
@@ -326,7 +326,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			description, changeLog, false, bytes, serviceContext);
 
 		assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			DLFileEntry.class.getName(), fileEntry.getFileEntryId());
+			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
 
 		assertEqualsSorted(assetTagNames, assetEntry.getTagNames());
 
@@ -397,7 +397,8 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 		searchContext.setQueryConfig(queryConfig);
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(DLFileEntry.class);
+		Indexer indexer = IndexerRegistryUtil.getIndexer(
+			DLFileEntryConstants.getClassName());
 
 		Hits hits = indexer.search(searchContext);
 

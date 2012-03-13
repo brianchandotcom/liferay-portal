@@ -34,6 +34,7 @@ public class MBeanRegisteringPortalLifecycle extends BasePortalLifecycle {
 
 	@Override
 	protected void doPortalDestroy() {
+		_managementService.dispose();
 	}
 
 	@Override

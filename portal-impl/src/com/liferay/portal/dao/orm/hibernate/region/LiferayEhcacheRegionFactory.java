@@ -139,6 +139,20 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 
 				reconfigureCache(ehcache);
 			}
+
+			if (!cacheConfigurations.isEmpty()) {
+				_mBeanRegisteringPortalLifecycle.doPortalDestroy();
+
+				try {
+					_mBeanRegisteringPortalLifecycle.doPortalInit();
+				}
+				catch (Exception e) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to reinitialize mbean registrations", e);
+					}
+				}
+			}
 		}
 	}
 

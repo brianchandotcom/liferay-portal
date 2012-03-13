@@ -14,6 +14,7 @@
 
 package com.liferay.portal.metadata;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -50,39 +51,21 @@ import org.xml.sax.ContentHandler;
 public class TikaRawMetadataProcessorTest extends PowerMockito {
 
 	@Test
-	public void testExtractMetadataFromInputStream() {
+	public void testExtractMetadataFromInputStream() throws Exception {
 		mockStatic(PrefsPropsUtil.class);
 
 		try {
-			OngoingStubbing<Boolean> ongoingStubbing = when(
+			when(
 				PrefsPropsUtil.getBoolean(
-					PropsKeys.XUGGLER_ENABLED, PropsValues.XUGGLER_ENABLED));
-
-			ongoingStubbing.thenReturn(Boolean.FALSE);
-
-			ContentHandler contentHandler = Mockito.any(ContentHandler.class);
-
-			Metadata metadata = Mockito.any(Metadata.class);
+					PropsKeys.XUGGLER_ENABLED, PropsValues.XUGGLER_ENABLED))
+			.thenReturn(Boolean.FALSE);
 
 			InputStream inputStream = Mockito.any(InputStream.class);
+			ContentHandler contentHandler = Mockito.any(ContentHandler.class);
+			Metadata metadata = Mockito.any(Metadata.class);
 			ParseContext parseContext = Mockito.any(ParseContext.class);
 
 			_parser.parse(inputStream, contentHandler, metadata, parseContext);
-
-			PowerMockitoStubber powerMockitoStubber = doAnswer(
-				new Answer<Object>() {
-
-					public Object answer(InvocationOnMock invocationOnMock)
-						throws Throwable {
-
-						return new Metadata();
-					}
-
-				});
-
-			Parser parser = powerMockitoStubber.when(_parser);
-
-			parser.parse(inputStream, contentHandler, metadata, parseContext);
 
 			metadata = _tikaRawMetadataProcessor.extractMetadata(
 				"pdf", "application/pdf", inputStream);
@@ -91,7 +74,7 @@ public class TikaRawMetadataProcessorTest extends PowerMockito {
 			Assert.assertEquals(0, metadata.size());
 
 		}
-		catch (Exception e) {
+		catch (SystemException e) {
 			Assert.fail("Unexpected error");
 		}
 	}

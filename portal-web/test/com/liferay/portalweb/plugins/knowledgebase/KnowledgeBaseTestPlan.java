@@ -18,7 +18,6 @@ import com.liferay.portalweb.plugins.knowledgebase.knowledgebaseadmin.KnowledgeB
 import com.liferay.portalweb.plugins.knowledgebase.knowledgebasearticle.KnowledgeBaseArticleTestPlan;
 import com.liferay.portalweb.plugins.knowledgebase.knowledgebasedisplay.KnowledgeBaseDisplayTestPlan;
 import com.liferay.portalweb.plugins.knowledgebase.knowledgebasesection.KnowledgeBaseSectionTestPlan;
-import com.liferay.portalweb.plugins.knowledgebase.usecase.UseCaseTestPlan;
 import com.liferay.portalweb.portal.BaseTestSuite;
 
 import junit.framework.Test;
@@ -36,7 +35,6 @@ public class KnowledgeBaseTestPlan extends BaseTestSuite {
 		testSuite.addTest(KnowledgeBaseArticleTestPlan.suite());
 		testSuite.addTest(KnowledgeBaseDisplayTestPlan.suite());
 		testSuite.addTest(KnowledgeBaseSectionTestPlan.suite());
-		testSuite.addTest(UseCaseTestPlan.suite());
 
 		return testSuite;
 	}

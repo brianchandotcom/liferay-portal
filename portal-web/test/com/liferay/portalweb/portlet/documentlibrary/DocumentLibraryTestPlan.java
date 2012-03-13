@@ -23,7 +23,6 @@ import com.liferay.portalweb.portlet.documentlibrary.folder.FolderTestPlan;
 import com.liferay.portalweb.portlet.documentlibrary.image.ImageTestPlan;
 import com.liferay.portalweb.portlet.documentlibrary.lar.LARTestPlan;
 import com.liferay.portalweb.portlet.documentlibrary.portlet.PortletTestPlan;
-import com.liferay.portalweb.portlet.documentlibrary.usecase.UseCaseTestPlan;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -44,7 +43,6 @@ public class DocumentLibraryTestPlan extends BaseTestSuite {
 		testSuite.addTest(ImageTestPlan.suite());
 		testSuite.addTest(LARTestPlan.suite());
 		testSuite.addTest(PortletTestPlan.suite());
-		testSuite.addTest(UseCaseTestPlan.suite());
 
 		return testSuite;
 	}

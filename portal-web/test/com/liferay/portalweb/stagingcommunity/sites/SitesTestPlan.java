@@ -19,7 +19,6 @@ import com.liferay.portalweb.stagingcommunity.sites.event.EventTestPlan;
 import com.liferay.portalweb.stagingcommunity.sites.pagevariation.PageVariationTestPlan;
 import com.liferay.portalweb.stagingcommunity.sites.site.SiteTestPlan;
 import com.liferay.portalweb.stagingcommunity.sites.sitepagesvariation.SitePagesVariationTestPlan;
-import com.liferay.portalweb.stagingcommunity.sites.usecase.UseCaseTestPlan;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -36,7 +35,6 @@ public class SitesTestPlan extends BaseTestSuite {
 		testSuite.addTest(PageVariationTestPlan.suite());
 		testSuite.addTest(SiteTestPlan.suite());
 		testSuite.addTest(SitePagesVariationTestPlan.suite());
-		testSuite.addTest(UseCaseTestPlan.suite());
 
 		return testSuite;
 	}

@@ -78,16 +78,20 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 		return getContentType(file, file.getName());
 	}
 
-	public String getContentType(File file, String title) {
+	public String getContentType(File file, String fileName) {
+		if ((file == null) || !file.exists()) {
+			return getContentType(fileName);
+		}
+
 		InputStream is = null;
 
 		try {
 			is = TikaInputStream.get(file);
 
-			return getContentType(is, title);
+			return getContentType(is, fileName);
 		}
 		catch (FileNotFoundException fnfe) {
-			return getContentType(title);
+			return getContentType(fileName);
 		}
 		finally {
 			StreamUtil.cleanUp(is);
@@ -95,8 +99,8 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 	}
 
 	public String getContentType(InputStream inputStream, String fileName) {
-		if ((inputStream == null) && Validator.isNull(fileName)) {
-			return ContentTypes.APPLICATION_OCTET_STREAM;
+		if (inputStream == null) {
+			return getContentType(fileName);
 		}
 
 		String contentType = null;

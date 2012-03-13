@@ -148,7 +148,9 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 		Boolean basicAuthEnabled = (Boolean)session.getAttribute(
 			WebKeys.BASIC_AUTH_ENABLED);
 
-		session.removeAttribute(WebKeys.BASIC_AUTH_ENABLED);
+		if (basicAuthEnabled != null) {
+			session.removeAttribute(WebKeys.BASIC_AUTH_ENABLED);
+		}
 
 		String path = super.processPath(request, response);
 

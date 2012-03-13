@@ -2304,16 +2304,16 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			long groupId, boolean privateLayout, long parentLayoutId)
 		throws SystemException {
 
-		List<Layout> layouts = layoutPersistence.findByG_P_P(
-			groupId, privateLayout, parentLayoutId);
+		try {
+			Layout layout = layoutPersistence.findByG_P_P_First(
+				groupId, privateLayout, parentLayoutId,
+				new LayoutPriorityComparator(false));
 
-		if (layouts.size() == 0) {
+			return layout.getPriority() + 1;
+		}
+		catch (NoSuchLayoutException e) {
 			return 0;
 		}
-
-		Layout layout = layouts.get(layouts.size() - 1);
-
-		return layout.getPriority() + 1;
 	}
 
 	protected long getParentLayoutId(

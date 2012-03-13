@@ -34,6 +34,7 @@ import com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 import com.liferay.portlet.documentlibrary.NoSuchMetadataSetException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.dynamicdatamapping.RequiredStructureException;
 import com.liferay.portlet.dynamicdatamapping.StructureDuplicateElementException;
@@ -115,22 +116,29 @@ public class EditFileEntryTypeAction extends PortletAction {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws Exception {
 
-		DLFileEntryType fileEntryType = null;
+		DLFileEntryType dlFileEntryType = null;
 
 		try {
 			long fileEntryTypeId = ParamUtil.getLong(
 				renderRequest, "fileEntryTypeId");
 
 			if (fileEntryTypeId > 0) {
-				fileEntryType = DLFileEntryTypeServiceUtil.getFileEntryType(
+				dlFileEntryType = DLFileEntryTypeServiceUtil.getFileEntryType(
 					fileEntryTypeId);
 
 				renderRequest.setAttribute(
-					WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY_TYPE, fileEntryType);
+					WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY_TYPE, dlFileEntryType);
 
 				DDMStructure ddmStructure =
 					DDMStructureLocalServiceUtil.fetchStructure(
-						fileEntryType.getGroupId(), "auto_" + fileEntryTypeId);
+						dlFileEntryType.getGroupId(),
+						DLUtil.getDDMStructureKey(dlFileEntryType));
+
+				if (ddmStructure == null) {
+					ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
+						dlFileEntryType.getGroupId(),
+						DLUtil.getDeprecatedDDMStructureKey(dlFileEntryType));
+				}
 
 				renderRequest.setAttribute(
 					WebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE, ddmStructure);

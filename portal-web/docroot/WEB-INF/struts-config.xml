@@ -3,12 +3,6 @@
 
 <struts-config>
 
-	<!-- Forms Beans -->
-
-	<form-beans>
-		<form-bean name="mapsMapsForm" type="com.liferay.portlet.maps.form.MapsForm" />
-	</form-beans>
-
 	<!-- Global Forwards -->
 
 	<global-forwards>

@@ -21,8 +21,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
@@ -35,7 +37,10 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.FileVersionVersionComparator;
+
+import java.io.InputStream;
 
 import java.util.Collections;
 import java.util.Date;
@@ -114,6 +119,48 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 		DLFileEntryTypeLocalServiceUtil.updateDLFileEntryType(dlFileEntryType);
 	}
 
+	protected void checkMimeTypes() throws Exception {
+		List<DLFileEntry> dlFileEntries =
+			DLFileEntryLocalServiceUtil.getFileEntriesByMimeType(
+				ContentTypes.APPLICATION_OCTET_STREAM);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Processing " + dlFileEntries.size() + " file entries with " +
+					ContentTypes.APPLICATION_OCTET_STREAM);
+		}
+
+		for (DLFileEntry dlFileEntry : dlFileEntries) {
+			InputStream inputStream =
+				DLFileEntryLocalServiceUtil.getFileAsStream(
+					dlFileEntry.getUserId(), dlFileEntry.getFileEntryId(),
+					dlFileEntry.getVersion(), false);
+
+			String title = DLUtil.getTitleWithExtension(
+				dlFileEntry.getTitle(), dlFileEntry.getExtension());
+
+			String mimeType = MimeTypesUtil.getContentType(inputStream, title);
+
+			if (mimeType.equals(ContentTypes.APPLICATION_OCTET_STREAM)) {
+				continue;
+			}
+
+			dlFileEntry.setMimeType(mimeType);
+
+			DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry);
+
+			DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+
+			dlFileVersion.setMimeType(mimeType);
+
+			DLFileVersionLocalServiceUtil.updateDLFileVersion(dlFileVersion);
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Fixed file entries with invalid mime types");
+		}
+	}
+
 	protected void checkMisversionedDLFileEntries() throws Exception {
 		List<DLFileEntry> dlFileEntries =
 			DLFileEntryLocalServiceUtil.getMisversionedFileEntries();
@@ -177,8 +224,10 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		checkDLFileEntryType();
 		checkMisversionedDLFileEntries();
+
+		checkDLFileEntryType();
+		checkMimeTypes();
 		removeOrphanedDLFileEntries();
 		updateAssets();
 	}

@@ -143,6 +143,42 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		_fileEntry = null;
 	}
 
+	public void testAddFileEntryWithInvalidMimeType() throws Exception {
+		long folderId = folder.getFolderId();
+		String description = StringPool.BLANK;
+		String changeLog = StringPool.BLANK;
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		try {
+			String name = "InvalidMime.txt";
+			byte[] bytes = CONTENT.getBytes();
+
+			FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
+				TestPropsValues.getGroupId(), folderId, name,
+				ContentTypes.APPLICATION_OCTET_STREAM, name, description,
+				changeLog, bytes, serviceContext);
+
+			assertEquals(ContentTypes.TEXT_PLAIN, fileEntry.getMimeType());
+
+			name = "InvalidMime";
+
+			fileEntry = DLAppServiceUtil.updateFileEntry(
+				fileEntry.getFileEntryId(), name, null, name, description,
+				changeLog, true, bytes, serviceContext);
+
+			assertEquals(ContentTypes.TEXT_PLAIN, fileEntry.getMimeType());
+		}
+		catch (Exception e) {
+			fail(
+				"Unable to add file with invalid mime type " +
+					StackTraceUtil.getStackTrace(e));
+		}
+	}
+
 	public void testAddNullFileEntry() throws Exception {
 		long folderId = folder.getFolderId();
 		String description = StringPool.BLANK;

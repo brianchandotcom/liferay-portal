@@ -126,6 +126,25 @@ public class AddDocumentTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace(
+							"Test1 Document1.txt\nThis is Test1 Document1")
+										.equals(selenium.getText("//td[1]/a"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace(
 				"Test1 Document1.txt\nThis is Test1 Document1"),
 			selenium.getText("//td[1]/a"));

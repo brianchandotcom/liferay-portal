@@ -38,7 +38,7 @@ public class VerifyOracle extends VerifyProcess {
 
 		String dbType = db.getType();
 
-		if (!dbType.equals(DB.TYPE_ORACLE)) {
+		if (true || !dbType.equals(DB.TYPE_ORACLE)) {
 			return;
 		}
 

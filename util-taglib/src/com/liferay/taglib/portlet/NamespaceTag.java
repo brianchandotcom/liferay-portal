@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.portlet;
 
+import com.liferay.portal.kernel.servlet.taglib.TagSupport;
 import com.liferay.portal.kernel.util.JavaConstants;
 
 import javax.portlet.PortletResponse;
@@ -21,7 +22,6 @@ import javax.portlet.PortletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.tagext.TagSupport;
 
 /**
  * @author Brian Wing Shun Chan

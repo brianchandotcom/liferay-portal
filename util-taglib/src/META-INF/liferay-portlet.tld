@@ -56,12 +56,12 @@
 	<tag>
 		<name>namespace</name>
 		<tag-class>com.liferay.taglib.portlet.NamespaceTag</tag-class>
-		<body-content>JSP</body-content>
+		<body-content>empty</body-content>
 	</tag>
 	<tag>
 		<name>param</name>
 		<tag-class>com.liferay.taglib.util.ParamTag</tag-class>
-		<body-content>JSP</body-content>
+		<body-content>empty</body-content>
 		<attribute>
 			<name>name</name>
 			<required>true</required>
@@ -76,7 +76,7 @@
 	<tag>
 		<name>property</name>
 		<tag-class>com.liferay.taglib.util.PropertyTag</tag-class>
-		<body-content>JSP</body-content>
+		<body-content>empty</body-content>
 		<attribute>
 			<name>name</name>
 			<required>true</required>

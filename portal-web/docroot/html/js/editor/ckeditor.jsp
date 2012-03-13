@@ -161,6 +161,11 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 		sb.append(fileBrowserParams);
 
 		String connectorURL = HttpUtil.encodeURL(sb.toString());
+		String portalProxyPath = PropsUtil.get(PropsKeys.PORTAL_PROXY_PATH);
+
+		if (Validator.isNotNull(portalProxyPath)) {
+			connectorURL += "&ServerPath=" + portalProxyPath;
+		}
 		%>
 
 		CKEDITOR.replace(

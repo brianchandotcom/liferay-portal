@@ -526,6 +526,27 @@ function OnUploadCompleted( errorNumber, fileUrl, fileName, customMsg )]]></repl
 					flags="s"
 				/>
 
+				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmresourceslist.html">
+					<replacetoken><![CDATA[var sLink = '<a href="#" onclick="OpenFile(\'' + ProtectPath( fileUrl ) + '\');return false;">' ;]]></replacetoken>
+					<replacevalue><![CDATA[var sServerPath = GetUrlParam( 'ServerPath' ) ;
+	var sLink = '<a href="#" onclick="OpenFile(\'' + ProtectPath( sServerPath+fileUrl ) + '\');return false;">' ;]]>
+					</replacevalue>
+				</replace>
+				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmresourceslist.html">
+					<replacetoken><![CDATA[function OpenFolder( folderPath )]]></replacetoken>
+					<replacevalue><![CDATA[function GetUrlParam( paramName )
+{
+	var oRegex = new RegExp( '[\?&]' + paramName + '=([^&]+)', 'i' ) ;
+	var oMatch = oRegex.exec( window.top.location.search ) ;
+	if ( oMatch && oMatch.length > 1 )
+		return decodeURIComponent( oMatch[1] ) ;
+	else
+	return '' ;
+} 
+
+function OpenFolder( folderPath )]]>
+					</replacevalue>
+				</replace>
 				<!-- frmresourcetype.html -->
 
 				<replaceregexp file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmresourcetype.html"
@@ -633,6 +654,27 @@ var defaultTypes = []]>
 	var funcNum = (match && match.length) ? match[1] : '';
 
 	window.top.opener.CKEDITOR.tools.callFunction(funcNum, fileUrl);]]>
+					</replacevalue>
+				</replace>
+				<replace file="docroot/html/js/editor/ckeditor/editor/filemanager/browser/liferay/frmresourceslist.html">
+					<replacetoken><![CDATA[var sLink = '<a href="#" onclick="OpenFile(\'' + ProtectPath( fileUrl ) + '\');return false;">' ;]]></replacetoken>
+					<replacevalue><![CDATA[var sServerPath = GetUrlParam( 'ServerPath' ) ;
+	var sLink = '<a href="#" onclick="OpenFile(\'' + ProtectPath( sServerPath+fileUrl ) + '\');return false;">' ;]]>
+					</replacevalue>
+				</replace>
+				<replace file="docroot/html/js/editor/ckeditor/editor/filemanager/browser/liferay/frmresourceslist.html">
+					<replacetoken><![CDATA[function OpenFolder( folderPath )]]></replacetoken>
+					<replacevalue><![CDATA[function GetUrlParam( paramName )
+{
+	var oRegex = new RegExp( '[\?&]' + paramName + '=([^&]+)', 'i' ) ;
+	var oMatch = oRegex.exec( window.top.location.search ) ;
+	if ( oMatch && oMatch.length > 1 )
+		return decodeURIComponent( oMatch[1] ) ;
+	else
+	return '' ;
+} 
+
+function OpenFolder( folderPath )]]>
 					</replacevalue>
 				</replace>
 			</then>

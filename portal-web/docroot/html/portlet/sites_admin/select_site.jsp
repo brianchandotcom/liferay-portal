@@ -35,6 +35,7 @@ portletURL.setParameter("includeUserPersonalSite", String.valueOf(includeUserPer
 	/>
 
 	<liferay-ui:search-container
+		id="groupsSearchContainer"
 		searchContainer="<%= new GroupSearch(renderRequest, portletURL) %>"
 	>
 		<liferay-ui:search-form

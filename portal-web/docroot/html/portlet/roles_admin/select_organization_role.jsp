@@ -65,6 +65,7 @@ if (step == 1) {
 			%>
 
 			<liferay-ui:search-container
+				id="organizationsSearchContainer"
 				searchContainer="<%= new OrganizationSearch(renderRequest, portletURL) %>"
 			>
 				<liferay-ui:search-container-results>

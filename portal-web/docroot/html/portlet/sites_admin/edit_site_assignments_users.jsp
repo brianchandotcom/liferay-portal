@@ -58,6 +58,7 @@ userSearch.setEmptyResultsMessage(emptyResultsMessage);
 <aui:input name="removeUserIds" type="hidden" />
 
 <liferay-ui:search-container
+	id="usersSearchContainer"
 	rowChecker="<%= userGroupChecker %>"
 	searchContainer="<%= userSearch %>"
 >

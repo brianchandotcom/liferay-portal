@@ -50,6 +50,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_user_roles.jsp-po
 />
 
 <liferay-ui:search-container
+	id="usersSearchContainer"
 	rowChecker="<%= new UserGroupRoleUserChecker(renderResponse, group, role) %>"
 	searchContainer="<%= new UserSearch(renderRequest, portletURL) %>"
 >

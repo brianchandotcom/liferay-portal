@@ -35,6 +35,7 @@ portletURL.setParameter("struts_action", "/layout_prototypes/view");
 
 	<liferay-ui:search-container
 		headerNames="name"
+		id="layoutPrototypesSearchContainer"
 		searchContainer='<%= new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, null, LanguageUtil.get(pageContext, "no-page-templates-were-found")) %>'
 	>
 		<aui:input name="deleteLayoutPrototypesIds" type="hidden" />

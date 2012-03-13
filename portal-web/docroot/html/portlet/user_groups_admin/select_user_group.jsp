@@ -30,6 +30,7 @@ portletURL.setParameter("struts_action", "/user_groups_admin/select_user_group")
 	/>
 
 	<liferay-ui:search-container
+		id="userGroupsSearchContainer"
 		searchContainer="<%= new UserGroupSearch(renderRequest, portletURL) %>"
 	>
 		<liferay-ui:search-form

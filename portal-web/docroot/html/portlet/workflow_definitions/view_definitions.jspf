@@ -26,6 +26,7 @@ portletURL.setParameter("struts_action", "/workflow_definitions/view");
 
 <liferay-ui:search-container
 	emptyResultsMessage="no-workflow-definitions-are-defined"
+	id="workflowDefinitionsSearchContainer"
 	iteratorURL="<%= portletURL %>"
 >
 	<liferay-ui:search-container-results

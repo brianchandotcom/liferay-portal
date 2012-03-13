@@ -80,6 +80,7 @@ portletURL.setParameter("tabs3", tabs3);
 			/>
 
 			<liferay-ui:search-container
+				id="passwordPoliciesSearchContainer"
 				rowChecker="<%= new UserPasswordPolicyChecker(renderResponse, passwordPolicy) %>"
 				searchContainer="<%= new UserSearch(renderRequest, portletURL) %>"
 			>

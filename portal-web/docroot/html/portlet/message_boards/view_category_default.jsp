@@ -41,6 +41,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 				curParam="cur1"
 				deltaConfigurable="<%= false %>"
 				headerNames="category,categories,threads,posts"
+				id="mbCategoriesSearchContainer"
 				iteratorURL="<%= portletURL %>"
 			>
 				<liferay-ui:search-container-results

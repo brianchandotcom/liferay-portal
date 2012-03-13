@@ -36,6 +36,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.
 />
 
 <liferay-ui:search-container
+	id="usersSearchContainer"
 	rowChecker="<%= new UserRoleChecker(renderResponse, role) %>"
 	searchContainer="<%= new UserSearch(renderRequest, portletURL) %>"
 >

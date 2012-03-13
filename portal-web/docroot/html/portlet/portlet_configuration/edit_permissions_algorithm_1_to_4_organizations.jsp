@@ -45,6 +45,7 @@ int organizationIdsPos = ParamUtil.getInteger(request, "organizationIdsPos");
 		/>
 
 		<liferay-ui:search-container
+			id="organizationsSearchContainer"
 			rowChecker="<%= new RowChecker(renderResponse) %>"
 			searchContainer="<%= new OrganizationSearch(renderRequest, portletURL) %>"
 		>

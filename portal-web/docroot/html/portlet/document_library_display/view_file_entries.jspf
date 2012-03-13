@@ -38,6 +38,7 @@
 		deltaConfigurable="<%= false %>"
 		emptyResultsMessage="there-are-no-documents-or-media-files-in-this-folder"
 		headerNames="<%= StringUtil.merge(fileEntryColumns) %>"
+		id="fileEntriesSearchContainer"
 		iteratorURL="<%= portletURL %>"
 		rowChecker="<%= rowChecker %>"
 	>

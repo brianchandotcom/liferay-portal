@@ -201,6 +201,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				deltaConfigurable="<%= false %>"
 				emptyResultsMessage="you-are-not-subscribed-to-any-categories"
 				headerNames="category,categories,threads,posts"
+				id="mbCategoriesSearchContainer"
 				iteratorURL="<%= portletURL %>"
 			>
 				<liferay-ui:search-container-results

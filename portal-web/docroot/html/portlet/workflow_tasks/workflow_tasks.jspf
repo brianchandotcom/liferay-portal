@@ -15,6 +15,7 @@
 --%>
 
 <liferay-ui:search-container
+	id="workflowTasksSearchContainer"
 	searchContainer="<%= new WorkflowTaskSearch(renderRequest, portletURL) %>"
 >
 	<%@ include file="/html/portlet/workflow_tasks/workflow_search_results.jspf" %>

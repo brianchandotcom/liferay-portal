@@ -51,7 +51,9 @@ editPublicRenderParameterURL.setParameter("portletResource", portletResource);
 	<aui:input name="returnToFullPageURL" type="hidden" value="<%= returnToFullPageURL %>" />
 	<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
 
-	<liferay-ui:search-container>
+	<liferay-ui:search-container
+		id="publicRenderParametersSearchContainer"
+	>
 		<liferay-ui:search-container-results
 			results="<%= ListUtil.subList(publicRenderParameterConfigurations, searchContainer.getStart(), searchContainer.getEnd()) %>"
 			total="<%= publicRenderParameterConfigurations.size() %>"

@@ -44,7 +44,9 @@ else {
 
 <br /><br />
 
-<liferay-ui:search-container>
+<liferay-ui:search-container
+	id="announcementsDeliveriesSearchContainer"
+>
 	<liferay-ui:search-container-results
 		results="<%= deliveries %>"
 	/>

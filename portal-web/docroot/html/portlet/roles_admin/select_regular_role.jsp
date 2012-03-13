@@ -29,6 +29,7 @@ portletURL.setParameter("struts_action", "/roles_admin/select_regular_role");
 
 	<liferay-ui:search-container
 		headerNames="name"
+		id="rolesSearchContainer"
 		searchContainer="<%= new RoleSearch(renderRequest, portletURL) %>"
 	>
 		<liferay-ui:search-form

@@ -43,6 +43,7 @@ List<String> attributeNames = Collections.list(expandoBridge.getAttributeNames()
 
 <liferay-ui:search-container
 	emptyResultsMessage='<%= LanguageUtil.format(pageContext, "no-custom-fields-are-defined-for-x", modelResourceName) %>'
+	id="customAttributeNamesSearchContainer"
 	iteratorURL="<%= portletURL %>"
 >
 	<liferay-ui:search-container-results

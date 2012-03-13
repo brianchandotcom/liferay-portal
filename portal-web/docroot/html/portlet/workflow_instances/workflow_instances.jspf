@@ -15,6 +15,7 @@
 --%>
 
 <liferay-ui:search-container
+	id="workflowInstancesSearchContainer"
 	iteratorURL="<%= portletURL %>"
 >
 	<%@ include file="/html/portlet/workflow_instances/workflow_search_results.jspf" %>

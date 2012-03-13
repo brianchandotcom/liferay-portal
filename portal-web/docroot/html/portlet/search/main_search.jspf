@@ -125,6 +125,7 @@ boolean showMenu = displayAssetTypeFacet || displayAssetTagsFacet || displayAsse
 
 	<aui:column cssClass="result" first="<%= !showMenu %>" last="<%= showMenu %>">
 		<liferay-ui:search-container
+			id="documentsSearchContainer"
 			searchContainer="<%= mainSearchSearchContainer %>"
 		>
 			<liferay-ui:search-container-results

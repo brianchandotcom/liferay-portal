@@ -47,7 +47,7 @@ import org.xml.sax.ContentHandler;
  */
 @PrepareForTest(PrefsPropsUtil.class)
 @RunWith(PowerMockRunner.class)
-public class TikaRawMetadataProcessorTests extends PowerMockito {
+public class TikaRawMetadataProcessorTest extends PowerMockito {
 
 	@Test
 	public void testExtractMetadataFromInputStream() {

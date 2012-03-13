@@ -25,7 +25,7 @@ import org.junit.runner.RunWith;
  * @author Miguel Pastor
  */
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class TranslationToXHTMLTests extends AbstractWikiParserTests {
+public class TranslationToXHTMLTest extends AbstractWikiParserTests {
 
 	@Test
 	public void testEscapedEscapedCharacter() {

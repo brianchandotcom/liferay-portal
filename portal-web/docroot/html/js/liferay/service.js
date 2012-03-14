@@ -42,6 +42,7 @@ Liferay.Service.registerClass(
 	{
 		addCountry: true,
 		fetchCountry: true,
+		fetchCountryByA3: true,
 		getCountries: true,
 		getCountry: true,
 		getCountryByA2: true,
@@ -304,6 +305,7 @@ Liferay.Service.registerClass(
 	Liferay.Service.Portal, "Region",
 	{
 		addRegion: true,
+		fetchRegionByRegionCode: true,
 		getRegion: true,
 		getRegions: true
 	}

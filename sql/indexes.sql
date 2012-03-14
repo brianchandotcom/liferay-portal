@@ -567,6 +567,7 @@ create unique index IX_A6E99284 on RatingsStats (classNameId, classPK);
 create index IX_2D9A426F on Region (active_);
 create index IX_16D87CA7 on Region (countryId);
 create index IX_11FB3E42 on Region (countryId, active_);
+create unique index IX_A2635F5C on Region (countryId, regionCode);
 
 create index IX_8BD6BCA7 on Release_ (servletContextName);
 

@@ -90,13 +90,46 @@ public class RegionServiceHttp {
 		}
 	}
 
+	public static com.liferay.portal.model.Region fetchRegionByRegionCode(
+		HttpPrincipal httpPrincipal, long countryId, java.lang.String regionCode)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(RegionServiceUtil.class.getName(),
+					"fetchRegionByRegionCode",
+					_fetchRegionByRegionCodeParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					countryId, regionCode);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portal.model.Region)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.portal.model.Region getRegion(
 		HttpPrincipal httpPrincipal, long regionId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(RegionServiceUtil.class.getName(),
-					"getRegion", _getRegionParameterTypes1);
+					"getRegion", _getRegionParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, regionId);
 
@@ -131,7 +164,7 @@ public class RegionServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(RegionServiceUtil.class.getName(),
-					"getRegions", _getRegionsParameterTypes2);
+					"getRegions", _getRegionsParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
 
@@ -162,7 +195,7 @@ public class RegionServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(RegionServiceUtil.class.getName(),
-					"getRegions", _getRegionsParameterTypes3);
+					"getRegions", _getRegionsParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, active);
 
@@ -193,7 +226,7 @@ public class RegionServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(RegionServiceUtil.class.getName(),
-					"getRegions", _getRegionsParameterTypes4);
+					"getRegions", _getRegionsParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, countryId);
 
@@ -224,7 +257,7 @@ public class RegionServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(RegionServiceUtil.class.getName(),
-					"getRegions", _getRegionsParameterTypes5);
+					"getRegions", _getRegionsParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					countryId, active);
@@ -256,17 +289,20 @@ public class RegionServiceHttp {
 			long.class, java.lang.String.class, java.lang.String.class,
 			boolean.class
 		};
-	private static final Class<?>[] _getRegionParameterTypes1 = new Class[] {
+	private static final Class<?>[] _fetchRegionByRegionCodeParameterTypes1 = new Class[] {
+			long.class, java.lang.String.class
+		};
+	private static final Class<?>[] _getRegionParameterTypes2 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getRegionsParameterTypes2 = new Class[] {  };
-	private static final Class<?>[] _getRegionsParameterTypes3 = new Class[] {
+	private static final Class<?>[] _getRegionsParameterTypes3 = new Class[] {  };
+	private static final Class<?>[] _getRegionsParameterTypes4 = new Class[] {
 			boolean.class
 		};
-	private static final Class<?>[] _getRegionsParameterTypes4 = new Class[] {
+	private static final Class<?>[] _getRegionsParameterTypes5 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getRegionsParameterTypes5 = new Class[] {
+	private static final Class<?>[] _getRegionsParameterTypes6 = new Class[] {
 			long.class, boolean.class
 		};
 }

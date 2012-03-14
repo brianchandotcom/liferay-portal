@@ -95,6 +95,20 @@ public class CountryServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.model.CountrySoap fetchCountryByA3(
+		java.lang.String a3) throws RemoteException {
+		try {
+			com.liferay.portal.model.Country returnValue = CountryServiceUtil.fetchCountryByA3(a3);
+
+			return com.liferay.portal.model.CountrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portal.model.CountrySoap[] getCountries()
 		throws RemoteException {
 		try {

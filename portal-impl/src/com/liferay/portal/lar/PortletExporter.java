@@ -333,15 +333,21 @@ public class PortletExporter {
 			PortletDataContext portletDataContext, Element rootElement)
 		throws Exception {
 
+		Element assetsElement = rootElement.element("assets");
+		Element assetCategoriesElement = rootElement.element("categories");
 		Element assetVocabulariesElement = rootElement.element("vocabularies");
+
+		if (assetsElement == null) {
+			assetsElement = rootElement.addElement("assets");
+		}
+
+		if (assetCategoriesElement == null) {
+			assetCategoriesElement = rootElement.addElement("categories");
+		}
 
 		if (assetVocabulariesElement == null) {
 			assetVocabulariesElement = rootElement.addElement("vocabularies");
 		}
-
-		Element assetsElement = rootElement.addElement("assets");
-
-		Element assetCategoriesElement = rootElement.addElement("categories");
 
 		Map<String, String[]> assetCategoryUuidsMap =
 			portletDataContext.getAssetCategoryUuidsMap();

@@ -79,7 +79,6 @@ import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryServiceUtil;
-import com.liferay.portlet.documentlibrary.util.AudioProcessor;
 import com.liferay.portlet.documentlibrary.util.AudioProcessorUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.DocumentConversionUtil;
@@ -877,32 +876,36 @@ public class WebServerServlet extends HttpServlet {
 
 			converted = true;
 		}
-		else if (audioPreview) {
-			fileName = FileUtil.stripExtension(fileName).concat(
-				StringPool.PERIOD).concat(AudioProcessor.PREVIEW_TYPE);
-			inputStream = AudioProcessorUtil.getPreviewAsStream(fileVersion);
-			contentLength = AudioProcessorUtil.getPreviewFileSize(fileVersion);
-
-			converted = true;
-		}
-		else if (imagePreview) {
-			fileName = FileUtil.stripExtension(fileName).concat(
-				StringPool.PERIOD).concat(
-					ImageProcessorUtil.getPreviewType(fileVersion));
-			inputStream = ImageProcessorUtil.getPreviewAsStream(fileVersion);
-			contentLength = ImageProcessorUtil.getPreviewFileSize(fileVersion);
-
-			converted = true;
-		}
-		else if (videoPreview) {
+		else if (audioPreview || videoPreview) {
 			String type = ParamUtil.getString(request, "type");
 
 			fileName = FileUtil.stripExtension(fileName).concat(
 				StringPool.PERIOD).concat(type);
-			inputStream = VideoProcessorUtil.getPreviewAsStream(
-				fileVersion, type);
-			contentLength = VideoProcessorUtil.getPreviewFileSize(
-				fileVersion, type);
+
+			if (audioPreview) {
+				inputStream = AudioProcessorUtil.getPreviewAsStream(
+					fileVersion, type);
+				contentLength = AudioProcessorUtil.getPreviewFileSize(
+					fileVersion, type);
+			}
+			else {
+				inputStream = VideoProcessorUtil.getPreviewAsStream(
+					fileVersion, type);
+				contentLength = VideoProcessorUtil.getPreviewFileSize(
+					fileVersion, type);
+			}
+
+			converted = true;
+		}
+		else if (imagePreview) {
+			String type = ImageProcessorUtil.getPreviewType(fileVersion);
+
+			fileName = FileUtil.stripExtension(fileName).concat(
+				StringPool.PERIOD).concat(type);
+
+			inputStream = ImageProcessorUtil.getPreviewAsStream(fileVersion);
+
+			contentLength = ImageProcessorUtil.getPreviewFileSize(fileVersion);
 
 			converted = true;
 		}

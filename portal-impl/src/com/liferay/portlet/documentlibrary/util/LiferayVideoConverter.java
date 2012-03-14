@@ -277,36 +277,6 @@ public class LiferayVideoConverter extends LiferayConverter {
 	}
 
 	@Override
-	protected int getAudioEncodingChannels(
-		IContainer outputIContainer, int channels) {
-
-		IContainerFormat iContainerFormat =
-			outputIContainer.getContainerFormat();
-
-		String outputFormat = iContainerFormat.getOutputFormatShortName();
-
-		if (outputFormat.equals("ogg")) {
-			return 2;
-		}
-
-		return super.getAudioEncodingChannels(outputIContainer, channels);
-	}
-
-	@Override
-	protected ICodec getAudioEncodingICodec(IContainer outputIContainer) {
-		IContainerFormat iContainerFormat =
-			outputIContainer.getContainerFormat();
-
-		String outputFormat = iContainerFormat.getOutputFormatShortName();
-
-		if (outputFormat.equals("ogg")) {
-			return ICodec.findEncodingCodec(ICodec.ID.CODEC_ID_VORBIS);
-		}
-
-		return super.getAudioEncodingICodec(outputIContainer);
-	}
-
-	@Override
 	protected IContainer getInputIContainer() {
 		return _inputIContainer;
 	}

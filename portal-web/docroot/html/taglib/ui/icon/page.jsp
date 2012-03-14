@@ -44,7 +44,7 @@ if (Validator.isNotNull(src) && themeDisplay.isThemeImagesFastLoad() && !auiImag
 				spriteFileName = StringUtil.replace(spriteFileName, ".png", ".gif");
 			}
 
-			spriteFileURL = PortalUtil.getPortalURL(request).concat(themeDisplay.getPathThemeImages()).concat(spriteFileName);
+			spriteFileURL = themeDisplay.getPathThemeImages().concat(spriteFileName);
 		}
 	}
 

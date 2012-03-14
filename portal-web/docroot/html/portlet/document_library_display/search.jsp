@@ -191,7 +191,7 @@ int mountFoldersCount = DLAppServiceUtil.getMountFoldersCount(scopeGroupId, DLFo
 				sb.append(mountFolder.getName());
 				sb.append("</a>");
 
-				if ((i + 1) > mountFoldersCount) {
+				if ((i + 1) < mountFoldersCount) {
 					sb.append(", ");
 				}
 			}

@@ -47,8 +47,6 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.portletconfiguration.util.PublicRenderParameterConfiguration;
 import com.liferay.util.servlet.DynamicServletRequest;
 
-import java.lang.reflect.Method;
-
 import java.security.Principal;
 
 import java.util.ArrayList;
@@ -71,6 +69,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletSession;
 import javax.portlet.WindowState;
+import javax.portlet.filter.PortletRequestWrapper;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
@@ -87,31 +86,21 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 	public static PortletRequestImpl getPortletRequestImpl(
 		PortletRequest portletRequest) {
 
-		PortletRequestImpl portletRequestImpl = null;
+		while (!(portletRequest instanceof PortletRequestImpl)) {
 
-		if (portletRequest instanceof PortletRequestImpl) {
-			portletRequestImpl = (PortletRequestImpl)portletRequest;
-		}
-		else {
-
-			// LPS-3311
-
-			try {
-				Method method = portletRequest.getClass().getMethod(
-					"getRequest");
-
-				Object obj = method.invoke(portletRequest, (Object[])null);
-
-				portletRequestImpl = getPortletRequestImpl((PortletRequest)obj);
+			if (portletRequest instanceof PortletRequestWrapper) {
+				PortletRequestWrapper portletRequestWrapper =
+					(PortletRequestWrapper)portletRequest;
+				portletRequest = portletRequestWrapper.getRequest();
 			}
-			catch (Exception e) {
+			else {
 				throw new RuntimeException(
-					"Unable to get the portlet request from " +
+					"Unable to unwrap the portlet request from " +
 						portletRequest.getClass().getName());
 			}
 		}
 
-		return portletRequestImpl;
+		return (PortletRequestImpl)portletRequest;
 	}
 
 	public void cleanUp() {

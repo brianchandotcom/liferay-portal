@@ -52,7 +52,7 @@
 
 	<path id="test.classpath">
 		<pathelement path="${classpath}" />
-		<fileset dir="${project.dir}/lib/development" includes="*.jar" excludes="jetty*.jar,selenium-server.jar,tomcat*.jar" />
+		<fileset dir="${project.dir}/lib/development" includes="*.jar" excludes="jetty*.jar,tomcat*.jar" />
 		<fileset dir="${project.dir}/lib/global" includes="*.jar" />
 		<fileset dir="${project.dir}/lib/portal" includes="*.jar" excludes="ant.jar" />
 	</path>
@@ -451,7 +451,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				<include name="**/*.java" />
 			</fileset>
 		</cobertura-report>
-	
+
 		<copy todir="${sonar.surefire.reportsPath}" failonerror="false">
 			<fileset dir="${project.dir}/portal-impl/test-results">
 				<include name="**/*.xml" />

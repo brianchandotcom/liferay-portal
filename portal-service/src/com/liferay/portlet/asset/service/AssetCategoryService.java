@@ -87,7 +87,7 @@ public interface AssetCategoryService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.json.JSONArray getJSONSearch(
-		long groupId, java.lang.String keywords, long vocabularyId, int start,
+		long groupId, java.lang.String name, long vocabularyId, int start,
 		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

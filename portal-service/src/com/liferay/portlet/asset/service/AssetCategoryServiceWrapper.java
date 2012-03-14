@@ -87,12 +87,12 @@ public class AssetCategoryServiceWrapper implements AssetCategoryService,
 	}
 
 	public com.liferay.portal.kernel.json.JSONArray getJSONSearch(
-		long groupId, java.lang.String keywords, long vocabularyId, int start,
+		long groupId, java.lang.String name, long vocabularyId, int start,
 		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _assetCategoryService.getJSONSearch(groupId, keywords,
-			vocabularyId, start, end, obc);
+		return _assetCategoryService.getJSONSearch(groupId, name, vocabularyId,
+			start, end, obc);
 	}
 
 	public com.liferay.portal.kernel.json.JSONObject getJSONVocabularyCategories(

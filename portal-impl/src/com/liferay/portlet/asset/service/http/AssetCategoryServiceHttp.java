@@ -312,7 +312,7 @@ public class AssetCategoryServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.json.JSONArray getJSONSearch(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String keywords,
+		HttpPrincipal httpPrincipal, long groupId, java.lang.String name,
 		long vocabularyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -322,7 +322,7 @@ public class AssetCategoryServiceHttp {
 					"getJSONSearch", _getJSONSearchParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					keywords, vocabularyId, start, end, obc);
+					name, vocabularyId, start, end, obc);
 
 			Object returnObj = null;
 

@@ -103,10 +103,11 @@ if (Validator.isNotNull(src) && themeDisplay.isThemeImagesFastLoad() && !auiImag
 String imgClass = "icon";
 
 if (auiImage) {
-	StringBundler sb = new StringBundler(4);
+	StringBundler sb = new StringBundler(5);
 
 	sb.append(details);
 	sb.append(" style=\"background-image: url('");
+	sb.append(PortalUtil.getPortalURL(request));
 	sb.append(themeDisplay.getPathThemeImages());
 	sb.append("/aui/icon_sprite.png'); height: 16px; width: 16px;\"");
 

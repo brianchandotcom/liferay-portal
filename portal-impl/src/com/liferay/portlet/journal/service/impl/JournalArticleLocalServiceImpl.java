@@ -2755,7 +2755,8 @@ public class JournalArticleLocalServiceImpl
 						JournalArticle.class.getName(), 0,
 						ContentTypes.TEXT_HTML, staticContent);
 
-					staticContentElement.setText(staticContent);
+					staticContentElement.clearContent();
+					staticContentElement.addCDATA(staticContent);
 				}
 			}
 

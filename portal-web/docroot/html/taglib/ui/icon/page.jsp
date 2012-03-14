@@ -44,7 +44,11 @@ if (Validator.isNotNull(src) && themeDisplay.isThemeImagesFastLoad() && !auiImag
 				spriteFileName = StringUtil.replace(spriteFileName, ".png", ".gif");
 			}
 
-			spriteFileURL = PortalUtil.getPortalURL(request).concat(themeDisplay.getPathThemeImages()).concat(spriteFileName);
+			spriteFileURL = themeDisplay.getPathThemeImages().concat(spriteFileName);
+
+			if (spriteFileURL.startsWith(StringPool.FORWARD_SLASH)) {
+				spriteFileURL = PortalUtil.getPortalURL(request).concat(spriteFileURL);
+			}
 		}
 	}
 
@@ -107,7 +111,15 @@ if (auiImage) {
 
 	sb.append(details);
 	sb.append(" style=\"background-image: url('");
-	sb.append(themeDisplay.getPathThemeImages());
+
+	String path = themeDisplay.getPathThemeImages();
+
+	if (path.startsWith(StringPool.FORWARD_SLASH)) {
+		path = PortalUtil.getPortalURL(request).concat(path);
+	}
+
+	sb.append(path);
+
 	sb.append("/aui/icon_sprite.png'); height: 16px; width: 16px;\"");
 
 	details = sb.toString();

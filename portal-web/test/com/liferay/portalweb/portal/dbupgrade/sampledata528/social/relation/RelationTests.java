@@ -15,7 +15,6 @@
 package com.liferay.portalweb.portal.dbupgrade.sampledata528.social.relation;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

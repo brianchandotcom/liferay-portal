@@ -69,9 +69,6 @@ public class AddIGFolderImageTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded right ']/ul/li[5]/a"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		Thread.sleep(5000);
-		selenium.selectWindow("null");
-		selenium.windowFocus();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

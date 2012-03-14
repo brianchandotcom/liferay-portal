@@ -294,6 +294,8 @@ int sortColumnIndex = -1;
 			}
 
 			Map<String, Object> data = row.getData();
+			
+			String rowId = row.getId();
 		%>
 
 			<tr class="<%= rowClassName %>" <%= AUIUtil.buildData(data) %>>
@@ -333,7 +335,7 @@ int sortColumnIndex = -1;
 					<c:if test="<%= (headerNames != null) && (headerNames.size() >= (j + 1)) %>">
 						headers="<%= namespace + id %>_col-<%= urlHeaderName %>"
 					</c:if>
-					id="<%= namespace + id %>_col-<%= urlHeaderName %>_row-<%= i + 1 %>"
+					id="<%= namespace + id %>_col-<%= urlHeaderName %>_row-<%= rowId %>"
 				>
 
 					<%

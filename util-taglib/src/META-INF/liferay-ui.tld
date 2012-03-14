@@ -2430,6 +2430,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>idProperty</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>indexVar</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

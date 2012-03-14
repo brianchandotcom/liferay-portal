@@ -20,6 +20,7 @@ import com.thoughtworks.selenium.Selenium;
 
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 
 /**
@@ -30,6 +31,14 @@ public class WebDriverToSeleniumBridge
 
 	public WebDriverToSeleniumBridge(WebDriver webDriver) {
 		super(webDriver);
+	}
+
+	public void acceptConfirmation() {
+		WebDriver.TargetLocator targetLocator = switchTo();
+
+		Alert alert = targetLocator.alert();
+
+		alert.accept();
 	}
 
 	public void addCustomRequestHeader(String key, String value) {

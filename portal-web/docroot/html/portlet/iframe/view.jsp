@@ -196,6 +196,5 @@ if (windowState.equals(WindowState.MAXIMIZED)) {
 				}
 			}
 		);
-
 	}
 </aui:script>

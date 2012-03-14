@@ -127,7 +127,7 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 	public void reconfigureCaches(URL cacheConfigFile) {
 		synchronized (manager) {
 			Configuration configuration = EhcacheConfigurationUtil.
-				getConfiguration(cacheConfigFile, true);
+				getConfiguration(cacheConfigFile, true, _usingDefault);
 
 			Map<String, CacheConfiguration> cacheConfigurations =
 				configuration.getCacheConfigurations();
@@ -164,11 +164,11 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 				configuration = ConfigurationFactory.parseConfiguration();
 			}
 			else {
-				boolean usingDefault = configurationPath.equals(
+				_usingDefault = configurationPath.equals(
 					_DEFAULT_CLUSTERED_EHCACHE_CONFIG_FILE);
 
 				configuration = EhcacheConfigurationUtil.getConfiguration(
-					configurationPath, true, usingDefault);
+					configurationPath, true, _usingDefault);
 			}
 
 			/*Object transactionManager =
@@ -276,5 +276,6 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 		LiferayEhcacheRegionFactory.class);
 
 	private MBeanRegisteringPortalLifecycle _mBeanRegisteringPortalLifecycle;
+	private boolean _usingDefault;
 
 }

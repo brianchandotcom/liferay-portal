@@ -60,11 +60,11 @@ public class EhcachePortalCacheManager implements PortalCacheManager {
 			configurationPath = _DEFAULT_CLUSTERED_EHCACHE_CONFIG_FILE;
 		}
 
-		boolean usingDefault = configurationPath.equals(
+		_usingDefault = configurationPath.equals(
 			_DEFAULT_CLUSTERED_EHCACHE_CONFIG_FILE);
 
 		Configuration configuration = EhcacheConfigurationUtil.getConfiguration(
-			configurationPath, _clusterAware, usingDefault);
+			configurationPath, _clusterAware, _usingDefault);
 
 		_cacheManager = new CacheManager(configuration);
 
@@ -144,7 +144,7 @@ public class EhcachePortalCacheManager implements PortalCacheManager {
 
 	public void reconfigureCaches(URL configurationURL) {
 		Configuration configuration = EhcacheConfigurationUtil.getConfiguration(
-			configurationURL, _clusterAware);
+			configurationURL, _clusterAware, _usingDefault);
 
 		Map<String, CacheConfiguration> cacheConfigurations =
 			configuration.getCacheConfigurations();
@@ -262,5 +262,6 @@ public class EhcachePortalCacheManager implements PortalCacheManager {
 	private boolean _registerCacheManager = true;
 	private boolean _registerCaches = true;
 	private boolean _registerCacheStatistics = true;
+	private boolean _usingDefault;
 
 }

@@ -28,7 +28,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
+import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.plugin.PluginPackageUtil;
@@ -271,18 +273,37 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 			cacheConfigurationPath);
 
 		if (cacheConfigurationURL != null) {
-			PortalCacheManager portalCacheManager =
-				(PortalCacheManager)PortalBeanLocatorUtil.locate(
-					portalCacheManagerBeanId);
 
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Reconfiguring caches in cache manager " +
-						portalCacheManagerBeanId + " using " +
-							cacheConfigurationURL);
+			ClassLoader aggregateClassLoader =
+				AggregateClassLoader.getAggregateClassLoader(
+					new ClassLoader[] {
+						PortalClassLoaderUtil.getClassLoader(), classLoader
+					});
+			
+			ClassLoader contextClassLoader = 
+				Thread.currentThread().getContextClassLoader();
+
+			try {
+				Thread.currentThread().setContextClassLoader(
+					aggregateClassLoader);
+
+				PortalCacheManager portalCacheManager =
+					(PortalCacheManager)PortalBeanLocatorUtil.locate(
+						portalCacheManagerBeanId);
+
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Reconfiguring caches in cache manager " +
+							portalCacheManagerBeanId + " using " +
+								cacheConfigurationURL);
+				}
+
+				portalCacheManager.reconfigureCaches(cacheConfigurationURL);
+			} 
+			finally {
+				Thread.currentThread().setContextClassLoader(
+					contextClassLoader);
 			}
-
-			portalCacheManager.reconfigureCaches(cacheConfigurationURL);
 		}
 	}
 

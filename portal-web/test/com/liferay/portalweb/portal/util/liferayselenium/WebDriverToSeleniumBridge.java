@@ -21,7 +21,9 @@ import com.thoughtworks.selenium.Selenium;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 /**
  * @author Brian Wing Shun Chan
@@ -355,6 +357,33 @@ public class WebDriverToSeleniumBridge
 	public String getValue(String locator) {
 		throw new UnsupportedOperationException();
 	}
+
+	public WebElement getWebElement(String locator) {					
+		if (locator.startsWith("//")) {
+			return findElement(By.xpath(locator));
+		}
+		else if (locator.startsWith("xpath=")) {
+			return findElement(By.xpath(locator.substring(6)));
+		}
+		else if (locator.startsWith("link=")) {
+			return findElement(By.linkText(locator.substring(5)));
+		}
+		else if (locator.startsWith("name=")) {
+			return findElement(By.name(locator.substring(5)));
+		}
+		else if (locator.startsWith("class=")) {
+			return findElement(By.className(locator.substring(6)));
+		}
+		else if (locator.startsWith("tag=")) {
+			return findElement(By.tagName(locator.substring(4)));
+		}
+		else if (locator.startsWith("css=")) {
+			return findElement(By.cssSelector(locator.substring(4)));			
+		}
+		else {
+			return findElement(By.id(locator));
+		}
+	}	
 
 	public boolean getWhetherThisFrameMatchFrameExpression(
 		String currentFrameString, String target) {

@@ -1467,6 +1467,10 @@
 			<finder-column name="countryId" />
 			<finder-column name="active" />
 		</finder>
+		<finder name="C_R" return-type="Region" unique="true">
+			<finder-column name="countryId" />
+			<finder-column name="regionCode" />
+		</finder>
 	</entity>
 	<entity name="Release" local-service="true" remote-service="false">
 

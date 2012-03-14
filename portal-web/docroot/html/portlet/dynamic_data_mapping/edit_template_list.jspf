@@ -50,6 +50,7 @@ String language = BeanParamUtil.getString(template, request, "language", DDMTemp
 	Liferay.Util.inlineEditor(
 		{
 			button: '#<portlet:namespace />editorButton',
+			cache: false,
 			id: '<portlet:namespace />scriptContentIFrame',
 			textarea: '<portlet:namespace />scriptContent',
 			title: '<%= UnicodeLanguageUtil.get(pageContext, "editor") %>',

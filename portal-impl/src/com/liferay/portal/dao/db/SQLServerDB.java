@@ -61,16 +61,13 @@ public class SQLServerDB extends BaseDB {
 	}
 
 	@Override
-	public List<Index> getIndexes() throws SQLException {
+	public List<Index> getIndexes(Connection con) throws SQLException {
 		List<Index> indexes = new ArrayList<Index>();
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
-
 			DatabaseMetaData databaseMetaData = con.getMetaData();
 
 			if (databaseMetaData.getDatabaseMajorVersion() <=
@@ -103,7 +100,7 @@ public class SQLServerDB extends BaseDB {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 
 		return indexes;

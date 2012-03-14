@@ -30,6 +30,8 @@ import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.verify.VerifyException;
 import com.liferay.portal.verify.VerifyProcessUtil;
 
+import java.sql.Connection;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
@@ -37,22 +39,10 @@ import com.liferay.portal.verify.VerifyProcessUtil;
  */
 public class StartupHelper {
 
-	public boolean isUpgraded() {
-		return _upgraded;
-	}
+	public static void updateIndexes(
+		DB db, Connection con, boolean dropIndexes) {
 
-	public boolean isVerified() {
-		return _verified;
-	}
-
-	public void setDropIndexes(boolean dropIndexes) {
-		_dropIndexes = dropIndexes;
-	}
-
-	public void updateIndexes() {
 		try {
-			DB db = DBFactoryUtil.getDB();
-
 			Thread currentThread = Thread.currentThread();
 
 			ClassLoader classLoader = currentThread.getContextClassLoader();
@@ -70,11 +60,27 @@ public class StartupHelper {
 				"com/liferay/portal/tools/sql/dependencies/indexes.properties");
 
 			db.updateIndexes(
-				tablesSQL, indexesSQL, indexesProperties, _dropIndexes);
+				con, tablesSQL, indexesSQL, indexesProperties, dropIndexes);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+	}
+
+	public boolean isUpgraded() {
+		return _upgraded;
+	}
+
+	public boolean isVerified() {
+		return _verified;
+	}
+
+	public void setDropIndexes(boolean dropIndexes) {
+		_dropIndexes = dropIndexes;
+	}
+
+	public void updateIndexes() {
+		updateIndexes(DBFactoryUtil.getDB(), null, _dropIndexes);
 	}
 
 	public void upgradeProcess(int buildNumber) throws UpgradeException {

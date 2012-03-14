@@ -16,10 +16,12 @@ package com.liferay.portal.convert;
 
 import com.liferay.mail.model.CyrusUser;
 import com.liferay.mail.model.CyrusVirtual;
+import com.liferay.portal.events.StartupHelper;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.PortletServlet;
@@ -29,6 +31,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.model.ModelHintsUtil;
+import com.liferay.portal.model.ServiceComponent;
+import com.liferay.portal.service.ServiceComponentLocalServiceUtil;
 import com.liferay.portal.spring.hibernate.DialectDetector;
 import com.liferay.portal.upgrade.util.Table;
 import com.liferay.portal.util.MaintenanceUtil;
@@ -38,9 +42,11 @@ import java.lang.reflect.Field;
 
 import java.sql.Connection;
 
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
 
@@ -161,6 +167,24 @@ public class ConvertDatabase extends ConvertProcess {
 				migrateTable(db, connection, table, columns, sqlCreate);
 
 				i++;
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Migrating database indexes");
+			}
+
+			StartupHelper.updateIndexes(db, connection, false);
+
+			List<ServiceComponent> serviceComponents =
+				ServiceComponentLocalServiceUtil.getServiceComponents(
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+			Set<String> validIndexes = new HashSet<String>();
+
+			for (ServiceComponent serviceComponent : serviceComponents) {
+				String indexesSQL = serviceComponent.getIndexesSQL();
+
+				db.addIndexes(connection, indexesSQL, validIndexes);
 			}
 		}
 		finally {

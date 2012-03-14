@@ -21,7 +21,6 @@
 							(lower(title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 							(description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 							(content LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-							(type_ = ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 							(structureId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 							(templateId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 							(displayDate >= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
@@ -38,6 +37,7 @@
 						(TEMP_TABLE.tempGroupId = JournalArticle.groupId) AND
 						(TEMP_TABLE.tempArticleId = JournalArticle.articleId) AND
 						(TEMP_TABLE.tempVersion = JournalArticle.version)
+			WHERE (type_ = ? [$AND_OR_NULL_CHECK$])
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByExpirationDate">
@@ -99,7 +99,6 @@
 							(lower(title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 							(description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 							(content LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-							(type_ = ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 							(structureId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 							(templateId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 							(displayDate >= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
@@ -116,6 +115,7 @@
 						(TEMP_TABLE.tempGroupId = JournalArticle.groupId) AND
 						(TEMP_TABLE.tempArticleId = JournalArticle.articleId) AND
 						(TEMP_TABLE.tempVersion = JournalArticle.version)
+			WHERE (type_ = ? [$AND_OR_NULL_CHECK$])
 			ORDER BY
 				id_ ASC
 		]]>

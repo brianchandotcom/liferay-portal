@@ -633,8 +633,6 @@ public class JournalArticleFinderImpl
 			qPos.add(titles, 2);
 			qPos.add(descriptions, 2);
 			qPos.add(contents, 2);
-			qPos.add(type);
-			qPos.add(type);
 			qPos.add(structureIds, 2);
 			qPos.add(templateIds, 2);
 			qPos.add(displayDateGT_TS);
@@ -648,6 +646,8 @@ public class JournalArticleFinderImpl
 
 			qPos.add(reviewDate_TS);
 			qPos.add(reviewDate_TS);
+			qPos.add(type);
+			qPos.add(type);
 
 			Iterator<Long> itr = q.iterate();
 
@@ -773,8 +773,6 @@ public class JournalArticleFinderImpl
 			qPos.add(titles, 2);
 			qPos.add(descriptions, 2);
 			qPos.add(contents, 2);
-			qPos.add(type);
-			qPos.add(type);
 			qPos.add(structureIds, 2);
 			qPos.add(templateIds, 2);
 			qPos.add(displayDateGT_TS);
@@ -788,6 +786,8 @@ public class JournalArticleFinderImpl
 
 			qPos.add(reviewDate_TS);
 			qPos.add(reviewDate_TS);
+			qPos.add(type);
+			qPos.add(type);
 
 			return (List<JournalArticle>)QueryUtil.list(
 				q, getDialect(), start, end);

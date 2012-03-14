@@ -688,6 +688,7 @@ if (Validator.isNotNull(content)) {
 						dialog: {
 							width:680
 						},
+						id: '<portlet:namespace />structureSelector',
 						title: '<%= UnicodeLanguageUtil.get(pageContext, "template") %>',
 						uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/journal/select_template" /><portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" /><portlet:param name="structureId" value="<%= String.valueOf(structureId) %>" /></portlet:renderURL>'
 					}

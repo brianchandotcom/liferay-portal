@@ -78,6 +78,7 @@ if ((article != null) && article.isDraft()) {
 									cssClass: 'portlet-asset-categories-admin-dialog permissions-change',
 									width: 700
 								},
+								id: '<portlet:namespace />articlePermissions',
 								title: '<%= UnicodeLanguageUtil.get(pageContext, "permissions") %>',
 								uri: '<%= permissionsURL %>'
 							}

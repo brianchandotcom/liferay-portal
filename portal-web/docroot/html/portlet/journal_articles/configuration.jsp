@@ -182,6 +182,7 @@ if (Validator.isNotNull(structureId)) {
 					dialog: {
 						width: 680
 					},
+					id: '<portlet:namespace />StructureSelector',
 					title: '<%= UnicodeLanguageUtil.get(pageContext, "structure") %>',
 					uri: '<liferay-portlet:renderURL portletName="<%= PortletKeys.JOURNAL %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/journal/select_structure" /><portlet:param name="structureId" value="<%= structureId %>" /></liferay-portlet:renderURL>'
 				}

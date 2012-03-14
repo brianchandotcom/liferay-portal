@@ -14,20 +14,57 @@
 
 package com.liferay.portal.verify;
 
+import com.liferay.portal.kernel.cal.TZSRecurrence;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portlet.calendar.model.CalEvent;
 import com.liferay.portlet.calendar.service.CalEventLocalServiceUtil;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 import java.util.List;
+
+import org.jabsorb.JSONSerializer;
 
 /**
  * @author Juan Fernández
+ * @author Matthew Kong
  */
 public class VerifyCalendar extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
+		verifyNoAssets();
+		verifySerialization();
+	}
+
+	protected void updateCalEvent(long eventId, String recurrence)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = DataAccess.getConnection();
+
+			ps = con.prepareStatement(
+				"update CalEvent set recurrence = ? where eventId = ?");
+
+			ps.setString(1, recurrence);
+			ps.setLong(2, eventId);
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
+	}
+
+	protected void verifyNoAssets() throws Exception {
 		List<CalEvent> events = CalEventLocalServiceUtil.getNoAssetEvents();
 
 		if (_log.isDebugEnabled()) {
@@ -52,6 +89,41 @@ public class VerifyCalendar extends VerifyProcess {
 			_log.debug("Assets verified for events");
 		}
 
+	}
+
+	protected void verifySerialization() throws Exception {
+		JSONSerializer jsonSerializer = new JSONSerializer();
+
+		jsonSerializer.registerDefaultSerializers();
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getConnection();
+
+			ps = con.prepareStatement(
+				"select eventId, recurrence from CalEvent where recurrence " +
+					"not like '%serializable%'");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long eventId = rs.getLong("eventId");
+				String oldRecurrence = rs.getString("recurrence");
+
+				TZSRecurrence recurrence =
+					(TZSRecurrence)jsonSerializer.fromJSON(oldRecurrence);
+
+				String newRecurrence = JSONFactoryUtil.serialize(recurrence);
+
+				updateCalEvent(eventId, newRecurrence);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(VerifyCalendar.class);

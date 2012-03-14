@@ -48,10 +48,10 @@ public class VerifyDB2 extends VerifyProcess {
 
 			ps = con.prepareStatement(
 				"SELECT tbname, name, coltype, length " +
-				"FROM sysibm.syscolumns " +
-				"WHERE tbcreator = " +
-				"(SELECT DISTINCT CURRENT SCHEMA FROM sysibm.sysschemata) " +
-				"AND coltype = 'VARCHAR' and length = 500");
+					"FROM sysibm.syscolumns WHERE tbcreator = " +
+						"(SELECT DISTINCT CURRENT SCHEMA FROM " +
+							"sysibm.sysschemata) AND coltype = 'VARCHAR' " +
+								"AND length = 500");
 
 			rs = ps.executeQuery();
 
@@ -61,14 +61,12 @@ public class VerifyDB2 extends VerifyProcess {
 
 				runSQL(
 					"alter table " + tableName + " ALTER COLUMN " + columnName +
-					" SET DATA TYPE VARCHAR(600)");
+						" SET DATA TYPE VARCHAR(600)");
 			}
 	  }
 	  finally {
 	  	DataAccess.cleanUp(con, ps, rs);
 	  }
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(VerifyDB2.class);
 
 }

@@ -351,9 +351,9 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		throws SystemException {
 
 		return journalArticleFinder.filterFindByKeywords(
-			companyId, groupId, classNameId, keywords, version, type,
-			structureId, templateId, displayDateGT, displayDateLT, status,
-			reviewDate, start, end, obc);
+			companyId, groupId, classNameId, keywords, version, structureId,
+			templateId, displayDateGT, displayDateLT, status, reviewDate, type,
+			start, end, obc);
 	}
 
 	public List<JournalArticle> search(
@@ -364,10 +364,11 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			boolean andOperator, int start, int end, OrderByComparator obc)
 		throws SystemException {
 
-		return journalArticleFinder.filterFindByC_G_C_A_V_T_D_C_T_S_T_D_S_R(
+		return journalArticleFinder.filterFindByC_G_C_A_V_T_D_C_S_T_D_S_R_T(
 			companyId, groupId, classNameId, articleId, version, title,
-			description, content, type, structureId, templateId, displayDateGT,
-			displayDateLT, status, reviewDate, andOperator, start, end, obc);
+			description, content, structureId, templateId, displayDateGT,
+			displayDateLT, status, reviewDate, type, andOperator, start, end,
+			obc);
 	}
 
 	public List<JournalArticle> search(
@@ -378,11 +379,11 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			boolean andOperator, int start, int end, OrderByComparator obc)
 		throws SystemException {
 
-		return journalArticleFinder.filterFindByC_G_C_A_V_T_D_C_T_S_T_D_S_R(
+		return journalArticleFinder.filterFindByC_G_C_A_V_T_D_C_S_T_D_S_R_T(
 			companyId, groupId, classNameId, articleId, version, title,
-			description, content, type, structureIds, templateIds,
-			displayDateGT, displayDateLT, status, reviewDate, andOperator,
-			start, end, obc);
+			description, content, structureIds, templateIds, displayDateGT,
+			displayDateLT, status, reviewDate, type, andOperator, start, end,
+			obc);
 	}
 
 	public int searchCount(
@@ -392,9 +393,8 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		throws SystemException {
 
 		return journalArticleFinder.filterCountByKeywords(
-			companyId, groupId, classNameId, keywords, version, type,
-			structureId, templateId, displayDateGT, displayDateLT, status,
-			reviewDate);
+			companyId, groupId, classNameId, keywords, version, structureId,
+			templateId, displayDateGT, displayDateLT, status, reviewDate, type);
 	}
 
 	public int searchCount(
@@ -405,10 +405,10 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			boolean andOperator)
 		throws SystemException {
 
-		return journalArticleFinder.filterCountByC_G_C_A_V_T_D_C_T_S_T_D_S_R(
+		return journalArticleFinder.filterCountByC_G_C_A_V_T_D_C_S_T_D_S_R_T(
 			companyId, groupId, classNameId, articleId, version, title,
-			description, content, type, structureId, templateId, displayDateGT,
-			displayDateLT, status, reviewDate, andOperator);
+			description, content, structureId, templateId, displayDateGT,
+			displayDateLT, status, reviewDate, type, andOperator);
 	}
 
 	public int searchCount(
@@ -419,10 +419,10 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			boolean andOperator)
 		throws SystemException {
 
-		return journalArticleFinder.filterCountByC_G_C_A_V_T_D_C_T_S_T_D_S_R(
+		return journalArticleFinder.filterCountByC_G_C_A_V_T_D_C_S_T_D_S_R_T(
 			companyId, groupId, classNameId, articleId, version, title,
-			description, content, type, structureIds, templateIds,
-			displayDateGT, displayDateLT, status, reviewDate, andOperator);
+			description, content, structureIds, templateIds, displayDateGT,
+			displayDateLT, status, reviewDate, type, andOperator);
 	}
 
 	public void subscribe(long groupId)

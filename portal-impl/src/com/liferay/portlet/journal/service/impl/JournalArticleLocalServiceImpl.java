@@ -1596,9 +1596,9 @@ public class JournalArticleLocalServiceImpl
 		throws SystemException {
 
 		return journalArticleFinder.findByKeywords(
-			companyId, groupId, classNameId, keywords, version, type,
-			structureId, templateId, displayDateGT, displayDateLT, status,
-			reviewDate, start, end, obc);
+			companyId, groupId, classNameId, keywords, version, structureId,
+			templateId, displayDateGT, displayDateLT, status, reviewDate, type,
+			start, end, obc);
 	}
 
 	public List<JournalArticle> search(
@@ -1609,10 +1609,11 @@ public class JournalArticleLocalServiceImpl
 			boolean andOperator, int start, int end, OrderByComparator obc)
 		throws SystemException {
 
-		return journalArticleFinder.findByC_G_C_A_V_T_D_C_T_S_T_D_S_R(
+		return journalArticleFinder.findByC_G_C_A_V_T_D_C_S_T_D_S_R_T(
 			companyId, groupId, classNameId, articleId, version, title,
-			description, content, type, structureId, templateId, displayDateGT,
-			displayDateLT, status, reviewDate, andOperator, start, end, obc);
+			description, content, structureId, templateId, displayDateGT,
+			displayDateLT, status, reviewDate, type, andOperator, start, end,
+			obc);
 	}
 
 	public List<JournalArticle> search(
@@ -1623,11 +1624,11 @@ public class JournalArticleLocalServiceImpl
 			boolean andOperator, int start, int end, OrderByComparator obc)
 		throws SystemException {
 
-		return journalArticleFinder.findByC_G_C_A_V_T_D_C_T_S_T_D_S_R(
+		return journalArticleFinder.findByC_G_C_A_V_T_D_C_S_T_D_S_R_T(
 			companyId, groupId, classNameId, articleId, version, title,
-			description, content, type, structureIds, templateIds,
-			displayDateGT, displayDateLT, status, reviewDate, andOperator,
-			start, end, obc);
+			description, content, structureIds, templateIds, displayDateGT,
+			displayDateLT, status, reviewDate, type, andOperator, start, end,
+			obc);
 	}
 
 	public Hits search(
@@ -1745,10 +1746,10 @@ public class JournalArticleLocalServiceImpl
 			boolean andOperator)
 		throws SystemException {
 
-		return journalArticleFinder.countByC_G_C_A_V_T_D_C_T_S_T_D_S_R(
+		return journalArticleFinder.countByC_G_C_A_V_T_D_C_S_T_D_S_R_T(
 			companyId, groupId, classNameId, articleId, version, title,
-			description, content, type, structureId, templateId, displayDateGT,
-			displayDateLT, status, reviewDate, andOperator);
+			description, content, structureId, templateId, displayDateGT,
+			displayDateLT, status, reviewDate, type, andOperator);
 	}
 
 	public int searchCount(
@@ -1759,10 +1760,10 @@ public class JournalArticleLocalServiceImpl
 			boolean andOperator)
 		throws SystemException {
 
-		return journalArticleFinder.countByC_G_C_A_V_T_D_C_T_S_T_D_S_R(
+		return journalArticleFinder.countByC_G_C_A_V_T_D_C_S_T_D_S_R_T(
 			companyId, groupId, classNameId, articleId, version, title,
-			description, content, type, structureIds, templateIds,
-			displayDateGT, displayDateLT, status, reviewDate, andOperator);
+			description, content, structureIds, templateIds, displayDateGT,
+			displayDateLT, status, reviewDate, type, andOperator);
 	}
 
 	public void subscribe(long userId, long groupId)

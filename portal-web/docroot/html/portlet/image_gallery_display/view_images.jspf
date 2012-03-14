@@ -213,22 +213,22 @@ embeddedPlayerURL.setParameter("struts_action", "/image_gallery_display/embedded
 
 <aui:script use="aui-image-viewer-gallery,aui-media-viewer-plugin">
 	var viewportRegion = A.getDoc().get('viewportRegion');
-	var maxHeight = (viewportRegion.height * 0.5);
-	var maxWidth = (viewportRegion.width * 0.5);
+
+	var maxHeight = (viewportRegion.height / 2);
+	var maxWidth = (viewportRegion.width / 2);
 
 	var imageGallery = new A.ImageGallery(
 		{
 			after: {
 				render: function(event) {
 					var instance = this;
+
 					var footerNode = instance.footerNode;
 
 					instance._actions = A.Node.create('<div class="lfr-image-gallery-actions"></div>');
 
 					if (footerNode) {
-						footerNode.append(
-							instance._actions
-						);
+						footerNode.append(instance._actions);
 					}
 				}
 
@@ -243,13 +243,13 @@ embeddedPlayerURL.setParameter("struts_action", "/image_gallery_display/embedded
 						var actions = instance._actions;
 
 						if (actions) {
-							var action = A.one('#<portlet:namespace />buttonsContainer_' + fileEntryId);
+							var defaultAction = A.one('#<portlet:namespace />buttonsContainer_' + fileEntryId);
 
 							actions.empty();
 
-							actions.append(
-								action.clone().show()
-							);
+							var action = defaultAction.clone().show();
+
+							actions.append(action);
 						}
 					}
 				</c:if>

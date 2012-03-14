@@ -55,10 +55,10 @@ for (String previewFileURL : previewFileURLs) {
 					},
 					height: 32
 					<c:if test="<%= Validator.isNotNull(mp3PreviewFileURL) %>">
-						,url: '<%= mp3PreviewFileURL %>'
+						, url: '<%= mp3PreviewFileURL %>'
 					</c:if>
 					<c:if test="<%= Validator.isNotNull(oggPreviewFileURL) %>">
-						,oggUrl: '<%= oggPreviewFileURL %>',
+						, oggUrl: '<%= oggPreviewFileURL %>',
 					</c:if>
 				}
 			).render();
@@ -68,7 +68,7 @@ for (String previewFileURL : previewFileURLs) {
 		<aui:script use="aui-base,aui-video">
 			new A.Video(
 				{
-					boundingBox: '#<portlet:namespace />previewFileContent',
+					contentBox: '#<portlet:namespace />previewFileContent',
 					fixedAttributes: {
 						allowfullscreen: 'true',
 						bgColor: '#000000'
@@ -77,10 +77,10 @@ for (String previewFileURL : previewFileURLs) {
 						ogvUrl: '<%= ogvPreviewFileURL %>',
 					</c:if>
 
-					poster: '<%= videoThumbnailURL %>',
+					poster: '<%= videoThumbnailURL %>'
 
 					<c:if test="<%= Validator.isNotNull(mp4PreviewFileURL) %>">
-						url: '<%= mp4PreviewFileURL %>'
+						, url: '<%= mp4PreviewFileURL %>'
 					</c:if>
 				}
 			).render();

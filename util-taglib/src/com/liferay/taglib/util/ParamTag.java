@@ -14,8 +14,9 @@
 
 package com.liferay.taglib.util;
 
+import com.liferay.portal.kernel.servlet.taglib.TagSupport;
+
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.tagext.TagSupport;
 
 /**
  * @author Brian Wing Shun Chan
@@ -34,7 +35,7 @@ public class ParamTag extends TagSupport {
 
 		paramAncestorTag.addParam(_name, _value);
 
-		return EVAL_BODY_INCLUDE;
+		return SKIP_BODY;
 	}
 
 	public void setName(String name) {

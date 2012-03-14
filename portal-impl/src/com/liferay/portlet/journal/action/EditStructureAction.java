@@ -78,9 +78,10 @@ public class EditStructureAction extends PortletAction {
 				deleteStructures(actionRequest);
 			}
 
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
-
 			if (Validator.isNotNull(cmd)) {
+				String redirect = ParamUtil.getString(
+					actionRequest, "redirect");
+
 				if (structure != null) {
 					boolean saveAndContinue = ParamUtil.getBoolean(
 						actionRequest, "saveAndContinue");

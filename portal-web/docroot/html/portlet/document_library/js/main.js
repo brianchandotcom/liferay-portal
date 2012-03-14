@@ -498,7 +498,7 @@ AUI.add(
 						var action = event.action;
 
 						if (action == instance._config.actions.MOVE) {
-							instance._processFileEntryAction(action, instance._config.moveEntryActionUrl);
+							instance._processFileEntryAction(action, instance._config.moveEntryRenderUrl);
 						}
 						else {
 							instance._processFileEntryAction(action, instance._config.editEntryUrl);
@@ -700,7 +700,7 @@ AUI.add(
 					_moveEntries: function(folderId) {
 						var instance = this;
 
-						var form = instance._config.form;
+						var form = instance._config.form.instance;
 
 						form[instance.ns('newFolderId')].value = folderId;
 

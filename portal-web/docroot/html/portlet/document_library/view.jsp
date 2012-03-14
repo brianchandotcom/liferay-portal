@@ -196,7 +196,6 @@ if (folder != null) {
 				method: 'post',
 			},
 			mainUrl: '<%= mainURL %>',
-			moveEntryActionUrl: '<portlet:actionURL><portlet:param name="struts_action" value="/document_library/move_entry" /></portlet:actionURL>',
 			moveEntryRenderUrl: '<portlet:renderURL><portlet:param name="struts_action" value="/document_library/move_entry" /></portlet:renderURL>',
 			namespace: '<portlet:namespace />',
 			portletId: '<%= portletId %>',

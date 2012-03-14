@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Region;
@@ -129,6 +130,16 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 			RegionModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A",
 			new String[] { Long.class.getName(), Boolean.class.getName() });
+	public static final FinderPath FINDER_PATH_FETCH_BY_C_R = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
+			RegionModelImpl.FINDER_CACHE_ENABLED, RegionImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_R",
+			new String[] { Long.class.getName(), String.class.getName() },
+			RegionModelImpl.COUNTRYID_COLUMN_BITMASK |
+			RegionModelImpl.REGIONCODE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_C_R = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
+			RegionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R",
+			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
 			RegionModelImpl.FINDER_CACHE_ENABLED, RegionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
@@ -147,6 +158,13 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	public void cacheResult(Region region) {
 		EntityCacheUtil.putResult(RegionModelImpl.ENTITY_CACHE_ENABLED,
 			RegionImpl.class, region.getPrimaryKey(), region);
+
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_R,
+			new Object[] {
+				Long.valueOf(region.getCountryId()),
+				
+			region.getRegionCode()
+			}, region);
 
 		region.resetOriginalValues();
 	}
@@ -203,6 +221,8 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache(region);
 	}
 
 	@Override
@@ -213,7 +233,18 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 		for (Region region : regions) {
 			EntityCacheUtil.removeResult(RegionModelImpl.ENTITY_CACHE_ENABLED,
 				RegionImpl.class, region.getPrimaryKey());
+
+			clearUniqueFindersCache(region);
 		}
+	}
+
+	protected void clearUniqueFindersCache(Region region) {
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_R,
+			new Object[] {
+				Long.valueOf(region.getCountryId()),
+				
+			region.getRegionCode()
+			});
 	}
 
 	/**
@@ -398,6 +429,35 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 
 		EntityCacheUtil.putResult(RegionModelImpl.ENTITY_CACHE_ENABLED,
 			RegionImpl.class, region.getPrimaryKey(), region);
+
+		if (isNew) {
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_R,
+				new Object[] {
+					Long.valueOf(region.getCountryId()),
+					
+				region.getRegionCode()
+				}, region);
+		}
+		else {
+			if ((regionModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_C_R.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(regionModelImpl.getOriginalCountryId()),
+						
+						regionModelImpl.getOriginalRegionCode()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_R, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_R, args);
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_R,
+					new Object[] {
+						Long.valueOf(region.getCountryId()),
+						
+					region.getRegionCode()
+					}, region);
+			}
+		}
 
 		return region;
 	}
@@ -1606,6 +1666,169 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	}
 
 	/**
+	 * Returns the region where countryId = &#63; and regionCode = &#63; or throws a {@link com.liferay.portal.NoSuchRegionException} if it could not be found.
+	 *
+	 * @param countryId the country ID
+	 * @param regionCode the region code
+	 * @return the matching region
+	 * @throws com.liferay.portal.NoSuchRegionException if a matching region could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Region findByC_R(long countryId, String regionCode)
+		throws NoSuchRegionException, SystemException {
+		Region region = fetchByC_R(countryId, regionCode);
+
+		if (region == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("countryId=");
+			msg.append(countryId);
+
+			msg.append(", regionCode=");
+			msg.append(regionCode);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchRegionException(msg.toString());
+		}
+
+		return region;
+	}
+
+	/**
+	 * Returns the region where countryId = &#63; and regionCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param countryId the country ID
+	 * @param regionCode the region code
+	 * @return the matching region, or <code>null</code> if a matching region could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Region fetchByC_R(long countryId, String regionCode)
+		throws SystemException {
+		return fetchByC_R(countryId, regionCode, true);
+	}
+
+	/**
+	 * Returns the region where countryId = &#63; and regionCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param countryId the country ID
+	 * @param regionCode the region code
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching region, or <code>null</code> if a matching region could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Region fetchByC_R(long countryId, String regionCode,
+		boolean retrieveFromCache) throws SystemException {
+		Object[] finderArgs = new Object[] { countryId, regionCode };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_C_R,
+					finderArgs, this);
+		}
+
+		if (result instanceof Region) {
+			Region region = (Region)result;
+
+			if ((countryId != region.getCountryId()) ||
+					!Validator.equals(regionCode, region.getRegionCode())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_REGION_WHERE);
+
+			query.append(_FINDER_COLUMN_C_R_COUNTRYID_2);
+
+			if (regionCode == null) {
+				query.append(_FINDER_COLUMN_C_R_REGIONCODE_1);
+			}
+			else {
+				if (regionCode.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_C_R_REGIONCODE_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_C_R_REGIONCODE_2);
+				}
+			}
+
+			query.append(RegionModelImpl.ORDER_BY_JPQL);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(countryId);
+
+				if (regionCode != null) {
+					qPos.add(regionCode);
+				}
+
+				List<Region> list = q.list();
+
+				result = list;
+
+				Region region = null;
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_R,
+						finderArgs, list);
+				}
+				else {
+					region = list.get(0);
+
+					cacheResult(region);
+
+					if ((region.getCountryId() != countryId) ||
+							(region.getRegionCode() == null) ||
+							!region.getRegionCode().equals(regionCode)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_R,
+							finderArgs, region);
+					}
+				}
+
+				return region;
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (result == null) {
+					FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_R,
+						finderArgs);
+				}
+
+				closeSession(session);
+			}
+		}
+		else {
+			if (result instanceof List<?>) {
+				return null;
+			}
+			else {
+				return (Region)result;
+			}
+		}
+	}
+
+	/**
 	 * Returns all the regions.
 	 *
 	 * @return the regions
@@ -1755,6 +1978,20 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 		for (Region region : findByC_A(countryId, active)) {
 			remove(region);
 		}
+	}
+
+	/**
+	 * Removes the region where countryId = &#63; and regionCode = &#63; from the database.
+	 *
+	 * @param countryId the country ID
+	 * @param regionCode the region code
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByC_R(long countryId, String regionCode)
+		throws NoSuchRegionException, SystemException {
+		Region region = findByC_R(countryId, regionCode);
+
+		remove(region);
 	}
 
 	/**
@@ -1924,6 +2161,77 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 				}
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_A, finderArgs,
+					count);
+
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of regions where countryId = &#63; and regionCode = &#63;.
+	 *
+	 * @param countryId the country ID
+	 * @param regionCode the region code
+	 * @return the number of matching regions
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByC_R(long countryId, String regionCode)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { countryId, regionCode };
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_C_R,
+				finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_REGION_WHERE);
+
+			query.append(_FINDER_COLUMN_C_R_COUNTRYID_2);
+
+			if (regionCode == null) {
+				query.append(_FINDER_COLUMN_C_R_REGIONCODE_1);
+			}
+			else {
+				if (regionCode.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_C_R_REGIONCODE_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_C_R_REGIONCODE_2);
+				}
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(countryId);
+
+				if (regionCode != null) {
+					qPos.add(regionCode);
+				}
+
+				count = (Long)q.uniqueResult();
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (count == null) {
+					count = Long.valueOf(0);
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_R, finderArgs,
 					count);
 
 				closeSession(session);
@@ -2140,6 +2448,10 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	private static final String _FINDER_COLUMN_ACTIVE_ACTIVE_2 = "region.active = ?";
 	private static final String _FINDER_COLUMN_C_A_COUNTRYID_2 = "region.countryId = ? AND ";
 	private static final String _FINDER_COLUMN_C_A_ACTIVE_2 = "region.active = ?";
+	private static final String _FINDER_COLUMN_C_R_COUNTRYID_2 = "region.countryId = ? AND ";
+	private static final String _FINDER_COLUMN_C_R_REGIONCODE_1 = "region.regionCode IS NULL";
+	private static final String _FINDER_COLUMN_C_R_REGIONCODE_2 = "region.regionCode = ?";
+	private static final String _FINDER_COLUMN_C_R_REGIONCODE_3 = "(region.regionCode IS NULL OR region.regionCode = ?)";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "region.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Region exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Region exists with the key {";

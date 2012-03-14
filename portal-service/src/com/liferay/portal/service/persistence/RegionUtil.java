@@ -555,6 +555,52 @@ public class RegionUtil {
 	}
 
 	/**
+	* Returns the region where countryId = &#63; and regionCode = &#63; or throws a {@link com.liferay.portal.NoSuchRegionException} if it could not be found.
+	*
+	* @param countryId the country ID
+	* @param regionCode the region code
+	* @return the matching region
+	* @throws com.liferay.portal.NoSuchRegionException if a matching region could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Region findByC_R(long countryId,
+		java.lang.String regionCode)
+		throws com.liferay.portal.NoSuchRegionException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByC_R(countryId, regionCode);
+	}
+
+	/**
+	* Returns the region where countryId = &#63; and regionCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param countryId the country ID
+	* @param regionCode the region code
+	* @return the matching region, or <code>null</code> if a matching region could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Region fetchByC_R(long countryId,
+		java.lang.String regionCode)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByC_R(countryId, regionCode);
+	}
+
+	/**
+	* Returns the region where countryId = &#63; and regionCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param countryId the country ID
+	* @param regionCode the region code
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching region, or <code>null</code> if a matching region could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Region fetchByC_R(long countryId,
+		java.lang.String regionCode, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByC_R(countryId, regionCode, retrieveFromCache);
+	}
+
+	/**
 	* Returns all the regions.
 	*
 	* @return the regions
@@ -638,6 +684,19 @@ public class RegionUtil {
 	}
 
 	/**
+	* Removes the region where countryId = &#63; and regionCode = &#63; from the database.
+	*
+	* @param countryId the country ID
+	* @param regionCode the region code
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByC_R(long countryId, java.lang.String regionCode)
+		throws com.liferay.portal.NoSuchRegionException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByC_R(countryId, regionCode);
+	}
+
+	/**
 	* Removes all the regions from the database.
 	*
 	* @throws SystemException if a system exception occurred
@@ -682,6 +741,19 @@ public class RegionUtil {
 	public static int countByC_A(long countryId, boolean active)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().countByC_A(countryId, active);
+	}
+
+	/**
+	* Returns the number of regions where countryId = &#63; and regionCode = &#63;.
+	*
+	* @param countryId the country ID
+	* @param regionCode the region code
+	* @return the number of matching regions
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByC_R(long countryId, java.lang.String regionCode)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByC_R(countryId, regionCode);
 	}
 
 	/**

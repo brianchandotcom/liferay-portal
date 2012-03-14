@@ -70,7 +70,9 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 					<h3 class="layout-variation-name"><liferay-ui:message key="<%= layoutBranch.getName() %>" /></h3>
 				</c:if>
 
-				<liferay-ui:search-container>
+				<liferay-ui:search-container
+					id="layoutRevisionsSearchContainer"
+				>
 					<liferay-ui:search-container-results
 						results="<%= LayoutRevisionLocalServiceUtil.getLayoutRevisions(rootLayoutRevision.getLayoutSetBranchId(), rootLayoutRevision.getLayoutBranchId(), rootLayoutRevision.getPlid(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, new LayoutRevisionIdComparator(false)) %>"
 						total="<%= LayoutRevisionLocalServiceUtil.getLayoutRevisionsCount(rootLayoutRevision.getLayoutSetBranchId(), rootLayoutRevision.getLayoutBranchId(), rootLayoutRevision.getPlid()) %>"

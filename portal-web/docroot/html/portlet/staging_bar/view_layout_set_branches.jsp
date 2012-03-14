@@ -73,7 +73,10 @@ request.setAttribute("view_layout_set_branches.jsp-currentLayoutSetBranchId", St
 </c:if>
 
 <div class="branch-results">
-	<liferay-ui:search-container>
+	<liferay-ui:search-container
+		id="layoutSetBranchesSearchContainer"
+	>
+
 		<liferay-ui:search-container-results
 			results="<%= layoutSetBranches %>"
 			total="<%= layoutSetBranches.size() %>"

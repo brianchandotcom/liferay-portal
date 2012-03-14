@@ -137,6 +137,7 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 								delta="<%= foldersPerPage %>"
 								deltaConfigurable="<%= false %>"
 								headerNames="<%= StringUtil.merge(folderColumns) %>"
+								id="foldersSearchContainer"
 								iteratorURL="<%= portletURL %>"
 							>
 								<liferay-ui:search-container-results

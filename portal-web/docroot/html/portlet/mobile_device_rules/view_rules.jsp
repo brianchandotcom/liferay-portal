@@ -57,6 +57,7 @@ portletURL.setParameter("redirect", redirect);
 	deltaConfigurable="<%= false %>"
 	emptyResultsMessage="no-rules-are-configured-for-this-rule-group"
 	headerNames="name,type"
+	id="mdrRulesSearchContainer"
 	iteratorURL="<%= portletURL %>"
 >
 	<liferay-ui:search-container-results

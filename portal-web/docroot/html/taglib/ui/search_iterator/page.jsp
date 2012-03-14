@@ -17,8 +17,6 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
-String randomId = PwdGenerator.getPassword(PwdGenerator.KEY3, 4);
-
 SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:search:searchContainer");
 
 boolean paginate = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:search-iterator:paginate"));
@@ -27,7 +25,7 @@ String type = (String)request.getAttribute("liferay-ui:search:type");
 String id = searchContainer.getId();
 
 if (Validator.isNull(id)) {
-	id = PwdGenerator.getPassword(PwdGenerator.KEY3, 4);
+	id = PortalUtil.generateRandomKey(request, "taglib_search_container");
 }
 
 int start = searchContainer.getStart();
@@ -77,7 +75,7 @@ int sortColumnIndex = -1;
 		</div>
 	</c:if>
 
-	<div class="results-grid" id="<%= id %>SearchContainer">
+	<div class="results-grid" id="<%= namespace + id %>SearchContainer">
 		<table class="taglib-search-iterator">
 
 		<c:if test="<%= headerNames != null %>">
@@ -131,7 +129,7 @@ int sortColumnIndex = -1;
 				}
 			%>
 
-				<th class="col-<%= i + 1 %> <%= cssClass %>" id="<%= randomId %>_col-<%= i + 1 %>"
+				<th class="col-<%= i + 1 %> <%= cssClass %>" id="<%= namespace + id %>_col-<%= i + 1 %>"
 
 					<%--
 
@@ -301,7 +299,7 @@ int sortColumnIndex = -1;
 
 				<td class="align-<%= entry.getAlign() %> col-<%= j + 1 %><%= row.isBold() ? " taglib-search-iterator-highlighted" : "" %> <%= columnClassName %> valign-<%= entry.getValign() %>" colspan="<%= entry.getColspan() %>"
 					<c:if test="<%= (headerNames != null) && (headerNames.size() >= (j + 1)) %>">
-						headers="<%= randomId %>_col-<%= (j + 1) %>"
+						headers="<%= namespace + id %>_col-<%= (j + 1) %>"
 					</c:if>
 				>
 
@@ -338,14 +336,14 @@ int sortColumnIndex = -1;
 </c:if>
 
 <c:if test="<%= Validator.isNotNull(id) %>">
-	<input id="<%= id %>PrimaryKeys" name="<%= id %>PrimaryKeys" type="hidden" value="<%= StringUtil.merge(primaryKeys) %>" />
+	<input id="<%= namespace + id %>PrimaryKeys" name="<%= id %>PrimaryKeys" type="hidden" value="<%= StringUtil.merge(primaryKeys) %>" />
 
 	<aui:script use="liferay-search-container">
 		new Liferay.SearchContainer(
 			{
 				classNameHover: '<%= _CLASS_NAME_HOVER %>',
 				hover: <%= searchContainer.isHover() %>,
-				id: '<%= id %>',
+				id: '<%= namespace + id %>',
 				rowClassNameAlternate: '<%= _ROW_CLASS_NAME_ALTERNATE %>',
 				rowClassNameAlternateHover: '<%= _ROW_CLASS_NAME_ALTERNATE_HOVER %>',
 				rowClassNameBody: '<%= _ROW_CLASS_NAME_BODY %>',

@@ -107,7 +107,9 @@ if (pluginType.equals(Plugin.TYPE_PORTLET)) {
 						<div class="permission-group">
 							<b><liferay-ui:message key="action.ADD_TO_PAGE" /></b>: <liferay-ui:message key="the-users-with-the-following-roles-can-add-this-portlet-to-the-pages-they-manage" />
 
-							<liferay-ui:search-container >
+							<liferay-ui:search-container
+								id="rolesSearchContainer"
+							>
 								<liferay-ui:search-container-results
 									results="<%= addToPageRoles %>"
 								/>

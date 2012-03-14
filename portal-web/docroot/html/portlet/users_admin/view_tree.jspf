@@ -181,6 +181,7 @@ int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCom
 		%>
 
 		<liferay-ui:search-container
+			id="organizationsSearchContainer"
 			searchContainer="<%= organizationSearch %>"
 		>
 			<%

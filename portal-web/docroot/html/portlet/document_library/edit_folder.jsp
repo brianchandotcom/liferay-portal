@@ -186,7 +186,7 @@ if (workflowEnabled) {
 					<c:if test="<%= !rootFolder %>">
 						<liferay-ui:search-container
 							headerNames="<%= headerNames %>"
-							id='<%= renderResponse.getNamespace() + "fileEntryTypeSearchContainer" %>'
+							id="fileEntryTypeSearchContainer"
 						>
 							<liferay-ui:search-container-results
 								results="<%= fileEntryTypes %>"

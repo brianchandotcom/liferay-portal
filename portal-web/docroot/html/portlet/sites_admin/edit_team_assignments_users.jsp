@@ -40,6 +40,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_team_assignments.
 />
 
 <liferay-ui:search-container
+	id="usersSearchContainer"
 	rowChecker="<%= new UserTeamChecker(renderResponse, team) %>"
 	searchContainer="<%= new UserSearch(renderRequest, portletURL) %>"
 >

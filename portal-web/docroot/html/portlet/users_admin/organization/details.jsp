@@ -193,7 +193,7 @@ if (parentOrganization != null) {
 
 <liferay-ui:search-container
 	headerNames="name,type,null"
-	id='<%= renderResponse.getNamespace() + "parentOrganizationSearchContainer" %>'
+	id="parentOrganizationSearchContainer"
 >
 	<liferay-ui:search-container-results
 		results="<%= parentOrganizations %>"

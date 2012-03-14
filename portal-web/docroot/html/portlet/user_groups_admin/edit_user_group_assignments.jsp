@@ -62,6 +62,7 @@ portletURL.setParameter("userGroupId", String.valueOf(userGroup.getUserGroupId()
 	<aui:input name="removeUserIds" type="hidden" />
 
 	<liferay-ui:search-container
+		id="usersSearchContainer"
 		rowChecker="<%= new UserUserGroupChecker(renderResponse, userGroup) %>"
 		searchContainer="<%= new UserSearch(renderRequest, portletURL) %>"
 	>

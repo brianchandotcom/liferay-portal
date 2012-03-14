@@ -172,6 +172,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 							curParam="cur1"
 							deltaConfigurable="<%= false %>"
 							headerNames="category,categories,threads,posts"
+							id="mbCategoriesSearchContainer"
 							iteratorURL="<%= portletURL %>"
 							rowChecker="<%= new RowChecker(renderResponse) %>"
 						>

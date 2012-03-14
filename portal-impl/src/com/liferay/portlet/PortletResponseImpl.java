@@ -39,7 +39,6 @@ import com.liferay.portal.util.WebKeys;
 import java.io.Writer;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -58,6 +57,7 @@ import javax.portlet.PortletURL;
 import javax.portlet.PortletURLGenerationListener;
 import javax.portlet.ResourceURL;
 import javax.portlet.WindowStateException;
+import javax.portlet.filter.PortletResponseWrapper;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -84,32 +84,21 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 	public static PortletResponseImpl getPortletResponseImpl(
 		PortletResponse portletResponse) {
 
-		PortletResponseImpl portletResponseImpl = null;
+		while (!(portletResponse instanceof PortletResponseImpl)) {
 
-		if (portletResponse instanceof PortletResponseImpl) {
-			portletResponseImpl = (PortletResponseImpl)portletResponse;
-		}
-		else {
-
-			// LEP-4033
-
-			try {
-				Method method = portletResponse.getClass().getMethod(
-					"getResponse");
-
-				Object obj = method.invoke(portletResponse, (Object[])null);
-
-				portletResponseImpl = getPortletResponseImpl(
-					(PortletResponse)obj);
+			if (portletResponse instanceof PortletResponseWrapper) {
+				PortletResponseWrapper portletResponseWrapper =
+					(PortletResponseWrapper)portletResponse;
+				portletResponse = portletResponseWrapper.getResponse();
 			}
-			catch (Exception e) {
+			else {
 				throw new RuntimeException(
-					"Unable to get the portlet response from " +
+					"Unable to unwrap the portlet response from " +
 						portletResponse.getClass().getName());
 			}
 		}
 
-		return portletResponseImpl;
+		return (PortletResponseImpl)portletResponse;
 	}
 
 	public void addDateHeader(String name, long date) {

@@ -1949,11 +1949,11 @@ public class StagingImpl implements Staging {
 		Set<String> parameterNames = serviceContext.getAttributes().keySet();
 
 		for (String parameterName : parameterNames) {
-			boolean staged = ParamUtil.getBoolean(
-				serviceContext, parameterName);
-
 			if (parameterName.startsWith(StagingConstants.STAGED_PORTLET) &&
 				!parameterName.endsWith("Checkbox")) {
+
+				boolean staged = ParamUtil.getBoolean(
+					serviceContext, parameterName);
 
 				typeSettingsProperties.setProperty(
 					parameterName, String.valueOf(staged));

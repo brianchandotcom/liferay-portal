@@ -45,6 +45,7 @@ public class ViewBlogsEntryScopeTest extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Page Scope Current Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
+		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

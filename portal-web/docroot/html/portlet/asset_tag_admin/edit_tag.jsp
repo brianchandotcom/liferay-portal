@@ -104,7 +104,7 @@ else {
 									<div class="row-fields">
 										<aui:input fieldParam='<%= "key" + tagPropertiesIndex %>' id='<%= "key" + tagPropertiesIndex %>' name="key" />
 
-										<aui:input fieldParam='<%= "value" + tagPropertiesIndex %>' id='<%= "key" + tagPropertiesIndex %>' name="value" />
+										<aui:input fieldParam='<%= "value" + tagPropertiesIndex %>' id='<%= "value" + tagPropertiesIndex %>' name="value" />
 									</div>
 								</div>
 

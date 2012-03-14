@@ -5,8 +5,8 @@
 .lfr-upload-container .upload-target {
 	background-color: #8FBE31;
 	border: 1px solid #729A22;
-	min-height: 30px;
 	margin-right: 1.5em;
+	min-height: 30px;
 	text-align: center;
 	text-shadow: 1px 1px #656565;
 }
@@ -113,15 +113,15 @@
 .lfr-upload-container .delete-button {
 	background-image: url(@theme_image_path@/portlet/close.png);
 	background-repeat: no-repeat;
+	font-size: 0;
+	height: 16px;
+	margin-top: -8px;
+	padding: 0;
 	position: absolute;
 	right: 5px;
 	text-indent: -9999em;
-	font-size: 0;
-	width: 16px;
-	height: 16px;
-	padding: 0;
 	top: 50%;
-	margin-top: -8px;
+	width: 16px;
 }
 
 .lfr-upload-container .upload-complete {
@@ -147,8 +147,8 @@
 }
 
 .lfr-upload-container .file-added .success-message {
-	font-weight: normal;
 	float: right;
+	font-weight: normal;
 }
 
 .lfr-upload-container .upload-error {

@@ -282,10 +282,6 @@ int tabIndex = 1;
 
 		var xsd = "<root>\n";
 
-		if ((cmd == "add") && (elCount == -1)) {
-			xsd += "<dynamic-element name='' type=''></dynamic-element>\n"
-		}
-
 		for (i = 0; i >= 0; i++) {
 			var elDepth = document.getElementById("<portlet:namespace />structure_el" + i + "_depth");
 			var elMetadataXML = document.getElementById("<portlet:namespace />structure_el" + i + "_metadata_xml");
@@ -387,6 +383,10 @@ int tabIndex = 1;
 			else {
 				break;
 			}
+		}
+
+		if ((cmd == "add") && (elCount == -1)) {
+			xsd += "<dynamic-element name='' type=''></dynamic-element>\n"
 		}
 
 		xsd += "</root>";

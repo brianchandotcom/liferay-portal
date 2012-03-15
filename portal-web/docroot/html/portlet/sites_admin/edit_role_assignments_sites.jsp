@@ -46,56 +46,54 @@ searchContainer.setRowChecker(new GroupRoleChecker(renderResponse, role));
 	searchContainer="<%= searchContainer %>"
 />
 
-<%
-GroupSearchTerms searchTerms = (GroupSearchTerms)searchContainer.getSearchTerms();
+<liferay-ui:search-container
+	searchContainer="<%= new GroupSearch(renderRequest, portletURL) %>"
+>
 
-LinkedHashMap groupParams = new LinkedHashMap();
+	<%
+	GroupSearchTerms searchTerms = (GroupSearchTerms)searchContainer.getSearchTerms();
 
-groupParams.put("site", Boolean.TRUE);
+	LinkedHashMap groupParams = new LinkedHashMap();
 
-if (tabs3.equals("current")) {
-	groupParams.put("groupsRoles", new Long(role.getRoleId()));
-}
+	groupParams.put("site", Boolean.TRUE);
 
-int total = GroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getName(), searchTerms.getDescription(), groupParams);
+	if (tabs3.equals("current")) {
+		groupParams.put("groupsRoles", new Long(role.getRoleId()));
+	}
+	%>
 
-searchContainer.setTotal(total);
+	<liferay-ui:search-container-results
+		results="<%= GroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getName(), searchTerms.getDescription(), groupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
+		total="<%= GroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getName(), searchTerms.getDescription(), groupParams) %>"
+	/>
 
-List results = GroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getName(), searchTerms.getDescription(), groupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+	<div class="separator"><!-- --></div>
 
-searchContainer.setResults(results);
-%>
+	<%
+	String taglibOnClick = renderResponse.getNamespace() + "updateRoleGroups('" + portletURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur + "');";
+	%>
 
-<div class="separator"><!-- --></div>
+	<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
 
-<%
-String taglibOnClick = renderResponse.getNamespace() + "updateRoleGroups('" + portletURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur + "');";
-%>
+	<br /><br />
 
-<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
+	<liferay-ui:search-container-row
+		className="com.liferay.portal.model.Group"
+		escapedModel="<%= true %>"
+		keyProperty="groupId"
+		modelVar="group"
+	>
 
-<br /><br />
+		<liferay-ui:search-container-column-text
+			name="name"
+			value="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
+		/>
 
-<%
-List resultRows = searchContainer.getResultRows();
+		<liferay-ui:search-container-column-text
+			name="type"
+			value="<%= LanguageUtil.get(pageContext, group.getTypeLabel()) %>"
+		/>
+	</liferay-ui:search-container-row>
 
-for (int i = 0; i < results.size(); i++) {
-	Group group = (Group)results.get(i);
-
-	ResultRow row = new ResultRow(group, group.getGroupId(), i);
-
-	// Name
-
-	row.addText(group.getDescriptiveName(locale));
-
-	// Type
-
-	row.addText(LanguageUtil.get(pageContext, group.getTypeLabel()));
-
-	// Add result row
-
-	resultRows.add(row);
-}
-%>
-
-<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+	<liferay-ui:search-iterator />
+</liferay-ui:search-container>

@@ -367,15 +367,15 @@ public class EditUserAction extends PortletAction {
 		String ymSn = ParamUtil.getString(actionRequest, "ymSn");
 		String jobTitle = ParamUtil.getString(actionRequest, "jobTitle");
 		long[] groupIds = getLongArray(
-			actionRequest, "groupsSearchContainerPrimaryKeys");
+			actionRequest, "groupSearchContainerPrimaryKeys");
 		long[] organizationIds = getLongArray(
-			actionRequest, "organizationsSearchContainerPrimaryKeys");
+			actionRequest, "organizationSearchContainerPrimaryKeys");
 		long[] roleIds = getLongArray(
 			actionRequest, "rolesSearchContainerPrimaryKeys");
 		List<UserGroupRole> userGroupRoles = UsersAdminUtil.getUserGroupRoles(
 			actionRequest);
 		long[] userGroupIds = getLongArray(
-			actionRequest, "userGroupsSearchContainerPrimaryKeys");
+			actionRequest, "usergroupSearchContainerPrimaryKeys");
 		List<Address> addresses = UsersAdminUtil.getAddresses(actionRequest);
 		List<EmailAddress> emailAddresses = UsersAdminUtil.getEmailAddresses(
 			actionRequest);
@@ -617,9 +617,9 @@ public class EditUserAction extends PortletAction {
 		String jobTitle = BeanParamUtil.getString(
 			user, actionRequest, "jobTitle");
 		long[] groupIds = getLongArray(
-			actionRequest, "groupsSearchContainerPrimaryKeys");
+			actionRequest, "groupSearchContainerPrimaryKeys");
 		long[] organizationIds = getLongArray(
-			actionRequest, "organizationsSearchContainerPrimaryKeys");
+			actionRequest, "organizationSearchContainerPrimaryKeys");
 		long[] roleIds = getLongArray(
 			actionRequest, "rolesSearchContainerPrimaryKeys");
 
@@ -632,7 +632,7 @@ public class EditUserAction extends PortletAction {
 		}
 
 		long[] userGroupIds = getLongArray(
-			actionRequest, "userGroupsSearchContainerPrimaryKeys");
+			actionRequest, "usergroupSearchContainerPrimaryKeys");
 		List<Address> addresses = UsersAdminUtil.getAddresses(
 			actionRequest, user.getAddresses());
 		List<EmailAddress> emailAddresses = UsersAdminUtil.getEmailAddresses(

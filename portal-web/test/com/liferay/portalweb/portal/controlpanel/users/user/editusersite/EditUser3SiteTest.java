@@ -171,7 +171,7 @@ public class EditUser3SiteTest extends BaseTestCase {
 					try {
 						if (RuntimeVariables.replace("Site Name")
 												.equals(selenium.getText(
-										"//table[@data-searchcontainerid='_125_groupsSearchContainer']/tr/td"))) {
+										"//table[@data-searchcontainerid='_125_groupSearchContainer']/tr/td"))) {
 							break;
 						}
 					}
@@ -183,7 +183,7 @@ public class EditUser3SiteTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Site Name"),
 					selenium.getText(
-						"//table[@data-searchcontainerid='_125_groupsSearchContainer']/tr/td"));
+						"//table[@data-searchcontainerid='_125_groupSearchContainer']/tr/td"));
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
@@ -193,7 +193,7 @@ public class EditUser3SiteTest extends BaseTestCase {
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				assertEquals(RuntimeVariables.replace("Site Name"),
 					selenium.getText(
-						"//table[@data-searchcontainerid='_125_groupsSearchContainer']/tbody/tr/td[contains(.,'Site Name')]"));
+						"//table[@data-searchcontainerid='_125_groupSearchContainer']/tbody/tr/td[contains(.,'Site Name')]"));
 
 			case 100:
 				label = -1;

@@ -128,7 +128,7 @@ if (row == null) {
 		<portlet:renderURL var="addUserURL">
 			<portlet:param name="struts_action" value="/users_admin/edit_user" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
-			<portlet:param name="organizationsSearchContainerPrimaryKeys" value="<%= String.valueOf(organizationId) %>" />
+			<portlet:param name="organizationSearchContainerPrimaryKeys" value="<%= String.valueOf(organizationId) %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon

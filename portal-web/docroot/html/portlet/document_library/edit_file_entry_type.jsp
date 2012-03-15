@@ -95,7 +95,7 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="additionalMetadataFields" persistState="<%= true %>" title="additional-metadata-fields">
 			<liferay-ui:search-container
 				headerNames='<%= (fileEntryType == null) ? "name,null" : "name" %>'
-				id="ddmStructuresSearchContainer"
+				id="ddmStructureSearchContainer"
 			>
 				<liferay-ui:search-container-results
 					results="<%= ddmStructures %>"
@@ -176,7 +176,7 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 		function(ddmStructureId, ddmStructureName, dialog) {
 			var A = AUI();
 
-			var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />ddmStructuresSearchContainer');
+			var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />ddmStructureSearchContainer');
 
 			var ddmStructureLink = '<a class="modify-link" data-rowId="' + ddmStructureId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeStructureIcon) %></a>';
 
@@ -193,7 +193,7 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 </aui:script>
 
 <aui:script use="liferay-search-container">
-	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />ddmStructuresSearchContainer');
+	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />ddmStructureSearchContainer');
 
 	searchContainer.get('contentBox').delegate(
 		'click',

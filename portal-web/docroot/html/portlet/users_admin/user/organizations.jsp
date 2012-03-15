@@ -34,7 +34,7 @@ List<Organization> organizations = (List<Organization>)request.getAttribute("use
 
 <liferay-ui:search-container
 	headerNames="name,type,roles,null"
-	id="organizationsSearchContainer"
+	id="organizationSearchContainer"
 >
 	<liferay-ui:search-container-results
 		results="<%= organizations %>"
@@ -119,7 +119,7 @@ List<Organization> organizations = (List<Organization>)request.getAttribute("use
 		function(organizationId, groupId, name, type) {
 			var A = AUI();
 
-			var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />organizationsSearchContainer');
+			var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />organizationSearchContainer');
 
 			var rowColumns = [];
 
@@ -136,7 +136,7 @@ List<Organization> organizations = (List<Organization>)request.getAttribute("use
 </aui:script>
 
 <aui:script use="liferay-search-container">
-	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />organizationsSearchContainer');
+	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />organizationSearchContainer');
 
 	searchContainer.get('contentBox').delegate(
 		'click',

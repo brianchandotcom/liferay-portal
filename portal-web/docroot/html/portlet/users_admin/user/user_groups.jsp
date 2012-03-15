@@ -32,7 +32,7 @@ List<UserGroup> userGroups = (List<UserGroup>)request.getAttribute("user.userGro
 
 <liferay-ui:search-container
 	headerNames="name,null"
-	id="userGroupsSearchContainer"
+	id="userGroupSearchContainer"
 >
 	<liferay-ui:search-container-results
 		results="<%= userGroups %>"
@@ -85,7 +85,7 @@ List<UserGroup> userGroups = (List<UserGroup>)request.getAttribute("user.userGro
 		function(userGroupId, name) {
 			var A = AUI();
 
-			var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />userGroupsSearchContainer');
+			var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />userGroupSearchContainer');
 
 			var rowColumns = [];
 
@@ -100,7 +100,7 @@ List<UserGroup> userGroups = (List<UserGroup>)request.getAttribute("user.userGro
 </aui:script>
 
 <aui:script use="liferay-search-container">
-	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />userGroupsSearchContainer');
+	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />userGroupSearchContainer');
 
 	searchContainer.get('contentBox').delegate(
 		'click',

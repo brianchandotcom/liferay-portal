@@ -39,7 +39,7 @@ else {
 	passwordPolicy = selUser.getPasswordPolicy();
 }
 
-String groupIds = ParamUtil.getString(request, "groupsSearchContainerPrimaryKeys");
+String groupIds = ParamUtil.getString(request, "groupSearchContainerPrimaryKeys");
 
 List<Group> groups = Collections.emptyList();
 
@@ -56,7 +56,7 @@ else if (selUser != null) {
 	}
 }
 
-String organizationIds = ParamUtil.getString(request, "organizationsSearchContainerPrimaryKeys");
+String organizationIds = ParamUtil.getString(request, "organizationSearchContainerPrimaryKeys");
 
 List<Organization> organizations = Collections.emptyList();
 
@@ -116,7 +116,7 @@ for (UserGroupRole userGroupRole : userGroupRoles) {
 	}
 }
 
-String userGroupIds = ParamUtil.getString(request, "userGroupsSearchContainerPrimaryKeys");
+String userGroupIds = ParamUtil.getString(request, "usergroupSearchContainerPrimaryKeys");
 
 List<UserGroup> userGroups = Collections.emptyList();
 

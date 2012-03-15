@@ -126,7 +126,11 @@ public class PortletSessionImpl implements LiferayPortletSession {
 
 			Object value = _session.getAttribute(name);
 
-			map.put(name.substring(portletScopeLength + 1), value);
+			if (scope == PortletSession.PORTLET_SCOPE) {
+				name = name.substring(portletScopeLength + 1);
+			}
+
+			map.put(name, value);
 		}
 
 		return map;

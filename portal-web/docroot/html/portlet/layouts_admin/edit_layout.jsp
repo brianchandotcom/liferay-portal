@@ -242,7 +242,7 @@ String[][] categorySections = {mainSections};
 												{
 													cache: false,
 													dialog: {
-														width: 700
+														width: 900
 													},
 													id: '<portlet:namespace /><%= selLayout.getFriendlyURL().substring(1) %>_permissions',
 													title: '<%= UnicodeLanguageUtil.get(pageContext, "permissions") %>',

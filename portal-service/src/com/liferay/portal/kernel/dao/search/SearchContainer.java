@@ -151,6 +151,10 @@ public class SearchContainer<R> {
 		_emptyResultsMessage = emptyResultsMessage;
 	}
 
+	public String getClassName() {
+		return _className;
+	}
+
 	public int getCur() {
 		return _cur;
 	}
@@ -273,6 +277,10 @@ public class SearchContainer<R> {
 		return _hover;
 	}
 
+	public void setClassName(String className) {
+		_className = className;
+	}
+
 	public void setDelta(int delta) {
 		if (delta <= 0) {
 			_delta = DEFAULT_DELTA;
@@ -383,6 +391,7 @@ public class SearchContainer<R> {
 		}
 	}
 
+	private String _className;
 	private int _cur;
 	private String _curParam = DEFAULT_CUR_PARAM;
 	private int _delta = DEFAULT_DELTA;

@@ -77,6 +77,7 @@ public class SearchContainerRowTag<R>
 			SearchContainer<R> searchContainer =
 				searchContainerTag.getSearchContainer();
 
+			searchContainer.setClassName(_className);
 			searchContainer.setHeaderNames(_headerNames);
 			searchContainer.setOrderableHeaders(_orderableHeaders);
 

@@ -25,7 +25,16 @@ String type = (String)request.getAttribute("liferay-ui:search:type");
 String id = searchContainer.getId();
 
 if (Validator.isNull(id)) {
-	id = PortalUtil.generateRandomKey(request, "taglib_search_container");
+	id = searchContainer.getClassName();
+
+	if (Validator.isNotNull(id)) {
+		id = TextFormatter.format(StringUtil.extractLast(id, StringPool.PERIOD), TextFormatter.F);
+	}
+	else {
+		id = PortalUtil.generateRandomKey(request, "taglib_search_container");
+	}
+
+	id = id.concat("SearchContainer");
 }
 
 int start = searchContainer.getStart();

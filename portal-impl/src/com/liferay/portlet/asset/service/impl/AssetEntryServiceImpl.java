@@ -251,7 +251,9 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 				catch (Exception e) {
 				}
 
-				if (end != QueryUtil.ALL_POS && filteredEntries.size() > end) {
+				if ((end != QueryUtil.ALL_POS) &&
+					(filteredEntries.size() > end)) {
+
 					break;
 				}
 			}

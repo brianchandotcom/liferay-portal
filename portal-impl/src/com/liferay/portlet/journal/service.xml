@@ -149,6 +149,11 @@
 			<finder-column name="articleId" />
 			<finder-column name="status" arrayable-operator="OR" />
 		</finder>
+		<finder name="G_F_ST" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="folderId" />
+			<finder-column name="status" arrayable-operator="OR" />
+		</finder>
 		<finder name="G_UT_ST" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="urlTitle" />
@@ -551,6 +556,7 @@
 		<exception>DuplicateArticleId</exception>
 		<exception>DuplicateArticleImageId</exception>
 		<exception>DuplicateFeedId</exception>
+		<exception>DuplicateFolderName</exception>
 		<exception>DuplicateStructureElement</exception>
 		<exception>DuplicateStructureId</exception>
 		<exception>DuplicateTemplateId</exception>

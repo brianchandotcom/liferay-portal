@@ -258,6 +258,15 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			groupId, articleId, start, end, obc);
 	}
 
+	public List<JournalArticle> getArticlesByFolderId(
+			long groupId, long folderId, int start, int end,
+			OrderByComparator obc)
+		throws SystemException {
+
+		return journalArticlePersistence.filterFindByG_F(
+			groupId, folderId, start, end, obc);
+	}
+
 	public List<JournalArticle> getArticlesByLayoutUuid(
 			long groupId, String layoutUuid)
 		throws SystemException {
@@ -269,6 +278,12 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		throws SystemException {
 
 		return journalArticlePersistence.filterCountByG_A(groupId, articleId);
+	}
+
+	public int getArticlesCountByFolderId(long groupId, long folderId)
+		throws SystemException {
+
+		return journalArticlePersistence.filterCountByG_F(groupId, folderId);
 	}
 
 	public JournalArticle getDisplayArticleByUrlTitle(

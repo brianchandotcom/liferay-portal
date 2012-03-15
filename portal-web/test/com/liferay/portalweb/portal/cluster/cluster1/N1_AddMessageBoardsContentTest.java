@@ -119,7 +119,5 @@ public class N1_AddMessageBoardsContentTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertTrue(selenium.isElementPresent("link=Test Category 1"));
-		assertEquals(RuntimeVariables.replace("Node: [$CLUSTER_NODE_1$]"),
-			selenium.getText("//div[@id='content']/div[3]"));
 	}
 }

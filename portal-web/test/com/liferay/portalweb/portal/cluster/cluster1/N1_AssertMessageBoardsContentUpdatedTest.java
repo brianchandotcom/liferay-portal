@@ -50,7 +50,5 @@ public class N1_AssertMessageBoardsContentUpdatedTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent("link=Test Category 2"));
-		assertEquals(RuntimeVariables.replace("Node: [$CLUSTER_NODE_1$]"),
-			selenium.getText("//div[@id='content']/div[3]"));
 	}
 }

@@ -48,6 +48,23 @@ public class AddMBCategoryNodeTwoTest extends BaseTestCase {
 			RuntimeVariables.replace("Add Category"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//input[@id='_19_name']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.type("//input[@id='_19_name']",
 			RuntimeVariables.replace("MB Category Name Node-2"));
 		selenium.type("//textarea[@id='_19_description']",

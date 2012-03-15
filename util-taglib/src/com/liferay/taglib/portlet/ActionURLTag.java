@@ -30,6 +30,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.taglib.util.ParamAndPropertyAncestorTagImpl;
 
 import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
@@ -52,7 +53,8 @@ public class ActionURLTag extends ParamAndPropertyAncestorTagImpl {
 			String resourceID, String cacheability, long plid, long refererPlid,
 			String portletName, Boolean anchor, Boolean encrypt,
 			long doAsGroupId, long doAsUserId, Boolean portletConfiguration,
-			Map<String, String[]> params, PageContext pageContext)
+			Map<String, String[]> params, Set<String> removedParamNames,
+			PageContext pageContext)
 		throws Exception {
 
 		HttpServletRequest request =
@@ -156,6 +158,8 @@ public class ActionURLTag extends ParamAndPropertyAncestorTagImpl {
 			liferayPortletURL.setParameters(params);
 		}
 
+		liferayPortletURL.setRemovedParamNames(removedParamNames);
+
 		String portletURLToString = liferayPortletURL.toString();
 
 		if (Validator.isNotNull(var)) {
@@ -179,7 +183,8 @@ public class ActionURLTag extends ParamAndPropertyAncestorTagImpl {
 				_secure, _copyCurrentRenderParameters, _escapeXml, _name,
 				_resourceID, _cacheability, _plid, _refererPlid, _portletName,
 				_anchor, _encrypt, _doAsGroupId, _doAsUserId,
-				_portletConfiguration, getParams(), pageContext);
+				_portletConfiguration, getParams(), getRemovedParamNames(),
+				pageContext);
 
 			return EVAL_PAGE;
 		}

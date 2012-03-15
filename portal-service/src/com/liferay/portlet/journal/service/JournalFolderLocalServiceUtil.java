@@ -281,14 +281,14 @@ public class JournalFolderLocalServiceUtil {
 	}
 
 	public static com.liferay.portlet.journal.model.JournalFolder addFolder(
-		long userId, long parentFolderId, java.lang.String name,
+		long userId, long groupId, long parentFolderId, java.lang.String name,
 		java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .addFolder(userId, parentFolderId, name, description,
-			serviceContext);
+				   .addFolder(userId, groupId, parentFolderId, name,
+			description, serviceContext);
 	}
 
 	public static void deleteFolder(

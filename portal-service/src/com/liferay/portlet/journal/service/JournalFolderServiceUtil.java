@@ -38,13 +38,14 @@ public class JournalFolderServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.journal.service.impl.JournalFolderServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.portlet.journal.model.JournalFolder addFolder(
-		long parentFolderId, java.lang.String name,
+		long groupId, long parentFolderId, java.lang.String name,
 		java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .addFolder(parentFolderId, name, description, serviceContext);
+				   .addFolder(groupId, parentFolderId, name, description,
+			serviceContext);
 	}
 
 	public static void deleteFolder(long folderId)

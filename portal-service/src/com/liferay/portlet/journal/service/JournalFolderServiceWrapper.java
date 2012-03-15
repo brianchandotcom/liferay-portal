@@ -33,12 +33,12 @@ public class JournalFolderServiceWrapper implements JournalFolderService,
 	}
 
 	public com.liferay.portlet.journal.model.JournalFolder addFolder(
-		long parentFolderId, java.lang.String name,
+		long groupId, long parentFolderId, java.lang.String name,
 		java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _journalFolderService.addFolder(parentFolderId, name,
+		return _journalFolderService.addFolder(groupId, parentFolderId, name,
 			description, serviceContext);
 	}
 

@@ -67,13 +67,13 @@ import java.rmi.RemoteException;
  */
 public class JournalFolderServiceSoap {
 	public static com.liferay.portlet.journal.model.JournalFolderSoap addFolder(
-		long parentFolderId, java.lang.String name,
+		long groupId, long parentFolderId, java.lang.String name,
 		java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			com.liferay.portlet.journal.model.JournalFolder returnValue = JournalFolderServiceUtil.addFolder(parentFolderId,
-					name, description, serviceContext);
+			com.liferay.portlet.journal.model.JournalFolder returnValue = JournalFolderServiceUtil.addFolder(groupId,
+					parentFolderId, name, description, serviceContext);
 
 			return com.liferay.portlet.journal.model.JournalFolderSoap.toSoapModel(returnValue);
 		}

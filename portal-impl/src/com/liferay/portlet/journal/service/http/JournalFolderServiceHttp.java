@@ -55,7 +55,7 @@ import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
  */
 public class JournalFolderServiceHttp {
 	public static com.liferay.portlet.journal.model.JournalFolder addFolder(
-		HttpPrincipal httpPrincipal, long parentFolderId,
+		HttpPrincipal httpPrincipal, long groupId, long parentFolderId,
 		java.lang.String name, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -64,7 +64,7 @@ public class JournalFolderServiceHttp {
 			MethodKey methodKey = new MethodKey(JournalFolderServiceUtil.class.getName(),
 					"addFolder", _addFolderParameterTypes0);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					parentFolderId, name, description, serviceContext);
 
 			Object returnObj = null;
@@ -359,7 +359,8 @@ public class JournalFolderServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(JournalFolderServiceHttp.class);
 	private static final Class<?>[] _addFolderParameterTypes0 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
+			long.class, long.class, java.lang.String.class,
+			java.lang.String.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteFolderParameterTypes1 = new Class[] {

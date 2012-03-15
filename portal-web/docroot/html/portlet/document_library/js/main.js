@@ -495,14 +495,17 @@ AUI.add(
 					_editFileEntry: function(event) {
 						var instance = this;
 
+						var config = instance._config;
+
 						var action = event.action;
 
-						if (action == instance._config.actions.MOVE) {
-							instance._processFileEntryAction(action, instance._config.moveEntryRenderUrl);
+						var url = config.editEntryUrl;
+
+						if (action == config.actions.MOVE) {
+							url = config.moveEntryRenderUrl;
 						}
-						else {
-							instance._processFileEntryAction(action, instance._config.editEntryUrl);
-						}
+
+						instance._processFileEntryAction(action, url);
 					},
 
 					_getDefaultHistoryState: function() {
@@ -700,13 +703,13 @@ AUI.add(
 					_moveEntries: function(folderId) {
 						var instance = this;
 
-						var form = instance._config.form.instance;
+						var config = instance._config;
 
-						form[instance.ns('newFolderId')].value = folderId;
+						var form = config.form.node;
 
-						var move = instance._config.moveConstant;
+						form.get(instance.ns('newFolderId')).val(folderId);
 
-						instance._processFileEntryAction(move, instance._config.moveEntryRenderUrl);
+						instance._processFileEntryAction(config.moveConstant, config.moveEntryRenderUrl);
 					},
 
 					_onDataRetrieveSuccess: function(event) {
@@ -1114,12 +1117,7 @@ AUI.add(
 
 						var config = instance._config;
 
-						var form = config.form.instance;
-
-						var allRowIds = config.allRowIds;
-						var rowIds = config.rowIds;
-
-						var allRowsIdCheckbox = instance.ns(allRowIds + 'Checkbox');
+						var form = config.form.node;
 
 						var redirectUrl = location.href;
 
@@ -1127,12 +1125,23 @@ AUI.add(
 							redirectUrl = instance._updateFolderIdRedirectUrl(redirectUrl);
 						}
 
-						form.method = config.form.method;
-						form[instance.ns('cmd')].value = action;
-						form[instance.ns('redirect')].value = redirectUrl;
-						form[instance.ns('folderIds')].value = Liferay.Util.listCheckedExcept(form, allRowsIdCheckbox, instance.ns(rowIds + 'FolderCheckbox'));
-						form[instance.ns('fileEntryIds')].value = Liferay.Util.listCheckedExcept(form, allRowsIdCheckbox, instance.ns(rowIds + 'FileEntryCheckbox'));
-						form[instance.ns('fileShortcutIds')].value = Liferay.Util.listCheckedExcept(form, allRowsIdCheckbox, instance.ns(rowIds + 'DLFileShortcutCheckbox'));
+						form.attr('method', config.form.method);
+
+						form.get(instance.ns('cmd')).val(action);
+						form.get(instance.ns('redirect')).val(redirectUrl);
+
+						var allRowIds = config.allRowIds;
+						var rowIds = config.rowIds;
+
+						var allRowsIdCheckbox = instance.ns(allRowIds + 'Checkbox');
+
+						var folderIds = Liferay.Util.listCheckedExcept(form, allRowsIdCheckbox, instance.ns(rowIds + 'FolderCheckbox'));
+						var fileEntryIds = Liferay.Util.listCheckedExcept(form, allRowsIdCheckbox, instance.ns(rowIds + 'FileEntryCheckbox'));
+						var fileShortcutIds = Liferay.Util.listCheckedExcept(form, allRowsIdCheckbox, instance.ns(rowIds + 'DLFileShortcutCheckbox'));
+
+						form.get(instance.ns('folderIds')).val(folderIds);
+						form.get(instance.ns('fileEntryIds')).val(fileEntryIds);
+						form.get(instance.ns('fileShortcutIds')).val(fileShortcutIds);
 
 						submitForm(form, url);
 					},

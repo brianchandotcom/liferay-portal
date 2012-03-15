@@ -192,8 +192,8 @@ if (folder != null) {
 			folderStart: <%= folderStart %>,
 			foldersTotal: <%= foldersTotal %>,
 			form: {
-				instance: document.<portlet:namespace />fm2,
 				method: 'post',
+				node: A.one(document.<portlet:namespace />fm2)
 			},
 			mainUrl: '<%= mainURL %>',
 			moveEntryRenderUrl: '<portlet:renderURL><portlet:param name="struts_action" value="/document_library/move_entry" /></portlet:renderURL>',

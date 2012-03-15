@@ -156,6 +156,7 @@ AUI.add(
 						instance._dataRetrieveFailure = instance.ns('dataRetrieveFailure');
 						instance._eventDataRequest = instance.ns('dataRequest');
 						instance._eventDataRetrieveSuccess = instance.ns('dataRetrieveSuccess');
+						instance._eventEditFileEntry = instance.ns('editFileEntry');
 						instance._eventOpenDocument = instance.ns('openDocument');
 						instance._eventPageLoaded = instance.ns('pageLoaded');
 
@@ -231,6 +232,7 @@ AUI.add(
 							Liferay.on(instance._dataRetrieveFailure, instance._onDataRetrieveFailure, instance),
 							Liferay.on(instance._eventDataRequest, instance._onDataRequest, instance),
 							Liferay.on(instance._eventDataRetrieveSuccess, instance._onDataRetrieveSuccess, instance),
+							Liferay.on(instance._eventEditFileEntry, instance._editFileEntry, instance),
 							Liferay.on(instance._eventOpenDocument, instance._openDocument, instance),
 							Liferay.on(instance._eventPageLoaded, instance._onPageLoaded, instance)
 						];
@@ -490,6 +492,22 @@ AUI.add(
 						);
 					},
 
+					_editFileEntry: function(event) {
+						var instance = this;
+
+						var config = instance._config;
+
+						var action = event.action;
+
+						var url = config.editEntryUrl;
+
+						if (action == config.actions.MOVE) {
+							url = config.moveEntryRenderUrl;
+						}
+
+						instance._processFileEntryAction(action, url);
+					},
+
 					_getDefaultHistoryState: function() {
 						var instance = this;
 
@@ -682,6 +700,18 @@ AUI.add(
 						);
 					},
 
+					_moveEntries: function(folderId) {
+						var instance = this;
+
+						var config = instance._config;
+
+						var form = config.form.node;
+
+						form.get(instance.ns('newFolderId')).val(folderId);
+
+						instance._processFileEntryAction(config.moveConstant, config.moveEntryRenderUrl);
+					},
+
 					_onDataRetrieveSuccess: function(event) {
 						var instance = this;
 
@@ -826,7 +856,7 @@ AUI.add(
 						var selectedItems = instance._ddHandler.dd.get(STR_DATA).selectedItems;
 
 						if (selectedItems.indexOf(folderContainer) == -1) {
-							WIN[instance.ns('moveEntries')](folderId);
+							instance._moveEntries(folderId);
 						}
 					},
 
@@ -1080,6 +1110,40 @@ AUI.add(
 								}
 							}
 						);
+					},
+
+					_processFileEntryAction: function(action, url) {
+						var instance = this;
+
+						var config = instance._config;
+
+						var form = config.form.node;
+
+						var redirectUrl = location.href;
+
+						if (action === config.actions.DELETE && !History.HTML5 && location.hash) {
+							redirectUrl = instance._updateFolderIdRedirectUrl(redirectUrl);
+						}
+
+						form.attr('method', config.form.method);
+
+						form.get(instance.ns('cmd')).val(action);
+						form.get(instance.ns('redirect')).val(redirectUrl);
+
+						var allRowIds = config.allRowIds;
+						var rowIds = config.rowIds;
+
+						var allRowsIdCheckbox = instance.ns(allRowIds + 'Checkbox');
+
+						var folderIds = Liferay.Util.listCheckedExcept(form, allRowsIdCheckbox, instance.ns(rowIds + 'FolderCheckbox'));
+						var fileEntryIds = Liferay.Util.listCheckedExcept(form, allRowsIdCheckbox, instance.ns(rowIds + 'FileEntryCheckbox'));
+						var fileShortcutIds = Liferay.Util.listCheckedExcept(form, allRowsIdCheckbox, instance.ns(rowIds + 'DLFileShortcutCheckbox'));
+
+						form.get(instance.ns('folderIds')).val(folderIds);
+						form.get(instance.ns('fileEntryIds')).val(fileEntryIds);
+						form.get(instance.ns('fileShortcutIds')).val(fileShortcutIds);
+
+						submitForm(form, url);
 					},
 
 					_restoreState: function() {
@@ -1453,6 +1517,27 @@ AUI.add(
 						instance._selectAllCheckbox.attr(CSS_SELECTED, false);
 
 						instance._toggleEntriesSelection();
+					},
+
+					_updateFolderIdRedirectUrl: function(redirectUrl) {
+						var instance = this;
+
+						var config = instance._config;
+
+						var currentFolderMatch = config.folderIdHashRegEx.exec(redirectUrl);
+
+						if (currentFolderMatch) {
+							var currentFolderId = currentFolderMatch[1];
+
+							redirectUrl = redirectUrl.replace(
+								config.folderIdRegEx,
+								function(match, folderId) {
+									return match.replace(folderId, currentFolderId);
+								}
+							);
+						}
+
+						return redirectUrl;
 					},
 
 					_updateSelectedEntriesStatus: function() {

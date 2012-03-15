@@ -16,17 +16,6 @@
 
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
-<%
-Folder folder = (Folder)request.getAttribute("view.jsp-folder");
-
-long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
-
-long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
-
-String orderByCol = ParamUtil.getString(request, "orderByCol");
-String orderByType = ParamUtil.getString(request, "orderByType");
-%>
-
 <c:if test="<%= !user.isDefaultUser() %>">
 	<aui:input cssClass="select-documents aui-state-default" inline="<%= true %>" label="" name='<%= RowChecker.ALL_ROW_IDS %>' type="checkbox" />
 </c:if>
@@ -40,48 +29,52 @@ String orderByType = ParamUtil.getString(request, "orderByType");
 	<c:if test="<%= !scopeGroup.isStaged() || scopeGroup.isStagingGroup() || !scopeGroup.isStagedPortlet(PortletKeys.DOCUMENT_LIBRARY) %>">
 
 		<%
-		String taglibUrl = "javascript:" + renderResponse.getNamespace() + "editFileEntry('" + Constants.CANCEL_CHECKOUT + "')";
+		String taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editFileEntry', {action: '" + Constants.CANCEL_CHECKOUT + "'});";
 		%>
 
 		<liferay-ui:icon
 			image="undo"
 			message="cancel-checkout[document]"
-			url="<%= taglibUrl %>"
+			onClick="<%= taglibOnClick %>"
+			url="javascript:;"
 		/>
 
 		<%
-		taglibUrl = "javascript:" + renderResponse.getNamespace() + "editFileEntry('" + Constants.CHECKIN + "')";
+		taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editFileEntry', {action: '" + Constants.CHECKIN + "'});";
 		%>
 
 		<liferay-ui:icon
 			image="unlock"
 			message="checkin"
-			url="<%= taglibUrl %>"
+			onClick="<%= taglibOnClick %>"
+			url="javascript:;"
 		/>
 
 		<%
-		taglibUrl = "javascript:" + renderResponse.getNamespace() + "editFileEntry('" + Constants.CHECKOUT + "')";
+		taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editFileEntry', {action: '" + Constants.CHECKOUT + "'});";
 		%>
 
 		<liferay-ui:icon
 			image="lock"
 			message="checkout[document]"
-			url="<%= taglibUrl %>"
+			onClick="<%= taglibOnClick %>"
+			url="javascript:;"
 		/>
 
 		<%
-		taglibUrl = "javascript:" + renderResponse.getNamespace() + "editFileEntry('" + Constants.MOVE + "')";
+		taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editFileEntry', {action: '" + Constants.MOVE + "'});";
 		%>
 
 		<liferay-ui:icon
 			image="submit"
 			message="move"
-			url="<%= taglibUrl %>"
+			onClick="<%= taglibOnClick %>"
+			url="javascript:;"
 		/>
 	</c:if>
 
 	<%
-	String taglibUrl = "javascript:" + renderResponse.getNamespace() + "editFileEntry('" + Constants.DELETE + "')";
+	String taglibUrl = "Liferay.fire('" + renderResponse.getNamespace() + "editFileEntry', {action: '" + Constants.DELETE + "'});";
 	%>
 
 	<liferay-ui:icon-delete

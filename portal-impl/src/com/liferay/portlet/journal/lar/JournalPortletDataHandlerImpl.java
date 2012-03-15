@@ -79,6 +79,7 @@ import com.liferay.portlet.journal.service.persistence.JournalFeedUtil;
 import com.liferay.portlet.journal.service.persistence.JournalFolderUtil;
 import com.liferay.portlet.journal.service.persistence.JournalStructureUtil;
 import com.liferay.portlet.journal.service.persistence.JournalTemplateUtil;
+import com.liferay.portlet.journal.util.comparator.ArticleIDComparator;
 import com.liferay.portlet.journal.util.comparator.StructurePKComparator;
 
 import java.io.File;
@@ -1585,7 +1586,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		portletDataContext.addClassedModel(feedElement, path, feed, _NAMESPACE);
 	}
 
-	protected void exportFolder(
+	protected static void exportFolder(
 			PortletDataContext portletDataContext, Element foldersElement,
 			Element articlesElement, Element structuresElement,
 			Element templatesElement, Element dlFileEntryTypesElement,
@@ -1612,39 +1613,16 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			folder.getGroupId(), folder.getFolderId());
 
 		for (JournalArticle article : articles) {
-			exportFolder(portletDataContext, foldersElement,
-				articlesElement, structuresElement, templatesElement,
-				dlFileEntryTypesElement, dlFoldersElement, dlFileEntriesElement,
-				dlFileRanksElement, folder, true);
+			exportFolder(
+				portletDataContext, foldersElement, articlesElement,
+				structuresElement, templatesElement, dlFileEntryTypesElement,
+				dlFoldersElement, dlFileEntriesElement, dlFileRanksElement,
+				folder, true);
 
 			exportArticle(
 				portletDataContext, articlesElement, structuresElement,
 				templatesElement, dlFileEntryTypesElement, dlFoldersElement,
 				dlFileEntriesElement, dlFileRanksElement, article, true);
-		}
-	}
-
-	protected void exportParentFolder(
-			PortletDataContext portletDataContext, Element foldersElement,
-			long folderId)
-		throws Exception {
-
-		if (folderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			return;
-		}
-
-		JournalFolder folder = JournalFolderUtil.findByPrimaryKey(folderId);
-
-		exportParentFolder(
-			portletDataContext, foldersElement, folder.getParentFolderId());
-
-		String path = getFolderPath(portletDataContext, folder);
-
-		if (portletDataContext.isPathNotProcessed(path)) {
-			Element folderElement = foldersElement.addElement("folder");
-
-			portletDataContext.addClassedModel(
-				folderElement, path, folder, _NAMESPACE);
 		}
 	}
 
@@ -1830,6 +1808,30 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			ArrayUtil.toStringArray(newLinksToLayout.toArray()));
 
 		return content;
+	}
+
+	protected static void exportParentFolder(
+		PortletDataContext portletDataContext, Element foldersElement,
+		long folderId)
+		throws Exception {
+
+		if (folderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			return;
+		}
+
+		JournalFolder folder = JournalFolderUtil.findByPrimaryKey(folderId);
+
+		exportParentFolder(
+			portletDataContext, foldersElement, folder.getParentFolderId());
+
+		String path = getFolderPath(portletDataContext, folder);
+
+		if (portletDataContext.isPathNotProcessed(path)) {
+			Element folderElement = foldersElement.addElement("folder");
+
+			portletDataContext.addClassedModel(
+				folderElement, path, folder, _NAMESPACE);
+		}
 	}
 
 	protected static void exportStructure(
@@ -2139,15 +2141,17 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		JournalFolder importedFolder = null;
 
+		long groupId = portletDataContext.getScopeGroupId();
+
 		if (portletDataContext.isDataStrategyMirror()) {
 			JournalFolder existingFolder = JournalFolderUtil.fetchByUUID_G(
-				folder.getUuid(), portletDataContext.getScopeGroupId());
+				folder.getUuid(), groupId);
 
 			if (existingFolder == null) {
 				serviceContext.setUuid(folder.getUuid());
 
 				importedFolder = JournalFolderLocalServiceUtil.addFolder(
-					userId, parentFolderId, folder.getName(),
+					userId, groupId, parentFolderId, folder.getName(),
 					folder.getDescription(), serviceContext);
 			}
 			else {
@@ -2159,7 +2163,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		}
 		else {
 			importedFolder = JournalFolderLocalServiceUtil.addFolder(
-				userId, parentFolderId, folder.getName(),
+				userId, groupId, parentFolderId, folder.getName(),
 				folder.getDescription(), serviceContext);
 		}
 
@@ -2349,20 +2353,22 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		Element articlesElement = rootElement.addElement("articles");
 
 		if (portletDataContext.getBooleanParameter(_NAMESPACE, "web-content")) {
-
 			List<JournalFolder> folders = JournalFolderUtil.findByGroupId(
 				portletDataContext.getScopeGroupId());
 
 			for (JournalFolder folder : folders) {
-				exportFolder(portletDataContext, foldersElement,
-					articlesElement, structuresElement, templatesElement,
+				exportFolder(
+					portletDataContext, foldersElement, articlesElement,
+					structuresElement, templatesElement,
 					dlFileEntryTypesElement, dlFoldersElement, dlFilesElement,
 					dlFileRanksElement, folder, true);
 			}
 
 			List<JournalArticle> articles = JournalArticleUtil.findByG_F(
 				portletDataContext.getScopeGroupId(),
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new ArticleIDComparator(true));
 
 			for (JournalArticle article : articles) {
 				exportArticle(

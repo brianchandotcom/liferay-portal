@@ -42,7 +42,7 @@ public class JournalFolderServiceImpl
 	extends JournalFolderServiceBaseImpl {
 
 	public JournalFolder addFolder(
-			long parentFolderId, String name, String description,
+			long groupId, long parentFolderId, String name, String description,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -51,7 +51,8 @@ public class JournalFolderServiceImpl
 			parentFolderId, ActionKeys.ADD_FOLDER);
 
 		return journalFolderLocalService.addFolder(
-			getUserId(), parentFolderId, name, description, serviceContext);
+			getUserId(), groupId, parentFolderId, name, description,
+			serviceContext);
 	}
 
 	public void deleteFolder(long folderId)

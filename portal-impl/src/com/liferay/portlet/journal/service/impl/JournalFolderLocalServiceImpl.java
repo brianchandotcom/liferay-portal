@@ -50,14 +50,13 @@ public class JournalFolderLocalServiceImpl
 	extends JournalFolderLocalServiceBaseImpl {
 
 	public JournalFolder addFolder(
-			long userId, long parentFolderId, String name, String description,
-			ServiceContext serviceContext)
+			long userId, long groupId, long parentFolderId, String name,
+			String description, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// Folder
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		long groupId = serviceContext.getScopeGroupId();
 		parentFolderId = getParentFolderId(groupId, parentFolderId);
 		Date now = new Date();
 
@@ -93,9 +92,8 @@ public class JournalFolderLocalServiceImpl
 
 		// Folders
 
-		List<JournalFolder> folders =
-			journalFolderPersistence.findByG_P(
-				folder.getGroupId(), folder.getFolderId());
+		List<JournalFolder> folders = journalFolderPersistence.findByG_P(
+			folder.getGroupId(), folder.getFolderId());
 
 		for (JournalFolder curFolder : folders) {
 			deleteFolder(curFolder);
@@ -133,9 +131,8 @@ public class JournalFolderLocalServiceImpl
 	public void deleteFolders(long groupId)
 		throws PortalException, SystemException {
 
-		List<JournalFolder> folders =
-			journalFolderPersistence.findByG_P(
-				groupId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+		List<JournalFolder> folders = journalFolderPersistence.findByG_P(
+			groupId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		for (JournalFolder folder : folders) {
 			deleteFolder(folder);
@@ -236,9 +233,7 @@ public class JournalFolderLocalServiceImpl
 	protected long getParentFolderId(JournalFolder folder, long parentFolderId)
 		throws SystemException {
 
-		if (parentFolderId ==
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-
+		if (parentFolderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			return parentFolderId;
 		}
 
@@ -271,9 +266,7 @@ public class JournalFolderLocalServiceImpl
 	protected long getParentFolderId(long groupId, long parentFolderId)
 		throws SystemException {
 
-		if (parentFolderId !=
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-
+		if (parentFolderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			JournalFolder parentFolder =
 				journalFolderPersistence.fetchByPrimaryKey(parentFolderId);
 
@@ -291,9 +284,8 @@ public class JournalFolderLocalServiceImpl
 	protected void mergeFolders(JournalFolder fromFolder, long toFolderId)
 		throws PortalException, SystemException {
 
-		List<JournalFolder> folders =
-			journalFolderPersistence.findByG_P(
-				fromFolder.getGroupId(), fromFolder.getFolderId());
+		List<JournalFolder> folders = journalFolderPersistence.findByG_P(
+			fromFolder.getGroupId(), fromFolder.getFolderId());
 
 		for (JournalFolder folder : folders) {
 			mergeFolders(folder, toFolderId);

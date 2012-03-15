@@ -51,7 +51,34 @@ public class AddEventSOTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_8_title']",
 			RuntimeVariables.replace("Calendar Event Title"));
-		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("Source"),
+			selenium.getText("//span[@id='cke_48_label' and .='Source']"));
+		selenium.clickAt("//span[@id='cke_48_label' and .='Source']",
+			RuntimeVariables.replace("Source"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//td[@id='cke_contents__8_editor']/textarea")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.type("//td[@id='cke_contents__8_editor']/textarea",
+			RuntimeVariables.replace("Calendar Event Description"));
+		assertEquals(RuntimeVariables.replace("Source"),
+			selenium.getText("//span[@id='cke_48_label' and .='Source']"));
+		selenium.clickAt("//span[@id='cke_48_label' and .='Source']",
+			RuntimeVariables.replace("Source"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -71,8 +98,24 @@ public class AddEventSOTest extends BaseTestCase {
 		}
 
 		selenium.selectFrame("//td[@id='cke_contents__8_editor']/iframe");
-		selenium.type("//body",
-			RuntimeVariables.replace("Calendar Event Description"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Calendar Event Description")
+										.equals(selenium.getText("//body"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

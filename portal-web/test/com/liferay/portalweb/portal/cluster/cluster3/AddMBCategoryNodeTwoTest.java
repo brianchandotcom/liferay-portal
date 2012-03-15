@@ -78,5 +78,7 @@ public class AddMBCategoryNodeTwoTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertTrue(selenium.isTextPresent("MB Category Name Node-2"));
 		assertTrue(selenium.isTextPresent("MB Category Description Node-2"));
+		assertEquals(RuntimeVariables.replace("Node: [$CLUSTER_NODE_2$]"),
+			selenium.getText("//div[@id='content']/div[3]"));
 	}
 }

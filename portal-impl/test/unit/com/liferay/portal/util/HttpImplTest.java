@@ -21,8 +21,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.mockito.stubbing.OngoingStubbing;
-
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -107,10 +105,8 @@ public class HttpImplTest extends PowerMockito {
 
 		mockStatic(PortalUtil.class);
 
-		OngoingStubbing<String[]> ongoingStubbing = when(
-			PortalUtil.stripURLAnchor(url, StringPool.POUND));
-
-		ongoingStubbing.thenReturn(new String[] {url, StringPool.BLANK});
+		when(PortalUtil.stripURLAnchor(url, StringPool.POUND))
+		.thenReturn(new String[] {url, StringPool.BLANK});
 
 		String newURL = _httpImpl.addParameter(
 			url, parameterName, parameterValue);

@@ -18,11 +18,28 @@ import com.liferay.portal.kernel.util.GetterUtil;
 
 import com.thoughtworks.selenium.Selenium;
 
+import java.util.Calendar;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
+
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverBackedSelenium;
 import org.openqa.selenium.WebElement;
 
 /**
@@ -213,7 +230,7 @@ public class WebDriverToSeleniumBridge
 		throw new UnsupportedOperationException();
 	}
 
-	public String getAttribute(String attributeLocator) {
+	public String getAttribute(String locator){
 		throw new UnsupportedOperationException();
 	}
 
@@ -309,11 +326,11 @@ public class WebDriverToSeleniumBridge
 		throw new UnsupportedOperationException();
 	}
 
-	public String getSelectedLabel(String selectLocator) {
+	public String getSelectedLabel(String locator) {
 		throw new UnsupportedOperationException();
 	}
 
-	public String[] getSelectedLabels(String selectLocator) {
+	public String [] getSelectedLabels(String param2) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -348,7 +365,7 @@ public class WebDriverToSeleniumBridge
 
 	public String getValue(String locator) {
 		throw new UnsupportedOperationException();
-	}
+	}	
 
 	public boolean getWhetherThisFrameMatchFrameExpression(
 		String currentFrameString, String target) {
@@ -414,7 +431,7 @@ public class WebDriverToSeleniumBridge
 		throw new UnsupportedOperationException();
 	}
 
-	public boolean isTextPresent(String pattern) {
+	public boolean isTextPresent(String locator) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -444,6 +461,9 @@ public class WebDriverToSeleniumBridge
 
 	public void keyUpNative(String keycode) {
 		throw new UnsupportedOperationException();
+	}
+
+	public void loadRequiredJavaScriptModules() {
 	}
 
 	public void metaKeyDown() {
@@ -705,4 +725,30 @@ public class WebDriverToSeleniumBridge
 		}
 	}
 
+	protected List<WebElement> getWebElements(String locator) {					
+		if (locator.startsWith("//")) {
+			return findElements(By.xpath(locator));
+		}
+		else if (locator.startsWith("xpath=")) {
+			return findElements(By.xpath(locator.substring(6)));
+		}
+		else if (locator.startsWith("link=")) {
+			return findElements(By.linkText(locator.substring(5)));
+		}
+		else if (locator.startsWith("name=")) {
+			return findElements(By.name(locator.substring(5)));
+		}
+		else if (locator.startsWith("class=")) {
+			return findElements(By.className(locator.substring(6)));
+		}
+		else if (locator.startsWith("tag=")) {
+			return findElements(By.tagName(locator.substring(4)));
+		}
+		else if (locator.startsWith("css=")) {
+			return findElements(By.cssSelector(locator.substring(4)));			
+		}
+		else {
+			return findElements(By.id(locator));
+		}
+	}	
 }

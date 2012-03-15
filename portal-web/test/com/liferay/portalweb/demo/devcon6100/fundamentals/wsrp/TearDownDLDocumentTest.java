@@ -83,6 +83,7 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 					continue;
 				}
 
+				Thread.sleep(5000);
 				assertFalse(selenium.isChecked(
 						"//input[@id='_20_allRowIdsCheckbox']"));
 				selenium.clickAt("//input[@id='_20_allRowIdsCheckbox']",

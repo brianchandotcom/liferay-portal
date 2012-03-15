@@ -1085,6 +1085,10 @@ public class JournalArticleWrapper implements JournalArticle,
 		return _journalArticle.getDefaultLocale();
 	}
 
+	public com.liferay.portlet.journal.model.JournalFolder getFolder() {
+		return _journalArticle.getFolder();
+	}
+
 	public java.lang.String getSmallImageType()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

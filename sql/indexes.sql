@@ -320,6 +320,7 @@ create index IX_A2534AC2 on JournalArticle (groupId, classNameId, layoutUuid);
 create index IX_91E78C35 on JournalArticle (groupId, classNameId, structureId);
 create index IX_F43B9FF2 on JournalArticle (groupId, classNameId, templateId);
 create index IX_5CD17502 on JournalArticle (groupId, folderId);
+create index IX_F35391E8 on JournalArticle (groupId, folderId, status);
 create index IX_3C028C1E on JournalArticle (groupId, layoutUuid);
 create index IX_301D024B on JournalArticle (groupId, status);
 create index IX_2E207659 on JournalArticle (groupId, structureId);

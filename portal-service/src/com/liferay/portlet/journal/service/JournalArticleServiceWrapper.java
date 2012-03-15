@@ -198,6 +198,14 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 			articleId, start, end, obc);
 	}
 
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticlesByFolderId(
+		long groupId, long folderId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleService.getArticlesByFolderId(groupId, folderId,
+			start, end, obc);
+	}
+
 	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticlesByLayoutUuid(
 		long groupId, java.lang.String layoutUuid)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -210,6 +218,12 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _journalArticleService.getArticlesCountByArticleId(groupId,
 			articleId);
+	}
+
+	public int getArticlesCountByFolderId(long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleService.getArticlesCountByFolderId(groupId,
+			folderId);
 	}
 
 	public com.liferay.portlet.journal.model.JournalArticle getDisplayArticleByUrlTitle(

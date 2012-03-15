@@ -634,12 +634,6 @@ public class JournalArticleLocalServiceWrapper
 	}
 
 	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticles(
-		long groupId, java.lang.String articleId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _journalArticleLocalService.getArticles(groupId, articleId);
-	}
-
-	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticles(
 		long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _journalArticleLocalService.getArticles(groupId, folderId);
@@ -658,6 +652,12 @@ public class JournalArticleLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _journalArticleLocalService.getArticles(groupId, folderId,
 			start, end, orderByComparator);
+	}
+
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticles(
+		long groupId, java.lang.String articleId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleLocalService.getArticles(groupId, articleId);
 	}
 
 	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticlesBySmallImageId(

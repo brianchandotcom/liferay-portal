@@ -27,7 +27,7 @@ List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolder
 %>
 
 <liferay-ui:search-container
-	id="fileEntryTypesSearchContainer"
+	id="fileEntryTypeSearchContainer"
 >
 	<liferay-ui:search-container-results
 		results="<%= fileEntryTypes %>"
@@ -48,7 +48,7 @@ List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolder
 </liferay-ui:search-container>
 
 <aui:script use="liferay-portlet-url,liferay-search-container">
-	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />fileEntryTypesSearchContainer');
+	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />fileEntryTypeSearchContainer');
 
 	searchContainer.get('contentBox').delegate(
 		'click',

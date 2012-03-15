@@ -25,72 +25,74 @@
 	PortletURL portletURL = renderResponse.createRenderURL();
 
 	portletURL.setParameter("struts_action", "/document_library/select_group");
-
-	GroupSearch searchContainer = new GroupSearch(renderRequest, portletURL);
 	%>
 
-	<liferay-ui:search-form
-		page="/html/portlet/users_admin/group_search.jsp"
-		searchContainer="<%= searchContainer %>"
-	/>
+	<liferay-ui:search-container
+		searchContainer="<%= new GroupSearch(renderRequest, portletURL) %>"
+	>
+		<liferay-ui:search-form
+			page="/html/portlet/users_admin/group_search.jsp"
+			searchContainer="<%= searchContainer %>"
+		/>
 
-	<div class="separator"><!-- --></div>
+		<div class="separator"><!-- --></div>
 
-	<%
-	GroupSearchTerms searchTerms = (GroupSearchTerms)searchContainer.getSearchTerms();
+		<%
+		List<Group> mySites = user.getMySites();
 
-	List<Group> mySites = user.getMySites();
+		if (PortalUtil.isCompanyControlPanelPortlet(portletId, themeDisplay)) {
+			mySites = ListUtil.copy(mySites);
 
-	if (PortalUtil.isCompanyControlPanelPortlet(portletId, themeDisplay)) {
-		mySites = ListUtil.copy(mySites);
-
-		mySites.add(0, GroupLocalServiceUtil.getGroup(themeDisplay.getCompanyGroupId()));
-	}
-
-	int total = mySites.size();
-
-	searchContainer.setTotal(total);
-
-	searchContainer.setResults(mySites);
-
-	List resultRows = searchContainer.getResultRows();
-
-	for (int i = 0; i < mySites.size(); i++) {
-		Group group = mySites.get(i);
-
-		ResultRow row = new ResultRow(group, group.getGroupId(), i);
-
-		String groupName = HtmlUtil.escape(group.getDescriptiveName(locale));
-
-		if (group.isUser()) {
-			groupName = LanguageUtil.get(pageContext, "my-site");
+			mySites.add(0, GroupLocalServiceUtil.getGroup(themeDisplay.getCompanyGroupId()));
 		}
 
-		StringBundler sb = new StringBundler(7);
+		%>
 
-		sb.append("javascript:opener.");
-		sb.append(renderResponse.getNamespace());
-		sb.append("selectGroup('");
-		sb.append(group.getGroupId());
-		sb.append("', '");
-		sb.append(UnicodeFormatter.toString(groupName));
-		sb.append("'); window.close();");
+		<liferay-ui:search-container-results
+			results="<%= mySites %>"
+			total="<%= mySites.size() %>"
+		/>
 
-		String rowHREF = sb.toString();
+		<liferay-ui:search-container-row
+			className="com.liferay.portal.model.Group"
+			escapedModel="<%= true %>"
+			keyProperty="groupId"
+			modelVar="group"
+		>
 
-		// Name
+			<%
+			String groupName = HtmlUtil.escape(group.getDescriptiveName(locale));
 
-		row.addText(groupName, rowHREF);
+			if (group.isUser()) {
+				groupName = LanguageUtil.get(pageContext, "my-site");
+			}
 
-		// Type
+			StringBundler sb = new StringBundler(7);
 
-		row.addText(LanguageUtil.get(pageContext, group.getTypeLabel()), rowHREF);
+			sb.append("javascript:opener.");
+			sb.append(renderResponse.getNamespace());
+			sb.append("selectGroup('");
+			sb.append(group.getGroupId());
+			sb.append("', '");
+			sb.append(UnicodeFormatter.toString(groupName));
+			sb.append("'); window.close();");
 
-		// Add result row
+			String rowHREF = sb.toString();
+			%>
 
-		resultRows.add(row);
-	}
-	%>
+			<liferay-ui:search-container-column-text
+				href="<%= rowHREF %>"
+				name="name"
+				value="<%= groupName %>"
+			/>
 
-	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+			<liferay-ui:search-container-column-text
+				href="<%= rowHREF %>"
+				name="type"
+				value="<%= LanguageUtil.get(pageContext, group.getTypeLabel()) %>"
+			/>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator />
+	</liferay-ui:search-container>
 </aui:form>

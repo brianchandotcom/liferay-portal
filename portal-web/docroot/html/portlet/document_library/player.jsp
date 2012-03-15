@@ -47,8 +47,6 @@ for (String previewFileURL : previewFileURLs) {
 <c:choose>
 	<c:when test="<%= supportedAudio %>">
 		<aui:script use="aui-audio,swfdetect">
-			var oggUrl = '<%= oggPreviewFileURL %>';
-
 			var auiAudio = new A.Audio(
 				{
 					contentBox: '#<portlet:namespace />previewFileContent',
@@ -56,18 +54,14 @@ for (String previewFileURL : previewFileURLs) {
 						allowfullscreen: 'true'
 					}
 
-					<c:if test="<%= Validator.isNotNull(oggPreviewFileURL) && !BrowserSnifferUtil.isFirefox(request) %>">
-						, oggUrl: '<%= oggPreviewFileURL %>'
-					</c:if>
-
 					<c:if test="<%= Validator.isNotNull(mp3PreviewFileURL) %>">
 						, url: '<%= mp3PreviewFileURL %>'
 					</c:if>
 				}
 			);
 
-			if (A.UA.gecko && !A.SWFDetect.isFlashVersionAtLeast(9)) {
-				auiAudio.set('oggUrl', oggUrl);
+			if (<%= Validator.isNotNull(oggPreviewFileURL) %> && A.UA.gecko && !A.SWFDetect.isFlashVersionAtLeast(9)) {
+				auiAudio.set('oggUrl', '<%= oggPreviewFileURL %>');
 			}
 
 			auiAudio.render();

@@ -15,7 +15,6 @@
 package com.liferay.portlet.sitesadmin.util;
 
 import com.liferay.portal.model.Group;
-import com.liferay.portal.service.ServiceContext;
 
 import javax.portlet.PortletRequest;
 
@@ -35,15 +34,5 @@ public interface SitesAdmin {
 	public static final boolean DEFAULT_SECURE_CONNECTION = false;
 
 	public int getStagingType(Group liveGroup, PortletRequest portletRequest);
-
-	public void updateAssetCategoryIds(
-			PortletRequest portletRequest, Group liveGroup,
-			ServiceContext serviceContext)
-		throws Exception;
-
-	public void updateAssetTagNames(
-			PortletRequest portletRequest, Group liveGroup,
-			ServiceContext serviceContext)
-		throws Exception;
 
 }

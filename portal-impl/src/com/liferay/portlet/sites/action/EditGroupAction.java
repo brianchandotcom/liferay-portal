@@ -59,7 +59,6 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.sites.util.SitesUtil;
-import com.liferay.portlet.sitesadmin.util.SitesAdminUtil;
 
 import java.util.List;
 
@@ -363,11 +362,6 @@ public class EditGroupAction extends PortletAction {
 			oldFriendlyURL = liveGroup.getFriendlyURL();
 			type = ParamUtil.getInteger(
 				actionRequest, "type", liveGroup.getType());
-
-			SitesAdminUtil.updateAssetCategoryIds(
-				actionRequest, liveGroup, serviceContext);
-			SitesAdminUtil.updateAssetTagNames(
-				actionRequest, liveGroup, serviceContext);
 
 			liveGroup = GroupServiceUtil.updateGroup(
 				liveGroupId, name, description, type, friendlyURL, active,

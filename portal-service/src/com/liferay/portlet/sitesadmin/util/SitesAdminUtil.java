@@ -15,7 +15,6 @@
 package com.liferay.portlet.sitesadmin.util;
 
 import com.liferay.portal.model.Group;
-import com.liferay.portal.service.ServiceContext;
 
 import javax.portlet.PortletRequest;
 
@@ -32,24 +31,6 @@ public class SitesAdminUtil {
 		Group liveGroup, PortletRequest portletRequest) {
 
 		return getSitesAdmin().getStagingType(liveGroup, portletRequest);
-	}
-
-	public static void updateAssetCategoryIds(
-			PortletRequest portletRequest, Group liveGroup,
-			ServiceContext serviceContext)
-		throws Exception{
-
-		getSitesAdmin().updateAssetCategoryIds(
-			portletRequest, liveGroup, serviceContext);
-	}
-
-	public static void updateAssetTagNames(
-			PortletRequest portletRequest, Group liveGroup,
-			ServiceContext serviceContext)
-		throws Exception{
-
-		getSitesAdmin().updateAssetTagNames(
-			portletRequest, liveGroup, serviceContext);
 	}
 
 	public void setSitesAdmin(SitesAdmin sitesAdmin) {

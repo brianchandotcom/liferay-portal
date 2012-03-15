@@ -127,8 +127,8 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 	}
 
 	public JSONArray getJSONSearch(
-			long groupId, String name, long vocabularyId, int start,
-			int end, OrderByComparator obc)
+			long groupId, String name, long vocabularyId, int start, int end,
+			OrderByComparator obc)
 		throws PortalException, SystemException {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();

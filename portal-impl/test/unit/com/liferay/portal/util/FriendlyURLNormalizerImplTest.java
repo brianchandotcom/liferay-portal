@@ -99,7 +99,7 @@ public class FriendlyURLNormalizerImplTest extends TestCase {
 	@Test
 	public void testNormalizeWordWithNonASCIICharacters() {
 		Assert.assertEquals(
-			"wordnc", _friendlyURLNormalizerImpl.normalize("wordñÇ"));
+			"wordnc", _friendlyURLNormalizerImpl.normalize("word\u00F1\u00C7"));
 	}
 
 	private FriendlyURLNormalizerImpl _friendlyURLNormalizerImpl =

@@ -15,7 +15,7 @@
 package com.liferay.portalweb.socialofficehome.contactscenter.contacts.unblockccuser;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
+import com.liferay.portalweb.socialoffice.users.user.signinso.SignOutSOTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -30,10 +30,10 @@ public class UnblockCCUserTests extends BaseTestSuite {
 		testSuite.addTestSuite(BlockCCUserTest.class);
 		testSuite.addTestSuite(UnblockCCUserTest.class);
 		testSuite.addTestSuite(ViewUnblockCCUserTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOUs_SignInTest.class);
 		testSuite.addTestSuite(SOUs_ViewUnblockCCUserTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOSignInTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
 

@@ -15,7 +15,7 @@
 package com.liferay.portalweb.socialofficehome.whatshappening.whentry.addwhentrycontentviewablebyfollowers;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
+import com.liferay.portalweb.socialoffice.users.user.signinso.SignOutSOTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -29,12 +29,12 @@ public class AddWHEntryContentViewableByFollowersTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddSOUserTest.class);
 		testSuite.addTestSuite(AddWHEntryContentViewableByFollowersTest.class);
 		testSuite.addTestSuite(ViewWHEntryContentViewableByFollowersTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOUs_SignInTest.class);
 		testSuite.addTestSuite(SOUs_ViewWHContentViewableByFollowersTest.class);
 		testSuite.addTestSuite(SOUs_AddFollowingCCUserTest.class);
 		testSuite.addTestSuite(SOUs_ViewFollowingWHContentViewableByFollowersTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOSignInTest.class);
 		testSuite.addTestSuite(TearDownWHEntryContentTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);

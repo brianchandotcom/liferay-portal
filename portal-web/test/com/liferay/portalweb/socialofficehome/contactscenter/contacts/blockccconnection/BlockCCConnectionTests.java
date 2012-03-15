@@ -15,7 +15,7 @@
 package com.liferay.portalweb.socialofficehome.contactscenter.contacts.blockccconnection;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
+import com.liferay.portalweb.socialoffice.users.user.signinso.SignOutSOTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -27,17 +27,17 @@ public class BlockCCConnectionTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddSOUserTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOUs_SignInTest.class);
 		testSuite.addTestSuite(SOUs_AddAsConnectionCCUserTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOSignInTest.class);
 		testSuite.addTestSuite(ConfirmNotificationsAddConnnectionTest.class);
 		testSuite.addTestSuite(BlockCCConnectionTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOUs_SignInTest.class);
 		testSuite.addTestSuite(SOUs_ViewBlockCCConnectionTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOSignInTest.class);
 		testSuite.addTestSuite(ViewBlockCCConnectionTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);

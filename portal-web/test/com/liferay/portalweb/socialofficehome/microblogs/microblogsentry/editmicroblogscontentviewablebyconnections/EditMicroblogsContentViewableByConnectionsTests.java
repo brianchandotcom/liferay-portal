@@ -15,7 +15,7 @@
 package com.liferay.portalweb.socialofficehome.microblogs.microblogsentry.editmicroblogscontentviewablebyconnections;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
+import com.liferay.portalweb.socialoffice.users.user.signinso.SignOutSOTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -30,24 +30,24 @@ public class EditMicroblogsContentViewableByConnectionsTests
 		testSuite.addTestSuite(AddSOUserTest.class);
 		testSuite.addTestSuite(AddMicroblogsContentViewableByConnectionsTest.class);
 		testSuite.addTestSuite(ViewMicroblogsContentViewableByConnectionsTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOUs_SignInTest.class);
 		testSuite.addTestSuite(SOUs_ViewMicroblogsContentViewableByConnectionsTest.class);
 		testSuite.addTestSuite(SOUs_AddAsConnectionCCUserTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOSignInTest.class);
 		testSuite.addTestSuite(ConfirmNotificationsAddConnnectionTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOUs_SignInTest.class);
 		testSuite.addTestSuite(SOUs_ViewConnectionMBContentViewableByConnectionsTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOSignInTest.class);
 		testSuite.addTestSuite(EditMicroblogsContentViewableByConnectionsTest.class);
 		testSuite.addTestSuite(ViewEditMicroblogsContentViewableByConnectionsTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOUs_SignInTest.class);
 		testSuite.addTestSuite(SOUs_ViewConnectionEditMBViewableByConnectionsTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOSignInTest.class);
 		testSuite.addTestSuite(TearDownWHEntryContentTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);

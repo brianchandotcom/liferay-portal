@@ -322,6 +322,9 @@ public class LoginSocialOfficeTest extends BaseTestCase {
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				selenium.open("/web/guest/home/");
 				loadRequiredJavaScriptModules();
+				assertTrue(selenium.isElementPresent(
+						"//li[@id='_145_userMenu']/a"));
+				selenium.mouseOver("//li[@id='_145_userMenu']/a");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {

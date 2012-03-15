@@ -15,7 +15,7 @@
 package com.liferay.portalweb.socialofficehome.sites.site.soussearchsitessite;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
+import com.liferay.portalweb.socialoffice.users.user.signinso.SignOutSOTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -28,16 +28,16 @@ public class SOUs_SearchSitesSiteTests extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddSOUserTest.class);
 		testSuite.addTestSuite(AddSitesSiteTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOUs_SignInTest.class);
 		testSuite.addTestSuite(SOUs_AddAsConnectionCCUserTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOSignInTest.class);
 		testSuite.addTestSuite(ConfirmNotificationsAddConnnectionTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOUs_SignInTest.class);
 		testSuite.addTestSuite(SOUs_SearchSitesSiteTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOSignInTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
 		testSuite.addTestSuite(TearDownSOSitesTest.class);

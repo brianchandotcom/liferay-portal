@@ -15,7 +15,7 @@
 package com.liferay.portalweb.socialofficehome.microblogs.microblogsentry.sousdeleterepostmicroblogscontent;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
+import com.liferay.portalweb.socialoffice.users.user.signinso.SignOutSOTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -29,13 +29,13 @@ public class SOUs_DeleteRepostMicroblogsContentTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddSOUserTest.class);
 		testSuite.addTestSuite(AddMicroblogsContentViewableByEveryoneTest.class);
 		testSuite.addTestSuite(ViewMicroblogsContentViewableByEveryoneTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOUs_SignInTest.class);
 		testSuite.addTestSuite(SOUs_ViewMBContentViewableByEveryoneProfileTest.class);
 		testSuite.addTestSuite(SOUs_RepostMicroblogsContentProfileTest.class);
 		testSuite.addTestSuite(SOUs_DeleteRepostMicroblogsContentTest.class);
 		testSuite.addTestSuite(SOUs_ViewDeleteRepostMicroblogsContentTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOSignInTest.class);
 		testSuite.addTestSuite(TearDownWHEntryContentTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);

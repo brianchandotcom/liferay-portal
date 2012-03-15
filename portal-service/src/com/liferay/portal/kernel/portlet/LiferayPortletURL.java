@@ -71,6 +71,8 @@ public interface LiferayPortletURL
 	 */
 	public String getPortletId();
 
+	public Set<String> getRemovedParamNames();
+
 	/**
 	 * Returns the map of reserved parameters for this URL.
 	 *
@@ -301,5 +303,7 @@ public interface LiferayPortletURL
 	 * @param refererPlid the referer layout ID
 	 */
 	public void setRefererPlid(long refererPlid);
+
+	public void setRemovedParamNames(Set<String> removedParamNames);
 
 }

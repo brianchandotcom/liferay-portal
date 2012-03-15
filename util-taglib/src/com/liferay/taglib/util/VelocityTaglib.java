@@ -57,6 +57,7 @@ import com.liferay.taglib.ui.StagingTag;
 import com.liferay.taglib.ui.ToggleTag;
 
 import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
@@ -132,13 +133,14 @@ public class VelocityTaglib {
 		String cacheability = null;
 		Map<String, String[]> params = HttpUtil.parameterMapFromString(
 			queryString);
+		Set<String> removedParamNames = null;
 
 		ActionURLTag.doTag(
 			PortletRequest.ACTION_PHASE, windowState, portletMode, var, varImpl,
 			secure, copyCurrentRenderParameters, escapeXml, name, resourceID,
 			cacheability, plid, refererPlid, portletName, anchor, encrypt,
 			doAsGroupId, doAsUserId, portletConfiguration, params,
-			_pageContext);
+			removedParamNames, _pageContext);
 	}
 
 	public void actionURL(
@@ -525,13 +527,14 @@ public class VelocityTaglib {
 		String cacheability = null;
 		Map<String, String[]> params = HttpUtil.parameterMapFromString(
 			queryString);
+		Set<String> removedParamNames = null;
 
 		ActionURLTag.doTag(
 			PortletRequest.RENDER_PHASE, windowState, portletMode, var, varImpl,
 			secure, copyCurrentRenderParameters, escapeXml, name, resourceID,
 			cacheability, plid, refererPlid, portletName, anchor, encrypt,
 			doAsGroupId, doAsUserId, portletConfiguration, params,
-			_pageContext);
+			removedParamNames, _pageContext);
 	}
 
 	/**

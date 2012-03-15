@@ -22,6 +22,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.naming.NamingException;
 
@@ -71,6 +72,10 @@ public interface DB {
 
 	public static final String TYPE_SYBASE = "sybase";
 
+	void addIndexes(
+			Connection con, String indexesSQL, Set<String> validIndexNames)
+		throws IOException;
+
 	public void buildCreateFile(String sqlDir, String databaseName)
 		throws IOException;
 
@@ -83,7 +88,7 @@ public interface DB {
 	public void buildSQLFile(String sqlDir, String fileName)
 		throws IOException;
 
-	public List<Index> getIndexes() throws SQLException;
+	public List<Index> getIndexes(Connection con) throws SQLException;
 
 	public String getTemplateFalse();
 
@@ -133,8 +138,8 @@ public interface DB {
 		boolean supportsStringCaseSensitiveQuery);
 
 	public void updateIndexes(
-			String tablesSQL, String indexesSQL, String indexesProperties,
-			boolean dropStaleIndexes)
+			Connection con, String tablesSQL, String indexesSQL,
+			String indexesProperties, boolean dropStaleIndexes)
 		throws IOException, SQLException;
 
 }

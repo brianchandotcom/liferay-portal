@@ -54,16 +54,13 @@ public class PostgreSQLDB extends BaseDB {
 	}
 
 	@Override
-	public List<Index> getIndexes() throws SQLException {
+	public List<Index> getIndexes(Connection con) throws SQLException {
 		List<Index> indexes = new ArrayList<Index>();
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
-
 			StringBundler sb = new StringBundler(3);
 
 			sb.append("select indexname, tablename, indexdef from pg_indexes ");
@@ -91,7 +88,7 @@ public class PostgreSQLDB extends BaseDB {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 
 		return indexes;

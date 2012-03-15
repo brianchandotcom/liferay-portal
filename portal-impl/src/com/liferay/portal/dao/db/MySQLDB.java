@@ -56,16 +56,13 @@ public class MySQLDB extends BaseDB {
 	}
 
 	@Override
-	public List<Index> getIndexes() throws SQLException {
+	public List<Index> getIndexes(Connection con) throws SQLException {
 		List<Index> indexes = new ArrayList<Index>();
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
-
 			StringBundler sb = new StringBundler(4);
 
 			sb.append("select distinct(index_name), table_name, non_unique ");
@@ -88,7 +85,7 @@ public class MySQLDB extends BaseDB {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 
 		return indexes;

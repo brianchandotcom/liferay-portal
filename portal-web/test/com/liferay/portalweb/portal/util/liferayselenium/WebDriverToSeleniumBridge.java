@@ -50,6 +50,8 @@ public class WebDriverToSeleniumBridge
 
 	public WebDriverToSeleniumBridge(WebDriver webDriver) {
 		super(webDriver);
+
+		initializeKeyTable();
 	}
 
 	public void addCustomRequestHeader(String key, String value) {
@@ -750,5 +752,73 @@ public class WebDriverToSeleniumBridge
 		else {
 			return findElements(By.id(locator));
 		}
-	}	
+	}
+
+	public void initializeKeyTable() {
+		keyTable[107] = Keys.ADD;
+		keyTable[18] = Keys.ALT;
+		keyTable[40] = Keys.ARROW_DOWN;
+		keyTable[37] = Keys.ARROW_LEFT;
+		keyTable[39] = Keys.ARROW_RIGHT;
+		keyTable[38] = Keys.ARROW_UP;
+		keyTable[8] = Keys.BACK_SPACE;
+		//keyTable[] = Keys.CANCEL;
+		//keyTable[] = Keys.CLEAR;
+		//keyTable[] = Keys.COMMAND;
+		keyTable[17] = Keys.CONTROL;
+		keyTable[110] = Keys.DECIMAL;
+		keyTable[46] = Keys.DELETE;
+		keyTable[111] = Keys.DIVIDE;
+		//keyTable[] = Keys.DOWN;
+		//keyTable[] = Keys.END;
+		keyTable[13] = Keys.ENTER;
+		//keyTable[] = Keys.EQUALS;
+		keyTable[27] = Keys.ESCAPE;
+		keyTable[112] = Keys.F1;
+		keyTable[121] = Keys.F10;
+		keyTable[122] = Keys.F11;
+		keyTable[123] = Keys.F12;
+		keyTable[113] = Keys.F2;
+		keyTable[114] = Keys.F3;
+		keyTable[115] = Keys.F4;
+		keyTable[116] = Keys.F5;
+		keyTable[117] = Keys.F6;
+		keyTable[118] = Keys.F7;
+		keyTable[119] = Keys.F8;
+		keyTable[120] = Keys.F9;
+		//keyTable[] = Keys.HELP;
+		keyTable[36] = Keys.HOME;
+		keyTable[45] = Keys.INSERT;
+		//keyTable[] = Keys.LEFT;
+		//keyTable[] = Keys.LEFT_ALT;
+		//keyTable[] = Keys.LEFT_CONTROL;
+		//keyTable[] = Keys.LEFT_SHIFT;
+		//keyTable[] = Keys.META;
+		//keyTable[] = Keys.NULL;
+		keyTable[96] = Keys.NUMPAD0;
+		keyTable[97] = Keys.NUMPAD1;
+		keyTable[98] = Keys.NUMPAD2;
+		keyTable[99] = Keys.NUMPAD3;
+		keyTable[100] = Keys.NUMPAD4;
+		keyTable[101] = Keys.NUMPAD5;
+		keyTable[102] = Keys.NUMPAD6;
+		keyTable[103] = Keys.NUMPAD7;
+		keyTable[104] = Keys.NUMPAD8;
+		keyTable[105] = Keys.NUMPAD9;
+		keyTable[34] = Keys.PAGE_DOWN;
+		keyTable[33] = Keys.PAGE_UP;
+		keyTable[19] = Keys.PAUSE;
+		//keyTable[] = Keys.RETURN;
+		//keyTable[] = Keys.RIGHT;
+		//keyTable[] = Keys.SEMICOLON;
+		//keyTable[] = Keys.SEPARATOR;
+		keyTable[16] = Keys.SHIFT;
+		keyTable[32] = Keys.SPACE;
+		keyTable[109] = Keys.SUBTRACT;
+		keyTable[9] = Keys.TAB;
+		//keyTable[] = Keys.UP;
+	}
+
+	private final Keys [] keyTable = new Keys[128];	
+
 }

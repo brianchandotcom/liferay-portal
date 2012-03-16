@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
+import com.liferay.portal.kernel.servlet.PortletContextLifecycleThreadLocal;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -95,6 +96,8 @@ public class ClusterSchedulerEngine
 			if (memoryClusteredSlaveJob) {
 				removeMemoryClusteredJobs(groupName);
 
+				skipClusterInvoking(groupName);
+
 				return;
 			}
 
@@ -118,6 +121,8 @@ public class ClusterSchedulerEngine
 		try {
 			if (memoryClusteredSlaveJob) {
 				_memoryClusteredJobs.remove(getFullName(jobName, groupName));
+
+				skipClusterInvoking(groupName);
 
 				return;
 			}
@@ -425,6 +430,8 @@ public class ClusterSchedulerEngine
 			if (memoryClusteredSlaveJob) {
 				removeMemoryClusteredJobs(groupName);
 
+				skipClusterInvoking(groupName);
+
 				return;
 			}
 
@@ -448,6 +455,8 @@ public class ClusterSchedulerEngine
 		try {
 			if (memoryClusteredSlaveJob) {
 				_memoryClusteredJobs.remove(getFullName(jobName, groupName));
+
+				skipClusterInvoking(groupName);
 
 				return;
 			}
@@ -774,7 +783,9 @@ public class ClusterSchedulerEngine
 
 		StorageType storageType = getStorageType(groupName);
 
-		if (storageType.equals(StorageType.PERSISTED)) {
+		if (storageType.equals(StorageType.PERSISTED) ||
+			PortletContextLifecycleThreadLocal.isDestroying()) {
+
 			SchedulerException schedulerException = new SchedulerException();
 
 			schedulerException.setSwallowable(true);

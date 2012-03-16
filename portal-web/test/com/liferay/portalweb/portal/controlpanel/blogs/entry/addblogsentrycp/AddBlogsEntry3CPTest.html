@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>AddBlogsEntryCPTest</title>
+<title>AddBlogsEntry3CPTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">AddBlogsEntryCPTest</td></tr>
+<tr><td rowspan="1" colspan="3">AddBlogsEntry3CPTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -36,12 +36,37 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_161_title']</td>
-	<td>Blogs Entry Title</td>
+	<td>Blogs Entry3 Title</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//span[@id='cke_48_label' and .='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@id='cke_48_label' and .='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//td[@id='cke_contents__161_editor']/textarea</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//td[@id='cke_contents__161_editor']/textarea</td>
+	<td>Blogs Entry3 Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@id='cke_48_label' and .='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@id='cke_48_label' and .='Source']</td>
+	<td>Source</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -54,9 +79,9 @@
 	<td>CK Editor</td>
 </tr>
 <tr>
-	<td>type</td>
+	<td>waitForText</td>
 	<td>//body</td>
-	<td>Blogs Entry Content</td>
+	<td>Blogs Entry3 Content</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
@@ -76,9 +101,23 @@
 <tr>
 	<td>assertText</td>
 	<td>//td[2]/a</td>
-	<td>Blogs Entry Title</td>
+	<td>Blogs Entry3 Title</td>
 </tr>
-
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//td[2]/a</td>
+	<td>Blogs Entry3 Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1[@class='header-title']/span</td>
+	<td>Blogs Entry3 Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='entry-body']/p</td>
+	<td>Blogs Entry3 Content</td>
+</tr>
 </tbody></table>
 </body>
 </html>

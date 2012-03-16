@@ -16,17 +16,17 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Blogs</td>
-	<td></td>
+	<td>Blogs</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -36,12 +36,37 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_161_title']</td>
-	<td>Blogs2 Entry2 Title2</td>
+	<td>Blogs Entry2 Title</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//span[@id='cke_48_label' and .='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@id='cke_48_label' and .='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//td[@id='cke_contents__161_editor']/textarea</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//td[@id='cke_contents__161_editor']/textarea</td>
+	<td>Blogs Entry2 Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@id='cke_48_label' and .='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@id='cke_48_label' and .='Source']</td>
+	<td>Source</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -54,19 +79,19 @@
 	<td>CK Editor</td>
 </tr>
 <tr>
-	<td>type</td>
+	<td>waitForText</td>
 	<td>//body</td>
-	<td>Blogs2 Entry2 Content2</td>
+	<td>Blogs Entry2 Content</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
 	<td>relative=top</td>
-	<td></td>
+	<td>top</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Publish']</td>
-	<td></td>
+	<td>Publish</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -76,9 +101,23 @@
 <tr>
 	<td>assertText</td>
 	<td>//td[2]/a</td>
-	<td>Blogs2 Entry2 Title2</td>
+	<td>Blogs Entry2 Title</td>
 </tr>
-
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//td[2]/a</td>
+	<td>Blogs Entry2 Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1[@class='header-title']/span</td>
+	<td>Blogs Entry2 Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='entry-body']/p</td>
+	<td>Blogs Entry2 Content</td>
+</tr>
 </tbody></table>
 </body>
 </html>

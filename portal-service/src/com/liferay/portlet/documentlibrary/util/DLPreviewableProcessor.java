@@ -112,6 +112,25 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		deleteFiles(fileVersion, getThumbnailType());
 	}
 
+	public void exportGeneratedFiles(
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			Element fileEntryElement)
+		throws Exception {
+
+		doExportGeneratedFiles(portletDataContext, fileEntry, fileEntryElement);
+	}
+
+	public void importGeneratedFiles(
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			FileEntry importedFileEntry, Element fileEntryElement)
+		throws Exception {
+
+		cleanUp(importedFileEntry.getFileVersion());
+
+		doImportGeneratedFiles(
+			portletDataContext, fileEntry, importedFileEntry, fileEntryElement);
+	}
+
 	public boolean isSupported(FileVersion fileVersion) {
 		if (fileVersion == null) {
 			return false;
@@ -211,6 +230,11 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		DLStoreUtil.addFile(companyId, REPOSITORY_ID, filePath, is);
 	}
 
+	protected abstract void doExportGeneratedFiles(
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			Element fileEntryElement)
+		throws Exception;
+
 	protected InputStream doGetPreviewAsStream(
 			FileVersion fileVersion, int index, String type)
 		throws PortalException, SystemException {
@@ -284,6 +308,11 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			fileVersion.getCompanyId(), CompanyConstants.SYSTEM,
 			getThumbnailFilePath(fileVersion, type, index));
 	}
+
+	protected abstract void doImportGeneratedFiles(
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			FileEntry importedFileEntry, Element fileEntryElement)
+		throws Exception;
 
 	protected void exportBinary(
 			PortletDataContext portletDataContext, Element fileEntryElement,

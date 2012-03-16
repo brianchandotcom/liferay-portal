@@ -72,17 +72,6 @@ public class VideoProcessorImpl
 		return _instance;
 	}
 
-	public void exportGeneratedFiles(
-			PortletDataContext portletDataContext, FileEntry fileEntry,
-			Element fileEntryElement)
-		throws Exception {
-
-		exportThumbnails(
-			portletDataContext, fileEntry, fileEntryElement, "video");
-
-		exportPreviews(portletDataContext, fileEntry, fileEntryElement);
-	}
-
 	public void generateVideo(FileVersion fileVersion)
 		throws Exception {
 
@@ -134,19 +123,6 @@ public class VideoProcessorImpl
 		return hasVideo;
 	}
 
-	public void importGeneratedFiles(
-			PortletDataContext portletDataContext, FileEntry fileEntry,
-			FileEntry importedFileEntry, Element fileEntryElement)
-		throws Exception {
-
-		importThumbnails(
-			portletDataContext, fileEntry, importedFileEntry, fileEntryElement,
-			"video");
-
-		importPreviews(
-			portletDataContext, fileEntry, importedFileEntry, fileEntryElement);
-	}
-
 	public boolean isSupported(String mimeType) {
 		if (Validator.isNull(mimeType)) {
 			return false;
@@ -175,6 +151,32 @@ public class VideoProcessorImpl
 
 	public void trigger(FileVersion fileVersion) {
 		_instance._queueGeneration(fileVersion);
+	}
+
+	@Override
+	protected void doExportGeneratedFiles(
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			Element fileEntryElement)
+		throws Exception {
+
+		exportThumbnails(
+			portletDataContext, fileEntry, fileEntryElement, "video");
+
+		exportPreviews(portletDataContext, fileEntry, fileEntryElement);
+	}
+
+	@Override
+	protected void doImportGeneratedFiles(
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			FileEntry importedFileEntry, Element fileEntryElement)
+		throws Exception {
+
+		importThumbnails(
+			portletDataContext, fileEntry, importedFileEntry, fileEntryElement,
+			"video");
+
+		importPreviews(
+			portletDataContext, fileEntry, importedFileEntry, fileEntryElement);
 	}
 
 	protected void exportPreviews(

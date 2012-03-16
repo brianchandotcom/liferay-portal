@@ -70,17 +70,6 @@ public class ImageProcessorImpl
 		deleteFiles(fileVersion, type);
 	}
 
-	public void exportGeneratedFiles(
-			PortletDataContext portletDataContext, FileEntry fileEntry,
-			Element fileEntryElement)
-		throws Exception {
-
-		exportThumbnails(
-			portletDataContext, fileEntry, fileEntryElement, "image");
-
-		exportPreview(portletDataContext, fileEntry, fileEntryElement);
-	}
-
 	public void generateImages(FileVersion fileVersion) {
 		_instance._generateImages(fileVersion);
 	}
@@ -162,26 +151,6 @@ public class ImageProcessorImpl
 		return hasImages;
 	}
 
-	public void importGeneratedFiles(
-			PortletDataContext portletDataContext, FileEntry fileEntry,
-			FileEntry importedFileEntry, Element fileEntryElement)
-		throws Exception {
-
-		importThumbnails(
-			portletDataContext, fileEntry, importedFileEntry, fileEntryElement,
-			"image");
-
-		FileVersion importedFileVersion = importedFileEntry.getFileVersion();
-
-		if (!_previewGenerationRequired(importedFileVersion)) {
-			return;
-		}
-
-		importPreview(
-			portletDataContext, fileEntry, importedFileEntry, fileEntryElement,
-			"image", getPreviewType(importedFileVersion));
-	}
-
 	public boolean isImageSupported(FileVersion fileVersion) {
 		return _instance.isSupported(fileVersion);
 	}
@@ -211,6 +180,39 @@ public class ImageProcessorImpl
 
 	public void trigger(FileVersion fileVersion) {
 		_instance._queueGeneration(fileVersion);
+	}
+
+	@Override
+	protected void doExportGeneratedFiles(
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			Element fileEntryElement)
+		throws Exception {
+
+		exportThumbnails(
+			portletDataContext, fileEntry, fileEntryElement, "image");
+
+		exportPreview(portletDataContext, fileEntry, fileEntryElement);
+	}
+
+	@Override
+	protected void doImportGeneratedFiles(
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			FileEntry importedFileEntry, Element fileEntryElement)
+		throws Exception {
+
+		importThumbnails(
+			portletDataContext, fileEntry, importedFileEntry, fileEntryElement,
+			"image");
+
+		FileVersion importedFileVersion = importedFileEntry.getFileVersion();
+
+		if (!_previewGenerationRequired(importedFileVersion)) {
+			return;
+		}
+
+		importPreview(
+			portletDataContext, fileEntry, importedFileEntry, fileEntryElement,
+			"image", getPreviewType(importedFileVersion));
 	}
 
 	protected void exportPreview(

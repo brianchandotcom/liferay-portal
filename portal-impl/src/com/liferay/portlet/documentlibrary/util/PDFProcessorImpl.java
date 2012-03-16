@@ -87,17 +87,6 @@ public class PDFProcessorImpl
 		return _instance;
 	}
 
-	public void exportGeneratedFiles(
-			PortletDataContext portletDataContext, FileEntry fileEntry,
-			Element fileEntryElement)
-		throws Exception {
-
-		exportThumbnails(
-			portletDataContext, fileEntry, fileEntryElement, "pdf");
-
-		exportPreviews(portletDataContext, fileEntry, fileEntryElement);
-	}
-
 	public void generateImages(FileVersion fileVersion) throws Exception {
 		Initializer._initializedInstance._generateImages(fileVersion);
 	}
@@ -183,19 +172,6 @@ public class PDFProcessorImpl
 		return hasImages;
 	}
 
-	public void importGeneratedFiles(
-			PortletDataContext portletDataContext, FileEntry fileEntry,
-			FileEntry importedFileEntry, Element fileEntryElement)
-		throws Exception {
-
-		importThumbnails(
-			portletDataContext, fileEntry, importedFileEntry, fileEntryElement,
-			"pdf");
-
-		importPreviews(
-			portletDataContext, fileEntry, importedFileEntry, fileEntryElement);
-	}
-
 	public boolean isDocumentSupported(FileVersion fileVersion) {
 		return Initializer._initializedInstance.isSupported(fileVersion);
 	}
@@ -269,6 +245,32 @@ public class PDFProcessorImpl
 
 	public void trigger(FileVersion fileVersion) {
 		Initializer._initializedInstance._queueGeneration(fileVersion);
+	}
+
+	@Override
+	protected void doExportGeneratedFiles(
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			Element fileEntryElement)
+		throws Exception {
+
+		exportThumbnails(
+			portletDataContext, fileEntry, fileEntryElement, "pdf");
+
+		exportPreviews(portletDataContext, fileEntry, fileEntryElement);
+	}
+
+	@Override
+	protected void doImportGeneratedFiles(
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			FileEntry importedFileEntry, Element fileEntryElement)
+		throws Exception {
+
+		importThumbnails(
+			portletDataContext, fileEntry, importedFileEntry, fileEntryElement,
+			"pdf");
+
+		importPreviews(
+			portletDataContext, fileEntry, importedFileEntry, fileEntryElement);
 	}
 
 	protected void exportPreviews(

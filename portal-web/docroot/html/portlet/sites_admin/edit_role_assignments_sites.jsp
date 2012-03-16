@@ -35,18 +35,8 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.
 	url="<%= portletURL.toString() %>"
 />
 
-<%
-GroupSearch groupSearchContainer = new GroupSearch(renderRequest, portletURL);
-
-groupSearchContainer.setRowChecker(new GroupRoleChecker(renderResponse, role));
-%>
-
-<liferay-ui:search-form
-	page="/html/portlet/users_admin/group_search.jsp"
-	searchContainer="<%= groupSearchContainer %>"
-/>
-
 <liferay-ui:search-container
+	rowChecker="<%= new GroupRoleChecker(renderResponse, role) %>"
 	searchContainer="<%= new GroupSearch(renderRequest, portletURL) %>"
 >
 
@@ -65,6 +55,11 @@ groupSearchContainer.setRowChecker(new GroupRoleChecker(renderResponse, role));
 	<liferay-ui:search-container-results
 		results="<%= GroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getName(), searchTerms.getDescription(), groupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
 		total="<%= GroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getName(), searchTerms.getDescription(), groupParams) %>"
+	/>
+
+	<liferay-ui:search-form
+		page="/html/portlet/users_admin/group_search.jsp"
+		searchContainer="<%= searchContainer %>"
 	/>
 
 	<div class="separator"><!-- --></div>

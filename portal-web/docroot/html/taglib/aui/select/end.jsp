@@ -26,7 +26,7 @@
 		</c:if>
 
 		<c:if test='<%= inlineLabel.equals("right") %>'>
-			<label <%= AUIUtil.buildLabel(inlineLabel, true, id) %>>
+			<label <%= AUIUtil.buildLabel(inlineLabel, true, id, false) %>>
 				<liferay-ui:message key="<%= label %>" />
 
 				<c:if test="<%= Validator.isNotNull(helpMessage) %>">

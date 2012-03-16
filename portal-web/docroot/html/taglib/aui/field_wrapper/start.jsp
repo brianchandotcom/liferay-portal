@@ -23,7 +23,7 @@ String fieldCss = AUIUtil.buildCss(AUIUtil.FIELD_PREFIX, "wrapper", inlineField,
 <div class="<%= fieldCss %>">
 	<div class="aui-field-wrapper-content">
 		<c:if test='<%= Validator.isNotNull(label) && !inlineLabel.equals("right") %>'>
-			<label <%= AUIUtil.buildLabel(inlineLabel, showForLabel, name) %>>
+			<label <%= AUIUtil.buildLabel(inlineLabel, showForLabel, name, false) %>>
 				<liferay-ui:message key="<%= label %>" />
 
 				<c:if test="<%= required %>">

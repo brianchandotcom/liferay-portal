@@ -53,7 +53,34 @@ public class AddBlogsEntryTitleEscapeCharacterCPTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_161_title']",
 			RuntimeVariables.replace("<!--Html Escape Character Test-->"));
-		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("Source"),
+			selenium.getText("//span[@id='cke_48_label' and .='Source']"));
+		selenium.clickAt("//span[@id='cke_48_label' and .='Source']",
+			RuntimeVariables.replace("Source"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//td[@id='cke_contents__161_editor']/textarea")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.type("//td[@id='cke_contents__161_editor']/textarea",
+			RuntimeVariables.replace("Blogs Entry Content"));
+		assertEquals(RuntimeVariables.replace("Source"),
+			selenium.getText("//span[@id='cke_48_label' and .='Source']"));
+		selenium.clickAt("//span[@id='cke_48_label' and .='Source']",
+			RuntimeVariables.replace("Source"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -73,9 +100,25 @@ public class AddBlogsEntryTitleEscapeCharacterCPTest extends BaseTestCase {
 		}
 
 		selenium.selectFrame("//td[@id='cke_contents__161_editor']/iframe");
-		selenium.type("//body", RuntimeVariables.replace("Blogs Entry Content"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Blogs Entry Content")
+										.equals(selenium.getText("//body"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.selectFrame("relative=top");
-		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");

@@ -14,7 +14,17 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
 </tr>
@@ -39,9 +49,34 @@
 	<td>Blogs Entry Title</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//span[@id='cke_48_label' and .='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@id='cke_48_label' and .='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//td[@id='cke_contents__161_editor']/textarea</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//td[@id='cke_contents__161_editor']/textarea</td>
+	<td>Blogs Entry Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@id='cke_48_label' and .='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@id='cke_48_label' and .='Source']</td>
+	<td>Source</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -54,7 +89,7 @@
 	<td>CK Editor</td>
 </tr>
 <tr>
-	<td>type</td>
+	<td>waitForText</td>
 	<td>//body</td>
 	<td>Blogs Entry Content</td>
 </tr>
@@ -78,7 +113,21 @@
 	<td>//td[2]/a</td>
 	<td>Blogs Entry Title</td>
 </tr>
-
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//td[2]/a</td>
+	<td>Blogs Entry Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1[@class='header-title']/span</td>
+	<td>Blogs Entry Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='entry-body']/p</td>
+	<td>Blogs Entry Content</td>
+</tr>
 </tbody></table>
 </body>
 </html>

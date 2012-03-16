@@ -15,6 +15,8 @@
 package com.liferay.portalweb.portal.controlpanel.blogs.entrycomment.deleteblogsentrycommentcp;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.blogs.entry.addblogsentrycp.AddBlogsEntryCPTest;
+import com.liferay.portalweb.portal.controlpanel.blogs.entry.addblogsentrycp.TearDownBlogsEntryCPTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

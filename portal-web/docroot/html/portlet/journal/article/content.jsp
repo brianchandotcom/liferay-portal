@@ -290,7 +290,7 @@ if (Validator.isNotNull(content)) {
 												<%= HtmlUtil.escape(template.getName(locale)) %>
 											</span>
 
-											<c:if test="<%= (template != null) && JournalTemplatePermission.contains(permissionChecker, template.getGroupId(), template.getTemplateId(), ActionKeys.UPDATE) %>">
+											<c:if test="<%= JournalTemplatePermission.contains(permissionChecker, template.getGroupId(), template.getTemplateId(), ActionKeys.UPDATE) %>">
 												<c:if test="<%= template.isSmallImage() %>">
 													<img class="article-template-image" id="<portlet:namespace />templateImage" src="<%= _getTemplateImage(themeDisplay, template) %>" />
 												</c:if>

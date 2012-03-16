@@ -18,12 +18,14 @@ import com.liferay.portal.kernel.util.GetterUtil;
 
 import com.thoughtworks.selenium.Selenium;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 /**
  * @author Brian Wing Shun Chan
@@ -50,7 +52,20 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public void addSelection(String locator, String optionLocator) {
-		throw new UnsupportedOperationException();
+		Select select = new Select(getWebElement(locator));
+
+		if (optionLocator.startsWith("index=")) {
+			select.selectByIndex(Integer.parseInt(optionLocator.substring(6)));
+		}
+		else if (optionLocator.startsWith("label=")) {
+			select.selectByVisibleText(optionLocator.substring(6));
+		}
+		else if (optionLocator.startsWith("value=")) {
+			select.selectByValue(optionLocator.substring(6));
+		}
+		else {
+			select.selectByVisibleText(optionLocator);
+		}
 	}
 
 	public void allowNativeXpath(String allow) {

@@ -14,38 +14,48 @@
 
 package com.liferay.portal.test;
 
-import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.junit.internal.runners.model.MultipleFailureException;
 import org.junit.runners.model.Statement;
 
 /**
  * @author Miguel Pastor
  */
-public class RunBeforeTestMethodCallback extends AbstractStatementCallback {
+public class RunAfterTestClassesCallback extends AbstractStatementCallback {
 
-	public RunBeforeTestMethodCallback(
-		Object instance, Method method, Statement statement,
-		TestContextHandler testContextHandler) {
+	public RunAfterTestClassesCallback(
+		Statement statement, TestContextHandler testContextHandler) {
 
 		super(statement, testContextHandler);
-
-		_instance = instance;
-		_method = method;
 	}
 
 	@Override
 	public void evaluate() throws Throwable {
-		getTextContextHandler().runBeforeTestMethod(_instance, _method);
+		List<Throwable> throwables = new ArrayList<Throwable>();
 
 		Statement statement = getStatement();
 
-		if (statement != null) {
-			statement.evaluate();
+		if ( statement != null) {
+			try {
+				statement.evaluate();
+			}
+			catch (Throwable t) {
+				throwables.add(t);
+			}
 		}
 
-	}
+		try {
+			getTextContextHandler().runAfterTestClasses();
+		}
+		catch (Exception e) {
+			throwables.add(e);
+		}
 
-	private Object _instance;
-	private Method _method;
+		if (!throwables.isEmpty()) {
+			throw new MultipleFailureException(throwables);
+		}
+	}
 
 }

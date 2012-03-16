@@ -45,11 +45,28 @@ public class TestContextHandler {
 		}
 	}
 
+	public void runAfterTestClasses() {
+		for (ExecutionTestListener executionTestListener :
+				_executionTestListeners) {
+
+			executionTestListener.runAfterClass(_testContext);
+		}
+	}
+
 	public void runAfterTestMethod(Object instance, Method method) {
 		for (ExecutionTestListener executionTestListener :
 				_executionTestListeners) {
 
 			executionTestListener.runAfterTest(_testContext);
+		}
+	}
+
+	public void runBeforeTestClasses() {
+
+		for (ExecutionTestListener executionTestListener :
+				_executionTestListeners) {
+
+			executionTestListener.runBeforeClass(_testContext);
 		}
 	}
 

@@ -125,7 +125,9 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public void click(String locator) {
-		throw new UnsupportedOperationException();
+		WebElement element = getWebElement(locator);
+
+		element.click();
 	}
 
 	public void clickAt(String locator, String coordString) {

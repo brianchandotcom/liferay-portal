@@ -127,15 +127,14 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 	}
 
 	public JSONArray getJSONSearch(
-			long groupId, String name, long vocabularyId, int start, int end,
-			OrderByComparator obc)
+			long groupId, String keywords, long vocabularyId, int start,
+			int end, OrderByComparator obc)
 		throws PortalException, SystemException {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		List<AssetCategory> categories = filterCategories(
-			assetCategoryFinder.filterFindByG_N_V(
-				groupId, name, vocabularyId, start, end, obc));
+		List<AssetCategory> categories = search(
+			groupId, keywords, vocabularyId, start, end, obc);
 
 		for (AssetCategory category : categories) {
 			String categoryJSON = JSONFactoryUtil.looseSerialize(category);

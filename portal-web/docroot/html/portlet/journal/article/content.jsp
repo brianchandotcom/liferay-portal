@@ -232,7 +232,9 @@ if (Validator.isNotNull(content)) {
 									</span>
 
 									<c:if test="<%= classNameId == 0 %>">
-										<liferay-ui:icon id="editStructureLink" image="edit" url="javascript:;" />
+										<c:if test="<%= ((structure != null) && JournalStructurePermission.contains(permissionChecker, structure, ActionKeys.UPDATE)) %>">
+											<liferay-ui:icon id="editStructureLink" image="edit" url="javascript:;" />
+										</c:if>
 
 										<portlet:renderURL var="changeStructureURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 											<portlet:param name="struts_action" value="/journal/select_structure" />
@@ -288,18 +290,20 @@ if (Validator.isNotNull(content)) {
 												<%= HtmlUtil.escape(template.getName(locale)) %>
 											</span>
 
-											<c:if test="<%= template.isSmallImage() %>">
-												<img class="article-template-image" id="<portlet:namespace />templateImage" src="<%= _getTemplateImage(themeDisplay, template) %>" />
+											<c:if test="<%= JournalTemplatePermission.contains(permissionChecker, template.getGroupId(), template.getTemplateId(), ActionKeys.UPDATE) %>">
+												<c:if test="<%= template.isSmallImage() %>">
+													<img class="article-template-image" id="<portlet:namespace />templateImage" src="<%= _getTemplateImage(themeDisplay, template) %>" />
+												</c:if>
+
+												<portlet:renderURL var="templateURL">
+													<portlet:param name="struts_action" value="/journal/edit_template" />
+													<portlet:param name="redirect" value="<%= currentURL %>" />
+													<portlet:param name="groupId" value="<%= String.valueOf(template.getGroupId()) %>" />
+													<portlet:param name="templateId" value="<%= template.getTemplateId() %>" />
+												</portlet:renderURL>
+
+												<liferay-ui:icon image="edit" url="<%= templateURL %>" />
 											</c:if>
-
-											<portlet:renderURL var="templateURL">
-												<portlet:param name="struts_action" value="/journal/edit_template" />
-												<portlet:param name="redirect" value="<%= currentURL %>" />
-												<portlet:param name="groupId" value="<%= String.valueOf(template.getGroupId()) %>" />
-												<portlet:param name="templateId" value="<%= template.getTemplateId() %>" />
-											</portlet:renderURL>
-
-											<liferay-ui:icon image="edit" url="<%= templateURL %>" />
 										</c:when>
 										<c:otherwise>
 											<aui:select inlineField="<%= true %>" label="" name="templateId">

@@ -315,7 +315,7 @@ public class PDFProcessorImpl
 		throws Exception {
 
 		int previewFileCount = GetterUtil.getInteger(
-			fileEntryElement.attributeValue("bin-path-preview-pdf-count"));
+			fileEntryElement.attributeValue("bin-path-pdf-preview-count"));
 
 		for (int i = 0; i < previewFileCount; i++) {
 			importPreview(

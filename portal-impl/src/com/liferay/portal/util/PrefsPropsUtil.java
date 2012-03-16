@@ -20,15 +20,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.PortalPreferencesLocalServiceUtil;
-import com.liferay.portal.service.impl.PortletPreferencesLocalUtil;
-import com.liferay.portlet.BasePreferencesImpl;
-import com.liferay.portlet.PortalPreferencesImpl;
-import com.liferay.portlet.PortalPreferencesWrapper;
 import com.liferay.util.ContentUtil;
-
-import java.io.Serializable;
-
-import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
@@ -252,20 +244,8 @@ public class PrefsPropsUtil {
 		long ownerId = companyId;
 		int ownerType = PortletKeys.PREFS_OWNER_TYPE_COMPANY;
 
-		Map<Serializable, BasePreferencesImpl> preferencesPool =
-			PortletPreferencesLocalUtil.getPreferencesPool(ownerId, ownerType);
-
-		PortalPreferencesImpl portalPreferencesImpl =
-			(PortalPreferencesImpl)preferencesPool.get(companyId);
-
-		if (portalPreferencesImpl == null) {
-			return PortalPreferencesLocalServiceUtil.getPreferences(
-				companyId, ownerId, ownerType);
-		}
-		else {
-			return new PortalPreferencesWrapper(
-				(PortalPreferencesImpl)portalPreferencesImpl.clone());
-		}
+		return PortalPreferencesLocalServiceUtil.getPreferences(
+			companyId, ownerId, ownerType);
 	}
 
 	public static short getShort(long companyId, String name)

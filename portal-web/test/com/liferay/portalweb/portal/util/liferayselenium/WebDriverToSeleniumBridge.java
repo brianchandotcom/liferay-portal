@@ -705,4 +705,31 @@ public class WebDriverToSeleniumBridge
 		}
 	}
 
+	protected List<WebElement> getWebElements(String locator) {
+		if (locator.startsWith("//")) {
+			return findElements(By.xpath(locator));
+		}
+		else if (locator.startsWith("class=")) {
+			return findElements(By.className(locator.substring(6)));
+		}
+		else if (locator.startsWith("css=")) {
+			return findElements(By.cssSelector(locator.substring(4)));
+		}
+		else if (locator.startsWith("link=")) {
+			return findElements(By.linkText(locator.substring(5)));
+		}
+		else if (locator.startsWith("name=")) {
+			return findElements(By.name(locator.substring(5)));
+		}
+		else if (locator.startsWith("tag=")) {
+			return findElements(By.tagName(locator.substring(4)));
+		}
+		else if (locator.startsWith("xpath=")) {
+			return findElements(By.xpath(locator.substring(6)));
+		}
+		else {
+			return findElements(By.id(locator));
+		}
+	}
+
 }

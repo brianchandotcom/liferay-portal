@@ -21,48 +21,36 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
-import com.liferay.portal.test.ExecutionTestListeners;
-import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.service.persistence.BasePersistenceTestCase;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateModelImpl;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
-import org.junit.runner.RunWith;
-
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-@ExecutionTestListeners(listeners =  {
-	PersistenceExecutionTestListener.class})
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class DDMTemplatePersistenceTest {
-	@Before
+public class DDMTemplatePersistenceTest extends BasePersistenceTestCase {
+	@Override
 	public void setUp() throws Exception {
+		super.setUp();
+
 		_persistence = (DDMTemplatePersistence)PortalBeanLocatorUtil.locate(DDMTemplatePersistence.class.getName());
 	}
 
-	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = nextLong();
 
 		DDMTemplate ddmTemplate = _persistence.create(pk);
 
-		Assert.assertNotNull(ddmTemplate);
+		assertNotNull(ddmTemplate);
 
-		Assert.assertEquals(ddmTemplate.getPrimaryKey(), pk);
+		assertEquals(ddmTemplate.getPrimaryKey(), pk);
 	}
 
-	@Test
 	public void testRemove() throws Exception {
 		DDMTemplate newDDMTemplate = addDDMTemplate();
 
@@ -70,127 +58,117 @@ public class DDMTemplatePersistenceTest {
 
 		DDMTemplate existingDDMTemplate = _persistence.fetchByPrimaryKey(newDDMTemplate.getPrimaryKey());
 
-		Assert.assertNull(existingDDMTemplate);
+		assertNull(existingDDMTemplate);
 	}
 
-	@Test
 	public void testUpdateNew() throws Exception {
 		addDDMTemplate();
 	}
 
-	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = nextLong();
 
 		DDMTemplate newDDMTemplate = _persistence.create(pk);
 
-		newDDMTemplate.setUuid(ServiceTestUtil.randomString());
+		newDDMTemplate.setUuid(randomString());
 
-		newDDMTemplate.setGroupId(ServiceTestUtil.nextLong());
+		newDDMTemplate.setGroupId(nextLong());
 
-		newDDMTemplate.setCompanyId(ServiceTestUtil.nextLong());
+		newDDMTemplate.setCompanyId(nextLong());
 
-		newDDMTemplate.setUserId(ServiceTestUtil.nextLong());
+		newDDMTemplate.setUserId(nextLong());
 
-		newDDMTemplate.setUserName(ServiceTestUtil.randomString());
+		newDDMTemplate.setUserName(randomString());
 
-		newDDMTemplate.setCreateDate(ServiceTestUtil.nextDate());
+		newDDMTemplate.setCreateDate(nextDate());
 
-		newDDMTemplate.setModifiedDate(ServiceTestUtil.nextDate());
+		newDDMTemplate.setModifiedDate(nextDate());
 
-		newDDMTemplate.setStructureId(ServiceTestUtil.nextLong());
+		newDDMTemplate.setClassNameId(nextLong());
 
-		newDDMTemplate.setName(ServiceTestUtil.randomString());
+		newDDMTemplate.setClassPK(nextLong());
 
-		newDDMTemplate.setDescription(ServiceTestUtil.randomString());
+		newDDMTemplate.setName(randomString());
 
-		newDDMTemplate.setType(ServiceTestUtil.randomString());
+		newDDMTemplate.setDescription(randomString());
 
-		newDDMTemplate.setMode(ServiceTestUtil.randomString());
+		newDDMTemplate.setType(randomString());
 
-		newDDMTemplate.setLanguage(ServiceTestUtil.randomString());
+		newDDMTemplate.setMode(randomString());
 
-		newDDMTemplate.setScript(ServiceTestUtil.randomString());
+		newDDMTemplate.setLanguage(randomString());
+
+		newDDMTemplate.setScript(randomString());
 
 		_persistence.update(newDDMTemplate, false);
 
 		DDMTemplate existingDDMTemplate = _persistence.findByPrimaryKey(newDDMTemplate.getPrimaryKey());
 
-		Assert.assertEquals(existingDDMTemplate.getUuid(),
-			newDDMTemplate.getUuid());
-		Assert.assertEquals(existingDDMTemplate.getTemplateId(),
+		assertEquals(existingDDMTemplate.getUuid(), newDDMTemplate.getUuid());
+		assertEquals(existingDDMTemplate.getTemplateId(),
 			newDDMTemplate.getTemplateId());
-		Assert.assertEquals(existingDDMTemplate.getGroupId(),
+		assertEquals(existingDDMTemplate.getGroupId(),
 			newDDMTemplate.getGroupId());
-		Assert.assertEquals(existingDDMTemplate.getCompanyId(),
+		assertEquals(existingDDMTemplate.getCompanyId(),
 			newDDMTemplate.getCompanyId());
-		Assert.assertEquals(existingDDMTemplate.getUserId(),
-			newDDMTemplate.getUserId());
-		Assert.assertEquals(existingDDMTemplate.getUserName(),
+		assertEquals(existingDDMTemplate.getUserId(), newDDMTemplate.getUserId());
+		assertEquals(existingDDMTemplate.getUserName(),
 			newDDMTemplate.getUserName());
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingDDMTemplate.getCreateDate()),
+		assertEquals(Time.getShortTimestamp(existingDDMTemplate.getCreateDate()),
 			Time.getShortTimestamp(newDDMTemplate.getCreateDate()));
-		Assert.assertEquals(Time.getShortTimestamp(
+		assertEquals(Time.getShortTimestamp(
 				existingDDMTemplate.getModifiedDate()),
 			Time.getShortTimestamp(newDDMTemplate.getModifiedDate()));
-		Assert.assertEquals(existingDDMTemplate.getStructureId(),
-			newDDMTemplate.getStructureId());
-		Assert.assertEquals(existingDDMTemplate.getName(),
-			newDDMTemplate.getName());
-		Assert.assertEquals(existingDDMTemplate.getDescription(),
+		assertEquals(existingDDMTemplate.getClassNameId(),
+			newDDMTemplate.getClassNameId());
+		assertEquals(existingDDMTemplate.getClassPK(),
+			newDDMTemplate.getClassPK());
+		assertEquals(existingDDMTemplate.getName(), newDDMTemplate.getName());
+		assertEquals(existingDDMTemplate.getDescription(),
 			newDDMTemplate.getDescription());
-		Assert.assertEquals(existingDDMTemplate.getType(),
-			newDDMTemplate.getType());
-		Assert.assertEquals(existingDDMTemplate.getMode(),
-			newDDMTemplate.getMode());
-		Assert.assertEquals(existingDDMTemplate.getLanguage(),
+		assertEquals(existingDDMTemplate.getType(), newDDMTemplate.getType());
+		assertEquals(existingDDMTemplate.getMode(), newDDMTemplate.getMode());
+		assertEquals(existingDDMTemplate.getLanguage(),
 			newDDMTemplate.getLanguage());
-		Assert.assertEquals(existingDDMTemplate.getScript(),
-			newDDMTemplate.getScript());
+		assertEquals(existingDDMTemplate.getScript(), newDDMTemplate.getScript());
 	}
 
-	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		DDMTemplate newDDMTemplate = addDDMTemplate();
 
 		DDMTemplate existingDDMTemplate = _persistence.findByPrimaryKey(newDDMTemplate.getPrimaryKey());
 
-		Assert.assertEquals(existingDDMTemplate, newDDMTemplate);
+		assertEquals(existingDDMTemplate, newDDMTemplate);
 	}
 
-	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			Assert.fail("Missing entity did not throw NoSuchTemplateException");
+			fail("Missing entity did not throw NoSuchTemplateException");
 		}
 		catch (NoSuchTemplateException nsee) {
 		}
 	}
 
-	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		DDMTemplate newDDMTemplate = addDDMTemplate();
 
 		DDMTemplate existingDDMTemplate = _persistence.fetchByPrimaryKey(newDDMTemplate.getPrimaryKey());
 
-		Assert.assertEquals(existingDDMTemplate, newDDMTemplate);
+		assertEquals(existingDDMTemplate, newDDMTemplate);
 	}
 
-	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = nextLong();
 
 		DDMTemplate missingDDMTemplate = _persistence.fetchByPrimaryKey(pk);
 
-		Assert.assertNull(missingDDMTemplate);
+		assertNull(missingDDMTemplate);
 	}
 
-	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		DDMTemplate newDDMTemplate = addDDMTemplate();
@@ -203,27 +181,24 @@ public class DDMTemplatePersistenceTest {
 
 		List<DDMTemplate> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		Assert.assertEquals(1, result.size());
+		assertEquals(1, result.size());
 
 		DDMTemplate existingDDMTemplate = result.get(0);
 
-		Assert.assertEquals(existingDDMTemplate, newDDMTemplate);
+		assertEquals(existingDDMTemplate, newDDMTemplate);
 	}
 
-	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMTemplate.class,
 				DDMTemplate.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("templateId",
-				ServiceTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("templateId", nextLong()));
 
 		List<DDMTemplate> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		Assert.assertEquals(0, result.size());
+		assertEquals(0, result.size());
 	}
 
-	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		DDMTemplate newDDMTemplate = addDDMTemplate();
@@ -240,14 +215,13 @@ public class DDMTemplatePersistenceTest {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		Assert.assertEquals(1, result.size());
+		assertEquals(1, result.size());
 
 		Object existingTemplateId = result.get(0);
 
-		Assert.assertEquals(existingTemplateId, newTemplateId);
+		assertEquals(existingTemplateId, newTemplateId);
 	}
 
-	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMTemplate.class,
 				DDMTemplate.class.getClassLoader());
@@ -255,14 +229,13 @@ public class DDMTemplatePersistenceTest {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("templateId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("templateId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		Assert.assertEquals(0, result.size());
+		assertEquals(0, result.size());
 	}
 
-	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -274,45 +247,53 @@ public class DDMTemplatePersistenceTest {
 
 		DDMTemplateModelImpl existingDDMTemplateModelImpl = (DDMTemplateModelImpl)_persistence.findByPrimaryKey(newDDMTemplate.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(
-				existingDDMTemplateModelImpl.getUuid(),
+		assertTrue(Validator.equals(existingDDMTemplateModelImpl.getUuid(),
 				existingDDMTemplateModelImpl.getOriginalUuid()));
-		Assert.assertEquals(existingDDMTemplateModelImpl.getGroupId(),
+		assertEquals(existingDDMTemplateModelImpl.getGroupId(),
 			existingDDMTemplateModelImpl.getOriginalGroupId());
+
+		assertEquals(existingDDMTemplateModelImpl.getGroupId(),
+			existingDDMTemplateModelImpl.getOriginalGroupId());
+		assertEquals(existingDDMTemplateModelImpl.getClassNameId(),
+			existingDDMTemplateModelImpl.getOriginalClassNameId());
+		assertEquals(existingDDMTemplateModelImpl.getClassPK(),
+			existingDDMTemplateModelImpl.getOriginalClassPK());
 	}
 
 	protected DDMTemplate addDDMTemplate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = nextLong();
 
 		DDMTemplate ddmTemplate = _persistence.create(pk);
 
-		ddmTemplate.setUuid(ServiceTestUtil.randomString());
+		ddmTemplate.setUuid(randomString());
 
-		ddmTemplate.setGroupId(ServiceTestUtil.nextLong());
+		ddmTemplate.setGroupId(nextLong());
 
-		ddmTemplate.setCompanyId(ServiceTestUtil.nextLong());
+		ddmTemplate.setCompanyId(nextLong());
 
-		ddmTemplate.setUserId(ServiceTestUtil.nextLong());
+		ddmTemplate.setUserId(nextLong());
 
-		ddmTemplate.setUserName(ServiceTestUtil.randomString());
+		ddmTemplate.setUserName(randomString());
 
-		ddmTemplate.setCreateDate(ServiceTestUtil.nextDate());
+		ddmTemplate.setCreateDate(nextDate());
 
-		ddmTemplate.setModifiedDate(ServiceTestUtil.nextDate());
+		ddmTemplate.setModifiedDate(nextDate());
 
-		ddmTemplate.setStructureId(ServiceTestUtil.nextLong());
+		ddmTemplate.setClassNameId(nextLong());
 
-		ddmTemplate.setName(ServiceTestUtil.randomString());
+		ddmTemplate.setClassPK(nextLong());
 
-		ddmTemplate.setDescription(ServiceTestUtil.randomString());
+		ddmTemplate.setName(randomString());
 
-		ddmTemplate.setType(ServiceTestUtil.randomString());
+		ddmTemplate.setDescription(randomString());
 
-		ddmTemplate.setMode(ServiceTestUtil.randomString());
+		ddmTemplate.setType(randomString());
 
-		ddmTemplate.setLanguage(ServiceTestUtil.randomString());
+		ddmTemplate.setMode(randomString());
 
-		ddmTemplate.setScript(ServiceTestUtil.randomString());
+		ddmTemplate.setLanguage(randomString());
+
+		ddmTemplate.setScript(randomString());
 
 		_persistence.update(ddmTemplate, false);
 

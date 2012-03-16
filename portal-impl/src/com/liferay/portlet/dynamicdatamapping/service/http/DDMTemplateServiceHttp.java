@@ -55,7 +55,8 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil;
  */
 public class DDMTemplateServiceHttp {
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate addTemplate(
-		HttpPrincipal httpPrincipal, long groupId, long structureId,
+		HttpPrincipal httpPrincipal, long groupId, long classNameId,
+		long classPK,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String type, java.lang.String mode,
@@ -68,8 +69,8 @@ public class DDMTemplateServiceHttp {
 					"addTemplate", _addTemplateParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					structureId, nameMap, descriptionMap, type, mode, language,
-					script, serviceContext);
+					classNameId, classPK, nameMap, descriptionMap, type, mode,
+					language, script, serviceContext);
 
 			Object returnObj = null;
 
@@ -98,7 +99,7 @@ public class DDMTemplateServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> copyTemplates(
-		HttpPrincipal httpPrincipal, long structureId, long newStructureId,
+		HttpPrincipal httpPrincipal, long classPK, long newClassPK,
 		java.lang.String type,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -107,8 +108,8 @@ public class DDMTemplateServiceHttp {
 			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class.getName(),
 					"copyTemplates", _copyTemplatesParameterTypes1);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					structureId, newStructureId, type, serviceContext);
+			MethodHandler methodHandler = new MethodHandler(methodKey, classPK,
+					newClassPK, type, serviceContext);
 
 			Object returnObj = null;
 
@@ -207,15 +208,15 @@ public class DDMTemplateServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates(
-		HttpPrincipal httpPrincipal, long structureId, java.lang.String type,
+		HttpPrincipal httpPrincipal, long classPK, java.lang.String type,
 		java.lang.String mode)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class.getName(),
 					"getTemplates", _getTemplatesParameterTypes4);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					structureId, type, mode);
+			MethodHandler methodHandler = new MethodHandler(methodKey, classPK,
+					type, mode);
 
 			Object returnObj = null;
 
@@ -241,7 +242,7 @@ public class DDMTemplateServiceHttp {
 
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> search(
 		HttpPrincipal httpPrincipal, long companyId, long groupId,
-		long structureId, java.lang.String keywords, java.lang.String type,
+		long classPK, java.lang.String keywords, java.lang.String type,
 		java.lang.String mode, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -250,8 +251,8 @@ public class DDMTemplateServiceHttp {
 					"search", _searchParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					companyId, groupId, structureId, keywords, type, mode,
-					start, end, orderByComparator);
+					companyId, groupId, classPK, keywords, type, mode, start,
+					end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -277,7 +278,7 @@ public class DDMTemplateServiceHttp {
 
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> search(
 		HttpPrincipal httpPrincipal, long companyId, long groupId,
-		long structureId, java.lang.String name, java.lang.String description,
+		long classPK, java.lang.String name, java.lang.String description,
 		java.lang.String type, java.lang.String mode,
 		java.lang.String language, boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
@@ -287,8 +288,8 @@ public class DDMTemplateServiceHttp {
 					"search", _searchParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					companyId, groupId, structureId, name, description, type,
-					mode, language, andOperator, start, end, orderByComparator);
+					companyId, groupId, classPK, name, description, type, mode,
+					language, andOperator, start, end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -313,7 +314,7 @@ public class DDMTemplateServiceHttp {
 	}
 
 	public static int searchCount(HttpPrincipal httpPrincipal, long companyId,
-		long groupId, long structureId, java.lang.String keywords,
+		long groupId, long classPK, java.lang.String keywords,
 		java.lang.String type, java.lang.String mode)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -321,7 +322,7 @@ public class DDMTemplateServiceHttp {
 					"searchCount", _searchCountParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					companyId, groupId, structureId, keywords, type, mode);
+					companyId, groupId, classPK, keywords, type, mode);
 
 			Object returnObj = null;
 
@@ -346,7 +347,7 @@ public class DDMTemplateServiceHttp {
 	}
 
 	public static int searchCount(HttpPrincipal httpPrincipal, long companyId,
-		long groupId, long structureId, java.lang.String name,
+		long groupId, long classPK, java.lang.String name,
 		java.lang.String description, java.lang.String type,
 		java.lang.String mode, java.lang.String language, boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -355,8 +356,8 @@ public class DDMTemplateServiceHttp {
 					"searchCount", _searchCountParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					companyId, groupId, structureId, name, description, type,
-					mode, language, andOperator);
+					companyId, groupId, classPK, name, description, type, mode,
+					language, andOperator);
 
 			Object returnObj = null;
 
@@ -425,8 +426,8 @@ public class DDMTemplateServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(DDMTemplateServiceHttp.class);
 	private static final Class<?>[] _addTemplateParameterTypes0 = new Class[] {
-			long.class, long.class, java.util.Map.class, java.util.Map.class,
-			java.lang.String.class, java.lang.String.class,
+			long.class, long.class, long.class, java.util.Map.class,
+			java.util.Map.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
 			com.liferay.portal.service.ServiceContext.class
 		};

@@ -21,14 +21,16 @@ String backURL = ParamUtil.getString(request, "backURL");
 
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 
-long structureId = ParamUtil.getLong(request, "structureId");
+long templateClassNameId = ParamUtil.getLong(request, "templateClassNameId");
+long templateClassPK = ParamUtil.getLong(request, "templateClassPK");
 %>
 
 <div class="lfr-portlet-toolbar">
 	<portlet:renderURL var="viewTemplatesURL">
 		<portlet:param name="struts_action" value="/dynamic_data_mapping/view_template" />
 		<portlet:param name="backURL" value="<%= backURL %>" />
-		<portlet:param name="structureId" value="<%= String.valueOf(structureId) %>" />
+		<portlet:param name="templateClassNameId" value="<%= String.valueOf(templateClassNameId) %>" />
+		<portlet:param name="templateClassPK" value="<%= String.valueOf(templateClassPK) %>" />
 	</portlet:renderURL>
 
 	<span class="lfr-toolbar-button view-button <%= toolbarItem.equals("view-all") ? "current" : StringPool.BLANK %>">
@@ -45,7 +47,8 @@ long structureId = ParamUtil.getLong(request, "structureId");
 			<portlet:param name="redirect" value="<%= viewTemplatesURL %>" />
 			<portlet:param name="backURL" value="<%= viewTemplatesURL %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
-			<portlet:param name="structureId" value="<%= String.valueOf(structureId) %>" />
+			<portlet:param name="templateClassNameId" value="<%= String.valueOf(templateClassNameId) %>" />
+			<portlet:param name="templateClassPK" value="<%= String.valueOf(templateClassPK) %>" />
 			<portlet:param name="structureAvailableFields" value='<%= renderResponse.getNamespace() + "structureAvailableFields" %>' />
 		</portlet:renderURL>
 
@@ -66,7 +69,8 @@ long structureId = ParamUtil.getLong(request, "structureId");
 			<portlet:param name="redirect" value="<%= viewTemplatesURL %>" />
 			<portlet:param name="backURL" value="<%= viewTemplatesURL %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
-			<portlet:param name="structureId" value="<%= String.valueOf(structureId) %>" />
+			<portlet:param name="templateClassNameId" value="<%= String.valueOf(templateClassNameId) %>" />
+			<portlet:param name="templateClassPK" value="<%= String.valueOf(templateClassPK) %>" />
 			<portlet:param name="type" value="list" />
 		</portlet:renderURL>
 

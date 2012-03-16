@@ -473,6 +473,12 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 		return _layoutSet.getGroup();
 	}
 
+	public long getLayoutSetPrototypeId()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutSet.getLayoutSetPrototypeId();
+	}
+
 	public long getLiveLogoId() {
 		return _layoutSet.getLiveLogoId();
 	}

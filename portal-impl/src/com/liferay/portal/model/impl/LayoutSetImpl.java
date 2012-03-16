@@ -25,9 +25,11 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ColorScheme;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutSet;
+import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.model.VirtualHost;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.ThemeLocalServiceUtil;
 import com.liferay.portal.service.VirtualHostLocalServiceUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
@@ -50,6 +52,22 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 
 	public Group getGroup() throws PortalException, SystemException {
 		return GroupLocalServiceUtil.getGroup(getGroupId());
+	}
+	
+	public long getLayoutSetPrototypeId()
+		throws PortalException, SystemException {
+
+		String layoutSetPrototypeUuid = getLayoutSetPrototypeUuid();
+		
+		if (Validator.isNull(layoutSetPrototypeUuid)) {
+			return 0;
+		}
+
+		LayoutSetPrototype layoutSetPrototype =
+			LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuid(
+				layoutSetPrototypeUuid);
+
+		return layoutSetPrototype.getLayoutSetPrototypeId();
 	}
 
 	public long getLiveLogoId() {

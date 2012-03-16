@@ -315,11 +315,11 @@ public class EditGroupAction extends PortletAction {
 
 		long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
 
-		String name = ParamUtil.getString(actionRequest, "name");
-		String description = ParamUtil.getString(actionRequest, "description");
-		int type = ParamUtil.getInteger(actionRequest, "type");
-		String friendlyURL = ParamUtil.getString(actionRequest, "friendlyURL");
-		boolean active = ParamUtil.getBoolean(actionRequest, "active");
+		boolean active;
+		String description = null;
+		String friendlyURL = null;
+		String name = null;
+		int type;
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			Group.class.getName(), actionRequest);
@@ -331,6 +331,12 @@ public class EditGroupAction extends PortletAction {
 		if (liveGroupId <= 0) {
 
 			// Add group
+
+			active = ParamUtil.getBoolean(actionRequest, "active");
+			description = ParamUtil.getString(actionRequest, "description");
+			friendlyURL = ParamUtil.getString(actionRequest, "friendlyURL");
+			name = ParamUtil.getString(actionRequest, "name");
+			type = ParamUtil.getInteger(actionRequest, "type");
 
 			liveGroup = GroupServiceUtil.addGroup(
 				name, description, type, friendlyURL, true, active,
@@ -346,6 +352,17 @@ public class EditGroupAction extends PortletAction {
 			liveGroup = GroupLocalServiceUtil.getGroup(liveGroupId);
 
 			oldFriendlyURL = liveGroup.getFriendlyURL();
+
+			active = ParamUtil.getBoolean(
+				actionRequest, "active", liveGroup.getActive());
+			description = ParamUtil.getString(
+				actionRequest, "description", liveGroup.getDescription());
+			friendlyURL = ParamUtil.getString(
+				actionRequest, "friendlyURL", liveGroup.getFriendlyURL());
+			name = ParamUtil.getString(
+				actionRequest, "name", liveGroup.getName());
+			type = ParamUtil.getInteger(
+				actionRequest, "type", liveGroup.getType());
 
 			liveGroup = GroupServiceUtil.updateGroup(
 				liveGroupId, name, description, type, friendlyURL, active,
@@ -379,29 +396,40 @@ public class EditGroupAction extends PortletAction {
 			liveGroup.getTypeSettingsProperties();
 
 		String customJspServletContextName = ParamUtil.getString(
-			actionRequest, "customJspServletContextName");
+			actionRequest, "customJspServletContextName",
+			liveGroup.getTypeSettingsProperty("customJspServletContextName"));
 
 		typeSettingsProperties.setProperty(
 			"customJspServletContextName", customJspServletContextName);
 
 		String googleAnalyticsId = ParamUtil.getString(
-			actionRequest, "googleAnalyticsId");
+			actionRequest, "googleAnalyticsId",
+			typeSettingsProperties.getProperty("googleAnalyticsId"));
 
 		typeSettingsProperties.setProperty(
 			"googleAnalyticsId", googleAnalyticsId);
 
 		String publicRobots = ParamUtil.getString(
-			actionRequest, "publicRobots");
+			actionRequest, "publicRobots",
+			liveGroup.getTypeSettingsProperty("false-robots.txt"));
 		String privateRobots = ParamUtil.getString(
-			actionRequest, "privateRobots");
+			actionRequest, "privateRobots",
+			liveGroup.getTypeSettingsProperty("true-robots.txt"));
 
 		typeSettingsProperties.setProperty("false-robots.txt", publicRobots);
 		typeSettingsProperties.setProperty("true-robots.txt", privateRobots);
 
+		// Virtual Hosts
+
+		LayoutSet publicLayoutSet = liveGroup.getPublicLayoutSet();
+		LayoutSet privateLayoutSet = liveGroup.getPrivateLayoutSet();
+
 		String publicVirtualHost = ParamUtil.getString(
-			actionRequest, "publicVirtualHost");
+			actionRequest, "publicVirtualHost",
+			publicLayoutSet.getVirtualHostname());
 		String privateVirtualHost = ParamUtil.getString(
-			actionRequest, "privateVirtualHost");
+			actionRequest, "privateVirtualHost",
+			privateLayoutSet.getVirtualHostname());
 
 		LayoutSetServiceUtil.updateVirtualHost(
 			liveGroup.getGroupId(), false, publicVirtualHost);
@@ -409,17 +437,27 @@ public class EditGroupAction extends PortletAction {
 		LayoutSetServiceUtil.updateVirtualHost(
 			liveGroup.getGroupId(), true, privateVirtualHost);
 
+		// Staging
+
 		if (liveGroup.hasStagingGroup()) {
 			Group stagingGroup = liveGroup.getStagingGroup();
 
 			oldStagingFriendlyURL = stagingGroup.getFriendlyURL();
 
+			LayoutSet stagingPublicLayoutSet =
+				stagingGroup.getPublicLayoutSet();
+			LayoutSet stagingPrivateLayoutSet =
+				stagingGroup.getPrivateLayoutSet();
+
 			publicVirtualHost = ParamUtil.getString(
-				actionRequest, "stagingPublicVirtualHost");
+				actionRequest, "stagingPublicVirtualHost",
+				stagingPublicLayoutSet.getVirtualHostname());
 			privateVirtualHost = ParamUtil.getString(
-				actionRequest, "stagingPrivateVirtualHost");
+				actionRequest, "stagingPrivateVirtualHost",
+				stagingPrivateLayoutSet.getVirtualHostname());
 			friendlyURL = ParamUtil.getString(
-				actionRequest, "stagingFriendlyURL");
+				actionRequest, "stagingFriendlyURL",
+				stagingGroup.getFriendlyURL());
 
 			LayoutSetServiceUtil.updateVirtualHost(
 				stagingGroup.getGroupId(), false, publicVirtualHost);
@@ -436,18 +474,20 @@ public class EditGroupAction extends PortletAction {
 
 		// Layout set prototypes
 
-		LayoutSet privateLayoutSet = liveGroup.getPrivateLayoutSet();
-		LayoutSet publicLayoutSet = liveGroup.getPublicLayoutSet();
-
 		if (!liveGroup.isStaged()) {
 			long privateLayoutSetPrototypeId = ParamUtil.getLong(
-				actionRequest, "privateLayoutSetPrototypeId");
+				actionRequest, "privateLayoutSetPrototypeId",
+				privateLayoutSet.getLayoutSetPrototypeId());
 			long publicLayoutSetPrototypeId = ParamUtil.getLong(
-				actionRequest, "publicLayoutSetPrototypeId");
+				actionRequest, "publicLayoutSetPrototypeId",
+				publicLayoutSet.getLayoutSetPrototypeId());
+
 			boolean privateLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
-				actionRequest, "privateLayoutSetPrototypeLinkEnabled");
+				actionRequest, "privateLayoutSetPrototypeLinkEnabled",
+				privateLayoutSet.isLayoutSetPrototypeLinkEnabled());
 			boolean publicLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
-				actionRequest, "publicLayoutSetPrototypeLinkEnabled");
+				actionRequest, "publicLayoutSetPrototypeLinkEnabled",
+				publicLayoutSet.isLayoutSetPrototypeLinkEnabled());
 
 			if ((privateLayoutSetPrototypeId == 0) &&
 				(publicLayoutSetPrototypeId == 0) &&

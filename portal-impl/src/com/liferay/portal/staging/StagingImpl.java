@@ -1333,12 +1333,17 @@ public class StagingImpl implements Staging {
 			return;
 		}
 
-		int stagingType = ParamUtil.getInteger(portletRequest, "stagingType");
+		int stagingType = getStagingType(liveGroup, portletRequest);
 
+		boolean defaultBranchingPublic = GetterUtil.getBoolean(
+			liveGroup.getTypeSettingsProperty("branchingPublic"));
+		boolean defaultBranchingPrivate = GetterUtil.getBoolean(
+			liveGroup.getTypeSettingsProperty("branchingPrivate"));
+		
 		boolean branchingPublic = ParamUtil.getBoolean(
-			portletRequest, "branchingPublic");
+			portletRequest, "branchingPublic", defaultBranchingPublic);
 		boolean branchingPrivate = ParamUtil.getBoolean(
-			portletRequest, "branchingPrivate");
+			portletRequest, "branchingPrivate", defaultBranchingPrivate);
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -1355,16 +1360,31 @@ public class StagingImpl implements Staging {
 				branchingPrivate, serviceContext);
 		}
 		else if (stagingType == StagingConstants.TYPE_REMOTE_STAGING) {
+			String defaultRemoteAddress = GetterUtil.getString(
+				liveGroup.getTypeSettingsProperty("remoteAddress"));
+			
 			String remoteAddress = ParamUtil.getString(
-				portletRequest, "remoteAddress");
+				portletRequest, "remoteAddress", defaultRemoteAddress);
 
 			remoteAddress = stripProtocolFromRemoteAddress(remoteAddress);
 
+			long defaultRemoteGroupId = GetterUtil.getLong(
+				liveGroup.getTypeSettingsProperty("remoteGroupId"));
+
 			long remoteGroupId = ParamUtil.getLong(
-				portletRequest, "remoteGroupId");
-			int remotePort = ParamUtil.getInteger(portletRequest, "remotePort");
+				portletRequest, "remoteGroupId", defaultRemoteGroupId);
+
+			int defaultRemotePort = GetterUtil.getInteger(
+				liveGroup.getTypeSettingsProperty("remotePort"));
+
+			int remotePort = ParamUtil.getInteger(
+				portletRequest, "remotePort", defaultRemotePort);
+
+			boolean defaultSecureConnection = GetterUtil.getBoolean(
+				liveGroup.getTypeSettingsProperty("secureConnection"));
+
 			boolean secureConnection = ParamUtil.getBoolean(
-				portletRequest, "secureConnection");
+				portletRequest, "secureConnection", defaultSecureConnection);
 
 			enableRemoteStaging(
 				userId, scopeGroup, liveGroup, branchingPublic,
@@ -1588,6 +1608,26 @@ public class StagingImpl implements Staging {
 
 	protected String getRecentLayoutSetBranchIdKey(long layoutSetId) {
 		return "layoutSetBranchId_" + layoutSetId;
+	}
+
+	protected int getStagingType(
+		Group liveGroup, PortletRequest portletRequest) {
+
+		String stagingType = portletRequest.getParameter("stagingType");
+
+		if (stagingType != null) {
+			return GetterUtil.getInteger(stagingType);
+		}
+
+		if (liveGroup.isStagedRemotely()) {
+			return StagingConstants.TYPE_REMOTE_STAGING;
+		}
+
+		if (liveGroup.hasStagingGroup()) {
+			return StagingConstants.TYPE_LOCAL_STAGING;
+		}
+
+		return StagingConstants.TYPE_NOT_STAGED;
 	}
 
 	protected void publishLayouts(

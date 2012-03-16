@@ -61,6 +61,20 @@ public class PortletServlet extends HttpServlet {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 
+		if (request.getAttribute(WebKeys.EXTEND_SESSION) != null) {
+			request.removeAttribute(WebKeys.EXTEND_SESSION);
+
+			HttpSession session = request.getSession(false);
+
+			if (session != null) {
+				String key = PortletServlet.class.getName() + ".extend_session";
+
+				session.setAttribute(key, Boolean.TRUE);
+				session.removeAttribute(key);
+			}
+			return;
+		}
+
 		String portletId = (String)request.getAttribute(WebKeys.PORTLET_ID);
 
 		PortletRequest portletRequest = (PortletRequest)request.getAttribute(

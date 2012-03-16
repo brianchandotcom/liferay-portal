@@ -38,6 +38,8 @@ public interface WebKeys {
 	public static final String CURRENT_COMPLETE_URL = "CURRENT_COMPLETE_URL";
 
 	public static final String CURRENT_URL = "CURRENT_URL";
+	
+	public static final String EXTEND_SESSION = "EXTEND_SESSION";
 
 	public static final String FILE_ITEM_THRESHOLD_SIZE_EXCEEDED = "FILE_ITEM_THRESHOLD_SIZE_EXCEEDED";
 

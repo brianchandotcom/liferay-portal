@@ -28,6 +28,8 @@ public abstract class AbstractStatementCallback extends Statement {
 		_testContextHandler = testContextHandler;
 	}
 
+	public abstract void evaluate() throws Throwable;
+
 	public Statement getStatement() {
 		return _statement;
 	}
@@ -35,8 +37,6 @@ public abstract class AbstractStatementCallback extends Statement {
 	public TestContextHandler getTextContextHandler() {
 		return _testContextHandler;
 	}
-
-	public abstract void evaluate() throws Throwable;
 
 	private Statement _statement;
 	private TestContextHandler _testContextHandler;

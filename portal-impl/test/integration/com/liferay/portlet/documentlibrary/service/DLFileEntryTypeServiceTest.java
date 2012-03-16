@@ -20,7 +20,10 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.service.BaseServiceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.EnvironmentConfigTestListener;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
@@ -30,15 +33,21 @@ import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.util.List;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
 /**
  * @author Alexander Chow
  */
-public class DLFileEntryTypeServiceTest extends BaseServiceTestCase {
+@ExecutionTestListeners(listeners = {EnvironmentConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class DLFileEntryTypeServiceTest {
 
-	@Override
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		SimpleAction simpleAction =
 			new AddDefaultDocumentLibraryStructuresAction();
 
@@ -49,11 +58,12 @@ public class DLFileEntryTypeServiceTest extends BaseServiceTestCase {
 		_folder = DLAppLocalServiceUtil.addFolder(
 			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Folder A", "",
-			getServiceContext());
+			ServiceTestUtil.getServiceContext());
 
 		_subfolder = DLAppLocalServiceUtil.addFolder(
 			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
-			_folder.getFolderId(), "SubFolder AA", "", getServiceContext());
+			_folder.getFolderId(), "SubFolder AA", "",
+			ServiceTestUtil.getServiceContext());
 
 		_basicDocumentDLFileEntryType =
 			DLFileEntryTypeLocalServiceUtil.getFileEntryType(
@@ -76,25 +86,25 @@ public class DLFileEntryTypeServiceTest extends BaseServiceTestCase {
 		}
 	}
 
-	@Override
+	@After
 	public void tearDown() throws Exception {
-		super.tearDown();
-
 		DLAppLocalServiceUtil.deleteFolder(_folder.getFolderId());
 	}
 
+	@Test
 	public void testCheckDefaultFileEntryTypes() throws Exception {
-		assertNotNull(
+		Assert.assertNotNull(
 			DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT + " cannot be null",
 			_basicDocumentDLFileEntryType);
-		assertNotNull(
+		Assert.assertNotNull(
 			DLFileEntryTypeConstants.NAME_CONTRACT + " cannot be null",
 			_contractDLFileEntryType);
-		assertNotNull(
+		Assert.assertNotNull(
 			DLFileEntryTypeConstants.NAME_MARKETING_BANNER + " cannot be null",
 			_marketingBannerDLFileEntryType);
 	}
 
+	@Test
 	public void testFileEntryTypeRestrictions() throws Exception {
 
 		// Configure folder
@@ -108,7 +118,7 @@ public class DLFileEntryTypeServiceTest extends BaseServiceTestCase {
 					_contractDLFileEntryType.getPrimaryKey(),
 					_marketingBannerDLFileEntryType.getPrimaryKey()
 				}),
-			true, getServiceContext());
+			true, ServiceTestUtil.getServiceContext());
 
 		// Add file to folder
 
@@ -117,7 +127,8 @@ public class DLFileEntryTypeServiceTest extends BaseServiceTestCase {
 
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
 			TestPropsValues.getGroupId(), _folder.getFolderId(), name,
-			ContentTypes.TEXT_PLAIN, name, "", "", bytes, getServiceContext());
+			ContentTypes.TEXT_PLAIN, name, "", "", bytes,
+			ServiceTestUtil.getServiceContext());
 
 		assertFileEntryType(fileEntry, _contractDLFileEntryType);
 
@@ -125,7 +136,8 @@ public class DLFileEntryTypeServiceTest extends BaseServiceTestCase {
 
 		fileEntry = DLAppServiceUtil.addFileEntry(
 			TestPropsValues.getGroupId(), _subfolder.getFolderId(), name,
-			ContentTypes.TEXT_PLAIN, name, "", "", bytes, getServiceContext());
+			ContentTypes.TEXT_PLAIN, name, "", "", bytes,
+			ServiceTestUtil.getServiceContext());
 
 		assertFileEntryType(fileEntry, _contractDLFileEntryType);
 
@@ -136,8 +148,8 @@ public class DLFileEntryTypeServiceTest extends BaseServiceTestCase {
 			_subfolder.getName(), _subfolder.getDescription(),
 			_basicDocumentDLFileEntryType.getPrimaryKey(),
 			ListUtil.toList(
-				new long[] {_basicDocumentDLFileEntryType.getPrimaryKey()}),
-			true, getServiceContext());
+				new long[]{_basicDocumentDLFileEntryType.getPrimaryKey()}),
+			true, ServiceTestUtil.getServiceContext());
 
 		fileEntry = DLAppServiceUtil.getFileEntry(fileEntry.getFileEntryId());
 
@@ -149,7 +161,7 @@ public class DLFileEntryTypeServiceTest extends BaseServiceTestCase {
 
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
-		assertEquals(
+		Assert.assertEquals(
 			"File should be of file entry type " +
 				dlFileEntryType.getFileEntryTypeId(),
 			dlFileEntryType.getPrimaryKey(), dlFileEntry.getFileEntryTypeId());

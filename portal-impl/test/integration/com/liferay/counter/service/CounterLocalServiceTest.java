@@ -15,16 +15,26 @@
 package com.liferay.counter.service;
 
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.service.BaseServiceTestCase;
 import com.liferay.portal.service.PortalServiceUtil;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.EnvironmentConfigTestListener;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Michael Young
  */
-public class CounterLocalServiceTest extends BaseServiceTestCase {
+@ExecutionTestListeners(listeners = {EnvironmentConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class CounterLocalServiceTest {
 
+	@Test
 	public void testCounterIncrement_Rollback() throws Exception {
-		long counterValue = nextLong() + 1;
+		long counterValue = ServiceTestUtil.nextLong() + 1;
 
 		try {
 			PortalServiceUtil.testCounterIncrement_Rollback();
@@ -32,7 +42,7 @@ public class CounterLocalServiceTest extends BaseServiceTestCase {
 		catch (SystemException se) {
 		}
 
-		assertTrue(nextLong() > counterValue);
+		Assert.assertTrue(ServiceTestUtil.nextLong() > counterValue);
 	}
 
 }

@@ -20,6 +20,9 @@ import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Lock;
+import com.liferay.portal.test.EnvironmentConfigTestListener;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,11 +33,18 @@ import java.util.concurrent.TimeUnit;
 import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.exception.LockAcquisitionException;
 
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
 /**
  * @author Shuyang Zhou
  */
-public class LockLocalServiceTest extends BaseServiceTestCase {
+@ExecutionTestListeners(listeners = {EnvironmentConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class LockLocalServiceTest {
 
+	@Test
 	public void testMutualExcludeLockingParallel() throws Exception {
 		ExecutorService executorService = Executors.newFixedThreadPool(10);
 
@@ -51,17 +61,19 @@ public class LockLocalServiceTest extends BaseServiceTestCase {
 
 		executorService.shutdown();
 
-		assertTrue(executorService.awaitTermination(600, TimeUnit.SECONDS));
+		Assert.assertTrue(
+			executorService.awaitTermination(600, TimeUnit.SECONDS));
 
 		for (LockingJob lockingJob : lockingJobs) {
 			SystemException systemException = lockingJob.getSystemException();
 
 			if (systemException != null) {
-				fail(systemException.getMessage());
+				Assert.fail(systemException.getMessage());
 			}
 		}
 	}
 
+	@Test
 	public void testMutualExcludeLockingSerial() throws Exception {
 		String className = "testClassName";
 		String key = "testKey";
@@ -69,22 +81,22 @@ public class LockLocalServiceTest extends BaseServiceTestCase {
 
 		Lock lock1 = LockLocalServiceUtil.lock(className, key, owner1, false);
 
-		assertEquals(owner1, lock1.getOwner());
-		assertTrue(lock1.isNew());
+		Assert.assertEquals(owner1, lock1.getOwner());
+		Assert.assertTrue(lock1.isNew());
 
 		String owner2 = "owner2";
 
 		Lock lock2 = LockLocalServiceUtil.lock(className, key, owner2, false);
 
-		assertEquals(owner1, lock2.getOwner());
-		assertFalse(lock2.isNew());
+		Assert.assertEquals(owner1, lock2.getOwner());
+		Assert.assertFalse(lock2.isNew());
 
 		LockLocalServiceUtil.unlock(className, key, owner1, false);
 
 		lock2 = LockLocalServiceUtil.lock(className, key, owner2, false);
 
-		assertEquals(owner2, lock2.getOwner());
-		assertTrue(lock2.isNew());
+		Assert.assertEquals(owner2, lock2.getOwner());
+		Assert.assertTrue(lock2.isNew());
 
 		LockLocalServiceUtil.unlock(className, key, owner2, false);
 	}

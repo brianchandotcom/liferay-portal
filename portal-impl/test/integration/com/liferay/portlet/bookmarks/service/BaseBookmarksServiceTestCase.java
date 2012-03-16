@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.bookmarks.service;
 
-import com.liferay.portal.service.BaseServiceTestCase;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
@@ -24,7 +23,7 @@ import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
 /**
  * @author Brian Wing Shun Chan
  */
-public class BaseBookmarksServiceTestCase extends BaseServiceTestCase {
+public class BaseBookmarksServiceTestCase {
 
 	protected BookmarksEntry addEntry() throws Exception {
 		BookmarksFolder folder = addFolder();

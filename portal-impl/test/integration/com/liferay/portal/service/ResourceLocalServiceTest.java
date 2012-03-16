@@ -19,21 +19,29 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.DoAsUserThread;
+import com.liferay.portal.test.EnvironmentConfigTestListener;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.TestPropsValues;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class ResourceLocalServiceTest extends BaseServiceTestCase {
+@ExecutionTestListeners(listeners = {EnvironmentConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class ResourceLocalServiceTest {
 
-	@Override
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
+		_userIds = new long[ServiceTestUtil.THREAD_COUNT];
 
-		_userIds = new long[THREAD_COUNT];
-
-		for (int i = 0 ; i < THREAD_COUNT; i++) {
-			User user = addUser(
+		for (int i = 0 ; i < ServiceTestUtil.THREAD_COUNT; i++) {
+			User user = ServiceTestUtil.addUser(
 				"ResourceLocalServiceTest" + (i + 1), false,
 				new long[] {TestPropsValues.getGroupId()});
 
@@ -41,8 +49,10 @@ public class ResourceLocalServiceTest extends BaseServiceTestCase {
 		}
 	}
 
+	@Test
 	public void testAddResourcesConcurrently() throws Exception {
-		DoAsUserThread[] doAsUserThreads = new DoAsUserThread[THREAD_COUNT];
+		DoAsUserThread[] doAsUserThreads =
+			new DoAsUserThread[ServiceTestUtil.THREAD_COUNT];
 
 		for (int i = 0; i < doAsUserThreads.length; i++) {
 			doAsUserThreads[i] = new AddResources(_userIds[i]);
@@ -64,10 +74,10 @@ public class ResourceLocalServiceTest extends BaseServiceTestCase {
 			}
 		}
 
-		assertTrue(
-			"Only " + successCount + " out of " + THREAD_COUNT +
+		Assert.assertTrue(
+			"Only " + successCount + " out of " + ServiceTestUtil.THREAD_COUNT +
 				" threads added resources successfully",
-			successCount == THREAD_COUNT);
+			successCount == ServiceTestUtil.THREAD_COUNT);
 	}
 
 	private long[] _userIds;

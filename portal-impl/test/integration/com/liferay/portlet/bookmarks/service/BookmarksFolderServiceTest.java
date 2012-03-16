@@ -23,38 +23,53 @@ import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.test.EnvironmentConfigTestListener;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.assertion.AssertUtils;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 
 import java.util.List;
 
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
 /**
  * @author Brian Wing Shun Chan
  */
+@ExecutionTestListeners(listeners = {EnvironmentConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class BookmarksFolderServiceTest extends BaseBookmarksServiceTestCase {
 
+	@Test
 	public void testAddFolder() throws Exception {
 		addFolder();
 	}
 
+	@Test
 	public void testAddSubfolder() throws Exception {
 		BookmarksFolder folder = addFolder();
 
 		addFolder(folder.getFolderId());
 	}
 
+	@Test
 	public void testDeleteFolder() throws Exception {
 		BookmarksFolder folder = addFolder();
 
 		BookmarksFolderServiceUtil.deleteFolder(folder.getFolderId());
 	}
 
+	@Test
 	public void testGetFolder() throws Exception {
 		BookmarksFolder folder = addFolder();
 
 		BookmarksFolderServiceUtil.getFolder(folder.getFolderId());
 	}
 
+	@Test
 	public void testSearch() throws Exception {
 		BookmarksEntry entry = addEntry();
 
@@ -83,23 +98,26 @@ public class BookmarksFolderServiceTest extends BaseBookmarksServiceTestCase {
 
 		Hits hits = indexer.search(searchContext);
 
-		assertEquals(1, hits.getLength());
+		Assert.assertEquals(1, hits.getLength());
 
 		List<Document> results =  hits.toList();
 
 		for (Document doc : results) {
-			assertEquals(
+			Assert.assertEquals(
 				companyId, GetterUtil.getLong(doc.get(Field.COMPANY_ID)));
 
-			assertEquals(groupId, GetterUtil.getLong(doc.get(Field.GROUP_ID)));
+			Assert.assertEquals(
+					groupId, GetterUtil.getLong(doc.get(Field.GROUP_ID)));
 
-			assertEqualsIgnoreCase(entry.getName(), doc.get(Field.TITLE));
-			assertEquals(entry.getUrl(), doc.get(Field.URL));
-			assertEqualsIgnoreCase(
+			AssertUtils.assertEqualsIgnoreCase(
+				entry.getName(), doc.get(Field.TITLE));
+			Assert.assertEquals(entry.getUrl(), doc.get(Field.URL));
+			AssertUtils.assertEqualsIgnoreCase(
 				entry.getDescription(), doc.get(Field.DESCRIPTION));
 
-			assertEquals(folderId, GetterUtil.getLong(doc.get("folderId")));
-			assertEquals(
+			Assert.assertEquals(
+				folderId, GetterUtil.getLong(doc.get("folderId")));
+			Assert.assertEquals(
 				entry.getEntryId(),
 				GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK)));
 		}
@@ -112,7 +130,7 @@ public class BookmarksFolderServiceTest extends BaseBookmarksServiceTestCase {
 
 		Query query = hits.getQuery();
 
-		assertEquals(query.toString(), 0, hits.getLength());
+		Assert.assertEquals(query.toString(), 0, hits.getLength());
 
 		addEntry();
 		addEntry();
@@ -127,8 +145,8 @@ public class BookmarksFolderServiceTest extends BaseBookmarksServiceTestCase {
 
 		hits = indexer.search(searchContext);
 
-		assertEquals(4, hits.getLength());
-		assertEquals(2, hits.getDocs().length);
+		Assert.assertEquals(4, hits.getLength());
+		Assert.assertEquals(2, hits.getDocs().length);
 	}
 
 }

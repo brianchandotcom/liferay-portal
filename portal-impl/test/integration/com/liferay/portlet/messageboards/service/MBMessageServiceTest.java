@@ -19,10 +19,10 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.DoAsUserThread;
-import com.liferay.portal.service.BaseServiceTestCase;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.*;
+import com.liferay.portal.test.EnvironmentConfigTestListener;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
@@ -33,15 +33,21 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
 /**
  * @author Alexander Chow
  */
-public class MBMessageServiceTest extends BaseServiceTestCase {
+@ExecutionTestListeners(listeners = {EnvironmentConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class MBMessageServiceTest {
 
-	@Override
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		String name = "Test Category";
 		String description = "This is a test category.";
 		String displayStyle = MBCategoryConstants.DEFAULT_DISPLAY_STYLE;
@@ -84,18 +90,18 @@ public class MBMessageServiceTest extends BaseServiceTestCase {
 		_userIds = UserLocalServiceUtil.getGroupUserIds(group.getGroupId());
 	}
 
-	@Override
+	@After
 	public void tearDown() throws Exception {
 		if (_category != null) {
 			MBCategoryServiceUtil.deleteCategory(
 				_category.getGroupId(), _category.getCategoryId());
 		}
-
-		super.tearDown();
 	}
 
+	@Test
 	public void testAddMessagesConcurrently() throws Exception {
-		DoAsUserThread[] doAsUserThreads = new DoAsUserThread[THREAD_COUNT];
+		DoAsUserThread[] doAsUserThreads =
+			new DoAsUserThread[ServiceTestUtil.THREAD_COUNT];
 
 		for (int i = 0; i < doAsUserThreads.length; i++) {
 			String subject = "Test Message " + i;
@@ -119,10 +125,11 @@ public class MBMessageServiceTest extends BaseServiceTestCase {
 			}
 		}
 
-		assertTrue(
-			"Only " + successCount + " out of " + THREAD_COUNT +
-				" threads added messages successfully",
-			successCount == THREAD_COUNT);
+		Assert.assertTrue(
+			"Only " + successCount + " out of " +
+				ServiceTestUtil.THREAD_COUNT +
+					" threads added messages successfully",
+			successCount == ServiceTestUtil.THREAD_COUNT);
 	}
 
 	private MBCategory _category;

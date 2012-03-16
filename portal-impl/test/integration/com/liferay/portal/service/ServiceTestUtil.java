@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service;
 
+import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.jcr.JCRFactoryUtil;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.messaging.MessageBus;
@@ -23,6 +24,8 @@ import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineUtil;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.User;
@@ -47,9 +50,15 @@ import com.liferay.portlet.messageboards.util.MBIndexer;
 import com.liferay.portlet.messageboards.workflow.MBDiscussionWorkflowHandler;
 import com.liferay.portlet.messageboards.workflow.MBMessageWorkflowHandler;
 import com.liferay.portlet.usersadmin.util.UserIndexer;
+import com.liferay.util.PwdGenerator;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Random;
 import java.util.Set;
 
 /**
@@ -59,10 +68,64 @@ import java.util.Set;
  */
 public class ServiceTestUtil {
 
+	public static final int THREAD_COUNT = 25;
+
+	public static User addUser(
+			String screenName, boolean autoScreenName, long[] groupIds)
+		throws Exception {
+
+		User user = UserLocalServiceUtil.fetchUserByScreenName(
+				TestPropsValues.getCompanyId(), screenName);
+
+		if (user != null) {
+			return user;
+		}
+
+		boolean autoPassword = true;
+		String password1 = StringPool.BLANK;
+		String password2 = StringPool.BLANK;
+		String emailAddress = "ServiceTestSuite." + nextLong() + "@liferay.com";
+		long facebookId = 0;
+		String openId = StringPool.BLANK;
+		Locale locale = LocaleUtil.getDefault();
+		String firstName = "ServiceTestSuite";
+		String middleName = StringPool.BLANK;
+		String lastName = "ServiceTestSuite";
+		int prefixId = 0;
+		int suffixId = 0;
+		boolean male = true;
+		int birthdayMonth = Calendar.JANUARY;
+		int birthdayDay = 1;
+		int birthdayYear = 1970;
+		String jobTitle = StringPool.BLANK;
+		long[] organizationIds = null;
+		long[] roleIds = null;
+		long[] userGroupIds = null;
+		boolean sendMail = false;
+
+		return UserLocalServiceUtil.addUser(
+			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+			autoPassword, password1, password2, autoScreenName, screenName,
+			emailAddress, facebookId, openId, locale, firstName, middleName,
+			lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay,
+			birthdayYear, jobTitle, groupIds, organizationIds, roleIds,
+			userGroupIds, sendMail, getServiceContext());
+	}
+
 	public static void destroyServices() {
 		LuceneHelperUtil.shutdown();
 
 		FileUtil.deltree(PropsValues.LIFERAY_HOME + "/data");
+	}
+
+	public static ServiceContext getServiceContext() throws Exception {
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(TestPropsValues.getCompanyId());
+		serviceContext.setScopeGroupId(TestPropsValues.getGroupId());
+		serviceContext.setUserId(TestPropsValues.getUserId());
+
+		return serviceContext;
 	}
 
 	public static void initPermissions() {
@@ -181,6 +244,44 @@ public class ServiceTestUtil {
 		}
 	}
 
+	public static Date newDate() throws Exception {
+		return new Date();
+	}
+
+	public static Date newDate(int month, int day, int year) throws Exception {
+		Calendar calendar = new GregorianCalendar();
+
+		calendar.set(Calendar.MONTH, month);
+		calendar.set(Calendar.DATE, day);
+		calendar.set(Calendar.YEAR, year);
+
+		return calendar.getTime();
+	}
+
+	public static Date nextDate() throws Exception {
+		return new Date();
+	}
+
+	public static double nextDouble() throws Exception {
+		return CounterLocalServiceUtil.increment();
+	}
+
+	public static int nextInt() throws Exception {
+		return (int)CounterLocalServiceUtil.increment();
+	}
+
+	public static long nextLong() throws Exception {
+		return CounterLocalServiceUtil.increment();
+	}
+
+	public static boolean randomBoolean() throws Exception {
+		return _random.nextBoolean();
+	}
+
+	public static String randomString() throws Exception {
+		return PwdGenerator.getPassword();
+	}
+
 	private static void _checkResourceActions() throws Exception {
 		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM != 6) {
 			return;
@@ -212,5 +313,7 @@ public class ServiceTestUtil {
 			}
 		}
 	}
+
+	private static Random _random = new Random();
 
 }

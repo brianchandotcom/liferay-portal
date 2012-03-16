@@ -18,12 +18,9 @@
 
 <%
 for (String servletContextName : ServletContextPool.keySet()) {
-	
 	ServletContext servletContext = ServletContextPool.get(servletContextName);
 
-	if (Validator.isNotNull(servletContextName) &&
-		!servletContextName.equals(PortalUtil.getPathContext())) {
-		
+	if (Validator.isNotNull(servletContextName) && !servletContextName.equals(PortalUtil.getPathContext())) {
 		PortletApp portletApp = PortletLocalServiceUtil.getPortletApp(servletContextName);
 
 		List<Portlet> portlets = portletApp.getPortlets();

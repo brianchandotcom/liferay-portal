@@ -72,6 +72,7 @@ public class PortletServlet extends HttpServlet {
 				session.setAttribute(key, Boolean.TRUE);
 				session.removeAttribute(key);
 			}
+
 			return;
 		}
 

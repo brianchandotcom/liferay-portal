@@ -14,40 +14,52 @@
 
 package com.liferay.portal.security.auth;
 
-import com.liferay.portal.util.BaseTestCase;
+import com.liferay.portal.test.EnvironmentConfigTestListener;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Shuyang Zhou
  */
-public class TransientTokenUtilTest extends BaseTestCase {
+@ExecutionTestListeners(listeners = {EnvironmentConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class TransientTokenUtilTest {
 
+	@Test
 	public void testCheckTokenExpired() throws Exception {
 		String tokenString = TransientTokenUtil.createToken(10);
 
 		Thread.sleep(20);
 
-		assertFalse(TransientTokenUtil.checkToken(tokenString));
+		Assert.assertFalse(TransientTokenUtil.checkToken(tokenString));
 	}
 
+	@Test
 	public void testCheckTokenNotExist() {
-		assertFalse(TransientTokenUtil.checkToken("test1"));
-		assertFalse(TransientTokenUtil.checkToken("test2"));
+		Assert.assertFalse(TransientTokenUtil.checkToken("test1"));
+		Assert.assertFalse(TransientTokenUtil.checkToken("test2"));
 	}
 
+	@Test
 	public void testCheckTokenValid() {
 		String tokenString = TransientTokenUtil.createToken(100);
 
-		assertTrue(TransientTokenUtil.checkToken(tokenString));
+		Assert.assertTrue(TransientTokenUtil.checkToken(tokenString));
 	}
 
+	@Test
 	public void testClearAll() {
 		String tokenString = TransientTokenUtil.createToken(100);
 
-		assertTrue(TransientTokenUtil.checkToken(tokenString));
+		Assert.assertTrue(TransientTokenUtil.checkToken(tokenString));
 
 		TransientTokenUtil.clearAll();
 
-		assertFalse(TransientTokenUtil.checkToken(tokenString));
+		Assert.assertFalse(TransientTokenUtil.checkToken(tokenString));
 	}
 
 }

@@ -16,31 +16,39 @@ package com.liferay.portlet.social.service;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.BaseServiceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.test.EnvironmentConfigTestListener;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portal.util.comparator.UserScreenNameComparator;
 import com.liferay.portlet.social.model.SocialRelationConstants;
-import com.liferay.portlet.social.service.SocialRelationLocalServiceUtil;
 
 import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class SocialRelationLocalServiceTest extends BaseServiceTestCase {
+@ExecutionTestListeners(listeners = {EnvironmentConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class SocialRelationLocalServiceTest {
 
-	@Override
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		for (String screenNamePrefix : new String[] {"dlc", "fra"}) {
 			for (int i = 1; i <= 9; i++) {
-				addUser(screenNamePrefix + i, false, null);
+				ServiceTestUtil.addUser(screenNamePrefix + i, false, null);
 			}
 		}
 	}
 
+	@Test
 	public void testAddRelationWithBiType() throws Exception {
 		User dlc1User = UserLocalServiceUtil.getUserByScreenName(
 			TestPropsValues.getCompanyId(), "dlc1");
@@ -130,6 +138,7 @@ public class SocialRelationLocalServiceTest extends BaseServiceTestCase {
 			SocialRelationConstants.TYPE_BI_ROMANTIC_PARTNER);
 	}
 
+	@Test
 	public void testAddRelationWithUniType() throws Exception {
 		User fra1User = UserLocalServiceUtil.getUserByScreenName(
 			TestPropsValues.getCompanyId(), "fra1");
@@ -215,6 +224,7 @@ public class SocialRelationLocalServiceTest extends BaseServiceTestCase {
 			SocialRelationConstants.TYPE_UNI_CHILD);
 	}
 
+	@Test
 	public void testGetMutualRelations() throws Exception {
 		User dlc1User = UserLocalServiceUtil.getUserByScreenName(
 			TestPropsValues.getCompanyId(), "dlc1");
@@ -228,9 +238,10 @@ public class SocialRelationLocalServiceTest extends BaseServiceTestCase {
 			dlc1User.getUserId(), dlc2User.getUserId(), QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, new UserScreenNameComparator(true));
 
-		assertEquals(4, users.size());
+		Assert.assertEquals(4, users.size());
 	}
 
+	@Test
 	public void testGetMutualRelationsByBiType() throws Exception {
 		User dlc1User = UserLocalServiceUtil.getUserByScreenName(
 			TestPropsValues.getCompanyId(), "dlc1");
@@ -245,13 +256,14 @@ public class SocialRelationLocalServiceTest extends BaseServiceTestCase {
 			SocialRelationConstants.TYPE_BI_FRIEND, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, new UserScreenNameComparator(true));
 
-		assertEquals(3, users.size());
+		Assert.assertEquals(3, users.size());
 
-		assertEquals("dlc3", users.get(0).getScreenName());
-		assertEquals("dlc4", users.get(1).getScreenName());
-		assertEquals("dlc5", users.get(2).getScreenName());
+		Assert.assertEquals("dlc3", users.get(0).getScreenName());
+		Assert.assertEquals("dlc4", users.get(1).getScreenName());
+		Assert.assertEquals("dlc5", users.get(2).getScreenName());
 	}
 
+	@Test
 	public void testGetMutualRelationsByUniType() throws Exception {
 		User fra3User = UserLocalServiceUtil.getUserByScreenName(
 			TestPropsValues.getCompanyId(), "fra3");
@@ -269,10 +281,10 @@ public class SocialRelationLocalServiceTest extends BaseServiceTestCase {
 			SocialRelationConstants.TYPE_UNI_CHILD, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, new UserScreenNameComparator(true));
 
-		assertEquals(2, users.size());
+		Assert.assertEquals(2, users.size());
 
-		assertEquals("fra1", users.get(0).getScreenName());
-		assertEquals("fra2", users.get(1).getScreenName());
+		Assert.assertEquals("fra1", users.get(0).getScreenName());
+		Assert.assertEquals("fra2", users.get(1).getScreenName());
 
 		// Are fra3 and fra5 both children of fra1?
 
@@ -281,11 +293,12 @@ public class SocialRelationLocalServiceTest extends BaseServiceTestCase {
 			SocialRelationConstants.TYPE_UNI_CHILD, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, new UserScreenNameComparator(true));
 
-		assertEquals(1, users.size());
+		Assert.assertEquals(1, users.size());
 
-		assertEquals("fra1", users.get(0).getScreenName());
+		Assert.assertEquals("fra1", users.get(0).getScreenName());
 	}
 
+	@Test
 	public void testGetRelations() throws Exception {
 		User dlc1User = UserLocalServiceUtil.getUserByScreenName(
 			TestPropsValues.getCompanyId(), "dlc1");
@@ -296,18 +309,19 @@ public class SocialRelationLocalServiceTest extends BaseServiceTestCase {
 			dlc1User.getUserId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new UserScreenNameComparator(true));
 
-		assertEquals(8, users.size());
+		Assert.assertEquals(8, users.size());
 
-		assertEquals("dlc2", users.get(0).getScreenName());
-		assertEquals("dlc3", users.get(1).getScreenName());
-		assertEquals("dlc4", users.get(2).getScreenName());
-		assertEquals("dlc5", users.get(3).getScreenName());
-		assertEquals("dlc6", users.get(4).getScreenName());
-		assertEquals("dlc7", users.get(5).getScreenName());
-		assertEquals("dlc8", users.get(6).getScreenName());
-		assertEquals("dlc9", users.get(7).getScreenName());
+		Assert.assertEquals("dlc2", users.get(0).getScreenName());
+		Assert.assertEquals("dlc3", users.get(1).getScreenName());
+		Assert.assertEquals("dlc4", users.get(2).getScreenName());
+		Assert.assertEquals("dlc5", users.get(3).getScreenName());
+		Assert.assertEquals("dlc6", users.get(4).getScreenName());
+		Assert.assertEquals("dlc7", users.get(5).getScreenName());
+		Assert.assertEquals("dlc8", users.get(6).getScreenName());
+		Assert.assertEquals("dlc9", users.get(7).getScreenName());
 	}
 
+	@Test
 	public void testGetRelationsByBiType() throws Exception {
 		User dlc1User = UserLocalServiceUtil.getUserByScreenName(
 			TestPropsValues.getCompanyId(), "dlc1");
@@ -325,15 +339,15 @@ public class SocialRelationLocalServiceTest extends BaseServiceTestCase {
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new UserScreenNameComparator(true));
 
-		assertEquals(7, users.size());
+		Assert.assertEquals(7, users.size());
 
-		assertEquals("dlc2", users.get(0).getScreenName());
-		assertEquals("dlc3", users.get(1).getScreenName());
-		assertEquals("dlc4", users.get(2).getScreenName());
-		assertEquals("dlc5", users.get(3).getScreenName());
-		assertEquals("dlc6", users.get(4).getScreenName());
-		assertEquals("dlc7", users.get(5).getScreenName());
-		assertEquals("dlc8", users.get(6).getScreenName());
+		Assert.assertEquals("dlc2", users.get(0).getScreenName());
+		Assert.assertEquals("dlc3", users.get(1).getScreenName());
+		Assert.assertEquals("dlc4", users.get(2).getScreenName());
+		Assert.assertEquals("dlc5", users.get(3).getScreenName());
+		Assert.assertEquals("dlc6", users.get(4).getScreenName());
+		Assert.assertEquals("dlc7", users.get(5).getScreenName());
+		Assert.assertEquals("dlc8", users.get(6).getScreenName());
 
 		// Is dlc1 a coworker of dlc9?
 
@@ -342,9 +356,9 @@ public class SocialRelationLocalServiceTest extends BaseServiceTestCase {
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new UserScreenNameComparator(true));
 
-		assertEquals(1, users.size());
+		Assert.assertEquals(1, users.size());
 
-		assertEquals("dlc9", users.get(0).getScreenName());
+		Assert.assertEquals("dlc9", users.get(0).getScreenName());
 
 		// Is dlc1 romantically involved with dlc2?
 
@@ -353,9 +367,9 @@ public class SocialRelationLocalServiceTest extends BaseServiceTestCase {
 			SocialRelationConstants.TYPE_BI_ROMANTIC_PARTNER, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, new UserScreenNameComparator(true));
 
-		assertEquals(1, users.size());
+		Assert.assertEquals(1, users.size());
 
-		assertEquals("dlc2", users.get(0).getScreenName());
+		Assert.assertEquals("dlc2", users.get(0).getScreenName());
 
 		// Is dlc2 romantically involved with dlc1?
 
@@ -364,9 +378,9 @@ public class SocialRelationLocalServiceTest extends BaseServiceTestCase {
 			SocialRelationConstants.TYPE_BI_ROMANTIC_PARTNER, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, new UserScreenNameComparator(true));
 
-		assertEquals(1, users.size());
+		Assert.assertEquals(1, users.size());
 
-		assertEquals("dlc1", users.get(0).getScreenName());
+		Assert.assertEquals("dlc1", users.get(0).getScreenName());
 
 		// Is dlc3 romantically involved with anyone?
 
@@ -375,9 +389,10 @@ public class SocialRelationLocalServiceTest extends BaseServiceTestCase {
 			SocialRelationConstants.TYPE_BI_ROMANTIC_PARTNER, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, new UserScreenNameComparator(true));
 
-		assertEquals(0, users.size());
+		Assert.assertEquals(0, users.size());
 	}
 
+	@Test
 	public void testGetRelationsByUniType() throws Exception {
 		User fra1User = UserLocalServiceUtil.getUserByScreenName(
 			TestPropsValues.getCompanyId(), "fra1");
@@ -398,16 +413,16 @@ public class SocialRelationLocalServiceTest extends BaseServiceTestCase {
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new UserScreenNameComparator(true));
 
-		assertEquals(8, users.size());
+		Assert.assertEquals(8, users.size());
 
-		assertEquals("fra2", users.get(0).getScreenName());
-		assertEquals("fra3", users.get(1).getScreenName());
-		assertEquals("fra4", users.get(2).getScreenName());
-		assertEquals("fra5", users.get(3).getScreenName());
-		assertEquals("fra6", users.get(4).getScreenName());
-		assertEquals("fra7", users.get(5).getScreenName());
-		assertEquals("fra8", users.get(6).getScreenName());
-		assertEquals("fra9", users.get(7).getScreenName());
+		Assert.assertEquals("fra2", users.get(0).getScreenName());
+		Assert.assertEquals("fra3", users.get(1).getScreenName());
+		Assert.assertEquals("fra4", users.get(2).getScreenName());
+		Assert.assertEquals("fra5", users.get(3).getScreenName());
+		Assert.assertEquals("fra6", users.get(4).getScreenName());
+		Assert.assertEquals("fra7", users.get(5).getScreenName());
+		Assert.assertEquals("fra8", users.get(6).getScreenName());
+		Assert.assertEquals("fra9", users.get(7).getScreenName());
 
 		// Is fra2 a parent of anyone?
 
@@ -416,7 +431,7 @@ public class SocialRelationLocalServiceTest extends BaseServiceTestCase {
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new UserScreenNameComparator(true));
 
-		assertEquals(0, users.size());
+		Assert.assertEquals(0, users.size());
 
 		// Is fra3 a child of anyone?
 
@@ -425,10 +440,10 @@ public class SocialRelationLocalServiceTest extends BaseServiceTestCase {
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new UserScreenNameComparator(true));
 
-		assertEquals(2, users.size());
+		Assert.assertEquals(2, users.size());
 
-		assertEquals("fra1", users.get(0).getScreenName());
-		assertEquals("fra2", users.get(1).getScreenName());
+		Assert.assertEquals("fra1", users.get(0).getScreenName());
+		Assert.assertEquals("fra2", users.get(1).getScreenName());
 
 		// Is fra6 a child of fra1?
 
@@ -437,7 +452,7 @@ public class SocialRelationLocalServiceTest extends BaseServiceTestCase {
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new UserScreenNameComparator(true));
 
-		assertEquals(0, users.size());
+		Assert.assertEquals(0, users.size());
 	}
 
 }

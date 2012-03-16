@@ -19,20 +19,21 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.BaseServiceTestCase;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
+import org.junit.After;
+import org.junit.Before;
+
 /**
  * @author Alexander Chow
  */
-public class BaseDLAppTestCase extends BaseServiceTestCase {
+public class BaseDLAppTestCase {
 
-	@Override
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
 
 		String name = "Test Folder";
 		String description = "This is a test folder.";
@@ -56,13 +57,11 @@ public class BaseDLAppTestCase extends BaseServiceTestCase {
 			serviceContext);
 	}
 
-	@Override
+	@After
 	public void tearDown() throws Exception {
 		if (folder != null) {
 			DLAppServiceUtil.deleteFolder(folder.getFolderId());
 		}
-
-		super.tearDown();
 	}
 
 	protected FileEntry addFileEntry(boolean rootFolder, String fileName)

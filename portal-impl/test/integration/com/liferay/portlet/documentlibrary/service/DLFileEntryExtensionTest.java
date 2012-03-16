@@ -15,9 +15,16 @@
 package com.liferay.portlet.documentlibrary.service;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.test.EnvironmentConfigTestListener;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * This JUnit test case takes into consideration all possible permutations of
@@ -173,8 +180,11 @@ import com.liferay.portlet.documentlibrary.util.DLUtil;
  *
  * @author Alexander Chow
  */
+@ExecutionTestListeners(listeners = {EnvironmentConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 
+	@Test
 	public void testAddFileEntryBasic() throws Exception {
 		testAddFileEntryBasic(_FILE_NAME, "Test.pdf", "txt", "Test.pdf.txt");
 		testAddFileEntryBasic(_FILE_NAME, _FILE_NAME, "txt", _FILE_NAME);
@@ -192,13 +202,14 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 		try {
 			addFileEntry(false, "", "");
 
-			fail(
+			Assert.fail(
 				"Created document with blank source file name and blank title");
 		}
 		catch (FileNameException fne) {
 		}
 	}
 
+	@Test
 	public void testAddFileEntryFalsePositives() throws Exception {
 
 		// "Test.txt" / "Test.txt" followed by "Test" / "Test"
@@ -213,7 +224,7 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 				tempFileEntry.getFileEntryId());
 		}
 		catch (DuplicateFileException dfe) {
-			fail("Unable to create" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
+			Assert.fail("Unable to create" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
 
 		DLAppLocalServiceUtil.deleteFileEntry(fileEntry.getFileEntryId());
@@ -231,12 +242,13 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 				tempFileEntry.getFileEntryId());
 		}
 		catch (DuplicateFileException dfe) {
-			fail("Unable to create" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
+			Assert.fail("Unable to create" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
 
 		DLAppLocalServiceUtil.deleteFileEntry(fileEntry.getFileEntryId());
 	}
 
+	@Test
 	public void testAddFileEntryWithExtension() throws Exception {
 		FileEntry fileEntry = addFileEntry(false, _FILE_NAME, _FILE_NAME);
 
@@ -245,7 +257,7 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 		try {
 			addFileEntry(false, _FILE_NAME, _STRIPPED_FILE_NAME);
 
-			fail("Created" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
+			Assert.fail("Created" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
 		catch (DuplicateFileException dfe) {
 		}
@@ -257,7 +269,7 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 				tempFileEntry.getFileEntryId(), _FILE_NAME,
 				_STRIPPED_FILE_NAME);
 
-			fail("Renamed" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
+			Assert.fail("Renamed" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
 		catch (DuplicateFileException dfe2) {
 		}
@@ -271,7 +283,7 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 		try {
 			addFileEntry(false, _FILE_NAME, "");
 
-			fail("Created" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
+			Assert.fail("Created" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
 		catch (DuplicateFileException dfe) {
 		}
@@ -281,7 +293,7 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 		try {
 			updateFileEntry(tempFileEntry.getFileEntryId(), _FILE_NAME, "");
 
-			fail("Renamed" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
+			Assert.fail("Renamed" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
 		catch (DuplicateFileException dfe) {
 		}
@@ -295,7 +307,7 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 		try {
 			addFileEntry(false, _STRIPPED_FILE_NAME, _FILE_NAME);
 
-			fail("Created" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
+			Assert.fail("Created" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
 		catch (DuplicateFileException dfe) {
 		}
@@ -307,7 +319,7 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 				tempFileEntry.getFileEntryId(), _STRIPPED_FILE_NAME,
 				_FILE_NAME);
 
-			fail("Renamed" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
+			Assert.fail("Renamed" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
 		catch (DuplicateFileException dfe2) {
 		}
@@ -321,7 +333,7 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 		try {
 			addFileEntry(false, "", _FILE_NAME);
 
-			fail("Created" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
+			Assert.fail("Created" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
 		catch (DuplicateFileException dfe) {
 		}
@@ -331,7 +343,7 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 		try {
 			updateFileEntry(tempFileEntry.getFileEntryId(), "", _FILE_NAME);
 
-			fail("Renamed" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
+			Assert.fail("Renamed" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
 		catch (DuplicateFileException dfe2) {
 		}
@@ -343,6 +355,7 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 		DLAppLocalServiceUtil.deleteFileEntry(fileEntry.getFileEntryId());
 	}
 
+	@Test
 	public void testAddFileEntryWithoutExtension() throws Exception {
 		FileEntry fileEntry = addFileEntry(
 			false, _STRIPPED_FILE_NAME, _STRIPPED_FILE_NAME);
@@ -352,7 +365,7 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 		try {
 			addFileEntry(false, _STRIPPED_FILE_NAME, "");
 
-			fail("Created" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
+			Assert.fail("Created" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
 		catch (DuplicateFileException dfe) {
 		}
@@ -363,7 +376,7 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 			updateFileEntry(
 				tempFileEntry.getFileEntryId(), _STRIPPED_FILE_NAME, "");
 
-			fail("Renamed" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
+			Assert.fail("Renamed" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
 		catch (DuplicateFileException dfe2) {
 		}
@@ -377,7 +390,7 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 		try {
 			addFileEntry(false, "", _STRIPPED_FILE_NAME);
 
-			fail("Created" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
+			Assert.fail("Created" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
 		catch (DuplicateFileException dfe) {
 		}
@@ -388,7 +401,7 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 			updateFileEntry(
 				tempFileEntry.getFileEntryId(), "", _STRIPPED_FILE_NAME);
 
-			fail("Renamed" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
+			Assert.fail("Renamed" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
 		catch (DuplicateFileException dfe) {
 		}
@@ -407,10 +420,10 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 
 		FileEntry fileEntry = addFileEntry(false, sourceFileName, title);
 
-		assertEquals(
+		Assert.assertEquals(
 			"Invalid file extension", extension, fileEntry.getExtension());
 
-		assertEquals(
+		Assert.assertEquals(
 			titleWithExtension, DLUtil.getTitleWithExtension(fileEntry));
 
 		DLAppLocalServiceUtil.deleteFileEntry(fileEntry.getFileEntryId());

@@ -12,31 +12,25 @@
  * details.
  */
 
-package com.liferay.portal.service;
+package com.liferay.portal.test;
 
 import com.liferay.portal.service.ServiceTestUtil;
 
-import junit.extensions.TestSetup;
-
-import junit.framework.Test;
-
 /**
- * @author Brian Wing Shun Chan
+ * @author Miguel Pastor
  */
-public class ServiceTestSetup extends TestSetup {
-
-	public ServiceTestSetup(Test test) {
-		super(test);
-	}
+public class EnvironmentConfigTestListener
+	extends AbstractExecutionTestListener {
 
 	@Override
-	public void setUp() throws Exception {
-		ServiceTestUtil.initServices();
-	}
-
-	@Override
-	public void tearDown() throws Exception {
+	public void runAfterClass(TestContext testContext) {
 		ServiceTestUtil.destroyServices();
+	}
+
+	@Override
+	public void runBeforeClass(TestContext testContext) {
+		ServiceTestUtil.initServices();
+		ServiceTestUtil.initPermissions();
 	}
 
 }

@@ -56,6 +56,14 @@ public class LiferayIntegrationJUnitTestRunner
 			_testContextHandler);
 	}
 
+	@Override
+	protected Statement withAfterClasses(Statement statement) {
+		Statement withAfterClassesStatement = super.withAfterClasses(statement);
+
+		return new RunAfterTestClassesCallback(
+			withAfterClassesStatement, _testContextHandler);
+	}
+
 	/**
 	 * @deprecated
 	 */
@@ -69,6 +77,15 @@ public class LiferayIntegrationJUnitTestRunner
 		return new RunBeforeTestMethodCallback(
 			instance, frameworkMethod.getMethod(), withBeforesStatement,
 			_testContextHandler);
+	}
+
+	@Override
+	protected Statement withBeforeClasses(Statement statement) {
+		Statement withBeforeClassesStatement = super.withBeforeClasses(
+			statement);
+
+		return new RunBeforeTestClassesCallback(
+			withBeforeClassesStatement, _testContextHandler);
 	}
 
 	private TestContextHandler _testContextHandler;

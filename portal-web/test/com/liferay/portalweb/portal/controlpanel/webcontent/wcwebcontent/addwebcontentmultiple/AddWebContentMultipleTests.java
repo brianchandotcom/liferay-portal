@@ -15,6 +15,10 @@
 package com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwebcontentmultiple;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwebcontent.AddWebContent1Test;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwebcontent.AddWebContent2Test;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwebcontent.AddWebContent3Test;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwebcontent.TearDownWebContentTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

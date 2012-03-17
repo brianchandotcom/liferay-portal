@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddBlogsEntryCPTest extends BaseTestCase {
 	public void testAddBlogsEntryCP() throws Exception {
-		selenium.open("/web/web/home/");
+		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {

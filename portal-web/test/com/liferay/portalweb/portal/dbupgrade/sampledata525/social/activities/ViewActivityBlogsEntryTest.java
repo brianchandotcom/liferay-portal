@@ -24,28 +24,12 @@ public class ViewActivityBlogsEntryTest extends BaseTestCase {
 	public void testViewActivityBlogsEntry() throws Exception {
 		selenium.open("/web/joebloggs/home/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Activities Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("link=Activities Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Activities Page",
+			RuntimeVariables.replace("Activities Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
-				"Joe wrote a new blog entry, Blogs Entry Title."),
+				"Joe wrote a new blog entry, Blogs Entry Title, in Guest."),
 			selenium.getText("xPath=(//div[@class='activity-title'])[2]"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 			selenium.getText("xPath=(//div[@class='activity-title'])[2]/a"));

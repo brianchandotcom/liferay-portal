@@ -45,7 +45,7 @@ public class ViewActivityBlogsEntryTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
-				"Joe wrote a new blog entry, Blogs Entry Title."),
+				"Joe wrote a new blog entry, Blogs Entry Title, in Liferay."),
 			selenium.getText("xPath=(//div[@class='activity-title'])[2]"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 			selenium.getText("xPath=(//div[@class='activity-title'])[2]/a"));

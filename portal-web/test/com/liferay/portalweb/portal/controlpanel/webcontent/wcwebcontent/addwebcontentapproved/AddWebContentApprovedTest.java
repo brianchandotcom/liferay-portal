@@ -55,7 +55,69 @@ public class AddWebContentApprovedTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_15_title_en_US']",
 			RuntimeVariables.replace("Web Content Name Approved"));
-		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Source"),
+			selenium.getText("//span[@id='cke_49_label' and .='Source']"));
+		selenium.clickAt("//span[@id='cke_49_label' and .='Source']",
+			RuntimeVariables.replace("Source"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.type("//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea",
+			RuntimeVariables.replace("Web Content Content Approved"));
+		assertEquals(RuntimeVariables.replace("Source"),
+			selenium.getText("//span[@id='cke_49_label' and .='Source']"));
+		selenium.clickAt("//span[@id='cke_49_label' and .='Source']",
+			RuntimeVariables.replace("Source"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -76,8 +138,24 @@ public class AddWebContentApprovedTest extends BaseTestCase {
 
 		selenium.selectFrame(
 			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
-		selenium.type("//body",
-			RuntimeVariables.replace("Web Content Content Approved"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Web Content Content Approved")
+										.equals(selenium.getText("//body"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));

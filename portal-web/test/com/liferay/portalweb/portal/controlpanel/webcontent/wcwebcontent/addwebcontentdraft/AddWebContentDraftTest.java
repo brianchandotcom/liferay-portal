@@ -62,6 +62,69 @@ public class AddWebContentDraftTest extends BaseTestCase {
 			}
 
 			try {
+				if (selenium.isElementPresent(
+							"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Source"),
+			selenium.getText("//span[@id='cke_49_label' and .='Source']"));
+		selenium.clickAt("//span[@id='cke_49_label' and .='Source']",
+			RuntimeVariables.replace("Source"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.type("//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea",
+			RuntimeVariables.replace("Web Content Content Not Approved"));
+		assertEquals(RuntimeVariables.replace("Source"),
+			selenium.getText("//span[@id='cke_49_label' and .='Source']"));
+		selenium.clickAt("//span[@id='cke_49_label' and .='Source']",
+			RuntimeVariables.replace("Source"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
 				if (selenium.isVisible(
 							"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe")) {
 					break;
@@ -75,8 +138,24 @@ public class AddWebContentDraftTest extends BaseTestCase {
 
 		selenium.selectFrame(
 			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
-		selenium.type("//body",
-			RuntimeVariables.replace("Web Content Content Not Approved"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Web Content Content Not Approved")
+										.equals(selenium.getText("//body"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Save as Draft']",
 			RuntimeVariables.replace("Save as Draft"));

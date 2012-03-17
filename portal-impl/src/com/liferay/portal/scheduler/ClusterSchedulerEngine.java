@@ -95,13 +95,10 @@ public class ClusterSchedulerEngine
 		try {
 			if (memoryClusteredSlaveJob) {
 				removeMemoryClusteredJobs(groupName);
-
-				skipClusterInvoking(groupName);
-
-				return;
 			}
-
-			_schedulerEngine.delete(groupName);
+			else {
+				_schedulerEngine.delete(groupName);
+			}
 		}
 		finally {
 			_readLock.unlock();
@@ -121,13 +118,10 @@ public class ClusterSchedulerEngine
 		try {
 			if (memoryClusteredSlaveJob) {
 				_memoryClusteredJobs.remove(getFullName(jobName, groupName));
-
-				skipClusterInvoking(groupName);
-
-				return;
 			}
-
-			_schedulerEngine.delete(jobName, groupName);
+			else {
+				_schedulerEngine.delete(jobName, groupName);
+			}
 		}
 		finally {
 			_readLock.unlock();
@@ -429,13 +423,10 @@ public class ClusterSchedulerEngine
 		try {
 			if (memoryClusteredSlaveJob) {
 				removeMemoryClusteredJobs(groupName);
-
-				skipClusterInvoking(groupName);
-
-				return;
 			}
-
-			_schedulerEngine.unschedule(groupName);
+			else {
+				_schedulerEngine.unschedule(groupName);
+			}
 		}
 		finally {
 			_readLock.unlock();
@@ -455,13 +446,10 @@ public class ClusterSchedulerEngine
 		try {
 			if (memoryClusteredSlaveJob) {
 				_memoryClusteredJobs.remove(getFullName(jobName, groupName));
-
-				skipClusterInvoking(groupName);
-
-				return;
 			}
-
-			_schedulerEngine.unschedule(jobName, groupName);
+			else {
+				_schedulerEngine.unschedule(jobName, groupName);
+			}
 		}
 		finally {
 			_readLock.unlock();

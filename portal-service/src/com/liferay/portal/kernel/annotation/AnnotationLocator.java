@@ -17,13 +17,37 @@ package com.liferay.portal.kernel.annotation;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 /**
  * @author Shuyang Zhou
  */
 public class AnnotationLocator {
+
+	public static List<Annotation> locate(Class<?> targetClass) {
+		Queue<Class<?>> queue = new LinkedList<Class<?>>();
+
+		queue.offer(targetClass);
+
+		ArrayList<Annotation> annotationList = new ArrayList<Annotation>();
+
+		Class<?> clazz = null;
+
+		while ((clazz = queue.poll()) != null) {
+			Annotation[] annotations = clazz.getAnnotations();
+
+			_mergeAnnotations(annotations, annotationList);
+
+			_queueSuperTypes(queue, clazz);
+		}
+
+		annotationList.trimToSize();
+
+		return annotationList;
+	}
 
 	public static <T extends Annotation> T locate(
 		Class<?> targetClass, Class<T> annotationClass) {
@@ -32,7 +56,65 @@ public class AnnotationLocator {
 
 		queue.offer(targetClass);
 
-		return _deepSearchTypes(queue, annotationClass);
+		Class<?> clazz = null;
+
+		while ((clazz = queue.poll()) != null) {
+			T annotation = clazz.getAnnotation(annotationClass);
+
+			if (annotation == null) {
+				_queueSuperTypes(queue, clazz);
+			}
+			else {
+				return annotation;
+			}
+		}
+
+		return null;
+	}
+
+	public static List<Annotation> locate(Method method, Class<?> targetClass) {
+		Queue<Class<?>> queue = new LinkedList<Class<?>>();
+
+		if (targetClass == null) {
+			queue.offer(method.getDeclaringClass());
+		}
+		else {
+			queue.offer(targetClass);
+		}
+
+		ArrayList<Annotation> annotationList = new ArrayList<Annotation>();
+
+		Class<?> clazz = null;
+
+		while ((clazz = queue.poll()) != null) {
+			try {
+				Method specificMethod = clazz.getDeclaredMethod(
+					method.getName(), method.getParameterTypes());
+
+				Annotation[] annotations = specificMethod.getAnnotations();
+
+				_mergeAnnotations(annotations, annotationList);
+			}
+			catch (Exception e) {
+			}
+
+			try {
+				// Ensure the clazz has publicly inherited method
+				clazz.getMethod(method.getName(), method.getParameterTypes());
+
+				Annotation[] annotations = clazz.getAnnotations();
+
+				_mergeAnnotations(annotations, annotationList);
+			}
+			catch (Exception e) {
+			}
+
+			_queueSuperTypes(queue, clazz);
+		}
+
+		annotationList.trimToSize();
+
+		return annotationList;
 	}
 
 	public static <T extends Annotation> T locate(
@@ -47,63 +129,60 @@ public class AnnotationLocator {
 			queue.offer(targetClass);
 		}
 
-		return _deepSearchMethods(queue, method, annotationClass);
-	}
+		Class<?> clazz = null;
 
-	private static <T extends Annotation> T _deepSearchMethods(
-		Queue<Class<?>> queue, Method method, Class<T> annotationClass) {
+		while ((clazz = queue.poll()) != null) {
+			T annotation = null;
 
-		if (queue.isEmpty()) {
-			return null;
-		}
+			try {
+				Method specificMethod = clazz.getDeclaredMethod(
+					method.getName(), method.getParameterTypes());
 
-		T annotation = null;
+				annotation = specificMethod.getAnnotation(annotationClass);
 
-		Class<?> clazz = queue.poll();
+				if (annotation != null) {
+					return annotation;
+				}
+			}
+			catch (Exception e) {
+			}
 
-		try {
-			Method specificMethod = clazz.getDeclaredMethod(
-				method.getName(), method.getParameterTypes());
+			try {
+				// Ensure the clazz has publicly inherited method
+				clazz.getMethod(method.getName(), method.getParameterTypes());
 
-			annotation = specificMethod.getAnnotation(annotationClass);
+				annotation = clazz.getAnnotation(annotationClass);
+			}
+			catch (Exception e) {
+			}
 
-			if (annotation != null) {
+			if (annotation == null) {
+				_queueSuperTypes(queue, clazz);
+			}
+			else {
 				return annotation;
 			}
 		}
-		catch (Exception e) {
-		}
 
-		annotation = clazz.getAnnotation(annotationClass);
-
-		if (annotation == null) {
-			_queueSuperTypes(queue, clazz);
-
-			return _deepSearchMethods(queue, method, annotationClass);
-		}
-		else {
-			return annotation;
-		}
+		return null;
 	}
 
-	private static <T extends Annotation> T _deepSearchTypes(
-		Queue<Class<?>> queue, Class<T> annotationClass) {
+	private static void _mergeAnnotations(
+		Annotation[] sourceAnnotations, List<Annotation> targetAnnotationList) {
 
-		if (queue.isEmpty()) {
-			return null;
-		}
+		Outter :
+		for (Annotation sourceAnnotation : sourceAnnotations) {
 
-		Class<?> clazz = queue.poll();
+			for (Annotation targetAnnotation : targetAnnotationList) {
 
-		T annotation = clazz.getAnnotation(annotationClass);
+				if (sourceAnnotation.annotationType() ==
+					targetAnnotation.annotationType()) {
 
-		if (annotation == null) {
-			_queueSuperTypes(queue, clazz);
+					continue Outter;
+				}
+			}
 
-			return _deepSearchTypes(queue, annotationClass);
-		}
-		else {
-			return annotation;
+			targetAnnotationList.add(sourceAnnotation);
 		}
 	}
 
@@ -119,7 +198,9 @@ public class AnnotationLocator {
 		Class<?>[] interfaceClasses = clazz.getInterfaces();
 
 		for (Class<?> interfaceClass : interfaceClasses) {
-			queue.offer(interfaceClass);
+			if (!queue.contains(interfaceClass)) {
+				queue.offer(interfaceClass);
+			}
 		}
 	}
 

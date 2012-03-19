@@ -69,23 +69,6 @@ public class EmailAddressLocalServiceImpl
 		return emailAddress;
 	}
 
-	@Override
-	public void deleteEmailAddress(EmailAddress emailAddress)
-		throws SystemException {
-
-		emailAddressPersistence.remove(emailAddress);
-	}
-
-	@Override
-	public void deleteEmailAddress(long emailAddressId)
-		throws PortalException, SystemException {
-
-		EmailAddress emailAddress = emailAddressPersistence.findByPrimaryKey(
-			emailAddressId);
-
-		deleteEmailAddress(emailAddress);
-	}
-
 	public void deleteEmailAddresses(
 			long companyId, String className, long classPK)
 		throws SystemException {
@@ -98,13 +81,6 @@ public class EmailAddressLocalServiceImpl
 		for (EmailAddress emailAddress : emailAddresses) {
 			deleteEmailAddress(emailAddress);
 		}
-	}
-
-	@Override
-	public EmailAddress getEmailAddress(long emailAddressId)
-		throws PortalException, SystemException {
-
-		return emailAddressPersistence.findByPrimaryKey(emailAddressId);
 	}
 
 	public List<EmailAddress> getEmailAddresses() throws SystemException {

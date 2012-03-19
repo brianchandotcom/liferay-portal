@@ -16,7 +16,6 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -73,13 +72,6 @@ public class ClassNameLocalServiceImpl
 		for (String model : models) {
 			getClassName(model);
 		}
-	}
-
-	@Override
-	public ClassName getClassName(long classNameId)
-		throws PortalException, SystemException {
-
-		return classNamePersistence.findByPrimaryKey(classNameId);
 	}
 
 	@Skip

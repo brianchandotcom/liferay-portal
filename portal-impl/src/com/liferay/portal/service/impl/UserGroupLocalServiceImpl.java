@@ -310,22 +310,6 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the user group with the primary key.
-	 *
-	 * @param  userGroupId the primary key of the user group
-	 * @return Returns the user group with the primary key
-	 * @throws PortalException if a user group with the primary key could not be
-	 *         found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public UserGroup getUserGroup(long userGroupId)
-		throws PortalException, SystemException {
-
-		return userGroupPersistence.findByPrimaryKey(userGroupId);
-	}
-
-	/**
 	 * Returns the user group with the name.
 	 *
 	 * @param  companyId the primary key of the user group's company

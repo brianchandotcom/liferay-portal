@@ -122,13 +122,6 @@ public class LayoutBranchLocalServiceImpl
 		}
 	}
 
-	@Override
-	public LayoutBranch getLayoutBranch(long layoutBranchId)
-		throws PortalException, SystemException {
-
-		return layoutBranchPersistence.findByPrimaryKey(layoutBranchId);
-	}
-
 	public List<LayoutBranch> getLayoutBranches(
 			long layoutSetBranchId, long plid, int start, int end,
 			OrderByComparator orderByComparator)

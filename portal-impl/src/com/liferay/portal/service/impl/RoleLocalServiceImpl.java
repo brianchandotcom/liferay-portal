@@ -492,19 +492,6 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the role with the primary key.
-	 *
-	 * @param  roleId the primary key of the role
-	 * @return the role with the primary key
-	 * @throws PortalException if a role with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public Role getRole(long roleId) throws PortalException, SystemException {
-		return rolePersistence.findByPrimaryKey(roleId);
-	}
-
-	/**
 	 * Returns the role with the name in the company.
 	 *
 	 * <p>

@@ -72,23 +72,6 @@ public class MembershipRequestLocalServiceImpl
 		return membershipRequest;
 	}
 
-	@Override
-	public void deleteMembershipRequest(long membershipRequestId)
-			throws PortalException, SystemException {
-
-		MembershipRequest membershipRequest =
-			membershipRequestPersistence.findByPrimaryKey(membershipRequestId);
-
-		deleteMembershipRequest(membershipRequest);
-	}
-
-	@Override
-	public void deleteMembershipRequest(MembershipRequest membershipRequest)
-		throws SystemException {
-
-		membershipRequestPersistence.remove(membershipRequest);
-	}
-
 	public void deleteMembershipRequests(long groupId) throws SystemException {
 		List<MembershipRequest> membershipRequests =
 			membershipRequestPersistence.findByGroupId(groupId);
@@ -118,14 +101,6 @@ public class MembershipRequestLocalServiceImpl
 		for (MembershipRequest membershipRequest : membershipRequests) {
 			deleteMembershipRequest(membershipRequest);
 		}
-	}
-
-	@Override
-	public MembershipRequest getMembershipRequest(long membershipRequestId)
-		throws PortalException, SystemException {
-
-		return membershipRequestPersistence.findByPrimaryKey(
-			membershipRequestId);
 	}
 
 	public List<MembershipRequest> getMembershipRequests(

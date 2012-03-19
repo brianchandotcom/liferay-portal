@@ -247,13 +247,6 @@ public class LayoutRevisionLocalServiceImpl
 			layoutSetBranchId, parentLayoutRevision, plid);
 	}
 
-	@Override
-	public LayoutRevision getLayoutRevision(long layoutRevisionId)
-		throws PortalException, SystemException {
-
-		return layoutRevisionPersistence.findByPrimaryKey(layoutRevisionId);
-	}
-
 	public LayoutRevision getLayoutRevision(
 			long layoutSetBranchId, long plid, boolean head)
 		throws PortalException, SystemException {

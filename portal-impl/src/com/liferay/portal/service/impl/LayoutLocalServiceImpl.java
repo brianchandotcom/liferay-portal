@@ -943,23 +943,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the layout matching the primary key; throws a {@link
-	 * com.liferay.portal.NoSuchLayoutException} otherwise.
-	 *
-	 * @param  plid the primary key of the layout
-	 * @return the matching layout
-	 * @throws PortalException if a layout with the primary key could not be
-	 *         found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public Layout getLayout(long plid)
-		throws PortalException, SystemException {
-
-		return layoutPersistence.findByPrimaryKey(plid);
-	}
-
-	/**
 	 * Returns the layout matching the primary key, group, and privacy; throws a
 	 * {@link com.liferay.portal.NoSuchLayoutException} otherwise.
 	 *
@@ -990,23 +973,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		return layoutPersistence.findByIconImageId(iconImageId);
-	}
-
-	/**
-	 * Returns the layout with the universally unique identifier and the group.
-	 *
-	 * @param  uuid the universally unique identifier of the layout
-	 * @param  groupId the primary key of the group
-	 * @return the layout with the universally unique identifier and the group
-	 * @throws PortalException if a group with the primary key could not be
-	 *         found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public Layout getLayoutByUuidAndGroupId(String uuid, long groupId)
-		throws PortalException, SystemException {
-
-		return layoutPersistence.findByUUID_G(uuid, groupId);
 	}
 
 	/**

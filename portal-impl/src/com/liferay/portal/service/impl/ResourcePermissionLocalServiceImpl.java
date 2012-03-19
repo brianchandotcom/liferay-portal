@@ -209,25 +209,6 @@ public class ResourcePermissionLocalServiceImpl
 	}
 
 	/**
-	 * Deletes the resource permission. This method should not be confused with
-	 * any of the <code>removeResourcePermission</code> methods, as its purpose
-	 * is very different. This method should only be used for deleting a
-	 * resource permission that refers to a resource when that resource is
-	 * deleted. For example this method could be used to delete a permission to
-	 * a blog post when it is deleted.
-	 *
-	 * @param  resourcePermissionId the primary key of the resource permission
-	 * @throws PortalException if a portal exceptional occurred
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public void deleteResourcePermission(long resourcePermissionId)
-		throws PortalException, SystemException {
-
-		resourcePermissionPersistence.remove(resourcePermissionId);
-	}
-
-	/**
 	 * Deletes all resource permissions at the scope to resources of the type.
 	 * This method should not be confused with any of the
 	 * <code>removeResourcePermission</code> methods, as its purpose is very

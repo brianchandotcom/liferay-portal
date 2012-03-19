@@ -124,23 +124,6 @@ public class JournalContentSearchLocalServiceImpl
 		}
 	}
 
-	@Override
-	public void deleteJournalContentSearch(JournalContentSearch contentSearch)
-		throws SystemException {
-
-		journalContentSearchPersistence.remove(contentSearch);
-	}
-
-	@Override
-	public void deleteJournalContentSearch(long contentSearchId)
-		throws PortalException, SystemException {
-
-		JournalContentSearch contentSearch =
-			journalContentSearchPersistence.findByPrimaryKey(contentSearchId);
-
-		deleteJournalContentSearch(contentSearch);
-	}
-
 	public void deleteLayoutContentSearches(
 			long groupId, boolean privateLayout, long layoutId)
 		throws SystemException {

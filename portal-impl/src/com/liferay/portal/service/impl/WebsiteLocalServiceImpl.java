@@ -65,20 +65,6 @@ public class WebsiteLocalServiceImpl extends WebsiteLocalServiceBaseImpl {
 		return website;
 	}
 
-	@Override
-	public void deleteWebsite(long websiteId)
-		throws PortalException, SystemException {
-
-		Website website = websitePersistence.findByPrimaryKey(websiteId);
-
-		deleteWebsite(website);
-	}
-
-	@Override
-	public void deleteWebsite(Website website) throws SystemException {
-		websitePersistence.remove(website);
-	}
-
 	public void deleteWebsites(long companyId, String className, long classPK)
 		throws SystemException {
 
@@ -90,13 +76,6 @@ public class WebsiteLocalServiceImpl extends WebsiteLocalServiceBaseImpl {
 		for (Website website : websites) {
 			deleteWebsite(website);
 		}
-	}
-
-	@Override
-	public Website getWebsite(long websiteId)
-		throws PortalException, SystemException {
-
-		return websitePersistence.findByPrimaryKey(websiteId);
 	}
 
 	public List<Website> getWebsites() throws SystemException {

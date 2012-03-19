@@ -15,7 +15,6 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.NoSuchBrowserTrackerException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -36,13 +35,6 @@ public class BrowserTrackerLocalServiceImpl
 		}
 		catch (NoSuchBrowserTrackerException nsbte) {
 		}
-	}
-
-	@Override
-	public BrowserTracker getBrowserTracker(long browserTrackerId)
-		throws PortalException, SystemException {
-
-		return browserTrackerPersistence.findByPrimaryKey(browserTrackerId);
 	}
 
 	public BrowserTracker getBrowserTracker(long userId, long browserKey)

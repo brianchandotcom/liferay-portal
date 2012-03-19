@@ -64,13 +64,6 @@ public class PortletItemLocalServiceImpl
 		return portletItem;
 	}
 
-	@Override
-	public PortletItem getPortletItem(long portletItemId)
-		throws PortalException, SystemException {
-
-		return portletItemPersistence.findByPrimaryKey(portletItemId);
-	}
-
 	public PortletItem getPortletItem(
 			long groupId, String name, String portletId, String className)
 		throws PortalException, SystemException {

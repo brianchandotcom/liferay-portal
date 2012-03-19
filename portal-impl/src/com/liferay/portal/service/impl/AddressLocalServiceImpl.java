@@ -82,20 +82,6 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 		return address;
 	}
 
-	@Override
-	public void deleteAddress(Address address) throws SystemException {
-		addressPersistence.remove(address);
-	}
-
-	@Override
-	public void deleteAddress(long addressId)
-		throws PortalException, SystemException {
-
-		Address address = addressPersistence.findByPrimaryKey(addressId);
-
-		deleteAddress(address);
-	}
-
 	public void deleteAddresses(long companyId, String className, long classPK)
 		throws SystemException {
 
@@ -107,13 +93,6 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 		for (Address address : addresses) {
 			deleteAddress(address);
 		}
-	}
-
-	@Override
-	public Address getAddress(long addressId)
-		throws PortalException, SystemException {
-
-		return addressPersistence.findByPrimaryKey(addressId);
 	}
 
 	public List<Address> getAddresses() throws SystemException {

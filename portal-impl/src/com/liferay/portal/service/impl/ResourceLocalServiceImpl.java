@@ -254,13 +254,6 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		}
 	}
 
-	@Override
-	public Resource getResource(long resourceId)
-		throws PortalException, SystemException {
-
-		return resourcePersistence.findByPrimaryKey(resourceId);
-	}
-
 	public Resource getResource(
 			long companyId, String name, int scope, String primKey)
 		throws PortalException, SystemException {

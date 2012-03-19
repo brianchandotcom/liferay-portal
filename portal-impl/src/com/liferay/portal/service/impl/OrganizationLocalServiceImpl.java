@@ -437,22 +437,6 @@ public class OrganizationLocalServiceImpl
 	}
 
 	/**
-	 * Returns the organization with the primary key.
-	 *
-	 * @param  organizationId the primary key of the organization
-	 * @return the organization with the primary key
-	 * @throws PortalException if an organization with the primary key could not
-	 *         be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public Organization getOrganization(long organizationId)
-		throws PortalException, SystemException {
-
-		return organizationPersistence.findByPrimaryKey(organizationId);
-	}
-
-	/**
 	 * Returns the organization with the name.
 	 *
 	 * @param  companyId the primary key of the organization's company

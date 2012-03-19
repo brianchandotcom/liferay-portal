@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.service.base.ContactLocalServiceBaseImpl;
@@ -63,13 +62,6 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 		if (contact != null) {
 			deleteContact(contact);
 		}
-	}
-
-	@Override
-	public Contact getContact(long contactId)
-		throws PortalException, SystemException {
-
-		return contactPersistence.findByPrimaryKey(contactId);
 	}
 
 }

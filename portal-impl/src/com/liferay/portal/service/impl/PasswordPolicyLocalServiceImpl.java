@@ -176,13 +176,6 @@ public class PasswordPolicyLocalServiceImpl
 		return passwordPolicyPersistence.findByC_DP(companyId, true);
 	}
 
-	@Override
-	public PasswordPolicy getPasswordPolicy(long passwordPolicyId)
-		throws PortalException, SystemException {
-
-		return passwordPolicyPersistence.findByPrimaryKey(passwordPolicyId);
-	}
-
 	/**
 	 * @deprecated
 	 */

@@ -71,20 +71,6 @@ public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 		return phone;
 	}
 
-	@Override
-	public void deletePhone(long phoneId)
-		throws PortalException, SystemException {
-
-		Phone phone = phonePersistence.findByPrimaryKey(phoneId);
-
-		deletePhone(phone);
-	}
-
-	@Override
-	public void deletePhone(Phone phone) throws SystemException {
-		phonePersistence.remove(phone);
-	}
-
 	public void deletePhones(long companyId, String className, long classPK)
 		throws SystemException {
 
@@ -96,13 +82,6 @@ public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 		for (Phone phone : phones) {
 			deletePhone(phone);
 		}
-	}
-
-	@Override
-	public Phone getPhone(long phoneId)
-		throws PortalException, SystemException {
-
-		return phonePersistence.findByPrimaryKey(phoneId);
 	}
 
 	public List<Phone> getPhones() throws SystemException {

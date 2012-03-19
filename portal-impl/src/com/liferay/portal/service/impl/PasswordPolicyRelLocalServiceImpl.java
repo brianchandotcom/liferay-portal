@@ -75,16 +75,6 @@ public class PasswordPolicyRelLocalServiceImpl
 		}
 	}
 
-	@Override
-	public void deletePasswordPolicyRel(long passwordPolicyRelId)
-		throws PortalException, SystemException {
-
-		PasswordPolicyRel passwordPolicyRel =
-			passwordPolicyRelPersistence.findByPrimaryKey(passwordPolicyRelId);
-
-		deletePasswordPolicyRel(passwordPolicyRel);
-	}
-
 	public void deletePasswordPolicyRel(
 			long passwordPolicyId, String className, long classPK)
 		throws SystemException {
@@ -100,13 +90,6 @@ public class PasswordPolicyRelLocalServiceImpl
 		}
 		catch (NoSuchPasswordPolicyRelException nsppre) {
 		}
-	}
-
-	@Override
-	public void deletePasswordPolicyRel(PasswordPolicyRel passwordPolicyRel)
-		throws SystemException {
-
-		passwordPolicyRelPersistence.remove(passwordPolicyRel);
 	}
 
 	public void deletePasswordPolicyRel(String className, long classPK)

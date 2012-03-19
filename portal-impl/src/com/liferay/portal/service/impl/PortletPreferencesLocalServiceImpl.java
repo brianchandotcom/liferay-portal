@@ -92,13 +92,6 @@ public class PortletPreferencesLocalServiceImpl
 		return portletPreferences;
 	}
 
-	@Override
-	public void deletePortletPreferences(long portletPreferencesId)
-		throws PortalException, SystemException {
-
-		portletPreferencesPersistence.remove(portletPreferencesId);
-	}
-
 	public void deletePortletPreferences(long ownerId, int ownerType, long plid)
 		throws SystemException {
 

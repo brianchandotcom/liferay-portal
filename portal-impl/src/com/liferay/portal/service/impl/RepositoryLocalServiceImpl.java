@@ -228,13 +228,6 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 		return localRepositoryImpl;
 	}
 
-	@Override
-	public Repository getRepository(long repositoryId)
-		throws PortalException, SystemException {
-
-		return repositoryPersistence.findByPrimaryKey(repositoryId);
-	}
-
 	public com.liferay.portal.kernel.repository.Repository getRepositoryImpl(
 			long repositoryId)
 		throws PortalException, SystemException {

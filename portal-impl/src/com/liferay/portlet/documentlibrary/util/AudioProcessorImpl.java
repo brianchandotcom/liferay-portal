@@ -66,14 +66,6 @@ public class AudioProcessorImpl
 		return _instance;
 	}
 
-	public void exportGeneratedFiles(
-			PortletDataContext portletDataContext, FileEntry fileEntry,
-			Element fileEntryElement)
-		throws Exception {
-
-		exportPreviews(portletDataContext, fileEntry, fileEntryElement);
-	}
-
 	public void generateAudio(FileVersion fileVersion) throws Exception {
 		_instance._generateAudio(fileVersion);
 	}
@@ -111,15 +103,6 @@ public class AudioProcessorImpl
 		return hasAudio;
 	}
 
-	public void importGeneratedFiles(
-			PortletDataContext portletDataContext, FileEntry fileEntry,
-			FileEntry importedFileEntry, Element fileEntryElement)
-		throws Exception {
-
-		importPreviews(
-			portletDataContext, fileEntry, importedFileEntry, fileEntryElement);
-	}
-
 	public boolean isAudioSupported(FileVersion fileVersion) {
 		return _instance.isSupported(fileVersion);
 	}
@@ -148,6 +131,25 @@ public class AudioProcessorImpl
 
 	public void trigger(FileVersion fileVersion) {
 		_instance._queueGeneration(fileVersion);
+	}
+
+	@Override
+	protected void doExportGeneratedFiles(
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			Element fileEntryElement)
+		throws Exception {
+
+		exportPreviews(portletDataContext, fileEntry, fileEntryElement);
+	}
+
+	@Override
+	protected void doImportGeneratedFiles(
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			FileEntry importedFileEntry, Element fileEntryElement)
+		throws Exception {
+
+		importPreviews(
+			portletDataContext, fileEntry, importedFileEntry, fileEntryElement);
 	}
 
 	protected void exportPreviews(

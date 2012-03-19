@@ -133,7 +133,7 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		List<AssetCategory> categories = search(
+		List<AssetCategory> categories = getVocabularyCategories(
 			groupId, keywords, vocabularyId, start, end, obc);
 
 		for (AssetCategory category : categories) {

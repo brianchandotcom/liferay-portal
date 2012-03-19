@@ -23,6 +23,8 @@ AUI.add(
 
 		var TPL_MESSAGE = '<div class="lfr-categories-message">{0}</div>';
 
+		var TPL_SEARCH_QUERY = '%{0}%';
+
 		var TPL_SEARCH_RESULTS = '<div class="lfr-categories-selector-search-results"></div>';
 
 		/**
@@ -474,7 +476,7 @@ AUI.add(
 							Liferay.Service.Asset.AssetCategory.getJSONSearch(
 								{
 									groupId: vocabularyGroupIds[0],
-									keywords: searchValue,
+									name: Lang.sub(TPL_SEARCH_QUERY, [searchValue]),
 									vocabularyId: vocabularyIds[0],
 									start: -1,
 									end: -1,

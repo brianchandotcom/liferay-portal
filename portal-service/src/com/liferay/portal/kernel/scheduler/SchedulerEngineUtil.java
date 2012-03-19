@@ -31,12 +31,14 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -261,11 +263,11 @@ public class SchedulerEngineUtil {
 
 	public static void schedule(
 			SchedulerEntry schedulerEntry, StorageType storageType,
-			ClassLoader classLoader, int exceptionsMaxSize)
+			String portletId, int exceptionsMaxSize)
 		throws SchedulerException {
 
 		_instance._schedule(
-			schedulerEntry, storageType, classLoader, exceptionsMaxSize);
+			schedulerEntry, storageType, portletId, exceptionsMaxSize);
 	}
 
 	public static void schedule(
@@ -868,8 +870,17 @@ public class SchedulerEngineUtil {
 
 	private void _schedule(
 			SchedulerEntry schedulerEntry, StorageType storageType,
-			ClassLoader classLoader, int exceptionsMaxSize)
+			String portletId, int exceptionsMaxSize)
 		throws SchedulerException {
+
+		ClassLoader classLoader = null;
+
+		if ((portletId == null) || (portletId.length() == 0)) {
+			classLoader = PortalClassLoaderUtil.getClassLoader();
+		}
+		else {
+			classLoader = PortletClassLoaderUtil.getClassLoader(portletId);
+		}
 
 		SchedulerEventMessageListenerWrapper schedulerEventListenerWrapper =
 			new SchedulerEventMessageListenerWrapper();

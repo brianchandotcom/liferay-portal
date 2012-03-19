@@ -882,11 +882,13 @@ public class SchedulerEngineUtil {
 			classLoader = PortletClassLoaderUtil.getClassLoader(portletId);
 		}
 
+		Trigger trigger = schedulerEntry.getTrigger();
+
 		SchedulerEventMessageListenerWrapper schedulerEventListenerWrapper =
 			new SchedulerEventMessageListenerWrapper();
 
-		schedulerEventListenerWrapper.setClassName(
-			schedulerEntry.getEventListenerClass());
+		schedulerEventListenerWrapper.setJobName(trigger.getJobName());
+		schedulerEventListenerWrapper.setGroupName(trigger.getGroupName());
 		schedulerEventListenerWrapper.setMessageListener(
 			_getSchedulerEventListener(schedulerEntry, classLoader));
 
@@ -906,8 +908,7 @@ public class SchedulerEngineUtil {
 			schedulerEventListenerWrapper.getMessageListenerUUID());
 
 		_schedule(
-			schedulerEntry.getTrigger(), storageType,
-			schedulerEntry.getDescription(),
+			trigger, storageType, schedulerEntry.getDescription(),
 			DestinationNames.SCHEDULER_DISPATCH, message, exceptionsMaxSize);
 	}
 

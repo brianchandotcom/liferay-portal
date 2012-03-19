@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -45,8 +46,8 @@ public class PortletPreferencesLocalServiceImpl
 	extends PortletPreferencesLocalServiceBaseImpl {
 
 	public PortletPreferences addPortletPreferences(
-			long companyId, long ownerId, int ownerType, long plid,
-			String portletId, Portlet portlet, String defaultPreferences)
+			long ownerId, int ownerType, long plid, String portletId,
+			Portlet portlet, String defaultPreferences)
 		throws SystemException {
 
 		long portletPreferencesId = counterLocalService.increment();
@@ -106,6 +107,7 @@ public class PortletPreferencesLocalServiceImpl
 			ownerId, ownerType, plid, portletId);
 	}
 
+	@Skip
 	public javax.portlet.PortletPreferences getDefaultPreferences(
 			long companyId, String portletId)
 		throws SystemException {
@@ -307,14 +309,15 @@ public class PortletPreferencesLocalServiceImpl
 			String portletId, String defaultPreferences)
 		throws SystemException {
 
-		Portlet portlet = portletLocalService.getPortletById(
-			companyId, portletId);
-
 		PortletPreferences portletPreferences =
 			portletPreferencesPersistence.fetchByO_O_P_P(
 				ownerId, ownerType, plid, portletId);
 
 		if (portletPreferences == null) {
+
+			Portlet portlet = portletLocalService.getPortletById(
+				companyId, portletId);
+
 			if (PortletPreferencesThreadLocal.isStrict() &&
 				(Validator.isNull(defaultPreferences) ||
 					((portlet != null) && portlet.isUndeployedPortlet()))) {
@@ -324,7 +327,7 @@ public class PortletPreferencesLocalServiceImpl
 
 			portletPreferences =
 				portletPreferencesLocalService.addPortletPreferences(
-					companyId, ownerId, ownerType, plid, portletId, portlet,
+					ownerId, ownerType, plid, portletId, portlet,
 					defaultPreferences);
 		}
 

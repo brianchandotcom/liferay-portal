@@ -22,6 +22,7 @@ import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -30,6 +31,7 @@ import javax.portlet.ValidatorException;
 
 /**
  * @author Alexander Chow
+ * @author Shuyang Zhou
  */
 public abstract class BasePreferencesImpl implements Serializable {
 
@@ -45,7 +47,11 @@ public abstract class BasePreferencesImpl implements Serializable {
 	}
 
 	public Map<String, String[]> getMap() {
-		Map<String, String[]> map = new ConcurrentHashMap<String, String[]>();
+		// Undo LPS-6908, the return map is already wrapped as unmodifiable.
+		// There is no need to protect it from concurrent modification, since
+		// it can not be modified at all!
+
+		Map<String, String[]> map = new HashMap<String, String[]>();
 
 		Map<String, Preference> preferences = getPreferences();
 
@@ -55,9 +61,7 @@ public abstract class BasePreferencesImpl implements Serializable {
 
 			String[] actualValues = getActualValues(preference.getValues());
 
-			if (actualValues != null) {
-				map.put(key, actualValues);
-			}
+			map.put(key, actualValues);
 		}
 
 		return Collections.unmodifiableMap(map);
@@ -141,9 +145,12 @@ public abstract class BasePreferencesImpl implements Serializable {
 	}
 
 	public void reset() {
-		Map<String, Preference> modifiedPreferences = getModifiedPreferences();
+		Map<String, Preference> modifiedPreferences = getModifiedPreferences(
+			false);
 
-		modifiedPreferences.clear();
+		if (modifiedPreferences != null) {
+			modifiedPreferences.clear();
+		}
 	}
 
 	public abstract void reset(String key) throws ReadOnlyException;
@@ -155,7 +162,8 @@ public abstract class BasePreferencesImpl implements Serializable {
 
 		value = getXMLSafeValue(value);
 
-		Map<String, Preference> modifiedPreferences = getModifiedPreferences();
+		Map<String, Preference> modifiedPreferences = getModifiedPreferences(
+			true);
 
 		Preference preference = modifiedPreferences.get(key);
 
@@ -182,7 +190,8 @@ public abstract class BasePreferencesImpl implements Serializable {
 
 		values = getXMLSafeValues(values);
 
-		Map<String, Preference> modifiedPreferences = getModifiedPreferences();
+		Map<String, Preference> modifiedPreferences = getModifiedPreferences(
+			true);
 
 		Preference preference = modifiedPreferences.get(key);
 
@@ -216,16 +225,21 @@ public abstract class BasePreferencesImpl implements Serializable {
 			return null;
 		}
 
-		if ((values.length == 1) && (getActualValue(values[0]) == null)) {
-			return null;
+		if (values.length == 1) {
+			String actualValue = getActualValue(values[0]);
+
+			if (actualValue == null) {
+				return null;
+			}
+			else {
+				return new String[] {actualValue};
+			}
 		}
 
 		String[] actualValues = new String[values.length];
 
-		System.arraycopy(values, 0, actualValues, 0, values.length);
-
 		for (int i = 0; i < actualValues.length; i++) {
-			actualValues[i] = getActualValue(actualValues[i]);
+			actualValues[i] = getActualValue(values[i]);
 		}
 
 		return actualValues;
@@ -235,8 +249,10 @@ public abstract class BasePreferencesImpl implements Serializable {
 		return _companyId;
 	}
 
-	protected Map<String, Preference> getModifiedPreferences() {
-		if (_modifiedPreferences == null) {
+	protected Map<String, Preference> getModifiedPreferences(
+		boolean createIfAbsent) {
+
+		if ((_modifiedPreferences == null) && createIfAbsent) {
 			_modifiedPreferences = new ConcurrentHashMap<String, Preference>();
 
 			for (Map.Entry<String, Preference> entry :
@@ -279,17 +295,13 @@ public abstract class BasePreferencesImpl implements Serializable {
 
 	protected String[] getXMLSafeValues(String[] values) {
 		if (values == null) {
-			return new String[] {getXMLSafeValue(null)};
+			return new String[] {_NULL_VALUE};
 		}
 
 		String[] xmlSafeValues = new String[values.length];
 
-		System.arraycopy(values, 0, xmlSafeValues, 0, values.length);
-
 		for (int i = 0; i < xmlSafeValues.length; i++) {
-			if (xmlSafeValues[i] == null) {
-				xmlSafeValues[i] = getXMLSafeValue(xmlSafeValues[i]);
-			}
+			xmlSafeValues[i] = getXMLSafeValue(values[i]);
 		}
 
 		return xmlSafeValues;

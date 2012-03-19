@@ -14,12 +14,14 @@
 
 package com.liferay.portal.spring.aop;
 
+import com.liferay.portal.kernel.annotation.AnnotationLocator;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -69,42 +71,24 @@ public abstract class AnnotationChainableMethodAdvice<T extends Annotation>
 
 		Method method = methodInvocation.getMethod();
 
-		Method targetMethod = null;
+		List<Annotation> annotations = AnnotationLocator.locate(
+			method, targetClass);
 
-		try {
-			targetMethod = targetClass.getDeclaredMethod(
-				method.getName(), method.getParameterTypes());
-		}
-		catch (Throwable t) {
-		}
+		Iterator<Annotation> iterator = annotations.iterator();
 
-		Annotation[] annotations = null;
+		while (iterator.hasNext()) {
+			Annotation curAnnotation = iterator.next();
 
-		if (targetMethod != null) {
-			annotations = targetMethod.getAnnotations();
-		}
+			if (!_annotationChainableMethodAdvices.containsKey(
+					curAnnotation.annotationType())) {
 
-		if ((annotations == null) || (annotations.length == 0)) {
-			annotations = method.getAnnotations();
-		}
-
-		if ((annotations != null) && (annotations.length > 0)) {
-			List<Annotation> annotationsList = new ArrayList<Annotation>(
-				annotations.length);
-
-			for (Annotation curAnnotation : annotations) {
-				if (_annotationChainableMethodAdvices.containsKey(
-						curAnnotation.annotationType())) {
-
-					annotationsList.add(curAnnotation);
-				}
+				iterator.remove();
 			}
-
-			annotations = annotationsList.toArray(
-				new Annotation[annotationsList.size()]);
 		}
 
-		ServiceMethodAnnotationCache.put(methodInvocation, annotations);
+		ServiceMethodAnnotationCache.put(
+			methodInvocation,
+			annotations.toArray(new Annotation[annotations.size()]));
 
 		Set<Class<? extends Annotation>> annotationClasses =
 			new HashSet<Class<? extends Annotation>>();

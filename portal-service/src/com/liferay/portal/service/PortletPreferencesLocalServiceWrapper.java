@@ -258,12 +258,12 @@ public class PortletPreferencesLocalServiceWrapper
 	}
 
 	public com.liferay.portal.model.PortletPreferences addPortletPreferences(
-		long companyId, long ownerId, int ownerType, long plid,
-		java.lang.String portletId, com.liferay.portal.model.Portlet portlet,
+		long ownerId, int ownerType, long plid, java.lang.String portletId,
+		com.liferay.portal.model.Portlet portlet,
 		java.lang.String defaultPreferences)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _portletPreferencesLocalService.addPortletPreferences(companyId,
-			ownerId, ownerType, plid, portletId, portlet, defaultPreferences);
+		return _portletPreferencesLocalService.addPortletPreferences(ownerId,
+			ownerType, plid, portletId, portlet, defaultPreferences);
 	}
 
 	public void deletePortletPreferences(long ownerId, int ownerType, long plid)

@@ -84,7 +84,7 @@ public class PortletPreferencesImpl
 			(getOwnerType() == portletPreferences.getOwnerType()) &&
 			(getPlid() == portletPreferences.getPlid()) &&
 			getPortletId().equals(portletPreferences.getPortletId()) &&
-			getMap().equals(portletPreferences.getMap())) {
+			getPreferences().equals(portletPreferences.getPreferences())) {
 
 			return true;
 		}
@@ -117,12 +117,10 @@ public class PortletPreferencesImpl
 			throw new ReadOnlyException(key);
 		}
 
-		if (_defaultPreferences == null) {
+		if ((_defaultPreferences == null) && (_portletId != null)) {
 			try {
-				if (_portletId != null) {
-					_defaultPreferences = PortletPreferencesLocalServiceUtil.
-						getDefaultPreferences(getCompanyId(), _portletId);
-				}
+				_defaultPreferences = PortletPreferencesLocalServiceUtil.
+					getDefaultPreferences(getCompanyId(), _portletId);
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
@@ -142,9 +140,11 @@ public class PortletPreferencesImpl
 		}
 		else {
 			Map<String, Preference> modifiedPreferences =
-				getModifiedPreferences();
+				getModifiedPreferences(false);
 
-			modifiedPreferences.remove(key);
+			if (modifiedPreferences != null) {
+				modifiedPreferences.remove(key);
+			}
 		}
 	}
 

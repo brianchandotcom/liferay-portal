@@ -237,8 +237,8 @@ public interface PortletPreferencesLocalService
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public com.liferay.portal.model.PortletPreferences addPortletPreferences(
-		long companyId, long ownerId, int ownerType, long plid,
-		java.lang.String portletId, com.liferay.portal.model.Portlet portlet,
+		long ownerId, int ownerType, long plid, java.lang.String portletId,
+		com.liferay.portal.model.Portlet portlet,
 		java.lang.String defaultPreferences)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

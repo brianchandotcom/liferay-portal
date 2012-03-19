@@ -492,13 +492,11 @@ public class PortletBagFactory {
 		}
 
 		if (_classLoader == PortalClassLoaderUtil.getClassLoader()) {
-			SchedulerEngineUtil.schedule(
-				schedulerEntry, StorageType.MEMORY_CLUSTERED, null, 0);
+			portletId = null;
 		}
-		else {
-			SchedulerEngineUtil.schedule(
-				schedulerEntry, StorageType.MEMORY_CLUSTERED, portletId, 0);
-		}
+
+		SchedulerEngineUtil.schedule(
+			schedulerEntry, StorageType.MEMORY_CLUSTERED, portletId, 0);
 	}
 
 	protected void initSchedulers(Portlet portlet) throws Exception {

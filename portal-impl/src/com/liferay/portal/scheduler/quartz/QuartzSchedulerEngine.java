@@ -52,8 +52,6 @@ import com.liferay.portal.service.QuartzLocalService;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
-import java.lang.reflect.Constructor;
-
 import java.text.ParseException;
 
 import java.util.ArrayList;
@@ -582,30 +580,17 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		MessageListener schedulerEventListener = null;
 
 		try {
-			if (classLoader != PortalClassLoaderUtil.getClassLoader()) {
-				Class<?> clazz = classLoader.loadClass(messageListenerClass);
+			Class<? extends MessageListener> clazz =
+				(Class<? extends MessageListener>)classLoader.loadClass(
+					messageListenerClass);
 
-				Constructor<?> constructor = clazz.getConstructor();
+			schedulerEventListener = clazz.newInstance();
 
-				if (constructor == null) {
-					throw new Exception(
-						"Unable to get public constructor of class " +
-							messageListenerClass);
-				}
-
-				schedulerEventListener =
-					(MessageListener)constructor.newInstance();
-
-				schedulerEventListener =
-					(MessageListener)ProxyUtil.newProxyInstance(
-						classLoader, new Class<?>[] {MessageListener.class},
-						new ClassLoaderBeanHandler(
-							schedulerEventListener, classLoader));
-			}
-			else {
-				schedulerEventListener = (MessageListener)Class.forName(
-					messageListenerClass).newInstance();
-			}
+			schedulerEventListener =
+				(MessageListener)ProxyUtil.newProxyInstance(
+					classLoader, new Class<?>[] {MessageListener.class},
+					new ClassLoaderBeanHandler(
+						schedulerEventListener, classLoader));
 		}
 		catch (Exception e) {
 			throw new SchedulerException(

@@ -224,11 +224,10 @@ public class SubscriptionSender implements Serializable {
 		if ((userId > 0) && Validator.isNotNull(_contextUserPrefix)) {
 			setContextAttribute(
 				"[$" + _contextUserPrefix + "_USER_ADDRESS$]",
-				HtmlUtil.escape(PortalUtil.getUserEmailAddress(userId)));
+				PortalUtil.getUserEmailAddress(userId));
 			setContextAttribute(
 				"[$" + _contextUserPrefix + "_USER_NAME$]",
-				HtmlUtil.escape(
-					PortalUtil.getUserName(userId, StringPool.BLANK)));
+				PortalUtil.getUserName(userId, StringPool.BLANK));
 		}
 
 		mailId = PortalUtil.getMailId(
@@ -251,13 +250,13 @@ public class SubscriptionSender implements Serializable {
 		setContextAttribute(key, value, true);
 	}
 
-	public void setContextAttribute(String key, Object value, boolean escaped) {
-		if (escaped) {
-			_context.put(key, HtmlUtil.escape(String.valueOf(value)));
-		}
-		else {
-			_context.put(key, String.valueOf(value));
-		}
+	public void setContextAttribute(String key, Object value, boolean escape) {
+		setContextAttribute(key,
+			new HtmlEscapableObject<String>(String.valueOf(value), escape));
+	}
+
+	public void setContextAttribute(String key, EscapableObject<String> value) {
+		_context.put(key, value);
 	}
 
 	public void setContextAttributes(Object... values) {
@@ -482,7 +481,7 @@ public class SubscriptionSender implements Serializable {
 					GetterUtil.getString(to.getPersonal(), to.getAddress()))
 			});
 
-		processedSubject = replaceContent(processedSubject, locale);
+		processedSubject = replaceContent(processedSubject, locale, false);
 
 		mailMessage.setSubject(processedSubject);
 
@@ -500,7 +499,7 @@ public class SubscriptionSender implements Serializable {
 					GetterUtil.getString(to.getPersonal(), to.getAddress()))
 			});
 
-		processedBody = replaceContent(processedBody, locale);
+		processedBody = replaceContent(processedBody, locale, this.htmlFormat);
 
 		mailMessage.setBody(processedBody);
 	}
@@ -508,11 +507,20 @@ public class SubscriptionSender implements Serializable {
 	protected String replaceContent(String content, Locale locale)
 		throws Exception {
 
-		for (Map.Entry<String, Object> entry : _context.entrySet()) {
-			String key = entry.getKey();
-			Object value = entry.getValue();
+		return replaceContent(content, locale, true);
+	}
 
-			content = StringUtil.replace(content, key, String.valueOf(value));
+	protected String replaceContent(String content, Locale locale,
+			boolean escape)
+		throws Exception {
+
+		for (Map.Entry<String, EscapableObject<String>> entry : _context.entrySet()) {
+			String key = entry.getKey();
+			EscapableObject<String> value = entry.getValue();
+
+			String valueString = escape ? value.getEscaped() : value.getRaw();
+
+			content = StringUtil.replace(content, key, valueString);
 		}
 
 		if (Validator.isNotNull(portletId)) {
@@ -646,7 +654,7 @@ public class SubscriptionSender implements Serializable {
 
 	private List<InternetAddress> _bulkAddresses;
 	private ClassLoader _classLoader;
-	private Map<String, Object> _context = new HashMap<String, Object>();
+	private Map<String, EscapableObject<String>> _context = new HashMap<String, EscapableObject<String>>();
 	private String _contextUserPrefix;
 	private boolean _initialized;
 	private Object[] _mailIdIds;

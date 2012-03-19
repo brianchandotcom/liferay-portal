@@ -57,6 +57,29 @@ public class PortletContextListener
 
 	@Override
 	protected void doPortalDestroy() {
+		PortletContextLifecycleThreadLocal.setDestroying(true);
+
+		try {
+			_doPortletDestroy();
+		}
+		finally {
+			PortletContextLifecycleThreadLocal.setDestroying(false);
+		}
+	}
+
+	@Override
+	protected void doPortalInit() throws Exception {
+		PortletContextLifecycleThreadLocal.setInitializing(true);
+
+		try {
+			_doPortletInit();
+		}
+		finally {
+			PortletContextLifecycleThreadLocal.setInitializing(false);
+		}
+	}
+
+	private void _doPortletDestroy() {
 		HotDeployUtil.fireUndeployEvent(
 			new HotDeployEvent(_servletContext, _portletClassLoader));
 
@@ -96,8 +119,7 @@ public class PortletContextListener
 		}
 	}
 
-	@Override
-	protected void doPortalInit() throws Exception {
+	private void _doPortletInit() throws Exception {
 		HotDeployUtil.fireDeployEvent(
 			new HotDeployEvent(_servletContext, _portletClassLoader));
 

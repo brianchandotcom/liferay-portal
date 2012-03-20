@@ -156,6 +156,50 @@
 				feedId ASC
 		]]>
 	</sql>
+	<sql id="com.liferay.portlet.journal.service.persistence.JournalFolderFinder.countF_ByG_F">
+		<![CDATA[
+			SELECT
+				COUNT(*) AS COUNT_VALUE
+			FROM
+				JournalFolder
+			WHERE
+				(JournalFolder.groupId = ?) AND
+				[$FOLDER_PARENT_FOLDER_ID$]
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.journal.service.persistence.JournalFolderFinder.countJA_ByG_F">
+		<![CDATA[
+			SELECT
+				COUNT(*) AS COUNT_VALUE
+			FROM
+				JournalArticle
+			WHERE
+				(JournalArticle.groupId = ?) AND
+				[$JOURNAL_ARTICLE_FOLDER_ID$]
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.journal.service.persistence.JournalFolderFinder.findF_ByG_F">
+		<![CDATA[
+			SELECT
+				DISTINCT folderId AS modelFolderId, JournalFolder.createDate as createDate, JournalFolder.modifiedDate as modifiedDate, JournalFolder.name AS title, 1 AS modelFolder, 0 AS articleId
+			FROM
+				JournalFolder
+			WHERE
+				(JournalFolder.groupId = ?) AND
+				[$FOLDER_PARENT_FOLDER_ID$]
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.journal.service.persistence.JournalFolderFinder.findJA_ByG_F">
+		<![CDATA[
+			SELECT
+				DISTINCT JournalArticle.folderId AS modelFolderId, JournalArticle.createDate as createDate, JournalArticle.modifiedDate as modifiedDate, JournalArticle.title AS title, 0 AS modelFolder, JournalArticle.articleId as articleId
+			FROM
+				JournalArticle
+			WHERE
+				(JournalArticle.groupId = ?) AND
+				[$JOURNAL_ARTICLE_FOLDER_ID$]
+		]]>
+	</sql>
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalStructureFinder.countByC_G_S_N_D">
 		<![CDATA[
 			SELECT

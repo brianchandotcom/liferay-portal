@@ -16,6 +16,7 @@ package com.liferay.portlet.journal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.journal.model.JournalFolder;
@@ -96,6 +97,21 @@ public class JournalFolderServiceImpl
 
 		return journalFolderPersistence.filterFindByG_P(
 			groupId, parentFolderId, start, end);
+	}
+
+	public List<Object> getFoldersAndJournalArticles(
+			long groupId, long folderId, int start, int end,
+			OrderByComparator obc)
+		throws SystemException {
+
+		return journalFolderFinder.filterFindF_JAByG_F(
+			groupId, folderId, start, end, obc);
+	}
+
+	public int getFoldersAndJournalArticlesCount(long groupId, long folderId)
+		throws SystemException {
+
+		return journalFolderFinder.filterCountF_JA_ByG_F(groupId, folderId);
 	}
 
 	public int getFoldersCount(long groupId, long parentFolderId)

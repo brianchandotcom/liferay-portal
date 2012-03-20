@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
@@ -176,10 +177,25 @@ public class JournalFolderLocalServiceImpl
 			groupId, parentFolderId, start, end);
 	}
 
+	public List<Object> getFoldersAndJournalArticles(
+			long groupId, long folderId, int start, int end,
+			OrderByComparator obc)
+		throws SystemException {
+
+		return journalFolderFinder.findF_JAByG_F(
+			groupId, folderId, start, end, obc);
+	}
+
 	public int getFoldersCount(long groupId, long parentFolderId)
 		throws SystemException {
 
 		return journalFolderPersistence.countByG_P(groupId, parentFolderId);
+	}
+
+	public int getFoldersAndJournalArticlesCount(long groupId, long folderId)
+		throws SystemException {
+
+		return journalFolderFinder.countF_JA_ByG_F(groupId, folderId);
 	}
 
 	public void getSubfolderIds(

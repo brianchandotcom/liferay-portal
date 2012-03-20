@@ -16,6 +16,7 @@ package com.liferay.portal.events;
 
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
@@ -80,7 +81,21 @@ public class StartupHelper {
 	}
 
 	public void updateIndexes() {
-		updateIndexes(DBFactoryUtil.getDB(), null, _dropIndexes);
+		DB db = DBFactoryUtil.getDB();
+
+		Connection con = null;
+
+		try {
+			con = DataAccess.getConnection();
+
+			updateIndexes(db, con, _dropIndexes);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+		finally {
+			DataAccess.cleanUp(con);
+		}
 	}
 
 	public void upgradeProcess(int buildNumber) throws UpgradeException {

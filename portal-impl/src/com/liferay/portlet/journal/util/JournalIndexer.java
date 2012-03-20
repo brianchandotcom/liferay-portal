@@ -164,6 +164,26 @@ public class JournalIndexer extends BaseIndexer {
 		document.addUID(
 			PORTLET_ID, article.getGroupId(), article.getArticleId());
 
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+
+		String[] languageIds = getLanguageIds(
+			defaultLanguageId, article.getContent());
+
+		for (String languageId : languageIds) {
+			String content = extractContent(
+				article.getContentByLocale(languageId));
+
+			if (languageId.equals(defaultLanguageId)) {
+				document.addText(Field.CONTENT, content);
+			}
+
+			document.addText(
+				Field.CONTENT.concat(StringPool.UNDERLINE).concat(languageId),
+				content);
+		}
+
 		document.addLocalizedText(
 			Field.DESCRIPTION, article.getDescriptionMap());
 		document.addLocalizedText(Field.TITLE, article.getTitleMap());
@@ -178,29 +198,7 @@ public class JournalIndexer extends BaseIndexer {
 
 		JournalStructure structure = null;
 
-		if (Validator.isNull(article.getStructureId())) {
-			Locale defaultLocale = LocaleUtil.getDefault();
-
-			String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
-
-			String[] languageIds = getLanguageIds(
-				defaultLanguageId, article.getContent());
-
-			for (String languageId : languageIds) {
-				String content = extractContent(
-					article.getContentByLocale(languageId));
-
-				if (languageId.equals(defaultLanguageId)) {
-					document.addText(Field.CONTENT, content);
-				}
-
-				document.addText(
-					Field.CONTENT.concat(StringPool.UNDERLINE).concat(
-						languageId),
-					content);
-			}
-		}
-		else {
+		if (Validator.isNotNull(article.getStructureId())) {
 			try {
 				structure = JournalStructureLocalServiceUtil.getStructure(
 					article.getGroupId(), article.getStructureId());

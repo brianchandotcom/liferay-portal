@@ -59,6 +59,7 @@ import com.liferay.portlet.journal.service.persistence.JournalArticleResourcePer
 import com.liferay.portlet.journal.service.persistence.JournalContentSearchPersistence;
 import com.liferay.portlet.journal.service.persistence.JournalFeedFinder;
 import com.liferay.portlet.journal.service.persistence.JournalFeedPersistence;
+import com.liferay.portlet.journal.service.persistence.JournalFolderFinder;
 import com.liferay.portlet.journal.service.persistence.JournalFolderPersistence;
 import com.liferay.portlet.journal.service.persistence.JournalStructureFinder;
 import com.liferay.portlet.journal.service.persistence.JournalStructurePersistence;
@@ -406,6 +407,24 @@ public abstract class JournalFolderServiceBaseImpl extends PrincipalBean
 	public void setJournalFolderPersistence(
 		JournalFolderPersistence journalFolderPersistence) {
 		this.journalFolderPersistence = journalFolderPersistence;
+	}
+
+	/**
+	 * Returns the journal folder finder.
+	 *
+	 * @return the journal folder finder
+	 */
+	public JournalFolderFinder getJournalFolderFinder() {
+		return journalFolderFinder;
+	}
+
+	/**
+	 * Sets the journal folder finder.
+	 *
+	 * @param journalFolderFinder the journal folder finder
+	 */
+	public void setJournalFolderFinder(JournalFolderFinder journalFolderFinder) {
+		this.journalFolderFinder = journalFolderFinder;
 	}
 
 	/**
@@ -942,6 +961,8 @@ public abstract class JournalFolderServiceBaseImpl extends PrincipalBean
 	protected JournalFolderService journalFolderService;
 	@BeanReference(type = JournalFolderPersistence.class)
 	protected JournalFolderPersistence journalFolderPersistence;
+	@BeanReference(type = JournalFolderFinder.class)
+	protected JournalFolderFinder journalFolderFinder;
 	@BeanReference(type = JournalStructureLocalService.class)
 	protected JournalStructureLocalService journalStructureLocalService;
 	@BeanReference(type = JournalStructureService.class)

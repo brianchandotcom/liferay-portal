@@ -344,10 +344,24 @@ public class JournalFolderLocalServiceWrapper
 			start, end);
 	}
 
+	public java.util.List<java.lang.Object> getFoldersAndJournalArticles(
+		long groupId, long folderId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalFolderLocalService.getFoldersAndJournalArticles(groupId,
+			folderId, start, end, obc);
+	}
+
 	public int getFoldersCount(long groupId, long parentFolderId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _journalFolderLocalService.getFoldersCount(groupId,
 			parentFolderId);
+	}
+
+	public int getFoldersAndJournalArticlesCount(long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalFolderLocalService.getFoldersAndJournalArticlesCount(groupId,
+			folderId);
 	}
 
 	public void getSubfolderIds(java.util.List<java.lang.Long> folderIds,

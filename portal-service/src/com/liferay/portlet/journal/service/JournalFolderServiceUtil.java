@@ -79,6 +79,21 @@ public class JournalFolderServiceUtil {
 		return getService().getFolders(groupId, parentFolderId, start, end);
 	}
 
+	public static java.util.List<java.lang.Object> getFoldersAndJournalArticles(
+		long groupId, long folderId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getFoldersAndJournalArticles(groupId, folderId, start, end,
+			obc);
+	}
+
+	public static int getFoldersAndJournalArticlesCount(long groupId,
+		long folderId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getFoldersAndJournalArticlesCount(groupId, folderId);
+	}
+
 	public static int getFoldersCount(long groupId, long parentFolderId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getFoldersCount(groupId, parentFolderId);

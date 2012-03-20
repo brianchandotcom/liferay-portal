@@ -15,6 +15,7 @@
 package com.liferay.portalweb.portal.controlpanel.blogs;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.blogs.blogsentry.BlogsEntryTestPlan;
 import com.liferay.portalweb.portal.controlpanel.blogs.entry.EntryTestPlan;
 import com.liferay.portalweb.portal.controlpanel.blogs.entrycomment.EntryCommentTestPlan;
 import com.liferay.portalweb.portal.controlpanel.blogs.lar.LARTestPlan;
@@ -30,6 +31,7 @@ public class BlogsTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
+		testSuite.addTest(BlogsEntryTestPlan.suite());
 		testSuite.addTest(EntryTestPlan.suite());
 		testSuite.addTest(EntryCommentTestPlan.suite());
 		testSuite.addTest(LARTestPlan.suite());

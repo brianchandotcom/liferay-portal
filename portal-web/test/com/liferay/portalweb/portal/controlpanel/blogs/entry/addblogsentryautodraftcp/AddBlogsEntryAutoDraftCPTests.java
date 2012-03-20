@@ -15,7 +15,7 @@
 package com.liferay.portalweb.portal.controlpanel.blogs.entry.addblogsentryautodraftcp;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.controlpanel.blogs.entry.addblogsentrycp.TearDownBlogsEntryCPTest;
+import com.liferay.portalweb.portal.controlpanel.blogs.blogsentry.addblogsentrycp.TearDownBlogsEntryCPTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

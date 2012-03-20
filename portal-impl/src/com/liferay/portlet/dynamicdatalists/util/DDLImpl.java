@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -268,6 +269,8 @@ public class DDLImpl implements DDL {
 
 		Map<String, String> tokens = JournalUtil.getTokens(
 			recordSet.getGroupId(), themeDisplay, xmlRequest);
+
+		tokens.put("template_id", StringUtil.valueOf(ddmTemplateId));
 
 		String xml = StringPool.BLANK;
 

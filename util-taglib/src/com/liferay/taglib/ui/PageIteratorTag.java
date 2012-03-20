@@ -51,8 +51,8 @@ public class PageIteratorTag extends IncludeTag {
 		_formName = formName;
 	}
 
-	public void setIdPrefix(String idPrefix) {
-		_idPrefix = idPrefix;
+	public void setId(String id) {
+		_id = id;
 	}
 
 	public void setJsCall(String jsCall) {
@@ -97,7 +97,7 @@ public class PageIteratorTag extends IncludeTag {
 		_deltaConfigurable = SearchContainer.DEFAULT_DELTA_CONFIGURABLE;
 		_deltaParam = SearchContainer.DEFAULT_DELTA_PARAM;
 		_formName = "fm";
-		_idPrefix = null;
+		_id = null;
 		_jsCall = null;
 		_maxPages = 10;
 		_pages = 0;
@@ -138,7 +138,7 @@ public class PageIteratorTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:page-iterator:deltaParam", _deltaParam);
 		request.setAttribute("liferay-ui:page-iterator:formName", _formName);
-		request.setAttribute("liferay-ui:page-iterator:idPrefix", _idPrefix);
+		request.setAttribute("liferay-ui:page-iterator:id", _id);
 		request.setAttribute("liferay-ui:page-iterator:jsCall", _jsCall);
 		request.setAttribute(
 			"liferay-ui:page-iterator:maxPages", String.valueOf(_maxPages));
@@ -165,7 +165,7 @@ public class PageIteratorTag extends IncludeTag {
 		SearchContainer.DEFAULT_DELTA_CONFIGURABLE;
 	private String _deltaParam = SearchContainer.DEFAULT_DELTA_PARAM;
 	private String _formName = "fm";
-	private String _idPrefix;
+	private String _id;
 	private String _jsCall;
 	private int _maxPages = 10;
 	private int _pages;

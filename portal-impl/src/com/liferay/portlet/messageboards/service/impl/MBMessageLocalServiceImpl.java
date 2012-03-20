@@ -94,7 +94,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.portlet.PortletPreferences;
@@ -613,6 +612,17 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 					mbMessagePersistence.update(childMessage, false);
 
+					List<MBMessage> repliesMessages =
+						mbMessagePersistence.findByThreadReplies(
+							message.getThreadId());
+
+					for (MBMessage repliesMessage : repliesMessages) {
+						repliesMessage.setRootMessageId(
+							childMessage.getMessageId());
+
+						mbMessagePersistence.update(repliesMessage, false);
+					}
+
 					thread.setRootMessageId(childMessage.getMessageId());
 					thread.setRootMessageUserId(childMessage.getUserId());
 
@@ -630,11 +640,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				// Message has children messages
 
 				if (!childrenMessages.isEmpty()) {
-					Iterator<MBMessage> itr = childrenMessages.iterator();
-
-					while (itr.hasNext()) {
-						MBMessage childMessage = itr.next();
-
+					for (MBMessage childMessage : childrenMessages) {
 						childMessage.setParentMessageId(
 							message.getParentMessageId());
 

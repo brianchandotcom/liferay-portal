@@ -130,28 +130,26 @@ public class ClassPathUtil {
 			_log.debug("Decoded path " + path);
 		}
 
-		if (ServerDetector.isWebLogic()) {
-			if (protocol.equals("zip")) {
-				path = "file:".concat(path);
-			}
+		if (ServerDetector.isWebLogic() && protocol.equals("zip")) {
+			path = "file:".concat(path);
 		}
 
-		if (ServerDetector.isJBoss()) {
-			if (protocol.equals("vfs") || protocol.equals("vfsfile")) {
-				int pos = path.indexOf(".jar/");
+		if (ServerDetector.isJBoss() &&
+			(protocol.equals("vfs") || protocol.equals("vfsfile"))) {
 
-				if (pos != -1) {
-					String jarFilePath = path.substring(0, pos + 4);
+			int pos = path.indexOf(".jar/");
 
-					File jarFile = new File(jarFilePath);
+			if (pos != -1) {
+				String jarFilePath = path.substring(0, pos + 4);
 
-					if (jarFile.isFile()) {
-						path = jarFilePath + '!' + path.substring(pos + 4);
-					}
+				File jarFile = new File(jarFilePath);
+
+				if (jarFile.isFile()) {
+					path = jarFilePath + '!' + path.substring(pos + 4);
 				}
-
-				path = "file:".concat(path);
 			}
+
+			path = "file:".concat(path);
 		}
 
 		File dir = null;

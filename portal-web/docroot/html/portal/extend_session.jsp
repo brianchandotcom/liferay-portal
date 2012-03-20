@@ -13,3 +13,36 @@
  * details.
  */
 --%>
+
+<%@ include file="/html/portal/init.jsp" %>
+
+<%
+for (String servletContextName : ServletContextPool.keySet()) {
+	ServletContext servletContext = ServletContextPool.get(servletContextName);
+
+	if (Validator.isNotNull(servletContextName) && !servletContextName.equals(PortalUtil.getPathContext())) {
+		PortletApp portletApp = PortletLocalServiceUtil.getPortletApp(servletContextName);
+
+		List<Portlet> portlets = portletApp.getPortlets();
+
+		for (Portlet portlet : portlets) {
+			String path = StringPool.SLASH + portlet.getPortletName() + "/invoke";
+
+			RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher(path);
+
+			request.setAttribute(WebKeys.EXTEND_SESSION, Boolean.TRUE);
+
+			try {
+				requestDispatcher.include(request, response);
+			}
+			catch (Exception e) {
+				_log.warn("Unable to extend session for: " + servletContextName);
+			}
+		}
+	}
+}
+%>
+
+<%!
+private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portal.extend_session_jsp");
+%>

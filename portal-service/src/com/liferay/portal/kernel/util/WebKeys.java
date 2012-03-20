@@ -39,6 +39,8 @@ public interface WebKeys {
 
 	public static final String CURRENT_URL = "CURRENT_URL";
 
+	public static final String EXTEND_SESSION = "EXTEND_SESSION";
+
 	public static final String FILE_ITEM_THRESHOLD_SIZE_EXCEEDED = "FILE_ITEM_THRESHOLD_SIZE_EXCEEDED";
 
 	public static final String FORGOT_PASSWORD_REMINDER_ATTEMPTS = "FORGOT_PASSWORD_REMINDER_ATTEMPTS";

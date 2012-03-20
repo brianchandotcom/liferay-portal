@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.scheduler;
 
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouterUtil;
-import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.cal.DayAndPosition;
 import com.liferay.portal.kernel.cal.Duration;
 import com.liferay.portal.kernel.cal.Recurrence;
@@ -24,21 +23,14 @@ import com.liferay.portal.kernel.cal.RecurrenceSerializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.InvokerMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageBus;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
-import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalLifecycle;
-import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.util.PortalUtil;
@@ -47,7 +39,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import javax.portlet.PortletRequest;
 
@@ -57,6 +48,29 @@ import javax.portlet.PortletRequest;
  * @author Tina Tian
  */
 public class SchedulerEngineUtil {
+
+	public static void addJob(
+			Trigger trigger, StorageType storageType, String description,
+			String destinationName, Message message,
+			String messageListenerClass, String portletId,
+			int exceptionsMaxSize)
+		throws SchedulerException {
+
+		_instance._addJob(
+			trigger, storageType, description, destinationName, message,
+			messageListenerClass, portletId, exceptionsMaxSize);
+	}
+
+	public static void addJob(
+			Trigger trigger, StorageType storageType, String description,
+			String destinationName, Object payload, String messageListenerClass,
+			String portletId, int exceptionsMaxSize)
+		throws SchedulerException {
+
+		_instance._addJob(
+			trigger, storageType, description, destinationName, payload,
+			messageListenerClass, portletId, exceptionsMaxSize);
+	}
 
 	public static void addScriptingJob(
 			Trigger trigger, StorageType storageType, String description,
@@ -261,11 +275,11 @@ public class SchedulerEngineUtil {
 
 	public static void schedule(
 			SchedulerEntry schedulerEntry, StorageType storageType,
-			ClassLoader classLoader, int exceptionsMaxSize)
+			String portletId, int exceptionsMaxSize)
 		throws SchedulerException {
 
 		_instance._schedule(
-			schedulerEntry, storageType, classLoader, exceptionsMaxSize);
+			schedulerEntry, storageType, portletId, exceptionsMaxSize);
 	}
 
 	public static void schedule(
@@ -355,6 +369,41 @@ public class SchedulerEngineUtil {
 		}
 	}
 
+	private void _addJob(
+			Trigger trigger, StorageType storageType, String description,
+			String destinationName, Message message,
+			String messageListenerClass, String portletId,
+			int exceptionsMaxSize)
+		throws SchedulerException {
+
+		if (message == null) {
+			message = new Message();
+		}
+
+		message.put(
+			SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME, messageListenerClass);
+		message.put(SchedulerEngine.PORTLET_ID, portletId);
+
+		_schedule(
+			trigger, storageType, description, destinationName, message,
+			exceptionsMaxSize);
+	}
+
+	private void _addJob(
+			Trigger trigger, StorageType storageType, String description,
+			String destinationName, Object payload, String messageListenerClass,
+			String portletId, int exceptionsMaxSize)
+		throws SchedulerException {
+
+		Message message = new Message();
+
+		message.setPayload(payload);
+
+		_addJob(
+			trigger, storageType, description, destinationName, message,
+			messageListenerClass, portletId, exceptionsMaxSize);
+	}
+
 	private void _addScriptingJob(
 			Trigger trigger, StorageType storageType, String description,
 			String language, String script, int exceptionsMaxSize)
@@ -410,16 +459,12 @@ public class SchedulerEngineUtil {
 	private void _delete(String groupName, StorageType storageType)
 		throws SchedulerException {
 
-		_unregisterMessageListener(groupName, storageType);
-
 		_schedulerEngine.delete(_namespaceGroupName(groupName, storageType));
 	}
 
 	private void _delete(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {
-
-		_unregisterMessageListener(jobName, groupName, storageType);
 
 		_schedulerEngine.delete(
 			jobName, _namespaceGroupName(groupName, storageType));
@@ -775,25 +820,6 @@ public class SchedulerEngineUtil {
 			_namespaceGroupName(groupName, storageType));
 	}
 
-	private MessageListener _getSchedulerEventListener(
-			SchedulerEntry schedulerEntry, ClassLoader classLoader)
-		throws SchedulerException {
-
-		try {
-			MessageListener schedulerEventListener =
-				(MessageListener)classLoader.loadClass(
-					schedulerEntry.getEventListenerClass()).newInstance();
-
-			return (MessageListener)ProxyUtil.newProxyInstance(
-				classLoader, new Class[] {MessageListener.class},
-				new ClassLoaderBeanHandler(
-					schedulerEventListener, classLoader));
-		}
-		catch (Exception e) {
-			throw new SchedulerException(e);
-		}
-	}
-
 	private Date _getStartTime(SchedulerResponse schedulerResponse) {
 		Message message = schedulerResponse.getMessage();
 
@@ -868,31 +894,17 @@ public class SchedulerEngineUtil {
 
 	private void _schedule(
 			SchedulerEntry schedulerEntry, StorageType storageType,
-			ClassLoader classLoader, int exceptionsMaxSize)
+			String portletId, int exceptionsMaxSize)
 		throws SchedulerException {
-
-		SchedulerEventMessageListenerWrapper schedulerEventListenerWrapper =
-			new SchedulerEventMessageListenerWrapper();
-
-		schedulerEventListenerWrapper.setClassName(
-			schedulerEntry.getEventListenerClass());
-		schedulerEventListenerWrapper.setMessageListener(
-			_getSchedulerEventListener(schedulerEntry, classLoader));
-
-		schedulerEventListenerWrapper.afterPropertiesSet();
-
-		schedulerEntry.setEventListener(schedulerEventListenerWrapper);
-
-		MessageBusUtil.registerMessageListener(
-			DestinationNames.SCHEDULER_DISPATCH, schedulerEventListenerWrapper);
 
 		Message message = new Message();
 
 		message.put(
 			SchedulerEngine.CONTEXT_PATH, schedulerEntry.getContextPath());
 		message.put(
-			SchedulerEngine.MESSAGE_LISTENER_UUID,
-			schedulerEventListenerWrapper.getMessageListenerUUID());
+			SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME,
+			schedulerEntry.getEventListenerClass());
+		message.put(SchedulerEngine.PORTLET_ID, portletId);
 
 		_schedule(
 			schedulerEntry.getTrigger(), storageType,
@@ -951,78 +963,6 @@ public class SchedulerEngineUtil {
 			jobName, _namespaceGroupName(groupName, storageType));
 	}
 
-	private void _unregisterMessageListener(
-		SchedulerResponse schedulerResponse) {
-
-		if (schedulerResponse == null) {
-			return;
-		}
-
-		String destinationName = schedulerResponse.getDestinationName();
-
-		if (!destinationName.equals(DestinationNames.SCHEDULER_DISPATCH)) {
-			return;
-		}
-
-		Message message = schedulerResponse.getMessage();
-
-		String messageListenerUUID = message.getString(
-			SchedulerEngine.MESSAGE_LISTENER_UUID);
-
-		if (messageListenerUUID == null) {
-			return;
-		}
-
-		MessageBus messageBus = MessageBusUtil.getMessageBus();
-
-		Destination destination = messageBus.getDestination(
-			DestinationNames.SCHEDULER_DISPATCH);
-
-		Set<MessageListener> messageListeners =
-			destination.getMessageListeners();
-
-		for (MessageListener messageListener : messageListeners) {
-			InvokerMessageListener invokerMessageListener =
-				(InvokerMessageListener)messageListener;
-
-			SchedulerEventMessageListenerWrapper schedulerMessageListener =
-				(SchedulerEventMessageListenerWrapper)
-					invokerMessageListener.getMessageListener();
-
-			if (messageListenerUUID.equals(
-					schedulerMessageListener.getMessageListenerUUID())) {
-
-				MessageBusUtil.unregisterMessageListener(
-					DestinationNames.SCHEDULER_DISPATCH,
-					schedulerMessageListener);
-
-				return;
-			}
-		}
-	}
-
-	private void _unregisterMessageListener(
-			String groupName, StorageType storageType)
-		throws SchedulerException {
-
-		List<SchedulerResponse> schedulerResponses = _getScheduledJobs(
-			groupName, storageType);
-
-		for (SchedulerResponse schedulerResponse : schedulerResponses) {
-			_unregisterMessageListener(schedulerResponse);
-		}
-	}
-
-	private void _unregisterMessageListener(
-			String jobName, String groupName, StorageType storageType)
-		throws SchedulerException {
-
-		SchedulerResponse schedulerResponse = _getScheduledJob(
-			jobName, groupName, storageType);
-
-		_unregisterMessageListener(schedulerResponse);
-	}
-
 	private void _unschedule(
 			SchedulerEntry schedulerEntry, StorageType storageType)
 		throws SchedulerException {
@@ -1035,8 +975,6 @@ public class SchedulerEngineUtil {
 	private void _unschedule(String groupName, StorageType storageType)
 		throws SchedulerException {
 
-		_unregisterMessageListener(groupName, storageType);
-
 		_schedulerEngine.unschedule(
 			_namespaceGroupName(groupName, storageType));
 	}
@@ -1044,8 +982,6 @@ public class SchedulerEngineUtil {
 	private void _unschedule(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {
-
-		_unregisterMessageListener(jobName, groupName, storageType);
 
 		_schedulerEngine.unschedule(
 			jobName, _namespaceGroupName(groupName, storageType));
@@ -1075,8 +1011,6 @@ public class SchedulerEngineUtil {
 		if (message == null) {
 			return;
 		}
-
-		_unregisterMessageListener(schedulerResponse);
 
 		_addScriptingJob(
 			trigger, storageType, description, language, script,

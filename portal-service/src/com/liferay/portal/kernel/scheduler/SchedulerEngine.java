@@ -67,9 +67,14 @@ public interface SchedulerEngine {
 
 	public static final String MESSAGE = "MESSAGE";
 
+	public static final String MESSAGE_LISTENER_CLASS_NAME =
+		"MESSAGE_LISTENER_CLASS_NAME";
+
 	public static final String MESSAGE_LISTENER_UUID = "MESSAGE_LISTENER_UUID";
 
 	public static final String NEXT_FIRE_TIME = "NEXT_FIRE_TIME";
+
+	public static final String PORTLET_ID = "PORTLET_ID";
 
 	public static final String PREVIOUS_FIRE_TIME = "PREVIOUS_FIRE_TIME";
 

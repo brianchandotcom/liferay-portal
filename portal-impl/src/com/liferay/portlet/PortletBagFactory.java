@@ -137,8 +137,6 @@ public class PortletBagFactory {
 
 		OpenSearch openSearchInstance = newOpenSearch(portlet);
 
-		initSchedulers(portlet);
-
 		FriendlyURLMapper friendlyURLMapperInstance = newFriendlyURLMapper(
 			portlet);
 
@@ -306,6 +304,8 @@ public class PortletBagFactory {
 
 		PortletBagPool.put(portlet.getRootPortletId(), portletBag);
 
+		initSchedulers(portlet);
+
 		try {
 			PortletInstanceFactoryUtil.create(portlet, _servletContext);
 		}
@@ -461,7 +461,8 @@ public class PortletBagFactory {
 		}
 	}
 
-	protected void initScheduler(SchedulerEntry schedulerEntry)
+	protected void initScheduler(
+			SchedulerEntry schedulerEntry, String portletId)
 		throws Exception {
 
 		String propertyKey = schedulerEntry.getPropertyKey();
@@ -490,8 +491,12 @@ public class PortletBagFactory {
 			schedulerEntry.setTriggerValue(triggerValue);
 		}
 
+		if (_classLoader == PortalClassLoaderUtil.getClassLoader()) {
+			portletId = null;
+		}
+
 		SchedulerEngineUtil.schedule(
-			schedulerEntry, StorageType.MEMORY_CLUSTERED, _classLoader, 0);
+			schedulerEntry, StorageType.MEMORY_CLUSTERED, portletId, 0);
 	}
 
 	protected void initSchedulers(Portlet portlet) throws Exception {
@@ -506,7 +511,7 @@ public class PortletBagFactory {
 		}
 
 		for (SchedulerEntry schedulerEntry : schedulerEntries) {
-			initScheduler(schedulerEntry);
+			initScheduler(schedulerEntry, portlet.getPortletId());
 		}
 	}
 

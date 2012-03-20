@@ -1678,12 +1678,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			throw new RequiredUserException();
 		}
 
-		// Indexer
-
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
-
-		indexer.delete(user);
-
 		// Browser tracker
 
 		browserTrackerLocalService.deleteUserBrowserTracker(user.getUserId());

@@ -120,64 +120,77 @@ public class PortletContextListener
 	}
 
 	private void _doPortletInit() throws Exception {
-		HotDeployUtil.fireDeployEvent(
-			new HotDeployEvent(_servletContext, _portletClassLoader));
+		Thread currentThread = Thread.currentThread();
 
-		if (ServerDetector.isGlassfish() || ServerDetector.isJOnAS()) {
-			return;
+		ClassLoader classLoader = currentThread.getContextClassLoader();
+
+		if (!_portletClassLoader.equals(classLoader)) {
+			currentThread.setContextClassLoader(_portletClassLoader);
 		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Dynamically binding the Liferay data source");
-		}
-
-		DataSource dataSource = InfrastructureUtil.getDataSource();
-
-		if (dataSource == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Abort dynamically binding the Liferay data source " +
-						"because it is not available");
-			}
-
-			return;
-		}
-
-		Context context = new InitialContext();
 
 		try {
-			try {
-				context.lookup(_JNDI_JDBC);
-			}
-			catch (NamingException ne) {
-				context.createSubcontext(_JNDI_JDBC);
+			HotDeployUtil.fireDeployEvent(
+				new HotDeployEvent(_servletContext, _portletClassLoader));
+
+			if (ServerDetector.isGlassfish() || ServerDetector.isJOnAS()) {
+				return;
 			}
 
-			try {
-				context.lookup(_JNDI_JDBC_LIFERAY_POOL);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Dynamically binding the Liferay data source");
 			}
-			catch (NamingException ne) {
+
+			DataSource dataSource = InfrastructureUtil.getDataSource();
+
+			if (dataSource == null) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Abort dynamically binding the Liferay data source " +
+							"because it is not available");
+				}
+
+				return;
+			}
+
+			Context context = new InitialContext();
+
+			try {
 				try {
-					Class<?> clazz = dataSource.getClass();
-
-					Method method = clazz.getMethod("getTargetDataSource");
-
-					dataSource = (DataSource)method.invoke(dataSource);
+					context.lookup(_JNDI_JDBC);
 				}
-				catch (NoSuchMethodException nsme) {
+				catch (NamingException ne) {
+					context.createSubcontext(_JNDI_JDBC);
 				}
 
-				context.bind(_JNDI_JDBC_LIFERAY_POOL, dataSource);
+				try {
+					context.lookup(_JNDI_JDBC_LIFERAY_POOL);
+				}
+				catch (NamingException ne) {
+					try {
+						Class<?> clazz = dataSource.getClass();
+
+						Method method = clazz.getMethod("getTargetDataSource");
+
+						dataSource = (DataSource)method.invoke(dataSource);
+					}
+					catch (NoSuchMethodException nsme) {
+					}
+
+					context.bind(_JNDI_JDBC_LIFERAY_POOL, dataSource);
+				}
+
+				_bindLiferayPool = true;
 			}
-
-			_bindLiferayPool = true;
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to dynamically bind the Liferay data source: " +
+							e.getMessage());
+				}
+			}
 		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to dynamically bind the Liferay data source: " +
-						e.getMessage());
-			}
+		finally {
+			currentThread.setContextClassLoader(classLoader);
 		}
 	}
 

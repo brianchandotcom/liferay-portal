@@ -32,5 +32,8 @@
 		document.execCommand("ClearAuthenticationCache");
 	</c:if>
 
-	location.href = '<%= HtmlUtil.escapeJS(referer) %>';
 </script>
+
+<%
+response.sendRedirect(referer);
+%>

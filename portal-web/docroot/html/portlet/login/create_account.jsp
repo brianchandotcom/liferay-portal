@@ -55,6 +55,18 @@ boolean male = ParamUtil.getBoolean(request, "male", true);
 	<liferay-ui:error exception="<%= DuplicateUserIdException.class %>" message="the-user-id-you-requested-is-already-taken" />
 	<liferay-ui:error exception="<%= DuplicateUserScreenNameException.class %>" message="the-screen-name-you-requested-is-already-taken" />
 	<liferay-ui:error exception="<%= EmailAddressException.class %>" message="please-enter-a-valid-email-address" />
+
+	<liferay-ui:error exception="<%= GroupFriendlyURLException.class %>">
+
+		<%
+		GroupFriendlyURLException gfurle = (GroupFriendlyURLException)errorException;
+		%>
+
+		<c:if test="<%= gfurle.getType() == GroupFriendlyURLException.DUPLICATE %>">
+			<liferay-ui:message key="the-screen-name-you-requested-is-associated-with-an-existing-friendly-url" />
+		</c:if>
+	</liferay-ui:error>
+
 	<liferay-ui:error exception="<%= NoSuchCountryException.class %>" message="please-select-a-country" />
 	<liferay-ui:error exception="<%= NoSuchListTypeException.class %>" message="please-select-a-type" />
 	<liferay-ui:error exception="<%= NoSuchRegionException.class %>" message="please-select-a-region" />

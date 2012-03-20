@@ -51,6 +51,23 @@ public class SelectTimeZonePacificStandardTimeCPMATest extends BaseTestCase {
 			}
 
 			try {
+				if (selenium.isElementPresent(
+							"//body[contains(@class,'page-maximized')]/div[contains(@class,'aui-helper-hidden')]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
 				if (selenium.isVisible("//a[@id='_2_displaySettingsLink']")) {
 					break;
 				}
@@ -63,6 +80,23 @@ public class SelectTimeZonePacificStandardTimeCPMATest extends BaseTestCase {
 
 		selenium.clickAt("//a[@id='_2_displaySettingsLink']",
 			RuntimeVariables.replace("Display Settings"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//div[@id='_2_displaySettings' and contains(@class,'selected')]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -84,7 +118,6 @@ public class SelectTimeZonePacificStandardTimeCPMATest extends BaseTestCase {
 			RuntimeVariables.replace("(UTC -08:00) Pacific Standard Time"));
 		assertEquals("(UTC -08:00) Pacific Standard Time",
 			selenium.getSelectedLabel("//select[@name='_2_timeZoneId']"));
-		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

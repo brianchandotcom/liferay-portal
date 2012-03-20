@@ -685,6 +685,17 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		}
 	}
 
+	public boolean isOrganizationAdmin(long organizationId) {
+		try {
+			return isOrganizationAdminImpl(organizationId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			return false;
+		}
+	}
+
 	protected void addTeamRoles(long userId, Group group, List<Role> roles)
 		throws Exception {
 
@@ -986,11 +997,21 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 					name, actionId);
 		}
 
-		if (checkAdmin &&
-			(isCompanyAdminImpl(companyId) ||
-			 (isGroupAdminImpl(groupId) && hasLayoutManagerPermission))) {
+		if (checkAdmin) {
+			if (isCompanyAdminImpl(companyId)) {
+				return true;
+			}
 
-			return true;
+			if (name.equals(Organization.class.getName())) {
+				long organizationId = GetterUtil.getInteger(primKey);
+
+				if (isOrganizationAdminImpl(organizationId)) {
+					return true;
+				}
+			}
+			else if (isGroupAdminImpl(groupId) && hasLayoutManagerPermission) {
+				return true;
+			}
 		}
 
 		logHasUserPermission(groupId, name, primKey, actionId, stopWatch, 1);
@@ -1142,6 +1163,43 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		}
 
 		if (bag.isGroupOwner(this, group)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	protected boolean isOrganizationAdminImpl(long organizationId)
+		throws Exception {
+
+		if (!signedIn) {
+			return false;
+		}
+
+		if (isOmniadmin()) {
+			return true;
+		}
+
+		if (organizationId <= 0) {
+			return false;
+		}
+
+		Organization organization =
+			OrganizationLocalServiceUtil.getOrganization(organizationId);
+
+		if (isCompanyAdmin(organization.getCompanyId())) {
+			return true;
+		}
+
+		PermissionCheckerBag bag = getUserBag(
+			user.getUserId(), organization.getGroupId());
+
+		if (bag == null) {
+			_log.error("Bag should never be null");
+		}
+
+		if (bag.isOrganizationAdmin(this, organization)) {
 			return true;
 		}
 		else {

@@ -64,6 +64,10 @@ public class SimplePermissionChecker extends BasePermissionChecker {
 		return signedIn;
 	}
 
+	public boolean isOrganizationAdmin(long organizationId) {
+		return signedIn;
+	}
+
 	protected boolean hasPermission(String actionId) {
 		if (signedIn) {
 			return true;

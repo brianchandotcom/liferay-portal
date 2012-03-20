@@ -164,6 +164,23 @@ public class PermissionCheckerBagImpl implements PermissionCheckerBag {
 		return value.booleanValue();
 	}
 
+	public boolean isOrganizationAdmin(
+			PermissionChecker permissionChecker, Organization organization)
+		throws Exception {
+
+		Boolean value = _organizationAdmins.get(
+			organization.getOrganizationId());
+
+		if (value == null) {
+			value = Boolean.valueOf(
+				isOrganizationAdminImpl(permissionChecker, organization));
+
+			_organizationAdmins.put(organization.getOrganizationId(), value);
+		}
+
+		return value.booleanValue();
+	}
+
 	protected boolean isGroupAdminImpl(
 			PermissionChecker permissionChecker, Group group)
 		throws PortalException, SystemException {
@@ -307,9 +324,36 @@ public class PermissionCheckerBagImpl implements PermissionCheckerBag {
 		return false;
 	}
 
+	protected boolean isOrganizationAdminImpl(
+			PermissionChecker permissionChecker, Organization organization)
+		throws PortalException, SystemException {
+
+		while (organization != null) {
+			Group organizationGroup = organization.getGroup();
+
+			long organizationGroupId = organizationGroup.getGroupId();
+
+			if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+					_userId, organizationGroupId,
+					RoleConstants.ORGANIZATION_ADMINISTRATOR, true) ||
+				UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+					_userId, organizationGroupId,
+					RoleConstants.ORGANIZATION_OWNER, true)) {
+
+				return true;
+			}
+
+			organization = organization.getParentOrganization();
+		}
+
+		return false;
+	}
+
 	private Map<Long, Boolean> _groupAdmins = new HashMap<Long, Boolean>();
 	private Map<Long, Boolean> _groupOwners = new HashMap<Long, Boolean>();
 	private List<Group> _groups;
+	private Map<Long, Boolean> _organizationAdmins =
+		new HashMap<Long, Boolean>();
 	private long[] _roleIds;
 	private List<Role> _roles;
 	private List<Group> _userGroups;

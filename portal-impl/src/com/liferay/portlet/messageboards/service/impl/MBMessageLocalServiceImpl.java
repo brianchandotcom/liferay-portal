@@ -612,15 +612,15 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 					mbMessagePersistence.update(childMessage, false);
 
-					List<MBMessage> childMessageReplies =
+					List<MBMessage> repliesMessages =
 						mbMessagePersistence.findByThreadReplies(
 							message.getThreadId());
 
-					for (MBMessage childMessageReply : childMessageReplies) {
-						childMessageReply.setRootMessageId(
+					for (MBMessage repliesMessage : repliesMessages) {
+						repliesMessage.setRootMessageId(
 							childMessage.getMessageId());
 
-						mbMessagePersistence.update(childMessageReply, false);
+						mbMessagePersistence.update(repliesMessage, false);
 					}
 
 					thread.setRootMessageId(childMessage.getMessageId());

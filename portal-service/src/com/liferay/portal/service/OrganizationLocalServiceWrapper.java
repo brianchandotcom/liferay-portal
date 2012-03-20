@@ -58,27 +58,30 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	* Deletes the organization with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param organizationId the primary key of the organization
+	* @return the organization that was removed
 	* @throws PortalException if a organization with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteOrganization(long organizationId)
+	public com.liferay.portal.model.Organization deleteOrganization(
+		long organizationId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_organizationLocalService.deleteOrganization(organizationId);
+		return _organizationLocalService.deleteOrganization(organizationId);
 	}
 
 	/**
 	* Deletes the organization from the database. Also notifies the appropriate model listeners.
 	*
 	* @param organization the organization
+	* @return the organization that was removed
 	* @throws PortalException
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteOrganization(
+	public com.liferay.portal.model.Organization deleteOrganization(
 		com.liferay.portal.model.Organization organization)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_organizationLocalService.deleteOrganization(organization);
+		return _organizationLocalService.deleteOrganization(organization);
 	}
 
 	/**

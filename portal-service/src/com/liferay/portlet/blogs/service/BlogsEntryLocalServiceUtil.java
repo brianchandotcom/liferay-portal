@@ -66,25 +66,28 @@ public class BlogsEntryLocalServiceUtil {
 	* Deletes the blogs entry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param entryId the primary key of the blogs entry
+	* @return the blogs entry that was removed
 	* @throws PortalException if a blogs entry with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteBlogsEntry(long entryId)
+	public static com.liferay.portlet.blogs.model.BlogsEntry deleteBlogsEntry(
+		long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteBlogsEntry(entryId);
+		return getService().deleteBlogsEntry(entryId);
 	}
 
 	/**
 	* Deletes the blogs entry from the database. Also notifies the appropriate model listeners.
 	*
 	* @param blogsEntry the blogs entry
+	* @return the blogs entry that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteBlogsEntry(
+	public static com.liferay.portlet.blogs.model.BlogsEntry deleteBlogsEntry(
 		com.liferay.portlet.blogs.model.BlogsEntry blogsEntry)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteBlogsEntry(blogsEntry);
+		return getService().deleteBlogsEntry(blogsEntry);
 	}
 
 	/**

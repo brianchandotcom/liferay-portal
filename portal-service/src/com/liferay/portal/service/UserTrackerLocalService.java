@@ -66,10 +66,12 @@ public interface UserTrackerLocalService extends PersistedModelLocalService {
 	* Deletes the user tracker with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param userTrackerId the primary key of the user tracker
+	* @return the user tracker that was removed
 	* @throws PortalException if a user tracker with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteUserTracker(long userTrackerId)
+	public com.liferay.portal.model.UserTracker deleteUserTracker(
+		long userTrackerId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -77,9 +79,10 @@ public interface UserTrackerLocalService extends PersistedModelLocalService {
 	* Deletes the user tracker from the database. Also notifies the appropriate model listeners.
 	*
 	* @param userTracker the user tracker
+	* @return the user tracker that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteUserTracker(
+	public com.liferay.portal.model.UserTracker deleteUserTracker(
 		com.liferay.portal.model.UserTracker userTracker)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

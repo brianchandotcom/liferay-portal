@@ -66,25 +66,28 @@ public class SCLicenseLocalServiceUtil {
 	* Deletes the s c license with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param licenseId the primary key of the s c license
+	* @return the s c license that was removed
 	* @throws PortalException if a s c license with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteSCLicense(long licenseId)
+	public static com.liferay.portlet.softwarecatalog.model.SCLicense deleteSCLicense(
+		long licenseId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteSCLicense(licenseId);
+		return getService().deleteSCLicense(licenseId);
 	}
 
 	/**
 	* Deletes the s c license from the database. Also notifies the appropriate model listeners.
 	*
 	* @param scLicense the s c license
+	* @return the s c license that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteSCLicense(
+	public static com.liferay.portlet.softwarecatalog.model.SCLicense deleteSCLicense(
 		com.liferay.portlet.softwarecatalog.model.SCLicense scLicense)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteSCLicense(scLicense);
+		return getService().deleteSCLicense(scLicense);
 	}
 
 	/**

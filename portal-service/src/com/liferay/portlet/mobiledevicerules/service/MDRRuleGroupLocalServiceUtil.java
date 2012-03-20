@@ -66,25 +66,28 @@ public class MDRRuleGroupLocalServiceUtil {
 	* Deletes the m d r rule group with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param ruleGroupId the primary key of the m d r rule group
+	* @return the m d r rule group that was removed
 	* @throws PortalException if a m d r rule group with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteMDRRuleGroup(long ruleGroupId)
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup deleteMDRRuleGroup(
+		long ruleGroupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteMDRRuleGroup(ruleGroupId);
+		return getService().deleteMDRRuleGroup(ruleGroupId);
 	}
 
 	/**
 	* Deletes the m d r rule group from the database. Also notifies the appropriate model listeners.
 	*
 	* @param mdrRuleGroup the m d r rule group
+	* @return the m d r rule group that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteMDRRuleGroup(
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup deleteMDRRuleGroup(
 		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup mdrRuleGroup)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteMDRRuleGroup(mdrRuleGroup);
+		return getService().deleteMDRRuleGroup(mdrRuleGroup);
 	}
 
 	/**

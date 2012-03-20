@@ -66,25 +66,28 @@ public class ResourcePermissionLocalServiceUtil {
 	* Deletes the resource permission with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param resourcePermissionId the primary key of the resource permission
+	* @return the resource permission that was removed
 	* @throws PortalException if a resource permission with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteResourcePermission(long resourcePermissionId)
+	public static com.liferay.portal.model.ResourcePermission deleteResourcePermission(
+		long resourcePermissionId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteResourcePermission(resourcePermissionId);
+		return getService().deleteResourcePermission(resourcePermissionId);
 	}
 
 	/**
 	* Deletes the resource permission from the database. Also notifies the appropriate model listeners.
 	*
 	* @param resourcePermission the resource permission
+	* @return the resource permission that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteResourcePermission(
+	public static com.liferay.portal.model.ResourcePermission deleteResourcePermission(
 		com.liferay.portal.model.ResourcePermission resourcePermission)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteResourcePermission(resourcePermission);
+		return getService().deleteResourcePermission(resourcePermission);
 	}
 
 	/**

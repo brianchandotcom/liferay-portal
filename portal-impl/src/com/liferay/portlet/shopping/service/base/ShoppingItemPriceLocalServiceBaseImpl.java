@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
@@ -98,27 +97,12 @@ public abstract class ShoppingItemPriceLocalServiceBaseImpl
 	 * @return the shopping item price that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public ShoppingItemPrice addShoppingItemPrice(
 		ShoppingItemPrice shoppingItemPrice) throws SystemException {
 		shoppingItemPrice.setNew(true);
 
-		shoppingItemPrice = shoppingItemPricePersistence.update(shoppingItemPrice,
-				false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(shoppingItemPrice);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return shoppingItemPrice;
+		return shoppingItemPricePersistence.update(shoppingItemPrice, false);
 	}
 
 	/**
@@ -135,49 +119,27 @@ public abstract class ShoppingItemPriceLocalServiceBaseImpl
 	 * Deletes the shopping item price with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param itemPriceId the primary key of the shopping item price
+	 * @return the shopping item price that was removed
 	 * @throws PortalException if a shopping item price with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteShoppingItemPrice(long itemPriceId)
+	@Indexable(type = IndexableType.DELETE)
+	public ShoppingItemPrice deleteShoppingItemPrice(long itemPriceId)
 		throws PortalException, SystemException {
-		ShoppingItemPrice shoppingItemPrice = shoppingItemPricePersistence.remove(itemPriceId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(shoppingItemPrice);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return shoppingItemPricePersistence.remove(itemPriceId);
 	}
 
 	/**
 	 * Deletes the shopping item price from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param shoppingItemPrice the shopping item price
+	 * @return the shopping item price that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteShoppingItemPrice(ShoppingItemPrice shoppingItemPrice)
-		throws SystemException {
-		shoppingItemPricePersistence.remove(shoppingItemPrice);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(shoppingItemPrice);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public ShoppingItemPrice deleteShoppingItemPrice(
+		ShoppingItemPrice shoppingItemPrice) throws SystemException {
+		return shoppingItemPricePersistence.remove(shoppingItemPrice);
 	}
 
 	/**
@@ -303,6 +265,7 @@ public abstract class ShoppingItemPriceLocalServiceBaseImpl
 	 * @return the shopping item price that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public ShoppingItemPrice updateShoppingItemPrice(
 		ShoppingItemPrice shoppingItemPrice) throws SystemException {
 		return updateShoppingItemPrice(shoppingItemPrice, true);
@@ -316,28 +279,13 @@ public abstract class ShoppingItemPriceLocalServiceBaseImpl
 	 * @return the shopping item price that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public ShoppingItemPrice updateShoppingItemPrice(
 		ShoppingItemPrice shoppingItemPrice, boolean merge)
 		throws SystemException {
 		shoppingItemPrice.setNew(false);
 
-		shoppingItemPrice = shoppingItemPricePersistence.update(shoppingItemPrice,
-				merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(shoppingItemPrice);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return shoppingItemPrice;
+		return shoppingItemPricePersistence.update(shoppingItemPrice, merge);
 	}
 
 	/**

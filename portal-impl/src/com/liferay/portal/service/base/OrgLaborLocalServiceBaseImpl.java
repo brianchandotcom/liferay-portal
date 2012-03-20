@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.OrgLabor;
 import com.liferay.portal.model.PersistedModel;
@@ -254,25 +253,11 @@ public abstract class OrgLaborLocalServiceBaseImpl
 	 * @return the org labor that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public OrgLabor addOrgLabor(OrgLabor orgLabor) throws SystemException {
 		orgLabor.setNew(true);
 
-		orgLabor = orgLaborPersistence.update(orgLabor, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(orgLabor);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return orgLabor;
+		return orgLaborPersistence.update(orgLabor, false);
 	}
 
 	/**
@@ -289,48 +274,26 @@ public abstract class OrgLaborLocalServiceBaseImpl
 	 * Deletes the org labor with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param orgLaborId the primary key of the org labor
+	 * @return the org labor that was removed
 	 * @throws PortalException if a org labor with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteOrgLabor(long orgLaborId)
+	@Indexable(type = IndexableType.DELETE)
+	public OrgLabor deleteOrgLabor(long orgLaborId)
 		throws PortalException, SystemException {
-		OrgLabor orgLabor = orgLaborPersistence.remove(orgLaborId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(orgLabor);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return orgLaborPersistence.remove(orgLaborId);
 	}
 
 	/**
 	 * Deletes the org labor from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param orgLabor the org labor
+	 * @return the org labor that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteOrgLabor(OrgLabor orgLabor) throws SystemException {
-		orgLaborPersistence.remove(orgLabor);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(orgLabor);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public OrgLabor deleteOrgLabor(OrgLabor orgLabor) throws SystemException {
+		return orgLaborPersistence.remove(orgLabor);
 	}
 
 	/**
@@ -454,6 +417,7 @@ public abstract class OrgLaborLocalServiceBaseImpl
 	 * @return the org labor that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public OrgLabor updateOrgLabor(OrgLabor orgLabor) throws SystemException {
 		return updateOrgLabor(orgLabor, true);
 	}
@@ -466,26 +430,12 @@ public abstract class OrgLaborLocalServiceBaseImpl
 	 * @return the org labor that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public OrgLabor updateOrgLabor(OrgLabor orgLabor, boolean merge)
 		throws SystemException {
 		orgLabor.setNew(false);
 
-		orgLabor = orgLaborPersistence.update(orgLabor, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(orgLabor);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return orgLabor;
+		return orgLaborPersistence.update(orgLabor, merge);
 	}
 
 	/**

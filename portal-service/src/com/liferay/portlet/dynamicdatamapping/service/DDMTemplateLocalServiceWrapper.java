@@ -60,25 +60,28 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	* Deletes the d d m template with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param templateId the primary key of the d d m template
+	* @return the d d m template that was removed
 	* @throws PortalException if a d d m template with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteDDMTemplate(long templateId)
+	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate deleteDDMTemplate(
+		long templateId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_ddmTemplateLocalService.deleteDDMTemplate(templateId);
+		return _ddmTemplateLocalService.deleteDDMTemplate(templateId);
 	}
 
 	/**
 	* Deletes the d d m template from the database. Also notifies the appropriate model listeners.
 	*
 	* @param ddmTemplate the d d m template
+	* @return the d d m template that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteDDMTemplate(
+	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate deleteDDMTemplate(
 		com.liferay.portlet.dynamicdatamapping.model.DDMTemplate ddmTemplate)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_ddmTemplateLocalService.deleteDDMTemplate(ddmTemplate);
+		return _ddmTemplateLocalService.deleteDDMTemplate(ddmTemplate);
 	}
 
 	/**

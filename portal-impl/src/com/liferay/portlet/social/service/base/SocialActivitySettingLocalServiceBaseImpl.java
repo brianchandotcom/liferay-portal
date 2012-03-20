@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.GroupLocalService;
@@ -98,27 +97,13 @@ public abstract class SocialActivitySettingLocalServiceBaseImpl
 	 * @return the social activity setting that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public SocialActivitySetting addSocialActivitySetting(
 		SocialActivitySetting socialActivitySetting) throws SystemException {
 		socialActivitySetting.setNew(true);
 
-		socialActivitySetting = socialActivitySettingPersistence.update(socialActivitySetting,
-				false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(socialActivitySetting);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return socialActivitySetting;
+		return socialActivitySettingPersistence.update(socialActivitySetting,
+			false);
 	}
 
 	/**
@@ -136,49 +121,27 @@ public abstract class SocialActivitySettingLocalServiceBaseImpl
 	 * Deletes the social activity setting with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param activitySettingId the primary key of the social activity setting
+	 * @return the social activity setting that was removed
 	 * @throws PortalException if a social activity setting with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteSocialActivitySetting(long activitySettingId)
-		throws PortalException, SystemException {
-		SocialActivitySetting socialActivitySetting = socialActivitySettingPersistence.remove(activitySettingId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(socialActivitySetting);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public SocialActivitySetting deleteSocialActivitySetting(
+		long activitySettingId) throws PortalException, SystemException {
+		return socialActivitySettingPersistence.remove(activitySettingId);
 	}
 
 	/**
 	 * Deletes the social activity setting from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param socialActivitySetting the social activity setting
+	 * @return the social activity setting that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteSocialActivitySetting(
+	@Indexable(type = IndexableType.DELETE)
+	public SocialActivitySetting deleteSocialActivitySetting(
 		SocialActivitySetting socialActivitySetting) throws SystemException {
-		socialActivitySettingPersistence.remove(socialActivitySetting);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(socialActivitySetting);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return socialActivitySettingPersistence.remove(socialActivitySetting);
 	}
 
 	/**
@@ -304,6 +267,7 @@ public abstract class SocialActivitySettingLocalServiceBaseImpl
 	 * @return the social activity setting that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public SocialActivitySetting updateSocialActivitySetting(
 		SocialActivitySetting socialActivitySetting) throws SystemException {
 		return updateSocialActivitySetting(socialActivitySetting, true);
@@ -317,28 +281,14 @@ public abstract class SocialActivitySettingLocalServiceBaseImpl
 	 * @return the social activity setting that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public SocialActivitySetting updateSocialActivitySetting(
 		SocialActivitySetting socialActivitySetting, boolean merge)
 		throws SystemException {
 		socialActivitySetting.setNew(false);
 
-		socialActivitySetting = socialActivitySettingPersistence.update(socialActivitySetting,
-				merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(socialActivitySetting);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return socialActivitySetting;
+		return socialActivitySettingPersistence.update(socialActivitySetting,
+			merge);
 	}
 
 	/**

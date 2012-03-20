@@ -67,10 +67,12 @@ public interface AssetLinkLocalService extends PersistedModelLocalService {
 	* Deletes the asset link with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param linkId the primary key of the asset link
+	* @return the asset link that was removed
 	* @throws PortalException if a asset link with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteAssetLink(long linkId)
+	public com.liferay.portlet.asset.model.AssetLink deleteAssetLink(
+		long linkId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -78,9 +80,10 @@ public interface AssetLinkLocalService extends PersistedModelLocalService {
 	* Deletes the asset link from the database. Also notifies the appropriate model listeners.
 	*
 	* @param assetLink the asset link
+	* @return the asset link that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteAssetLink(
+	public com.liferay.portlet.asset.model.AssetLink deleteAssetLink(
 		com.liferay.portlet.asset.model.AssetLink assetLink)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

@@ -61,25 +61,28 @@ public class SocialRelationLocalServiceWrapper
 	* Deletes the social relation with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param relationId the primary key of the social relation
+	* @return the social relation that was removed
 	* @throws PortalException if a social relation with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteSocialRelation(long relationId)
+	public com.liferay.portlet.social.model.SocialRelation deleteSocialRelation(
+		long relationId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_socialRelationLocalService.deleteSocialRelation(relationId);
+		return _socialRelationLocalService.deleteSocialRelation(relationId);
 	}
 
 	/**
 	* Deletes the social relation from the database. Also notifies the appropriate model listeners.
 	*
 	* @param socialRelation the social relation
+	* @return the social relation that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteSocialRelation(
+	public com.liferay.portlet.social.model.SocialRelation deleteSocialRelation(
 		com.liferay.portlet.social.model.SocialRelation socialRelation)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_socialRelationLocalService.deleteSocialRelation(socialRelation);
+		return _socialRelationLocalService.deleteSocialRelation(socialRelation);
 	}
 
 	/**

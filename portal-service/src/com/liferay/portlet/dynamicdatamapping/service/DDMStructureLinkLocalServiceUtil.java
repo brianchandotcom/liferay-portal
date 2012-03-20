@@ -66,25 +66,28 @@ public class DDMStructureLinkLocalServiceUtil {
 	* Deletes the d d m structure link with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param structureLinkId the primary key of the d d m structure link
+	* @return the d d m structure link that was removed
 	* @throws PortalException if a d d m structure link with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteDDMStructureLink(long structureLinkId)
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink deleteDDMStructureLink(
+		long structureLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteDDMStructureLink(structureLinkId);
+		return getService().deleteDDMStructureLink(structureLinkId);
 	}
 
 	/**
 	* Deletes the d d m structure link from the database. Also notifies the appropriate model listeners.
 	*
 	* @param ddmStructureLink the d d m structure link
+	* @return the d d m structure link that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteDDMStructureLink(
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink deleteDDMStructureLink(
 		com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink ddmStructureLink)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteDDMStructureLink(ddmStructureLink);
+		return getService().deleteDDMStructureLink(ddmStructureLink);
 	}
 
 	/**

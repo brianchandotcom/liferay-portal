@@ -66,24 +66,28 @@ public class CounterLocalServiceUtil {
 	* Deletes the counter with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param name the primary key of the counter
+	* @return the counter that was removed
 	* @throws PortalException if a counter with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteCounter(java.lang.String name)
+	public static com.liferay.counter.model.Counter deleteCounter(
+		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteCounter(name);
+		return getService().deleteCounter(name);
 	}
 
 	/**
 	* Deletes the counter from the database. Also notifies the appropriate model listeners.
 	*
 	* @param counter the counter
+	* @return the counter that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteCounter(com.liferay.counter.model.Counter counter)
+	public static com.liferay.counter.model.Counter deleteCounter(
+		com.liferay.counter.model.Counter counter)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteCounter(counter);
+		return getService().deleteCounter(counter);
 	}
 
 	/**

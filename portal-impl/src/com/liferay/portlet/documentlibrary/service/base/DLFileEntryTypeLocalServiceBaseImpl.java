@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
@@ -114,27 +113,12 @@ public abstract class DLFileEntryTypeLocalServiceBaseImpl
 	 * @return the document library file entry type that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public DLFileEntryType addDLFileEntryType(DLFileEntryType dlFileEntryType)
 		throws SystemException {
 		dlFileEntryType.setNew(true);
 
-		dlFileEntryType = dlFileEntryTypePersistence.update(dlFileEntryType,
-				false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(dlFileEntryType);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return dlFileEntryType;
+		return dlFileEntryTypePersistence.update(dlFileEntryType, false);
 	}
 
 	/**
@@ -151,49 +135,27 @@ public abstract class DLFileEntryTypeLocalServiceBaseImpl
 	 * Deletes the document library file entry type with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param fileEntryTypeId the primary key of the document library file entry type
+	 * @return the document library file entry type that was removed
 	 * @throws PortalException if a document library file entry type with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteDLFileEntryType(long fileEntryTypeId)
+	@Indexable(type = IndexableType.DELETE)
+	public DLFileEntryType deleteDLFileEntryType(long fileEntryTypeId)
 		throws PortalException, SystemException {
-		DLFileEntryType dlFileEntryType = dlFileEntryTypePersistence.remove(fileEntryTypeId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(dlFileEntryType);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return dlFileEntryTypePersistence.remove(fileEntryTypeId);
 	}
 
 	/**
 	 * Deletes the document library file entry type from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param dlFileEntryType the document library file entry type
+	 * @return the document library file entry type that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteDLFileEntryType(DLFileEntryType dlFileEntryType)
-		throws SystemException {
-		dlFileEntryTypePersistence.remove(dlFileEntryType);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(dlFileEntryType);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public DLFileEntryType deleteDLFileEntryType(
+		DLFileEntryType dlFileEntryType) throws SystemException {
+		return dlFileEntryTypePersistence.remove(dlFileEntryType);
 	}
 
 	/**
@@ -333,6 +295,7 @@ public abstract class DLFileEntryTypeLocalServiceBaseImpl
 	 * @return the document library file entry type that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public DLFileEntryType updateDLFileEntryType(
 		DLFileEntryType dlFileEntryType) throws SystemException {
 		return updateDLFileEntryType(dlFileEntryType, true);
@@ -346,28 +309,13 @@ public abstract class DLFileEntryTypeLocalServiceBaseImpl
 	 * @return the document library file entry type that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public DLFileEntryType updateDLFileEntryType(
 		DLFileEntryType dlFileEntryType, boolean merge)
 		throws SystemException {
 		dlFileEntryType.setNew(false);
 
-		dlFileEntryType = dlFileEntryTypePersistence.update(dlFileEntryType,
-				merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(dlFileEntryType);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return dlFileEntryType;
+		return dlFileEntryTypePersistence.update(dlFileEntryType, merge);
 	}
 
 	/**

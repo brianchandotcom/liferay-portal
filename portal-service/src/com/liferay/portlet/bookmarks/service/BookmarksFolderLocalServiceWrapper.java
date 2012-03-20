@@ -61,25 +61,28 @@ public class BookmarksFolderLocalServiceWrapper
 	* Deletes the bookmarks folder with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param folderId the primary key of the bookmarks folder
+	* @return the bookmarks folder that was removed
 	* @throws PortalException if a bookmarks folder with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteBookmarksFolder(long folderId)
+	public com.liferay.portlet.bookmarks.model.BookmarksFolder deleteBookmarksFolder(
+		long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_bookmarksFolderLocalService.deleteBookmarksFolder(folderId);
+		return _bookmarksFolderLocalService.deleteBookmarksFolder(folderId);
 	}
 
 	/**
 	* Deletes the bookmarks folder from the database. Also notifies the appropriate model listeners.
 	*
 	* @param bookmarksFolder the bookmarks folder
+	* @return the bookmarks folder that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteBookmarksFolder(
+	public com.liferay.portlet.bookmarks.model.BookmarksFolder deleteBookmarksFolder(
 		com.liferay.portlet.bookmarks.model.BookmarksFolder bookmarksFolder)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_bookmarksFolderLocalService.deleteBookmarksFolder(bookmarksFolder);
+		return _bookmarksFolderLocalService.deleteBookmarksFolder(bookmarksFolder);
 	}
 
 	/**

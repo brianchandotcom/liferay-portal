@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.model.ResourceBlock;
@@ -254,26 +253,12 @@ public abstract class ResourceBlockLocalServiceBaseImpl
 	 * @return the resource block that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public ResourceBlock addResourceBlock(ResourceBlock resourceBlock)
 		throws SystemException {
 		resourceBlock.setNew(true);
 
-		resourceBlock = resourceBlockPersistence.update(resourceBlock, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(resourceBlock);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return resourceBlock;
+		return resourceBlockPersistence.update(resourceBlock, false);
 	}
 
 	/**
@@ -290,49 +275,27 @@ public abstract class ResourceBlockLocalServiceBaseImpl
 	 * Deletes the resource block with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param resourceBlockId the primary key of the resource block
+	 * @return the resource block that was removed
 	 * @throws PortalException if a resource block with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteResourceBlock(long resourceBlockId)
+	@Indexable(type = IndexableType.DELETE)
+	public ResourceBlock deleteResourceBlock(long resourceBlockId)
 		throws PortalException, SystemException {
-		ResourceBlock resourceBlock = resourceBlockPersistence.remove(resourceBlockId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(resourceBlock);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return resourceBlockPersistence.remove(resourceBlockId);
 	}
 
 	/**
 	 * Deletes the resource block from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param resourceBlock the resource block
+	 * @return the resource block that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteResourceBlock(ResourceBlock resourceBlock)
+	@Indexable(type = IndexableType.DELETE)
+	public ResourceBlock deleteResourceBlock(ResourceBlock resourceBlock)
 		throws SystemException {
-		resourceBlockPersistence.remove(resourceBlock);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(resourceBlock);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return resourceBlockPersistence.remove(resourceBlock);
 	}
 
 	/**
@@ -458,6 +421,7 @@ public abstract class ResourceBlockLocalServiceBaseImpl
 	 * @return the resource block that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public ResourceBlock updateResourceBlock(ResourceBlock resourceBlock)
 		throws SystemException {
 		return updateResourceBlock(resourceBlock, true);
@@ -471,26 +435,12 @@ public abstract class ResourceBlockLocalServiceBaseImpl
 	 * @return the resource block that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public ResourceBlock updateResourceBlock(ResourceBlock resourceBlock,
 		boolean merge) throws SystemException {
 		resourceBlock.setNew(false);
 
-		resourceBlock = resourceBlockPersistence.update(resourceBlock, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(resourceBlock);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return resourceBlock;
+		return resourceBlockPersistence.update(resourceBlock, merge);
 	}
 
 	/**

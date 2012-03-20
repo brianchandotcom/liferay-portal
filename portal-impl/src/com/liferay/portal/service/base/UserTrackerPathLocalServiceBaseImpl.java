@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.model.UserTrackerPath;
@@ -254,27 +253,12 @@ public abstract class UserTrackerPathLocalServiceBaseImpl
 	 * @return the user tracker path that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public UserTrackerPath addUserTrackerPath(UserTrackerPath userTrackerPath)
 		throws SystemException {
 		userTrackerPath.setNew(true);
 
-		userTrackerPath = userTrackerPathPersistence.update(userTrackerPath,
-				false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(userTrackerPath);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return userTrackerPath;
+		return userTrackerPathPersistence.update(userTrackerPath, false);
 	}
 
 	/**
@@ -291,49 +275,27 @@ public abstract class UserTrackerPathLocalServiceBaseImpl
 	 * Deletes the user tracker path with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param userTrackerPathId the primary key of the user tracker path
+	 * @return the user tracker path that was removed
 	 * @throws PortalException if a user tracker path with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteUserTrackerPath(long userTrackerPathId)
+	@Indexable(type = IndexableType.DELETE)
+	public UserTrackerPath deleteUserTrackerPath(long userTrackerPathId)
 		throws PortalException, SystemException {
-		UserTrackerPath userTrackerPath = userTrackerPathPersistence.remove(userTrackerPathId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(userTrackerPath);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return userTrackerPathPersistence.remove(userTrackerPathId);
 	}
 
 	/**
 	 * Deletes the user tracker path from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param userTrackerPath the user tracker path
+	 * @return the user tracker path that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteUserTrackerPath(UserTrackerPath userTrackerPath)
-		throws SystemException {
-		userTrackerPathPersistence.remove(userTrackerPath);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(userTrackerPath);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public UserTrackerPath deleteUserTrackerPath(
+		UserTrackerPath userTrackerPath) throws SystemException {
+		return userTrackerPathPersistence.remove(userTrackerPath);
 	}
 
 	/**
@@ -459,6 +421,7 @@ public abstract class UserTrackerPathLocalServiceBaseImpl
 	 * @return the user tracker path that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public UserTrackerPath updateUserTrackerPath(
 		UserTrackerPath userTrackerPath) throws SystemException {
 		return updateUserTrackerPath(userTrackerPath, true);
@@ -472,28 +435,13 @@ public abstract class UserTrackerPathLocalServiceBaseImpl
 	 * @return the user tracker path that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public UserTrackerPath updateUserTrackerPath(
 		UserTrackerPath userTrackerPath, boolean merge)
 		throws SystemException {
 		userTrackerPath.setNew(false);
 
-		userTrackerPath = userTrackerPathPersistence.update(userTrackerPath,
-				merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(userTrackerPath);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return userTrackerPath;
+		return userTrackerPathPersistence.update(userTrackerPath, merge);
 	}
 
 	/**

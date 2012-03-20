@@ -56,24 +56,27 @@ public class ContactLocalServiceWrapper implements ContactLocalService,
 	* Deletes the contact with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param contactId the primary key of the contact
+	* @return the contact that was removed
 	* @throws PortalException if a contact with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteContact(long contactId)
+	public com.liferay.portal.model.Contact deleteContact(long contactId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_contactLocalService.deleteContact(contactId);
+		return _contactLocalService.deleteContact(contactId);
 	}
 
 	/**
 	* Deletes the contact from the database. Also notifies the appropriate model listeners.
 	*
 	* @param contact the contact
+	* @return the contact that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteContact(com.liferay.portal.model.Contact contact)
+	public com.liferay.portal.model.Contact deleteContact(
+		com.liferay.portal.model.Contact contact)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_contactLocalService.deleteContact(contact);
+		return _contactLocalService.deleteContact(contact);
 	}
 
 	/**

@@ -66,10 +66,12 @@ public interface LayoutPrototypeLocalService extends PersistedModelLocalService 
 	* Deletes the layout prototype with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param layoutPrototypeId the primary key of the layout prototype
+	* @return the layout prototype that was removed
 	* @throws PortalException if a layout prototype with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteLayoutPrototype(long layoutPrototypeId)
+	public com.liferay.portal.model.LayoutPrototype deleteLayoutPrototype(
+		long layoutPrototypeId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -77,10 +79,11 @@ public interface LayoutPrototypeLocalService extends PersistedModelLocalService 
 	* Deletes the layout prototype from the database. Also notifies the appropriate model listeners.
 	*
 	* @param layoutPrototype the layout prototype
+	* @return the layout prototype that was removed
 	* @throws PortalException
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteLayoutPrototype(
+	public com.liferay.portal.model.LayoutPrototype deleteLayoutPrototype(
 		com.liferay.portal.model.LayoutPrototype layoutPrototype)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

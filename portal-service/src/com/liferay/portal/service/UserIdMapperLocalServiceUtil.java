@@ -66,25 +66,28 @@ public class UserIdMapperLocalServiceUtil {
 	* Deletes the user ID mapper with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param userIdMapperId the primary key of the user ID mapper
+	* @return the user ID mapper that was removed
 	* @throws PortalException if a user ID mapper with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteUserIdMapper(long userIdMapperId)
+	public static com.liferay.portal.model.UserIdMapper deleteUserIdMapper(
+		long userIdMapperId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteUserIdMapper(userIdMapperId);
+		return getService().deleteUserIdMapper(userIdMapperId);
 	}
 
 	/**
 	* Deletes the user ID mapper from the database. Also notifies the appropriate model listeners.
 	*
 	* @param userIdMapper the user ID mapper
+	* @return the user ID mapper that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteUserIdMapper(
+	public static com.liferay.portal.model.UserIdMapper deleteUserIdMapper(
 		com.liferay.portal.model.UserIdMapper userIdMapper)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteUserIdMapper(userIdMapper);
+		return getService().deleteUserIdMapper(userIdMapper);
 	}
 
 	/**

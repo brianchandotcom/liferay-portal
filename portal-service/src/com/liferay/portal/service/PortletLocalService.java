@@ -65,10 +65,11 @@ public interface PortletLocalService extends PersistedModelLocalService {
 	* Deletes the portlet with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param id the primary key of the portlet
+	* @return the portlet that was removed
 	* @throws PortalException if a portlet with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deletePortlet(long id)
+	public com.liferay.portal.model.Portlet deletePortlet(long id)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -76,9 +77,11 @@ public interface PortletLocalService extends PersistedModelLocalService {
 	* Deletes the portlet from the database. Also notifies the appropriate model listeners.
 	*
 	* @param portlet the portlet
+	* @return the portlet that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deletePortlet(com.liferay.portal.model.Portlet portlet)
+	public com.liferay.portal.model.Portlet deletePortlet(
+		com.liferay.portal.model.Portlet portlet)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

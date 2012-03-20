@@ -66,25 +66,28 @@ public class MBBanLocalServiceUtil {
 	* Deletes the message boards ban with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param banId the primary key of the message boards ban
+	* @return the message boards ban that was removed
 	* @throws PortalException if a message boards ban with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteMBBan(long banId)
+	public static com.liferay.portlet.messageboards.model.MBBan deleteMBBan(
+		long banId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteMBBan(banId);
+		return getService().deleteMBBan(banId);
 	}
 
 	/**
 	* Deletes the message boards ban from the database. Also notifies the appropriate model listeners.
 	*
 	* @param mbBan the message boards ban
+	* @return the message boards ban that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteMBBan(
+	public static com.liferay.portlet.messageboards.model.MBBan deleteMBBan(
 		com.liferay.portlet.messageboards.model.MBBan mbBan)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteMBBan(mbBan);
+		return getService().deleteMBBan(mbBan);
 	}
 
 	/**

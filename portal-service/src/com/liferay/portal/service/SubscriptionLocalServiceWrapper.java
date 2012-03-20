@@ -58,27 +58,30 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 	* Deletes the subscription with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param subscriptionId the primary key of the subscription
+	* @return the subscription that was removed
 	* @throws PortalException if a subscription with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteSubscription(long subscriptionId)
+	public com.liferay.portal.model.Subscription deleteSubscription(
+		long subscriptionId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_subscriptionLocalService.deleteSubscription(subscriptionId);
+		return _subscriptionLocalService.deleteSubscription(subscriptionId);
 	}
 
 	/**
 	* Deletes the subscription from the database. Also notifies the appropriate model listeners.
 	*
 	* @param subscription the subscription
+	* @return the subscription that was removed
 	* @throws PortalException
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteSubscription(
+	public com.liferay.portal.model.Subscription deleteSubscription(
 		com.liferay.portal.model.Subscription subscription)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_subscriptionLocalService.deleteSubscription(subscription);
+		return _subscriptionLocalService.deleteSubscription(subscription);
 	}
 
 	/**

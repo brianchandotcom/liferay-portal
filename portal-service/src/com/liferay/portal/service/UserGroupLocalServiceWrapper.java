@@ -57,26 +57,29 @@ public class UserGroupLocalServiceWrapper implements UserGroupLocalService,
 	* Deletes the user group with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param userGroupId the primary key of the user group
+	* @return the user group that was removed
 	* @throws PortalException if a user group with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteUserGroup(long userGroupId)
+	public com.liferay.portal.model.UserGroup deleteUserGroup(long userGroupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_userGroupLocalService.deleteUserGroup(userGroupId);
+		return _userGroupLocalService.deleteUserGroup(userGroupId);
 	}
 
 	/**
 	* Deletes the user group from the database. Also notifies the appropriate model listeners.
 	*
 	* @param userGroup the user group
+	* @return the user group that was removed
 	* @throws PortalException
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteUserGroup(com.liferay.portal.model.UserGroup userGroup)
+	public com.liferay.portal.model.UserGroup deleteUserGroup(
+		com.liferay.portal.model.UserGroup userGroup)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_userGroupLocalService.deleteUserGroup(userGroup);
+		return _userGroupLocalService.deleteUserGroup(userGroup);
 	}
 
 	/**

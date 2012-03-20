@@ -61,25 +61,28 @@ public class AssetTagPropertyLocalServiceWrapper
 	* Deletes the asset tag property with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param tagPropertyId the primary key of the asset tag property
+	* @return the asset tag property that was removed
 	* @throws PortalException if a asset tag property with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteAssetTagProperty(long tagPropertyId)
+	public com.liferay.portlet.asset.model.AssetTagProperty deleteAssetTagProperty(
+		long tagPropertyId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_assetTagPropertyLocalService.deleteAssetTagProperty(tagPropertyId);
+		return _assetTagPropertyLocalService.deleteAssetTagProperty(tagPropertyId);
 	}
 
 	/**
 	* Deletes the asset tag property from the database. Also notifies the appropriate model listeners.
 	*
 	* @param assetTagProperty the asset tag property
+	* @return the asset tag property that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteAssetTagProperty(
+	public com.liferay.portlet.asset.model.AssetTagProperty deleteAssetTagProperty(
 		com.liferay.portlet.asset.model.AssetTagProperty assetTagProperty)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_assetTagPropertyLocalService.deleteAssetTagProperty(assetTagProperty);
+		return _assetTagPropertyLocalService.deleteAssetTagProperty(assetTagProperty);
 	}
 
 	/**

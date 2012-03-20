@@ -68,10 +68,12 @@ public interface AssetCategoryPropertyLocalService
 	* Deletes the asset category property with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param categoryPropertyId the primary key of the asset category property
+	* @return the asset category property that was removed
 	* @throws PortalException if a asset category property with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteAssetCategoryProperty(long categoryPropertyId)
+	public com.liferay.portlet.asset.model.AssetCategoryProperty deleteAssetCategoryProperty(
+		long categoryPropertyId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -79,9 +81,10 @@ public interface AssetCategoryPropertyLocalService
 	* Deletes the asset category property from the database. Also notifies the appropriate model listeners.
 	*
 	* @param assetCategoryProperty the asset category property
+	* @return the asset category property that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteAssetCategoryProperty(
+	public com.liferay.portlet.asset.model.AssetCategoryProperty deleteAssetCategoryProperty(
 		com.liferay.portlet.asset.model.AssetCategoryProperty assetCategoryProperty)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

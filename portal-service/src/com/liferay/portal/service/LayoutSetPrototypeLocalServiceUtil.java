@@ -66,27 +66,30 @@ public class LayoutSetPrototypeLocalServiceUtil {
 	* Deletes the layout set prototype with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param layoutSetPrototypeId the primary key of the layout set prototype
+	* @return the layout set prototype that was removed
 	* @throws PortalException if a layout set prototype with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteLayoutSetPrototype(long layoutSetPrototypeId)
+	public static com.liferay.portal.model.LayoutSetPrototype deleteLayoutSetPrototype(
+		long layoutSetPrototypeId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteLayoutSetPrototype(layoutSetPrototypeId);
+		return getService().deleteLayoutSetPrototype(layoutSetPrototypeId);
 	}
 
 	/**
 	* Deletes the layout set prototype from the database. Also notifies the appropriate model listeners.
 	*
 	* @param layoutSetPrototype the layout set prototype
+	* @return the layout set prototype that was removed
 	* @throws PortalException
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteLayoutSetPrototype(
+	public static com.liferay.portal.model.LayoutSetPrototype deleteLayoutSetPrototype(
 		com.liferay.portal.model.LayoutSetPrototype layoutSetPrototype)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteLayoutSetPrototype(layoutSetPrototype);
+		return getService().deleteLayoutSetPrototype(layoutSetPrototype);
 	}
 
 	/**

@@ -65,10 +65,11 @@ public interface TeamLocalService extends PersistedModelLocalService {
 	* Deletes the team with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param teamId the primary key of the team
+	* @return the team that was removed
 	* @throws PortalException if a team with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteTeam(long teamId)
+	public com.liferay.portal.model.Team deleteTeam(long teamId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -76,10 +77,12 @@ public interface TeamLocalService extends PersistedModelLocalService {
 	* Deletes the team from the database. Also notifies the appropriate model listeners.
 	*
 	* @param team the team
+	* @return the team that was removed
 	* @throws PortalException
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteTeam(com.liferay.portal.model.Team team)
+	public com.liferay.portal.model.Team deleteTeam(
+		com.liferay.portal.model.Team team)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

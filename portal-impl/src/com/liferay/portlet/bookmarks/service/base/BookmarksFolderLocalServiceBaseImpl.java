@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.GroupLocalService;
@@ -89,27 +88,12 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 	 * @return the bookmarks folder that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public BookmarksFolder addBookmarksFolder(BookmarksFolder bookmarksFolder)
 		throws SystemException {
 		bookmarksFolder.setNew(true);
 
-		bookmarksFolder = bookmarksFolderPersistence.update(bookmarksFolder,
-				false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(bookmarksFolder);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return bookmarksFolder;
+		return bookmarksFolderPersistence.update(bookmarksFolder, false);
 	}
 
 	/**
@@ -126,49 +110,27 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 	 * Deletes the bookmarks folder with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param folderId the primary key of the bookmarks folder
+	 * @return the bookmarks folder that was removed
 	 * @throws PortalException if a bookmarks folder with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteBookmarksFolder(long folderId)
+	@Indexable(type = IndexableType.DELETE)
+	public BookmarksFolder deleteBookmarksFolder(long folderId)
 		throws PortalException, SystemException {
-		BookmarksFolder bookmarksFolder = bookmarksFolderPersistence.remove(folderId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(bookmarksFolder);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return bookmarksFolderPersistence.remove(folderId);
 	}
 
 	/**
 	 * Deletes the bookmarks folder from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param bookmarksFolder the bookmarks folder
+	 * @return the bookmarks folder that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteBookmarksFolder(BookmarksFolder bookmarksFolder)
-		throws SystemException {
-		bookmarksFolderPersistence.remove(bookmarksFolder);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(bookmarksFolder);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public BookmarksFolder deleteBookmarksFolder(
+		BookmarksFolder bookmarksFolder) throws SystemException {
+		return bookmarksFolderPersistence.remove(bookmarksFolder);
 	}
 
 	/**
@@ -308,6 +270,7 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 	 * @return the bookmarks folder that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public BookmarksFolder updateBookmarksFolder(
 		BookmarksFolder bookmarksFolder) throws SystemException {
 		return updateBookmarksFolder(bookmarksFolder, true);
@@ -321,28 +284,13 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 	 * @return the bookmarks folder that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public BookmarksFolder updateBookmarksFolder(
 		BookmarksFolder bookmarksFolder, boolean merge)
 		throws SystemException {
 		bookmarksFolder.setNew(false);
 
-		bookmarksFolder = bookmarksFolderPersistence.update(bookmarksFolder,
-				merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(bookmarksFolder);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return bookmarksFolder;
+		return bookmarksFolderPersistence.update(bookmarksFolder, merge);
 	}
 
 	/**

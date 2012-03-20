@@ -68,10 +68,12 @@ public interface AnnouncementsFlagLocalService
 	* Deletes the announcements flag with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param flagId the primary key of the announcements flag
+	* @return the announcements flag that was removed
 	* @throws PortalException if a announcements flag with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteAnnouncementsFlag(long flagId)
+	public com.liferay.portlet.announcements.model.AnnouncementsFlag deleteAnnouncementsFlag(
+		long flagId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -79,9 +81,10 @@ public interface AnnouncementsFlagLocalService
 	* Deletes the announcements flag from the database. Also notifies the appropriate model listeners.
 	*
 	* @param announcementsFlag the announcements flag
+	* @return the announcements flag that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteAnnouncementsFlag(
+	public com.liferay.portlet.announcements.model.AnnouncementsFlag deleteAnnouncementsFlag(
 		com.liferay.portlet.announcements.model.AnnouncementsFlag announcementsFlag)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

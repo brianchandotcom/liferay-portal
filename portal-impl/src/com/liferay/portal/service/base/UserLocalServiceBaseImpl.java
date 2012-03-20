@@ -27,9 +27,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.model.User;
@@ -291,25 +290,11 @@ public abstract class UserLocalServiceBaseImpl implements UserLocalService,
 	 * @return the user that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public User addUser(User user) throws SystemException {
 		user.setNew(true);
 
-		user = userPersistence.update(user, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(user);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return user;
+		return userPersistence.update(user, false);
 	}
 
 	/**
@@ -326,48 +311,26 @@ public abstract class UserLocalServiceBaseImpl implements UserLocalService,
 	 * Deletes the user with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param userId the primary key of the user
+	 * @return the user that was removed
 	 * @throws PortalException if a user with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteUser(long userId) throws PortalException, SystemException {
-		User user = userPersistence.remove(userId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(user);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public User deleteUser(long userId) throws PortalException, SystemException {
+		return userPersistence.remove(userId);
 	}
 
 	/**
 	 * Deletes the user from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param user the user
+	 * @return the user that was removed
 	 * @throws PortalException
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteUser(User user) throws PortalException, SystemException {
-		userPersistence.remove(user);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(user);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public User deleteUser(User user) throws PortalException, SystemException {
+		return userPersistence.remove(user);
 	}
 
 	/**
@@ -489,6 +452,7 @@ public abstract class UserLocalServiceBaseImpl implements UserLocalService,
 	 * @return the user that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public User updateUser(User user) throws SystemException {
 		return updateUser(user, true);
 	}
@@ -501,25 +465,11 @@ public abstract class UserLocalServiceBaseImpl implements UserLocalService,
 	 * @return the user that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public User updateUser(User user, boolean merge) throws SystemException {
 		user.setNew(false);
 
-		user = userPersistence.update(user, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(user);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return user;
+		return userPersistence.update(user, merge);
 	}
 
 	/**

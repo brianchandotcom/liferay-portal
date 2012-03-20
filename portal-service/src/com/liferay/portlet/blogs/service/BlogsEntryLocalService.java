@@ -67,10 +67,12 @@ public interface BlogsEntryLocalService extends PersistedModelLocalService {
 	* Deletes the blogs entry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param entryId the primary key of the blogs entry
+	* @return the blogs entry that was removed
 	* @throws PortalException if a blogs entry with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteBlogsEntry(long entryId)
+	public com.liferay.portlet.blogs.model.BlogsEntry deleteBlogsEntry(
+		long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -78,9 +80,10 @@ public interface BlogsEntryLocalService extends PersistedModelLocalService {
 	* Deletes the blogs entry from the database. Also notifies the appropriate model listeners.
 	*
 	* @param blogsEntry the blogs entry
+	* @return the blogs entry that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteBlogsEntry(
+	public com.liferay.portlet.blogs.model.BlogsEntry deleteBlogsEntry(
 		com.liferay.portlet.blogs.model.BlogsEntry blogsEntry)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

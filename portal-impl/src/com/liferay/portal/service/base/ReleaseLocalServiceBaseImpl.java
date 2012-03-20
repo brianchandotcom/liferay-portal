@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.model.Release;
@@ -254,25 +253,11 @@ public abstract class ReleaseLocalServiceBaseImpl implements ReleaseLocalService
 	 * @return the release that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public Release addRelease(Release release) throws SystemException {
 		release.setNew(true);
 
-		release = releasePersistence.update(release, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(release);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return release;
+		return releasePersistence.update(release, false);
 	}
 
 	/**
@@ -289,48 +274,26 @@ public abstract class ReleaseLocalServiceBaseImpl implements ReleaseLocalService
 	 * Deletes the release with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param releaseId the primary key of the release
+	 * @return the release that was removed
 	 * @throws PortalException if a release with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteRelease(long releaseId)
+	@Indexable(type = IndexableType.DELETE)
+	public Release deleteRelease(long releaseId)
 		throws PortalException, SystemException {
-		Release release = releasePersistence.remove(releaseId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(release);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return releasePersistence.remove(releaseId);
 	}
 
 	/**
 	 * Deletes the release from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param release the release
+	 * @return the release that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteRelease(Release release) throws SystemException {
-		releasePersistence.remove(release);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(release);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public Release deleteRelease(Release release) throws SystemException {
+		return releasePersistence.remove(release);
 	}
 
 	/**
@@ -454,6 +417,7 @@ public abstract class ReleaseLocalServiceBaseImpl implements ReleaseLocalService
 	 * @return the release that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public Release updateRelease(Release release) throws SystemException {
 		return updateRelease(release, true);
 	}
@@ -466,26 +430,12 @@ public abstract class ReleaseLocalServiceBaseImpl implements ReleaseLocalService
 	 * @return the release that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public Release updateRelease(Release release, boolean merge)
 		throws SystemException {
 		release.setNew(false);
 
-		release = releasePersistence.update(release, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(release);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return release;
+		return releasePersistence.update(release, merge);
 	}
 
 	/**

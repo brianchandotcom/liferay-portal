@@ -61,25 +61,28 @@ public class BlogsStatsUserLocalServiceWrapper
 	* Deletes the blogs stats user with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param statsUserId the primary key of the blogs stats user
+	* @return the blogs stats user that was removed
 	* @throws PortalException if a blogs stats user with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteBlogsStatsUser(long statsUserId)
+	public com.liferay.portlet.blogs.model.BlogsStatsUser deleteBlogsStatsUser(
+		long statsUserId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_blogsStatsUserLocalService.deleteBlogsStatsUser(statsUserId);
+		return _blogsStatsUserLocalService.deleteBlogsStatsUser(statsUserId);
 	}
 
 	/**
 	* Deletes the blogs stats user from the database. Also notifies the appropriate model listeners.
 	*
 	* @param blogsStatsUser the blogs stats user
+	* @return the blogs stats user that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteBlogsStatsUser(
+	public com.liferay.portlet.blogs.model.BlogsStatsUser deleteBlogsStatsUser(
 		com.liferay.portlet.blogs.model.BlogsStatsUser blogsStatsUser)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_blogsStatsUserLocalService.deleteBlogsStatsUser(blogsStatsUser);
+		return _blogsStatsUserLocalService.deleteBlogsStatsUser(blogsStatsUser);
 	}
 
 	/**

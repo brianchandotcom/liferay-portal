@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
@@ -89,27 +88,12 @@ public abstract class SCFrameworkVersionLocalServiceBaseImpl
 	 * @return the s c framework version that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public SCFrameworkVersion addSCFrameworkVersion(
 		SCFrameworkVersion scFrameworkVersion) throws SystemException {
 		scFrameworkVersion.setNew(true);
 
-		scFrameworkVersion = scFrameworkVersionPersistence.update(scFrameworkVersion,
-				false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(scFrameworkVersion);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return scFrameworkVersion;
+		return scFrameworkVersionPersistence.update(scFrameworkVersion, false);
 	}
 
 	/**
@@ -126,49 +110,27 @@ public abstract class SCFrameworkVersionLocalServiceBaseImpl
 	 * Deletes the s c framework version with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param frameworkVersionId the primary key of the s c framework version
+	 * @return the s c framework version that was removed
 	 * @throws PortalException if a s c framework version with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteSCFrameworkVersion(long frameworkVersionId)
+	@Indexable(type = IndexableType.DELETE)
+	public SCFrameworkVersion deleteSCFrameworkVersion(long frameworkVersionId)
 		throws PortalException, SystemException {
-		SCFrameworkVersion scFrameworkVersion = scFrameworkVersionPersistence.remove(frameworkVersionId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(scFrameworkVersion);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return scFrameworkVersionPersistence.remove(frameworkVersionId);
 	}
 
 	/**
 	 * Deletes the s c framework version from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param scFrameworkVersion the s c framework version
+	 * @return the s c framework version that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteSCFrameworkVersion(SCFrameworkVersion scFrameworkVersion)
-		throws SystemException {
-		scFrameworkVersionPersistence.remove(scFrameworkVersion);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(scFrameworkVersion);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public SCFrameworkVersion deleteSCFrameworkVersion(
+		SCFrameworkVersion scFrameworkVersion) throws SystemException {
+		return scFrameworkVersionPersistence.remove(scFrameworkVersion);
 	}
 
 	/**
@@ -294,6 +256,7 @@ public abstract class SCFrameworkVersionLocalServiceBaseImpl
 	 * @return the s c framework version that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public SCFrameworkVersion updateSCFrameworkVersion(
 		SCFrameworkVersion scFrameworkVersion) throws SystemException {
 		return updateSCFrameworkVersion(scFrameworkVersion, true);
@@ -307,28 +270,13 @@ public abstract class SCFrameworkVersionLocalServiceBaseImpl
 	 * @return the s c framework version that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public SCFrameworkVersion updateSCFrameworkVersion(
 		SCFrameworkVersion scFrameworkVersion, boolean merge)
 		throws SystemException {
 		scFrameworkVersion.setNew(false);
 
-		scFrameworkVersion = scFrameworkVersionPersistence.update(scFrameworkVersion,
-				merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(scFrameworkVersion);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return scFrameworkVersion;
+		return scFrameworkVersionPersistence.update(scFrameworkVersion, merge);
 	}
 
 	/**

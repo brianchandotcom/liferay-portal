@@ -66,25 +66,28 @@ public class PasswordPolicyRelLocalServiceUtil {
 	* Deletes the password policy rel with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param passwordPolicyRelId the primary key of the password policy rel
+	* @return the password policy rel that was removed
 	* @throws PortalException if a password policy rel with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deletePasswordPolicyRel(long passwordPolicyRelId)
+	public static com.liferay.portal.model.PasswordPolicyRel deletePasswordPolicyRel(
+		long passwordPolicyRelId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deletePasswordPolicyRel(passwordPolicyRelId);
+		return getService().deletePasswordPolicyRel(passwordPolicyRelId);
 	}
 
 	/**
 	* Deletes the password policy rel from the database. Also notifies the appropriate model listeners.
 	*
 	* @param passwordPolicyRel the password policy rel
+	* @return the password policy rel that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deletePasswordPolicyRel(
+	public static com.liferay.portal.model.PasswordPolicyRel deletePasswordPolicyRel(
 		com.liferay.portal.model.PasswordPolicyRel passwordPolicyRel)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deletePasswordPolicyRel(passwordPolicyRel);
+		return getService().deletePasswordPolicyRel(passwordPolicyRel);
 	}
 
 	/**

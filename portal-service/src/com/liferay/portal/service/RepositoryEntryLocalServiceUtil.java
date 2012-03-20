@@ -66,25 +66,28 @@ public class RepositoryEntryLocalServiceUtil {
 	* Deletes the repository entry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param repositoryEntryId the primary key of the repository entry
+	* @return the repository entry that was removed
 	* @throws PortalException if a repository entry with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteRepositoryEntry(long repositoryEntryId)
+	public static com.liferay.portal.model.RepositoryEntry deleteRepositoryEntry(
+		long repositoryEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteRepositoryEntry(repositoryEntryId);
+		return getService().deleteRepositoryEntry(repositoryEntryId);
 	}
 
 	/**
 	* Deletes the repository entry from the database. Also notifies the appropriate model listeners.
 	*
 	* @param repositoryEntry the repository entry
+	* @return the repository entry that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteRepositoryEntry(
+	public static com.liferay.portal.model.RepositoryEntry deleteRepositoryEntry(
 		com.liferay.portal.model.RepositoryEntry repositoryEntry)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteRepositoryEntry(repositoryEntry);
+		return getService().deleteRepositoryEntry(repositoryEntry);
 	}
 
 	/**

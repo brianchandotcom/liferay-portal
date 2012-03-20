@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
@@ -85,26 +84,12 @@ public abstract class PollsQuestionLocalServiceBaseImpl
 	 * @return the polls question that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public PollsQuestion addPollsQuestion(PollsQuestion pollsQuestion)
 		throws SystemException {
 		pollsQuestion.setNew(true);
 
-		pollsQuestion = pollsQuestionPersistence.update(pollsQuestion, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(pollsQuestion);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return pollsQuestion;
+		return pollsQuestionPersistence.update(pollsQuestion, false);
 	}
 
 	/**
@@ -121,49 +106,27 @@ public abstract class PollsQuestionLocalServiceBaseImpl
 	 * Deletes the polls question with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param questionId the primary key of the polls question
+	 * @return the polls question that was removed
 	 * @throws PortalException if a polls question with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deletePollsQuestion(long questionId)
+	@Indexable(type = IndexableType.DELETE)
+	public PollsQuestion deletePollsQuestion(long questionId)
 		throws PortalException, SystemException {
-		PollsQuestion pollsQuestion = pollsQuestionPersistence.remove(questionId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(pollsQuestion);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return pollsQuestionPersistence.remove(questionId);
 	}
 
 	/**
 	 * Deletes the polls question from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param pollsQuestion the polls question
+	 * @return the polls question that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deletePollsQuestion(PollsQuestion pollsQuestion)
+	@Indexable(type = IndexableType.DELETE)
+	public PollsQuestion deletePollsQuestion(PollsQuestion pollsQuestion)
 		throws SystemException {
-		pollsQuestionPersistence.remove(pollsQuestion);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(pollsQuestion);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return pollsQuestionPersistence.remove(pollsQuestion);
 	}
 
 	/**
@@ -303,6 +266,7 @@ public abstract class PollsQuestionLocalServiceBaseImpl
 	 * @return the polls question that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public PollsQuestion updatePollsQuestion(PollsQuestion pollsQuestion)
 		throws SystemException {
 		return updatePollsQuestion(pollsQuestion, true);
@@ -316,26 +280,12 @@ public abstract class PollsQuestionLocalServiceBaseImpl
 	 * @return the polls question that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public PollsQuestion updatePollsQuestion(PollsQuestion pollsQuestion,
 		boolean merge) throws SystemException {
 		pollsQuestion.setNew(false);
 
-		pollsQuestion = pollsQuestionPersistence.update(pollsQuestion, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(pollsQuestion);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return pollsQuestion;
+		return pollsQuestionPersistence.update(pollsQuestion, merge);
 	}
 
 	/**

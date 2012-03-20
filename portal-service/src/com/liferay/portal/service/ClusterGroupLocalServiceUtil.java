@@ -66,25 +66,28 @@ public class ClusterGroupLocalServiceUtil {
 	* Deletes the cluster group with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param clusterGroupId the primary key of the cluster group
+	* @return the cluster group that was removed
 	* @throws PortalException if a cluster group with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteClusterGroup(long clusterGroupId)
+	public static com.liferay.portal.model.ClusterGroup deleteClusterGroup(
+		long clusterGroupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteClusterGroup(clusterGroupId);
+		return getService().deleteClusterGroup(clusterGroupId);
 	}
 
 	/**
 	* Deletes the cluster group from the database. Also notifies the appropriate model listeners.
 	*
 	* @param clusterGroup the cluster group
+	* @return the cluster group that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteClusterGroup(
+	public static com.liferay.portal.model.ClusterGroup deleteClusterGroup(
 		com.liferay.portal.model.ClusterGroup clusterGroup)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteClusterGroup(clusterGroup);
+		return getService().deleteClusterGroup(clusterGroup);
 	}
 
 	/**

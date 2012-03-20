@@ -66,25 +66,28 @@ public class ResourceActionLocalServiceUtil {
 	* Deletes the resource action with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param resourceActionId the primary key of the resource action
+	* @return the resource action that was removed
 	* @throws PortalException if a resource action with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteResourceAction(long resourceActionId)
+	public static com.liferay.portal.model.ResourceAction deleteResourceAction(
+		long resourceActionId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteResourceAction(resourceActionId);
+		return getService().deleteResourceAction(resourceActionId);
 	}
 
 	/**
 	* Deletes the resource action from the database. Also notifies the appropriate model listeners.
 	*
 	* @param resourceAction the resource action
+	* @return the resource action that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteResourceAction(
+	public static com.liferay.portal.model.ResourceAction deleteResourceAction(
 		com.liferay.portal.model.ResourceAction resourceAction)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteResourceAction(resourceAction);
+		return getService().deleteResourceAction(resourceAction);
 	}
 
 	/**

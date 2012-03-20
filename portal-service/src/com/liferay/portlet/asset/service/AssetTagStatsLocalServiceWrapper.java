@@ -61,25 +61,28 @@ public class AssetTagStatsLocalServiceWrapper
 	* Deletes the asset tag stats with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param tagStatsId the primary key of the asset tag stats
+	* @return the asset tag stats that was removed
 	* @throws PortalException if a asset tag stats with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteAssetTagStats(long tagStatsId)
+	public com.liferay.portlet.asset.model.AssetTagStats deleteAssetTagStats(
+		long tagStatsId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_assetTagStatsLocalService.deleteAssetTagStats(tagStatsId);
+		return _assetTagStatsLocalService.deleteAssetTagStats(tagStatsId);
 	}
 
 	/**
 	* Deletes the asset tag stats from the database. Also notifies the appropriate model listeners.
 	*
 	* @param assetTagStats the asset tag stats
+	* @return the asset tag stats that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteAssetTagStats(
+	public com.liferay.portlet.asset.model.AssetTagStats deleteAssetTagStats(
 		com.liferay.portlet.asset.model.AssetTagStats assetTagStats)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_assetTagStatsLocalService.deleteAssetTagStats(assetTagStats);
+		return _assetTagStatsLocalService.deleteAssetTagStats(assetTagStats);
 	}
 
 	/**

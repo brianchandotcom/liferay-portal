@@ -59,26 +59,28 @@ public class UserGroupRoleLocalServiceWrapper
 	* Deletes the user group role with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param userGroupRolePK the primary key of the user group role
+	* @return the user group role that was removed
 	* @throws PortalException if a user group role with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteUserGroupRole(
+	public com.liferay.portal.model.UserGroupRole deleteUserGroupRole(
 		com.liferay.portal.service.persistence.UserGroupRolePK userGroupRolePK)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_userGroupRoleLocalService.deleteUserGroupRole(userGroupRolePK);
+		return _userGroupRoleLocalService.deleteUserGroupRole(userGroupRolePK);
 	}
 
 	/**
 	* Deletes the user group role from the database. Also notifies the appropriate model listeners.
 	*
 	* @param userGroupRole the user group role
+	* @return the user group role that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteUserGroupRole(
+	public com.liferay.portal.model.UserGroupRole deleteUserGroupRole(
 		com.liferay.portal.model.UserGroupRole userGroupRole)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_userGroupRoleLocalService.deleteUserGroupRole(userGroupRole);
+		return _userGroupRoleLocalService.deleteUserGroupRole(userGroupRole);
 	}
 
 	/**

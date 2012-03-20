@@ -57,24 +57,27 @@ public class ClassNameLocalServiceWrapper implements ClassNameLocalService,
 	* Deletes the class name with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param classNameId the primary key of the class name
+	* @return the class name that was removed
 	* @throws PortalException if a class name with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteClassName(long classNameId)
+	public com.liferay.portal.model.ClassName deleteClassName(long classNameId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_classNameLocalService.deleteClassName(classNameId);
+		return _classNameLocalService.deleteClassName(classNameId);
 	}
 
 	/**
 	* Deletes the class name from the database. Also notifies the appropriate model listeners.
 	*
 	* @param className the class name
+	* @return the class name that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteClassName(com.liferay.portal.model.ClassName className)
+	public com.liferay.portal.model.ClassName deleteClassName(
+		com.liferay.portal.model.ClassName className)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_classNameLocalService.deleteClassName(className);
+		return _classNameLocalService.deleteClassName(className);
 	}
 
 	/**

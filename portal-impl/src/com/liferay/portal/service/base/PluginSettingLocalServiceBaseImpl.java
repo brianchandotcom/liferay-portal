@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.model.PluginSetting;
@@ -254,26 +253,12 @@ public abstract class PluginSettingLocalServiceBaseImpl
 	 * @return the plugin setting that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public PluginSetting addPluginSetting(PluginSetting pluginSetting)
 		throws SystemException {
 		pluginSetting.setNew(true);
 
-		pluginSetting = pluginSettingPersistence.update(pluginSetting, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(pluginSetting);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return pluginSetting;
+		return pluginSettingPersistence.update(pluginSetting, false);
 	}
 
 	/**
@@ -290,49 +275,27 @@ public abstract class PluginSettingLocalServiceBaseImpl
 	 * Deletes the plugin setting with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param pluginSettingId the primary key of the plugin setting
+	 * @return the plugin setting that was removed
 	 * @throws PortalException if a plugin setting with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deletePluginSetting(long pluginSettingId)
+	@Indexable(type = IndexableType.DELETE)
+	public PluginSetting deletePluginSetting(long pluginSettingId)
 		throws PortalException, SystemException {
-		PluginSetting pluginSetting = pluginSettingPersistence.remove(pluginSettingId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(pluginSetting);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return pluginSettingPersistence.remove(pluginSettingId);
 	}
 
 	/**
 	 * Deletes the plugin setting from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param pluginSetting the plugin setting
+	 * @return the plugin setting that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deletePluginSetting(PluginSetting pluginSetting)
+	@Indexable(type = IndexableType.DELETE)
+	public PluginSetting deletePluginSetting(PluginSetting pluginSetting)
 		throws SystemException {
-		pluginSettingPersistence.remove(pluginSetting);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(pluginSetting);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return pluginSettingPersistence.remove(pluginSetting);
 	}
 
 	/**
@@ -458,6 +421,7 @@ public abstract class PluginSettingLocalServiceBaseImpl
 	 * @return the plugin setting that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public PluginSetting updatePluginSetting(PluginSetting pluginSetting)
 		throws SystemException {
 		return updatePluginSetting(pluginSetting, true);
@@ -471,26 +435,12 @@ public abstract class PluginSettingLocalServiceBaseImpl
 	 * @return the plugin setting that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public PluginSetting updatePluginSetting(PluginSetting pluginSetting,
 		boolean merge) throws SystemException {
 		pluginSetting.setNew(false);
 
-		pluginSetting = pluginSettingPersistence.update(pluginSetting, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(pluginSetting);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return pluginSetting;
+		return pluginSettingPersistence.update(pluginSetting, merge);
 	}
 
 	/**

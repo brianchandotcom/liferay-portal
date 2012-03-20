@@ -58,25 +58,28 @@ public class PortletItemLocalServiceWrapper implements PortletItemLocalService,
 	* Deletes the portlet item with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param portletItemId the primary key of the portlet item
+	* @return the portlet item that was removed
 	* @throws PortalException if a portlet item with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deletePortletItem(long portletItemId)
+	public com.liferay.portal.model.PortletItem deletePortletItem(
+		long portletItemId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_portletItemLocalService.deletePortletItem(portletItemId);
+		return _portletItemLocalService.deletePortletItem(portletItemId);
 	}
 
 	/**
 	* Deletes the portlet item from the database. Also notifies the appropriate model listeners.
 	*
 	* @param portletItem the portlet item
+	* @return the portlet item that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deletePortletItem(
+	public com.liferay.portal.model.PortletItem deletePortletItem(
 		com.liferay.portal.model.PortletItem portletItem)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_portletItemLocalService.deletePortletItem(portletItem);
+		return _portletItemLocalService.deletePortletItem(portletItem);
 	}
 
 	/**

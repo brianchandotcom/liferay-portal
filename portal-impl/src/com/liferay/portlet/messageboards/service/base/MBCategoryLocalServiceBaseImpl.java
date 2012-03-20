@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.GroupLocalService;
@@ -111,26 +110,12 @@ public abstract class MBCategoryLocalServiceBaseImpl
 	 * @return the message boards category that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public MBCategory addMBCategory(MBCategory mbCategory)
 		throws SystemException {
 		mbCategory.setNew(true);
 
-		mbCategory = mbCategoryPersistence.update(mbCategory, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(mbCategory);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return mbCategory;
+		return mbCategoryPersistence.update(mbCategory, false);
 	}
 
 	/**
@@ -147,49 +132,27 @@ public abstract class MBCategoryLocalServiceBaseImpl
 	 * Deletes the message boards category with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param categoryId the primary key of the message boards category
+	 * @return the message boards category that was removed
 	 * @throws PortalException if a message boards category with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteMBCategory(long categoryId)
+	@Indexable(type = IndexableType.DELETE)
+	public MBCategory deleteMBCategory(long categoryId)
 		throws PortalException, SystemException {
-		MBCategory mbCategory = mbCategoryPersistence.remove(categoryId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(mbCategory);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return mbCategoryPersistence.remove(categoryId);
 	}
 
 	/**
 	 * Deletes the message boards category from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param mbCategory the message boards category
+	 * @return the message boards category that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteMBCategory(MBCategory mbCategory)
+	@Indexable(type = IndexableType.DELETE)
+	public MBCategory deleteMBCategory(MBCategory mbCategory)
 		throws SystemException {
-		mbCategoryPersistence.remove(mbCategory);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(mbCategory);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return mbCategoryPersistence.remove(mbCategory);
 	}
 
 	/**
@@ -329,6 +292,7 @@ public abstract class MBCategoryLocalServiceBaseImpl
 	 * @return the message boards category that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public MBCategory updateMBCategory(MBCategory mbCategory)
 		throws SystemException {
 		return updateMBCategory(mbCategory, true);
@@ -342,26 +306,12 @@ public abstract class MBCategoryLocalServiceBaseImpl
 	 * @return the message boards category that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public MBCategory updateMBCategory(MBCategory mbCategory, boolean merge)
 		throws SystemException {
 		mbCategory.setNew(false);
 
-		mbCategory = mbCategoryPersistence.update(mbCategory, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(mbCategory);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return mbCategory;
+		return mbCategoryPersistence.update(mbCategory, merge);
 	}
 
 	/**

@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.PersistedModel;
@@ -329,25 +328,11 @@ public abstract class GroupLocalServiceBaseImpl implements GroupLocalService,
 	 * @return the group that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public Group addGroup(Group group) throws SystemException {
 		group.setNew(true);
 
-		group = groupPersistence.update(group, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(group);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return group;
+		return groupPersistence.update(group, false);
 	}
 
 	/**
@@ -364,50 +349,28 @@ public abstract class GroupLocalServiceBaseImpl implements GroupLocalService,
 	 * Deletes the group with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param groupId the primary key of the group
+	 * @return the group that was removed
 	 * @throws PortalException if a group with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteGroup(long groupId)
+	@Indexable(type = IndexableType.DELETE)
+	public Group deleteGroup(long groupId)
 		throws PortalException, SystemException {
-		Group group = groupPersistence.remove(groupId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(group);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return groupPersistence.remove(groupId);
 	}
 
 	/**
 	 * Deletes the group from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param group the group
+	 * @return the group that was removed
 	 * @throws PortalException
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteGroup(Group group)
+	@Indexable(type = IndexableType.DELETE)
+	public Group deleteGroup(Group group)
 		throws PortalException, SystemException {
-		groupPersistence.remove(group);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(group);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return groupPersistence.remove(group);
 	}
 
 	/**
@@ -529,6 +492,7 @@ public abstract class GroupLocalServiceBaseImpl implements GroupLocalService,
 	 * @return the group that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public Group updateGroup(Group group) throws SystemException {
 		return updateGroup(group, true);
 	}
@@ -541,26 +505,12 @@ public abstract class GroupLocalServiceBaseImpl implements GroupLocalService,
 	 * @return the group that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public Group updateGroup(Group group, boolean merge)
 		throws SystemException {
 		group.setNew(false);
 
-		group = groupPersistence.update(group, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(group);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return group;
+		return groupPersistence.update(group, merge);
 	}
 
 	/**

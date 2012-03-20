@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.model.Subscription;
@@ -266,26 +265,12 @@ public abstract class SubscriptionLocalServiceBaseImpl
 	 * @return the subscription that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public Subscription addSubscription(Subscription subscription)
 		throws SystemException {
 		subscription.setNew(true);
 
-		subscription = subscriptionPersistence.update(subscription, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(subscription);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return subscription;
+		return subscriptionPersistence.update(subscription, false);
 	}
 
 	/**
@@ -302,50 +287,28 @@ public abstract class SubscriptionLocalServiceBaseImpl
 	 * Deletes the subscription with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param subscriptionId the primary key of the subscription
+	 * @return the subscription that was removed
 	 * @throws PortalException if a subscription with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteSubscription(long subscriptionId)
+	@Indexable(type = IndexableType.DELETE)
+	public Subscription deleteSubscription(long subscriptionId)
 		throws PortalException, SystemException {
-		Subscription subscription = subscriptionPersistence.remove(subscriptionId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(subscription);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return subscriptionPersistence.remove(subscriptionId);
 	}
 
 	/**
 	 * Deletes the subscription from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param subscription the subscription
+	 * @return the subscription that was removed
 	 * @throws PortalException
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteSubscription(Subscription subscription)
+	@Indexable(type = IndexableType.DELETE)
+	public Subscription deleteSubscription(Subscription subscription)
 		throws PortalException, SystemException {
-		subscriptionPersistence.remove(subscription);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(subscription);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return subscriptionPersistence.remove(subscription);
 	}
 
 	/**
@@ -471,6 +434,7 @@ public abstract class SubscriptionLocalServiceBaseImpl
 	 * @return the subscription that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public Subscription updateSubscription(Subscription subscription)
 		throws SystemException {
 		return updateSubscription(subscription, true);
@@ -484,26 +448,12 @@ public abstract class SubscriptionLocalServiceBaseImpl
 	 * @return the subscription that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public Subscription updateSubscription(Subscription subscription,
 		boolean merge) throws SystemException {
 		subscription.setNew(false);
 
-		subscription = subscriptionPersistence.update(subscription, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(subscription);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return subscription;
+		return subscriptionPersistence.update(subscription, merge);
 	}
 
 	/**

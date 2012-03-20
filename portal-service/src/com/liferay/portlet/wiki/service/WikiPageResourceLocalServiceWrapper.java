@@ -61,25 +61,28 @@ public class WikiPageResourceLocalServiceWrapper
 	* Deletes the wiki page resource with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param resourcePrimKey the primary key of the wiki page resource
+	* @return the wiki page resource that was removed
 	* @throws PortalException if a wiki page resource with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteWikiPageResource(long resourcePrimKey)
+	public com.liferay.portlet.wiki.model.WikiPageResource deleteWikiPageResource(
+		long resourcePrimKey)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_wikiPageResourceLocalService.deleteWikiPageResource(resourcePrimKey);
+		return _wikiPageResourceLocalService.deleteWikiPageResource(resourcePrimKey);
 	}
 
 	/**
 	* Deletes the wiki page resource from the database. Also notifies the appropriate model listeners.
 	*
 	* @param wikiPageResource the wiki page resource
+	* @return the wiki page resource that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteWikiPageResource(
+	public com.liferay.portlet.wiki.model.WikiPageResource deleteWikiPageResource(
 		com.liferay.portlet.wiki.model.WikiPageResource wikiPageResource)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_wikiPageResourceLocalService.deleteWikiPageResource(wikiPageResource);
+		return _wikiPageResourceLocalService.deleteWikiPageResource(wikiPageResource);
 	}
 
 	/**

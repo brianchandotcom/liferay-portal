@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
@@ -104,26 +103,12 @@ public abstract class AssetCategoryLocalServiceBaseImpl
 	 * @return the asset category that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public AssetCategory addAssetCategory(AssetCategory assetCategory)
 		throws SystemException {
 		assetCategory.setNew(true);
 
-		assetCategory = assetCategoryPersistence.update(assetCategory, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(assetCategory);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return assetCategory;
+		return assetCategoryPersistence.update(assetCategory, false);
 	}
 
 	/**
@@ -140,49 +125,27 @@ public abstract class AssetCategoryLocalServiceBaseImpl
 	 * Deletes the asset category with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param categoryId the primary key of the asset category
+	 * @return the asset category that was removed
 	 * @throws PortalException if a asset category with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteAssetCategory(long categoryId)
+	@Indexable(type = IndexableType.DELETE)
+	public AssetCategory deleteAssetCategory(long categoryId)
 		throws PortalException, SystemException {
-		AssetCategory assetCategory = assetCategoryPersistence.remove(categoryId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(assetCategory);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return assetCategoryPersistence.remove(categoryId);
 	}
 
 	/**
 	 * Deletes the asset category from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param assetCategory the asset category
+	 * @return the asset category that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteAssetCategory(AssetCategory assetCategory)
+	@Indexable(type = IndexableType.DELETE)
+	public AssetCategory deleteAssetCategory(AssetCategory assetCategory)
 		throws SystemException {
-		assetCategoryPersistence.remove(assetCategory);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(assetCategory);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return assetCategoryPersistence.remove(assetCategory);
 	}
 
 	/**
@@ -322,6 +285,7 @@ public abstract class AssetCategoryLocalServiceBaseImpl
 	 * @return the asset category that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public AssetCategory updateAssetCategory(AssetCategory assetCategory)
 		throws SystemException {
 		return updateAssetCategory(assetCategory, true);
@@ -335,26 +299,12 @@ public abstract class AssetCategoryLocalServiceBaseImpl
 	 * @return the asset category that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public AssetCategory updateAssetCategory(AssetCategory assetCategory,
 		boolean merge) throws SystemException {
 		assetCategory.setNew(false);
 
-		assetCategory = assetCategoryPersistence.update(assetCategory, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(assetCategory);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return assetCategory;
+		return assetCategoryPersistence.update(assetCategory, merge);
 	}
 
 	/**

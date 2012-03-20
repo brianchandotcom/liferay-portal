@@ -66,27 +66,30 @@ public class UserGroupLocalServiceUtil {
 	* Deletes the user group with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param userGroupId the primary key of the user group
+	* @return the user group that was removed
 	* @throws PortalException if a user group with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteUserGroup(long userGroupId)
+	public static com.liferay.portal.model.UserGroup deleteUserGroup(
+		long userGroupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteUserGroup(userGroupId);
+		return getService().deleteUserGroup(userGroupId);
 	}
 
 	/**
 	* Deletes the user group from the database. Also notifies the appropriate model listeners.
 	*
 	* @param userGroup the user group
+	* @return the user group that was removed
 	* @throws PortalException
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteUserGroup(
+	public static com.liferay.portal.model.UserGroup deleteUserGroup(
 		com.liferay.portal.model.UserGroup userGroup)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteUserGroup(userGroup);
+		return getService().deleteUserGroup(userGroup);
 	}
 
 	/**

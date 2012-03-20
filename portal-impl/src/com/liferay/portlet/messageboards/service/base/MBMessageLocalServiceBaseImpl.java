@@ -27,9 +27,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.CompanyLocalService;
@@ -145,26 +144,12 @@ public abstract class MBMessageLocalServiceBaseImpl
 	 * @return the message-boards message that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public MBMessage addMBMessage(MBMessage mbMessage)
 		throws SystemException {
 		mbMessage.setNew(true);
 
-		mbMessage = mbMessagePersistence.update(mbMessage, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(mbMessage);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return mbMessage;
+		return mbMessagePersistence.update(mbMessage, false);
 	}
 
 	/**
@@ -181,48 +166,27 @@ public abstract class MBMessageLocalServiceBaseImpl
 	 * Deletes the message-boards message with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param messageId the primary key of the message-boards message
+	 * @return the message-boards message that was removed
 	 * @throws PortalException if a message-boards message with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteMBMessage(long messageId)
+	@Indexable(type = IndexableType.DELETE)
+	public MBMessage deleteMBMessage(long messageId)
 		throws PortalException, SystemException {
-		MBMessage mbMessage = mbMessagePersistence.remove(messageId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(mbMessage);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return mbMessagePersistence.remove(messageId);
 	}
 
 	/**
 	 * Deletes the message-boards message from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param mbMessage the message-boards message
+	 * @return the message-boards message that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteMBMessage(MBMessage mbMessage) throws SystemException {
-		mbMessagePersistence.remove(mbMessage);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(mbMessage);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public MBMessage deleteMBMessage(MBMessage mbMessage)
+		throws SystemException {
+		return mbMessagePersistence.remove(mbMessage);
 	}
 
 	/**
@@ -361,6 +325,7 @@ public abstract class MBMessageLocalServiceBaseImpl
 	 * @return the message-boards message that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public MBMessage updateMBMessage(MBMessage mbMessage)
 		throws SystemException {
 		return updateMBMessage(mbMessage, true);
@@ -374,26 +339,12 @@ public abstract class MBMessageLocalServiceBaseImpl
 	 * @return the message-boards message that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public MBMessage updateMBMessage(MBMessage mbMessage, boolean merge)
 		throws SystemException {
 		mbMessage.setNew(false);
 
-		mbMessage = mbMessagePersistence.update(mbMessage, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(mbMessage);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return mbMessage;
+		return mbMessagePersistence.update(mbMessage, merge);
 	}
 
 	/**

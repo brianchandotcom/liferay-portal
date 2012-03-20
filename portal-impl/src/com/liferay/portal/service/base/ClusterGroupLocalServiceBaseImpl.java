@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.ClusterGroup;
 import com.liferay.portal.model.PersistedModel;
@@ -254,26 +253,12 @@ public abstract class ClusterGroupLocalServiceBaseImpl
 	 * @return the cluster group that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public ClusterGroup addClusterGroup(ClusterGroup clusterGroup)
 		throws SystemException {
 		clusterGroup.setNew(true);
 
-		clusterGroup = clusterGroupPersistence.update(clusterGroup, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(clusterGroup);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return clusterGroup;
+		return clusterGroupPersistence.update(clusterGroup, false);
 	}
 
 	/**
@@ -290,49 +275,27 @@ public abstract class ClusterGroupLocalServiceBaseImpl
 	 * Deletes the cluster group with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param clusterGroupId the primary key of the cluster group
+	 * @return the cluster group that was removed
 	 * @throws PortalException if a cluster group with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteClusterGroup(long clusterGroupId)
+	@Indexable(type = IndexableType.DELETE)
+	public ClusterGroup deleteClusterGroup(long clusterGroupId)
 		throws PortalException, SystemException {
-		ClusterGroup clusterGroup = clusterGroupPersistence.remove(clusterGroupId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(clusterGroup);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return clusterGroupPersistence.remove(clusterGroupId);
 	}
 
 	/**
 	 * Deletes the cluster group from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param clusterGroup the cluster group
+	 * @return the cluster group that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteClusterGroup(ClusterGroup clusterGroup)
+	@Indexable(type = IndexableType.DELETE)
+	public ClusterGroup deleteClusterGroup(ClusterGroup clusterGroup)
 		throws SystemException {
-		clusterGroupPersistence.remove(clusterGroup);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(clusterGroup);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return clusterGroupPersistence.remove(clusterGroup);
 	}
 
 	/**
@@ -458,6 +421,7 @@ public abstract class ClusterGroupLocalServiceBaseImpl
 	 * @return the cluster group that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public ClusterGroup updateClusterGroup(ClusterGroup clusterGroup)
 		throws SystemException {
 		return updateClusterGroup(clusterGroup, true);
@@ -471,26 +435,12 @@ public abstract class ClusterGroupLocalServiceBaseImpl
 	 * @return the cluster group that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public ClusterGroup updateClusterGroup(ClusterGroup clusterGroup,
 		boolean merge) throws SystemException {
 		clusterGroup.setNew(false);
 
-		clusterGroup = clusterGroupPersistence.update(clusterGroup, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(clusterGroup);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return clusterGroup;
+		return clusterGroupPersistence.update(clusterGroup, merge);
 	}
 
 	/**

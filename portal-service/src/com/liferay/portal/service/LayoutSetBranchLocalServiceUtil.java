@@ -66,27 +66,30 @@ public class LayoutSetBranchLocalServiceUtil {
 	* Deletes the layout set branch with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param layoutSetBranchId the primary key of the layout set branch
+	* @return the layout set branch that was removed
 	* @throws PortalException if a layout set branch with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteLayoutSetBranch(long layoutSetBranchId)
+	public static com.liferay.portal.model.LayoutSetBranch deleteLayoutSetBranch(
+		long layoutSetBranchId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteLayoutSetBranch(layoutSetBranchId);
+		return getService().deleteLayoutSetBranch(layoutSetBranchId);
 	}
 
 	/**
 	* Deletes the layout set branch from the database. Also notifies the appropriate model listeners.
 	*
 	* @param layoutSetBranch the layout set branch
+	* @return the layout set branch that was removed
 	* @throws PortalException
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteLayoutSetBranch(
+	public static com.liferay.portal.model.LayoutSetBranch deleteLayoutSetBranch(
 		com.liferay.portal.model.LayoutSetBranch layoutSetBranch)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteLayoutSetBranch(layoutSetBranch);
+		return getService().deleteLayoutSetBranch(layoutSetBranch);
 	}
 
 	/**
@@ -274,12 +277,12 @@ public class LayoutSetBranchLocalServiceUtil {
 			description, master, copyLayoutSetBranchId, serviceContext);
 	}
 
-	public static void deleteLayoutSetBranch(
+	public static com.liferay.portal.model.LayoutSetBranch deleteLayoutSetBranch(
 		com.liferay.portal.model.LayoutSetBranch layoutSetBranch,
 		boolean includeMaster)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteLayoutSetBranch(layoutSetBranch, includeMaster);
+		return getService().deleteLayoutSetBranch(layoutSetBranch, includeMaster);
 	}
 
 	public static void deleteLayoutSetBranches(long groupId,

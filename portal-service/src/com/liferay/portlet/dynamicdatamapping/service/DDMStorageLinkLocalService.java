@@ -67,10 +67,12 @@ public interface DDMStorageLinkLocalService extends PersistedModelLocalService {
 	* Deletes the d d m storage link with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param storageLinkId the primary key of the d d m storage link
+	* @return the d d m storage link that was removed
 	* @throws PortalException if a d d m storage link with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteDDMStorageLink(long storageLinkId)
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink deleteDDMStorageLink(
+		long storageLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -78,9 +80,10 @@ public interface DDMStorageLinkLocalService extends PersistedModelLocalService {
 	* Deletes the d d m storage link from the database. Also notifies the appropriate model listeners.
 	*
 	* @param ddmStorageLink the d d m storage link
+	* @return the d d m storage link that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteDDMStorageLink(
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink deleteDDMStorageLink(
 		com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink ddmStorageLink)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

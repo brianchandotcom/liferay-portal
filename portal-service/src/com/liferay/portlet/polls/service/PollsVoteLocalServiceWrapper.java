@@ -60,25 +60,28 @@ public class PollsVoteLocalServiceWrapper implements PollsVoteLocalService,
 	* Deletes the polls vote with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param voteId the primary key of the polls vote
+	* @return the polls vote that was removed
 	* @throws PortalException if a polls vote with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deletePollsVote(long voteId)
+	public com.liferay.portlet.polls.model.PollsVote deletePollsVote(
+		long voteId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_pollsVoteLocalService.deletePollsVote(voteId);
+		return _pollsVoteLocalService.deletePollsVote(voteId);
 	}
 
 	/**
 	* Deletes the polls vote from the database. Also notifies the appropriate model listeners.
 	*
 	* @param pollsVote the polls vote
+	* @return the polls vote that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deletePollsVote(
+	public com.liferay.portlet.polls.model.PollsVote deletePollsVote(
 		com.liferay.portlet.polls.model.PollsVote pollsVote)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_pollsVoteLocalService.deletePollsVote(pollsVote);
+		return _pollsVoteLocalService.deletePollsVote(pollsVote);
 	}
 
 	/**

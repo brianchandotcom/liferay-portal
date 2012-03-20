@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.GroupLocalService;
@@ -105,26 +104,12 @@ public abstract class SCProductEntryLocalServiceBaseImpl
 	 * @return the s c product entry that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public SCProductEntry addSCProductEntry(SCProductEntry scProductEntry)
 		throws SystemException {
 		scProductEntry.setNew(true);
 
-		scProductEntry = scProductEntryPersistence.update(scProductEntry, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(scProductEntry);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return scProductEntry;
+		return scProductEntryPersistence.update(scProductEntry, false);
 	}
 
 	/**
@@ -141,49 +126,27 @@ public abstract class SCProductEntryLocalServiceBaseImpl
 	 * Deletes the s c product entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param productEntryId the primary key of the s c product entry
+	 * @return the s c product entry that was removed
 	 * @throws PortalException if a s c product entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteSCProductEntry(long productEntryId)
+	@Indexable(type = IndexableType.DELETE)
+	public SCProductEntry deleteSCProductEntry(long productEntryId)
 		throws PortalException, SystemException {
-		SCProductEntry scProductEntry = scProductEntryPersistence.remove(productEntryId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(scProductEntry);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return scProductEntryPersistence.remove(productEntryId);
 	}
 
 	/**
 	 * Deletes the s c product entry from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param scProductEntry the s c product entry
+	 * @return the s c product entry that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteSCProductEntry(SCProductEntry scProductEntry)
+	@Indexable(type = IndexableType.DELETE)
+	public SCProductEntry deleteSCProductEntry(SCProductEntry scProductEntry)
 		throws SystemException {
-		scProductEntryPersistence.remove(scProductEntry);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(scProductEntry);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return scProductEntryPersistence.remove(scProductEntry);
 	}
 
 	/**
@@ -309,6 +272,7 @@ public abstract class SCProductEntryLocalServiceBaseImpl
 	 * @return the s c product entry that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public SCProductEntry updateSCProductEntry(SCProductEntry scProductEntry)
 		throws SystemException {
 		return updateSCProductEntry(scProductEntry, true);
@@ -322,26 +286,12 @@ public abstract class SCProductEntryLocalServiceBaseImpl
 	 * @return the s c product entry that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public SCProductEntry updateSCProductEntry(SCProductEntry scProductEntry,
 		boolean merge) throws SystemException {
 		scProductEntry.setNew(false);
 
-		scProductEntry = scProductEntryPersistence.update(scProductEntry, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(scProductEntry);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return scProductEntry;
+		return scProductEntryPersistence.update(scProductEntry, merge);
 	}
 
 	/**

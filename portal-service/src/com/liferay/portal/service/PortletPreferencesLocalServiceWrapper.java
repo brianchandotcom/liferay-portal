@@ -59,25 +59,28 @@ public class PortletPreferencesLocalServiceWrapper
 	* Deletes the portlet preferences with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param portletPreferencesId the primary key of the portlet preferences
+	* @return the portlet preferences that was removed
 	* @throws PortalException if a portlet preferences with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deletePortletPreferences(long portletPreferencesId)
+	public com.liferay.portal.model.PortletPreferences deletePortletPreferences(
+		long portletPreferencesId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_portletPreferencesLocalService.deletePortletPreferences(portletPreferencesId);
+		return _portletPreferencesLocalService.deletePortletPreferences(portletPreferencesId);
 	}
 
 	/**
 	* Deletes the portlet preferences from the database. Also notifies the appropriate model listeners.
 	*
 	* @param portletPreferences the portlet preferences
+	* @return the portlet preferences that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deletePortletPreferences(
+	public com.liferay.portal.model.PortletPreferences deletePortletPreferences(
 		com.liferay.portal.model.PortletPreferences portletPreferences)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_portletPreferencesLocalService.deletePortletPreferences(portletPreferences);
+		return _portletPreferencesLocalService.deletePortletPreferences(portletPreferences);
 	}
 
 	/**

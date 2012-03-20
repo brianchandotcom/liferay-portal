@@ -65,24 +65,27 @@ public class ReleaseLocalServiceUtil {
 	* Deletes the release with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param releaseId the primary key of the release
+	* @return the release that was removed
 	* @throws PortalException if a release with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteRelease(long releaseId)
+	public static com.liferay.portal.model.Release deleteRelease(long releaseId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteRelease(releaseId);
+		return getService().deleteRelease(releaseId);
 	}
 
 	/**
 	* Deletes the release from the database. Also notifies the appropriate model listeners.
 	*
 	* @param release the release
+	* @return the release that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteRelease(com.liferay.portal.model.Release release)
+	public static com.liferay.portal.model.Release deleteRelease(
+		com.liferay.portal.model.Release release)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteRelease(release);
+		return getService().deleteRelease(release);
 	}
 
 	/**

@@ -65,10 +65,11 @@ public interface ResourceCodeLocalService extends PersistedModelLocalService {
 	* Deletes the resource code with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param codeId the primary key of the resource code
+	* @return the resource code that was removed
 	* @throws PortalException if a resource code with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteResourceCode(long codeId)
+	public com.liferay.portal.model.ResourceCode deleteResourceCode(long codeId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -76,9 +77,10 @@ public interface ResourceCodeLocalService extends PersistedModelLocalService {
 	* Deletes the resource code from the database. Also notifies the appropriate model listeners.
 	*
 	* @param resourceCode the resource code
+	* @return the resource code that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteResourceCode(
+	public com.liferay.portal.model.ResourceCode deleteResourceCode(
 		com.liferay.portal.model.ResourceCode resourceCode)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

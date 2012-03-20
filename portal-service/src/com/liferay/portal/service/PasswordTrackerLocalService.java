@@ -66,10 +66,12 @@ public interface PasswordTrackerLocalService extends PersistedModelLocalService 
 	* Deletes the password tracker with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param passwordTrackerId the primary key of the password tracker
+	* @return the password tracker that was removed
 	* @throws PortalException if a password tracker with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deletePasswordTracker(long passwordTrackerId)
+	public com.liferay.portal.model.PasswordTracker deletePasswordTracker(
+		long passwordTrackerId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -77,9 +79,10 @@ public interface PasswordTrackerLocalService extends PersistedModelLocalService 
 	* Deletes the password tracker from the database. Also notifies the appropriate model listeners.
 	*
 	* @param passwordTracker the password tracker
+	* @return the password tracker that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deletePasswordTracker(
+	public com.liferay.portal.model.PasswordTracker deletePasswordTracker(
 		com.liferay.portal.model.PasswordTracker passwordTracker)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

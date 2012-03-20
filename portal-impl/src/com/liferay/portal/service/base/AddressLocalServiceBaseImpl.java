@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.model.PersistedModel;
@@ -254,25 +253,11 @@ public abstract class AddressLocalServiceBaseImpl implements AddressLocalService
 	 * @return the address that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public Address addAddress(Address address) throws SystemException {
 		address.setNew(true);
 
-		address = addressPersistence.update(address, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(address);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return address;
+		return addressPersistence.update(address, false);
 	}
 
 	/**
@@ -289,48 +274,26 @@ public abstract class AddressLocalServiceBaseImpl implements AddressLocalService
 	 * Deletes the address with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param addressId the primary key of the address
+	 * @return the address that was removed
 	 * @throws PortalException if a address with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteAddress(long addressId)
+	@Indexable(type = IndexableType.DELETE)
+	public Address deleteAddress(long addressId)
 		throws PortalException, SystemException {
-		Address address = addressPersistence.remove(addressId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(address);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return addressPersistence.remove(addressId);
 	}
 
 	/**
 	 * Deletes the address from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param address the address
+	 * @return the address that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteAddress(Address address) throws SystemException {
-		addressPersistence.remove(address);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(address);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public Address deleteAddress(Address address) throws SystemException {
+		return addressPersistence.remove(address);
 	}
 
 	/**
@@ -454,6 +417,7 @@ public abstract class AddressLocalServiceBaseImpl implements AddressLocalService
 	 * @return the address that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public Address updateAddress(Address address) throws SystemException {
 		return updateAddress(address, true);
 	}
@@ -466,26 +430,12 @@ public abstract class AddressLocalServiceBaseImpl implements AddressLocalService
 	 * @return the address that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public Address updateAddress(Address address, boolean merge)
 		throws SystemException {
 		address.setNew(false);
 
-		address = addressPersistence.update(address, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(address);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return address;
+		return addressPersistence.update(address, merge);
 	}
 
 	/**

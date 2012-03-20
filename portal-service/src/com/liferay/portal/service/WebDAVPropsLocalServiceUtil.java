@@ -66,25 +66,28 @@ public class WebDAVPropsLocalServiceUtil {
 	* Deletes the web d a v props with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param webDavPropsId the primary key of the web d a v props
+	* @return the web d a v props that was removed
 	* @throws PortalException if a web d a v props with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteWebDAVProps(long webDavPropsId)
+	public static com.liferay.portal.model.WebDAVProps deleteWebDAVProps(
+		long webDavPropsId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteWebDAVProps(webDavPropsId);
+		return getService().deleteWebDAVProps(webDavPropsId);
 	}
 
 	/**
 	* Deletes the web d a v props from the database. Also notifies the appropriate model listeners.
 	*
 	* @param webDAVProps the web d a v props
+	* @return the web d a v props that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteWebDAVProps(
+	public static com.liferay.portal.model.WebDAVProps deleteWebDAVProps(
 		com.liferay.portal.model.WebDAVProps webDAVProps)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteWebDAVProps(webDAVProps);
+		return getService().deleteWebDAVProps(webDAVProps);
 	}
 
 	/**

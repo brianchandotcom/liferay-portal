@@ -66,25 +66,28 @@ public class DDMStructureLocalServiceUtil {
 	* Deletes the d d m structure with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param structureId the primary key of the d d m structure
+	* @return the d d m structure that was removed
 	* @throws PortalException if a d d m structure with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteDDMStructure(long structureId)
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure deleteDDMStructure(
+		long structureId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteDDMStructure(structureId);
+		return getService().deleteDDMStructure(structureId);
 	}
 
 	/**
 	* Deletes the d d m structure from the database. Also notifies the appropriate model listeners.
 	*
 	* @param ddmStructure the d d m structure
+	* @return the d d m structure that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteDDMStructure(
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure deleteDDMStructure(
 		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteDDMStructure(ddmStructure);
+		return getService().deleteDDMStructure(ddmStructure);
 	}
 
 	/**

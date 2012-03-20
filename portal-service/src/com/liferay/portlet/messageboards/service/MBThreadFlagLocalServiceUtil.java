@@ -66,25 +66,28 @@ public class MBThreadFlagLocalServiceUtil {
 	* Deletes the message boards thread flag with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param threadFlagId the primary key of the message boards thread flag
+	* @return the message boards thread flag that was removed
 	* @throws PortalException if a message boards thread flag with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteMBThreadFlag(long threadFlagId)
+	public static com.liferay.portlet.messageboards.model.MBThreadFlag deleteMBThreadFlag(
+		long threadFlagId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteMBThreadFlag(threadFlagId);
+		return getService().deleteMBThreadFlag(threadFlagId);
 	}
 
 	/**
 	* Deletes the message boards thread flag from the database. Also notifies the appropriate model listeners.
 	*
 	* @param mbThreadFlag the message boards thread flag
+	* @return the message boards thread flag that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteMBThreadFlag(
+	public static com.liferay.portlet.messageboards.model.MBThreadFlag deleteMBThreadFlag(
 		com.liferay.portlet.messageboards.model.MBThreadFlag mbThreadFlag)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteMBThreadFlag(mbThreadFlag);
+		return getService().deleteMBThreadFlag(mbThreadFlag);
 	}
 
 	/**

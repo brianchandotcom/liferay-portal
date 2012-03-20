@@ -66,25 +66,28 @@ public class MBMessageLocalServiceUtil {
 	* Deletes the message-boards message with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param messageId the primary key of the message-boards message
+	* @return the message-boards message that was removed
 	* @throws PortalException if a message-boards message with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteMBMessage(long messageId)
+	public static com.liferay.portlet.messageboards.model.MBMessage deleteMBMessage(
+		long messageId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteMBMessage(messageId);
+		return getService().deleteMBMessage(messageId);
 	}
 
 	/**
 	* Deletes the message-boards message from the database. Also notifies the appropriate model listeners.
 	*
 	* @param mbMessage the message-boards message
+	* @return the message-boards message that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteMBMessage(
+	public static com.liferay.portlet.messageboards.model.MBMessage deleteMBMessage(
 		com.liferay.portlet.messageboards.model.MBMessage mbMessage)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteMBMessage(mbMessage);
+		return getService().deleteMBMessage(mbMessage);
 	}
 
 	/**

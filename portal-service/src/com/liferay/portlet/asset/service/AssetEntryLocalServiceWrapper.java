@@ -60,25 +60,28 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	* Deletes the asset entry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param entryId the primary key of the asset entry
+	* @return the asset entry that was removed
 	* @throws PortalException if a asset entry with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteAssetEntry(long entryId)
+	public com.liferay.portlet.asset.model.AssetEntry deleteAssetEntry(
+		long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_assetEntryLocalService.deleteAssetEntry(entryId);
+		return _assetEntryLocalService.deleteAssetEntry(entryId);
 	}
 
 	/**
 	* Deletes the asset entry from the database. Also notifies the appropriate model listeners.
 	*
 	* @param assetEntry the asset entry
+	* @return the asset entry that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteAssetEntry(
+	public com.liferay.portlet.asset.model.AssetEntry deleteAssetEntry(
 		com.liferay.portlet.asset.model.AssetEntry assetEntry)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_assetEntryLocalService.deleteAssetEntry(assetEntry);
+		return _assetEntryLocalService.deleteAssetEntry(assetEntry);
 	}
 
 	/**

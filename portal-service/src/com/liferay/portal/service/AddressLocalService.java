@@ -65,10 +65,11 @@ public interface AddressLocalService extends PersistedModelLocalService {
 	* Deletes the address with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param addressId the primary key of the address
+	* @return the address that was removed
 	* @throws PortalException if a address with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteAddress(long addressId)
+	public com.liferay.portal.model.Address deleteAddress(long addressId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -76,9 +77,11 @@ public interface AddressLocalService extends PersistedModelLocalService {
 	* Deletes the address from the database. Also notifies the appropriate model listeners.
 	*
 	* @param address the address
+	* @return the address that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteAddress(com.liferay.portal.model.Address address)
+	public com.liferay.portal.model.Address deleteAddress(
+		com.liferay.portal.model.Address address)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

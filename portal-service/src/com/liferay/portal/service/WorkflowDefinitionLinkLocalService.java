@@ -67,10 +67,12 @@ public interface WorkflowDefinitionLinkLocalService
 	* Deletes the workflow definition link with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param workflowDefinitionLinkId the primary key of the workflow definition link
+	* @return the workflow definition link that was removed
 	* @throws PortalException if a workflow definition link with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteWorkflowDefinitionLink(long workflowDefinitionLinkId)
+	public com.liferay.portal.model.WorkflowDefinitionLink deleteWorkflowDefinitionLink(
+		long workflowDefinitionLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -78,9 +80,10 @@ public interface WorkflowDefinitionLinkLocalService
 	* Deletes the workflow definition link from the database. Also notifies the appropriate model listeners.
 	*
 	* @param workflowDefinitionLink the workflow definition link
+	* @return the workflow definition link that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteWorkflowDefinitionLink(
+	public com.liferay.portal.model.WorkflowDefinitionLink deleteWorkflowDefinitionLink(
 		com.liferay.portal.model.WorkflowDefinitionLink workflowDefinitionLink)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

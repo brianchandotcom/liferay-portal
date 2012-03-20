@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.model.Role;
@@ -254,25 +253,11 @@ public abstract class RoleLocalServiceBaseImpl implements RoleLocalService,
 	 * @return the role that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public Role addRole(Role role) throws SystemException {
 		role.setNew(true);
 
-		role = rolePersistence.update(role, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(role);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return role;
+		return rolePersistence.update(role, false);
 	}
 
 	/**
@@ -289,48 +274,26 @@ public abstract class RoleLocalServiceBaseImpl implements RoleLocalService,
 	 * Deletes the role with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param roleId the primary key of the role
+	 * @return the role that was removed
 	 * @throws PortalException if a role with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteRole(long roleId) throws PortalException, SystemException {
-		Role role = rolePersistence.remove(roleId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(role);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public Role deleteRole(long roleId) throws PortalException, SystemException {
+		return rolePersistence.remove(roleId);
 	}
 
 	/**
 	 * Deletes the role from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param role the role
+	 * @return the role that was removed
 	 * @throws PortalException
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteRole(Role role) throws PortalException, SystemException {
-		rolePersistence.remove(role);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(role);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public Role deleteRole(Role role) throws PortalException, SystemException {
+		return rolePersistence.remove(role);
 	}
 
 	/**
@@ -452,6 +415,7 @@ public abstract class RoleLocalServiceBaseImpl implements RoleLocalService,
 	 * @return the role that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public Role updateRole(Role role) throws SystemException {
 		return updateRole(role, true);
 	}
@@ -464,25 +428,11 @@ public abstract class RoleLocalServiceBaseImpl implements RoleLocalService,
 	 * @return the role that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public Role updateRole(Role role, boolean merge) throws SystemException {
 		role.setNew(false);
 
-		role = rolePersistence.update(role, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(role);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return role;
+		return rolePersistence.update(role, merge);
 	}
 
 	/**

@@ -66,25 +66,28 @@ public class ClassNameLocalServiceUtil {
 	* Deletes the class name with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param classNameId the primary key of the class name
+	* @return the class name that was removed
 	* @throws PortalException if a class name with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteClassName(long classNameId)
+	public static com.liferay.portal.model.ClassName deleteClassName(
+		long classNameId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteClassName(classNameId);
+		return getService().deleteClassName(classNameId);
 	}
 
 	/**
 	* Deletes the class name from the database. Also notifies the appropriate model listeners.
 	*
 	* @param className the class name
+	* @return the class name that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteClassName(
+	public static com.liferay.portal.model.ClassName deleteClassName(
 		com.liferay.portal.model.ClassName className)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteClassName(className);
+		return getService().deleteClassName(className);
 	}
 
 	/**

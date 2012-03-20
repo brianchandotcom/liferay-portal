@@ -61,25 +61,28 @@ public class SocialRequestLocalServiceWrapper
 	* Deletes the social request with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param requestId the primary key of the social request
+	* @return the social request that was removed
 	* @throws PortalException if a social request with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteSocialRequest(long requestId)
+	public com.liferay.portlet.social.model.SocialRequest deleteSocialRequest(
+		long requestId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_socialRequestLocalService.deleteSocialRequest(requestId);
+		return _socialRequestLocalService.deleteSocialRequest(requestId);
 	}
 
 	/**
 	* Deletes the social request from the database. Also notifies the appropriate model listeners.
 	*
 	* @param socialRequest the social request
+	* @return the social request that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteSocialRequest(
+	public com.liferay.portlet.social.model.SocialRequest deleteSocialRequest(
 		com.liferay.portlet.social.model.SocialRequest socialRequest)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_socialRequestLocalService.deleteSocialRequest(socialRequest);
+		return _socialRequestLocalService.deleteSocialRequest(socialRequest);
 	}
 
 	/**

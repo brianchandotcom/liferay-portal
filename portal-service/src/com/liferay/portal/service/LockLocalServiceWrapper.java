@@ -56,24 +56,27 @@ public class LockLocalServiceWrapper implements LockLocalService,
 	* Deletes the lock with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param lockId the primary key of the lock
+	* @return the lock that was removed
 	* @throws PortalException if a lock with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteLock(long lockId)
+	public com.liferay.portal.model.Lock deleteLock(long lockId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_lockLocalService.deleteLock(lockId);
+		return _lockLocalService.deleteLock(lockId);
 	}
 
 	/**
 	* Deletes the lock from the database. Also notifies the appropriate model listeners.
 	*
 	* @param lock the lock
+	* @return the lock that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteLock(com.liferay.portal.model.Lock lock)
+	public com.liferay.portal.model.Lock deleteLock(
+		com.liferay.portal.model.Lock lock)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_lockLocalService.deleteLock(lock);
+		return _lockLocalService.deleteLock(lock);
 	}
 
 	/**

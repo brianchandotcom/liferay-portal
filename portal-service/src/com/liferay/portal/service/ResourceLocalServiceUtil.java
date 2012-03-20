@@ -66,25 +66,28 @@ public class ResourceLocalServiceUtil {
 	* Deletes the resource with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param resourceId the primary key of the resource
+	* @return the resource that was removed
 	* @throws PortalException if a resource with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteResource(long resourceId)
+	public static com.liferay.portal.model.Resource deleteResource(
+		long resourceId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteResource(resourceId);
+		return getService().deleteResource(resourceId);
 	}
 
 	/**
 	* Deletes the resource from the database. Also notifies the appropriate model listeners.
 	*
 	* @param resource the resource
+	* @return the resource that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteResource(
+	public static com.liferay.portal.model.Resource deleteResource(
 		com.liferay.portal.model.Resource resource)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteResource(resource);
+		return getService().deleteResource(resource);
 	}
 
 	/**

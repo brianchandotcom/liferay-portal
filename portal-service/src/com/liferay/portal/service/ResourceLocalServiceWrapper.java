@@ -57,24 +57,27 @@ public class ResourceLocalServiceWrapper implements ResourceLocalService,
 	* Deletes the resource with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param resourceId the primary key of the resource
+	* @return the resource that was removed
 	* @throws PortalException if a resource with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteResource(long resourceId)
+	public com.liferay.portal.model.Resource deleteResource(long resourceId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_resourceLocalService.deleteResource(resourceId);
+		return _resourceLocalService.deleteResource(resourceId);
 	}
 
 	/**
 	* Deletes the resource from the database. Also notifies the appropriate model listeners.
 	*
 	* @param resource the resource
+	* @return the resource that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteResource(com.liferay.portal.model.Resource resource)
+	public com.liferay.portal.model.Resource deleteResource(
+		com.liferay.portal.model.Resource resource)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_resourceLocalService.deleteResource(resource);
+		return _resourceLocalService.deleteResource(resource);
 	}
 
 	/**

@@ -60,25 +60,28 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 	* Deletes the message-boards message with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param messageId the primary key of the message-boards message
+	* @return the message-boards message that was removed
 	* @throws PortalException if a message-boards message with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteMBMessage(long messageId)
+	public com.liferay.portlet.messageboards.model.MBMessage deleteMBMessage(
+		long messageId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_mbMessageLocalService.deleteMBMessage(messageId);
+		return _mbMessageLocalService.deleteMBMessage(messageId);
 	}
 
 	/**
 	* Deletes the message-boards message from the database. Also notifies the appropriate model listeners.
 	*
 	* @param mbMessage the message-boards message
+	* @return the message-boards message that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteMBMessage(
+	public com.liferay.portlet.messageboards.model.MBMessage deleteMBMessage(
 		com.liferay.portlet.messageboards.model.MBMessage mbMessage)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_mbMessageLocalService.deleteMBMessage(mbMessage);
+		return _mbMessageLocalService.deleteMBMessage(mbMessage);
 	}
 
 	/**

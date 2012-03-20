@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.ImageLocalService;
@@ -137,26 +136,12 @@ public abstract class DLFileEntryLocalServiceBaseImpl
 	 * @return the document library file entry that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public DLFileEntry addDLFileEntry(DLFileEntry dlFileEntry)
 		throws SystemException {
 		dlFileEntry.setNew(true);
 
-		dlFileEntry = dlFileEntryPersistence.update(dlFileEntry, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(dlFileEntry);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return dlFileEntry;
+		return dlFileEntryPersistence.update(dlFileEntry, false);
 	}
 
 	/**
@@ -173,49 +158,27 @@ public abstract class DLFileEntryLocalServiceBaseImpl
 	 * Deletes the document library file entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param fileEntryId the primary key of the document library file entry
+	 * @return the document library file entry that was removed
 	 * @throws PortalException if a document library file entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteDLFileEntry(long fileEntryId)
+	@Indexable(type = IndexableType.DELETE)
+	public DLFileEntry deleteDLFileEntry(long fileEntryId)
 		throws PortalException, SystemException {
-		DLFileEntry dlFileEntry = dlFileEntryPersistence.remove(fileEntryId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(dlFileEntry);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return dlFileEntryPersistence.remove(fileEntryId);
 	}
 
 	/**
 	 * Deletes the document library file entry from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param dlFileEntry the document library file entry
+	 * @return the document library file entry that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteDLFileEntry(DLFileEntry dlFileEntry)
+	@Indexable(type = IndexableType.DELETE)
+	public DLFileEntry deleteDLFileEntry(DLFileEntry dlFileEntry)
 		throws SystemException {
-		dlFileEntryPersistence.remove(dlFileEntry);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(dlFileEntry);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return dlFileEntryPersistence.remove(dlFileEntry);
 	}
 
 	/**
@@ -355,6 +318,7 @@ public abstract class DLFileEntryLocalServiceBaseImpl
 	 * @return the document library file entry that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public DLFileEntry updateDLFileEntry(DLFileEntry dlFileEntry)
 		throws SystemException {
 		return updateDLFileEntry(dlFileEntry, true);
@@ -368,26 +332,12 @@ public abstract class DLFileEntryLocalServiceBaseImpl
 	 * @return the document library file entry that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public DLFileEntry updateDLFileEntry(DLFileEntry dlFileEntry, boolean merge)
 		throws SystemException {
 		dlFileEntry.setNew(false);
 
-		dlFileEntry = dlFileEntryPersistence.update(dlFileEntry, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(dlFileEntry);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return dlFileEntry;
+		return dlFileEntryPersistence.update(dlFileEntry, merge);
 	}
 
 	/**

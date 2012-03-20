@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
@@ -104,25 +103,11 @@ public abstract class AssetTagLocalServiceBaseImpl
 	 * @return the asset tag that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public AssetTag addAssetTag(AssetTag assetTag) throws SystemException {
 		assetTag.setNew(true);
 
-		assetTag = assetTagPersistence.update(assetTag, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(assetTag);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return assetTag;
+		return assetTagPersistence.update(assetTag, false);
 	}
 
 	/**
@@ -139,48 +124,26 @@ public abstract class AssetTagLocalServiceBaseImpl
 	 * Deletes the asset tag with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param tagId the primary key of the asset tag
+	 * @return the asset tag that was removed
 	 * @throws PortalException if a asset tag with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteAssetTag(long tagId)
+	@Indexable(type = IndexableType.DELETE)
+	public AssetTag deleteAssetTag(long tagId)
 		throws PortalException, SystemException {
-		AssetTag assetTag = assetTagPersistence.remove(tagId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(assetTag);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return assetTagPersistence.remove(tagId);
 	}
 
 	/**
 	 * Deletes the asset tag from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param assetTag the asset tag
+	 * @return the asset tag that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteAssetTag(AssetTag assetTag) throws SystemException {
-		assetTagPersistence.remove(assetTag);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(assetTag);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public AssetTag deleteAssetTag(AssetTag assetTag) throws SystemException {
+		return assetTagPersistence.remove(assetTag);
 	}
 
 	/**
@@ -304,6 +267,7 @@ public abstract class AssetTagLocalServiceBaseImpl
 	 * @return the asset tag that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public AssetTag updateAssetTag(AssetTag assetTag) throws SystemException {
 		return updateAssetTag(assetTag, true);
 	}
@@ -316,26 +280,12 @@ public abstract class AssetTagLocalServiceBaseImpl
 	 * @return the asset tag that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public AssetTag updateAssetTag(AssetTag assetTag, boolean merge)
 		throws SystemException {
 		assetTag.setNew(false);
 
-		assetTag = assetTagPersistence.update(assetTag, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(assetTag);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return assetTag;
+		return assetTagPersistence.update(assetTag, merge);
 	}
 
 	/**

@@ -66,25 +66,28 @@ public class ExpandoColumnLocalServiceUtil {
 	* Deletes the expando column with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param columnId the primary key of the expando column
+	* @return the expando column that was removed
 	* @throws PortalException if a expando column with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteExpandoColumn(long columnId)
+	public static com.liferay.portlet.expando.model.ExpandoColumn deleteExpandoColumn(
+		long columnId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteExpandoColumn(columnId);
+		return getService().deleteExpandoColumn(columnId);
 	}
 
 	/**
 	* Deletes the expando column from the database. Also notifies the appropriate model listeners.
 	*
 	* @param expandoColumn the expando column
+	* @return the expando column that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteExpandoColumn(
+	public static com.liferay.portlet.expando.model.ExpandoColumn deleteExpandoColumn(
 		com.liferay.portlet.expando.model.ExpandoColumn expandoColumn)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteExpandoColumn(expandoColumn);
+		return getService().deleteExpandoColumn(expandoColumn);
 	}
 
 	/**

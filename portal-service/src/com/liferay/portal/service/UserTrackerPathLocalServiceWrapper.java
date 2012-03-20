@@ -59,25 +59,28 @@ public class UserTrackerPathLocalServiceWrapper
 	* Deletes the user tracker path with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param userTrackerPathId the primary key of the user tracker path
+	* @return the user tracker path that was removed
 	* @throws PortalException if a user tracker path with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteUserTrackerPath(long userTrackerPathId)
+	public com.liferay.portal.model.UserTrackerPath deleteUserTrackerPath(
+		long userTrackerPathId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_userTrackerPathLocalService.deleteUserTrackerPath(userTrackerPathId);
+		return _userTrackerPathLocalService.deleteUserTrackerPath(userTrackerPathId);
 	}
 
 	/**
 	* Deletes the user tracker path from the database. Also notifies the appropriate model listeners.
 	*
 	* @param userTrackerPath the user tracker path
+	* @return the user tracker path that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteUserTrackerPath(
+	public com.liferay.portal.model.UserTrackerPath deleteUserTrackerPath(
 		com.liferay.portal.model.UserTrackerPath userTrackerPath)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_userTrackerPathLocalService.deleteUserTrackerPath(userTrackerPath);
+		return _userTrackerPathLocalService.deleteUserTrackerPath(userTrackerPath);
 	}
 
 	/**

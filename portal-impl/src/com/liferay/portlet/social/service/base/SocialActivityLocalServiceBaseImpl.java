@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.GroupLocalService;
@@ -106,26 +105,12 @@ public abstract class SocialActivityLocalServiceBaseImpl
 	 * @return the social activity that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public SocialActivity addSocialActivity(SocialActivity socialActivity)
 		throws SystemException {
 		socialActivity.setNew(true);
 
-		socialActivity = socialActivityPersistence.update(socialActivity, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(socialActivity);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return socialActivity;
+		return socialActivityPersistence.update(socialActivity, false);
 	}
 
 	/**
@@ -142,49 +127,27 @@ public abstract class SocialActivityLocalServiceBaseImpl
 	 * Deletes the social activity with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param activityId the primary key of the social activity
+	 * @return the social activity that was removed
 	 * @throws PortalException if a social activity with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteSocialActivity(long activityId)
+	@Indexable(type = IndexableType.DELETE)
+	public SocialActivity deleteSocialActivity(long activityId)
 		throws PortalException, SystemException {
-		SocialActivity socialActivity = socialActivityPersistence.remove(activityId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(socialActivity);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return socialActivityPersistence.remove(activityId);
 	}
 
 	/**
 	 * Deletes the social activity from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param socialActivity the social activity
+	 * @return the social activity that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteSocialActivity(SocialActivity socialActivity)
+	@Indexable(type = IndexableType.DELETE)
+	public SocialActivity deleteSocialActivity(SocialActivity socialActivity)
 		throws SystemException {
-		socialActivityPersistence.remove(socialActivity);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(socialActivity);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return socialActivityPersistence.remove(socialActivity);
 	}
 
 	/**
@@ -310,6 +273,7 @@ public abstract class SocialActivityLocalServiceBaseImpl
 	 * @return the social activity that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public SocialActivity updateSocialActivity(SocialActivity socialActivity)
 		throws SystemException {
 		return updateSocialActivity(socialActivity, true);
@@ -323,26 +287,12 @@ public abstract class SocialActivityLocalServiceBaseImpl
 	 * @return the social activity that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public SocialActivity updateSocialActivity(SocialActivity socialActivity,
 		boolean merge) throws SystemException {
 		socialActivity.setNew(false);
 
-		socialActivity = socialActivityPersistence.update(socialActivity, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(socialActivity);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return socialActivity;
+		return socialActivityPersistence.update(socialActivity, merge);
 	}
 
 	/**

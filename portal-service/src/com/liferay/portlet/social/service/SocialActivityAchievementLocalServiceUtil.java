@@ -68,26 +68,30 @@ public class SocialActivityAchievementLocalServiceUtil {
 	* Deletes the social activity achievement with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param activityAchievementId the primary key of the social activity achievement
+	* @return the social activity achievement that was removed
 	* @throws PortalException if a social activity achievement with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteSocialActivityAchievement(
+	public static com.liferay.portlet.social.model.SocialActivityAchievement deleteSocialActivityAchievement(
 		long activityAchievementId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteSocialActivityAchievement(activityAchievementId);
+		return getService()
+				   .deleteSocialActivityAchievement(activityAchievementId);
 	}
 
 	/**
 	* Deletes the social activity achievement from the database. Also notifies the appropriate model listeners.
 	*
 	* @param socialActivityAchievement the social activity achievement
+	* @return the social activity achievement that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteSocialActivityAchievement(
+	public static com.liferay.portlet.social.model.SocialActivityAchievement deleteSocialActivityAchievement(
 		com.liferay.portlet.social.model.SocialActivityAchievement socialActivityAchievement)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteSocialActivityAchievement(socialActivityAchievement);
+		return getService()
+				   .deleteSocialActivityAchievement(socialActivityAchievement);
 	}
 
 	/**

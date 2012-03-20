@@ -66,25 +66,28 @@ public class SocialActivityLimitLocalServiceUtil {
 	* Deletes the social activity limit with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param activityLimitId the primary key of the social activity limit
+	* @return the social activity limit that was removed
 	* @throws PortalException if a social activity limit with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteSocialActivityLimit(long activityLimitId)
+	public static com.liferay.portlet.social.model.SocialActivityLimit deleteSocialActivityLimit(
+		long activityLimitId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteSocialActivityLimit(activityLimitId);
+		return getService().deleteSocialActivityLimit(activityLimitId);
 	}
 
 	/**
 	* Deletes the social activity limit from the database. Also notifies the appropriate model listeners.
 	*
 	* @param socialActivityLimit the social activity limit
+	* @return the social activity limit that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteSocialActivityLimit(
+	public static com.liferay.portlet.social.model.SocialActivityLimit deleteSocialActivityLimit(
 		com.liferay.portlet.social.model.SocialActivityLimit socialActivityLimit)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteSocialActivityLimit(socialActivityLimit);
+		return getService().deleteSocialActivityLimit(socialActivityLimit);
 	}
 
 	/**

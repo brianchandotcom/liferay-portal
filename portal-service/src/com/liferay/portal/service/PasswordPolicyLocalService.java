@@ -66,10 +66,12 @@ public interface PasswordPolicyLocalService extends PersistedModelLocalService {
 	* Deletes the password policy with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param passwordPolicyId the primary key of the password policy
+	* @return the password policy that was removed
 	* @throws PortalException if a password policy with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deletePasswordPolicy(long passwordPolicyId)
+	public com.liferay.portal.model.PasswordPolicy deletePasswordPolicy(
+		long passwordPolicyId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -77,10 +79,11 @@ public interface PasswordPolicyLocalService extends PersistedModelLocalService {
 	* Deletes the password policy from the database. Also notifies the appropriate model listeners.
 	*
 	* @param passwordPolicy the password policy
+	* @return the password policy that was removed
 	* @throws PortalException
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deletePasswordPolicy(
+	public com.liferay.portal.model.PasswordPolicy deletePasswordPolicy(
 		com.liferay.portal.model.PasswordPolicy passwordPolicy)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

@@ -59,24 +59,27 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	* Deletes the wiki node with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param nodeId the primary key of the wiki node
+	* @return the wiki node that was removed
 	* @throws PortalException if a wiki node with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteWikiNode(long nodeId)
+	public com.liferay.portlet.wiki.model.WikiNode deleteWikiNode(long nodeId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_wikiNodeLocalService.deleteWikiNode(nodeId);
+		return _wikiNodeLocalService.deleteWikiNode(nodeId);
 	}
 
 	/**
 	* Deletes the wiki node from the database. Also notifies the appropriate model listeners.
 	*
 	* @param wikiNode the wiki node
+	* @return the wiki node that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteWikiNode(com.liferay.portlet.wiki.model.WikiNode wikiNode)
+	public com.liferay.portlet.wiki.model.WikiNode deleteWikiNode(
+		com.liferay.portlet.wiki.model.WikiNode wikiNode)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_wikiNodeLocalService.deleteWikiNode(wikiNode);
+		return _wikiNodeLocalService.deleteWikiNode(wikiNode);
 	}
 
 	/**

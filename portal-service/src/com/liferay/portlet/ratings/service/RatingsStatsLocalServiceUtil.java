@@ -66,25 +66,28 @@ public class RatingsStatsLocalServiceUtil {
 	* Deletes the ratings stats with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param statsId the primary key of the ratings stats
+	* @return the ratings stats that was removed
 	* @throws PortalException if a ratings stats with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteRatingsStats(long statsId)
+	public static com.liferay.portlet.ratings.model.RatingsStats deleteRatingsStats(
+		long statsId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteRatingsStats(statsId);
+		return getService().deleteRatingsStats(statsId);
 	}
 
 	/**
 	* Deletes the ratings stats from the database. Also notifies the appropriate model listeners.
 	*
 	* @param ratingsStats the ratings stats
+	* @return the ratings stats that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteRatingsStats(
+	public static com.liferay.portlet.ratings.model.RatingsStats deleteRatingsStats(
 		com.liferay.portlet.ratings.model.RatingsStats ratingsStats)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteRatingsStats(ratingsStats);
+		return getService().deleteRatingsStats(ratingsStats);
 	}
 
 	/**

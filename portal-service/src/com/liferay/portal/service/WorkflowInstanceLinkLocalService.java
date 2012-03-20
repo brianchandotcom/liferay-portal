@@ -67,10 +67,12 @@ public interface WorkflowInstanceLinkLocalService
 	* Deletes the workflow instance link with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param workflowInstanceLinkId the primary key of the workflow instance link
+	* @return the workflow instance link that was removed
 	* @throws PortalException if a workflow instance link with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteWorkflowInstanceLink(long workflowInstanceLinkId)
+	public com.liferay.portal.model.WorkflowInstanceLink deleteWorkflowInstanceLink(
+		long workflowInstanceLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -78,10 +80,11 @@ public interface WorkflowInstanceLinkLocalService
 	* Deletes the workflow instance link from the database. Also notifies the appropriate model listeners.
 	*
 	* @param workflowInstanceLink the workflow instance link
+	* @return the workflow instance link that was removed
 	* @throws PortalException
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteWorkflowInstanceLink(
+	public com.liferay.portal.model.WorkflowInstanceLink deleteWorkflowInstanceLink(
 		com.liferay.portal.model.WorkflowInstanceLink workflowInstanceLink)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

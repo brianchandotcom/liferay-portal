@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
@@ -94,26 +93,12 @@ public abstract class SocialRequestLocalServiceBaseImpl
 	 * @return the social request that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public SocialRequest addSocialRequest(SocialRequest socialRequest)
 		throws SystemException {
 		socialRequest.setNew(true);
 
-		socialRequest = socialRequestPersistence.update(socialRequest, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(socialRequest);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return socialRequest;
+		return socialRequestPersistence.update(socialRequest, false);
 	}
 
 	/**
@@ -130,49 +115,27 @@ public abstract class SocialRequestLocalServiceBaseImpl
 	 * Deletes the social request with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param requestId the primary key of the social request
+	 * @return the social request that was removed
 	 * @throws PortalException if a social request with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteSocialRequest(long requestId)
+	@Indexable(type = IndexableType.DELETE)
+	public SocialRequest deleteSocialRequest(long requestId)
 		throws PortalException, SystemException {
-		SocialRequest socialRequest = socialRequestPersistence.remove(requestId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(socialRequest);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return socialRequestPersistence.remove(requestId);
 	}
 
 	/**
 	 * Deletes the social request from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param socialRequest the social request
+	 * @return the social request that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteSocialRequest(SocialRequest socialRequest)
+	@Indexable(type = IndexableType.DELETE)
+	public SocialRequest deleteSocialRequest(SocialRequest socialRequest)
 		throws SystemException {
-		socialRequestPersistence.remove(socialRequest);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(socialRequest);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return socialRequestPersistence.remove(socialRequest);
 	}
 
 	/**
@@ -312,6 +275,7 @@ public abstract class SocialRequestLocalServiceBaseImpl
 	 * @return the social request that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public SocialRequest updateSocialRequest(SocialRequest socialRequest)
 		throws SystemException {
 		return updateSocialRequest(socialRequest, true);
@@ -325,26 +289,12 @@ public abstract class SocialRequestLocalServiceBaseImpl
 	 * @return the social request that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public SocialRequest updateSocialRequest(SocialRequest socialRequest,
 		boolean merge) throws SystemException {
 		socialRequest.setNew(false);
 
-		socialRequest = socialRequestPersistence.update(socialRequest, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(socialRequest);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return socialRequest;
+		return socialRequestPersistence.update(socialRequest, merge);
 	}
 
 	/**

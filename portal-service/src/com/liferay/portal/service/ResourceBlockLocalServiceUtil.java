@@ -66,25 +66,28 @@ public class ResourceBlockLocalServiceUtil {
 	* Deletes the resource block with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param resourceBlockId the primary key of the resource block
+	* @return the resource block that was removed
 	* @throws PortalException if a resource block with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteResourceBlock(long resourceBlockId)
+	public static com.liferay.portal.model.ResourceBlock deleteResourceBlock(
+		long resourceBlockId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteResourceBlock(resourceBlockId);
+		return getService().deleteResourceBlock(resourceBlockId);
 	}
 
 	/**
 	* Deletes the resource block from the database. Also notifies the appropriate model listeners.
 	*
 	* @param resourceBlock the resource block
+	* @return the resource block that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteResourceBlock(
+	public static com.liferay.portal.model.ResourceBlock deleteResourceBlock(
 		com.liferay.portal.model.ResourceBlock resourceBlock)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteResourceBlock(resourceBlock);
+		return getService().deleteResourceBlock(resourceBlock);
 	}
 
 	/**

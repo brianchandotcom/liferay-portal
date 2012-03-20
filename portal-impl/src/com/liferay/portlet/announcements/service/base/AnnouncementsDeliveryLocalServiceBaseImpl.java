@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
@@ -85,27 +84,13 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 	 * @return the announcements delivery that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public AnnouncementsDelivery addAnnouncementsDelivery(
 		AnnouncementsDelivery announcementsDelivery) throws SystemException {
 		announcementsDelivery.setNew(true);
 
-		announcementsDelivery = announcementsDeliveryPersistence.update(announcementsDelivery,
-				false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(announcementsDelivery);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return announcementsDelivery;
+		return announcementsDeliveryPersistence.update(announcementsDelivery,
+			false);
 	}
 
 	/**
@@ -122,49 +107,27 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 	 * Deletes the announcements delivery with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param deliveryId the primary key of the announcements delivery
+	 * @return the announcements delivery that was removed
 	 * @throws PortalException if a announcements delivery with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteAnnouncementsDelivery(long deliveryId)
+	@Indexable(type = IndexableType.DELETE)
+	public AnnouncementsDelivery deleteAnnouncementsDelivery(long deliveryId)
 		throws PortalException, SystemException {
-		AnnouncementsDelivery announcementsDelivery = announcementsDeliveryPersistence.remove(deliveryId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(announcementsDelivery);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return announcementsDeliveryPersistence.remove(deliveryId);
 	}
 
 	/**
 	 * Deletes the announcements delivery from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param announcementsDelivery the announcements delivery
+	 * @return the announcements delivery that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteAnnouncementsDelivery(
+	@Indexable(type = IndexableType.DELETE)
+	public AnnouncementsDelivery deleteAnnouncementsDelivery(
 		AnnouncementsDelivery announcementsDelivery) throws SystemException {
-		announcementsDeliveryPersistence.remove(announcementsDelivery);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(announcementsDelivery);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return announcementsDeliveryPersistence.remove(announcementsDelivery);
 	}
 
 	/**
@@ -290,6 +253,7 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 	 * @return the announcements delivery that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public AnnouncementsDelivery updateAnnouncementsDelivery(
 		AnnouncementsDelivery announcementsDelivery) throws SystemException {
 		return updateAnnouncementsDelivery(announcementsDelivery, true);
@@ -303,28 +267,14 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 	 * @return the announcements delivery that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public AnnouncementsDelivery updateAnnouncementsDelivery(
 		AnnouncementsDelivery announcementsDelivery, boolean merge)
 		throws SystemException {
 		announcementsDelivery.setNew(false);
 
-		announcementsDelivery = announcementsDeliveryPersistence.update(announcementsDelivery,
-				merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(announcementsDelivery);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return announcementsDelivery;
+		return announcementsDeliveryPersistence.update(announcementsDelivery,
+			merge);
 	}
 
 	/**

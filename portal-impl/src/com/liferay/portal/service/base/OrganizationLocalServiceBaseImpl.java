@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.PersistedModel;
@@ -262,26 +261,12 @@ public abstract class OrganizationLocalServiceBaseImpl
 	 * @return the organization that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public Organization addOrganization(Organization organization)
 		throws SystemException {
 		organization.setNew(true);
 
-		organization = organizationPersistence.update(organization, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(organization);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return organization;
+		return organizationPersistence.update(organization, false);
 	}
 
 	/**
@@ -298,50 +283,28 @@ public abstract class OrganizationLocalServiceBaseImpl
 	 * Deletes the organization with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param organizationId the primary key of the organization
+	 * @return the organization that was removed
 	 * @throws PortalException if a organization with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteOrganization(long organizationId)
+	@Indexable(type = IndexableType.DELETE)
+	public Organization deleteOrganization(long organizationId)
 		throws PortalException, SystemException {
-		Organization organization = organizationPersistence.remove(organizationId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(organization);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return organizationPersistence.remove(organizationId);
 	}
 
 	/**
 	 * Deletes the organization from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param organization the organization
+	 * @return the organization that was removed
 	 * @throws PortalException
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteOrganization(Organization organization)
+	@Indexable(type = IndexableType.DELETE)
+	public Organization deleteOrganization(Organization organization)
 		throws PortalException, SystemException {
-		organizationPersistence.remove(organization);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(organization);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return organizationPersistence.remove(organization);
 	}
 
 	/**
@@ -467,6 +430,7 @@ public abstract class OrganizationLocalServiceBaseImpl
 	 * @return the organization that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public Organization updateOrganization(Organization organization)
 		throws SystemException {
 		return updateOrganization(organization, true);
@@ -480,26 +444,12 @@ public abstract class OrganizationLocalServiceBaseImpl
 	 * @return the organization that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public Organization updateOrganization(Organization organization,
 		boolean merge) throws SystemException {
 		organization.setNew(false);
 
-		organization = organizationPersistence.update(organization, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(organization);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return organization;
+		return organizationPersistence.update(organization, merge);
 	}
 
 	/**

@@ -66,25 +66,28 @@ public class DLFileEntryLocalServiceUtil {
 	* Deletes the document library file entry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param fileEntryId the primary key of the document library file entry
+	* @return the document library file entry that was removed
 	* @throws PortalException if a document library file entry with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteDLFileEntry(long fileEntryId)
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntry deleteDLFileEntry(
+		long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteDLFileEntry(fileEntryId);
+		return getService().deleteDLFileEntry(fileEntryId);
 	}
 
 	/**
 	* Deletes the document library file entry from the database. Also notifies the appropriate model listeners.
 	*
 	* @param dlFileEntry the document library file entry
+	* @return the document library file entry that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteDLFileEntry(
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntry deleteDLFileEntry(
 		com.liferay.portlet.documentlibrary.model.DLFileEntry dlFileEntry)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteDLFileEntry(dlFileEntry);
+		return getService().deleteDLFileEntry(dlFileEntry);
 	}
 
 	/**

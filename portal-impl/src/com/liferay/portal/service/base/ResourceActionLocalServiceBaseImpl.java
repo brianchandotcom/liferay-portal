@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.model.ResourceAction;
@@ -254,26 +253,12 @@ public abstract class ResourceActionLocalServiceBaseImpl
 	 * @return the resource action that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public ResourceAction addResourceAction(ResourceAction resourceAction)
 		throws SystemException {
 		resourceAction.setNew(true);
 
-		resourceAction = resourceActionPersistence.update(resourceAction, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(resourceAction);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return resourceAction;
+		return resourceActionPersistence.update(resourceAction, false);
 	}
 
 	/**
@@ -290,49 +275,27 @@ public abstract class ResourceActionLocalServiceBaseImpl
 	 * Deletes the resource action with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param resourceActionId the primary key of the resource action
+	 * @return the resource action that was removed
 	 * @throws PortalException if a resource action with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteResourceAction(long resourceActionId)
+	@Indexable(type = IndexableType.DELETE)
+	public ResourceAction deleteResourceAction(long resourceActionId)
 		throws PortalException, SystemException {
-		ResourceAction resourceAction = resourceActionPersistence.remove(resourceActionId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(resourceAction);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return resourceActionPersistence.remove(resourceActionId);
 	}
 
 	/**
 	 * Deletes the resource action from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param resourceAction the resource action
+	 * @return the resource action that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteResourceAction(ResourceAction resourceAction)
+	@Indexable(type = IndexableType.DELETE)
+	public ResourceAction deleteResourceAction(ResourceAction resourceAction)
 		throws SystemException {
-		resourceActionPersistence.remove(resourceAction);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(resourceAction);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return resourceActionPersistence.remove(resourceAction);
 	}
 
 	/**
@@ -458,6 +421,7 @@ public abstract class ResourceActionLocalServiceBaseImpl
 	 * @return the resource action that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public ResourceAction updateResourceAction(ResourceAction resourceAction)
 		throws SystemException {
 		return updateResourceAction(resourceAction, true);
@@ -471,26 +435,12 @@ public abstract class ResourceActionLocalServiceBaseImpl
 	 * @return the resource action that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public ResourceAction updateResourceAction(ResourceAction resourceAction,
 		boolean merge) throws SystemException {
 		resourceAction.setNew(false);
 
-		resourceAction = resourceActionPersistence.update(resourceAction, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(resourceAction);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return resourceAction;
+		return resourceActionPersistence.update(resourceAction, merge);
 	}
 
 	/**

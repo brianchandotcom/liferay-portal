@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.ImageLocalService;
@@ -92,27 +91,12 @@ public abstract class SCProductScreenshotLocalServiceBaseImpl
 	 * @return the s c product screenshot that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public SCProductScreenshot addSCProductScreenshot(
 		SCProductScreenshot scProductScreenshot) throws SystemException {
 		scProductScreenshot.setNew(true);
 
-		scProductScreenshot = scProductScreenshotPersistence.update(scProductScreenshot,
-				false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(scProductScreenshot);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return scProductScreenshot;
+		return scProductScreenshotPersistence.update(scProductScreenshot, false);
 	}
 
 	/**
@@ -130,49 +114,27 @@ public abstract class SCProductScreenshotLocalServiceBaseImpl
 	 * Deletes the s c product screenshot with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param productScreenshotId the primary key of the s c product screenshot
+	 * @return the s c product screenshot that was removed
 	 * @throws PortalException if a s c product screenshot with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteSCProductScreenshot(long productScreenshotId)
-		throws PortalException, SystemException {
-		SCProductScreenshot scProductScreenshot = scProductScreenshotPersistence.remove(productScreenshotId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(scProductScreenshot);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public SCProductScreenshot deleteSCProductScreenshot(
+		long productScreenshotId) throws PortalException, SystemException {
+		return scProductScreenshotPersistence.remove(productScreenshotId);
 	}
 
 	/**
 	 * Deletes the s c product screenshot from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param scProductScreenshot the s c product screenshot
+	 * @return the s c product screenshot that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteSCProductScreenshot(
+	@Indexable(type = IndexableType.DELETE)
+	public SCProductScreenshot deleteSCProductScreenshot(
 		SCProductScreenshot scProductScreenshot) throws SystemException {
-		scProductScreenshotPersistence.remove(scProductScreenshot);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(scProductScreenshot);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return scProductScreenshotPersistence.remove(scProductScreenshot);
 	}
 
 	/**
@@ -298,6 +260,7 @@ public abstract class SCProductScreenshotLocalServiceBaseImpl
 	 * @return the s c product screenshot that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public SCProductScreenshot updateSCProductScreenshot(
 		SCProductScreenshot scProductScreenshot) throws SystemException {
 		return updateSCProductScreenshot(scProductScreenshot, true);
@@ -311,28 +274,13 @@ public abstract class SCProductScreenshotLocalServiceBaseImpl
 	 * @return the s c product screenshot that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public SCProductScreenshot updateSCProductScreenshot(
 		SCProductScreenshot scProductScreenshot, boolean merge)
 		throws SystemException {
 		scProductScreenshot.setNew(false);
 
-		scProductScreenshot = scProductScreenshotPersistence.update(scProductScreenshot,
-				merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(scProductScreenshot);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return scProductScreenshot;
+		return scProductScreenshotPersistence.update(scProductScreenshot, merge);
 	}
 
 	/**

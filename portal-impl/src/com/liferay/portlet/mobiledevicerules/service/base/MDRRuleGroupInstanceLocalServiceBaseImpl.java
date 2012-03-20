@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.LayoutLocalService;
@@ -95,27 +94,13 @@ public abstract class MDRRuleGroupInstanceLocalServiceBaseImpl
 	 * @return the m d r rule group instance that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public MDRRuleGroupInstance addMDRRuleGroupInstance(
 		MDRRuleGroupInstance mdrRuleGroupInstance) throws SystemException {
 		mdrRuleGroupInstance.setNew(true);
 
-		mdrRuleGroupInstance = mdrRuleGroupInstancePersistence.update(mdrRuleGroupInstance,
-				false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(mdrRuleGroupInstance);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return mdrRuleGroupInstance;
+		return mdrRuleGroupInstancePersistence.update(mdrRuleGroupInstance,
+			false);
 	}
 
 	/**
@@ -133,49 +118,27 @@ public abstract class MDRRuleGroupInstanceLocalServiceBaseImpl
 	 * Deletes the m d r rule group instance with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param ruleGroupInstanceId the primary key of the m d r rule group instance
+	 * @return the m d r rule group instance that was removed
 	 * @throws PortalException if a m d r rule group instance with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteMDRRuleGroupInstance(long ruleGroupInstanceId)
-		throws PortalException, SystemException {
-		MDRRuleGroupInstance mdrRuleGroupInstance = mdrRuleGroupInstancePersistence.remove(ruleGroupInstanceId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(mdrRuleGroupInstance);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public MDRRuleGroupInstance deleteMDRRuleGroupInstance(
+		long ruleGroupInstanceId) throws PortalException, SystemException {
+		return mdrRuleGroupInstancePersistence.remove(ruleGroupInstanceId);
 	}
 
 	/**
 	 * Deletes the m d r rule group instance from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param mdrRuleGroupInstance the m d r rule group instance
+	 * @return the m d r rule group instance that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteMDRRuleGroupInstance(
+	@Indexable(type = IndexableType.DELETE)
+	public MDRRuleGroupInstance deleteMDRRuleGroupInstance(
 		MDRRuleGroupInstance mdrRuleGroupInstance) throws SystemException {
-		mdrRuleGroupInstancePersistence.remove(mdrRuleGroupInstance);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(mdrRuleGroupInstance);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return mdrRuleGroupInstancePersistence.remove(mdrRuleGroupInstance);
 	}
 
 	/**
@@ -315,6 +278,7 @@ public abstract class MDRRuleGroupInstanceLocalServiceBaseImpl
 	 * @return the m d r rule group instance that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public MDRRuleGroupInstance updateMDRRuleGroupInstance(
 		MDRRuleGroupInstance mdrRuleGroupInstance) throws SystemException {
 		return updateMDRRuleGroupInstance(mdrRuleGroupInstance, true);
@@ -328,28 +292,14 @@ public abstract class MDRRuleGroupInstanceLocalServiceBaseImpl
 	 * @return the m d r rule group instance that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public MDRRuleGroupInstance updateMDRRuleGroupInstance(
 		MDRRuleGroupInstance mdrRuleGroupInstance, boolean merge)
 		throws SystemException {
 		mdrRuleGroupInstance.setNew(false);
 
-		mdrRuleGroupInstance = mdrRuleGroupInstancePersistence.update(mdrRuleGroupInstance,
-				merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(mdrRuleGroupInstance);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return mdrRuleGroupInstance;
+		return mdrRuleGroupInstancePersistence.update(mdrRuleGroupInstance,
+			merge);
 	}
 
 	/**

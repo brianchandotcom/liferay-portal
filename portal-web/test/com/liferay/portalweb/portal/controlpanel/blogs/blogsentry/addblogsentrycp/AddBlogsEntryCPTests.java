@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.blogs.entry.publishblogsentrydraftcp;
+package com.liferay.portalweb.portal.controlpanel.blogs.blogsentry.addblogsentrycp;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.controlpanel.blogs.blogsentry.addblogsentrycp.TearDownBlogsEntryCPTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -23,11 +22,10 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class PublishBlogsEntryDraftCPTests extends BaseTestSuite {
+public class AddBlogsEntryCPTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AddBlogsEntryDraftCPTest.class);
-		testSuite.addTestSuite(PublishBlogsEntryDraftCPTest.class);
+		testSuite.addTestSuite(AddBlogsEntryCPTest.class);
 		testSuite.addTestSuite(TearDownBlogsEntryCPTest.class);
 
 		return testSuite;

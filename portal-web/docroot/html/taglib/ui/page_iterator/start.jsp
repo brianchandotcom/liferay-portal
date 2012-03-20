@@ -23,6 +23,7 @@ String curParam = (String)request.getAttribute("liferay-ui:page-iterator:curPara
 int delta = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:page-iterator:delta"));
 boolean deltaConfigurable = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:page-iterator:deltaConfigurable"));
 String deltaParam = (String)request.getAttribute("liferay-ui:page-iterator:deltaParam");
+String idPrefix = (String)request.getAttribute("liferay-ui:page-iterator:idPrefix");
 String jsCall = GetterUtil.getString((String)request.getAttribute("liferay-ui:page-iterator:jsCall"));
 int maxPages = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:page-iterator:maxPages"));
 String target = (String)request.getAttribute("liferay-ui:page-iterator:target");
@@ -132,7 +133,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 							<%= delta %>
 						</c:when>
 						<c:otherwise>
-							<aui:select changesContext="<%= true %>" inlineLabel="left" name="itemsPerPage" onchange='<%= namespace + deltaParam + "updateDelta(this);" %>'>
+							<aui:select changesContext="<%= true %>" id='<%= idPrefix + "_itemsPerPage" %>' inlineLabel="left" name="itemsPerPage" onchange='<%= namespace + deltaParam + "updateDelta(this);" %>'>
 
 								<%
 								for (int curDelta : PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) {
@@ -170,7 +171,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 						}
 						%>
 
-						<aui:select changesContext="<%= true %>" inlineLabel="left" name="page" onchange='<%= namespace + curParam + "updateCur(this);" %>' suffix='<%= suffix %>'>
+						<aui:select changesContext="<%= true %>" id='<%= idPrefix + "_page" %>' inlineLabel="left" name="page" onchange='<%= namespace + curParam + "updateCur(this);" %>' suffix='<%= suffix %>'>
 
 							<%
 							int pagesIteratorMax = maxPages;

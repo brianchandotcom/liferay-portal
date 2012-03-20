@@ -41,6 +41,29 @@
 				(type_ = ? [$AND_OR_NULL_CHECK$])
 		]]>
 	</sql>
+	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.countByG_F">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT JournalArticle.articleId) AS COUNT_VALUE
+			FROM
+				JournalArticle
+			WHERE
+				(JournalArticle.groupId = ?) AND
+				[$FOLDER_ID$]
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.countByG_F_S">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT JournalArticle.articleId) AS COUNT_VALUE
+			FROM
+				JournalArticle
+			WHERE
+				(JournalArticle.groupId = ?) AND
+				(JournalArticle.status = ?) AND
+				[$FOLDER_ID$]
+		]]>
+	</sql>
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByExpirationDate">
 		<![CDATA[
 			SELECT

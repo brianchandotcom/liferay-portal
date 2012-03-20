@@ -1382,6 +1382,29 @@ public class JournalArticleLocalServiceImpl
 		return articles.get(0);
 	}
 
+	public int getFoldersArticlesCount(
+			long groupId, List<Long> folderIds, int status)
+		throws SystemException {
+
+		if (folderIds.size() <= PropsValues.SQL_DATA_MAX_PARAMETERS) {
+			return journalArticleFinder.countByG_F_S(
+				groupId, folderIds, status);
+		}
+		else {
+			int start = 0;
+			int end = PropsValues.SQL_DATA_MAX_PARAMETERS;
+
+			int filesCount = journalArticleFinder.countByG_F_S(
+				groupId, folderIds.subList(start, end), status);
+
+			folderIds.subList(start, end).clear();
+
+			filesCount += getFoldersArticlesCount(groupId, folderIds, status);
+
+			return filesCount;
+		}
+	}
+
 	public JournalArticle getLatestArticle(long resourcePrimKey)
 		throws PortalException, SystemException {
 

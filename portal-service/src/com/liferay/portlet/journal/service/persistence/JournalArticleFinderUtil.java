@@ -81,6 +81,18 @@ public class JournalArticleFinderUtil {
 			status, reviewDate, andOperator);
 	}
 
+	public static int countByG_F_S(long groupId,
+		java.util.List<java.lang.Long> folderIds, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().countByG_F_S(groupId, folderIds, status);
+	}
+
+	public static int filterCountByG_F_S(long groupId,
+		java.util.List<java.lang.Long> folderIds, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().filterCountByG_F_S(groupId, folderIds, status);
+	}
+
 	public static int filterCountByKeywords(long companyId, long groupId,
 		long classNameId, java.lang.String keywords, java.lang.Double version,
 		java.lang.String type, java.lang.String structureId,

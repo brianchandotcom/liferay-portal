@@ -718,6 +718,13 @@ public class JournalArticleLocalServiceWrapper
 			urlTitle);
 	}
 
+	public int getFoldersArticlesCount(long groupId,
+		java.util.List<java.lang.Long> folderIds, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleLocalService.getFoldersArticlesCount(groupId,
+			folderIds, status);
+	}
+
 	public com.liferay.portlet.journal.model.JournalArticle getLatestArticle(
 		long resourcePrimKey)
 		throws com.liferay.portal.kernel.exception.PortalException,

@@ -53,6 +53,14 @@ public interface JournalArticleFinder {
 		boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public int countByG_F_S(long groupId,
+		java.util.List<java.lang.Long> folderIds, int status)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public int filterCountByG_F_S(long groupId,
+		java.util.List<java.lang.Long> folderIds, int status)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public int filterCountByKeywords(long companyId, long groupId,
 		long classNameId, java.lang.String keywords, java.lang.Double version,
 		java.lang.String type, java.lang.String structureId,

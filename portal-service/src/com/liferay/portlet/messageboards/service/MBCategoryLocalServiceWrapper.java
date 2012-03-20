@@ -60,25 +60,28 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	* Deletes the message boards category with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param categoryId the primary key of the message boards category
+	* @return the message boards category that was removed
 	* @throws PortalException if a message boards category with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteMBCategory(long categoryId)
+	public com.liferay.portlet.messageboards.model.MBCategory deleteMBCategory(
+		long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_mbCategoryLocalService.deleteMBCategory(categoryId);
+		return _mbCategoryLocalService.deleteMBCategory(categoryId);
 	}
 
 	/**
 	* Deletes the message boards category from the database. Also notifies the appropriate model listeners.
 	*
 	* @param mbCategory the message boards category
+	* @return the message boards category that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteMBCategory(
+	public com.liferay.portlet.messageboards.model.MBCategory deleteMBCategory(
 		com.liferay.portlet.messageboards.model.MBCategory mbCategory)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_mbCategoryLocalService.deleteMBCategory(mbCategory);
+		return _mbCategoryLocalService.deleteMBCategory(mbCategory);
 	}
 
 	/**

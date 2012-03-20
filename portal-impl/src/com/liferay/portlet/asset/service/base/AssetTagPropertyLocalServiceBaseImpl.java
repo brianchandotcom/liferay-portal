@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
@@ -104,27 +103,12 @@ public abstract class AssetTagPropertyLocalServiceBaseImpl
 	 * @return the asset tag property that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public AssetTagProperty addAssetTagProperty(
 		AssetTagProperty assetTagProperty) throws SystemException {
 		assetTagProperty.setNew(true);
 
-		assetTagProperty = assetTagPropertyPersistence.update(assetTagProperty,
-				false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(assetTagProperty);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return assetTagProperty;
+		return assetTagPropertyPersistence.update(assetTagProperty, false);
 	}
 
 	/**
@@ -141,49 +125,27 @@ public abstract class AssetTagPropertyLocalServiceBaseImpl
 	 * Deletes the asset tag property with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param tagPropertyId the primary key of the asset tag property
+	 * @return the asset tag property that was removed
 	 * @throws PortalException if a asset tag property with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteAssetTagProperty(long tagPropertyId)
+	@Indexable(type = IndexableType.DELETE)
+	public AssetTagProperty deleteAssetTagProperty(long tagPropertyId)
 		throws PortalException, SystemException {
-		AssetTagProperty assetTagProperty = assetTagPropertyPersistence.remove(tagPropertyId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(assetTagProperty);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return assetTagPropertyPersistence.remove(tagPropertyId);
 	}
 
 	/**
 	 * Deletes the asset tag property from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param assetTagProperty the asset tag property
+	 * @return the asset tag property that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteAssetTagProperty(AssetTagProperty assetTagProperty)
-		throws SystemException {
-		assetTagPropertyPersistence.remove(assetTagProperty);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(assetTagProperty);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public AssetTagProperty deleteAssetTagProperty(
+		AssetTagProperty assetTagProperty) throws SystemException {
+		return assetTagPropertyPersistence.remove(assetTagProperty);
 	}
 
 	/**
@@ -309,6 +271,7 @@ public abstract class AssetTagPropertyLocalServiceBaseImpl
 	 * @return the asset tag property that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public AssetTagProperty updateAssetTagProperty(
 		AssetTagProperty assetTagProperty) throws SystemException {
 		return updateAssetTagProperty(assetTagProperty, true);
@@ -322,28 +285,13 @@ public abstract class AssetTagPropertyLocalServiceBaseImpl
 	 * @return the asset tag property that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public AssetTagProperty updateAssetTagProperty(
 		AssetTagProperty assetTagProperty, boolean merge)
 		throws SystemException {
 		assetTagProperty.setNew(false);
 
-		assetTagProperty = assetTagPropertyPersistence.update(assetTagProperty,
-				merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(assetTagProperty);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return assetTagProperty;
+		return assetTagPropertyPersistence.update(assetTagProperty, merge);
 	}
 
 	/**

@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
@@ -84,27 +83,12 @@ public abstract class WikiPageResourceLocalServiceBaseImpl
 	 * @return the wiki page resource that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public WikiPageResource addWikiPageResource(
 		WikiPageResource wikiPageResource) throws SystemException {
 		wikiPageResource.setNew(true);
 
-		wikiPageResource = wikiPageResourcePersistence.update(wikiPageResource,
-				false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(wikiPageResource);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return wikiPageResource;
+		return wikiPageResourcePersistence.update(wikiPageResource, false);
 	}
 
 	/**
@@ -121,49 +105,27 @@ public abstract class WikiPageResourceLocalServiceBaseImpl
 	 * Deletes the wiki page resource with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param resourcePrimKey the primary key of the wiki page resource
+	 * @return the wiki page resource that was removed
 	 * @throws PortalException if a wiki page resource with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteWikiPageResource(long resourcePrimKey)
+	@Indexable(type = IndexableType.DELETE)
+	public WikiPageResource deleteWikiPageResource(long resourcePrimKey)
 		throws PortalException, SystemException {
-		WikiPageResource wikiPageResource = wikiPageResourcePersistence.remove(resourcePrimKey);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(wikiPageResource);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return wikiPageResourcePersistence.remove(resourcePrimKey);
 	}
 
 	/**
 	 * Deletes the wiki page resource from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param wikiPageResource the wiki page resource
+	 * @return the wiki page resource that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteWikiPageResource(WikiPageResource wikiPageResource)
-		throws SystemException {
-		wikiPageResourcePersistence.remove(wikiPageResource);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(wikiPageResource);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public WikiPageResource deleteWikiPageResource(
+		WikiPageResource wikiPageResource) throws SystemException {
+		return wikiPageResourcePersistence.remove(wikiPageResource);
 	}
 
 	/**
@@ -289,6 +251,7 @@ public abstract class WikiPageResourceLocalServiceBaseImpl
 	 * @return the wiki page resource that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public WikiPageResource updateWikiPageResource(
 		WikiPageResource wikiPageResource) throws SystemException {
 		return updateWikiPageResource(wikiPageResource, true);
@@ -302,28 +265,13 @@ public abstract class WikiPageResourceLocalServiceBaseImpl
 	 * @return the wiki page resource that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public WikiPageResource updateWikiPageResource(
 		WikiPageResource wikiPageResource, boolean merge)
 		throws SystemException {
 		wikiPageResource.setNew(false);
 
-		wikiPageResource = wikiPageResourcePersistence.update(wikiPageResource,
-				merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(wikiPageResource);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return wikiPageResource;
+		return wikiPageResourcePersistence.update(wikiPageResource, merge);
 	}
 
 	/**

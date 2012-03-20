@@ -56,24 +56,27 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 	* Deletes the ticket with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param ticketId the primary key of the ticket
+	* @return the ticket that was removed
 	* @throws PortalException if a ticket with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteTicket(long ticketId)
+	public com.liferay.portal.model.Ticket deleteTicket(long ticketId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_ticketLocalService.deleteTicket(ticketId);
+		return _ticketLocalService.deleteTicket(ticketId);
 	}
 
 	/**
 	* Deletes the ticket from the database. Also notifies the appropriate model listeners.
 	*
 	* @param ticket the ticket
+	* @return the ticket that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteTicket(com.liferay.portal.model.Ticket ticket)
+	public com.liferay.portal.model.Ticket deleteTicket(
+		com.liferay.portal.model.Ticket ticket)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_ticketLocalService.deleteTicket(ticket);
+		return _ticketLocalService.deleteTicket(ticket);
 	}
 
 	/**

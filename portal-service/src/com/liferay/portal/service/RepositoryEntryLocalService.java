@@ -66,10 +66,12 @@ public interface RepositoryEntryLocalService extends PersistedModelLocalService 
 	* Deletes the repository entry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param repositoryEntryId the primary key of the repository entry
+	* @return the repository entry that was removed
 	* @throws PortalException if a repository entry with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteRepositoryEntry(long repositoryEntryId)
+	public com.liferay.portal.model.RepositoryEntry deleteRepositoryEntry(
+		long repositoryEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -77,9 +79,10 @@ public interface RepositoryEntryLocalService extends PersistedModelLocalService 
 	* Deletes the repository entry from the database. Also notifies the appropriate model listeners.
 	*
 	* @param repositoryEntry the repository entry
+	* @return the repository entry that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteRepositoryEntry(
+	public com.liferay.portal.model.RepositoryEntry deleteRepositoryEntry(
 		com.liferay.portal.model.RepositoryEntry repositoryEntry)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

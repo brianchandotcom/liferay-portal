@@ -65,24 +65,27 @@ public class ImageLocalServiceUtil {
 	* Deletes the image with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param imageId the primary key of the image
+	* @return the image that was removed
 	* @throws PortalException if a image with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteImage(long imageId)
+	public static com.liferay.portal.model.Image deleteImage(long imageId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteImage(imageId);
+		return getService().deleteImage(imageId);
 	}
 
 	/**
 	* Deletes the image from the database. Also notifies the appropriate model listeners.
 	*
 	* @param image the image
+	* @return the image that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteImage(com.liferay.portal.model.Image image)
+	public static com.liferay.portal.model.Image deleteImage(
+		com.liferay.portal.model.Image image)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteImage(image);
+		return getService().deleteImage(image);
 	}
 
 	/**

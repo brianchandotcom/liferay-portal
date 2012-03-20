@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
@@ -90,26 +89,12 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 	 * @return the d d l record set that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public DDLRecordSet addDDLRecordSet(DDLRecordSet ddlRecordSet)
 		throws SystemException {
 		ddlRecordSet.setNew(true);
 
-		ddlRecordSet = ddlRecordSetPersistence.update(ddlRecordSet, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(ddlRecordSet);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return ddlRecordSet;
+		return ddlRecordSetPersistence.update(ddlRecordSet, false);
 	}
 
 	/**
@@ -126,49 +111,27 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 	 * Deletes the d d l record set with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param recordSetId the primary key of the d d l record set
+	 * @return the d d l record set that was removed
 	 * @throws PortalException if a d d l record set with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteDDLRecordSet(long recordSetId)
+	@Indexable(type = IndexableType.DELETE)
+	public DDLRecordSet deleteDDLRecordSet(long recordSetId)
 		throws PortalException, SystemException {
-		DDLRecordSet ddlRecordSet = ddlRecordSetPersistence.remove(recordSetId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(ddlRecordSet);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return ddlRecordSetPersistence.remove(recordSetId);
 	}
 
 	/**
 	 * Deletes the d d l record set from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param ddlRecordSet the d d l record set
+	 * @return the d d l record set that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteDDLRecordSet(DDLRecordSet ddlRecordSet)
+	@Indexable(type = IndexableType.DELETE)
+	public DDLRecordSet deleteDDLRecordSet(DDLRecordSet ddlRecordSet)
 		throws SystemException {
-		ddlRecordSetPersistence.remove(ddlRecordSet);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(ddlRecordSet);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return ddlRecordSetPersistence.remove(ddlRecordSet);
 	}
 
 	/**
@@ -308,6 +271,7 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 	 * @return the d d l record set that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public DDLRecordSet updateDDLRecordSet(DDLRecordSet ddlRecordSet)
 		throws SystemException {
 		return updateDDLRecordSet(ddlRecordSet, true);
@@ -321,26 +285,12 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 	 * @return the d d l record set that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public DDLRecordSet updateDDLRecordSet(DDLRecordSet ddlRecordSet,
 		boolean merge) throws SystemException {
 		ddlRecordSet.setNew(false);
 
-		ddlRecordSet = ddlRecordSetPersistence.update(ddlRecordSet, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(ddlRecordSet);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return ddlRecordSet;
+		return ddlRecordSetPersistence.update(ddlRecordSet, merge);
 	}
 
 	/**

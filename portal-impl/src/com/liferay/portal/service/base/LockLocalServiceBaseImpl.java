@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.PersistedModel;
@@ -254,25 +253,11 @@ public abstract class LockLocalServiceBaseImpl implements LockLocalService,
 	 * @return the lock that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public Lock addLock(Lock lock) throws SystemException {
 		lock.setNew(true);
 
-		lock = lockPersistence.update(lock, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(lock);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return lock;
+		return lockPersistence.update(lock, false);
 	}
 
 	/**
@@ -289,47 +274,25 @@ public abstract class LockLocalServiceBaseImpl implements LockLocalService,
 	 * Deletes the lock with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param lockId the primary key of the lock
+	 * @return the lock that was removed
 	 * @throws PortalException if a lock with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteLock(long lockId) throws PortalException, SystemException {
-		Lock lock = lockPersistence.remove(lockId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(lock);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public Lock deleteLock(long lockId) throws PortalException, SystemException {
+		return lockPersistence.remove(lockId);
 	}
 
 	/**
 	 * Deletes the lock from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param lock the lock
+	 * @return the lock that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteLock(Lock lock) throws SystemException {
-		lockPersistence.remove(lock);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(lock);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public Lock deleteLock(Lock lock) throws SystemException {
+		return lockPersistence.remove(lock);
 	}
 
 	/**
@@ -451,6 +414,7 @@ public abstract class LockLocalServiceBaseImpl implements LockLocalService,
 	 * @return the lock that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public Lock updateLock(Lock lock) throws SystemException {
 		return updateLock(lock, true);
 	}
@@ -463,25 +427,11 @@ public abstract class LockLocalServiceBaseImpl implements LockLocalService,
 	 * @return the lock that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public Lock updateLock(Lock lock, boolean merge) throws SystemException {
 		lock.setNew(false);
 
-		lock = lockPersistence.update(lock, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(lock);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return lock;
+		return lockPersistence.update(lock, merge);
 	}
 
 	/**

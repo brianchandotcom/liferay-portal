@@ -66,25 +66,28 @@ public class JournalFeedLocalServiceUtil {
 	* Deletes the journal feed with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param id the primary key of the journal feed
+	* @return the journal feed that was removed
 	* @throws PortalException if a journal feed with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteJournalFeed(long id)
+	public static com.liferay.portlet.journal.model.JournalFeed deleteJournalFeed(
+		long id)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteJournalFeed(id);
+		return getService().deleteJournalFeed(id);
 	}
 
 	/**
 	* Deletes the journal feed from the database. Also notifies the appropriate model listeners.
 	*
 	* @param journalFeed the journal feed
+	* @return the journal feed that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteJournalFeed(
+	public static com.liferay.portlet.journal.model.JournalFeed deleteJournalFeed(
 		com.liferay.portlet.journal.model.JournalFeed journalFeed)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteJournalFeed(journalFeed);
+		return getService().deleteJournalFeed(journalFeed);
 	}
 
 	/**

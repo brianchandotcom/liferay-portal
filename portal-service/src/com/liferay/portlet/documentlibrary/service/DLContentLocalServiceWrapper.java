@@ -60,25 +60,28 @@ public class DLContentLocalServiceWrapper implements DLContentLocalService,
 	* Deletes the document library content with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param contentId the primary key of the document library content
+	* @return the document library content that was removed
 	* @throws PortalException if a document library content with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteDLContent(long contentId)
+	public com.liferay.portlet.documentlibrary.model.DLContent deleteDLContent(
+		long contentId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_dlContentLocalService.deleteDLContent(contentId);
+		return _dlContentLocalService.deleteDLContent(contentId);
 	}
 
 	/**
 	* Deletes the document library content from the database. Also notifies the appropriate model listeners.
 	*
 	* @param dlContent the document library content
+	* @return the document library content that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteDLContent(
+	public com.liferay.portlet.documentlibrary.model.DLContent deleteDLContent(
 		com.liferay.portlet.documentlibrary.model.DLContent dlContent)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_dlContentLocalService.deleteDLContent(dlContent);
+		return _dlContentLocalService.deleteDLContent(dlContent);
 	}
 
 	/**

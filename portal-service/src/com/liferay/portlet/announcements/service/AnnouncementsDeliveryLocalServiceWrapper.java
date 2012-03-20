@@ -61,25 +61,28 @@ public class AnnouncementsDeliveryLocalServiceWrapper
 	* Deletes the announcements delivery with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param deliveryId the primary key of the announcements delivery
+	* @return the announcements delivery that was removed
 	* @throws PortalException if a announcements delivery with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteAnnouncementsDelivery(long deliveryId)
+	public com.liferay.portlet.announcements.model.AnnouncementsDelivery deleteAnnouncementsDelivery(
+		long deliveryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_announcementsDeliveryLocalService.deleteAnnouncementsDelivery(deliveryId);
+		return _announcementsDeliveryLocalService.deleteAnnouncementsDelivery(deliveryId);
 	}
 
 	/**
 	* Deletes the announcements delivery from the database. Also notifies the appropriate model listeners.
 	*
 	* @param announcementsDelivery the announcements delivery
+	* @return the announcements delivery that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteAnnouncementsDelivery(
+	public com.liferay.portlet.announcements.model.AnnouncementsDelivery deleteAnnouncementsDelivery(
 		com.liferay.portlet.announcements.model.AnnouncementsDelivery announcementsDelivery)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_announcementsDeliveryLocalService.deleteAnnouncementsDelivery(announcementsDelivery);
+		return _announcementsDeliveryLocalService.deleteAnnouncementsDelivery(announcementsDelivery);
 	}
 
 	/**

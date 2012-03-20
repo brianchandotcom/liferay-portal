@@ -65,10 +65,11 @@ public interface UserLocalService extends PersistedModelLocalService {
 	* Deletes the user with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param userId the primary key of the user
+	* @return the user that was removed
 	* @throws PortalException if a user with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteUser(long userId)
+	public com.liferay.portal.model.User deleteUser(long userId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -76,10 +77,12 @@ public interface UserLocalService extends PersistedModelLocalService {
 	* Deletes the user from the database. Also notifies the appropriate model listeners.
 	*
 	* @param user the user
+	* @return the user that was removed
 	* @throws PortalException
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteUser(com.liferay.portal.model.User user)
+	public com.liferay.portal.model.User deleteUser(
+		com.liferay.portal.model.User user)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

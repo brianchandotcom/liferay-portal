@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
@@ -89,27 +88,12 @@ public abstract class SCProductVersionLocalServiceBaseImpl
 	 * @return the s c product version that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public SCProductVersion addSCProductVersion(
 		SCProductVersion scProductVersion) throws SystemException {
 		scProductVersion.setNew(true);
 
-		scProductVersion = scProductVersionPersistence.update(scProductVersion,
-				false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(scProductVersion);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return scProductVersion;
+		return scProductVersionPersistence.update(scProductVersion, false);
 	}
 
 	/**
@@ -126,49 +110,27 @@ public abstract class SCProductVersionLocalServiceBaseImpl
 	 * Deletes the s c product version with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param productVersionId the primary key of the s c product version
+	 * @return the s c product version that was removed
 	 * @throws PortalException if a s c product version with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteSCProductVersion(long productVersionId)
+	@Indexable(type = IndexableType.DELETE)
+	public SCProductVersion deleteSCProductVersion(long productVersionId)
 		throws PortalException, SystemException {
-		SCProductVersion scProductVersion = scProductVersionPersistence.remove(productVersionId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(scProductVersion);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return scProductVersionPersistence.remove(productVersionId);
 	}
 
 	/**
 	 * Deletes the s c product version from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param scProductVersion the s c product version
+	 * @return the s c product version that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteSCProductVersion(SCProductVersion scProductVersion)
-		throws SystemException {
-		scProductVersionPersistence.remove(scProductVersion);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(scProductVersion);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public SCProductVersion deleteSCProductVersion(
+		SCProductVersion scProductVersion) throws SystemException {
+		return scProductVersionPersistence.remove(scProductVersion);
 	}
 
 	/**
@@ -294,6 +256,7 @@ public abstract class SCProductVersionLocalServiceBaseImpl
 	 * @return the s c product version that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public SCProductVersion updateSCProductVersion(
 		SCProductVersion scProductVersion) throws SystemException {
 		return updateSCProductVersion(scProductVersion, true);
@@ -307,28 +270,13 @@ public abstract class SCProductVersionLocalServiceBaseImpl
 	 * @return the s c product version that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public SCProductVersion updateSCProductVersion(
 		SCProductVersion scProductVersion, boolean merge)
 		throws SystemException {
 		scProductVersion.setNew(false);
 
-		scProductVersion = scProductVersionPersistence.update(scProductVersion,
-				merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(scProductVersion);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return scProductVersion;
+		return scProductVersionPersistence.update(scProductVersion, merge);
 	}
 
 	/**

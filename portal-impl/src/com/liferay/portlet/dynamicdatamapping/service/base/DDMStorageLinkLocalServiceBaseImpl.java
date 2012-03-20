@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
@@ -89,26 +88,12 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 	 * @return the d d m storage link that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public DDMStorageLink addDDMStorageLink(DDMStorageLink ddmStorageLink)
 		throws SystemException {
 		ddmStorageLink.setNew(true);
 
-		ddmStorageLink = ddmStorageLinkPersistence.update(ddmStorageLink, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(ddmStorageLink);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return ddmStorageLink;
+		return ddmStorageLinkPersistence.update(ddmStorageLink, false);
 	}
 
 	/**
@@ -125,49 +110,27 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 	 * Deletes the d d m storage link with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param storageLinkId the primary key of the d d m storage link
+	 * @return the d d m storage link that was removed
 	 * @throws PortalException if a d d m storage link with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteDDMStorageLink(long storageLinkId)
+	@Indexable(type = IndexableType.DELETE)
+	public DDMStorageLink deleteDDMStorageLink(long storageLinkId)
 		throws PortalException, SystemException {
-		DDMStorageLink ddmStorageLink = ddmStorageLinkPersistence.remove(storageLinkId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(ddmStorageLink);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return ddmStorageLinkPersistence.remove(storageLinkId);
 	}
 
 	/**
 	 * Deletes the d d m storage link from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param ddmStorageLink the d d m storage link
+	 * @return the d d m storage link that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteDDMStorageLink(DDMStorageLink ddmStorageLink)
+	@Indexable(type = IndexableType.DELETE)
+	public DDMStorageLink deleteDDMStorageLink(DDMStorageLink ddmStorageLink)
 		throws SystemException {
-		ddmStorageLinkPersistence.remove(ddmStorageLink);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(ddmStorageLink);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return ddmStorageLinkPersistence.remove(ddmStorageLink);
 	}
 
 	/**
@@ -293,6 +256,7 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 	 * @return the d d m storage link that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public DDMStorageLink updateDDMStorageLink(DDMStorageLink ddmStorageLink)
 		throws SystemException {
 		return updateDDMStorageLink(ddmStorageLink, true);
@@ -306,26 +270,12 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 	 * @return the d d m storage link that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public DDMStorageLink updateDDMStorageLink(DDMStorageLink ddmStorageLink,
 		boolean merge) throws SystemException {
 		ddmStorageLink.setNew(false);
 
-		ddmStorageLink = ddmStorageLinkPersistence.update(ddmStorageLink, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(ddmStorageLink);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return ddmStorageLink;
+		return ddmStorageLinkPersistence.update(ddmStorageLink, merge);
 	}
 
 	/**

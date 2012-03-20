@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.model.ResourcePermission;
@@ -254,27 +253,12 @@ public abstract class ResourcePermissionLocalServiceBaseImpl
 	 * @return the resource permission that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public ResourcePermission addResourcePermission(
 		ResourcePermission resourcePermission) throws SystemException {
 		resourcePermission.setNew(true);
 
-		resourcePermission = resourcePermissionPersistence.update(resourcePermission,
-				false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(resourcePermission);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return resourcePermission;
+		return resourcePermissionPersistence.update(resourcePermission, false);
 	}
 
 	/**
@@ -292,49 +276,27 @@ public abstract class ResourcePermissionLocalServiceBaseImpl
 	 * Deletes the resource permission with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param resourcePermissionId the primary key of the resource permission
+	 * @return the resource permission that was removed
 	 * @throws PortalException if a resource permission with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteResourcePermission(long resourcePermissionId)
-		throws PortalException, SystemException {
-		ResourcePermission resourcePermission = resourcePermissionPersistence.remove(resourcePermissionId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(resourcePermission);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public ResourcePermission deleteResourcePermission(
+		long resourcePermissionId) throws PortalException, SystemException {
+		return resourcePermissionPersistence.remove(resourcePermissionId);
 	}
 
 	/**
 	 * Deletes the resource permission from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param resourcePermission the resource permission
+	 * @return the resource permission that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteResourcePermission(ResourcePermission resourcePermission)
-		throws SystemException {
-		resourcePermissionPersistence.remove(resourcePermission);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(resourcePermission);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public ResourcePermission deleteResourcePermission(
+		ResourcePermission resourcePermission) throws SystemException {
+		return resourcePermissionPersistence.remove(resourcePermission);
 	}
 
 	/**
@@ -460,6 +422,7 @@ public abstract class ResourcePermissionLocalServiceBaseImpl
 	 * @return the resource permission that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public ResourcePermission updateResourcePermission(
 		ResourcePermission resourcePermission) throws SystemException {
 		return updateResourcePermission(resourcePermission, true);
@@ -473,28 +436,13 @@ public abstract class ResourcePermissionLocalServiceBaseImpl
 	 * @return the resource permission that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public ResourcePermission updateResourcePermission(
 		ResourcePermission resourcePermission, boolean merge)
 		throws SystemException {
 		resourcePermission.setNew(false);
 
-		resourcePermission = resourcePermissionPersistence.update(resourcePermission,
-				merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(resourcePermission);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return resourcePermission;
+		return resourcePermissionPersistence.update(resourcePermission, merge);
 	}
 
 	/**

@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.ImageLocalService;
@@ -101,26 +100,12 @@ public abstract class ShoppingItemLocalServiceBaseImpl
 	 * @return the shopping item that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public ShoppingItem addShoppingItem(ShoppingItem shoppingItem)
 		throws SystemException {
 		shoppingItem.setNew(true);
 
-		shoppingItem = shoppingItemPersistence.update(shoppingItem, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(shoppingItem);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return shoppingItem;
+		return shoppingItemPersistence.update(shoppingItem, false);
 	}
 
 	/**
@@ -137,49 +122,27 @@ public abstract class ShoppingItemLocalServiceBaseImpl
 	 * Deletes the shopping item with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param itemId the primary key of the shopping item
+	 * @return the shopping item that was removed
 	 * @throws PortalException if a shopping item with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteShoppingItem(long itemId)
+	@Indexable(type = IndexableType.DELETE)
+	public ShoppingItem deleteShoppingItem(long itemId)
 		throws PortalException, SystemException {
-		ShoppingItem shoppingItem = shoppingItemPersistence.remove(itemId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(shoppingItem);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return shoppingItemPersistence.remove(itemId);
 	}
 
 	/**
 	 * Deletes the shopping item from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param shoppingItem the shopping item
+	 * @return the shopping item that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteShoppingItem(ShoppingItem shoppingItem)
+	@Indexable(type = IndexableType.DELETE)
+	public ShoppingItem deleteShoppingItem(ShoppingItem shoppingItem)
 		throws SystemException {
-		shoppingItemPersistence.remove(shoppingItem);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(shoppingItem);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return shoppingItemPersistence.remove(shoppingItem);
 	}
 
 	/**
@@ -305,6 +268,7 @@ public abstract class ShoppingItemLocalServiceBaseImpl
 	 * @return the shopping item that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public ShoppingItem updateShoppingItem(ShoppingItem shoppingItem)
 		throws SystemException {
 		return updateShoppingItem(shoppingItem, true);
@@ -318,26 +282,12 @@ public abstract class ShoppingItemLocalServiceBaseImpl
 	 * @return the shopping item that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public ShoppingItem updateShoppingItem(ShoppingItem shoppingItem,
 		boolean merge) throws SystemException {
 		shoppingItem.setNew(false);
 
-		shoppingItem = shoppingItemPersistence.update(shoppingItem, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(shoppingItem);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return shoppingItem;
+		return shoppingItemPersistence.update(shoppingItem, merge);
 	}
 
 	/**

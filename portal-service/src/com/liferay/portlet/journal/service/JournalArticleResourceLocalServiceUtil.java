@@ -66,25 +66,28 @@ public class JournalArticleResourceLocalServiceUtil {
 	* Deletes the journal article resource with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param resourcePrimKey the primary key of the journal article resource
+	* @return the journal article resource that was removed
 	* @throws PortalException if a journal article resource with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteJournalArticleResource(long resourcePrimKey)
+	public static com.liferay.portlet.journal.model.JournalArticleResource deleteJournalArticleResource(
+		long resourcePrimKey)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteJournalArticleResource(resourcePrimKey);
+		return getService().deleteJournalArticleResource(resourcePrimKey);
 	}
 
 	/**
 	* Deletes the journal article resource from the database. Also notifies the appropriate model listeners.
 	*
 	* @param journalArticleResource the journal article resource
+	* @return the journal article resource that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteJournalArticleResource(
+	public static com.liferay.portlet.journal.model.JournalArticleResource deleteJournalArticleResource(
 		com.liferay.portlet.journal.model.JournalArticleResource journalArticleResource)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteJournalArticleResource(journalArticleResource);
+		return getService().deleteJournalArticleResource(journalArticleResource);
 	}
 
 	/**

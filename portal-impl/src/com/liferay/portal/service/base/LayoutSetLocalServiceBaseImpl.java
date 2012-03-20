@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.PersistedModel;
@@ -254,26 +253,12 @@ public abstract class LayoutSetLocalServiceBaseImpl
 	 * @return the layout set that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public LayoutSet addLayoutSet(LayoutSet layoutSet)
 		throws SystemException {
 		layoutSet.setNew(true);
 
-		layoutSet = layoutSetPersistence.update(layoutSet, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(layoutSet);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return layoutSet;
+		return layoutSetPersistence.update(layoutSet, false);
 	}
 
 	/**
@@ -290,48 +275,27 @@ public abstract class LayoutSetLocalServiceBaseImpl
 	 * Deletes the layout set with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param layoutSetId the primary key of the layout set
+	 * @return the layout set that was removed
 	 * @throws PortalException if a layout set with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteLayoutSet(long layoutSetId)
+	@Indexable(type = IndexableType.DELETE)
+	public LayoutSet deleteLayoutSet(long layoutSetId)
 		throws PortalException, SystemException {
-		LayoutSet layoutSet = layoutSetPersistence.remove(layoutSetId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(layoutSet);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return layoutSetPersistence.remove(layoutSetId);
 	}
 
 	/**
 	 * Deletes the layout set from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param layoutSet the layout set
+	 * @return the layout set that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteLayoutSet(LayoutSet layoutSet) throws SystemException {
-		layoutSetPersistence.remove(layoutSet);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(layoutSet);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public LayoutSet deleteLayoutSet(LayoutSet layoutSet)
+		throws SystemException {
+		return layoutSetPersistence.remove(layoutSet);
 	}
 
 	/**
@@ -456,6 +420,7 @@ public abstract class LayoutSetLocalServiceBaseImpl
 	 * @return the layout set that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public LayoutSet updateLayoutSet(LayoutSet layoutSet)
 		throws SystemException {
 		return updateLayoutSet(layoutSet, true);
@@ -469,26 +434,12 @@ public abstract class LayoutSetLocalServiceBaseImpl
 	 * @return the layout set that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public LayoutSet updateLayoutSet(LayoutSet layoutSet, boolean merge)
 		throws SystemException {
 		layoutSet.setNew(false);
 
-		layoutSet = layoutSetPersistence.update(layoutSet, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(layoutSet);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return layoutSet;
+		return layoutSetPersistence.update(layoutSet, merge);
 	}
 
 	/**

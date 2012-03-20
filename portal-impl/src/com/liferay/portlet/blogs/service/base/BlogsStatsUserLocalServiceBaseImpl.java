@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.GroupLocalService;
@@ -86,26 +85,12 @@ public abstract class BlogsStatsUserLocalServiceBaseImpl
 	 * @return the blogs stats user that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public BlogsStatsUser addBlogsStatsUser(BlogsStatsUser blogsStatsUser)
 		throws SystemException {
 		blogsStatsUser.setNew(true);
 
-		blogsStatsUser = blogsStatsUserPersistence.update(blogsStatsUser, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(blogsStatsUser);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return blogsStatsUser;
+		return blogsStatsUserPersistence.update(blogsStatsUser, false);
 	}
 
 	/**
@@ -122,49 +107,27 @@ public abstract class BlogsStatsUserLocalServiceBaseImpl
 	 * Deletes the blogs stats user with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param statsUserId the primary key of the blogs stats user
+	 * @return the blogs stats user that was removed
 	 * @throws PortalException if a blogs stats user with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteBlogsStatsUser(long statsUserId)
+	@Indexable(type = IndexableType.DELETE)
+	public BlogsStatsUser deleteBlogsStatsUser(long statsUserId)
 		throws PortalException, SystemException {
-		BlogsStatsUser blogsStatsUser = blogsStatsUserPersistence.remove(statsUserId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(blogsStatsUser);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return blogsStatsUserPersistence.remove(statsUserId);
 	}
 
 	/**
 	 * Deletes the blogs stats user from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param blogsStatsUser the blogs stats user
+	 * @return the blogs stats user that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteBlogsStatsUser(BlogsStatsUser blogsStatsUser)
+	@Indexable(type = IndexableType.DELETE)
+	public BlogsStatsUser deleteBlogsStatsUser(BlogsStatsUser blogsStatsUser)
 		throws SystemException {
-		blogsStatsUserPersistence.remove(blogsStatsUser);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(blogsStatsUser);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return blogsStatsUserPersistence.remove(blogsStatsUser);
 	}
 
 	/**
@@ -290,6 +253,7 @@ public abstract class BlogsStatsUserLocalServiceBaseImpl
 	 * @return the blogs stats user that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public BlogsStatsUser updateBlogsStatsUser(BlogsStatsUser blogsStatsUser)
 		throws SystemException {
 		return updateBlogsStatsUser(blogsStatsUser, true);
@@ -303,26 +267,12 @@ public abstract class BlogsStatsUserLocalServiceBaseImpl
 	 * @return the blogs stats user that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public BlogsStatsUser updateBlogsStatsUser(BlogsStatsUser blogsStatsUser,
 		boolean merge) throws SystemException {
 		blogsStatsUser.setNew(false);
 
-		blogsStatsUser = blogsStatsUserPersistence.update(blogsStatsUser, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(blogsStatsUser);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return blogsStatsUser;
+		return blogsStatsUserPersistence.update(blogsStatsUser, merge);
 	}
 
 	/**

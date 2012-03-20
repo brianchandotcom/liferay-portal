@@ -61,25 +61,28 @@ public class SocialActivityAchievementLocalServiceWrapper
 	* Deletes the social activity achievement with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param activityAchievementId the primary key of the social activity achievement
+	* @return the social activity achievement that was removed
 	* @throws PortalException if a social activity achievement with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteSocialActivityAchievement(long activityAchievementId)
+	public com.liferay.portlet.social.model.SocialActivityAchievement deleteSocialActivityAchievement(
+		long activityAchievementId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_socialActivityAchievementLocalService.deleteSocialActivityAchievement(activityAchievementId);
+		return _socialActivityAchievementLocalService.deleteSocialActivityAchievement(activityAchievementId);
 	}
 
 	/**
 	* Deletes the social activity achievement from the database. Also notifies the appropriate model listeners.
 	*
 	* @param socialActivityAchievement the social activity achievement
+	* @return the social activity achievement that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteSocialActivityAchievement(
+	public com.liferay.portlet.social.model.SocialActivityAchievement deleteSocialActivityAchievement(
 		com.liferay.portlet.social.model.SocialActivityAchievement socialActivityAchievement)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_socialActivityAchievementLocalService.deleteSocialActivityAchievement(socialActivityAchievement);
+		return _socialActivityAchievementLocalService.deleteSocialActivityAchievement(socialActivityAchievement);
 	}
 
 	/**

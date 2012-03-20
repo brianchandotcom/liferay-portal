@@ -67,10 +67,12 @@ public interface DLFileShortcutLocalService extends PersistedModelLocalService {
 	* Deletes the document library file shortcut with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param fileShortcutId the primary key of the document library file shortcut
+	* @return the document library file shortcut that was removed
 	* @throws PortalException if a document library file shortcut with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteDLFileShortcut(long fileShortcutId)
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut deleteDLFileShortcut(
+		long fileShortcutId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -78,9 +80,10 @@ public interface DLFileShortcutLocalService extends PersistedModelLocalService {
 	* Deletes the document library file shortcut from the database. Also notifies the appropriate model listeners.
 	*
 	* @param dlFileShortcut the document library file shortcut
+	* @return the document library file shortcut that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteDLFileShortcut(
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut deleteDLFileShortcut(
 		com.liferay.portlet.documentlibrary.model.DLFileShortcut dlFileShortcut)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

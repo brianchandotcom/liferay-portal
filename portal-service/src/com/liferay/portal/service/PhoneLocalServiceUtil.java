@@ -65,24 +65,27 @@ public class PhoneLocalServiceUtil {
 	* Deletes the phone with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param phoneId the primary key of the phone
+	* @return the phone that was removed
 	* @throws PortalException if a phone with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deletePhone(long phoneId)
+	public static com.liferay.portal.model.Phone deletePhone(long phoneId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deletePhone(phoneId);
+		return getService().deletePhone(phoneId);
 	}
 
 	/**
 	* Deletes the phone from the database. Also notifies the appropriate model listeners.
 	*
 	* @param phone the phone
+	* @return the phone that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deletePhone(com.liferay.portal.model.Phone phone)
+	public static com.liferay.portal.model.Phone deletePhone(
+		com.liferay.portal.model.Phone phone)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deletePhone(phone);
+		return getService().deletePhone(phone);
 	}
 
 	/**

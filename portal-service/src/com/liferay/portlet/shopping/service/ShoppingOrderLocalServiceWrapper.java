@@ -61,25 +61,28 @@ public class ShoppingOrderLocalServiceWrapper
 	* Deletes the shopping order with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param orderId the primary key of the shopping order
+	* @return the shopping order that was removed
 	* @throws PortalException if a shopping order with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteShoppingOrder(long orderId)
+	public com.liferay.portlet.shopping.model.ShoppingOrder deleteShoppingOrder(
+		long orderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_shoppingOrderLocalService.deleteShoppingOrder(orderId);
+		return _shoppingOrderLocalService.deleteShoppingOrder(orderId);
 	}
 
 	/**
 	* Deletes the shopping order from the database. Also notifies the appropriate model listeners.
 	*
 	* @param shoppingOrder the shopping order
+	* @return the shopping order that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteShoppingOrder(
+	public com.liferay.portlet.shopping.model.ShoppingOrder deleteShoppingOrder(
 		com.liferay.portlet.shopping.model.ShoppingOrder shoppingOrder)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_shoppingOrderLocalService.deleteShoppingOrder(shoppingOrder);
+		return _shoppingOrderLocalService.deleteShoppingOrder(shoppingOrder);
 	}
 
 	/**

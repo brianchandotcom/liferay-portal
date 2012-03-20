@@ -67,10 +67,12 @@ public interface PollsQuestionLocalService extends PersistedModelLocalService {
 	* Deletes the polls question with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param questionId the primary key of the polls question
+	* @return the polls question that was removed
 	* @throws PortalException if a polls question with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deletePollsQuestion(long questionId)
+	public com.liferay.portlet.polls.model.PollsQuestion deletePollsQuestion(
+		long questionId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -78,9 +80,10 @@ public interface PollsQuestionLocalService extends PersistedModelLocalService {
 	* Deletes the polls question from the database. Also notifies the appropriate model listeners.
 	*
 	* @param pollsQuestion the polls question
+	* @return the polls question that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deletePollsQuestion(
+	public com.liferay.portlet.polls.model.PollsQuestion deletePollsQuestion(
 		com.liferay.portlet.polls.model.PollsQuestion pollsQuestion)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

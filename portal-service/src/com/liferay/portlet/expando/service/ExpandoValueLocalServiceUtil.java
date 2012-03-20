@@ -66,25 +66,28 @@ public class ExpandoValueLocalServiceUtil {
 	* Deletes the expando value with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param valueId the primary key of the expando value
+	* @return the expando value that was removed
 	* @throws PortalException if a expando value with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteExpandoValue(long valueId)
+	public static com.liferay.portlet.expando.model.ExpandoValue deleteExpandoValue(
+		long valueId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteExpandoValue(valueId);
+		return getService().deleteExpandoValue(valueId);
 	}
 
 	/**
 	* Deletes the expando value from the database. Also notifies the appropriate model listeners.
 	*
 	* @param expandoValue the expando value
+	* @return the expando value that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteExpandoValue(
+	public static com.liferay.portlet.expando.model.ExpandoValue deleteExpandoValue(
 		com.liferay.portlet.expando.model.ExpandoValue expandoValue)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteExpandoValue(expandoValue);
+		return getService().deleteExpandoValue(expandoValue);
 	}
 
 	/**

@@ -61,25 +61,28 @@ public class SocialActivityCounterLocalServiceWrapper
 	* Deletes the social activity counter with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param activityCounterId the primary key of the social activity counter
+	* @return the social activity counter that was removed
 	* @throws PortalException if a social activity counter with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteSocialActivityCounter(long activityCounterId)
+	public com.liferay.portlet.social.model.SocialActivityCounter deleteSocialActivityCounter(
+		long activityCounterId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_socialActivityCounterLocalService.deleteSocialActivityCounter(activityCounterId);
+		return _socialActivityCounterLocalService.deleteSocialActivityCounter(activityCounterId);
 	}
 
 	/**
 	* Deletes the social activity counter from the database. Also notifies the appropriate model listeners.
 	*
 	* @param socialActivityCounter the social activity counter
+	* @return the social activity counter that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteSocialActivityCounter(
+	public com.liferay.portlet.social.model.SocialActivityCounter deleteSocialActivityCounter(
 		com.liferay.portlet.social.model.SocialActivityCounter socialActivityCounter)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_socialActivityCounterLocalService.deleteSocialActivityCounter(socialActivityCounter);
+		return _socialActivityCounterLocalService.deleteSocialActivityCounter(socialActivityCounter);
 	}
 
 	/**
@@ -289,7 +292,8 @@ public class SocialActivityCounterLocalServiceWrapper
 	}
 
 	/**
-	* @deprecated {@link #createActivityCounter(long, long, long, String, int, int, int, int, int, long, int)}
+	* @deprecated {@link #createActivityCounter(long, long, long, String, int,
+	int, int, int, int, long, int)}
 	*/
 	public com.liferay.portlet.social.model.SocialActivityCounter createActivityCounter(
 		long groupId, long classNameId, long classPK, java.lang.String name,

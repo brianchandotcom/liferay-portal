@@ -67,10 +67,12 @@ public interface MBThreadLocalService extends PersistedModelLocalService {
 	* Deletes the message boards thread with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param threadId the primary key of the message boards thread
+	* @return the message boards thread that was removed
 	* @throws PortalException if a message boards thread with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteMBThread(long threadId)
+	public com.liferay.portlet.messageboards.model.MBThread deleteMBThread(
+		long threadId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -78,9 +80,10 @@ public interface MBThreadLocalService extends PersistedModelLocalService {
 	* Deletes the message boards thread from the database. Also notifies the appropriate model listeners.
 	*
 	* @param mbThread the message boards thread
+	* @return the message boards thread that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteMBThread(
+	public com.liferay.portlet.messageboards.model.MBThread deleteMBThread(
 		com.liferay.portlet.messageboards.model.MBThread mbThread)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

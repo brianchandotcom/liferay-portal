@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
@@ -98,27 +97,12 @@ public abstract class ShoppingItemFieldLocalServiceBaseImpl
 	 * @return the shopping item field that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public ShoppingItemField addShoppingItemField(
 		ShoppingItemField shoppingItemField) throws SystemException {
 		shoppingItemField.setNew(true);
 
-		shoppingItemField = shoppingItemFieldPersistence.update(shoppingItemField,
-				false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(shoppingItemField);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return shoppingItemField;
+		return shoppingItemFieldPersistence.update(shoppingItemField, false);
 	}
 
 	/**
@@ -135,49 +119,27 @@ public abstract class ShoppingItemFieldLocalServiceBaseImpl
 	 * Deletes the shopping item field with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param itemFieldId the primary key of the shopping item field
+	 * @return the shopping item field that was removed
 	 * @throws PortalException if a shopping item field with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteShoppingItemField(long itemFieldId)
+	@Indexable(type = IndexableType.DELETE)
+	public ShoppingItemField deleteShoppingItemField(long itemFieldId)
 		throws PortalException, SystemException {
-		ShoppingItemField shoppingItemField = shoppingItemFieldPersistence.remove(itemFieldId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(shoppingItemField);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return shoppingItemFieldPersistence.remove(itemFieldId);
 	}
 
 	/**
 	 * Deletes the shopping item field from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param shoppingItemField the shopping item field
+	 * @return the shopping item field that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteShoppingItemField(ShoppingItemField shoppingItemField)
-		throws SystemException {
-		shoppingItemFieldPersistence.remove(shoppingItemField);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(shoppingItemField);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public ShoppingItemField deleteShoppingItemField(
+		ShoppingItemField shoppingItemField) throws SystemException {
+		return shoppingItemFieldPersistence.remove(shoppingItemField);
 	}
 
 	/**
@@ -303,6 +265,7 @@ public abstract class ShoppingItemFieldLocalServiceBaseImpl
 	 * @return the shopping item field that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public ShoppingItemField updateShoppingItemField(
 		ShoppingItemField shoppingItemField) throws SystemException {
 		return updateShoppingItemField(shoppingItemField, true);
@@ -316,28 +279,13 @@ public abstract class ShoppingItemFieldLocalServiceBaseImpl
 	 * @return the shopping item field that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public ShoppingItemField updateShoppingItemField(
 		ShoppingItemField shoppingItemField, boolean merge)
 		throws SystemException {
 		shoppingItemField.setNew(false);
 
-		shoppingItemField = shoppingItemFieldPersistence.update(shoppingItemField,
-				merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(shoppingItemField);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return shoppingItemField;
+		return shoppingItemFieldPersistence.update(shoppingItemField, merge);
 	}
 
 	/**

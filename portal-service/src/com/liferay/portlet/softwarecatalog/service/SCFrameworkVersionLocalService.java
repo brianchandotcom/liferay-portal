@@ -68,10 +68,12 @@ public interface SCFrameworkVersionLocalService
 	* Deletes the s c framework version with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param frameworkVersionId the primary key of the s c framework version
+	* @return the s c framework version that was removed
 	* @throws PortalException if a s c framework version with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteSCFrameworkVersion(long frameworkVersionId)
+	public com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion deleteSCFrameworkVersion(
+		long frameworkVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -79,9 +81,10 @@ public interface SCFrameworkVersionLocalService
 	* Deletes the s c framework version from the database. Also notifies the appropriate model listeners.
 	*
 	* @param scFrameworkVersion the s c framework version
+	* @return the s c framework version that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteSCFrameworkVersion(
+	public com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion deleteSCFrameworkVersion(
 		com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion scFrameworkVersion)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

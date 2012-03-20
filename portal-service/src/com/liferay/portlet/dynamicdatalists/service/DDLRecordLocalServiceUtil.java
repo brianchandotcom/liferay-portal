@@ -66,25 +66,28 @@ public class DDLRecordLocalServiceUtil {
 	* Deletes the d d l record with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param recordId the primary key of the d d l record
+	* @return the d d l record that was removed
 	* @throws PortalException if a d d l record with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteDDLRecord(long recordId)
+	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord deleteDDLRecord(
+		long recordId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteDDLRecord(recordId);
+		return getService().deleteDDLRecord(recordId);
 	}
 
 	/**
 	* Deletes the d d l record from the database. Also notifies the appropriate model listeners.
 	*
 	* @param ddlRecord the d d l record
+	* @return the d d l record that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteDDLRecord(
+	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord deleteDDLRecord(
 		com.liferay.portlet.dynamicdatalists.model.DDLRecord ddlRecord)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteDDLRecord(ddlRecord);
+		return getService().deleteDDLRecord(ddlRecord);
 	}
 
 	/**

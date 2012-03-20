@@ -65,10 +65,11 @@ public interface OrgLaborLocalService extends PersistedModelLocalService {
 	* Deletes the org labor with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param orgLaborId the primary key of the org labor
+	* @return the org labor that was removed
 	* @throws PortalException if a org labor with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteOrgLabor(long orgLaborId)
+	public com.liferay.portal.model.OrgLabor deleteOrgLabor(long orgLaborId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -76,9 +77,11 @@ public interface OrgLaborLocalService extends PersistedModelLocalService {
 	* Deletes the org labor from the database. Also notifies the appropriate model listeners.
 	*
 	* @param orgLabor the org labor
+	* @return the org labor that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteOrgLabor(com.liferay.portal.model.OrgLabor orgLabor)
+	public com.liferay.portal.model.OrgLabor deleteOrgLabor(
+		com.liferay.portal.model.OrgLabor orgLabor)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

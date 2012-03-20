@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
@@ -114,26 +113,12 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 	 * @return the document library file shortcut that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public DLFileShortcut addDLFileShortcut(DLFileShortcut dlFileShortcut)
 		throws SystemException {
 		dlFileShortcut.setNew(true);
 
-		dlFileShortcut = dlFileShortcutPersistence.update(dlFileShortcut, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(dlFileShortcut);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return dlFileShortcut;
+		return dlFileShortcutPersistence.update(dlFileShortcut, false);
 	}
 
 	/**
@@ -150,49 +135,27 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 	 * Deletes the document library file shortcut with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param fileShortcutId the primary key of the document library file shortcut
+	 * @return the document library file shortcut that was removed
 	 * @throws PortalException if a document library file shortcut with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteDLFileShortcut(long fileShortcutId)
+	@Indexable(type = IndexableType.DELETE)
+	public DLFileShortcut deleteDLFileShortcut(long fileShortcutId)
 		throws PortalException, SystemException {
-		DLFileShortcut dlFileShortcut = dlFileShortcutPersistence.remove(fileShortcutId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(dlFileShortcut);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return dlFileShortcutPersistence.remove(fileShortcutId);
 	}
 
 	/**
 	 * Deletes the document library file shortcut from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param dlFileShortcut the document library file shortcut
+	 * @return the document library file shortcut that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteDLFileShortcut(DLFileShortcut dlFileShortcut)
+	@Indexable(type = IndexableType.DELETE)
+	public DLFileShortcut deleteDLFileShortcut(DLFileShortcut dlFileShortcut)
 		throws SystemException {
-		dlFileShortcutPersistence.remove(dlFileShortcut);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(dlFileShortcut);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return dlFileShortcutPersistence.remove(dlFileShortcut);
 	}
 
 	/**
@@ -332,6 +295,7 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 	 * @return the document library file shortcut that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public DLFileShortcut updateDLFileShortcut(DLFileShortcut dlFileShortcut)
 		throws SystemException {
 		return updateDLFileShortcut(dlFileShortcut, true);
@@ -345,26 +309,12 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 	 * @return the document library file shortcut that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public DLFileShortcut updateDLFileShortcut(DLFileShortcut dlFileShortcut,
 		boolean merge) throws SystemException {
 		dlFileShortcut.setNew(false);
 
-		dlFileShortcut = dlFileShortcutPersistence.update(dlFileShortcut, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(dlFileShortcut);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return dlFileShortcut;
+		return dlFileShortcutPersistence.update(dlFileShortcut, merge);
 	}
 
 	/**

@@ -67,10 +67,12 @@ public interface JournalArticleLocalService extends PersistedModelLocalService {
 	* Deletes the journal article with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param id the primary key of the journal article
+	* @return the journal article that was removed
 	* @throws PortalException if a journal article with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteJournalArticle(long id)
+	public com.liferay.portlet.journal.model.JournalArticle deleteJournalArticle(
+		long id)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -78,9 +80,10 @@ public interface JournalArticleLocalService extends PersistedModelLocalService {
 	* Deletes the journal article from the database. Also notifies the appropriate model listeners.
 	*
 	* @param journalArticle the journal article
+	* @return the journal article that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteJournalArticle(
+	public com.liferay.portlet.journal.model.JournalArticle deleteJournalArticle(
 		com.liferay.portlet.journal.model.JournalArticle journalArticle)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

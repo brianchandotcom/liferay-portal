@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.GroupLocalService;
@@ -90,25 +89,11 @@ public abstract class WikiNodeLocalServiceBaseImpl
 	 * @return the wiki node that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public WikiNode addWikiNode(WikiNode wikiNode) throws SystemException {
 		wikiNode.setNew(true);
 
-		wikiNode = wikiNodePersistence.update(wikiNode, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(wikiNode);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return wikiNode;
+		return wikiNodePersistence.update(wikiNode, false);
 	}
 
 	/**
@@ -125,48 +110,26 @@ public abstract class WikiNodeLocalServiceBaseImpl
 	 * Deletes the wiki node with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param nodeId the primary key of the wiki node
+	 * @return the wiki node that was removed
 	 * @throws PortalException if a wiki node with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteWikiNode(long nodeId)
+	@Indexable(type = IndexableType.DELETE)
+	public WikiNode deleteWikiNode(long nodeId)
 		throws PortalException, SystemException {
-		WikiNode wikiNode = wikiNodePersistence.remove(nodeId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(wikiNode);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return wikiNodePersistence.remove(nodeId);
 	}
 
 	/**
 	 * Deletes the wiki node from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param wikiNode the wiki node
+	 * @return the wiki node that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteWikiNode(WikiNode wikiNode) throws SystemException {
-		wikiNodePersistence.remove(wikiNode);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(wikiNode);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public WikiNode deleteWikiNode(WikiNode wikiNode) throws SystemException {
+		return wikiNodePersistence.remove(wikiNode);
 	}
 
 	/**
@@ -304,6 +267,7 @@ public abstract class WikiNodeLocalServiceBaseImpl
 	 * @return the wiki node that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public WikiNode updateWikiNode(WikiNode wikiNode) throws SystemException {
 		return updateWikiNode(wikiNode, true);
 	}
@@ -316,26 +280,12 @@ public abstract class WikiNodeLocalServiceBaseImpl
 	 * @return the wiki node that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public WikiNode updateWikiNode(WikiNode wikiNode, boolean merge)
 		throws SystemException {
 		wikiNode.setNew(false);
 
-		wikiNode = wikiNodePersistence.update(wikiNode, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(wikiNode);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return wikiNode;
+		return wikiNodePersistence.update(wikiNode, merge);
 	}
 
 	/**

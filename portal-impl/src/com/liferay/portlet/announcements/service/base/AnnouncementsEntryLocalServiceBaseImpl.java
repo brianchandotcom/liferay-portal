@@ -27,9 +27,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.CompanyLocalService;
@@ -106,27 +105,12 @@ public abstract class AnnouncementsEntryLocalServiceBaseImpl
 	 * @return the announcements entry that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public AnnouncementsEntry addAnnouncementsEntry(
 		AnnouncementsEntry announcementsEntry) throws SystemException {
 		announcementsEntry.setNew(true);
 
-		announcementsEntry = announcementsEntryPersistence.update(announcementsEntry,
-				false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(announcementsEntry);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return announcementsEntry;
+		return announcementsEntryPersistence.update(announcementsEntry, false);
 	}
 
 	/**
@@ -143,49 +127,27 @@ public abstract class AnnouncementsEntryLocalServiceBaseImpl
 	 * Deletes the announcements entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param entryId the primary key of the announcements entry
+	 * @return the announcements entry that was removed
 	 * @throws PortalException if a announcements entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteAnnouncementsEntry(long entryId)
+	@Indexable(type = IndexableType.DELETE)
+	public AnnouncementsEntry deleteAnnouncementsEntry(long entryId)
 		throws PortalException, SystemException {
-		AnnouncementsEntry announcementsEntry = announcementsEntryPersistence.remove(entryId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(announcementsEntry);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return announcementsEntryPersistence.remove(entryId);
 	}
 
 	/**
 	 * Deletes the announcements entry from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param announcementsEntry the announcements entry
+	 * @return the announcements entry that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteAnnouncementsEntry(AnnouncementsEntry announcementsEntry)
-		throws SystemException {
-		announcementsEntryPersistence.remove(announcementsEntry);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(announcementsEntry);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public AnnouncementsEntry deleteAnnouncementsEntry(
+		AnnouncementsEntry announcementsEntry) throws SystemException {
+		return announcementsEntryPersistence.remove(announcementsEntry);
 	}
 
 	/**
@@ -311,6 +273,7 @@ public abstract class AnnouncementsEntryLocalServiceBaseImpl
 	 * @return the announcements entry that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public AnnouncementsEntry updateAnnouncementsEntry(
 		AnnouncementsEntry announcementsEntry) throws SystemException {
 		return updateAnnouncementsEntry(announcementsEntry, true);
@@ -324,28 +287,13 @@ public abstract class AnnouncementsEntryLocalServiceBaseImpl
 	 * @return the announcements entry that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public AnnouncementsEntry updateAnnouncementsEntry(
 		AnnouncementsEntry announcementsEntry, boolean merge)
 		throws SystemException {
 		announcementsEntry.setNew(false);
 
-		announcementsEntry = announcementsEntryPersistence.update(announcementsEntry,
-				merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(announcementsEntry);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return announcementsEntry;
+		return announcementsEntryPersistence.update(announcementsEntry, merge);
 	}
 
 	/**

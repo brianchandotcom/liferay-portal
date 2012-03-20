@@ -61,25 +61,28 @@ public class JournalStructureLocalServiceWrapper
 	* Deletes the journal structure with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param id the primary key of the journal structure
+	* @return the journal structure that was removed
 	* @throws PortalException if a journal structure with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteJournalStructure(long id)
+	public com.liferay.portlet.journal.model.JournalStructure deleteJournalStructure(
+		long id)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_journalStructureLocalService.deleteJournalStructure(id);
+		return _journalStructureLocalService.deleteJournalStructure(id);
 	}
 
 	/**
 	* Deletes the journal structure from the database. Also notifies the appropriate model listeners.
 	*
 	* @param journalStructure the journal structure
+	* @return the journal structure that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteJournalStructure(
+	public com.liferay.portlet.journal.model.JournalStructure deleteJournalStructure(
 		com.liferay.portlet.journal.model.JournalStructure journalStructure)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_journalStructureLocalService.deleteJournalStructure(journalStructure);
+		return _journalStructureLocalService.deleteJournalStructure(journalStructure);
 	}
 
 	/**

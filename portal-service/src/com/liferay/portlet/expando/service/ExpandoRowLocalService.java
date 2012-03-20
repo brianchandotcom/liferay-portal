@@ -67,10 +67,12 @@ public interface ExpandoRowLocalService extends PersistedModelLocalService {
 	* Deletes the expando row with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param rowId the primary key of the expando row
+	* @return the expando row that was removed
 	* @throws PortalException if a expando row with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteExpandoRow(long rowId)
+	public com.liferay.portlet.expando.model.ExpandoRow deleteExpandoRow(
+		long rowId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -78,9 +80,10 @@ public interface ExpandoRowLocalService extends PersistedModelLocalService {
 	* Deletes the expando row from the database. Also notifies the appropriate model listeners.
 	*
 	* @param expandoRow the expando row
+	* @return the expando row that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteExpandoRow(
+	public com.liferay.portlet.expando.model.ExpandoRow deleteExpandoRow(
 		com.liferay.portlet.expando.model.ExpandoRow expandoRow)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

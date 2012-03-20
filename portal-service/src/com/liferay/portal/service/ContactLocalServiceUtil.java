@@ -65,24 +65,27 @@ public class ContactLocalServiceUtil {
 	* Deletes the contact with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param contactId the primary key of the contact
+	* @return the contact that was removed
 	* @throws PortalException if a contact with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteContact(long contactId)
+	public static com.liferay.portal.model.Contact deleteContact(long contactId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteContact(contactId);
+		return getService().deleteContact(contactId);
 	}
 
 	/**
 	* Deletes the contact from the database. Also notifies the appropriate model listeners.
 	*
 	* @param contact the contact
+	* @return the contact that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteContact(com.liferay.portal.model.Contact contact)
+	public static com.liferay.portal.model.Contact deleteContact(
+		com.liferay.portal.model.Contact contact)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteContact(contact);
+		return getService().deleteContact(contact);
 	}
 
 	/**

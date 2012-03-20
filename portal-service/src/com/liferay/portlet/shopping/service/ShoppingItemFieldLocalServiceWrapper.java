@@ -61,25 +61,28 @@ public class ShoppingItemFieldLocalServiceWrapper
 	* Deletes the shopping item field with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param itemFieldId the primary key of the shopping item field
+	* @return the shopping item field that was removed
 	* @throws PortalException if a shopping item field with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteShoppingItemField(long itemFieldId)
+	public com.liferay.portlet.shopping.model.ShoppingItemField deleteShoppingItemField(
+		long itemFieldId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_shoppingItemFieldLocalService.deleteShoppingItemField(itemFieldId);
+		return _shoppingItemFieldLocalService.deleteShoppingItemField(itemFieldId);
 	}
 
 	/**
 	* Deletes the shopping item field from the database. Also notifies the appropriate model listeners.
 	*
 	* @param shoppingItemField the shopping item field
+	* @return the shopping item field that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteShoppingItemField(
+	public com.liferay.portlet.shopping.model.ShoppingItemField deleteShoppingItemField(
 		com.liferay.portlet.shopping.model.ShoppingItemField shoppingItemField)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_shoppingItemFieldLocalService.deleteShoppingItemField(shoppingItemField);
+		return _shoppingItemFieldLocalService.deleteShoppingItemField(shoppingItemField);
 	}
 
 	/**

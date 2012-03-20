@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Permission;
 import com.liferay.portal.model.PersistedModel;
@@ -254,26 +253,12 @@ public abstract class PermissionLocalServiceBaseImpl
 	 * @return the permission that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public Permission addPermission(Permission permission)
 		throws SystemException {
 		permission.setNew(true);
 
-		permission = permissionPersistence.update(permission, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(permission);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return permission;
+		return permissionPersistence.update(permission, false);
 	}
 
 	/**
@@ -290,49 +275,27 @@ public abstract class PermissionLocalServiceBaseImpl
 	 * Deletes the permission with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param permissionId the primary key of the permission
+	 * @return the permission that was removed
 	 * @throws PortalException if a permission with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deletePermission(long permissionId)
+	@Indexable(type = IndexableType.DELETE)
+	public Permission deletePermission(long permissionId)
 		throws PortalException, SystemException {
-		Permission permission = permissionPersistence.remove(permissionId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(permission);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return permissionPersistence.remove(permissionId);
 	}
 
 	/**
 	 * Deletes the permission from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param permission the permission
+	 * @return the permission that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deletePermission(Permission permission)
+	@Indexable(type = IndexableType.DELETE)
+	public Permission deletePermission(Permission permission)
 		throws SystemException {
-		permissionPersistence.remove(permission);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(permission);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return permissionPersistence.remove(permission);
 	}
 
 	/**
@@ -458,6 +421,7 @@ public abstract class PermissionLocalServiceBaseImpl
 	 * @return the permission that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public Permission updatePermission(Permission permission)
 		throws SystemException {
 		return updatePermission(permission, true);
@@ -471,26 +435,12 @@ public abstract class PermissionLocalServiceBaseImpl
 	 * @return the permission that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public Permission updatePermission(Permission permission, boolean merge)
 		throws SystemException {
 		permission.setNew(false);
 
-		permission = permissionPersistence.update(permission, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(permission);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return permission;
+		return permissionPersistence.update(permission, merge);
 	}
 
 	/**

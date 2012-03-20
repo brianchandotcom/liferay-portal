@@ -65,24 +65,27 @@ public class ShardLocalServiceUtil {
 	* Deletes the shard with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param shardId the primary key of the shard
+	* @return the shard that was removed
 	* @throws PortalException if a shard with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteShard(long shardId)
+	public static com.liferay.portal.model.Shard deleteShard(long shardId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteShard(shardId);
+		return getService().deleteShard(shardId);
 	}
 
 	/**
 	* Deletes the shard from the database. Also notifies the appropriate model listeners.
 	*
 	* @param shard the shard
+	* @return the shard that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteShard(com.liferay.portal.model.Shard shard)
+	public static com.liferay.portal.model.Shard deleteShard(
+		com.liferay.portal.model.Shard shard)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteShard(shard);
+		return getService().deleteShard(shard);
 	}
 
 	/**

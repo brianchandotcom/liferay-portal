@@ -65,26 +65,29 @@ public class TeamLocalServiceUtil {
 	* Deletes the team with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param teamId the primary key of the team
+	* @return the team that was removed
 	* @throws PortalException if a team with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteTeam(long teamId)
+	public static com.liferay.portal.model.Team deleteTeam(long teamId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteTeam(teamId);
+		return getService().deleteTeam(teamId);
 	}
 
 	/**
 	* Deletes the team from the database. Also notifies the appropriate model listeners.
 	*
 	* @param team the team
+	* @return the team that was removed
 	* @throws PortalException
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteTeam(com.liferay.portal.model.Team team)
+	public static com.liferay.portal.model.Team deleteTeam(
+		com.liferay.portal.model.Team team)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteTeam(team);
+		return getService().deleteTeam(team);
 	}
 
 	/**

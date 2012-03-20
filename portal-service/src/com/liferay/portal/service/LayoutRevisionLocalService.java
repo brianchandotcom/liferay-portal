@@ -66,10 +66,12 @@ public interface LayoutRevisionLocalService extends PersistedModelLocalService {
 	* Deletes the layout revision with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param layoutRevisionId the primary key of the layout revision
+	* @return the layout revision that was removed
 	* @throws PortalException if a layout revision with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteLayoutRevision(long layoutRevisionId)
+	public com.liferay.portal.model.LayoutRevision deleteLayoutRevision(
+		long layoutRevisionId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -77,10 +79,11 @@ public interface LayoutRevisionLocalService extends PersistedModelLocalService {
 	* Deletes the layout revision from the database. Also notifies the appropriate model listeners.
 	*
 	* @param layoutRevision the layout revision
+	* @return the layout revision that was removed
 	* @throws PortalException
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteLayoutRevision(
+	public com.liferay.portal.model.LayoutRevision deleteLayoutRevision(
 		com.liferay.portal.model.LayoutRevision layoutRevision)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

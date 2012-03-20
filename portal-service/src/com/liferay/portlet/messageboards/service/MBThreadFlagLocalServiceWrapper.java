@@ -60,25 +60,28 @@ public class MBThreadFlagLocalServiceWrapper implements MBThreadFlagLocalService
 	* Deletes the message boards thread flag with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param threadFlagId the primary key of the message boards thread flag
+	* @return the message boards thread flag that was removed
 	* @throws PortalException if a message boards thread flag with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteMBThreadFlag(long threadFlagId)
+	public com.liferay.portlet.messageboards.model.MBThreadFlag deleteMBThreadFlag(
+		long threadFlagId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_mbThreadFlagLocalService.deleteMBThreadFlag(threadFlagId);
+		return _mbThreadFlagLocalService.deleteMBThreadFlag(threadFlagId);
 	}
 
 	/**
 	* Deletes the message boards thread flag from the database. Also notifies the appropriate model listeners.
 	*
 	* @param mbThreadFlag the message boards thread flag
+	* @return the message boards thread flag that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteMBThreadFlag(
+	public com.liferay.portlet.messageboards.model.MBThreadFlag deleteMBThreadFlag(
 		com.liferay.portlet.messageboards.model.MBThreadFlag mbThreadFlag)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_mbThreadFlagLocalService.deleteMBThreadFlag(mbThreadFlag);
+		return _mbThreadFlagLocalService.deleteMBThreadFlag(mbThreadFlag);
 	}
 
 	/**

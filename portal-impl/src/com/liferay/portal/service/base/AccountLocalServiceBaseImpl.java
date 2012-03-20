@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Account;
 import com.liferay.portal.model.PersistedModel;
@@ -254,25 +253,11 @@ public abstract class AccountLocalServiceBaseImpl implements AccountLocalService
 	 * @return the account that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public Account addAccount(Account account) throws SystemException {
 		account.setNew(true);
 
-		account = accountPersistence.update(account, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(account);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return account;
+		return accountPersistence.update(account, false);
 	}
 
 	/**
@@ -289,48 +274,26 @@ public abstract class AccountLocalServiceBaseImpl implements AccountLocalService
 	 * Deletes the account with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param accountId the primary key of the account
+	 * @return the account that was removed
 	 * @throws PortalException if a account with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteAccount(long accountId)
+	@Indexable(type = IndexableType.DELETE)
+	public Account deleteAccount(long accountId)
 		throws PortalException, SystemException {
-		Account account = accountPersistence.remove(accountId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(account);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return accountPersistence.remove(accountId);
 	}
 
 	/**
 	 * Deletes the account from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param account the account
+	 * @return the account that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteAccount(Account account) throws SystemException {
-		accountPersistence.remove(account);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(account);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public Account deleteAccount(Account account) throws SystemException {
+		return accountPersistence.remove(account);
 	}
 
 	/**
@@ -454,6 +417,7 @@ public abstract class AccountLocalServiceBaseImpl implements AccountLocalService
 	 * @return the account that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public Account updateAccount(Account account) throws SystemException {
 		return updateAccount(account, true);
 	}
@@ -466,26 +430,12 @@ public abstract class AccountLocalServiceBaseImpl implements AccountLocalService
 	 * @return the account that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public Account updateAccount(Account account, boolean merge)
 		throws SystemException {
 		account.setNew(false);
 
-		account = accountPersistence.update(account, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(account);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return account;
+		return accountPersistence.update(account, merge);
 	}
 
 	/**

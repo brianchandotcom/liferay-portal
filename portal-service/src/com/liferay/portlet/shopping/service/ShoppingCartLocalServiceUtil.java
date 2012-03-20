@@ -66,25 +66,28 @@ public class ShoppingCartLocalServiceUtil {
 	* Deletes the shopping cart with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param cartId the primary key of the shopping cart
+	* @return the shopping cart that was removed
 	* @throws PortalException if a shopping cart with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteShoppingCart(long cartId)
+	public static com.liferay.portlet.shopping.model.ShoppingCart deleteShoppingCart(
+		long cartId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteShoppingCart(cartId);
+		return getService().deleteShoppingCart(cartId);
 	}
 
 	/**
 	* Deletes the shopping cart from the database. Also notifies the appropriate model listeners.
 	*
 	* @param shoppingCart the shopping cart
+	* @return the shopping cart that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteShoppingCart(
+	public static com.liferay.portlet.shopping.model.ShoppingCart deleteShoppingCart(
 		com.liferay.portlet.shopping.model.ShoppingCart shoppingCart)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteShoppingCart(shoppingCart);
+		return getService().deleteShoppingCart(shoppingCart);
 	}
 
 	/**

@@ -66,25 +66,28 @@ public class DLFileEntryTypeLocalServiceUtil {
 	* Deletes the document library file entry type with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param fileEntryTypeId the primary key of the document library file entry type
+	* @return the document library file entry type that was removed
 	* @throws PortalException if a document library file entry type with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteDLFileEntryType(long fileEntryTypeId)
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntryType deleteDLFileEntryType(
+		long fileEntryTypeId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteDLFileEntryType(fileEntryTypeId);
+		return getService().deleteDLFileEntryType(fileEntryTypeId);
 	}
 
 	/**
 	* Deletes the document library file entry type from the database. Also notifies the appropriate model listeners.
 	*
 	* @param dlFileEntryType the document library file entry type
+	* @return the document library file entry type that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteDLFileEntryType(
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntryType deleteDLFileEntryType(
 		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteDLFileEntryType(dlFileEntryType);
+		return getService().deleteDLFileEntryType(dlFileEntryType);
 	}
 
 	/**

@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.model.Portlet;
@@ -254,25 +253,11 @@ public abstract class PortletLocalServiceBaseImpl implements PortletLocalService
 	 * @return the portlet that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public Portlet addPortlet(Portlet portlet) throws SystemException {
 		portlet.setNew(true);
 
-		portlet = portletPersistence.update(portlet, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(portlet);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return portlet;
+		return portletPersistence.update(portlet, false);
 	}
 
 	/**
@@ -289,47 +274,26 @@ public abstract class PortletLocalServiceBaseImpl implements PortletLocalService
 	 * Deletes the portlet with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param id the primary key of the portlet
+	 * @return the portlet that was removed
 	 * @throws PortalException if a portlet with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deletePortlet(long id) throws PortalException, SystemException {
-		Portlet portlet = portletPersistence.remove(id);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(portlet);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public Portlet deletePortlet(long id)
+		throws PortalException, SystemException {
+		return portletPersistence.remove(id);
 	}
 
 	/**
 	 * Deletes the portlet from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param portlet the portlet
+	 * @return the portlet that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deletePortlet(Portlet portlet) throws SystemException {
-		portletPersistence.remove(portlet);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(portlet);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public Portlet deletePortlet(Portlet portlet) throws SystemException {
+		return portletPersistence.remove(portlet);
 	}
 
 	/**
@@ -452,6 +416,7 @@ public abstract class PortletLocalServiceBaseImpl implements PortletLocalService
 	 * @return the portlet that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public Portlet updatePortlet(Portlet portlet) throws SystemException {
 		return updatePortlet(portlet, true);
 	}
@@ -464,26 +429,12 @@ public abstract class PortletLocalServiceBaseImpl implements PortletLocalService
 	 * @return the portlet that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public Portlet updatePortlet(Portlet portlet, boolean merge)
 		throws SystemException {
 		portlet.setNew(false);
 
-		portlet = portletPersistence.update(portlet, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(portlet);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return portlet;
+		return portletPersistence.update(portlet, merge);
 	}
 
 	/**

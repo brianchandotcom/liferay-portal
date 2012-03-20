@@ -66,25 +66,28 @@ public class SocialActivityLocalServiceUtil {
 	* Deletes the social activity with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param activityId the primary key of the social activity
+	* @return the social activity that was removed
 	* @throws PortalException if a social activity with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteSocialActivity(long activityId)
+	public static com.liferay.portlet.social.model.SocialActivity deleteSocialActivity(
+		long activityId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteSocialActivity(activityId);
+		return getService().deleteSocialActivity(activityId);
 	}
 
 	/**
 	* Deletes the social activity from the database. Also notifies the appropriate model listeners.
 	*
 	* @param socialActivity the social activity
+	* @return the social activity that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteSocialActivity(
+	public static com.liferay.portlet.social.model.SocialActivity deleteSocialActivity(
 		com.liferay.portlet.social.model.SocialActivity socialActivity)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteSocialActivity(socialActivity);
+		return getService().deleteSocialActivity(socialActivity);
 	}
 
 	/**

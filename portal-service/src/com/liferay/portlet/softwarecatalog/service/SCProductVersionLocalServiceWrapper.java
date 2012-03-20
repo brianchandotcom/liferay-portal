@@ -61,25 +61,28 @@ public class SCProductVersionLocalServiceWrapper
 	* Deletes the s c product version with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param productVersionId the primary key of the s c product version
+	* @return the s c product version that was removed
 	* @throws PortalException if a s c product version with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteSCProductVersion(long productVersionId)
+	public com.liferay.portlet.softwarecatalog.model.SCProductVersion deleteSCProductVersion(
+		long productVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_scProductVersionLocalService.deleteSCProductVersion(productVersionId);
+		return _scProductVersionLocalService.deleteSCProductVersion(productVersionId);
 	}
 
 	/**
 	* Deletes the s c product version from the database. Also notifies the appropriate model listeners.
 	*
 	* @param scProductVersion the s c product version
+	* @return the s c product version that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteSCProductVersion(
+	public com.liferay.portlet.softwarecatalog.model.SCProductVersion deleteSCProductVersion(
 		com.liferay.portlet.softwarecatalog.model.SCProductVersion scProductVersion)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_scProductVersionLocalService.deleteSCProductVersion(scProductVersion);
+		return _scProductVersionLocalService.deleteSCProductVersion(scProductVersion);
 	}
 
 	/**

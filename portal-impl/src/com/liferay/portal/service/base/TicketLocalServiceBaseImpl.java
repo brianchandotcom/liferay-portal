@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.model.Ticket;
@@ -254,25 +253,11 @@ public abstract class TicketLocalServiceBaseImpl implements TicketLocalService,
 	 * @return the ticket that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public Ticket addTicket(Ticket ticket) throws SystemException {
 		ticket.setNew(true);
 
-		ticket = ticketPersistence.update(ticket, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(ticket);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return ticket;
+		return ticketPersistence.update(ticket, false);
 	}
 
 	/**
@@ -289,48 +274,26 @@ public abstract class TicketLocalServiceBaseImpl implements TicketLocalService,
 	 * Deletes the ticket with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param ticketId the primary key of the ticket
+	 * @return the ticket that was removed
 	 * @throws PortalException if a ticket with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteTicket(long ticketId)
+	@Indexable(type = IndexableType.DELETE)
+	public Ticket deleteTicket(long ticketId)
 		throws PortalException, SystemException {
-		Ticket ticket = ticketPersistence.remove(ticketId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(ticket);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return ticketPersistence.remove(ticketId);
 	}
 
 	/**
 	 * Deletes the ticket from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param ticket the ticket
+	 * @return the ticket that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteTicket(Ticket ticket) throws SystemException {
-		ticketPersistence.remove(ticket);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(ticket);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public Ticket deleteTicket(Ticket ticket) throws SystemException {
+		return ticketPersistence.remove(ticket);
 	}
 
 	/**
@@ -454,6 +417,7 @@ public abstract class TicketLocalServiceBaseImpl implements TicketLocalService,
 	 * @return the ticket that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public Ticket updateTicket(Ticket ticket) throws SystemException {
 		return updateTicket(ticket, true);
 	}
@@ -466,26 +430,12 @@ public abstract class TicketLocalServiceBaseImpl implements TicketLocalService,
 	 * @return the ticket that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public Ticket updateTicket(Ticket ticket, boolean merge)
 		throws SystemException {
 		ticket.setNew(false);
 
-		ticket = ticketPersistence.update(ticket, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(ticket);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return ticket;
+		return ticketPersistence.update(ticket, merge);
 	}
 
 	/**

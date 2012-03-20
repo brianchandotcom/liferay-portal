@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.LayoutBranch;
 import com.liferay.portal.model.PersistedModel;
@@ -254,26 +253,12 @@ public abstract class LayoutBranchLocalServiceBaseImpl
 	 * @return the layout branch that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public LayoutBranch addLayoutBranch(LayoutBranch layoutBranch)
 		throws SystemException {
 		layoutBranch.setNew(true);
 
-		layoutBranch = layoutBranchPersistence.update(layoutBranch, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(layoutBranch);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return layoutBranch;
+		return layoutBranchPersistence.update(layoutBranch, false);
 	}
 
 	/**
@@ -290,49 +275,27 @@ public abstract class LayoutBranchLocalServiceBaseImpl
 	 * Deletes the layout branch with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param LayoutBranchId the primary key of the layout branch
+	 * @return the layout branch that was removed
 	 * @throws PortalException if a layout branch with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteLayoutBranch(long LayoutBranchId)
+	@Indexable(type = IndexableType.DELETE)
+	public LayoutBranch deleteLayoutBranch(long LayoutBranchId)
 		throws PortalException, SystemException {
-		LayoutBranch layoutBranch = layoutBranchPersistence.remove(LayoutBranchId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(layoutBranch);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return layoutBranchPersistence.remove(LayoutBranchId);
 	}
 
 	/**
 	 * Deletes the layout branch from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param layoutBranch the layout branch
+	 * @return the layout branch that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteLayoutBranch(LayoutBranch layoutBranch)
+	@Indexable(type = IndexableType.DELETE)
+	public LayoutBranch deleteLayoutBranch(LayoutBranch layoutBranch)
 		throws SystemException {
-		layoutBranchPersistence.remove(layoutBranch);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(layoutBranch);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return layoutBranchPersistence.remove(layoutBranch);
 	}
 
 	/**
@@ -458,6 +421,7 @@ public abstract class LayoutBranchLocalServiceBaseImpl
 	 * @return the layout branch that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public LayoutBranch updateLayoutBranch(LayoutBranch layoutBranch)
 		throws SystemException {
 		return updateLayoutBranch(layoutBranch, true);
@@ -471,26 +435,12 @@ public abstract class LayoutBranchLocalServiceBaseImpl
 	 * @return the layout branch that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public LayoutBranch updateLayoutBranch(LayoutBranch layoutBranch,
 		boolean merge) throws SystemException {
 		layoutBranch.setNew(false);
 
-		layoutBranch = layoutBranchPersistence.update(layoutBranch, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(layoutBranch);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return layoutBranch;
+		return layoutBranchPersistence.update(layoutBranch, merge);
 	}
 
 	/**

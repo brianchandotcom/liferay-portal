@@ -66,10 +66,12 @@ public interface ResourceActionLocalService extends PersistedModelLocalService {
 	* Deletes the resource action with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param resourceActionId the primary key of the resource action
+	* @return the resource action that was removed
 	* @throws PortalException if a resource action with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteResourceAction(long resourceActionId)
+	public com.liferay.portal.model.ResourceAction deleteResourceAction(
+		long resourceActionId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -77,9 +79,10 @@ public interface ResourceActionLocalService extends PersistedModelLocalService {
 	* Deletes the resource action from the database. Also notifies the appropriate model listeners.
 	*
 	* @param resourceAction the resource action
+	* @return the resource action that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteResourceAction(
+	public com.liferay.portal.model.ResourceAction deleteResourceAction(
 		com.liferay.portal.model.ResourceAction resourceAction)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

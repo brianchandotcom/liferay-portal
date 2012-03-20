@@ -65,24 +65,27 @@ public class WebsiteLocalServiceUtil {
 	* Deletes the website with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param websiteId the primary key of the website
+	* @return the website that was removed
 	* @throws PortalException if a website with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteWebsite(long websiteId)
+	public static com.liferay.portal.model.Website deleteWebsite(long websiteId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteWebsite(websiteId);
+		return getService().deleteWebsite(websiteId);
 	}
 
 	/**
 	* Deletes the website from the database. Also notifies the appropriate model listeners.
 	*
 	* @param website the website
+	* @return the website that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteWebsite(com.liferay.portal.model.Website website)
+	public static com.liferay.portal.model.Website deleteWebsite(
+		com.liferay.portal.model.Website website)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteWebsite(website);
+		return getService().deleteWebsite(website);
 	}
 
 	/**

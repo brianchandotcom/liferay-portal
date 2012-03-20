@@ -67,10 +67,12 @@ public interface MembershipRequestLocalService
 	* Deletes the membership request with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param membershipRequestId the primary key of the membership request
+	* @return the membership request that was removed
 	* @throws PortalException if a membership request with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteMembershipRequest(long membershipRequestId)
+	public com.liferay.portal.model.MembershipRequest deleteMembershipRequest(
+		long membershipRequestId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -78,9 +80,10 @@ public interface MembershipRequestLocalService
 	* Deletes the membership request from the database. Also notifies the appropriate model listeners.
 	*
 	* @param membershipRequest the membership request
+	* @return the membership request that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteMembershipRequest(
+	public com.liferay.portal.model.MembershipRequest deleteMembershipRequest(
 		com.liferay.portal.model.MembershipRequest membershipRequest)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

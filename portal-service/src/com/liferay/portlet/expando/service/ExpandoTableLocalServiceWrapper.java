@@ -60,25 +60,28 @@ public class ExpandoTableLocalServiceWrapper implements ExpandoTableLocalService
 	* Deletes the expando table with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param tableId the primary key of the expando table
+	* @return the expando table that was removed
 	* @throws PortalException if a expando table with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteExpandoTable(long tableId)
+	public com.liferay.portlet.expando.model.ExpandoTable deleteExpandoTable(
+		long tableId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_expandoTableLocalService.deleteExpandoTable(tableId);
+		return _expandoTableLocalService.deleteExpandoTable(tableId);
 	}
 
 	/**
 	* Deletes the expando table from the database. Also notifies the appropriate model listeners.
 	*
 	* @param expandoTable the expando table
+	* @return the expando table that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteExpandoTable(
+	public com.liferay.portlet.expando.model.ExpandoTable deleteExpandoTable(
 		com.liferay.portlet.expando.model.ExpandoTable expandoTable)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_expandoTableLocalService.deleteExpandoTable(expandoTable);
+		return _expandoTableLocalService.deleteExpandoTable(expandoTable);
 	}
 
 	/**

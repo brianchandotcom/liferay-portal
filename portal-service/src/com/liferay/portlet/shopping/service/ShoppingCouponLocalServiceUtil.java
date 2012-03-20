@@ -66,25 +66,28 @@ public class ShoppingCouponLocalServiceUtil {
 	* Deletes the shopping coupon with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param couponId the primary key of the shopping coupon
+	* @return the shopping coupon that was removed
 	* @throws PortalException if a shopping coupon with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteShoppingCoupon(long couponId)
+	public static com.liferay.portlet.shopping.model.ShoppingCoupon deleteShoppingCoupon(
+		long couponId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteShoppingCoupon(couponId);
+		return getService().deleteShoppingCoupon(couponId);
 	}
 
 	/**
 	* Deletes the shopping coupon from the database. Also notifies the appropriate model listeners.
 	*
 	* @param shoppingCoupon the shopping coupon
+	* @return the shopping coupon that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteShoppingCoupon(
+	public static com.liferay.portlet.shopping.model.ShoppingCoupon deleteShoppingCoupon(
 		com.liferay.portlet.shopping.model.ShoppingCoupon shoppingCoupon)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteShoppingCoupon(shoppingCoupon);
+		return getService().deleteShoppingCoupon(shoppingCoupon);
 	}
 
 	/**

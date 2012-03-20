@@ -60,25 +60,28 @@ public class MBDiscussionLocalServiceWrapper implements MBDiscussionLocalService
 	* Deletes the message boards discussion with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param discussionId the primary key of the message boards discussion
+	* @return the message boards discussion that was removed
 	* @throws PortalException if a message boards discussion with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteMBDiscussion(long discussionId)
+	public com.liferay.portlet.messageboards.model.MBDiscussion deleteMBDiscussion(
+		long discussionId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_mbDiscussionLocalService.deleteMBDiscussion(discussionId);
+		return _mbDiscussionLocalService.deleteMBDiscussion(discussionId);
 	}
 
 	/**
 	* Deletes the message boards discussion from the database. Also notifies the appropriate model listeners.
 	*
 	* @param mbDiscussion the message boards discussion
+	* @return the message boards discussion that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteMBDiscussion(
+	public com.liferay.portlet.messageboards.model.MBDiscussion deleteMBDiscussion(
 		com.liferay.portlet.messageboards.model.MBDiscussion mbDiscussion)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_mbDiscussionLocalService.deleteMBDiscussion(mbDiscussion);
+		return _mbDiscussionLocalService.deleteMBDiscussion(mbDiscussion);
 	}
 
 	/**

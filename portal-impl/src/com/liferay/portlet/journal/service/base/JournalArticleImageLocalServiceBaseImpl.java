@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.ImageLocalService;
@@ -100,27 +99,12 @@ public abstract class JournalArticleImageLocalServiceBaseImpl
 	 * @return the journal article image that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public JournalArticleImage addJournalArticleImage(
 		JournalArticleImage journalArticleImage) throws SystemException {
 		journalArticleImage.setNew(true);
 
-		journalArticleImage = journalArticleImagePersistence.update(journalArticleImage,
-				false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(journalArticleImage);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return journalArticleImage;
+		return journalArticleImagePersistence.update(journalArticleImage, false);
 	}
 
 	/**
@@ -137,49 +121,27 @@ public abstract class JournalArticleImageLocalServiceBaseImpl
 	 * Deletes the journal article image with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param articleImageId the primary key of the journal article image
+	 * @return the journal article image that was removed
 	 * @throws PortalException if a journal article image with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteJournalArticleImage(long articleImageId)
+	@Indexable(type = IndexableType.DELETE)
+	public JournalArticleImage deleteJournalArticleImage(long articleImageId)
 		throws PortalException, SystemException {
-		JournalArticleImage journalArticleImage = journalArticleImagePersistence.remove(articleImageId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(journalArticleImage);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return journalArticleImagePersistence.remove(articleImageId);
 	}
 
 	/**
 	 * Deletes the journal article image from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param journalArticleImage the journal article image
+	 * @return the journal article image that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteJournalArticleImage(
+	@Indexable(type = IndexableType.DELETE)
+	public JournalArticleImage deleteJournalArticleImage(
 		JournalArticleImage journalArticleImage) throws SystemException {
-		journalArticleImagePersistence.remove(journalArticleImage);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(journalArticleImage);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return journalArticleImagePersistence.remove(journalArticleImage);
 	}
 
 	/**
@@ -305,6 +267,7 @@ public abstract class JournalArticleImageLocalServiceBaseImpl
 	 * @return the journal article image that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public JournalArticleImage updateJournalArticleImage(
 		JournalArticleImage journalArticleImage) throws SystemException {
 		return updateJournalArticleImage(journalArticleImage, true);
@@ -318,28 +281,13 @@ public abstract class JournalArticleImageLocalServiceBaseImpl
 	 * @return the journal article image that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public JournalArticleImage updateJournalArticleImage(
 		JournalArticleImage journalArticleImage, boolean merge)
 		throws SystemException {
 		journalArticleImage.setNew(false);
 
-		journalArticleImage = journalArticleImagePersistence.update(journalArticleImage,
-				merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(journalArticleImage);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return journalArticleImage;
+		return journalArticleImagePersistence.update(journalArticleImage, merge);
 	}
 
 	/**

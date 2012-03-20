@@ -27,9 +27,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.CompanyLocalService;
@@ -109,26 +108,12 @@ public abstract class ShoppingOrderLocalServiceBaseImpl
 	 * @return the shopping order that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public ShoppingOrder addShoppingOrder(ShoppingOrder shoppingOrder)
 		throws SystemException {
 		shoppingOrder.setNew(true);
 
-		shoppingOrder = shoppingOrderPersistence.update(shoppingOrder, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(shoppingOrder);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return shoppingOrder;
+		return shoppingOrderPersistence.update(shoppingOrder, false);
 	}
 
 	/**
@@ -145,49 +130,27 @@ public abstract class ShoppingOrderLocalServiceBaseImpl
 	 * Deletes the shopping order with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param orderId the primary key of the shopping order
+	 * @return the shopping order that was removed
 	 * @throws PortalException if a shopping order with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteShoppingOrder(long orderId)
+	@Indexable(type = IndexableType.DELETE)
+	public ShoppingOrder deleteShoppingOrder(long orderId)
 		throws PortalException, SystemException {
-		ShoppingOrder shoppingOrder = shoppingOrderPersistence.remove(orderId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(shoppingOrder);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return shoppingOrderPersistence.remove(orderId);
 	}
 
 	/**
 	 * Deletes the shopping order from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param shoppingOrder the shopping order
+	 * @return the shopping order that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteShoppingOrder(ShoppingOrder shoppingOrder)
+	@Indexable(type = IndexableType.DELETE)
+	public ShoppingOrder deleteShoppingOrder(ShoppingOrder shoppingOrder)
 		throws SystemException {
-		shoppingOrderPersistence.remove(shoppingOrder);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(shoppingOrder);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return shoppingOrderPersistence.remove(shoppingOrder);
 	}
 
 	/**
@@ -313,6 +276,7 @@ public abstract class ShoppingOrderLocalServiceBaseImpl
 	 * @return the shopping order that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public ShoppingOrder updateShoppingOrder(ShoppingOrder shoppingOrder)
 		throws SystemException {
 		return updateShoppingOrder(shoppingOrder, true);
@@ -326,26 +290,12 @@ public abstract class ShoppingOrderLocalServiceBaseImpl
 	 * @return the shopping order that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public ShoppingOrder updateShoppingOrder(ShoppingOrder shoppingOrder,
 		boolean merge) throws SystemException {
 		shoppingOrder.setNew(false);
 
-		shoppingOrder = shoppingOrderPersistence.update(shoppingOrder, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(shoppingOrder);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return shoppingOrder;
+		return shoppingOrderPersistence.update(shoppingOrder, merge);
 	}
 
 	/**

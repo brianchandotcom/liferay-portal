@@ -123,13 +123,13 @@ public class SubscriptionLocalServiceImpl
 	}
 
 	@Override
-	public void deleteSubscription(long subscriptionId)
+	public Subscription deleteSubscription(long subscriptionId)
 		throws PortalException, SystemException {
 
 		Subscription subscription = subscriptionPersistence.fetchByPrimaryKey(
 			subscriptionId);
 
-		deleteSubscription(subscription);
+		return deleteSubscription(subscription);
 	}
 
 	public void deleteSubscription(long userId, String className, long classPK)
@@ -145,7 +145,7 @@ public class SubscriptionLocalServiceImpl
 	}
 
 	@Override
-	public void deleteSubscription(Subscription subscription)
+	public Subscription deleteSubscription(Subscription subscription)
 		throws PortalException, SystemException {
 
 		// Subscription
@@ -166,6 +166,8 @@ public class SubscriptionLocalServiceImpl
 				subscription.getClassPK(),
 				SocialActivityConstants.TYPE_UNSUBSCRIBE, StringPool.BLANK, 0);
 		}
+
+		return subscription;
 	}
 
 	public void deleteSubscriptions(long userId)

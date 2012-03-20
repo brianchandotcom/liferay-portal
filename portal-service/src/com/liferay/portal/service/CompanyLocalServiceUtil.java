@@ -65,24 +65,27 @@ public class CompanyLocalServiceUtil {
 	* Deletes the company with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param companyId the primary key of the company
+	* @return the company that was removed
 	* @throws PortalException if a company with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteCompany(long companyId)
+	public static com.liferay.portal.model.Company deleteCompany(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteCompany(companyId);
+		return getService().deleteCompany(companyId);
 	}
 
 	/**
 	* Deletes the company from the database. Also notifies the appropriate model listeners.
 	*
 	* @param company the company
+	* @return the company that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteCompany(com.liferay.portal.model.Company company)
+	public static com.liferay.portal.model.Company deleteCompany(
+		com.liferay.portal.model.Company company)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteCompany(company);
+		return getService().deleteCompany(company);
 	}
 
 	/**

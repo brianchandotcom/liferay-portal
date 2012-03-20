@@ -67,10 +67,12 @@ public interface DLFolderLocalService extends PersistedModelLocalService {
 	* Deletes the document library folder with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param folderId the primary key of the document library folder
+	* @return the document library folder that was removed
 	* @throws PortalException if a document library folder with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteDLFolder(long folderId)
+	public com.liferay.portlet.documentlibrary.model.DLFolder deleteDLFolder(
+		long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -78,9 +80,10 @@ public interface DLFolderLocalService extends PersistedModelLocalService {
 	* Deletes the document library folder from the database. Also notifies the appropriate model listeners.
 	*
 	* @param dlFolder the document library folder
+	* @return the document library folder that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteDLFolder(
+	public com.liferay.portlet.documentlibrary.model.DLFolder deleteDLFolder(
 		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

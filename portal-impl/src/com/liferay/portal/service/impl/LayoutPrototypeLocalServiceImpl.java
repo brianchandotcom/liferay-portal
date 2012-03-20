@@ -87,7 +87,8 @@ public class LayoutPrototypeLocalServiceImpl
 	}
 
 	@Override
-	public void deleteLayoutPrototype(LayoutPrototype layoutPrototype)
+	public LayoutPrototype deleteLayoutPrototype(
+			LayoutPrototype layoutPrototype)
 		throws PortalException, SystemException {
 
 		// Group
@@ -110,16 +111,18 @@ public class LayoutPrototypeLocalServiceImpl
 		// Permission cache
 
 		PermissionCacheUtil.clearCache();
+
+		return layoutPrototype;
 	}
 
 	@Override
-	public void deleteLayoutPrototype(long layoutPrototypeId)
+	public LayoutPrototype deleteLayoutPrototype(long layoutPrototypeId)
 		throws PortalException, SystemException {
 
 		LayoutPrototype layoutPrototype =
 			layoutPrototypePersistence.findByPrimaryKey(layoutPrototypeId);
 
-		deleteLayoutPrototype(layoutPrototype);
+		return deleteLayoutPrototype(layoutPrototype);
 	}
 
 	public LayoutPrototype getLayoutPrototypeByUuid(String uuid)

@@ -56,26 +56,29 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	* Deletes the group with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param groupId the primary key of the group
+	* @return the group that was removed
 	* @throws PortalException if a group with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteGroup(long groupId)
+	public com.liferay.portal.model.Group deleteGroup(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_groupLocalService.deleteGroup(groupId);
+		return _groupLocalService.deleteGroup(groupId);
 	}
 
 	/**
 	* Deletes the group from the database. Also notifies the appropriate model listeners.
 	*
 	* @param group the group
+	* @return the group that was removed
 	* @throws PortalException
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteGroup(com.liferay.portal.model.Group group)
+	public com.liferay.portal.model.Group deleteGroup(
+		com.liferay.portal.model.Group group)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_groupLocalService.deleteGroup(group);
+		return _groupLocalService.deleteGroup(group);
 	}
 
 	/**

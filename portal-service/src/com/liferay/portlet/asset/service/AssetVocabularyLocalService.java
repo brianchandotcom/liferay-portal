@@ -67,10 +67,12 @@ public interface AssetVocabularyLocalService extends PersistedModelLocalService 
 	* Deletes the asset vocabulary with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param vocabularyId the primary key of the asset vocabulary
+	* @return the asset vocabulary that was removed
 	* @throws PortalException if a asset vocabulary with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteAssetVocabulary(long vocabularyId)
+	public com.liferay.portlet.asset.model.AssetVocabulary deleteAssetVocabulary(
+		long vocabularyId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -78,9 +80,10 @@ public interface AssetVocabularyLocalService extends PersistedModelLocalService 
 	* Deletes the asset vocabulary from the database. Also notifies the appropriate model listeners.
 	*
 	* @param assetVocabulary the asset vocabulary
+	* @return the asset vocabulary that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteAssetVocabulary(
+	public com.liferay.portlet.asset.model.AssetVocabulary deleteAssetVocabulary(
 		com.liferay.portlet.asset.model.AssetVocabulary assetVocabulary)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

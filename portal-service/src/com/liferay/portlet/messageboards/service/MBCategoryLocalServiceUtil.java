@@ -66,25 +66,28 @@ public class MBCategoryLocalServiceUtil {
 	* Deletes the message boards category with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param categoryId the primary key of the message boards category
+	* @return the message boards category that was removed
 	* @throws PortalException if a message boards category with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteMBCategory(long categoryId)
+	public static com.liferay.portlet.messageboards.model.MBCategory deleteMBCategory(
+		long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteMBCategory(categoryId);
+		return getService().deleteMBCategory(categoryId);
 	}
 
 	/**
 	* Deletes the message boards category from the database. Also notifies the appropriate model listeners.
 	*
 	* @param mbCategory the message boards category
+	* @return the message boards category that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteMBCategory(
+	public static com.liferay.portlet.messageboards.model.MBCategory deleteMBCategory(
 		com.liferay.portlet.messageboards.model.MBCategory mbCategory)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteMBCategory(mbCategory);
+		return getService().deleteMBCategory(mbCategory);
 	}
 
 	/**

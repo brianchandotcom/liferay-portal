@@ -66,25 +66,28 @@ public class AssetCategoryLocalServiceUtil {
 	* Deletes the asset category with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param categoryId the primary key of the asset category
+	* @return the asset category that was removed
 	* @throws PortalException if a asset category with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteAssetCategory(long categoryId)
+	public static com.liferay.portlet.asset.model.AssetCategory deleteAssetCategory(
+		long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteAssetCategory(categoryId);
+		return getService().deleteAssetCategory(categoryId);
 	}
 
 	/**
 	* Deletes the asset category from the database. Also notifies the appropriate model listeners.
 	*
 	* @param assetCategory the asset category
+	* @return the asset category that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteAssetCategory(
+	public static com.liferay.portlet.asset.model.AssetCategory deleteAssetCategory(
 		com.liferay.portlet.asset.model.AssetCategory assetCategory)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteAssetCategory(assetCategory);
+		return getService().deleteAssetCategory(assetCategory);
 	}
 
 	/**

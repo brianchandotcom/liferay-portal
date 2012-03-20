@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.model.Resource;
@@ -254,25 +253,11 @@ public abstract class ResourceLocalServiceBaseImpl
 	 * @return the resource that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public Resource addResource(Resource resource) throws SystemException {
 		resource.setNew(true);
 
-		resource = resourcePersistence.update(resource, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(resource);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return resource;
+		return resourcePersistence.update(resource, false);
 	}
 
 	/**
@@ -289,48 +274,26 @@ public abstract class ResourceLocalServiceBaseImpl
 	 * Deletes the resource with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param resourceId the primary key of the resource
+	 * @return the resource that was removed
 	 * @throws PortalException if a resource with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteResource(long resourceId)
+	@Indexable(type = IndexableType.DELETE)
+	public Resource deleteResource(long resourceId)
 		throws PortalException, SystemException {
-		Resource resource = resourcePersistence.remove(resourceId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(resource);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return resourcePersistence.remove(resourceId);
 	}
 
 	/**
 	 * Deletes the resource from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param resource the resource
+	 * @return the resource that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteResource(Resource resource) throws SystemException {
-		resourcePersistence.remove(resource);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(resource);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public Resource deleteResource(Resource resource) throws SystemException {
+		return resourcePersistence.remove(resource);
 	}
 
 	/**
@@ -454,6 +417,7 @@ public abstract class ResourceLocalServiceBaseImpl
 	 * @return the resource that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public Resource updateResource(Resource resource) throws SystemException {
 		return updateResource(resource, true);
 	}
@@ -466,26 +430,12 @@ public abstract class ResourceLocalServiceBaseImpl
 	 * @return the resource that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public Resource updateResource(Resource resource, boolean merge)
 		throws SystemException {
 		resource.setNew(false);
 
-		resource = resourcePersistence.update(resource, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(resource);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return resource;
+		return resourcePersistence.update(resource, merge);
 	}
 
 	/**

@@ -98,7 +98,7 @@ public class LayoutBranchLocalServiceImpl
 	}
 
 	@Override
-	public void deleteLayoutBranch(long layoutBranchId)
+	public LayoutBranch deleteLayoutBranch(long layoutBranchId)
 		throws PortalException, SystemException {
 
 		LayoutBranch layoutBranch = layoutBranchPersistence.findByPrimaryKey(
@@ -108,7 +108,7 @@ public class LayoutBranchLocalServiceImpl
 			layoutBranch.getLayoutSetBranchId(), layoutBranchId,
 			layoutBranch.getPlid());
 
-		layoutBranchLocalService.deleteLayoutBranch(layoutBranch);
+		return layoutBranchLocalService.deleteLayoutBranch(layoutBranch);
 	}
 
 	public void deleteLayoutSetBranchLayoutBranches(long layoutSetBranchId)

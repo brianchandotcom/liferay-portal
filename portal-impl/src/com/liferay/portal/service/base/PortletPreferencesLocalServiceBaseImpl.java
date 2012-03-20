@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.model.PortletPreferences;
@@ -254,27 +253,12 @@ public abstract class PortletPreferencesLocalServiceBaseImpl
 	 * @return the portlet preferences that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public PortletPreferences addPortletPreferences(
 		PortletPreferences portletPreferences) throws SystemException {
 		portletPreferences.setNew(true);
 
-		portletPreferences = portletPreferencesPersistence.update(portletPreferences,
-				false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(portletPreferences);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return portletPreferences;
+		return portletPreferencesPersistence.update(portletPreferences, false);
 	}
 
 	/**
@@ -292,49 +276,27 @@ public abstract class PortletPreferencesLocalServiceBaseImpl
 	 * Deletes the portlet preferences with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param portletPreferencesId the primary key of the portlet preferences
+	 * @return the portlet preferences that was removed
 	 * @throws PortalException if a portlet preferences with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deletePortletPreferences(long portletPreferencesId)
-		throws PortalException, SystemException {
-		PortletPreferences portletPreferences = portletPreferencesPersistence.remove(portletPreferencesId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(portletPreferences);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public PortletPreferences deletePortletPreferences(
+		long portletPreferencesId) throws PortalException, SystemException {
+		return portletPreferencesPersistence.remove(portletPreferencesId);
 	}
 
 	/**
 	 * Deletes the portlet preferences from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param portletPreferences the portlet preferences
+	 * @return the portlet preferences that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deletePortletPreferences(PortletPreferences portletPreferences)
-		throws SystemException {
-		portletPreferencesPersistence.remove(portletPreferences);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(portletPreferences);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public PortletPreferences deletePortletPreferences(
+		PortletPreferences portletPreferences) throws SystemException {
+		return portletPreferencesPersistence.remove(portletPreferences);
 	}
 
 	/**
@@ -460,6 +422,7 @@ public abstract class PortletPreferencesLocalServiceBaseImpl
 	 * @return the portlet preferences that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public PortletPreferences updatePortletPreferences(
 		PortletPreferences portletPreferences) throws SystemException {
 		return updatePortletPreferences(portletPreferences, true);
@@ -473,28 +436,13 @@ public abstract class PortletPreferencesLocalServiceBaseImpl
 	 * @return the portlet preferences that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public PortletPreferences updatePortletPreferences(
 		PortletPreferences portletPreferences, boolean merge)
 		throws SystemException {
 		portletPreferences.setNew(false);
 
-		portletPreferences = portletPreferencesPersistence.update(portletPreferences,
-				merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(portletPreferences);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return portletPreferences;
+		return portletPreferencesPersistence.update(portletPreferences, merge);
 	}
 
 	/**

@@ -66,25 +66,28 @@ public class DLFileEntryMetadataLocalServiceUtil {
 	* Deletes the document library file entry metadata with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param fileEntryMetadataId the primary key of the document library file entry metadata
+	* @return the document library file entry metadata that was removed
 	* @throws PortalException if a document library file entry metadata with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteDLFileEntryMetadata(long fileEntryMetadataId)
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata deleteDLFileEntryMetadata(
+		long fileEntryMetadataId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteDLFileEntryMetadata(fileEntryMetadataId);
+		return getService().deleteDLFileEntryMetadata(fileEntryMetadataId);
 	}
 
 	/**
 	* Deletes the document library file entry metadata from the database. Also notifies the appropriate model listeners.
 	*
 	* @param dlFileEntryMetadata the document library file entry metadata
+	* @return the document library file entry metadata that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteDLFileEntryMetadata(
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata deleteDLFileEntryMetadata(
 		com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata dlFileEntryMetadata)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteDLFileEntryMetadata(dlFileEntryMetadata);
+		return getService().deleteDLFileEntryMetadata(dlFileEntryMetadata);
 	}
 
 	/**

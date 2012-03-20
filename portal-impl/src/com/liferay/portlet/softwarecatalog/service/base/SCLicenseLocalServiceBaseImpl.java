@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
@@ -89,26 +88,12 @@ public abstract class SCLicenseLocalServiceBaseImpl
 	 * @return the s c license that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public SCLicense addSCLicense(SCLicense scLicense)
 		throws SystemException {
 		scLicense.setNew(true);
 
-		scLicense = scLicensePersistence.update(scLicense, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(scLicense);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return scLicense;
+		return scLicensePersistence.update(scLicense, false);
 	}
 
 	/**
@@ -125,48 +110,27 @@ public abstract class SCLicenseLocalServiceBaseImpl
 	 * Deletes the s c license with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param licenseId the primary key of the s c license
+	 * @return the s c license that was removed
 	 * @throws PortalException if a s c license with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteSCLicense(long licenseId)
+	@Indexable(type = IndexableType.DELETE)
+	public SCLicense deleteSCLicense(long licenseId)
 		throws PortalException, SystemException {
-		SCLicense scLicense = scLicensePersistence.remove(licenseId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(scLicense);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return scLicensePersistence.remove(licenseId);
 	}
 
 	/**
 	 * Deletes the s c license from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param scLicense the s c license
+	 * @return the s c license that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteSCLicense(SCLicense scLicense) throws SystemException {
-		scLicensePersistence.remove(scLicense);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(scLicense);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public SCLicense deleteSCLicense(SCLicense scLicense)
+		throws SystemException {
+		return scLicensePersistence.remove(scLicense);
 	}
 
 	/**
@@ -291,6 +255,7 @@ public abstract class SCLicenseLocalServiceBaseImpl
 	 * @return the s c license that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public SCLicense updateSCLicense(SCLicense scLicense)
 		throws SystemException {
 		return updateSCLicense(scLicense, true);
@@ -304,26 +269,12 @@ public abstract class SCLicenseLocalServiceBaseImpl
 	 * @return the s c license that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public SCLicense updateSCLicense(SCLicense scLicense, boolean merge)
 		throws SystemException {
 		scLicense.setNew(false);
 
-		scLicense = scLicensePersistence.update(scLicense, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(scLicense);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return scLicense;
+		return scLicensePersistence.update(scLicense, merge);
 	}
 
 	/**

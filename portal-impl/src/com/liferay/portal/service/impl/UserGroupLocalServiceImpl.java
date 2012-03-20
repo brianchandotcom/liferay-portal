@@ -251,13 +251,13 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteUserGroup(long userGroupId)
+	public UserGroup deleteUserGroup(long userGroupId)
 		throws PortalException, SystemException {
 
 		UserGroup userGroup = userGroupPersistence.findByPrimaryKey(
 			userGroupId);
 
-		deleteUserGroup(userGroup);
+		return deleteUserGroup(userGroup);
 	}
 
 	/**
@@ -269,7 +269,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteUserGroup(UserGroup userGroup)
+	public UserGroup deleteUserGroup(UserGroup userGroup)
 		throws PortalException, SystemException {
 
 		int count = userLocalService.getUserGroupUsersCount(
@@ -307,6 +307,8 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		// Permission cache
 
 		PermissionCacheUtil.clearCache();
+
+		return userGroup;
 	}
 
 	/**

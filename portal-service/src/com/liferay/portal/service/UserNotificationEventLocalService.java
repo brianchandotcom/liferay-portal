@@ -67,10 +67,12 @@ public interface UserNotificationEventLocalService
 	* Deletes the user notification event with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param userNotificationEventId the primary key of the user notification event
+	* @return the user notification event that was removed
 	* @throws PortalException if a user notification event with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteUserNotificationEvent(long userNotificationEventId)
+	public com.liferay.portal.model.UserNotificationEvent deleteUserNotificationEvent(
+		long userNotificationEventId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -78,9 +80,10 @@ public interface UserNotificationEventLocalService
 	* Deletes the user notification event from the database. Also notifies the appropriate model listeners.
 	*
 	* @param userNotificationEvent the user notification event
+	* @return the user notification event that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteUserNotificationEvent(
+	public com.liferay.portal.model.UserNotificationEvent deleteUserNotificationEvent(
 		com.liferay.portal.model.UserNotificationEvent userNotificationEvent)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

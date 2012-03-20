@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.GroupLocalService;
@@ -108,27 +107,12 @@ public abstract class AssetVocabularyLocalServiceBaseImpl
 	 * @return the asset vocabulary that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public AssetVocabulary addAssetVocabulary(AssetVocabulary assetVocabulary)
 		throws SystemException {
 		assetVocabulary.setNew(true);
 
-		assetVocabulary = assetVocabularyPersistence.update(assetVocabulary,
-				false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(assetVocabulary);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return assetVocabulary;
+		return assetVocabularyPersistence.update(assetVocabulary, false);
 	}
 
 	/**
@@ -145,49 +129,27 @@ public abstract class AssetVocabularyLocalServiceBaseImpl
 	 * Deletes the asset vocabulary with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param vocabularyId the primary key of the asset vocabulary
+	 * @return the asset vocabulary that was removed
 	 * @throws PortalException if a asset vocabulary with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteAssetVocabulary(long vocabularyId)
+	@Indexable(type = IndexableType.DELETE)
+	public AssetVocabulary deleteAssetVocabulary(long vocabularyId)
 		throws PortalException, SystemException {
-		AssetVocabulary assetVocabulary = assetVocabularyPersistence.remove(vocabularyId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(assetVocabulary);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return assetVocabularyPersistence.remove(vocabularyId);
 	}
 
 	/**
 	 * Deletes the asset vocabulary from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param assetVocabulary the asset vocabulary
+	 * @return the asset vocabulary that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteAssetVocabulary(AssetVocabulary assetVocabulary)
-		throws SystemException {
-		assetVocabularyPersistence.remove(assetVocabulary);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(assetVocabulary);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public AssetVocabulary deleteAssetVocabulary(
+		AssetVocabulary assetVocabulary) throws SystemException {
+		return assetVocabularyPersistence.remove(assetVocabulary);
 	}
 
 	/**
@@ -327,6 +289,7 @@ public abstract class AssetVocabularyLocalServiceBaseImpl
 	 * @return the asset vocabulary that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public AssetVocabulary updateAssetVocabulary(
 		AssetVocabulary assetVocabulary) throws SystemException {
 		return updateAssetVocabulary(assetVocabulary, true);
@@ -340,28 +303,13 @@ public abstract class AssetVocabularyLocalServiceBaseImpl
 	 * @return the asset vocabulary that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public AssetVocabulary updateAssetVocabulary(
 		AssetVocabulary assetVocabulary, boolean merge)
 		throws SystemException {
 		assetVocabulary.setNew(false);
 
-		assetVocabulary = assetVocabularyPersistence.update(assetVocabulary,
-				merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(assetVocabulary);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return assetVocabulary;
+		return assetVocabularyPersistence.update(assetVocabulary, merge);
 	}
 
 	/**

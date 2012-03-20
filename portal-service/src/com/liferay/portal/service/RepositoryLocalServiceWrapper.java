@@ -58,24 +58,28 @@ public class RepositoryLocalServiceWrapper implements RepositoryLocalService,
 	* Deletes the repository with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param repositoryId the primary key of the repository
+	* @return the repository that was removed
 	* @throws PortalException if a repository with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteRepository(long repositoryId)
+	public com.liferay.portal.model.Repository deleteRepository(
+		long repositoryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_repositoryLocalService.deleteRepository(repositoryId);
+		return _repositoryLocalService.deleteRepository(repositoryId);
 	}
 
 	/**
 	* Deletes the repository from the database. Also notifies the appropriate model listeners.
 	*
 	* @param repository the repository
+	* @return the repository that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteRepository(com.liferay.portal.model.Repository repository)
+	public com.liferay.portal.model.Repository deleteRepository(
+		com.liferay.portal.model.Repository repository)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_repositoryLocalService.deleteRepository(repository);
+		return _repositoryLocalService.deleteRepository(repository);
 	}
 
 	/**

@@ -67,10 +67,12 @@ public interface ResourceBlockPermissionLocalService
 	* Deletes the resource block permission with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param resourceBlockPermissionId the primary key of the resource block permission
+	* @return the resource block permission that was removed
 	* @throws PortalException if a resource block permission with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteResourceBlockPermission(long resourceBlockPermissionId)
+	public com.liferay.portal.model.ResourceBlockPermission deleteResourceBlockPermission(
+		long resourceBlockPermissionId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -78,9 +80,10 @@ public interface ResourceBlockPermissionLocalService
 	* Deletes the resource block permission from the database. Also notifies the appropriate model listeners.
 	*
 	* @param resourceBlockPermission the resource block permission
+	* @return the resource block permission that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteResourceBlockPermission(
+	public com.liferay.portal.model.ResourceBlockPermission deleteResourceBlockPermission(
 		com.liferay.portal.model.ResourceBlockPermission resourceBlockPermission)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

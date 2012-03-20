@@ -66,10 +66,12 @@ public interface EmailAddressLocalService extends PersistedModelLocalService {
 	* Deletes the email address with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param emailAddressId the primary key of the email address
+	* @return the email address that was removed
 	* @throws PortalException if a email address with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteEmailAddress(long emailAddressId)
+	public com.liferay.portal.model.EmailAddress deleteEmailAddress(
+		long emailAddressId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -77,9 +79,10 @@ public interface EmailAddressLocalService extends PersistedModelLocalService {
 	* Deletes the email address from the database. Also notifies the appropriate model listeners.
 	*
 	* @param emailAddress the email address
+	* @return the email address that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteEmailAddress(
+	public com.liferay.portal.model.EmailAddress deleteEmailAddress(
 		com.liferay.portal.model.EmailAddress emailAddress)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

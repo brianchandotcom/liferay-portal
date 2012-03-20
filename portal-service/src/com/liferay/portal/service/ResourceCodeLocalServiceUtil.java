@@ -66,25 +66,28 @@ public class ResourceCodeLocalServiceUtil {
 	* Deletes the resource code with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param codeId the primary key of the resource code
+	* @return the resource code that was removed
 	* @throws PortalException if a resource code with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteResourceCode(long codeId)
+	public static com.liferay.portal.model.ResourceCode deleteResourceCode(
+		long codeId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteResourceCode(codeId);
+		return getService().deleteResourceCode(codeId);
 	}
 
 	/**
 	* Deletes the resource code from the database. Also notifies the appropriate model listeners.
 	*
 	* @param resourceCode the resource code
+	* @return the resource code that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteResourceCode(
+	public static com.liferay.portal.model.ResourceCode deleteResourceCode(
 		com.liferay.portal.model.ResourceCode resourceCode)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteResourceCode(resourceCode);
+		return getService().deleteResourceCode(resourceCode);
 	}
 
 	/**

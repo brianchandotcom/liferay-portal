@@ -65,10 +65,11 @@ public interface LayoutSetLocalService extends PersistedModelLocalService {
 	* Deletes the layout set with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param layoutSetId the primary key of the layout set
+	* @return the layout set that was removed
 	* @throws PortalException if a layout set with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteLayoutSet(long layoutSetId)
+	public com.liferay.portal.model.LayoutSet deleteLayoutSet(long layoutSetId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -76,9 +77,11 @@ public interface LayoutSetLocalService extends PersistedModelLocalService {
 	* Deletes the layout set from the database. Also notifies the appropriate model listeners.
 	*
 	* @param layoutSet the layout set
+	* @return the layout set that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteLayoutSet(com.liferay.portal.model.LayoutSet layoutSet)
+	public com.liferay.portal.model.LayoutSet deleteLayoutSet(
+		com.liferay.portal.model.LayoutSet layoutSet)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

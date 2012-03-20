@@ -68,10 +68,12 @@ public interface SocialActivitySettingLocalService
 	* Deletes the social activity setting with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param activitySettingId the primary key of the social activity setting
+	* @return the social activity setting that was removed
 	* @throws PortalException if a social activity setting with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteSocialActivitySetting(long activitySettingId)
+	public com.liferay.portlet.social.model.SocialActivitySetting deleteSocialActivitySetting(
+		long activitySettingId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -79,9 +81,10 @@ public interface SocialActivitySettingLocalService
 	* Deletes the social activity setting from the database. Also notifies the appropriate model listeners.
 	*
 	* @param socialActivitySetting the social activity setting
+	* @return the social activity setting that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteSocialActivitySetting(
+	public com.liferay.portlet.social.model.SocialActivitySetting deleteSocialActivitySetting(
 		com.liferay.portlet.social.model.SocialActivitySetting socialActivitySetting)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

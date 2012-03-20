@@ -1657,12 +1657,12 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteUser(long userId)
+	public User deleteUser(long userId)
 		throws PortalException, SystemException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		deleteUser(user);
+		return deleteUser(user);
 	}
 
 	/**
@@ -1673,16 +1673,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteUser(User user) throws PortalException, SystemException {
+	public User deleteUser(User user) throws PortalException, SystemException {
 		if (!PropsValues.USERS_DELETE) {
 			throw new RequiredUserException();
 		}
-
-		// Indexer
-
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
-
-		indexer.delete(user);
 
 		// Browser tracker
 
@@ -1795,6 +1789,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
 			user.getCompanyId(), 0, User.class.getName(), user.getUserId());
+
+		return user;
 	}
 
 	/**

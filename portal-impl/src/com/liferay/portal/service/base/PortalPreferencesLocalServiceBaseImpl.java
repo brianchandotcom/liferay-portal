@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.model.PortalPreferences;
@@ -254,27 +253,12 @@ public abstract class PortalPreferencesLocalServiceBaseImpl
 	 * @return the portal preferences that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public PortalPreferences addPortalPreferences(
 		PortalPreferences portalPreferences) throws SystemException {
 		portalPreferences.setNew(true);
 
-		portalPreferences = portalPreferencesPersistence.update(portalPreferences,
-				false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(portalPreferences);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return portalPreferences;
+		return portalPreferencesPersistence.update(portalPreferences, false);
 	}
 
 	/**
@@ -291,49 +275,27 @@ public abstract class PortalPreferencesLocalServiceBaseImpl
 	 * Deletes the portal preferences with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param portalPreferencesId the primary key of the portal preferences
+	 * @return the portal preferences that was removed
 	 * @throws PortalException if a portal preferences with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deletePortalPreferences(long portalPreferencesId)
+	@Indexable(type = IndexableType.DELETE)
+	public PortalPreferences deletePortalPreferences(long portalPreferencesId)
 		throws PortalException, SystemException {
-		PortalPreferences portalPreferences = portalPreferencesPersistence.remove(portalPreferencesId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(portalPreferences);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return portalPreferencesPersistence.remove(portalPreferencesId);
 	}
 
 	/**
 	 * Deletes the portal preferences from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param portalPreferences the portal preferences
+	 * @return the portal preferences that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deletePortalPreferences(PortalPreferences portalPreferences)
-		throws SystemException {
-		portalPreferencesPersistence.remove(portalPreferences);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(portalPreferences);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public PortalPreferences deletePortalPreferences(
+		PortalPreferences portalPreferences) throws SystemException {
+		return portalPreferencesPersistence.remove(portalPreferences);
 	}
 
 	/**
@@ -459,6 +421,7 @@ public abstract class PortalPreferencesLocalServiceBaseImpl
 	 * @return the portal preferences that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public PortalPreferences updatePortalPreferences(
 		PortalPreferences portalPreferences) throws SystemException {
 		return updatePortalPreferences(portalPreferences, true);
@@ -472,28 +435,13 @@ public abstract class PortalPreferencesLocalServiceBaseImpl
 	 * @return the portal preferences that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public PortalPreferences updatePortalPreferences(
 		PortalPreferences portalPreferences, boolean merge)
 		throws SystemException {
 		portalPreferences.setNew(false);
 
-		portalPreferences = portalPreferencesPersistence.update(portalPreferences,
-				merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(portalPreferences);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return portalPreferences;
+		return portalPreferencesPersistence.update(portalPreferences, merge);
 	}
 
 	/**

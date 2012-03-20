@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
@@ -100,26 +99,12 @@ public abstract class JournalFeedLocalServiceBaseImpl
 	 * @return the journal feed that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public JournalFeed addJournalFeed(JournalFeed journalFeed)
 		throws SystemException {
 		journalFeed.setNew(true);
 
-		journalFeed = journalFeedPersistence.update(journalFeed, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(journalFeed);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return journalFeed;
+		return journalFeedPersistence.update(journalFeed, false);
 	}
 
 	/**
@@ -136,49 +121,27 @@ public abstract class JournalFeedLocalServiceBaseImpl
 	 * Deletes the journal feed with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param id the primary key of the journal feed
+	 * @return the journal feed that was removed
 	 * @throws PortalException if a journal feed with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteJournalFeed(long id)
+	@Indexable(type = IndexableType.DELETE)
+	public JournalFeed deleteJournalFeed(long id)
 		throws PortalException, SystemException {
-		JournalFeed journalFeed = journalFeedPersistence.remove(id);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(journalFeed);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return journalFeedPersistence.remove(id);
 	}
 
 	/**
 	 * Deletes the journal feed from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param journalFeed the journal feed
+	 * @return the journal feed that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteJournalFeed(JournalFeed journalFeed)
+	@Indexable(type = IndexableType.DELETE)
+	public JournalFeed deleteJournalFeed(JournalFeed journalFeed)
 		throws SystemException {
-		journalFeedPersistence.remove(journalFeed);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(journalFeed);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return journalFeedPersistence.remove(journalFeed);
 	}
 
 	/**
@@ -317,6 +280,7 @@ public abstract class JournalFeedLocalServiceBaseImpl
 	 * @return the journal feed that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public JournalFeed updateJournalFeed(JournalFeed journalFeed)
 		throws SystemException {
 		return updateJournalFeed(journalFeed, true);
@@ -330,26 +294,12 @@ public abstract class JournalFeedLocalServiceBaseImpl
 	 * @return the journal feed that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public JournalFeed updateJournalFeed(JournalFeed journalFeed, boolean merge)
 		throws SystemException {
 		journalFeed.setNew(false);
 
-		journalFeed = journalFeedPersistence.update(journalFeed, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(journalFeed);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return journalFeed;
+		return journalFeedPersistence.update(journalFeed, merge);
 	}
 
 	/**

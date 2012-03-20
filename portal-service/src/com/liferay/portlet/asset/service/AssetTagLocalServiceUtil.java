@@ -66,25 +66,28 @@ public class AssetTagLocalServiceUtil {
 	* Deletes the asset tag with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param tagId the primary key of the asset tag
+	* @return the asset tag that was removed
 	* @throws PortalException if a asset tag with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteAssetTag(long tagId)
+	public static com.liferay.portlet.asset.model.AssetTag deleteAssetTag(
+		long tagId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteAssetTag(tagId);
+		return getService().deleteAssetTag(tagId);
 	}
 
 	/**
 	* Deletes the asset tag from the database. Also notifies the appropriate model listeners.
 	*
 	* @param assetTag the asset tag
+	* @return the asset tag that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteAssetTag(
+	public static com.liferay.portlet.asset.model.AssetTag deleteAssetTag(
 		com.liferay.portlet.asset.model.AssetTag assetTag)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteAssetTag(assetTag);
+		return getService().deleteAssetTag(assetTag);
 	}
 
 	/**

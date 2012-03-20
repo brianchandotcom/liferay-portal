@@ -176,23 +176,23 @@ public class ResourceBlockLocalServiceImpl
 	}
 
 	@Override
-	public void deleteResourceBlock(long resourceBlockId)
+	public ResourceBlock deleteResourceBlock(long resourceBlockId)
 		throws PortalException, SystemException {
 
 		ResourceBlock resourceBlock = resourceBlockPersistence.findByPrimaryKey(
 			resourceBlockId);
 
-		deleteResourceBlock(resourceBlock);
+		return deleteResourceBlock(resourceBlock);
 	}
 
 	@Override
-	public void deleteResourceBlock(ResourceBlock resourceBlock)
+	public ResourceBlock deleteResourceBlock(ResourceBlock resourceBlock)
 		throws SystemException {
 
 		resourceBlockPermissionLocalService.deleteResourceBlockPermissions(
 			resourceBlock.getPrimaryKey());
 
-		resourceBlockPersistence.remove(resourceBlock);
+		return resourceBlockPersistence.remove(resourceBlock);
 	}
 
 	public long getActionId(String name, String actionId)

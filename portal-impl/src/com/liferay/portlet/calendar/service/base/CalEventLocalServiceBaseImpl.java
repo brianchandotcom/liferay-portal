@@ -27,9 +27,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.CompanyLocalService;
@@ -110,25 +109,11 @@ public abstract class CalEventLocalServiceBaseImpl
 	 * @return the cal event that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public CalEvent addCalEvent(CalEvent calEvent) throws SystemException {
 		calEvent.setNew(true);
 
-		calEvent = calEventPersistence.update(calEvent, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(calEvent);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return calEvent;
+		return calEventPersistence.update(calEvent, false);
 	}
 
 	/**
@@ -145,48 +130,26 @@ public abstract class CalEventLocalServiceBaseImpl
 	 * Deletes the cal event with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param eventId the primary key of the cal event
+	 * @return the cal event that was removed
 	 * @throws PortalException if a cal event with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteCalEvent(long eventId)
+	@Indexable(type = IndexableType.DELETE)
+	public CalEvent deleteCalEvent(long eventId)
 		throws PortalException, SystemException {
-		CalEvent calEvent = calEventPersistence.remove(eventId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(calEvent);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return calEventPersistence.remove(eventId);
 	}
 
 	/**
 	 * Deletes the cal event from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param calEvent the cal event
+	 * @return the cal event that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteCalEvent(CalEvent calEvent) throws SystemException {
-		calEventPersistence.remove(calEvent);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(calEvent);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public CalEvent deleteCalEvent(CalEvent calEvent) throws SystemException {
+		return calEventPersistence.remove(calEvent);
 	}
 
 	/**
@@ -324,6 +287,7 @@ public abstract class CalEventLocalServiceBaseImpl
 	 * @return the cal event that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public CalEvent updateCalEvent(CalEvent calEvent) throws SystemException {
 		return updateCalEvent(calEvent, true);
 	}
@@ -336,26 +300,12 @@ public abstract class CalEventLocalServiceBaseImpl
 	 * @return the cal event that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public CalEvent updateCalEvent(CalEvent calEvent, boolean merge)
 		throws SystemException {
 		calEvent.setNew(false);
 
-		calEvent = calEventPersistence.update(calEvent, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(calEvent);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return calEvent;
+		return calEventPersistence.update(calEvent, merge);
 	}
 
 	/**

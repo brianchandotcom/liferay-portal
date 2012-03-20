@@ -66,10 +66,12 @@ public interface ServiceComponentLocalService extends PersistedModelLocalService
 	* Deletes the service component with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param serviceComponentId the primary key of the service component
+	* @return the service component that was removed
 	* @throws PortalException if a service component with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteServiceComponent(long serviceComponentId)
+	public com.liferay.portal.model.ServiceComponent deleteServiceComponent(
+		long serviceComponentId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -77,9 +79,10 @@ public interface ServiceComponentLocalService extends PersistedModelLocalService
 	* Deletes the service component from the database. Also notifies the appropriate model listeners.
 	*
 	* @param serviceComponent the service component
+	* @return the service component that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteServiceComponent(
+	public com.liferay.portal.model.ServiceComponent deleteServiceComponent(
 		com.liferay.portal.model.ServiceComponent serviceComponent)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

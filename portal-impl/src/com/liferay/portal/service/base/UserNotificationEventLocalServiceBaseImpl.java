@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.model.UserNotificationEvent;
@@ -254,27 +253,13 @@ public abstract class UserNotificationEventLocalServiceBaseImpl
 	 * @return the user notification event that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public UserNotificationEvent addUserNotificationEvent(
 		UserNotificationEvent userNotificationEvent) throws SystemException {
 		userNotificationEvent.setNew(true);
 
-		userNotificationEvent = userNotificationEventPersistence.update(userNotificationEvent,
-				false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(userNotificationEvent);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return userNotificationEvent;
+		return userNotificationEventPersistence.update(userNotificationEvent,
+			false);
 	}
 
 	/**
@@ -292,49 +277,27 @@ public abstract class UserNotificationEventLocalServiceBaseImpl
 	 * Deletes the user notification event with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param userNotificationEventId the primary key of the user notification event
+	 * @return the user notification event that was removed
 	 * @throws PortalException if a user notification event with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteUserNotificationEvent(long userNotificationEventId)
-		throws PortalException, SystemException {
-		UserNotificationEvent userNotificationEvent = userNotificationEventPersistence.remove(userNotificationEventId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(userNotificationEvent);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public UserNotificationEvent deleteUserNotificationEvent(
+		long userNotificationEventId) throws PortalException, SystemException {
+		return userNotificationEventPersistence.remove(userNotificationEventId);
 	}
 
 	/**
 	 * Deletes the user notification event from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param userNotificationEvent the user notification event
+	 * @return the user notification event that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteUserNotificationEvent(
+	@Indexable(type = IndexableType.DELETE)
+	public UserNotificationEvent deleteUserNotificationEvent(
 		UserNotificationEvent userNotificationEvent) throws SystemException {
-		userNotificationEventPersistence.remove(userNotificationEvent);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(userNotificationEvent);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return userNotificationEventPersistence.remove(userNotificationEvent);
 	}
 
 	/**
@@ -460,6 +423,7 @@ public abstract class UserNotificationEventLocalServiceBaseImpl
 	 * @return the user notification event that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public UserNotificationEvent updateUserNotificationEvent(
 		UserNotificationEvent userNotificationEvent) throws SystemException {
 		return updateUserNotificationEvent(userNotificationEvent, true);
@@ -473,28 +437,14 @@ public abstract class UserNotificationEventLocalServiceBaseImpl
 	 * @return the user notification event that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public UserNotificationEvent updateUserNotificationEvent(
 		UserNotificationEvent userNotificationEvent, boolean merge)
 		throws SystemException {
 		userNotificationEvent.setNew(false);
 
-		userNotificationEvent = userNotificationEventPersistence.update(userNotificationEvent,
-				merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(userNotificationEvent);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return userNotificationEvent;
+		return userNotificationEventPersistence.update(userNotificationEvent,
+			merge);
 	}
 
 	/**

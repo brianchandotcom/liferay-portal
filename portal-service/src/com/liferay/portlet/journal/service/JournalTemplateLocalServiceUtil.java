@@ -66,25 +66,28 @@ public class JournalTemplateLocalServiceUtil {
 	* Deletes the journal template with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param id the primary key of the journal template
+	* @return the journal template that was removed
 	* @throws PortalException if a journal template with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteJournalTemplate(long id)
+	public static com.liferay.portlet.journal.model.JournalTemplate deleteJournalTemplate(
+		long id)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteJournalTemplate(id);
+		return getService().deleteJournalTemplate(id);
 	}
 
 	/**
 	* Deletes the journal template from the database. Also notifies the appropriate model listeners.
 	*
 	* @param journalTemplate the journal template
+	* @return the journal template that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteJournalTemplate(
+	public static com.liferay.portlet.journal.model.JournalTemplate deleteJournalTemplate(
 		com.liferay.portlet.journal.model.JournalTemplate journalTemplate)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteJournalTemplate(journalTemplate);
+		return getService().deleteJournalTemplate(journalTemplate);
 	}
 
 	/**

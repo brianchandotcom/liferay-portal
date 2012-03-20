@@ -103,7 +103,8 @@ public class LayoutSetPrototypeLocalServiceImpl
 	}
 
 	@Override
-	public void deleteLayoutSetPrototype(LayoutSetPrototype layoutSetPrototype)
+	public LayoutSetPrototype deleteLayoutSetPrototype(
+			LayoutSetPrototype layoutSetPrototype)
 		throws PortalException, SystemException {
 
 		List<LayoutSet> layoutSets =
@@ -135,17 +136,20 @@ public class LayoutSetPrototypeLocalServiceImpl
 		// Permission cache
 
 		PermissionCacheUtil.clearCache();
+
+		return layoutSetPrototype;
 	}
 
 	@Override
-	public void deleteLayoutSetPrototype(long layoutSetPrototypeId)
+	public LayoutSetPrototype deleteLayoutSetPrototype(
+			long layoutSetPrototypeId)
 		throws PortalException, SystemException {
 
 		LayoutSetPrototype layoutSetPrototype =
 			layoutSetPrototypePersistence.findByPrimaryKey(
 				layoutSetPrototypeId);
 
-		deleteLayoutSetPrototype(layoutSetPrototype);
+		return deleteLayoutSetPrototype(layoutSetPrototype);
 	}
 
 	public LayoutSetPrototype getLayoutSetPrototypeByUuid(String uuid)

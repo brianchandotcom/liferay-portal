@@ -61,25 +61,28 @@ public class SCProductEntryLocalServiceWrapper
 	* Deletes the s c product entry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param productEntryId the primary key of the s c product entry
+	* @return the s c product entry that was removed
 	* @throws PortalException if a s c product entry with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteSCProductEntry(long productEntryId)
+	public com.liferay.portlet.softwarecatalog.model.SCProductEntry deleteSCProductEntry(
+		long productEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_scProductEntryLocalService.deleteSCProductEntry(productEntryId);
+		return _scProductEntryLocalService.deleteSCProductEntry(productEntryId);
 	}
 
 	/**
 	* Deletes the s c product entry from the database. Also notifies the appropriate model listeners.
 	*
 	* @param scProductEntry the s c product entry
+	* @return the s c product entry that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteSCProductEntry(
+	public com.liferay.portlet.softwarecatalog.model.SCProductEntry deleteSCProductEntry(
 		com.liferay.portlet.softwarecatalog.model.SCProductEntry scProductEntry)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_scProductEntryLocalService.deleteSCProductEntry(scProductEntry);
+		return _scProductEntryLocalService.deleteSCProductEntry(scProductEntry);
 	}
 
 	/**

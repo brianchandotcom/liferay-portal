@@ -60,25 +60,28 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 	* Deletes the d d l record set with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param recordSetId the primary key of the d d l record set
+	* @return the d d l record set that was removed
 	* @throws PortalException if a d d l record set with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteDDLRecordSet(long recordSetId)
+	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet deleteDDLRecordSet(
+		long recordSetId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_ddlRecordSetLocalService.deleteDDLRecordSet(recordSetId);
+		return _ddlRecordSetLocalService.deleteDDLRecordSet(recordSetId);
 	}
 
 	/**
 	* Deletes the d d l record set from the database. Also notifies the appropriate model listeners.
 	*
 	* @param ddlRecordSet the d d l record set
+	* @return the d d l record set that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteDDLRecordSet(
+	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet deleteDDLRecordSet(
 		com.liferay.portlet.dynamicdatalists.model.DDLRecordSet ddlRecordSet)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_ddlRecordSetLocalService.deleteDDLRecordSet(ddlRecordSet);
+		return _ddlRecordSetLocalService.deleteDDLRecordSet(ddlRecordSet);
 	}
 
 	/**

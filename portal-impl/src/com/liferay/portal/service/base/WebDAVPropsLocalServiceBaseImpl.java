@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.model.WebDAVProps;
@@ -254,26 +253,12 @@ public abstract class WebDAVPropsLocalServiceBaseImpl
 	 * @return the web d a v props that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public WebDAVProps addWebDAVProps(WebDAVProps webDAVProps)
 		throws SystemException {
 		webDAVProps.setNew(true);
 
-		webDAVProps = webDAVPropsPersistence.update(webDAVProps, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(webDAVProps);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return webDAVProps;
+		return webDAVPropsPersistence.update(webDAVProps, false);
 	}
 
 	/**
@@ -290,49 +275,27 @@ public abstract class WebDAVPropsLocalServiceBaseImpl
 	 * Deletes the web d a v props with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param webDavPropsId the primary key of the web d a v props
+	 * @return the web d a v props that was removed
 	 * @throws PortalException if a web d a v props with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteWebDAVProps(long webDavPropsId)
+	@Indexable(type = IndexableType.DELETE)
+	public WebDAVProps deleteWebDAVProps(long webDavPropsId)
 		throws PortalException, SystemException {
-		WebDAVProps webDAVProps = webDAVPropsPersistence.remove(webDavPropsId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(webDAVProps);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return webDAVPropsPersistence.remove(webDavPropsId);
 	}
 
 	/**
 	 * Deletes the web d a v props from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param webDAVProps the web d a v props
+	 * @return the web d a v props that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteWebDAVProps(WebDAVProps webDAVProps)
+	@Indexable(type = IndexableType.DELETE)
+	public WebDAVProps deleteWebDAVProps(WebDAVProps webDAVProps)
 		throws SystemException {
-		webDAVPropsPersistence.remove(webDAVProps);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(webDAVProps);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return webDAVPropsPersistence.remove(webDAVProps);
 	}
 
 	/**
@@ -458,6 +421,7 @@ public abstract class WebDAVPropsLocalServiceBaseImpl
 	 * @return the web d a v props that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public WebDAVProps updateWebDAVProps(WebDAVProps webDAVProps)
 		throws SystemException {
 		return updateWebDAVProps(webDAVProps, true);
@@ -471,26 +435,12 @@ public abstract class WebDAVPropsLocalServiceBaseImpl
 	 * @return the web d a v props that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public WebDAVProps updateWebDAVProps(WebDAVProps webDAVProps, boolean merge)
 		throws SystemException {
 		webDAVProps.setNew(false);
 
-		webDAVProps = webDAVPropsPersistence.update(webDAVProps, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(webDAVProps);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return webDAVProps;
+		return webDAVPropsPersistence.update(webDAVProps, merge);
 	}
 
 	/**

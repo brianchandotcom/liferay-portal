@@ -66,25 +66,28 @@ public class JournalContentSearchLocalServiceUtil {
 	* Deletes the journal content search with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param contentSearchId the primary key of the journal content search
+	* @return the journal content search that was removed
 	* @throws PortalException if a journal content search with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteJournalContentSearch(long contentSearchId)
+	public static com.liferay.portlet.journal.model.JournalContentSearch deleteJournalContentSearch(
+		long contentSearchId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteJournalContentSearch(contentSearchId);
+		return getService().deleteJournalContentSearch(contentSearchId);
 	}
 
 	/**
 	* Deletes the journal content search from the database. Also notifies the appropriate model listeners.
 	*
 	* @param journalContentSearch the journal content search
+	* @return the journal content search that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteJournalContentSearch(
+	public static com.liferay.portlet.journal.model.JournalContentSearch deleteJournalContentSearch(
 		com.liferay.portlet.journal.model.JournalContentSearch journalContentSearch)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteJournalContentSearch(journalContentSearch);
+		return getService().deleteJournalContentSearch(journalContentSearch);
 	}
 
 	/**

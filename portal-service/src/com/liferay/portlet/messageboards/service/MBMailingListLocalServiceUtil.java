@@ -66,25 +66,28 @@ public class MBMailingListLocalServiceUtil {
 	* Deletes the message boards mailing list with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param mailingListId the primary key of the message boards mailing list
+	* @return the message boards mailing list that was removed
 	* @throws PortalException if a message boards mailing list with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteMBMailingList(long mailingListId)
+	public static com.liferay.portlet.messageboards.model.MBMailingList deleteMBMailingList(
+		long mailingListId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteMBMailingList(mailingListId);
+		return getService().deleteMBMailingList(mailingListId);
 	}
 
 	/**
 	* Deletes the message boards mailing list from the database. Also notifies the appropriate model listeners.
 	*
 	* @param mbMailingList the message boards mailing list
+	* @return the message boards mailing list that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteMBMailingList(
+	public static com.liferay.portlet.messageboards.model.MBMailingList deleteMBMailingList(
 		com.liferay.portlet.messageboards.model.MBMailingList mbMailingList)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteMBMailingList(mbMailingList);
+		return getService().deleteMBMailingList(mbMailingList);
 	}
 
 	/**

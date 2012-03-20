@@ -66,10 +66,11 @@ public interface WikiPageLocalService extends PersistedModelLocalService {
 	* Deletes the wiki page with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param pageId the primary key of the wiki page
+	* @return the wiki page that was removed
 	* @throws PortalException if a wiki page with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteWikiPage(long pageId)
+	public com.liferay.portlet.wiki.model.WikiPage deleteWikiPage(long pageId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -77,9 +78,11 @@ public interface WikiPageLocalService extends PersistedModelLocalService {
 	* Deletes the wiki page from the database. Also notifies the appropriate model listeners.
 	*
 	* @param wikiPage the wiki page
+	* @return the wiki page that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteWikiPage(com.liferay.portlet.wiki.model.WikiPage wikiPage)
+	public com.liferay.portlet.wiki.model.WikiPage deleteWikiPage(
+		com.liferay.portlet.wiki.model.WikiPage wikiPage)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

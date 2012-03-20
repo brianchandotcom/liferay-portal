@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.model.ResourceCode;
@@ -254,26 +253,12 @@ public abstract class ResourceCodeLocalServiceBaseImpl
 	 * @return the resource code that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public ResourceCode addResourceCode(ResourceCode resourceCode)
 		throws SystemException {
 		resourceCode.setNew(true);
 
-		resourceCode = resourceCodePersistence.update(resourceCode, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(resourceCode);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return resourceCode;
+		return resourceCodePersistence.update(resourceCode, false);
 	}
 
 	/**
@@ -290,49 +275,27 @@ public abstract class ResourceCodeLocalServiceBaseImpl
 	 * Deletes the resource code with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param codeId the primary key of the resource code
+	 * @return the resource code that was removed
 	 * @throws PortalException if a resource code with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteResourceCode(long codeId)
+	@Indexable(type = IndexableType.DELETE)
+	public ResourceCode deleteResourceCode(long codeId)
 		throws PortalException, SystemException {
-		ResourceCode resourceCode = resourceCodePersistence.remove(codeId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(resourceCode);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return resourceCodePersistence.remove(codeId);
 	}
 
 	/**
 	 * Deletes the resource code from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param resourceCode the resource code
+	 * @return the resource code that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteResourceCode(ResourceCode resourceCode)
+	@Indexable(type = IndexableType.DELETE)
+	public ResourceCode deleteResourceCode(ResourceCode resourceCode)
 		throws SystemException {
-		resourceCodePersistence.remove(resourceCode);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(resourceCode);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return resourceCodePersistence.remove(resourceCode);
 	}
 
 	/**
@@ -458,6 +421,7 @@ public abstract class ResourceCodeLocalServiceBaseImpl
 	 * @return the resource code that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public ResourceCode updateResourceCode(ResourceCode resourceCode)
 		throws SystemException {
 		return updateResourceCode(resourceCode, true);
@@ -471,26 +435,12 @@ public abstract class ResourceCodeLocalServiceBaseImpl
 	 * @return the resource code that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public ResourceCode updateResourceCode(ResourceCode resourceCode,
 		boolean merge) throws SystemException {
 		resourceCode.setNew(false);
 
-		resourceCode = resourceCodePersistence.update(resourceCode, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(resourceCode);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return resourceCode;
+		return resourceCodePersistence.update(resourceCode, merge);
 	}
 
 	/**

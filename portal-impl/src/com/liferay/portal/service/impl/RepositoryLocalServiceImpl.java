@@ -131,7 +131,7 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void deleteRepository(long repositoryId)
+	public Repository deleteRepository(long repositoryId)
 		throws PortalException, SystemException {
 
 		Repository repository = repositoryPersistence.fetchByPrimaryKey(
@@ -151,6 +151,8 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 
 			repositoryEntryPersistence.removeByRepositoryId(repositoryId);
 		}
+
+		return repository;
 	}
 
 	public LocalRepository getLocalRepositoryImpl(long repositoryId)

@@ -58,25 +58,28 @@ public class VirtualHostLocalServiceWrapper implements VirtualHostLocalService,
 	* Deletes the virtual host with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param virtualHostId the primary key of the virtual host
+	* @return the virtual host that was removed
 	* @throws PortalException if a virtual host with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteVirtualHost(long virtualHostId)
+	public com.liferay.portal.model.VirtualHost deleteVirtualHost(
+		long virtualHostId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_virtualHostLocalService.deleteVirtualHost(virtualHostId);
+		return _virtualHostLocalService.deleteVirtualHost(virtualHostId);
 	}
 
 	/**
 	* Deletes the virtual host from the database. Also notifies the appropriate model listeners.
 	*
 	* @param virtualHost the virtual host
+	* @return the virtual host that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteVirtualHost(
+	public com.liferay.portal.model.VirtualHost deleteVirtualHost(
 		com.liferay.portal.model.VirtualHost virtualHost)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_virtualHostLocalService.deleteVirtualHost(virtualHost);
+		return _virtualHostLocalService.deleteVirtualHost(virtualHost);
 	}
 
 	/**

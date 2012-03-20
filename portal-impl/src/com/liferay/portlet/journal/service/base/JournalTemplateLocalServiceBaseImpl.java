@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.GroupLocalService;
@@ -109,27 +108,12 @@ public abstract class JournalTemplateLocalServiceBaseImpl
 	 * @return the journal template that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public JournalTemplate addJournalTemplate(JournalTemplate journalTemplate)
 		throws SystemException {
 		journalTemplate.setNew(true);
 
-		journalTemplate = journalTemplatePersistence.update(journalTemplate,
-				false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(journalTemplate);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return journalTemplate;
+		return journalTemplatePersistence.update(journalTemplate, false);
 	}
 
 	/**
@@ -146,49 +130,27 @@ public abstract class JournalTemplateLocalServiceBaseImpl
 	 * Deletes the journal template with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param id the primary key of the journal template
+	 * @return the journal template that was removed
 	 * @throws PortalException if a journal template with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteJournalTemplate(long id)
+	@Indexable(type = IndexableType.DELETE)
+	public JournalTemplate deleteJournalTemplate(long id)
 		throws PortalException, SystemException {
-		JournalTemplate journalTemplate = journalTemplatePersistence.remove(id);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(journalTemplate);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return journalTemplatePersistence.remove(id);
 	}
 
 	/**
 	 * Deletes the journal template from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param journalTemplate the journal template
+	 * @return the journal template that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteJournalTemplate(JournalTemplate journalTemplate)
-		throws SystemException {
-		journalTemplatePersistence.remove(journalTemplate);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(journalTemplate);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public JournalTemplate deleteJournalTemplate(
+		JournalTemplate journalTemplate) throws SystemException {
+		return journalTemplatePersistence.remove(journalTemplate);
 	}
 
 	/**
@@ -328,6 +290,7 @@ public abstract class JournalTemplateLocalServiceBaseImpl
 	 * @return the journal template that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public JournalTemplate updateJournalTemplate(
 		JournalTemplate journalTemplate) throws SystemException {
 		return updateJournalTemplate(journalTemplate, true);
@@ -341,28 +304,13 @@ public abstract class JournalTemplateLocalServiceBaseImpl
 	 * @return the journal template that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public JournalTemplate updateJournalTemplate(
 		JournalTemplate journalTemplate, boolean merge)
 		throws SystemException {
 		journalTemplate.setNew(false);
 
-		journalTemplate = journalTemplatePersistence.update(journalTemplate,
-				merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(journalTemplate);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return journalTemplate;
+		return journalTemplatePersistence.update(journalTemplate, merge);
 	}
 
 	/**

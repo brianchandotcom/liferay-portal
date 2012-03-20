@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.LockLocalService;
@@ -113,25 +112,11 @@ public abstract class MBThreadLocalServiceBaseImpl
 	 * @return the message boards thread that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public MBThread addMBThread(MBThread mbThread) throws SystemException {
 		mbThread.setNew(true);
 
-		mbThread = mbThreadPersistence.update(mbThread, false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(mbThread);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return mbThread;
+		return mbThreadPersistence.update(mbThread, false);
 	}
 
 	/**
@@ -148,48 +133,26 @@ public abstract class MBThreadLocalServiceBaseImpl
 	 * Deletes the message boards thread with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param threadId the primary key of the message boards thread
+	 * @return the message boards thread that was removed
 	 * @throws PortalException if a message boards thread with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteMBThread(long threadId)
+	@Indexable(type = IndexableType.DELETE)
+	public MBThread deleteMBThread(long threadId)
 		throws PortalException, SystemException {
-		MBThread mbThread = mbThreadPersistence.remove(threadId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(mbThread);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return mbThreadPersistence.remove(threadId);
 	}
 
 	/**
 	 * Deletes the message boards thread from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param mbThread the message boards thread
+	 * @return the message boards thread that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteMBThread(MBThread mbThread) throws SystemException {
-		mbThreadPersistence.remove(mbThread);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(mbThread);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public MBThread deleteMBThread(MBThread mbThread) throws SystemException {
+		return mbThreadPersistence.remove(mbThread);
 	}
 
 	/**
@@ -313,6 +276,7 @@ public abstract class MBThreadLocalServiceBaseImpl
 	 * @return the message boards thread that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public MBThread updateMBThread(MBThread mbThread) throws SystemException {
 		return updateMBThread(mbThread, true);
 	}
@@ -325,26 +289,12 @@ public abstract class MBThreadLocalServiceBaseImpl
 	 * @return the message boards thread that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public MBThread updateMBThread(MBThread mbThread, boolean merge)
 		throws SystemException {
 		mbThread.setNew(false);
 
-		mbThread = mbThreadPersistence.update(mbThread, merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(mbThread);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return mbThread;
+		return mbThreadPersistence.update(mbThread, merge);
 	}
 
 	/**

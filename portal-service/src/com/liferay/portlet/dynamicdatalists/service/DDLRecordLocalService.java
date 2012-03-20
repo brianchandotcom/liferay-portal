@@ -67,10 +67,12 @@ public interface DDLRecordLocalService extends PersistedModelLocalService {
 	* Deletes the d d l record with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param recordId the primary key of the d d l record
+	* @return the d d l record that was removed
 	* @throws PortalException if a d d l record with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteDDLRecord(long recordId)
+	public com.liferay.portlet.dynamicdatalists.model.DDLRecord deleteDDLRecord(
+		long recordId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -78,9 +80,10 @@ public interface DDLRecordLocalService extends PersistedModelLocalService {
 	* Deletes the d d l record from the database. Also notifies the appropriate model listeners.
 	*
 	* @param ddlRecord the d d l record
+	* @return the d d l record that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteDDLRecord(
+	public com.liferay.portlet.dynamicdatalists.model.DDLRecord deleteDDLRecord(
 		com.liferay.portlet.dynamicdatalists.model.DDLRecord ddlRecord)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

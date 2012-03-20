@@ -261,13 +261,14 @@ public class LayoutSetBranchLocalServiceImpl
 	}
 
 	@Override
-	public void deleteLayoutSetBranch(LayoutSetBranch layoutSetBranch)
+	public LayoutSetBranch deleteLayoutSetBranch(
+			LayoutSetBranch layoutSetBranch)
 		throws PortalException, SystemException {
 
-		deleteLayoutSetBranch(layoutSetBranch, false);
+		return deleteLayoutSetBranch(layoutSetBranch, false);
 	}
 
-	public void deleteLayoutSetBranch(
+	public LayoutSetBranch deleteLayoutSetBranch(
 			LayoutSetBranch layoutSetBranch, boolean includeMaster)
 		throws PortalException, SystemException {
 
@@ -295,16 +296,18 @@ public class LayoutSetBranchLocalServiceImpl
 
 		layoutRevisionLocalService.deleteLayoutSetBranchLayoutRevisions(
 			layoutSetBranch.getLayoutSetBranchId());
+
+		return layoutSetBranch;
 	}
 
 	@Override
-	public void deleteLayoutSetBranch(long layoutSetBranchId)
+	public LayoutSetBranch deleteLayoutSetBranch(long layoutSetBranchId)
 		throws PortalException, SystemException {
 
 		LayoutSetBranch layoutSetBranch =
 			layoutSetBranchPersistence.findByPrimaryKey(layoutSetBranchId);
 
-		deleteLayoutSetBranch(layoutSetBranch);
+		return deleteLayoutSetBranch(layoutSetBranch, false);
 	}
 
 	public void deleteLayoutSetBranches(long groupId, boolean privateLayout)

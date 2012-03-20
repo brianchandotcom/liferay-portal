@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.PersistedModel;
@@ -254,27 +253,12 @@ public abstract class LayoutSetPrototypeLocalServiceBaseImpl
 	 * @return the layout set prototype that was added
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public LayoutSetPrototype addLayoutSetPrototype(
 		LayoutSetPrototype layoutSetPrototype) throws SystemException {
 		layoutSetPrototype.setNew(true);
 
-		layoutSetPrototype = layoutSetPrototypePersistence.update(layoutSetPrototype,
-				false);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(layoutSetPrototype);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return layoutSetPrototype;
+		return layoutSetPrototypePersistence.update(layoutSetPrototype, false);
 	}
 
 	/**
@@ -292,50 +276,29 @@ public abstract class LayoutSetPrototypeLocalServiceBaseImpl
 	 * Deletes the layout set prototype with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param layoutSetPrototypeId the primary key of the layout set prototype
+	 * @return the layout set prototype that was removed
 	 * @throws PortalException if a layout set prototype with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteLayoutSetPrototype(long layoutSetPrototypeId)
-		throws PortalException, SystemException {
-		LayoutSetPrototype layoutSetPrototype = layoutSetPrototypePersistence.remove(layoutSetPrototypeId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(layoutSetPrototype);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+	@Indexable(type = IndexableType.DELETE)
+	public LayoutSetPrototype deleteLayoutSetPrototype(
+		long layoutSetPrototypeId) throws PortalException, SystemException {
+		return layoutSetPrototypePersistence.remove(layoutSetPrototypeId);
 	}
 
 	/**
 	 * Deletes the layout set prototype from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param layoutSetPrototype the layout set prototype
+	 * @return the layout set prototype that was removed
 	 * @throws PortalException
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteLayoutSetPrototype(LayoutSetPrototype layoutSetPrototype)
+	@Indexable(type = IndexableType.DELETE)
+	public LayoutSetPrototype deleteLayoutSetPrototype(
+		LayoutSetPrototype layoutSetPrototype)
 		throws PortalException, SystemException {
-		layoutSetPrototypePersistence.remove(layoutSetPrototype);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.delete(layoutSetPrototype);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
+		return layoutSetPrototypePersistence.remove(layoutSetPrototype);
 	}
 
 	/**
@@ -461,6 +424,7 @@ public abstract class LayoutSetPrototypeLocalServiceBaseImpl
 	 * @return the layout set prototype that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public LayoutSetPrototype updateLayoutSetPrototype(
 		LayoutSetPrototype layoutSetPrototype) throws SystemException {
 		return updateLayoutSetPrototype(layoutSetPrototype, true);
@@ -474,28 +438,13 @@ public abstract class LayoutSetPrototypeLocalServiceBaseImpl
 	 * @return the layout set prototype that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public LayoutSetPrototype updateLayoutSetPrototype(
 		LayoutSetPrototype layoutSetPrototype, boolean merge)
 		throws SystemException {
 		layoutSetPrototype.setNew(false);
 
-		layoutSetPrototype = layoutSetPrototypePersistence.update(layoutSetPrototype,
-				merge);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
-
-		if (indexer != null) {
-			try {
-				indexer.reindex(layoutSetPrototype);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(se, se);
-				}
-			}
-		}
-
-		return layoutSetPrototype;
+		return layoutSetPrototypePersistence.update(layoutSetPrototype, merge);
 	}
 
 	/**

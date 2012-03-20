@@ -262,6 +262,7 @@ double version = ParamUtil.getDouble(request, "version");
 							cur="<%= articleDisplay.getCurrentPage() %>"
 							curParam='<%= "page" %>'
 							delta="<%= 1 %>"
+							id="articleDisplayPages"
 							maxPages="<%= 25 %>"
 							total="<%= articleDisplay.getNumberOfPages() %>"
 							type="article"

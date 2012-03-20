@@ -63,5 +63,5 @@ String baseTypeCss = TextFormatter.format(baseType.toLowerCase(), TextFormatter.
 
 String fieldCss = AUIUtil.buildCss(AUIUtil.FIELD_PREFIX, baseTypeCss, inlineField, disabled, choiceField, first, last, cssClass);
 String inputCss = AUIUtil.buildCss(AUIUtil.INPUT_PREFIX, baseTypeCss, false, false, choiceField, false, false, inputCssClass);
-String labelTag = AUIUtil.buildLabel(inlineLabel, showForLabel, forLabel);
+String labelTag = AUIUtil.buildLabel(inlineLabel, showForLabel, forLabel, choiceField);
 %>

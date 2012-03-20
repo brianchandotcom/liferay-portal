@@ -33,7 +33,9 @@ public class AUIUtil {
 
 	public static final String INPUT_PREFIX = "aui-field-input";
 
-	public static final String LABEL_PREFIX = "aui-field-label";
+	public static final String LABEL_CHOICE_PREFIX = "aui-choice-label";
+
+	public static final String LABEL_FIELD_PREFIX = "aui-field-label";
 
 	public static String buildCss(
 		String prefix, String baseTypeCss, boolean inlineField,
@@ -126,15 +128,20 @@ public class AUIUtil {
 		return sb.toString();
 	}
 
-	public static String buildLabel(
-		String inlineLabel, boolean showForLabel, String forLabel) {
+	public static String buildLabel(String inlineLabel, boolean showForLabel,
+		String forLabel, boolean choiceField) {
 
 		StringBundler sb = new StringBundler(4);
 
-		sb.append("class=\"" + LABEL_PREFIX);
+		if (choiceField) {
+			sb.append("class=\"" + LABEL_CHOICE_PREFIX);
+		}
+		else {
+			sb.append("class=\"" + LABEL_FIELD_PREFIX);
 
-		if (Validator.isNotNull(inlineLabel)) {
-			sb.append("-inline-label");
+			if (Validator.isNotNull(inlineLabel)) {
+				sb.append("-inline-label");
+			}
 		}
 
 		sb.append("\"");

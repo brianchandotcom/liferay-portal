@@ -315,13 +315,13 @@ public class OrganizationLocalServiceImpl
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteOrganization(long organizationId)
+	public Organization deleteOrganization(long organizationId)
 		throws PortalException, SystemException {
 
 		Organization organization = organizationPersistence.findByPrimaryKey(
 			organizationId);
 
-		deleteOrganization(organization);
+		return deleteOrganization(organization);
 	}
 
 	/**
@@ -334,7 +334,7 @@ public class OrganizationLocalServiceImpl
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteOrganization(Organization organization)
+	public Organization deleteOrganization(Organization organization)
 		throws PortalException, SystemException {
 
 		if ((userLocalService.getOrganizationUsersCount(
@@ -421,6 +421,8 @@ public class OrganizationLocalServiceImpl
 			Organization.class);
 
 		indexer.delete(organization);
+
+		return organization;
 	}
 
 	/**

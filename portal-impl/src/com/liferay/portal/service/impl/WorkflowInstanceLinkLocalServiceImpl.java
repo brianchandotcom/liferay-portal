@@ -89,7 +89,7 @@ public class WorkflowInstanceLinkLocalServiceImpl
 	}
 
 	@Override
-	public void deleteWorkflowInstanceLink(
+	public WorkflowInstanceLink deleteWorkflowInstanceLink(
 			WorkflowInstanceLink workflowInstanceLink)
 		throws PortalException, SystemException {
 
@@ -103,6 +103,8 @@ public class WorkflowInstanceLinkLocalServiceImpl
 		WorkflowInstanceManagerUtil.deleteWorkflowInstance(
 			workflowInstanceLink.getCompanyId(),
 			workflowInstanceLink.getWorkflowInstanceId());
+
+		return workflowInstanceLink;
 	}
 
 	public void deleteWorkflowInstanceLinks(

@@ -77,12 +77,14 @@ public class UserGroupRoleLocalServiceImpl
 	}
 
 	@Override
-	public void deleteUserGroupRole(UserGroupRole userGroupRole)
+	public UserGroupRole deleteUserGroupRole(UserGroupRole userGroupRole)
 		throws SystemException {
 
 		userGroupRolePersistence.remove(userGroupRole);
 
 		PermissionCacheUtil.clearCache();
+
+		return userGroupRole;
 	}
 
 	public void deleteUserGroupRoles(long userId, long groupId, long[] roleIds)

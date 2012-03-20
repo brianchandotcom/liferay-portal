@@ -549,7 +549,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteGroup(Group group)
+	public Group deleteGroup(Group group)
 		throws PortalException, SystemException {
 
 		if (PortalUtil.isSystemGroup(group.getName())) {
@@ -735,6 +735,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		// Permission cache
 
 		PermissionCacheUtil.clearCache();
+
+		return group;
 	}
 
 	/**
@@ -754,12 +756,12 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteGroup(long groupId)
+	public Group deleteGroup(long groupId)
 		throws PortalException, SystemException {
 
 		Group group = groupPersistence.findByPrimaryKey(groupId);
 
-		deleteGroup(group);
+		return deleteGroup(group);
 	}
 
 	/**

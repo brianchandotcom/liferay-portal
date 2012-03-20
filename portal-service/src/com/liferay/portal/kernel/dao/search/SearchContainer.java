@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.dao.search;
 
+import com.liferay.portal.kernel.util.DeterminateKeyGenerator;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -21,6 +22,8 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TextFormatter;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -195,6 +198,31 @@ public class SearchContainer<R> {
 	}
 
 	public String getId() {
+		if (Validator.isNotNull(_id)) {
+			return _id;
+		}
+
+		String id = null;
+
+		if (Validator.isNotNull(_className)) {
+			String simpleClassName = _className;
+
+			int pos = simpleClassName.lastIndexOf(StringPool.PERIOD);
+
+			if (pos != -1) {
+				simpleClassName = simpleClassName.substring(pos + 1);
+			}
+
+			String variableCasingSimpleClassName = TextFormatter.format(simpleClassName, TextFormatter.I);
+
+			id = TextFormatter.formatPlural(variableCasingSimpleClassName);
+		}
+		else {
+			id = DeterminateKeyGenerator.generate("taglib_search_container");
+		}
+
+		_id = id.concat("SearchContainer");
+
 		return _id;
 	}
 

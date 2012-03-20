@@ -113,7 +113,7 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public void check(String locator) {
-		throw new UnsupportedOperationException();
+		click(locator);
 	}
 
 	public void chooseCancelOnNextConfirmation() {

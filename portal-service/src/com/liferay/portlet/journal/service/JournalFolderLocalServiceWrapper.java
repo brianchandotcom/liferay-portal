@@ -344,24 +344,31 @@ public class JournalFolderLocalServiceWrapper
 			start, end);
 	}
 
-	public java.util.List<java.lang.Object> getFoldersAndJournalArticles(
+	public java.util.List<java.lang.Object> getFoldersAndArticles(
 		long groupId, long folderId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _journalFolderLocalService.getFoldersAndJournalArticles(groupId,
+		return _journalFolderLocalService.getFoldersAndArticles(groupId,
 			folderId, start, end, obc);
+	}
+
+	public int getFoldersAndArticlesCount(long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalFolderLocalService.getFoldersAndArticlesCount(groupId,
+			folderId);
+	}
+
+	public int getFoldersArticlesCount(long groupId,
+		java.util.List<java.lang.Long> folderIds, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalFolderLocalService.getFoldersArticlesCount(groupId,
+			folderIds, status);
 	}
 
 	public int getFoldersCount(long groupId, long parentFolderId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _journalFolderLocalService.getFoldersCount(groupId,
 			parentFolderId);
-	}
-
-	public int getFoldersAndJournalArticlesCount(long groupId, long folderId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _journalFolderLocalService.getFoldersAndJournalArticlesCount(groupId,
-			folderId);
 	}
 
 	public void getSubfolderIds(java.util.List<java.lang.Long> folderIds,

@@ -909,7 +909,6 @@ Liferay.Service.registerClass(
 		getArticlesCountByArticleId: true,
 		getArticlesCountByFolderId: true,
 		getDisplayArticleByUrlTitle: true,
-		getFoldersArticlesCount: true,
 		getLatestArticle: true,
 		removeArticleLocale: true,
 		search: true,
@@ -938,7 +937,8 @@ Liferay.Service.registerClass(
 		deleteFolder: true,
 		getFolder: true,
 		getFolders: true,
-		getFoldersAndJournalArticlesCount: true,
+		getFoldersAndArticlesCount: true,
+		getFoldersArticlesCount: true,
 		getFoldersCount: true,
 		getSubfolderIds: true,
 		updateFolder: true

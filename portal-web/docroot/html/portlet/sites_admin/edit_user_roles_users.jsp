@@ -81,6 +81,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_user_roles.jsp-po
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.model.User"
 		escapedModel="<%= true %>"
+		idProperty="screenName"
 		keyProperty="userId"
 		modelVar="user2"
 	>

@@ -102,6 +102,7 @@ userGroupRoles.addAll(organizationRoles);
 
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.model.Group"
+		idProperty="friendlyURL"
 		keyProperty="groupId"
 		modelVar="group"
 	>

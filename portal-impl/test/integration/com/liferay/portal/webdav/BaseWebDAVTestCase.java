@@ -28,7 +28,7 @@ import com.liferay.portlet.documentlibrary.webdav.DLWebDAVStorageImpl;
 import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.TestCase;
+import org.junit.Assert;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -36,7 +36,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 /**
  * @author Alexander Chow
  */
-public class BaseWebDAVTestCase extends TestCase {
+public class BaseWebDAVTestCase {
 
 	public static void assertBytes(byte[] expected, byte[] actual) {
 		if ((expected == null) && (actual == null)) {
@@ -63,7 +63,7 @@ public class BaseWebDAVTestCase extends TestCase {
 			}
 		}
 
-		fail(
+		Assert.fail(
 			"Content does not match.  Expected " + expected + ", Actual " +
 				actual);
 	}
@@ -75,7 +75,11 @@ public class BaseWebDAVTestCase extends TestCase {
 			returnedStatusCode = getStatusCode(tuple);
 		}
 
-		assertEquals(statusCode, returnedStatusCode);
+		Assert.assertEquals(statusCode, returnedStatusCode);
+	}
+
+	public static int getStatusCode(Tuple tuple) {
+		return (Integer)tuple.getObject(0);
 	}
 
 	public Tuple service(
@@ -326,10 +330,6 @@ public class BaseWebDAVTestCase extends TestCase {
 		byte[] data = getResponseBody(tuple);
 
 		return new String(data);
-	}
-
-	protected static int getStatusCode(Tuple tuple) {
-		return (Integer)tuple.getObject(0);
 	}
 
 	protected String getUserAgent() {

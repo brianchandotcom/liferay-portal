@@ -17,7 +17,10 @@ package com.liferay.portal.webdav;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.webdav.WebDAVUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.webdav.methods.Method;
+import com.liferay.portal.webdav.test.WebDAVEnvConfigTestListener;
 
 import java.io.File;
 
@@ -26,6 +29,10 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
 /**
  * <p>
  * Based on Microsoft Office 2008 for OS X.
@@ -33,14 +40,18 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Alexander Chow
  */
+@ExecutionTestListeners(listeners = {WebDAVEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class WebDAVOSXTest extends BaseWebDAVTestCase {
 
+	@Test
 	public void testMSOffice0Setup() throws Exception {
 		_testFileBytes = FileUtil.getBytes(new File(_OFFICE_TEST_DOCX));
 		_testMetaBytes = FileUtil.getBytes(new File(_OFFICE_TEST_META_DOCX));
 		_testDeltaBytes = FileUtil.getBytes(new File(_OFFICE_TEST_DELTA_DOCX));
 	}
 
+	@Test
 	public void testMSOffice1Create() throws Exception {
 		Tuple tuple = null;
 
@@ -120,7 +131,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 				tuple = serviceGet(_TEST_META_NAME);
 
 				assertCode(HttpServletResponse.SC_OK, tuple);
-				assertTrue(getResponseBody(tuple).length == 0);
+				Assert.assertTrue(getResponseBody(tuple).length == 0);
 			}
 
 			unlock(_TEST_META_NAME);
@@ -143,6 +154,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 		}
 	}
 
+	@Test
 	public void testMSOffice2Open() throws Exception {
 		Tuple tuple = null;
 
@@ -167,6 +179,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 		assertBytes(_testFileBytes, getResponseBody(tuple));
 	}
 
+	@Test
 	public void testMSOffice3Modify() throws Exception {
 		Tuple tuple = null;
 
@@ -290,7 +303,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 		tuple = serviceGet(_TEST_META_NAME);
 
 		assertCode(HttpServletResponse.SC_OK, tuple);
-		assertTrue(getResponseBody(tuple).length == 0);
+		Assert.assertTrue(getResponseBody(tuple).length == 0);
 		assertCode(
 			HttpServletResponse.SC_CREATED,
 			servicePut(

@@ -16,7 +16,10 @@ package com.liferay.portlet.documentlibrary.store;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.util.BaseTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.EnvironmentConfigTestListener;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
@@ -30,153 +33,165 @@ import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Set;
 
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
 /**
  * @author Shuyang Zhou
  * @author Tina Tian
  */
-public class DBStoreTest extends BaseTestCase {
+@ExecutionTestListeners(listeners = {EnvironmentConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class DBStoreTest {
 
+	@Test
 	public void testAddFileWithByteArray() throws Exception {
-		long companyId = nextLong();
-		long repositoryId = nextLong();
-		String fileName = randomString();
+		long companyId = ServiceTestUtil.nextLong();
+		long repositoryId = ServiceTestUtil.nextLong();
+		String fileName = ServiceTestUtil.randomString();
 
 		_store.addFile(companyId, repositoryId, fileName, _DATA_VERSION_1);
 
-		assertTrue(
+		Assert.assertTrue(
 			_store.hasFile(
 				companyId, repositoryId, fileName, Store.VERSION_DEFAULT));
 	}
 
+	@Test
 	public void testAddFileWithFile() throws Exception {
-		long companyId = nextLong();
-		long repositoryId = nextLong();
-		String fileName = randomString();
+		long companyId = ServiceTestUtil.nextLong();
+		long repositoryId = ServiceTestUtil.nextLong();
+		String fileName = ServiceTestUtil.randomString();
 		File file = createFile(_DATA_VERSION_1);
 
 		_store.addFile(companyId, repositoryId, fileName, file);
 
-		assertTrue(
+		Assert.assertTrue(
 			_store.hasFile(
 				companyId, repositoryId, fileName, Store.VERSION_DEFAULT));
 	}
 
+	@Test
 	public void testAddFileWithInputStream() throws Exception {
 
 		// FileInputStream
 
-		long companyId = nextLong();
-		long repositoryId = nextLong();
-		String fileName = randomString();
+		long companyId = ServiceTestUtil.nextLong();
+		long repositoryId = ServiceTestUtil.nextLong();
+		String fileName = ServiceTestUtil.randomString();
 		File file = createFile(_DATA_VERSION_1);
 
 		_store.addFile(
 			companyId, repositoryId, fileName, new FileInputStream(file));
 
-		assertTrue(
+		Assert.assertTrue(
 			_store.hasFile(
 				companyId, repositoryId, fileName, Store.VERSION_DEFAULT));
 
 		// UnsyncByteArrayInputStream
 
-		companyId = nextLong();
-		repositoryId = nextLong();
-		fileName = randomString();
+		companyId = ServiceTestUtil.nextLong();
+		repositoryId = ServiceTestUtil.nextLong();
+		fileName = ServiceTestUtil.randomString();
 
 		_store.addFile(
 			companyId, repositoryId, fileName,
 			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 
-		assertTrue(
+		Assert.assertTrue(
 			_store.hasFile(
 				companyId, repositoryId, fileName, Store.VERSION_DEFAULT));
 
 		// ByteArrayInputStream
 
-		companyId = nextLong();
-		repositoryId = nextLong();
-		fileName = randomString();
+		companyId = ServiceTestUtil.nextLong();
+		repositoryId = ServiceTestUtil.nextLong();
+		fileName = ServiceTestUtil.randomString();
 
 		_store.addFile(
 			companyId, repositoryId, fileName,
 			new ByteArrayInputStream(_DATA_VERSION_1));
 
-		assertTrue(
+		Assert.assertTrue(
 			_store.hasFile(
 				companyId, repositoryId, fileName, Store.VERSION_DEFAULT));
 
 		// BufferedInputStream
 
-		companyId = nextLong();
-		repositoryId = nextLong();
-		fileName = randomString();
+		companyId = ServiceTestUtil.nextLong();
+		repositoryId = ServiceTestUtil.nextLong();
+		fileName = ServiceTestUtil.randomString();
 
 		_store.addFile(
 			companyId, repositoryId, fileName,
 			new BufferedInputStream(new ByteArrayInputStream(_DATA_VERSION_1)));
 
-		assertTrue(
+		Assert.assertTrue(
 			_store.hasFile(
 				companyId, repositoryId, fileName, Store.VERSION_DEFAULT));
 	}
 
+	@Test
 	public void testDeleteDirectory() throws Exception {
 
 		// One level deep
 
-		long companyId = nextLong();
-		long repositoryId = nextLong();
+		long companyId = ServiceTestUtil.nextLong();
+		long repositoryId = ServiceTestUtil.nextLong();
 
-		String directory = randomString();
+		String directory = ServiceTestUtil.randomString();
 
-		String fileName1 = directory + "/" + randomString();
-		String fileName2 = directory + "/" + randomString();
+		String fileName1 = directory + "/" + ServiceTestUtil.randomString();
+		String fileName2 = directory + "/" + ServiceTestUtil.randomString();
 
 		_store.addFile(companyId, repositoryId, fileName1, _DATA_VERSION_1);
 		_store.addFile(companyId, repositoryId, fileName2, _DATA_VERSION_1);
 
-		assertTrue(
+		Assert.assertTrue(
 			_store.hasFile(
 				companyId, repositoryId, fileName1, Store.VERSION_DEFAULT));
-		assertTrue(
+		Assert.assertTrue(
 			_store.hasFile(
 				companyId, repositoryId, fileName2, Store.VERSION_DEFAULT));
 
 		_store.deleteDirectory(companyId, repositoryId, directory);
 
-		assertFalse(
+		Assert.assertFalse(
 			_store.hasFile(
 				companyId, repositoryId, fileName1, Store.VERSION_DEFAULT));
-		assertFalse(
+		Assert.assertFalse(
 			_store.hasFile(
 				companyId, repositoryId, fileName2, Store.VERSION_DEFAULT));
 
 		// Two levels deep
 
-		directory = randomString();
-		fileName1 = directory + "/" + randomString();
-		fileName2 = directory + "/" + randomString() + "/" + randomString();
+		directory = ServiceTestUtil.randomString();
+		fileName1 = directory + "/" + ServiceTestUtil.randomString();
+		fileName2 = directory + "/" + ServiceTestUtil.randomString() + "/" +
+			ServiceTestUtil.randomString();
 
 		_store.addFile(companyId, repositoryId, fileName1, _DATA_VERSION_1);
 		_store.addFile(companyId, repositoryId, fileName2, _DATA_VERSION_1);
 
-		assertTrue(
+		Assert.assertTrue(
 			_store.hasFile(
 				companyId, repositoryId, fileName1, Store.VERSION_DEFAULT));
-		assertTrue(
+		Assert.assertTrue(
 			_store.hasFile(
 				companyId, repositoryId, fileName2, Store.VERSION_DEFAULT));
 
 		_store.deleteDirectory(companyId, repositoryId, directory);
 
-		assertFalse(
+		Assert.assertFalse(
 			_store.hasFile(
 				companyId, repositoryId, fileName1, Store.VERSION_DEFAULT));
-		assertFalse(
+		Assert.assertFalse(
 			_store.hasFile(
 				companyId, repositoryId, fileName2, Store.VERSION_DEFAULT));
 	}
 
+	@Test
 	public void testDeleteFile() throws Exception {
 		Object[] data = addFile(1);
 
@@ -184,19 +199,22 @@ public class DBStoreTest extends BaseTestCase {
 		long repositoryId = (Long)data[1];
 		String fileName = (String)data[2];
 
-		assertTrue(
+		Assert.assertTrue(
 			_store.hasFile(
 				companyId, repositoryId, fileName, Store.VERSION_DEFAULT));
-		assertTrue(_store.hasFile(companyId, repositoryId, fileName, "1.1"));
+		Assert.assertTrue(
+			_store.hasFile(companyId, repositoryId, fileName, "1.1"));
 
 		_store.deleteFile(companyId, repositoryId, fileName);
 
-		assertFalse(
+		Assert.assertFalse(
 			_store.hasFile(
 				companyId, repositoryId, fileName, Store.VERSION_DEFAULT));
-		assertFalse(_store.hasFile(companyId, repositoryId, fileName, "1.1"));
+		Assert.assertFalse(
+			_store.hasFile(companyId, repositoryId, fileName, "1.1"));
 	}
 
+	@Test
 	public void testDeleteFileWithVersion() throws Exception {
 
 		// 1.0
@@ -207,26 +225,29 @@ public class DBStoreTest extends BaseTestCase {
 		long repositoryId = (Long)data[1];
 		String fileName = (String)data[2];
 
-		assertTrue(
+		Assert.assertTrue(
 			_store.hasFile(
 				companyId, repositoryId, fileName, Store.VERSION_DEFAULT));
 
 		_store.deleteFile(
 			companyId, repositoryId, fileName, Store.VERSION_DEFAULT);
 
-		assertFalse(
+		Assert.assertFalse(
 			_store.hasFile(
 				companyId, repositoryId, fileName, Store.VERSION_DEFAULT));
 
 		// 1.1
 
-		assertTrue(_store.hasFile(companyId, repositoryId, fileName, "1.1"));
+		Assert.assertTrue(
+			_store.hasFile(companyId, repositoryId, fileName, "1.1"));
 
 		_store.deleteFile(companyId, repositoryId, fileName, "1.1");
 
-		assertFalse(_store.hasFile(companyId, repositoryId, fileName, "1.1"));
+		Assert.assertFalse(
+			_store.hasFile(companyId, repositoryId, fileName, "1.1"));
 	}
 
+	@Test
 	public void testGetFileAsStream() throws Exception {
 		Object[] data = addFile(1);
 
@@ -238,14 +259,15 @@ public class DBStoreTest extends BaseTestCase {
 			companyId, repositoryId, fileName);
 
 		for (int i = 0; i < _DATA_SIZE; i++) {
-			assertEquals(_DATA_VERSION_1[i], (byte)inputStream.read());
+			Assert.assertEquals(_DATA_VERSION_1[i], (byte)inputStream.read());
 		}
 
-		assertEquals(-1, inputStream.read());
+		Assert.assertEquals(-1, inputStream.read());
 
 		inputStream.close();
 	}
 
+	@Test
 	public void testGetFileAsStreamWithVersion() throws Exception {
 		Object[] data = addFile(5);
 
@@ -257,71 +279,74 @@ public class DBStoreTest extends BaseTestCase {
 			companyId, repositoryId, fileName, "1.5");
 
 		for (int i = 0; i < _DATA_SIZE; i++) {
-			assertEquals(_DATA_VERSION_1[i], (byte)inputStream.read());
+			Assert.assertEquals(_DATA_VERSION_1[i], (byte)inputStream.read());
 		}
 
-		assertEquals(-1, inputStream.read());
+		Assert.assertEquals(-1, inputStream.read());
 
 		inputStream.close();
 	}
 
+	@Test
 	public void testGetFileNames() throws Exception {
-		long companyId = nextLong();
-		long repositoryId = nextLong();
+		long companyId = ServiceTestUtil.nextLong();
+		long repositoryId = ServiceTestUtil.nextLong();
 
 		// One level deep
 
-		String directory = randomString();
+		String directory = ServiceTestUtil.randomString();
 
-		String fileName1 = directory + "/" + randomString();
-		String fileName2 = directory + "/" + randomString();
+		String fileName1 = directory + "/" + ServiceTestUtil.randomString();
+		String fileName2 = directory + "/" + ServiceTestUtil.randomString();
 
 		_store.addFile(companyId, repositoryId, fileName1, _DATA_VERSION_1);
 		_store.addFile(companyId, repositoryId, fileName2, _DATA_VERSION_1);
 
 		String[] fileNames = _store.getFileNames(companyId, repositoryId);
 
-		assertEquals(2, fileNames.length);
+		Assert.assertEquals(2, fileNames.length);
 
 		Set<String> fileNamesSet = SetUtil.fromArray(fileNames);
 
-		assertTrue(fileNamesSet.contains(fileName1));
-		assertTrue(fileNamesSet.contains(fileName2));
+		Assert.assertTrue(fileNamesSet.contains(fileName1));
+		Assert.assertTrue(fileNamesSet.contains(fileName2));
 
 		// Two levels deep
 
-		directory = randomString();
+		directory = ServiceTestUtil.randomString();
 
-		String fileName3 = directory + "/" + randomString();
+		String fileName3 = directory + "/" + ServiceTestUtil.randomString();
 		String fileName4 =
-			directory + "/" + randomString() + "/" + randomString();
+			directory + "/" + ServiceTestUtil.randomString() + "/" +
+				ServiceTestUtil. randomString();
 
 		_store.addFile(companyId, repositoryId, fileName3, _DATA_VERSION_1);
 		_store.addFile(companyId, repositoryId, fileName4, _DATA_VERSION_1);
 
 		fileNames = _store.getFileNames(companyId, repositoryId);
 
-		assertEquals(4, fileNames.length);
+		Assert.assertEquals(4, fileNames.length);
 
 		fileNamesSet = SetUtil.fromArray(fileNames);
 
-		assertTrue(fileNamesSet.contains(fileName1));
-		assertTrue(fileNamesSet.contains(fileName2));
-		assertTrue(fileNamesSet.contains(fileName3));
-		assertTrue(fileNamesSet.contains(fileName4));
+		Assert.assertTrue(fileNamesSet.contains(fileName1));
+		Assert.assertTrue(fileNamesSet.contains(fileName2));
+		Assert.assertTrue(fileNamesSet.contains(fileName3));
+		Assert.assertTrue(fileNamesSet.contains(fileName4));
 	}
 
+	@Test
 	public void testGetFileNamesWithDirectory() throws Exception {
 
 		// One level deep
 
-		long companyId = nextLong();
-		long repositoryId = nextLong();
+		long companyId = ServiceTestUtil.nextLong();
+		long repositoryId = ServiceTestUtil.nextLong();
 
-		String directory = randomString();
+		String directory = ServiceTestUtil.randomString();
 
-		String fileName1 = directory + "/" + randomString();
-		String fileName2 = directory + "/" + randomString();
+		String fileName1 = directory + "/" + ServiceTestUtil.randomString();
+		String fileName2 = directory + "/" + ServiceTestUtil.randomString();
 
 		_store.addFile(companyId, repositoryId, fileName1, _DATA_VERSION_1);
 		_store.addFile(companyId, repositoryId, fileName2, _DATA_VERSION_1);
@@ -329,40 +354,41 @@ public class DBStoreTest extends BaseTestCase {
 		String[] fileNames = _store.getFileNames(
 			companyId, repositoryId, directory);
 
-		assertEquals(2, fileNames.length);
+		Assert.assertEquals(2, fileNames.length);
 
 		Set<String> fileNamesSet = SetUtil.fromArray(fileNames);
 
-		assertTrue(fileNamesSet.contains(fileName1));
-		assertTrue(fileNamesSet.contains(fileName2));
+		Assert.assertTrue(fileNamesSet.contains(fileName1));
+		Assert.assertTrue(fileNamesSet.contains(fileName2));
 
 		// Two levels deep
 
-		directory = randomString();
+		directory = ServiceTestUtil.randomString();
 
-		String subdirectory = directory + "/" + randomString();
+		String subdirectory = directory + "/" + ServiceTestUtil.randomString();
 
-		String fileName3 = directory + "/" + randomString();
-		String fileName4 = subdirectory + "/" + randomString();
+		String fileName3 = directory + "/" + ServiceTestUtil.randomString();
+		String fileName4 = subdirectory + "/" + ServiceTestUtil.randomString();
 
 		_store.addFile(companyId, repositoryId, fileName3, _DATA_VERSION_1);
 		_store.addFile(companyId, repositoryId, fileName4, _DATA_VERSION_1);
 
 		fileNames = _store.getFileNames(companyId, repositoryId, directory);
 
-		assertEquals(2, fileNames.length);
+		Assert.assertEquals(2, fileNames.length);
 
 		fileNamesSet = SetUtil.fromArray(fileNames);
 
-		assertTrue(fileNamesSet.contains(fileName3));
-		assertTrue(fileNamesSet.contains(fileName4));
+		Assert.assertTrue(fileNamesSet.contains(fileName3));
+		Assert.assertTrue(fileNamesSet.contains(fileName4));
 
 		fileNames = _store.getFileNames(companyId, repositoryId, subdirectory);
 
-		assertEquals(1, fileNames.length);
-		assertEquals(fileName4, fileNames[0]);
+		Assert.assertEquals(1, fileNames.length);
+		Assert.assertEquals(fileName4, fileNames[0]);
 	}
 
+	@Test
 	public void testGetFileSize() throws Exception {
 		Object[] data = addFile(0);
 
@@ -372,19 +398,21 @@ public class DBStoreTest extends BaseTestCase {
 
 		long size = _store.getFileSize(companyId, repositoryId, fileName);
 
-		assertEquals(_DATA_SIZE, size);
+		Assert.assertEquals(_DATA_SIZE, size);
 	}
 
+	@Test
 	public void testHasFile() throws Exception {
-		long companyId = nextLong();
-		long repositoryId = nextLong();
-		String fileName = randomString();
+		long companyId = ServiceTestUtil.nextLong();
+		long repositoryId = ServiceTestUtil.nextLong();
+		String fileName = ServiceTestUtil.randomString();
 
 		_store.addFile(companyId, repositoryId, fileName, _DATA_VERSION_1);
 
-		assertTrue(_store.hasFile(companyId, repositoryId, fileName));
+		Assert.assertTrue(_store.hasFile(companyId, repositoryId, fileName));
 	}
 
+	@Test
 	public void testHasFileWithVersion() throws Exception {
 		Object[] data = addFile(5);
 
@@ -395,12 +423,13 @@ public class DBStoreTest extends BaseTestCase {
 		String versionLabel = "1.";
 
 		for (int i = 0; i < 5; i++) {
-			assertTrue(
+			Assert.assertTrue(
 				_store.hasFile(
 					companyId, repositoryId, fileName, versionLabel + i));
 		}
 	}
 
+	@Test
 	public void testUpdateFileWithByteArray() throws Exception {
 		Object[] data = addFile(0);
 
@@ -414,19 +443,20 @@ public class DBStoreTest extends BaseTestCase {
 		byte[] bytes1 = _store.getFileAsBytes(
 			companyId, repositoryId, fileName, "1.0");
 
-		assertTrue(Arrays.equals(_DATA_VERSION_1, bytes1));
+		Assert.assertTrue(Arrays.equals(_DATA_VERSION_1, bytes1));
 
 		byte[] bytes2 = _store.getFileAsBytes(
 			companyId, repositoryId, fileName, "1.1");
 
-		assertTrue(Arrays.equals(_DATA_VERSION_2, bytes2));
+		Assert.assertTrue(Arrays.equals(_DATA_VERSION_2, bytes2));
 
 		byte[] bytes3 = _store.getFileAsBytes(
 			companyId, repositoryId, fileName);
 
-		assertTrue(Arrays.equals(_DATA_VERSION_2, bytes3));
+		Assert.assertTrue(Arrays.equals(_DATA_VERSION_2, bytes3));
 	}
 
+	@Test
 	public void testUpdateFileWithFile() throws Exception {
 		Object[] data = addFile(0);
 
@@ -441,19 +471,20 @@ public class DBStoreTest extends BaseTestCase {
 		byte[] bytes1 = _store.getFileAsBytes(
 			companyId, repositoryId, fileName, "1.0");
 
-		assertTrue(Arrays.equals(_DATA_VERSION_1, bytes1));
+		Assert.assertTrue(Arrays.equals(_DATA_VERSION_1, bytes1));
 
 		byte[] bytes2 = _store.getFileAsBytes(
 			companyId, repositoryId, fileName, "1.1");
 
-		assertTrue(Arrays.equals(_DATA_VERSION_2, bytes2));
+		Assert.assertTrue(Arrays.equals(_DATA_VERSION_2, bytes2));
 
 		byte[] bytes3 = _store.getFileAsBytes(
 			companyId, repositoryId, fileName);
 
-		assertTrue(Arrays.equals(_DATA_VERSION_2, bytes3));
+		Assert.assertTrue(Arrays.equals(_DATA_VERSION_2, bytes3));
 	}
 
+	@Test
 	public void testUpdateFileWithInputStream() throws Exception {
 		Object[] data = addFile(0);
 
@@ -468,19 +499,20 @@ public class DBStoreTest extends BaseTestCase {
 		byte[] bytes1 = _store.getFileAsBytes(
 			companyId, repositoryId, fileName, "1.0");
 
-		assertTrue(Arrays.equals(_DATA_VERSION_1, bytes1));
+		Assert.assertTrue(Arrays.equals(_DATA_VERSION_1, bytes1));
 
 		byte[] bytes2 = _store.getFileAsBytes(
 			companyId, repositoryId, fileName, "1.1");
 
-		assertTrue(Arrays.equals(_DATA_VERSION_2, bytes2));
+		Assert.assertTrue(Arrays.equals(_DATA_VERSION_2, bytes2));
 
 		byte[] bytes3 = _store.getFileAsBytes(
 			companyId, repositoryId, fileName);
 
-		assertTrue(Arrays.equals(_DATA_VERSION_2, bytes3));
+		Assert.assertTrue(Arrays.equals(_DATA_VERSION_2, bytes3));
 	}
 
+	@Test
 	public void testUpdateFileWithNewFileName() throws Exception {
 		Object[] data = addFile(0);
 
@@ -488,14 +520,15 @@ public class DBStoreTest extends BaseTestCase {
 		long repositoryId = (Long)data[1];
 		String fileName = (String)data[2];
 
-		String newFileName = randomString();
+		String newFileName = ServiceTestUtil.randomString();
 
 		_store.updateFile(companyId, repositoryId, fileName, newFileName);
 
-		assertFalse(_store.hasFile(companyId, repositoryId, fileName));
-		assertTrue(_store.hasFile(companyId, repositoryId, newFileName));
+		Assert.assertFalse(_store.hasFile(companyId, repositoryId, fileName));
+		Assert.assertTrue(_store.hasFile(companyId, repositoryId, newFileName));
 	}
 
+	@Test
 	public void testUpdateFileWithNewRepositoryId() throws Exception {
 		Object[] data = addFile(0);
 
@@ -503,18 +536,18 @@ public class DBStoreTest extends BaseTestCase {
 		long repositoryId = (Long)data[1];
 		String fileName = (String)data[2];
 
-		long newRepositoryId = nextLong();
+		long newRepositoryId = ServiceTestUtil.nextLong();
 
 		_store.updateFile(companyId, repositoryId, newRepositoryId, fileName);
 
-		assertFalse(_store.hasFile(companyId, repositoryId, fileName));
-		assertTrue(_store.hasFile(companyId, newRepositoryId, fileName));
+		Assert.assertFalse(_store.hasFile(companyId, repositoryId, fileName));
+		Assert.assertTrue(_store.hasFile(companyId, newRepositoryId, fileName));
 	}
 
 	protected Object[] addFile(int newVersionCount) throws Exception {
-		long companyId = nextLong();
-		long repositoryId = nextLong();
-		String fileName = randomString();
+		long companyId = ServiceTestUtil.nextLong();
+		long repositoryId = ServiceTestUtil.nextLong();
+		String fileName = ServiceTestUtil.randomString();
 
 		_store.addFile(companyId, repositoryId, fileName, _DATA_VERSION_1);
 
@@ -526,12 +559,12 @@ public class DBStoreTest extends BaseTestCase {
 				_DATA_VERSION_1);
 		}
 
-		assertTrue(
+		Assert.assertTrue(
 			_store.hasFile(
 				companyId, repositoryId, fileName, Store.VERSION_DEFAULT));
 
 		for (int i = 1; i <= newVersionCount; i++) {
-			assertTrue(
+			Assert.assertTrue(
 				_store.hasFile(
 					companyId, repositoryId, fileName, versionLabel + i));
 		}

@@ -17,23 +17,28 @@ package com.liferay.portlet;
 import com.liferay.portal.kernel.portlet.Route;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.util.BaseTestCase;
-import com.liferay.portal.util.InitUtil;
+import com.liferay.portal.test.EnvironmentConfigTestListener;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.assertion.AssertUtils;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Connor McKay
  * @author Brian Wing Shun Chan
  */
-public class RouterImplTest extends BaseTestCase {
+@ExecutionTestListeners(listeners = {EnvironmentConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class RouterImplTest {
 
-	public RouterImplTest() {
-		InitUtil.initWithSpring();
-	}
-
-	@Override
+	@Before
 	public void setUp() throws Exception {
 		_routerImpl = new RouterImpl();
 
@@ -100,16 +105,19 @@ public class RouterImplTest extends BaseTestCase {
 		route = _routerImpl.addRoute("{method}/{controller}/{action}.{format}");
 	}
 
+	@Test
 	public void testGeneratedParameters() {
 		assertUrlGeneratesParameters(
 			"instance/1b7c/recent", "p_p_id=15_INSTANCE_1b7c&topLink=recent");
 		assertUrlRegenerates("instance/1b7c/recent");
 	}
 
+	@Test
 	public void testPriority() {
 		assertUrlRegeneratesUrl("GET/boxes/index", "GET/boxes");
 	}
 
+	@Test
 	public void testReproduction() {
 		assertUrlRegenerates("GET/boxes/16");
 		assertUrlRegenerates("GET/boxes/25.xml");
@@ -123,11 +131,13 @@ public class RouterImplTest extends BaseTestCase {
 		assertUrlRegenerates("POST/boxes.xml");
 	}
 
+	@Test
 	public void testUrlDecoding() {
 		assertParameterInUrlEquals(
 			"controller", "open boxes", "POST/open%20boxes");
 	}
 
+	@Test
 	public void testUrlToParameters() {
 		assertUrlGeneratesParameters(
 			"GET/boxes/16",
@@ -168,7 +178,7 @@ public class RouterImplTest extends BaseTestCase {
 
 		_routerImpl.urlToParameters(url, parameters);
 
-		assertEquals(value, MapUtil.getString(parameters, name));
+		Assert.assertEquals(value, MapUtil.getString(parameters, name));
 	}
 
 	protected void assertUrlGeneratesParameters(
@@ -181,7 +191,7 @@ public class RouterImplTest extends BaseTestCase {
 
 		_routerImpl.urlToParameters(url, generatedParameters);
 
-		assertEquals(parameters, generatedParameters);
+		AssertUtils.assertEquals(parameters, generatedParameters);
 	}
 
 	protected void assertUrlRegenerates(String url) {
@@ -195,7 +205,7 @@ public class RouterImplTest extends BaseTestCase {
 
 		String generatedUrl = _routerImpl.parametersToUrl(parameters);
 
-		assertEquals(expectedUrl, generatedUrl);
+		Assert.assertEquals(expectedUrl, generatedUrl);
 	}
 
 	private RouterImpl _routerImpl;

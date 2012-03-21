@@ -307,7 +307,13 @@ public class SearchContainerRowTag<R>
 		else {
 			Object idObj = BeanPropertiesUtil.getObject(model, _idProperty);
 
-			idKey = FriendlyURLNormalizerUtil.normalize(String.valueOf(idObj));
+			if (Validator.isNull(idObj)) {
+				idKey = String.valueOf(_rowIndex + 1);
+			}
+			else {
+				idKey = FriendlyURLNormalizerUtil.normalize(
+					String.valueOf(idObj), new char[]{'/'});
+			}
 		}
 
 		_resultRow = new ResultRow(model, primaryKey, idKey, _rowIndex, _bold);

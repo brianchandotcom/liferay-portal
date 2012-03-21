@@ -17,7 +17,7 @@ package com.liferay.portal.cache.key;
 /**
  * @author Shuyang Zhou
  */
-public class SimpleCacheKeyGeneratorTest extends BaseCacheKeyGeneratorTest {
+public class SimpleCacheKeyGeneratorTest extends BaseCacheKeyGeneratorTestCase {
 
 	@Override
 	public void setUp() throws Exception {

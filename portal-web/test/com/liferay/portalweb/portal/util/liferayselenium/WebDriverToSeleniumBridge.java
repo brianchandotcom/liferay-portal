@@ -272,7 +272,15 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public String getAttribute(String attributeLocator) {
-		throw new UnsupportedOperationException();
+		int splitIndex = attributeLocator.lastIndexOf('@');
+
+		String attribute = attributeLocator.substring(splitIndex);
+
+		String locator = attributeLocator.substring(0, splitIndex - 1);
+
+		WebElement webElement = getWebElement(locator);
+
+		return webElement.getAttribute(attribute);
 	}
 
 	public String[] getAttributeFromAllWindows(String attributeName) {

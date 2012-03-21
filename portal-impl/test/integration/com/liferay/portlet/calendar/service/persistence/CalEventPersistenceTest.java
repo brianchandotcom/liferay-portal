@@ -21,36 +21,48 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.calendar.NoSuchEventException;
 import com.liferay.portlet.calendar.model.CalEvent;
 import com.liferay.portlet.calendar.model.impl.CalEventModelImpl;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class CalEventPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class CalEventPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (CalEventPersistence)PortalBeanLocatorUtil.locate(CalEventPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		CalEvent calEvent = _persistence.create(pk);
 
-		assertNotNull(calEvent);
+		Assert.assertNotNull(calEvent);
 
-		assertEquals(calEvent.getPrimaryKey(), pk);
+		Assert.assertEquals(calEvent.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		CalEvent newCalEvent = addCalEvent();
 
@@ -58,138 +70,158 @@ public class CalEventPersistenceTest extends BasePersistenceTestCase {
 
 		CalEvent existingCalEvent = _persistence.fetchByPrimaryKey(newCalEvent.getPrimaryKey());
 
-		assertNull(existingCalEvent);
+		Assert.assertNull(existingCalEvent);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addCalEvent();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		CalEvent newCalEvent = _persistence.create(pk);
 
-		newCalEvent.setUuid(randomString());
+		newCalEvent.setUuid(ServiceTestUtil.randomString());
 
-		newCalEvent.setGroupId(nextLong());
+		newCalEvent.setGroupId(ServiceTestUtil.nextLong());
 
-		newCalEvent.setCompanyId(nextLong());
+		newCalEvent.setCompanyId(ServiceTestUtil.nextLong());
 
-		newCalEvent.setUserId(nextLong());
+		newCalEvent.setUserId(ServiceTestUtil.nextLong());
 
-		newCalEvent.setUserName(randomString());
+		newCalEvent.setUserName(ServiceTestUtil.randomString());
 
-		newCalEvent.setCreateDate(nextDate());
+		newCalEvent.setCreateDate(ServiceTestUtil.nextDate());
 
-		newCalEvent.setModifiedDate(nextDate());
+		newCalEvent.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newCalEvent.setTitle(randomString());
+		newCalEvent.setTitle(ServiceTestUtil.randomString());
 
-		newCalEvent.setDescription(randomString());
+		newCalEvent.setDescription(ServiceTestUtil.randomString());
 
-		newCalEvent.setLocation(randomString());
+		newCalEvent.setLocation(ServiceTestUtil.randomString());
 
-		newCalEvent.setStartDate(nextDate());
+		newCalEvent.setStartDate(ServiceTestUtil.nextDate());
 
-		newCalEvent.setEndDate(nextDate());
+		newCalEvent.setEndDate(ServiceTestUtil.nextDate());
 
-		newCalEvent.setDurationHour(nextInt());
+		newCalEvent.setDurationHour(ServiceTestUtil.nextInt());
 
-		newCalEvent.setDurationMinute(nextInt());
+		newCalEvent.setDurationMinute(ServiceTestUtil.nextInt());
 
-		newCalEvent.setAllDay(randomBoolean());
+		newCalEvent.setAllDay(ServiceTestUtil.randomBoolean());
 
-		newCalEvent.setTimeZoneSensitive(randomBoolean());
+		newCalEvent.setTimeZoneSensitive(ServiceTestUtil.randomBoolean());
 
-		newCalEvent.setType(randomString());
+		newCalEvent.setType(ServiceTestUtil.randomString());
 
-		newCalEvent.setRepeating(randomBoolean());
+		newCalEvent.setRepeating(ServiceTestUtil.randomBoolean());
 
-		newCalEvent.setRecurrence(randomString());
+		newCalEvent.setRecurrence(ServiceTestUtil.randomString());
 
-		newCalEvent.setRemindBy(nextInt());
+		newCalEvent.setRemindBy(ServiceTestUtil.nextInt());
 
-		newCalEvent.setFirstReminder(nextInt());
+		newCalEvent.setFirstReminder(ServiceTestUtil.nextInt());
 
-		newCalEvent.setSecondReminder(nextInt());
+		newCalEvent.setSecondReminder(ServiceTestUtil.nextInt());
 
 		_persistence.update(newCalEvent, false);
 
 		CalEvent existingCalEvent = _persistence.findByPrimaryKey(newCalEvent.getPrimaryKey());
 
-		assertEquals(existingCalEvent.getUuid(), newCalEvent.getUuid());
-		assertEquals(existingCalEvent.getEventId(), newCalEvent.getEventId());
-		assertEquals(existingCalEvent.getGroupId(), newCalEvent.getGroupId());
-		assertEquals(existingCalEvent.getCompanyId(), newCalEvent.getCompanyId());
-		assertEquals(existingCalEvent.getUserId(), newCalEvent.getUserId());
-		assertEquals(existingCalEvent.getUserName(), newCalEvent.getUserName());
-		assertEquals(Time.getShortTimestamp(existingCalEvent.getCreateDate()),
+		Assert.assertEquals(existingCalEvent.getUuid(), newCalEvent.getUuid());
+		Assert.assertEquals(existingCalEvent.getEventId(),
+			newCalEvent.getEventId());
+		Assert.assertEquals(existingCalEvent.getGroupId(),
+			newCalEvent.getGroupId());
+		Assert.assertEquals(existingCalEvent.getCompanyId(),
+			newCalEvent.getCompanyId());
+		Assert.assertEquals(existingCalEvent.getUserId(),
+			newCalEvent.getUserId());
+		Assert.assertEquals(existingCalEvent.getUserName(),
+			newCalEvent.getUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingCalEvent.getCreateDate()),
 			Time.getShortTimestamp(newCalEvent.getCreateDate()));
-		assertEquals(Time.getShortTimestamp(existingCalEvent.getModifiedDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingCalEvent.getModifiedDate()),
 			Time.getShortTimestamp(newCalEvent.getModifiedDate()));
-		assertEquals(existingCalEvent.getTitle(), newCalEvent.getTitle());
-		assertEquals(existingCalEvent.getDescription(),
+		Assert.assertEquals(existingCalEvent.getTitle(), newCalEvent.getTitle());
+		Assert.assertEquals(existingCalEvent.getDescription(),
 			newCalEvent.getDescription());
-		assertEquals(existingCalEvent.getLocation(), newCalEvent.getLocation());
-		assertEquals(Time.getShortTimestamp(existingCalEvent.getStartDate()),
+		Assert.assertEquals(existingCalEvent.getLocation(),
+			newCalEvent.getLocation());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingCalEvent.getStartDate()),
 			Time.getShortTimestamp(newCalEvent.getStartDate()));
-		assertEquals(Time.getShortTimestamp(existingCalEvent.getEndDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingCalEvent.getEndDate()),
 			Time.getShortTimestamp(newCalEvent.getEndDate()));
-		assertEquals(existingCalEvent.getDurationHour(),
+		Assert.assertEquals(existingCalEvent.getDurationHour(),
 			newCalEvent.getDurationHour());
-		assertEquals(existingCalEvent.getDurationMinute(),
+		Assert.assertEquals(existingCalEvent.getDurationMinute(),
 			newCalEvent.getDurationMinute());
-		assertEquals(existingCalEvent.getAllDay(), newCalEvent.getAllDay());
-		assertEquals(existingCalEvent.getTimeZoneSensitive(),
+		Assert.assertEquals(existingCalEvent.getAllDay(),
+			newCalEvent.getAllDay());
+		Assert.assertEquals(existingCalEvent.getTimeZoneSensitive(),
 			newCalEvent.getTimeZoneSensitive());
-		assertEquals(existingCalEvent.getType(), newCalEvent.getType());
-		assertEquals(existingCalEvent.getRepeating(), newCalEvent.getRepeating());
-		assertEquals(existingCalEvent.getRecurrence(),
+		Assert.assertEquals(existingCalEvent.getType(), newCalEvent.getType());
+		Assert.assertEquals(existingCalEvent.getRepeating(),
+			newCalEvent.getRepeating());
+		Assert.assertEquals(existingCalEvent.getRecurrence(),
 			newCalEvent.getRecurrence());
-		assertEquals(existingCalEvent.getRemindBy(), newCalEvent.getRemindBy());
-		assertEquals(existingCalEvent.getFirstReminder(),
+		Assert.assertEquals(existingCalEvent.getRemindBy(),
+			newCalEvent.getRemindBy());
+		Assert.assertEquals(existingCalEvent.getFirstReminder(),
 			newCalEvent.getFirstReminder());
-		assertEquals(existingCalEvent.getSecondReminder(),
+		Assert.assertEquals(existingCalEvent.getSecondReminder(),
 			newCalEvent.getSecondReminder());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CalEvent newCalEvent = addCalEvent();
 
 		CalEvent existingCalEvent = _persistence.findByPrimaryKey(newCalEvent.getPrimaryKey());
 
-		assertEquals(existingCalEvent, newCalEvent);
+		Assert.assertEquals(existingCalEvent, newCalEvent);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchEventException");
+			Assert.fail("Missing entity did not throw NoSuchEventException");
 		}
 		catch (NoSuchEventException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		CalEvent newCalEvent = addCalEvent();
 
 		CalEvent existingCalEvent = _persistence.fetchByPrimaryKey(newCalEvent.getPrimaryKey());
 
-		assertEquals(existingCalEvent, newCalEvent);
+		Assert.assertEquals(existingCalEvent, newCalEvent);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		CalEvent missingCalEvent = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingCalEvent);
+		Assert.assertNull(missingCalEvent);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		CalEvent newCalEvent = addCalEvent();
@@ -202,24 +234,27 @@ public class CalEventPersistenceTest extends BasePersistenceTestCase {
 
 		List<CalEvent> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		CalEvent existingCalEvent = result.get(0);
 
-		assertEquals(existingCalEvent, newCalEvent);
+		Assert.assertEquals(existingCalEvent, newCalEvent);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CalEvent.class,
 				CalEvent.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("eventId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("eventId",
+				ServiceTestUtil.nextLong()));
 
 		List<CalEvent> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		CalEvent newCalEvent = addCalEvent();
@@ -236,13 +271,14 @@ public class CalEventPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingEventId = result.get(0);
 
-		assertEquals(existingEventId, newEventId);
+		Assert.assertEquals(existingEventId, newEventId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CalEvent.class,
 				CalEvent.class.getClassLoader());
@@ -250,13 +286,14 @@ public class CalEventPersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("eventId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("eventId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -268,60 +305,61 @@ public class CalEventPersistenceTest extends BasePersistenceTestCase {
 
 		CalEventModelImpl existingCalEventModelImpl = (CalEventModelImpl)_persistence.findByPrimaryKey(newCalEvent.getPrimaryKey());
 
-		assertTrue(Validator.equals(existingCalEventModelImpl.getUuid(),
+		Assert.assertTrue(Validator.equals(
+				existingCalEventModelImpl.getUuid(),
 				existingCalEventModelImpl.getOriginalUuid()));
-		assertEquals(existingCalEventModelImpl.getGroupId(),
+		Assert.assertEquals(existingCalEventModelImpl.getGroupId(),
 			existingCalEventModelImpl.getOriginalGroupId());
 	}
 
 	protected CalEvent addCalEvent() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		CalEvent calEvent = _persistence.create(pk);
 
-		calEvent.setUuid(randomString());
+		calEvent.setUuid(ServiceTestUtil.randomString());
 
-		calEvent.setGroupId(nextLong());
+		calEvent.setGroupId(ServiceTestUtil.nextLong());
 
-		calEvent.setCompanyId(nextLong());
+		calEvent.setCompanyId(ServiceTestUtil.nextLong());
 
-		calEvent.setUserId(nextLong());
+		calEvent.setUserId(ServiceTestUtil.nextLong());
 
-		calEvent.setUserName(randomString());
+		calEvent.setUserName(ServiceTestUtil.randomString());
 
-		calEvent.setCreateDate(nextDate());
+		calEvent.setCreateDate(ServiceTestUtil.nextDate());
 
-		calEvent.setModifiedDate(nextDate());
+		calEvent.setModifiedDate(ServiceTestUtil.nextDate());
 
-		calEvent.setTitle(randomString());
+		calEvent.setTitle(ServiceTestUtil.randomString());
 
-		calEvent.setDescription(randomString());
+		calEvent.setDescription(ServiceTestUtil.randomString());
 
-		calEvent.setLocation(randomString());
+		calEvent.setLocation(ServiceTestUtil.randomString());
 
-		calEvent.setStartDate(nextDate());
+		calEvent.setStartDate(ServiceTestUtil.nextDate());
 
-		calEvent.setEndDate(nextDate());
+		calEvent.setEndDate(ServiceTestUtil.nextDate());
 
-		calEvent.setDurationHour(nextInt());
+		calEvent.setDurationHour(ServiceTestUtil.nextInt());
 
-		calEvent.setDurationMinute(nextInt());
+		calEvent.setDurationMinute(ServiceTestUtil.nextInt());
 
-		calEvent.setAllDay(randomBoolean());
+		calEvent.setAllDay(ServiceTestUtil.randomBoolean());
 
-		calEvent.setTimeZoneSensitive(randomBoolean());
+		calEvent.setTimeZoneSensitive(ServiceTestUtil.randomBoolean());
 
-		calEvent.setType(randomString());
+		calEvent.setType(ServiceTestUtil.randomString());
 
-		calEvent.setRepeating(randomBoolean());
+		calEvent.setRepeating(ServiceTestUtil.randomBoolean());
 
-		calEvent.setRecurrence(randomString());
+		calEvent.setRecurrence(ServiceTestUtil.randomString());
 
-		calEvent.setRemindBy(nextInt());
+		calEvent.setRemindBy(ServiceTestUtil.nextInt());
 
-		calEvent.setFirstReminder(nextInt());
+		calEvent.setFirstReminder(ServiceTestUtil.nextInt());
 
-		calEvent.setSecondReminder(nextInt());
+		calEvent.setSecondReminder(ServiceTestUtil.nextInt());
 
 		_persistence.update(calEvent, false);
 

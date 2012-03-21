@@ -23,32 +23,44 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.impl.GroupModelImpl;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class GroupPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class GroupPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (GroupPersistence)PortalBeanLocatorUtil.locate(GroupPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Group group = _persistence.create(pk);
 
-		assertNotNull(group);
+		Assert.assertNotNull(group);
 
-		assertEquals(group.getPrimaryKey(), pk);
+		Assert.assertEquals(group.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		Group newGroup = addGroup();
 
@@ -56,102 +68,115 @@ public class GroupPersistenceTest extends BasePersistenceTestCase {
 
 		Group existingGroup = _persistence.fetchByPrimaryKey(newGroup.getPrimaryKey());
 
-		assertNull(existingGroup);
+		Assert.assertNull(existingGroup);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addGroup();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Group newGroup = _persistence.create(pk);
 
-		newGroup.setCompanyId(nextLong());
+		newGroup.setCompanyId(ServiceTestUtil.nextLong());
 
-		newGroup.setCreatorUserId(nextLong());
+		newGroup.setCreatorUserId(ServiceTestUtil.nextLong());
 
-		newGroup.setClassNameId(nextLong());
+		newGroup.setClassNameId(ServiceTestUtil.nextLong());
 
-		newGroup.setClassPK(nextLong());
+		newGroup.setClassPK(ServiceTestUtil.nextLong());
 
-		newGroup.setParentGroupId(nextLong());
+		newGroup.setParentGroupId(ServiceTestUtil.nextLong());
 
-		newGroup.setLiveGroupId(nextLong());
+		newGroup.setLiveGroupId(ServiceTestUtil.nextLong());
 
-		newGroup.setName(randomString());
+		newGroup.setName(ServiceTestUtil.randomString());
 
-		newGroup.setDescription(randomString());
+		newGroup.setDescription(ServiceTestUtil.randomString());
 
-		newGroup.setType(nextInt());
+		newGroup.setType(ServiceTestUtil.nextInt());
 
-		newGroup.setTypeSettings(randomString());
+		newGroup.setTypeSettings(ServiceTestUtil.randomString());
 
-		newGroup.setFriendlyURL(randomString());
+		newGroup.setFriendlyURL(ServiceTestUtil.randomString());
 
-		newGroup.setSite(randomBoolean());
+		newGroup.setSite(ServiceTestUtil.randomBoolean());
 
-		newGroup.setActive(randomBoolean());
+		newGroup.setActive(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(newGroup, false);
 
 		Group existingGroup = _persistence.findByPrimaryKey(newGroup.getPrimaryKey());
 
-		assertEquals(existingGroup.getGroupId(), newGroup.getGroupId());
-		assertEquals(existingGroup.getCompanyId(), newGroup.getCompanyId());
-		assertEquals(existingGroup.getCreatorUserId(),
+		Assert.assertEquals(existingGroup.getGroupId(), newGroup.getGroupId());
+		Assert.assertEquals(existingGroup.getCompanyId(),
+			newGroup.getCompanyId());
+		Assert.assertEquals(existingGroup.getCreatorUserId(),
 			newGroup.getCreatorUserId());
-		assertEquals(existingGroup.getClassNameId(), newGroup.getClassNameId());
-		assertEquals(existingGroup.getClassPK(), newGroup.getClassPK());
-		assertEquals(existingGroup.getParentGroupId(),
+		Assert.assertEquals(existingGroup.getClassNameId(),
+			newGroup.getClassNameId());
+		Assert.assertEquals(existingGroup.getClassPK(), newGroup.getClassPK());
+		Assert.assertEquals(existingGroup.getParentGroupId(),
 			newGroup.getParentGroupId());
-		assertEquals(existingGroup.getLiveGroupId(), newGroup.getLiveGroupId());
-		assertEquals(existingGroup.getName(), newGroup.getName());
-		assertEquals(existingGroup.getDescription(), newGroup.getDescription());
-		assertEquals(existingGroup.getType(), newGroup.getType());
-		assertEquals(existingGroup.getTypeSettings(), newGroup.getTypeSettings());
-		assertEquals(existingGroup.getFriendlyURL(), newGroup.getFriendlyURL());
-		assertEquals(existingGroup.getSite(), newGroup.getSite());
-		assertEquals(existingGroup.getActive(), newGroup.getActive());
+		Assert.assertEquals(existingGroup.getLiveGroupId(),
+			newGroup.getLiveGroupId());
+		Assert.assertEquals(existingGroup.getName(), newGroup.getName());
+		Assert.assertEquals(existingGroup.getDescription(),
+			newGroup.getDescription());
+		Assert.assertEquals(existingGroup.getType(), newGroup.getType());
+		Assert.assertEquals(existingGroup.getTypeSettings(),
+			newGroup.getTypeSettings());
+		Assert.assertEquals(existingGroup.getFriendlyURL(),
+			newGroup.getFriendlyURL());
+		Assert.assertEquals(existingGroup.getSite(), newGroup.getSite());
+		Assert.assertEquals(existingGroup.getActive(), newGroup.getActive());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Group newGroup = addGroup();
 
 		Group existingGroup = _persistence.findByPrimaryKey(newGroup.getPrimaryKey());
 
-		assertEquals(existingGroup, newGroup);
+		Assert.assertEquals(existingGroup, newGroup);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchGroupException");
+			Assert.fail("Missing entity did not throw NoSuchGroupException");
 		}
 		catch (NoSuchGroupException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		Group newGroup = addGroup();
 
 		Group existingGroup = _persistence.fetchByPrimaryKey(newGroup.getPrimaryKey());
 
-		assertEquals(existingGroup, newGroup);
+		Assert.assertEquals(existingGroup, newGroup);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Group missingGroup = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingGroup);
+		Assert.assertNull(missingGroup);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		Group newGroup = addGroup();
@@ -164,24 +189,27 @@ public class GroupPersistenceTest extends BasePersistenceTestCase {
 
 		List<Group> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Group existingGroup = result.get(0);
 
-		assertEquals(existingGroup, newGroup);
+		Assert.assertEquals(existingGroup, newGroup);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Group.class,
 				Group.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("groupId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("groupId",
+				ServiceTestUtil.nextLong()));
 
 		List<Group> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		Group newGroup = addGroup();
@@ -198,13 +226,14 @@ public class GroupPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingGroupId = result.get(0);
 
-		assertEquals(existingGroupId, newGroupId);
+		Assert.assertEquals(existingGroupId, newGroupId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Group.class,
 				Group.class.getClassLoader());
@@ -212,13 +241,14 @@ public class GroupPersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("groupId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("groupId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -230,73 +260,74 @@ public class GroupPersistenceTest extends BasePersistenceTestCase {
 
 		GroupModelImpl existingGroupModelImpl = (GroupModelImpl)_persistence.findByPrimaryKey(newGroup.getPrimaryKey());
 
-		assertEquals(existingGroupModelImpl.getLiveGroupId(),
+		Assert.assertEquals(existingGroupModelImpl.getLiveGroupId(),
 			existingGroupModelImpl.getOriginalLiveGroupId());
 
-		assertEquals(existingGroupModelImpl.getCompanyId(),
+		Assert.assertEquals(existingGroupModelImpl.getCompanyId(),
 			existingGroupModelImpl.getOriginalCompanyId());
-		assertTrue(Validator.equals(existingGroupModelImpl.getName(),
+		Assert.assertTrue(Validator.equals(existingGroupModelImpl.getName(),
 				existingGroupModelImpl.getOriginalName()));
 
-		assertEquals(existingGroupModelImpl.getCompanyId(),
+		Assert.assertEquals(existingGroupModelImpl.getCompanyId(),
 			existingGroupModelImpl.getOriginalCompanyId());
-		assertTrue(Validator.equals(existingGroupModelImpl.getFriendlyURL(),
+		Assert.assertTrue(Validator.equals(
+				existingGroupModelImpl.getFriendlyURL(),
 				existingGroupModelImpl.getOriginalFriendlyURL()));
 
-		assertEquals(existingGroupModelImpl.getCompanyId(),
+		Assert.assertEquals(existingGroupModelImpl.getCompanyId(),
 			existingGroupModelImpl.getOriginalCompanyId());
-		assertEquals(existingGroupModelImpl.getClassNameId(),
+		Assert.assertEquals(existingGroupModelImpl.getClassNameId(),
 			existingGroupModelImpl.getOriginalClassNameId());
-		assertEquals(existingGroupModelImpl.getClassPK(),
+		Assert.assertEquals(existingGroupModelImpl.getClassPK(),
 			existingGroupModelImpl.getOriginalClassPK());
 
-		assertEquals(existingGroupModelImpl.getCompanyId(),
+		Assert.assertEquals(existingGroupModelImpl.getCompanyId(),
 			existingGroupModelImpl.getOriginalCompanyId());
-		assertEquals(existingGroupModelImpl.getLiveGroupId(),
+		Assert.assertEquals(existingGroupModelImpl.getLiveGroupId(),
 			existingGroupModelImpl.getOriginalLiveGroupId());
-		assertTrue(Validator.equals(existingGroupModelImpl.getName(),
+		Assert.assertTrue(Validator.equals(existingGroupModelImpl.getName(),
 				existingGroupModelImpl.getOriginalName()));
 
-		assertEquals(existingGroupModelImpl.getCompanyId(),
+		Assert.assertEquals(existingGroupModelImpl.getCompanyId(),
 			existingGroupModelImpl.getOriginalCompanyId());
-		assertEquals(existingGroupModelImpl.getClassNameId(),
+		Assert.assertEquals(existingGroupModelImpl.getClassNameId(),
 			existingGroupModelImpl.getOriginalClassNameId());
-		assertEquals(existingGroupModelImpl.getLiveGroupId(),
+		Assert.assertEquals(existingGroupModelImpl.getLiveGroupId(),
 			existingGroupModelImpl.getOriginalLiveGroupId());
-		assertTrue(Validator.equals(existingGroupModelImpl.getName(),
+		Assert.assertTrue(Validator.equals(existingGroupModelImpl.getName(),
 				existingGroupModelImpl.getOriginalName()));
 	}
 
 	protected Group addGroup() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Group group = _persistence.create(pk);
 
-		group.setCompanyId(nextLong());
+		group.setCompanyId(ServiceTestUtil.nextLong());
 
-		group.setCreatorUserId(nextLong());
+		group.setCreatorUserId(ServiceTestUtil.nextLong());
 
-		group.setClassNameId(nextLong());
+		group.setClassNameId(ServiceTestUtil.nextLong());
 
-		group.setClassPK(nextLong());
+		group.setClassPK(ServiceTestUtil.nextLong());
 
-		group.setParentGroupId(nextLong());
+		group.setParentGroupId(ServiceTestUtil.nextLong());
 
-		group.setLiveGroupId(nextLong());
+		group.setLiveGroupId(ServiceTestUtil.nextLong());
 
-		group.setName(randomString());
+		group.setName(ServiceTestUtil.randomString());
 
-		group.setDescription(randomString());
+		group.setDescription(ServiceTestUtil.randomString());
 
-		group.setType(nextInt());
+		group.setType(ServiceTestUtil.nextInt());
 
-		group.setTypeSettings(randomString());
+		group.setTypeSettings(ServiceTestUtil.randomString());
 
-		group.setFriendlyURL(randomString());
+		group.setFriendlyURL(ServiceTestUtil.randomString());
 
-		group.setSite(randomBoolean());
+		group.setSite(ServiceTestUtil.randomBoolean());
 
-		group.setActive(randomBoolean());
+		group.setActive(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(group, false);
 

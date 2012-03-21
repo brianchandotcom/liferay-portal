@@ -24,32 +24,44 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Team;
 import com.liferay.portal.model.impl.TeamModelImpl;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class TeamPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class TeamPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (TeamPersistence)PortalBeanLocatorUtil.locate(TeamPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Team team = _persistence.create(pk);
 
-		assertNotNull(team);
+		Assert.assertNotNull(team);
 
-		assertEquals(team.getPrimaryKey(), pk);
+		Assert.assertEquals(team.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		Team newTeam = addTeam();
 
@@ -57,87 +69,96 @@ public class TeamPersistenceTest extends BasePersistenceTestCase {
 
 		Team existingTeam = _persistence.fetchByPrimaryKey(newTeam.getPrimaryKey());
 
-		assertNull(existingTeam);
+		Assert.assertNull(existingTeam);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addTeam();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Team newTeam = _persistence.create(pk);
 
-		newTeam.setCompanyId(nextLong());
+		newTeam.setCompanyId(ServiceTestUtil.nextLong());
 
-		newTeam.setUserId(nextLong());
+		newTeam.setUserId(ServiceTestUtil.nextLong());
 
-		newTeam.setUserName(randomString());
+		newTeam.setUserName(ServiceTestUtil.randomString());
 
-		newTeam.setCreateDate(nextDate());
+		newTeam.setCreateDate(ServiceTestUtil.nextDate());
 
-		newTeam.setModifiedDate(nextDate());
+		newTeam.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newTeam.setGroupId(nextLong());
+		newTeam.setGroupId(ServiceTestUtil.nextLong());
 
-		newTeam.setName(randomString());
+		newTeam.setName(ServiceTestUtil.randomString());
 
-		newTeam.setDescription(randomString());
+		newTeam.setDescription(ServiceTestUtil.randomString());
 
 		_persistence.update(newTeam, false);
 
 		Team existingTeam = _persistence.findByPrimaryKey(newTeam.getPrimaryKey());
 
-		assertEquals(existingTeam.getTeamId(), newTeam.getTeamId());
-		assertEquals(existingTeam.getCompanyId(), newTeam.getCompanyId());
-		assertEquals(existingTeam.getUserId(), newTeam.getUserId());
-		assertEquals(existingTeam.getUserName(), newTeam.getUserName());
-		assertEquals(Time.getShortTimestamp(existingTeam.getCreateDate()),
+		Assert.assertEquals(existingTeam.getTeamId(), newTeam.getTeamId());
+		Assert.assertEquals(existingTeam.getCompanyId(), newTeam.getCompanyId());
+		Assert.assertEquals(existingTeam.getUserId(), newTeam.getUserId());
+		Assert.assertEquals(existingTeam.getUserName(), newTeam.getUserName());
+		Assert.assertEquals(Time.getShortTimestamp(existingTeam.getCreateDate()),
 			Time.getShortTimestamp(newTeam.getCreateDate()));
-		assertEquals(Time.getShortTimestamp(existingTeam.getModifiedDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingTeam.getModifiedDate()),
 			Time.getShortTimestamp(newTeam.getModifiedDate()));
-		assertEquals(existingTeam.getGroupId(), newTeam.getGroupId());
-		assertEquals(existingTeam.getName(), newTeam.getName());
-		assertEquals(existingTeam.getDescription(), newTeam.getDescription());
+		Assert.assertEquals(existingTeam.getGroupId(), newTeam.getGroupId());
+		Assert.assertEquals(existingTeam.getName(), newTeam.getName());
+		Assert.assertEquals(existingTeam.getDescription(),
+			newTeam.getDescription());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Team newTeam = addTeam();
 
 		Team existingTeam = _persistence.findByPrimaryKey(newTeam.getPrimaryKey());
 
-		assertEquals(existingTeam, newTeam);
+		Assert.assertEquals(existingTeam, newTeam);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchTeamException");
+			Assert.fail("Missing entity did not throw NoSuchTeamException");
 		}
 		catch (NoSuchTeamException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		Team newTeam = addTeam();
 
 		Team existingTeam = _persistence.fetchByPrimaryKey(newTeam.getPrimaryKey());
 
-		assertEquals(existingTeam, newTeam);
+		Assert.assertEquals(existingTeam, newTeam);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Team missingTeam = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingTeam);
+		Assert.assertNull(missingTeam);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		Team newTeam = addTeam();
@@ -150,24 +171,27 @@ public class TeamPersistenceTest extends BasePersistenceTestCase {
 
 		List<Team> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Team existingTeam = result.get(0);
 
-		assertEquals(existingTeam, newTeam);
+		Assert.assertEquals(existingTeam, newTeam);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Team.class,
 				Team.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("teamId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("teamId",
+				ServiceTestUtil.nextLong()));
 
 		List<Team> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		Team newTeam = addTeam();
@@ -184,13 +208,14 @@ public class TeamPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingTeamId = result.get(0);
 
-		assertEquals(existingTeamId, newTeamId);
+		Assert.assertEquals(existingTeamId, newTeamId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Team.class,
 				Team.class.getClassLoader());
@@ -198,13 +223,14 @@ public class TeamPersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("teamId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("teamId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -216,32 +242,32 @@ public class TeamPersistenceTest extends BasePersistenceTestCase {
 
 		TeamModelImpl existingTeamModelImpl = (TeamModelImpl)_persistence.findByPrimaryKey(newTeam.getPrimaryKey());
 
-		assertEquals(existingTeamModelImpl.getGroupId(),
+		Assert.assertEquals(existingTeamModelImpl.getGroupId(),
 			existingTeamModelImpl.getOriginalGroupId());
-		assertTrue(Validator.equals(existingTeamModelImpl.getName(),
+		Assert.assertTrue(Validator.equals(existingTeamModelImpl.getName(),
 				existingTeamModelImpl.getOriginalName()));
 	}
 
 	protected Team addTeam() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Team team = _persistence.create(pk);
 
-		team.setCompanyId(nextLong());
+		team.setCompanyId(ServiceTestUtil.nextLong());
 
-		team.setUserId(nextLong());
+		team.setUserId(ServiceTestUtil.nextLong());
 
-		team.setUserName(randomString());
+		team.setUserName(ServiceTestUtil.randomString());
 
-		team.setCreateDate(nextDate());
+		team.setCreateDate(ServiceTestUtil.nextDate());
 
-		team.setModifiedDate(nextDate());
+		team.setModifiedDate(ServiceTestUtil.nextDate());
 
-		team.setGroupId(nextLong());
+		team.setGroupId(ServiceTestUtil.nextLong());
 
-		team.setName(randomString());
+		team.setName(ServiceTestUtil.randomString());
 
-		team.setDescription(randomString());
+		team.setDescription(ServiceTestUtil.randomString());
 
 		_persistence.update(team, false);
 

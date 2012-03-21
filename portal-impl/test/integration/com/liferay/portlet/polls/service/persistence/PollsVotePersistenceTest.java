@@ -20,36 +20,48 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.polls.NoSuchVoteException;
 import com.liferay.portlet.polls.model.PollsVote;
 import com.liferay.portlet.polls.model.impl.PollsVoteModelImpl;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class PollsVotePersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class PollsVotePersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (PollsVotePersistence)PortalBeanLocatorUtil.locate(PollsVotePersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		PollsVote pollsVote = _persistence.create(pk);
 
-		assertNotNull(pollsVote);
+		Assert.assertNotNull(pollsVote);
 
-		assertEquals(pollsVote.getPrimaryKey(), pk);
+		Assert.assertEquals(pollsVote.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		PollsVote newPollsVote = addPollsVote();
 
@@ -57,90 +69,104 @@ public class PollsVotePersistenceTest extends BasePersistenceTestCase {
 
 		PollsVote existingPollsVote = _persistence.fetchByPrimaryKey(newPollsVote.getPrimaryKey());
 
-		assertNull(existingPollsVote);
+		Assert.assertNull(existingPollsVote);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addPollsVote();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		PollsVote newPollsVote = _persistence.create(pk);
 
-		newPollsVote.setCompanyId(nextLong());
+		newPollsVote.setCompanyId(ServiceTestUtil.nextLong());
 
-		newPollsVote.setUserId(nextLong());
+		newPollsVote.setUserId(ServiceTestUtil.nextLong());
 
-		newPollsVote.setUserName(randomString());
+		newPollsVote.setUserName(ServiceTestUtil.randomString());
 
-		newPollsVote.setCreateDate(nextDate());
+		newPollsVote.setCreateDate(ServiceTestUtil.nextDate());
 
-		newPollsVote.setModifiedDate(nextDate());
+		newPollsVote.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newPollsVote.setQuestionId(nextLong());
+		newPollsVote.setQuestionId(ServiceTestUtil.nextLong());
 
-		newPollsVote.setChoiceId(nextLong());
+		newPollsVote.setChoiceId(ServiceTestUtil.nextLong());
 
-		newPollsVote.setVoteDate(nextDate());
+		newPollsVote.setVoteDate(ServiceTestUtil.nextDate());
 
 		_persistence.update(newPollsVote, false);
 
 		PollsVote existingPollsVote = _persistence.findByPrimaryKey(newPollsVote.getPrimaryKey());
 
-		assertEquals(existingPollsVote.getVoteId(), newPollsVote.getVoteId());
-		assertEquals(existingPollsVote.getCompanyId(),
+		Assert.assertEquals(existingPollsVote.getVoteId(),
+			newPollsVote.getVoteId());
+		Assert.assertEquals(existingPollsVote.getCompanyId(),
 			newPollsVote.getCompanyId());
-		assertEquals(existingPollsVote.getUserId(), newPollsVote.getUserId());
-		assertEquals(existingPollsVote.getUserName(), newPollsVote.getUserName());
-		assertEquals(Time.getShortTimestamp(existingPollsVote.getCreateDate()),
+		Assert.assertEquals(existingPollsVote.getUserId(),
+			newPollsVote.getUserId());
+		Assert.assertEquals(existingPollsVote.getUserName(),
+			newPollsVote.getUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingPollsVote.getCreateDate()),
 			Time.getShortTimestamp(newPollsVote.getCreateDate()));
-		assertEquals(Time.getShortTimestamp(existingPollsVote.getModifiedDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingPollsVote.getModifiedDate()),
 			Time.getShortTimestamp(newPollsVote.getModifiedDate()));
-		assertEquals(existingPollsVote.getQuestionId(),
+		Assert.assertEquals(existingPollsVote.getQuestionId(),
 			newPollsVote.getQuestionId());
-		assertEquals(existingPollsVote.getChoiceId(), newPollsVote.getChoiceId());
-		assertEquals(Time.getShortTimestamp(existingPollsVote.getVoteDate()),
+		Assert.assertEquals(existingPollsVote.getChoiceId(),
+			newPollsVote.getChoiceId());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingPollsVote.getVoteDate()),
 			Time.getShortTimestamp(newPollsVote.getVoteDate()));
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		PollsVote newPollsVote = addPollsVote();
 
 		PollsVote existingPollsVote = _persistence.findByPrimaryKey(newPollsVote.getPrimaryKey());
 
-		assertEquals(existingPollsVote, newPollsVote);
+		Assert.assertEquals(existingPollsVote, newPollsVote);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchVoteException");
+			Assert.fail("Missing entity did not throw NoSuchVoteException");
 		}
 		catch (NoSuchVoteException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		PollsVote newPollsVote = addPollsVote();
 
 		PollsVote existingPollsVote = _persistence.fetchByPrimaryKey(newPollsVote.getPrimaryKey());
 
-		assertEquals(existingPollsVote, newPollsVote);
+		Assert.assertEquals(existingPollsVote, newPollsVote);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		PollsVote missingPollsVote = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingPollsVote);
+		Assert.assertNull(missingPollsVote);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		PollsVote newPollsVote = addPollsVote();
@@ -153,24 +179,27 @@ public class PollsVotePersistenceTest extends BasePersistenceTestCase {
 
 		List<PollsVote> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		PollsVote existingPollsVote = result.get(0);
 
-		assertEquals(existingPollsVote, newPollsVote);
+		Assert.assertEquals(existingPollsVote, newPollsVote);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PollsVote.class,
 				PollsVote.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("voteId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("voteId",
+				ServiceTestUtil.nextLong()));
 
 		List<PollsVote> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		PollsVote newPollsVote = addPollsVote();
@@ -187,13 +216,14 @@ public class PollsVotePersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingVoteId = result.get(0);
 
-		assertEquals(existingVoteId, newVoteId);
+		Assert.assertEquals(existingVoteId, newVoteId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PollsVote.class,
 				PollsVote.class.getClassLoader());
@@ -201,13 +231,14 @@ public class PollsVotePersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("voteId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("voteId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -219,32 +250,32 @@ public class PollsVotePersistenceTest extends BasePersistenceTestCase {
 
 		PollsVoteModelImpl existingPollsVoteModelImpl = (PollsVoteModelImpl)_persistence.findByPrimaryKey(newPollsVote.getPrimaryKey());
 
-		assertEquals(existingPollsVoteModelImpl.getQuestionId(),
+		Assert.assertEquals(existingPollsVoteModelImpl.getQuestionId(),
 			existingPollsVoteModelImpl.getOriginalQuestionId());
-		assertEquals(existingPollsVoteModelImpl.getUserId(),
+		Assert.assertEquals(existingPollsVoteModelImpl.getUserId(),
 			existingPollsVoteModelImpl.getOriginalUserId());
 	}
 
 	protected PollsVote addPollsVote() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		PollsVote pollsVote = _persistence.create(pk);
 
-		pollsVote.setCompanyId(nextLong());
+		pollsVote.setCompanyId(ServiceTestUtil.nextLong());
 
-		pollsVote.setUserId(nextLong());
+		pollsVote.setUserId(ServiceTestUtil.nextLong());
 
-		pollsVote.setUserName(randomString());
+		pollsVote.setUserName(ServiceTestUtil.randomString());
 
-		pollsVote.setCreateDate(nextDate());
+		pollsVote.setCreateDate(ServiceTestUtil.nextDate());
 
-		pollsVote.setModifiedDate(nextDate());
+		pollsVote.setModifiedDate(ServiceTestUtil.nextDate());
 
-		pollsVote.setQuestionId(nextLong());
+		pollsVote.setQuestionId(ServiceTestUtil.nextLong());
 
-		pollsVote.setChoiceId(nextLong());
+		pollsVote.setChoiceId(ServiceTestUtil.nextLong());
 
-		pollsVote.setVoteDate(nextDate());
+		pollsVote.setVoteDate(ServiceTestUtil.nextDate());
 
 		_persistence.update(pollsVote, false);
 

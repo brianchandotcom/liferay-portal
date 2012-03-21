@@ -19,36 +19,48 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.social.NoSuchActivityException;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.impl.SocialActivityModelImpl;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class SocialActivityPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class SocialActivityPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (SocialActivityPersistence)PortalBeanLocatorUtil.locate(SocialActivityPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		SocialActivity socialActivity = _persistence.create(pk);
 
-		assertNotNull(socialActivity);
+		Assert.assertNotNull(socialActivity);
 
-		assertEquals(socialActivity.getPrimaryKey(), pk);
+		Assert.assertEquals(socialActivity.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		SocialActivity newSocialActivity = addSocialActivity();
 
@@ -56,102 +68,109 @@ public class SocialActivityPersistenceTest extends BasePersistenceTestCase {
 
 		SocialActivity existingSocialActivity = _persistence.fetchByPrimaryKey(newSocialActivity.getPrimaryKey());
 
-		assertNull(existingSocialActivity);
+		Assert.assertNull(existingSocialActivity);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addSocialActivity();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		SocialActivity newSocialActivity = _persistence.create(pk);
 
-		newSocialActivity.setGroupId(nextLong());
+		newSocialActivity.setGroupId(ServiceTestUtil.nextLong());
 
-		newSocialActivity.setCompanyId(nextLong());
+		newSocialActivity.setCompanyId(ServiceTestUtil.nextLong());
 
-		newSocialActivity.setUserId(nextLong());
+		newSocialActivity.setUserId(ServiceTestUtil.nextLong());
 
-		newSocialActivity.setCreateDate(nextLong());
+		newSocialActivity.setCreateDate(ServiceTestUtil.nextLong());
 
-		newSocialActivity.setMirrorActivityId(nextLong());
+		newSocialActivity.setMirrorActivityId(ServiceTestUtil.nextLong());
 
-		newSocialActivity.setClassNameId(nextLong());
+		newSocialActivity.setClassNameId(ServiceTestUtil.nextLong());
 
-		newSocialActivity.setClassPK(nextLong());
+		newSocialActivity.setClassPK(ServiceTestUtil.nextLong());
 
-		newSocialActivity.setType(nextInt());
+		newSocialActivity.setType(ServiceTestUtil.nextInt());
 
-		newSocialActivity.setExtraData(randomString());
+		newSocialActivity.setExtraData(ServiceTestUtil.randomString());
 
-		newSocialActivity.setReceiverUserId(nextLong());
+		newSocialActivity.setReceiverUserId(ServiceTestUtil.nextLong());
 
 		_persistence.update(newSocialActivity, false);
 
 		SocialActivity existingSocialActivity = _persistence.findByPrimaryKey(newSocialActivity.getPrimaryKey());
 
-		assertEquals(existingSocialActivity.getActivityId(),
+		Assert.assertEquals(existingSocialActivity.getActivityId(),
 			newSocialActivity.getActivityId());
-		assertEquals(existingSocialActivity.getGroupId(),
+		Assert.assertEquals(existingSocialActivity.getGroupId(),
 			newSocialActivity.getGroupId());
-		assertEquals(existingSocialActivity.getCompanyId(),
+		Assert.assertEquals(existingSocialActivity.getCompanyId(),
 			newSocialActivity.getCompanyId());
-		assertEquals(existingSocialActivity.getUserId(),
+		Assert.assertEquals(existingSocialActivity.getUserId(),
 			newSocialActivity.getUserId());
-		assertEquals(existingSocialActivity.getCreateDate(),
+		Assert.assertEquals(existingSocialActivity.getCreateDate(),
 			newSocialActivity.getCreateDate());
-		assertEquals(existingSocialActivity.getMirrorActivityId(),
+		Assert.assertEquals(existingSocialActivity.getMirrorActivityId(),
 			newSocialActivity.getMirrorActivityId());
-		assertEquals(existingSocialActivity.getClassNameId(),
+		Assert.assertEquals(existingSocialActivity.getClassNameId(),
 			newSocialActivity.getClassNameId());
-		assertEquals(existingSocialActivity.getClassPK(),
+		Assert.assertEquals(existingSocialActivity.getClassPK(),
 			newSocialActivity.getClassPK());
-		assertEquals(existingSocialActivity.getType(),
+		Assert.assertEquals(existingSocialActivity.getType(),
 			newSocialActivity.getType());
-		assertEquals(existingSocialActivity.getExtraData(),
+		Assert.assertEquals(existingSocialActivity.getExtraData(),
 			newSocialActivity.getExtraData());
-		assertEquals(existingSocialActivity.getReceiverUserId(),
+		Assert.assertEquals(existingSocialActivity.getReceiverUserId(),
 			newSocialActivity.getReceiverUserId());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		SocialActivity newSocialActivity = addSocialActivity();
 
 		SocialActivity existingSocialActivity = _persistence.findByPrimaryKey(newSocialActivity.getPrimaryKey());
 
-		assertEquals(existingSocialActivity, newSocialActivity);
+		Assert.assertEquals(existingSocialActivity, newSocialActivity);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchActivityException");
+			Assert.fail("Missing entity did not throw NoSuchActivityException");
 		}
 		catch (NoSuchActivityException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		SocialActivity newSocialActivity = addSocialActivity();
 
 		SocialActivity existingSocialActivity = _persistence.fetchByPrimaryKey(newSocialActivity.getPrimaryKey());
 
-		assertEquals(existingSocialActivity, newSocialActivity);
+		Assert.assertEquals(existingSocialActivity, newSocialActivity);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		SocialActivity missingSocialActivity = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingSocialActivity);
+		Assert.assertNull(missingSocialActivity);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		SocialActivity newSocialActivity = addSocialActivity();
@@ -164,24 +183,27 @@ public class SocialActivityPersistenceTest extends BasePersistenceTestCase {
 
 		List<SocialActivity> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		SocialActivity existingSocialActivity = result.get(0);
 
-		assertEquals(existingSocialActivity, newSocialActivity);
+		Assert.assertEquals(existingSocialActivity, newSocialActivity);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SocialActivity.class,
 				SocialActivity.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("activityId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("activityId",
+				ServiceTestUtil.nextLong()));
 
 		List<SocialActivity> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		SocialActivity newSocialActivity = addSocialActivity();
@@ -198,13 +220,14 @@ public class SocialActivityPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingActivityId = result.get(0);
 
-		assertEquals(existingActivityId, newActivityId);
+		Assert.assertEquals(existingActivityId, newActivityId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SocialActivity.class,
 				SocialActivity.class.getClassLoader());
@@ -212,13 +235,14 @@ public class SocialActivityPersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("activityId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("activityId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -230,49 +254,49 @@ public class SocialActivityPersistenceTest extends BasePersistenceTestCase {
 
 		SocialActivityModelImpl existingSocialActivityModelImpl = (SocialActivityModelImpl)_persistence.findByPrimaryKey(newSocialActivity.getPrimaryKey());
 
-		assertEquals(existingSocialActivityModelImpl.getMirrorActivityId(),
+		Assert.assertEquals(existingSocialActivityModelImpl.getMirrorActivityId(),
 			existingSocialActivityModelImpl.getOriginalMirrorActivityId());
 
-		assertEquals(existingSocialActivityModelImpl.getGroupId(),
+		Assert.assertEquals(existingSocialActivityModelImpl.getGroupId(),
 			existingSocialActivityModelImpl.getOriginalGroupId());
-		assertEquals(existingSocialActivityModelImpl.getUserId(),
+		Assert.assertEquals(existingSocialActivityModelImpl.getUserId(),
 			existingSocialActivityModelImpl.getOriginalUserId());
-		assertEquals(existingSocialActivityModelImpl.getCreateDate(),
+		Assert.assertEquals(existingSocialActivityModelImpl.getCreateDate(),
 			existingSocialActivityModelImpl.getOriginalCreateDate());
-		assertEquals(existingSocialActivityModelImpl.getClassNameId(),
+		Assert.assertEquals(existingSocialActivityModelImpl.getClassNameId(),
 			existingSocialActivityModelImpl.getOriginalClassNameId());
-		assertEquals(existingSocialActivityModelImpl.getClassPK(),
+		Assert.assertEquals(existingSocialActivityModelImpl.getClassPK(),
 			existingSocialActivityModelImpl.getOriginalClassPK());
-		assertEquals(existingSocialActivityModelImpl.getType(),
+		Assert.assertEquals(existingSocialActivityModelImpl.getType(),
 			existingSocialActivityModelImpl.getOriginalType());
-		assertEquals(existingSocialActivityModelImpl.getReceiverUserId(),
+		Assert.assertEquals(existingSocialActivityModelImpl.getReceiverUserId(),
 			existingSocialActivityModelImpl.getOriginalReceiverUserId());
 	}
 
 	protected SocialActivity addSocialActivity() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		SocialActivity socialActivity = _persistence.create(pk);
 
-		socialActivity.setGroupId(nextLong());
+		socialActivity.setGroupId(ServiceTestUtil.nextLong());
 
-		socialActivity.setCompanyId(nextLong());
+		socialActivity.setCompanyId(ServiceTestUtil.nextLong());
 
-		socialActivity.setUserId(nextLong());
+		socialActivity.setUserId(ServiceTestUtil.nextLong());
 
-		socialActivity.setCreateDate(nextLong());
+		socialActivity.setCreateDate(ServiceTestUtil.nextLong());
 
-		socialActivity.setMirrorActivityId(nextLong());
+		socialActivity.setMirrorActivityId(ServiceTestUtil.nextLong());
 
-		socialActivity.setClassNameId(nextLong());
+		socialActivity.setClassNameId(ServiceTestUtil.nextLong());
 
-		socialActivity.setClassPK(nextLong());
+		socialActivity.setClassPK(ServiceTestUtil.nextLong());
 
-		socialActivity.setType(nextInt());
+		socialActivity.setType(ServiceTestUtil.nextInt());
 
-		socialActivity.setExtraData(randomString());
+		socialActivity.setExtraData(ServiceTestUtil.randomString());
 
-		socialActivity.setReceiverUserId(nextLong());
+		socialActivity.setReceiverUserId(ServiceTestUtil.nextLong());
 
 		_persistence.update(socialActivity, false);
 

@@ -21,31 +21,43 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.model.ListType;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class ListTypePersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class ListTypePersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (ListTypePersistence)PortalBeanLocatorUtil.locate(ListTypePersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		int pk = nextInt();
+		int pk = ServiceTestUtil.nextInt();
 
 		ListType listType = _persistence.create(pk);
 
-		assertNotNull(listType);
+		Assert.assertNotNull(listType);
 
-		assertEquals(listType.getPrimaryKey(), pk);
+		Assert.assertEquals(listType.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		ListType newListType = addListType();
 
@@ -53,68 +65,75 @@ public class ListTypePersistenceTest extends BasePersistenceTestCase {
 
 		ListType existingListType = _persistence.fetchByPrimaryKey(newListType.getPrimaryKey());
 
-		assertNull(existingListType);
+		Assert.assertNull(existingListType);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addListType();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		int pk = nextInt();
+		int pk = ServiceTestUtil.nextInt();
 
 		ListType newListType = _persistence.create(pk);
 
-		newListType.setName(randomString());
+		newListType.setName(ServiceTestUtil.randomString());
 
-		newListType.setType(randomString());
+		newListType.setType(ServiceTestUtil.randomString());
 
 		_persistence.update(newListType, false);
 
 		ListType existingListType = _persistence.findByPrimaryKey(newListType.getPrimaryKey());
 
-		assertEquals(existingListType.getListTypeId(),
+		Assert.assertEquals(existingListType.getListTypeId(),
 			newListType.getListTypeId());
-		assertEquals(existingListType.getName(), newListType.getName());
-		assertEquals(existingListType.getType(), newListType.getType());
+		Assert.assertEquals(existingListType.getName(), newListType.getName());
+		Assert.assertEquals(existingListType.getType(), newListType.getType());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ListType newListType = addListType();
 
 		ListType existingListType = _persistence.findByPrimaryKey(newListType.getPrimaryKey());
 
-		assertEquals(existingListType, newListType);
+		Assert.assertEquals(existingListType, newListType);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		int pk = nextInt();
+		int pk = ServiceTestUtil.nextInt();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchListTypeException");
+			Assert.fail("Missing entity did not throw NoSuchListTypeException");
 		}
 		catch (NoSuchListTypeException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		ListType newListType = addListType();
 
 		ListType existingListType = _persistence.fetchByPrimaryKey(newListType.getPrimaryKey());
 
-		assertEquals(existingListType, newListType);
+		Assert.assertEquals(existingListType, newListType);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		int pk = nextInt();
+		int pk = ServiceTestUtil.nextInt();
 
 		ListType missingListType = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingListType);
+		Assert.assertNull(missingListType);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		ListType newListType = addListType();
@@ -127,24 +146,27 @@ public class ListTypePersistenceTest extends BasePersistenceTestCase {
 
 		List<ListType> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		ListType existingListType = result.get(0);
 
-		assertEquals(existingListType, newListType);
+		Assert.assertEquals(existingListType, newListType);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ListType.class,
 				ListType.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("listTypeId", nextInt()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("listTypeId",
+				ServiceTestUtil.nextInt()));
 
 		List<ListType> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		ListType newListType = addListType();
@@ -161,13 +183,14 @@ public class ListTypePersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingListTypeId = result.get(0);
 
-		assertEquals(existingListTypeId, newListTypeId);
+		Assert.assertEquals(existingListTypeId, newListTypeId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ListType.class,
 				ListType.class.getClassLoader());
@@ -175,21 +198,21 @@ public class ListTypePersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("listTypeId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("listTypeId",
-				new Object[] { nextInt() }));
+				new Object[] { ServiceTestUtil.nextInt() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
 	protected ListType addListType() throws Exception {
-		int pk = nextInt();
+		int pk = ServiceTestUtil.nextInt();
 
 		ListType listType = _persistence.create(pk);
 
-		listType.setName(randomString());
+		listType.setName(ServiceTestUtil.randomString());
 
-		listType.setType(randomString());
+		listType.setType(ServiceTestUtil.randomString());
 
 		_persistence.update(listType, false);
 

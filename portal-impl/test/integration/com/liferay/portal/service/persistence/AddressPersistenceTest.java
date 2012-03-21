@@ -22,31 +22,43 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.Address;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddressPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class AddressPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (AddressPersistence)PortalBeanLocatorUtil.locate(AddressPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Address address = _persistence.create(pk);
 
-		assertNotNull(address);
+		Assert.assertNotNull(address);
 
-		assertEquals(address.getPrimaryKey(), pk);
+		Assert.assertEquals(address.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		Address newAddress = addAddress();
 
@@ -54,115 +66,135 @@ public class AddressPersistenceTest extends BasePersistenceTestCase {
 
 		Address existingAddress = _persistence.fetchByPrimaryKey(newAddress.getPrimaryKey());
 
-		assertNull(existingAddress);
+		Assert.assertNull(existingAddress);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addAddress();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Address newAddress = _persistence.create(pk);
 
-		newAddress.setCompanyId(nextLong());
+		newAddress.setCompanyId(ServiceTestUtil.nextLong());
 
-		newAddress.setUserId(nextLong());
+		newAddress.setUserId(ServiceTestUtil.nextLong());
 
-		newAddress.setUserName(randomString());
+		newAddress.setUserName(ServiceTestUtil.randomString());
 
-		newAddress.setCreateDate(nextDate());
+		newAddress.setCreateDate(ServiceTestUtil.nextDate());
 
-		newAddress.setModifiedDate(nextDate());
+		newAddress.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newAddress.setClassNameId(nextLong());
+		newAddress.setClassNameId(ServiceTestUtil.nextLong());
 
-		newAddress.setClassPK(nextLong());
+		newAddress.setClassPK(ServiceTestUtil.nextLong());
 
-		newAddress.setStreet1(randomString());
+		newAddress.setStreet1(ServiceTestUtil.randomString());
 
-		newAddress.setStreet2(randomString());
+		newAddress.setStreet2(ServiceTestUtil.randomString());
 
-		newAddress.setStreet3(randomString());
+		newAddress.setStreet3(ServiceTestUtil.randomString());
 
-		newAddress.setCity(randomString());
+		newAddress.setCity(ServiceTestUtil.randomString());
 
-		newAddress.setZip(randomString());
+		newAddress.setZip(ServiceTestUtil.randomString());
 
-		newAddress.setRegionId(nextLong());
+		newAddress.setRegionId(ServiceTestUtil.nextLong());
 
-		newAddress.setCountryId(nextLong());
+		newAddress.setCountryId(ServiceTestUtil.nextLong());
 
-		newAddress.setTypeId(nextInt());
+		newAddress.setTypeId(ServiceTestUtil.nextInt());
 
-		newAddress.setMailing(randomBoolean());
+		newAddress.setMailing(ServiceTestUtil.randomBoolean());
 
-		newAddress.setPrimary(randomBoolean());
+		newAddress.setPrimary(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(newAddress, false);
 
 		Address existingAddress = _persistence.findByPrimaryKey(newAddress.getPrimaryKey());
 
-		assertEquals(existingAddress.getAddressId(), newAddress.getAddressId());
-		assertEquals(existingAddress.getCompanyId(), newAddress.getCompanyId());
-		assertEquals(existingAddress.getUserId(), newAddress.getUserId());
-		assertEquals(existingAddress.getUserName(), newAddress.getUserName());
-		assertEquals(Time.getShortTimestamp(existingAddress.getCreateDate()),
+		Assert.assertEquals(existingAddress.getAddressId(),
+			newAddress.getAddressId());
+		Assert.assertEquals(existingAddress.getCompanyId(),
+			newAddress.getCompanyId());
+		Assert.assertEquals(existingAddress.getUserId(), newAddress.getUserId());
+		Assert.assertEquals(existingAddress.getUserName(),
+			newAddress.getUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingAddress.getCreateDate()),
 			Time.getShortTimestamp(newAddress.getCreateDate()));
-		assertEquals(Time.getShortTimestamp(existingAddress.getModifiedDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingAddress.getModifiedDate()),
 			Time.getShortTimestamp(newAddress.getModifiedDate()));
-		assertEquals(existingAddress.getClassNameId(),
+		Assert.assertEquals(existingAddress.getClassNameId(),
 			newAddress.getClassNameId());
-		assertEquals(existingAddress.getClassPK(), newAddress.getClassPK());
-		assertEquals(existingAddress.getStreet1(), newAddress.getStreet1());
-		assertEquals(existingAddress.getStreet2(), newAddress.getStreet2());
-		assertEquals(existingAddress.getStreet3(), newAddress.getStreet3());
-		assertEquals(existingAddress.getCity(), newAddress.getCity());
-		assertEquals(existingAddress.getZip(), newAddress.getZip());
-		assertEquals(existingAddress.getRegionId(), newAddress.getRegionId());
-		assertEquals(existingAddress.getCountryId(), newAddress.getCountryId());
-		assertEquals(existingAddress.getTypeId(), newAddress.getTypeId());
-		assertEquals(existingAddress.getMailing(), newAddress.getMailing());
-		assertEquals(existingAddress.getPrimary(), newAddress.getPrimary());
+		Assert.assertEquals(existingAddress.getClassPK(),
+			newAddress.getClassPK());
+		Assert.assertEquals(existingAddress.getStreet1(),
+			newAddress.getStreet1());
+		Assert.assertEquals(existingAddress.getStreet2(),
+			newAddress.getStreet2());
+		Assert.assertEquals(existingAddress.getStreet3(),
+			newAddress.getStreet3());
+		Assert.assertEquals(existingAddress.getCity(), newAddress.getCity());
+		Assert.assertEquals(existingAddress.getZip(), newAddress.getZip());
+		Assert.assertEquals(existingAddress.getRegionId(),
+			newAddress.getRegionId());
+		Assert.assertEquals(existingAddress.getCountryId(),
+			newAddress.getCountryId());
+		Assert.assertEquals(existingAddress.getTypeId(), newAddress.getTypeId());
+		Assert.assertEquals(existingAddress.getMailing(),
+			newAddress.getMailing());
+		Assert.assertEquals(existingAddress.getPrimary(),
+			newAddress.getPrimary());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Address newAddress = addAddress();
 
 		Address existingAddress = _persistence.findByPrimaryKey(newAddress.getPrimaryKey());
 
-		assertEquals(existingAddress, newAddress);
+		Assert.assertEquals(existingAddress, newAddress);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchAddressException");
+			Assert.fail("Missing entity did not throw NoSuchAddressException");
 		}
 		catch (NoSuchAddressException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		Address newAddress = addAddress();
 
 		Address existingAddress = _persistence.fetchByPrimaryKey(newAddress.getPrimaryKey());
 
-		assertEquals(existingAddress, newAddress);
+		Assert.assertEquals(existingAddress, newAddress);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Address missingAddress = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingAddress);
+		Assert.assertNull(missingAddress);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		Address newAddress = addAddress();
@@ -175,24 +207,27 @@ public class AddressPersistenceTest extends BasePersistenceTestCase {
 
 		List<Address> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Address existingAddress = result.get(0);
 
-		assertEquals(existingAddress, newAddress);
+		Assert.assertEquals(existingAddress, newAddress);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Address.class,
 				Address.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("addressId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("addressId",
+				ServiceTestUtil.nextLong()));
 
 		List<Address> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		Address newAddress = addAddress();
@@ -209,13 +244,14 @@ public class AddressPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingAddressId = result.get(0);
 
-		assertEquals(existingAddressId, newAddressId);
+		Assert.assertEquals(existingAddressId, newAddressId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Address.class,
 				Address.class.getClassLoader());
@@ -223,51 +259,51 @@ public class AddressPersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("addressId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("addressId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
 	protected Address addAddress() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Address address = _persistence.create(pk);
 
-		address.setCompanyId(nextLong());
+		address.setCompanyId(ServiceTestUtil.nextLong());
 
-		address.setUserId(nextLong());
+		address.setUserId(ServiceTestUtil.nextLong());
 
-		address.setUserName(randomString());
+		address.setUserName(ServiceTestUtil.randomString());
 
-		address.setCreateDate(nextDate());
+		address.setCreateDate(ServiceTestUtil.nextDate());
 
-		address.setModifiedDate(nextDate());
+		address.setModifiedDate(ServiceTestUtil.nextDate());
 
-		address.setClassNameId(nextLong());
+		address.setClassNameId(ServiceTestUtil.nextLong());
 
-		address.setClassPK(nextLong());
+		address.setClassPK(ServiceTestUtil.nextLong());
 
-		address.setStreet1(randomString());
+		address.setStreet1(ServiceTestUtil.randomString());
 
-		address.setStreet2(randomString());
+		address.setStreet2(ServiceTestUtil.randomString());
 
-		address.setStreet3(randomString());
+		address.setStreet3(ServiceTestUtil.randomString());
 
-		address.setCity(randomString());
+		address.setCity(ServiceTestUtil.randomString());
 
-		address.setZip(randomString());
+		address.setZip(ServiceTestUtil.randomString());
 
-		address.setRegionId(nextLong());
+		address.setRegionId(ServiceTestUtil.nextLong());
 
-		address.setCountryId(nextLong());
+		address.setCountryId(ServiceTestUtil.nextLong());
 
-		address.setTypeId(nextInt());
+		address.setTypeId(ServiceTestUtil.nextInt());
 
-		address.setMailing(randomBoolean());
+		address.setMailing(ServiceTestUtil.randomBoolean());
 
-		address.setPrimary(randomBoolean());
+		address.setPrimary(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(address, false);
 

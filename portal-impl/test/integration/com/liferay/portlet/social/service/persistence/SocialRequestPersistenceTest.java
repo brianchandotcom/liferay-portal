@@ -20,36 +20,48 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.social.NoSuchRequestException;
 import com.liferay.portlet.social.model.SocialRequest;
 import com.liferay.portlet.social.model.impl.SocialRequestModelImpl;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class SocialRequestPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class SocialRequestPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (SocialRequestPersistence)PortalBeanLocatorUtil.locate(SocialRequestPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		SocialRequest socialRequest = _persistence.create(pk);
 
-		assertNotNull(socialRequest);
+		Assert.assertNotNull(socialRequest);
 
-		assertEquals(socialRequest.getPrimaryKey(), pk);
+		Assert.assertEquals(socialRequest.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		SocialRequest newSocialRequest = addSocialRequest();
 
@@ -57,108 +69,117 @@ public class SocialRequestPersistenceTest extends BasePersistenceTestCase {
 
 		SocialRequest existingSocialRequest = _persistence.fetchByPrimaryKey(newSocialRequest.getPrimaryKey());
 
-		assertNull(existingSocialRequest);
+		Assert.assertNull(existingSocialRequest);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addSocialRequest();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		SocialRequest newSocialRequest = _persistence.create(pk);
 
-		newSocialRequest.setUuid(randomString());
+		newSocialRequest.setUuid(ServiceTestUtil.randomString());
 
-		newSocialRequest.setGroupId(nextLong());
+		newSocialRequest.setGroupId(ServiceTestUtil.nextLong());
 
-		newSocialRequest.setCompanyId(nextLong());
+		newSocialRequest.setCompanyId(ServiceTestUtil.nextLong());
 
-		newSocialRequest.setUserId(nextLong());
+		newSocialRequest.setUserId(ServiceTestUtil.nextLong());
 
-		newSocialRequest.setCreateDate(nextLong());
+		newSocialRequest.setCreateDate(ServiceTestUtil.nextLong());
 
-		newSocialRequest.setModifiedDate(nextLong());
+		newSocialRequest.setModifiedDate(ServiceTestUtil.nextLong());
 
-		newSocialRequest.setClassNameId(nextLong());
+		newSocialRequest.setClassNameId(ServiceTestUtil.nextLong());
 
-		newSocialRequest.setClassPK(nextLong());
+		newSocialRequest.setClassPK(ServiceTestUtil.nextLong());
 
-		newSocialRequest.setType(nextInt());
+		newSocialRequest.setType(ServiceTestUtil.nextInt());
 
-		newSocialRequest.setExtraData(randomString());
+		newSocialRequest.setExtraData(ServiceTestUtil.randomString());
 
-		newSocialRequest.setReceiverUserId(nextLong());
+		newSocialRequest.setReceiverUserId(ServiceTestUtil.nextLong());
 
-		newSocialRequest.setStatus(nextInt());
+		newSocialRequest.setStatus(ServiceTestUtil.nextInt());
 
 		_persistence.update(newSocialRequest, false);
 
 		SocialRequest existingSocialRequest = _persistence.findByPrimaryKey(newSocialRequest.getPrimaryKey());
 
-		assertEquals(existingSocialRequest.getUuid(), newSocialRequest.getUuid());
-		assertEquals(existingSocialRequest.getRequestId(),
+		Assert.assertEquals(existingSocialRequest.getUuid(),
+			newSocialRequest.getUuid());
+		Assert.assertEquals(existingSocialRequest.getRequestId(),
 			newSocialRequest.getRequestId());
-		assertEquals(existingSocialRequest.getGroupId(),
+		Assert.assertEquals(existingSocialRequest.getGroupId(),
 			newSocialRequest.getGroupId());
-		assertEquals(existingSocialRequest.getCompanyId(),
+		Assert.assertEquals(existingSocialRequest.getCompanyId(),
 			newSocialRequest.getCompanyId());
-		assertEquals(existingSocialRequest.getUserId(),
+		Assert.assertEquals(existingSocialRequest.getUserId(),
 			newSocialRequest.getUserId());
-		assertEquals(existingSocialRequest.getCreateDate(),
+		Assert.assertEquals(existingSocialRequest.getCreateDate(),
 			newSocialRequest.getCreateDate());
-		assertEquals(existingSocialRequest.getModifiedDate(),
+		Assert.assertEquals(existingSocialRequest.getModifiedDate(),
 			newSocialRequest.getModifiedDate());
-		assertEquals(existingSocialRequest.getClassNameId(),
+		Assert.assertEquals(existingSocialRequest.getClassNameId(),
 			newSocialRequest.getClassNameId());
-		assertEquals(existingSocialRequest.getClassPK(),
+		Assert.assertEquals(existingSocialRequest.getClassPK(),
 			newSocialRequest.getClassPK());
-		assertEquals(existingSocialRequest.getType(), newSocialRequest.getType());
-		assertEquals(existingSocialRequest.getExtraData(),
+		Assert.assertEquals(existingSocialRequest.getType(),
+			newSocialRequest.getType());
+		Assert.assertEquals(existingSocialRequest.getExtraData(),
 			newSocialRequest.getExtraData());
-		assertEquals(existingSocialRequest.getReceiverUserId(),
+		Assert.assertEquals(existingSocialRequest.getReceiverUserId(),
 			newSocialRequest.getReceiverUserId());
-		assertEquals(existingSocialRequest.getStatus(),
+		Assert.assertEquals(existingSocialRequest.getStatus(),
 			newSocialRequest.getStatus());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		SocialRequest newSocialRequest = addSocialRequest();
 
 		SocialRequest existingSocialRequest = _persistence.findByPrimaryKey(newSocialRequest.getPrimaryKey());
 
-		assertEquals(existingSocialRequest, newSocialRequest);
+		Assert.assertEquals(existingSocialRequest, newSocialRequest);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchRequestException");
+			Assert.fail("Missing entity did not throw NoSuchRequestException");
 		}
 		catch (NoSuchRequestException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		SocialRequest newSocialRequest = addSocialRequest();
 
 		SocialRequest existingSocialRequest = _persistence.fetchByPrimaryKey(newSocialRequest.getPrimaryKey());
 
-		assertEquals(existingSocialRequest, newSocialRequest);
+		Assert.assertEquals(existingSocialRequest, newSocialRequest);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		SocialRequest missingSocialRequest = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingSocialRequest);
+		Assert.assertNull(missingSocialRequest);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		SocialRequest newSocialRequest = addSocialRequest();
@@ -171,24 +192,27 @@ public class SocialRequestPersistenceTest extends BasePersistenceTestCase {
 
 		List<SocialRequest> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		SocialRequest existingSocialRequest = result.get(0);
 
-		assertEquals(existingSocialRequest, newSocialRequest);
+		Assert.assertEquals(existingSocialRequest, newSocialRequest);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SocialRequest.class,
 				SocialRequest.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("requestId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("requestId",
+				ServiceTestUtil.nextLong()));
 
 		List<SocialRequest> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		SocialRequest newSocialRequest = addSocialRequest();
@@ -205,13 +229,14 @@ public class SocialRequestPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingRequestId = result.get(0);
 
-		assertEquals(existingRequestId, newRequestId);
+		Assert.assertEquals(existingRequestId, newRequestId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SocialRequest.class,
 				SocialRequest.class.getClassLoader());
@@ -219,13 +244,14 @@ public class SocialRequestPersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("requestId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("requestId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -237,51 +263,52 @@ public class SocialRequestPersistenceTest extends BasePersistenceTestCase {
 
 		SocialRequestModelImpl existingSocialRequestModelImpl = (SocialRequestModelImpl)_persistence.findByPrimaryKey(newSocialRequest.getPrimaryKey());
 
-		assertTrue(Validator.equals(existingSocialRequestModelImpl.getUuid(),
+		Assert.assertTrue(Validator.equals(
+				existingSocialRequestModelImpl.getUuid(),
 				existingSocialRequestModelImpl.getOriginalUuid()));
-		assertEquals(existingSocialRequestModelImpl.getGroupId(),
+		Assert.assertEquals(existingSocialRequestModelImpl.getGroupId(),
 			existingSocialRequestModelImpl.getOriginalGroupId());
 
-		assertEquals(existingSocialRequestModelImpl.getUserId(),
+		Assert.assertEquals(existingSocialRequestModelImpl.getUserId(),
 			existingSocialRequestModelImpl.getOriginalUserId());
-		assertEquals(existingSocialRequestModelImpl.getClassNameId(),
+		Assert.assertEquals(existingSocialRequestModelImpl.getClassNameId(),
 			existingSocialRequestModelImpl.getOriginalClassNameId());
-		assertEquals(existingSocialRequestModelImpl.getClassPK(),
+		Assert.assertEquals(existingSocialRequestModelImpl.getClassPK(),
 			existingSocialRequestModelImpl.getOriginalClassPK());
-		assertEquals(existingSocialRequestModelImpl.getType(),
+		Assert.assertEquals(existingSocialRequestModelImpl.getType(),
 			existingSocialRequestModelImpl.getOriginalType());
-		assertEquals(existingSocialRequestModelImpl.getReceiverUserId(),
+		Assert.assertEquals(existingSocialRequestModelImpl.getReceiverUserId(),
 			existingSocialRequestModelImpl.getOriginalReceiverUserId());
 	}
 
 	protected SocialRequest addSocialRequest() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		SocialRequest socialRequest = _persistence.create(pk);
 
-		socialRequest.setUuid(randomString());
+		socialRequest.setUuid(ServiceTestUtil.randomString());
 
-		socialRequest.setGroupId(nextLong());
+		socialRequest.setGroupId(ServiceTestUtil.nextLong());
 
-		socialRequest.setCompanyId(nextLong());
+		socialRequest.setCompanyId(ServiceTestUtil.nextLong());
 
-		socialRequest.setUserId(nextLong());
+		socialRequest.setUserId(ServiceTestUtil.nextLong());
 
-		socialRequest.setCreateDate(nextLong());
+		socialRequest.setCreateDate(ServiceTestUtil.nextLong());
 
-		socialRequest.setModifiedDate(nextLong());
+		socialRequest.setModifiedDate(ServiceTestUtil.nextLong());
 
-		socialRequest.setClassNameId(nextLong());
+		socialRequest.setClassNameId(ServiceTestUtil.nextLong());
 
-		socialRequest.setClassPK(nextLong());
+		socialRequest.setClassPK(ServiceTestUtil.nextLong());
 
-		socialRequest.setType(nextInt());
+		socialRequest.setType(ServiceTestUtil.nextInt());
 
-		socialRequest.setExtraData(randomString());
+		socialRequest.setExtraData(ServiceTestUtil.randomString());
 
-		socialRequest.setReceiverUserId(nextLong());
+		socialRequest.setReceiverUserId(ServiceTestUtil.nextLong());
 
-		socialRequest.setStatus(nextInt());
+		socialRequest.setStatus(ServiceTestUtil.nextInt());
 
 		_persistence.update(socialRequest, false);
 

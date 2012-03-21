@@ -21,36 +21,48 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class DLFolderPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class DLFolderPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (DLFolderPersistence)PortalBeanLocatorUtil.locate(DLFolderPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		DLFolder dlFolder = _persistence.create(pk);
 
-		assertNotNull(dlFolder);
+		Assert.assertNotNull(dlFolder);
 
-		assertEquals(dlFolder.getPrimaryKey(), pk);
+		Assert.assertEquals(dlFolder.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		DLFolder newDLFolder = addDLFolder();
 
@@ -58,115 +70,130 @@ public class DLFolderPersistenceTest extends BasePersistenceTestCase {
 
 		DLFolder existingDLFolder = _persistence.fetchByPrimaryKey(newDLFolder.getPrimaryKey());
 
-		assertNull(existingDLFolder);
+		Assert.assertNull(existingDLFolder);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addDLFolder();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		DLFolder newDLFolder = _persistence.create(pk);
 
-		newDLFolder.setUuid(randomString());
+		newDLFolder.setUuid(ServiceTestUtil.randomString());
 
-		newDLFolder.setGroupId(nextLong());
+		newDLFolder.setGroupId(ServiceTestUtil.nextLong());
 
-		newDLFolder.setCompanyId(nextLong());
+		newDLFolder.setCompanyId(ServiceTestUtil.nextLong());
 
-		newDLFolder.setUserId(nextLong());
+		newDLFolder.setUserId(ServiceTestUtil.nextLong());
 
-		newDLFolder.setUserName(randomString());
+		newDLFolder.setUserName(ServiceTestUtil.randomString());
 
-		newDLFolder.setCreateDate(nextDate());
+		newDLFolder.setCreateDate(ServiceTestUtil.nextDate());
 
-		newDLFolder.setModifiedDate(nextDate());
+		newDLFolder.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newDLFolder.setRepositoryId(nextLong());
+		newDLFolder.setRepositoryId(ServiceTestUtil.nextLong());
 
-		newDLFolder.setMountPoint(randomBoolean());
+		newDLFolder.setMountPoint(ServiceTestUtil.randomBoolean());
 
-		newDLFolder.setParentFolderId(nextLong());
+		newDLFolder.setParentFolderId(ServiceTestUtil.nextLong());
 
-		newDLFolder.setName(randomString());
+		newDLFolder.setName(ServiceTestUtil.randomString());
 
-		newDLFolder.setDescription(randomString());
+		newDLFolder.setDescription(ServiceTestUtil.randomString());
 
-		newDLFolder.setLastPostDate(nextDate());
+		newDLFolder.setLastPostDate(ServiceTestUtil.nextDate());
 
-		newDLFolder.setDefaultFileEntryTypeId(nextLong());
+		newDLFolder.setDefaultFileEntryTypeId(ServiceTestUtil.nextLong());
 
-		newDLFolder.setOverrideFileEntryTypes(randomBoolean());
+		newDLFolder.setOverrideFileEntryTypes(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(newDLFolder, false);
 
 		DLFolder existingDLFolder = _persistence.findByPrimaryKey(newDLFolder.getPrimaryKey());
 
-		assertEquals(existingDLFolder.getUuid(), newDLFolder.getUuid());
-		assertEquals(existingDLFolder.getFolderId(), newDLFolder.getFolderId());
-		assertEquals(existingDLFolder.getGroupId(), newDLFolder.getGroupId());
-		assertEquals(existingDLFolder.getCompanyId(), newDLFolder.getCompanyId());
-		assertEquals(existingDLFolder.getUserId(), newDLFolder.getUserId());
-		assertEquals(existingDLFolder.getUserName(), newDLFolder.getUserName());
-		assertEquals(Time.getShortTimestamp(existingDLFolder.getCreateDate()),
+		Assert.assertEquals(existingDLFolder.getUuid(), newDLFolder.getUuid());
+		Assert.assertEquals(existingDLFolder.getFolderId(),
+			newDLFolder.getFolderId());
+		Assert.assertEquals(existingDLFolder.getGroupId(),
+			newDLFolder.getGroupId());
+		Assert.assertEquals(existingDLFolder.getCompanyId(),
+			newDLFolder.getCompanyId());
+		Assert.assertEquals(existingDLFolder.getUserId(),
+			newDLFolder.getUserId());
+		Assert.assertEquals(existingDLFolder.getUserName(),
+			newDLFolder.getUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingDLFolder.getCreateDate()),
 			Time.getShortTimestamp(newDLFolder.getCreateDate()));
-		assertEquals(Time.getShortTimestamp(existingDLFolder.getModifiedDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingDLFolder.getModifiedDate()),
 			Time.getShortTimestamp(newDLFolder.getModifiedDate()));
-		assertEquals(existingDLFolder.getRepositoryId(),
+		Assert.assertEquals(existingDLFolder.getRepositoryId(),
 			newDLFolder.getRepositoryId());
-		assertEquals(existingDLFolder.getMountPoint(),
+		Assert.assertEquals(existingDLFolder.getMountPoint(),
 			newDLFolder.getMountPoint());
-		assertEquals(existingDLFolder.getParentFolderId(),
+		Assert.assertEquals(existingDLFolder.getParentFolderId(),
 			newDLFolder.getParentFolderId());
-		assertEquals(existingDLFolder.getName(), newDLFolder.getName());
-		assertEquals(existingDLFolder.getDescription(),
+		Assert.assertEquals(existingDLFolder.getName(), newDLFolder.getName());
+		Assert.assertEquals(existingDLFolder.getDescription(),
 			newDLFolder.getDescription());
-		assertEquals(Time.getShortTimestamp(existingDLFolder.getLastPostDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingDLFolder.getLastPostDate()),
 			Time.getShortTimestamp(newDLFolder.getLastPostDate()));
-		assertEquals(existingDLFolder.getDefaultFileEntryTypeId(),
+		Assert.assertEquals(existingDLFolder.getDefaultFileEntryTypeId(),
 			newDLFolder.getDefaultFileEntryTypeId());
-		assertEquals(existingDLFolder.getOverrideFileEntryTypes(),
+		Assert.assertEquals(existingDLFolder.getOverrideFileEntryTypes(),
 			newDLFolder.getOverrideFileEntryTypes());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		DLFolder newDLFolder = addDLFolder();
 
 		DLFolder existingDLFolder = _persistence.findByPrimaryKey(newDLFolder.getPrimaryKey());
 
-		assertEquals(existingDLFolder, newDLFolder);
+		Assert.assertEquals(existingDLFolder, newDLFolder);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchFolderException");
+			Assert.fail("Missing entity did not throw NoSuchFolderException");
 		}
 		catch (NoSuchFolderException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		DLFolder newDLFolder = addDLFolder();
 
 		DLFolder existingDLFolder = _persistence.fetchByPrimaryKey(newDLFolder.getPrimaryKey());
 
-		assertEquals(existingDLFolder, newDLFolder);
+		Assert.assertEquals(existingDLFolder, newDLFolder);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		DLFolder missingDLFolder = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingDLFolder);
+		Assert.assertNull(missingDLFolder);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		DLFolder newDLFolder = addDLFolder();
@@ -179,24 +206,27 @@ public class DLFolderPersistenceTest extends BasePersistenceTestCase {
 
 		List<DLFolder> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		DLFolder existingDLFolder = result.get(0);
 
-		assertEquals(existingDLFolder, newDLFolder);
+		Assert.assertEquals(existingDLFolder, newDLFolder);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLFolder.class,
 				DLFolder.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("folderId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("folderId",
+				ServiceTestUtil.nextLong()));
 
 		List<DLFolder> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		DLFolder newDLFolder = addDLFolder();
@@ -213,13 +243,14 @@ public class DLFolderPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingFolderId = result.get(0);
 
-		assertEquals(existingFolderId, newFolderId);
+		Assert.assertEquals(existingFolderId, newFolderId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLFolder.class,
 				DLFolder.class.getClassLoader());
@@ -227,13 +258,14 @@ public class DLFolderPersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("folderId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("folderId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -245,56 +277,58 @@ public class DLFolderPersistenceTest extends BasePersistenceTestCase {
 
 		DLFolderModelImpl existingDLFolderModelImpl = (DLFolderModelImpl)_persistence.findByPrimaryKey(newDLFolder.getPrimaryKey());
 
-		assertTrue(Validator.equals(existingDLFolderModelImpl.getUuid(),
+		Assert.assertTrue(Validator.equals(
+				existingDLFolderModelImpl.getUuid(),
 				existingDLFolderModelImpl.getOriginalUuid()));
-		assertEquals(existingDLFolderModelImpl.getGroupId(),
+		Assert.assertEquals(existingDLFolderModelImpl.getGroupId(),
 			existingDLFolderModelImpl.getOriginalGroupId());
 
-		assertEquals(existingDLFolderModelImpl.getRepositoryId(),
+		Assert.assertEquals(existingDLFolderModelImpl.getRepositoryId(),
 			existingDLFolderModelImpl.getOriginalRepositoryId());
 
-		assertEquals(existingDLFolderModelImpl.getGroupId(),
+		Assert.assertEquals(existingDLFolderModelImpl.getGroupId(),
 			existingDLFolderModelImpl.getOriginalGroupId());
-		assertEquals(existingDLFolderModelImpl.getParentFolderId(),
+		Assert.assertEquals(existingDLFolderModelImpl.getParentFolderId(),
 			existingDLFolderModelImpl.getOriginalParentFolderId());
-		assertTrue(Validator.equals(existingDLFolderModelImpl.getName(),
+		Assert.assertTrue(Validator.equals(
+				existingDLFolderModelImpl.getName(),
 				existingDLFolderModelImpl.getOriginalName()));
 	}
 
 	protected DLFolder addDLFolder() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		DLFolder dlFolder = _persistence.create(pk);
 
-		dlFolder.setUuid(randomString());
+		dlFolder.setUuid(ServiceTestUtil.randomString());
 
-		dlFolder.setGroupId(nextLong());
+		dlFolder.setGroupId(ServiceTestUtil.nextLong());
 
-		dlFolder.setCompanyId(nextLong());
+		dlFolder.setCompanyId(ServiceTestUtil.nextLong());
 
-		dlFolder.setUserId(nextLong());
+		dlFolder.setUserId(ServiceTestUtil.nextLong());
 
-		dlFolder.setUserName(randomString());
+		dlFolder.setUserName(ServiceTestUtil.randomString());
 
-		dlFolder.setCreateDate(nextDate());
+		dlFolder.setCreateDate(ServiceTestUtil.nextDate());
 
-		dlFolder.setModifiedDate(nextDate());
+		dlFolder.setModifiedDate(ServiceTestUtil.nextDate());
 
-		dlFolder.setRepositoryId(nextLong());
+		dlFolder.setRepositoryId(ServiceTestUtil.nextLong());
 
-		dlFolder.setMountPoint(randomBoolean());
+		dlFolder.setMountPoint(ServiceTestUtil.randomBoolean());
 
-		dlFolder.setParentFolderId(nextLong());
+		dlFolder.setParentFolderId(ServiceTestUtil.nextLong());
 
-		dlFolder.setName(randomString());
+		dlFolder.setName(ServiceTestUtil.randomString());
 
-		dlFolder.setDescription(randomString());
+		dlFolder.setDescription(ServiceTestUtil.randomString());
 
-		dlFolder.setLastPostDate(nextDate());
+		dlFolder.setLastPostDate(ServiceTestUtil.nextDate());
 
-		dlFolder.setDefaultFileEntryTypeId(nextLong());
+		dlFolder.setDefaultFileEntryTypeId(ServiceTestUtil.nextLong());
 
-		dlFolder.setOverrideFileEntryTypes(randomBoolean());
+		dlFolder.setOverrideFileEntryTypes(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(dlFolder, false);
 

@@ -20,36 +20,49 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.assertion.AssertUtils;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.blogs.NoSuchStatsUserException;
 import com.liferay.portlet.blogs.model.BlogsStatsUser;
 import com.liferay.portlet.blogs.model.impl.BlogsStatsUserModelImpl;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class BlogsStatsUserPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class BlogsStatsUserPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (BlogsStatsUserPersistence)PortalBeanLocatorUtil.locate(BlogsStatsUserPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		BlogsStatsUser blogsStatsUser = _persistence.create(pk);
 
-		assertNotNull(blogsStatsUser);
+		Assert.assertNotNull(blogsStatsUser);
 
-		assertEquals(blogsStatsUser.getPrimaryKey(), pk);
+		Assert.assertEquals(blogsStatsUser.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		BlogsStatsUser newBlogsStatsUser = addBlogsStatsUser();
 
@@ -57,95 +70,102 @@ public class BlogsStatsUserPersistenceTest extends BasePersistenceTestCase {
 
 		BlogsStatsUser existingBlogsStatsUser = _persistence.fetchByPrimaryKey(newBlogsStatsUser.getPrimaryKey());
 
-		assertNull(existingBlogsStatsUser);
+		Assert.assertNull(existingBlogsStatsUser);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addBlogsStatsUser();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		BlogsStatsUser newBlogsStatsUser = _persistence.create(pk);
 
-		newBlogsStatsUser.setGroupId(nextLong());
+		newBlogsStatsUser.setGroupId(ServiceTestUtil.nextLong());
 
-		newBlogsStatsUser.setCompanyId(nextLong());
+		newBlogsStatsUser.setCompanyId(ServiceTestUtil.nextLong());
 
-		newBlogsStatsUser.setUserId(nextLong());
+		newBlogsStatsUser.setUserId(ServiceTestUtil.nextLong());
 
-		newBlogsStatsUser.setEntryCount(nextInt());
+		newBlogsStatsUser.setEntryCount(ServiceTestUtil.nextInt());
 
-		newBlogsStatsUser.setLastPostDate(nextDate());
+		newBlogsStatsUser.setLastPostDate(ServiceTestUtil.nextDate());
 
-		newBlogsStatsUser.setRatingsTotalEntries(nextInt());
+		newBlogsStatsUser.setRatingsTotalEntries(ServiceTestUtil.nextInt());
 
-		newBlogsStatsUser.setRatingsTotalScore(nextDouble());
+		newBlogsStatsUser.setRatingsTotalScore(ServiceTestUtil.nextDouble());
 
-		newBlogsStatsUser.setRatingsAverageScore(nextDouble());
+		newBlogsStatsUser.setRatingsAverageScore(ServiceTestUtil.nextDouble());
 
 		_persistence.update(newBlogsStatsUser, false);
 
 		BlogsStatsUser existingBlogsStatsUser = _persistence.findByPrimaryKey(newBlogsStatsUser.getPrimaryKey());
 
-		assertEquals(existingBlogsStatsUser.getStatsUserId(),
+		Assert.assertEquals(existingBlogsStatsUser.getStatsUserId(),
 			newBlogsStatsUser.getStatsUserId());
-		assertEquals(existingBlogsStatsUser.getGroupId(),
+		Assert.assertEquals(existingBlogsStatsUser.getGroupId(),
 			newBlogsStatsUser.getGroupId());
-		assertEquals(existingBlogsStatsUser.getCompanyId(),
+		Assert.assertEquals(existingBlogsStatsUser.getCompanyId(),
 			newBlogsStatsUser.getCompanyId());
-		assertEquals(existingBlogsStatsUser.getUserId(),
+		Assert.assertEquals(existingBlogsStatsUser.getUserId(),
 			newBlogsStatsUser.getUserId());
-		assertEquals(existingBlogsStatsUser.getEntryCount(),
+		Assert.assertEquals(existingBlogsStatsUser.getEntryCount(),
 			newBlogsStatsUser.getEntryCount());
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingBlogsStatsUser.getLastPostDate()),
 			Time.getShortTimestamp(newBlogsStatsUser.getLastPostDate()));
-		assertEquals(existingBlogsStatsUser.getRatingsTotalEntries(),
+		Assert.assertEquals(existingBlogsStatsUser.getRatingsTotalEntries(),
 			newBlogsStatsUser.getRatingsTotalEntries());
-		assertEquals(existingBlogsStatsUser.getRatingsTotalScore(),
+		AssertUtils.assertEquals(existingBlogsStatsUser.getRatingsTotalScore(),
 			newBlogsStatsUser.getRatingsTotalScore());
-		assertEquals(existingBlogsStatsUser.getRatingsAverageScore(),
+		AssertUtils.assertEquals(existingBlogsStatsUser.getRatingsAverageScore(),
 			newBlogsStatsUser.getRatingsAverageScore());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		BlogsStatsUser newBlogsStatsUser = addBlogsStatsUser();
 
 		BlogsStatsUser existingBlogsStatsUser = _persistence.findByPrimaryKey(newBlogsStatsUser.getPrimaryKey());
 
-		assertEquals(existingBlogsStatsUser, newBlogsStatsUser);
+		Assert.assertEquals(existingBlogsStatsUser, newBlogsStatsUser);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchStatsUserException");
+			Assert.fail("Missing entity did not throw NoSuchStatsUserException");
 		}
 		catch (NoSuchStatsUserException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		BlogsStatsUser newBlogsStatsUser = addBlogsStatsUser();
 
 		BlogsStatsUser existingBlogsStatsUser = _persistence.fetchByPrimaryKey(newBlogsStatsUser.getPrimaryKey());
 
-		assertEquals(existingBlogsStatsUser, newBlogsStatsUser);
+		Assert.assertEquals(existingBlogsStatsUser, newBlogsStatsUser);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		BlogsStatsUser missingBlogsStatsUser = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingBlogsStatsUser);
+		Assert.assertNull(missingBlogsStatsUser);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		BlogsStatsUser newBlogsStatsUser = addBlogsStatsUser();
@@ -158,24 +178,27 @@ public class BlogsStatsUserPersistenceTest extends BasePersistenceTestCase {
 
 		List<BlogsStatsUser> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		BlogsStatsUser existingBlogsStatsUser = result.get(0);
 
-		assertEquals(existingBlogsStatsUser, newBlogsStatsUser);
+		Assert.assertEquals(existingBlogsStatsUser, newBlogsStatsUser);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BlogsStatsUser.class,
 				BlogsStatsUser.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("statsUserId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("statsUserId",
+				ServiceTestUtil.nextLong()));
 
 		List<BlogsStatsUser> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		BlogsStatsUser newBlogsStatsUser = addBlogsStatsUser();
@@ -192,13 +215,14 @@ public class BlogsStatsUserPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingStatsUserId = result.get(0);
 
-		assertEquals(existingStatsUserId, newStatsUserId);
+		Assert.assertEquals(existingStatsUserId, newStatsUserId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BlogsStatsUser.class,
 				BlogsStatsUser.class.getClassLoader());
@@ -206,13 +230,14 @@ public class BlogsStatsUserPersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("statsUserId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("statsUserId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -224,32 +249,32 @@ public class BlogsStatsUserPersistenceTest extends BasePersistenceTestCase {
 
 		BlogsStatsUserModelImpl existingBlogsStatsUserModelImpl = (BlogsStatsUserModelImpl)_persistence.findByPrimaryKey(newBlogsStatsUser.getPrimaryKey());
 
-		assertEquals(existingBlogsStatsUserModelImpl.getGroupId(),
+		Assert.assertEquals(existingBlogsStatsUserModelImpl.getGroupId(),
 			existingBlogsStatsUserModelImpl.getOriginalGroupId());
-		assertEquals(existingBlogsStatsUserModelImpl.getUserId(),
+		Assert.assertEquals(existingBlogsStatsUserModelImpl.getUserId(),
 			existingBlogsStatsUserModelImpl.getOriginalUserId());
 	}
 
 	protected BlogsStatsUser addBlogsStatsUser() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		BlogsStatsUser blogsStatsUser = _persistence.create(pk);
 
-		blogsStatsUser.setGroupId(nextLong());
+		blogsStatsUser.setGroupId(ServiceTestUtil.nextLong());
 
-		blogsStatsUser.setCompanyId(nextLong());
+		blogsStatsUser.setCompanyId(ServiceTestUtil.nextLong());
 
-		blogsStatsUser.setUserId(nextLong());
+		blogsStatsUser.setUserId(ServiceTestUtil.nextLong());
 
-		blogsStatsUser.setEntryCount(nextInt());
+		blogsStatsUser.setEntryCount(ServiceTestUtil.nextInt());
 
-		blogsStatsUser.setLastPostDate(nextDate());
+		blogsStatsUser.setLastPostDate(ServiceTestUtil.nextDate());
 
-		blogsStatsUser.setRatingsTotalEntries(nextInt());
+		blogsStatsUser.setRatingsTotalEntries(ServiceTestUtil.nextInt());
 
-		blogsStatsUser.setRatingsTotalScore(nextDouble());
+		blogsStatsUser.setRatingsTotalScore(ServiceTestUtil.nextDouble());
 
-		blogsStatsUser.setRatingsAverageScore(nextDouble());
+		blogsStatsUser.setRatingsAverageScore(ServiceTestUtil.nextDouble());
 
 		_persistence.update(blogsStatsUser, false);
 

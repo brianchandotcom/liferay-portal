@@ -19,34 +19,46 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 
 import com.liferay.portlet.shopping.NoSuchItemFieldException;
 import com.liferay.portlet.shopping.model.ShoppingItemField;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class ShoppingItemFieldPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class ShoppingItemFieldPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (ShoppingItemFieldPersistence)PortalBeanLocatorUtil.locate(ShoppingItemFieldPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ShoppingItemField shoppingItemField = _persistence.create(pk);
 
-		assertNotNull(shoppingItemField);
+		Assert.assertNotNull(shoppingItemField);
 
-		assertEquals(shoppingItemField.getPrimaryKey(), pk);
+		Assert.assertEquals(shoppingItemField.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		ShoppingItemField newShoppingItemField = addShoppingItemField();
 
@@ -54,78 +66,85 @@ public class ShoppingItemFieldPersistenceTest extends BasePersistenceTestCase {
 
 		ShoppingItemField existingShoppingItemField = _persistence.fetchByPrimaryKey(newShoppingItemField.getPrimaryKey());
 
-		assertNull(existingShoppingItemField);
+		Assert.assertNull(existingShoppingItemField);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addShoppingItemField();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ShoppingItemField newShoppingItemField = _persistence.create(pk);
 
-		newShoppingItemField.setItemId(nextLong());
+		newShoppingItemField.setItemId(ServiceTestUtil.nextLong());
 
-		newShoppingItemField.setName(randomString());
+		newShoppingItemField.setName(ServiceTestUtil.randomString());
 
-		newShoppingItemField.setValues(randomString());
+		newShoppingItemField.setValues(ServiceTestUtil.randomString());
 
-		newShoppingItemField.setDescription(randomString());
+		newShoppingItemField.setDescription(ServiceTestUtil.randomString());
 
 		_persistence.update(newShoppingItemField, false);
 
 		ShoppingItemField existingShoppingItemField = _persistence.findByPrimaryKey(newShoppingItemField.getPrimaryKey());
 
-		assertEquals(existingShoppingItemField.getItemFieldId(),
+		Assert.assertEquals(existingShoppingItemField.getItemFieldId(),
 			newShoppingItemField.getItemFieldId());
-		assertEquals(existingShoppingItemField.getItemId(),
+		Assert.assertEquals(existingShoppingItemField.getItemId(),
 			newShoppingItemField.getItemId());
-		assertEquals(existingShoppingItemField.getName(),
+		Assert.assertEquals(existingShoppingItemField.getName(),
 			newShoppingItemField.getName());
-		assertEquals(existingShoppingItemField.getValues(),
+		Assert.assertEquals(existingShoppingItemField.getValues(),
 			newShoppingItemField.getValues());
-		assertEquals(existingShoppingItemField.getDescription(),
+		Assert.assertEquals(existingShoppingItemField.getDescription(),
 			newShoppingItemField.getDescription());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ShoppingItemField newShoppingItemField = addShoppingItemField();
 
 		ShoppingItemField existingShoppingItemField = _persistence.findByPrimaryKey(newShoppingItemField.getPrimaryKey());
 
-		assertEquals(existingShoppingItemField, newShoppingItemField);
+		Assert.assertEquals(existingShoppingItemField, newShoppingItemField);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchItemFieldException");
+			Assert.fail("Missing entity did not throw NoSuchItemFieldException");
 		}
 		catch (NoSuchItemFieldException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		ShoppingItemField newShoppingItemField = addShoppingItemField();
 
 		ShoppingItemField existingShoppingItemField = _persistence.fetchByPrimaryKey(newShoppingItemField.getPrimaryKey());
 
-		assertEquals(existingShoppingItemField, newShoppingItemField);
+		Assert.assertEquals(existingShoppingItemField, newShoppingItemField);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ShoppingItemField missingShoppingItemField = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingShoppingItemField);
+		Assert.assertNull(missingShoppingItemField);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		ShoppingItemField newShoppingItemField = addShoppingItemField();
@@ -138,24 +157,27 @@ public class ShoppingItemFieldPersistenceTest extends BasePersistenceTestCase {
 
 		List<ShoppingItemField> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		ShoppingItemField existingShoppingItemField = result.get(0);
 
-		assertEquals(existingShoppingItemField, newShoppingItemField);
+		Assert.assertEquals(existingShoppingItemField, newShoppingItemField);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ShoppingItemField.class,
 				ShoppingItemField.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("itemFieldId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("itemFieldId",
+				ServiceTestUtil.nextLong()));
 
 		List<ShoppingItemField> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		ShoppingItemField newShoppingItemField = addShoppingItemField();
@@ -172,13 +194,14 @@ public class ShoppingItemFieldPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingItemFieldId = result.get(0);
 
-		assertEquals(existingItemFieldId, newItemFieldId);
+		Assert.assertEquals(existingItemFieldId, newItemFieldId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ShoppingItemField.class,
 				ShoppingItemField.class.getClassLoader());
@@ -186,26 +209,26 @@ public class ShoppingItemFieldPersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("itemFieldId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("itemFieldId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
 	protected ShoppingItemField addShoppingItemField()
 		throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ShoppingItemField shoppingItemField = _persistence.create(pk);
 
-		shoppingItemField.setItemId(nextLong());
+		shoppingItemField.setItemId(ServiceTestUtil.nextLong());
 
-		shoppingItemField.setName(randomString());
+		shoppingItemField.setName(ServiceTestUtil.randomString());
 
-		shoppingItemField.setValues(randomString());
+		shoppingItemField.setValues(ServiceTestUtil.randomString());
 
-		shoppingItemField.setDescription(randomString());
+		shoppingItemField.setDescription(ServiceTestUtil.randomString());
 
 		_persistence.update(shoppingItemField, false);
 

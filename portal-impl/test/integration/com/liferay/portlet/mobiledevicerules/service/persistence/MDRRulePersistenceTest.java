@@ -21,36 +21,48 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.mobiledevicerules.NoSuchRuleException;
 import com.liferay.portlet.mobiledevicerules.model.MDRRule;
 import com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleModelImpl;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
 /**
  * @author Edward C. Han
  */
-public class MDRRulePersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class MDRRulePersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (MDRRulePersistence)PortalBeanLocatorUtil.locate(MDRRulePersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		MDRRule mdrRule = _persistence.create(pk);
 
-		assertNotNull(mdrRule);
+		Assert.assertNotNull(mdrRule);
 
-		assertEquals(mdrRule.getPrimaryKey(), pk);
+		Assert.assertEquals(mdrRule.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		MDRRule newMDRRule = addMDRRule();
 
@@ -58,102 +70,114 @@ public class MDRRulePersistenceTest extends BasePersistenceTestCase {
 
 		MDRRule existingMDRRule = _persistence.fetchByPrimaryKey(newMDRRule.getPrimaryKey());
 
-		assertNull(existingMDRRule);
+		Assert.assertNull(existingMDRRule);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addMDRRule();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		MDRRule newMDRRule = _persistence.create(pk);
 
-		newMDRRule.setUuid(randomString());
+		newMDRRule.setUuid(ServiceTestUtil.randomString());
 
-		newMDRRule.setGroupId(nextLong());
+		newMDRRule.setGroupId(ServiceTestUtil.nextLong());
 
-		newMDRRule.setCompanyId(nextLong());
+		newMDRRule.setCompanyId(ServiceTestUtil.nextLong());
 
-		newMDRRule.setUserId(nextLong());
+		newMDRRule.setUserId(ServiceTestUtil.nextLong());
 
-		newMDRRule.setUserName(randomString());
+		newMDRRule.setUserName(ServiceTestUtil.randomString());
 
-		newMDRRule.setCreateDate(nextDate());
+		newMDRRule.setCreateDate(ServiceTestUtil.nextDate());
 
-		newMDRRule.setModifiedDate(nextDate());
+		newMDRRule.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newMDRRule.setRuleGroupId(nextLong());
+		newMDRRule.setRuleGroupId(ServiceTestUtil.nextLong());
 
-		newMDRRule.setName(randomString());
+		newMDRRule.setName(ServiceTestUtil.randomString());
 
-		newMDRRule.setDescription(randomString());
+		newMDRRule.setDescription(ServiceTestUtil.randomString());
 
-		newMDRRule.setType(randomString());
+		newMDRRule.setType(ServiceTestUtil.randomString());
 
-		newMDRRule.setTypeSettings(randomString());
+		newMDRRule.setTypeSettings(ServiceTestUtil.randomString());
 
 		_persistence.update(newMDRRule, false);
 
 		MDRRule existingMDRRule = _persistence.findByPrimaryKey(newMDRRule.getPrimaryKey());
 
-		assertEquals(existingMDRRule.getUuid(), newMDRRule.getUuid());
-		assertEquals(existingMDRRule.getRuleId(), newMDRRule.getRuleId());
-		assertEquals(existingMDRRule.getGroupId(), newMDRRule.getGroupId());
-		assertEquals(existingMDRRule.getCompanyId(), newMDRRule.getCompanyId());
-		assertEquals(existingMDRRule.getUserId(), newMDRRule.getUserId());
-		assertEquals(existingMDRRule.getUserName(), newMDRRule.getUserName());
-		assertEquals(Time.getShortTimestamp(existingMDRRule.getCreateDate()),
+		Assert.assertEquals(existingMDRRule.getUuid(), newMDRRule.getUuid());
+		Assert.assertEquals(existingMDRRule.getRuleId(), newMDRRule.getRuleId());
+		Assert.assertEquals(existingMDRRule.getGroupId(),
+			newMDRRule.getGroupId());
+		Assert.assertEquals(existingMDRRule.getCompanyId(),
+			newMDRRule.getCompanyId());
+		Assert.assertEquals(existingMDRRule.getUserId(), newMDRRule.getUserId());
+		Assert.assertEquals(existingMDRRule.getUserName(),
+			newMDRRule.getUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMDRRule.getCreateDate()),
 			Time.getShortTimestamp(newMDRRule.getCreateDate()));
-		assertEquals(Time.getShortTimestamp(existingMDRRule.getModifiedDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMDRRule.getModifiedDate()),
 			Time.getShortTimestamp(newMDRRule.getModifiedDate()));
-		assertEquals(existingMDRRule.getRuleGroupId(),
+		Assert.assertEquals(existingMDRRule.getRuleGroupId(),
 			newMDRRule.getRuleGroupId());
-		assertEquals(existingMDRRule.getName(), newMDRRule.getName());
-		assertEquals(existingMDRRule.getDescription(),
+		Assert.assertEquals(existingMDRRule.getName(), newMDRRule.getName());
+		Assert.assertEquals(existingMDRRule.getDescription(),
 			newMDRRule.getDescription());
-		assertEquals(existingMDRRule.getType(), newMDRRule.getType());
-		assertEquals(existingMDRRule.getTypeSettings(),
+		Assert.assertEquals(existingMDRRule.getType(), newMDRRule.getType());
+		Assert.assertEquals(existingMDRRule.getTypeSettings(),
 			newMDRRule.getTypeSettings());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		MDRRule newMDRRule = addMDRRule();
 
 		MDRRule existingMDRRule = _persistence.findByPrimaryKey(newMDRRule.getPrimaryKey());
 
-		assertEquals(existingMDRRule, newMDRRule);
+		Assert.assertEquals(existingMDRRule, newMDRRule);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchRuleException");
+			Assert.fail("Missing entity did not throw NoSuchRuleException");
 		}
 		catch (NoSuchRuleException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		MDRRule newMDRRule = addMDRRule();
 
 		MDRRule existingMDRRule = _persistence.fetchByPrimaryKey(newMDRRule.getPrimaryKey());
 
-		assertEquals(existingMDRRule, newMDRRule);
+		Assert.assertEquals(existingMDRRule, newMDRRule);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		MDRRule missingMDRRule = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingMDRRule);
+		Assert.assertNull(missingMDRRule);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		MDRRule newMDRRule = addMDRRule();
@@ -166,24 +190,27 @@ public class MDRRulePersistenceTest extends BasePersistenceTestCase {
 
 		List<MDRRule> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		MDRRule existingMDRRule = result.get(0);
 
-		assertEquals(existingMDRRule, newMDRRule);
+		Assert.assertEquals(existingMDRRule, newMDRRule);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MDRRule.class,
 				MDRRule.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("ruleId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("ruleId",
+				ServiceTestUtil.nextLong()));
 
 		List<MDRRule> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		MDRRule newMDRRule = addMDRRule();
@@ -200,13 +227,14 @@ public class MDRRulePersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingRuleId = result.get(0);
 
-		assertEquals(existingRuleId, newRuleId);
+		Assert.assertEquals(existingRuleId, newRuleId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MDRRule.class,
 				MDRRule.class.getClassLoader());
@@ -214,13 +242,14 @@ public class MDRRulePersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("ruleId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("ruleId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -232,40 +261,40 @@ public class MDRRulePersistenceTest extends BasePersistenceTestCase {
 
 		MDRRuleModelImpl existingMDRRuleModelImpl = (MDRRuleModelImpl)_persistence.findByPrimaryKey(newMDRRule.getPrimaryKey());
 
-		assertTrue(Validator.equals(existingMDRRuleModelImpl.getUuid(),
+		Assert.assertTrue(Validator.equals(existingMDRRuleModelImpl.getUuid(),
 				existingMDRRuleModelImpl.getOriginalUuid()));
-		assertEquals(existingMDRRuleModelImpl.getGroupId(),
+		Assert.assertEquals(existingMDRRuleModelImpl.getGroupId(),
 			existingMDRRuleModelImpl.getOriginalGroupId());
 	}
 
 	protected MDRRule addMDRRule() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		MDRRule mdrRule = _persistence.create(pk);
 
-		mdrRule.setUuid(randomString());
+		mdrRule.setUuid(ServiceTestUtil.randomString());
 
-		mdrRule.setGroupId(nextLong());
+		mdrRule.setGroupId(ServiceTestUtil.nextLong());
 
-		mdrRule.setCompanyId(nextLong());
+		mdrRule.setCompanyId(ServiceTestUtil.nextLong());
 
-		mdrRule.setUserId(nextLong());
+		mdrRule.setUserId(ServiceTestUtil.nextLong());
 
-		mdrRule.setUserName(randomString());
+		mdrRule.setUserName(ServiceTestUtil.randomString());
 
-		mdrRule.setCreateDate(nextDate());
+		mdrRule.setCreateDate(ServiceTestUtil.nextDate());
 
-		mdrRule.setModifiedDate(nextDate());
+		mdrRule.setModifiedDate(ServiceTestUtil.nextDate());
 
-		mdrRule.setRuleGroupId(nextLong());
+		mdrRule.setRuleGroupId(ServiceTestUtil.nextLong());
 
-		mdrRule.setName(randomString());
+		mdrRule.setName(ServiceTestUtil.randomString());
 
-		mdrRule.setDescription(randomString());
+		mdrRule.setDescription(ServiceTestUtil.randomString());
 
-		mdrRule.setType(randomString());
+		mdrRule.setType(ServiceTestUtil.randomString());
 
-		mdrRule.setTypeSettings(randomString());
+		mdrRule.setTypeSettings(ServiceTestUtil.randomString());
 
 		_persistence.update(mdrRule, false);
 

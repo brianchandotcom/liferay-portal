@@ -23,32 +23,44 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.impl.PortletModelImpl;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class PortletPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class PortletPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (PortletPersistence)PortalBeanLocatorUtil.locate(PortletPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Portlet portlet = _persistence.create(pk);
 
-		assertNotNull(portlet);
+		Assert.assertNotNull(portlet);
 
-		assertEquals(portlet.getPrimaryKey(), pk);
+		Assert.assertEquals(portlet.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		Portlet newPortlet = addPortlet();
 
@@ -56,73 +68,82 @@ public class PortletPersistenceTest extends BasePersistenceTestCase {
 
 		Portlet existingPortlet = _persistence.fetchByPrimaryKey(newPortlet.getPrimaryKey());
 
-		assertNull(existingPortlet);
+		Assert.assertNull(existingPortlet);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addPortlet();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Portlet newPortlet = _persistence.create(pk);
 
-		newPortlet.setCompanyId(nextLong());
+		newPortlet.setCompanyId(ServiceTestUtil.nextLong());
 
-		newPortlet.setPortletId(randomString());
+		newPortlet.setPortletId(ServiceTestUtil.randomString());
 
-		newPortlet.setRoles(randomString());
+		newPortlet.setRoles(ServiceTestUtil.randomString());
 
-		newPortlet.setActive(randomBoolean());
+		newPortlet.setActive(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(newPortlet, false);
 
 		Portlet existingPortlet = _persistence.findByPrimaryKey(newPortlet.getPrimaryKey());
 
-		assertEquals(existingPortlet.getId(), newPortlet.getId());
-		assertEquals(existingPortlet.getCompanyId(), newPortlet.getCompanyId());
-		assertEquals(existingPortlet.getPortletId(), newPortlet.getPortletId());
-		assertEquals(existingPortlet.getRoles(), newPortlet.getRoles());
-		assertEquals(existingPortlet.getActive(), newPortlet.getActive());
+		Assert.assertEquals(existingPortlet.getId(), newPortlet.getId());
+		Assert.assertEquals(existingPortlet.getCompanyId(),
+			newPortlet.getCompanyId());
+		Assert.assertEquals(existingPortlet.getPortletId(),
+			newPortlet.getPortletId());
+		Assert.assertEquals(existingPortlet.getRoles(), newPortlet.getRoles());
+		Assert.assertEquals(existingPortlet.getActive(), newPortlet.getActive());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Portlet newPortlet = addPortlet();
 
 		Portlet existingPortlet = _persistence.findByPrimaryKey(newPortlet.getPrimaryKey());
 
-		assertEquals(existingPortlet, newPortlet);
+		Assert.assertEquals(existingPortlet, newPortlet);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchPortletException");
+			Assert.fail("Missing entity did not throw NoSuchPortletException");
 		}
 		catch (NoSuchPortletException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		Portlet newPortlet = addPortlet();
 
 		Portlet existingPortlet = _persistence.fetchByPrimaryKey(newPortlet.getPrimaryKey());
 
-		assertEquals(existingPortlet, newPortlet);
+		Assert.assertEquals(existingPortlet, newPortlet);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Portlet missingPortlet = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingPortlet);
+		Assert.assertNull(missingPortlet);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		Portlet newPortlet = addPortlet();
@@ -134,24 +155,27 @@ public class PortletPersistenceTest extends BasePersistenceTestCase {
 
 		List<Portlet> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Portlet existingPortlet = result.get(0);
 
-		assertEquals(existingPortlet, newPortlet);
+		Assert.assertEquals(existingPortlet, newPortlet);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Portlet.class,
 				Portlet.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("id", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("id",
+				ServiceTestUtil.nextLong()));
 
 		List<Portlet> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		Portlet newPortlet = addPortlet();
@@ -167,13 +191,14 @@ public class PortletPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingId = result.get(0);
 
-		assertEquals(existingId, newId);
+		Assert.assertEquals(existingId, newId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Portlet.class,
 				Portlet.class.getClassLoader());
@@ -181,13 +206,14 @@ public class PortletPersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("id"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("id",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -199,24 +225,25 @@ public class PortletPersistenceTest extends BasePersistenceTestCase {
 
 		PortletModelImpl existingPortletModelImpl = (PortletModelImpl)_persistence.findByPrimaryKey(newPortlet.getPrimaryKey());
 
-		assertEquals(existingPortletModelImpl.getCompanyId(),
+		Assert.assertEquals(existingPortletModelImpl.getCompanyId(),
 			existingPortletModelImpl.getOriginalCompanyId());
-		assertTrue(Validator.equals(existingPortletModelImpl.getPortletId(),
+		Assert.assertTrue(Validator.equals(
+				existingPortletModelImpl.getPortletId(),
 				existingPortletModelImpl.getOriginalPortletId()));
 	}
 
 	protected Portlet addPortlet() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Portlet portlet = _persistence.create(pk);
 
-		portlet.setCompanyId(nextLong());
+		portlet.setCompanyId(ServiceTestUtil.nextLong());
 
-		portlet.setPortletId(randomString());
+		portlet.setPortletId(ServiceTestUtil.randomString());
 
-		portlet.setRoles(randomString());
+		portlet.setRoles(ServiceTestUtil.randomString());
 
-		portlet.setActive(randomBoolean());
+		portlet.setActive(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(portlet, false);
 

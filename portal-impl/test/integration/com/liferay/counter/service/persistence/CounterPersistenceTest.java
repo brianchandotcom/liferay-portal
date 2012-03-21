@@ -22,31 +22,43 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class CounterPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class CounterPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (CounterPersistence)PortalBeanLocatorUtil.locate(CounterPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		String pk = randomString();
+		String pk = ServiceTestUtil.randomString();
 
 		Counter counter = _persistence.create(pk);
 
-		assertNotNull(counter);
+		Assert.assertNotNull(counter);
 
-		assertEquals(counter.getPrimaryKey(), pk);
+		Assert.assertEquals(counter.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		Counter newCounter = addCounter();
 
@@ -54,64 +66,72 @@ public class CounterPersistenceTest extends BasePersistenceTestCase {
 
 		Counter existingCounter = _persistence.fetchByPrimaryKey(newCounter.getPrimaryKey());
 
-		assertNull(existingCounter);
+		Assert.assertNull(existingCounter);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addCounter();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		String pk = randomString();
+		String pk = ServiceTestUtil.randomString();
 
 		Counter newCounter = _persistence.create(pk);
 
-		newCounter.setCurrentId(nextLong());
+		newCounter.setCurrentId(ServiceTestUtil.nextLong());
 
 		_persistence.update(newCounter, false);
 
 		Counter existingCounter = _persistence.findByPrimaryKey(newCounter.getPrimaryKey());
 
-		assertEquals(existingCounter.getName(), newCounter.getName());
-		assertEquals(existingCounter.getCurrentId(), newCounter.getCurrentId());
+		Assert.assertEquals(existingCounter.getName(), newCounter.getName());
+		Assert.assertEquals(existingCounter.getCurrentId(),
+			newCounter.getCurrentId());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Counter newCounter = addCounter();
 
 		Counter existingCounter = _persistence.findByPrimaryKey(newCounter.getPrimaryKey());
 
-		assertEquals(existingCounter, newCounter);
+		Assert.assertEquals(existingCounter, newCounter);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		String pk = randomString();
+		String pk = ServiceTestUtil.randomString();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchCounterException");
+			Assert.fail("Missing entity did not throw NoSuchCounterException");
 		}
 		catch (NoSuchCounterException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		Counter newCounter = addCounter();
 
 		Counter existingCounter = _persistence.fetchByPrimaryKey(newCounter.getPrimaryKey());
 
-		assertEquals(existingCounter, newCounter);
+		Assert.assertEquals(existingCounter, newCounter);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		String pk = randomString();
+		String pk = ServiceTestUtil.randomString();
 
 		Counter missingCounter = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingCounter);
+		Assert.assertNull(missingCounter);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		Counter newCounter = addCounter();
@@ -123,24 +143,27 @@ public class CounterPersistenceTest extends BasePersistenceTestCase {
 
 		List<Counter> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Counter existingCounter = result.get(0);
 
-		assertEquals(existingCounter, newCounter);
+		Assert.assertEquals(existingCounter, newCounter);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Counter.class,
 				Counter.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("name", randomString()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("name",
+				ServiceTestUtil.randomString()));
 
 		List<Counter> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		Counter newCounter = addCounter();
@@ -157,13 +180,14 @@ public class CounterPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingName = result.get(0);
 
-		assertEquals(existingName, newName);
+		Assert.assertEquals(existingName, newName);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Counter.class,
 				Counter.class.getClassLoader());
@@ -171,19 +195,19 @@ public class CounterPersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("name"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("name",
-				new Object[] { randomString() }));
+				new Object[] { ServiceTestUtil.randomString() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
 	protected Counter addCounter() throws Exception {
-		String pk = randomString();
+		String pk = ServiceTestUtil.randomString();
 
 		Counter counter = _persistence.create(pk);
 
-		counter.setCurrentId(nextLong());
+		counter.setCurrentId(ServiceTestUtil.nextLong());
 
 		_persistence.update(counter, false);
 

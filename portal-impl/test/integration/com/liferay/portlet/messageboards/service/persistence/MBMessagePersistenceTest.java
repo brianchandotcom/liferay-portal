@@ -21,36 +21,49 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.assertion.AssertUtils;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.messageboards.NoSuchMessageException;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.impl.MBMessageModelImpl;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class MBMessagePersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class MBMessagePersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (MBMessagePersistence)PortalBeanLocatorUtil.locate(MBMessagePersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		MBMessage mbMessage = _persistence.create(pk);
 
-		assertNotNull(mbMessage);
+		Assert.assertNotNull(mbMessage);
 
-		assertEquals(mbMessage.getPrimaryKey(), pk);
+		Assert.assertEquals(mbMessage.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		MBMessage newMBMessage = addMBMessage();
 
@@ -58,150 +71,170 @@ public class MBMessagePersistenceTest extends BasePersistenceTestCase {
 
 		MBMessage existingMBMessage = _persistence.fetchByPrimaryKey(newMBMessage.getPrimaryKey());
 
-		assertNull(existingMBMessage);
+		Assert.assertNull(existingMBMessage);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addMBMessage();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		MBMessage newMBMessage = _persistence.create(pk);
 
-		newMBMessage.setUuid(randomString());
+		newMBMessage.setUuid(ServiceTestUtil.randomString());
 
-		newMBMessage.setGroupId(nextLong());
+		newMBMessage.setGroupId(ServiceTestUtil.nextLong());
 
-		newMBMessage.setCompanyId(nextLong());
+		newMBMessage.setCompanyId(ServiceTestUtil.nextLong());
 
-		newMBMessage.setUserId(nextLong());
+		newMBMessage.setUserId(ServiceTestUtil.nextLong());
 
-		newMBMessage.setUserName(randomString());
+		newMBMessage.setUserName(ServiceTestUtil.randomString());
 
-		newMBMessage.setCreateDate(nextDate());
+		newMBMessage.setCreateDate(ServiceTestUtil.nextDate());
 
-		newMBMessage.setModifiedDate(nextDate());
+		newMBMessage.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newMBMessage.setClassNameId(nextLong());
+		newMBMessage.setClassNameId(ServiceTestUtil.nextLong());
 
-		newMBMessage.setClassPK(nextLong());
+		newMBMessage.setClassPK(ServiceTestUtil.nextLong());
 
-		newMBMessage.setCategoryId(nextLong());
+		newMBMessage.setCategoryId(ServiceTestUtil.nextLong());
 
-		newMBMessage.setThreadId(nextLong());
+		newMBMessage.setThreadId(ServiceTestUtil.nextLong());
 
-		newMBMessage.setRootMessageId(nextLong());
+		newMBMessage.setRootMessageId(ServiceTestUtil.nextLong());
 
-		newMBMessage.setParentMessageId(nextLong());
+		newMBMessage.setParentMessageId(ServiceTestUtil.nextLong());
 
-		newMBMessage.setSubject(randomString());
+		newMBMessage.setSubject(ServiceTestUtil.randomString());
 
-		newMBMessage.setBody(randomString());
+		newMBMessage.setBody(ServiceTestUtil.randomString());
 
-		newMBMessage.setFormat(randomString());
+		newMBMessage.setFormat(ServiceTestUtil.randomString());
 
-		newMBMessage.setAttachments(randomBoolean());
+		newMBMessage.setAttachments(ServiceTestUtil.randomBoolean());
 
-		newMBMessage.setAnonymous(randomBoolean());
+		newMBMessage.setAnonymous(ServiceTestUtil.randomBoolean());
 
-		newMBMessage.setPriority(nextDouble());
+		newMBMessage.setPriority(ServiceTestUtil.nextDouble());
 
-		newMBMessage.setAllowPingbacks(randomBoolean());
+		newMBMessage.setAllowPingbacks(ServiceTestUtil.randomBoolean());
 
-		newMBMessage.setAnswer(randomBoolean());
+		newMBMessage.setAnswer(ServiceTestUtil.randomBoolean());
 
-		newMBMessage.setStatus(nextInt());
+		newMBMessage.setStatus(ServiceTestUtil.nextInt());
 
-		newMBMessage.setStatusByUserId(nextLong());
+		newMBMessage.setStatusByUserId(ServiceTestUtil.nextLong());
 
-		newMBMessage.setStatusByUserName(randomString());
+		newMBMessage.setStatusByUserName(ServiceTestUtil.randomString());
 
-		newMBMessage.setStatusDate(nextDate());
+		newMBMessage.setStatusDate(ServiceTestUtil.nextDate());
 
 		_persistence.update(newMBMessage, false);
 
 		MBMessage existingMBMessage = _persistence.findByPrimaryKey(newMBMessage.getPrimaryKey());
 
-		assertEquals(existingMBMessage.getUuid(), newMBMessage.getUuid());
-		assertEquals(existingMBMessage.getMessageId(),
+		Assert.assertEquals(existingMBMessage.getUuid(), newMBMessage.getUuid());
+		Assert.assertEquals(existingMBMessage.getMessageId(),
 			newMBMessage.getMessageId());
-		assertEquals(existingMBMessage.getGroupId(), newMBMessage.getGroupId());
-		assertEquals(existingMBMessage.getCompanyId(),
+		Assert.assertEquals(existingMBMessage.getGroupId(),
+			newMBMessage.getGroupId());
+		Assert.assertEquals(existingMBMessage.getCompanyId(),
 			newMBMessage.getCompanyId());
-		assertEquals(existingMBMessage.getUserId(), newMBMessage.getUserId());
-		assertEquals(existingMBMessage.getUserName(), newMBMessage.getUserName());
-		assertEquals(Time.getShortTimestamp(existingMBMessage.getCreateDate()),
+		Assert.assertEquals(existingMBMessage.getUserId(),
+			newMBMessage.getUserId());
+		Assert.assertEquals(existingMBMessage.getUserName(),
+			newMBMessage.getUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMBMessage.getCreateDate()),
 			Time.getShortTimestamp(newMBMessage.getCreateDate()));
-		assertEquals(Time.getShortTimestamp(existingMBMessage.getModifiedDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMBMessage.getModifiedDate()),
 			Time.getShortTimestamp(newMBMessage.getModifiedDate()));
-		assertEquals(existingMBMessage.getClassNameId(),
+		Assert.assertEquals(existingMBMessage.getClassNameId(),
 			newMBMessage.getClassNameId());
-		assertEquals(existingMBMessage.getClassPK(), newMBMessage.getClassPK());
-		assertEquals(existingMBMessage.getCategoryId(),
+		Assert.assertEquals(existingMBMessage.getClassPK(),
+			newMBMessage.getClassPK());
+		Assert.assertEquals(existingMBMessage.getCategoryId(),
 			newMBMessage.getCategoryId());
-		assertEquals(existingMBMessage.getThreadId(), newMBMessage.getThreadId());
-		assertEquals(existingMBMessage.getRootMessageId(),
+		Assert.assertEquals(existingMBMessage.getThreadId(),
+			newMBMessage.getThreadId());
+		Assert.assertEquals(existingMBMessage.getRootMessageId(),
 			newMBMessage.getRootMessageId());
-		assertEquals(existingMBMessage.getParentMessageId(),
+		Assert.assertEquals(existingMBMessage.getParentMessageId(),
 			newMBMessage.getParentMessageId());
-		assertEquals(existingMBMessage.getSubject(), newMBMessage.getSubject());
-		assertEquals(existingMBMessage.getBody(), newMBMessage.getBody());
-		assertEquals(existingMBMessage.getFormat(), newMBMessage.getFormat());
-		assertEquals(existingMBMessage.getAttachments(),
+		Assert.assertEquals(existingMBMessage.getSubject(),
+			newMBMessage.getSubject());
+		Assert.assertEquals(existingMBMessage.getBody(), newMBMessage.getBody());
+		Assert.assertEquals(existingMBMessage.getFormat(),
+			newMBMessage.getFormat());
+		Assert.assertEquals(existingMBMessage.getAttachments(),
 			newMBMessage.getAttachments());
-		assertEquals(existingMBMessage.getAnonymous(),
+		Assert.assertEquals(existingMBMessage.getAnonymous(),
 			newMBMessage.getAnonymous());
-		assertEquals(existingMBMessage.getPriority(), newMBMessage.getPriority());
-		assertEquals(existingMBMessage.getAllowPingbacks(),
+		AssertUtils.assertEquals(existingMBMessage.getPriority(),
+			newMBMessage.getPriority());
+		Assert.assertEquals(existingMBMessage.getAllowPingbacks(),
 			newMBMessage.getAllowPingbacks());
-		assertEquals(existingMBMessage.getAnswer(), newMBMessage.getAnswer());
-		assertEquals(existingMBMessage.getStatus(), newMBMessage.getStatus());
-		assertEquals(existingMBMessage.getStatusByUserId(),
+		Assert.assertEquals(existingMBMessage.getAnswer(),
+			newMBMessage.getAnswer());
+		Assert.assertEquals(existingMBMessage.getStatus(),
+			newMBMessage.getStatus());
+		Assert.assertEquals(existingMBMessage.getStatusByUserId(),
 			newMBMessage.getStatusByUserId());
-		assertEquals(existingMBMessage.getStatusByUserName(),
+		Assert.assertEquals(existingMBMessage.getStatusByUserName(),
 			newMBMessage.getStatusByUserName());
-		assertEquals(Time.getShortTimestamp(existingMBMessage.getStatusDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMBMessage.getStatusDate()),
 			Time.getShortTimestamp(newMBMessage.getStatusDate()));
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		MBMessage newMBMessage = addMBMessage();
 
 		MBMessage existingMBMessage = _persistence.findByPrimaryKey(newMBMessage.getPrimaryKey());
 
-		assertEquals(existingMBMessage, newMBMessage);
+		Assert.assertEquals(existingMBMessage, newMBMessage);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchMessageException");
+			Assert.fail("Missing entity did not throw NoSuchMessageException");
 		}
 		catch (NoSuchMessageException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		MBMessage newMBMessage = addMBMessage();
 
 		MBMessage existingMBMessage = _persistence.fetchByPrimaryKey(newMBMessage.getPrimaryKey());
 
-		assertEquals(existingMBMessage, newMBMessage);
+		Assert.assertEquals(existingMBMessage, newMBMessage);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		MBMessage missingMBMessage = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingMBMessage);
+		Assert.assertNull(missingMBMessage);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		MBMessage newMBMessage = addMBMessage();
@@ -214,24 +247,27 @@ public class MBMessagePersistenceTest extends BasePersistenceTestCase {
 
 		List<MBMessage> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		MBMessage existingMBMessage = result.get(0);
 
-		assertEquals(existingMBMessage, newMBMessage);
+		Assert.assertEquals(existingMBMessage, newMBMessage);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBMessage.class,
 				MBMessage.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("messageId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("messageId",
+				ServiceTestUtil.nextLong()));
 
 		List<MBMessage> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		MBMessage newMBMessage = addMBMessage();
@@ -248,13 +284,14 @@ public class MBMessagePersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingMessageId = result.get(0);
 
-		assertEquals(existingMessageId, newMessageId);
+		Assert.assertEquals(existingMessageId, newMessageId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBMessage.class,
 				MBMessage.class.getClassLoader());
@@ -262,13 +299,14 @@ public class MBMessagePersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("messageId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("messageId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -280,66 +318,67 @@ public class MBMessagePersistenceTest extends BasePersistenceTestCase {
 
 		MBMessageModelImpl existingMBMessageModelImpl = (MBMessageModelImpl)_persistence.findByPrimaryKey(newMBMessage.getPrimaryKey());
 
-		assertTrue(Validator.equals(existingMBMessageModelImpl.getUuid(),
+		Assert.assertTrue(Validator.equals(
+				existingMBMessageModelImpl.getUuid(),
 				existingMBMessageModelImpl.getOriginalUuid()));
-		assertEquals(existingMBMessageModelImpl.getGroupId(),
+		Assert.assertEquals(existingMBMessageModelImpl.getGroupId(),
 			existingMBMessageModelImpl.getOriginalGroupId());
 	}
 
 	protected MBMessage addMBMessage() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		MBMessage mbMessage = _persistence.create(pk);
 
-		mbMessage.setUuid(randomString());
+		mbMessage.setUuid(ServiceTestUtil.randomString());
 
-		mbMessage.setGroupId(nextLong());
+		mbMessage.setGroupId(ServiceTestUtil.nextLong());
 
-		mbMessage.setCompanyId(nextLong());
+		mbMessage.setCompanyId(ServiceTestUtil.nextLong());
 
-		mbMessage.setUserId(nextLong());
+		mbMessage.setUserId(ServiceTestUtil.nextLong());
 
-		mbMessage.setUserName(randomString());
+		mbMessage.setUserName(ServiceTestUtil.randomString());
 
-		mbMessage.setCreateDate(nextDate());
+		mbMessage.setCreateDate(ServiceTestUtil.nextDate());
 
-		mbMessage.setModifiedDate(nextDate());
+		mbMessage.setModifiedDate(ServiceTestUtil.nextDate());
 
-		mbMessage.setClassNameId(nextLong());
+		mbMessage.setClassNameId(ServiceTestUtil.nextLong());
 
-		mbMessage.setClassPK(nextLong());
+		mbMessage.setClassPK(ServiceTestUtil.nextLong());
 
-		mbMessage.setCategoryId(nextLong());
+		mbMessage.setCategoryId(ServiceTestUtil.nextLong());
 
-		mbMessage.setThreadId(nextLong());
+		mbMessage.setThreadId(ServiceTestUtil.nextLong());
 
-		mbMessage.setRootMessageId(nextLong());
+		mbMessage.setRootMessageId(ServiceTestUtil.nextLong());
 
-		mbMessage.setParentMessageId(nextLong());
+		mbMessage.setParentMessageId(ServiceTestUtil.nextLong());
 
-		mbMessage.setSubject(randomString());
+		mbMessage.setSubject(ServiceTestUtil.randomString());
 
-		mbMessage.setBody(randomString());
+		mbMessage.setBody(ServiceTestUtil.randomString());
 
-		mbMessage.setFormat(randomString());
+		mbMessage.setFormat(ServiceTestUtil.randomString());
 
-		mbMessage.setAttachments(randomBoolean());
+		mbMessage.setAttachments(ServiceTestUtil.randomBoolean());
 
-		mbMessage.setAnonymous(randomBoolean());
+		mbMessage.setAnonymous(ServiceTestUtil.randomBoolean());
 
-		mbMessage.setPriority(nextDouble());
+		mbMessage.setPriority(ServiceTestUtil.nextDouble());
 
-		mbMessage.setAllowPingbacks(randomBoolean());
+		mbMessage.setAllowPingbacks(ServiceTestUtil.randomBoolean());
 
-		mbMessage.setAnswer(randomBoolean());
+		mbMessage.setAnswer(ServiceTestUtil.randomBoolean());
 
-		mbMessage.setStatus(nextInt());
+		mbMessage.setStatus(ServiceTestUtil.nextInt());
 
-		mbMessage.setStatusByUserId(nextLong());
+		mbMessage.setStatusByUserId(ServiceTestUtil.nextLong());
 
-		mbMessage.setStatusByUserName(randomString());
+		mbMessage.setStatusByUserName(ServiceTestUtil.randomString());
 
-		mbMessage.setStatusDate(nextDate());
+		mbMessage.setStatusDate(ServiceTestUtil.nextDate());
 
 		_persistence.update(mbMessage, false);
 

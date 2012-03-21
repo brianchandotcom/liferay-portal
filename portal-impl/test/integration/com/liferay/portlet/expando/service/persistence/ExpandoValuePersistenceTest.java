@@ -19,36 +19,48 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.expando.NoSuchValueException;
 import com.liferay.portlet.expando.model.ExpandoValue;
 import com.liferay.portlet.expando.model.impl.ExpandoValueModelImpl;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class ExpandoValuePersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class ExpandoValuePersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (ExpandoValuePersistence)PortalBeanLocatorUtil.locate(ExpandoValuePersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ExpandoValue expandoValue = _persistence.create(pk);
 
-		assertNotNull(expandoValue);
+		Assert.assertNotNull(expandoValue);
 
-		assertEquals(expandoValue.getPrimaryKey(), pk);
+		Assert.assertEquals(expandoValue.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		ExpandoValue newExpandoValue = addExpandoValue();
 
@@ -56,88 +68,97 @@ public class ExpandoValuePersistenceTest extends BasePersistenceTestCase {
 
 		ExpandoValue existingExpandoValue = _persistence.fetchByPrimaryKey(newExpandoValue.getPrimaryKey());
 
-		assertNull(existingExpandoValue);
+		Assert.assertNull(existingExpandoValue);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addExpandoValue();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ExpandoValue newExpandoValue = _persistence.create(pk);
 
-		newExpandoValue.setCompanyId(nextLong());
+		newExpandoValue.setCompanyId(ServiceTestUtil.nextLong());
 
-		newExpandoValue.setTableId(nextLong());
+		newExpandoValue.setTableId(ServiceTestUtil.nextLong());
 
-		newExpandoValue.setColumnId(nextLong());
+		newExpandoValue.setColumnId(ServiceTestUtil.nextLong());
 
-		newExpandoValue.setRowId(nextLong());
+		newExpandoValue.setRowId(ServiceTestUtil.nextLong());
 
-		newExpandoValue.setClassNameId(nextLong());
+		newExpandoValue.setClassNameId(ServiceTestUtil.nextLong());
 
-		newExpandoValue.setClassPK(nextLong());
+		newExpandoValue.setClassPK(ServiceTestUtil.nextLong());
 
-		newExpandoValue.setData(randomString());
+		newExpandoValue.setData(ServiceTestUtil.randomString());
 
 		_persistence.update(newExpandoValue, false);
 
 		ExpandoValue existingExpandoValue = _persistence.findByPrimaryKey(newExpandoValue.getPrimaryKey());
 
-		assertEquals(existingExpandoValue.getValueId(),
+		Assert.assertEquals(existingExpandoValue.getValueId(),
 			newExpandoValue.getValueId());
-		assertEquals(existingExpandoValue.getCompanyId(),
+		Assert.assertEquals(existingExpandoValue.getCompanyId(),
 			newExpandoValue.getCompanyId());
-		assertEquals(existingExpandoValue.getTableId(),
+		Assert.assertEquals(existingExpandoValue.getTableId(),
 			newExpandoValue.getTableId());
-		assertEquals(existingExpandoValue.getColumnId(),
+		Assert.assertEquals(existingExpandoValue.getColumnId(),
 			newExpandoValue.getColumnId());
-		assertEquals(existingExpandoValue.getRowId(), newExpandoValue.getRowId());
-		assertEquals(existingExpandoValue.getClassNameId(),
+		Assert.assertEquals(existingExpandoValue.getRowId(),
+			newExpandoValue.getRowId());
+		Assert.assertEquals(existingExpandoValue.getClassNameId(),
 			newExpandoValue.getClassNameId());
-		assertEquals(existingExpandoValue.getClassPK(),
+		Assert.assertEquals(existingExpandoValue.getClassPK(),
 			newExpandoValue.getClassPK());
-		assertEquals(existingExpandoValue.getData(), newExpandoValue.getData());
+		Assert.assertEquals(existingExpandoValue.getData(),
+			newExpandoValue.getData());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ExpandoValue newExpandoValue = addExpandoValue();
 
 		ExpandoValue existingExpandoValue = _persistence.findByPrimaryKey(newExpandoValue.getPrimaryKey());
 
-		assertEquals(existingExpandoValue, newExpandoValue);
+		Assert.assertEquals(existingExpandoValue, newExpandoValue);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchValueException");
+			Assert.fail("Missing entity did not throw NoSuchValueException");
 		}
 		catch (NoSuchValueException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		ExpandoValue newExpandoValue = addExpandoValue();
 
 		ExpandoValue existingExpandoValue = _persistence.fetchByPrimaryKey(newExpandoValue.getPrimaryKey());
 
-		assertEquals(existingExpandoValue, newExpandoValue);
+		Assert.assertEquals(existingExpandoValue, newExpandoValue);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ExpandoValue missingExpandoValue = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingExpandoValue);
+		Assert.assertNull(missingExpandoValue);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		ExpandoValue newExpandoValue = addExpandoValue();
@@ -150,24 +171,27 @@ public class ExpandoValuePersistenceTest extends BasePersistenceTestCase {
 
 		List<ExpandoValue> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		ExpandoValue existingExpandoValue = result.get(0);
 
-		assertEquals(existingExpandoValue, newExpandoValue);
+		Assert.assertEquals(existingExpandoValue, newExpandoValue);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ExpandoValue.class,
 				ExpandoValue.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("valueId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("valueId",
+				ServiceTestUtil.nextLong()));
 
 		List<ExpandoValue> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		ExpandoValue newExpandoValue = addExpandoValue();
@@ -184,13 +208,14 @@ public class ExpandoValuePersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingValueId = result.get(0);
 
-		assertEquals(existingValueId, newValueId);
+		Assert.assertEquals(existingValueId, newValueId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ExpandoValue.class,
 				ExpandoValue.class.getClassLoader());
@@ -198,13 +223,14 @@ public class ExpandoValuePersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("valueId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("valueId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -216,37 +242,37 @@ public class ExpandoValuePersistenceTest extends BasePersistenceTestCase {
 
 		ExpandoValueModelImpl existingExpandoValueModelImpl = (ExpandoValueModelImpl)_persistence.findByPrimaryKey(newExpandoValue.getPrimaryKey());
 
-		assertEquals(existingExpandoValueModelImpl.getColumnId(),
+		Assert.assertEquals(existingExpandoValueModelImpl.getColumnId(),
 			existingExpandoValueModelImpl.getOriginalColumnId());
-		assertEquals(existingExpandoValueModelImpl.getRowId(),
+		Assert.assertEquals(existingExpandoValueModelImpl.getRowId(),
 			existingExpandoValueModelImpl.getOriginalRowId());
 
-		assertEquals(existingExpandoValueModelImpl.getTableId(),
+		Assert.assertEquals(existingExpandoValueModelImpl.getTableId(),
 			existingExpandoValueModelImpl.getOriginalTableId());
-		assertEquals(existingExpandoValueModelImpl.getColumnId(),
+		Assert.assertEquals(existingExpandoValueModelImpl.getColumnId(),
 			existingExpandoValueModelImpl.getOriginalColumnId());
-		assertEquals(existingExpandoValueModelImpl.getClassPK(),
+		Assert.assertEquals(existingExpandoValueModelImpl.getClassPK(),
 			existingExpandoValueModelImpl.getOriginalClassPK());
 	}
 
 	protected ExpandoValue addExpandoValue() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ExpandoValue expandoValue = _persistence.create(pk);
 
-		expandoValue.setCompanyId(nextLong());
+		expandoValue.setCompanyId(ServiceTestUtil.nextLong());
 
-		expandoValue.setTableId(nextLong());
+		expandoValue.setTableId(ServiceTestUtil.nextLong());
 
-		expandoValue.setColumnId(nextLong());
+		expandoValue.setColumnId(ServiceTestUtil.nextLong());
 
-		expandoValue.setRowId(nextLong());
+		expandoValue.setRowId(ServiceTestUtil.nextLong());
 
-		expandoValue.setClassNameId(nextLong());
+		expandoValue.setClassNameId(ServiceTestUtil.nextLong());
 
-		expandoValue.setClassPK(nextLong());
+		expandoValue.setClassPK(ServiceTestUtil.nextLong());
 
-		expandoValue.setData(randomString());
+		expandoValue.setData(ServiceTestUtil.randomString());
 
 		_persistence.update(expandoValue, false);
 

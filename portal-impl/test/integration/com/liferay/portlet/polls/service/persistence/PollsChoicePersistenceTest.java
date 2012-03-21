@@ -20,36 +20,48 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.polls.NoSuchChoiceException;
 import com.liferay.portlet.polls.model.PollsChoice;
 import com.liferay.portlet.polls.model.impl.PollsChoiceModelImpl;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class PollsChoicePersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class PollsChoicePersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (PollsChoicePersistence)PortalBeanLocatorUtil.locate(PollsChoicePersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		PollsChoice pollsChoice = _persistence.create(pk);
 
-		assertNotNull(pollsChoice);
+		Assert.assertNotNull(pollsChoice);
 
-		assertEquals(pollsChoice.getPrimaryKey(), pk);
+		Assert.assertEquals(pollsChoice.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		PollsChoice newPollsChoice = addPollsChoice();
 
@@ -57,76 +69,85 @@ public class PollsChoicePersistenceTest extends BasePersistenceTestCase {
 
 		PollsChoice existingPollsChoice = _persistence.fetchByPrimaryKey(newPollsChoice.getPrimaryKey());
 
-		assertNull(existingPollsChoice);
+		Assert.assertNull(existingPollsChoice);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addPollsChoice();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		PollsChoice newPollsChoice = _persistence.create(pk);
 
-		newPollsChoice.setUuid(randomString());
+		newPollsChoice.setUuid(ServiceTestUtil.randomString());
 
-		newPollsChoice.setQuestionId(nextLong());
+		newPollsChoice.setQuestionId(ServiceTestUtil.nextLong());
 
-		newPollsChoice.setName(randomString());
+		newPollsChoice.setName(ServiceTestUtil.randomString());
 
-		newPollsChoice.setDescription(randomString());
+		newPollsChoice.setDescription(ServiceTestUtil.randomString());
 
 		_persistence.update(newPollsChoice, false);
 
 		PollsChoice existingPollsChoice = _persistence.findByPrimaryKey(newPollsChoice.getPrimaryKey());
 
-		assertEquals(existingPollsChoice.getUuid(), newPollsChoice.getUuid());
-		assertEquals(existingPollsChoice.getChoiceId(),
+		Assert.assertEquals(existingPollsChoice.getUuid(),
+			newPollsChoice.getUuid());
+		Assert.assertEquals(existingPollsChoice.getChoiceId(),
 			newPollsChoice.getChoiceId());
-		assertEquals(existingPollsChoice.getQuestionId(),
+		Assert.assertEquals(existingPollsChoice.getQuestionId(),
 			newPollsChoice.getQuestionId());
-		assertEquals(existingPollsChoice.getName(), newPollsChoice.getName());
-		assertEquals(existingPollsChoice.getDescription(),
+		Assert.assertEquals(existingPollsChoice.getName(),
+			newPollsChoice.getName());
+		Assert.assertEquals(existingPollsChoice.getDescription(),
 			newPollsChoice.getDescription());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		PollsChoice newPollsChoice = addPollsChoice();
 
 		PollsChoice existingPollsChoice = _persistence.findByPrimaryKey(newPollsChoice.getPrimaryKey());
 
-		assertEquals(existingPollsChoice, newPollsChoice);
+		Assert.assertEquals(existingPollsChoice, newPollsChoice);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchChoiceException");
+			Assert.fail("Missing entity did not throw NoSuchChoiceException");
 		}
 		catch (NoSuchChoiceException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		PollsChoice newPollsChoice = addPollsChoice();
 
 		PollsChoice existingPollsChoice = _persistence.fetchByPrimaryKey(newPollsChoice.getPrimaryKey());
 
-		assertEquals(existingPollsChoice, newPollsChoice);
+		Assert.assertEquals(existingPollsChoice, newPollsChoice);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		PollsChoice missingPollsChoice = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingPollsChoice);
+		Assert.assertNull(missingPollsChoice);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		PollsChoice newPollsChoice = addPollsChoice();
@@ -139,24 +160,27 @@ public class PollsChoicePersistenceTest extends BasePersistenceTestCase {
 
 		List<PollsChoice> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		PollsChoice existingPollsChoice = result.get(0);
 
-		assertEquals(existingPollsChoice, newPollsChoice);
+		Assert.assertEquals(existingPollsChoice, newPollsChoice);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PollsChoice.class,
 				PollsChoice.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("choiceId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("choiceId",
+				ServiceTestUtil.nextLong()));
 
 		List<PollsChoice> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		PollsChoice newPollsChoice = addPollsChoice();
@@ -173,13 +197,14 @@ public class PollsChoicePersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingChoiceId = result.get(0);
 
-		assertEquals(existingChoiceId, newChoiceId);
+		Assert.assertEquals(existingChoiceId, newChoiceId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PollsChoice.class,
 				PollsChoice.class.getClassLoader());
@@ -187,13 +212,14 @@ public class PollsChoicePersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("choiceId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("choiceId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -205,24 +231,25 @@ public class PollsChoicePersistenceTest extends BasePersistenceTestCase {
 
 		PollsChoiceModelImpl existingPollsChoiceModelImpl = (PollsChoiceModelImpl)_persistence.findByPrimaryKey(newPollsChoice.getPrimaryKey());
 
-		assertEquals(existingPollsChoiceModelImpl.getQuestionId(),
+		Assert.assertEquals(existingPollsChoiceModelImpl.getQuestionId(),
 			existingPollsChoiceModelImpl.getOriginalQuestionId());
-		assertTrue(Validator.equals(existingPollsChoiceModelImpl.getName(),
+		Assert.assertTrue(Validator.equals(
+				existingPollsChoiceModelImpl.getName(),
 				existingPollsChoiceModelImpl.getOriginalName()));
 	}
 
 	protected PollsChoice addPollsChoice() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		PollsChoice pollsChoice = _persistence.create(pk);
 
-		pollsChoice.setUuid(randomString());
+		pollsChoice.setUuid(ServiceTestUtil.randomString());
 
-		pollsChoice.setQuestionId(nextLong());
+		pollsChoice.setQuestionId(ServiceTestUtil.nextLong());
 
-		pollsChoice.setName(randomString());
+		pollsChoice.setName(ServiceTestUtil.randomString());
 
-		pollsChoice.setDescription(randomString());
+		pollsChoice.setDescription(ServiceTestUtil.randomString());
 
 		_persistence.update(pollsChoice, false);
 

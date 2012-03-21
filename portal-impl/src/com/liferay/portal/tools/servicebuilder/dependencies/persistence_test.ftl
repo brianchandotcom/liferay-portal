@@ -30,7 +30,13 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.test.assertion.AssertUtils;
+import com.liferay.portal.test.EnvironmentConfigTestListener;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
 
 import java.sql.Blob;
@@ -38,26 +44,32 @@ import java.sql.Blob;
 import java.util.Arrays;
 import java.util.List;
 
-public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
-	@Override
+@ExecutionTestListeners(listeners = {PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class ${entity.name}PersistenceTest {
+
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (${entity.name}Persistence)${beanLocatorUtilShortName}.locate(${entity.name}Persistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
 		<#if entity.hasCompoundPK()>
 			${entity.PKClassName} pk = new ${entity.PKClassName}(
 
 			<#list entity.PKList as column>
 				<#if column.type == "int">
-					nextInt()
+					ServiceTestUtil.nextInt()
 				<#elseif column.type == "long">
-					nextLong()
+					ServiceTestUtil.nextLong()
 				<#elseif column.type == "String">
-					randomString()
+					ServiceTestUtil.randomString()
 				</#if>
 
 				<#if column_has_next>
@@ -72,11 +84,11 @@ public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
 			${column.type} pk =
 
 			<#if column.type == "int">
-				nextInt()
+				ServiceTestUtil.nextInt()
 			<#elseif column.type == "long">
-				nextLong()
+				ServiceTestUtil.nextLong()
 			<#elseif column.type == "String">
-				randomString()
+				ServiceTestUtil.randomString()
 			</#if>
 
 			;
@@ -84,11 +96,12 @@ public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
 
 		${entity.name} ${entity.varName} = _persistence.create(pk);
 
-		assertNotNull(${entity.varName});
+		Assert.assertNotNull(${entity.varName});
 
-		assertEquals(${entity.varName}.getPrimaryKey(), pk);
+		Assert.assertEquals(${entity.varName}.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		${entity.name} new${entity.name} = add${entity.name}();
 
@@ -96,24 +109,26 @@ public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
 
 		${entity.name} existing${entity.name} = _persistence.fetchByPrimaryKey(new${entity.name}.getPrimaryKey());
 
-		assertNull(existing${entity.name});
+		Assert.assertNull(existing${entity.name});
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		add${entity.name}();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
 		<#if entity.hasCompoundPK()>
 			${entity.PKClassName} pk = new ${entity.PKClassName}(
 
 			<#list entity.PKList as column>
 				<#if column.type == "int">
-					nextInt()
+					ServiceTestUtil.nextInt()
 				<#elseif column.type == "long">
-					nextLong()
+					ServiceTestUtil.nextLong()
 				<#elseif column.type == "String">
-					randomString()
+					ServiceTestUtil.randomString()
 				</#if>
 
 				<#if column_has_next>
@@ -128,11 +143,11 @@ public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
 			${column.type} pk =
 
 			<#if column.type == "int">
-				nextInt()
+				ServiceTestUtil.nextInt()
 			<#elseif column.type == "long">
-				nextLong()
+				ServiceTestUtil.nextLong()
 			<#elseif column.type == "String">
-				randomString()
+				ServiceTestUtil.randomString()
 			</#if>
 
 			;
@@ -143,7 +158,7 @@ public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
 		<#list entity.regularColList as column>
 			<#if !column.primary && ((parentPKColumn == "") || (parentPKColumn.name != column.name))>
 				<#if column.type == "Blob">
-					String new${column.methodName}String = randomString();
+					String new${column.methodName}String = ServiceTestUtil.randomString();
 
 					byte[] new${column.methodName}Bytes = new${column.methodName}String.getBytes(StringPool.UTF8);
 
@@ -153,19 +168,19 @@ public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
 				new${entity.name}.set${column.methodName}(
 
 				<#if column.type == "boolean">
-					randomBoolean()
+					ServiceTestUtil.randomBoolean()
 				<#elseif column.type == "double">
-					nextDouble()
+					ServiceTestUtil.nextDouble()
 				<#elseif column.type == "int">
-					nextInt()
+					ServiceTestUtil.nextInt()
 				<#elseif column.type == "long">
-					nextLong()
+					ServiceTestUtil.nextLong()
 				<#elseif column.type == "Date">
-					nextDate()
+					ServiceTestUtil.nextDate()
 				<#elseif column.type == "Blob">
 					 new${column.methodName}Blob
 				<#elseif column.type == "String">
-					randomString()
+					ServiceTestUtil.randomString()
 				</#if>
 
 				);
@@ -180,34 +195,38 @@ public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
 			<#if column.type == "Blob">
 				Blob existing${column.methodName} = existing${entity.name}.get${column.methodName}();
 
-				assertTrue(Arrays.equals(existing${column.methodName}.getBytes(1, (int)existing${column.methodName}.length()), new${column.methodName}Bytes));
+				Assert.assertTrue(Arrays.equals(existing${column.methodName}.getBytes(1, (int)existing${column.methodName}.length()), new${column.methodName}Bytes));
 			<#elseif column.type == "Date">
-				assertEquals(Time.getShortTimestamp(existing${entity.name}.get${column.methodName}()), Time.getShortTimestamp(new${entity.name}.get${column.methodName}()));
+				Assert.assertEquals(Time.getShortTimestamp(existing${entity.name}.get${column.methodName}()), Time.getShortTimestamp(new${entity.name}.get${column.methodName}()));
+			<#elseif column.type == "double">
+				AssertUtils.assertEquals(existing${entity.name}.get${column.methodName}(), new${entity.name}.get${column.methodName}());
 			<#else>
-				assertEquals(existing${entity.name}.get${column.methodName}(), new${entity.name}.get${column.methodName}());
+				Assert.assertEquals(existing${entity.name}.get${column.methodName}(), new${entity.name}.get${column.methodName}());
 			</#if>
 		</#list>
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		${entity.name} new${entity.name} = add${entity.name}();
 
 		${entity.name} existing${entity.name} = _persistence.findByPrimaryKey(new${entity.name}.getPrimaryKey());
 
-		assertEquals(existing${entity.name}, new${entity.name});
+		Assert.assertEquals(existing${entity.name}, new${entity.name});
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		<#if entity.hasCompoundPK()>
 			${entity.PKClassName} pk = new ${entity.PKClassName}(
 
 			<#list entity.PKList as column>
 				<#if column.type == "int">
-					nextInt()
+					ServiceTestUtil.nextInt()
 				<#elseif column.type == "long">
-					nextLong()
+					ServiceTestUtil.nextLong()
 				<#elseif column.type == "String">
-					randomString()
+					ServiceTestUtil.randomString()
 				</#if>
 
 				<#if column_has_next>
@@ -222,11 +241,11 @@ public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
 			${column.type} pk =
 
 			<#if column.type == "int">
-				nextInt()
+				ServiceTestUtil.nextInt()
 			<#elseif column.type == "long">
-				nextLong()
+				ServiceTestUtil.nextLong()
 			<#elseif column.type == "String">
-				randomString()
+				ServiceTestUtil.randomString()
 			</#if>
 
 			;
@@ -235,31 +254,33 @@ public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw ${noSuchEntity}Exception");
+			Assert.fail("Missing entity did not throw ${noSuchEntity}Exception");
 		}
 		catch (${noSuchEntity}Exception nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		${entity.name} new${entity.name} = add${entity.name}();
 
 		${entity.name} existing${entity.name} = _persistence.fetchByPrimaryKey(new${entity.name}.getPrimaryKey());
 
-		assertEquals(existing${entity.name}, new${entity.name});
+		Assert.assertEquals(existing${entity.name}, new${entity.name});
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		<#if entity.hasCompoundPK()>
 			${entity.PKClassName} pk = new ${entity.PKClassName}(
 
 			<#list entity.PKList as column>
 				<#if column.type == "int">
-					nextInt()
+					ServiceTestUtil.nextInt()
 				<#elseif column.type == "long">
-					nextLong()
+					ServiceTestUtil.nextLong()
 				<#elseif column.type == "String">
-					randomString()
+					ServiceTestUtil.randomString()
 				</#if>
 
 				<#if column_has_next>
@@ -274,11 +295,11 @@ public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
 			${column.type} pk =
 
 			<#if column.type == "int">
-				nextInt()
+				ServiceTestUtil.nextInt()
 			<#elseif column.type == "long">
-				nextLong()
+				ServiceTestUtil.nextLong()
 			<#elseif column.type == "String">
-				randomString()
+				ServiceTestUtil.randomString()
 			</#if>
 
 			;
@@ -286,9 +307,10 @@ public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
 
 		${entity.name} missing${entity.name} = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missing${entity.name});
+		Assert.assertNull(missing${entity.name});
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
 		${entity.name} new${entity.name} = add${entity.name}();
 
@@ -306,13 +328,14 @@ public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
 
 		List<${entity.name}> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		${entity.name} existing${entity.name} = result.get(0);
 
-		assertEquals(existing${entity.name}, new${entity.name});
+		Assert.assertEquals(existing${entity.name}, new${entity.name});
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(${entity.name}.class, ${entity.name}.class.getClassLoader());
 
@@ -321,11 +344,11 @@ public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
 				dynamicQuery.add(RestrictionsFactoryUtil.eq("id.${column.name}",
 
 				<#if column.type == "int">
-					nextInt()
+					ServiceTestUtil.nextInt()
 				<#elseif column.type == "long">
-					nextLong()
+					ServiceTestUtil.nextLong()
 				<#elseif column.type == "String">
-					randomString()
+					ServiceTestUtil.randomString()
 				</#if>
 
 				));
@@ -336,11 +359,11 @@ public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
 			dynamicQuery.add(RestrictionsFactoryUtil.eq("${column.name}",
 
 			<#if column.type == "int">
-				nextInt()
+				ServiceTestUtil.nextInt()
 			<#elseif column.type == "long">
-				nextLong()
+				ServiceTestUtil.nextLong()
 			<#elseif column.type == "String">
-				randomString()
+				ServiceTestUtil.randomString()
 			</#if>
 
 			));
@@ -348,9 +371,10 @@ public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
 
 		List<${entity.name}> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting() throws Exception {
 		${entity.name} new${entity.name} = add${entity.name}();
 
@@ -372,13 +396,14 @@ public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existing${column.methodName} = result.get(0);
 
-		assertEquals(existing${column.methodName}, new${column.methodName});
+		Assert.assertEquals(existing${column.methodName}, new${column.methodName});
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(${entity.name}.class, ${entity.name}.class.getClassLoader());
 
@@ -395,23 +420,24 @@ public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("${propertyName}", new Object[] {
 
 		<#if column.type == "int">
-			nextInt()
+			ServiceTestUtil.nextInt()
 		<#elseif column.type == "long">
-			nextLong()
+			ServiceTestUtil.nextLong()
 		<#elseif column.type == "String">
-			randomString()
+			ServiceTestUtil.randomString()
 		</#if>
 
 		}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
 	<#assign uniqueFinderList = entity.getUniqueFinderList()>
 
 	<#if uniqueFinderList?size != 0>
+		@Test
 		public void testResetOriginalValues() throws Exception {
 			if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 				return;
@@ -427,10 +453,12 @@ public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
 				<#assign finderColsList = finder.getColumns()>
 
 				<#list finderColsList as finderCol>
-					<#if finderCol.isPrimitiveType()>
-						assertEquals(existing${entity.name}ModelImpl.get${finderCol.methodName}(), existing${entity.name}ModelImpl.getOriginal${finderCol.methodName}());
+					<#if finderCol.type == "double">
+						AssertUtils.assertEquals(existing${entity.name}ModelImpl.get${finderCol.methodName}(), existing${entity.name}ModelImpl.getOriginal${finderCol.methodName}());
+					<#elseif finderCol.isPrimitiveType()>
+						Assert.assertEquals(existing${entity.name}ModelImpl.get${finderCol.methodName}(), existing${entity.name}ModelImpl.getOriginal${finderCol.methodName}());
 					<#else>
-						assertTrue(Validator.equals(existing${entity.name}ModelImpl.get${finderCol.methodName}(), existing${entity.name}ModelImpl.getOriginal${finderCol.methodName}()));
+						Assert.assertTrue(Validator.equals(existing${entity.name}ModelImpl.get${finderCol.methodName}(), existing${entity.name}ModelImpl.getOriginal${finderCol.methodName}()));
 					</#if>
 				</#list>
 			</#list>
@@ -443,11 +471,11 @@ public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
 
 			<#list entity.PKList as column>
 				<#if column.type == "int">
-					nextInt()
+					ServiceTestUtil.nextInt()
 				<#elseif column.type == "long">
-					nextLong()
+					ServiceTestUtil.nextLong()
 				<#elseif column.type == "String">
-					randomString()
+					ServiceTestUtil.randomString()
 				</#if>
 
 				<#if column_has_next>
@@ -462,11 +490,11 @@ public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
 			${column.type} pk =
 
 			<#if column.type == "int">
-				nextInt()
+				ServiceTestUtil.nextInt()
 			<#elseif column.type == "long">
-				nextLong()
+				ServiceTestUtil.nextLong()
 			<#elseif column.type == "String">
-				randomString()
+				ServiceTestUtil.randomString()
 			</#if>
 
 			;
@@ -477,7 +505,7 @@ public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
 		<#list entity.regularColList as column>
 			<#if !column.primary && ((parentPKColumn == "") || (parentPKColumn.name != column.name))>
 				<#if column.type == "Blob">
-					String ${column.name}String = randomString();
+					String ${column.name}String = ServiceTestUtil.randomString();
 
 					byte[] ${column.name}Bytes = ${column.name}String.getBytes(StringPool.UTF8);
 
@@ -487,19 +515,19 @@ public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
 				${entity.varName}.set${column.methodName}(
 
 				<#if column.type == "boolean">
-					randomBoolean()
+					ServiceTestUtil.randomBoolean()
 				<#elseif column.type == "double">
-					nextDouble()
+					ServiceTestUtil.nextDouble()
 				<#elseif column.type == "int">
-					nextInt()
+					ServiceTestUtil.nextInt()
 				<#elseif column.type == "long">
-					nextLong()
+					ServiceTestUtil.nextLong()
 				<#elseif column.type == "Blob">
 					${column.name}Blob
 				<#elseif column.type == "Date">
-					nextDate()
+					ServiceTestUtil.nextDate()
 				<#elseif column.type == "String">
-					randomString()
+					ServiceTestUtil.randomString()
 				</#if>
 
 				);
@@ -512,8 +540,9 @@ public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
 	}
 
 	<#if entity.isHierarchicalTree()>
+		@Test
 		public void testMoveTree() throws Exception {
-			long ${scopeColumn.name} = nextLong();
+			long ${scopeColumn.name} = ServiceTestUtil.nextLong();
 
 			${entity.name} root${entity.name} = add${entity.name}(${scopeColumn.name}, null);
 
@@ -524,14 +553,15 @@ public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
 
 			root${entity.name} = _persistence.fetchByPrimaryKey(root${entity.name}.getPrimaryKey());
 
-			assertEquals(previousRootLeft${pkColumn.methodName}, root${entity.name}.getLeft${pkColumn.methodName}());
-			assertEquals(previousRootRight${pkColumn.methodName} + 2, root${entity.name}.getRight${pkColumn.methodName}());
-			assertEquals(root${entity.name}.getLeft${pkColumn.methodName}() + 1, child${entity.name}.getLeft${pkColumn.methodName}());
-			assertEquals(root${entity.name}.getRight${pkColumn.methodName}() - 1, child${entity.name}.getRight${pkColumn.methodName}());
+			Assert.assertEquals(previousRootLeft${pkColumn.methodName}, root${entity.name}.getLeft${pkColumn.methodName}());
+			Assert.assertEquals(previousRootRight${pkColumn.methodName} + 2, root${entity.name}.getRight${pkColumn.methodName}());
+			Assert.assertEquals(root${entity.name}.getLeft${pkColumn.methodName}() + 1, child${entity.name}.getLeft${pkColumn.methodName}());
+			Assert.assertEquals(root${entity.name}.getRight${pkColumn.methodName}() - 1, child${entity.name}.getRight${pkColumn.methodName}());
 		}
 
+		@Test
 		public void testMoveTreeFromLeft() throws Exception {
-			long ${scopeColumn.name} = nextLong();
+			long ${scopeColumn.name} = ServiceTestUtil.nextLong();
 
 			${entity.name} parent${entity.name} = add${entity.name}(${scopeColumn.name}, null);
 
@@ -551,16 +581,17 @@ public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
 			root${entity.name} = _persistence.fetchByPrimaryKey(root${entity.name}.getPrimaryKey());
 			child${entity.name} = _persistence.fetchByPrimaryKey(child${entity.name}.getPrimaryKey());
 
-			assertEquals(previousRootLeft${pkColumn.methodName} - 4, root${entity.name}.getLeft${pkColumn.methodName}());
-			assertEquals(previousRootRight${pkColumn.methodName}, root${entity.name}.getRight${pkColumn.methodName}());
-			assertEquals(root${entity.name}.getLeft${pkColumn.methodName}() + 1, parent${entity.name}.getLeft${pkColumn.methodName}());
-			assertEquals(root${entity.name}.getRight${pkColumn.methodName}() - 1, parent${entity.name}.getRight${pkColumn.methodName}());
-			assertEquals(parent${entity.name}.getLeft${pkColumn.methodName}() + 1, child${entity.name}.getLeft${pkColumn.methodName}());
-			assertEquals(parent${entity.name}.getRight${pkColumn.methodName}() - 1, child${entity.name}.getRight${pkColumn.methodName}());
+			Assert.assertEquals(previousRootLeft${pkColumn.methodName} - 4, root${entity.name}.getLeft${pkColumn.methodName}());
+			Assert.assertEquals(previousRootRight${pkColumn.methodName}, root${entity.name}.getRight${pkColumn.methodName}());
+			Assert.assertEquals(root${entity.name}.getLeft${pkColumn.methodName}() + 1, parent${entity.name}.getLeft${pkColumn.methodName}());
+			Assert.assertEquals(root${entity.name}.getRight${pkColumn.methodName}() - 1, parent${entity.name}.getRight${pkColumn.methodName}());
+			Assert.assertEquals(parent${entity.name}.getLeft${pkColumn.methodName}() + 1, child${entity.name}.getLeft${pkColumn.methodName}());
+			Assert.assertEquals(parent${entity.name}.getRight${pkColumn.methodName}() - 1, child${entity.name}.getRight${pkColumn.methodName}());
 		}
 
+		@Test
 		public void testMoveTreeFromRight() throws Exception {
-			long ${scopeColumn.name} = nextLong();
+			long ${scopeColumn.name} = ServiceTestUtil.nextLong();
 
 			${entity.name} root${entity.name} = add${entity.name}(${scopeColumn.name}, null);
 
@@ -580,16 +611,17 @@ public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
 			root${entity.name} = _persistence.fetchByPrimaryKey(root${entity.name}.getPrimaryKey());
 			child${entity.name} = _persistence.fetchByPrimaryKey(child${entity.name}.getPrimaryKey());
 
-			assertEquals(previousRootLeft${pkColumn.methodName}, root${entity.name}.getLeft${pkColumn.methodName}());
-			assertEquals(previousRootRight${pkColumn.methodName} + 4, root${entity.name}.getRight${pkColumn.methodName}());
-			assertEquals(root${entity.name}.getLeft${pkColumn.methodName}() + 1, parent${entity.name}.getLeft${pkColumn.methodName}());
-			assertEquals(root${entity.name}.getRight${pkColumn.methodName}() - 1, parent${entity.name}.getRight${pkColumn.methodName}());
-			assertEquals(parent${entity.name}.getLeft${pkColumn.methodName}() + 1, child${entity.name}.getLeft${pkColumn.methodName}());
-			assertEquals(parent${entity.name}.getRight${pkColumn.methodName}() - 1, child${entity.name}.getRight${pkColumn.methodName}());
+			Assert.assertEquals(previousRootLeft${pkColumn.methodName}, root${entity.name}.getLeft${pkColumn.methodName}());
+			Assert.assertEquals(previousRootRight${pkColumn.methodName} + 4, root${entity.name}.getRight${pkColumn.methodName}());
+			Assert.assertEquals(root${entity.name}.getLeft${pkColumn.methodName}() + 1, parent${entity.name}.getLeft${pkColumn.methodName}());
+			Assert.assertEquals(root${entity.name}.getRight${pkColumn.methodName}() - 1, parent${entity.name}.getRight${pkColumn.methodName}());
+			Assert.assertEquals(parent${entity.name}.getLeft${pkColumn.methodName}() + 1, child${entity.name}.getLeft${pkColumn.methodName}());
+			Assert.assertEquals(parent${entity.name}.getRight${pkColumn.methodName}() - 1, child${entity.name}.getRight${pkColumn.methodName}());
 		}
 
+		@Test
 		public void testMoveTreeIntoTreeFromLeft() throws Exception {
-			long ${scopeColumn.name} = nextLong();
+			long ${scopeColumn.name} = ServiceTestUtil.nextLong();
 
 			${entity.name} parent${entity.name} = add${entity.name}(${scopeColumn.name}, null);
 
@@ -619,20 +651,21 @@ public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
 			rightRootChild${entity.name} = _persistence.fetchByPrimaryKey(rightRootChild${entity.name}.getPrimaryKey());
 			parentChild${entity.name} = _persistence.fetchByPrimaryKey(parentChild${entity.name}.getPrimaryKey());
 
-			assertEquals(previousRootLeft${pkColumn.methodName} - 4, root${entity.name}.getLeft${pkColumn.methodName}());
-			assertEquals(previousRootRight${pkColumn.methodName}, root${entity.name}.getRight${pkColumn.methodName}());
-			assertEquals(root${entity.name}.getLeft${pkColumn.methodName}() + 1, leftRootChild${entity.name}.getLeft${pkColumn.methodName}());
-			assertEquals(root${entity.name}.getRight${pkColumn.methodName}() - 7, leftRootChild${entity.name}.getRight${pkColumn.methodName}());
-			assertEquals(root${entity.name}.getLeft${pkColumn.methodName}() + 3, rightRootChild${entity.name}.getLeft${pkColumn.methodName}());
-			assertEquals(root${entity.name}.getRight${pkColumn.methodName}() - 1, rightRootChild${entity.name}.getRight${pkColumn.methodName}());
-			assertEquals(rightRootChild${entity.name}.getLeft${pkColumn.methodName}() + 1, parent${entity.name}.getLeft${pkColumn.methodName}());
-			assertEquals(rightRootChild${entity.name}.getRight${pkColumn.methodName}() - 1, parent${entity.name}.getRight${pkColumn.methodName}());
-			assertEquals(parent${entity.name}.getLeft${pkColumn.methodName}() + 1, parentChild${entity.name}.getLeft${pkColumn.methodName}());
-			assertEquals(parent${entity.name}.getRight${pkColumn.methodName}() - 1, parentChild${entity.name}.getRight${pkColumn.methodName}());
+			Assert.assertEquals(previousRootLeft${pkColumn.methodName} - 4, root${entity.name}.getLeft${pkColumn.methodName}());
+			Assert.assertEquals(previousRootRight${pkColumn.methodName}, root${entity.name}.getRight${pkColumn.methodName}());
+			Assert.assertEquals(root${entity.name}.getLeft${pkColumn.methodName}() + 1, leftRootChild${entity.name}.getLeft${pkColumn.methodName}());
+			Assert.assertEquals(root${entity.name}.getRight${pkColumn.methodName}() - 7, leftRootChild${entity.name}.getRight${pkColumn.methodName}());
+			Assert.assertEquals(root${entity.name}.getLeft${pkColumn.methodName}() + 3, rightRootChild${entity.name}.getLeft${pkColumn.methodName}());
+			Assert.assertEquals(root${entity.name}.getRight${pkColumn.methodName}() - 1, rightRootChild${entity.name}.getRight${pkColumn.methodName}());
+			Assert.assertEquals(rightRootChild${entity.name}.getLeft${pkColumn.methodName}() + 1, parent${entity.name}.getLeft${pkColumn.methodName}());
+			Assert.assertEquals(rightRootChild${entity.name}.getRight${pkColumn.methodName}() - 1, parent${entity.name}.getRight${pkColumn.methodName}());
+			Assert.assertEquals(parent${entity.name}.getLeft${pkColumn.methodName}() + 1, parentChild${entity.name}.getLeft${pkColumn.methodName}());
+			Assert.assertEquals(parent${entity.name}.getRight${pkColumn.methodName}() - 1, parentChild${entity.name}.getRight${pkColumn.methodName}());
 		}
 
+		@Test
 		public void testMoveTreeIntoTreeFromRight() throws Exception {
-			long ${scopeColumn.name} = nextLong();
+			long ${scopeColumn.name} = ServiceTestUtil.nextLong();
 
 			${entity.name} root${entity.name} = add${entity.name}(${scopeColumn.name}, null);
 
@@ -662,16 +695,16 @@ public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
 			rightRootChild${entity.name} = _persistence.fetchByPrimaryKey(rightRootChild${entity.name}.getPrimaryKey());
 			parentChild${entity.name} = _persistence.fetchByPrimaryKey(parentChild${entity.name}.getPrimaryKey());
 
-			assertEquals(previousRootLeft${pkColumn.methodName}, root${entity.name}.getLeft${pkColumn.methodName}());
-			assertEquals(previousRootRight${pkColumn.methodName} + 4, root${entity.name}.getRight${pkColumn.methodName}());
-			assertEquals(root${entity.name}.getLeft${pkColumn.methodName}() + 1, leftRootChild${entity.name}.getLeft${pkColumn.methodName}());
-			assertEquals(root${entity.name}.getRight${pkColumn.methodName}() - 3, leftRootChild${entity.name}.getRight${pkColumn.methodName}());
-			assertEquals(root${entity.name}.getLeft${pkColumn.methodName}() + 7, rightRootChild${entity.name}.getLeft${pkColumn.methodName}());
-			assertEquals(root${entity.name}.getRight${pkColumn.methodName}() - 1, rightRootChild${entity.name}.getRight${pkColumn.methodName}());
-			assertEquals(leftRootChild${entity.name}.getLeft${pkColumn.methodName}() + 1, parent${entity.name}.getLeft${pkColumn.methodName}());
-			assertEquals(leftRootChild${entity.name}.getRight${pkColumn.methodName}() - 1, parent${entity.name}.getRight${pkColumn.methodName}());
-			assertEquals(parent${entity.name}.getLeft${pkColumn.methodName}() + 1, parentChild${entity.name}.getLeft${pkColumn.methodName}());
-			assertEquals(parent${entity.name}.getRight${pkColumn.methodName}() - 1, parentChild${entity.name}.getRight${pkColumn.methodName}());
+			Assert.assertEquals(previousRootLeft${pkColumn.methodName}, root${entity.name}.getLeft${pkColumn.methodName}());
+			Assert.assertEquals(previousRootRight${pkColumn.methodName} + 4, root${entity.name}.getRight${pkColumn.methodName}());
+			Assert.assertEquals(root${entity.name}.getLeft${pkColumn.methodName}() + 1, leftRootChild${entity.name}.getLeft${pkColumn.methodName}());
+			Assert.assertEquals(root${entity.name}.getRight${pkColumn.methodName}() - 3, leftRootChild${entity.name}.getRight${pkColumn.methodName}());
+			Assert.assertEquals(root${entity.name}.getLeft${pkColumn.methodName}() + 7, rightRootChild${entity.name}.getLeft${pkColumn.methodName}());
+			Assert.assertEquals(root${entity.name}.getRight${pkColumn.methodName}() - 1, rightRootChild${entity.name}.getRight${pkColumn.methodName}());
+			Assert.assertEquals(leftRootChild${entity.name}.getLeft${pkColumn.methodName}() + 1, parent${entity.name}.getLeft${pkColumn.methodName}());
+			Assert.assertEquals(leftRootChild${entity.name}.getRight${pkColumn.methodName}() - 1, parent${entity.name}.getRight${pkColumn.methodName}());
+			Assert.assertEquals(parent${entity.name}.getLeft${pkColumn.methodName}() + 1, parentChild${entity.name}.getLeft${pkColumn.methodName}());
+			Assert.assertEquals(parent${entity.name}.getRight${pkColumn.methodName}() - 1, parentChild${entity.name}.getRight${pkColumn.methodName}());
 		}
 
 		protected ${entity.name} add${entity.name}(long ${scopeColumn.name}, Long parent${pkColumn.methodName}) throws Exception {
@@ -680,11 +713,11 @@ public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
 
 				<#list entity.PKList as column>
 					<#if column.type == "int">
-						nextInt()
+						ServiceTestUtil.nextInt()
 					<#elseif column.type == "long">
-						nextLong()
+						ServiceTestUtil.nextLong()
 					<#elseif column.type == "String">
-						randomString()
+						ServiceTestUtil.randomString()
 					</#if>
 
 					<#if column_has_next>
@@ -699,11 +732,11 @@ public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
 				${column.type} pk =
 
 				<#if column.type == "int">
-					nextInt()
+					ServiceTestUtil.nextInt()
 				<#elseif column.type == "long">
-					nextLong()
+					ServiceTestUtil.nextLong()
 				<#elseif column.type == "String">
-					randomString()
+					ServiceTestUtil.randomString()
 				</#if>
 
 				;
@@ -717,7 +750,7 @@ public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
 						${entity.varName}.set${column.methodName}(${scopeColumn.name});
 					<#else>
 						<#if column.type == "Blob">
-							String ${column.name}String = randomString();
+							String ${column.name}String = ServiceTestUtil.randomString();
 
 							byte[] ${column.name}Bytes = ${column.name}String.getBytes(StringPool.UTF8);
 
@@ -727,19 +760,19 @@ public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
 						${entity.varName}.set${column.methodName}(
 
 						<#if column.type == "boolean">
-							randomBoolean()
+							ServiceTestUtil.randomBoolean()
 						<#elseif column.type == "double">
-							nextDouble()
+							ServiceTestUtil.nextDouble()
 						<#elseif column.type == "int">
-							nextInt()
+							ServiceTestUtil.nextInt()
 						<#elseif column.type == "long">
-							nextLong()
+							ServiceTestUtil.nextLong()
 						<#elseif column.type == "Blob">
 							${column.name}Blob
 						<#elseif column.type == "Date">
-							nextDate()
+							ServiceTestUtil.nextDate()
 						<#elseif column.type == "String">
-							randomString()
+							ServiceTestUtil.randomString()
 						</#if>
 
 						);

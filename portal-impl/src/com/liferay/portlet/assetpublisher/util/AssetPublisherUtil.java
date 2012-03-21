@@ -395,61 +395,42 @@ public class AssetPublisherUtil {
 		PortletPreferences portletPreferences, long scopeGroupId,
 		Layout layout) {
 
-		boolean defaultScope = GetterUtil.getBoolean(
-			portletPreferences.getValue("defaultScope", null), true);
+		String defaultScopeId = GetterUtil.getString(
+			portletPreferences.getValue("defaultScope", null));
 
-		if (defaultScope) {
+		if (Validator.equals(defaultScopeId, StringPool.TRUE)) {
 			return new long[] {scopeGroupId};
 		}
 
-		long defaultScopeId = GetterUtil.getLong(
-			portletPreferences.getValue("defaultScope", null));
+		if (Validator.equals(defaultScopeId, StringPool.FALSE)) {
+			String[] scopeIds = portletPreferences.getValues(
+				"scopeIds",
+				new String[] {"group" + StringPool.UNDERLINE + scopeGroupId});
 
-		if (defaultScopeId > 0) {
-			return new long[] {defaultScopeId};
-		}
+			long[] groupIds = new long[scopeIds.length];
 
-		String[] scopeIds = portletPreferences.getValues(
-			"scopeIds",
-			new String[] {"group" + StringPool.UNDERLINE + scopeGroupId});
-
-		long[] groupIds = new long[scopeIds.length];
-
-		for (int i = 0; i < scopeIds.length; i++) {
-			try {
-				String[] scopeIdFragments = StringUtil.split(
-					scopeIds[i], CharPool.UNDERLINE);
-
-				if (scopeIdFragments[0].equals("Layout")) {
-					long scopeIdLayoutId = GetterUtil.getLong(
-						scopeIdFragments[1]);
-
-					Layout scopeIdLayout = LayoutLocalServiceUtil.getLayout(
-						scopeGroupId, layout.isPrivateLayout(),
-						scopeIdLayoutId);
-
-					Group scopeIdGroup = scopeIdLayout.getScopeGroup();
-
-					groupIds[i] = scopeIdGroup.getGroupId();
+			for (int i = 0; i < scopeIds.length; i++) {
+				try {
+					groupIds[i] = _getGroupId(
+						scopeIds[i], scopeGroupId, layout.isPrivateLayout());
 				}
-				else {
-					if (scopeIdFragments[1].equals(GroupConstants.DEFAULT)) {
-						groupIds[i] = scopeGroupId;
-					}
-					else {
-						long scopeIdGroupId = GetterUtil.getLong(
-							scopeIdFragments[1]);
-
-						groupIds[i] = scopeIdGroupId;
-					}
+				catch (Exception e) {
+					continue;
 				}
 			}
-			catch (Exception e) {
-				continue;
-			}
+
+			return groupIds;
 		}
 
-		return groupIds;
+		try {
+			long groupId = _getGroupId(
+				defaultScopeId, scopeGroupId, layout.isPrivateLayout());
+
+			return new long[] {groupId};
+		}
+		catch (Exception e) {
+			return new long[0];
+		}
 	}
 
 	public static long getRecentFolderId(
@@ -538,6 +519,31 @@ public class AssetPublisherUtil {
 		}
 
 		return xml;
+	}
+
+	private static long _getGroupId(
+			String scopeId, long scopeGroupId, boolean privateLayout)
+		throws Exception {
+
+		String[] scopeIdFragments = StringUtil.split(
+			scopeId, CharPool.UNDERLINE);
+
+		if (scopeIdFragments[0].equals("Layout")) {
+			long scopeIdLayoutId = GetterUtil.getLong(scopeIdFragments[1]);
+
+			Layout scopeIdLayout = LayoutLocalServiceUtil.getLayout(
+				scopeGroupId, privateLayout, scopeIdLayoutId);
+
+			Group scopeIdGroup = scopeIdLayout.getScopeGroup();
+
+			return scopeIdGroup.getGroupId();
+		}
+
+		if (scopeIdFragments[1].equals(GroupConstants.DEFAULT)) {
+			return scopeGroupId;
+		}
+
+		return GetterUtil.getLong(scopeIdFragments[1]);
 	}
 
 	private static Map<String, Long> _getRecentFolderIds(

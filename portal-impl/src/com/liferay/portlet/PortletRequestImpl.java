@@ -330,19 +330,37 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 	}
 
 	public Map<String, String[]> getPrivateParameterMap() {
-		Map<String, String[]> parameterMap = new HashMap<String, String[]>();
+		Map<String, String[]> parameterMap = null;
 
-		Enumeration<String> enu = getParameterNames();
+		if (_portletRequestDispatcherRequest != null) {
+			parameterMap = _portletRequestDispatcherRequest.getParameterMap();
+		}
+		else {
+			parameterMap = _request.getParameterMap();
+		}
 
-		while (enu.hasMoreElements()) {
-			String name = enu.nextElement();
+		Map<String, String[]> privateParameterMap = null;
+
+		for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
+			String name = entry.getKey();
 
 			if (_portlet.getPublicRenderParameter(name) == null) {
-				parameterMap.put(name, getParameterValues(name));
+
+				if (privateParameterMap == null) {
+					privateParameterMap = new HashMap<String, String[]>(
+						parameterMap.size(), 1);
+				}
+
+				privateParameterMap.put(name, entry.getValue());
 			}
 		}
 
-		return parameterMap;
+		if (privateParameterMap == null) {
+			return Collections.emptyMap();
+		}
+		else {
+			return Collections.unmodifiableMap(privateParameterMap);
+		}
 	}
 
 	public Enumeration<String> getProperties(String name) {
@@ -366,19 +384,37 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 	}
 
 	public Map<String, String[]> getPublicParameterMap() {
-		Map<String, String[]> parameterMap = new HashMap<String, String[]>();
+		Map<String, String[]> parameterMap = null;
 
-		Enumeration<String> enu = getParameterNames();
+		if (_portletRequestDispatcherRequest != null) {
+			parameterMap = _portletRequestDispatcherRequest.getParameterMap();
+		}
+		else {
+			parameterMap = _request.getParameterMap();
+		}
 
-		while (enu.hasMoreElements()) {
-			String name = enu.nextElement();
+		Map<String, String[]> publicParameterMap = null;
+
+		for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
+			String name = entry.getKey();
 
 			if (_portlet.getPublicRenderParameter(name) != null) {
-				parameterMap.put(name, getParameterValues(name));
+
+				if (publicParameterMap == null) {
+					publicParameterMap = new HashMap<String, String[]>(
+						parameterMap.size(), 1);
+				}
+
+				publicParameterMap.put(name, entry.getValue());
 			}
 		}
 
-		return parameterMap;
+		if (publicParameterMap == null) {
+			return Collections.emptyMap();
+		}
+		else {
+			return Collections.unmodifiableMap(publicParameterMap);
+		}
 	}
 
 	public String getRemoteUser() {
@@ -628,11 +664,9 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 			}
 		}
 
-		Map<String, String[]> renderParameters = RenderParametersPool.get(
-			request, plid, _portletName);
-
 		if (portletFocus) {
-			renderParameters = new HashMap<String, String[]>();
+			Map<String, String[]> renderParameters =
+				new HashMap<String, String[]>();
 
 			if (getLifecycle().equals(PortletRequest.RENDER_PHASE) &&
 				!LiferayWindowState.isExclusive(request) &&
@@ -668,6 +702,9 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 			}
 		}
 		else {
+			Map<String, String[]> renderParameters = RenderParametersPool.get(
+				request, plid, _portletName);
+
 			for (Map.Entry<String, String[]> entry :
 					renderParameters.entrySet()) {
 

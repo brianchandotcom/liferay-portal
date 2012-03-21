@@ -78,7 +78,6 @@ public class PortletAppImpl implements PortletApp {
 	public void addPublicRenderParameter(
 		PublicRenderParameter publicRenderParameter) {
 
-		_publicRenderParameters.add(publicRenderParameter);
 		_publicRenderParametersByIdentifier.put(
 			publicRenderParameter.getIdentifier(), publicRenderParameter);
 	}
@@ -203,8 +202,6 @@ public class PortletAppImpl implements PortletApp {
 	private Map<String, PortletURLListener>
 		_portletURLListenersByListenerClass =
 			new HashMap<String, PortletURLListener>();
-	private Set<PublicRenderParameter> _publicRenderParameters =
-		new LinkedHashSet<PublicRenderParameter>();
 	private Map<String, PublicRenderParameter>
 		_publicRenderParametersByIdentifier =
 			new HashMap<String, PublicRenderParameter>();

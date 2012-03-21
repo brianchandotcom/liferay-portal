@@ -19,36 +19,48 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.messageboards.NoSuchDiscussionException;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.impl.MBDiscussionModelImpl;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class MBDiscussionPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class MBDiscussionPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (MBDiscussionPersistence)PortalBeanLocatorUtil.locate(MBDiscussionPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		MBDiscussion mbDiscussion = _persistence.create(pk);
 
-		assertNotNull(mbDiscussion);
+		Assert.assertNotNull(mbDiscussion);
 
-		assertEquals(mbDiscussion.getPrimaryKey(), pk);
+		Assert.assertEquals(mbDiscussion.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		MBDiscussion newMBDiscussion = addMBDiscussion();
 
@@ -56,74 +68,82 @@ public class MBDiscussionPersistenceTest extends BasePersistenceTestCase {
 
 		MBDiscussion existingMBDiscussion = _persistence.fetchByPrimaryKey(newMBDiscussion.getPrimaryKey());
 
-		assertNull(existingMBDiscussion);
+		Assert.assertNull(existingMBDiscussion);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addMBDiscussion();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		MBDiscussion newMBDiscussion = _persistence.create(pk);
 
-		newMBDiscussion.setClassNameId(nextLong());
+		newMBDiscussion.setClassNameId(ServiceTestUtil.nextLong());
 
-		newMBDiscussion.setClassPK(nextLong());
+		newMBDiscussion.setClassPK(ServiceTestUtil.nextLong());
 
-		newMBDiscussion.setThreadId(nextLong());
+		newMBDiscussion.setThreadId(ServiceTestUtil.nextLong());
 
 		_persistence.update(newMBDiscussion, false);
 
 		MBDiscussion existingMBDiscussion = _persistence.findByPrimaryKey(newMBDiscussion.getPrimaryKey());
 
-		assertEquals(existingMBDiscussion.getDiscussionId(),
+		Assert.assertEquals(existingMBDiscussion.getDiscussionId(),
 			newMBDiscussion.getDiscussionId());
-		assertEquals(existingMBDiscussion.getClassNameId(),
+		Assert.assertEquals(existingMBDiscussion.getClassNameId(),
 			newMBDiscussion.getClassNameId());
-		assertEquals(existingMBDiscussion.getClassPK(),
+		Assert.assertEquals(existingMBDiscussion.getClassPK(),
 			newMBDiscussion.getClassPK());
-		assertEquals(existingMBDiscussion.getThreadId(),
+		Assert.assertEquals(existingMBDiscussion.getThreadId(),
 			newMBDiscussion.getThreadId());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		MBDiscussion newMBDiscussion = addMBDiscussion();
 
 		MBDiscussion existingMBDiscussion = _persistence.findByPrimaryKey(newMBDiscussion.getPrimaryKey());
 
-		assertEquals(existingMBDiscussion, newMBDiscussion);
+		Assert.assertEquals(existingMBDiscussion, newMBDiscussion);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchDiscussionException");
+			Assert.fail(
+				"Missing entity did not throw NoSuchDiscussionException");
 		}
 		catch (NoSuchDiscussionException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		MBDiscussion newMBDiscussion = addMBDiscussion();
 
 		MBDiscussion existingMBDiscussion = _persistence.fetchByPrimaryKey(newMBDiscussion.getPrimaryKey());
 
-		assertEquals(existingMBDiscussion, newMBDiscussion);
+		Assert.assertEquals(existingMBDiscussion, newMBDiscussion);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		MBDiscussion missingMBDiscussion = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingMBDiscussion);
+		Assert.assertNull(missingMBDiscussion);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		MBDiscussion newMBDiscussion = addMBDiscussion();
@@ -136,24 +156,27 @@ public class MBDiscussionPersistenceTest extends BasePersistenceTestCase {
 
 		List<MBDiscussion> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		MBDiscussion existingMBDiscussion = result.get(0);
 
-		assertEquals(existingMBDiscussion, newMBDiscussion);
+		Assert.assertEquals(existingMBDiscussion, newMBDiscussion);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBDiscussion.class,
 				MBDiscussion.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("discussionId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("discussionId",
+				ServiceTestUtil.nextLong()));
 
 		List<MBDiscussion> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		MBDiscussion newMBDiscussion = addMBDiscussion();
@@ -171,13 +194,14 @@ public class MBDiscussionPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingDiscussionId = result.get(0);
 
-		assertEquals(existingDiscussionId, newDiscussionId);
+		Assert.assertEquals(existingDiscussionId, newDiscussionId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBDiscussion.class,
 				MBDiscussion.class.getClassLoader());
@@ -186,13 +210,14 @@ public class MBDiscussionPersistenceTest extends BasePersistenceTestCase {
 				"discussionId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("discussionId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -204,25 +229,25 @@ public class MBDiscussionPersistenceTest extends BasePersistenceTestCase {
 
 		MBDiscussionModelImpl existingMBDiscussionModelImpl = (MBDiscussionModelImpl)_persistence.findByPrimaryKey(newMBDiscussion.getPrimaryKey());
 
-		assertEquals(existingMBDiscussionModelImpl.getThreadId(),
+		Assert.assertEquals(existingMBDiscussionModelImpl.getThreadId(),
 			existingMBDiscussionModelImpl.getOriginalThreadId());
 
-		assertEquals(existingMBDiscussionModelImpl.getClassNameId(),
+		Assert.assertEquals(existingMBDiscussionModelImpl.getClassNameId(),
 			existingMBDiscussionModelImpl.getOriginalClassNameId());
-		assertEquals(existingMBDiscussionModelImpl.getClassPK(),
+		Assert.assertEquals(existingMBDiscussionModelImpl.getClassPK(),
 			existingMBDiscussionModelImpl.getOriginalClassPK());
 	}
 
 	protected MBDiscussion addMBDiscussion() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		MBDiscussion mbDiscussion = _persistence.create(pk);
 
-		mbDiscussion.setClassNameId(nextLong());
+		mbDiscussion.setClassNameId(ServiceTestUtil.nextLong());
 
-		mbDiscussion.setClassPK(nextLong());
+		mbDiscussion.setClassPK(ServiceTestUtil.nextLong());
 
-		mbDiscussion.setThreadId(nextLong());
+		mbDiscussion.setThreadId(ServiceTestUtil.nextLong());
 
 		_persistence.update(mbDiscussion, false);
 

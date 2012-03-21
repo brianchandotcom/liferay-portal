@@ -23,32 +23,44 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ResourceBlock;
 import com.liferay.portal.model.impl.ResourceBlockModelImpl;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class ResourceBlockPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class ResourceBlockPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (ResourceBlockPersistence)PortalBeanLocatorUtil.locate(ResourceBlockPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ResourceBlock resourceBlock = _persistence.create(pk);
 
-		assertNotNull(resourceBlock);
+		Assert.assertNotNull(resourceBlock);
 
-		assertEquals(resourceBlock.getPrimaryKey(), pk);
+		Assert.assertEquals(resourceBlock.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		ResourceBlock newResourceBlock = addResourceBlock();
 
@@ -56,81 +68,90 @@ public class ResourceBlockPersistenceTest extends BasePersistenceTestCase {
 
 		ResourceBlock existingResourceBlock = _persistence.fetchByPrimaryKey(newResourceBlock.getPrimaryKey());
 
-		assertNull(existingResourceBlock);
+		Assert.assertNull(existingResourceBlock);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addResourceBlock();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ResourceBlock newResourceBlock = _persistence.create(pk);
 
-		newResourceBlock.setCompanyId(nextLong());
+		newResourceBlock.setCompanyId(ServiceTestUtil.nextLong());
 
-		newResourceBlock.setGroupId(nextLong());
+		newResourceBlock.setGroupId(ServiceTestUtil.nextLong());
 
-		newResourceBlock.setName(randomString());
+		newResourceBlock.setName(ServiceTestUtil.randomString());
 
-		newResourceBlock.setPermissionsHash(randomString());
+		newResourceBlock.setPermissionsHash(ServiceTestUtil.randomString());
 
-		newResourceBlock.setReferenceCount(nextLong());
+		newResourceBlock.setReferenceCount(ServiceTestUtil.nextLong());
 
 		_persistence.update(newResourceBlock, false);
 
 		ResourceBlock existingResourceBlock = _persistence.findByPrimaryKey(newResourceBlock.getPrimaryKey());
 
-		assertEquals(existingResourceBlock.getResourceBlockId(),
+		Assert.assertEquals(existingResourceBlock.getResourceBlockId(),
 			newResourceBlock.getResourceBlockId());
-		assertEquals(existingResourceBlock.getCompanyId(),
+		Assert.assertEquals(existingResourceBlock.getCompanyId(),
 			newResourceBlock.getCompanyId());
-		assertEquals(existingResourceBlock.getGroupId(),
+		Assert.assertEquals(existingResourceBlock.getGroupId(),
 			newResourceBlock.getGroupId());
-		assertEquals(existingResourceBlock.getName(), newResourceBlock.getName());
-		assertEquals(existingResourceBlock.getPermissionsHash(),
+		Assert.assertEquals(existingResourceBlock.getName(),
+			newResourceBlock.getName());
+		Assert.assertEquals(existingResourceBlock.getPermissionsHash(),
 			newResourceBlock.getPermissionsHash());
-		assertEquals(existingResourceBlock.getReferenceCount(),
+		Assert.assertEquals(existingResourceBlock.getReferenceCount(),
 			newResourceBlock.getReferenceCount());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ResourceBlock newResourceBlock = addResourceBlock();
 
 		ResourceBlock existingResourceBlock = _persistence.findByPrimaryKey(newResourceBlock.getPrimaryKey());
 
-		assertEquals(existingResourceBlock, newResourceBlock);
+		Assert.assertEquals(existingResourceBlock, newResourceBlock);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchResourceBlockException");
+			Assert.fail(
+				"Missing entity did not throw NoSuchResourceBlockException");
 		}
 		catch (NoSuchResourceBlockException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		ResourceBlock newResourceBlock = addResourceBlock();
 
 		ResourceBlock existingResourceBlock = _persistence.fetchByPrimaryKey(newResourceBlock.getPrimaryKey());
 
-		assertEquals(existingResourceBlock, newResourceBlock);
+		Assert.assertEquals(existingResourceBlock, newResourceBlock);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ResourceBlock missingResourceBlock = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingResourceBlock);
+		Assert.assertNull(missingResourceBlock);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		ResourceBlock newResourceBlock = addResourceBlock();
@@ -143,25 +164,27 @@ public class ResourceBlockPersistenceTest extends BasePersistenceTestCase {
 
 		List<ResourceBlock> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		ResourceBlock existingResourceBlock = result.get(0);
 
-		assertEquals(existingResourceBlock, newResourceBlock);
+		Assert.assertEquals(existingResourceBlock, newResourceBlock);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ResourceBlock.class,
 				ResourceBlock.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("resourceBlockId",
-				nextLong()));
+				ServiceTestUtil.nextLong()));
 
 		List<ResourceBlock> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		ResourceBlock newResourceBlock = addResourceBlock();
@@ -179,13 +202,14 @@ public class ResourceBlockPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingResourceBlockId = result.get(0);
 
-		assertEquals(existingResourceBlockId, newResourceBlockId);
+		Assert.assertEquals(existingResourceBlockId, newResourceBlockId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ResourceBlock.class,
 				ResourceBlock.class.getClassLoader());
@@ -194,13 +218,14 @@ public class ResourceBlockPersistenceTest extends BasePersistenceTestCase {
 				"resourceBlockId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("resourceBlockId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -212,31 +237,32 @@ public class ResourceBlockPersistenceTest extends BasePersistenceTestCase {
 
 		ResourceBlockModelImpl existingResourceBlockModelImpl = (ResourceBlockModelImpl)_persistence.findByPrimaryKey(newResourceBlock.getPrimaryKey());
 
-		assertEquals(existingResourceBlockModelImpl.getCompanyId(),
+		Assert.assertEquals(existingResourceBlockModelImpl.getCompanyId(),
 			existingResourceBlockModelImpl.getOriginalCompanyId());
-		assertEquals(existingResourceBlockModelImpl.getGroupId(),
+		Assert.assertEquals(existingResourceBlockModelImpl.getGroupId(),
 			existingResourceBlockModelImpl.getOriginalGroupId());
-		assertTrue(Validator.equals(existingResourceBlockModelImpl.getName(),
+		Assert.assertTrue(Validator.equals(
+				existingResourceBlockModelImpl.getName(),
 				existingResourceBlockModelImpl.getOriginalName()));
-		assertTrue(Validator.equals(
+		Assert.assertTrue(Validator.equals(
 				existingResourceBlockModelImpl.getPermissionsHash(),
 				existingResourceBlockModelImpl.getOriginalPermissionsHash()));
 	}
 
 	protected ResourceBlock addResourceBlock() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ResourceBlock resourceBlock = _persistence.create(pk);
 
-		resourceBlock.setCompanyId(nextLong());
+		resourceBlock.setCompanyId(ServiceTestUtil.nextLong());
 
-		resourceBlock.setGroupId(nextLong());
+		resourceBlock.setGroupId(ServiceTestUtil.nextLong());
 
-		resourceBlock.setName(randomString());
+		resourceBlock.setName(ServiceTestUtil.randomString());
 
-		resourceBlock.setPermissionsHash(randomString());
+		resourceBlock.setPermissionsHash(ServiceTestUtil.randomString());
 
-		resourceBlock.setReferenceCount(nextLong());
+		resourceBlock.setReferenceCount(ServiceTestUtil.nextLong());
 
 		_persistence.update(resourceBlock, false);
 

@@ -22,31 +22,43 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.UserTrackerPath;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class UserTrackerPathPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class UserTrackerPathPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (UserTrackerPathPersistence)PortalBeanLocatorUtil.locate(UserTrackerPathPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		UserTrackerPath userTrackerPath = _persistence.create(pk);
 
-		assertNotNull(userTrackerPath);
+		Assert.assertNotNull(userTrackerPath);
 
-		assertEquals(userTrackerPath.getPrimaryKey(), pk);
+		Assert.assertEquals(userTrackerPath.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		UserTrackerPath newUserTrackerPath = addUserTrackerPath();
 
@@ -54,75 +66,83 @@ public class UserTrackerPathPersistenceTest extends BasePersistenceTestCase {
 
 		UserTrackerPath existingUserTrackerPath = _persistence.fetchByPrimaryKey(newUserTrackerPath.getPrimaryKey());
 
-		assertNull(existingUserTrackerPath);
+		Assert.assertNull(existingUserTrackerPath);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addUserTrackerPath();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		UserTrackerPath newUserTrackerPath = _persistence.create(pk);
 
-		newUserTrackerPath.setUserTrackerId(nextLong());
+		newUserTrackerPath.setUserTrackerId(ServiceTestUtil.nextLong());
 
-		newUserTrackerPath.setPath(randomString());
+		newUserTrackerPath.setPath(ServiceTestUtil.randomString());
 
-		newUserTrackerPath.setPathDate(nextDate());
+		newUserTrackerPath.setPathDate(ServiceTestUtil.nextDate());
 
 		_persistence.update(newUserTrackerPath, false);
 
 		UserTrackerPath existingUserTrackerPath = _persistence.findByPrimaryKey(newUserTrackerPath.getPrimaryKey());
 
-		assertEquals(existingUserTrackerPath.getUserTrackerPathId(),
+		Assert.assertEquals(existingUserTrackerPath.getUserTrackerPathId(),
 			newUserTrackerPath.getUserTrackerPathId());
-		assertEquals(existingUserTrackerPath.getUserTrackerId(),
+		Assert.assertEquals(existingUserTrackerPath.getUserTrackerId(),
 			newUserTrackerPath.getUserTrackerId());
-		assertEquals(existingUserTrackerPath.getPath(),
+		Assert.assertEquals(existingUserTrackerPath.getPath(),
 			newUserTrackerPath.getPath());
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingUserTrackerPath.getPathDate()),
 			Time.getShortTimestamp(newUserTrackerPath.getPathDate()));
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		UserTrackerPath newUserTrackerPath = addUserTrackerPath();
 
 		UserTrackerPath existingUserTrackerPath = _persistence.findByPrimaryKey(newUserTrackerPath.getPrimaryKey());
 
-		assertEquals(existingUserTrackerPath, newUserTrackerPath);
+		Assert.assertEquals(existingUserTrackerPath, newUserTrackerPath);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchUserTrackerPathException");
+			Assert.fail(
+				"Missing entity did not throw NoSuchUserTrackerPathException");
 		}
 		catch (NoSuchUserTrackerPathException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		UserTrackerPath newUserTrackerPath = addUserTrackerPath();
 
 		UserTrackerPath existingUserTrackerPath = _persistence.fetchByPrimaryKey(newUserTrackerPath.getPrimaryKey());
 
-		assertEquals(existingUserTrackerPath, newUserTrackerPath);
+		Assert.assertEquals(existingUserTrackerPath, newUserTrackerPath);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		UserTrackerPath missingUserTrackerPath = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingUserTrackerPath);
+		Assert.assertNull(missingUserTrackerPath);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		UserTrackerPath newUserTrackerPath = addUserTrackerPath();
@@ -135,25 +155,27 @@ public class UserTrackerPathPersistenceTest extends BasePersistenceTestCase {
 
 		List<UserTrackerPath> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		UserTrackerPath existingUserTrackerPath = result.get(0);
 
-		assertEquals(existingUserTrackerPath, newUserTrackerPath);
+		Assert.assertEquals(existingUserTrackerPath, newUserTrackerPath);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserTrackerPath.class,
 				UserTrackerPath.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("userTrackerPathId",
-				nextLong()));
+				ServiceTestUtil.nextLong()));
 
 		List<UserTrackerPath> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		UserTrackerPath newUserTrackerPath = addUserTrackerPath();
@@ -171,13 +193,14 @@ public class UserTrackerPathPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingUserTrackerPathId = result.get(0);
 
-		assertEquals(existingUserTrackerPathId, newUserTrackerPathId);
+		Assert.assertEquals(existingUserTrackerPathId, newUserTrackerPathId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserTrackerPath.class,
 				UserTrackerPath.class.getClassLoader());
@@ -186,23 +209,23 @@ public class UserTrackerPathPersistenceTest extends BasePersistenceTestCase {
 				"userTrackerPathId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("userTrackerPathId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
 	protected UserTrackerPath addUserTrackerPath() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		UserTrackerPath userTrackerPath = _persistence.create(pk);
 
-		userTrackerPath.setUserTrackerId(nextLong());
+		userTrackerPath.setUserTrackerId(ServiceTestUtil.nextLong());
 
-		userTrackerPath.setPath(randomString());
+		userTrackerPath.setPath(ServiceTestUtil.randomString());
 
-		userTrackerPath.setPathDate(nextDate());
+		userTrackerPath.setPathDate(ServiceTestUtil.nextDate());
 
 		_persistence.update(userTrackerPath, false);
 

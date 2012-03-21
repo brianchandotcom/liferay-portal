@@ -21,36 +21,49 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.assertion.AssertUtils;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.shopping.NoSuchOrderException;
 import com.liferay.portlet.shopping.model.ShoppingOrder;
 import com.liferay.portlet.shopping.model.impl.ShoppingOrderModelImpl;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class ShoppingOrderPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class ShoppingOrderPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (ShoppingOrderPersistence)PortalBeanLocatorUtil.locate(ShoppingOrderPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ShoppingOrder shoppingOrder = _persistence.create(pk);
 
-		assertNotNull(shoppingOrder);
+		Assert.assertNotNull(shoppingOrder);
 
-		assertEquals(shoppingOrder.getPrimaryKey(), pk);
+		Assert.assertEquals(shoppingOrder.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		ShoppingOrder newShoppingOrder = addShoppingOrder();
 
@@ -58,263 +71,271 @@ public class ShoppingOrderPersistenceTest extends BasePersistenceTestCase {
 
 		ShoppingOrder existingShoppingOrder = _persistence.fetchByPrimaryKey(newShoppingOrder.getPrimaryKey());
 
-		assertNull(existingShoppingOrder);
+		Assert.assertNull(existingShoppingOrder);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addShoppingOrder();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ShoppingOrder newShoppingOrder = _persistence.create(pk);
 
-		newShoppingOrder.setGroupId(nextLong());
+		newShoppingOrder.setGroupId(ServiceTestUtil.nextLong());
 
-		newShoppingOrder.setCompanyId(nextLong());
+		newShoppingOrder.setCompanyId(ServiceTestUtil.nextLong());
 
-		newShoppingOrder.setUserId(nextLong());
+		newShoppingOrder.setUserId(ServiceTestUtil.nextLong());
 
-		newShoppingOrder.setUserName(randomString());
+		newShoppingOrder.setUserName(ServiceTestUtil.randomString());
 
-		newShoppingOrder.setCreateDate(nextDate());
+		newShoppingOrder.setCreateDate(ServiceTestUtil.nextDate());
 
-		newShoppingOrder.setModifiedDate(nextDate());
+		newShoppingOrder.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newShoppingOrder.setNumber(randomString());
+		newShoppingOrder.setNumber(ServiceTestUtil.randomString());
 
-		newShoppingOrder.setTax(nextDouble());
+		newShoppingOrder.setTax(ServiceTestUtil.nextDouble());
 
-		newShoppingOrder.setShipping(nextDouble());
+		newShoppingOrder.setShipping(ServiceTestUtil.nextDouble());
 
-		newShoppingOrder.setAltShipping(randomString());
+		newShoppingOrder.setAltShipping(ServiceTestUtil.randomString());
 
-		newShoppingOrder.setRequiresShipping(randomBoolean());
+		newShoppingOrder.setRequiresShipping(ServiceTestUtil.randomBoolean());
 
-		newShoppingOrder.setInsure(randomBoolean());
+		newShoppingOrder.setInsure(ServiceTestUtil.randomBoolean());
 
-		newShoppingOrder.setInsurance(nextDouble());
+		newShoppingOrder.setInsurance(ServiceTestUtil.nextDouble());
 
-		newShoppingOrder.setCouponCodes(randomString());
+		newShoppingOrder.setCouponCodes(ServiceTestUtil.randomString());
 
-		newShoppingOrder.setCouponDiscount(nextDouble());
+		newShoppingOrder.setCouponDiscount(ServiceTestUtil.nextDouble());
 
-		newShoppingOrder.setBillingFirstName(randomString());
+		newShoppingOrder.setBillingFirstName(ServiceTestUtil.randomString());
 
-		newShoppingOrder.setBillingLastName(randomString());
+		newShoppingOrder.setBillingLastName(ServiceTestUtil.randomString());
 
-		newShoppingOrder.setBillingEmailAddress(randomString());
+		newShoppingOrder.setBillingEmailAddress(ServiceTestUtil.randomString());
 
-		newShoppingOrder.setBillingCompany(randomString());
+		newShoppingOrder.setBillingCompany(ServiceTestUtil.randomString());
 
-		newShoppingOrder.setBillingStreet(randomString());
+		newShoppingOrder.setBillingStreet(ServiceTestUtil.randomString());
 
-		newShoppingOrder.setBillingCity(randomString());
+		newShoppingOrder.setBillingCity(ServiceTestUtil.randomString());
 
-		newShoppingOrder.setBillingState(randomString());
+		newShoppingOrder.setBillingState(ServiceTestUtil.randomString());
 
-		newShoppingOrder.setBillingZip(randomString());
+		newShoppingOrder.setBillingZip(ServiceTestUtil.randomString());
 
-		newShoppingOrder.setBillingCountry(randomString());
+		newShoppingOrder.setBillingCountry(ServiceTestUtil.randomString());
 
-		newShoppingOrder.setBillingPhone(randomString());
+		newShoppingOrder.setBillingPhone(ServiceTestUtil.randomString());
 
-		newShoppingOrder.setShipToBilling(randomBoolean());
+		newShoppingOrder.setShipToBilling(ServiceTestUtil.randomBoolean());
 
-		newShoppingOrder.setShippingFirstName(randomString());
+		newShoppingOrder.setShippingFirstName(ServiceTestUtil.randomString());
 
-		newShoppingOrder.setShippingLastName(randomString());
+		newShoppingOrder.setShippingLastName(ServiceTestUtil.randomString());
 
-		newShoppingOrder.setShippingEmailAddress(randomString());
+		newShoppingOrder.setShippingEmailAddress(ServiceTestUtil.randomString());
 
-		newShoppingOrder.setShippingCompany(randomString());
+		newShoppingOrder.setShippingCompany(ServiceTestUtil.randomString());
 
-		newShoppingOrder.setShippingStreet(randomString());
+		newShoppingOrder.setShippingStreet(ServiceTestUtil.randomString());
 
-		newShoppingOrder.setShippingCity(randomString());
+		newShoppingOrder.setShippingCity(ServiceTestUtil.randomString());
 
-		newShoppingOrder.setShippingState(randomString());
+		newShoppingOrder.setShippingState(ServiceTestUtil.randomString());
 
-		newShoppingOrder.setShippingZip(randomString());
+		newShoppingOrder.setShippingZip(ServiceTestUtil.randomString());
 
-		newShoppingOrder.setShippingCountry(randomString());
+		newShoppingOrder.setShippingCountry(ServiceTestUtil.randomString());
 
-		newShoppingOrder.setShippingPhone(randomString());
+		newShoppingOrder.setShippingPhone(ServiceTestUtil.randomString());
 
-		newShoppingOrder.setCcName(randomString());
+		newShoppingOrder.setCcName(ServiceTestUtil.randomString());
 
-		newShoppingOrder.setCcType(randomString());
+		newShoppingOrder.setCcType(ServiceTestUtil.randomString());
 
-		newShoppingOrder.setCcNumber(randomString());
+		newShoppingOrder.setCcNumber(ServiceTestUtil.randomString());
 
-		newShoppingOrder.setCcExpMonth(nextInt());
+		newShoppingOrder.setCcExpMonth(ServiceTestUtil.nextInt());
 
-		newShoppingOrder.setCcExpYear(nextInt());
+		newShoppingOrder.setCcExpYear(ServiceTestUtil.nextInt());
 
-		newShoppingOrder.setCcVerNumber(randomString());
+		newShoppingOrder.setCcVerNumber(ServiceTestUtil.randomString());
 
-		newShoppingOrder.setComments(randomString());
+		newShoppingOrder.setComments(ServiceTestUtil.randomString());
 
-		newShoppingOrder.setPpTxnId(randomString());
+		newShoppingOrder.setPpTxnId(ServiceTestUtil.randomString());
 
-		newShoppingOrder.setPpPaymentStatus(randomString());
+		newShoppingOrder.setPpPaymentStatus(ServiceTestUtil.randomString());
 
-		newShoppingOrder.setPpPaymentGross(nextDouble());
+		newShoppingOrder.setPpPaymentGross(ServiceTestUtil.nextDouble());
 
-		newShoppingOrder.setPpReceiverEmail(randomString());
+		newShoppingOrder.setPpReceiverEmail(ServiceTestUtil.randomString());
 
-		newShoppingOrder.setPpPayerEmail(randomString());
+		newShoppingOrder.setPpPayerEmail(ServiceTestUtil.randomString());
 
-		newShoppingOrder.setSendOrderEmail(randomBoolean());
+		newShoppingOrder.setSendOrderEmail(ServiceTestUtil.randomBoolean());
 
-		newShoppingOrder.setSendShippingEmail(randomBoolean());
+		newShoppingOrder.setSendShippingEmail(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(newShoppingOrder, false);
 
 		ShoppingOrder existingShoppingOrder = _persistence.findByPrimaryKey(newShoppingOrder.getPrimaryKey());
 
-		assertEquals(existingShoppingOrder.getOrderId(),
+		Assert.assertEquals(existingShoppingOrder.getOrderId(),
 			newShoppingOrder.getOrderId());
-		assertEquals(existingShoppingOrder.getGroupId(),
+		Assert.assertEquals(existingShoppingOrder.getGroupId(),
 			newShoppingOrder.getGroupId());
-		assertEquals(existingShoppingOrder.getCompanyId(),
+		Assert.assertEquals(existingShoppingOrder.getCompanyId(),
 			newShoppingOrder.getCompanyId());
-		assertEquals(existingShoppingOrder.getUserId(),
+		Assert.assertEquals(existingShoppingOrder.getUserId(),
 			newShoppingOrder.getUserId());
-		assertEquals(existingShoppingOrder.getUserName(),
+		Assert.assertEquals(existingShoppingOrder.getUserName(),
 			newShoppingOrder.getUserName());
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingShoppingOrder.getCreateDate()),
 			Time.getShortTimestamp(newShoppingOrder.getCreateDate()));
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingShoppingOrder.getModifiedDate()),
 			Time.getShortTimestamp(newShoppingOrder.getModifiedDate()));
-		assertEquals(existingShoppingOrder.getNumber(),
+		Assert.assertEquals(existingShoppingOrder.getNumber(),
 			newShoppingOrder.getNumber());
-		assertEquals(existingShoppingOrder.getTax(), newShoppingOrder.getTax());
-		assertEquals(existingShoppingOrder.getShipping(),
+		AssertUtils.assertEquals(existingShoppingOrder.getTax(),
+			newShoppingOrder.getTax());
+		AssertUtils.assertEquals(existingShoppingOrder.getShipping(),
 			newShoppingOrder.getShipping());
-		assertEquals(existingShoppingOrder.getAltShipping(),
+		Assert.assertEquals(existingShoppingOrder.getAltShipping(),
 			newShoppingOrder.getAltShipping());
-		assertEquals(existingShoppingOrder.getRequiresShipping(),
+		Assert.assertEquals(existingShoppingOrder.getRequiresShipping(),
 			newShoppingOrder.getRequiresShipping());
-		assertEquals(existingShoppingOrder.getInsure(),
+		Assert.assertEquals(existingShoppingOrder.getInsure(),
 			newShoppingOrder.getInsure());
-		assertEquals(existingShoppingOrder.getInsurance(),
+		AssertUtils.assertEquals(existingShoppingOrder.getInsurance(),
 			newShoppingOrder.getInsurance());
-		assertEquals(existingShoppingOrder.getCouponCodes(),
+		Assert.assertEquals(existingShoppingOrder.getCouponCodes(),
 			newShoppingOrder.getCouponCodes());
-		assertEquals(existingShoppingOrder.getCouponDiscount(),
+		AssertUtils.assertEquals(existingShoppingOrder.getCouponDiscount(),
 			newShoppingOrder.getCouponDiscount());
-		assertEquals(existingShoppingOrder.getBillingFirstName(),
+		Assert.assertEquals(existingShoppingOrder.getBillingFirstName(),
 			newShoppingOrder.getBillingFirstName());
-		assertEquals(existingShoppingOrder.getBillingLastName(),
+		Assert.assertEquals(existingShoppingOrder.getBillingLastName(),
 			newShoppingOrder.getBillingLastName());
-		assertEquals(existingShoppingOrder.getBillingEmailAddress(),
+		Assert.assertEquals(existingShoppingOrder.getBillingEmailAddress(),
 			newShoppingOrder.getBillingEmailAddress());
-		assertEquals(existingShoppingOrder.getBillingCompany(),
+		Assert.assertEquals(existingShoppingOrder.getBillingCompany(),
 			newShoppingOrder.getBillingCompany());
-		assertEquals(existingShoppingOrder.getBillingStreet(),
+		Assert.assertEquals(existingShoppingOrder.getBillingStreet(),
 			newShoppingOrder.getBillingStreet());
-		assertEquals(existingShoppingOrder.getBillingCity(),
+		Assert.assertEquals(existingShoppingOrder.getBillingCity(),
 			newShoppingOrder.getBillingCity());
-		assertEquals(existingShoppingOrder.getBillingState(),
+		Assert.assertEquals(existingShoppingOrder.getBillingState(),
 			newShoppingOrder.getBillingState());
-		assertEquals(existingShoppingOrder.getBillingZip(),
+		Assert.assertEquals(existingShoppingOrder.getBillingZip(),
 			newShoppingOrder.getBillingZip());
-		assertEquals(existingShoppingOrder.getBillingCountry(),
+		Assert.assertEquals(existingShoppingOrder.getBillingCountry(),
 			newShoppingOrder.getBillingCountry());
-		assertEquals(existingShoppingOrder.getBillingPhone(),
+		Assert.assertEquals(existingShoppingOrder.getBillingPhone(),
 			newShoppingOrder.getBillingPhone());
-		assertEquals(existingShoppingOrder.getShipToBilling(),
+		Assert.assertEquals(existingShoppingOrder.getShipToBilling(),
 			newShoppingOrder.getShipToBilling());
-		assertEquals(existingShoppingOrder.getShippingFirstName(),
+		Assert.assertEquals(existingShoppingOrder.getShippingFirstName(),
 			newShoppingOrder.getShippingFirstName());
-		assertEquals(existingShoppingOrder.getShippingLastName(),
+		Assert.assertEquals(existingShoppingOrder.getShippingLastName(),
 			newShoppingOrder.getShippingLastName());
-		assertEquals(existingShoppingOrder.getShippingEmailAddress(),
+		Assert.assertEquals(existingShoppingOrder.getShippingEmailAddress(),
 			newShoppingOrder.getShippingEmailAddress());
-		assertEquals(existingShoppingOrder.getShippingCompany(),
+		Assert.assertEquals(existingShoppingOrder.getShippingCompany(),
 			newShoppingOrder.getShippingCompany());
-		assertEquals(existingShoppingOrder.getShippingStreet(),
+		Assert.assertEquals(existingShoppingOrder.getShippingStreet(),
 			newShoppingOrder.getShippingStreet());
-		assertEquals(existingShoppingOrder.getShippingCity(),
+		Assert.assertEquals(existingShoppingOrder.getShippingCity(),
 			newShoppingOrder.getShippingCity());
-		assertEquals(existingShoppingOrder.getShippingState(),
+		Assert.assertEquals(existingShoppingOrder.getShippingState(),
 			newShoppingOrder.getShippingState());
-		assertEquals(existingShoppingOrder.getShippingZip(),
+		Assert.assertEquals(existingShoppingOrder.getShippingZip(),
 			newShoppingOrder.getShippingZip());
-		assertEquals(existingShoppingOrder.getShippingCountry(),
+		Assert.assertEquals(existingShoppingOrder.getShippingCountry(),
 			newShoppingOrder.getShippingCountry());
-		assertEquals(existingShoppingOrder.getShippingPhone(),
+		Assert.assertEquals(existingShoppingOrder.getShippingPhone(),
 			newShoppingOrder.getShippingPhone());
-		assertEquals(existingShoppingOrder.getCcName(),
+		Assert.assertEquals(existingShoppingOrder.getCcName(),
 			newShoppingOrder.getCcName());
-		assertEquals(existingShoppingOrder.getCcType(),
+		Assert.assertEquals(existingShoppingOrder.getCcType(),
 			newShoppingOrder.getCcType());
-		assertEquals(existingShoppingOrder.getCcNumber(),
+		Assert.assertEquals(existingShoppingOrder.getCcNumber(),
 			newShoppingOrder.getCcNumber());
-		assertEquals(existingShoppingOrder.getCcExpMonth(),
+		Assert.assertEquals(existingShoppingOrder.getCcExpMonth(),
 			newShoppingOrder.getCcExpMonth());
-		assertEquals(existingShoppingOrder.getCcExpYear(),
+		Assert.assertEquals(existingShoppingOrder.getCcExpYear(),
 			newShoppingOrder.getCcExpYear());
-		assertEquals(existingShoppingOrder.getCcVerNumber(),
+		Assert.assertEquals(existingShoppingOrder.getCcVerNumber(),
 			newShoppingOrder.getCcVerNumber());
-		assertEquals(existingShoppingOrder.getComments(),
+		Assert.assertEquals(existingShoppingOrder.getComments(),
 			newShoppingOrder.getComments());
-		assertEquals(existingShoppingOrder.getPpTxnId(),
+		Assert.assertEquals(existingShoppingOrder.getPpTxnId(),
 			newShoppingOrder.getPpTxnId());
-		assertEquals(existingShoppingOrder.getPpPaymentStatus(),
+		Assert.assertEquals(existingShoppingOrder.getPpPaymentStatus(),
 			newShoppingOrder.getPpPaymentStatus());
-		assertEquals(existingShoppingOrder.getPpPaymentGross(),
+		AssertUtils.assertEquals(existingShoppingOrder.getPpPaymentGross(),
 			newShoppingOrder.getPpPaymentGross());
-		assertEquals(existingShoppingOrder.getPpReceiverEmail(),
+		Assert.assertEquals(existingShoppingOrder.getPpReceiverEmail(),
 			newShoppingOrder.getPpReceiverEmail());
-		assertEquals(existingShoppingOrder.getPpPayerEmail(),
+		Assert.assertEquals(existingShoppingOrder.getPpPayerEmail(),
 			newShoppingOrder.getPpPayerEmail());
-		assertEquals(existingShoppingOrder.getSendOrderEmail(),
+		Assert.assertEquals(existingShoppingOrder.getSendOrderEmail(),
 			newShoppingOrder.getSendOrderEmail());
-		assertEquals(existingShoppingOrder.getSendShippingEmail(),
+		Assert.assertEquals(existingShoppingOrder.getSendShippingEmail(),
 			newShoppingOrder.getSendShippingEmail());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ShoppingOrder newShoppingOrder = addShoppingOrder();
 
 		ShoppingOrder existingShoppingOrder = _persistence.findByPrimaryKey(newShoppingOrder.getPrimaryKey());
 
-		assertEquals(existingShoppingOrder, newShoppingOrder);
+		Assert.assertEquals(existingShoppingOrder, newShoppingOrder);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchOrderException");
+			Assert.fail("Missing entity did not throw NoSuchOrderException");
 		}
 		catch (NoSuchOrderException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		ShoppingOrder newShoppingOrder = addShoppingOrder();
 
 		ShoppingOrder existingShoppingOrder = _persistence.fetchByPrimaryKey(newShoppingOrder.getPrimaryKey());
 
-		assertEquals(existingShoppingOrder, newShoppingOrder);
+		Assert.assertEquals(existingShoppingOrder, newShoppingOrder);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ShoppingOrder missingShoppingOrder = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingShoppingOrder);
+		Assert.assertNull(missingShoppingOrder);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		ShoppingOrder newShoppingOrder = addShoppingOrder();
@@ -327,24 +348,27 @@ public class ShoppingOrderPersistenceTest extends BasePersistenceTestCase {
 
 		List<ShoppingOrder> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		ShoppingOrder existingShoppingOrder = result.get(0);
 
-		assertEquals(existingShoppingOrder, newShoppingOrder);
+		Assert.assertEquals(existingShoppingOrder, newShoppingOrder);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ShoppingOrder.class,
 				ShoppingOrder.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("orderId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("orderId",
+				ServiceTestUtil.nextLong()));
 
 		List<ShoppingOrder> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		ShoppingOrder newShoppingOrder = addShoppingOrder();
@@ -361,13 +385,14 @@ public class ShoppingOrderPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingOrderId = result.get(0);
 
-		assertEquals(existingOrderId, newOrderId);
+		Assert.assertEquals(existingOrderId, newOrderId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ShoppingOrder.class,
 				ShoppingOrder.class.getClassLoader());
@@ -375,13 +400,14 @@ public class ShoppingOrderPersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("orderId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("orderId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -393,119 +419,119 @@ public class ShoppingOrderPersistenceTest extends BasePersistenceTestCase {
 
 		ShoppingOrderModelImpl existingShoppingOrderModelImpl = (ShoppingOrderModelImpl)_persistence.findByPrimaryKey(newShoppingOrder.getPrimaryKey());
 
-		assertTrue(Validator.equals(
+		Assert.assertTrue(Validator.equals(
 				existingShoppingOrderModelImpl.getNumber(),
 				existingShoppingOrderModelImpl.getOriginalNumber()));
 
-		assertTrue(Validator.equals(
+		Assert.assertTrue(Validator.equals(
 				existingShoppingOrderModelImpl.getPpTxnId(),
 				existingShoppingOrderModelImpl.getOriginalPpTxnId()));
 	}
 
 	protected ShoppingOrder addShoppingOrder() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ShoppingOrder shoppingOrder = _persistence.create(pk);
 
-		shoppingOrder.setGroupId(nextLong());
+		shoppingOrder.setGroupId(ServiceTestUtil.nextLong());
 
-		shoppingOrder.setCompanyId(nextLong());
+		shoppingOrder.setCompanyId(ServiceTestUtil.nextLong());
 
-		shoppingOrder.setUserId(nextLong());
+		shoppingOrder.setUserId(ServiceTestUtil.nextLong());
 
-		shoppingOrder.setUserName(randomString());
+		shoppingOrder.setUserName(ServiceTestUtil.randomString());
 
-		shoppingOrder.setCreateDate(nextDate());
+		shoppingOrder.setCreateDate(ServiceTestUtil.nextDate());
 
-		shoppingOrder.setModifiedDate(nextDate());
+		shoppingOrder.setModifiedDate(ServiceTestUtil.nextDate());
 
-		shoppingOrder.setNumber(randomString());
+		shoppingOrder.setNumber(ServiceTestUtil.randomString());
 
-		shoppingOrder.setTax(nextDouble());
+		shoppingOrder.setTax(ServiceTestUtil.nextDouble());
 
-		shoppingOrder.setShipping(nextDouble());
+		shoppingOrder.setShipping(ServiceTestUtil.nextDouble());
 
-		shoppingOrder.setAltShipping(randomString());
+		shoppingOrder.setAltShipping(ServiceTestUtil.randomString());
 
-		shoppingOrder.setRequiresShipping(randomBoolean());
+		shoppingOrder.setRequiresShipping(ServiceTestUtil.randomBoolean());
 
-		shoppingOrder.setInsure(randomBoolean());
+		shoppingOrder.setInsure(ServiceTestUtil.randomBoolean());
 
-		shoppingOrder.setInsurance(nextDouble());
+		shoppingOrder.setInsurance(ServiceTestUtil.nextDouble());
 
-		shoppingOrder.setCouponCodes(randomString());
+		shoppingOrder.setCouponCodes(ServiceTestUtil.randomString());
 
-		shoppingOrder.setCouponDiscount(nextDouble());
+		shoppingOrder.setCouponDiscount(ServiceTestUtil.nextDouble());
 
-		shoppingOrder.setBillingFirstName(randomString());
+		shoppingOrder.setBillingFirstName(ServiceTestUtil.randomString());
 
-		shoppingOrder.setBillingLastName(randomString());
+		shoppingOrder.setBillingLastName(ServiceTestUtil.randomString());
 
-		shoppingOrder.setBillingEmailAddress(randomString());
+		shoppingOrder.setBillingEmailAddress(ServiceTestUtil.randomString());
 
-		shoppingOrder.setBillingCompany(randomString());
+		shoppingOrder.setBillingCompany(ServiceTestUtil.randomString());
 
-		shoppingOrder.setBillingStreet(randomString());
+		shoppingOrder.setBillingStreet(ServiceTestUtil.randomString());
 
-		shoppingOrder.setBillingCity(randomString());
+		shoppingOrder.setBillingCity(ServiceTestUtil.randomString());
 
-		shoppingOrder.setBillingState(randomString());
+		shoppingOrder.setBillingState(ServiceTestUtil.randomString());
 
-		shoppingOrder.setBillingZip(randomString());
+		shoppingOrder.setBillingZip(ServiceTestUtil.randomString());
 
-		shoppingOrder.setBillingCountry(randomString());
+		shoppingOrder.setBillingCountry(ServiceTestUtil.randomString());
 
-		shoppingOrder.setBillingPhone(randomString());
+		shoppingOrder.setBillingPhone(ServiceTestUtil.randomString());
 
-		shoppingOrder.setShipToBilling(randomBoolean());
+		shoppingOrder.setShipToBilling(ServiceTestUtil.randomBoolean());
 
-		shoppingOrder.setShippingFirstName(randomString());
+		shoppingOrder.setShippingFirstName(ServiceTestUtil.randomString());
 
-		shoppingOrder.setShippingLastName(randomString());
+		shoppingOrder.setShippingLastName(ServiceTestUtil.randomString());
 
-		shoppingOrder.setShippingEmailAddress(randomString());
+		shoppingOrder.setShippingEmailAddress(ServiceTestUtil.randomString());
 
-		shoppingOrder.setShippingCompany(randomString());
+		shoppingOrder.setShippingCompany(ServiceTestUtil.randomString());
 
-		shoppingOrder.setShippingStreet(randomString());
+		shoppingOrder.setShippingStreet(ServiceTestUtil.randomString());
 
-		shoppingOrder.setShippingCity(randomString());
+		shoppingOrder.setShippingCity(ServiceTestUtil.randomString());
 
-		shoppingOrder.setShippingState(randomString());
+		shoppingOrder.setShippingState(ServiceTestUtil.randomString());
 
-		shoppingOrder.setShippingZip(randomString());
+		shoppingOrder.setShippingZip(ServiceTestUtil.randomString());
 
-		shoppingOrder.setShippingCountry(randomString());
+		shoppingOrder.setShippingCountry(ServiceTestUtil.randomString());
 
-		shoppingOrder.setShippingPhone(randomString());
+		shoppingOrder.setShippingPhone(ServiceTestUtil.randomString());
 
-		shoppingOrder.setCcName(randomString());
+		shoppingOrder.setCcName(ServiceTestUtil.randomString());
 
-		shoppingOrder.setCcType(randomString());
+		shoppingOrder.setCcType(ServiceTestUtil.randomString());
 
-		shoppingOrder.setCcNumber(randomString());
+		shoppingOrder.setCcNumber(ServiceTestUtil.randomString());
 
-		shoppingOrder.setCcExpMonth(nextInt());
+		shoppingOrder.setCcExpMonth(ServiceTestUtil.nextInt());
 
-		shoppingOrder.setCcExpYear(nextInt());
+		shoppingOrder.setCcExpYear(ServiceTestUtil.nextInt());
 
-		shoppingOrder.setCcVerNumber(randomString());
+		shoppingOrder.setCcVerNumber(ServiceTestUtil.randomString());
 
-		shoppingOrder.setComments(randomString());
+		shoppingOrder.setComments(ServiceTestUtil.randomString());
 
-		shoppingOrder.setPpTxnId(randomString());
+		shoppingOrder.setPpTxnId(ServiceTestUtil.randomString());
 
-		shoppingOrder.setPpPaymentStatus(randomString());
+		shoppingOrder.setPpPaymentStatus(ServiceTestUtil.randomString());
 
-		shoppingOrder.setPpPaymentGross(nextDouble());
+		shoppingOrder.setPpPaymentGross(ServiceTestUtil.nextDouble());
 
-		shoppingOrder.setPpReceiverEmail(randomString());
+		shoppingOrder.setPpReceiverEmail(ServiceTestUtil.randomString());
 
-		shoppingOrder.setPpPayerEmail(randomString());
+		shoppingOrder.setPpPayerEmail(ServiceTestUtil.randomString());
 
-		shoppingOrder.setSendOrderEmail(randomBoolean());
+		shoppingOrder.setSendOrderEmail(ServiceTestUtil.randomBoolean());
 
-		shoppingOrder.setSendShippingEmail(randomBoolean());
+		shoppingOrder.setSendShippingEmail(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(shoppingOrder, false);
 

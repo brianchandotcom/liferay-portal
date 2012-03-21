@@ -19,34 +19,46 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 
 import com.liferay.portlet.softwarecatalog.NoSuchLicenseException;
 import com.liferay.portlet.softwarecatalog.model.SCLicense;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class SCLicensePersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class SCLicensePersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (SCLicensePersistence)PortalBeanLocatorUtil.locate(SCLicensePersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		SCLicense scLicense = _persistence.create(pk);
 
-		assertNotNull(scLicense);
+		Assert.assertNotNull(scLicense);
 
-		assertEquals(scLicense.getPrimaryKey(), pk);
+		Assert.assertEquals(scLicense.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		SCLicense newSCLicense = addSCLicense();
 
@@ -54,79 +66,87 @@ public class SCLicensePersistenceTest extends BasePersistenceTestCase {
 
 		SCLicense existingSCLicense = _persistence.fetchByPrimaryKey(newSCLicense.getPrimaryKey());
 
-		assertNull(existingSCLicense);
+		Assert.assertNull(existingSCLicense);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addSCLicense();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		SCLicense newSCLicense = _persistence.create(pk);
 
-		newSCLicense.setName(randomString());
+		newSCLicense.setName(ServiceTestUtil.randomString());
 
-		newSCLicense.setUrl(randomString());
+		newSCLicense.setUrl(ServiceTestUtil.randomString());
 
-		newSCLicense.setOpenSource(randomBoolean());
+		newSCLicense.setOpenSource(ServiceTestUtil.randomBoolean());
 
-		newSCLicense.setActive(randomBoolean());
+		newSCLicense.setActive(ServiceTestUtil.randomBoolean());
 
-		newSCLicense.setRecommended(randomBoolean());
+		newSCLicense.setRecommended(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(newSCLicense, false);
 
 		SCLicense existingSCLicense = _persistence.findByPrimaryKey(newSCLicense.getPrimaryKey());
 
-		assertEquals(existingSCLicense.getLicenseId(),
+		Assert.assertEquals(existingSCLicense.getLicenseId(),
 			newSCLicense.getLicenseId());
-		assertEquals(existingSCLicense.getName(), newSCLicense.getName());
-		assertEquals(existingSCLicense.getUrl(), newSCLicense.getUrl());
-		assertEquals(existingSCLicense.getOpenSource(),
+		Assert.assertEquals(existingSCLicense.getName(), newSCLicense.getName());
+		Assert.assertEquals(existingSCLicense.getUrl(), newSCLicense.getUrl());
+		Assert.assertEquals(existingSCLicense.getOpenSource(),
 			newSCLicense.getOpenSource());
-		assertEquals(existingSCLicense.getActive(), newSCLicense.getActive());
-		assertEquals(existingSCLicense.getRecommended(),
+		Assert.assertEquals(existingSCLicense.getActive(),
+			newSCLicense.getActive());
+		Assert.assertEquals(existingSCLicense.getRecommended(),
 			newSCLicense.getRecommended());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		SCLicense newSCLicense = addSCLicense();
 
 		SCLicense existingSCLicense = _persistence.findByPrimaryKey(newSCLicense.getPrimaryKey());
 
-		assertEquals(existingSCLicense, newSCLicense);
+		Assert.assertEquals(existingSCLicense, newSCLicense);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchLicenseException");
+			Assert.fail("Missing entity did not throw NoSuchLicenseException");
 		}
 		catch (NoSuchLicenseException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		SCLicense newSCLicense = addSCLicense();
 
 		SCLicense existingSCLicense = _persistence.fetchByPrimaryKey(newSCLicense.getPrimaryKey());
 
-		assertEquals(existingSCLicense, newSCLicense);
+		Assert.assertEquals(existingSCLicense, newSCLicense);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		SCLicense missingSCLicense = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingSCLicense);
+		Assert.assertNull(missingSCLicense);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		SCLicense newSCLicense = addSCLicense();
@@ -139,24 +159,27 @@ public class SCLicensePersistenceTest extends BasePersistenceTestCase {
 
 		List<SCLicense> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		SCLicense existingSCLicense = result.get(0);
 
-		assertEquals(existingSCLicense, newSCLicense);
+		Assert.assertEquals(existingSCLicense, newSCLicense);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SCLicense.class,
 				SCLicense.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("licenseId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("licenseId",
+				ServiceTestUtil.nextLong()));
 
 		List<SCLicense> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		SCLicense newSCLicense = addSCLicense();
@@ -173,13 +196,14 @@ public class SCLicensePersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingLicenseId = result.get(0);
 
-		assertEquals(existingLicenseId, newLicenseId);
+		Assert.assertEquals(existingLicenseId, newLicenseId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SCLicense.class,
 				SCLicense.class.getClassLoader());
@@ -187,27 +211,27 @@ public class SCLicensePersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("licenseId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("licenseId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
 	protected SCLicense addSCLicense() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		SCLicense scLicense = _persistence.create(pk);
 
-		scLicense.setName(randomString());
+		scLicense.setName(ServiceTestUtil.randomString());
 
-		scLicense.setUrl(randomString());
+		scLicense.setUrl(ServiceTestUtil.randomString());
 
-		scLicense.setOpenSource(randomBoolean());
+		scLicense.setOpenSource(ServiceTestUtil.randomBoolean());
 
-		scLicense.setActive(randomBoolean());
+		scLicense.setActive(ServiceTestUtil.randomBoolean());
 
-		scLicense.setRecommended(randomBoolean());
+		scLicense.setRecommended(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(scLicense, false);
 

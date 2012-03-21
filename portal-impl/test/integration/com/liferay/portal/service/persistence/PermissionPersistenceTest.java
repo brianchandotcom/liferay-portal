@@ -23,32 +23,44 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Permission;
 import com.liferay.portal.model.impl.PermissionModelImpl;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class PermissionPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class PermissionPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (PermissionPersistence)PortalBeanLocatorUtil.locate(PermissionPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Permission permission = _persistence.create(pk);
 
-		assertNotNull(permission);
+		Assert.assertNotNull(permission);
 
-		assertEquals(permission.getPrimaryKey(), pk);
+		Assert.assertEquals(permission.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		Permission newPermission = addPermission();
 
@@ -56,74 +68,82 @@ public class PermissionPersistenceTest extends BasePersistenceTestCase {
 
 		Permission existingPermission = _persistence.fetchByPrimaryKey(newPermission.getPrimaryKey());
 
-		assertNull(existingPermission);
+		Assert.assertNull(existingPermission);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addPermission();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Permission newPermission = _persistence.create(pk);
 
-		newPermission.setCompanyId(nextLong());
+		newPermission.setCompanyId(ServiceTestUtil.nextLong());
 
-		newPermission.setActionId(randomString());
+		newPermission.setActionId(ServiceTestUtil.randomString());
 
-		newPermission.setResourceId(nextLong());
+		newPermission.setResourceId(ServiceTestUtil.nextLong());
 
 		_persistence.update(newPermission, false);
 
 		Permission existingPermission = _persistence.findByPrimaryKey(newPermission.getPrimaryKey());
 
-		assertEquals(existingPermission.getPermissionId(),
+		Assert.assertEquals(existingPermission.getPermissionId(),
 			newPermission.getPermissionId());
-		assertEquals(existingPermission.getCompanyId(),
+		Assert.assertEquals(existingPermission.getCompanyId(),
 			newPermission.getCompanyId());
-		assertEquals(existingPermission.getActionId(),
+		Assert.assertEquals(existingPermission.getActionId(),
 			newPermission.getActionId());
-		assertEquals(existingPermission.getResourceId(),
+		Assert.assertEquals(existingPermission.getResourceId(),
 			newPermission.getResourceId());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Permission newPermission = addPermission();
 
 		Permission existingPermission = _persistence.findByPrimaryKey(newPermission.getPrimaryKey());
 
-		assertEquals(existingPermission, newPermission);
+		Assert.assertEquals(existingPermission, newPermission);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchPermissionException");
+			Assert.fail(
+				"Missing entity did not throw NoSuchPermissionException");
 		}
 		catch (NoSuchPermissionException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		Permission newPermission = addPermission();
 
 		Permission existingPermission = _persistence.fetchByPrimaryKey(newPermission.getPrimaryKey());
 
-		assertEquals(existingPermission, newPermission);
+		Assert.assertEquals(existingPermission, newPermission);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Permission missingPermission = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingPermission);
+		Assert.assertNull(missingPermission);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		Permission newPermission = addPermission();
@@ -136,24 +156,27 @@ public class PermissionPersistenceTest extends BasePersistenceTestCase {
 
 		List<Permission> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Permission existingPermission = result.get(0);
 
-		assertEquals(existingPermission, newPermission);
+		Assert.assertEquals(existingPermission, newPermission);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Permission.class,
 				Permission.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("permissionId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("permissionId",
+				ServiceTestUtil.nextLong()));
 
 		List<Permission> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		Permission newPermission = addPermission();
@@ -171,13 +194,14 @@ public class PermissionPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingPermissionId = result.get(0);
 
-		assertEquals(existingPermissionId, newPermissionId);
+		Assert.assertEquals(existingPermissionId, newPermissionId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Permission.class,
 				Permission.class.getClassLoader());
@@ -186,13 +210,14 @@ public class PermissionPersistenceTest extends BasePersistenceTestCase {
 				"permissionId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("permissionId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -204,22 +229,23 @@ public class PermissionPersistenceTest extends BasePersistenceTestCase {
 
 		PermissionModelImpl existingPermissionModelImpl = (PermissionModelImpl)_persistence.findByPrimaryKey(newPermission.getPrimaryKey());
 
-		assertTrue(Validator.equals(existingPermissionModelImpl.getActionId(),
+		Assert.assertTrue(Validator.equals(
+				existingPermissionModelImpl.getActionId(),
 				existingPermissionModelImpl.getOriginalActionId()));
-		assertEquals(existingPermissionModelImpl.getResourceId(),
+		Assert.assertEquals(existingPermissionModelImpl.getResourceId(),
 			existingPermissionModelImpl.getOriginalResourceId());
 	}
 
 	protected Permission addPermission() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Permission permission = _persistence.create(pk);
 
-		permission.setCompanyId(nextLong());
+		permission.setCompanyId(ServiceTestUtil.nextLong());
 
-		permission.setActionId(randomString());
+		permission.setActionId(ServiceTestUtil.randomString());
 
-		permission.setResourceId(nextLong());
+		permission.setResourceId(ServiceTestUtil.nextLong());
 
 		_persistence.update(permission, false);
 

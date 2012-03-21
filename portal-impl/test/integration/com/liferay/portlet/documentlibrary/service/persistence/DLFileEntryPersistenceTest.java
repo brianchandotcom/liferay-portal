@@ -21,36 +21,48 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryModelImpl;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class DLFileEntryPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class DLFileEntryPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (DLFileEntryPersistence)PortalBeanLocatorUtil.locate(DLFileEntryPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		DLFileEntry dlFileEntry = _persistence.create(pk);
 
-		assertNotNull(dlFileEntry);
+		Assert.assertNotNull(dlFileEntry);
 
-		assertEquals(dlFileEntry.getPrimaryKey(), pk);
+		Assert.assertEquals(dlFileEntry.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		DLFileEntry newDLFileEntry = addDLFileEntry();
 
@@ -58,158 +70,171 @@ public class DLFileEntryPersistenceTest extends BasePersistenceTestCase {
 
 		DLFileEntry existingDLFileEntry = _persistence.fetchByPrimaryKey(newDLFileEntry.getPrimaryKey());
 
-		assertNull(existingDLFileEntry);
+		Assert.assertNull(existingDLFileEntry);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addDLFileEntry();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		DLFileEntry newDLFileEntry = _persistence.create(pk);
 
-		newDLFileEntry.setUuid(randomString());
+		newDLFileEntry.setUuid(ServiceTestUtil.randomString());
 
-		newDLFileEntry.setGroupId(nextLong());
+		newDLFileEntry.setGroupId(ServiceTestUtil.nextLong());
 
-		newDLFileEntry.setCompanyId(nextLong());
+		newDLFileEntry.setCompanyId(ServiceTestUtil.nextLong());
 
-		newDLFileEntry.setUserId(nextLong());
+		newDLFileEntry.setUserId(ServiceTestUtil.nextLong());
 
-		newDLFileEntry.setUserName(randomString());
+		newDLFileEntry.setUserName(ServiceTestUtil.randomString());
 
-		newDLFileEntry.setVersionUserId(nextLong());
+		newDLFileEntry.setVersionUserId(ServiceTestUtil.nextLong());
 
-		newDLFileEntry.setVersionUserName(randomString());
+		newDLFileEntry.setVersionUserName(ServiceTestUtil.randomString());
 
-		newDLFileEntry.setCreateDate(nextDate());
+		newDLFileEntry.setCreateDate(ServiceTestUtil.nextDate());
 
-		newDLFileEntry.setModifiedDate(nextDate());
+		newDLFileEntry.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newDLFileEntry.setRepositoryId(nextLong());
+		newDLFileEntry.setRepositoryId(ServiceTestUtil.nextLong());
 
-		newDLFileEntry.setFolderId(nextLong());
+		newDLFileEntry.setFolderId(ServiceTestUtil.nextLong());
 
-		newDLFileEntry.setName(randomString());
+		newDLFileEntry.setName(ServiceTestUtil.randomString());
 
-		newDLFileEntry.setExtension(randomString());
+		newDLFileEntry.setExtension(ServiceTestUtil.randomString());
 
-		newDLFileEntry.setMimeType(randomString());
+		newDLFileEntry.setMimeType(ServiceTestUtil.randomString());
 
-		newDLFileEntry.setTitle(randomString());
+		newDLFileEntry.setTitle(ServiceTestUtil.randomString());
 
-		newDLFileEntry.setDescription(randomString());
+		newDLFileEntry.setDescription(ServiceTestUtil.randomString());
 
-		newDLFileEntry.setExtraSettings(randomString());
+		newDLFileEntry.setExtraSettings(ServiceTestUtil.randomString());
 
-		newDLFileEntry.setFileEntryTypeId(nextLong());
+		newDLFileEntry.setFileEntryTypeId(ServiceTestUtil.nextLong());
 
-		newDLFileEntry.setVersion(randomString());
+		newDLFileEntry.setVersion(ServiceTestUtil.randomString());
 
-		newDLFileEntry.setSize(nextLong());
+		newDLFileEntry.setSize(ServiceTestUtil.nextLong());
 
-		newDLFileEntry.setReadCount(nextInt());
+		newDLFileEntry.setReadCount(ServiceTestUtil.nextInt());
 
-		newDLFileEntry.setSmallImageId(nextLong());
+		newDLFileEntry.setSmallImageId(ServiceTestUtil.nextLong());
 
-		newDLFileEntry.setLargeImageId(nextLong());
+		newDLFileEntry.setLargeImageId(ServiceTestUtil.nextLong());
 
-		newDLFileEntry.setCustom1ImageId(nextLong());
+		newDLFileEntry.setCustom1ImageId(ServiceTestUtil.nextLong());
 
-		newDLFileEntry.setCustom2ImageId(nextLong());
+		newDLFileEntry.setCustom2ImageId(ServiceTestUtil.nextLong());
 
 		_persistence.update(newDLFileEntry, false);
 
 		DLFileEntry existingDLFileEntry = _persistence.findByPrimaryKey(newDLFileEntry.getPrimaryKey());
 
-		assertEquals(existingDLFileEntry.getUuid(), newDLFileEntry.getUuid());
-		assertEquals(existingDLFileEntry.getFileEntryId(),
+		Assert.assertEquals(existingDLFileEntry.getUuid(),
+			newDLFileEntry.getUuid());
+		Assert.assertEquals(existingDLFileEntry.getFileEntryId(),
 			newDLFileEntry.getFileEntryId());
-		assertEquals(existingDLFileEntry.getGroupId(),
+		Assert.assertEquals(existingDLFileEntry.getGroupId(),
 			newDLFileEntry.getGroupId());
-		assertEquals(existingDLFileEntry.getCompanyId(),
+		Assert.assertEquals(existingDLFileEntry.getCompanyId(),
 			newDLFileEntry.getCompanyId());
-		assertEquals(existingDLFileEntry.getUserId(), newDLFileEntry.getUserId());
-		assertEquals(existingDLFileEntry.getUserName(),
+		Assert.assertEquals(existingDLFileEntry.getUserId(),
+			newDLFileEntry.getUserId());
+		Assert.assertEquals(existingDLFileEntry.getUserName(),
 			newDLFileEntry.getUserName());
-		assertEquals(existingDLFileEntry.getVersionUserId(),
+		Assert.assertEquals(existingDLFileEntry.getVersionUserId(),
 			newDLFileEntry.getVersionUserId());
-		assertEquals(existingDLFileEntry.getVersionUserName(),
+		Assert.assertEquals(existingDLFileEntry.getVersionUserName(),
 			newDLFileEntry.getVersionUserName());
-		assertEquals(Time.getShortTimestamp(existingDLFileEntry.getCreateDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingDLFileEntry.getCreateDate()),
 			Time.getShortTimestamp(newDLFileEntry.getCreateDate()));
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingDLFileEntry.getModifiedDate()),
 			Time.getShortTimestamp(newDLFileEntry.getModifiedDate()));
-		assertEquals(existingDLFileEntry.getRepositoryId(),
+		Assert.assertEquals(existingDLFileEntry.getRepositoryId(),
 			newDLFileEntry.getRepositoryId());
-		assertEquals(existingDLFileEntry.getFolderId(),
+		Assert.assertEquals(existingDLFileEntry.getFolderId(),
 			newDLFileEntry.getFolderId());
-		assertEquals(existingDLFileEntry.getName(), newDLFileEntry.getName());
-		assertEquals(existingDLFileEntry.getExtension(),
+		Assert.assertEquals(existingDLFileEntry.getName(),
+			newDLFileEntry.getName());
+		Assert.assertEquals(existingDLFileEntry.getExtension(),
 			newDLFileEntry.getExtension());
-		assertEquals(existingDLFileEntry.getMimeType(),
+		Assert.assertEquals(existingDLFileEntry.getMimeType(),
 			newDLFileEntry.getMimeType());
-		assertEquals(existingDLFileEntry.getTitle(), newDLFileEntry.getTitle());
-		assertEquals(existingDLFileEntry.getDescription(),
+		Assert.assertEquals(existingDLFileEntry.getTitle(),
+			newDLFileEntry.getTitle());
+		Assert.assertEquals(existingDLFileEntry.getDescription(),
 			newDLFileEntry.getDescription());
-		assertEquals(existingDLFileEntry.getExtraSettings(),
+		Assert.assertEquals(existingDLFileEntry.getExtraSettings(),
 			newDLFileEntry.getExtraSettings());
-		assertEquals(existingDLFileEntry.getFileEntryTypeId(),
+		Assert.assertEquals(existingDLFileEntry.getFileEntryTypeId(),
 			newDLFileEntry.getFileEntryTypeId());
-		assertEquals(existingDLFileEntry.getVersion(),
+		Assert.assertEquals(existingDLFileEntry.getVersion(),
 			newDLFileEntry.getVersion());
-		assertEquals(existingDLFileEntry.getSize(), newDLFileEntry.getSize());
-		assertEquals(existingDLFileEntry.getReadCount(),
+		Assert.assertEquals(existingDLFileEntry.getSize(),
+			newDLFileEntry.getSize());
+		Assert.assertEquals(existingDLFileEntry.getReadCount(),
 			newDLFileEntry.getReadCount());
-		assertEquals(existingDLFileEntry.getSmallImageId(),
+		Assert.assertEquals(existingDLFileEntry.getSmallImageId(),
 			newDLFileEntry.getSmallImageId());
-		assertEquals(existingDLFileEntry.getLargeImageId(),
+		Assert.assertEquals(existingDLFileEntry.getLargeImageId(),
 			newDLFileEntry.getLargeImageId());
-		assertEquals(existingDLFileEntry.getCustom1ImageId(),
+		Assert.assertEquals(existingDLFileEntry.getCustom1ImageId(),
 			newDLFileEntry.getCustom1ImageId());
-		assertEquals(existingDLFileEntry.getCustom2ImageId(),
+		Assert.assertEquals(existingDLFileEntry.getCustom2ImageId(),
 			newDLFileEntry.getCustom2ImageId());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		DLFileEntry newDLFileEntry = addDLFileEntry();
 
 		DLFileEntry existingDLFileEntry = _persistence.findByPrimaryKey(newDLFileEntry.getPrimaryKey());
 
-		assertEquals(existingDLFileEntry, newDLFileEntry);
+		Assert.assertEquals(existingDLFileEntry, newDLFileEntry);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchFileEntryException");
+			Assert.fail("Missing entity did not throw NoSuchFileEntryException");
 		}
 		catch (NoSuchFileEntryException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		DLFileEntry newDLFileEntry = addDLFileEntry();
 
 		DLFileEntry existingDLFileEntry = _persistence.fetchByPrimaryKey(newDLFileEntry.getPrimaryKey());
 
-		assertEquals(existingDLFileEntry, newDLFileEntry);
+		Assert.assertEquals(existingDLFileEntry, newDLFileEntry);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		DLFileEntry missingDLFileEntry = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingDLFileEntry);
+		Assert.assertNull(missingDLFileEntry);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		DLFileEntry newDLFileEntry = addDLFileEntry();
@@ -222,24 +247,27 @@ public class DLFileEntryPersistenceTest extends BasePersistenceTestCase {
 
 		List<DLFileEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		DLFileEntry existingDLFileEntry = result.get(0);
 
-		assertEquals(existingDLFileEntry, newDLFileEntry);
+		Assert.assertEquals(existingDLFileEntry, newDLFileEntry);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLFileEntry.class,
 				DLFileEntry.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("fileEntryId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("fileEntryId",
+				ServiceTestUtil.nextLong()));
 
 		List<DLFileEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		DLFileEntry newDLFileEntry = addDLFileEntry();
@@ -256,13 +284,14 @@ public class DLFileEntryPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingFileEntryId = result.get(0);
 
-		assertEquals(existingFileEntryId, newFileEntryId);
+		Assert.assertEquals(existingFileEntryId, newFileEntryId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLFileEntry.class,
 				DLFileEntry.class.getClassLoader());
@@ -270,13 +299,14 @@ public class DLFileEntryPersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("fileEntryId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("fileEntryId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -288,80 +318,83 @@ public class DLFileEntryPersistenceTest extends BasePersistenceTestCase {
 
 		DLFileEntryModelImpl existingDLFileEntryModelImpl = (DLFileEntryModelImpl)_persistence.findByPrimaryKey(newDLFileEntry.getPrimaryKey());
 
-		assertTrue(Validator.equals(existingDLFileEntryModelImpl.getUuid(),
+		Assert.assertTrue(Validator.equals(
+				existingDLFileEntryModelImpl.getUuid(),
 				existingDLFileEntryModelImpl.getOriginalUuid()));
-		assertEquals(existingDLFileEntryModelImpl.getGroupId(),
+		Assert.assertEquals(existingDLFileEntryModelImpl.getGroupId(),
 			existingDLFileEntryModelImpl.getOriginalGroupId());
 
-		assertEquals(existingDLFileEntryModelImpl.getGroupId(),
+		Assert.assertEquals(existingDLFileEntryModelImpl.getGroupId(),
 			existingDLFileEntryModelImpl.getOriginalGroupId());
-		assertEquals(existingDLFileEntryModelImpl.getFolderId(),
+		Assert.assertEquals(existingDLFileEntryModelImpl.getFolderId(),
 			existingDLFileEntryModelImpl.getOriginalFolderId());
-		assertTrue(Validator.equals(existingDLFileEntryModelImpl.getName(),
+		Assert.assertTrue(Validator.equals(
+				existingDLFileEntryModelImpl.getName(),
 				existingDLFileEntryModelImpl.getOriginalName()));
 
-		assertEquals(existingDLFileEntryModelImpl.getGroupId(),
+		Assert.assertEquals(existingDLFileEntryModelImpl.getGroupId(),
 			existingDLFileEntryModelImpl.getOriginalGroupId());
-		assertEquals(existingDLFileEntryModelImpl.getFolderId(),
+		Assert.assertEquals(existingDLFileEntryModelImpl.getFolderId(),
 			existingDLFileEntryModelImpl.getOriginalFolderId());
-		assertTrue(Validator.equals(existingDLFileEntryModelImpl.getTitle(),
+		Assert.assertTrue(Validator.equals(
+				existingDLFileEntryModelImpl.getTitle(),
 				existingDLFileEntryModelImpl.getOriginalTitle()));
 	}
 
 	protected DLFileEntry addDLFileEntry() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		DLFileEntry dlFileEntry = _persistence.create(pk);
 
-		dlFileEntry.setUuid(randomString());
+		dlFileEntry.setUuid(ServiceTestUtil.randomString());
 
-		dlFileEntry.setGroupId(nextLong());
+		dlFileEntry.setGroupId(ServiceTestUtil.nextLong());
 
-		dlFileEntry.setCompanyId(nextLong());
+		dlFileEntry.setCompanyId(ServiceTestUtil.nextLong());
 
-		dlFileEntry.setUserId(nextLong());
+		dlFileEntry.setUserId(ServiceTestUtil.nextLong());
 
-		dlFileEntry.setUserName(randomString());
+		dlFileEntry.setUserName(ServiceTestUtil.randomString());
 
-		dlFileEntry.setVersionUserId(nextLong());
+		dlFileEntry.setVersionUserId(ServiceTestUtil.nextLong());
 
-		dlFileEntry.setVersionUserName(randomString());
+		dlFileEntry.setVersionUserName(ServiceTestUtil.randomString());
 
-		dlFileEntry.setCreateDate(nextDate());
+		dlFileEntry.setCreateDate(ServiceTestUtil.nextDate());
 
-		dlFileEntry.setModifiedDate(nextDate());
+		dlFileEntry.setModifiedDate(ServiceTestUtil.nextDate());
 
-		dlFileEntry.setRepositoryId(nextLong());
+		dlFileEntry.setRepositoryId(ServiceTestUtil.nextLong());
 
-		dlFileEntry.setFolderId(nextLong());
+		dlFileEntry.setFolderId(ServiceTestUtil.nextLong());
 
-		dlFileEntry.setName(randomString());
+		dlFileEntry.setName(ServiceTestUtil.randomString());
 
-		dlFileEntry.setExtension(randomString());
+		dlFileEntry.setExtension(ServiceTestUtil.randomString());
 
-		dlFileEntry.setMimeType(randomString());
+		dlFileEntry.setMimeType(ServiceTestUtil.randomString());
 
-		dlFileEntry.setTitle(randomString());
+		dlFileEntry.setTitle(ServiceTestUtil.randomString());
 
-		dlFileEntry.setDescription(randomString());
+		dlFileEntry.setDescription(ServiceTestUtil.randomString());
 
-		dlFileEntry.setExtraSettings(randomString());
+		dlFileEntry.setExtraSettings(ServiceTestUtil.randomString());
 
-		dlFileEntry.setFileEntryTypeId(nextLong());
+		dlFileEntry.setFileEntryTypeId(ServiceTestUtil.nextLong());
 
-		dlFileEntry.setVersion(randomString());
+		dlFileEntry.setVersion(ServiceTestUtil.randomString());
 
-		dlFileEntry.setSize(nextLong());
+		dlFileEntry.setSize(ServiceTestUtil.nextLong());
 
-		dlFileEntry.setReadCount(nextInt());
+		dlFileEntry.setReadCount(ServiceTestUtil.nextInt());
 
-		dlFileEntry.setSmallImageId(nextLong());
+		dlFileEntry.setSmallImageId(ServiceTestUtil.nextLong());
 
-		dlFileEntry.setLargeImageId(nextLong());
+		dlFileEntry.setLargeImageId(ServiceTestUtil.nextLong());
 
-		dlFileEntry.setCustom1ImageId(nextLong());
+		dlFileEntry.setCustom1ImageId(ServiceTestUtil.nextLong());
 
-		dlFileEntry.setCustom2ImageId(nextLong());
+		dlFileEntry.setCustom2ImageId(ServiceTestUtil.nextLong());
 
 		_persistence.update(dlFileEntry, false);
 

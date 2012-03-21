@@ -20,37 +20,48 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.announcements.NoSuchDeliveryException;
 import com.liferay.portlet.announcements.model.AnnouncementsDelivery;
 import com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryModelImpl;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class AnnouncementsDeliveryPersistenceTest
-	extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class AnnouncementsDeliveryPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (AnnouncementsDeliveryPersistence)PortalBeanLocatorUtil.locate(AnnouncementsDeliveryPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		AnnouncementsDelivery announcementsDelivery = _persistence.create(pk);
 
-		assertNotNull(announcementsDelivery);
+		Assert.assertNotNull(announcementsDelivery);
 
-		assertEquals(announcementsDelivery.getPrimaryKey(), pk);
+		Assert.assertEquals(announcementsDelivery.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		AnnouncementsDelivery newAnnouncementsDelivery = addAnnouncementsDelivery();
 
@@ -58,86 +69,95 @@ public class AnnouncementsDeliveryPersistenceTest
 
 		AnnouncementsDelivery existingAnnouncementsDelivery = _persistence.fetchByPrimaryKey(newAnnouncementsDelivery.getPrimaryKey());
 
-		assertNull(existingAnnouncementsDelivery);
+		Assert.assertNull(existingAnnouncementsDelivery);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addAnnouncementsDelivery();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		AnnouncementsDelivery newAnnouncementsDelivery = _persistence.create(pk);
 
-		newAnnouncementsDelivery.setCompanyId(nextLong());
+		newAnnouncementsDelivery.setCompanyId(ServiceTestUtil.nextLong());
 
-		newAnnouncementsDelivery.setUserId(nextLong());
+		newAnnouncementsDelivery.setUserId(ServiceTestUtil.nextLong());
 
-		newAnnouncementsDelivery.setType(randomString());
+		newAnnouncementsDelivery.setType(ServiceTestUtil.randomString());
 
-		newAnnouncementsDelivery.setEmail(randomBoolean());
+		newAnnouncementsDelivery.setEmail(ServiceTestUtil.randomBoolean());
 
-		newAnnouncementsDelivery.setSms(randomBoolean());
+		newAnnouncementsDelivery.setSms(ServiceTestUtil.randomBoolean());
 
-		newAnnouncementsDelivery.setWebsite(randomBoolean());
+		newAnnouncementsDelivery.setWebsite(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(newAnnouncementsDelivery, false);
 
 		AnnouncementsDelivery existingAnnouncementsDelivery = _persistence.findByPrimaryKey(newAnnouncementsDelivery.getPrimaryKey());
 
-		assertEquals(existingAnnouncementsDelivery.getDeliveryId(),
+		Assert.assertEquals(existingAnnouncementsDelivery.getDeliveryId(),
 			newAnnouncementsDelivery.getDeliveryId());
-		assertEquals(existingAnnouncementsDelivery.getCompanyId(),
+		Assert.assertEquals(existingAnnouncementsDelivery.getCompanyId(),
 			newAnnouncementsDelivery.getCompanyId());
-		assertEquals(existingAnnouncementsDelivery.getUserId(),
+		Assert.assertEquals(existingAnnouncementsDelivery.getUserId(),
 			newAnnouncementsDelivery.getUserId());
-		assertEquals(existingAnnouncementsDelivery.getType(),
+		Assert.assertEquals(existingAnnouncementsDelivery.getType(),
 			newAnnouncementsDelivery.getType());
-		assertEquals(existingAnnouncementsDelivery.getEmail(),
+		Assert.assertEquals(existingAnnouncementsDelivery.getEmail(),
 			newAnnouncementsDelivery.getEmail());
-		assertEquals(existingAnnouncementsDelivery.getSms(),
+		Assert.assertEquals(existingAnnouncementsDelivery.getSms(),
 			newAnnouncementsDelivery.getSms());
-		assertEquals(existingAnnouncementsDelivery.getWebsite(),
+		Assert.assertEquals(existingAnnouncementsDelivery.getWebsite(),
 			newAnnouncementsDelivery.getWebsite());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		AnnouncementsDelivery newAnnouncementsDelivery = addAnnouncementsDelivery();
 
 		AnnouncementsDelivery existingAnnouncementsDelivery = _persistence.findByPrimaryKey(newAnnouncementsDelivery.getPrimaryKey());
 
-		assertEquals(existingAnnouncementsDelivery, newAnnouncementsDelivery);
+		Assert.assertEquals(existingAnnouncementsDelivery,
+			newAnnouncementsDelivery);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchDeliveryException");
+			Assert.fail("Missing entity did not throw NoSuchDeliveryException");
 		}
 		catch (NoSuchDeliveryException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		AnnouncementsDelivery newAnnouncementsDelivery = addAnnouncementsDelivery();
 
 		AnnouncementsDelivery existingAnnouncementsDelivery = _persistence.fetchByPrimaryKey(newAnnouncementsDelivery.getPrimaryKey());
 
-		assertEquals(existingAnnouncementsDelivery, newAnnouncementsDelivery);
+		Assert.assertEquals(existingAnnouncementsDelivery,
+			newAnnouncementsDelivery);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		AnnouncementsDelivery missingAnnouncementsDelivery = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingAnnouncementsDelivery);
+		Assert.assertNull(missingAnnouncementsDelivery);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		AnnouncementsDelivery newAnnouncementsDelivery = addAnnouncementsDelivery();
@@ -150,24 +170,28 @@ public class AnnouncementsDeliveryPersistenceTest
 
 		List<AnnouncementsDelivery> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		AnnouncementsDelivery existingAnnouncementsDelivery = result.get(0);
 
-		assertEquals(existingAnnouncementsDelivery, newAnnouncementsDelivery);
+		Assert.assertEquals(existingAnnouncementsDelivery,
+			newAnnouncementsDelivery);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AnnouncementsDelivery.class,
 				AnnouncementsDelivery.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("deliveryId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("deliveryId",
+				ServiceTestUtil.nextLong()));
 
 		List<AnnouncementsDelivery> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		AnnouncementsDelivery newAnnouncementsDelivery = addAnnouncementsDelivery();
@@ -184,13 +208,14 @@ public class AnnouncementsDeliveryPersistenceTest
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingDeliveryId = result.get(0);
 
-		assertEquals(existingDeliveryId, newDeliveryId);
+		Assert.assertEquals(existingDeliveryId, newDeliveryId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AnnouncementsDelivery.class,
 				AnnouncementsDelivery.class.getClassLoader());
@@ -198,13 +223,14 @@ public class AnnouncementsDeliveryPersistenceTest
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("deliveryId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("deliveryId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -216,30 +242,30 @@ public class AnnouncementsDeliveryPersistenceTest
 
 		AnnouncementsDeliveryModelImpl existingAnnouncementsDeliveryModelImpl = (AnnouncementsDeliveryModelImpl)_persistence.findByPrimaryKey(newAnnouncementsDelivery.getPrimaryKey());
 
-		assertEquals(existingAnnouncementsDeliveryModelImpl.getUserId(),
+		Assert.assertEquals(existingAnnouncementsDeliveryModelImpl.getUserId(),
 			existingAnnouncementsDeliveryModelImpl.getOriginalUserId());
-		assertTrue(Validator.equals(
+		Assert.assertTrue(Validator.equals(
 				existingAnnouncementsDeliveryModelImpl.getType(),
 				existingAnnouncementsDeliveryModelImpl.getOriginalType()));
 	}
 
 	protected AnnouncementsDelivery addAnnouncementsDelivery()
 		throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		AnnouncementsDelivery announcementsDelivery = _persistence.create(pk);
 
-		announcementsDelivery.setCompanyId(nextLong());
+		announcementsDelivery.setCompanyId(ServiceTestUtil.nextLong());
 
-		announcementsDelivery.setUserId(nextLong());
+		announcementsDelivery.setUserId(ServiceTestUtil.nextLong());
 
-		announcementsDelivery.setType(randomString());
+		announcementsDelivery.setType(ServiceTestUtil.randomString());
 
-		announcementsDelivery.setEmail(randomBoolean());
+		announcementsDelivery.setEmail(ServiceTestUtil.randomBoolean());
 
-		announcementsDelivery.setSms(randomBoolean());
+		announcementsDelivery.setSms(ServiceTestUtil.randomBoolean());
 
-		announcementsDelivery.setWebsite(randomBoolean());
+		announcementsDelivery.setWebsite(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(announcementsDelivery, false);
 

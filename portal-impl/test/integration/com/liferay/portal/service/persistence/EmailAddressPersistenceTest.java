@@ -22,31 +22,43 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.EmailAddress;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class EmailAddressPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class EmailAddressPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (EmailAddressPersistence)PortalBeanLocatorUtil.locate(EmailAddressPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		EmailAddress emailAddress = _persistence.create(pk);
 
-		assertNotNull(emailAddress);
+		Assert.assertNotNull(emailAddress);
 
-		assertEquals(emailAddress.getPrimaryKey(), pk);
+		Assert.assertEquals(emailAddress.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		EmailAddress newEmailAddress = addEmailAddress();
 
@@ -54,104 +66,112 @@ public class EmailAddressPersistenceTest extends BasePersistenceTestCase {
 
 		EmailAddress existingEmailAddress = _persistence.fetchByPrimaryKey(newEmailAddress.getPrimaryKey());
 
-		assertNull(existingEmailAddress);
+		Assert.assertNull(existingEmailAddress);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addEmailAddress();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		EmailAddress newEmailAddress = _persistence.create(pk);
 
-		newEmailAddress.setCompanyId(nextLong());
+		newEmailAddress.setCompanyId(ServiceTestUtil.nextLong());
 
-		newEmailAddress.setUserId(nextLong());
+		newEmailAddress.setUserId(ServiceTestUtil.nextLong());
 
-		newEmailAddress.setUserName(randomString());
+		newEmailAddress.setUserName(ServiceTestUtil.randomString());
 
-		newEmailAddress.setCreateDate(nextDate());
+		newEmailAddress.setCreateDate(ServiceTestUtil.nextDate());
 
-		newEmailAddress.setModifiedDate(nextDate());
+		newEmailAddress.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newEmailAddress.setClassNameId(nextLong());
+		newEmailAddress.setClassNameId(ServiceTestUtil.nextLong());
 
-		newEmailAddress.setClassPK(nextLong());
+		newEmailAddress.setClassPK(ServiceTestUtil.nextLong());
 
-		newEmailAddress.setAddress(randomString());
+		newEmailAddress.setAddress(ServiceTestUtil.randomString());
 
-		newEmailAddress.setTypeId(nextInt());
+		newEmailAddress.setTypeId(ServiceTestUtil.nextInt());
 
-		newEmailAddress.setPrimary(randomBoolean());
+		newEmailAddress.setPrimary(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(newEmailAddress, false);
 
 		EmailAddress existingEmailAddress = _persistence.findByPrimaryKey(newEmailAddress.getPrimaryKey());
 
-		assertEquals(existingEmailAddress.getEmailAddressId(),
+		Assert.assertEquals(existingEmailAddress.getEmailAddressId(),
 			newEmailAddress.getEmailAddressId());
-		assertEquals(existingEmailAddress.getCompanyId(),
+		Assert.assertEquals(existingEmailAddress.getCompanyId(),
 			newEmailAddress.getCompanyId());
-		assertEquals(existingEmailAddress.getUserId(),
+		Assert.assertEquals(existingEmailAddress.getUserId(),
 			newEmailAddress.getUserId());
-		assertEquals(existingEmailAddress.getUserName(),
+		Assert.assertEquals(existingEmailAddress.getUserName(),
 			newEmailAddress.getUserName());
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingEmailAddress.getCreateDate()),
 			Time.getShortTimestamp(newEmailAddress.getCreateDate()));
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingEmailAddress.getModifiedDate()),
 			Time.getShortTimestamp(newEmailAddress.getModifiedDate()));
-		assertEquals(existingEmailAddress.getClassNameId(),
+		Assert.assertEquals(existingEmailAddress.getClassNameId(),
 			newEmailAddress.getClassNameId());
-		assertEquals(existingEmailAddress.getClassPK(),
+		Assert.assertEquals(existingEmailAddress.getClassPK(),
 			newEmailAddress.getClassPK());
-		assertEquals(existingEmailAddress.getAddress(),
+		Assert.assertEquals(existingEmailAddress.getAddress(),
 			newEmailAddress.getAddress());
-		assertEquals(existingEmailAddress.getTypeId(),
+		Assert.assertEquals(existingEmailAddress.getTypeId(),
 			newEmailAddress.getTypeId());
-		assertEquals(existingEmailAddress.getPrimary(),
+		Assert.assertEquals(existingEmailAddress.getPrimary(),
 			newEmailAddress.getPrimary());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		EmailAddress newEmailAddress = addEmailAddress();
 
 		EmailAddress existingEmailAddress = _persistence.findByPrimaryKey(newEmailAddress.getPrimaryKey());
 
-		assertEquals(existingEmailAddress, newEmailAddress);
+		Assert.assertEquals(existingEmailAddress, newEmailAddress);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchEmailAddressException");
+			Assert.fail(
+				"Missing entity did not throw NoSuchEmailAddressException");
 		}
 		catch (NoSuchEmailAddressException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		EmailAddress newEmailAddress = addEmailAddress();
 
 		EmailAddress existingEmailAddress = _persistence.fetchByPrimaryKey(newEmailAddress.getPrimaryKey());
 
-		assertEquals(existingEmailAddress, newEmailAddress);
+		Assert.assertEquals(existingEmailAddress, newEmailAddress);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		EmailAddress missingEmailAddress = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingEmailAddress);
+		Assert.assertNull(missingEmailAddress);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		EmailAddress newEmailAddress = addEmailAddress();
@@ -164,24 +184,27 @@ public class EmailAddressPersistenceTest extends BasePersistenceTestCase {
 
 		List<EmailAddress> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		EmailAddress existingEmailAddress = result.get(0);
 
-		assertEquals(existingEmailAddress, newEmailAddress);
+		Assert.assertEquals(existingEmailAddress, newEmailAddress);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(EmailAddress.class,
 				EmailAddress.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("emailAddressId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("emailAddressId",
+				ServiceTestUtil.nextLong()));
 
 		List<EmailAddress> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		EmailAddress newEmailAddress = addEmailAddress();
@@ -199,13 +222,14 @@ public class EmailAddressPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingEmailAddressId = result.get(0);
 
-		assertEquals(existingEmailAddressId, newEmailAddressId);
+		Assert.assertEquals(existingEmailAddressId, newEmailAddressId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(EmailAddress.class,
 				EmailAddress.class.getClassLoader());
@@ -214,37 +238,37 @@ public class EmailAddressPersistenceTest extends BasePersistenceTestCase {
 				"emailAddressId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("emailAddressId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
 	protected EmailAddress addEmailAddress() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		EmailAddress emailAddress = _persistence.create(pk);
 
-		emailAddress.setCompanyId(nextLong());
+		emailAddress.setCompanyId(ServiceTestUtil.nextLong());
 
-		emailAddress.setUserId(nextLong());
+		emailAddress.setUserId(ServiceTestUtil.nextLong());
 
-		emailAddress.setUserName(randomString());
+		emailAddress.setUserName(ServiceTestUtil.randomString());
 
-		emailAddress.setCreateDate(nextDate());
+		emailAddress.setCreateDate(ServiceTestUtil.nextDate());
 
-		emailAddress.setModifiedDate(nextDate());
+		emailAddress.setModifiedDate(ServiceTestUtil.nextDate());
 
-		emailAddress.setClassNameId(nextLong());
+		emailAddress.setClassNameId(ServiceTestUtil.nextLong());
 
-		emailAddress.setClassPK(nextLong());
+		emailAddress.setClassPK(ServiceTestUtil.nextLong());
 
-		emailAddress.setAddress(randomString());
+		emailAddress.setAddress(ServiceTestUtil.randomString());
 
-		emailAddress.setTypeId(nextInt());
+		emailAddress.setTypeId(ServiceTestUtil.nextInt());
 
-		emailAddress.setPrimary(randomBoolean());
+		emailAddress.setPrimary(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(emailAddress, false);
 

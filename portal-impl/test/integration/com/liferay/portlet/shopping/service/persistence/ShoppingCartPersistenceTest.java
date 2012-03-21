@@ -20,36 +20,48 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.shopping.NoSuchCartException;
 import com.liferay.portlet.shopping.model.ShoppingCart;
 import com.liferay.portlet.shopping.model.impl.ShoppingCartModelImpl;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class ShoppingCartPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class ShoppingCartPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (ShoppingCartPersistence)PortalBeanLocatorUtil.locate(ShoppingCartPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ShoppingCart shoppingCart = _persistence.create(pk);
 
-		assertNotNull(shoppingCart);
+		Assert.assertNotNull(shoppingCart);
 
-		assertEquals(shoppingCart.getPrimaryKey(), pk);
+		Assert.assertEquals(shoppingCart.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		ShoppingCart newShoppingCart = addShoppingCart();
 
@@ -57,104 +69,111 @@ public class ShoppingCartPersistenceTest extends BasePersistenceTestCase {
 
 		ShoppingCart existingShoppingCart = _persistence.fetchByPrimaryKey(newShoppingCart.getPrimaryKey());
 
-		assertNull(existingShoppingCart);
+		Assert.assertNull(existingShoppingCart);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addShoppingCart();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ShoppingCart newShoppingCart = _persistence.create(pk);
 
-		newShoppingCart.setGroupId(nextLong());
+		newShoppingCart.setGroupId(ServiceTestUtil.nextLong());
 
-		newShoppingCart.setCompanyId(nextLong());
+		newShoppingCart.setCompanyId(ServiceTestUtil.nextLong());
 
-		newShoppingCart.setUserId(nextLong());
+		newShoppingCart.setUserId(ServiceTestUtil.nextLong());
 
-		newShoppingCart.setUserName(randomString());
+		newShoppingCart.setUserName(ServiceTestUtil.randomString());
 
-		newShoppingCart.setCreateDate(nextDate());
+		newShoppingCart.setCreateDate(ServiceTestUtil.nextDate());
 
-		newShoppingCart.setModifiedDate(nextDate());
+		newShoppingCart.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newShoppingCart.setItemIds(randomString());
+		newShoppingCart.setItemIds(ServiceTestUtil.randomString());
 
-		newShoppingCart.setCouponCodes(randomString());
+		newShoppingCart.setCouponCodes(ServiceTestUtil.randomString());
 
-		newShoppingCart.setAltShipping(nextInt());
+		newShoppingCart.setAltShipping(ServiceTestUtil.nextInt());
 
-		newShoppingCart.setInsure(randomBoolean());
+		newShoppingCart.setInsure(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(newShoppingCart, false);
 
 		ShoppingCart existingShoppingCart = _persistence.findByPrimaryKey(newShoppingCart.getPrimaryKey());
 
-		assertEquals(existingShoppingCart.getCartId(),
+		Assert.assertEquals(existingShoppingCart.getCartId(),
 			newShoppingCart.getCartId());
-		assertEquals(existingShoppingCart.getGroupId(),
+		Assert.assertEquals(existingShoppingCart.getGroupId(),
 			newShoppingCart.getGroupId());
-		assertEquals(existingShoppingCart.getCompanyId(),
+		Assert.assertEquals(existingShoppingCart.getCompanyId(),
 			newShoppingCart.getCompanyId());
-		assertEquals(existingShoppingCart.getUserId(),
+		Assert.assertEquals(existingShoppingCart.getUserId(),
 			newShoppingCart.getUserId());
-		assertEquals(existingShoppingCart.getUserName(),
+		Assert.assertEquals(existingShoppingCart.getUserName(),
 			newShoppingCart.getUserName());
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingShoppingCart.getCreateDate()),
 			Time.getShortTimestamp(newShoppingCart.getCreateDate()));
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingShoppingCart.getModifiedDate()),
 			Time.getShortTimestamp(newShoppingCart.getModifiedDate()));
-		assertEquals(existingShoppingCart.getItemIds(),
+		Assert.assertEquals(existingShoppingCart.getItemIds(),
 			newShoppingCart.getItemIds());
-		assertEquals(existingShoppingCart.getCouponCodes(),
+		Assert.assertEquals(existingShoppingCart.getCouponCodes(),
 			newShoppingCart.getCouponCodes());
-		assertEquals(existingShoppingCart.getAltShipping(),
+		Assert.assertEquals(existingShoppingCart.getAltShipping(),
 			newShoppingCart.getAltShipping());
-		assertEquals(existingShoppingCart.getInsure(),
+		Assert.assertEquals(existingShoppingCart.getInsure(),
 			newShoppingCart.getInsure());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ShoppingCart newShoppingCart = addShoppingCart();
 
 		ShoppingCart existingShoppingCart = _persistence.findByPrimaryKey(newShoppingCart.getPrimaryKey());
 
-		assertEquals(existingShoppingCart, newShoppingCart);
+		Assert.assertEquals(existingShoppingCart, newShoppingCart);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchCartException");
+			Assert.fail("Missing entity did not throw NoSuchCartException");
 		}
 		catch (NoSuchCartException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		ShoppingCart newShoppingCart = addShoppingCart();
 
 		ShoppingCart existingShoppingCart = _persistence.fetchByPrimaryKey(newShoppingCart.getPrimaryKey());
 
-		assertEquals(existingShoppingCart, newShoppingCart);
+		Assert.assertEquals(existingShoppingCart, newShoppingCart);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ShoppingCart missingShoppingCart = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingShoppingCart);
+		Assert.assertNull(missingShoppingCart);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		ShoppingCart newShoppingCart = addShoppingCart();
@@ -167,24 +186,27 @@ public class ShoppingCartPersistenceTest extends BasePersistenceTestCase {
 
 		List<ShoppingCart> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		ShoppingCart existingShoppingCart = result.get(0);
 
-		assertEquals(existingShoppingCart, newShoppingCart);
+		Assert.assertEquals(existingShoppingCart, newShoppingCart);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ShoppingCart.class,
 				ShoppingCart.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("cartId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("cartId",
+				ServiceTestUtil.nextLong()));
 
 		List<ShoppingCart> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		ShoppingCart newShoppingCart = addShoppingCart();
@@ -201,13 +223,14 @@ public class ShoppingCartPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingCartId = result.get(0);
 
-		assertEquals(existingCartId, newCartId);
+		Assert.assertEquals(existingCartId, newCartId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ShoppingCart.class,
 				ShoppingCart.class.getClassLoader());
@@ -215,13 +238,14 @@ public class ShoppingCartPersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("cartId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("cartId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -233,36 +257,36 @@ public class ShoppingCartPersistenceTest extends BasePersistenceTestCase {
 
 		ShoppingCartModelImpl existingShoppingCartModelImpl = (ShoppingCartModelImpl)_persistence.findByPrimaryKey(newShoppingCart.getPrimaryKey());
 
-		assertEquals(existingShoppingCartModelImpl.getGroupId(),
+		Assert.assertEquals(existingShoppingCartModelImpl.getGroupId(),
 			existingShoppingCartModelImpl.getOriginalGroupId());
-		assertEquals(existingShoppingCartModelImpl.getUserId(),
+		Assert.assertEquals(existingShoppingCartModelImpl.getUserId(),
 			existingShoppingCartModelImpl.getOriginalUserId());
 	}
 
 	protected ShoppingCart addShoppingCart() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ShoppingCart shoppingCart = _persistence.create(pk);
 
-		shoppingCart.setGroupId(nextLong());
+		shoppingCart.setGroupId(ServiceTestUtil.nextLong());
 
-		shoppingCart.setCompanyId(nextLong());
+		shoppingCart.setCompanyId(ServiceTestUtil.nextLong());
 
-		shoppingCart.setUserId(nextLong());
+		shoppingCart.setUserId(ServiceTestUtil.nextLong());
 
-		shoppingCart.setUserName(randomString());
+		shoppingCart.setUserName(ServiceTestUtil.randomString());
 
-		shoppingCart.setCreateDate(nextDate());
+		shoppingCart.setCreateDate(ServiceTestUtil.nextDate());
 
-		shoppingCart.setModifiedDate(nextDate());
+		shoppingCart.setModifiedDate(ServiceTestUtil.nextDate());
 
-		shoppingCart.setItemIds(randomString());
+		shoppingCart.setItemIds(ServiceTestUtil.randomString());
 
-		shoppingCart.setCouponCodes(randomString());
+		shoppingCart.setCouponCodes(ServiceTestUtil.randomString());
 
-		shoppingCart.setAltShipping(nextInt());
+		shoppingCart.setAltShipping(ServiceTestUtil.nextInt());
 
-		shoppingCart.setInsure(randomBoolean());
+		shoppingCart.setInsure(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(shoppingCart, false);
 

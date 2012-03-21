@@ -23,32 +23,44 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Shard;
 import com.liferay.portal.model.impl.ShardModelImpl;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class ShardPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class ShardPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (ShardPersistence)PortalBeanLocatorUtil.locate(ShardPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Shard shard = _persistence.create(pk);
 
-		assertNotNull(shard);
+		Assert.assertNotNull(shard);
 
-		assertEquals(shard.getPrimaryKey(), pk);
+		Assert.assertEquals(shard.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		Shard newShard = addShard();
 
@@ -56,70 +68,78 @@ public class ShardPersistenceTest extends BasePersistenceTestCase {
 
 		Shard existingShard = _persistence.fetchByPrimaryKey(newShard.getPrimaryKey());
 
-		assertNull(existingShard);
+		Assert.assertNull(existingShard);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addShard();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Shard newShard = _persistence.create(pk);
 
-		newShard.setClassNameId(nextLong());
+		newShard.setClassNameId(ServiceTestUtil.nextLong());
 
-		newShard.setClassPK(nextLong());
+		newShard.setClassPK(ServiceTestUtil.nextLong());
 
-		newShard.setName(randomString());
+		newShard.setName(ServiceTestUtil.randomString());
 
 		_persistence.update(newShard, false);
 
 		Shard existingShard = _persistence.findByPrimaryKey(newShard.getPrimaryKey());
 
-		assertEquals(existingShard.getShardId(), newShard.getShardId());
-		assertEquals(existingShard.getClassNameId(), newShard.getClassNameId());
-		assertEquals(existingShard.getClassPK(), newShard.getClassPK());
-		assertEquals(existingShard.getName(), newShard.getName());
+		Assert.assertEquals(existingShard.getShardId(), newShard.getShardId());
+		Assert.assertEquals(existingShard.getClassNameId(),
+			newShard.getClassNameId());
+		Assert.assertEquals(existingShard.getClassPK(), newShard.getClassPK());
+		Assert.assertEquals(existingShard.getName(), newShard.getName());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Shard newShard = addShard();
 
 		Shard existingShard = _persistence.findByPrimaryKey(newShard.getPrimaryKey());
 
-		assertEquals(existingShard, newShard);
+		Assert.assertEquals(existingShard, newShard);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchShardException");
+			Assert.fail("Missing entity did not throw NoSuchShardException");
 		}
 		catch (NoSuchShardException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		Shard newShard = addShard();
 
 		Shard existingShard = _persistence.fetchByPrimaryKey(newShard.getPrimaryKey());
 
-		assertEquals(existingShard, newShard);
+		Assert.assertEquals(existingShard, newShard);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Shard missingShard = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingShard);
+		Assert.assertNull(missingShard);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		Shard newShard = addShard();
@@ -132,24 +152,27 @@ public class ShardPersistenceTest extends BasePersistenceTestCase {
 
 		List<Shard> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Shard existingShard = result.get(0);
 
-		assertEquals(existingShard, newShard);
+		Assert.assertEquals(existingShard, newShard);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Shard.class,
 				Shard.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("shardId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("shardId",
+				ServiceTestUtil.nextLong()));
 
 		List<Shard> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		Shard newShard = addShard();
@@ -166,13 +189,14 @@ public class ShardPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingShardId = result.get(0);
 
-		assertEquals(existingShardId, newShardId);
+		Assert.assertEquals(existingShardId, newShardId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Shard.class,
 				Shard.class.getClassLoader());
@@ -180,13 +204,14 @@ public class ShardPersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("shardId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("shardId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -198,25 +223,25 @@ public class ShardPersistenceTest extends BasePersistenceTestCase {
 
 		ShardModelImpl existingShardModelImpl = (ShardModelImpl)_persistence.findByPrimaryKey(newShard.getPrimaryKey());
 
-		assertTrue(Validator.equals(existingShardModelImpl.getName(),
+		Assert.assertTrue(Validator.equals(existingShardModelImpl.getName(),
 				existingShardModelImpl.getOriginalName()));
 
-		assertEquals(existingShardModelImpl.getClassNameId(),
+		Assert.assertEquals(existingShardModelImpl.getClassNameId(),
 			existingShardModelImpl.getOriginalClassNameId());
-		assertEquals(existingShardModelImpl.getClassPK(),
+		Assert.assertEquals(existingShardModelImpl.getClassPK(),
 			existingShardModelImpl.getOriginalClassPK());
 	}
 
 	protected Shard addShard() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Shard shard = _persistence.create(pk);
 
-		shard.setClassNameId(nextLong());
+		shard.setClassNameId(ServiceTestUtil.nextLong());
 
-		shard.setClassPK(nextLong());
+		shard.setClassPK(ServiceTestUtil.nextLong());
 
-		shard.setName(randomString());
+		shard.setName(ServiceTestUtil.randomString());
 
 		_persistence.update(shard, false);
 

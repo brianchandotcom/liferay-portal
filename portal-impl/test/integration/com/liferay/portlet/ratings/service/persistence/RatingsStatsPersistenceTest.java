@@ -19,36 +19,49 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.assertion.AssertUtils;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.ratings.NoSuchStatsException;
 import com.liferay.portlet.ratings.model.RatingsStats;
 import com.liferay.portlet.ratings.model.impl.RatingsStatsModelImpl;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class RatingsStatsPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class RatingsStatsPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (RatingsStatsPersistence)PortalBeanLocatorUtil.locate(RatingsStatsPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		RatingsStats ratingsStats = _persistence.create(pk);
 
-		assertNotNull(ratingsStats);
+		Assert.assertNotNull(ratingsStats);
 
-		assertEquals(ratingsStats.getPrimaryKey(), pk);
+		Assert.assertEquals(ratingsStats.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		RatingsStats newRatingsStats = addRatingsStats();
 
@@ -56,82 +69,89 @@ public class RatingsStatsPersistenceTest extends BasePersistenceTestCase {
 
 		RatingsStats existingRatingsStats = _persistence.fetchByPrimaryKey(newRatingsStats.getPrimaryKey());
 
-		assertNull(existingRatingsStats);
+		Assert.assertNull(existingRatingsStats);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addRatingsStats();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		RatingsStats newRatingsStats = _persistence.create(pk);
 
-		newRatingsStats.setClassNameId(nextLong());
+		newRatingsStats.setClassNameId(ServiceTestUtil.nextLong());
 
-		newRatingsStats.setClassPK(nextLong());
+		newRatingsStats.setClassPK(ServiceTestUtil.nextLong());
 
-		newRatingsStats.setTotalEntries(nextInt());
+		newRatingsStats.setTotalEntries(ServiceTestUtil.nextInt());
 
-		newRatingsStats.setTotalScore(nextDouble());
+		newRatingsStats.setTotalScore(ServiceTestUtil.nextDouble());
 
-		newRatingsStats.setAverageScore(nextDouble());
+		newRatingsStats.setAverageScore(ServiceTestUtil.nextDouble());
 
 		_persistence.update(newRatingsStats, false);
 
 		RatingsStats existingRatingsStats = _persistence.findByPrimaryKey(newRatingsStats.getPrimaryKey());
 
-		assertEquals(existingRatingsStats.getStatsId(),
+		Assert.assertEquals(existingRatingsStats.getStatsId(),
 			newRatingsStats.getStatsId());
-		assertEquals(existingRatingsStats.getClassNameId(),
+		Assert.assertEquals(existingRatingsStats.getClassNameId(),
 			newRatingsStats.getClassNameId());
-		assertEquals(existingRatingsStats.getClassPK(),
+		Assert.assertEquals(existingRatingsStats.getClassPK(),
 			newRatingsStats.getClassPK());
-		assertEquals(existingRatingsStats.getTotalEntries(),
+		Assert.assertEquals(existingRatingsStats.getTotalEntries(),
 			newRatingsStats.getTotalEntries());
-		assertEquals(existingRatingsStats.getTotalScore(),
+		AssertUtils.assertEquals(existingRatingsStats.getTotalScore(),
 			newRatingsStats.getTotalScore());
-		assertEquals(existingRatingsStats.getAverageScore(),
+		AssertUtils.assertEquals(existingRatingsStats.getAverageScore(),
 			newRatingsStats.getAverageScore());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		RatingsStats newRatingsStats = addRatingsStats();
 
 		RatingsStats existingRatingsStats = _persistence.findByPrimaryKey(newRatingsStats.getPrimaryKey());
 
-		assertEquals(existingRatingsStats, newRatingsStats);
+		Assert.assertEquals(existingRatingsStats, newRatingsStats);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchStatsException");
+			Assert.fail("Missing entity did not throw NoSuchStatsException");
 		}
 		catch (NoSuchStatsException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		RatingsStats newRatingsStats = addRatingsStats();
 
 		RatingsStats existingRatingsStats = _persistence.fetchByPrimaryKey(newRatingsStats.getPrimaryKey());
 
-		assertEquals(existingRatingsStats, newRatingsStats);
+		Assert.assertEquals(existingRatingsStats, newRatingsStats);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		RatingsStats missingRatingsStats = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingRatingsStats);
+		Assert.assertNull(missingRatingsStats);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		RatingsStats newRatingsStats = addRatingsStats();
@@ -144,24 +164,27 @@ public class RatingsStatsPersistenceTest extends BasePersistenceTestCase {
 
 		List<RatingsStats> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		RatingsStats existingRatingsStats = result.get(0);
 
-		assertEquals(existingRatingsStats, newRatingsStats);
+		Assert.assertEquals(existingRatingsStats, newRatingsStats);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(RatingsStats.class,
 				RatingsStats.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("statsId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("statsId",
+				ServiceTestUtil.nextLong()));
 
 		List<RatingsStats> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		RatingsStats newRatingsStats = addRatingsStats();
@@ -178,13 +201,14 @@ public class RatingsStatsPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingStatsId = result.get(0);
 
-		assertEquals(existingStatsId, newStatsId);
+		Assert.assertEquals(existingStatsId, newStatsId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(RatingsStats.class,
 				RatingsStats.class.getClassLoader());
@@ -192,13 +216,14 @@ public class RatingsStatsPersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("statsId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("statsId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -210,26 +235,26 @@ public class RatingsStatsPersistenceTest extends BasePersistenceTestCase {
 
 		RatingsStatsModelImpl existingRatingsStatsModelImpl = (RatingsStatsModelImpl)_persistence.findByPrimaryKey(newRatingsStats.getPrimaryKey());
 
-		assertEquals(existingRatingsStatsModelImpl.getClassNameId(),
+		Assert.assertEquals(existingRatingsStatsModelImpl.getClassNameId(),
 			existingRatingsStatsModelImpl.getOriginalClassNameId());
-		assertEquals(existingRatingsStatsModelImpl.getClassPK(),
+		Assert.assertEquals(existingRatingsStatsModelImpl.getClassPK(),
 			existingRatingsStatsModelImpl.getOriginalClassPK());
 	}
 
 	protected RatingsStats addRatingsStats() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		RatingsStats ratingsStats = _persistence.create(pk);
 
-		ratingsStats.setClassNameId(nextLong());
+		ratingsStats.setClassNameId(ServiceTestUtil.nextLong());
 
-		ratingsStats.setClassPK(nextLong());
+		ratingsStats.setClassPK(ServiceTestUtil.nextLong());
 
-		ratingsStats.setTotalEntries(nextInt());
+		ratingsStats.setTotalEntries(ServiceTestUtil.nextInt());
 
-		ratingsStats.setTotalScore(nextDouble());
+		ratingsStats.setTotalScore(ServiceTestUtil.nextDouble());
 
-		ratingsStats.setAverageScore(nextDouble());
+		ratingsStats.setAverageScore(ServiceTestUtil.nextDouble());
 
 		_persistence.update(ratingsStats, false);
 

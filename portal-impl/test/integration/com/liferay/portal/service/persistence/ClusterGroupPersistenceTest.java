@@ -21,31 +21,43 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.model.ClusterGroup;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class ClusterGroupPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class ClusterGroupPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (ClusterGroupPersistence)PortalBeanLocatorUtil.locate(ClusterGroupPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ClusterGroup clusterGroup = _persistence.create(pk);
 
-		assertNotNull(clusterGroup);
+		Assert.assertNotNull(clusterGroup);
 
-		assertEquals(clusterGroup.getPrimaryKey(), pk);
+		Assert.assertEquals(clusterGroup.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		ClusterGroup newClusterGroup = addClusterGroup();
 
@@ -53,73 +65,82 @@ public class ClusterGroupPersistenceTest extends BasePersistenceTestCase {
 
 		ClusterGroup existingClusterGroup = _persistence.fetchByPrimaryKey(newClusterGroup.getPrimaryKey());
 
-		assertNull(existingClusterGroup);
+		Assert.assertNull(existingClusterGroup);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addClusterGroup();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ClusterGroup newClusterGroup = _persistence.create(pk);
 
-		newClusterGroup.setName(randomString());
+		newClusterGroup.setName(ServiceTestUtil.randomString());
 
-		newClusterGroup.setClusterNodeIds(randomString());
+		newClusterGroup.setClusterNodeIds(ServiceTestUtil.randomString());
 
-		newClusterGroup.setWholeCluster(randomBoolean());
+		newClusterGroup.setWholeCluster(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(newClusterGroup, false);
 
 		ClusterGroup existingClusterGroup = _persistence.findByPrimaryKey(newClusterGroup.getPrimaryKey());
 
-		assertEquals(existingClusterGroup.getClusterGroupId(),
+		Assert.assertEquals(existingClusterGroup.getClusterGroupId(),
 			newClusterGroup.getClusterGroupId());
-		assertEquals(existingClusterGroup.getName(), newClusterGroup.getName());
-		assertEquals(existingClusterGroup.getClusterNodeIds(),
+		Assert.assertEquals(existingClusterGroup.getName(),
+			newClusterGroup.getName());
+		Assert.assertEquals(existingClusterGroup.getClusterNodeIds(),
 			newClusterGroup.getClusterNodeIds());
-		assertEquals(existingClusterGroup.getWholeCluster(),
+		Assert.assertEquals(existingClusterGroup.getWholeCluster(),
 			newClusterGroup.getWholeCluster());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ClusterGroup newClusterGroup = addClusterGroup();
 
 		ClusterGroup existingClusterGroup = _persistence.findByPrimaryKey(newClusterGroup.getPrimaryKey());
 
-		assertEquals(existingClusterGroup, newClusterGroup);
+		Assert.assertEquals(existingClusterGroup, newClusterGroup);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchClusterGroupException");
+			Assert.fail(
+				"Missing entity did not throw NoSuchClusterGroupException");
 		}
 		catch (NoSuchClusterGroupException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		ClusterGroup newClusterGroup = addClusterGroup();
 
 		ClusterGroup existingClusterGroup = _persistence.fetchByPrimaryKey(newClusterGroup.getPrimaryKey());
 
-		assertEquals(existingClusterGroup, newClusterGroup);
+		Assert.assertEquals(existingClusterGroup, newClusterGroup);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ClusterGroup missingClusterGroup = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingClusterGroup);
+		Assert.assertNull(missingClusterGroup);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		ClusterGroup newClusterGroup = addClusterGroup();
@@ -132,24 +153,27 @@ public class ClusterGroupPersistenceTest extends BasePersistenceTestCase {
 
 		List<ClusterGroup> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		ClusterGroup existingClusterGroup = result.get(0);
 
-		assertEquals(existingClusterGroup, newClusterGroup);
+		Assert.assertEquals(existingClusterGroup, newClusterGroup);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ClusterGroup.class,
 				ClusterGroup.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("clusterGroupId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("clusterGroupId",
+				ServiceTestUtil.nextLong()));
 
 		List<ClusterGroup> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		ClusterGroup newClusterGroup = addClusterGroup();
@@ -167,13 +191,14 @@ public class ClusterGroupPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingClusterGroupId = result.get(0);
 
-		assertEquals(existingClusterGroupId, newClusterGroupId);
+		Assert.assertEquals(existingClusterGroupId, newClusterGroupId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ClusterGroup.class,
 				ClusterGroup.class.getClassLoader());
@@ -182,23 +207,23 @@ public class ClusterGroupPersistenceTest extends BasePersistenceTestCase {
 				"clusterGroupId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("clusterGroupId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
 	protected ClusterGroup addClusterGroup() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ClusterGroup clusterGroup = _persistence.create(pk);
 
-		clusterGroup.setName(randomString());
+		clusterGroup.setName(ServiceTestUtil.randomString());
 
-		clusterGroup.setClusterNodeIds(randomString());
+		clusterGroup.setClusterNodeIds(ServiceTestUtil.randomString());
 
-		clusterGroup.setWholeCluster(randomBoolean());
+		clusterGroup.setWholeCluster(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(clusterGroup, false);
 

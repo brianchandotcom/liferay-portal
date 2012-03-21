@@ -22,31 +22,43 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.Phone;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class PhonePersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class PhonePersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (PhonePersistence)PortalBeanLocatorUtil.locate(PhonePersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Phone phone = _persistence.create(pk);
 
-		assertNotNull(phone);
+		Assert.assertNotNull(phone);
 
-		assertEquals(phone.getPrimaryKey(), pk);
+		Assert.assertEquals(phone.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		Phone newPhone = addPhone();
 
@@ -54,96 +66,108 @@ public class PhonePersistenceTest extends BasePersistenceTestCase {
 
 		Phone existingPhone = _persistence.fetchByPrimaryKey(newPhone.getPrimaryKey());
 
-		assertNull(existingPhone);
+		Assert.assertNull(existingPhone);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addPhone();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Phone newPhone = _persistence.create(pk);
 
-		newPhone.setCompanyId(nextLong());
+		newPhone.setCompanyId(ServiceTestUtil.nextLong());
 
-		newPhone.setUserId(nextLong());
+		newPhone.setUserId(ServiceTestUtil.nextLong());
 
-		newPhone.setUserName(randomString());
+		newPhone.setUserName(ServiceTestUtil.randomString());
 
-		newPhone.setCreateDate(nextDate());
+		newPhone.setCreateDate(ServiceTestUtil.nextDate());
 
-		newPhone.setModifiedDate(nextDate());
+		newPhone.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newPhone.setClassNameId(nextLong());
+		newPhone.setClassNameId(ServiceTestUtil.nextLong());
 
-		newPhone.setClassPK(nextLong());
+		newPhone.setClassPK(ServiceTestUtil.nextLong());
 
-		newPhone.setNumber(randomString());
+		newPhone.setNumber(ServiceTestUtil.randomString());
 
-		newPhone.setExtension(randomString());
+		newPhone.setExtension(ServiceTestUtil.randomString());
 
-		newPhone.setTypeId(nextInt());
+		newPhone.setTypeId(ServiceTestUtil.nextInt());
 
-		newPhone.setPrimary(randomBoolean());
+		newPhone.setPrimary(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(newPhone, false);
 
 		Phone existingPhone = _persistence.findByPrimaryKey(newPhone.getPrimaryKey());
 
-		assertEquals(existingPhone.getPhoneId(), newPhone.getPhoneId());
-		assertEquals(existingPhone.getCompanyId(), newPhone.getCompanyId());
-		assertEquals(existingPhone.getUserId(), newPhone.getUserId());
-		assertEquals(existingPhone.getUserName(), newPhone.getUserName());
-		assertEquals(Time.getShortTimestamp(existingPhone.getCreateDate()),
+		Assert.assertEquals(existingPhone.getPhoneId(), newPhone.getPhoneId());
+		Assert.assertEquals(existingPhone.getCompanyId(),
+			newPhone.getCompanyId());
+		Assert.assertEquals(existingPhone.getUserId(), newPhone.getUserId());
+		Assert.assertEquals(existingPhone.getUserName(), newPhone.getUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingPhone.getCreateDate()),
 			Time.getShortTimestamp(newPhone.getCreateDate()));
-		assertEquals(Time.getShortTimestamp(existingPhone.getModifiedDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingPhone.getModifiedDate()),
 			Time.getShortTimestamp(newPhone.getModifiedDate()));
-		assertEquals(existingPhone.getClassNameId(), newPhone.getClassNameId());
-		assertEquals(existingPhone.getClassPK(), newPhone.getClassPK());
-		assertEquals(existingPhone.getNumber(), newPhone.getNumber());
-		assertEquals(existingPhone.getExtension(), newPhone.getExtension());
-		assertEquals(existingPhone.getTypeId(), newPhone.getTypeId());
-		assertEquals(existingPhone.getPrimary(), newPhone.getPrimary());
+		Assert.assertEquals(existingPhone.getClassNameId(),
+			newPhone.getClassNameId());
+		Assert.assertEquals(existingPhone.getClassPK(), newPhone.getClassPK());
+		Assert.assertEquals(existingPhone.getNumber(), newPhone.getNumber());
+		Assert.assertEquals(existingPhone.getExtension(),
+			newPhone.getExtension());
+		Assert.assertEquals(existingPhone.getTypeId(), newPhone.getTypeId());
+		Assert.assertEquals(existingPhone.getPrimary(), newPhone.getPrimary());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Phone newPhone = addPhone();
 
 		Phone existingPhone = _persistence.findByPrimaryKey(newPhone.getPrimaryKey());
 
-		assertEquals(existingPhone, newPhone);
+		Assert.assertEquals(existingPhone, newPhone);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchPhoneException");
+			Assert.fail("Missing entity did not throw NoSuchPhoneException");
 		}
 		catch (NoSuchPhoneException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		Phone newPhone = addPhone();
 
 		Phone existingPhone = _persistence.fetchByPrimaryKey(newPhone.getPrimaryKey());
 
-		assertEquals(existingPhone, newPhone);
+		Assert.assertEquals(existingPhone, newPhone);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Phone missingPhone = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingPhone);
+		Assert.assertNull(missingPhone);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		Phone newPhone = addPhone();
@@ -156,24 +180,27 @@ public class PhonePersistenceTest extends BasePersistenceTestCase {
 
 		List<Phone> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Phone existingPhone = result.get(0);
 
-		assertEquals(existingPhone, newPhone);
+		Assert.assertEquals(existingPhone, newPhone);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Phone.class,
 				Phone.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("phoneId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("phoneId",
+				ServiceTestUtil.nextLong()));
 
 		List<Phone> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		Phone newPhone = addPhone();
@@ -190,13 +217,14 @@ public class PhonePersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingPhoneId = result.get(0);
 
-		assertEquals(existingPhoneId, newPhoneId);
+		Assert.assertEquals(existingPhoneId, newPhoneId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Phone.class,
 				Phone.class.getClassLoader());
@@ -204,39 +232,39 @@ public class PhonePersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("phoneId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("phoneId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
 	protected Phone addPhone() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Phone phone = _persistence.create(pk);
 
-		phone.setCompanyId(nextLong());
+		phone.setCompanyId(ServiceTestUtil.nextLong());
 
-		phone.setUserId(nextLong());
+		phone.setUserId(ServiceTestUtil.nextLong());
 
-		phone.setUserName(randomString());
+		phone.setUserName(ServiceTestUtil.randomString());
 
-		phone.setCreateDate(nextDate());
+		phone.setCreateDate(ServiceTestUtil.nextDate());
 
-		phone.setModifiedDate(nextDate());
+		phone.setModifiedDate(ServiceTestUtil.nextDate());
 
-		phone.setClassNameId(nextLong());
+		phone.setClassNameId(ServiceTestUtil.nextLong());
 
-		phone.setClassPK(nextLong());
+		phone.setClassPK(ServiceTestUtil.nextLong());
 
-		phone.setNumber(randomString());
+		phone.setNumber(ServiceTestUtil.randomString());
 
-		phone.setExtension(randomString());
+		phone.setExtension(ServiceTestUtil.randomString());
 
-		phone.setTypeId(nextInt());
+		phone.setTypeId(ServiceTestUtil.nextInt());
 
-		phone.setPrimary(randomBoolean());
+		phone.setPrimary(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(phone, false);
 

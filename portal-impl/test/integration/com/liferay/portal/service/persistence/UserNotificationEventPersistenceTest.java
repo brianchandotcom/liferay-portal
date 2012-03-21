@@ -21,32 +21,43 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.model.UserNotificationEvent;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class UserNotificationEventPersistenceTest
-	extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class UserNotificationEventPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (UserNotificationEventPersistence)PortalBeanLocatorUtil.locate(UserNotificationEventPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		UserNotificationEvent userNotificationEvent = _persistence.create(pk);
 
-		assertNotNull(userNotificationEvent);
+		Assert.assertNotNull(userNotificationEvent);
 
-		assertEquals(userNotificationEvent.getPrimaryKey(), pk);
+		Assert.assertEquals(userNotificationEvent.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		UserNotificationEvent newUserNotificationEvent = addUserNotificationEvent();
 
@@ -54,95 +65,104 @@ public class UserNotificationEventPersistenceTest
 
 		UserNotificationEvent existingUserNotificationEvent = _persistence.fetchByPrimaryKey(newUserNotificationEvent.getPrimaryKey());
 
-		assertNull(existingUserNotificationEvent);
+		Assert.assertNull(existingUserNotificationEvent);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addUserNotificationEvent();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		UserNotificationEvent newUserNotificationEvent = _persistence.create(pk);
 
-		newUserNotificationEvent.setUuid(randomString());
+		newUserNotificationEvent.setUuid(ServiceTestUtil.randomString());
 
-		newUserNotificationEvent.setCompanyId(nextLong());
+		newUserNotificationEvent.setCompanyId(ServiceTestUtil.nextLong());
 
-		newUserNotificationEvent.setUserId(nextLong());
+		newUserNotificationEvent.setUserId(ServiceTestUtil.nextLong());
 
-		newUserNotificationEvent.setType(randomString());
+		newUserNotificationEvent.setType(ServiceTestUtil.randomString());
 
-		newUserNotificationEvent.setTimestamp(nextLong());
+		newUserNotificationEvent.setTimestamp(ServiceTestUtil.nextLong());
 
-		newUserNotificationEvent.setDeliverBy(nextLong());
+		newUserNotificationEvent.setDeliverBy(ServiceTestUtil.nextLong());
 
-		newUserNotificationEvent.setPayload(randomString());
+		newUserNotificationEvent.setPayload(ServiceTestUtil.randomString());
 
-		newUserNotificationEvent.setArchived(randomBoolean());
+		newUserNotificationEvent.setArchived(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(newUserNotificationEvent, false);
 
 		UserNotificationEvent existingUserNotificationEvent = _persistence.findByPrimaryKey(newUserNotificationEvent.getPrimaryKey());
 
-		assertEquals(existingUserNotificationEvent.getUuid(),
+		Assert.assertEquals(existingUserNotificationEvent.getUuid(),
 			newUserNotificationEvent.getUuid());
-		assertEquals(existingUserNotificationEvent.getUserNotificationEventId(),
+		Assert.assertEquals(existingUserNotificationEvent.getUserNotificationEventId(),
 			newUserNotificationEvent.getUserNotificationEventId());
-		assertEquals(existingUserNotificationEvent.getCompanyId(),
+		Assert.assertEquals(existingUserNotificationEvent.getCompanyId(),
 			newUserNotificationEvent.getCompanyId());
-		assertEquals(existingUserNotificationEvent.getUserId(),
+		Assert.assertEquals(existingUserNotificationEvent.getUserId(),
 			newUserNotificationEvent.getUserId());
-		assertEquals(existingUserNotificationEvent.getType(),
+		Assert.assertEquals(existingUserNotificationEvent.getType(),
 			newUserNotificationEvent.getType());
-		assertEquals(existingUserNotificationEvent.getTimestamp(),
+		Assert.assertEquals(existingUserNotificationEvent.getTimestamp(),
 			newUserNotificationEvent.getTimestamp());
-		assertEquals(existingUserNotificationEvent.getDeliverBy(),
+		Assert.assertEquals(existingUserNotificationEvent.getDeliverBy(),
 			newUserNotificationEvent.getDeliverBy());
-		assertEquals(existingUserNotificationEvent.getPayload(),
+		Assert.assertEquals(existingUserNotificationEvent.getPayload(),
 			newUserNotificationEvent.getPayload());
-		assertEquals(existingUserNotificationEvent.getArchived(),
+		Assert.assertEquals(existingUserNotificationEvent.getArchived(),
 			newUserNotificationEvent.getArchived());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		UserNotificationEvent newUserNotificationEvent = addUserNotificationEvent();
 
 		UserNotificationEvent existingUserNotificationEvent = _persistence.findByPrimaryKey(newUserNotificationEvent.getPrimaryKey());
 
-		assertEquals(existingUserNotificationEvent, newUserNotificationEvent);
+		Assert.assertEquals(existingUserNotificationEvent,
+			newUserNotificationEvent);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail(
+			Assert.fail(
 				"Missing entity did not throw NoSuchUserNotificationEventException");
 		}
 		catch (NoSuchUserNotificationEventException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		UserNotificationEvent newUserNotificationEvent = addUserNotificationEvent();
 
 		UserNotificationEvent existingUserNotificationEvent = _persistence.fetchByPrimaryKey(newUserNotificationEvent.getPrimaryKey());
 
-		assertEquals(existingUserNotificationEvent, newUserNotificationEvent);
+		Assert.assertEquals(existingUserNotificationEvent,
+			newUserNotificationEvent);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		UserNotificationEvent missingUserNotificationEvent = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingUserNotificationEvent);
+		Assert.assertNull(missingUserNotificationEvent);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		UserNotificationEvent newUserNotificationEvent = addUserNotificationEvent();
@@ -155,25 +175,28 @@ public class UserNotificationEventPersistenceTest
 
 		List<UserNotificationEvent> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		UserNotificationEvent existingUserNotificationEvent = result.get(0);
 
-		assertEquals(existingUserNotificationEvent, newUserNotificationEvent);
+		Assert.assertEquals(existingUserNotificationEvent,
+			newUserNotificationEvent);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserNotificationEvent.class,
 				UserNotificationEvent.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("userNotificationEventId",
-				nextLong()));
+				ServiceTestUtil.nextLong()));
 
 		List<UserNotificationEvent> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		UserNotificationEvent newUserNotificationEvent = addUserNotificationEvent();
@@ -191,13 +214,15 @@ public class UserNotificationEventPersistenceTest
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingUserNotificationEventId = result.get(0);
 
-		assertEquals(existingUserNotificationEventId, newUserNotificationEventId);
+		Assert.assertEquals(existingUserNotificationEventId,
+			newUserNotificationEventId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserNotificationEvent.class,
 				UserNotificationEvent.class.getClassLoader());
@@ -206,34 +231,34 @@ public class UserNotificationEventPersistenceTest
 				"userNotificationEventId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("userNotificationEventId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
 	protected UserNotificationEvent addUserNotificationEvent()
 		throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		UserNotificationEvent userNotificationEvent = _persistence.create(pk);
 
-		userNotificationEvent.setUuid(randomString());
+		userNotificationEvent.setUuid(ServiceTestUtil.randomString());
 
-		userNotificationEvent.setCompanyId(nextLong());
+		userNotificationEvent.setCompanyId(ServiceTestUtil.nextLong());
 
-		userNotificationEvent.setUserId(nextLong());
+		userNotificationEvent.setUserId(ServiceTestUtil.nextLong());
 
-		userNotificationEvent.setType(randomString());
+		userNotificationEvent.setType(ServiceTestUtil.randomString());
 
-		userNotificationEvent.setTimestamp(nextLong());
+		userNotificationEvent.setTimestamp(ServiceTestUtil.nextLong());
 
-		userNotificationEvent.setDeliverBy(nextLong());
+		userNotificationEvent.setDeliverBy(ServiceTestUtil.nextLong());
 
-		userNotificationEvent.setPayload(randomString());
+		userNotificationEvent.setPayload(ServiceTestUtil.randomString());
 
-		userNotificationEvent.setArchived(randomBoolean());
+		userNotificationEvent.setArchived(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(userNotificationEvent, false);
 

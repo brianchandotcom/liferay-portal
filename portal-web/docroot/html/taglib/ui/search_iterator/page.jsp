@@ -294,8 +294,10 @@ int sortColumnIndex = -1;
 			}
 
 			Map<String, Object> data = row.getData();
-			
+
 			String rowId = row.getId();
+
+			request.setAttribute("liferay-ui:search-container-row:rowId", id.concat(StringPool.UNDERLINE.concat(rowId)));
 		%>
 
 			<tr class="<%= rowClassName %>" <%= AUIUtil.buildData(data) %>>

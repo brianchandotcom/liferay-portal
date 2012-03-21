@@ -14,6 +14,8 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.taglib.util.IncludeTag;
@@ -139,7 +141,23 @@ public class IconTag extends IncludeTag {
 		String id = _id;
 
 		if (Validator.isNull(id)) {
-			id = PortalUtil.generateRandomKey(request, IconTag.class.getName());
+			id = (String)request.getAttribute(
+				"liferay-ui:search-container-row:rowId");
+
+			String message = _message;
+
+			if (Validator.isNull(message)) {
+				message = _image;
+			}
+
+			if (Validator.isNotNull(id) && Validator.isNotNull(message)) {
+				id = id.concat(StringPool.UNDERLINE.concat(
+					FriendlyURLNormalizerUtil.normalize(message)));
+			}
+			else {
+				id = PortalUtil.generateRandomKey(
+					request, IconTag.class.getName());
+			}
 		}
 
 		request.setAttribute("liferay-ui:icon:alt", _alt);

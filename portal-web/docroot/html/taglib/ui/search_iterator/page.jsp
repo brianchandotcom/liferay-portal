@@ -24,29 +24,6 @@ String type = (String)request.getAttribute("liferay-ui:search:type");
 
 String id = searchContainer.getId();
 
-if (Validator.isNull(id)) {
-	id = searchContainer.getClassName();
-
-	if (Validator.isNotNull(id)) {
-		String simpleClassName = id;
-
-		int pos = id.lastIndexOf(StringPool.PERIOD);
-
-		if (pos != -1) {
-			simpleClassName = id.substring(pos + 1);
-		}
-
-		String variableCasingSimpleClassName = TextFormatter.format(simpleClassName, TextFormatter.I);
-
-		id = TextFormatter.formatPlural(variableCasingSimpleClassName);
-	}
-	else {
-		id = PortalUtil.generateRandomKey(request, "taglib_search_container");
-	}
-
-	id = id.concat("SearchContainer");
-}
-
 int start = searchContainer.getStart();
 int end = searchContainer.getEnd();
 int total = searchContainer.getTotal();
@@ -90,7 +67,7 @@ int sortColumnIndex = -1;
 <div class="lfr-search-container <%= resultRows.isEmpty() ? "aui-helper-hidden" : StringPool.BLANK %>">
 	<c:if test="<%= PropsValues.SEARCH_CONTAINER_SHOW_PAGINATION_TOP && (resultRows.size() > 10) && paginate %>">
 		<div class="taglib-search-iterator-page-iterator-top">
-			<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" type="<%= type %>" />
+			<liferay-ui:search-paginator id='<%= id + "PageIteratorTop" %>' searchContainer="<%= searchContainer %>" type="<%= type %>" />
 		</div>
 	</c:if>
 
@@ -343,7 +320,7 @@ int sortColumnIndex = -1;
 
 	<c:if test="<%= PropsValues.SEARCH_CONTAINER_SHOW_PAGINATION_BOTTOM && paginate %>">
 		<div class="taglib-search-iterator-page-iterator-bottom">
-			<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" type="<%= type %>" />
+			<liferay-ui:search-paginator id='<%= id + "PageIteratorBottom" %>' searchContainer="<%= searchContainer %>" type="<%= type %>" />
 		</div>
 	</c:if>
 </div>

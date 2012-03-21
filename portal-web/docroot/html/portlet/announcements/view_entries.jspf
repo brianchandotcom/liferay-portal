@@ -34,7 +34,7 @@ boolean hasResults = total > 0;
 %>
 
 <c:if test="<%= hasResults %>">
-	<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" type="article" />
+	<liferay-ui:search-paginator id="pageIteratorTop" searchContainer="<%= searchContainer %>" type="article" />
 </c:if>
 
 <%
@@ -52,7 +52,7 @@ hasResults = hasResults || (total > 0);
 %>
 
 <c:if test="<%= total > 0 %>">
-	<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" type="article" />
+	<liferay-ui:search-paginator id="pageIteratorBottom" searchContainer="<%= searchContainer %>" type="article" />
 </c:if>
 
 <aui:script>

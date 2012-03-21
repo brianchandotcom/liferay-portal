@@ -21,6 +21,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class SearchPaginatorTag<R> extends SearchFormTag<R> {
 
+	public void setId(String id) {
+		_id = id;
+	}
+
 	public void setType(String type) {
 		_type = type;
 	}
@@ -41,12 +45,14 @@ public class SearchPaginatorTag<R> extends SearchFormTag<R> {
 	protected void setAttributes(HttpServletRequest request) {
 		super.setAttributes(request);
 
+		request.setAttribute("liferay-ui:search:id", _id);
 		request.setAttribute("liferay-ui:search:type", _type);
 	}
 
 	private static final String _PAGE =
 		"/html/taglib/ui/search_paginator/page.jsp";
 
+	private String _id;
 	private String _type = "regular";
 
 }

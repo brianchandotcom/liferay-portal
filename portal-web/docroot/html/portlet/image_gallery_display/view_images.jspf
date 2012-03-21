@@ -22,7 +22,7 @@
 	</c:when>
 	<c:otherwise>
 		<div class="taglib-search-iterator-page-iterator-top">
-			<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" type="more" />
+			<liferay-ui:search-paginator id="pageIteratorTop" searchContainer="<%= searchContainer %>" />
 		</div>
 	</c:otherwise>
 </c:choose>
@@ -200,7 +200,7 @@
 
 <c:if test="<%= !results.isEmpty() %>">
 	<div class="taglib-search-iterator-page-iterator-bottom">
-		<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" />
+		<liferay-ui:search-paginator id="pageIteratorBottom" searchContainer="<%= searchContainer %>" />
 	</div>
 </c:if>
 

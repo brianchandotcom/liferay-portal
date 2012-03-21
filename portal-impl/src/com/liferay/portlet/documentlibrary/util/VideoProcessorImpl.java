@@ -363,30 +363,20 @@ public class VideoProcessorImpl
 	}
 
 	private void _generateVideo(FileVersion fileVersion) throws Exception {
-		String tempFileId = DLUtil.getTempFileId(
-			fileVersion.getFileEntryId(), fileVersion.getVersion());
+		if (!PrefsPropsUtil.getBoolean(
+				PropsKeys.XUGGLER_ENABLED, PropsValues.XUGGLER_ENABLED) ||
+			_hasVideo(fileVersion)) {
 
-		File[] previewTempFiles = new File[_PREVIEW_TYPES.length];
-
-		for (int i = 0; i < _PREVIEW_TYPES.length; i++) {
-			previewTempFiles[i] = getPreviewTempFile(
-				tempFileId, _PREVIEW_TYPES[i]);
+			return;
 		}
-
-		File videoTempFile = null;
 
 		InputStream inputStream = null;
 
+		File[] previewTempFiles = new File[_PREVIEW_TYPES.length];
+
+		File videoTempFile = null;
+
 		try {
-			videoTempFile = FileUtil.createTempFile(fileVersion.getExtension());
-
-			if (!PrefsPropsUtil.getBoolean(
-					PropsKeys.XUGGLER_ENABLED, PropsValues.XUGGLER_ENABLED) ||
-				_hasVideo(fileVersion)) {
-
-				return;
-			}
-
 			File file = null;
 
 			if (!hasPreviews(fileVersion) || !hasThumbnails(fileVersion)) {
@@ -404,6 +394,9 @@ public class VideoProcessorImpl
 				if (file == null) {
 					inputStream = fileVersion.getContentStream(false);
 
+					videoTempFile = FileUtil.createTempFile(
+						fileVersion.getExtension());
+
 					FileUtil.write(videoTempFile, inputStream);
 
 					file = videoTempFile;
@@ -411,6 +404,14 @@ public class VideoProcessorImpl
 			}
 
 			if (!hasPreviews(fileVersion)) {
+				String tempFileId = DLUtil.getTempFileId(
+					fileVersion.getFileEntryId(), fileVersion.getVersion());
+
+				for (int i = 0; i < _PREVIEW_TYPES.length; i++) {
+					previewTempFiles[i] = getPreviewTempFile(
+						tempFileId, _PREVIEW_TYPES[i]);
+				}
+
 				try {
 					_generateVideoXuggler(
 						fileVersion, file, previewTempFiles,

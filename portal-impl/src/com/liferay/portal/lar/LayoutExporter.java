@@ -334,9 +334,9 @@ public class LayoutExporter {
 				String path = getLayoutSetPrototype(
 					portletDataContext, layoutSetPrototypeUuid);
 
-				File layoutSetPrototypeFile = null;
-
 				InputStream inputStream = null;
+
+				File layoutSetPrototypeFile = null;
 
 				try {
 					layoutSetPrototypeFile = SitesUtil.exportLayoutSetPrototype(
@@ -352,9 +352,7 @@ public class LayoutExporter {
 				finally {
 					StreamUtil.cleanUp(inputStream);
 
-					if (layoutSetPrototypeFile != null) {
-						layoutSetPrototypeFile.delete();
-					}
+					FileUtil.delete(layoutSetPrototypeFile);
 				}
 			}
 		}

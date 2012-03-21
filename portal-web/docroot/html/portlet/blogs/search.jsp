@@ -54,6 +54,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 		SearchContext searchContext = SearchContextFactory.getInstance(request);
 
+		searchContext.setAttribute("paginationType", "regular");
 		searchContext.setEnd(searchContainer.getEnd());
 		searchContext.setKeywords(keywords);
 		searchContext.setStart(searchContainer.getStart());

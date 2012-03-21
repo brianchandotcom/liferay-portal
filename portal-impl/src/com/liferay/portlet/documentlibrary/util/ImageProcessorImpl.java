@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -238,6 +239,8 @@ public class ImageProcessorImpl
 	}
 
 	private void _generateImages(FileVersion fileVersion) {
+		InputStream inputStream = null;
+
 		try {
 			if (!PropsValues.DL_FILE_ENTRY_THUMBNAIL_ENABLED &&
 				!PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED) {
@@ -245,7 +248,7 @@ public class ImageProcessorImpl
 				return;
 			}
 
-			InputStream inputStream = fileVersion.getContentStream(false);
+			inputStream = fileVersion.getContentStream(false);
 
 			byte[] bytes = FileUtil.getBytes(inputStream);
 
@@ -271,6 +274,8 @@ public class ImageProcessorImpl
 			_log.error(e, e);
 		}
 		finally {
+			StreamUtil.cleanUp(inputStream);
+
 			_fileVersionIds.remove(fileVersion.getFileVersionId());
 		}
 	}
@@ -357,9 +362,11 @@ public class ImageProcessorImpl
 
 		String type = getPreviewType(fileVersion);
 
-		File file = FileUtil.createTempFile(type);
+		File file = null;
 
 		try {
+			file = FileUtil.createTempFile(type);
+
 			FileOutputStream fos = new FileOutputStream(file);
 
 			try {

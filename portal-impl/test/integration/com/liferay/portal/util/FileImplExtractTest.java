@@ -15,53 +15,68 @@
 package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.test.EnvironmentConfigTestListener;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 
 import java.io.InputStream;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Igor Spasic
  * @see    MimeTypesImplTest
  */
-public class FileImplExtractTest extends BaseTestCase {
+@ExecutionTestListeners(listeners = {EnvironmentConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class FileImplExtractTest {
 
+	@Test
 	public void testDoc() {
 		String text = extractText("test.doc");
 
-		assertEquals("Extract test.", text);
+		Assert.assertEquals("Extract test.", text);
 	}
 
+	@Test
 	public void testDocx() {
 		String text = extractText("test-2007.docx");
 
-		assertEquals("Extract test.", text);
+		Assert.assertEquals("Extract test.", text);
 
 		text = extractText("test-2010.docx");
 
-		assertEquals("Extract test.", text);
+		Assert.assertEquals("Extract test.", text);
 	}
 
+	@Test
 	public void testHtml() {
 		String text = extractText("test.html");
 
-		assertEquals("Extract test.", text);
+		Assert.assertEquals("Extract test.", text);
 	}
 
+	@Test
 	public void testJpg() {
 		String text = extractText("test.jpg");
 
-		assertEquals("", text);
+		Assert.assertEquals("", text);
 	}
 
+	@Test
 	public void testOdt() {
 		String text = extractText("test.odt");
 
-		assertEquals("Extract test.", text);
+		Assert.assertEquals("Extract test.", text);
 	}
 
+	@Test
 	public void testPdf() {
 		String text = extractText("test-2010.pdf");
 
-		assertEquals("Extract test.", text);
+		Assert.assertEquals("Extract test.", text);
 
 		// PDFBOX-890
 
@@ -70,46 +85,53 @@ public class FileImplExtractTest extends BaseTestCase {
 		//assertEquals("Extract test.", text);
 	}
 
+	@Test
 	public void testPpt() {
 		String text = extractText("test.ppt");
 
-		assertEquals("Extract test.", text);
+		Assert.assertEquals("Extract test.", text);
 	}
 
+	@Test
 	public void testPptx() {
 		String text = extractText("test-2010.pptx");
 
-		assertEquals("Extract test.", text);
+		Assert.assertEquals("Extract test.", text);
 	}
 
+	@Test
 	public void testRtf() {
 		String text = extractText("test.rtf");
 
-		assertEquals("Extract  test.", text);
+		Assert.assertEquals("Extract  test.", text);
 	}
 
+	@Test
 	public void testTxt() {
 		String text = extractText("test.txt");
 
-		assertEquals("Extract test.", text);
+		Assert.assertEquals("Extract test.", text);
 	}
 
+	@Test
 	public void testXls() {
 		String text = extractText("test.xls");
 
-		assertEquals("Sheet1\n\tExtract test.", text);
+		Assert.assertEquals("Sheet1\n\tExtract test.", text);
 	}
 
+	@Test
 	public void testXlsx() {
 		String text = extractText("test-2010.xlsx");
 
-		assertEquals("Sheet1\n\tExtract test.", text);
+		Assert.assertEquals("Sheet1\n\tExtract test.", text);
 	}
 
+	@Test
 	public void testXml() {
 		String text = extractText("test.xml");
 
-		assertEquals("<test>Extract test.</test>", text);
+		Assert.assertEquals("<test>Extract test.</test>", text);
 	}
 
 	protected String extractText(String fileName) {

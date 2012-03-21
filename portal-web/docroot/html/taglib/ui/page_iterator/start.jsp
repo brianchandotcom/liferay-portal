@@ -36,7 +36,7 @@ int pages = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:page-
 if (Validator.isNull(id)) {
 	id = PortalUtil.generateRandomKey(request, "taglib-page-iterator");
 }
-	
+
 int start = (cur - 1) * delta;
 int end = cur * delta;
 

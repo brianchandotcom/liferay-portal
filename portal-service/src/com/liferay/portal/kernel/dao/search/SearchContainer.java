@@ -213,7 +213,8 @@ public class SearchContainer<R> {
 				simpleClassName = simpleClassName.substring(pos + 1);
 			}
 
-			String variableCasingSimpleClassName = TextFormatter.format(simpleClassName, TextFormatter.I);
+			String variableCasingSimpleClassName = TextFormatter.format(
+				simpleClassName, TextFormatter.I);
 
 			id = TextFormatter.formatPlural(variableCasingSimpleClassName);
 		}

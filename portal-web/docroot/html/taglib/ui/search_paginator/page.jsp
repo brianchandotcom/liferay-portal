@@ -21,12 +21,12 @@ SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay
 
 String id = (String)request.getAttribute("liferay-ui:search:id");
 
-if (Validator.isNull(id) && searchContainer != null) {
+if (Validator.isNull(id) && (searchContainer != null)) {
 	id = searchContainer.getId();
 
 	id = id.concat("PageIterator");
 }
-	
+
 String type = (String)request.getAttribute("liferay-ui:search:type");
 
 PortletURL iteratorURL = searchContainer.getIteratorURL();

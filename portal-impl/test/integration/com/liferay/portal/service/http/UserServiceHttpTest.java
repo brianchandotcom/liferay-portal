@@ -18,20 +18,31 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.EnvironmentConfigTestListener;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.TestPropsValues;
 
 import java.util.Calendar;
 import java.util.Locale;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
 /**
  * @author Brian Wing Shun Chan
  */
+@ExecutionTestListeners(listeners = {EnvironmentConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class UserServiceHttpTest extends BaseServiceHttpTestCase {
 
+	@Test
 	public void testAddUser() throws Exception {
 		addUser();
 	}
 
+	@Test
 	public void testDeleteUser() throws Exception {
 		User user = addUser();
 
@@ -39,6 +50,7 @@ public class UserServiceHttpTest extends BaseServiceHttpTestCase {
 			getHttpPrincipal(TestPropsValues.getUserId()), user.getUserId());
 	}
 
+	@Test
 	public void testGetUser() throws Exception {
 		User user = addUser();
 
@@ -54,7 +66,8 @@ public class UserServiceHttpTest extends BaseServiceHttpTestCase {
 		boolean autoScreenName = true;
 		String screenName = StringPool.BLANK;
 		String emailAddress =
-			"UserServiceHttpTest." + nextLong() + "@liferay.com";
+			"UserServiceHttpTest." + ServiceTestUtil.nextLong() +
+				"@liferay.com";
 		long facebookId = 0;
 		String openId = StringPool.BLANK;
 		Locale locale = LocaleUtil.getDefault();

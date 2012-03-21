@@ -23,32 +23,44 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.model.impl.RepositoryEntryModelImpl;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class RepositoryEntryPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class RepositoryEntryPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (RepositoryEntryPersistence)PortalBeanLocatorUtil.locate(RepositoryEntryPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		RepositoryEntry repositoryEntry = _persistence.create(pk);
 
-		assertNotNull(repositoryEntry);
+		Assert.assertNotNull(repositoryEntry);
 
-		assertEquals(repositoryEntry.getPrimaryKey(), pk);
+		Assert.assertEquals(repositoryEntry.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		RepositoryEntry newRepositoryEntry = addRepositoryEntry();
 
@@ -56,78 +68,86 @@ public class RepositoryEntryPersistenceTest extends BasePersistenceTestCase {
 
 		RepositoryEntry existingRepositoryEntry = _persistence.fetchByPrimaryKey(newRepositoryEntry.getPrimaryKey());
 
-		assertNull(existingRepositoryEntry);
+		Assert.assertNull(existingRepositoryEntry);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addRepositoryEntry();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		RepositoryEntry newRepositoryEntry = _persistence.create(pk);
 
-		newRepositoryEntry.setUuid(randomString());
+		newRepositoryEntry.setUuid(ServiceTestUtil.randomString());
 
-		newRepositoryEntry.setGroupId(nextLong());
+		newRepositoryEntry.setGroupId(ServiceTestUtil.nextLong());
 
-		newRepositoryEntry.setRepositoryId(nextLong());
+		newRepositoryEntry.setRepositoryId(ServiceTestUtil.nextLong());
 
-		newRepositoryEntry.setMappedId(randomString());
+		newRepositoryEntry.setMappedId(ServiceTestUtil.randomString());
 
 		_persistence.update(newRepositoryEntry, false);
 
 		RepositoryEntry existingRepositoryEntry = _persistence.findByPrimaryKey(newRepositoryEntry.getPrimaryKey());
 
-		assertEquals(existingRepositoryEntry.getUuid(),
+		Assert.assertEquals(existingRepositoryEntry.getUuid(),
 			newRepositoryEntry.getUuid());
-		assertEquals(existingRepositoryEntry.getRepositoryEntryId(),
+		Assert.assertEquals(existingRepositoryEntry.getRepositoryEntryId(),
 			newRepositoryEntry.getRepositoryEntryId());
-		assertEquals(existingRepositoryEntry.getGroupId(),
+		Assert.assertEquals(existingRepositoryEntry.getGroupId(),
 			newRepositoryEntry.getGroupId());
-		assertEquals(existingRepositoryEntry.getRepositoryId(),
+		Assert.assertEquals(existingRepositoryEntry.getRepositoryId(),
 			newRepositoryEntry.getRepositoryId());
-		assertEquals(existingRepositoryEntry.getMappedId(),
+		Assert.assertEquals(existingRepositoryEntry.getMappedId(),
 			newRepositoryEntry.getMappedId());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		RepositoryEntry newRepositoryEntry = addRepositoryEntry();
 
 		RepositoryEntry existingRepositoryEntry = _persistence.findByPrimaryKey(newRepositoryEntry.getPrimaryKey());
 
-		assertEquals(existingRepositoryEntry, newRepositoryEntry);
+		Assert.assertEquals(existingRepositoryEntry, newRepositoryEntry);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchRepositoryEntryException");
+			Assert.fail(
+				"Missing entity did not throw NoSuchRepositoryEntryException");
 		}
 		catch (NoSuchRepositoryEntryException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		RepositoryEntry newRepositoryEntry = addRepositoryEntry();
 
 		RepositoryEntry existingRepositoryEntry = _persistence.fetchByPrimaryKey(newRepositoryEntry.getPrimaryKey());
 
-		assertEquals(existingRepositoryEntry, newRepositoryEntry);
+		Assert.assertEquals(existingRepositoryEntry, newRepositoryEntry);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		RepositoryEntry missingRepositoryEntry = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingRepositoryEntry);
+		Assert.assertNull(missingRepositoryEntry);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		RepositoryEntry newRepositoryEntry = addRepositoryEntry();
@@ -140,25 +160,27 @@ public class RepositoryEntryPersistenceTest extends BasePersistenceTestCase {
 
 		List<RepositoryEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		RepositoryEntry existingRepositoryEntry = result.get(0);
 
-		assertEquals(existingRepositoryEntry, newRepositoryEntry);
+		Assert.assertEquals(existingRepositoryEntry, newRepositoryEntry);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(RepositoryEntry.class,
 				RepositoryEntry.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("repositoryEntryId",
-				nextLong()));
+				ServiceTestUtil.nextLong()));
 
 		List<RepositoryEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		RepositoryEntry newRepositoryEntry = addRepositoryEntry();
@@ -176,13 +198,14 @@ public class RepositoryEntryPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingRepositoryEntryId = result.get(0);
 
-		assertEquals(existingRepositoryEntryId, newRepositoryEntryId);
+		Assert.assertEquals(existingRepositoryEntryId, newRepositoryEntryId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(RepositoryEntry.class,
 				RepositoryEntry.class.getClassLoader());
@@ -191,13 +214,14 @@ public class RepositoryEntryPersistenceTest extends BasePersistenceTestCase {
 				"repositoryEntryId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("repositoryEntryId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -209,31 +233,31 @@ public class RepositoryEntryPersistenceTest extends BasePersistenceTestCase {
 
 		RepositoryEntryModelImpl existingRepositoryEntryModelImpl = (RepositoryEntryModelImpl)_persistence.findByPrimaryKey(newRepositoryEntry.getPrimaryKey());
 
-		assertTrue(Validator.equals(
+		Assert.assertTrue(Validator.equals(
 				existingRepositoryEntryModelImpl.getUuid(),
 				existingRepositoryEntryModelImpl.getOriginalUuid()));
-		assertEquals(existingRepositoryEntryModelImpl.getGroupId(),
+		Assert.assertEquals(existingRepositoryEntryModelImpl.getGroupId(),
 			existingRepositoryEntryModelImpl.getOriginalGroupId());
 
-		assertEquals(existingRepositoryEntryModelImpl.getRepositoryId(),
+		Assert.assertEquals(existingRepositoryEntryModelImpl.getRepositoryId(),
 			existingRepositoryEntryModelImpl.getOriginalRepositoryId());
-		assertTrue(Validator.equals(
+		Assert.assertTrue(Validator.equals(
 				existingRepositoryEntryModelImpl.getMappedId(),
 				existingRepositoryEntryModelImpl.getOriginalMappedId()));
 	}
 
 	protected RepositoryEntry addRepositoryEntry() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		RepositoryEntry repositoryEntry = _persistence.create(pk);
 
-		repositoryEntry.setUuid(randomString());
+		repositoryEntry.setUuid(ServiceTestUtil.randomString());
 
-		repositoryEntry.setGroupId(nextLong());
+		repositoryEntry.setGroupId(ServiceTestUtil.nextLong());
 
-		repositoryEntry.setRepositoryId(nextLong());
+		repositoryEntry.setRepositoryId(ServiceTestUtil.nextLong());
 
-		repositoryEntry.setMappedId(randomString());
+		repositoryEntry.setMappedId(ServiceTestUtil.randomString());
 
 		_persistence.update(repositoryEntry, false);
 

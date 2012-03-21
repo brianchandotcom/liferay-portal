@@ -21,36 +21,48 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.messageboards.NoSuchCategoryException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.impl.MBCategoryModelImpl;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class MBCategoryPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class MBCategoryPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (MBCategoryPersistence)PortalBeanLocatorUtil.locate(MBCategoryPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		MBCategory mbCategory = _persistence.create(pk);
 
-		assertNotNull(mbCategory);
+		Assert.assertNotNull(mbCategory);
 
-		assertEquals(mbCategory.getPrimaryKey(), pk);
+		Assert.assertEquals(mbCategory.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		MBCategory newMBCategory = addMBCategory();
 
@@ -58,116 +70,128 @@ public class MBCategoryPersistenceTest extends BasePersistenceTestCase {
 
 		MBCategory existingMBCategory = _persistence.fetchByPrimaryKey(newMBCategory.getPrimaryKey());
 
-		assertNull(existingMBCategory);
+		Assert.assertNull(existingMBCategory);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addMBCategory();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		MBCategory newMBCategory = _persistence.create(pk);
 
-		newMBCategory.setUuid(randomString());
+		newMBCategory.setUuid(ServiceTestUtil.randomString());
 
-		newMBCategory.setGroupId(nextLong());
+		newMBCategory.setGroupId(ServiceTestUtil.nextLong());
 
-		newMBCategory.setCompanyId(nextLong());
+		newMBCategory.setCompanyId(ServiceTestUtil.nextLong());
 
-		newMBCategory.setUserId(nextLong());
+		newMBCategory.setUserId(ServiceTestUtil.nextLong());
 
-		newMBCategory.setUserName(randomString());
+		newMBCategory.setUserName(ServiceTestUtil.randomString());
 
-		newMBCategory.setCreateDate(nextDate());
+		newMBCategory.setCreateDate(ServiceTestUtil.nextDate());
 
-		newMBCategory.setModifiedDate(nextDate());
+		newMBCategory.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newMBCategory.setParentCategoryId(nextLong());
+		newMBCategory.setParentCategoryId(ServiceTestUtil.nextLong());
 
-		newMBCategory.setName(randomString());
+		newMBCategory.setName(ServiceTestUtil.randomString());
 
-		newMBCategory.setDescription(randomString());
+		newMBCategory.setDescription(ServiceTestUtil.randomString());
 
-		newMBCategory.setDisplayStyle(randomString());
+		newMBCategory.setDisplayStyle(ServiceTestUtil.randomString());
 
-		newMBCategory.setThreadCount(nextInt());
+		newMBCategory.setThreadCount(ServiceTestUtil.nextInt());
 
-		newMBCategory.setMessageCount(nextInt());
+		newMBCategory.setMessageCount(ServiceTestUtil.nextInt());
 
-		newMBCategory.setLastPostDate(nextDate());
+		newMBCategory.setLastPostDate(ServiceTestUtil.nextDate());
 
 		_persistence.update(newMBCategory, false);
 
 		MBCategory existingMBCategory = _persistence.findByPrimaryKey(newMBCategory.getPrimaryKey());
 
-		assertEquals(existingMBCategory.getUuid(), newMBCategory.getUuid());
-		assertEquals(existingMBCategory.getCategoryId(),
+		Assert.assertEquals(existingMBCategory.getUuid(),
+			newMBCategory.getUuid());
+		Assert.assertEquals(existingMBCategory.getCategoryId(),
 			newMBCategory.getCategoryId());
-		assertEquals(existingMBCategory.getGroupId(), newMBCategory.getGroupId());
-		assertEquals(existingMBCategory.getCompanyId(),
+		Assert.assertEquals(existingMBCategory.getGroupId(),
+			newMBCategory.getGroupId());
+		Assert.assertEquals(existingMBCategory.getCompanyId(),
 			newMBCategory.getCompanyId());
-		assertEquals(existingMBCategory.getUserId(), newMBCategory.getUserId());
-		assertEquals(existingMBCategory.getUserName(),
+		Assert.assertEquals(existingMBCategory.getUserId(),
+			newMBCategory.getUserId());
+		Assert.assertEquals(existingMBCategory.getUserName(),
 			newMBCategory.getUserName());
-		assertEquals(Time.getShortTimestamp(existingMBCategory.getCreateDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMBCategory.getCreateDate()),
 			Time.getShortTimestamp(newMBCategory.getCreateDate()));
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingMBCategory.getModifiedDate()),
 			Time.getShortTimestamp(newMBCategory.getModifiedDate()));
-		assertEquals(existingMBCategory.getParentCategoryId(),
+		Assert.assertEquals(existingMBCategory.getParentCategoryId(),
 			newMBCategory.getParentCategoryId());
-		assertEquals(existingMBCategory.getName(), newMBCategory.getName());
-		assertEquals(existingMBCategory.getDescription(),
+		Assert.assertEquals(existingMBCategory.getName(),
+			newMBCategory.getName());
+		Assert.assertEquals(existingMBCategory.getDescription(),
 			newMBCategory.getDescription());
-		assertEquals(existingMBCategory.getDisplayStyle(),
+		Assert.assertEquals(existingMBCategory.getDisplayStyle(),
 			newMBCategory.getDisplayStyle());
-		assertEquals(existingMBCategory.getThreadCount(),
+		Assert.assertEquals(existingMBCategory.getThreadCount(),
 			newMBCategory.getThreadCount());
-		assertEquals(existingMBCategory.getMessageCount(),
+		Assert.assertEquals(existingMBCategory.getMessageCount(),
 			newMBCategory.getMessageCount());
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingMBCategory.getLastPostDate()),
 			Time.getShortTimestamp(newMBCategory.getLastPostDate()));
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		MBCategory newMBCategory = addMBCategory();
 
 		MBCategory existingMBCategory = _persistence.findByPrimaryKey(newMBCategory.getPrimaryKey());
 
-		assertEquals(existingMBCategory, newMBCategory);
+		Assert.assertEquals(existingMBCategory, newMBCategory);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchCategoryException");
+			Assert.fail("Missing entity did not throw NoSuchCategoryException");
 		}
 		catch (NoSuchCategoryException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		MBCategory newMBCategory = addMBCategory();
 
 		MBCategory existingMBCategory = _persistence.fetchByPrimaryKey(newMBCategory.getPrimaryKey());
 
-		assertEquals(existingMBCategory, newMBCategory);
+		Assert.assertEquals(existingMBCategory, newMBCategory);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		MBCategory missingMBCategory = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingMBCategory);
+		Assert.assertNull(missingMBCategory);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		MBCategory newMBCategory = addMBCategory();
@@ -180,24 +204,27 @@ public class MBCategoryPersistenceTest extends BasePersistenceTestCase {
 
 		List<MBCategory> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		MBCategory existingMBCategory = result.get(0);
 
-		assertEquals(existingMBCategory, newMBCategory);
+		Assert.assertEquals(existingMBCategory, newMBCategory);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBCategory.class,
 				MBCategory.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("categoryId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("categoryId",
+				ServiceTestUtil.nextLong()));
 
 		List<MBCategory> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		MBCategory newMBCategory = addMBCategory();
@@ -214,13 +241,14 @@ public class MBCategoryPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingCategoryId = result.get(0);
 
-		assertEquals(existingCategoryId, newCategoryId);
+		Assert.assertEquals(existingCategoryId, newCategoryId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBCategory.class,
 				MBCategory.class.getClassLoader());
@@ -228,13 +256,14 @@ public class MBCategoryPersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("categoryId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("categoryId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -246,44 +275,45 @@ public class MBCategoryPersistenceTest extends BasePersistenceTestCase {
 
 		MBCategoryModelImpl existingMBCategoryModelImpl = (MBCategoryModelImpl)_persistence.findByPrimaryKey(newMBCategory.getPrimaryKey());
 
-		assertTrue(Validator.equals(existingMBCategoryModelImpl.getUuid(),
+		Assert.assertTrue(Validator.equals(
+				existingMBCategoryModelImpl.getUuid(),
 				existingMBCategoryModelImpl.getOriginalUuid()));
-		assertEquals(existingMBCategoryModelImpl.getGroupId(),
+		Assert.assertEquals(existingMBCategoryModelImpl.getGroupId(),
 			existingMBCategoryModelImpl.getOriginalGroupId());
 	}
 
 	protected MBCategory addMBCategory() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		MBCategory mbCategory = _persistence.create(pk);
 
-		mbCategory.setUuid(randomString());
+		mbCategory.setUuid(ServiceTestUtil.randomString());
 
-		mbCategory.setGroupId(nextLong());
+		mbCategory.setGroupId(ServiceTestUtil.nextLong());
 
-		mbCategory.setCompanyId(nextLong());
+		mbCategory.setCompanyId(ServiceTestUtil.nextLong());
 
-		mbCategory.setUserId(nextLong());
+		mbCategory.setUserId(ServiceTestUtil.nextLong());
 
-		mbCategory.setUserName(randomString());
+		mbCategory.setUserName(ServiceTestUtil.randomString());
 
-		mbCategory.setCreateDate(nextDate());
+		mbCategory.setCreateDate(ServiceTestUtil.nextDate());
 
-		mbCategory.setModifiedDate(nextDate());
+		mbCategory.setModifiedDate(ServiceTestUtil.nextDate());
 
-		mbCategory.setParentCategoryId(nextLong());
+		mbCategory.setParentCategoryId(ServiceTestUtil.nextLong());
 
-		mbCategory.setName(randomString());
+		mbCategory.setName(ServiceTestUtil.randomString());
 
-		mbCategory.setDescription(randomString());
+		mbCategory.setDescription(ServiceTestUtil.randomString());
 
-		mbCategory.setDisplayStyle(randomString());
+		mbCategory.setDisplayStyle(ServiceTestUtil.randomString());
 
-		mbCategory.setThreadCount(nextInt());
+		mbCategory.setThreadCount(ServiceTestUtil.nextInt());
 
-		mbCategory.setMessageCount(nextInt());
+		mbCategory.setMessageCount(ServiceTestUtil.nextInt());
 
-		mbCategory.setLastPostDate(nextDate());
+		mbCategory.setLastPostDate(ServiceTestUtil.nextDate());
 
 		_persistence.update(mbCategory, false);
 

@@ -22,31 +22,43 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.Image;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class ImagePersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class ImagePersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (ImagePersistence)PortalBeanLocatorUtil.locate(ImagePersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Image image = _persistence.create(pk);
 
-		assertNotNull(image);
+		Assert.assertNotNull(image);
 
-		assertEquals(image.getPrimaryKey(), pk);
+		Assert.assertEquals(image.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		Image newImage = addImage();
 
@@ -54,80 +66,88 @@ public class ImagePersistenceTest extends BasePersistenceTestCase {
 
 		Image existingImage = _persistence.fetchByPrimaryKey(newImage.getPrimaryKey());
 
-		assertNull(existingImage);
+		Assert.assertNull(existingImage);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addImage();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Image newImage = _persistence.create(pk);
 
-		newImage.setModifiedDate(nextDate());
+		newImage.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newImage.setText(randomString());
+		newImage.setText(ServiceTestUtil.randomString());
 
-		newImage.setType(randomString());
+		newImage.setType(ServiceTestUtil.randomString());
 
-		newImage.setHeight(nextInt());
+		newImage.setHeight(ServiceTestUtil.nextInt());
 
-		newImage.setWidth(nextInt());
+		newImage.setWidth(ServiceTestUtil.nextInt());
 
-		newImage.setSize(nextInt());
+		newImage.setSize(ServiceTestUtil.nextInt());
 
 		_persistence.update(newImage, false);
 
 		Image existingImage = _persistence.findByPrimaryKey(newImage.getPrimaryKey());
 
-		assertEquals(existingImage.getImageId(), newImage.getImageId());
-		assertEquals(Time.getShortTimestamp(existingImage.getModifiedDate()),
+		Assert.assertEquals(existingImage.getImageId(), newImage.getImageId());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingImage.getModifiedDate()),
 			Time.getShortTimestamp(newImage.getModifiedDate()));
-		assertEquals(existingImage.getText(), newImage.getText());
-		assertEquals(existingImage.getType(), newImage.getType());
-		assertEquals(existingImage.getHeight(), newImage.getHeight());
-		assertEquals(existingImage.getWidth(), newImage.getWidth());
-		assertEquals(existingImage.getSize(), newImage.getSize());
+		Assert.assertEquals(existingImage.getText(), newImage.getText());
+		Assert.assertEquals(existingImage.getType(), newImage.getType());
+		Assert.assertEquals(existingImage.getHeight(), newImage.getHeight());
+		Assert.assertEquals(existingImage.getWidth(), newImage.getWidth());
+		Assert.assertEquals(existingImage.getSize(), newImage.getSize());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Image newImage = addImage();
 
 		Image existingImage = _persistence.findByPrimaryKey(newImage.getPrimaryKey());
 
-		assertEquals(existingImage, newImage);
+		Assert.assertEquals(existingImage, newImage);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchImageException");
+			Assert.fail("Missing entity did not throw NoSuchImageException");
 		}
 		catch (NoSuchImageException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		Image newImage = addImage();
 
 		Image existingImage = _persistence.fetchByPrimaryKey(newImage.getPrimaryKey());
 
-		assertEquals(existingImage, newImage);
+		Assert.assertEquals(existingImage, newImage);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Image missingImage = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingImage);
+		Assert.assertNull(missingImage);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		Image newImage = addImage();
@@ -140,24 +160,27 @@ public class ImagePersistenceTest extends BasePersistenceTestCase {
 
 		List<Image> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Image existingImage = result.get(0);
 
-		assertEquals(existingImage, newImage);
+		Assert.assertEquals(existingImage, newImage);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Image.class,
 				Image.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("imageId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("imageId",
+				ServiceTestUtil.nextLong()));
 
 		List<Image> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		Image newImage = addImage();
@@ -174,13 +197,14 @@ public class ImagePersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingImageId = result.get(0);
 
-		assertEquals(existingImageId, newImageId);
+		Assert.assertEquals(existingImageId, newImageId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Image.class,
 				Image.class.getClassLoader());
@@ -188,29 +212,29 @@ public class ImagePersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("imageId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("imageId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
 	protected Image addImage() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Image image = _persistence.create(pk);
 
-		image.setModifiedDate(nextDate());
+		image.setModifiedDate(ServiceTestUtil.nextDate());
 
-		image.setText(randomString());
+		image.setText(ServiceTestUtil.randomString());
 
-		image.setType(randomString());
+		image.setType(ServiceTestUtil.randomString());
 
-		image.setHeight(nextInt());
+		image.setHeight(ServiceTestUtil.nextInt());
 
-		image.setWidth(nextInt());
+		image.setWidth(ServiceTestUtil.nextInt());
 
-		image.setSize(nextInt());
+		image.setSize(ServiceTestUtil.nextInt());
 
 		_persistence.update(image, false);
 

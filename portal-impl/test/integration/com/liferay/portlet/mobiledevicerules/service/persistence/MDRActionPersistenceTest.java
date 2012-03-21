@@ -21,36 +21,48 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.mobiledevicerules.NoSuchActionException;
 import com.liferay.portlet.mobiledevicerules.model.MDRAction;
 import com.liferay.portlet.mobiledevicerules.model.impl.MDRActionModelImpl;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
 /**
  * @author Edward C. Han
  */
-public class MDRActionPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class MDRActionPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (MDRActionPersistence)PortalBeanLocatorUtil.locate(MDRActionPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		MDRAction mdrAction = _persistence.create(pk);
 
-		assertNotNull(mdrAction);
+		Assert.assertNotNull(mdrAction);
 
-		assertEquals(mdrAction.getPrimaryKey(), pk);
+		Assert.assertEquals(mdrAction.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		MDRAction newMDRAction = addMDRAction();
 
@@ -58,110 +70,124 @@ public class MDRActionPersistenceTest extends BasePersistenceTestCase {
 
 		MDRAction existingMDRAction = _persistence.fetchByPrimaryKey(newMDRAction.getPrimaryKey());
 
-		assertNull(existingMDRAction);
+		Assert.assertNull(existingMDRAction);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addMDRAction();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		MDRAction newMDRAction = _persistence.create(pk);
 
-		newMDRAction.setUuid(randomString());
+		newMDRAction.setUuid(ServiceTestUtil.randomString());
 
-		newMDRAction.setGroupId(nextLong());
+		newMDRAction.setGroupId(ServiceTestUtil.nextLong());
 
-		newMDRAction.setCompanyId(nextLong());
+		newMDRAction.setCompanyId(ServiceTestUtil.nextLong());
 
-		newMDRAction.setUserId(nextLong());
+		newMDRAction.setUserId(ServiceTestUtil.nextLong());
 
-		newMDRAction.setUserName(randomString());
+		newMDRAction.setUserName(ServiceTestUtil.randomString());
 
-		newMDRAction.setCreateDate(nextDate());
+		newMDRAction.setCreateDate(ServiceTestUtil.nextDate());
 
-		newMDRAction.setModifiedDate(nextDate());
+		newMDRAction.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newMDRAction.setClassNameId(nextLong());
+		newMDRAction.setClassNameId(ServiceTestUtil.nextLong());
 
-		newMDRAction.setClassPK(nextLong());
+		newMDRAction.setClassPK(ServiceTestUtil.nextLong());
 
-		newMDRAction.setRuleGroupInstanceId(nextLong());
+		newMDRAction.setRuleGroupInstanceId(ServiceTestUtil.nextLong());
 
-		newMDRAction.setName(randomString());
+		newMDRAction.setName(ServiceTestUtil.randomString());
 
-		newMDRAction.setDescription(randomString());
+		newMDRAction.setDescription(ServiceTestUtil.randomString());
 
-		newMDRAction.setType(randomString());
+		newMDRAction.setType(ServiceTestUtil.randomString());
 
-		newMDRAction.setTypeSettings(randomString());
+		newMDRAction.setTypeSettings(ServiceTestUtil.randomString());
 
 		_persistence.update(newMDRAction, false);
 
 		MDRAction existingMDRAction = _persistence.findByPrimaryKey(newMDRAction.getPrimaryKey());
 
-		assertEquals(existingMDRAction.getUuid(), newMDRAction.getUuid());
-		assertEquals(existingMDRAction.getActionId(), newMDRAction.getActionId());
-		assertEquals(existingMDRAction.getGroupId(), newMDRAction.getGroupId());
-		assertEquals(existingMDRAction.getCompanyId(),
+		Assert.assertEquals(existingMDRAction.getUuid(), newMDRAction.getUuid());
+		Assert.assertEquals(existingMDRAction.getActionId(),
+			newMDRAction.getActionId());
+		Assert.assertEquals(existingMDRAction.getGroupId(),
+			newMDRAction.getGroupId());
+		Assert.assertEquals(existingMDRAction.getCompanyId(),
 			newMDRAction.getCompanyId());
-		assertEquals(existingMDRAction.getUserId(), newMDRAction.getUserId());
-		assertEquals(existingMDRAction.getUserName(), newMDRAction.getUserName());
-		assertEquals(Time.getShortTimestamp(existingMDRAction.getCreateDate()),
+		Assert.assertEquals(existingMDRAction.getUserId(),
+			newMDRAction.getUserId());
+		Assert.assertEquals(existingMDRAction.getUserName(),
+			newMDRAction.getUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMDRAction.getCreateDate()),
 			Time.getShortTimestamp(newMDRAction.getCreateDate()));
-		assertEquals(Time.getShortTimestamp(existingMDRAction.getModifiedDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMDRAction.getModifiedDate()),
 			Time.getShortTimestamp(newMDRAction.getModifiedDate()));
-		assertEquals(existingMDRAction.getClassNameId(),
+		Assert.assertEquals(existingMDRAction.getClassNameId(),
 			newMDRAction.getClassNameId());
-		assertEquals(existingMDRAction.getClassPK(), newMDRAction.getClassPK());
-		assertEquals(existingMDRAction.getRuleGroupInstanceId(),
+		Assert.assertEquals(existingMDRAction.getClassPK(),
+			newMDRAction.getClassPK());
+		Assert.assertEquals(existingMDRAction.getRuleGroupInstanceId(),
 			newMDRAction.getRuleGroupInstanceId());
-		assertEquals(existingMDRAction.getName(), newMDRAction.getName());
-		assertEquals(existingMDRAction.getDescription(),
+		Assert.assertEquals(existingMDRAction.getName(), newMDRAction.getName());
+		Assert.assertEquals(existingMDRAction.getDescription(),
 			newMDRAction.getDescription());
-		assertEquals(existingMDRAction.getType(), newMDRAction.getType());
-		assertEquals(existingMDRAction.getTypeSettings(),
+		Assert.assertEquals(existingMDRAction.getType(), newMDRAction.getType());
+		Assert.assertEquals(existingMDRAction.getTypeSettings(),
 			newMDRAction.getTypeSettings());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		MDRAction newMDRAction = addMDRAction();
 
 		MDRAction existingMDRAction = _persistence.findByPrimaryKey(newMDRAction.getPrimaryKey());
 
-		assertEquals(existingMDRAction, newMDRAction);
+		Assert.assertEquals(existingMDRAction, newMDRAction);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchActionException");
+			Assert.fail("Missing entity did not throw NoSuchActionException");
 		}
 		catch (NoSuchActionException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		MDRAction newMDRAction = addMDRAction();
 
 		MDRAction existingMDRAction = _persistence.fetchByPrimaryKey(newMDRAction.getPrimaryKey());
 
-		assertEquals(existingMDRAction, newMDRAction);
+		Assert.assertEquals(existingMDRAction, newMDRAction);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		MDRAction missingMDRAction = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingMDRAction);
+		Assert.assertNull(missingMDRAction);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		MDRAction newMDRAction = addMDRAction();
@@ -174,24 +200,27 @@ public class MDRActionPersistenceTest extends BasePersistenceTestCase {
 
 		List<MDRAction> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		MDRAction existingMDRAction = result.get(0);
 
-		assertEquals(existingMDRAction, newMDRAction);
+		Assert.assertEquals(existingMDRAction, newMDRAction);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MDRAction.class,
 				MDRAction.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("actionId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("actionId",
+				ServiceTestUtil.nextLong()));
 
 		List<MDRAction> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		MDRAction newMDRAction = addMDRAction();
@@ -208,13 +237,14 @@ public class MDRActionPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingActionId = result.get(0);
 
-		assertEquals(existingActionId, newActionId);
+		Assert.assertEquals(existingActionId, newActionId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MDRAction.class,
 				MDRAction.class.getClassLoader());
@@ -222,13 +252,14 @@ public class MDRActionPersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("actionId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("actionId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -240,44 +271,45 @@ public class MDRActionPersistenceTest extends BasePersistenceTestCase {
 
 		MDRActionModelImpl existingMDRActionModelImpl = (MDRActionModelImpl)_persistence.findByPrimaryKey(newMDRAction.getPrimaryKey());
 
-		assertTrue(Validator.equals(existingMDRActionModelImpl.getUuid(),
+		Assert.assertTrue(Validator.equals(
+				existingMDRActionModelImpl.getUuid(),
 				existingMDRActionModelImpl.getOriginalUuid()));
-		assertEquals(existingMDRActionModelImpl.getGroupId(),
+		Assert.assertEquals(existingMDRActionModelImpl.getGroupId(),
 			existingMDRActionModelImpl.getOriginalGroupId());
 	}
 
 	protected MDRAction addMDRAction() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		MDRAction mdrAction = _persistence.create(pk);
 
-		mdrAction.setUuid(randomString());
+		mdrAction.setUuid(ServiceTestUtil.randomString());
 
-		mdrAction.setGroupId(nextLong());
+		mdrAction.setGroupId(ServiceTestUtil.nextLong());
 
-		mdrAction.setCompanyId(nextLong());
+		mdrAction.setCompanyId(ServiceTestUtil.nextLong());
 
-		mdrAction.setUserId(nextLong());
+		mdrAction.setUserId(ServiceTestUtil.nextLong());
 
-		mdrAction.setUserName(randomString());
+		mdrAction.setUserName(ServiceTestUtil.randomString());
 
-		mdrAction.setCreateDate(nextDate());
+		mdrAction.setCreateDate(ServiceTestUtil.nextDate());
 
-		mdrAction.setModifiedDate(nextDate());
+		mdrAction.setModifiedDate(ServiceTestUtil.nextDate());
 
-		mdrAction.setClassNameId(nextLong());
+		mdrAction.setClassNameId(ServiceTestUtil.nextLong());
 
-		mdrAction.setClassPK(nextLong());
+		mdrAction.setClassPK(ServiceTestUtil.nextLong());
 
-		mdrAction.setRuleGroupInstanceId(nextLong());
+		mdrAction.setRuleGroupInstanceId(ServiceTestUtil.nextLong());
 
-		mdrAction.setName(randomString());
+		mdrAction.setName(ServiceTestUtil.randomString());
 
-		mdrAction.setDescription(randomString());
+		mdrAction.setDescription(ServiceTestUtil.randomString());
 
-		mdrAction.setType(randomString());
+		mdrAction.setType(ServiceTestUtil.randomString());
 
-		mdrAction.setTypeSettings(randomString());
+		mdrAction.setTypeSettings(ServiceTestUtil.randomString());
 
 		_persistence.update(mdrAction, false);
 

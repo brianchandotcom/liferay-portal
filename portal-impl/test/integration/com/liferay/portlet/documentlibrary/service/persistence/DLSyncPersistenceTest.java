@@ -20,36 +20,48 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.documentlibrary.NoSuchSyncException;
 import com.liferay.portlet.documentlibrary.model.DLSync;
 import com.liferay.portlet.documentlibrary.model.impl.DLSyncModelImpl;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class DLSyncPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class DLSyncPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (DLSyncPersistence)PortalBeanLocatorUtil.locate(DLSyncPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		DLSync dlSync = _persistence.create(pk);
 
-		assertNotNull(dlSync);
+		Assert.assertNotNull(dlSync);
 
-		assertEquals(dlSync.getPrimaryKey(), pk);
+		Assert.assertEquals(dlSync.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		DLSync newDLSync = addDLSync();
 
@@ -57,101 +69,113 @@ public class DLSyncPersistenceTest extends BasePersistenceTestCase {
 
 		DLSync existingDLSync = _persistence.fetchByPrimaryKey(newDLSync.getPrimaryKey());
 
-		assertNull(existingDLSync);
+		Assert.assertNull(existingDLSync);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addDLSync();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		DLSync newDLSync = _persistence.create(pk);
 
-		newDLSync.setCompanyId(nextLong());
+		newDLSync.setCompanyId(ServiceTestUtil.nextLong());
 
-		newDLSync.setCreateDate(nextDate());
+		newDLSync.setCreateDate(ServiceTestUtil.nextDate());
 
-		newDLSync.setModifiedDate(nextDate());
+		newDLSync.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newDLSync.setFileId(nextLong());
+		newDLSync.setFileId(ServiceTestUtil.nextLong());
 
-		newDLSync.setFileUuid(randomString());
+		newDLSync.setFileUuid(ServiceTestUtil.randomString());
 
-		newDLSync.setRepositoryId(nextLong());
+		newDLSync.setRepositoryId(ServiceTestUtil.nextLong());
 
-		newDLSync.setParentFolderId(nextLong());
+		newDLSync.setParentFolderId(ServiceTestUtil.nextLong());
 
-		newDLSync.setName(randomString());
+		newDLSync.setName(ServiceTestUtil.randomString());
 
-		newDLSync.setDescription(randomString());
+		newDLSync.setDescription(ServiceTestUtil.randomString());
 
-		newDLSync.setEvent(randomString());
+		newDLSync.setEvent(ServiceTestUtil.randomString());
 
-		newDLSync.setType(randomString());
+		newDLSync.setType(ServiceTestUtil.randomString());
 
-		newDLSync.setVersion(randomString());
+		newDLSync.setVersion(ServiceTestUtil.randomString());
 
 		_persistence.update(newDLSync, false);
 
 		DLSync existingDLSync = _persistence.findByPrimaryKey(newDLSync.getPrimaryKey());
 
-		assertEquals(existingDLSync.getSyncId(), newDLSync.getSyncId());
-		assertEquals(existingDLSync.getCompanyId(), newDLSync.getCompanyId());
-		assertEquals(Time.getShortTimestamp(existingDLSync.getCreateDate()),
+		Assert.assertEquals(existingDLSync.getSyncId(), newDLSync.getSyncId());
+		Assert.assertEquals(existingDLSync.getCompanyId(),
+			newDLSync.getCompanyId());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingDLSync.getCreateDate()),
 			Time.getShortTimestamp(newDLSync.getCreateDate()));
-		assertEquals(Time.getShortTimestamp(existingDLSync.getModifiedDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingDLSync.getModifiedDate()),
 			Time.getShortTimestamp(newDLSync.getModifiedDate()));
-		assertEquals(existingDLSync.getFileId(), newDLSync.getFileId());
-		assertEquals(existingDLSync.getFileUuid(), newDLSync.getFileUuid());
-		assertEquals(existingDLSync.getRepositoryId(),
+		Assert.assertEquals(existingDLSync.getFileId(), newDLSync.getFileId());
+		Assert.assertEquals(existingDLSync.getFileUuid(),
+			newDLSync.getFileUuid());
+		Assert.assertEquals(existingDLSync.getRepositoryId(),
 			newDLSync.getRepositoryId());
-		assertEquals(existingDLSync.getParentFolderId(),
+		Assert.assertEquals(existingDLSync.getParentFolderId(),
 			newDLSync.getParentFolderId());
-		assertEquals(existingDLSync.getName(), newDLSync.getName());
-		assertEquals(existingDLSync.getDescription(), newDLSync.getDescription());
-		assertEquals(existingDLSync.getEvent(), newDLSync.getEvent());
-		assertEquals(existingDLSync.getType(), newDLSync.getType());
-		assertEquals(existingDLSync.getVersion(), newDLSync.getVersion());
+		Assert.assertEquals(existingDLSync.getName(), newDLSync.getName());
+		Assert.assertEquals(existingDLSync.getDescription(),
+			newDLSync.getDescription());
+		Assert.assertEquals(existingDLSync.getEvent(), newDLSync.getEvent());
+		Assert.assertEquals(existingDLSync.getType(), newDLSync.getType());
+		Assert.assertEquals(existingDLSync.getVersion(), newDLSync.getVersion());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		DLSync newDLSync = addDLSync();
 
 		DLSync existingDLSync = _persistence.findByPrimaryKey(newDLSync.getPrimaryKey());
 
-		assertEquals(existingDLSync, newDLSync);
+		Assert.assertEquals(existingDLSync, newDLSync);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchSyncException");
+			Assert.fail("Missing entity did not throw NoSuchSyncException");
 		}
 		catch (NoSuchSyncException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		DLSync newDLSync = addDLSync();
 
 		DLSync existingDLSync = _persistence.fetchByPrimaryKey(newDLSync.getPrimaryKey());
 
-		assertEquals(existingDLSync, newDLSync);
+		Assert.assertEquals(existingDLSync, newDLSync);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		DLSync missingDLSync = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingDLSync);
+		Assert.assertNull(missingDLSync);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		DLSync newDLSync = addDLSync();
@@ -164,24 +188,27 @@ public class DLSyncPersistenceTest extends BasePersistenceTestCase {
 
 		List<DLSync> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		DLSync existingDLSync = result.get(0);
 
-		assertEquals(existingDLSync, newDLSync);
+		Assert.assertEquals(existingDLSync, newDLSync);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLSync.class,
 				DLSync.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("syncId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("syncId",
+				ServiceTestUtil.nextLong()));
 
 		List<DLSync> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		DLSync newDLSync = addDLSync();
@@ -198,13 +225,14 @@ public class DLSyncPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingSyncId = result.get(0);
 
-		assertEquals(existingSyncId, newSyncId);
+		Assert.assertEquals(existingSyncId, newSyncId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLSync.class,
 				DLSync.class.getClassLoader());
@@ -212,13 +240,14 @@ public class DLSyncPersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("syncId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("syncId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -230,38 +259,38 @@ public class DLSyncPersistenceTest extends BasePersistenceTestCase {
 
 		DLSyncModelImpl existingDLSyncModelImpl = (DLSyncModelImpl)_persistence.findByPrimaryKey(newDLSync.getPrimaryKey());
 
-		assertEquals(existingDLSyncModelImpl.getFileId(),
+		Assert.assertEquals(existingDLSyncModelImpl.getFileId(),
 			existingDLSyncModelImpl.getOriginalFileId());
 	}
 
 	protected DLSync addDLSync() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		DLSync dlSync = _persistence.create(pk);
 
-		dlSync.setCompanyId(nextLong());
+		dlSync.setCompanyId(ServiceTestUtil.nextLong());
 
-		dlSync.setCreateDate(nextDate());
+		dlSync.setCreateDate(ServiceTestUtil.nextDate());
 
-		dlSync.setModifiedDate(nextDate());
+		dlSync.setModifiedDate(ServiceTestUtil.nextDate());
 
-		dlSync.setFileId(nextLong());
+		dlSync.setFileId(ServiceTestUtil.nextLong());
 
-		dlSync.setFileUuid(randomString());
+		dlSync.setFileUuid(ServiceTestUtil.randomString());
 
-		dlSync.setRepositoryId(nextLong());
+		dlSync.setRepositoryId(ServiceTestUtil.nextLong());
 
-		dlSync.setParentFolderId(nextLong());
+		dlSync.setParentFolderId(ServiceTestUtil.nextLong());
 
-		dlSync.setName(randomString());
+		dlSync.setName(ServiceTestUtil.randomString());
 
-		dlSync.setDescription(randomString());
+		dlSync.setDescription(ServiceTestUtil.randomString());
 
-		dlSync.setEvent(randomString());
+		dlSync.setEvent(ServiceTestUtil.randomString());
 
-		dlSync.setType(randomString());
+		dlSync.setType(ServiceTestUtil.randomString());
 
-		dlSync.setVersion(randomString());
+		dlSync.setVersion(ServiceTestUtil.randomString());
 
 		_persistence.update(dlSync, false);
 

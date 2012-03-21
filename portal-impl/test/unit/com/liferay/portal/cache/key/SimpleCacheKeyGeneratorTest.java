@@ -12,28 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.service.persistence;
-
-import com.liferay.portal.util.BaseTestCase;
-import com.liferay.portal.util.PropsValues;
+package com.liferay.portal.cache.key;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
-public class BasePersistenceTestCase extends BaseTestCase {
+public class SimpleCacheKeyGeneratorTest extends BaseCacheKeyGeneratorTestCase {
 
 	@Override
 	public void setUp() throws Exception {
-		super.setUp();
-
-		PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED = false;
-	}
-
-	@Override
-	public void tearDown() throws Exception {
-		super.tearDown();
-
-		PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED = true;
+		cacheKeyGenerator = new SimpleCacheKeyGenerator();
 	}
 
 }

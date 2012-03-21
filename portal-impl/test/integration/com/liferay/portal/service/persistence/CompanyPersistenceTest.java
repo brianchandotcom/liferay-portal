@@ -23,32 +23,44 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.impl.CompanyModelImpl;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class CompanyPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class CompanyPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (CompanyPersistence)PortalBeanLocatorUtil.locate(CompanyPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Company company = _persistence.create(pk);
 
-		assertNotNull(company);
+		Assert.assertNotNull(company);
 
-		assertEquals(company.getPrimaryKey(), pk);
+		Assert.assertEquals(company.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		Company newCompany = addCompany();
 
@@ -56,88 +68,99 @@ public class CompanyPersistenceTest extends BasePersistenceTestCase {
 
 		Company existingCompany = _persistence.fetchByPrimaryKey(newCompany.getPrimaryKey());
 
-		assertNull(existingCompany);
+		Assert.assertNull(existingCompany);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addCompany();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Company newCompany = _persistence.create(pk);
 
-		newCompany.setAccountId(nextLong());
+		newCompany.setAccountId(ServiceTestUtil.nextLong());
 
-		newCompany.setWebId(randomString());
+		newCompany.setWebId(ServiceTestUtil.randomString());
 
-		newCompany.setKey(randomString());
+		newCompany.setKey(ServiceTestUtil.randomString());
 
-		newCompany.setMx(randomString());
+		newCompany.setMx(ServiceTestUtil.randomString());
 
-		newCompany.setHomeURL(randomString());
+		newCompany.setHomeURL(ServiceTestUtil.randomString());
 
-		newCompany.setLogoId(nextLong());
+		newCompany.setLogoId(ServiceTestUtil.nextLong());
 
-		newCompany.setSystem(randomBoolean());
+		newCompany.setSystem(ServiceTestUtil.randomBoolean());
 
-		newCompany.setMaxUsers(nextInt());
+		newCompany.setMaxUsers(ServiceTestUtil.nextInt());
 
-		newCompany.setActive(randomBoolean());
+		newCompany.setActive(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(newCompany, false);
 
 		Company existingCompany = _persistence.findByPrimaryKey(newCompany.getPrimaryKey());
 
-		assertEquals(existingCompany.getCompanyId(), newCompany.getCompanyId());
-		assertEquals(existingCompany.getAccountId(), newCompany.getAccountId());
-		assertEquals(existingCompany.getWebId(), newCompany.getWebId());
-		assertEquals(existingCompany.getKey(), newCompany.getKey());
-		assertEquals(existingCompany.getMx(), newCompany.getMx());
-		assertEquals(existingCompany.getHomeURL(), newCompany.getHomeURL());
-		assertEquals(existingCompany.getLogoId(), newCompany.getLogoId());
-		assertEquals(existingCompany.getSystem(), newCompany.getSystem());
-		assertEquals(existingCompany.getMaxUsers(), newCompany.getMaxUsers());
-		assertEquals(existingCompany.getActive(), newCompany.getActive());
+		Assert.assertEquals(existingCompany.getCompanyId(),
+			newCompany.getCompanyId());
+		Assert.assertEquals(existingCompany.getAccountId(),
+			newCompany.getAccountId());
+		Assert.assertEquals(existingCompany.getWebId(), newCompany.getWebId());
+		Assert.assertEquals(existingCompany.getKey(), newCompany.getKey());
+		Assert.assertEquals(existingCompany.getMx(), newCompany.getMx());
+		Assert.assertEquals(existingCompany.getHomeURL(),
+			newCompany.getHomeURL());
+		Assert.assertEquals(existingCompany.getLogoId(), newCompany.getLogoId());
+		Assert.assertEquals(existingCompany.getSystem(), newCompany.getSystem());
+		Assert.assertEquals(existingCompany.getMaxUsers(),
+			newCompany.getMaxUsers());
+		Assert.assertEquals(existingCompany.getActive(), newCompany.getActive());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Company newCompany = addCompany();
 
 		Company existingCompany = _persistence.findByPrimaryKey(newCompany.getPrimaryKey());
 
-		assertEquals(existingCompany, newCompany);
+		Assert.assertEquals(existingCompany, newCompany);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchCompanyException");
+			Assert.fail("Missing entity did not throw NoSuchCompanyException");
 		}
 		catch (NoSuchCompanyException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		Company newCompany = addCompany();
 
 		Company existingCompany = _persistence.fetchByPrimaryKey(newCompany.getPrimaryKey());
 
-		assertEquals(existingCompany, newCompany);
+		Assert.assertEquals(existingCompany, newCompany);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Company missingCompany = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingCompany);
+		Assert.assertNull(missingCompany);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		Company newCompany = addCompany();
@@ -150,24 +173,27 @@ public class CompanyPersistenceTest extends BasePersistenceTestCase {
 
 		List<Company> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Company existingCompany = result.get(0);
 
-		assertEquals(existingCompany, newCompany);
+		Assert.assertEquals(existingCompany, newCompany);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Company.class,
 				Company.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("companyId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("companyId",
+				ServiceTestUtil.nextLong()));
 
 		List<Company> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		Company newCompany = addCompany();
@@ -184,13 +210,14 @@ public class CompanyPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingCompanyId = result.get(0);
 
-		assertEquals(existingCompanyId, newCompanyId);
+		Assert.assertEquals(existingCompanyId, newCompanyId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Company.class,
 				Company.class.getClassLoader());
@@ -198,13 +225,14 @@ public class CompanyPersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("companyId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("companyId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -216,38 +244,39 @@ public class CompanyPersistenceTest extends BasePersistenceTestCase {
 
 		CompanyModelImpl existingCompanyModelImpl = (CompanyModelImpl)_persistence.findByPrimaryKey(newCompany.getPrimaryKey());
 
-		assertTrue(Validator.equals(existingCompanyModelImpl.getWebId(),
+		Assert.assertTrue(Validator.equals(
+				existingCompanyModelImpl.getWebId(),
 				existingCompanyModelImpl.getOriginalWebId()));
 
-		assertTrue(Validator.equals(existingCompanyModelImpl.getMx(),
+		Assert.assertTrue(Validator.equals(existingCompanyModelImpl.getMx(),
 				existingCompanyModelImpl.getOriginalMx()));
 
-		assertEquals(existingCompanyModelImpl.getLogoId(),
+		Assert.assertEquals(existingCompanyModelImpl.getLogoId(),
 			existingCompanyModelImpl.getOriginalLogoId());
 	}
 
 	protected Company addCompany() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Company company = _persistence.create(pk);
 
-		company.setAccountId(nextLong());
+		company.setAccountId(ServiceTestUtil.nextLong());
 
-		company.setWebId(randomString());
+		company.setWebId(ServiceTestUtil.randomString());
 
-		company.setKey(randomString());
+		company.setKey(ServiceTestUtil.randomString());
 
-		company.setMx(randomString());
+		company.setMx(ServiceTestUtil.randomString());
 
-		company.setHomeURL(randomString());
+		company.setHomeURL(ServiceTestUtil.randomString());
 
-		company.setLogoId(nextLong());
+		company.setLogoId(ServiceTestUtil.nextLong());
 
-		company.setSystem(randomBoolean());
+		company.setSystem(ServiceTestUtil.randomBoolean());
 
-		company.setMaxUsers(nextInt());
+		company.setMaxUsers(ServiceTestUtil.nextInt());
 
-		company.setActive(randomBoolean());
+		company.setActive(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(company, false);
 

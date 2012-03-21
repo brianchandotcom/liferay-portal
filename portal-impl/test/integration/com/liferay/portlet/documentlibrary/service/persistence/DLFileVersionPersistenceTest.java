@@ -21,36 +21,48 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionModelImpl;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class DLFileVersionPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class DLFileVersionPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (DLFileVersionPersistence)PortalBeanLocatorUtil.locate(DLFileVersionPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		DLFileVersion dlFileVersion = _persistence.create(pk);
 
-		assertNotNull(dlFileVersion);
+		Assert.assertNotNull(dlFileVersion);
 
-		assertEquals(dlFileVersion.getPrimaryKey(), pk);
+		Assert.assertEquals(dlFileVersion.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		DLFileVersion newDLFileVersion = addDLFileVersion();
 
@@ -58,155 +70,165 @@ public class DLFileVersionPersistenceTest extends BasePersistenceTestCase {
 
 		DLFileVersion existingDLFileVersion = _persistence.fetchByPrimaryKey(newDLFileVersion.getPrimaryKey());
 
-		assertNull(existingDLFileVersion);
+		Assert.assertNull(existingDLFileVersion);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addDLFileVersion();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		DLFileVersion newDLFileVersion = _persistence.create(pk);
 
-		newDLFileVersion.setUuid(randomString());
+		newDLFileVersion.setUuid(ServiceTestUtil.randomString());
 
-		newDLFileVersion.setGroupId(nextLong());
+		newDLFileVersion.setGroupId(ServiceTestUtil.nextLong());
 
-		newDLFileVersion.setCompanyId(nextLong());
+		newDLFileVersion.setCompanyId(ServiceTestUtil.nextLong());
 
-		newDLFileVersion.setUserId(nextLong());
+		newDLFileVersion.setUserId(ServiceTestUtil.nextLong());
 
-		newDLFileVersion.setUserName(randomString());
+		newDLFileVersion.setUserName(ServiceTestUtil.randomString());
 
-		newDLFileVersion.setCreateDate(nextDate());
+		newDLFileVersion.setCreateDate(ServiceTestUtil.nextDate());
 
-		newDLFileVersion.setModifiedDate(nextDate());
+		newDLFileVersion.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newDLFileVersion.setRepositoryId(nextLong());
+		newDLFileVersion.setRepositoryId(ServiceTestUtil.nextLong());
 
-		newDLFileVersion.setFolderId(nextLong());
+		newDLFileVersion.setFolderId(ServiceTestUtil.nextLong());
 
-		newDLFileVersion.setFileEntryId(nextLong());
+		newDLFileVersion.setFileEntryId(ServiceTestUtil.nextLong());
 
-		newDLFileVersion.setExtension(randomString());
+		newDLFileVersion.setExtension(ServiceTestUtil.randomString());
 
-		newDLFileVersion.setMimeType(randomString());
+		newDLFileVersion.setMimeType(ServiceTestUtil.randomString());
 
-		newDLFileVersion.setTitle(randomString());
+		newDLFileVersion.setTitle(ServiceTestUtil.randomString());
 
-		newDLFileVersion.setDescription(randomString());
+		newDLFileVersion.setDescription(ServiceTestUtil.randomString());
 
-		newDLFileVersion.setChangeLog(randomString());
+		newDLFileVersion.setChangeLog(ServiceTestUtil.randomString());
 
-		newDLFileVersion.setExtraSettings(randomString());
+		newDLFileVersion.setExtraSettings(ServiceTestUtil.randomString());
 
-		newDLFileVersion.setFileEntryTypeId(nextLong());
+		newDLFileVersion.setFileEntryTypeId(ServiceTestUtil.nextLong());
 
-		newDLFileVersion.setVersion(randomString());
+		newDLFileVersion.setVersion(ServiceTestUtil.randomString());
 
-		newDLFileVersion.setSize(nextLong());
+		newDLFileVersion.setSize(ServiceTestUtil.nextLong());
 
-		newDLFileVersion.setStatus(nextInt());
+		newDLFileVersion.setStatus(ServiceTestUtil.nextInt());
 
-		newDLFileVersion.setStatusByUserId(nextLong());
+		newDLFileVersion.setStatusByUserId(ServiceTestUtil.nextLong());
 
-		newDLFileVersion.setStatusByUserName(randomString());
+		newDLFileVersion.setStatusByUserName(ServiceTestUtil.randomString());
 
-		newDLFileVersion.setStatusDate(nextDate());
+		newDLFileVersion.setStatusDate(ServiceTestUtil.nextDate());
 
 		_persistence.update(newDLFileVersion, false);
 
 		DLFileVersion existingDLFileVersion = _persistence.findByPrimaryKey(newDLFileVersion.getPrimaryKey());
 
-		assertEquals(existingDLFileVersion.getUuid(), newDLFileVersion.getUuid());
-		assertEquals(existingDLFileVersion.getFileVersionId(),
+		Assert.assertEquals(existingDLFileVersion.getUuid(),
+			newDLFileVersion.getUuid());
+		Assert.assertEquals(existingDLFileVersion.getFileVersionId(),
 			newDLFileVersion.getFileVersionId());
-		assertEquals(existingDLFileVersion.getGroupId(),
+		Assert.assertEquals(existingDLFileVersion.getGroupId(),
 			newDLFileVersion.getGroupId());
-		assertEquals(existingDLFileVersion.getCompanyId(),
+		Assert.assertEquals(existingDLFileVersion.getCompanyId(),
 			newDLFileVersion.getCompanyId());
-		assertEquals(existingDLFileVersion.getUserId(),
+		Assert.assertEquals(existingDLFileVersion.getUserId(),
 			newDLFileVersion.getUserId());
-		assertEquals(existingDLFileVersion.getUserName(),
+		Assert.assertEquals(existingDLFileVersion.getUserName(),
 			newDLFileVersion.getUserName());
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingDLFileVersion.getCreateDate()),
 			Time.getShortTimestamp(newDLFileVersion.getCreateDate()));
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingDLFileVersion.getModifiedDate()),
 			Time.getShortTimestamp(newDLFileVersion.getModifiedDate()));
-		assertEquals(existingDLFileVersion.getRepositoryId(),
+		Assert.assertEquals(existingDLFileVersion.getRepositoryId(),
 			newDLFileVersion.getRepositoryId());
-		assertEquals(existingDLFileVersion.getFolderId(),
+		Assert.assertEquals(existingDLFileVersion.getFolderId(),
 			newDLFileVersion.getFolderId());
-		assertEquals(existingDLFileVersion.getFileEntryId(),
+		Assert.assertEquals(existingDLFileVersion.getFileEntryId(),
 			newDLFileVersion.getFileEntryId());
-		assertEquals(existingDLFileVersion.getExtension(),
+		Assert.assertEquals(existingDLFileVersion.getExtension(),
 			newDLFileVersion.getExtension());
-		assertEquals(existingDLFileVersion.getMimeType(),
+		Assert.assertEquals(existingDLFileVersion.getMimeType(),
 			newDLFileVersion.getMimeType());
-		assertEquals(existingDLFileVersion.getTitle(),
+		Assert.assertEquals(existingDLFileVersion.getTitle(),
 			newDLFileVersion.getTitle());
-		assertEquals(existingDLFileVersion.getDescription(),
+		Assert.assertEquals(existingDLFileVersion.getDescription(),
 			newDLFileVersion.getDescription());
-		assertEquals(existingDLFileVersion.getChangeLog(),
+		Assert.assertEquals(existingDLFileVersion.getChangeLog(),
 			newDLFileVersion.getChangeLog());
-		assertEquals(existingDLFileVersion.getExtraSettings(),
+		Assert.assertEquals(existingDLFileVersion.getExtraSettings(),
 			newDLFileVersion.getExtraSettings());
-		assertEquals(existingDLFileVersion.getFileEntryTypeId(),
+		Assert.assertEquals(existingDLFileVersion.getFileEntryTypeId(),
 			newDLFileVersion.getFileEntryTypeId());
-		assertEquals(existingDLFileVersion.getVersion(),
+		Assert.assertEquals(existingDLFileVersion.getVersion(),
 			newDLFileVersion.getVersion());
-		assertEquals(existingDLFileVersion.getSize(), newDLFileVersion.getSize());
-		assertEquals(existingDLFileVersion.getStatus(),
+		Assert.assertEquals(existingDLFileVersion.getSize(),
+			newDLFileVersion.getSize());
+		Assert.assertEquals(existingDLFileVersion.getStatus(),
 			newDLFileVersion.getStatus());
-		assertEquals(existingDLFileVersion.getStatusByUserId(),
+		Assert.assertEquals(existingDLFileVersion.getStatusByUserId(),
 			newDLFileVersion.getStatusByUserId());
-		assertEquals(existingDLFileVersion.getStatusByUserName(),
+		Assert.assertEquals(existingDLFileVersion.getStatusByUserName(),
 			newDLFileVersion.getStatusByUserName());
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingDLFileVersion.getStatusDate()),
 			Time.getShortTimestamp(newDLFileVersion.getStatusDate()));
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		DLFileVersion newDLFileVersion = addDLFileVersion();
 
 		DLFileVersion existingDLFileVersion = _persistence.findByPrimaryKey(newDLFileVersion.getPrimaryKey());
 
-		assertEquals(existingDLFileVersion, newDLFileVersion);
+		Assert.assertEquals(existingDLFileVersion, newDLFileVersion);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchFileVersionException");
+			Assert.fail(
+				"Missing entity did not throw NoSuchFileVersionException");
 		}
 		catch (NoSuchFileVersionException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		DLFileVersion newDLFileVersion = addDLFileVersion();
 
 		DLFileVersion existingDLFileVersion = _persistence.fetchByPrimaryKey(newDLFileVersion.getPrimaryKey());
 
-		assertEquals(existingDLFileVersion, newDLFileVersion);
+		Assert.assertEquals(existingDLFileVersion, newDLFileVersion);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		DLFileVersion missingDLFileVersion = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingDLFileVersion);
+		Assert.assertNull(missingDLFileVersion);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		DLFileVersion newDLFileVersion = addDLFileVersion();
@@ -219,24 +241,27 @@ public class DLFileVersionPersistenceTest extends BasePersistenceTestCase {
 
 		List<DLFileVersion> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		DLFileVersion existingDLFileVersion = result.get(0);
 
-		assertEquals(existingDLFileVersion, newDLFileVersion);
+		Assert.assertEquals(existingDLFileVersion, newDLFileVersion);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLFileVersion.class,
 				DLFileVersion.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("fileVersionId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("fileVersionId",
+				ServiceTestUtil.nextLong()));
 
 		List<DLFileVersion> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		DLFileVersion newDLFileVersion = addDLFileVersion();
@@ -254,13 +279,14 @@ public class DLFileVersionPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingFileVersionId = result.get(0);
 
-		assertEquals(existingFileVersionId, newFileVersionId);
+		Assert.assertEquals(existingFileVersionId, newFileVersionId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLFileVersion.class,
 				DLFileVersion.class.getClassLoader());
@@ -269,13 +295,14 @@ public class DLFileVersionPersistenceTest extends BasePersistenceTestCase {
 				"fileVersionId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("fileVersionId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -287,68 +314,69 @@ public class DLFileVersionPersistenceTest extends BasePersistenceTestCase {
 
 		DLFileVersionModelImpl existingDLFileVersionModelImpl = (DLFileVersionModelImpl)_persistence.findByPrimaryKey(newDLFileVersion.getPrimaryKey());
 
-		assertTrue(Validator.equals(existingDLFileVersionModelImpl.getUuid(),
+		Assert.assertTrue(Validator.equals(
+				existingDLFileVersionModelImpl.getUuid(),
 				existingDLFileVersionModelImpl.getOriginalUuid()));
-		assertEquals(existingDLFileVersionModelImpl.getGroupId(),
+		Assert.assertEquals(existingDLFileVersionModelImpl.getGroupId(),
 			existingDLFileVersionModelImpl.getOriginalGroupId());
 
-		assertEquals(existingDLFileVersionModelImpl.getFileEntryId(),
+		Assert.assertEquals(existingDLFileVersionModelImpl.getFileEntryId(),
 			existingDLFileVersionModelImpl.getOriginalFileEntryId());
-		assertTrue(Validator.equals(
+		Assert.assertTrue(Validator.equals(
 				existingDLFileVersionModelImpl.getVersion(),
 				existingDLFileVersionModelImpl.getOriginalVersion()));
 	}
 
 	protected DLFileVersion addDLFileVersion() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		DLFileVersion dlFileVersion = _persistence.create(pk);
 
-		dlFileVersion.setUuid(randomString());
+		dlFileVersion.setUuid(ServiceTestUtil.randomString());
 
-		dlFileVersion.setGroupId(nextLong());
+		dlFileVersion.setGroupId(ServiceTestUtil.nextLong());
 
-		dlFileVersion.setCompanyId(nextLong());
+		dlFileVersion.setCompanyId(ServiceTestUtil.nextLong());
 
-		dlFileVersion.setUserId(nextLong());
+		dlFileVersion.setUserId(ServiceTestUtil.nextLong());
 
-		dlFileVersion.setUserName(randomString());
+		dlFileVersion.setUserName(ServiceTestUtil.randomString());
 
-		dlFileVersion.setCreateDate(nextDate());
+		dlFileVersion.setCreateDate(ServiceTestUtil.nextDate());
 
-		dlFileVersion.setModifiedDate(nextDate());
+		dlFileVersion.setModifiedDate(ServiceTestUtil.nextDate());
 
-		dlFileVersion.setRepositoryId(nextLong());
+		dlFileVersion.setRepositoryId(ServiceTestUtil.nextLong());
 
-		dlFileVersion.setFolderId(nextLong());
+		dlFileVersion.setFolderId(ServiceTestUtil.nextLong());
 
-		dlFileVersion.setFileEntryId(nextLong());
+		dlFileVersion.setFileEntryId(ServiceTestUtil.nextLong());
 
-		dlFileVersion.setExtension(randomString());
+		dlFileVersion.setExtension(ServiceTestUtil.randomString());
 
-		dlFileVersion.setMimeType(randomString());
+		dlFileVersion.setMimeType(ServiceTestUtil.randomString());
 
-		dlFileVersion.setTitle(randomString());
+		dlFileVersion.setTitle(ServiceTestUtil.randomString());
 
-		dlFileVersion.setDescription(randomString());
+		dlFileVersion.setDescription(ServiceTestUtil.randomString());
 
-		dlFileVersion.setChangeLog(randomString());
+		dlFileVersion.setChangeLog(ServiceTestUtil.randomString());
 
-		dlFileVersion.setExtraSettings(randomString());
+		dlFileVersion.setExtraSettings(ServiceTestUtil.randomString());
 
-		dlFileVersion.setFileEntryTypeId(nextLong());
+		dlFileVersion.setFileEntryTypeId(ServiceTestUtil.nextLong());
 
-		dlFileVersion.setVersion(randomString());
+		dlFileVersion.setVersion(ServiceTestUtil.randomString());
 
-		dlFileVersion.setSize(nextLong());
+		dlFileVersion.setSize(ServiceTestUtil.nextLong());
 
-		dlFileVersion.setStatus(nextInt());
+		dlFileVersion.setStatus(ServiceTestUtil.nextInt());
 
-		dlFileVersion.setStatusByUserId(nextLong());
+		dlFileVersion.setStatusByUserId(ServiceTestUtil.nextLong());
 
-		dlFileVersion.setStatusByUserName(randomString());
+		dlFileVersion.setStatusByUserName(ServiceTestUtil.randomString());
 
-		dlFileVersion.setStatusDate(nextDate());
+		dlFileVersion.setStatusDate(ServiceTestUtil.nextDate());
 
 		_persistence.update(dlFileVersion, false);
 

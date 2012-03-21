@@ -21,36 +21,49 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.assertion.AssertUtils;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.shopping.NoSuchItemException;
 import com.liferay.portlet.shopping.model.ShoppingItem;
 import com.liferay.portlet.shopping.model.impl.ShoppingItemModelImpl;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class ShoppingItemPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class ShoppingItemPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (ShoppingItemPersistence)PortalBeanLocatorUtil.locate(ShoppingItemPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ShoppingItem shoppingItem = _persistence.create(pk);
 
-		assertNotNull(shoppingItem);
+		Assert.assertNotNull(shoppingItem);
 
-		assertEquals(shoppingItem.getPrimaryKey(), pk);
+		Assert.assertEquals(shoppingItem.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		ShoppingItem newShoppingItem = addShoppingItem();
 
@@ -58,192 +71,203 @@ public class ShoppingItemPersistenceTest extends BasePersistenceTestCase {
 
 		ShoppingItem existingShoppingItem = _persistence.fetchByPrimaryKey(newShoppingItem.getPrimaryKey());
 
-		assertNull(existingShoppingItem);
+		Assert.assertNull(existingShoppingItem);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addShoppingItem();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ShoppingItem newShoppingItem = _persistence.create(pk);
 
-		newShoppingItem.setGroupId(nextLong());
+		newShoppingItem.setGroupId(ServiceTestUtil.nextLong());
 
-		newShoppingItem.setCompanyId(nextLong());
+		newShoppingItem.setCompanyId(ServiceTestUtil.nextLong());
 
-		newShoppingItem.setUserId(nextLong());
+		newShoppingItem.setUserId(ServiceTestUtil.nextLong());
 
-		newShoppingItem.setUserName(randomString());
+		newShoppingItem.setUserName(ServiceTestUtil.randomString());
 
-		newShoppingItem.setCreateDate(nextDate());
+		newShoppingItem.setCreateDate(ServiceTestUtil.nextDate());
 
-		newShoppingItem.setModifiedDate(nextDate());
+		newShoppingItem.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newShoppingItem.setCategoryId(nextLong());
+		newShoppingItem.setCategoryId(ServiceTestUtil.nextLong());
 
-		newShoppingItem.setSku(randomString());
+		newShoppingItem.setSku(ServiceTestUtil.randomString());
 
-		newShoppingItem.setName(randomString());
+		newShoppingItem.setName(ServiceTestUtil.randomString());
 
-		newShoppingItem.setDescription(randomString());
+		newShoppingItem.setDescription(ServiceTestUtil.randomString());
 
-		newShoppingItem.setProperties(randomString());
+		newShoppingItem.setProperties(ServiceTestUtil.randomString());
 
-		newShoppingItem.setFields(randomBoolean());
+		newShoppingItem.setFields(ServiceTestUtil.randomBoolean());
 
-		newShoppingItem.setFieldsQuantities(randomString());
+		newShoppingItem.setFieldsQuantities(ServiceTestUtil.randomString());
 
-		newShoppingItem.setMinQuantity(nextInt());
+		newShoppingItem.setMinQuantity(ServiceTestUtil.nextInt());
 
-		newShoppingItem.setMaxQuantity(nextInt());
+		newShoppingItem.setMaxQuantity(ServiceTestUtil.nextInt());
 
-		newShoppingItem.setPrice(nextDouble());
+		newShoppingItem.setPrice(ServiceTestUtil.nextDouble());
 
-		newShoppingItem.setDiscount(nextDouble());
+		newShoppingItem.setDiscount(ServiceTestUtil.nextDouble());
 
-		newShoppingItem.setTaxable(randomBoolean());
+		newShoppingItem.setTaxable(ServiceTestUtil.randomBoolean());
 
-		newShoppingItem.setShipping(nextDouble());
+		newShoppingItem.setShipping(ServiceTestUtil.nextDouble());
 
-		newShoppingItem.setUseShippingFormula(randomBoolean());
+		newShoppingItem.setUseShippingFormula(ServiceTestUtil.randomBoolean());
 
-		newShoppingItem.setRequiresShipping(randomBoolean());
+		newShoppingItem.setRequiresShipping(ServiceTestUtil.randomBoolean());
 
-		newShoppingItem.setStockQuantity(nextInt());
+		newShoppingItem.setStockQuantity(ServiceTestUtil.nextInt());
 
-		newShoppingItem.setFeatured(randomBoolean());
+		newShoppingItem.setFeatured(ServiceTestUtil.randomBoolean());
 
-		newShoppingItem.setSale(randomBoolean());
+		newShoppingItem.setSale(ServiceTestUtil.randomBoolean());
 
-		newShoppingItem.setSmallImage(randomBoolean());
+		newShoppingItem.setSmallImage(ServiceTestUtil.randomBoolean());
 
-		newShoppingItem.setSmallImageId(nextLong());
+		newShoppingItem.setSmallImageId(ServiceTestUtil.nextLong());
 
-		newShoppingItem.setSmallImageURL(randomString());
+		newShoppingItem.setSmallImageURL(ServiceTestUtil.randomString());
 
-		newShoppingItem.setMediumImage(randomBoolean());
+		newShoppingItem.setMediumImage(ServiceTestUtil.randomBoolean());
 
-		newShoppingItem.setMediumImageId(nextLong());
+		newShoppingItem.setMediumImageId(ServiceTestUtil.nextLong());
 
-		newShoppingItem.setMediumImageURL(randomString());
+		newShoppingItem.setMediumImageURL(ServiceTestUtil.randomString());
 
-		newShoppingItem.setLargeImage(randomBoolean());
+		newShoppingItem.setLargeImage(ServiceTestUtil.randomBoolean());
 
-		newShoppingItem.setLargeImageId(nextLong());
+		newShoppingItem.setLargeImageId(ServiceTestUtil.nextLong());
 
-		newShoppingItem.setLargeImageURL(randomString());
+		newShoppingItem.setLargeImageURL(ServiceTestUtil.randomString());
 
 		_persistence.update(newShoppingItem, false);
 
 		ShoppingItem existingShoppingItem = _persistence.findByPrimaryKey(newShoppingItem.getPrimaryKey());
 
-		assertEquals(existingShoppingItem.getItemId(),
+		Assert.assertEquals(existingShoppingItem.getItemId(),
 			newShoppingItem.getItemId());
-		assertEquals(existingShoppingItem.getGroupId(),
+		Assert.assertEquals(existingShoppingItem.getGroupId(),
 			newShoppingItem.getGroupId());
-		assertEquals(existingShoppingItem.getCompanyId(),
+		Assert.assertEquals(existingShoppingItem.getCompanyId(),
 			newShoppingItem.getCompanyId());
-		assertEquals(existingShoppingItem.getUserId(),
+		Assert.assertEquals(existingShoppingItem.getUserId(),
 			newShoppingItem.getUserId());
-		assertEquals(existingShoppingItem.getUserName(),
+		Assert.assertEquals(existingShoppingItem.getUserName(),
 			newShoppingItem.getUserName());
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingShoppingItem.getCreateDate()),
 			Time.getShortTimestamp(newShoppingItem.getCreateDate()));
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingShoppingItem.getModifiedDate()),
 			Time.getShortTimestamp(newShoppingItem.getModifiedDate()));
-		assertEquals(existingShoppingItem.getCategoryId(),
+		Assert.assertEquals(existingShoppingItem.getCategoryId(),
 			newShoppingItem.getCategoryId());
-		assertEquals(existingShoppingItem.getSku(), newShoppingItem.getSku());
-		assertEquals(existingShoppingItem.getName(), newShoppingItem.getName());
-		assertEquals(existingShoppingItem.getDescription(),
+		Assert.assertEquals(existingShoppingItem.getSku(),
+			newShoppingItem.getSku());
+		Assert.assertEquals(existingShoppingItem.getName(),
+			newShoppingItem.getName());
+		Assert.assertEquals(existingShoppingItem.getDescription(),
 			newShoppingItem.getDescription());
-		assertEquals(existingShoppingItem.getProperties(),
+		Assert.assertEquals(existingShoppingItem.getProperties(),
 			newShoppingItem.getProperties());
-		assertEquals(existingShoppingItem.getFields(),
+		Assert.assertEquals(existingShoppingItem.getFields(),
 			newShoppingItem.getFields());
-		assertEquals(existingShoppingItem.getFieldsQuantities(),
+		Assert.assertEquals(existingShoppingItem.getFieldsQuantities(),
 			newShoppingItem.getFieldsQuantities());
-		assertEquals(existingShoppingItem.getMinQuantity(),
+		Assert.assertEquals(existingShoppingItem.getMinQuantity(),
 			newShoppingItem.getMinQuantity());
-		assertEquals(existingShoppingItem.getMaxQuantity(),
+		Assert.assertEquals(existingShoppingItem.getMaxQuantity(),
 			newShoppingItem.getMaxQuantity());
-		assertEquals(existingShoppingItem.getPrice(), newShoppingItem.getPrice());
-		assertEquals(existingShoppingItem.getDiscount(),
+		AssertUtils.assertEquals(existingShoppingItem.getPrice(),
+			newShoppingItem.getPrice());
+		AssertUtils.assertEquals(existingShoppingItem.getDiscount(),
 			newShoppingItem.getDiscount());
-		assertEquals(existingShoppingItem.getTaxable(),
+		Assert.assertEquals(existingShoppingItem.getTaxable(),
 			newShoppingItem.getTaxable());
-		assertEquals(existingShoppingItem.getShipping(),
+		AssertUtils.assertEquals(existingShoppingItem.getShipping(),
 			newShoppingItem.getShipping());
-		assertEquals(existingShoppingItem.getUseShippingFormula(),
+		Assert.assertEquals(existingShoppingItem.getUseShippingFormula(),
 			newShoppingItem.getUseShippingFormula());
-		assertEquals(existingShoppingItem.getRequiresShipping(),
+		Assert.assertEquals(existingShoppingItem.getRequiresShipping(),
 			newShoppingItem.getRequiresShipping());
-		assertEquals(existingShoppingItem.getStockQuantity(),
+		Assert.assertEquals(existingShoppingItem.getStockQuantity(),
 			newShoppingItem.getStockQuantity());
-		assertEquals(existingShoppingItem.getFeatured(),
+		Assert.assertEquals(existingShoppingItem.getFeatured(),
 			newShoppingItem.getFeatured());
-		assertEquals(existingShoppingItem.getSale(), newShoppingItem.getSale());
-		assertEquals(existingShoppingItem.getSmallImage(),
+		Assert.assertEquals(existingShoppingItem.getSale(),
+			newShoppingItem.getSale());
+		Assert.assertEquals(existingShoppingItem.getSmallImage(),
 			newShoppingItem.getSmallImage());
-		assertEquals(existingShoppingItem.getSmallImageId(),
+		Assert.assertEquals(existingShoppingItem.getSmallImageId(),
 			newShoppingItem.getSmallImageId());
-		assertEquals(existingShoppingItem.getSmallImageURL(),
+		Assert.assertEquals(existingShoppingItem.getSmallImageURL(),
 			newShoppingItem.getSmallImageURL());
-		assertEquals(existingShoppingItem.getMediumImage(),
+		Assert.assertEquals(existingShoppingItem.getMediumImage(),
 			newShoppingItem.getMediumImage());
-		assertEquals(existingShoppingItem.getMediumImageId(),
+		Assert.assertEquals(existingShoppingItem.getMediumImageId(),
 			newShoppingItem.getMediumImageId());
-		assertEquals(existingShoppingItem.getMediumImageURL(),
+		Assert.assertEquals(existingShoppingItem.getMediumImageURL(),
 			newShoppingItem.getMediumImageURL());
-		assertEquals(existingShoppingItem.getLargeImage(),
+		Assert.assertEquals(existingShoppingItem.getLargeImage(),
 			newShoppingItem.getLargeImage());
-		assertEquals(existingShoppingItem.getLargeImageId(),
+		Assert.assertEquals(existingShoppingItem.getLargeImageId(),
 			newShoppingItem.getLargeImageId());
-		assertEquals(existingShoppingItem.getLargeImageURL(),
+		Assert.assertEquals(existingShoppingItem.getLargeImageURL(),
 			newShoppingItem.getLargeImageURL());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ShoppingItem newShoppingItem = addShoppingItem();
 
 		ShoppingItem existingShoppingItem = _persistence.findByPrimaryKey(newShoppingItem.getPrimaryKey());
 
-		assertEquals(existingShoppingItem, newShoppingItem);
+		Assert.assertEquals(existingShoppingItem, newShoppingItem);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchItemException");
+			Assert.fail("Missing entity did not throw NoSuchItemException");
 		}
 		catch (NoSuchItemException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		ShoppingItem newShoppingItem = addShoppingItem();
 
 		ShoppingItem existingShoppingItem = _persistence.fetchByPrimaryKey(newShoppingItem.getPrimaryKey());
 
-		assertEquals(existingShoppingItem, newShoppingItem);
+		Assert.assertEquals(existingShoppingItem, newShoppingItem);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ShoppingItem missingShoppingItem = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingShoppingItem);
+		Assert.assertNull(missingShoppingItem);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		ShoppingItem newShoppingItem = addShoppingItem();
@@ -256,24 +280,27 @@ public class ShoppingItemPersistenceTest extends BasePersistenceTestCase {
 
 		List<ShoppingItem> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		ShoppingItem existingShoppingItem = result.get(0);
 
-		assertEquals(existingShoppingItem, newShoppingItem);
+		Assert.assertEquals(existingShoppingItem, newShoppingItem);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ShoppingItem.class,
 				ShoppingItem.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("itemId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("itemId",
+				ServiceTestUtil.nextLong()));
 
 		List<ShoppingItem> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		ShoppingItem newShoppingItem = addShoppingItem();
@@ -290,13 +317,14 @@ public class ShoppingItemPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingItemId = result.get(0);
 
-		assertEquals(existingItemId, newItemId);
+		Assert.assertEquals(existingItemId, newItemId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ShoppingItem.class,
 				ShoppingItem.class.getClassLoader());
@@ -304,13 +332,14 @@ public class ShoppingItemPersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("itemId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("itemId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -322,91 +351,92 @@ public class ShoppingItemPersistenceTest extends BasePersistenceTestCase {
 
 		ShoppingItemModelImpl existingShoppingItemModelImpl = (ShoppingItemModelImpl)_persistence.findByPrimaryKey(newShoppingItem.getPrimaryKey());
 
-		assertEquals(existingShoppingItemModelImpl.getSmallImageId(),
+		Assert.assertEquals(existingShoppingItemModelImpl.getSmallImageId(),
 			existingShoppingItemModelImpl.getOriginalSmallImageId());
 
-		assertEquals(existingShoppingItemModelImpl.getMediumImageId(),
+		Assert.assertEquals(existingShoppingItemModelImpl.getMediumImageId(),
 			existingShoppingItemModelImpl.getOriginalMediumImageId());
 
-		assertEquals(existingShoppingItemModelImpl.getLargeImageId(),
+		Assert.assertEquals(existingShoppingItemModelImpl.getLargeImageId(),
 			existingShoppingItemModelImpl.getOriginalLargeImageId());
 
-		assertEquals(existingShoppingItemModelImpl.getCompanyId(),
+		Assert.assertEquals(existingShoppingItemModelImpl.getCompanyId(),
 			existingShoppingItemModelImpl.getOriginalCompanyId());
-		assertTrue(Validator.equals(existingShoppingItemModelImpl.getSku(),
+		Assert.assertTrue(Validator.equals(
+				existingShoppingItemModelImpl.getSku(),
 				existingShoppingItemModelImpl.getOriginalSku()));
 	}
 
 	protected ShoppingItem addShoppingItem() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ShoppingItem shoppingItem = _persistence.create(pk);
 
-		shoppingItem.setGroupId(nextLong());
+		shoppingItem.setGroupId(ServiceTestUtil.nextLong());
 
-		shoppingItem.setCompanyId(nextLong());
+		shoppingItem.setCompanyId(ServiceTestUtil.nextLong());
 
-		shoppingItem.setUserId(nextLong());
+		shoppingItem.setUserId(ServiceTestUtil.nextLong());
 
-		shoppingItem.setUserName(randomString());
+		shoppingItem.setUserName(ServiceTestUtil.randomString());
 
-		shoppingItem.setCreateDate(nextDate());
+		shoppingItem.setCreateDate(ServiceTestUtil.nextDate());
 
-		shoppingItem.setModifiedDate(nextDate());
+		shoppingItem.setModifiedDate(ServiceTestUtil.nextDate());
 
-		shoppingItem.setCategoryId(nextLong());
+		shoppingItem.setCategoryId(ServiceTestUtil.nextLong());
 
-		shoppingItem.setSku(randomString());
+		shoppingItem.setSku(ServiceTestUtil.randomString());
 
-		shoppingItem.setName(randomString());
+		shoppingItem.setName(ServiceTestUtil.randomString());
 
-		shoppingItem.setDescription(randomString());
+		shoppingItem.setDescription(ServiceTestUtil.randomString());
 
-		shoppingItem.setProperties(randomString());
+		shoppingItem.setProperties(ServiceTestUtil.randomString());
 
-		shoppingItem.setFields(randomBoolean());
+		shoppingItem.setFields(ServiceTestUtil.randomBoolean());
 
-		shoppingItem.setFieldsQuantities(randomString());
+		shoppingItem.setFieldsQuantities(ServiceTestUtil.randomString());
 
-		shoppingItem.setMinQuantity(nextInt());
+		shoppingItem.setMinQuantity(ServiceTestUtil.nextInt());
 
-		shoppingItem.setMaxQuantity(nextInt());
+		shoppingItem.setMaxQuantity(ServiceTestUtil.nextInt());
 
-		shoppingItem.setPrice(nextDouble());
+		shoppingItem.setPrice(ServiceTestUtil.nextDouble());
 
-		shoppingItem.setDiscount(nextDouble());
+		shoppingItem.setDiscount(ServiceTestUtil.nextDouble());
 
-		shoppingItem.setTaxable(randomBoolean());
+		shoppingItem.setTaxable(ServiceTestUtil.randomBoolean());
 
-		shoppingItem.setShipping(nextDouble());
+		shoppingItem.setShipping(ServiceTestUtil.nextDouble());
 
-		shoppingItem.setUseShippingFormula(randomBoolean());
+		shoppingItem.setUseShippingFormula(ServiceTestUtil.randomBoolean());
 
-		shoppingItem.setRequiresShipping(randomBoolean());
+		shoppingItem.setRequiresShipping(ServiceTestUtil.randomBoolean());
 
-		shoppingItem.setStockQuantity(nextInt());
+		shoppingItem.setStockQuantity(ServiceTestUtil.nextInt());
 
-		shoppingItem.setFeatured(randomBoolean());
+		shoppingItem.setFeatured(ServiceTestUtil.randomBoolean());
 
-		shoppingItem.setSale(randomBoolean());
+		shoppingItem.setSale(ServiceTestUtil.randomBoolean());
 
-		shoppingItem.setSmallImage(randomBoolean());
+		shoppingItem.setSmallImage(ServiceTestUtil.randomBoolean());
 
-		shoppingItem.setSmallImageId(nextLong());
+		shoppingItem.setSmallImageId(ServiceTestUtil.nextLong());
 
-		shoppingItem.setSmallImageURL(randomString());
+		shoppingItem.setSmallImageURL(ServiceTestUtil.randomString());
 
-		shoppingItem.setMediumImage(randomBoolean());
+		shoppingItem.setMediumImage(ServiceTestUtil.randomBoolean());
 
-		shoppingItem.setMediumImageId(nextLong());
+		shoppingItem.setMediumImageId(ServiceTestUtil.nextLong());
 
-		shoppingItem.setMediumImageURL(randomString());
+		shoppingItem.setMediumImageURL(ServiceTestUtil.randomString());
 
-		shoppingItem.setLargeImage(randomBoolean());
+		shoppingItem.setLargeImage(ServiceTestUtil.randomBoolean());
 
-		shoppingItem.setLargeImageId(nextLong());
+		shoppingItem.setLargeImageId(ServiceTestUtil.nextLong());
 
-		shoppingItem.setLargeImageURL(randomString());
+		shoppingItem.setLargeImageURL(ServiceTestUtil.randomString());
 
 		_persistence.update(shoppingItem, false);
 

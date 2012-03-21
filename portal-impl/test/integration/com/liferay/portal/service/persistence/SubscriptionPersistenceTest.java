@@ -23,32 +23,44 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.Subscription;
 import com.liferay.portal.model.impl.SubscriptionModelImpl;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class SubscriptionPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class SubscriptionPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (SubscriptionPersistence)PortalBeanLocatorUtil.locate(SubscriptionPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Subscription subscription = _persistence.create(pk);
 
-		assertNotNull(subscription);
+		Assert.assertNotNull(subscription);
 
-		assertEquals(subscription.getPrimaryKey(), pk);
+		Assert.assertEquals(subscription.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		Subscription newSubscription = addSubscription();
 
@@ -56,96 +68,104 @@ public class SubscriptionPersistenceTest extends BasePersistenceTestCase {
 
 		Subscription existingSubscription = _persistence.fetchByPrimaryKey(newSubscription.getPrimaryKey());
 
-		assertNull(existingSubscription);
+		Assert.assertNull(existingSubscription);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addSubscription();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Subscription newSubscription = _persistence.create(pk);
 
-		newSubscription.setCompanyId(nextLong());
+		newSubscription.setCompanyId(ServiceTestUtil.nextLong());
 
-		newSubscription.setUserId(nextLong());
+		newSubscription.setUserId(ServiceTestUtil.nextLong());
 
-		newSubscription.setUserName(randomString());
+		newSubscription.setUserName(ServiceTestUtil.randomString());
 
-		newSubscription.setCreateDate(nextDate());
+		newSubscription.setCreateDate(ServiceTestUtil.nextDate());
 
-		newSubscription.setModifiedDate(nextDate());
+		newSubscription.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newSubscription.setClassNameId(nextLong());
+		newSubscription.setClassNameId(ServiceTestUtil.nextLong());
 
-		newSubscription.setClassPK(nextLong());
+		newSubscription.setClassPK(ServiceTestUtil.nextLong());
 
-		newSubscription.setFrequency(randomString());
+		newSubscription.setFrequency(ServiceTestUtil.randomString());
 
 		_persistence.update(newSubscription, false);
 
 		Subscription existingSubscription = _persistence.findByPrimaryKey(newSubscription.getPrimaryKey());
 
-		assertEquals(existingSubscription.getSubscriptionId(),
+		Assert.assertEquals(existingSubscription.getSubscriptionId(),
 			newSubscription.getSubscriptionId());
-		assertEquals(existingSubscription.getCompanyId(),
+		Assert.assertEquals(existingSubscription.getCompanyId(),
 			newSubscription.getCompanyId());
-		assertEquals(existingSubscription.getUserId(),
+		Assert.assertEquals(existingSubscription.getUserId(),
 			newSubscription.getUserId());
-		assertEquals(existingSubscription.getUserName(),
+		Assert.assertEquals(existingSubscription.getUserName(),
 			newSubscription.getUserName());
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingSubscription.getCreateDate()),
 			Time.getShortTimestamp(newSubscription.getCreateDate()));
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingSubscription.getModifiedDate()),
 			Time.getShortTimestamp(newSubscription.getModifiedDate()));
-		assertEquals(existingSubscription.getClassNameId(),
+		Assert.assertEquals(existingSubscription.getClassNameId(),
 			newSubscription.getClassNameId());
-		assertEquals(existingSubscription.getClassPK(),
+		Assert.assertEquals(existingSubscription.getClassPK(),
 			newSubscription.getClassPK());
-		assertEquals(existingSubscription.getFrequency(),
+		Assert.assertEquals(existingSubscription.getFrequency(),
 			newSubscription.getFrequency());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Subscription newSubscription = addSubscription();
 
 		Subscription existingSubscription = _persistence.findByPrimaryKey(newSubscription.getPrimaryKey());
 
-		assertEquals(existingSubscription, newSubscription);
+		Assert.assertEquals(existingSubscription, newSubscription);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchSubscriptionException");
+			Assert.fail(
+				"Missing entity did not throw NoSuchSubscriptionException");
 		}
 		catch (NoSuchSubscriptionException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		Subscription newSubscription = addSubscription();
 
 		Subscription existingSubscription = _persistence.fetchByPrimaryKey(newSubscription.getPrimaryKey());
 
-		assertEquals(existingSubscription, newSubscription);
+		Assert.assertEquals(existingSubscription, newSubscription);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Subscription missingSubscription = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingSubscription);
+		Assert.assertNull(missingSubscription);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		Subscription newSubscription = addSubscription();
@@ -158,24 +178,27 @@ public class SubscriptionPersistenceTest extends BasePersistenceTestCase {
 
 		List<Subscription> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Subscription existingSubscription = result.get(0);
 
-		assertEquals(existingSubscription, newSubscription);
+		Assert.assertEquals(existingSubscription, newSubscription);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Subscription.class,
 				Subscription.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("subscriptionId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("subscriptionId",
+				ServiceTestUtil.nextLong()));
 
 		List<Subscription> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		Subscription newSubscription = addSubscription();
@@ -193,13 +216,14 @@ public class SubscriptionPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingSubscriptionId = result.get(0);
 
-		assertEquals(existingSubscriptionId, newSubscriptionId);
+		Assert.assertEquals(existingSubscriptionId, newSubscriptionId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Subscription.class,
 				Subscription.class.getClassLoader());
@@ -208,13 +232,14 @@ public class SubscriptionPersistenceTest extends BasePersistenceTestCase {
 				"subscriptionId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("subscriptionId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -226,36 +251,36 @@ public class SubscriptionPersistenceTest extends BasePersistenceTestCase {
 
 		SubscriptionModelImpl existingSubscriptionModelImpl = (SubscriptionModelImpl)_persistence.findByPrimaryKey(newSubscription.getPrimaryKey());
 
-		assertEquals(existingSubscriptionModelImpl.getCompanyId(),
+		Assert.assertEquals(existingSubscriptionModelImpl.getCompanyId(),
 			existingSubscriptionModelImpl.getOriginalCompanyId());
-		assertEquals(existingSubscriptionModelImpl.getUserId(),
+		Assert.assertEquals(existingSubscriptionModelImpl.getUserId(),
 			existingSubscriptionModelImpl.getOriginalUserId());
-		assertEquals(existingSubscriptionModelImpl.getClassNameId(),
+		Assert.assertEquals(existingSubscriptionModelImpl.getClassNameId(),
 			existingSubscriptionModelImpl.getOriginalClassNameId());
-		assertEquals(existingSubscriptionModelImpl.getClassPK(),
+		Assert.assertEquals(existingSubscriptionModelImpl.getClassPK(),
 			existingSubscriptionModelImpl.getOriginalClassPK());
 	}
 
 	protected Subscription addSubscription() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Subscription subscription = _persistence.create(pk);
 
-		subscription.setCompanyId(nextLong());
+		subscription.setCompanyId(ServiceTestUtil.nextLong());
 
-		subscription.setUserId(nextLong());
+		subscription.setUserId(ServiceTestUtil.nextLong());
 
-		subscription.setUserName(randomString());
+		subscription.setUserName(ServiceTestUtil.randomString());
 
-		subscription.setCreateDate(nextDate());
+		subscription.setCreateDate(ServiceTestUtil.nextDate());
 
-		subscription.setModifiedDate(nextDate());
+		subscription.setModifiedDate(ServiceTestUtil.nextDate());
 
-		subscription.setClassNameId(nextLong());
+		subscription.setClassNameId(ServiceTestUtil.nextLong());
 
-		subscription.setClassPK(nextLong());
+		subscription.setClassPK(ServiceTestUtil.nextLong());
 
-		subscription.setFrequency(randomString());
+		subscription.setFrequency(ServiceTestUtil.randomString());
 
 		_persistence.update(subscription, false);
 

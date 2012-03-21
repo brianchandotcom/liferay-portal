@@ -22,31 +22,43 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.Account;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class AccountPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class AccountPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (AccountPersistence)PortalBeanLocatorUtil.locate(AccountPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Account account = _persistence.create(pk);
 
-		assertNotNull(account);
+		Assert.assertNotNull(account);
 
-		assertEquals(account.getPrimaryKey(), pk);
+		Assert.assertEquals(account.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		Account newAccount = addAccount();
 
@@ -54,110 +66,127 @@ public class AccountPersistenceTest extends BasePersistenceTestCase {
 
 		Account existingAccount = _persistence.fetchByPrimaryKey(newAccount.getPrimaryKey());
 
-		assertNull(existingAccount);
+		Assert.assertNull(existingAccount);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addAccount();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Account newAccount = _persistence.create(pk);
 
-		newAccount.setCompanyId(nextLong());
+		newAccount.setCompanyId(ServiceTestUtil.nextLong());
 
-		newAccount.setUserId(nextLong());
+		newAccount.setUserId(ServiceTestUtil.nextLong());
 
-		newAccount.setUserName(randomString());
+		newAccount.setUserName(ServiceTestUtil.randomString());
 
-		newAccount.setCreateDate(nextDate());
+		newAccount.setCreateDate(ServiceTestUtil.nextDate());
 
-		newAccount.setModifiedDate(nextDate());
+		newAccount.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newAccount.setParentAccountId(nextLong());
+		newAccount.setParentAccountId(ServiceTestUtil.nextLong());
 
-		newAccount.setName(randomString());
+		newAccount.setName(ServiceTestUtil.randomString());
 
-		newAccount.setLegalName(randomString());
+		newAccount.setLegalName(ServiceTestUtil.randomString());
 
-		newAccount.setLegalId(randomString());
+		newAccount.setLegalId(ServiceTestUtil.randomString());
 
-		newAccount.setLegalType(randomString());
+		newAccount.setLegalType(ServiceTestUtil.randomString());
 
-		newAccount.setSicCode(randomString());
+		newAccount.setSicCode(ServiceTestUtil.randomString());
 
-		newAccount.setTickerSymbol(randomString());
+		newAccount.setTickerSymbol(ServiceTestUtil.randomString());
 
-		newAccount.setIndustry(randomString());
+		newAccount.setIndustry(ServiceTestUtil.randomString());
 
-		newAccount.setType(randomString());
+		newAccount.setType(ServiceTestUtil.randomString());
 
-		newAccount.setSize(randomString());
+		newAccount.setSize(ServiceTestUtil.randomString());
 
 		_persistence.update(newAccount, false);
 
 		Account existingAccount = _persistence.findByPrimaryKey(newAccount.getPrimaryKey());
 
-		assertEquals(existingAccount.getAccountId(), newAccount.getAccountId());
-		assertEquals(existingAccount.getCompanyId(), newAccount.getCompanyId());
-		assertEquals(existingAccount.getUserId(), newAccount.getUserId());
-		assertEquals(existingAccount.getUserName(), newAccount.getUserName());
-		assertEquals(Time.getShortTimestamp(existingAccount.getCreateDate()),
+		Assert.assertEquals(existingAccount.getAccountId(),
+			newAccount.getAccountId());
+		Assert.assertEquals(existingAccount.getCompanyId(),
+			newAccount.getCompanyId());
+		Assert.assertEquals(existingAccount.getUserId(), newAccount.getUserId());
+		Assert.assertEquals(existingAccount.getUserName(),
+			newAccount.getUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingAccount.getCreateDate()),
 			Time.getShortTimestamp(newAccount.getCreateDate()));
-		assertEquals(Time.getShortTimestamp(existingAccount.getModifiedDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingAccount.getModifiedDate()),
 			Time.getShortTimestamp(newAccount.getModifiedDate()));
-		assertEquals(existingAccount.getParentAccountId(),
+		Assert.assertEquals(existingAccount.getParentAccountId(),
 			newAccount.getParentAccountId());
-		assertEquals(existingAccount.getName(), newAccount.getName());
-		assertEquals(existingAccount.getLegalName(), newAccount.getLegalName());
-		assertEquals(existingAccount.getLegalId(), newAccount.getLegalId());
-		assertEquals(existingAccount.getLegalType(), newAccount.getLegalType());
-		assertEquals(existingAccount.getSicCode(), newAccount.getSicCode());
-		assertEquals(existingAccount.getTickerSymbol(),
+		Assert.assertEquals(existingAccount.getName(), newAccount.getName());
+		Assert.assertEquals(existingAccount.getLegalName(),
+			newAccount.getLegalName());
+		Assert.assertEquals(existingAccount.getLegalId(),
+			newAccount.getLegalId());
+		Assert.assertEquals(existingAccount.getLegalType(),
+			newAccount.getLegalType());
+		Assert.assertEquals(existingAccount.getSicCode(),
+			newAccount.getSicCode());
+		Assert.assertEquals(existingAccount.getTickerSymbol(),
 			newAccount.getTickerSymbol());
-		assertEquals(existingAccount.getIndustry(), newAccount.getIndustry());
-		assertEquals(existingAccount.getType(), newAccount.getType());
-		assertEquals(existingAccount.getSize(), newAccount.getSize());
+		Assert.assertEquals(existingAccount.getIndustry(),
+			newAccount.getIndustry());
+		Assert.assertEquals(existingAccount.getType(), newAccount.getType());
+		Assert.assertEquals(existingAccount.getSize(), newAccount.getSize());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Account newAccount = addAccount();
 
 		Account existingAccount = _persistence.findByPrimaryKey(newAccount.getPrimaryKey());
 
-		assertEquals(existingAccount, newAccount);
+		Assert.assertEquals(existingAccount, newAccount);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchAccountException");
+			Assert.fail("Missing entity did not throw NoSuchAccountException");
 		}
 		catch (NoSuchAccountException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		Account newAccount = addAccount();
 
 		Account existingAccount = _persistence.fetchByPrimaryKey(newAccount.getPrimaryKey());
 
-		assertEquals(existingAccount, newAccount);
+		Assert.assertEquals(existingAccount, newAccount);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Account missingAccount = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingAccount);
+		Assert.assertNull(missingAccount);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		Account newAccount = addAccount();
@@ -170,24 +199,27 @@ public class AccountPersistenceTest extends BasePersistenceTestCase {
 
 		List<Account> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Account existingAccount = result.get(0);
 
-		assertEquals(existingAccount, newAccount);
+		Assert.assertEquals(existingAccount, newAccount);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Account.class,
 				Account.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("accountId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("accountId",
+				ServiceTestUtil.nextLong()));
 
 		List<Account> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		Account newAccount = addAccount();
@@ -204,13 +236,14 @@ public class AccountPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingAccountId = result.get(0);
 
-		assertEquals(existingAccountId, newAccountId);
+		Assert.assertEquals(existingAccountId, newAccountId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Account.class,
 				Account.class.getClassLoader());
@@ -218,47 +251,47 @@ public class AccountPersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("accountId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("accountId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
 	protected Account addAccount() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Account account = _persistence.create(pk);
 
-		account.setCompanyId(nextLong());
+		account.setCompanyId(ServiceTestUtil.nextLong());
 
-		account.setUserId(nextLong());
+		account.setUserId(ServiceTestUtil.nextLong());
 
-		account.setUserName(randomString());
+		account.setUserName(ServiceTestUtil.randomString());
 
-		account.setCreateDate(nextDate());
+		account.setCreateDate(ServiceTestUtil.nextDate());
 
-		account.setModifiedDate(nextDate());
+		account.setModifiedDate(ServiceTestUtil.nextDate());
 
-		account.setParentAccountId(nextLong());
+		account.setParentAccountId(ServiceTestUtil.nextLong());
 
-		account.setName(randomString());
+		account.setName(ServiceTestUtil.randomString());
 
-		account.setLegalName(randomString());
+		account.setLegalName(ServiceTestUtil.randomString());
 
-		account.setLegalId(randomString());
+		account.setLegalId(ServiceTestUtil.randomString());
 
-		account.setLegalType(randomString());
+		account.setLegalType(ServiceTestUtil.randomString());
 
-		account.setSicCode(randomString());
+		account.setSicCode(ServiceTestUtil.randomString());
 
-		account.setTickerSymbol(randomString());
+		account.setTickerSymbol(ServiceTestUtil.randomString());
 
-		account.setIndustry(randomString());
+		account.setIndustry(ServiceTestUtil.randomString());
 
-		account.setType(randomString());
+		account.setType(ServiceTestUtil.randomString());
 
-		account.setSize(randomString());
+		account.setSize(ServiceTestUtil.randomString());
 
 		_persistence.update(account, false);
 

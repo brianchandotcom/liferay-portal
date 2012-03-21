@@ -17,11 +17,12 @@ package com.liferay.portal.cache.key;
 /**
  * @author Shuyang Zhou
  */
-public class SimpleCacheKeyGeneratorTest extends BaseCacheKeyGeneratorTest {
+public class HashCodeCacheKeyGeneratorTest
+	extends BaseCacheKeyGeneratorTestCase {
 
 	@Override
 	public void setUp() throws Exception {
-		cacheKeyGenerator = new SimpleCacheKeyGenerator();
+		cacheKeyGenerator = new HashCodeCacheKeyGenerator();
 	}
 
 }

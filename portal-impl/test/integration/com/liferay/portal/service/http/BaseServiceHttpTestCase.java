@@ -15,13 +15,12 @@
 package com.liferay.portal.service.http;
 
 import com.liferay.portal.security.auth.HttpPrincipal;
-import com.liferay.portal.util.BaseTestCase;
 import com.liferay.portal.util.TestPropsValues;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class BaseServiceHttpTestCase extends BaseTestCase {
+public class BaseServiceHttpTestCase {
 
 	protected HttpPrincipal getHttpPrincipal(long userId) {
 		return getHttpPrincipal(userId, true);

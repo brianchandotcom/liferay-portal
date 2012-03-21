@@ -21,32 +21,44 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.model.OrgGroupPermission;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class OrgGroupPermissionPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class OrgGroupPermissionPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (OrgGroupPermissionPersistence)PortalBeanLocatorUtil.locate(OrgGroupPermissionPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		OrgGroupPermissionPK pk = new OrgGroupPermissionPK(nextLong(),
-				nextLong(), nextLong());
+		OrgGroupPermissionPK pk = new OrgGroupPermissionPK(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextLong(), ServiceTestUtil.nextLong());
 
 		OrgGroupPermission orgGroupPermission = _persistence.create(pk);
 
-		assertNotNull(orgGroupPermission);
+		Assert.assertNotNull(orgGroupPermission);
 
-		assertEquals(orgGroupPermission.getPrimaryKey(), pk);
+		Assert.assertEquals(orgGroupPermission.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		OrgGroupPermission newOrgGroupPermission = addOrgGroupPermission();
 
@@ -54,16 +66,18 @@ public class OrgGroupPermissionPersistenceTest extends BasePersistenceTestCase {
 
 		OrgGroupPermission existingOrgGroupPermission = _persistence.fetchByPrimaryKey(newOrgGroupPermission.getPrimaryKey());
 
-		assertNull(existingOrgGroupPermission);
+		Assert.assertNull(existingOrgGroupPermission);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addOrgGroupPermission();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		OrgGroupPermissionPK pk = new OrgGroupPermissionPK(nextLong(),
-				nextLong(), nextLong());
+		OrgGroupPermissionPK pk = new OrgGroupPermissionPK(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextLong(), ServiceTestUtil.nextLong());
 
 		OrgGroupPermission newOrgGroupPermission = _persistence.create(pk);
 
@@ -71,53 +85,58 @@ public class OrgGroupPermissionPersistenceTest extends BasePersistenceTestCase {
 
 		OrgGroupPermission existingOrgGroupPermission = _persistence.findByPrimaryKey(newOrgGroupPermission.getPrimaryKey());
 
-		assertEquals(existingOrgGroupPermission.getOrganizationId(),
+		Assert.assertEquals(existingOrgGroupPermission.getOrganizationId(),
 			newOrgGroupPermission.getOrganizationId());
-		assertEquals(existingOrgGroupPermission.getGroupId(),
+		Assert.assertEquals(existingOrgGroupPermission.getGroupId(),
 			newOrgGroupPermission.getGroupId());
-		assertEquals(existingOrgGroupPermission.getPermissionId(),
+		Assert.assertEquals(existingOrgGroupPermission.getPermissionId(),
 			newOrgGroupPermission.getPermissionId());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		OrgGroupPermission newOrgGroupPermission = addOrgGroupPermission();
 
 		OrgGroupPermission existingOrgGroupPermission = _persistence.findByPrimaryKey(newOrgGroupPermission.getPrimaryKey());
 
-		assertEquals(existingOrgGroupPermission, newOrgGroupPermission);
+		Assert.assertEquals(existingOrgGroupPermission, newOrgGroupPermission);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		OrgGroupPermissionPK pk = new OrgGroupPermissionPK(nextLong(),
-				nextLong(), nextLong());
+		OrgGroupPermissionPK pk = new OrgGroupPermissionPK(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextLong(), ServiceTestUtil.nextLong());
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail(
+			Assert.fail(
 				"Missing entity did not throw NoSuchOrgGroupPermissionException");
 		}
 		catch (NoSuchOrgGroupPermissionException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		OrgGroupPermission newOrgGroupPermission = addOrgGroupPermission();
 
 		OrgGroupPermission existingOrgGroupPermission = _persistence.fetchByPrimaryKey(newOrgGroupPermission.getPrimaryKey());
 
-		assertEquals(existingOrgGroupPermission, newOrgGroupPermission);
+		Assert.assertEquals(existingOrgGroupPermission, newOrgGroupPermission);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		OrgGroupPermissionPK pk = new OrgGroupPermissionPK(nextLong(),
-				nextLong(), nextLong());
+		OrgGroupPermissionPK pk = new OrgGroupPermissionPK(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextLong(), ServiceTestUtil.nextLong());
 
 		OrgGroupPermission missingOrgGroupPermission = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingOrgGroupPermission);
+		Assert.assertNull(missingOrgGroupPermission);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		OrgGroupPermission newOrgGroupPermission = addOrgGroupPermission();
@@ -134,28 +153,31 @@ public class OrgGroupPermissionPersistenceTest extends BasePersistenceTestCase {
 
 		List<OrgGroupPermission> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		OrgGroupPermission existingOrgGroupPermission = result.get(0);
 
-		assertEquals(existingOrgGroupPermission, newOrgGroupPermission);
+		Assert.assertEquals(existingOrgGroupPermission, newOrgGroupPermission);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(OrgGroupPermission.class,
 				OrgGroupPermission.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.organizationId",
-				nextLong()));
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.groupId", nextLong()));
+				ServiceTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.groupId",
+				ServiceTestUtil.nextLong()));
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.permissionId",
-				nextLong()));
+				ServiceTestUtil.nextLong()));
 
 		List<OrgGroupPermission> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		OrgGroupPermission newOrgGroupPermission = addOrgGroupPermission();
@@ -173,13 +195,14 @@ public class OrgGroupPermissionPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingOrganizationId = result.get(0);
 
-		assertEquals(existingOrganizationId, newOrganizationId);
+		Assert.assertEquals(existingOrganizationId, newOrganizationId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(OrgGroupPermission.class,
 				OrgGroupPermission.class.getClassLoader());
@@ -188,17 +211,17 @@ public class OrgGroupPermissionPersistenceTest extends BasePersistenceTestCase {
 				"id.organizationId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("id.organizationId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
 	protected OrgGroupPermission addOrgGroupPermission()
 		throws Exception {
-		OrgGroupPermissionPK pk = new OrgGroupPermissionPK(nextLong(),
-				nextLong(), nextLong());
+		OrgGroupPermissionPK pk = new OrgGroupPermissionPK(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextLong(), ServiceTestUtil.nextLong());
 
 		OrgGroupPermission orgGroupPermission = _persistence.create(pk);
 

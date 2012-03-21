@@ -66,6 +66,8 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 	@Before
 	@Override
 	public void setUp() throws Exception {
+		super.setUp();
+
 		_userIds = new long[ServiceTestUtil.THREAD_COUNT];
 
 		for (int i = 0 ; i < ServiceTestUtil.THREAD_COUNT; i++) {
@@ -80,6 +82,8 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 	@After
 	@Override
 	public void tearDown() throws Exception {
+		super.tearDown();
+
 		if (_fileEntry != null) {
 			DLAppServiceUtil.deleteFileEntry(_fileEntry.getFileEntryId());
 		}

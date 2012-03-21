@@ -14,16 +14,23 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.test.EnvironmentConfigTestListener;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+
+import org.junit.Before;
+import org.junit.runner.RunWith;
+
 /**
  * @author Alexander Chow
  * @author Brian Wing Shun Chan
  */
+@ExecutionTestListeners(listeners = {EnvironmentConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class FileMultiValueMapTest extends MultiValueMapTestCase {
 
-	@Override
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		multiValueMap = new FileMultiValueMap<Integer, String>();
 	}
 

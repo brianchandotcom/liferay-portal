@@ -24,32 +24,44 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.impl.RepositoryModelImpl;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class RepositoryPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class RepositoryPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (RepositoryPersistence)PortalBeanLocatorUtil.locate(RepositoryPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Repository repository = _persistence.create(pk);
 
-		assertNotNull(repository);
+		Assert.assertNotNull(repository);
 
-		assertEquals(repository.getPrimaryKey(), pk);
+		Assert.assertEquals(repository.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		Repository newRepository = addRepository();
 
@@ -57,111 +69,124 @@ public class RepositoryPersistenceTest extends BasePersistenceTestCase {
 
 		Repository existingRepository = _persistence.fetchByPrimaryKey(newRepository.getPrimaryKey());
 
-		assertNull(existingRepository);
+		Assert.assertNull(existingRepository);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addRepository();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Repository newRepository = _persistence.create(pk);
 
-		newRepository.setUuid(randomString());
+		newRepository.setUuid(ServiceTestUtil.randomString());
 
-		newRepository.setGroupId(nextLong());
+		newRepository.setGroupId(ServiceTestUtil.nextLong());
 
-		newRepository.setCompanyId(nextLong());
+		newRepository.setCompanyId(ServiceTestUtil.nextLong());
 
-		newRepository.setUserId(nextLong());
+		newRepository.setUserId(ServiceTestUtil.nextLong());
 
-		newRepository.setUserName(randomString());
+		newRepository.setUserName(ServiceTestUtil.randomString());
 
-		newRepository.setCreateDate(nextDate());
+		newRepository.setCreateDate(ServiceTestUtil.nextDate());
 
-		newRepository.setModifiedDate(nextDate());
+		newRepository.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newRepository.setClassNameId(nextLong());
+		newRepository.setClassNameId(ServiceTestUtil.nextLong());
 
-		newRepository.setName(randomString());
+		newRepository.setName(ServiceTestUtil.randomString());
 
-		newRepository.setDescription(randomString());
+		newRepository.setDescription(ServiceTestUtil.randomString());
 
-		newRepository.setPortletId(randomString());
+		newRepository.setPortletId(ServiceTestUtil.randomString());
 
-		newRepository.setTypeSettings(randomString());
+		newRepository.setTypeSettings(ServiceTestUtil.randomString());
 
-		newRepository.setDlFolderId(nextLong());
+		newRepository.setDlFolderId(ServiceTestUtil.nextLong());
 
 		_persistence.update(newRepository, false);
 
 		Repository existingRepository = _persistence.findByPrimaryKey(newRepository.getPrimaryKey());
 
-		assertEquals(existingRepository.getUuid(), newRepository.getUuid());
-		assertEquals(existingRepository.getRepositoryId(),
+		Assert.assertEquals(existingRepository.getUuid(),
+			newRepository.getUuid());
+		Assert.assertEquals(existingRepository.getRepositoryId(),
 			newRepository.getRepositoryId());
-		assertEquals(existingRepository.getGroupId(), newRepository.getGroupId());
-		assertEquals(existingRepository.getCompanyId(),
+		Assert.assertEquals(existingRepository.getGroupId(),
+			newRepository.getGroupId());
+		Assert.assertEquals(existingRepository.getCompanyId(),
 			newRepository.getCompanyId());
-		assertEquals(existingRepository.getUserId(), newRepository.getUserId());
-		assertEquals(existingRepository.getUserName(),
+		Assert.assertEquals(existingRepository.getUserId(),
+			newRepository.getUserId());
+		Assert.assertEquals(existingRepository.getUserName(),
 			newRepository.getUserName());
-		assertEquals(Time.getShortTimestamp(existingRepository.getCreateDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingRepository.getCreateDate()),
 			Time.getShortTimestamp(newRepository.getCreateDate()));
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingRepository.getModifiedDate()),
 			Time.getShortTimestamp(newRepository.getModifiedDate()));
-		assertEquals(existingRepository.getClassNameId(),
+		Assert.assertEquals(existingRepository.getClassNameId(),
 			newRepository.getClassNameId());
-		assertEquals(existingRepository.getName(), newRepository.getName());
-		assertEquals(existingRepository.getDescription(),
+		Assert.assertEquals(existingRepository.getName(),
+			newRepository.getName());
+		Assert.assertEquals(existingRepository.getDescription(),
 			newRepository.getDescription());
-		assertEquals(existingRepository.getPortletId(),
+		Assert.assertEquals(existingRepository.getPortletId(),
 			newRepository.getPortletId());
-		assertEquals(existingRepository.getTypeSettings(),
+		Assert.assertEquals(existingRepository.getTypeSettings(),
 			newRepository.getTypeSettings());
-		assertEquals(existingRepository.getDlFolderId(),
+		Assert.assertEquals(existingRepository.getDlFolderId(),
 			newRepository.getDlFolderId());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Repository newRepository = addRepository();
 
 		Repository existingRepository = _persistence.findByPrimaryKey(newRepository.getPrimaryKey());
 
-		assertEquals(existingRepository, newRepository);
+		Assert.assertEquals(existingRepository, newRepository);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchRepositoryException");
+			Assert.fail(
+				"Missing entity did not throw NoSuchRepositoryException");
 		}
 		catch (NoSuchRepositoryException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		Repository newRepository = addRepository();
 
 		Repository existingRepository = _persistence.fetchByPrimaryKey(newRepository.getPrimaryKey());
 
-		assertEquals(existingRepository, newRepository);
+		Assert.assertEquals(existingRepository, newRepository);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Repository missingRepository = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingRepository);
+		Assert.assertNull(missingRepository);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		Repository newRepository = addRepository();
@@ -174,24 +199,27 @@ public class RepositoryPersistenceTest extends BasePersistenceTestCase {
 
 		List<Repository> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Repository existingRepository = result.get(0);
 
-		assertEquals(existingRepository, newRepository);
+		Assert.assertEquals(existingRepository, newRepository);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Repository.class,
 				Repository.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("repositoryId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("repositoryId",
+				ServiceTestUtil.nextLong()));
 
 		List<Repository> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		Repository newRepository = addRepository();
@@ -209,13 +237,14 @@ public class RepositoryPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingRepositoryId = result.get(0);
 
-		assertEquals(existingRepositoryId, newRepositoryId);
+		Assert.assertEquals(existingRepositoryId, newRepositoryId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Repository.class,
 				Repository.class.getClassLoader());
@@ -224,13 +253,14 @@ public class RepositoryPersistenceTest extends BasePersistenceTestCase {
 				"repositoryId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("repositoryId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -242,42 +272,43 @@ public class RepositoryPersistenceTest extends BasePersistenceTestCase {
 
 		RepositoryModelImpl existingRepositoryModelImpl = (RepositoryModelImpl)_persistence.findByPrimaryKey(newRepository.getPrimaryKey());
 
-		assertTrue(Validator.equals(existingRepositoryModelImpl.getUuid(),
+		Assert.assertTrue(Validator.equals(
+				existingRepositoryModelImpl.getUuid(),
 				existingRepositoryModelImpl.getOriginalUuid()));
-		assertEquals(existingRepositoryModelImpl.getGroupId(),
+		Assert.assertEquals(existingRepositoryModelImpl.getGroupId(),
 			existingRepositoryModelImpl.getOriginalGroupId());
 	}
 
 	protected Repository addRepository() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Repository repository = _persistence.create(pk);
 
-		repository.setUuid(randomString());
+		repository.setUuid(ServiceTestUtil.randomString());
 
-		repository.setGroupId(nextLong());
+		repository.setGroupId(ServiceTestUtil.nextLong());
 
-		repository.setCompanyId(nextLong());
+		repository.setCompanyId(ServiceTestUtil.nextLong());
 
-		repository.setUserId(nextLong());
+		repository.setUserId(ServiceTestUtil.nextLong());
 
-		repository.setUserName(randomString());
+		repository.setUserName(ServiceTestUtil.randomString());
 
-		repository.setCreateDate(nextDate());
+		repository.setCreateDate(ServiceTestUtil.nextDate());
 
-		repository.setModifiedDate(nextDate());
+		repository.setModifiedDate(ServiceTestUtil.nextDate());
 
-		repository.setClassNameId(nextLong());
+		repository.setClassNameId(ServiceTestUtil.nextLong());
 
-		repository.setName(randomString());
+		repository.setName(ServiceTestUtil.randomString());
 
-		repository.setDescription(randomString());
+		repository.setDescription(ServiceTestUtil.randomString());
 
-		repository.setPortletId(randomString());
+		repository.setPortletId(ServiceTestUtil.randomString());
 
-		repository.setTypeSettings(randomString());
+		repository.setTypeSettings(ServiceTestUtil.randomString());
 
-		repository.setDlFolderId(nextLong());
+		repository.setDlFolderId(ServiceTestUtil.nextLong());
 
 		_persistence.update(repository, false);
 

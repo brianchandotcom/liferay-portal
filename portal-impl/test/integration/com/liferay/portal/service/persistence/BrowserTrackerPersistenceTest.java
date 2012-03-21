@@ -22,32 +22,44 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.model.BrowserTracker;
 import com.liferay.portal.model.impl.BrowserTrackerModelImpl;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class BrowserTrackerPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class BrowserTrackerPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (BrowserTrackerPersistence)PortalBeanLocatorUtil.locate(BrowserTrackerPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		BrowserTracker browserTracker = _persistence.create(pk);
 
-		assertNotNull(browserTracker);
+		Assert.assertNotNull(browserTracker);
 
-		assertEquals(browserTracker.getPrimaryKey(), pk);
+		Assert.assertEquals(browserTracker.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		BrowserTracker newBrowserTracker = addBrowserTracker();
 
@@ -55,70 +67,78 @@ public class BrowserTrackerPersistenceTest extends BasePersistenceTestCase {
 
 		BrowserTracker existingBrowserTracker = _persistence.fetchByPrimaryKey(newBrowserTracker.getPrimaryKey());
 
-		assertNull(existingBrowserTracker);
+		Assert.assertNull(existingBrowserTracker);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addBrowserTracker();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		BrowserTracker newBrowserTracker = _persistence.create(pk);
 
-		newBrowserTracker.setUserId(nextLong());
+		newBrowserTracker.setUserId(ServiceTestUtil.nextLong());
 
-		newBrowserTracker.setBrowserKey(nextLong());
+		newBrowserTracker.setBrowserKey(ServiceTestUtil.nextLong());
 
 		_persistence.update(newBrowserTracker, false);
 
 		BrowserTracker existingBrowserTracker = _persistence.findByPrimaryKey(newBrowserTracker.getPrimaryKey());
 
-		assertEquals(existingBrowserTracker.getBrowserTrackerId(),
+		Assert.assertEquals(existingBrowserTracker.getBrowserTrackerId(),
 			newBrowserTracker.getBrowserTrackerId());
-		assertEquals(existingBrowserTracker.getUserId(),
+		Assert.assertEquals(existingBrowserTracker.getUserId(),
 			newBrowserTracker.getUserId());
-		assertEquals(existingBrowserTracker.getBrowserKey(),
+		Assert.assertEquals(existingBrowserTracker.getBrowserKey(),
 			newBrowserTracker.getBrowserKey());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		BrowserTracker newBrowserTracker = addBrowserTracker();
 
 		BrowserTracker existingBrowserTracker = _persistence.findByPrimaryKey(newBrowserTracker.getPrimaryKey());
 
-		assertEquals(existingBrowserTracker, newBrowserTracker);
+		Assert.assertEquals(existingBrowserTracker, newBrowserTracker);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchBrowserTrackerException");
+			Assert.fail(
+				"Missing entity did not throw NoSuchBrowserTrackerException");
 		}
 		catch (NoSuchBrowserTrackerException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		BrowserTracker newBrowserTracker = addBrowserTracker();
 
 		BrowserTracker existingBrowserTracker = _persistence.fetchByPrimaryKey(newBrowserTracker.getPrimaryKey());
 
-		assertEquals(existingBrowserTracker, newBrowserTracker);
+		Assert.assertEquals(existingBrowserTracker, newBrowserTracker);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		BrowserTracker missingBrowserTracker = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingBrowserTracker);
+		Assert.assertNull(missingBrowserTracker);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		BrowserTracker newBrowserTracker = addBrowserTracker();
@@ -131,25 +151,27 @@ public class BrowserTrackerPersistenceTest extends BasePersistenceTestCase {
 
 		List<BrowserTracker> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		BrowserTracker existingBrowserTracker = result.get(0);
 
-		assertEquals(existingBrowserTracker, newBrowserTracker);
+		Assert.assertEquals(existingBrowserTracker, newBrowserTracker);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BrowserTracker.class,
 				BrowserTracker.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("browserTrackerId",
-				nextLong()));
+				ServiceTestUtil.nextLong()));
 
 		List<BrowserTracker> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		BrowserTracker newBrowserTracker = addBrowserTracker();
@@ -167,13 +189,14 @@ public class BrowserTrackerPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingBrowserTrackerId = result.get(0);
 
-		assertEquals(existingBrowserTrackerId, newBrowserTrackerId);
+		Assert.assertEquals(existingBrowserTrackerId, newBrowserTrackerId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BrowserTracker.class,
 				BrowserTracker.class.getClassLoader());
@@ -182,13 +205,14 @@ public class BrowserTrackerPersistenceTest extends BasePersistenceTestCase {
 				"browserTrackerId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("browserTrackerId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -200,18 +224,18 @@ public class BrowserTrackerPersistenceTest extends BasePersistenceTestCase {
 
 		BrowserTrackerModelImpl existingBrowserTrackerModelImpl = (BrowserTrackerModelImpl)_persistence.findByPrimaryKey(newBrowserTracker.getPrimaryKey());
 
-		assertEquals(existingBrowserTrackerModelImpl.getUserId(),
+		Assert.assertEquals(existingBrowserTrackerModelImpl.getUserId(),
 			existingBrowserTrackerModelImpl.getOriginalUserId());
 	}
 
 	protected BrowserTracker addBrowserTracker() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		BrowserTracker browserTracker = _persistence.create(pk);
 
-		browserTracker.setUserId(nextLong());
+		browserTracker.setUserId(ServiceTestUtil.nextLong());
 
-		browserTracker.setBrowserKey(nextLong());
+		browserTracker.setBrowserKey(ServiceTestUtil.nextLong());
 
 		_persistence.update(browserTracker, false);
 

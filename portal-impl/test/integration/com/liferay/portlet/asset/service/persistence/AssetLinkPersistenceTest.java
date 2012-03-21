@@ -20,36 +20,48 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.asset.NoSuchLinkException;
 import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.model.impl.AssetLinkModelImpl;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class AssetLinkPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class AssetLinkPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (AssetLinkPersistence)PortalBeanLocatorUtil.locate(AssetLinkPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		AssetLink assetLink = _persistence.create(pk);
 
-		assertNotNull(assetLink);
+		Assert.assertNotNull(assetLink);
 
-		assertEquals(assetLink.getPrimaryKey(), pk);
+		Assert.assertEquals(assetLink.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		AssetLink newAssetLink = addAssetLink();
 
@@ -57,87 +69,101 @@ public class AssetLinkPersistenceTest extends BasePersistenceTestCase {
 
 		AssetLink existingAssetLink = _persistence.fetchByPrimaryKey(newAssetLink.getPrimaryKey());
 
-		assertNull(existingAssetLink);
+		Assert.assertNull(existingAssetLink);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addAssetLink();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		AssetLink newAssetLink = _persistence.create(pk);
 
-		newAssetLink.setCompanyId(nextLong());
+		newAssetLink.setCompanyId(ServiceTestUtil.nextLong());
 
-		newAssetLink.setUserId(nextLong());
+		newAssetLink.setUserId(ServiceTestUtil.nextLong());
 
-		newAssetLink.setUserName(randomString());
+		newAssetLink.setUserName(ServiceTestUtil.randomString());
 
-		newAssetLink.setCreateDate(nextDate());
+		newAssetLink.setCreateDate(ServiceTestUtil.nextDate());
 
-		newAssetLink.setEntryId1(nextLong());
+		newAssetLink.setEntryId1(ServiceTestUtil.nextLong());
 
-		newAssetLink.setEntryId2(nextLong());
+		newAssetLink.setEntryId2(ServiceTestUtil.nextLong());
 
-		newAssetLink.setType(nextInt());
+		newAssetLink.setType(ServiceTestUtil.nextInt());
 
-		newAssetLink.setWeight(nextInt());
+		newAssetLink.setWeight(ServiceTestUtil.nextInt());
 
 		_persistence.update(newAssetLink, false);
 
 		AssetLink existingAssetLink = _persistence.findByPrimaryKey(newAssetLink.getPrimaryKey());
 
-		assertEquals(existingAssetLink.getLinkId(), newAssetLink.getLinkId());
-		assertEquals(existingAssetLink.getCompanyId(),
+		Assert.assertEquals(existingAssetLink.getLinkId(),
+			newAssetLink.getLinkId());
+		Assert.assertEquals(existingAssetLink.getCompanyId(),
 			newAssetLink.getCompanyId());
-		assertEquals(existingAssetLink.getUserId(), newAssetLink.getUserId());
-		assertEquals(existingAssetLink.getUserName(), newAssetLink.getUserName());
-		assertEquals(Time.getShortTimestamp(existingAssetLink.getCreateDate()),
+		Assert.assertEquals(existingAssetLink.getUserId(),
+			newAssetLink.getUserId());
+		Assert.assertEquals(existingAssetLink.getUserName(),
+			newAssetLink.getUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingAssetLink.getCreateDate()),
 			Time.getShortTimestamp(newAssetLink.getCreateDate()));
-		assertEquals(existingAssetLink.getEntryId1(), newAssetLink.getEntryId1());
-		assertEquals(existingAssetLink.getEntryId2(), newAssetLink.getEntryId2());
-		assertEquals(existingAssetLink.getType(), newAssetLink.getType());
-		assertEquals(existingAssetLink.getWeight(), newAssetLink.getWeight());
+		Assert.assertEquals(existingAssetLink.getEntryId1(),
+			newAssetLink.getEntryId1());
+		Assert.assertEquals(existingAssetLink.getEntryId2(),
+			newAssetLink.getEntryId2());
+		Assert.assertEquals(existingAssetLink.getType(), newAssetLink.getType());
+		Assert.assertEquals(existingAssetLink.getWeight(),
+			newAssetLink.getWeight());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		AssetLink newAssetLink = addAssetLink();
 
 		AssetLink existingAssetLink = _persistence.findByPrimaryKey(newAssetLink.getPrimaryKey());
 
-		assertEquals(existingAssetLink, newAssetLink);
+		Assert.assertEquals(existingAssetLink, newAssetLink);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchLinkException");
+			Assert.fail("Missing entity did not throw NoSuchLinkException");
 		}
 		catch (NoSuchLinkException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		AssetLink newAssetLink = addAssetLink();
 
 		AssetLink existingAssetLink = _persistence.fetchByPrimaryKey(newAssetLink.getPrimaryKey());
 
-		assertEquals(existingAssetLink, newAssetLink);
+		Assert.assertEquals(existingAssetLink, newAssetLink);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		AssetLink missingAssetLink = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingAssetLink);
+		Assert.assertNull(missingAssetLink);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		AssetLink newAssetLink = addAssetLink();
@@ -150,24 +176,27 @@ public class AssetLinkPersistenceTest extends BasePersistenceTestCase {
 
 		List<AssetLink> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		AssetLink existingAssetLink = result.get(0);
 
-		assertEquals(existingAssetLink, newAssetLink);
+		Assert.assertEquals(existingAssetLink, newAssetLink);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AssetLink.class,
 				AssetLink.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("linkId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("linkId",
+				ServiceTestUtil.nextLong()));
 
 		List<AssetLink> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		AssetLink newAssetLink = addAssetLink();
@@ -184,13 +213,14 @@ public class AssetLinkPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingLinkId = result.get(0);
 
-		assertEquals(existingLinkId, newLinkId);
+		Assert.assertEquals(existingLinkId, newLinkId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AssetLink.class,
 				AssetLink.class.getClassLoader());
@@ -198,13 +228,14 @@ public class AssetLinkPersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("linkId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("linkId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -216,34 +247,34 @@ public class AssetLinkPersistenceTest extends BasePersistenceTestCase {
 
 		AssetLinkModelImpl existingAssetLinkModelImpl = (AssetLinkModelImpl)_persistence.findByPrimaryKey(newAssetLink.getPrimaryKey());
 
-		assertEquals(existingAssetLinkModelImpl.getEntryId1(),
+		Assert.assertEquals(existingAssetLinkModelImpl.getEntryId1(),
 			existingAssetLinkModelImpl.getOriginalEntryId1());
-		assertEquals(existingAssetLinkModelImpl.getEntryId2(),
+		Assert.assertEquals(existingAssetLinkModelImpl.getEntryId2(),
 			existingAssetLinkModelImpl.getOriginalEntryId2());
-		assertEquals(existingAssetLinkModelImpl.getType(),
+		Assert.assertEquals(existingAssetLinkModelImpl.getType(),
 			existingAssetLinkModelImpl.getOriginalType());
 	}
 
 	protected AssetLink addAssetLink() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		AssetLink assetLink = _persistence.create(pk);
 
-		assetLink.setCompanyId(nextLong());
+		assetLink.setCompanyId(ServiceTestUtil.nextLong());
 
-		assetLink.setUserId(nextLong());
+		assetLink.setUserId(ServiceTestUtil.nextLong());
 
-		assetLink.setUserName(randomString());
+		assetLink.setUserName(ServiceTestUtil.randomString());
 
-		assetLink.setCreateDate(nextDate());
+		assetLink.setCreateDate(ServiceTestUtil.nextDate());
 
-		assetLink.setEntryId1(nextLong());
+		assetLink.setEntryId1(ServiceTestUtil.nextLong());
 
-		assetLink.setEntryId2(nextLong());
+		assetLink.setEntryId2(ServiceTestUtil.nextLong());
 
-		assetLink.setType(nextInt());
+		assetLink.setType(ServiceTestUtil.nextInt());
 
-		assetLink.setWeight(nextInt());
+		assetLink.setWeight(ServiceTestUtil.nextInt());
 
 		_persistence.update(assetLink, false);
 

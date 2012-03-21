@@ -17,12 +17,19 @@ package com.liferay.portal.webdav;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Tuple;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.webdav.methods.Method;
+import com.liferay.portal.webdav.test.WebDAVEnvConfigTestListener;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * <p>
@@ -32,8 +39,11 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Alexander Chow
  */
+@ExecutionTestListeners(listeners = {WebDAVEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class WebDAVLitmusBasicTest extends BaseWebDAVTestCase {
 
+	@Test
 	public void test02Options() {
 		Tuple tuple = service(Method.OPTIONS, StringPool.BLANK, null, null);
 
@@ -44,19 +54,22 @@ public class WebDAVLitmusBasicTest extends BaseWebDAVTestCase {
 		String allowMethods = headers.get("Allow");
 
 		for (String method : Method.SUPPORTED_METHODS_ARRAY) {
-			assertTrue(
+			Assert.assertTrue(
 				"Does not allow " + method, allowMethods.contains(method));
 		}
 	}
 
+	@Test
 	public void test03PutGet() {
 		putGet("res");
 	}
 
+	@Test
 	public void test04PutGetUTF8() {
 		putGet("res-\u20AC");
 	}
 
+	@Test
 	public void test05PutNoParent() {
 		assertCode(
 			HttpServletResponse.SC_CONFLICT,
@@ -66,21 +79,25 @@ public class WebDAVLitmusBasicTest extends BaseWebDAVTestCase {
 			servicePut("409me/noparent.txt", _TEST_CONTENT.getBytes()));
 	}
 
+	@Test
 	public void test06MkcolOverPlain() {
 		assertCode(
 			HttpServletResponse.SC_METHOD_NOT_ALLOWED,
 			service(Method.MKCOL, "res-\u20AC", null, null));
 	}
 
+	@Test
 	public void test07Delete() {
 		assertCode(
 			HttpServletResponse.SC_NO_CONTENT, serviceDelete("res-\u20AC"));
 	}
 
+	@Test
 	public void test08DeleteNull() {
 		assertCode(HttpServletResponse.SC_NOT_FOUND, serviceDelete("404me"));
 	}
 
+	@Test
 	public void test09DeleteFragment() {
 		assertCode(
 			HttpServletResponse.SC_CREATED,
@@ -90,28 +107,33 @@ public class WebDAVLitmusBasicTest extends BaseWebDAVTestCase {
 		assertCode(HttpServletResponse.SC_NO_CONTENT, serviceDelete("frag"));
 	}
 
+	@Test
 	public void test10Mkcol() {
 		assertCode(
 			HttpServletResponse.SC_CREATED,
 			service(Method.MKCOL, "col", null, null));
 	}
 
+	@Test
 	public void test11MkcolAgain() {
 		assertCode(
 			HttpServletResponse.SC_METHOD_NOT_ALLOWED,
 			service(Method.MKCOL, "col", null, null));
 	}
 
+	@Test
 	public void test12DeleteColl() {
 		assertCode(HttpServletResponse.SC_NO_CONTENT, serviceDelete("col"));
 	}
 
+	@Test
 	public void test13MkcolNoParent() {
 		assertCode(
 			HttpServletResponse.SC_CONFLICT,
 			service(Method.MKCOL, "409me/col", null, null));
 	}
 
+	@Test
 	public void test14MkcolWithBody() {
 		Map<String, String> headers = new HashMap<String, String>();
 

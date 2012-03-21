@@ -23,32 +23,44 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ServiceComponent;
 import com.liferay.portal.model.impl.ServiceComponentModelImpl;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class ServiceComponentPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class ServiceComponentPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (ServiceComponentPersistence)PortalBeanLocatorUtil.locate(ServiceComponentPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ServiceComponent serviceComponent = _persistence.create(pk);
 
-		assertNotNull(serviceComponent);
+		Assert.assertNotNull(serviceComponent);
 
-		assertEquals(serviceComponent.getPrimaryKey(), pk);
+		Assert.assertEquals(serviceComponent.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		ServiceComponent newServiceComponent = addServiceComponent();
 
@@ -56,78 +68,86 @@ public class ServiceComponentPersistenceTest extends BasePersistenceTestCase {
 
 		ServiceComponent existingServiceComponent = _persistence.fetchByPrimaryKey(newServiceComponent.getPrimaryKey());
 
-		assertNull(existingServiceComponent);
+		Assert.assertNull(existingServiceComponent);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addServiceComponent();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ServiceComponent newServiceComponent = _persistence.create(pk);
 
-		newServiceComponent.setBuildNamespace(randomString());
+		newServiceComponent.setBuildNamespace(ServiceTestUtil.randomString());
 
-		newServiceComponent.setBuildNumber(nextLong());
+		newServiceComponent.setBuildNumber(ServiceTestUtil.nextLong());
 
-		newServiceComponent.setBuildDate(nextLong());
+		newServiceComponent.setBuildDate(ServiceTestUtil.nextLong());
 
-		newServiceComponent.setData(randomString());
+		newServiceComponent.setData(ServiceTestUtil.randomString());
 
 		_persistence.update(newServiceComponent, false);
 
 		ServiceComponent existingServiceComponent = _persistence.findByPrimaryKey(newServiceComponent.getPrimaryKey());
 
-		assertEquals(existingServiceComponent.getServiceComponentId(),
+		Assert.assertEquals(existingServiceComponent.getServiceComponentId(),
 			newServiceComponent.getServiceComponentId());
-		assertEquals(existingServiceComponent.getBuildNamespace(),
+		Assert.assertEquals(existingServiceComponent.getBuildNamespace(),
 			newServiceComponent.getBuildNamespace());
-		assertEquals(existingServiceComponent.getBuildNumber(),
+		Assert.assertEquals(existingServiceComponent.getBuildNumber(),
 			newServiceComponent.getBuildNumber());
-		assertEquals(existingServiceComponent.getBuildDate(),
+		Assert.assertEquals(existingServiceComponent.getBuildDate(),
 			newServiceComponent.getBuildDate());
-		assertEquals(existingServiceComponent.getData(),
+		Assert.assertEquals(existingServiceComponent.getData(),
 			newServiceComponent.getData());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ServiceComponent newServiceComponent = addServiceComponent();
 
 		ServiceComponent existingServiceComponent = _persistence.findByPrimaryKey(newServiceComponent.getPrimaryKey());
 
-		assertEquals(existingServiceComponent, newServiceComponent);
+		Assert.assertEquals(existingServiceComponent, newServiceComponent);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchServiceComponentException");
+			Assert.fail(
+				"Missing entity did not throw NoSuchServiceComponentException");
 		}
 		catch (NoSuchServiceComponentException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		ServiceComponent newServiceComponent = addServiceComponent();
 
 		ServiceComponent existingServiceComponent = _persistence.fetchByPrimaryKey(newServiceComponent.getPrimaryKey());
 
-		assertEquals(existingServiceComponent, newServiceComponent);
+		Assert.assertEquals(existingServiceComponent, newServiceComponent);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ServiceComponent missingServiceComponent = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingServiceComponent);
+		Assert.assertNull(missingServiceComponent);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		ServiceComponent newServiceComponent = addServiceComponent();
@@ -140,25 +160,27 @@ public class ServiceComponentPersistenceTest extends BasePersistenceTestCase {
 
 		List<ServiceComponent> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		ServiceComponent existingServiceComponent = result.get(0);
 
-		assertEquals(existingServiceComponent, newServiceComponent);
+		Assert.assertEquals(existingServiceComponent, newServiceComponent);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ServiceComponent.class,
 				ServiceComponent.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("serviceComponentId",
-				nextLong()));
+				ServiceTestUtil.nextLong()));
 
 		List<ServiceComponent> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		ServiceComponent newServiceComponent = addServiceComponent();
@@ -176,13 +198,14 @@ public class ServiceComponentPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingServiceComponentId = result.get(0);
 
-		assertEquals(existingServiceComponentId, newServiceComponentId);
+		Assert.assertEquals(existingServiceComponentId, newServiceComponentId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ServiceComponent.class,
 				ServiceComponent.class.getClassLoader());
@@ -191,13 +214,14 @@ public class ServiceComponentPersistenceTest extends BasePersistenceTestCase {
 				"serviceComponentId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("serviceComponentId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -209,25 +233,25 @@ public class ServiceComponentPersistenceTest extends BasePersistenceTestCase {
 
 		ServiceComponentModelImpl existingServiceComponentModelImpl = (ServiceComponentModelImpl)_persistence.findByPrimaryKey(newServiceComponent.getPrimaryKey());
 
-		assertTrue(Validator.equals(
+		Assert.assertTrue(Validator.equals(
 				existingServiceComponentModelImpl.getBuildNamespace(),
 				existingServiceComponentModelImpl.getOriginalBuildNamespace()));
-		assertEquals(existingServiceComponentModelImpl.getBuildNumber(),
+		Assert.assertEquals(existingServiceComponentModelImpl.getBuildNumber(),
 			existingServiceComponentModelImpl.getOriginalBuildNumber());
 	}
 
 	protected ServiceComponent addServiceComponent() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ServiceComponent serviceComponent = _persistence.create(pk);
 
-		serviceComponent.setBuildNamespace(randomString());
+		serviceComponent.setBuildNamespace(ServiceTestUtil.randomString());
 
-		serviceComponent.setBuildNumber(nextLong());
+		serviceComponent.setBuildNumber(ServiceTestUtil.nextLong());
 
-		serviceComponent.setBuildDate(nextLong());
+		serviceComponent.setBuildDate(ServiceTestUtil.nextLong());
 
-		serviceComponent.setData(randomString());
+		serviceComponent.setData(ServiceTestUtil.randomString());
 
 		_persistence.update(serviceComponent, false);
 

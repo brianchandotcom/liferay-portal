@@ -21,36 +21,48 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.bookmarks.NoSuchFolderException;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.model.impl.BookmarksFolderModelImpl;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class BookmarksFolderPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class BookmarksFolderPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (BookmarksFolderPersistence)PortalBeanLocatorUtil.locate(BookmarksFolderPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		BookmarksFolder bookmarksFolder = _persistence.create(pk);
 
-		assertNotNull(bookmarksFolder);
+		Assert.assertNotNull(bookmarksFolder);
 
-		assertEquals(bookmarksFolder.getPrimaryKey(), pk);
+		Assert.assertEquals(bookmarksFolder.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		BookmarksFolder newBookmarksFolder = addBookmarksFolder();
 
@@ -58,108 +70,115 @@ public class BookmarksFolderPersistenceTest extends BasePersistenceTestCase {
 
 		BookmarksFolder existingBookmarksFolder = _persistence.fetchByPrimaryKey(newBookmarksFolder.getPrimaryKey());
 
-		assertNull(existingBookmarksFolder);
+		Assert.assertNull(existingBookmarksFolder);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addBookmarksFolder();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		BookmarksFolder newBookmarksFolder = _persistence.create(pk);
 
-		newBookmarksFolder.setUuid(randomString());
+		newBookmarksFolder.setUuid(ServiceTestUtil.randomString());
 
-		newBookmarksFolder.setGroupId(nextLong());
+		newBookmarksFolder.setGroupId(ServiceTestUtil.nextLong());
 
-		newBookmarksFolder.setCompanyId(nextLong());
+		newBookmarksFolder.setCompanyId(ServiceTestUtil.nextLong());
 
-		newBookmarksFolder.setUserId(nextLong());
+		newBookmarksFolder.setUserId(ServiceTestUtil.nextLong());
 
-		newBookmarksFolder.setUserName(randomString());
+		newBookmarksFolder.setUserName(ServiceTestUtil.randomString());
 
-		newBookmarksFolder.setCreateDate(nextDate());
+		newBookmarksFolder.setCreateDate(ServiceTestUtil.nextDate());
 
-		newBookmarksFolder.setModifiedDate(nextDate());
+		newBookmarksFolder.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newBookmarksFolder.setResourceBlockId(nextLong());
+		newBookmarksFolder.setResourceBlockId(ServiceTestUtil.nextLong());
 
-		newBookmarksFolder.setParentFolderId(nextLong());
+		newBookmarksFolder.setParentFolderId(ServiceTestUtil.nextLong());
 
-		newBookmarksFolder.setName(randomString());
+		newBookmarksFolder.setName(ServiceTestUtil.randomString());
 
-		newBookmarksFolder.setDescription(randomString());
+		newBookmarksFolder.setDescription(ServiceTestUtil.randomString());
 
 		_persistence.update(newBookmarksFolder, false);
 
 		BookmarksFolder existingBookmarksFolder = _persistence.findByPrimaryKey(newBookmarksFolder.getPrimaryKey());
 
-		assertEquals(existingBookmarksFolder.getUuid(),
+		Assert.assertEquals(existingBookmarksFolder.getUuid(),
 			newBookmarksFolder.getUuid());
-		assertEquals(existingBookmarksFolder.getFolderId(),
+		Assert.assertEquals(existingBookmarksFolder.getFolderId(),
 			newBookmarksFolder.getFolderId());
-		assertEquals(existingBookmarksFolder.getGroupId(),
+		Assert.assertEquals(existingBookmarksFolder.getGroupId(),
 			newBookmarksFolder.getGroupId());
-		assertEquals(existingBookmarksFolder.getCompanyId(),
+		Assert.assertEquals(existingBookmarksFolder.getCompanyId(),
 			newBookmarksFolder.getCompanyId());
-		assertEquals(existingBookmarksFolder.getUserId(),
+		Assert.assertEquals(existingBookmarksFolder.getUserId(),
 			newBookmarksFolder.getUserId());
-		assertEquals(existingBookmarksFolder.getUserName(),
+		Assert.assertEquals(existingBookmarksFolder.getUserName(),
 			newBookmarksFolder.getUserName());
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingBookmarksFolder.getCreateDate()),
 			Time.getShortTimestamp(newBookmarksFolder.getCreateDate()));
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingBookmarksFolder.getModifiedDate()),
 			Time.getShortTimestamp(newBookmarksFolder.getModifiedDate()));
-		assertEquals(existingBookmarksFolder.getResourceBlockId(),
+		Assert.assertEquals(existingBookmarksFolder.getResourceBlockId(),
 			newBookmarksFolder.getResourceBlockId());
-		assertEquals(existingBookmarksFolder.getParentFolderId(),
+		Assert.assertEquals(existingBookmarksFolder.getParentFolderId(),
 			newBookmarksFolder.getParentFolderId());
-		assertEquals(existingBookmarksFolder.getName(),
+		Assert.assertEquals(existingBookmarksFolder.getName(),
 			newBookmarksFolder.getName());
-		assertEquals(existingBookmarksFolder.getDescription(),
+		Assert.assertEquals(existingBookmarksFolder.getDescription(),
 			newBookmarksFolder.getDescription());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		BookmarksFolder newBookmarksFolder = addBookmarksFolder();
 
 		BookmarksFolder existingBookmarksFolder = _persistence.findByPrimaryKey(newBookmarksFolder.getPrimaryKey());
 
-		assertEquals(existingBookmarksFolder, newBookmarksFolder);
+		Assert.assertEquals(existingBookmarksFolder, newBookmarksFolder);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchFolderException");
+			Assert.fail("Missing entity did not throw NoSuchFolderException");
 		}
 		catch (NoSuchFolderException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		BookmarksFolder newBookmarksFolder = addBookmarksFolder();
 
 		BookmarksFolder existingBookmarksFolder = _persistence.fetchByPrimaryKey(newBookmarksFolder.getPrimaryKey());
 
-		assertEquals(existingBookmarksFolder, newBookmarksFolder);
+		Assert.assertEquals(existingBookmarksFolder, newBookmarksFolder);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		BookmarksFolder missingBookmarksFolder = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingBookmarksFolder);
+		Assert.assertNull(missingBookmarksFolder);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		BookmarksFolder newBookmarksFolder = addBookmarksFolder();
@@ -172,24 +191,27 @@ public class BookmarksFolderPersistenceTest extends BasePersistenceTestCase {
 
 		List<BookmarksFolder> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		BookmarksFolder existingBookmarksFolder = result.get(0);
 
-		assertEquals(existingBookmarksFolder, newBookmarksFolder);
+		Assert.assertEquals(existingBookmarksFolder, newBookmarksFolder);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BookmarksFolder.class,
 				BookmarksFolder.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("folderId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("folderId",
+				ServiceTestUtil.nextLong()));
 
 		List<BookmarksFolder> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		BookmarksFolder newBookmarksFolder = addBookmarksFolder();
@@ -206,13 +228,14 @@ public class BookmarksFolderPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingFolderId = result.get(0);
 
-		assertEquals(existingFolderId, newFolderId);
+		Assert.assertEquals(existingFolderId, newFolderId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BookmarksFolder.class,
 				BookmarksFolder.class.getClassLoader());
@@ -220,13 +243,14 @@ public class BookmarksFolderPersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("folderId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("folderId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -238,39 +262,39 @@ public class BookmarksFolderPersistenceTest extends BasePersistenceTestCase {
 
 		BookmarksFolderModelImpl existingBookmarksFolderModelImpl = (BookmarksFolderModelImpl)_persistence.findByPrimaryKey(newBookmarksFolder.getPrimaryKey());
 
-		assertTrue(Validator.equals(
+		Assert.assertTrue(Validator.equals(
 				existingBookmarksFolderModelImpl.getUuid(),
 				existingBookmarksFolderModelImpl.getOriginalUuid()));
-		assertEquals(existingBookmarksFolderModelImpl.getGroupId(),
+		Assert.assertEquals(existingBookmarksFolderModelImpl.getGroupId(),
 			existingBookmarksFolderModelImpl.getOriginalGroupId());
 	}
 
 	protected BookmarksFolder addBookmarksFolder() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		BookmarksFolder bookmarksFolder = _persistence.create(pk);
 
-		bookmarksFolder.setUuid(randomString());
+		bookmarksFolder.setUuid(ServiceTestUtil.randomString());
 
-		bookmarksFolder.setGroupId(nextLong());
+		bookmarksFolder.setGroupId(ServiceTestUtil.nextLong());
 
-		bookmarksFolder.setCompanyId(nextLong());
+		bookmarksFolder.setCompanyId(ServiceTestUtil.nextLong());
 
-		bookmarksFolder.setUserId(nextLong());
+		bookmarksFolder.setUserId(ServiceTestUtil.nextLong());
 
-		bookmarksFolder.setUserName(randomString());
+		bookmarksFolder.setUserName(ServiceTestUtil.randomString());
 
-		bookmarksFolder.setCreateDate(nextDate());
+		bookmarksFolder.setCreateDate(ServiceTestUtil.nextDate());
 
-		bookmarksFolder.setModifiedDate(nextDate());
+		bookmarksFolder.setModifiedDate(ServiceTestUtil.nextDate());
 
-		bookmarksFolder.setResourceBlockId(nextLong());
+		bookmarksFolder.setResourceBlockId(ServiceTestUtil.nextLong());
 
-		bookmarksFolder.setParentFolderId(nextLong());
+		bookmarksFolder.setParentFolderId(ServiceTestUtil.nextLong());
 
-		bookmarksFolder.setName(randomString());
+		bookmarksFolder.setName(ServiceTestUtil.randomString());
 
-		bookmarksFolder.setDescription(randomString());
+		bookmarksFolder.setDescription(ServiceTestUtil.randomString());
 
 		_persistence.update(bookmarksFolder, false);
 

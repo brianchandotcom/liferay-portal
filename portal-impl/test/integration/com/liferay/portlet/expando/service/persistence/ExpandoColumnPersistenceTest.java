@@ -19,34 +19,46 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 
 import com.liferay.portlet.expando.NoSuchColumnException;
 import com.liferay.portlet.expando.model.ExpandoColumn;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class ExpandoColumnPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class ExpandoColumnPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (ExpandoColumnPersistence)PortalBeanLocatorUtil.locate(ExpandoColumnPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ExpandoColumn expandoColumn = _persistence.create(pk);
 
-		assertNotNull(expandoColumn);
+		Assert.assertNotNull(expandoColumn);
 
-		assertEquals(expandoColumn.getPrimaryKey(), pk);
+		Assert.assertEquals(expandoColumn.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		ExpandoColumn newExpandoColumn = addExpandoColumn();
 
@@ -54,84 +66,93 @@ public class ExpandoColumnPersistenceTest extends BasePersistenceTestCase {
 
 		ExpandoColumn existingExpandoColumn = _persistence.fetchByPrimaryKey(newExpandoColumn.getPrimaryKey());
 
-		assertNull(existingExpandoColumn);
+		Assert.assertNull(existingExpandoColumn);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addExpandoColumn();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ExpandoColumn newExpandoColumn = _persistence.create(pk);
 
-		newExpandoColumn.setCompanyId(nextLong());
+		newExpandoColumn.setCompanyId(ServiceTestUtil.nextLong());
 
-		newExpandoColumn.setTableId(nextLong());
+		newExpandoColumn.setTableId(ServiceTestUtil.nextLong());
 
-		newExpandoColumn.setName(randomString());
+		newExpandoColumn.setName(ServiceTestUtil.randomString());
 
-		newExpandoColumn.setType(nextInt());
+		newExpandoColumn.setType(ServiceTestUtil.nextInt());
 
-		newExpandoColumn.setDefaultData(randomString());
+		newExpandoColumn.setDefaultData(ServiceTestUtil.randomString());
 
-		newExpandoColumn.setTypeSettings(randomString());
+		newExpandoColumn.setTypeSettings(ServiceTestUtil.randomString());
 
 		_persistence.update(newExpandoColumn, false);
 
 		ExpandoColumn existingExpandoColumn = _persistence.findByPrimaryKey(newExpandoColumn.getPrimaryKey());
 
-		assertEquals(existingExpandoColumn.getColumnId(),
+		Assert.assertEquals(existingExpandoColumn.getColumnId(),
 			newExpandoColumn.getColumnId());
-		assertEquals(existingExpandoColumn.getCompanyId(),
+		Assert.assertEquals(existingExpandoColumn.getCompanyId(),
 			newExpandoColumn.getCompanyId());
-		assertEquals(existingExpandoColumn.getTableId(),
+		Assert.assertEquals(existingExpandoColumn.getTableId(),
 			newExpandoColumn.getTableId());
-		assertEquals(existingExpandoColumn.getName(), newExpandoColumn.getName());
-		assertEquals(existingExpandoColumn.getType(), newExpandoColumn.getType());
-		assertEquals(existingExpandoColumn.getDefaultData(),
+		Assert.assertEquals(existingExpandoColumn.getName(),
+			newExpandoColumn.getName());
+		Assert.assertEquals(existingExpandoColumn.getType(),
+			newExpandoColumn.getType());
+		Assert.assertEquals(existingExpandoColumn.getDefaultData(),
 			newExpandoColumn.getDefaultData());
-		assertEquals(existingExpandoColumn.getTypeSettings(),
+		Assert.assertEquals(existingExpandoColumn.getTypeSettings(),
 			newExpandoColumn.getTypeSettings());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ExpandoColumn newExpandoColumn = addExpandoColumn();
 
 		ExpandoColumn existingExpandoColumn = _persistence.findByPrimaryKey(newExpandoColumn.getPrimaryKey());
 
-		assertEquals(existingExpandoColumn, newExpandoColumn);
+		Assert.assertEquals(existingExpandoColumn, newExpandoColumn);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchColumnException");
+			Assert.fail("Missing entity did not throw NoSuchColumnException");
 		}
 		catch (NoSuchColumnException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		ExpandoColumn newExpandoColumn = addExpandoColumn();
 
 		ExpandoColumn existingExpandoColumn = _persistence.fetchByPrimaryKey(newExpandoColumn.getPrimaryKey());
 
-		assertEquals(existingExpandoColumn, newExpandoColumn);
+		Assert.assertEquals(existingExpandoColumn, newExpandoColumn);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ExpandoColumn missingExpandoColumn = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingExpandoColumn);
+		Assert.assertNull(missingExpandoColumn);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		ExpandoColumn newExpandoColumn = addExpandoColumn();
@@ -144,24 +165,27 @@ public class ExpandoColumnPersistenceTest extends BasePersistenceTestCase {
 
 		List<ExpandoColumn> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		ExpandoColumn existingExpandoColumn = result.get(0);
 
-		assertEquals(existingExpandoColumn, newExpandoColumn);
+		Assert.assertEquals(existingExpandoColumn, newExpandoColumn);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ExpandoColumn.class,
 				ExpandoColumn.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("columnId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("columnId",
+				ServiceTestUtil.nextLong()));
 
 		List<ExpandoColumn> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		ExpandoColumn newExpandoColumn = addExpandoColumn();
@@ -178,13 +202,14 @@ public class ExpandoColumnPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingColumnId = result.get(0);
 
-		assertEquals(existingColumnId, newColumnId);
+		Assert.assertEquals(existingColumnId, newColumnId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ExpandoColumn.class,
 				ExpandoColumn.class.getClassLoader());
@@ -192,29 +217,29 @@ public class ExpandoColumnPersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("columnId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("columnId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
 	protected ExpandoColumn addExpandoColumn() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ExpandoColumn expandoColumn = _persistence.create(pk);
 
-		expandoColumn.setCompanyId(nextLong());
+		expandoColumn.setCompanyId(ServiceTestUtil.nextLong());
 
-		expandoColumn.setTableId(nextLong());
+		expandoColumn.setTableId(ServiceTestUtil.nextLong());
 
-		expandoColumn.setName(randomString());
+		expandoColumn.setName(ServiceTestUtil.randomString());
 
-		expandoColumn.setType(nextInt());
+		expandoColumn.setType(ServiceTestUtil.nextInt());
 
-		expandoColumn.setDefaultData(randomString());
+		expandoColumn.setDefaultData(ServiceTestUtil.randomString());
 
-		expandoColumn.setTypeSettings(randomString());
+		expandoColumn.setTypeSettings(ServiceTestUtil.randomString());
 
 		_persistence.update(expandoColumn, false);
 

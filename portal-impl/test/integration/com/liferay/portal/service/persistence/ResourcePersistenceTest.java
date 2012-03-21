@@ -23,32 +23,44 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Resource;
 import com.liferay.portal.model.impl.ResourceModelImpl;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class ResourcePersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class ResourcePersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (ResourcePersistence)PortalBeanLocatorUtil.locate(ResourcePersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Resource resource = _persistence.create(pk);
 
-		assertNotNull(resource);
+		Assert.assertNotNull(resource);
 
-		assertEquals(resource.getPrimaryKey(), pk);
+		Assert.assertEquals(resource.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		Resource newResource = addResource();
 
@@ -56,68 +68,77 @@ public class ResourcePersistenceTest extends BasePersistenceTestCase {
 
 		Resource existingResource = _persistence.fetchByPrimaryKey(newResource.getPrimaryKey());
 
-		assertNull(existingResource);
+		Assert.assertNull(existingResource);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addResource();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Resource newResource = _persistence.create(pk);
 
-		newResource.setCodeId(nextLong());
+		newResource.setCodeId(ServiceTestUtil.nextLong());
 
-		newResource.setPrimKey(randomString());
+		newResource.setPrimKey(ServiceTestUtil.randomString());
 
 		_persistence.update(newResource, false);
 
 		Resource existingResource = _persistence.findByPrimaryKey(newResource.getPrimaryKey());
 
-		assertEquals(existingResource.getResourceId(),
+		Assert.assertEquals(existingResource.getResourceId(),
 			newResource.getResourceId());
-		assertEquals(existingResource.getCodeId(), newResource.getCodeId());
-		assertEquals(existingResource.getPrimKey(), newResource.getPrimKey());
+		Assert.assertEquals(existingResource.getCodeId(),
+			newResource.getCodeId());
+		Assert.assertEquals(existingResource.getPrimKey(),
+			newResource.getPrimKey());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Resource newResource = addResource();
 
 		Resource existingResource = _persistence.findByPrimaryKey(newResource.getPrimaryKey());
 
-		assertEquals(existingResource, newResource);
+		Assert.assertEquals(existingResource, newResource);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchResourceException");
+			Assert.fail("Missing entity did not throw NoSuchResourceException");
 		}
 		catch (NoSuchResourceException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		Resource newResource = addResource();
 
 		Resource existingResource = _persistence.fetchByPrimaryKey(newResource.getPrimaryKey());
 
-		assertEquals(existingResource, newResource);
+		Assert.assertEquals(existingResource, newResource);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Resource missingResource = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingResource);
+		Assert.assertNull(missingResource);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		Resource newResource = addResource();
@@ -130,24 +151,27 @@ public class ResourcePersistenceTest extends BasePersistenceTestCase {
 
 		List<Resource> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Resource existingResource = result.get(0);
 
-		assertEquals(existingResource, newResource);
+		Assert.assertEquals(existingResource, newResource);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Resource.class,
 				Resource.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("resourceId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("resourceId",
+				ServiceTestUtil.nextLong()));
 
 		List<Resource> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		Resource newResource = addResource();
@@ -164,13 +188,14 @@ public class ResourcePersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingResourceId = result.get(0);
 
-		assertEquals(existingResourceId, newResourceId);
+		Assert.assertEquals(existingResourceId, newResourceId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Resource.class,
 				Resource.class.getClassLoader());
@@ -178,13 +203,14 @@ public class ResourcePersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("resourceId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("resourceId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -196,20 +222,21 @@ public class ResourcePersistenceTest extends BasePersistenceTestCase {
 
 		ResourceModelImpl existingResourceModelImpl = (ResourceModelImpl)_persistence.findByPrimaryKey(newResource.getPrimaryKey());
 
-		assertEquals(existingResourceModelImpl.getCodeId(),
+		Assert.assertEquals(existingResourceModelImpl.getCodeId(),
 			existingResourceModelImpl.getOriginalCodeId());
-		assertTrue(Validator.equals(existingResourceModelImpl.getPrimKey(),
+		Assert.assertTrue(Validator.equals(
+				existingResourceModelImpl.getPrimKey(),
 				existingResourceModelImpl.getOriginalPrimKey()));
 	}
 
 	protected Resource addResource() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Resource resource = _persistence.create(pk);
 
-		resource.setCodeId(nextLong());
+		resource.setCodeId(ServiceTestUtil.nextLong());
 
-		resource.setPrimKey(randomString());
+		resource.setPrimKey(ServiceTestUtil.randomString());
 
 		_persistence.update(resource, false);
 

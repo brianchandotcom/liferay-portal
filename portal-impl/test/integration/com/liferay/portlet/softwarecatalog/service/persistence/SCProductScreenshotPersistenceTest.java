@@ -19,36 +19,48 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException;
 import com.liferay.portlet.softwarecatalog.model.SCProductScreenshot;
 import com.liferay.portlet.softwarecatalog.model.impl.SCProductScreenshotModelImpl;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class SCProductScreenshotPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class SCProductScreenshotPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (SCProductScreenshotPersistence)PortalBeanLocatorUtil.locate(SCProductScreenshotPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		SCProductScreenshot scProductScreenshot = _persistence.create(pk);
 
-		assertNotNull(scProductScreenshot);
+		Assert.assertNotNull(scProductScreenshot);
 
-		assertEquals(scProductScreenshot.getPrimaryKey(), pk);
+		Assert.assertEquals(scProductScreenshot.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		SCProductScreenshot newSCProductScreenshot = addSCProductScreenshot();
 
@@ -56,87 +68,94 @@ public class SCProductScreenshotPersistenceTest extends BasePersistenceTestCase 
 
 		SCProductScreenshot existingSCProductScreenshot = _persistence.fetchByPrimaryKey(newSCProductScreenshot.getPrimaryKey());
 
-		assertNull(existingSCProductScreenshot);
+		Assert.assertNull(existingSCProductScreenshot);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addSCProductScreenshot();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		SCProductScreenshot newSCProductScreenshot = _persistence.create(pk);
 
-		newSCProductScreenshot.setCompanyId(nextLong());
+		newSCProductScreenshot.setCompanyId(ServiceTestUtil.nextLong());
 
-		newSCProductScreenshot.setGroupId(nextLong());
+		newSCProductScreenshot.setGroupId(ServiceTestUtil.nextLong());
 
-		newSCProductScreenshot.setProductEntryId(nextLong());
+		newSCProductScreenshot.setProductEntryId(ServiceTestUtil.nextLong());
 
-		newSCProductScreenshot.setThumbnailId(nextLong());
+		newSCProductScreenshot.setThumbnailId(ServiceTestUtil.nextLong());
 
-		newSCProductScreenshot.setFullImageId(nextLong());
+		newSCProductScreenshot.setFullImageId(ServiceTestUtil.nextLong());
 
-		newSCProductScreenshot.setPriority(nextInt());
+		newSCProductScreenshot.setPriority(ServiceTestUtil.nextInt());
 
 		_persistence.update(newSCProductScreenshot, false);
 
 		SCProductScreenshot existingSCProductScreenshot = _persistence.findByPrimaryKey(newSCProductScreenshot.getPrimaryKey());
 
-		assertEquals(existingSCProductScreenshot.getProductScreenshotId(),
+		Assert.assertEquals(existingSCProductScreenshot.getProductScreenshotId(),
 			newSCProductScreenshot.getProductScreenshotId());
-		assertEquals(existingSCProductScreenshot.getCompanyId(),
+		Assert.assertEquals(existingSCProductScreenshot.getCompanyId(),
 			newSCProductScreenshot.getCompanyId());
-		assertEquals(existingSCProductScreenshot.getGroupId(),
+		Assert.assertEquals(existingSCProductScreenshot.getGroupId(),
 			newSCProductScreenshot.getGroupId());
-		assertEquals(existingSCProductScreenshot.getProductEntryId(),
+		Assert.assertEquals(existingSCProductScreenshot.getProductEntryId(),
 			newSCProductScreenshot.getProductEntryId());
-		assertEquals(existingSCProductScreenshot.getThumbnailId(),
+		Assert.assertEquals(existingSCProductScreenshot.getThumbnailId(),
 			newSCProductScreenshot.getThumbnailId());
-		assertEquals(existingSCProductScreenshot.getFullImageId(),
+		Assert.assertEquals(existingSCProductScreenshot.getFullImageId(),
 			newSCProductScreenshot.getFullImageId());
-		assertEquals(existingSCProductScreenshot.getPriority(),
+		Assert.assertEquals(existingSCProductScreenshot.getPriority(),
 			newSCProductScreenshot.getPriority());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		SCProductScreenshot newSCProductScreenshot = addSCProductScreenshot();
 
 		SCProductScreenshot existingSCProductScreenshot = _persistence.findByPrimaryKey(newSCProductScreenshot.getPrimaryKey());
 
-		assertEquals(existingSCProductScreenshot, newSCProductScreenshot);
+		Assert.assertEquals(existingSCProductScreenshot, newSCProductScreenshot);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail(
+			Assert.fail(
 				"Missing entity did not throw NoSuchProductScreenshotException");
 		}
 		catch (NoSuchProductScreenshotException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		SCProductScreenshot newSCProductScreenshot = addSCProductScreenshot();
 
 		SCProductScreenshot existingSCProductScreenshot = _persistence.fetchByPrimaryKey(newSCProductScreenshot.getPrimaryKey());
 
-		assertEquals(existingSCProductScreenshot, newSCProductScreenshot);
+		Assert.assertEquals(existingSCProductScreenshot, newSCProductScreenshot);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		SCProductScreenshot missingSCProductScreenshot = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingSCProductScreenshot);
+		Assert.assertNull(missingSCProductScreenshot);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		SCProductScreenshot newSCProductScreenshot = addSCProductScreenshot();
@@ -149,25 +168,27 @@ public class SCProductScreenshotPersistenceTest extends BasePersistenceTestCase 
 
 		List<SCProductScreenshot> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		SCProductScreenshot existingSCProductScreenshot = result.get(0);
 
-		assertEquals(existingSCProductScreenshot, newSCProductScreenshot);
+		Assert.assertEquals(existingSCProductScreenshot, newSCProductScreenshot);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SCProductScreenshot.class,
 				SCProductScreenshot.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("productScreenshotId",
-				nextLong()));
+				ServiceTestUtil.nextLong()));
 
 		List<SCProductScreenshot> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		SCProductScreenshot newSCProductScreenshot = addSCProductScreenshot();
@@ -185,13 +206,14 @@ public class SCProductScreenshotPersistenceTest extends BasePersistenceTestCase 
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingProductScreenshotId = result.get(0);
 
-		assertEquals(existingProductScreenshotId, newProductScreenshotId);
+		Assert.assertEquals(existingProductScreenshotId, newProductScreenshotId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SCProductScreenshot.class,
 				SCProductScreenshot.class.getClassLoader());
@@ -200,13 +222,14 @@ public class SCProductScreenshotPersistenceTest extends BasePersistenceTestCase 
 				"productScreenshotId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("productScreenshotId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -218,35 +241,35 @@ public class SCProductScreenshotPersistenceTest extends BasePersistenceTestCase 
 
 		SCProductScreenshotModelImpl existingSCProductScreenshotModelImpl = (SCProductScreenshotModelImpl)_persistence.findByPrimaryKey(newSCProductScreenshot.getPrimaryKey());
 
-		assertEquals(existingSCProductScreenshotModelImpl.getThumbnailId(),
+		Assert.assertEquals(existingSCProductScreenshotModelImpl.getThumbnailId(),
 			existingSCProductScreenshotModelImpl.getOriginalThumbnailId());
 
-		assertEquals(existingSCProductScreenshotModelImpl.getFullImageId(),
+		Assert.assertEquals(existingSCProductScreenshotModelImpl.getFullImageId(),
 			existingSCProductScreenshotModelImpl.getOriginalFullImageId());
 
-		assertEquals(existingSCProductScreenshotModelImpl.getProductEntryId(),
+		Assert.assertEquals(existingSCProductScreenshotModelImpl.getProductEntryId(),
 			existingSCProductScreenshotModelImpl.getOriginalProductEntryId());
-		assertEquals(existingSCProductScreenshotModelImpl.getPriority(),
+		Assert.assertEquals(existingSCProductScreenshotModelImpl.getPriority(),
 			existingSCProductScreenshotModelImpl.getOriginalPriority());
 	}
 
 	protected SCProductScreenshot addSCProductScreenshot()
 		throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		SCProductScreenshot scProductScreenshot = _persistence.create(pk);
 
-		scProductScreenshot.setCompanyId(nextLong());
+		scProductScreenshot.setCompanyId(ServiceTestUtil.nextLong());
 
-		scProductScreenshot.setGroupId(nextLong());
+		scProductScreenshot.setGroupId(ServiceTestUtil.nextLong());
 
-		scProductScreenshot.setProductEntryId(nextLong());
+		scProductScreenshot.setProductEntryId(ServiceTestUtil.nextLong());
 
-		scProductScreenshot.setThumbnailId(nextLong());
+		scProductScreenshot.setThumbnailId(ServiceTestUtil.nextLong());
 
-		scProductScreenshot.setFullImageId(nextLong());
+		scProductScreenshot.setFullImageId(ServiceTestUtil.nextLong());
 
-		scProductScreenshot.setPriority(nextInt());
+		scProductScreenshot.setPriority(ServiceTestUtil.nextInt());
 
 		_persistence.update(scProductScreenshot, false);
 

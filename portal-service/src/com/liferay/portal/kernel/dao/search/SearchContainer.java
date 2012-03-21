@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.dao.search;
 
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -146,6 +147,8 @@ public class SearchContainer<R> {
 			_headerNames = new ArrayList<String>(headerNames.size());
 
 			_headerNames.addAll(headerNames);
+
+			_generateUrlHeaderNames(_headerNames);
 		}
 
 		_emptyResultsMessage = emptyResultsMessage;
@@ -269,6 +272,10 @@ public class SearchContainer<R> {
 		return _total;
 	}
 
+	public List<String> getUrlHeaderNames() {
+		return _urlHeaderNames;
+	}
+
 	public boolean isDeltaConfigurable() {
 		return _deltaConfigurable;
 	}
@@ -309,6 +316,8 @@ public class SearchContainer<R> {
 
 	public void setHeaderNames(List<String> headerNames) {
 		_headerNames = headerNames;
+
+		_generateUrlHeaderNames(headerNames);
 	}
 
 	public void setHover(boolean hover) {
@@ -391,6 +400,15 @@ public class SearchContainer<R> {
 		}
 	}
 
+	private void _generateUrlHeaderNames(List<String> headerNames) {
+		_urlHeaderNames = new ArrayList<String>(headerNames.size());
+
+		for (String headerName: headerNames) {
+			_urlHeaderNames.add(
+				FriendlyURLNormalizerUtil.normalize(headerName));
+		}
+	}
+
 	private String _className;
 	private int _cur;
 	private String _curParam = DEFAULT_CUR_PARAM;
@@ -425,5 +443,6 @@ public class SearchContainer<R> {
 	private DisplayTerms _searchTerms;
 	private int _start;
 	private int _total;
+	private List<String> _urlHeaderNames;
 
 }

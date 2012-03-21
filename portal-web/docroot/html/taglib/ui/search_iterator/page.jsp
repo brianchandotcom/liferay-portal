@@ -52,6 +52,7 @@ int end = searchContainer.getEnd();
 int total = searchContainer.getTotal();
 List resultRows = searchContainer.getResultRows();
 List<String> headerNames = searchContainer.getHeaderNames();
+List<String> urlHeaderNames = searchContainer.getUrlHeaderNames();
 Map orderableHeaders = searchContainer.getOrderableHeaders();
 String emptyResultsMessage = searchContainer.getEmptyResultsMessage();
 RowChecker rowChecker = searchContainer.getRowChecker();
@@ -63,6 +64,7 @@ if (end > total) {
 if (rowChecker != null) {
 	if (headerNames != null) {
 		headerNames.add(0, rowChecker.getAllRowsCheckBox());
+		urlHeaderNames.add(0, "rowChecker");
 	}
 }
 
@@ -103,6 +105,11 @@ int sortColumnIndex = -1;
 			<%
 			for (int i = 0; i < headerNames.size(); i++) {
 				String headerName = headerNames.get(i);
+				String urlHeaderName = urlHeaderNames.get(i);
+
+				if (Validator.isNull(urlHeaderName)) {
+					urlHeaderName = String.valueOf(i +1);
+				}
 
 				String orderKey = null;
 				String orderByType = null;
@@ -148,7 +155,7 @@ int sortColumnIndex = -1;
 				}
 			%>
 
-				<th class="col-<%= i + 1 %> <%= cssClass %>" id="<%= namespace + id %>_col-<%= i + 1 %>"
+				<th class="col-<%= i + 1 %> col-<%= urlHeaderName %> <%= cssClass %>" id="<%= namespace + id %>_col-<%= urlHeaderName %>"
 
 					<%--
 
@@ -295,6 +302,12 @@ int sortColumnIndex = -1;
 			for (int j = 0; j < entries.size(); j++) {
 				SearchEntry entry = (SearchEntry)entries.get(j);
 
+				String urlHeaderName = urlHeaderNames.get(j);
+
+				if (Validator.isNull(urlHeaderName)) {
+					urlHeaderName = String.valueOf(j + 1);
+				}
+
 				entry.setIndex(j);
 
 				request.setAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW_ENTRY, entry);
@@ -316,10 +329,11 @@ int sortColumnIndex = -1;
 				}
 			%>
 
-				<td class="align-<%= entry.getAlign() %> col-<%= j + 1 %><%= row.isBold() ? " taglib-search-iterator-highlighted" : "" %> <%= columnClassName %> valign-<%= entry.getValign() %>" colspan="<%= entry.getColspan() %>"
+				<td class="align-<%= entry.getAlign() %> col-<%= j + 1 %><%= row.isBold() ? " taglib-search-iterator-highlighted" : "" %> col-<%= urlHeaderName %> <%= columnClassName %> valign-<%= entry.getValign() %>" colspan="<%= entry.getColspan() %>"
 					<c:if test="<%= (headerNames != null) && (headerNames.size() >= (j + 1)) %>">
-						headers="<%= namespace + id %>_col-<%= (j + 1) %>"
+						headers="<%= namespace + id %>_col-<%= urlHeaderName %>"
 					</c:if>
+					id="<%= namespace + id %>_col-<%= urlHeaderName %>_row-<%= i + 1 %>"
 				>
 
 					<%

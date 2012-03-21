@@ -105,7 +105,11 @@ int sortColumnIndex = -1;
 			<%
 			for (int i = 0; i < headerNames.size(); i++) {
 				String headerName = headerNames.get(i);
-				String urlHeaderName = urlHeaderNames.get(i);
+				String urlHeaderName = null;
+
+				if (i < urlHeaderNames.size()) {
+					urlHeaderName = urlHeaderNames.get(i);
+				}
 
 				if (Validator.isNull(urlHeaderName)) {
 					urlHeaderName = String.valueOf(i +1);
@@ -306,7 +310,11 @@ int sortColumnIndex = -1;
 			for (int j = 0; j < entries.size(); j++) {
 				SearchEntry entry = (SearchEntry)entries.get(j);
 
-				String urlHeaderName = urlHeaderNames.get(j);
+				String urlHeaderName = null;
+
+				if (j < urlHeaderNames.size()) {
+					urlHeaderName = urlHeaderNames.get(j);
+				}
 
 				if (Validator.isNull(urlHeaderName)) {
 					urlHeaderName = String.valueOf(j + 1);

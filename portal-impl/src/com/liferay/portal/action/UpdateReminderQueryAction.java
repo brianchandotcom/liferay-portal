@@ -55,7 +55,7 @@ public class UpdateReminderQueryAction extends Action {
 		try {
 			updateReminderQuery(request, response);
 
-			return mapping.findForward(ActionConstants.COMMON_REFERER);
+			return mapping.findForward(ActionConstants.COMMON_REFERER_JSP);
 		}
 		catch (Exception e) {
 			if (e instanceof UserReminderQueryException) {

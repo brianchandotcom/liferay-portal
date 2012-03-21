@@ -100,7 +100,7 @@ public class FacebookConnectAction extends PortletAction {
 			setFacebookCredentials(session, themeDisplay.getCompanyId(), token);
 		}
 		else {
-			return mapping.findForward(ActionConstants.COMMON_REFERER);
+			return mapping.findForward(ActionConstants.COMMON_REFERER_JSP);
 		}
 
 		response.sendRedirect(redirect);

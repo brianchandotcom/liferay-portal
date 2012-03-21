@@ -60,7 +60,7 @@ public class UpdateEmailAddressAction extends Action {
 		try {
 			updateEmailAddress(request);
 
-			return mapping.findForward(ActionConstants.COMMON_REFERER);
+			return mapping.findForward(ActionConstants.COMMON_REFERER_JSP);
 		}
 		catch (Exception e) {
 			if (e instanceof DuplicateUserEmailAddressException ||

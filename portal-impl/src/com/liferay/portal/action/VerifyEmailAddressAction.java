@@ -82,7 +82,7 @@ public class VerifyEmailAddressAction extends Action {
 				return null;
 			}
 			else {
-				return mapping.findForward(ActionConstants.COMMON_REFERER);
+				return mapping.findForward(ActionConstants.COMMON_REFERER_JSP);
 			}
 		}
 		catch (Exception e) {

@@ -69,7 +69,7 @@ public class UpdatePasswordAction extends Action {
 		Ticket ticket = getTicket(request);
 
 		if (!themeDisplay.isSignedIn() && (ticket == null)) {
-			return mapping.findForward(ActionConstants.COMMON_REFERER);
+			return mapping.findForward(ActionConstants.COMMON_REFERER_JSP);
 		}
 
 		String cmd = ParamUtil.getString(request, Constants.CMD);

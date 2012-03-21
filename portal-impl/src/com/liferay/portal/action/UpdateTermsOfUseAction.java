@@ -41,7 +41,7 @@ public class UpdateTermsOfUseAction extends Action {
 
 		UserServiceUtil.updateAgreedToTermsOfUse(userId, true);
 
-		return mapping.findForward(ActionConstants.COMMON_REFERER);
+		return mapping.findForward(ActionConstants.COMMON_REFERER_JSP);
 	}
 
 }

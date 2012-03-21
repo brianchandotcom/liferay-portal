@@ -240,7 +240,11 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public String getAlert() {
-		throw new UnsupportedOperationException();
+		WebDriver.TargetLocator targetLocator = switchTo();
+
+		Alert alert = targetLocator.alert();
+
+		return alert.getText();
 	}
 
 	public String[] getAllButtons() {

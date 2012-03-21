@@ -1058,9 +1058,11 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 
 		byte[] bytes = ImageToolUtil.getBytes(thumbnailRenderedImage, type);
 
-		File file = FileUtil.createTempFile(bytes);
+		File file = null;
 
 		try {
+			file = FileUtil.createTempFile(bytes);
+
 			addFileToStore(
 				fileVersion.getCompanyId(), THUMBNAIL_PATH,
 				getThumbnailFilePath(fileVersion, type, index), file);

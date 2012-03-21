@@ -153,7 +153,7 @@ public class WebDriverToSeleniumBridge
 
 	@Override
 	public void close() {
-		close();
+		super.close();
 	}
 
 	public void contextMenu(String locator) {
@@ -212,7 +212,19 @@ public class WebDriverToSeleniumBridge
 		String locatorOfObjectToBeDragged,
 		String locatorOfDragDestinationObject) {
 
-		throw new UnsupportedOperationException();
+		Actions actions = new Actions(this);
+
+		WebElement objectToBeDraggedWebElement = getWebElement(
+			locatorOfObjectToBeDragged);
+		WebElement dragDestinationObjectWebElement = getWebElement(
+			locatorOfDragDestinationObject);
+
+		actions.dragAndDrop(
+			objectToBeDraggedWebElement, dragDestinationObjectWebElement);
+
+		actions.build();
+
+		actions.perform();
 	}
 
 	public void dragdrop(String locator, String movementsString) {

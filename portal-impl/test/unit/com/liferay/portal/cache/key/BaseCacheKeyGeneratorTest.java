@@ -28,7 +28,7 @@ import junit.framework.TestCase;
 /**
  * @author Shuyang Zhou
  */
-public class BaseCacheKeyGeneratorTest extends TestCase {
+public abstract class BaseCacheKeyGeneratorTest extends TestCase {
 
 	public void testConsistency() {
 		StringBundler sb = new StringBundler(_KEYS);

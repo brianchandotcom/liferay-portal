@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.InstancePool;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
@@ -123,11 +124,18 @@ public class RawMetadataProcessorImpl
 		}
 
 		if (rawMetadataMap == null) {
-			InputStream inputStream = fileVersion.getContentStream(false);
+			InputStream inputStream = null;
 
-			rawMetadataMap = RawMetadataProcessorUtil.getRawMetadataMap(
-				fileVersion.getExtension(), fileVersion.getMimeType(),
-				inputStream);
+			try {
+				inputStream = fileVersion.getContentStream(false);
+
+				rawMetadataMap = RawMetadataProcessorUtil.getRawMetadataMap(
+					fileVersion.getExtension(), fileVersion.getMimeType(),
+					inputStream);
+			}
+			finally {
+				StreamUtil.cleanUp(inputStream);
+			}
 		}
 
 		List<DDMStructure> ddmStructures =

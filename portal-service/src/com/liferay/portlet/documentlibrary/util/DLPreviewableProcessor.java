@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
@@ -384,16 +385,22 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 
 		InputStream is = null;
 
-		if (fileIndex < 0) {
-			is = doGetPreviewAsStream(fileVersion, previewType);
-		}
-		else {
-			is = doGetPreviewAsStream(fileVersion, fileIndex + 1, previewType);
-		}
+		try {
+			if (fileIndex < 0) {
+				is = doGetPreviewAsStream(fileVersion, previewType);
+			}
+			else {
+				is = doGetPreviewAsStream(
+					fileVersion, fileIndex + 1, previewType);
+			}
 
-		exportBinary(
-			portletDataContext, fileEntryElement, fileVersion, is, binPath,
-			binPathName);
+			exportBinary(
+				portletDataContext, fileEntryElement, fileVersion, is, binPath,
+				binPathName);
+		}
+		finally {
+			StreamUtil.cleanUp(is);
+		}
 	}
 
 	protected void exportThumbnail(
@@ -407,15 +414,22 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			return;
 		}
 
-		InputStream is = doGetThumbnailAsStream(fileVersion, index);
+		InputStream is = null;
 
-		String binPath = getBinPath(portletDataContext, fileEntry, index);
+		try {
+			is = doGetThumbnailAsStream(fileVersion, index);
 
-		fileEntryElement.addAttribute(binPathName, binPath);
+			String binPath = getBinPath(portletDataContext, fileEntry, index);
 
-		exportBinary(
-			portletDataContext, fileEntryElement, fileVersion, is, binPath,
-			binPathName);
+			fileEntryElement.addAttribute(binPathName, binPath);
+
+			exportBinary(
+				portletDataContext, fileEntryElement, fileVersion, is, binPath,
+				binPathName);
+		}
+		finally {
+			StreamUtil.cleanUp(is);
+		}
 	}
 
 	protected void exportThumbnails(
@@ -789,16 +803,22 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 
 			InputStream is = null;
 
-			if (fileIndex < 0) {
-				is = doGetPreviewAsStream(fileVersion, previewType);
-			}
-			else {
-				is = doGetPreviewAsStream(fileVersion, fileIndex, previewType);
-			}
+			try {
+				if (fileIndex < 0) {
+					is = doGetPreviewAsStream(fileVersion, previewType);
+				}
+				else {
+					is = doGetPreviewAsStream(
+						fileVersion, fileIndex, previewType);
+				}
 
-			addFileToStore(
-				portletDataContext.getCompanyId(), PREVIEW_PATH,
-				previewFilePath, is);
+				addFileToStore(
+					portletDataContext.getCompanyId(), PREVIEW_PATH,
+					previewFilePath, is);
+			}
+			finally {
+				StreamUtil.cleanUp(is);
+			}
 		}
 	}
 
@@ -829,25 +849,33 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 
 		String binPath = fileEntryElement.attributeValue(binPathName);
 
-		InputStream is = portletDataContext.getZipEntryAsInputStream(binPath);
+		InputStream is = null;
 
-		if (is == null) {
-			return;
+		try {
+			is = portletDataContext.getZipEntryAsInputStream(binPath);
+
+			if (is == null) {
+				return;
+			}
+
+			String previewFilePath = null;
+
+			if (fileIndex < 0) {
+				previewFilePath = getPreviewFilePath(
+					fileVersion, getPreviewType(fileVersion));
+			}
+			else {
+				previewFilePath = getPreviewFilePath(
+					fileVersion, fileIndex + 1);
+			}
+
+			addFileToStore(
+				portletDataContext.getCompanyId(), PREVIEW_PATH,
+				previewFilePath, is);
 		}
-
-		String previewFilePath = null;
-
-		if (fileIndex < 0) {
-			previewFilePath = getPreviewFilePath(
-				fileVersion, getPreviewType(fileVersion));
+		finally {
+			StreamUtil.cleanUp(is);
 		}
-		else {
-			previewFilePath = getPreviewFilePath(fileVersion, fileIndex + 1);
-		}
-
-		addFileToStore(
-			portletDataContext.getCompanyId(), PREVIEW_PATH, previewFilePath,
-			is);
 	}
 
 	protected void importThumbnail(
@@ -868,18 +896,25 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 				return;
 			}
 
-			InputStream is = doGetThumbnailAsStream(fileVersion, index);
+			InputStream is = null;
 
-			FileVersion importedFileVersion =
-				importedFileEntry.getFileVersion();
+			try {
+				is = doGetThumbnailAsStream(fileVersion, index);
 
-			String thumbnailFilePath = getThumbnailFilePath(
-				importedFileVersion, getThumbnailType(importedFileVersion),
-				index);
+				FileVersion importedFileVersion =
+					importedFileEntry.getFileVersion();
 
-			addFileToStore(
-				portletDataContext.getCompanyId(), THUMBNAIL_PATH,
-				thumbnailFilePath, is);
+				String thumbnailFilePath = getThumbnailFilePath(
+					importedFileVersion, getThumbnailType(importedFileVersion),
+					index);
+
+				addFileToStore(
+					portletDataContext.getCompanyId(), THUMBNAIL_PATH,
+					thumbnailFilePath, is);
+			}
+			finally {
+				StreamUtil.cleanUp(is);
+			}
 		}
 	}
 
@@ -892,18 +927,25 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 
 		String binPath = fileEntryElement.attributeValue(binPathName);
 
-		InputStream is = portletDataContext.getZipEntryAsInputStream(binPath);
+		InputStream is = null;
 
-		if (is == null) {
-			return;
+		try {
+			is = portletDataContext.getZipEntryAsInputStream(binPath);
+
+			if (is == null) {
+				return;
+			}
+
+			String thumbnailFilePath = getThumbnailFilePath(
+				fileVersion, getThumbnailType(fileVersion), index);
+
+			addFileToStore(
+				portletDataContext.getCompanyId(), THUMBNAIL_PATH,
+				thumbnailFilePath, is);
 		}
-
-		String thumbnailFilePath = getThumbnailFilePath(
-			fileVersion, getThumbnailType(fileVersion), index);
-
-		addFileToStore(
-			portletDataContext.getCompanyId(), THUMBNAIL_PATH,
-			thumbnailFilePath, is);
+		finally {
+			StreamUtil.cleanUp(is);
+		}
 	}
 
 	protected void importThumbnails(
@@ -1016,9 +1058,11 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 
 		byte[] bytes = ImageToolUtil.getBytes(thumbnailRenderedImage, type);
 
-		File file = FileUtil.createTempFile(bytes);
+		File file = null;
 
 		try {
+			file = FileUtil.createTempFile(bytes);
+
 			addFileToStore(
 				fileVersion.getCompanyId(), THUMBNAIL_PATH,
 				getThumbnailFilePath(fileVersion, type, index), file);

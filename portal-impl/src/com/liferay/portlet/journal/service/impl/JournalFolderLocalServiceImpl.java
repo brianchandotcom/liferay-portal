@@ -178,7 +178,7 @@ public class JournalFolderLocalServiceImpl
 			groupId, parentFolderId, start, end);
 	}
 
-	public List<Object> getFoldersAndJournalArticles(
+	public List<Object> getFoldersAndArticles(
 			long groupId, long folderId, int start, int end,
 			OrderByComparator obc)
 		throws SystemException {
@@ -187,7 +187,7 @@ public class JournalFolderLocalServiceImpl
 			groupId, folderId, start, end, obc);
 	}
 
-	public int getFoldersAndJournalArticlesCount(long groupId, long folderId)
+	public int getFoldersAndArticlesCount(long groupId, long folderId)
 		throws SystemException {
 
 		return journalFolderFinder.countF_JA_ByG_F(groupId, folderId);

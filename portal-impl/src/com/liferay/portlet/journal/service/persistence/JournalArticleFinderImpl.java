@@ -766,7 +766,6 @@ public class JournalArticleFinderImpl
 		finally {
 			closeSession(session);
 		}
-
 	}
 
 	protected List<JournalArticle> doFindByC_G_C_A_V_T_D_C_T_S_T_D_S_R(

@@ -56,7 +56,7 @@ public class ViewCategoryTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Shopping Category Community"),
 			selenium.getText("//td[1]/a"));
-		assertEquals(RuntimeVariables.replace("Open"),
+		assertEquals(RuntimeVariables.replace("open"),
 			selenium.getText("//td[2]/a"));
 		selenium.clickAt("link=Shopping Category Community",
 			RuntimeVariables.replace("Shopping Category Community"));

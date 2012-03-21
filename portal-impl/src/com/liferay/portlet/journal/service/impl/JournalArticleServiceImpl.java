@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.service.base.JournalArticleServiceBaseImpl;
@@ -299,29 +298,6 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			getPermissionChecker(), article, ActionKeys.VIEW);
 
 		return article;
-	}
-
-	public int getFoldersArticlesCount(
-			long groupId, List<Long> folderIds, int status)
-		throws SystemException {
-
-		if (folderIds.size() <= PropsValues.SQL_DATA_MAX_PARAMETERS) {
-			return journalArticleFinder.filterCountByG_F_S(
-				groupId, folderIds, status);
-		}
-		else {
-			int start = 0;
-			int end = PropsValues.SQL_DATA_MAX_PARAMETERS;
-
-			int filesCount = journalArticleFinder.filterCountByG_F_S(
-				groupId, folderIds.subList(start, end), status);
-
-			folderIds.subList(start, end).clear();
-
-			filesCount += getFoldersArticlesCount(groupId, folderIds, status);
-
-			return filesCount;
-		}
 	}
 
 	public JournalArticle getLatestArticle(long resourcePrimKey)

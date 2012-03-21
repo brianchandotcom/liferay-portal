@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.journal.FolderNameException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolder;
@@ -186,16 +187,40 @@ public class JournalFolderLocalServiceImpl
 			groupId, folderId, start, end, obc);
 	}
 
-	public int getFoldersCount(long groupId, long parentFolderId)
-		throws SystemException {
-
-		return journalFolderPersistence.countByG_P(groupId, parentFolderId);
-	}
-
 	public int getFoldersAndJournalArticlesCount(long groupId, long folderId)
 		throws SystemException {
 
 		return journalFolderFinder.countF_JA_ByG_F(groupId, folderId);
+	}
+
+	public int getFoldersArticlesCount(
+			long groupId, List<Long> folderIds, int status)
+		throws SystemException {
+
+		if (folderIds.size() <= PropsValues.SQL_DATA_MAX_PARAMETERS) {
+			return journalArticleFinder.countByG_F_S(
+				groupId, folderIds, status);
+		}
+		else {
+			int start = 0;
+			int end = PropsValues.SQL_DATA_MAX_PARAMETERS;
+
+			int articlesCount = journalArticleFinder.countByG_F_S(
+				groupId, folderIds.subList(start, end), status);
+
+			folderIds.subList(start, end).clear();
+
+			articlesCount += getFoldersArticlesCount(
+				groupId, folderIds, status);
+
+			return articlesCount;
+		}
+	}
+
+	public int getFoldersCount(long groupId, long parentFolderId)
+		throws SystemException {
+
+		return journalFolderPersistence.countByG_P(groupId, parentFolderId);
 	}
 
 	public void getSubfolderIds(

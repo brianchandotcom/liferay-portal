@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.service.base.JournalFolderServiceBaseImpl;
 import com.liferay.portlet.journal.service.permission.JournalFolderPermission;
@@ -112,6 +113,30 @@ public class JournalFolderServiceImpl
 		throws SystemException {
 
 		return journalFolderFinder.filterCountF_JA_ByG_F(groupId, folderId);
+	}
+
+	public int getFoldersArticlesCount(
+			long groupId, List<Long> folderIds, int status)
+		throws SystemException {
+
+		if (folderIds.size() <= PropsValues.SQL_DATA_MAX_PARAMETERS) {
+			return journalArticleFinder.filterCountByG_F_S(
+				groupId, folderIds, status);
+		}
+		else {
+			int start = 0;
+			int end = PropsValues.SQL_DATA_MAX_PARAMETERS;
+
+			int articlesCount = journalArticleFinder.filterCountByG_F_S(
+				groupId, folderIds.subList(start, end), status);
+
+			folderIds.subList(start, end).clear();
+
+			articlesCount += getFoldersArticlesCount(
+				groupId, folderIds, status);
+
+			return articlesCount;
+		}
 	}
 
 	public int getFoldersCount(long groupId, long parentFolderId)

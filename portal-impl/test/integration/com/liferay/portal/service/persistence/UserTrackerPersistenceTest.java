@@ -22,31 +22,43 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.UserTracker;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class UserTrackerPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class UserTrackerPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (UserTrackerPersistence)PortalBeanLocatorUtil.locate(UserTrackerPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		UserTracker userTracker = _persistence.create(pk);
 
-		assertNotNull(userTracker);
+		Assert.assertNotNull(userTracker);
 
-		assertEquals(userTracker.getPrimaryKey(), pk);
+		Assert.assertEquals(userTracker.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		UserTracker newUserTracker = addUserTracker();
 
@@ -54,90 +66,99 @@ public class UserTrackerPersistenceTest extends BasePersistenceTestCase {
 
 		UserTracker existingUserTracker = _persistence.fetchByPrimaryKey(newUserTracker.getPrimaryKey());
 
-		assertNull(existingUserTracker);
+		Assert.assertNull(existingUserTracker);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addUserTracker();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		UserTracker newUserTracker = _persistence.create(pk);
 
-		newUserTracker.setCompanyId(nextLong());
+		newUserTracker.setCompanyId(ServiceTestUtil.nextLong());
 
-		newUserTracker.setUserId(nextLong());
+		newUserTracker.setUserId(ServiceTestUtil.nextLong());
 
-		newUserTracker.setModifiedDate(nextDate());
+		newUserTracker.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newUserTracker.setSessionId(randomString());
+		newUserTracker.setSessionId(ServiceTestUtil.randomString());
 
-		newUserTracker.setRemoteAddr(randomString());
+		newUserTracker.setRemoteAddr(ServiceTestUtil.randomString());
 
-		newUserTracker.setRemoteHost(randomString());
+		newUserTracker.setRemoteHost(ServiceTestUtil.randomString());
 
-		newUserTracker.setUserAgent(randomString());
+		newUserTracker.setUserAgent(ServiceTestUtil.randomString());
 
 		_persistence.update(newUserTracker, false);
 
 		UserTracker existingUserTracker = _persistence.findByPrimaryKey(newUserTracker.getPrimaryKey());
 
-		assertEquals(existingUserTracker.getUserTrackerId(),
+		Assert.assertEquals(existingUserTracker.getUserTrackerId(),
 			newUserTracker.getUserTrackerId());
-		assertEquals(existingUserTracker.getCompanyId(),
+		Assert.assertEquals(existingUserTracker.getCompanyId(),
 			newUserTracker.getCompanyId());
-		assertEquals(existingUserTracker.getUserId(), newUserTracker.getUserId());
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(existingUserTracker.getUserId(),
+			newUserTracker.getUserId());
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingUserTracker.getModifiedDate()),
 			Time.getShortTimestamp(newUserTracker.getModifiedDate()));
-		assertEquals(existingUserTracker.getSessionId(),
+		Assert.assertEquals(existingUserTracker.getSessionId(),
 			newUserTracker.getSessionId());
-		assertEquals(existingUserTracker.getRemoteAddr(),
+		Assert.assertEquals(existingUserTracker.getRemoteAddr(),
 			newUserTracker.getRemoteAddr());
-		assertEquals(existingUserTracker.getRemoteHost(),
+		Assert.assertEquals(existingUserTracker.getRemoteHost(),
 			newUserTracker.getRemoteHost());
-		assertEquals(existingUserTracker.getUserAgent(),
+		Assert.assertEquals(existingUserTracker.getUserAgent(),
 			newUserTracker.getUserAgent());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		UserTracker newUserTracker = addUserTracker();
 
 		UserTracker existingUserTracker = _persistence.findByPrimaryKey(newUserTracker.getPrimaryKey());
 
-		assertEquals(existingUserTracker, newUserTracker);
+		Assert.assertEquals(existingUserTracker, newUserTracker);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchUserTrackerException");
+			Assert.fail(
+				"Missing entity did not throw NoSuchUserTrackerException");
 		}
 		catch (NoSuchUserTrackerException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		UserTracker newUserTracker = addUserTracker();
 
 		UserTracker existingUserTracker = _persistence.fetchByPrimaryKey(newUserTracker.getPrimaryKey());
 
-		assertEquals(existingUserTracker, newUserTracker);
+		Assert.assertEquals(existingUserTracker, newUserTracker);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		UserTracker missingUserTracker = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingUserTracker);
+		Assert.assertNull(missingUserTracker);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		UserTracker newUserTracker = addUserTracker();
@@ -150,24 +171,27 @@ public class UserTrackerPersistenceTest extends BasePersistenceTestCase {
 
 		List<UserTracker> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		UserTracker existingUserTracker = result.get(0);
 
-		assertEquals(existingUserTracker, newUserTracker);
+		Assert.assertEquals(existingUserTracker, newUserTracker);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserTracker.class,
 				UserTracker.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("userTrackerId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("userTrackerId",
+				ServiceTestUtil.nextLong()));
 
 		List<UserTracker> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		UserTracker newUserTracker = addUserTracker();
@@ -185,13 +209,14 @@ public class UserTrackerPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingUserTrackerId = result.get(0);
 
-		assertEquals(existingUserTrackerId, newUserTrackerId);
+		Assert.assertEquals(existingUserTrackerId, newUserTrackerId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserTracker.class,
 				UserTracker.class.getClassLoader());
@@ -200,31 +225,31 @@ public class UserTrackerPersistenceTest extends BasePersistenceTestCase {
 				"userTrackerId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("userTrackerId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
 	protected UserTracker addUserTracker() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		UserTracker userTracker = _persistence.create(pk);
 
-		userTracker.setCompanyId(nextLong());
+		userTracker.setCompanyId(ServiceTestUtil.nextLong());
 
-		userTracker.setUserId(nextLong());
+		userTracker.setUserId(ServiceTestUtil.nextLong());
 
-		userTracker.setModifiedDate(nextDate());
+		userTracker.setModifiedDate(ServiceTestUtil.nextDate());
 
-		userTracker.setSessionId(randomString());
+		userTracker.setSessionId(ServiceTestUtil.randomString());
 
-		userTracker.setRemoteAddr(randomString());
+		userTracker.setRemoteAddr(ServiceTestUtil.randomString());
 
-		userTracker.setRemoteHost(randomString());
+		userTracker.setRemoteHost(ServiceTestUtil.randomString());
 
-		userTracker.setUserAgent(randomString());
+		userTracker.setUserAgent(ServiceTestUtil.randomString());
 
 		_persistence.update(userTracker, false);
 

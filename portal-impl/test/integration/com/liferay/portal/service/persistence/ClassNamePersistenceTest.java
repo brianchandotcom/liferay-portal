@@ -23,32 +23,44 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ClassName;
 import com.liferay.portal.model.impl.ClassNameModelImpl;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class ClassNamePersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class ClassNamePersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (ClassNamePersistence)PortalBeanLocatorUtil.locate(ClassNamePersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ClassName className = _persistence.create(pk);
 
-		assertNotNull(className);
+		Assert.assertNotNull(className);
 
-		assertEquals(className.getPrimaryKey(), pk);
+		Assert.assertEquals(className.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		ClassName newClassName = addClassName();
 
@@ -56,65 +68,73 @@ public class ClassNamePersistenceTest extends BasePersistenceTestCase {
 
 		ClassName existingClassName = _persistence.fetchByPrimaryKey(newClassName.getPrimaryKey());
 
-		assertNull(existingClassName);
+		Assert.assertNull(existingClassName);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addClassName();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ClassName newClassName = _persistence.create(pk);
 
-		newClassName.setValue(randomString());
+		newClassName.setValue(ServiceTestUtil.randomString());
 
 		_persistence.update(newClassName, false);
 
 		ClassName existingClassName = _persistence.findByPrimaryKey(newClassName.getPrimaryKey());
 
-		assertEquals(existingClassName.getClassNameId(),
+		Assert.assertEquals(existingClassName.getClassNameId(),
 			newClassName.getClassNameId());
-		assertEquals(existingClassName.getValue(), newClassName.getValue());
+		Assert.assertEquals(existingClassName.getValue(),
+			newClassName.getValue());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ClassName newClassName = addClassName();
 
 		ClassName existingClassName = _persistence.findByPrimaryKey(newClassName.getPrimaryKey());
 
-		assertEquals(existingClassName, newClassName);
+		Assert.assertEquals(existingClassName, newClassName);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchClassNameException");
+			Assert.fail("Missing entity did not throw NoSuchClassNameException");
 		}
 		catch (NoSuchClassNameException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		ClassName newClassName = addClassName();
 
 		ClassName existingClassName = _persistence.fetchByPrimaryKey(newClassName.getPrimaryKey());
 
-		assertEquals(existingClassName, newClassName);
+		Assert.assertEquals(existingClassName, newClassName);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ClassName missingClassName = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingClassName);
+		Assert.assertNull(missingClassName);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		ClassName newClassName = addClassName();
@@ -127,24 +147,27 @@ public class ClassNamePersistenceTest extends BasePersistenceTestCase {
 
 		List<ClassName> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		ClassName existingClassName = result.get(0);
 
-		assertEquals(existingClassName, newClassName);
+		Assert.assertEquals(existingClassName, newClassName);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ClassName.class,
 				ClassName.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("classNameId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("classNameId",
+				ServiceTestUtil.nextLong()));
 
 		List<ClassName> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		ClassName newClassName = addClassName();
@@ -161,13 +184,14 @@ public class ClassNamePersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingClassNameId = result.get(0);
 
-		assertEquals(existingClassNameId, newClassNameId);
+		Assert.assertEquals(existingClassNameId, newClassNameId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ClassName.class,
 				ClassName.class.getClassLoader());
@@ -175,13 +199,14 @@ public class ClassNamePersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("classNameId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("classNameId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -193,16 +218,17 @@ public class ClassNamePersistenceTest extends BasePersistenceTestCase {
 
 		ClassNameModelImpl existingClassNameModelImpl = (ClassNameModelImpl)_persistence.findByPrimaryKey(newClassName.getPrimaryKey());
 
-		assertTrue(Validator.equals(existingClassNameModelImpl.getValue(),
+		Assert.assertTrue(Validator.equals(
+				existingClassNameModelImpl.getValue(),
 				existingClassNameModelImpl.getOriginalValue()));
 	}
 
 	protected ClassName addClassName() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ClassName className = _persistence.create(pk);
 
-		className.setValue(randomString());
+		className.setValue(ServiceTestUtil.randomString());
 
 		_persistence.update(className, false);
 

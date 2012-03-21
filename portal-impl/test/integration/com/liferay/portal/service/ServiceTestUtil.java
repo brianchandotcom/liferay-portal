@@ -23,14 +23,11 @@ import com.liferay.portal.kernel.messaging.sender.MessageSender;
 import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineUtil;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.*;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.PortletImpl;
-import com.liferay.portal.search.lucene.LuceneHelperUtil;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
@@ -113,9 +110,12 @@ public class ServiceTestUtil {
 	}
 
 	public static void destroyServices() {
-		LuceneHelperUtil.shutdown();
+		//LuceneHelperUtil.shutdown();
 
-		FileUtil.deltree(PropsValues.LIFERAY_HOME + "/data");
+		//FileUtil.deltree(PropsValues.DL_STORE_FILE_SYSTEM_ROOT_DIR);
+		//FileUtil.deltree(
+		//	PropsUtil.get(PropsKeys.JCR_JACKRABBIT_REPOSITORY_ROOT));
+		FileUtil.delete(PropsValues.LIFERAY_HOME + "/data");
 	}
 
 	public static ServiceContext getServiceContext() throws Exception {
@@ -156,7 +156,11 @@ public class ServiceTestUtil {
 	public static void initServices() {
 		InitUtil.initWithSpring();
 
-		FileUtil.deltree(PropsValues.LIFERAY_HOME + "/data");
+		FileUtil.delete(PropsValues.LIFERAY_HOME + "/data");
+		//FileUtil.deltree(PropsValues.DL_STORE_FILE_SYSTEM_ROOT_DIR);
+		//FileUtil.deltree(
+		//	PropsUtil.get(PropsKeys.JCR_JACKRABBIT_REPOSITORY_ROOT));
+		FileUtil.mkdirs(PropsValues.LUCENE_DIR);
 
 		// JCR
 

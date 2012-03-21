@@ -23,32 +23,44 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.VirtualHost;
 import com.liferay.portal.model.impl.VirtualHostModelImpl;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class VirtualHostPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class VirtualHostPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (VirtualHostPersistence)PortalBeanLocatorUtil.locate(VirtualHostPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		VirtualHost virtualHost = _persistence.create(pk);
 
-		assertNotNull(virtualHost);
+		Assert.assertNotNull(virtualHost);
 
-		assertEquals(virtualHost.getPrimaryKey(), pk);
+		Assert.assertEquals(virtualHost.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		VirtualHost newVirtualHost = addVirtualHost();
 
@@ -56,74 +68,82 @@ public class VirtualHostPersistenceTest extends BasePersistenceTestCase {
 
 		VirtualHost existingVirtualHost = _persistence.fetchByPrimaryKey(newVirtualHost.getPrimaryKey());
 
-		assertNull(existingVirtualHost);
+		Assert.assertNull(existingVirtualHost);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addVirtualHost();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		VirtualHost newVirtualHost = _persistence.create(pk);
 
-		newVirtualHost.setCompanyId(nextLong());
+		newVirtualHost.setCompanyId(ServiceTestUtil.nextLong());
 
-		newVirtualHost.setLayoutSetId(nextLong());
+		newVirtualHost.setLayoutSetId(ServiceTestUtil.nextLong());
 
-		newVirtualHost.setHostname(randomString());
+		newVirtualHost.setHostname(ServiceTestUtil.randomString());
 
 		_persistence.update(newVirtualHost, false);
 
 		VirtualHost existingVirtualHost = _persistence.findByPrimaryKey(newVirtualHost.getPrimaryKey());
 
-		assertEquals(existingVirtualHost.getVirtualHostId(),
+		Assert.assertEquals(existingVirtualHost.getVirtualHostId(),
 			newVirtualHost.getVirtualHostId());
-		assertEquals(existingVirtualHost.getCompanyId(),
+		Assert.assertEquals(existingVirtualHost.getCompanyId(),
 			newVirtualHost.getCompanyId());
-		assertEquals(existingVirtualHost.getLayoutSetId(),
+		Assert.assertEquals(existingVirtualHost.getLayoutSetId(),
 			newVirtualHost.getLayoutSetId());
-		assertEquals(existingVirtualHost.getHostname(),
+		Assert.assertEquals(existingVirtualHost.getHostname(),
 			newVirtualHost.getHostname());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		VirtualHost newVirtualHost = addVirtualHost();
 
 		VirtualHost existingVirtualHost = _persistence.findByPrimaryKey(newVirtualHost.getPrimaryKey());
 
-		assertEquals(existingVirtualHost, newVirtualHost);
+		Assert.assertEquals(existingVirtualHost, newVirtualHost);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchVirtualHostException");
+			Assert.fail(
+				"Missing entity did not throw NoSuchVirtualHostException");
 		}
 		catch (NoSuchVirtualHostException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		VirtualHost newVirtualHost = addVirtualHost();
 
 		VirtualHost existingVirtualHost = _persistence.fetchByPrimaryKey(newVirtualHost.getPrimaryKey());
 
-		assertEquals(existingVirtualHost, newVirtualHost);
+		Assert.assertEquals(existingVirtualHost, newVirtualHost);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		VirtualHost missingVirtualHost = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingVirtualHost);
+		Assert.assertNull(missingVirtualHost);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		VirtualHost newVirtualHost = addVirtualHost();
@@ -136,24 +156,27 @@ public class VirtualHostPersistenceTest extends BasePersistenceTestCase {
 
 		List<VirtualHost> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		VirtualHost existingVirtualHost = result.get(0);
 
-		assertEquals(existingVirtualHost, newVirtualHost);
+		Assert.assertEquals(existingVirtualHost, newVirtualHost);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(VirtualHost.class,
 				VirtualHost.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("virtualHostId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("virtualHostId",
+				ServiceTestUtil.nextLong()));
 
 		List<VirtualHost> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		VirtualHost newVirtualHost = addVirtualHost();
@@ -171,13 +194,14 @@ public class VirtualHostPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingVirtualHostId = result.get(0);
 
-		assertEquals(existingVirtualHostId, newVirtualHostId);
+		Assert.assertEquals(existingVirtualHostId, newVirtualHostId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(VirtualHost.class,
 				VirtualHost.class.getClassLoader());
@@ -186,13 +210,14 @@ public class VirtualHostPersistenceTest extends BasePersistenceTestCase {
 				"virtualHostId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("virtualHostId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -204,26 +229,26 @@ public class VirtualHostPersistenceTest extends BasePersistenceTestCase {
 
 		VirtualHostModelImpl existingVirtualHostModelImpl = (VirtualHostModelImpl)_persistence.findByPrimaryKey(newVirtualHost.getPrimaryKey());
 
-		assertTrue(Validator.equals(
+		Assert.assertTrue(Validator.equals(
 				existingVirtualHostModelImpl.getHostname(),
 				existingVirtualHostModelImpl.getOriginalHostname()));
 
-		assertEquals(existingVirtualHostModelImpl.getCompanyId(),
+		Assert.assertEquals(existingVirtualHostModelImpl.getCompanyId(),
 			existingVirtualHostModelImpl.getOriginalCompanyId());
-		assertEquals(existingVirtualHostModelImpl.getLayoutSetId(),
+		Assert.assertEquals(existingVirtualHostModelImpl.getLayoutSetId(),
 			existingVirtualHostModelImpl.getOriginalLayoutSetId());
 	}
 
 	protected VirtualHost addVirtualHost() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		VirtualHost virtualHost = _persistence.create(pk);
 
-		virtualHost.setCompanyId(nextLong());
+		virtualHost.setCompanyId(ServiceTestUtil.nextLong());
 
-		virtualHost.setLayoutSetId(nextLong());
+		virtualHost.setLayoutSetId(ServiceTestUtil.nextLong());
 
-		virtualHost.setHostname(randomString());
+		virtualHost.setHostname(ServiceTestUtil.randomString());
 
 		_persistence.update(virtualHost, false);
 

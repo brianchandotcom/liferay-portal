@@ -21,36 +21,49 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.assertion.AssertUtils;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.wiki.NoSuchPageException;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.model.impl.WikiPageModelImpl;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class WikiPagePersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class WikiPagePersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (WikiPagePersistence)PortalBeanLocatorUtil.locate(WikiPagePersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		WikiPage wikiPage = _persistence.create(pk);
 
-		assertNotNull(wikiPage);
+		Assert.assertNotNull(wikiPage);
 
-		assertEquals(wikiPage.getPrimaryKey(), pk);
+		Assert.assertEquals(wikiPage.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		WikiPage newWikiPage = addWikiPage();
 
@@ -58,135 +71,157 @@ public class WikiPagePersistenceTest extends BasePersistenceTestCase {
 
 		WikiPage existingWikiPage = _persistence.fetchByPrimaryKey(newWikiPage.getPrimaryKey());
 
-		assertNull(existingWikiPage);
+		Assert.assertNull(existingWikiPage);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addWikiPage();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		WikiPage newWikiPage = _persistence.create(pk);
 
-		newWikiPage.setUuid(randomString());
+		newWikiPage.setUuid(ServiceTestUtil.randomString());
 
-		newWikiPage.setResourcePrimKey(nextLong());
+		newWikiPage.setResourcePrimKey(ServiceTestUtil.nextLong());
 
-		newWikiPage.setGroupId(nextLong());
+		newWikiPage.setGroupId(ServiceTestUtil.nextLong());
 
-		newWikiPage.setCompanyId(nextLong());
+		newWikiPage.setCompanyId(ServiceTestUtil.nextLong());
 
-		newWikiPage.setUserId(nextLong());
+		newWikiPage.setUserId(ServiceTestUtil.nextLong());
 
-		newWikiPage.setUserName(randomString());
+		newWikiPage.setUserName(ServiceTestUtil.randomString());
 
-		newWikiPage.setCreateDate(nextDate());
+		newWikiPage.setCreateDate(ServiceTestUtil.nextDate());
 
-		newWikiPage.setModifiedDate(nextDate());
+		newWikiPage.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newWikiPage.setNodeId(nextLong());
+		newWikiPage.setNodeId(ServiceTestUtil.nextLong());
 
-		newWikiPage.setTitle(randomString());
+		newWikiPage.setTitle(ServiceTestUtil.randomString());
 
-		newWikiPage.setVersion(nextDouble());
+		newWikiPage.setVersion(ServiceTestUtil.nextDouble());
 
-		newWikiPage.setMinorEdit(randomBoolean());
+		newWikiPage.setMinorEdit(ServiceTestUtil.randomBoolean());
 
-		newWikiPage.setContent(randomString());
+		newWikiPage.setContent(ServiceTestUtil.randomString());
 
-		newWikiPage.setSummary(randomString());
+		newWikiPage.setSummary(ServiceTestUtil.randomString());
 
-		newWikiPage.setFormat(randomString());
+		newWikiPage.setFormat(ServiceTestUtil.randomString());
 
-		newWikiPage.setHead(randomBoolean());
+		newWikiPage.setHead(ServiceTestUtil.randomBoolean());
 
-		newWikiPage.setParentTitle(randomString());
+		newWikiPage.setParentTitle(ServiceTestUtil.randomString());
 
-		newWikiPage.setRedirectTitle(randomString());
+		newWikiPage.setRedirectTitle(ServiceTestUtil.randomString());
 
-		newWikiPage.setStatus(nextInt());
+		newWikiPage.setStatus(ServiceTestUtil.nextInt());
 
-		newWikiPage.setStatusByUserId(nextLong());
+		newWikiPage.setStatusByUserId(ServiceTestUtil.nextLong());
 
-		newWikiPage.setStatusByUserName(randomString());
+		newWikiPage.setStatusByUserName(ServiceTestUtil.randomString());
 
-		newWikiPage.setStatusDate(nextDate());
+		newWikiPage.setStatusDate(ServiceTestUtil.nextDate());
 
 		_persistence.update(newWikiPage, false);
 
 		WikiPage existingWikiPage = _persistence.findByPrimaryKey(newWikiPage.getPrimaryKey());
 
-		assertEquals(existingWikiPage.getUuid(), newWikiPage.getUuid());
-		assertEquals(existingWikiPage.getPageId(), newWikiPage.getPageId());
-		assertEquals(existingWikiPage.getResourcePrimKey(),
+		Assert.assertEquals(existingWikiPage.getUuid(), newWikiPage.getUuid());
+		Assert.assertEquals(existingWikiPage.getPageId(),
+			newWikiPage.getPageId());
+		Assert.assertEquals(existingWikiPage.getResourcePrimKey(),
 			newWikiPage.getResourcePrimKey());
-		assertEquals(existingWikiPage.getGroupId(), newWikiPage.getGroupId());
-		assertEquals(existingWikiPage.getCompanyId(), newWikiPage.getCompanyId());
-		assertEquals(existingWikiPage.getUserId(), newWikiPage.getUserId());
-		assertEquals(existingWikiPage.getUserName(), newWikiPage.getUserName());
-		assertEquals(Time.getShortTimestamp(existingWikiPage.getCreateDate()),
+		Assert.assertEquals(existingWikiPage.getGroupId(),
+			newWikiPage.getGroupId());
+		Assert.assertEquals(existingWikiPage.getCompanyId(),
+			newWikiPage.getCompanyId());
+		Assert.assertEquals(existingWikiPage.getUserId(),
+			newWikiPage.getUserId());
+		Assert.assertEquals(existingWikiPage.getUserName(),
+			newWikiPage.getUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingWikiPage.getCreateDate()),
 			Time.getShortTimestamp(newWikiPage.getCreateDate()));
-		assertEquals(Time.getShortTimestamp(existingWikiPage.getModifiedDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingWikiPage.getModifiedDate()),
 			Time.getShortTimestamp(newWikiPage.getModifiedDate()));
-		assertEquals(existingWikiPage.getNodeId(), newWikiPage.getNodeId());
-		assertEquals(existingWikiPage.getTitle(), newWikiPage.getTitle());
-		assertEquals(existingWikiPage.getVersion(), newWikiPage.getVersion());
-		assertEquals(existingWikiPage.getMinorEdit(), newWikiPage.getMinorEdit());
-		assertEquals(existingWikiPage.getContent(), newWikiPage.getContent());
-		assertEquals(existingWikiPage.getSummary(), newWikiPage.getSummary());
-		assertEquals(existingWikiPage.getFormat(), newWikiPage.getFormat());
-		assertEquals(existingWikiPage.getHead(), newWikiPage.getHead());
-		assertEquals(existingWikiPage.getParentTitle(),
+		Assert.assertEquals(existingWikiPage.getNodeId(),
+			newWikiPage.getNodeId());
+		Assert.assertEquals(existingWikiPage.getTitle(), newWikiPage.getTitle());
+		AssertUtils.assertEquals(existingWikiPage.getVersion(),
+			newWikiPage.getVersion());
+		Assert.assertEquals(existingWikiPage.getMinorEdit(),
+			newWikiPage.getMinorEdit());
+		Assert.assertEquals(existingWikiPage.getContent(),
+			newWikiPage.getContent());
+		Assert.assertEquals(existingWikiPage.getSummary(),
+			newWikiPage.getSummary());
+		Assert.assertEquals(existingWikiPage.getFormat(),
+			newWikiPage.getFormat());
+		Assert.assertEquals(existingWikiPage.getHead(), newWikiPage.getHead());
+		Assert.assertEquals(existingWikiPage.getParentTitle(),
 			newWikiPage.getParentTitle());
-		assertEquals(existingWikiPage.getRedirectTitle(),
+		Assert.assertEquals(existingWikiPage.getRedirectTitle(),
 			newWikiPage.getRedirectTitle());
-		assertEquals(existingWikiPage.getStatus(), newWikiPage.getStatus());
-		assertEquals(existingWikiPage.getStatusByUserId(),
+		Assert.assertEquals(existingWikiPage.getStatus(),
+			newWikiPage.getStatus());
+		Assert.assertEquals(existingWikiPage.getStatusByUserId(),
 			newWikiPage.getStatusByUserId());
-		assertEquals(existingWikiPage.getStatusByUserName(),
+		Assert.assertEquals(existingWikiPage.getStatusByUserName(),
 			newWikiPage.getStatusByUserName());
-		assertEquals(Time.getShortTimestamp(existingWikiPage.getStatusDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingWikiPage.getStatusDate()),
 			Time.getShortTimestamp(newWikiPage.getStatusDate()));
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		WikiPage newWikiPage = addWikiPage();
 
 		WikiPage existingWikiPage = _persistence.findByPrimaryKey(newWikiPage.getPrimaryKey());
 
-		assertEquals(existingWikiPage, newWikiPage);
+		Assert.assertEquals(existingWikiPage, newWikiPage);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchPageException");
+			Assert.fail("Missing entity did not throw NoSuchPageException");
 		}
 		catch (NoSuchPageException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		WikiPage newWikiPage = addWikiPage();
 
 		WikiPage existingWikiPage = _persistence.fetchByPrimaryKey(newWikiPage.getPrimaryKey());
 
-		assertEquals(existingWikiPage, newWikiPage);
+		Assert.assertEquals(existingWikiPage, newWikiPage);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		WikiPage missingWikiPage = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingWikiPage);
+		Assert.assertNull(missingWikiPage);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		WikiPage newWikiPage = addWikiPage();
@@ -199,24 +234,27 @@ public class WikiPagePersistenceTest extends BasePersistenceTestCase {
 
 		List<WikiPage> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		WikiPage existingWikiPage = result.get(0);
 
-		assertEquals(existingWikiPage, newWikiPage);
+		Assert.assertEquals(existingWikiPage, newWikiPage);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WikiPage.class,
 				WikiPage.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("pageId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("pageId",
+				ServiceTestUtil.nextLong()));
 
 		List<WikiPage> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		WikiPage newWikiPage = addWikiPage();
@@ -233,13 +271,14 @@ public class WikiPagePersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingPageId = result.get(0);
 
-		assertEquals(existingPageId, newPageId);
+		Assert.assertEquals(existingPageId, newPageId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WikiPage.class,
 				WikiPage.class.getClassLoader());
@@ -247,13 +286,14 @@ public class WikiPagePersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("pageId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("pageId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -265,74 +305,76 @@ public class WikiPagePersistenceTest extends BasePersistenceTestCase {
 
 		WikiPageModelImpl existingWikiPageModelImpl = (WikiPageModelImpl)_persistence.findByPrimaryKey(newWikiPage.getPrimaryKey());
 
-		assertTrue(Validator.equals(existingWikiPageModelImpl.getUuid(),
+		Assert.assertTrue(Validator.equals(
+				existingWikiPageModelImpl.getUuid(),
 				existingWikiPageModelImpl.getOriginalUuid()));
-		assertEquals(existingWikiPageModelImpl.getGroupId(),
+		Assert.assertEquals(existingWikiPageModelImpl.getGroupId(),
 			existingWikiPageModelImpl.getOriginalGroupId());
 
-		assertEquals(existingWikiPageModelImpl.getResourcePrimKey(),
+		Assert.assertEquals(existingWikiPageModelImpl.getResourcePrimKey(),
 			existingWikiPageModelImpl.getOriginalResourcePrimKey());
-		assertEquals(existingWikiPageModelImpl.getNodeId(),
+		Assert.assertEquals(existingWikiPageModelImpl.getNodeId(),
 			existingWikiPageModelImpl.getOriginalNodeId());
-		assertEquals(existingWikiPageModelImpl.getVersion(),
+		AssertUtils.assertEquals(existingWikiPageModelImpl.getVersion(),
 			existingWikiPageModelImpl.getOriginalVersion());
 
-		assertEquals(existingWikiPageModelImpl.getNodeId(),
+		Assert.assertEquals(existingWikiPageModelImpl.getNodeId(),
 			existingWikiPageModelImpl.getOriginalNodeId());
-		assertTrue(Validator.equals(existingWikiPageModelImpl.getTitle(),
+		Assert.assertTrue(Validator.equals(
+				existingWikiPageModelImpl.getTitle(),
 				existingWikiPageModelImpl.getOriginalTitle()));
-		assertEquals(existingWikiPageModelImpl.getVersion(),
+		AssertUtils.assertEquals(existingWikiPageModelImpl.getVersion(),
 			existingWikiPageModelImpl.getOriginalVersion());
 	}
 
 	protected WikiPage addWikiPage() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		WikiPage wikiPage = _persistence.create(pk);
 
-		wikiPage.setUuid(randomString());
+		wikiPage.setUuid(ServiceTestUtil.randomString());
 
-		wikiPage.setResourcePrimKey(nextLong());
+		wikiPage.setResourcePrimKey(ServiceTestUtil.nextLong());
 
-		wikiPage.setGroupId(nextLong());
+		wikiPage.setGroupId(ServiceTestUtil.nextLong());
 
-		wikiPage.setCompanyId(nextLong());
+		wikiPage.setCompanyId(ServiceTestUtil.nextLong());
 
-		wikiPage.setUserId(nextLong());
+		wikiPage.setUserId(ServiceTestUtil.nextLong());
 
-		wikiPage.setUserName(randomString());
+		wikiPage.setUserName(ServiceTestUtil.randomString());
 
-		wikiPage.setCreateDate(nextDate());
+		wikiPage.setCreateDate(ServiceTestUtil.nextDate());
 
-		wikiPage.setModifiedDate(nextDate());
+		wikiPage.setModifiedDate(ServiceTestUtil.nextDate());
 
-		wikiPage.setNodeId(nextLong());
+		wikiPage.setNodeId(ServiceTestUtil.nextLong());
 
-		wikiPage.setTitle(randomString());
+		wikiPage.setTitle(ServiceTestUtil.randomString());
 
-		wikiPage.setVersion(nextDouble());
+		wikiPage.setVersion(ServiceTestUtil.nextDouble());
 
-		wikiPage.setMinorEdit(randomBoolean());
+		wikiPage.setMinorEdit(ServiceTestUtil.randomBoolean());
 
-		wikiPage.setContent(randomString());
+		wikiPage.setContent(ServiceTestUtil.randomString());
 
-		wikiPage.setSummary(randomString());
+		wikiPage.setSummary(ServiceTestUtil.randomString());
 
-		wikiPage.setFormat(randomString());
+		wikiPage.setFormat(ServiceTestUtil.randomString());
 
-		wikiPage.setHead(randomBoolean());
+		wikiPage.setHead(ServiceTestUtil.randomBoolean());
 
-		wikiPage.setParentTitle(randomString());
+		wikiPage.setParentTitle(ServiceTestUtil.randomString());
 
-		wikiPage.setRedirectTitle(randomString());
+		wikiPage.setRedirectTitle(ServiceTestUtil.randomString());
 
-		wikiPage.setStatus(nextInt());
+		wikiPage.setStatus(ServiceTestUtil.nextInt());
 
-		wikiPage.setStatusByUserId(nextLong());
+		wikiPage.setStatusByUserId(ServiceTestUtil.nextLong());
 
-		wikiPage.setStatusByUserName(randomString());
+		wikiPage.setStatusByUserName(ServiceTestUtil.randomString());
 
-		wikiPage.setStatusDate(nextDate());
+		wikiPage.setStatusDate(ServiceTestUtil.nextDate());
 
 		_persistence.update(wikiPage, false);
 

@@ -21,36 +21,49 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.assertion.AssertUtils;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.shopping.NoSuchCouponException;
 import com.liferay.portlet.shopping.model.ShoppingCoupon;
 import com.liferay.portlet.shopping.model.impl.ShoppingCouponModelImpl;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class ShoppingCouponPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class ShoppingCouponPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (ShoppingCouponPersistence)PortalBeanLocatorUtil.locate(ShoppingCouponPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ShoppingCoupon shoppingCoupon = _persistence.create(pk);
 
-		assertNotNull(shoppingCoupon);
+		Assert.assertNotNull(shoppingCoupon);
 
-		assertEquals(shoppingCoupon.getPrimaryKey(), pk);
+		Assert.assertEquals(shoppingCoupon.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		ShoppingCoupon newShoppingCoupon = addShoppingCoupon();
 
@@ -58,133 +71,141 @@ public class ShoppingCouponPersistenceTest extends BasePersistenceTestCase {
 
 		ShoppingCoupon existingShoppingCoupon = _persistence.fetchByPrimaryKey(newShoppingCoupon.getPrimaryKey());
 
-		assertNull(existingShoppingCoupon);
+		Assert.assertNull(existingShoppingCoupon);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addShoppingCoupon();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ShoppingCoupon newShoppingCoupon = _persistence.create(pk);
 
-		newShoppingCoupon.setGroupId(nextLong());
+		newShoppingCoupon.setGroupId(ServiceTestUtil.nextLong());
 
-		newShoppingCoupon.setCompanyId(nextLong());
+		newShoppingCoupon.setCompanyId(ServiceTestUtil.nextLong());
 
-		newShoppingCoupon.setUserId(nextLong());
+		newShoppingCoupon.setUserId(ServiceTestUtil.nextLong());
 
-		newShoppingCoupon.setUserName(randomString());
+		newShoppingCoupon.setUserName(ServiceTestUtil.randomString());
 
-		newShoppingCoupon.setCreateDate(nextDate());
+		newShoppingCoupon.setCreateDate(ServiceTestUtil.nextDate());
 
-		newShoppingCoupon.setModifiedDate(nextDate());
+		newShoppingCoupon.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newShoppingCoupon.setCode(randomString());
+		newShoppingCoupon.setCode(ServiceTestUtil.randomString());
 
-		newShoppingCoupon.setName(randomString());
+		newShoppingCoupon.setName(ServiceTestUtil.randomString());
 
-		newShoppingCoupon.setDescription(randomString());
+		newShoppingCoupon.setDescription(ServiceTestUtil.randomString());
 
-		newShoppingCoupon.setStartDate(nextDate());
+		newShoppingCoupon.setStartDate(ServiceTestUtil.nextDate());
 
-		newShoppingCoupon.setEndDate(nextDate());
+		newShoppingCoupon.setEndDate(ServiceTestUtil.nextDate());
 
-		newShoppingCoupon.setActive(randomBoolean());
+		newShoppingCoupon.setActive(ServiceTestUtil.randomBoolean());
 
-		newShoppingCoupon.setLimitCategories(randomString());
+		newShoppingCoupon.setLimitCategories(ServiceTestUtil.randomString());
 
-		newShoppingCoupon.setLimitSkus(randomString());
+		newShoppingCoupon.setLimitSkus(ServiceTestUtil.randomString());
 
-		newShoppingCoupon.setMinOrder(nextDouble());
+		newShoppingCoupon.setMinOrder(ServiceTestUtil.nextDouble());
 
-		newShoppingCoupon.setDiscount(nextDouble());
+		newShoppingCoupon.setDiscount(ServiceTestUtil.nextDouble());
 
-		newShoppingCoupon.setDiscountType(randomString());
+		newShoppingCoupon.setDiscountType(ServiceTestUtil.randomString());
 
 		_persistence.update(newShoppingCoupon, false);
 
 		ShoppingCoupon existingShoppingCoupon = _persistence.findByPrimaryKey(newShoppingCoupon.getPrimaryKey());
 
-		assertEquals(existingShoppingCoupon.getCouponId(),
+		Assert.assertEquals(existingShoppingCoupon.getCouponId(),
 			newShoppingCoupon.getCouponId());
-		assertEquals(existingShoppingCoupon.getGroupId(),
+		Assert.assertEquals(existingShoppingCoupon.getGroupId(),
 			newShoppingCoupon.getGroupId());
-		assertEquals(existingShoppingCoupon.getCompanyId(),
+		Assert.assertEquals(existingShoppingCoupon.getCompanyId(),
 			newShoppingCoupon.getCompanyId());
-		assertEquals(existingShoppingCoupon.getUserId(),
+		Assert.assertEquals(existingShoppingCoupon.getUserId(),
 			newShoppingCoupon.getUserId());
-		assertEquals(existingShoppingCoupon.getUserName(),
+		Assert.assertEquals(existingShoppingCoupon.getUserName(),
 			newShoppingCoupon.getUserName());
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingShoppingCoupon.getCreateDate()),
 			Time.getShortTimestamp(newShoppingCoupon.getCreateDate()));
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingShoppingCoupon.getModifiedDate()),
 			Time.getShortTimestamp(newShoppingCoupon.getModifiedDate()));
-		assertEquals(existingShoppingCoupon.getCode(),
+		Assert.assertEquals(existingShoppingCoupon.getCode(),
 			newShoppingCoupon.getCode());
-		assertEquals(existingShoppingCoupon.getName(),
+		Assert.assertEquals(existingShoppingCoupon.getName(),
 			newShoppingCoupon.getName());
-		assertEquals(existingShoppingCoupon.getDescription(),
+		Assert.assertEquals(existingShoppingCoupon.getDescription(),
 			newShoppingCoupon.getDescription());
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingShoppingCoupon.getStartDate()),
 			Time.getShortTimestamp(newShoppingCoupon.getStartDate()));
-		assertEquals(Time.getShortTimestamp(existingShoppingCoupon.getEndDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingShoppingCoupon.getEndDate()),
 			Time.getShortTimestamp(newShoppingCoupon.getEndDate()));
-		assertEquals(existingShoppingCoupon.getActive(),
+		Assert.assertEquals(existingShoppingCoupon.getActive(),
 			newShoppingCoupon.getActive());
-		assertEquals(existingShoppingCoupon.getLimitCategories(),
+		Assert.assertEquals(existingShoppingCoupon.getLimitCategories(),
 			newShoppingCoupon.getLimitCategories());
-		assertEquals(existingShoppingCoupon.getLimitSkus(),
+		Assert.assertEquals(existingShoppingCoupon.getLimitSkus(),
 			newShoppingCoupon.getLimitSkus());
-		assertEquals(existingShoppingCoupon.getMinOrder(),
+		AssertUtils.assertEquals(existingShoppingCoupon.getMinOrder(),
 			newShoppingCoupon.getMinOrder());
-		assertEquals(existingShoppingCoupon.getDiscount(),
+		AssertUtils.assertEquals(existingShoppingCoupon.getDiscount(),
 			newShoppingCoupon.getDiscount());
-		assertEquals(existingShoppingCoupon.getDiscountType(),
+		Assert.assertEquals(existingShoppingCoupon.getDiscountType(),
 			newShoppingCoupon.getDiscountType());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ShoppingCoupon newShoppingCoupon = addShoppingCoupon();
 
 		ShoppingCoupon existingShoppingCoupon = _persistence.findByPrimaryKey(newShoppingCoupon.getPrimaryKey());
 
-		assertEquals(existingShoppingCoupon, newShoppingCoupon);
+		Assert.assertEquals(existingShoppingCoupon, newShoppingCoupon);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchCouponException");
+			Assert.fail("Missing entity did not throw NoSuchCouponException");
 		}
 		catch (NoSuchCouponException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		ShoppingCoupon newShoppingCoupon = addShoppingCoupon();
 
 		ShoppingCoupon existingShoppingCoupon = _persistence.fetchByPrimaryKey(newShoppingCoupon.getPrimaryKey());
 
-		assertEquals(existingShoppingCoupon, newShoppingCoupon);
+		Assert.assertEquals(existingShoppingCoupon, newShoppingCoupon);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ShoppingCoupon missingShoppingCoupon = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingShoppingCoupon);
+		Assert.assertNull(missingShoppingCoupon);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		ShoppingCoupon newShoppingCoupon = addShoppingCoupon();
@@ -197,24 +218,27 @@ public class ShoppingCouponPersistenceTest extends BasePersistenceTestCase {
 
 		List<ShoppingCoupon> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		ShoppingCoupon existingShoppingCoupon = result.get(0);
 
-		assertEquals(existingShoppingCoupon, newShoppingCoupon);
+		Assert.assertEquals(existingShoppingCoupon, newShoppingCoupon);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ShoppingCoupon.class,
 				ShoppingCoupon.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("couponId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("couponId",
+				ServiceTestUtil.nextLong()));
 
 		List<ShoppingCoupon> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		ShoppingCoupon newShoppingCoupon = addShoppingCoupon();
@@ -231,13 +255,14 @@ public class ShoppingCouponPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingCouponId = result.get(0);
 
-		assertEquals(existingCouponId, newCouponId);
+		Assert.assertEquals(existingCouponId, newCouponId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ShoppingCoupon.class,
 				ShoppingCoupon.class.getClassLoader());
@@ -245,13 +270,14 @@ public class ShoppingCouponPersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("couponId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("couponId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -263,48 +289,49 @@ public class ShoppingCouponPersistenceTest extends BasePersistenceTestCase {
 
 		ShoppingCouponModelImpl existingShoppingCouponModelImpl = (ShoppingCouponModelImpl)_persistence.findByPrimaryKey(newShoppingCoupon.getPrimaryKey());
 
-		assertTrue(Validator.equals(existingShoppingCouponModelImpl.getCode(),
+		Assert.assertTrue(Validator.equals(
+				existingShoppingCouponModelImpl.getCode(),
 				existingShoppingCouponModelImpl.getOriginalCode()));
 	}
 
 	protected ShoppingCoupon addShoppingCoupon() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ShoppingCoupon shoppingCoupon = _persistence.create(pk);
 
-		shoppingCoupon.setGroupId(nextLong());
+		shoppingCoupon.setGroupId(ServiceTestUtil.nextLong());
 
-		shoppingCoupon.setCompanyId(nextLong());
+		shoppingCoupon.setCompanyId(ServiceTestUtil.nextLong());
 
-		shoppingCoupon.setUserId(nextLong());
+		shoppingCoupon.setUserId(ServiceTestUtil.nextLong());
 
-		shoppingCoupon.setUserName(randomString());
+		shoppingCoupon.setUserName(ServiceTestUtil.randomString());
 
-		shoppingCoupon.setCreateDate(nextDate());
+		shoppingCoupon.setCreateDate(ServiceTestUtil.nextDate());
 
-		shoppingCoupon.setModifiedDate(nextDate());
+		shoppingCoupon.setModifiedDate(ServiceTestUtil.nextDate());
 
-		shoppingCoupon.setCode(randomString());
+		shoppingCoupon.setCode(ServiceTestUtil.randomString());
 
-		shoppingCoupon.setName(randomString());
+		shoppingCoupon.setName(ServiceTestUtil.randomString());
 
-		shoppingCoupon.setDescription(randomString());
+		shoppingCoupon.setDescription(ServiceTestUtil.randomString());
 
-		shoppingCoupon.setStartDate(nextDate());
+		shoppingCoupon.setStartDate(ServiceTestUtil.nextDate());
 
-		shoppingCoupon.setEndDate(nextDate());
+		shoppingCoupon.setEndDate(ServiceTestUtil.nextDate());
 
-		shoppingCoupon.setActive(randomBoolean());
+		shoppingCoupon.setActive(ServiceTestUtil.randomBoolean());
 
-		shoppingCoupon.setLimitCategories(randomString());
+		shoppingCoupon.setLimitCategories(ServiceTestUtil.randomString());
 
-		shoppingCoupon.setLimitSkus(randomString());
+		shoppingCoupon.setLimitSkus(ServiceTestUtil.randomString());
 
-		shoppingCoupon.setMinOrder(nextDouble());
+		shoppingCoupon.setMinOrder(ServiceTestUtil.nextDouble());
 
-		shoppingCoupon.setDiscount(nextDouble());
+		shoppingCoupon.setDiscount(ServiceTestUtil.nextDouble());
 
-		shoppingCoupon.setDiscountType(randomString());
+		shoppingCoupon.setDiscountType(ServiceTestUtil.randomString());
 
 		_persistence.update(shoppingCoupon, false);
 

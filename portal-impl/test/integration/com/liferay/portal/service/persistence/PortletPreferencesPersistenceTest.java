@@ -23,32 +23,44 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.impl.PortletPreferencesModelImpl;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class PortletPreferencesPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class PortletPreferencesPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (PortletPreferencesPersistence)PortalBeanLocatorUtil.locate(PortletPreferencesPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		PortletPreferences portletPreferences = _persistence.create(pk);
 
-		assertNotNull(portletPreferences);
+		Assert.assertNotNull(portletPreferences);
 
-		assertEquals(portletPreferences.getPrimaryKey(), pk);
+		Assert.assertEquals(portletPreferences.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		PortletPreferences newPortletPreferences = addPortletPreferences();
 
@@ -56,83 +68,90 @@ public class PortletPreferencesPersistenceTest extends BasePersistenceTestCase {
 
 		PortletPreferences existingPortletPreferences = _persistence.fetchByPrimaryKey(newPortletPreferences.getPrimaryKey());
 
-		assertNull(existingPortletPreferences);
+		Assert.assertNull(existingPortletPreferences);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addPortletPreferences();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		PortletPreferences newPortletPreferences = _persistence.create(pk);
 
-		newPortletPreferences.setOwnerId(nextLong());
+		newPortletPreferences.setOwnerId(ServiceTestUtil.nextLong());
 
-		newPortletPreferences.setOwnerType(nextInt());
+		newPortletPreferences.setOwnerType(ServiceTestUtil.nextInt());
 
-		newPortletPreferences.setPlid(nextLong());
+		newPortletPreferences.setPlid(ServiceTestUtil.nextLong());
 
-		newPortletPreferences.setPortletId(randomString());
+		newPortletPreferences.setPortletId(ServiceTestUtil.randomString());
 
-		newPortletPreferences.setPreferences(randomString());
+		newPortletPreferences.setPreferences(ServiceTestUtil.randomString());
 
 		_persistence.update(newPortletPreferences, false);
 
 		PortletPreferences existingPortletPreferences = _persistence.findByPrimaryKey(newPortletPreferences.getPrimaryKey());
 
-		assertEquals(existingPortletPreferences.getPortletPreferencesId(),
+		Assert.assertEquals(existingPortletPreferences.getPortletPreferencesId(),
 			newPortletPreferences.getPortletPreferencesId());
-		assertEquals(existingPortletPreferences.getOwnerId(),
+		Assert.assertEquals(existingPortletPreferences.getOwnerId(),
 			newPortletPreferences.getOwnerId());
-		assertEquals(existingPortletPreferences.getOwnerType(),
+		Assert.assertEquals(existingPortletPreferences.getOwnerType(),
 			newPortletPreferences.getOwnerType());
-		assertEquals(existingPortletPreferences.getPlid(),
+		Assert.assertEquals(existingPortletPreferences.getPlid(),
 			newPortletPreferences.getPlid());
-		assertEquals(existingPortletPreferences.getPortletId(),
+		Assert.assertEquals(existingPortletPreferences.getPortletId(),
 			newPortletPreferences.getPortletId());
-		assertEquals(existingPortletPreferences.getPreferences(),
+		Assert.assertEquals(existingPortletPreferences.getPreferences(),
 			newPortletPreferences.getPreferences());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		PortletPreferences newPortletPreferences = addPortletPreferences();
 
 		PortletPreferences existingPortletPreferences = _persistence.findByPrimaryKey(newPortletPreferences.getPrimaryKey());
 
-		assertEquals(existingPortletPreferences, newPortletPreferences);
+		Assert.assertEquals(existingPortletPreferences, newPortletPreferences);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail(
+			Assert.fail(
 				"Missing entity did not throw NoSuchPortletPreferencesException");
 		}
 		catch (NoSuchPortletPreferencesException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		PortletPreferences newPortletPreferences = addPortletPreferences();
 
 		PortletPreferences existingPortletPreferences = _persistence.fetchByPrimaryKey(newPortletPreferences.getPrimaryKey());
 
-		assertEquals(existingPortletPreferences, newPortletPreferences);
+		Assert.assertEquals(existingPortletPreferences, newPortletPreferences);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		PortletPreferences missingPortletPreferences = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingPortletPreferences);
+		Assert.assertNull(missingPortletPreferences);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		PortletPreferences newPortletPreferences = addPortletPreferences();
@@ -145,25 +164,27 @@ public class PortletPreferencesPersistenceTest extends BasePersistenceTestCase {
 
 		List<PortletPreferences> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		PortletPreferences existingPortletPreferences = result.get(0);
 
-		assertEquals(existingPortletPreferences, newPortletPreferences);
+		Assert.assertEquals(existingPortletPreferences, newPortletPreferences);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PortletPreferences.class,
 				PortletPreferences.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("portletPreferencesId",
-				nextLong()));
+				ServiceTestUtil.nextLong()));
 
 		List<PortletPreferences> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		PortletPreferences newPortletPreferences = addPortletPreferences();
@@ -181,13 +202,15 @@ public class PortletPreferencesPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingPortletPreferencesId = result.get(0);
 
-		assertEquals(existingPortletPreferencesId, newPortletPreferencesId);
+		Assert.assertEquals(existingPortletPreferencesId,
+			newPortletPreferencesId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PortletPreferences.class,
 				PortletPreferences.class.getClassLoader());
@@ -196,13 +219,14 @@ public class PortletPreferencesPersistenceTest extends BasePersistenceTestCase {
 				"portletPreferencesId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("portletPreferencesId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -214,32 +238,32 @@ public class PortletPreferencesPersistenceTest extends BasePersistenceTestCase {
 
 		PortletPreferencesModelImpl existingPortletPreferencesModelImpl = (PortletPreferencesModelImpl)_persistence.findByPrimaryKey(newPortletPreferences.getPrimaryKey());
 
-		assertEquals(existingPortletPreferencesModelImpl.getOwnerId(),
+		Assert.assertEquals(existingPortletPreferencesModelImpl.getOwnerId(),
 			existingPortletPreferencesModelImpl.getOriginalOwnerId());
-		assertEquals(existingPortletPreferencesModelImpl.getOwnerType(),
+		Assert.assertEquals(existingPortletPreferencesModelImpl.getOwnerType(),
 			existingPortletPreferencesModelImpl.getOriginalOwnerType());
-		assertEquals(existingPortletPreferencesModelImpl.getPlid(),
+		Assert.assertEquals(existingPortletPreferencesModelImpl.getPlid(),
 			existingPortletPreferencesModelImpl.getOriginalPlid());
-		assertTrue(Validator.equals(
+		Assert.assertTrue(Validator.equals(
 				existingPortletPreferencesModelImpl.getPortletId(),
 				existingPortletPreferencesModelImpl.getOriginalPortletId()));
 	}
 
 	protected PortletPreferences addPortletPreferences()
 		throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		PortletPreferences portletPreferences = _persistence.create(pk);
 
-		portletPreferences.setOwnerId(nextLong());
+		portletPreferences.setOwnerId(ServiceTestUtil.nextLong());
 
-		portletPreferences.setOwnerType(nextInt());
+		portletPreferences.setOwnerType(ServiceTestUtil.nextInt());
 
-		portletPreferences.setPlid(nextLong());
+		portletPreferences.setPlid(ServiceTestUtil.nextLong());
 
-		portletPreferences.setPortletId(randomString());
+		portletPreferences.setPortletId(ServiceTestUtil.randomString());
 
-		portletPreferences.setPreferences(randomString());
+		portletPreferences.setPreferences(ServiceTestUtil.randomString());
 
 		_persistence.update(portletPreferences, false);
 

@@ -145,7 +145,7 @@ public class ClassicToCreoleTranslatorTest extends BaseTestCase {
 	public void testMonospace() throws Exception {
 		String content = "previous line\n monospace\nnext line";
 
-		String expected = "previous line\n{{{monospace}}}\nnext line";
+		String expected = "previous line\n{{{\n monospace\n}}}\nnext line";
 		String actual = _translate(content);
 
 		assertEquals(expected, actual);
@@ -155,7 +155,7 @@ public class ClassicToCreoleTranslatorTest extends BaseTestCase {
 		String content = "previous line\n monospace\n second line\nnext line";
 
 		String expected =
-			"previous line\n{{{monospace\nsecond line}}}\nnext line";
+			"previous line\n{{{\n monospace\n second line\n}}}\nnext line";
 		String actual = _translate(content);
 
 		assertEquals(expected, actual);

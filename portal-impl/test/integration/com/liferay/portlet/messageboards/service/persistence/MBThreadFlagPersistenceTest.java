@@ -20,36 +20,48 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.messageboards.NoSuchThreadFlagException;
 import com.liferay.portlet.messageboards.model.MBThreadFlag;
 import com.liferay.portlet.messageboards.model.impl.MBThreadFlagModelImpl;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class MBThreadFlagPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class MBThreadFlagPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (MBThreadFlagPersistence)PortalBeanLocatorUtil.locate(MBThreadFlagPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		MBThreadFlag mbThreadFlag = _persistence.create(pk);
 
-		assertNotNull(mbThreadFlag);
+		Assert.assertNotNull(mbThreadFlag);
 
-		assertEquals(mbThreadFlag.getPrimaryKey(), pk);
+		Assert.assertEquals(mbThreadFlag.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		MBThreadFlag newMBThreadFlag = addMBThreadFlag();
 
@@ -57,75 +69,83 @@ public class MBThreadFlagPersistenceTest extends BasePersistenceTestCase {
 
 		MBThreadFlag existingMBThreadFlag = _persistence.fetchByPrimaryKey(newMBThreadFlag.getPrimaryKey());
 
-		assertNull(existingMBThreadFlag);
+		Assert.assertNull(existingMBThreadFlag);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addMBThreadFlag();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		MBThreadFlag newMBThreadFlag = _persistence.create(pk);
 
-		newMBThreadFlag.setUserId(nextLong());
+		newMBThreadFlag.setUserId(ServiceTestUtil.nextLong());
 
-		newMBThreadFlag.setModifiedDate(nextDate());
+		newMBThreadFlag.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newMBThreadFlag.setThreadId(nextLong());
+		newMBThreadFlag.setThreadId(ServiceTestUtil.nextLong());
 
 		_persistence.update(newMBThreadFlag, false);
 
 		MBThreadFlag existingMBThreadFlag = _persistence.findByPrimaryKey(newMBThreadFlag.getPrimaryKey());
 
-		assertEquals(existingMBThreadFlag.getThreadFlagId(),
+		Assert.assertEquals(existingMBThreadFlag.getThreadFlagId(),
 			newMBThreadFlag.getThreadFlagId());
-		assertEquals(existingMBThreadFlag.getUserId(),
+		Assert.assertEquals(existingMBThreadFlag.getUserId(),
 			newMBThreadFlag.getUserId());
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingMBThreadFlag.getModifiedDate()),
 			Time.getShortTimestamp(newMBThreadFlag.getModifiedDate()));
-		assertEquals(existingMBThreadFlag.getThreadId(),
+		Assert.assertEquals(existingMBThreadFlag.getThreadId(),
 			newMBThreadFlag.getThreadId());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		MBThreadFlag newMBThreadFlag = addMBThreadFlag();
 
 		MBThreadFlag existingMBThreadFlag = _persistence.findByPrimaryKey(newMBThreadFlag.getPrimaryKey());
 
-		assertEquals(existingMBThreadFlag, newMBThreadFlag);
+		Assert.assertEquals(existingMBThreadFlag, newMBThreadFlag);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchThreadFlagException");
+			Assert.fail(
+				"Missing entity did not throw NoSuchThreadFlagException");
 		}
 		catch (NoSuchThreadFlagException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		MBThreadFlag newMBThreadFlag = addMBThreadFlag();
 
 		MBThreadFlag existingMBThreadFlag = _persistence.fetchByPrimaryKey(newMBThreadFlag.getPrimaryKey());
 
-		assertEquals(existingMBThreadFlag, newMBThreadFlag);
+		Assert.assertEquals(existingMBThreadFlag, newMBThreadFlag);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		MBThreadFlag missingMBThreadFlag = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingMBThreadFlag);
+		Assert.assertNull(missingMBThreadFlag);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		MBThreadFlag newMBThreadFlag = addMBThreadFlag();
@@ -138,24 +158,27 @@ public class MBThreadFlagPersistenceTest extends BasePersistenceTestCase {
 
 		List<MBThreadFlag> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		MBThreadFlag existingMBThreadFlag = result.get(0);
 
-		assertEquals(existingMBThreadFlag, newMBThreadFlag);
+		Assert.assertEquals(existingMBThreadFlag, newMBThreadFlag);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBThreadFlag.class,
 				MBThreadFlag.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("threadFlagId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("threadFlagId",
+				ServiceTestUtil.nextLong()));
 
 		List<MBThreadFlag> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		MBThreadFlag newMBThreadFlag = addMBThreadFlag();
@@ -173,13 +196,14 @@ public class MBThreadFlagPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingThreadFlagId = result.get(0);
 
-		assertEquals(existingThreadFlagId, newThreadFlagId);
+		Assert.assertEquals(existingThreadFlagId, newThreadFlagId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBThreadFlag.class,
 				MBThreadFlag.class.getClassLoader());
@@ -188,13 +212,14 @@ public class MBThreadFlagPersistenceTest extends BasePersistenceTestCase {
 				"threadFlagId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("threadFlagId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -206,22 +231,22 @@ public class MBThreadFlagPersistenceTest extends BasePersistenceTestCase {
 
 		MBThreadFlagModelImpl existingMBThreadFlagModelImpl = (MBThreadFlagModelImpl)_persistence.findByPrimaryKey(newMBThreadFlag.getPrimaryKey());
 
-		assertEquals(existingMBThreadFlagModelImpl.getUserId(),
+		Assert.assertEquals(existingMBThreadFlagModelImpl.getUserId(),
 			existingMBThreadFlagModelImpl.getOriginalUserId());
-		assertEquals(existingMBThreadFlagModelImpl.getThreadId(),
+		Assert.assertEquals(existingMBThreadFlagModelImpl.getThreadId(),
 			existingMBThreadFlagModelImpl.getOriginalThreadId());
 	}
 
 	protected MBThreadFlag addMBThreadFlag() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		MBThreadFlag mbThreadFlag = _persistence.create(pk);
 
-		mbThreadFlag.setUserId(nextLong());
+		mbThreadFlag.setUserId(ServiceTestUtil.nextLong());
 
-		mbThreadFlag.setModifiedDate(nextDate());
+		mbThreadFlag.setModifiedDate(ServiceTestUtil.nextDate());
 
-		mbThreadFlag.setThreadId(nextLong());
+		mbThreadFlag.setThreadId(ServiceTestUtil.nextLong());
 
 		_persistence.update(mbThreadFlag, false);
 

@@ -20,34 +20,46 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 
 import com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException;
 import com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class SCFrameworkVersionPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class SCFrameworkVersionPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (SCFrameworkVersionPersistence)PortalBeanLocatorUtil.locate(SCFrameworkVersionPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		SCFrameworkVersion scFrameworkVersion = _persistence.create(pk);
 
-		assertNotNull(scFrameworkVersion);
+		Assert.assertNotNull(scFrameworkVersion);
 
-		assertEquals(scFrameworkVersion.getPrimaryKey(), pk);
+		Assert.assertEquals(scFrameworkVersion.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		SCFrameworkVersion newSCFrameworkVersion = addSCFrameworkVersion();
 
@@ -55,104 +67,112 @@ public class SCFrameworkVersionPersistenceTest extends BasePersistenceTestCase {
 
 		SCFrameworkVersion existingSCFrameworkVersion = _persistence.fetchByPrimaryKey(newSCFrameworkVersion.getPrimaryKey());
 
-		assertNull(existingSCFrameworkVersion);
+		Assert.assertNull(existingSCFrameworkVersion);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addSCFrameworkVersion();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		SCFrameworkVersion newSCFrameworkVersion = _persistence.create(pk);
 
-		newSCFrameworkVersion.setGroupId(nextLong());
+		newSCFrameworkVersion.setGroupId(ServiceTestUtil.nextLong());
 
-		newSCFrameworkVersion.setCompanyId(nextLong());
+		newSCFrameworkVersion.setCompanyId(ServiceTestUtil.nextLong());
 
-		newSCFrameworkVersion.setUserId(nextLong());
+		newSCFrameworkVersion.setUserId(ServiceTestUtil.nextLong());
 
-		newSCFrameworkVersion.setUserName(randomString());
+		newSCFrameworkVersion.setUserName(ServiceTestUtil.randomString());
 
-		newSCFrameworkVersion.setCreateDate(nextDate());
+		newSCFrameworkVersion.setCreateDate(ServiceTestUtil.nextDate());
 
-		newSCFrameworkVersion.setModifiedDate(nextDate());
+		newSCFrameworkVersion.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newSCFrameworkVersion.setName(randomString());
+		newSCFrameworkVersion.setName(ServiceTestUtil.randomString());
 
-		newSCFrameworkVersion.setUrl(randomString());
+		newSCFrameworkVersion.setUrl(ServiceTestUtil.randomString());
 
-		newSCFrameworkVersion.setActive(randomBoolean());
+		newSCFrameworkVersion.setActive(ServiceTestUtil.randomBoolean());
 
-		newSCFrameworkVersion.setPriority(nextInt());
+		newSCFrameworkVersion.setPriority(ServiceTestUtil.nextInt());
 
 		_persistence.update(newSCFrameworkVersion, false);
 
 		SCFrameworkVersion existingSCFrameworkVersion = _persistence.findByPrimaryKey(newSCFrameworkVersion.getPrimaryKey());
 
-		assertEquals(existingSCFrameworkVersion.getFrameworkVersionId(),
+		Assert.assertEquals(existingSCFrameworkVersion.getFrameworkVersionId(),
 			newSCFrameworkVersion.getFrameworkVersionId());
-		assertEquals(existingSCFrameworkVersion.getGroupId(),
+		Assert.assertEquals(existingSCFrameworkVersion.getGroupId(),
 			newSCFrameworkVersion.getGroupId());
-		assertEquals(existingSCFrameworkVersion.getCompanyId(),
+		Assert.assertEquals(existingSCFrameworkVersion.getCompanyId(),
 			newSCFrameworkVersion.getCompanyId());
-		assertEquals(existingSCFrameworkVersion.getUserId(),
+		Assert.assertEquals(existingSCFrameworkVersion.getUserId(),
 			newSCFrameworkVersion.getUserId());
-		assertEquals(existingSCFrameworkVersion.getUserName(),
+		Assert.assertEquals(existingSCFrameworkVersion.getUserName(),
 			newSCFrameworkVersion.getUserName());
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingSCFrameworkVersion.getCreateDate()),
 			Time.getShortTimestamp(newSCFrameworkVersion.getCreateDate()));
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingSCFrameworkVersion.getModifiedDate()),
 			Time.getShortTimestamp(newSCFrameworkVersion.getModifiedDate()));
-		assertEquals(existingSCFrameworkVersion.getName(),
+		Assert.assertEquals(existingSCFrameworkVersion.getName(),
 			newSCFrameworkVersion.getName());
-		assertEquals(existingSCFrameworkVersion.getUrl(),
+		Assert.assertEquals(existingSCFrameworkVersion.getUrl(),
 			newSCFrameworkVersion.getUrl());
-		assertEquals(existingSCFrameworkVersion.getActive(),
+		Assert.assertEquals(existingSCFrameworkVersion.getActive(),
 			newSCFrameworkVersion.getActive());
-		assertEquals(existingSCFrameworkVersion.getPriority(),
+		Assert.assertEquals(existingSCFrameworkVersion.getPriority(),
 			newSCFrameworkVersion.getPriority());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		SCFrameworkVersion newSCFrameworkVersion = addSCFrameworkVersion();
 
 		SCFrameworkVersion existingSCFrameworkVersion = _persistence.findByPrimaryKey(newSCFrameworkVersion.getPrimaryKey());
 
-		assertEquals(existingSCFrameworkVersion, newSCFrameworkVersion);
+		Assert.assertEquals(existingSCFrameworkVersion, newSCFrameworkVersion);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchFrameworkVersionException");
+			Assert.fail(
+				"Missing entity did not throw NoSuchFrameworkVersionException");
 		}
 		catch (NoSuchFrameworkVersionException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		SCFrameworkVersion newSCFrameworkVersion = addSCFrameworkVersion();
 
 		SCFrameworkVersion existingSCFrameworkVersion = _persistence.fetchByPrimaryKey(newSCFrameworkVersion.getPrimaryKey());
 
-		assertEquals(existingSCFrameworkVersion, newSCFrameworkVersion);
+		Assert.assertEquals(existingSCFrameworkVersion, newSCFrameworkVersion);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		SCFrameworkVersion missingSCFrameworkVersion = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingSCFrameworkVersion);
+		Assert.assertNull(missingSCFrameworkVersion);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		SCFrameworkVersion newSCFrameworkVersion = addSCFrameworkVersion();
@@ -165,25 +185,27 @@ public class SCFrameworkVersionPersistenceTest extends BasePersistenceTestCase {
 
 		List<SCFrameworkVersion> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		SCFrameworkVersion existingSCFrameworkVersion = result.get(0);
 
-		assertEquals(existingSCFrameworkVersion, newSCFrameworkVersion);
+		Assert.assertEquals(existingSCFrameworkVersion, newSCFrameworkVersion);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SCFrameworkVersion.class,
 				SCFrameworkVersion.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("frameworkVersionId",
-				nextLong()));
+				ServiceTestUtil.nextLong()));
 
 		List<SCFrameworkVersion> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		SCFrameworkVersion newSCFrameworkVersion = addSCFrameworkVersion();
@@ -201,13 +223,14 @@ public class SCFrameworkVersionPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingFrameworkVersionId = result.get(0);
 
-		assertEquals(existingFrameworkVersionId, newFrameworkVersionId);
+		Assert.assertEquals(existingFrameworkVersionId, newFrameworkVersionId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SCFrameworkVersion.class,
 				SCFrameworkVersion.class.getClassLoader());
@@ -216,38 +239,38 @@ public class SCFrameworkVersionPersistenceTest extends BasePersistenceTestCase {
 				"frameworkVersionId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("frameworkVersionId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
 	protected SCFrameworkVersion addSCFrameworkVersion()
 		throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		SCFrameworkVersion scFrameworkVersion = _persistence.create(pk);
 
-		scFrameworkVersion.setGroupId(nextLong());
+		scFrameworkVersion.setGroupId(ServiceTestUtil.nextLong());
 
-		scFrameworkVersion.setCompanyId(nextLong());
+		scFrameworkVersion.setCompanyId(ServiceTestUtil.nextLong());
 
-		scFrameworkVersion.setUserId(nextLong());
+		scFrameworkVersion.setUserId(ServiceTestUtil.nextLong());
 
-		scFrameworkVersion.setUserName(randomString());
+		scFrameworkVersion.setUserName(ServiceTestUtil.randomString());
 
-		scFrameworkVersion.setCreateDate(nextDate());
+		scFrameworkVersion.setCreateDate(ServiceTestUtil.nextDate());
 
-		scFrameworkVersion.setModifiedDate(nextDate());
+		scFrameworkVersion.setModifiedDate(ServiceTestUtil.nextDate());
 
-		scFrameworkVersion.setName(randomString());
+		scFrameworkVersion.setName(ServiceTestUtil.randomString());
 
-		scFrameworkVersion.setUrl(randomString());
+		scFrameworkVersion.setUrl(ServiceTestUtil.randomString());
 
-		scFrameworkVersion.setActive(randomBoolean());
+		scFrameworkVersion.setActive(ServiceTestUtil.randomBoolean());
 
-		scFrameworkVersion.setPriority(nextInt());
+		scFrameworkVersion.setPriority(ServiceTestUtil.nextInt());
 
 		_persistence.update(scFrameworkVersion, false);
 

@@ -24,32 +24,44 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.impl.LockModelImpl;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class LockPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class LockPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (LockPersistence)PortalBeanLocatorUtil.locate(LockPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Lock lock = _persistence.create(pk);
 
-		assertNotNull(lock);
+		Assert.assertNotNull(lock);
 
-		assertEquals(lock.getPrimaryKey(), pk);
+		Assert.assertEquals(lock.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		Lock newLock = addLock();
 
@@ -57,93 +69,102 @@ public class LockPersistenceTest extends BasePersistenceTestCase {
 
 		Lock existingLock = _persistence.fetchByPrimaryKey(newLock.getPrimaryKey());
 
-		assertNull(existingLock);
+		Assert.assertNull(existingLock);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addLock();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Lock newLock = _persistence.create(pk);
 
-		newLock.setUuid(randomString());
+		newLock.setUuid(ServiceTestUtil.randomString());
 
-		newLock.setCompanyId(nextLong());
+		newLock.setCompanyId(ServiceTestUtil.nextLong());
 
-		newLock.setUserId(nextLong());
+		newLock.setUserId(ServiceTestUtil.nextLong());
 
-		newLock.setUserName(randomString());
+		newLock.setUserName(ServiceTestUtil.randomString());
 
-		newLock.setCreateDate(nextDate());
+		newLock.setCreateDate(ServiceTestUtil.nextDate());
 
-		newLock.setClassName(randomString());
+		newLock.setClassName(ServiceTestUtil.randomString());
 
-		newLock.setKey(randomString());
+		newLock.setKey(ServiceTestUtil.randomString());
 
-		newLock.setOwner(randomString());
+		newLock.setOwner(ServiceTestUtil.randomString());
 
-		newLock.setInheritable(randomBoolean());
+		newLock.setInheritable(ServiceTestUtil.randomBoolean());
 
-		newLock.setExpirationDate(nextDate());
+		newLock.setExpirationDate(ServiceTestUtil.nextDate());
 
 		_persistence.update(newLock, false);
 
 		Lock existingLock = _persistence.findByPrimaryKey(newLock.getPrimaryKey());
 
-		assertEquals(existingLock.getUuid(), newLock.getUuid());
-		assertEquals(existingLock.getLockId(), newLock.getLockId());
-		assertEquals(existingLock.getCompanyId(), newLock.getCompanyId());
-		assertEquals(existingLock.getUserId(), newLock.getUserId());
-		assertEquals(existingLock.getUserName(), newLock.getUserName());
-		assertEquals(Time.getShortTimestamp(existingLock.getCreateDate()),
+		Assert.assertEquals(existingLock.getUuid(), newLock.getUuid());
+		Assert.assertEquals(existingLock.getLockId(), newLock.getLockId());
+		Assert.assertEquals(existingLock.getCompanyId(), newLock.getCompanyId());
+		Assert.assertEquals(existingLock.getUserId(), newLock.getUserId());
+		Assert.assertEquals(existingLock.getUserName(), newLock.getUserName());
+		Assert.assertEquals(Time.getShortTimestamp(existingLock.getCreateDate()),
 			Time.getShortTimestamp(newLock.getCreateDate()));
-		assertEquals(existingLock.getClassName(), newLock.getClassName());
-		assertEquals(existingLock.getKey(), newLock.getKey());
-		assertEquals(existingLock.getOwner(), newLock.getOwner());
-		assertEquals(existingLock.getInheritable(), newLock.getInheritable());
-		assertEquals(Time.getShortTimestamp(existingLock.getExpirationDate()),
+		Assert.assertEquals(existingLock.getClassName(), newLock.getClassName());
+		Assert.assertEquals(existingLock.getKey(), newLock.getKey());
+		Assert.assertEquals(existingLock.getOwner(), newLock.getOwner());
+		Assert.assertEquals(existingLock.getInheritable(),
+			newLock.getInheritable());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingLock.getExpirationDate()),
 			Time.getShortTimestamp(newLock.getExpirationDate()));
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Lock newLock = addLock();
 
 		Lock existingLock = _persistence.findByPrimaryKey(newLock.getPrimaryKey());
 
-		assertEquals(existingLock, newLock);
+		Assert.assertEquals(existingLock, newLock);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchLockException");
+			Assert.fail("Missing entity did not throw NoSuchLockException");
 		}
 		catch (NoSuchLockException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		Lock newLock = addLock();
 
 		Lock existingLock = _persistence.fetchByPrimaryKey(newLock.getPrimaryKey());
 
-		assertEquals(existingLock, newLock);
+		Assert.assertEquals(existingLock, newLock);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Lock missingLock = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingLock);
+		Assert.assertNull(missingLock);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		Lock newLock = addLock();
@@ -156,24 +177,27 @@ public class LockPersistenceTest extends BasePersistenceTestCase {
 
 		List<Lock> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Lock existingLock = result.get(0);
 
-		assertEquals(existingLock, newLock);
+		Assert.assertEquals(existingLock, newLock);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Lock.class,
 				Lock.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("lockId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("lockId",
+				ServiceTestUtil.nextLong()));
 
 		List<Lock> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		Lock newLock = addLock();
@@ -190,13 +214,14 @@ public class LockPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingLockId = result.get(0);
 
-		assertEquals(existingLockId, newLockId);
+		Assert.assertEquals(existingLockId, newLockId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Lock.class,
 				Lock.class.getClassLoader());
@@ -204,13 +229,14 @@ public class LockPersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("lockId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("lockId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -222,43 +248,45 @@ public class LockPersistenceTest extends BasePersistenceTestCase {
 
 		LockModelImpl existingLockModelImpl = (LockModelImpl)_persistence.findByPrimaryKey(newLock.getPrimaryKey());
 
-		assertTrue(Validator.equals(existingLockModelImpl.getClassName(),
+		Assert.assertTrue(Validator.equals(
+				existingLockModelImpl.getClassName(),
 				existingLockModelImpl.getOriginalClassName()));
-		assertTrue(Validator.equals(existingLockModelImpl.getKey(),
+		Assert.assertTrue(Validator.equals(existingLockModelImpl.getKey(),
 				existingLockModelImpl.getOriginalKey()));
 
-		assertTrue(Validator.equals(existingLockModelImpl.getClassName(),
+		Assert.assertTrue(Validator.equals(
+				existingLockModelImpl.getClassName(),
 				existingLockModelImpl.getOriginalClassName()));
-		assertTrue(Validator.equals(existingLockModelImpl.getKey(),
+		Assert.assertTrue(Validator.equals(existingLockModelImpl.getKey(),
 				existingLockModelImpl.getOriginalKey()));
-		assertTrue(Validator.equals(existingLockModelImpl.getOwner(),
+		Assert.assertTrue(Validator.equals(existingLockModelImpl.getOwner(),
 				existingLockModelImpl.getOriginalOwner()));
 	}
 
 	protected Lock addLock() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Lock lock = _persistence.create(pk);
 
-		lock.setUuid(randomString());
+		lock.setUuid(ServiceTestUtil.randomString());
 
-		lock.setCompanyId(nextLong());
+		lock.setCompanyId(ServiceTestUtil.nextLong());
 
-		lock.setUserId(nextLong());
+		lock.setUserId(ServiceTestUtil.nextLong());
 
-		lock.setUserName(randomString());
+		lock.setUserName(ServiceTestUtil.randomString());
 
-		lock.setCreateDate(nextDate());
+		lock.setCreateDate(ServiceTestUtil.nextDate());
 
-		lock.setClassName(randomString());
+		lock.setClassName(ServiceTestUtil.randomString());
 
-		lock.setKey(randomString());
+		lock.setKey(ServiceTestUtil.randomString());
 
-		lock.setOwner(randomString());
+		lock.setOwner(ServiceTestUtil.randomString());
 
-		lock.setInheritable(randomBoolean());
+		lock.setInheritable(ServiceTestUtil.randomBoolean());
 
-		lock.setExpirationDate(nextDate());
+		lock.setExpirationDate(ServiceTestUtil.nextDate());
 
 		_persistence.update(lock, false);
 

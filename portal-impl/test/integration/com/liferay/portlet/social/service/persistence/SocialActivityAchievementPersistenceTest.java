@@ -20,37 +20,48 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.social.NoSuchActivityAchievementException;
 import com.liferay.portlet.social.model.SocialActivityAchievement;
 import com.liferay.portlet.social.model.impl.SocialActivityAchievementModelImpl;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class SocialActivityAchievementPersistenceTest
-	extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class SocialActivityAchievementPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (SocialActivityAchievementPersistence)PortalBeanLocatorUtil.locate(SocialActivityAchievementPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		SocialActivityAchievement socialActivityAchievement = _persistence.create(pk);
 
-		assertNotNull(socialActivityAchievement);
+		Assert.assertNotNull(socialActivityAchievement);
 
-		assertEquals(socialActivityAchievement.getPrimaryKey(), pk);
+		Assert.assertEquals(socialActivityAchievement.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		SocialActivityAchievement newSocialActivityAchievement = addSocialActivityAchievement();
 
@@ -58,89 +69,96 @@ public class SocialActivityAchievementPersistenceTest
 
 		SocialActivityAchievement existingSocialActivityAchievement = _persistence.fetchByPrimaryKey(newSocialActivityAchievement.getPrimaryKey());
 
-		assertNull(existingSocialActivityAchievement);
+		Assert.assertNull(existingSocialActivityAchievement);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addSocialActivityAchievement();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		SocialActivityAchievement newSocialActivityAchievement = _persistence.create(pk);
 
-		newSocialActivityAchievement.setGroupId(nextLong());
+		newSocialActivityAchievement.setGroupId(ServiceTestUtil.nextLong());
 
-		newSocialActivityAchievement.setCompanyId(nextLong());
+		newSocialActivityAchievement.setCompanyId(ServiceTestUtil.nextLong());
 
-		newSocialActivityAchievement.setUserId(nextLong());
+		newSocialActivityAchievement.setUserId(ServiceTestUtil.nextLong());
 
-		newSocialActivityAchievement.setCreateDate(nextLong());
+		newSocialActivityAchievement.setCreateDate(ServiceTestUtil.nextLong());
 
-		newSocialActivityAchievement.setName(randomString());
+		newSocialActivityAchievement.setName(ServiceTestUtil.randomString());
 
-		newSocialActivityAchievement.setFirstInGroup(randomBoolean());
+		newSocialActivityAchievement.setFirstInGroup(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(newSocialActivityAchievement, false);
 
 		SocialActivityAchievement existingSocialActivityAchievement = _persistence.findByPrimaryKey(newSocialActivityAchievement.getPrimaryKey());
 
-		assertEquals(existingSocialActivityAchievement.getActivityAchievementId(),
+		Assert.assertEquals(existingSocialActivityAchievement.getActivityAchievementId(),
 			newSocialActivityAchievement.getActivityAchievementId());
-		assertEquals(existingSocialActivityAchievement.getGroupId(),
+		Assert.assertEquals(existingSocialActivityAchievement.getGroupId(),
 			newSocialActivityAchievement.getGroupId());
-		assertEquals(existingSocialActivityAchievement.getCompanyId(),
+		Assert.assertEquals(existingSocialActivityAchievement.getCompanyId(),
 			newSocialActivityAchievement.getCompanyId());
-		assertEquals(existingSocialActivityAchievement.getUserId(),
+		Assert.assertEquals(existingSocialActivityAchievement.getUserId(),
 			newSocialActivityAchievement.getUserId());
-		assertEquals(existingSocialActivityAchievement.getCreateDate(),
+		Assert.assertEquals(existingSocialActivityAchievement.getCreateDate(),
 			newSocialActivityAchievement.getCreateDate());
-		assertEquals(existingSocialActivityAchievement.getName(),
+		Assert.assertEquals(existingSocialActivityAchievement.getName(),
 			newSocialActivityAchievement.getName());
-		assertEquals(existingSocialActivityAchievement.getFirstInGroup(),
+		Assert.assertEquals(existingSocialActivityAchievement.getFirstInGroup(),
 			newSocialActivityAchievement.getFirstInGroup());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		SocialActivityAchievement newSocialActivityAchievement = addSocialActivityAchievement();
 
 		SocialActivityAchievement existingSocialActivityAchievement = _persistence.findByPrimaryKey(newSocialActivityAchievement.getPrimaryKey());
 
-		assertEquals(existingSocialActivityAchievement,
+		Assert.assertEquals(existingSocialActivityAchievement,
 			newSocialActivityAchievement);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail(
+			Assert.fail(
 				"Missing entity did not throw NoSuchActivityAchievementException");
 		}
 		catch (NoSuchActivityAchievementException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		SocialActivityAchievement newSocialActivityAchievement = addSocialActivityAchievement();
 
 		SocialActivityAchievement existingSocialActivityAchievement = _persistence.fetchByPrimaryKey(newSocialActivityAchievement.getPrimaryKey());
 
-		assertEquals(existingSocialActivityAchievement,
+		Assert.assertEquals(existingSocialActivityAchievement,
 			newSocialActivityAchievement);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		SocialActivityAchievement missingSocialActivityAchievement = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingSocialActivityAchievement);
+		Assert.assertNull(missingSocialActivityAchievement);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		SocialActivityAchievement newSocialActivityAchievement = addSocialActivityAchievement();
@@ -153,26 +171,28 @@ public class SocialActivityAchievementPersistenceTest
 
 		List<SocialActivityAchievement> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		SocialActivityAchievement existingSocialActivityAchievement = result.get(0);
 
-		assertEquals(existingSocialActivityAchievement,
+		Assert.assertEquals(existingSocialActivityAchievement,
 			newSocialActivityAchievement);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SocialActivityAchievement.class,
 				SocialActivityAchievement.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("activityAchievementId",
-				nextLong()));
+				ServiceTestUtil.nextLong()));
 
 		List<SocialActivityAchievement> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		SocialActivityAchievement newSocialActivityAchievement = addSocialActivityAchievement();
@@ -190,13 +210,15 @@ public class SocialActivityAchievementPersistenceTest
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingActivityAchievementId = result.get(0);
 
-		assertEquals(existingActivityAchievementId, newActivityAchievementId);
+		Assert.assertEquals(existingActivityAchievementId,
+			newActivityAchievementId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SocialActivityAchievement.class,
 				SocialActivityAchievement.class.getClassLoader());
@@ -205,13 +227,14 @@ public class SocialActivityAchievementPersistenceTest
 				"activityAchievementId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("activityAchievementId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -224,32 +247,32 @@ public class SocialActivityAchievementPersistenceTest
 		SocialActivityAchievementModelImpl existingSocialActivityAchievementModelImpl =
 			(SocialActivityAchievementModelImpl)_persistence.findByPrimaryKey(newSocialActivityAchievement.getPrimaryKey());
 
-		assertEquals(existingSocialActivityAchievementModelImpl.getGroupId(),
+		Assert.assertEquals(existingSocialActivityAchievementModelImpl.getGroupId(),
 			existingSocialActivityAchievementModelImpl.getOriginalGroupId());
-		assertEquals(existingSocialActivityAchievementModelImpl.getUserId(),
+		Assert.assertEquals(existingSocialActivityAchievementModelImpl.getUserId(),
 			existingSocialActivityAchievementModelImpl.getOriginalUserId());
-		assertTrue(Validator.equals(
+		Assert.assertTrue(Validator.equals(
 				existingSocialActivityAchievementModelImpl.getName(),
 				existingSocialActivityAchievementModelImpl.getOriginalName()));
 	}
 
 	protected SocialActivityAchievement addSocialActivityAchievement()
 		throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		SocialActivityAchievement socialActivityAchievement = _persistence.create(pk);
 
-		socialActivityAchievement.setGroupId(nextLong());
+		socialActivityAchievement.setGroupId(ServiceTestUtil.nextLong());
 
-		socialActivityAchievement.setCompanyId(nextLong());
+		socialActivityAchievement.setCompanyId(ServiceTestUtil.nextLong());
 
-		socialActivityAchievement.setUserId(nextLong());
+		socialActivityAchievement.setUserId(ServiceTestUtil.nextLong());
 
-		socialActivityAchievement.setCreateDate(nextLong());
+		socialActivityAchievement.setCreateDate(ServiceTestUtil.nextLong());
 
-		socialActivityAchievement.setName(randomString());
+		socialActivityAchievement.setName(ServiceTestUtil.randomString());
 
-		socialActivityAchievement.setFirstInGroup(randomBoolean());
+		socialActivityAchievement.setFirstInGroup(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(socialActivityAchievement, false);
 

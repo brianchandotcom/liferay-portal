@@ -20,34 +20,46 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 
 import com.liferay.portlet.announcements.NoSuchEntryException;
 import com.liferay.portlet.announcements.model.AnnouncementsEntry;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class AnnouncementsEntryPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class AnnouncementsEntryPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (AnnouncementsEntryPersistence)PortalBeanLocatorUtil.locate(AnnouncementsEntryPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		AnnouncementsEntry announcementsEntry = _persistence.create(pk);
 
-		assertNotNull(announcementsEntry);
+		Assert.assertNotNull(announcementsEntry);
 
-		assertEquals(announcementsEntry.getPrimaryKey(), pk);
+		Assert.assertEquals(announcementsEntry.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		AnnouncementsEntry newAnnouncementsEntry = addAnnouncementsEntry();
 
@@ -55,130 +67,137 @@ public class AnnouncementsEntryPersistenceTest extends BasePersistenceTestCase {
 
 		AnnouncementsEntry existingAnnouncementsEntry = _persistence.fetchByPrimaryKey(newAnnouncementsEntry.getPrimaryKey());
 
-		assertNull(existingAnnouncementsEntry);
+		Assert.assertNull(existingAnnouncementsEntry);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addAnnouncementsEntry();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		AnnouncementsEntry newAnnouncementsEntry = _persistence.create(pk);
 
-		newAnnouncementsEntry.setUuid(randomString());
+		newAnnouncementsEntry.setUuid(ServiceTestUtil.randomString());
 
-		newAnnouncementsEntry.setCompanyId(nextLong());
+		newAnnouncementsEntry.setCompanyId(ServiceTestUtil.nextLong());
 
-		newAnnouncementsEntry.setUserId(nextLong());
+		newAnnouncementsEntry.setUserId(ServiceTestUtil.nextLong());
 
-		newAnnouncementsEntry.setUserName(randomString());
+		newAnnouncementsEntry.setUserName(ServiceTestUtil.randomString());
 
-		newAnnouncementsEntry.setCreateDate(nextDate());
+		newAnnouncementsEntry.setCreateDate(ServiceTestUtil.nextDate());
 
-		newAnnouncementsEntry.setModifiedDate(nextDate());
+		newAnnouncementsEntry.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newAnnouncementsEntry.setClassNameId(nextLong());
+		newAnnouncementsEntry.setClassNameId(ServiceTestUtil.nextLong());
 
-		newAnnouncementsEntry.setClassPK(nextLong());
+		newAnnouncementsEntry.setClassPK(ServiceTestUtil.nextLong());
 
-		newAnnouncementsEntry.setTitle(randomString());
+		newAnnouncementsEntry.setTitle(ServiceTestUtil.randomString());
 
-		newAnnouncementsEntry.setContent(randomString());
+		newAnnouncementsEntry.setContent(ServiceTestUtil.randomString());
 
-		newAnnouncementsEntry.setUrl(randomString());
+		newAnnouncementsEntry.setUrl(ServiceTestUtil.randomString());
 
-		newAnnouncementsEntry.setType(randomString());
+		newAnnouncementsEntry.setType(ServiceTestUtil.randomString());
 
-		newAnnouncementsEntry.setDisplayDate(nextDate());
+		newAnnouncementsEntry.setDisplayDate(ServiceTestUtil.nextDate());
 
-		newAnnouncementsEntry.setExpirationDate(nextDate());
+		newAnnouncementsEntry.setExpirationDate(ServiceTestUtil.nextDate());
 
-		newAnnouncementsEntry.setPriority(nextInt());
+		newAnnouncementsEntry.setPriority(ServiceTestUtil.nextInt());
 
-		newAnnouncementsEntry.setAlert(randomBoolean());
+		newAnnouncementsEntry.setAlert(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(newAnnouncementsEntry, false);
 
 		AnnouncementsEntry existingAnnouncementsEntry = _persistence.findByPrimaryKey(newAnnouncementsEntry.getPrimaryKey());
 
-		assertEquals(existingAnnouncementsEntry.getUuid(),
+		Assert.assertEquals(existingAnnouncementsEntry.getUuid(),
 			newAnnouncementsEntry.getUuid());
-		assertEquals(existingAnnouncementsEntry.getEntryId(),
+		Assert.assertEquals(existingAnnouncementsEntry.getEntryId(),
 			newAnnouncementsEntry.getEntryId());
-		assertEquals(existingAnnouncementsEntry.getCompanyId(),
+		Assert.assertEquals(existingAnnouncementsEntry.getCompanyId(),
 			newAnnouncementsEntry.getCompanyId());
-		assertEquals(existingAnnouncementsEntry.getUserId(),
+		Assert.assertEquals(existingAnnouncementsEntry.getUserId(),
 			newAnnouncementsEntry.getUserId());
-		assertEquals(existingAnnouncementsEntry.getUserName(),
+		Assert.assertEquals(existingAnnouncementsEntry.getUserName(),
 			newAnnouncementsEntry.getUserName());
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingAnnouncementsEntry.getCreateDate()),
 			Time.getShortTimestamp(newAnnouncementsEntry.getCreateDate()));
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingAnnouncementsEntry.getModifiedDate()),
 			Time.getShortTimestamp(newAnnouncementsEntry.getModifiedDate()));
-		assertEquals(existingAnnouncementsEntry.getClassNameId(),
+		Assert.assertEquals(existingAnnouncementsEntry.getClassNameId(),
 			newAnnouncementsEntry.getClassNameId());
-		assertEquals(existingAnnouncementsEntry.getClassPK(),
+		Assert.assertEquals(existingAnnouncementsEntry.getClassPK(),
 			newAnnouncementsEntry.getClassPK());
-		assertEquals(existingAnnouncementsEntry.getTitle(),
+		Assert.assertEquals(existingAnnouncementsEntry.getTitle(),
 			newAnnouncementsEntry.getTitle());
-		assertEquals(existingAnnouncementsEntry.getContent(),
+		Assert.assertEquals(existingAnnouncementsEntry.getContent(),
 			newAnnouncementsEntry.getContent());
-		assertEquals(existingAnnouncementsEntry.getUrl(),
+		Assert.assertEquals(existingAnnouncementsEntry.getUrl(),
 			newAnnouncementsEntry.getUrl());
-		assertEquals(existingAnnouncementsEntry.getType(),
+		Assert.assertEquals(existingAnnouncementsEntry.getType(),
 			newAnnouncementsEntry.getType());
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingAnnouncementsEntry.getDisplayDate()),
 			Time.getShortTimestamp(newAnnouncementsEntry.getDisplayDate()));
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingAnnouncementsEntry.getExpirationDate()),
 			Time.getShortTimestamp(newAnnouncementsEntry.getExpirationDate()));
-		assertEquals(existingAnnouncementsEntry.getPriority(),
+		Assert.assertEquals(existingAnnouncementsEntry.getPriority(),
 			newAnnouncementsEntry.getPriority());
-		assertEquals(existingAnnouncementsEntry.getAlert(),
+		Assert.assertEquals(existingAnnouncementsEntry.getAlert(),
 			newAnnouncementsEntry.getAlert());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		AnnouncementsEntry newAnnouncementsEntry = addAnnouncementsEntry();
 
 		AnnouncementsEntry existingAnnouncementsEntry = _persistence.findByPrimaryKey(newAnnouncementsEntry.getPrimaryKey());
 
-		assertEquals(existingAnnouncementsEntry, newAnnouncementsEntry);
+		Assert.assertEquals(existingAnnouncementsEntry, newAnnouncementsEntry);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchEntryException");
+			Assert.fail("Missing entity did not throw NoSuchEntryException");
 		}
 		catch (NoSuchEntryException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		AnnouncementsEntry newAnnouncementsEntry = addAnnouncementsEntry();
 
 		AnnouncementsEntry existingAnnouncementsEntry = _persistence.fetchByPrimaryKey(newAnnouncementsEntry.getPrimaryKey());
 
-		assertEquals(existingAnnouncementsEntry, newAnnouncementsEntry);
+		Assert.assertEquals(existingAnnouncementsEntry, newAnnouncementsEntry);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		AnnouncementsEntry missingAnnouncementsEntry = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingAnnouncementsEntry);
+		Assert.assertNull(missingAnnouncementsEntry);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		AnnouncementsEntry newAnnouncementsEntry = addAnnouncementsEntry();
@@ -191,24 +210,27 @@ public class AnnouncementsEntryPersistenceTest extends BasePersistenceTestCase {
 
 		List<AnnouncementsEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		AnnouncementsEntry existingAnnouncementsEntry = result.get(0);
 
-		assertEquals(existingAnnouncementsEntry, newAnnouncementsEntry);
+		Assert.assertEquals(existingAnnouncementsEntry, newAnnouncementsEntry);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AnnouncementsEntry.class,
 				AnnouncementsEntry.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("entryId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("entryId",
+				ServiceTestUtil.nextLong()));
 
 		List<AnnouncementsEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		AnnouncementsEntry newAnnouncementsEntry = addAnnouncementsEntry();
@@ -225,13 +247,14 @@ public class AnnouncementsEntryPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingEntryId = result.get(0);
 
-		assertEquals(existingEntryId, newEntryId);
+		Assert.assertEquals(existingEntryId, newEntryId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AnnouncementsEntry.class,
 				AnnouncementsEntry.class.getClassLoader());
@@ -239,50 +262,50 @@ public class AnnouncementsEntryPersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("entryId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("entryId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
 	protected AnnouncementsEntry addAnnouncementsEntry()
 		throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		AnnouncementsEntry announcementsEntry = _persistence.create(pk);
 
-		announcementsEntry.setUuid(randomString());
+		announcementsEntry.setUuid(ServiceTestUtil.randomString());
 
-		announcementsEntry.setCompanyId(nextLong());
+		announcementsEntry.setCompanyId(ServiceTestUtil.nextLong());
 
-		announcementsEntry.setUserId(nextLong());
+		announcementsEntry.setUserId(ServiceTestUtil.nextLong());
 
-		announcementsEntry.setUserName(randomString());
+		announcementsEntry.setUserName(ServiceTestUtil.randomString());
 
-		announcementsEntry.setCreateDate(nextDate());
+		announcementsEntry.setCreateDate(ServiceTestUtil.nextDate());
 
-		announcementsEntry.setModifiedDate(nextDate());
+		announcementsEntry.setModifiedDate(ServiceTestUtil.nextDate());
 
-		announcementsEntry.setClassNameId(nextLong());
+		announcementsEntry.setClassNameId(ServiceTestUtil.nextLong());
 
-		announcementsEntry.setClassPK(nextLong());
+		announcementsEntry.setClassPK(ServiceTestUtil.nextLong());
 
-		announcementsEntry.setTitle(randomString());
+		announcementsEntry.setTitle(ServiceTestUtil.randomString());
 
-		announcementsEntry.setContent(randomString());
+		announcementsEntry.setContent(ServiceTestUtil.randomString());
 
-		announcementsEntry.setUrl(randomString());
+		announcementsEntry.setUrl(ServiceTestUtil.randomString());
 
-		announcementsEntry.setType(randomString());
+		announcementsEntry.setType(ServiceTestUtil.randomString());
 
-		announcementsEntry.setDisplayDate(nextDate());
+		announcementsEntry.setDisplayDate(ServiceTestUtil.nextDate());
 
-		announcementsEntry.setExpirationDate(nextDate());
+		announcementsEntry.setExpirationDate(ServiceTestUtil.nextDate());
 
-		announcementsEntry.setPriority(nextInt());
+		announcementsEntry.setPriority(ServiceTestUtil.nextInt());
 
-		announcementsEntry.setAlert(randomBoolean());
+		announcementsEntry.setAlert(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(announcementsEntry, false);
 

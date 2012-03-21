@@ -12,22 +12,26 @@
  * details.
  */
 
-package com.liferay.portal.service.http;
+package com.liferay.portal.test.persistence;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import com.liferay.portal.test.AbstractExecutionTestListener;
+import com.liferay.portal.test.TestContext;
+import com.liferay.portal.util.PropsValues;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Miguel Pastor
  */
-public class ServiceHttpTestSuite extends TestSuite {
+public class PersistenceEnvConfigTestListener
+	extends AbstractExecutionTestListener {
 
-	public static Test suite() {
-		TestSuite testSuite = new TestSuite();
+	@Override
+	public void runAfterClass(TestContext testContext) {
+		PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED = true;
+	}
 
-		testSuite.addTestSuite(UserServiceHttpTest.class);
-
-		return testSuite;
+	@Override
+	public void runBeforeClass(TestContext testContext) {
+		PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED = false;
 	}
 
 }

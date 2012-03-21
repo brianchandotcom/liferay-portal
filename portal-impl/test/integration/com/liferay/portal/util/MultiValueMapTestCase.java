@@ -18,12 +18,16 @@ import com.liferay.portal.kernel.util.MultiValueMap;
 
 import java.util.Set;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 /**
  * @author Alexander Chow
  * @author Brian Wing Shun Chan
  */
-public abstract class MultiValueMapTestCase extends BaseTestCase {
+public abstract class MultiValueMapTestCase {
 
+	@Test
 	public void testDelete() {
 		String name = multiValueMap.getClass().getSimpleName();
 
@@ -34,20 +38,21 @@ public abstract class MultiValueMapTestCase extends BaseTestCase {
 		multiValueMap.put(10, "web");
 		multiValueMap.put(5, "hello");
 
-		assertEquals(name, 5, multiValueMap.size());
+		Assert.assertEquals(name, 5, multiValueMap.size());
 
 		multiValueMap.remove(10);
 
-		assertEquals(name, 2, multiValueMap.size());
+		Assert.assertEquals(name, 2, multiValueMap.size());
 
 		Set<String> values = multiValueMap.getAll(5);
 
-		assertNotNull(name, values);
+		Assert.assertNotNull(name, values);
 
-		assertTrue(name, values.contains("hello"));
-		assertTrue(name, values.contains("world"));
+		Assert.assertTrue(name, values.contains("hello"));
+		Assert.assertTrue(name, values.contains("world"));
 	}
 
+	@Test
 	public void testMultipleInsert() {
 		String name = multiValueMap.getClass().getSimpleName();
 
@@ -58,14 +63,14 @@ public abstract class MultiValueMapTestCase extends BaseTestCase {
 		multiValueMap.put(10, "web");
 		multiValueMap.put(5, "hello");
 
-		assertEquals(name, 5, multiValueMap.size());
+		Assert.assertEquals(name, 5, multiValueMap.size());
 
 		Set<String> values = multiValueMap.getAll(5);
 
-		assertNotNull(name, values);
+		Assert.assertNotNull(name, values);
 
-		assertTrue(name, values.contains("hello"));
-		assertTrue(name, values.contains("world"));
+		Assert.assertTrue(name, values.contains("hello"));
+		Assert.assertTrue(name, values.contains("world"));
 	}
 
 	protected MultiValueMap<Integer, String> multiValueMap;

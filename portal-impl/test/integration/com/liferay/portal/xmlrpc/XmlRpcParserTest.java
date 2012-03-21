@@ -18,40 +18,51 @@ import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.xmlrpc.Fault;
 import com.liferay.portal.kernel.xmlrpc.Response;
 import com.liferay.portal.kernel.xmlrpc.Success;
-import com.liferay.portal.util.BaseTestCase;
+import com.liferay.portal.test.EnvironmentConfigTestListener;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Alexander Chow
  * @author Brian Wing Shun Chan
  */
-public class XmlRpcParserTest extends BaseTestCase {
+@ExecutionTestListeners(listeners = {EnvironmentConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class XmlRpcParserTest {
 
+	@Test
 	public void testFaultResponseGenerator() throws Exception {
 		Fault fault = new FaultImpl(1234, "Fault");
 
 		Response response = XmlRpcParser.parseResponse(fault.toXml());
 
-		assertTrue(response instanceof Fault);
+		Assert.assertTrue(response instanceof Fault);
 
 		fault = (Fault)response;
 
-		assertEquals("Fault", fault.getDescription());
-		assertEquals(1234, fault.getCode());
+		Assert.assertEquals("Fault", fault.getDescription());
+		Assert.assertEquals(1234, fault.getCode());
 	}
 
+	@Test
 	public void testFaultResponseParser() throws Exception {
 		for (String xml : _FAULT_RESPONSES) {
 			Response response = XmlRpcParser.parseResponse(xml);
 
-			assertTrue(response instanceof Fault);
+			Assert.assertTrue(response instanceof Fault);
 
 			Fault fault = (Fault)response;
 
-			assertEquals(4, fault.getCode());
-			assertEquals("Too many parameters.", fault.getDescription());
+			Assert.assertEquals(4, fault.getCode());
+			Assert.assertEquals("Too many parameters.", fault.getDescription());
 		}
 	}
 
+	@Test
 	public void testMethodBuilder() throws Exception {
 		String xml = XmlRpcParser.buildMethod(
 			"method.name", new Object[] {"hello", "world"});
@@ -61,23 +72,24 @@ public class XmlRpcParserTest extends BaseTestCase {
 		String methodName = (String)tuple.getObject(0);
 		Object[] arguments = (Object[])tuple.getObject(1);
 
-		assertEquals("method.name", methodName);
-		assertEquals(2, arguments.length);
-		assertEquals("hello", arguments[0]);
-		assertEquals("world", arguments[1]);
+		Assert.assertEquals("method.name", methodName);
+		Assert.assertEquals(2, arguments.length);
+		Assert.assertEquals("hello", arguments[0]);
+		Assert.assertEquals("world", arguments[1]);
 	}
 
+	@Test
 	public void testMethodParser() throws Exception {
 		Tuple tuple = XmlRpcParser.parseMethod(_PARAMETERIZED_METHOD);
 
 		String methodName = (String)tuple.getObject(0);
 		Object[] arguments = (Object[])tuple.getObject(1);
 
-		assertEquals("params", methodName);
-		assertEquals(3, arguments.length);
-		assertEquals(1024, arguments[0]);
-		assertEquals("hello", arguments[1]);
-		assertEquals("world", arguments[2]);
+		Assert.assertEquals("params", methodName);
+		Assert.assertEquals(3, arguments.length);
+		Assert.assertEquals(1024, arguments[0]);
+		Assert.assertEquals("hello", arguments[1]);
+		Assert.assertEquals("world", arguments[2]);
 
 		for (String xml : _NON_PARAMETERIZED_METHODS) {
 			tuple = XmlRpcParser.parseMethod(xml);
@@ -85,29 +97,31 @@ public class XmlRpcParserTest extends BaseTestCase {
 			methodName = (String)tuple.getObject(0);
 			arguments = (Object[])tuple.getObject(1);
 
-			assertEquals("noParams", methodName);
-			assertEquals(0, arguments.length);
+			Assert.assertEquals("noParams", methodName);
+			Assert.assertEquals(0, arguments.length);
 		}
 	}
 
+	@Test
 	public void testSuccessResponseGenerator() throws Exception {
 		Success success = new SuccessImpl("Success");
 
 		Response response = XmlRpcParser.parseResponse(success.toXml());
 
-		assertTrue(response instanceof Success);
+		Assert.assertTrue(response instanceof Success);
 
 		success = (Success)response;
 
-		assertEquals("Success", success.getDescription());
+		Assert.assertEquals("Success", success.getDescription());
 	}
 
+	@Test
 	public void testSuccessResponseParser() throws Exception {
 		for (String xml : _SUCCESS_RESPONSES) {
 			Response response = XmlRpcParser.parseResponse(xml);
 
-			assertTrue(response instanceof Success);
-			assertEquals("South Dakota", response.getDescription());
+			Assert.assertTrue(response instanceof Success);
+			Assert.assertEquals("South Dakota", response.getDescription());
 		}
 	}
 

@@ -23,32 +23,44 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.impl.UserGroupModelImpl;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class UserGroupPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class UserGroupPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (UserGroupPersistence)PortalBeanLocatorUtil.locate(UserGroupPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		UserGroup userGroup = _persistence.create(pk);
 
-		assertNotNull(userGroup);
+		Assert.assertNotNull(userGroup);
 
-		assertEquals(userGroup.getPrimaryKey(), pk);
+		Assert.assertEquals(userGroup.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		UserGroup newUserGroup = addUserGroup();
 
@@ -56,81 +68,88 @@ public class UserGroupPersistenceTest extends BasePersistenceTestCase {
 
 		UserGroup existingUserGroup = _persistence.fetchByPrimaryKey(newUserGroup.getPrimaryKey());
 
-		assertNull(existingUserGroup);
+		Assert.assertNull(existingUserGroup);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addUserGroup();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		UserGroup newUserGroup = _persistence.create(pk);
 
-		newUserGroup.setCompanyId(nextLong());
+		newUserGroup.setCompanyId(ServiceTestUtil.nextLong());
 
-		newUserGroup.setParentUserGroupId(nextLong());
+		newUserGroup.setParentUserGroupId(ServiceTestUtil.nextLong());
 
-		newUserGroup.setName(randomString());
+		newUserGroup.setName(ServiceTestUtil.randomString());
 
-		newUserGroup.setDescription(randomString());
+		newUserGroup.setDescription(ServiceTestUtil.randomString());
 
-		newUserGroup.setAddedByLDAPImport(randomBoolean());
+		newUserGroup.setAddedByLDAPImport(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(newUserGroup, false);
 
 		UserGroup existingUserGroup = _persistence.findByPrimaryKey(newUserGroup.getPrimaryKey());
 
-		assertEquals(existingUserGroup.getUserGroupId(),
+		Assert.assertEquals(existingUserGroup.getUserGroupId(),
 			newUserGroup.getUserGroupId());
-		assertEquals(existingUserGroup.getCompanyId(),
+		Assert.assertEquals(existingUserGroup.getCompanyId(),
 			newUserGroup.getCompanyId());
-		assertEquals(existingUserGroup.getParentUserGroupId(),
+		Assert.assertEquals(existingUserGroup.getParentUserGroupId(),
 			newUserGroup.getParentUserGroupId());
-		assertEquals(existingUserGroup.getName(), newUserGroup.getName());
-		assertEquals(existingUserGroup.getDescription(),
+		Assert.assertEquals(existingUserGroup.getName(), newUserGroup.getName());
+		Assert.assertEquals(existingUserGroup.getDescription(),
 			newUserGroup.getDescription());
-		assertEquals(existingUserGroup.getAddedByLDAPImport(),
+		Assert.assertEquals(existingUserGroup.getAddedByLDAPImport(),
 			newUserGroup.getAddedByLDAPImport());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		UserGroup newUserGroup = addUserGroup();
 
 		UserGroup existingUserGroup = _persistence.findByPrimaryKey(newUserGroup.getPrimaryKey());
 
-		assertEquals(existingUserGroup, newUserGroup);
+		Assert.assertEquals(existingUserGroup, newUserGroup);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchUserGroupException");
+			Assert.fail("Missing entity did not throw NoSuchUserGroupException");
 		}
 		catch (NoSuchUserGroupException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		UserGroup newUserGroup = addUserGroup();
 
 		UserGroup existingUserGroup = _persistence.fetchByPrimaryKey(newUserGroup.getPrimaryKey());
 
-		assertEquals(existingUserGroup, newUserGroup);
+		Assert.assertEquals(existingUserGroup, newUserGroup);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		UserGroup missingUserGroup = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingUserGroup);
+		Assert.assertNull(missingUserGroup);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		UserGroup newUserGroup = addUserGroup();
@@ -143,24 +162,27 @@ public class UserGroupPersistenceTest extends BasePersistenceTestCase {
 
 		List<UserGroup> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		UserGroup existingUserGroup = result.get(0);
 
-		assertEquals(existingUserGroup, newUserGroup);
+		Assert.assertEquals(existingUserGroup, newUserGroup);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserGroup.class,
 				UserGroup.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("userGroupId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("userGroupId",
+				ServiceTestUtil.nextLong()));
 
 		List<UserGroup> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		UserGroup newUserGroup = addUserGroup();
@@ -177,13 +199,14 @@ public class UserGroupPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingUserGroupId = result.get(0);
 
-		assertEquals(existingUserGroupId, newUserGroupId);
+		Assert.assertEquals(existingUserGroupId, newUserGroupId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserGroup.class,
 				UserGroup.class.getClassLoader());
@@ -191,13 +214,14 @@ public class UserGroupPersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("userGroupId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("userGroupId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -209,26 +233,27 @@ public class UserGroupPersistenceTest extends BasePersistenceTestCase {
 
 		UserGroupModelImpl existingUserGroupModelImpl = (UserGroupModelImpl)_persistence.findByPrimaryKey(newUserGroup.getPrimaryKey());
 
-		assertEquals(existingUserGroupModelImpl.getCompanyId(),
+		Assert.assertEquals(existingUserGroupModelImpl.getCompanyId(),
 			existingUserGroupModelImpl.getOriginalCompanyId());
-		assertTrue(Validator.equals(existingUserGroupModelImpl.getName(),
+		Assert.assertTrue(Validator.equals(
+				existingUserGroupModelImpl.getName(),
 				existingUserGroupModelImpl.getOriginalName()));
 	}
 
 	protected UserGroup addUserGroup() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		UserGroup userGroup = _persistence.create(pk);
 
-		userGroup.setCompanyId(nextLong());
+		userGroup.setCompanyId(ServiceTestUtil.nextLong());
 
-		userGroup.setParentUserGroupId(nextLong());
+		userGroup.setParentUserGroupId(ServiceTestUtil.nextLong());
 
-		userGroup.setName(randomString());
+		userGroup.setName(ServiceTestUtil.randomString());
 
-		userGroup.setDescription(randomString());
+		userGroup.setDescription(ServiceTestUtil.randomString());
 
-		userGroup.setAddedByLDAPImport(randomBoolean());
+		userGroup.setAddedByLDAPImport(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(userGroup, false);
 

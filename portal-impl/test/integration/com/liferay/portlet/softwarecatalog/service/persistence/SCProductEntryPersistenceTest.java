@@ -21,36 +21,48 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.softwarecatalog.NoSuchProductEntryException;
 import com.liferay.portlet.softwarecatalog.model.SCProductEntry;
 import com.liferay.portlet.softwarecatalog.model.impl.SCProductEntryModelImpl;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class SCProductEntryPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class SCProductEntryPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (SCProductEntryPersistence)PortalBeanLocatorUtil.locate(SCProductEntryPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		SCProductEntry scProductEntry = _persistence.create(pk);
 
-		assertNotNull(scProductEntry);
+		Assert.assertNotNull(scProductEntry);
 
-		assertEquals(scProductEntry.getPrimaryKey(), pk);
+		Assert.assertEquals(scProductEntry.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		SCProductEntry newSCProductEntry = addSCProductEntry();
 
@@ -58,124 +70,132 @@ public class SCProductEntryPersistenceTest extends BasePersistenceTestCase {
 
 		SCProductEntry existingSCProductEntry = _persistence.fetchByPrimaryKey(newSCProductEntry.getPrimaryKey());
 
-		assertNull(existingSCProductEntry);
+		Assert.assertNull(existingSCProductEntry);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addSCProductEntry();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		SCProductEntry newSCProductEntry = _persistence.create(pk);
 
-		newSCProductEntry.setGroupId(nextLong());
+		newSCProductEntry.setGroupId(ServiceTestUtil.nextLong());
 
-		newSCProductEntry.setCompanyId(nextLong());
+		newSCProductEntry.setCompanyId(ServiceTestUtil.nextLong());
 
-		newSCProductEntry.setUserId(nextLong());
+		newSCProductEntry.setUserId(ServiceTestUtil.nextLong());
 
-		newSCProductEntry.setUserName(randomString());
+		newSCProductEntry.setUserName(ServiceTestUtil.randomString());
 
-		newSCProductEntry.setCreateDate(nextDate());
+		newSCProductEntry.setCreateDate(ServiceTestUtil.nextDate());
 
-		newSCProductEntry.setModifiedDate(nextDate());
+		newSCProductEntry.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newSCProductEntry.setName(randomString());
+		newSCProductEntry.setName(ServiceTestUtil.randomString());
 
-		newSCProductEntry.setType(randomString());
+		newSCProductEntry.setType(ServiceTestUtil.randomString());
 
-		newSCProductEntry.setTags(randomString());
+		newSCProductEntry.setTags(ServiceTestUtil.randomString());
 
-		newSCProductEntry.setShortDescription(randomString());
+		newSCProductEntry.setShortDescription(ServiceTestUtil.randomString());
 
-		newSCProductEntry.setLongDescription(randomString());
+		newSCProductEntry.setLongDescription(ServiceTestUtil.randomString());
 
-		newSCProductEntry.setPageURL(randomString());
+		newSCProductEntry.setPageURL(ServiceTestUtil.randomString());
 
-		newSCProductEntry.setAuthor(randomString());
+		newSCProductEntry.setAuthor(ServiceTestUtil.randomString());
 
-		newSCProductEntry.setRepoGroupId(randomString());
+		newSCProductEntry.setRepoGroupId(ServiceTestUtil.randomString());
 
-		newSCProductEntry.setRepoArtifactId(randomString());
+		newSCProductEntry.setRepoArtifactId(ServiceTestUtil.randomString());
 
 		_persistence.update(newSCProductEntry, false);
 
 		SCProductEntry existingSCProductEntry = _persistence.findByPrimaryKey(newSCProductEntry.getPrimaryKey());
 
-		assertEquals(existingSCProductEntry.getProductEntryId(),
+		Assert.assertEquals(existingSCProductEntry.getProductEntryId(),
 			newSCProductEntry.getProductEntryId());
-		assertEquals(existingSCProductEntry.getGroupId(),
+		Assert.assertEquals(existingSCProductEntry.getGroupId(),
 			newSCProductEntry.getGroupId());
-		assertEquals(existingSCProductEntry.getCompanyId(),
+		Assert.assertEquals(existingSCProductEntry.getCompanyId(),
 			newSCProductEntry.getCompanyId());
-		assertEquals(existingSCProductEntry.getUserId(),
+		Assert.assertEquals(existingSCProductEntry.getUserId(),
 			newSCProductEntry.getUserId());
-		assertEquals(existingSCProductEntry.getUserName(),
+		Assert.assertEquals(existingSCProductEntry.getUserName(),
 			newSCProductEntry.getUserName());
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingSCProductEntry.getCreateDate()),
 			Time.getShortTimestamp(newSCProductEntry.getCreateDate()));
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingSCProductEntry.getModifiedDate()),
 			Time.getShortTimestamp(newSCProductEntry.getModifiedDate()));
-		assertEquals(existingSCProductEntry.getName(),
+		Assert.assertEquals(existingSCProductEntry.getName(),
 			newSCProductEntry.getName());
-		assertEquals(existingSCProductEntry.getType(),
+		Assert.assertEquals(existingSCProductEntry.getType(),
 			newSCProductEntry.getType());
-		assertEquals(existingSCProductEntry.getTags(),
+		Assert.assertEquals(existingSCProductEntry.getTags(),
 			newSCProductEntry.getTags());
-		assertEquals(existingSCProductEntry.getShortDescription(),
+		Assert.assertEquals(existingSCProductEntry.getShortDescription(),
 			newSCProductEntry.getShortDescription());
-		assertEquals(existingSCProductEntry.getLongDescription(),
+		Assert.assertEquals(existingSCProductEntry.getLongDescription(),
 			newSCProductEntry.getLongDescription());
-		assertEquals(existingSCProductEntry.getPageURL(),
+		Assert.assertEquals(existingSCProductEntry.getPageURL(),
 			newSCProductEntry.getPageURL());
-		assertEquals(existingSCProductEntry.getAuthor(),
+		Assert.assertEquals(existingSCProductEntry.getAuthor(),
 			newSCProductEntry.getAuthor());
-		assertEquals(existingSCProductEntry.getRepoGroupId(),
+		Assert.assertEquals(existingSCProductEntry.getRepoGroupId(),
 			newSCProductEntry.getRepoGroupId());
-		assertEquals(existingSCProductEntry.getRepoArtifactId(),
+		Assert.assertEquals(existingSCProductEntry.getRepoArtifactId(),
 			newSCProductEntry.getRepoArtifactId());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		SCProductEntry newSCProductEntry = addSCProductEntry();
 
 		SCProductEntry existingSCProductEntry = _persistence.findByPrimaryKey(newSCProductEntry.getPrimaryKey());
 
-		assertEquals(existingSCProductEntry, newSCProductEntry);
+		Assert.assertEquals(existingSCProductEntry, newSCProductEntry);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchProductEntryException");
+			Assert.fail(
+				"Missing entity did not throw NoSuchProductEntryException");
 		}
 		catch (NoSuchProductEntryException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		SCProductEntry newSCProductEntry = addSCProductEntry();
 
 		SCProductEntry existingSCProductEntry = _persistence.fetchByPrimaryKey(newSCProductEntry.getPrimaryKey());
 
-		assertEquals(existingSCProductEntry, newSCProductEntry);
+		Assert.assertEquals(existingSCProductEntry, newSCProductEntry);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		SCProductEntry missingSCProductEntry = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingSCProductEntry);
+		Assert.assertNull(missingSCProductEntry);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		SCProductEntry newSCProductEntry = addSCProductEntry();
@@ -188,24 +208,27 @@ public class SCProductEntryPersistenceTest extends BasePersistenceTestCase {
 
 		List<SCProductEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		SCProductEntry existingSCProductEntry = result.get(0);
 
-		assertEquals(existingSCProductEntry, newSCProductEntry);
+		Assert.assertEquals(existingSCProductEntry, newSCProductEntry);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SCProductEntry.class,
 				SCProductEntry.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("productEntryId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("productEntryId",
+				ServiceTestUtil.nextLong()));
 
 		List<SCProductEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		SCProductEntry newSCProductEntry = addSCProductEntry();
@@ -223,13 +246,14 @@ public class SCProductEntryPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingProductEntryId = result.get(0);
 
-		assertEquals(existingProductEntryId, newProductEntryId);
+		Assert.assertEquals(existingProductEntryId, newProductEntryId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SCProductEntry.class,
 				SCProductEntry.class.getClassLoader());
@@ -238,13 +262,14 @@ public class SCProductEntryPersistenceTest extends BasePersistenceTestCase {
 				"productEntryId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("productEntryId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -256,48 +281,48 @@ public class SCProductEntryPersistenceTest extends BasePersistenceTestCase {
 
 		SCProductEntryModelImpl existingSCProductEntryModelImpl = (SCProductEntryModelImpl)_persistence.findByPrimaryKey(newSCProductEntry.getPrimaryKey());
 
-		assertTrue(Validator.equals(
+		Assert.assertTrue(Validator.equals(
 				existingSCProductEntryModelImpl.getRepoGroupId(),
 				existingSCProductEntryModelImpl.getOriginalRepoGroupId()));
-		assertTrue(Validator.equals(
+		Assert.assertTrue(Validator.equals(
 				existingSCProductEntryModelImpl.getRepoArtifactId(),
 				existingSCProductEntryModelImpl.getOriginalRepoArtifactId()));
 	}
 
 	protected SCProductEntry addSCProductEntry() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		SCProductEntry scProductEntry = _persistence.create(pk);
 
-		scProductEntry.setGroupId(nextLong());
+		scProductEntry.setGroupId(ServiceTestUtil.nextLong());
 
-		scProductEntry.setCompanyId(nextLong());
+		scProductEntry.setCompanyId(ServiceTestUtil.nextLong());
 
-		scProductEntry.setUserId(nextLong());
+		scProductEntry.setUserId(ServiceTestUtil.nextLong());
 
-		scProductEntry.setUserName(randomString());
+		scProductEntry.setUserName(ServiceTestUtil.randomString());
 
-		scProductEntry.setCreateDate(nextDate());
+		scProductEntry.setCreateDate(ServiceTestUtil.nextDate());
 
-		scProductEntry.setModifiedDate(nextDate());
+		scProductEntry.setModifiedDate(ServiceTestUtil.nextDate());
 
-		scProductEntry.setName(randomString());
+		scProductEntry.setName(ServiceTestUtil.randomString());
 
-		scProductEntry.setType(randomString());
+		scProductEntry.setType(ServiceTestUtil.randomString());
 
-		scProductEntry.setTags(randomString());
+		scProductEntry.setTags(ServiceTestUtil.randomString());
 
-		scProductEntry.setShortDescription(randomString());
+		scProductEntry.setShortDescription(ServiceTestUtil.randomString());
 
-		scProductEntry.setLongDescription(randomString());
+		scProductEntry.setLongDescription(ServiceTestUtil.randomString());
 
-		scProductEntry.setPageURL(randomString());
+		scProductEntry.setPageURL(ServiceTestUtil.randomString());
 
-		scProductEntry.setAuthor(randomString());
+		scProductEntry.setAuthor(ServiceTestUtil.randomString());
 
-		scProductEntry.setRepoGroupId(randomString());
+		scProductEntry.setRepoGroupId(ServiceTestUtil.randomString());
 
-		scProductEntry.setRepoArtifactId(randomString());
+		scProductEntry.setRepoArtifactId(ServiceTestUtil.randomString());
 
 		_persistence.update(scProductEntry, false);
 

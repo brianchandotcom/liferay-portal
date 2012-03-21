@@ -588,7 +588,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		<if>
 			<available file="test/${test.type}" type="dir" />
 			<then>
-				<junit dir="${project.dir}" fork="on" forkmode="perTest" haltonfailure="${junit.halt.on.failure}" outputtoformatters="false" printsummary="on" showoutput="true">
+				<junit dir="${project.dir}" fork="on" forkmode="once" haltonfailure="${junit.halt.on.failure}" outputtoformatters="false" printsummary="on" showoutput="true">
 					<sysproperty key="net.sourceforge.cobertura.datafile" file="test-coverage/cobertura.ser" />
 					<jvmarg line="${junit.debug.jpda}" />
 					<jvmarg value="-Xmx1024m" />
@@ -601,8 +601,11 @@ Please set the environment variable ANT_OPTS to the recommended value of
 					<formatter type="xml" />
 					<batchtest todir="test-results/${test.type}">
 						<fileset dir="test-classes/${test.type}" includes="**/${class}.class">
-							<exclude name="**/ServiceHttpTestSuite.class" />
-							<exclude name="**/ServiceSoapTestSuite.class" />
+							<!-- Many test were not being executed: need to review this one -->
+							<exclude name="**/DLAppServiceTest.class" />
+
+							<exclude name="**/UserServiceHttpTest.class" />
+							<exclude name="**/UserServiceSoapTest.class" />
 						</fileset>
 					</batchtest>
 				</junit>
@@ -611,7 +614,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 	</target>
 
 	<target name="test-integration" depends="compile,instrument-test-coverage,compile-test-integration">
-		<property name="class" value="*TestSuite" />
+		<property name="class" value="*Test" />
 
 		<ant target="test-cmd">
 			<property name="test.type" value="integration" />

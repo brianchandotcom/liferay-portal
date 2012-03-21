@@ -23,33 +23,44 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ResourceTypePermission;
 import com.liferay.portal.model.impl.ResourceTypePermissionModelImpl;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class ResourceTypePermissionPersistenceTest
-	extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class ResourceTypePermissionPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (ResourceTypePermissionPersistence)PortalBeanLocatorUtil.locate(ResourceTypePermissionPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ResourceTypePermission resourceTypePermission = _persistence.create(pk);
 
-		assertNotNull(resourceTypePermission);
+		Assert.assertNotNull(resourceTypePermission);
 
-		assertEquals(resourceTypePermission.getPrimaryKey(), pk);
+		Assert.assertEquals(resourceTypePermission.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		ResourceTypePermission newResourceTypePermission = addResourceTypePermission();
 
@@ -57,83 +68,92 @@ public class ResourceTypePermissionPersistenceTest
 
 		ResourceTypePermission existingResourceTypePermission = _persistence.fetchByPrimaryKey(newResourceTypePermission.getPrimaryKey());
 
-		assertNull(existingResourceTypePermission);
+		Assert.assertNull(existingResourceTypePermission);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addResourceTypePermission();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ResourceTypePermission newResourceTypePermission = _persistence.create(pk);
 
-		newResourceTypePermission.setCompanyId(nextLong());
+		newResourceTypePermission.setCompanyId(ServiceTestUtil.nextLong());
 
-		newResourceTypePermission.setGroupId(nextLong());
+		newResourceTypePermission.setGroupId(ServiceTestUtil.nextLong());
 
-		newResourceTypePermission.setName(randomString());
+		newResourceTypePermission.setName(ServiceTestUtil.randomString());
 
-		newResourceTypePermission.setRoleId(nextLong());
+		newResourceTypePermission.setRoleId(ServiceTestUtil.nextLong());
 
-		newResourceTypePermission.setActionIds(nextLong());
+		newResourceTypePermission.setActionIds(ServiceTestUtil.nextLong());
 
 		_persistence.update(newResourceTypePermission, false);
 
 		ResourceTypePermission existingResourceTypePermission = _persistence.findByPrimaryKey(newResourceTypePermission.getPrimaryKey());
 
-		assertEquals(existingResourceTypePermission.getResourceTypePermissionId(),
+		Assert.assertEquals(existingResourceTypePermission.getResourceTypePermissionId(),
 			newResourceTypePermission.getResourceTypePermissionId());
-		assertEquals(existingResourceTypePermission.getCompanyId(),
+		Assert.assertEquals(existingResourceTypePermission.getCompanyId(),
 			newResourceTypePermission.getCompanyId());
-		assertEquals(existingResourceTypePermission.getGroupId(),
+		Assert.assertEquals(existingResourceTypePermission.getGroupId(),
 			newResourceTypePermission.getGroupId());
-		assertEquals(existingResourceTypePermission.getName(),
+		Assert.assertEquals(existingResourceTypePermission.getName(),
 			newResourceTypePermission.getName());
-		assertEquals(existingResourceTypePermission.getRoleId(),
+		Assert.assertEquals(existingResourceTypePermission.getRoleId(),
 			newResourceTypePermission.getRoleId());
-		assertEquals(existingResourceTypePermission.getActionIds(),
+		Assert.assertEquals(existingResourceTypePermission.getActionIds(),
 			newResourceTypePermission.getActionIds());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ResourceTypePermission newResourceTypePermission = addResourceTypePermission();
 
 		ResourceTypePermission existingResourceTypePermission = _persistence.findByPrimaryKey(newResourceTypePermission.getPrimaryKey());
 
-		assertEquals(existingResourceTypePermission, newResourceTypePermission);
+		Assert.assertEquals(existingResourceTypePermission,
+			newResourceTypePermission);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail(
+			Assert.fail(
 				"Missing entity did not throw NoSuchResourceTypePermissionException");
 		}
 		catch (NoSuchResourceTypePermissionException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		ResourceTypePermission newResourceTypePermission = addResourceTypePermission();
 
 		ResourceTypePermission existingResourceTypePermission = _persistence.fetchByPrimaryKey(newResourceTypePermission.getPrimaryKey());
 
-		assertEquals(existingResourceTypePermission, newResourceTypePermission);
+		Assert.assertEquals(existingResourceTypePermission,
+			newResourceTypePermission);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ResourceTypePermission missingResourceTypePermission = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingResourceTypePermission);
+		Assert.assertNull(missingResourceTypePermission);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		ResourceTypePermission newResourceTypePermission = addResourceTypePermission();
@@ -147,25 +167,28 @@ public class ResourceTypePermissionPersistenceTest
 
 		List<ResourceTypePermission> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		ResourceTypePermission existingResourceTypePermission = result.get(0);
 
-		assertEquals(existingResourceTypePermission, newResourceTypePermission);
+		Assert.assertEquals(existingResourceTypePermission,
+			newResourceTypePermission);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ResourceTypePermission.class,
 				ResourceTypePermission.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq(
-				"resourceTypePermissionId", nextLong()));
+				"resourceTypePermissionId", ServiceTestUtil.nextLong()));
 
 		List<ResourceTypePermission> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		ResourceTypePermission newResourceTypePermission = addResourceTypePermission();
@@ -184,14 +207,15 @@ public class ResourceTypePermissionPersistenceTest
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingResourceTypePermissionId = result.get(0);
 
-		assertEquals(existingResourceTypePermissionId,
+		Assert.assertEquals(existingResourceTypePermissionId,
 			newResourceTypePermissionId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ResourceTypePermission.class,
 				ResourceTypePermission.class.getClassLoader());
@@ -200,13 +224,15 @@ public class ResourceTypePermissionPersistenceTest
 				"resourceTypePermissionId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in(
-				"resourceTypePermissionId", new Object[] { nextLong() }));
+				"resourceTypePermissionId",
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -218,32 +244,32 @@ public class ResourceTypePermissionPersistenceTest
 
 		ResourceTypePermissionModelImpl existingResourceTypePermissionModelImpl = (ResourceTypePermissionModelImpl)_persistence.findByPrimaryKey(newResourceTypePermission.getPrimaryKey());
 
-		assertEquals(existingResourceTypePermissionModelImpl.getCompanyId(),
+		Assert.assertEquals(existingResourceTypePermissionModelImpl.getCompanyId(),
 			existingResourceTypePermissionModelImpl.getOriginalCompanyId());
-		assertEquals(existingResourceTypePermissionModelImpl.getGroupId(),
+		Assert.assertEquals(existingResourceTypePermissionModelImpl.getGroupId(),
 			existingResourceTypePermissionModelImpl.getOriginalGroupId());
-		assertTrue(Validator.equals(
+		Assert.assertTrue(Validator.equals(
 				existingResourceTypePermissionModelImpl.getName(),
 				existingResourceTypePermissionModelImpl.getOriginalName()));
-		assertEquals(existingResourceTypePermissionModelImpl.getRoleId(),
+		Assert.assertEquals(existingResourceTypePermissionModelImpl.getRoleId(),
 			existingResourceTypePermissionModelImpl.getOriginalRoleId());
 	}
 
 	protected ResourceTypePermission addResourceTypePermission()
 		throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ResourceTypePermission resourceTypePermission = _persistence.create(pk);
 
-		resourceTypePermission.setCompanyId(nextLong());
+		resourceTypePermission.setCompanyId(ServiceTestUtil.nextLong());
 
-		resourceTypePermission.setGroupId(nextLong());
+		resourceTypePermission.setGroupId(ServiceTestUtil.nextLong());
 
-		resourceTypePermission.setName(randomString());
+		resourceTypePermission.setName(ServiceTestUtil.randomString());
 
-		resourceTypePermission.setRoleId(nextLong());
+		resourceTypePermission.setRoleId(ServiceTestUtil.nextLong());
 
-		resourceTypePermission.setActionIds(nextLong());
+		resourceTypePermission.setActionIds(ServiceTestUtil.nextLong());
 
 		_persistence.update(resourceTypePermission, false);
 

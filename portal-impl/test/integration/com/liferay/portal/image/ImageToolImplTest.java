@@ -18,7 +18,9 @@ import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageTool;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.util.BaseTestCase;
+import com.liferay.portal.test.EnvironmentConfigTestListener;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
@@ -31,27 +33,38 @@ import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
 /**
  * @author Shuyang Zhou
  */
-public class ImageToolImplTest extends BaseTestCase {
+@ExecutionTestListeners(listeners = {EnvironmentConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class ImageToolImplTest {
 
+	@Test
 	public void testReadBMP() throws Exception {
 		testRead("liferay.bmp");
 	}
 
+	@Test
 	public void testReadGIF() throws Exception {
 		testRead("liferay.gif");
 	}
 
+	@Test
 	public void testReadJPEG() throws Exception {
 		testRead("liferay.jpeg");
 	}
 
+	@Test
 	public void testReadJPG() throws Exception {
 		testRead("liferay.jpg");
 	}
 
+	@Test
 	public void testReadPNG() throws Exception {
 		testRead("liferay.png");
 	}
@@ -65,7 +78,7 @@ public class ImageToolImplTest extends BaseTestCase {
 
 		BufferedImage expectedImage = ImageIO.read(file);
 
-		assertNotNull(expectedImage);
+		Assert.assertNotNull(expectedImage);
 
 		DataBufferByte expectedDataBufferByte =
 			(DataBufferByte)expectedImage.getData().getDataBuffer();
@@ -88,7 +101,7 @@ public class ImageToolImplTest extends BaseTestCase {
 
 		RenderedImage resultImage = imageBag.getRenderedImage();
 
-		assertNotNull(resultImage);
+		Assert.assertNotNull(resultImage);
 
 		DataBufferByte resultDataBufferByte =
 			(DataBufferByte)resultImage.getData().getDataBuffer();
@@ -97,8 +110,8 @@ public class ImageToolImplTest extends BaseTestCase {
 
 		String resultType = imageBag.getType();
 
-		assertTrue(expectedType.equalsIgnoreCase(resultType));
-		assertTrue(Arrays.deepEquals(expectedData, resultData));
+		Assert.assertTrue(expectedType.equalsIgnoreCase(resultType));
+		Assert.assertTrue(Arrays.deepEquals(expectedData, resultData));
 	}
 
 }

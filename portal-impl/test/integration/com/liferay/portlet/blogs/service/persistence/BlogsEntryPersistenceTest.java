@@ -21,36 +21,48 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.blogs.NoSuchEntryException;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.model.impl.BlogsEntryModelImpl;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class BlogsEntryPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class BlogsEntryPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (BlogsEntryPersistence)PortalBeanLocatorUtil.locate(BlogsEntryPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		BlogsEntry blogsEntry = _persistence.create(pk);
 
-		assertNotNull(blogsEntry);
+		Assert.assertNotNull(blogsEntry);
 
-		assertEquals(blogsEntry.getPrimaryKey(), pk);
+		Assert.assertEquals(blogsEntry.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		BlogsEntry newBlogsEntry = addBlogsEntry();
 
@@ -58,144 +70,161 @@ public class BlogsEntryPersistenceTest extends BasePersistenceTestCase {
 
 		BlogsEntry existingBlogsEntry = _persistence.fetchByPrimaryKey(newBlogsEntry.getPrimaryKey());
 
-		assertNull(existingBlogsEntry);
+		Assert.assertNull(existingBlogsEntry);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addBlogsEntry();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		BlogsEntry newBlogsEntry = _persistence.create(pk);
 
-		newBlogsEntry.setUuid(randomString());
+		newBlogsEntry.setUuid(ServiceTestUtil.randomString());
 
-		newBlogsEntry.setGroupId(nextLong());
+		newBlogsEntry.setGroupId(ServiceTestUtil.nextLong());
 
-		newBlogsEntry.setCompanyId(nextLong());
+		newBlogsEntry.setCompanyId(ServiceTestUtil.nextLong());
 
-		newBlogsEntry.setUserId(nextLong());
+		newBlogsEntry.setUserId(ServiceTestUtil.nextLong());
 
-		newBlogsEntry.setUserName(randomString());
+		newBlogsEntry.setUserName(ServiceTestUtil.randomString());
 
-		newBlogsEntry.setCreateDate(nextDate());
+		newBlogsEntry.setCreateDate(ServiceTestUtil.nextDate());
 
-		newBlogsEntry.setModifiedDate(nextDate());
+		newBlogsEntry.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newBlogsEntry.setTitle(randomString());
+		newBlogsEntry.setTitle(ServiceTestUtil.randomString());
 
-		newBlogsEntry.setUrlTitle(randomString());
+		newBlogsEntry.setUrlTitle(ServiceTestUtil.randomString());
 
-		newBlogsEntry.setDescription(randomString());
+		newBlogsEntry.setDescription(ServiceTestUtil.randomString());
 
-		newBlogsEntry.setContent(randomString());
+		newBlogsEntry.setContent(ServiceTestUtil.randomString());
 
-		newBlogsEntry.setDisplayDate(nextDate());
+		newBlogsEntry.setDisplayDate(ServiceTestUtil.nextDate());
 
-		newBlogsEntry.setAllowPingbacks(randomBoolean());
+		newBlogsEntry.setAllowPingbacks(ServiceTestUtil.randomBoolean());
 
-		newBlogsEntry.setAllowTrackbacks(randomBoolean());
+		newBlogsEntry.setAllowTrackbacks(ServiceTestUtil.randomBoolean());
 
-		newBlogsEntry.setTrackbacks(randomString());
+		newBlogsEntry.setTrackbacks(ServiceTestUtil.randomString());
 
-		newBlogsEntry.setSmallImage(randomBoolean());
+		newBlogsEntry.setSmallImage(ServiceTestUtil.randomBoolean());
 
-		newBlogsEntry.setSmallImageId(nextLong());
+		newBlogsEntry.setSmallImageId(ServiceTestUtil.nextLong());
 
-		newBlogsEntry.setSmallImageURL(randomString());
+		newBlogsEntry.setSmallImageURL(ServiceTestUtil.randomString());
 
-		newBlogsEntry.setStatus(nextInt());
+		newBlogsEntry.setStatus(ServiceTestUtil.nextInt());
 
-		newBlogsEntry.setStatusByUserId(nextLong());
+		newBlogsEntry.setStatusByUserId(ServiceTestUtil.nextLong());
 
-		newBlogsEntry.setStatusByUserName(randomString());
+		newBlogsEntry.setStatusByUserName(ServiceTestUtil.randomString());
 
-		newBlogsEntry.setStatusDate(nextDate());
+		newBlogsEntry.setStatusDate(ServiceTestUtil.nextDate());
 
 		_persistence.update(newBlogsEntry, false);
 
 		BlogsEntry existingBlogsEntry = _persistence.findByPrimaryKey(newBlogsEntry.getPrimaryKey());
 
-		assertEquals(existingBlogsEntry.getUuid(), newBlogsEntry.getUuid());
-		assertEquals(existingBlogsEntry.getEntryId(), newBlogsEntry.getEntryId());
-		assertEquals(existingBlogsEntry.getGroupId(), newBlogsEntry.getGroupId());
-		assertEquals(existingBlogsEntry.getCompanyId(),
+		Assert.assertEquals(existingBlogsEntry.getUuid(),
+			newBlogsEntry.getUuid());
+		Assert.assertEquals(existingBlogsEntry.getEntryId(),
+			newBlogsEntry.getEntryId());
+		Assert.assertEquals(existingBlogsEntry.getGroupId(),
+			newBlogsEntry.getGroupId());
+		Assert.assertEquals(existingBlogsEntry.getCompanyId(),
 			newBlogsEntry.getCompanyId());
-		assertEquals(existingBlogsEntry.getUserId(), newBlogsEntry.getUserId());
-		assertEquals(existingBlogsEntry.getUserName(),
+		Assert.assertEquals(existingBlogsEntry.getUserId(),
+			newBlogsEntry.getUserId());
+		Assert.assertEquals(existingBlogsEntry.getUserName(),
 			newBlogsEntry.getUserName());
-		assertEquals(Time.getShortTimestamp(existingBlogsEntry.getCreateDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingBlogsEntry.getCreateDate()),
 			Time.getShortTimestamp(newBlogsEntry.getCreateDate()));
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingBlogsEntry.getModifiedDate()),
 			Time.getShortTimestamp(newBlogsEntry.getModifiedDate()));
-		assertEquals(existingBlogsEntry.getTitle(), newBlogsEntry.getTitle());
-		assertEquals(existingBlogsEntry.getUrlTitle(),
+		Assert.assertEquals(existingBlogsEntry.getTitle(),
+			newBlogsEntry.getTitle());
+		Assert.assertEquals(existingBlogsEntry.getUrlTitle(),
 			newBlogsEntry.getUrlTitle());
-		assertEquals(existingBlogsEntry.getDescription(),
+		Assert.assertEquals(existingBlogsEntry.getDescription(),
 			newBlogsEntry.getDescription());
-		assertEquals(existingBlogsEntry.getContent(), newBlogsEntry.getContent());
-		assertEquals(Time.getShortTimestamp(existingBlogsEntry.getDisplayDate()),
+		Assert.assertEquals(existingBlogsEntry.getContent(),
+			newBlogsEntry.getContent());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingBlogsEntry.getDisplayDate()),
 			Time.getShortTimestamp(newBlogsEntry.getDisplayDate()));
-		assertEquals(existingBlogsEntry.getAllowPingbacks(),
+		Assert.assertEquals(existingBlogsEntry.getAllowPingbacks(),
 			newBlogsEntry.getAllowPingbacks());
-		assertEquals(existingBlogsEntry.getAllowTrackbacks(),
+		Assert.assertEquals(existingBlogsEntry.getAllowTrackbacks(),
 			newBlogsEntry.getAllowTrackbacks());
-		assertEquals(existingBlogsEntry.getTrackbacks(),
+		Assert.assertEquals(existingBlogsEntry.getTrackbacks(),
 			newBlogsEntry.getTrackbacks());
-		assertEquals(existingBlogsEntry.getSmallImage(),
+		Assert.assertEquals(existingBlogsEntry.getSmallImage(),
 			newBlogsEntry.getSmallImage());
-		assertEquals(existingBlogsEntry.getSmallImageId(),
+		Assert.assertEquals(existingBlogsEntry.getSmallImageId(),
 			newBlogsEntry.getSmallImageId());
-		assertEquals(existingBlogsEntry.getSmallImageURL(),
+		Assert.assertEquals(existingBlogsEntry.getSmallImageURL(),
 			newBlogsEntry.getSmallImageURL());
-		assertEquals(existingBlogsEntry.getStatus(), newBlogsEntry.getStatus());
-		assertEquals(existingBlogsEntry.getStatusByUserId(),
+		Assert.assertEquals(existingBlogsEntry.getStatus(),
+			newBlogsEntry.getStatus());
+		Assert.assertEquals(existingBlogsEntry.getStatusByUserId(),
 			newBlogsEntry.getStatusByUserId());
-		assertEquals(existingBlogsEntry.getStatusByUserName(),
+		Assert.assertEquals(existingBlogsEntry.getStatusByUserName(),
 			newBlogsEntry.getStatusByUserName());
-		assertEquals(Time.getShortTimestamp(existingBlogsEntry.getStatusDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingBlogsEntry.getStatusDate()),
 			Time.getShortTimestamp(newBlogsEntry.getStatusDate()));
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		BlogsEntry newBlogsEntry = addBlogsEntry();
 
 		BlogsEntry existingBlogsEntry = _persistence.findByPrimaryKey(newBlogsEntry.getPrimaryKey());
 
-		assertEquals(existingBlogsEntry, newBlogsEntry);
+		Assert.assertEquals(existingBlogsEntry, newBlogsEntry);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchEntryException");
+			Assert.fail("Missing entity did not throw NoSuchEntryException");
 		}
 		catch (NoSuchEntryException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		BlogsEntry newBlogsEntry = addBlogsEntry();
 
 		BlogsEntry existingBlogsEntry = _persistence.fetchByPrimaryKey(newBlogsEntry.getPrimaryKey());
 
-		assertEquals(existingBlogsEntry, newBlogsEntry);
+		Assert.assertEquals(existingBlogsEntry, newBlogsEntry);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		BlogsEntry missingBlogsEntry = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingBlogsEntry);
+		Assert.assertNull(missingBlogsEntry);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		BlogsEntry newBlogsEntry = addBlogsEntry();
@@ -208,24 +237,27 @@ public class BlogsEntryPersistenceTest extends BasePersistenceTestCase {
 
 		List<BlogsEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		BlogsEntry existingBlogsEntry = result.get(0);
 
-		assertEquals(existingBlogsEntry, newBlogsEntry);
+		Assert.assertEquals(existingBlogsEntry, newBlogsEntry);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BlogsEntry.class,
 				BlogsEntry.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("entryId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("entryId",
+				ServiceTestUtil.nextLong()));
 
 		List<BlogsEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		BlogsEntry newBlogsEntry = addBlogsEntry();
@@ -242,13 +274,14 @@ public class BlogsEntryPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingEntryId = result.get(0);
 
-		assertEquals(existingEntryId, newEntryId);
+		Assert.assertEquals(existingEntryId, newEntryId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BlogsEntry.class,
 				BlogsEntry.class.getClassLoader());
@@ -256,13 +289,14 @@ public class BlogsEntryPersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("entryId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("entryId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -274,65 +308,67 @@ public class BlogsEntryPersistenceTest extends BasePersistenceTestCase {
 
 		BlogsEntryModelImpl existingBlogsEntryModelImpl = (BlogsEntryModelImpl)_persistence.findByPrimaryKey(newBlogsEntry.getPrimaryKey());
 
-		assertTrue(Validator.equals(existingBlogsEntryModelImpl.getUuid(),
+		Assert.assertTrue(Validator.equals(
+				existingBlogsEntryModelImpl.getUuid(),
 				existingBlogsEntryModelImpl.getOriginalUuid()));
-		assertEquals(existingBlogsEntryModelImpl.getGroupId(),
+		Assert.assertEquals(existingBlogsEntryModelImpl.getGroupId(),
 			existingBlogsEntryModelImpl.getOriginalGroupId());
 
-		assertEquals(existingBlogsEntryModelImpl.getGroupId(),
+		Assert.assertEquals(existingBlogsEntryModelImpl.getGroupId(),
 			existingBlogsEntryModelImpl.getOriginalGroupId());
-		assertTrue(Validator.equals(existingBlogsEntryModelImpl.getUrlTitle(),
+		Assert.assertTrue(Validator.equals(
+				existingBlogsEntryModelImpl.getUrlTitle(),
 				existingBlogsEntryModelImpl.getOriginalUrlTitle()));
 	}
 
 	protected BlogsEntry addBlogsEntry() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		BlogsEntry blogsEntry = _persistence.create(pk);
 
-		blogsEntry.setUuid(randomString());
+		blogsEntry.setUuid(ServiceTestUtil.randomString());
 
-		blogsEntry.setGroupId(nextLong());
+		blogsEntry.setGroupId(ServiceTestUtil.nextLong());
 
-		blogsEntry.setCompanyId(nextLong());
+		blogsEntry.setCompanyId(ServiceTestUtil.nextLong());
 
-		blogsEntry.setUserId(nextLong());
+		blogsEntry.setUserId(ServiceTestUtil.nextLong());
 
-		blogsEntry.setUserName(randomString());
+		blogsEntry.setUserName(ServiceTestUtil.randomString());
 
-		blogsEntry.setCreateDate(nextDate());
+		blogsEntry.setCreateDate(ServiceTestUtil.nextDate());
 
-		blogsEntry.setModifiedDate(nextDate());
+		blogsEntry.setModifiedDate(ServiceTestUtil.nextDate());
 
-		blogsEntry.setTitle(randomString());
+		blogsEntry.setTitle(ServiceTestUtil.randomString());
 
-		blogsEntry.setUrlTitle(randomString());
+		blogsEntry.setUrlTitle(ServiceTestUtil.randomString());
 
-		blogsEntry.setDescription(randomString());
+		blogsEntry.setDescription(ServiceTestUtil.randomString());
 
-		blogsEntry.setContent(randomString());
+		blogsEntry.setContent(ServiceTestUtil.randomString());
 
-		blogsEntry.setDisplayDate(nextDate());
+		blogsEntry.setDisplayDate(ServiceTestUtil.nextDate());
 
-		blogsEntry.setAllowPingbacks(randomBoolean());
+		blogsEntry.setAllowPingbacks(ServiceTestUtil.randomBoolean());
 
-		blogsEntry.setAllowTrackbacks(randomBoolean());
+		blogsEntry.setAllowTrackbacks(ServiceTestUtil.randomBoolean());
 
-		blogsEntry.setTrackbacks(randomString());
+		blogsEntry.setTrackbacks(ServiceTestUtil.randomString());
 
-		blogsEntry.setSmallImage(randomBoolean());
+		blogsEntry.setSmallImage(ServiceTestUtil.randomBoolean());
 
-		blogsEntry.setSmallImageId(nextLong());
+		blogsEntry.setSmallImageId(ServiceTestUtil.nextLong());
 
-		blogsEntry.setSmallImageURL(randomString());
+		blogsEntry.setSmallImageURL(ServiceTestUtil.randomString());
 
-		blogsEntry.setStatus(nextInt());
+		blogsEntry.setStatus(ServiceTestUtil.nextInt());
 
-		blogsEntry.setStatusByUserId(nextLong());
+		blogsEntry.setStatusByUserId(ServiceTestUtil.nextLong());
 
-		blogsEntry.setStatusByUserName(randomString());
+		blogsEntry.setStatusByUserName(ServiceTestUtil.randomString());
 
-		blogsEntry.setStatusDate(nextDate());
+		blogsEntry.setStatusDate(ServiceTestUtil.nextDate());
 
 		_persistence.update(blogsEntry, false);
 

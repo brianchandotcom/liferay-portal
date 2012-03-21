@@ -21,36 +21,48 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.softwarecatalog.NoSuchProductVersionException;
 import com.liferay.portlet.softwarecatalog.model.SCProductVersion;
 import com.liferay.portlet.softwarecatalog.model.impl.SCProductVersionModelImpl;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class SCProductVersionPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class SCProductVersionPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (SCProductVersionPersistence)PortalBeanLocatorUtil.locate(SCProductVersionPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		SCProductVersion scProductVersion = _persistence.create(pk);
 
-		assertNotNull(scProductVersion);
+		Assert.assertNotNull(scProductVersion);
 
-		assertEquals(scProductVersion.getPrimaryKey(), pk);
+		Assert.assertEquals(scProductVersion.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		SCProductVersion newSCProductVersion = addSCProductVersion();
 
@@ -58,108 +70,116 @@ public class SCProductVersionPersistenceTest extends BasePersistenceTestCase {
 
 		SCProductVersion existingSCProductVersion = _persistence.fetchByPrimaryKey(newSCProductVersion.getPrimaryKey());
 
-		assertNull(existingSCProductVersion);
+		Assert.assertNull(existingSCProductVersion);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addSCProductVersion();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		SCProductVersion newSCProductVersion = _persistence.create(pk);
 
-		newSCProductVersion.setCompanyId(nextLong());
+		newSCProductVersion.setCompanyId(ServiceTestUtil.nextLong());
 
-		newSCProductVersion.setUserId(nextLong());
+		newSCProductVersion.setUserId(ServiceTestUtil.nextLong());
 
-		newSCProductVersion.setUserName(randomString());
+		newSCProductVersion.setUserName(ServiceTestUtil.randomString());
 
-		newSCProductVersion.setCreateDate(nextDate());
+		newSCProductVersion.setCreateDate(ServiceTestUtil.nextDate());
 
-		newSCProductVersion.setModifiedDate(nextDate());
+		newSCProductVersion.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newSCProductVersion.setProductEntryId(nextLong());
+		newSCProductVersion.setProductEntryId(ServiceTestUtil.nextLong());
 
-		newSCProductVersion.setVersion(randomString());
+		newSCProductVersion.setVersion(ServiceTestUtil.randomString());
 
-		newSCProductVersion.setChangeLog(randomString());
+		newSCProductVersion.setChangeLog(ServiceTestUtil.randomString());
 
-		newSCProductVersion.setDownloadPageURL(randomString());
+		newSCProductVersion.setDownloadPageURL(ServiceTestUtil.randomString());
 
-		newSCProductVersion.setDirectDownloadURL(randomString());
+		newSCProductVersion.setDirectDownloadURL(ServiceTestUtil.randomString());
 
-		newSCProductVersion.setRepoStoreArtifact(randomBoolean());
+		newSCProductVersion.setRepoStoreArtifact(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(newSCProductVersion, false);
 
 		SCProductVersion existingSCProductVersion = _persistence.findByPrimaryKey(newSCProductVersion.getPrimaryKey());
 
-		assertEquals(existingSCProductVersion.getProductVersionId(),
+		Assert.assertEquals(existingSCProductVersion.getProductVersionId(),
 			newSCProductVersion.getProductVersionId());
-		assertEquals(existingSCProductVersion.getCompanyId(),
+		Assert.assertEquals(existingSCProductVersion.getCompanyId(),
 			newSCProductVersion.getCompanyId());
-		assertEquals(existingSCProductVersion.getUserId(),
+		Assert.assertEquals(existingSCProductVersion.getUserId(),
 			newSCProductVersion.getUserId());
-		assertEquals(existingSCProductVersion.getUserName(),
+		Assert.assertEquals(existingSCProductVersion.getUserName(),
 			newSCProductVersion.getUserName());
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingSCProductVersion.getCreateDate()),
 			Time.getShortTimestamp(newSCProductVersion.getCreateDate()));
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingSCProductVersion.getModifiedDate()),
 			Time.getShortTimestamp(newSCProductVersion.getModifiedDate()));
-		assertEquals(existingSCProductVersion.getProductEntryId(),
+		Assert.assertEquals(existingSCProductVersion.getProductEntryId(),
 			newSCProductVersion.getProductEntryId());
-		assertEquals(existingSCProductVersion.getVersion(),
+		Assert.assertEquals(existingSCProductVersion.getVersion(),
 			newSCProductVersion.getVersion());
-		assertEquals(existingSCProductVersion.getChangeLog(),
+		Assert.assertEquals(existingSCProductVersion.getChangeLog(),
 			newSCProductVersion.getChangeLog());
-		assertEquals(existingSCProductVersion.getDownloadPageURL(),
+		Assert.assertEquals(existingSCProductVersion.getDownloadPageURL(),
 			newSCProductVersion.getDownloadPageURL());
-		assertEquals(existingSCProductVersion.getDirectDownloadURL(),
+		Assert.assertEquals(existingSCProductVersion.getDirectDownloadURL(),
 			newSCProductVersion.getDirectDownloadURL());
-		assertEquals(existingSCProductVersion.getRepoStoreArtifact(),
+		Assert.assertEquals(existingSCProductVersion.getRepoStoreArtifact(),
 			newSCProductVersion.getRepoStoreArtifact());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		SCProductVersion newSCProductVersion = addSCProductVersion();
 
 		SCProductVersion existingSCProductVersion = _persistence.findByPrimaryKey(newSCProductVersion.getPrimaryKey());
 
-		assertEquals(existingSCProductVersion, newSCProductVersion);
+		Assert.assertEquals(existingSCProductVersion, newSCProductVersion);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchProductVersionException");
+			Assert.fail(
+				"Missing entity did not throw NoSuchProductVersionException");
 		}
 		catch (NoSuchProductVersionException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		SCProductVersion newSCProductVersion = addSCProductVersion();
 
 		SCProductVersion existingSCProductVersion = _persistence.fetchByPrimaryKey(newSCProductVersion.getPrimaryKey());
 
-		assertEquals(existingSCProductVersion, newSCProductVersion);
+		Assert.assertEquals(existingSCProductVersion, newSCProductVersion);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		SCProductVersion missingSCProductVersion = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingSCProductVersion);
+		Assert.assertNull(missingSCProductVersion);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		SCProductVersion newSCProductVersion = addSCProductVersion();
@@ -172,25 +192,27 @@ public class SCProductVersionPersistenceTest extends BasePersistenceTestCase {
 
 		List<SCProductVersion> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		SCProductVersion existingSCProductVersion = result.get(0);
 
-		assertEquals(existingSCProductVersion, newSCProductVersion);
+		Assert.assertEquals(existingSCProductVersion, newSCProductVersion);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SCProductVersion.class,
 				SCProductVersion.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("productVersionId",
-				nextLong()));
+				ServiceTestUtil.nextLong()));
 
 		List<SCProductVersion> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		SCProductVersion newSCProductVersion = addSCProductVersion();
@@ -208,13 +230,14 @@ public class SCProductVersionPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingProductVersionId = result.get(0);
 
-		assertEquals(existingProductVersionId, newProductVersionId);
+		Assert.assertEquals(existingProductVersionId, newProductVersionId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SCProductVersion.class,
 				SCProductVersion.class.getClassLoader());
@@ -223,13 +246,14 @@ public class SCProductVersionPersistenceTest extends BasePersistenceTestCase {
 				"productVersionId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("productVersionId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -241,37 +265,37 @@ public class SCProductVersionPersistenceTest extends BasePersistenceTestCase {
 
 		SCProductVersionModelImpl existingSCProductVersionModelImpl = (SCProductVersionModelImpl)_persistence.findByPrimaryKey(newSCProductVersion.getPrimaryKey());
 
-		assertTrue(Validator.equals(
+		Assert.assertTrue(Validator.equals(
 				existingSCProductVersionModelImpl.getDirectDownloadURL(),
 				existingSCProductVersionModelImpl.getOriginalDirectDownloadURL()));
 	}
 
 	protected SCProductVersion addSCProductVersion() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		SCProductVersion scProductVersion = _persistence.create(pk);
 
-		scProductVersion.setCompanyId(nextLong());
+		scProductVersion.setCompanyId(ServiceTestUtil.nextLong());
 
-		scProductVersion.setUserId(nextLong());
+		scProductVersion.setUserId(ServiceTestUtil.nextLong());
 
-		scProductVersion.setUserName(randomString());
+		scProductVersion.setUserName(ServiceTestUtil.randomString());
 
-		scProductVersion.setCreateDate(nextDate());
+		scProductVersion.setCreateDate(ServiceTestUtil.nextDate());
 
-		scProductVersion.setModifiedDate(nextDate());
+		scProductVersion.setModifiedDate(ServiceTestUtil.nextDate());
 
-		scProductVersion.setProductEntryId(nextLong());
+		scProductVersion.setProductEntryId(ServiceTestUtil.nextLong());
 
-		scProductVersion.setVersion(randomString());
+		scProductVersion.setVersion(ServiceTestUtil.randomString());
 
-		scProductVersion.setChangeLog(randomString());
+		scProductVersion.setChangeLog(ServiceTestUtil.randomString());
 
-		scProductVersion.setDownloadPageURL(randomString());
+		scProductVersion.setDownloadPageURL(ServiceTestUtil.randomString());
 
-		scProductVersion.setDirectDownloadURL(randomString());
+		scProductVersion.setDirectDownloadURL(ServiceTestUtil.randomString());
 
-		scProductVersion.setRepoStoreArtifact(randomBoolean());
+		scProductVersion.setRepoStoreArtifact(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(scProductVersion, false);
 

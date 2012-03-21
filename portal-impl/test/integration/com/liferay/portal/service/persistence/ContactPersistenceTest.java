@@ -22,31 +22,43 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.Contact;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class ContactPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class ContactPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (ContactPersistence)PortalBeanLocatorUtil.locate(ContactPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Contact contact = _persistence.create(pk);
 
-		assertNotNull(contact);
+		Assert.assertNotNull(contact);
 
-		assertEquals(contact.getPrimaryKey(), pk);
+		Assert.assertEquals(contact.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		Contact newContact = addContact();
 
@@ -54,155 +66,181 @@ public class ContactPersistenceTest extends BasePersistenceTestCase {
 
 		Contact existingContact = _persistence.fetchByPrimaryKey(newContact.getPrimaryKey());
 
-		assertNull(existingContact);
+		Assert.assertNull(existingContact);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addContact();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Contact newContact = _persistence.create(pk);
 
-		newContact.setCompanyId(nextLong());
+		newContact.setCompanyId(ServiceTestUtil.nextLong());
 
-		newContact.setUserId(nextLong());
+		newContact.setUserId(ServiceTestUtil.nextLong());
 
-		newContact.setUserName(randomString());
+		newContact.setUserName(ServiceTestUtil.randomString());
 
-		newContact.setCreateDate(nextDate());
+		newContact.setCreateDate(ServiceTestUtil.nextDate());
 
-		newContact.setModifiedDate(nextDate());
+		newContact.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newContact.setAccountId(nextLong());
+		newContact.setAccountId(ServiceTestUtil.nextLong());
 
-		newContact.setParentContactId(nextLong());
+		newContact.setParentContactId(ServiceTestUtil.nextLong());
 
-		newContact.setFirstName(randomString());
+		newContact.setFirstName(ServiceTestUtil.randomString());
 
-		newContact.setMiddleName(randomString());
+		newContact.setMiddleName(ServiceTestUtil.randomString());
 
-		newContact.setLastName(randomString());
+		newContact.setLastName(ServiceTestUtil.randomString());
 
-		newContact.setPrefixId(nextInt());
+		newContact.setPrefixId(ServiceTestUtil.nextInt());
 
-		newContact.setSuffixId(nextInt());
+		newContact.setSuffixId(ServiceTestUtil.nextInt());
 
-		newContact.setMale(randomBoolean());
+		newContact.setMale(ServiceTestUtil.randomBoolean());
 
-		newContact.setBirthday(nextDate());
+		newContact.setBirthday(ServiceTestUtil.nextDate());
 
-		newContact.setSmsSn(randomString());
+		newContact.setSmsSn(ServiceTestUtil.randomString());
 
-		newContact.setAimSn(randomString());
+		newContact.setAimSn(ServiceTestUtil.randomString());
 
-		newContact.setFacebookSn(randomString());
+		newContact.setFacebookSn(ServiceTestUtil.randomString());
 
-		newContact.setIcqSn(randomString());
+		newContact.setIcqSn(ServiceTestUtil.randomString());
 
-		newContact.setJabberSn(randomString());
+		newContact.setJabberSn(ServiceTestUtil.randomString());
 
-		newContact.setMsnSn(randomString());
+		newContact.setMsnSn(ServiceTestUtil.randomString());
 
-		newContact.setMySpaceSn(randomString());
+		newContact.setMySpaceSn(ServiceTestUtil.randomString());
 
-		newContact.setSkypeSn(randomString());
+		newContact.setSkypeSn(ServiceTestUtil.randomString());
 
-		newContact.setTwitterSn(randomString());
+		newContact.setTwitterSn(ServiceTestUtil.randomString());
 
-		newContact.setYmSn(randomString());
+		newContact.setYmSn(ServiceTestUtil.randomString());
 
-		newContact.setEmployeeStatusId(randomString());
+		newContact.setEmployeeStatusId(ServiceTestUtil.randomString());
 
-		newContact.setEmployeeNumber(randomString());
+		newContact.setEmployeeNumber(ServiceTestUtil.randomString());
 
-		newContact.setJobTitle(randomString());
+		newContact.setJobTitle(ServiceTestUtil.randomString());
 
-		newContact.setJobClass(randomString());
+		newContact.setJobClass(ServiceTestUtil.randomString());
 
-		newContact.setHoursOfOperation(randomString());
+		newContact.setHoursOfOperation(ServiceTestUtil.randomString());
 
 		_persistence.update(newContact, false);
 
 		Contact existingContact = _persistence.findByPrimaryKey(newContact.getPrimaryKey());
 
-		assertEquals(existingContact.getContactId(), newContact.getContactId());
-		assertEquals(existingContact.getCompanyId(), newContact.getCompanyId());
-		assertEquals(existingContact.getUserId(), newContact.getUserId());
-		assertEquals(existingContact.getUserName(), newContact.getUserName());
-		assertEquals(Time.getShortTimestamp(existingContact.getCreateDate()),
+		Assert.assertEquals(existingContact.getContactId(),
+			newContact.getContactId());
+		Assert.assertEquals(existingContact.getCompanyId(),
+			newContact.getCompanyId());
+		Assert.assertEquals(existingContact.getUserId(), newContact.getUserId());
+		Assert.assertEquals(existingContact.getUserName(),
+			newContact.getUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingContact.getCreateDate()),
 			Time.getShortTimestamp(newContact.getCreateDate()));
-		assertEquals(Time.getShortTimestamp(existingContact.getModifiedDate()),
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingContact.getModifiedDate()),
 			Time.getShortTimestamp(newContact.getModifiedDate()));
-		assertEquals(existingContact.getAccountId(), newContact.getAccountId());
-		assertEquals(existingContact.getParentContactId(),
+		Assert.assertEquals(existingContact.getAccountId(),
+			newContact.getAccountId());
+		Assert.assertEquals(existingContact.getParentContactId(),
 			newContact.getParentContactId());
-		assertEquals(existingContact.getFirstName(), newContact.getFirstName());
-		assertEquals(existingContact.getMiddleName(), newContact.getMiddleName());
-		assertEquals(existingContact.getLastName(), newContact.getLastName());
-		assertEquals(existingContact.getPrefixId(), newContact.getPrefixId());
-		assertEquals(existingContact.getSuffixId(), newContact.getSuffixId());
-		assertEquals(existingContact.getMale(), newContact.getMale());
-		assertEquals(Time.getShortTimestamp(existingContact.getBirthday()),
+		Assert.assertEquals(existingContact.getFirstName(),
+			newContact.getFirstName());
+		Assert.assertEquals(existingContact.getMiddleName(),
+			newContact.getMiddleName());
+		Assert.assertEquals(existingContact.getLastName(),
+			newContact.getLastName());
+		Assert.assertEquals(existingContact.getPrefixId(),
+			newContact.getPrefixId());
+		Assert.assertEquals(existingContact.getSuffixId(),
+			newContact.getSuffixId());
+		Assert.assertEquals(existingContact.getMale(), newContact.getMale());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingContact.getBirthday()),
 			Time.getShortTimestamp(newContact.getBirthday()));
-		assertEquals(existingContact.getSmsSn(), newContact.getSmsSn());
-		assertEquals(existingContact.getAimSn(), newContact.getAimSn());
-		assertEquals(existingContact.getFacebookSn(), newContact.getFacebookSn());
-		assertEquals(existingContact.getIcqSn(), newContact.getIcqSn());
-		assertEquals(existingContact.getJabberSn(), newContact.getJabberSn());
-		assertEquals(existingContact.getMsnSn(), newContact.getMsnSn());
-		assertEquals(existingContact.getMySpaceSn(), newContact.getMySpaceSn());
-		assertEquals(existingContact.getSkypeSn(), newContact.getSkypeSn());
-		assertEquals(existingContact.getTwitterSn(), newContact.getTwitterSn());
-		assertEquals(existingContact.getYmSn(), newContact.getYmSn());
-		assertEquals(existingContact.getEmployeeStatusId(),
+		Assert.assertEquals(existingContact.getSmsSn(), newContact.getSmsSn());
+		Assert.assertEquals(existingContact.getAimSn(), newContact.getAimSn());
+		Assert.assertEquals(existingContact.getFacebookSn(),
+			newContact.getFacebookSn());
+		Assert.assertEquals(existingContact.getIcqSn(), newContact.getIcqSn());
+		Assert.assertEquals(existingContact.getJabberSn(),
+			newContact.getJabberSn());
+		Assert.assertEquals(existingContact.getMsnSn(), newContact.getMsnSn());
+		Assert.assertEquals(existingContact.getMySpaceSn(),
+			newContact.getMySpaceSn());
+		Assert.assertEquals(existingContact.getSkypeSn(),
+			newContact.getSkypeSn());
+		Assert.assertEquals(existingContact.getTwitterSn(),
+			newContact.getTwitterSn());
+		Assert.assertEquals(existingContact.getYmSn(), newContact.getYmSn());
+		Assert.assertEquals(existingContact.getEmployeeStatusId(),
 			newContact.getEmployeeStatusId());
-		assertEquals(existingContact.getEmployeeNumber(),
+		Assert.assertEquals(existingContact.getEmployeeNumber(),
 			newContact.getEmployeeNumber());
-		assertEquals(existingContact.getJobTitle(), newContact.getJobTitle());
-		assertEquals(existingContact.getJobClass(), newContact.getJobClass());
-		assertEquals(existingContact.getHoursOfOperation(),
+		Assert.assertEquals(existingContact.getJobTitle(),
+			newContact.getJobTitle());
+		Assert.assertEquals(existingContact.getJobClass(),
+			newContact.getJobClass());
+		Assert.assertEquals(existingContact.getHoursOfOperation(),
 			newContact.getHoursOfOperation());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Contact newContact = addContact();
 
 		Contact existingContact = _persistence.findByPrimaryKey(newContact.getPrimaryKey());
 
-		assertEquals(existingContact, newContact);
+		Assert.assertEquals(existingContact, newContact);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchContactException");
+			Assert.fail("Missing entity did not throw NoSuchContactException");
 		}
 		catch (NoSuchContactException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		Contact newContact = addContact();
 
 		Contact existingContact = _persistence.fetchByPrimaryKey(newContact.getPrimaryKey());
 
-		assertEquals(existingContact, newContact);
+		Assert.assertEquals(existingContact, newContact);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Contact missingContact = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingContact);
+		Assert.assertNull(missingContact);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		Contact newContact = addContact();
@@ -215,24 +253,27 @@ public class ContactPersistenceTest extends BasePersistenceTestCase {
 
 		List<Contact> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Contact existingContact = result.get(0);
 
-		assertEquals(existingContact, newContact);
+		Assert.assertEquals(existingContact, newContact);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Contact.class,
 				Contact.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("contactId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("contactId",
+				ServiceTestUtil.nextLong()));
 
 		List<Contact> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		Contact newContact = addContact();
@@ -249,13 +290,14 @@ public class ContactPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingContactId = result.get(0);
 
-		assertEquals(existingContactId, newContactId);
+		Assert.assertEquals(existingContactId, newContactId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Contact.class,
 				Contact.class.getClassLoader());
@@ -263,75 +305,75 @@ public class ContactPersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("contactId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("contactId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
 	protected Contact addContact() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Contact contact = _persistence.create(pk);
 
-		contact.setCompanyId(nextLong());
+		contact.setCompanyId(ServiceTestUtil.nextLong());
 
-		contact.setUserId(nextLong());
+		contact.setUserId(ServiceTestUtil.nextLong());
 
-		contact.setUserName(randomString());
+		contact.setUserName(ServiceTestUtil.randomString());
 
-		contact.setCreateDate(nextDate());
+		contact.setCreateDate(ServiceTestUtil.nextDate());
 
-		contact.setModifiedDate(nextDate());
+		contact.setModifiedDate(ServiceTestUtil.nextDate());
 
-		contact.setAccountId(nextLong());
+		contact.setAccountId(ServiceTestUtil.nextLong());
 
-		contact.setParentContactId(nextLong());
+		contact.setParentContactId(ServiceTestUtil.nextLong());
 
-		contact.setFirstName(randomString());
+		contact.setFirstName(ServiceTestUtil.randomString());
 
-		contact.setMiddleName(randomString());
+		contact.setMiddleName(ServiceTestUtil.randomString());
 
-		contact.setLastName(randomString());
+		contact.setLastName(ServiceTestUtil.randomString());
 
-		contact.setPrefixId(nextInt());
+		contact.setPrefixId(ServiceTestUtil.nextInt());
 
-		contact.setSuffixId(nextInt());
+		contact.setSuffixId(ServiceTestUtil.nextInt());
 
-		contact.setMale(randomBoolean());
+		contact.setMale(ServiceTestUtil.randomBoolean());
 
-		contact.setBirthday(nextDate());
+		contact.setBirthday(ServiceTestUtil.nextDate());
 
-		contact.setSmsSn(randomString());
+		contact.setSmsSn(ServiceTestUtil.randomString());
 
-		contact.setAimSn(randomString());
+		contact.setAimSn(ServiceTestUtil.randomString());
 
-		contact.setFacebookSn(randomString());
+		contact.setFacebookSn(ServiceTestUtil.randomString());
 
-		contact.setIcqSn(randomString());
+		contact.setIcqSn(ServiceTestUtil.randomString());
 
-		contact.setJabberSn(randomString());
+		contact.setJabberSn(ServiceTestUtil.randomString());
 
-		contact.setMsnSn(randomString());
+		contact.setMsnSn(ServiceTestUtil.randomString());
 
-		contact.setMySpaceSn(randomString());
+		contact.setMySpaceSn(ServiceTestUtil.randomString());
 
-		contact.setSkypeSn(randomString());
+		contact.setSkypeSn(ServiceTestUtil.randomString());
 
-		contact.setTwitterSn(randomString());
+		contact.setTwitterSn(ServiceTestUtil.randomString());
 
-		contact.setYmSn(randomString());
+		contact.setYmSn(ServiceTestUtil.randomString());
 
-		contact.setEmployeeStatusId(randomString());
+		contact.setEmployeeStatusId(ServiceTestUtil.randomString());
 
-		contact.setEmployeeNumber(randomString());
+		contact.setEmployeeNumber(ServiceTestUtil.randomString());
 
-		contact.setJobTitle(randomString());
+		contact.setJobTitle(ServiceTestUtil.randomString());
 
-		contact.setJobClass(randomString());
+		contact.setJobClass(ServiceTestUtil.randomString());
 
-		contact.setHoursOfOperation(randomString());
+		contact.setHoursOfOperation(ServiceTestUtil.randomString());
 
 		_persistence.update(contact, false);
 

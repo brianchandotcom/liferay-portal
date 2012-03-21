@@ -20,15 +20,24 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
-import com.liferay.portal.kernel.test.TestCase;
+import com.liferay.portal.test.EnvironmentConfigTestListener;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 
 import org.apache.chemistry.opencmis.commons.enums.CapabilityQuery;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Mika Koivisto
  */
-public class CMISQueryBuilderTest extends TestCase {
+@ExecutionTestListeners(listeners = {EnvironmentConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class CMISQueryBuilderTest {
 
+	@Test
 	public void testBooleanQuery() throws Exception {
 		SearchContext searchContext = getSearchContext();
 
@@ -47,6 +56,7 @@ public class CMISQueryBuilderTest extends TestCase {
 			cmisQuery);
 	}
 
+	@Test
 	public void testContainsCombinedSupportedQuery() throws Exception {
 		SearchContext searchContext = getSearchContext();
 
@@ -69,6 +79,7 @@ public class CMISQueryBuilderTest extends TestCase {
 			cmisQuery);
 	}
 
+	@Test
 	public void testContainsOnlySupportedQuery() throws Exception {
 		SearchContext searchContext = getSearchContext();
 
@@ -88,6 +99,7 @@ public class CMISQueryBuilderTest extends TestCase {
 		assertQueryEquals("(CONTAINS('test'))", cmisQuery);
 	}
 
+	@Test
 	public void testExactFilenameQuery() throws Exception {
 		SearchContext searchContext = getSearchContext();
 
@@ -104,6 +116,7 @@ public class CMISQueryBuilderTest extends TestCase {
 			cmisQuery);
 	}
 
+	@Test
 	public void testFuzzyQuery() throws Exception {
 		SearchContext searchContext = getSearchContext();
 
@@ -120,6 +133,7 @@ public class CMISQueryBuilderTest extends TestCase {
 			cmisQuery);
 	}
 
+	@Test
 	public void testPhraseQuery() throws Exception {
 		SearchContext searchContext = getSearchContext();
 
@@ -136,6 +150,7 @@ public class CMISQueryBuilderTest extends TestCase {
 			"(cmis:createdBy = 'My test document.jpg')", cmisQuery);
 	}
 
+	@Test
 	public void testPrefixQuery() throws Exception {
 		SearchContext searchContext = getSearchContext();
 
@@ -152,6 +167,7 @@ public class CMISQueryBuilderTest extends TestCase {
 			cmisQuery);
 	}
 
+	@Test
 	public void testProximityQuery() throws Exception {
 		SearchContext searchContext = getSearchContext();
 
@@ -168,6 +184,7 @@ public class CMISQueryBuilderTest extends TestCase {
 			"(cmis:createdBy = 'test document')", cmisQuery);
 	}
 
+	@Test
 	public void testRangeQuery() throws Exception {
 		SearchContext searchContext = getSearchContext();
 
@@ -185,6 +202,7 @@ public class CMISQueryBuilderTest extends TestCase {
 			"cmis:creationDate <= 2009-11-10T23:59:59.000Z)", cmisQuery);
 	}
 
+	@Test
 	public void testWildcardFieldQuery() throws Exception {
 		SearchContext searchContext = getSearchContext();
 
@@ -201,6 +219,7 @@ public class CMISQueryBuilderTest extends TestCase {
 			cmisQuery);
 	}
 
+	@Test
 	public void testWildcardQuery() throws Exception {
 		SearchContext searchContext = getSearchContext();
 
@@ -218,7 +237,7 @@ public class CMISQueryBuilderTest extends TestCase {
 	}
 
 	protected void assertQueryEquals(String where, String query) {
-		assertEquals(_QUERY_PREFIX +  where + _QUERY_POSTFIX, query);
+		Assert.assertEquals(_QUERY_PREFIX + where + _QUERY_POSTFIX, query);
 	}
 
 	protected SearchContext getSearchContext() {

@@ -21,36 +21,48 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.asset.NoSuchVocabularyException;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.model.impl.AssetVocabularyModelImpl;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class AssetVocabularyPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class AssetVocabularyPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (AssetVocabularyPersistence)PortalBeanLocatorUtil.locate(AssetVocabularyPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		AssetVocabulary assetVocabulary = _persistence.create(pk);
 
-		assertNotNull(assetVocabulary);
+		Assert.assertNotNull(assetVocabulary);
 
-		assertEquals(assetVocabulary.getPrimaryKey(), pk);
+		Assert.assertEquals(assetVocabulary.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		AssetVocabulary newAssetVocabulary = addAssetVocabulary();
 
@@ -58,108 +70,116 @@ public class AssetVocabularyPersistenceTest extends BasePersistenceTestCase {
 
 		AssetVocabulary existingAssetVocabulary = _persistence.fetchByPrimaryKey(newAssetVocabulary.getPrimaryKey());
 
-		assertNull(existingAssetVocabulary);
+		Assert.assertNull(existingAssetVocabulary);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addAssetVocabulary();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		AssetVocabulary newAssetVocabulary = _persistence.create(pk);
 
-		newAssetVocabulary.setUuid(randomString());
+		newAssetVocabulary.setUuid(ServiceTestUtil.randomString());
 
-		newAssetVocabulary.setGroupId(nextLong());
+		newAssetVocabulary.setGroupId(ServiceTestUtil.nextLong());
 
-		newAssetVocabulary.setCompanyId(nextLong());
+		newAssetVocabulary.setCompanyId(ServiceTestUtil.nextLong());
 
-		newAssetVocabulary.setUserId(nextLong());
+		newAssetVocabulary.setUserId(ServiceTestUtil.nextLong());
 
-		newAssetVocabulary.setUserName(randomString());
+		newAssetVocabulary.setUserName(ServiceTestUtil.randomString());
 
-		newAssetVocabulary.setCreateDate(nextDate());
+		newAssetVocabulary.setCreateDate(ServiceTestUtil.nextDate());
 
-		newAssetVocabulary.setModifiedDate(nextDate());
+		newAssetVocabulary.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newAssetVocabulary.setName(randomString());
+		newAssetVocabulary.setName(ServiceTestUtil.randomString());
 
-		newAssetVocabulary.setTitle(randomString());
+		newAssetVocabulary.setTitle(ServiceTestUtil.randomString());
 
-		newAssetVocabulary.setDescription(randomString());
+		newAssetVocabulary.setDescription(ServiceTestUtil.randomString());
 
-		newAssetVocabulary.setSettings(randomString());
+		newAssetVocabulary.setSettings(ServiceTestUtil.randomString());
 
 		_persistence.update(newAssetVocabulary, false);
 
 		AssetVocabulary existingAssetVocabulary = _persistence.findByPrimaryKey(newAssetVocabulary.getPrimaryKey());
 
-		assertEquals(existingAssetVocabulary.getUuid(),
+		Assert.assertEquals(existingAssetVocabulary.getUuid(),
 			newAssetVocabulary.getUuid());
-		assertEquals(existingAssetVocabulary.getVocabularyId(),
+		Assert.assertEquals(existingAssetVocabulary.getVocabularyId(),
 			newAssetVocabulary.getVocabularyId());
-		assertEquals(existingAssetVocabulary.getGroupId(),
+		Assert.assertEquals(existingAssetVocabulary.getGroupId(),
 			newAssetVocabulary.getGroupId());
-		assertEquals(existingAssetVocabulary.getCompanyId(),
+		Assert.assertEquals(existingAssetVocabulary.getCompanyId(),
 			newAssetVocabulary.getCompanyId());
-		assertEquals(existingAssetVocabulary.getUserId(),
+		Assert.assertEquals(existingAssetVocabulary.getUserId(),
 			newAssetVocabulary.getUserId());
-		assertEquals(existingAssetVocabulary.getUserName(),
+		Assert.assertEquals(existingAssetVocabulary.getUserName(),
 			newAssetVocabulary.getUserName());
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingAssetVocabulary.getCreateDate()),
 			Time.getShortTimestamp(newAssetVocabulary.getCreateDate()));
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingAssetVocabulary.getModifiedDate()),
 			Time.getShortTimestamp(newAssetVocabulary.getModifiedDate()));
-		assertEquals(existingAssetVocabulary.getName(),
+		Assert.assertEquals(existingAssetVocabulary.getName(),
 			newAssetVocabulary.getName());
-		assertEquals(existingAssetVocabulary.getTitle(),
+		Assert.assertEquals(existingAssetVocabulary.getTitle(),
 			newAssetVocabulary.getTitle());
-		assertEquals(existingAssetVocabulary.getDescription(),
+		Assert.assertEquals(existingAssetVocabulary.getDescription(),
 			newAssetVocabulary.getDescription());
-		assertEquals(existingAssetVocabulary.getSettings(),
+		Assert.assertEquals(existingAssetVocabulary.getSettings(),
 			newAssetVocabulary.getSettings());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		AssetVocabulary newAssetVocabulary = addAssetVocabulary();
 
 		AssetVocabulary existingAssetVocabulary = _persistence.findByPrimaryKey(newAssetVocabulary.getPrimaryKey());
 
-		assertEquals(existingAssetVocabulary, newAssetVocabulary);
+		Assert.assertEquals(existingAssetVocabulary, newAssetVocabulary);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchVocabularyException");
+			Assert.fail(
+				"Missing entity did not throw NoSuchVocabularyException");
 		}
 		catch (NoSuchVocabularyException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		AssetVocabulary newAssetVocabulary = addAssetVocabulary();
 
 		AssetVocabulary existingAssetVocabulary = _persistence.fetchByPrimaryKey(newAssetVocabulary.getPrimaryKey());
 
-		assertEquals(existingAssetVocabulary, newAssetVocabulary);
+		Assert.assertEquals(existingAssetVocabulary, newAssetVocabulary);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		AssetVocabulary missingAssetVocabulary = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingAssetVocabulary);
+		Assert.assertNull(missingAssetVocabulary);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		AssetVocabulary newAssetVocabulary = addAssetVocabulary();
@@ -172,24 +192,27 @@ public class AssetVocabularyPersistenceTest extends BasePersistenceTestCase {
 
 		List<AssetVocabulary> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		AssetVocabulary existingAssetVocabulary = result.get(0);
 
-		assertEquals(existingAssetVocabulary, newAssetVocabulary);
+		Assert.assertEquals(existingAssetVocabulary, newAssetVocabulary);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AssetVocabulary.class,
 				AssetVocabulary.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("vocabularyId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("vocabularyId",
+				ServiceTestUtil.nextLong()));
 
 		List<AssetVocabulary> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		AssetVocabulary newAssetVocabulary = addAssetVocabulary();
@@ -207,13 +230,14 @@ public class AssetVocabularyPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingVocabularyId = result.get(0);
 
-		assertEquals(existingVocabularyId, newVocabularyId);
+		Assert.assertEquals(existingVocabularyId, newVocabularyId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AssetVocabulary.class,
 				AssetVocabulary.class.getClassLoader());
@@ -222,13 +246,14 @@ public class AssetVocabularyPersistenceTest extends BasePersistenceTestCase {
 				"vocabularyId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("vocabularyId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -240,45 +265,45 @@ public class AssetVocabularyPersistenceTest extends BasePersistenceTestCase {
 
 		AssetVocabularyModelImpl existingAssetVocabularyModelImpl = (AssetVocabularyModelImpl)_persistence.findByPrimaryKey(newAssetVocabulary.getPrimaryKey());
 
-		assertTrue(Validator.equals(
+		Assert.assertTrue(Validator.equals(
 				existingAssetVocabularyModelImpl.getUuid(),
 				existingAssetVocabularyModelImpl.getOriginalUuid()));
-		assertEquals(existingAssetVocabularyModelImpl.getGroupId(),
+		Assert.assertEquals(existingAssetVocabularyModelImpl.getGroupId(),
 			existingAssetVocabularyModelImpl.getOriginalGroupId());
 
-		assertEquals(existingAssetVocabularyModelImpl.getGroupId(),
+		Assert.assertEquals(existingAssetVocabularyModelImpl.getGroupId(),
 			existingAssetVocabularyModelImpl.getOriginalGroupId());
-		assertTrue(Validator.equals(
+		Assert.assertTrue(Validator.equals(
 				existingAssetVocabularyModelImpl.getName(),
 				existingAssetVocabularyModelImpl.getOriginalName()));
 	}
 
 	protected AssetVocabulary addAssetVocabulary() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		AssetVocabulary assetVocabulary = _persistence.create(pk);
 
-		assetVocabulary.setUuid(randomString());
+		assetVocabulary.setUuid(ServiceTestUtil.randomString());
 
-		assetVocabulary.setGroupId(nextLong());
+		assetVocabulary.setGroupId(ServiceTestUtil.nextLong());
 
-		assetVocabulary.setCompanyId(nextLong());
+		assetVocabulary.setCompanyId(ServiceTestUtil.nextLong());
 
-		assetVocabulary.setUserId(nextLong());
+		assetVocabulary.setUserId(ServiceTestUtil.nextLong());
 
-		assetVocabulary.setUserName(randomString());
+		assetVocabulary.setUserName(ServiceTestUtil.randomString());
 
-		assetVocabulary.setCreateDate(nextDate());
+		assetVocabulary.setCreateDate(ServiceTestUtil.nextDate());
 
-		assetVocabulary.setModifiedDate(nextDate());
+		assetVocabulary.setModifiedDate(ServiceTestUtil.nextDate());
 
-		assetVocabulary.setName(randomString());
+		assetVocabulary.setName(ServiceTestUtil.randomString());
 
-		assetVocabulary.setTitle(randomString());
+		assetVocabulary.setTitle(ServiceTestUtil.randomString());
 
-		assetVocabulary.setDescription(randomString());
+		assetVocabulary.setDescription(ServiceTestUtil.randomString());
 
-		assetVocabulary.setSettings(randomString());
+		assetVocabulary.setSettings(ServiceTestUtil.randomString());
 
 		_persistence.update(assetVocabulary, false);
 

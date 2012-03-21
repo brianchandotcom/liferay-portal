@@ -20,36 +20,48 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.social.NoSuchActivityLimitException;
 import com.liferay.portlet.social.model.SocialActivityLimit;
 import com.liferay.portlet.social.model.impl.SocialActivityLimitModelImpl;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class SocialActivityLimitPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class SocialActivityLimitPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (SocialActivityLimitPersistence)PortalBeanLocatorUtil.locate(SocialActivityLimitPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		SocialActivityLimit socialActivityLimit = _persistence.create(pk);
 
-		assertNotNull(socialActivityLimit);
+		Assert.assertNotNull(socialActivityLimit);
 
-		assertEquals(socialActivityLimit.getPrimaryKey(), pk);
+		Assert.assertEquals(socialActivityLimit.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		SocialActivityLimit newSocialActivityLimit = addSocialActivityLimit();
 
@@ -57,94 +69,102 @@ public class SocialActivityLimitPersistenceTest extends BasePersistenceTestCase 
 
 		SocialActivityLimit existingSocialActivityLimit = _persistence.fetchByPrimaryKey(newSocialActivityLimit.getPrimaryKey());
 
-		assertNull(existingSocialActivityLimit);
+		Assert.assertNull(existingSocialActivityLimit);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addSocialActivityLimit();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		SocialActivityLimit newSocialActivityLimit = _persistence.create(pk);
 
-		newSocialActivityLimit.setGroupId(nextLong());
+		newSocialActivityLimit.setGroupId(ServiceTestUtil.nextLong());
 
-		newSocialActivityLimit.setCompanyId(nextLong());
+		newSocialActivityLimit.setCompanyId(ServiceTestUtil.nextLong());
 
-		newSocialActivityLimit.setUserId(nextLong());
+		newSocialActivityLimit.setUserId(ServiceTestUtil.nextLong());
 
-		newSocialActivityLimit.setClassNameId(nextLong());
+		newSocialActivityLimit.setClassNameId(ServiceTestUtil.nextLong());
 
-		newSocialActivityLimit.setClassPK(nextLong());
+		newSocialActivityLimit.setClassPK(ServiceTestUtil.nextLong());
 
-		newSocialActivityLimit.setActivityType(nextInt());
+		newSocialActivityLimit.setActivityType(ServiceTestUtil.nextInt());
 
-		newSocialActivityLimit.setActivityCounterName(randomString());
+		newSocialActivityLimit.setActivityCounterName(ServiceTestUtil.randomString());
 
-		newSocialActivityLimit.setValue(randomString());
+		newSocialActivityLimit.setValue(ServiceTestUtil.randomString());
 
 		_persistence.update(newSocialActivityLimit, false);
 
 		SocialActivityLimit existingSocialActivityLimit = _persistence.findByPrimaryKey(newSocialActivityLimit.getPrimaryKey());
 
-		assertEquals(existingSocialActivityLimit.getActivityLimitId(),
+		Assert.assertEquals(existingSocialActivityLimit.getActivityLimitId(),
 			newSocialActivityLimit.getActivityLimitId());
-		assertEquals(existingSocialActivityLimit.getGroupId(),
+		Assert.assertEquals(existingSocialActivityLimit.getGroupId(),
 			newSocialActivityLimit.getGroupId());
-		assertEquals(existingSocialActivityLimit.getCompanyId(),
+		Assert.assertEquals(existingSocialActivityLimit.getCompanyId(),
 			newSocialActivityLimit.getCompanyId());
-		assertEquals(existingSocialActivityLimit.getUserId(),
+		Assert.assertEquals(existingSocialActivityLimit.getUserId(),
 			newSocialActivityLimit.getUserId());
-		assertEquals(existingSocialActivityLimit.getClassNameId(),
+		Assert.assertEquals(existingSocialActivityLimit.getClassNameId(),
 			newSocialActivityLimit.getClassNameId());
-		assertEquals(existingSocialActivityLimit.getClassPK(),
+		Assert.assertEquals(existingSocialActivityLimit.getClassPK(),
 			newSocialActivityLimit.getClassPK());
-		assertEquals(existingSocialActivityLimit.getActivityType(),
+		Assert.assertEquals(existingSocialActivityLimit.getActivityType(),
 			newSocialActivityLimit.getActivityType());
-		assertEquals(existingSocialActivityLimit.getActivityCounterName(),
+		Assert.assertEquals(existingSocialActivityLimit.getActivityCounterName(),
 			newSocialActivityLimit.getActivityCounterName());
-		assertEquals(existingSocialActivityLimit.getValue(),
+		Assert.assertEquals(existingSocialActivityLimit.getValue(),
 			newSocialActivityLimit.getValue());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		SocialActivityLimit newSocialActivityLimit = addSocialActivityLimit();
 
 		SocialActivityLimit existingSocialActivityLimit = _persistence.findByPrimaryKey(newSocialActivityLimit.getPrimaryKey());
 
-		assertEquals(existingSocialActivityLimit, newSocialActivityLimit);
+		Assert.assertEquals(existingSocialActivityLimit, newSocialActivityLimit);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchActivityLimitException");
+			Assert.fail(
+				"Missing entity did not throw NoSuchActivityLimitException");
 		}
 		catch (NoSuchActivityLimitException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		SocialActivityLimit newSocialActivityLimit = addSocialActivityLimit();
 
 		SocialActivityLimit existingSocialActivityLimit = _persistence.fetchByPrimaryKey(newSocialActivityLimit.getPrimaryKey());
 
-		assertEquals(existingSocialActivityLimit, newSocialActivityLimit);
+		Assert.assertEquals(existingSocialActivityLimit, newSocialActivityLimit);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		SocialActivityLimit missingSocialActivityLimit = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingSocialActivityLimit);
+		Assert.assertNull(missingSocialActivityLimit);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		SocialActivityLimit newSocialActivityLimit = addSocialActivityLimit();
@@ -157,25 +177,27 @@ public class SocialActivityLimitPersistenceTest extends BasePersistenceTestCase 
 
 		List<SocialActivityLimit> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		SocialActivityLimit existingSocialActivityLimit = result.get(0);
 
-		assertEquals(existingSocialActivityLimit, newSocialActivityLimit);
+		Assert.assertEquals(existingSocialActivityLimit, newSocialActivityLimit);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SocialActivityLimit.class,
 				SocialActivityLimit.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("activityLimitId",
-				nextLong()));
+				ServiceTestUtil.nextLong()));
 
 		List<SocialActivityLimit> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		SocialActivityLimit newSocialActivityLimit = addSocialActivityLimit();
@@ -193,13 +215,14 @@ public class SocialActivityLimitPersistenceTest extends BasePersistenceTestCase 
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingActivityLimitId = result.get(0);
 
-		assertEquals(existingActivityLimitId, newActivityLimitId);
+		Assert.assertEquals(existingActivityLimitId, newActivityLimitId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SocialActivityLimit.class,
 				SocialActivityLimit.class.getClassLoader());
@@ -208,13 +231,14 @@ public class SocialActivityLimitPersistenceTest extends BasePersistenceTestCase 
 				"activityLimitId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("activityLimitId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -226,42 +250,42 @@ public class SocialActivityLimitPersistenceTest extends BasePersistenceTestCase 
 
 		SocialActivityLimitModelImpl existingSocialActivityLimitModelImpl = (SocialActivityLimitModelImpl)_persistence.findByPrimaryKey(newSocialActivityLimit.getPrimaryKey());
 
-		assertEquals(existingSocialActivityLimitModelImpl.getGroupId(),
+		Assert.assertEquals(existingSocialActivityLimitModelImpl.getGroupId(),
 			existingSocialActivityLimitModelImpl.getOriginalGroupId());
-		assertEquals(existingSocialActivityLimitModelImpl.getUserId(),
+		Assert.assertEquals(existingSocialActivityLimitModelImpl.getUserId(),
 			existingSocialActivityLimitModelImpl.getOriginalUserId());
-		assertEquals(existingSocialActivityLimitModelImpl.getClassNameId(),
+		Assert.assertEquals(existingSocialActivityLimitModelImpl.getClassNameId(),
 			existingSocialActivityLimitModelImpl.getOriginalClassNameId());
-		assertEquals(existingSocialActivityLimitModelImpl.getClassPK(),
+		Assert.assertEquals(existingSocialActivityLimitModelImpl.getClassPK(),
 			existingSocialActivityLimitModelImpl.getOriginalClassPK());
-		assertEquals(existingSocialActivityLimitModelImpl.getActivityType(),
+		Assert.assertEquals(existingSocialActivityLimitModelImpl.getActivityType(),
 			existingSocialActivityLimitModelImpl.getOriginalActivityType());
-		assertTrue(Validator.equals(
+		Assert.assertTrue(Validator.equals(
 				existingSocialActivityLimitModelImpl.getActivityCounterName(),
 				existingSocialActivityLimitModelImpl.getOriginalActivityCounterName()));
 	}
 
 	protected SocialActivityLimit addSocialActivityLimit()
 		throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		SocialActivityLimit socialActivityLimit = _persistence.create(pk);
 
-		socialActivityLimit.setGroupId(nextLong());
+		socialActivityLimit.setGroupId(ServiceTestUtil.nextLong());
 
-		socialActivityLimit.setCompanyId(nextLong());
+		socialActivityLimit.setCompanyId(ServiceTestUtil.nextLong());
 
-		socialActivityLimit.setUserId(nextLong());
+		socialActivityLimit.setUserId(ServiceTestUtil.nextLong());
 
-		socialActivityLimit.setClassNameId(nextLong());
+		socialActivityLimit.setClassNameId(ServiceTestUtil.nextLong());
 
-		socialActivityLimit.setClassPK(nextLong());
+		socialActivityLimit.setClassPK(ServiceTestUtil.nextLong());
 
-		socialActivityLimit.setActivityType(nextInt());
+		socialActivityLimit.setActivityType(ServiceTestUtil.nextInt());
 
-		socialActivityLimit.setActivityCounterName(randomString());
+		socialActivityLimit.setActivityCounterName(ServiceTestUtil.randomString());
 
-		socialActivityLimit.setValue(randomString());
+		socialActivityLimit.setValue(ServiceTestUtil.randomString());
 
 		_persistence.update(socialActivityLimit, false);
 

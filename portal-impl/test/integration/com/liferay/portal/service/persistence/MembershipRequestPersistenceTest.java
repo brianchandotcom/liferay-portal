@@ -22,31 +22,43 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.MembershipRequest;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class MembershipRequestPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class MembershipRequestPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (MembershipRequestPersistence)PortalBeanLocatorUtil.locate(MembershipRequestPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		MembershipRequest membershipRequest = _persistence.create(pk);
 
-		assertNotNull(membershipRequest);
+		Assert.assertNotNull(membershipRequest);
 
-		assertEquals(membershipRequest.getPrimaryKey(), pk);
+		Assert.assertEquals(membershipRequest.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		MembershipRequest newMembershipRequest = addMembershipRequest();
 
@@ -54,101 +66,108 @@ public class MembershipRequestPersistenceTest extends BasePersistenceTestCase {
 
 		MembershipRequest existingMembershipRequest = _persistence.fetchByPrimaryKey(newMembershipRequest.getPrimaryKey());
 
-		assertNull(existingMembershipRequest);
+		Assert.assertNull(existingMembershipRequest);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addMembershipRequest();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		MembershipRequest newMembershipRequest = _persistence.create(pk);
 
-		newMembershipRequest.setGroupId(nextLong());
+		newMembershipRequest.setGroupId(ServiceTestUtil.nextLong());
 
-		newMembershipRequest.setCompanyId(nextLong());
+		newMembershipRequest.setCompanyId(ServiceTestUtil.nextLong());
 
-		newMembershipRequest.setUserId(nextLong());
+		newMembershipRequest.setUserId(ServiceTestUtil.nextLong());
 
-		newMembershipRequest.setCreateDate(nextDate());
+		newMembershipRequest.setCreateDate(ServiceTestUtil.nextDate());
 
-		newMembershipRequest.setComments(randomString());
+		newMembershipRequest.setComments(ServiceTestUtil.randomString());
 
-		newMembershipRequest.setReplyComments(randomString());
+		newMembershipRequest.setReplyComments(ServiceTestUtil.randomString());
 
-		newMembershipRequest.setReplyDate(nextDate());
+		newMembershipRequest.setReplyDate(ServiceTestUtil.nextDate());
 
-		newMembershipRequest.setReplierUserId(nextLong());
+		newMembershipRequest.setReplierUserId(ServiceTestUtil.nextLong());
 
-		newMembershipRequest.setStatusId(nextInt());
+		newMembershipRequest.setStatusId(ServiceTestUtil.nextInt());
 
 		_persistence.update(newMembershipRequest, false);
 
 		MembershipRequest existingMembershipRequest = _persistence.findByPrimaryKey(newMembershipRequest.getPrimaryKey());
 
-		assertEquals(existingMembershipRequest.getMembershipRequestId(),
+		Assert.assertEquals(existingMembershipRequest.getMembershipRequestId(),
 			newMembershipRequest.getMembershipRequestId());
-		assertEquals(existingMembershipRequest.getGroupId(),
+		Assert.assertEquals(existingMembershipRequest.getGroupId(),
 			newMembershipRequest.getGroupId());
-		assertEquals(existingMembershipRequest.getCompanyId(),
+		Assert.assertEquals(existingMembershipRequest.getCompanyId(),
 			newMembershipRequest.getCompanyId());
-		assertEquals(existingMembershipRequest.getUserId(),
+		Assert.assertEquals(existingMembershipRequest.getUserId(),
 			newMembershipRequest.getUserId());
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingMembershipRequest.getCreateDate()),
 			Time.getShortTimestamp(newMembershipRequest.getCreateDate()));
-		assertEquals(existingMembershipRequest.getComments(),
+		Assert.assertEquals(existingMembershipRequest.getComments(),
 			newMembershipRequest.getComments());
-		assertEquals(existingMembershipRequest.getReplyComments(),
+		Assert.assertEquals(existingMembershipRequest.getReplyComments(),
 			newMembershipRequest.getReplyComments());
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingMembershipRequest.getReplyDate()),
 			Time.getShortTimestamp(newMembershipRequest.getReplyDate()));
-		assertEquals(existingMembershipRequest.getReplierUserId(),
+		Assert.assertEquals(existingMembershipRequest.getReplierUserId(),
 			newMembershipRequest.getReplierUserId());
-		assertEquals(existingMembershipRequest.getStatusId(),
+		Assert.assertEquals(existingMembershipRequest.getStatusId(),
 			newMembershipRequest.getStatusId());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		MembershipRequest newMembershipRequest = addMembershipRequest();
 
 		MembershipRequest existingMembershipRequest = _persistence.findByPrimaryKey(newMembershipRequest.getPrimaryKey());
 
-		assertEquals(existingMembershipRequest, newMembershipRequest);
+		Assert.assertEquals(existingMembershipRequest, newMembershipRequest);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail(
+			Assert.fail(
 				"Missing entity did not throw NoSuchMembershipRequestException");
 		}
 		catch (NoSuchMembershipRequestException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		MembershipRequest newMembershipRequest = addMembershipRequest();
 
 		MembershipRequest existingMembershipRequest = _persistence.fetchByPrimaryKey(newMembershipRequest.getPrimaryKey());
 
-		assertEquals(existingMembershipRequest, newMembershipRequest);
+		Assert.assertEquals(existingMembershipRequest, newMembershipRequest);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		MembershipRequest missingMembershipRequest = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingMembershipRequest);
+		Assert.assertNull(missingMembershipRequest);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		MembershipRequest newMembershipRequest = addMembershipRequest();
@@ -161,25 +180,27 @@ public class MembershipRequestPersistenceTest extends BasePersistenceTestCase {
 
 		List<MembershipRequest> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		MembershipRequest existingMembershipRequest = result.get(0);
 
-		assertEquals(existingMembershipRequest, newMembershipRequest);
+		Assert.assertEquals(existingMembershipRequest, newMembershipRequest);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MembershipRequest.class,
 				MembershipRequest.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("membershipRequestId",
-				nextLong()));
+				ServiceTestUtil.nextLong()));
 
 		List<MembershipRequest> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		MembershipRequest newMembershipRequest = addMembershipRequest();
@@ -197,13 +218,14 @@ public class MembershipRequestPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingMembershipRequestId = result.get(0);
 
-		assertEquals(existingMembershipRequestId, newMembershipRequestId);
+		Assert.assertEquals(existingMembershipRequestId, newMembershipRequestId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MembershipRequest.class,
 				MembershipRequest.class.getClassLoader());
@@ -212,36 +234,36 @@ public class MembershipRequestPersistenceTest extends BasePersistenceTestCase {
 				"membershipRequestId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("membershipRequestId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
 	protected MembershipRequest addMembershipRequest()
 		throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		MembershipRequest membershipRequest = _persistence.create(pk);
 
-		membershipRequest.setGroupId(nextLong());
+		membershipRequest.setGroupId(ServiceTestUtil.nextLong());
 
-		membershipRequest.setCompanyId(nextLong());
+		membershipRequest.setCompanyId(ServiceTestUtil.nextLong());
 
-		membershipRequest.setUserId(nextLong());
+		membershipRequest.setUserId(ServiceTestUtil.nextLong());
 
-		membershipRequest.setCreateDate(nextDate());
+		membershipRequest.setCreateDate(ServiceTestUtil.nextDate());
 
-		membershipRequest.setComments(randomString());
+		membershipRequest.setComments(ServiceTestUtil.randomString());
 
-		membershipRequest.setReplyComments(randomString());
+		membershipRequest.setReplyComments(ServiceTestUtil.randomString());
 
-		membershipRequest.setReplyDate(nextDate());
+		membershipRequest.setReplyDate(ServiceTestUtil.nextDate());
 
-		membershipRequest.setReplierUserId(nextLong());
+		membershipRequest.setReplierUserId(ServiceTestUtil.nextLong());
 
-		membershipRequest.setStatusId(nextInt());
+		membershipRequest.setStatusId(ServiceTestUtil.nextInt());
 
 		_persistence.update(membershipRequest, false);
 

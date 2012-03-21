@@ -12,24 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.webdav;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
+package com.liferay.portal.cache.key;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
-public class WebDAVTestSuite extends TestSuite {
+public class JavaMD5CacheKeyGeneratorTest
+	extends BaseCacheKeyGeneratorTestCase {
 
-	public static Test suite() {
-		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTestSuite(WebDAVLitmusBasicTest.class);
-		testSuite.addTestSuite(WebDAVLitmusCopyMoveTest.class);
-		testSuite.addTestSuite(WebDAVOSXTest.class);
-
-		return new WebDAVTestSetup(testSuite);
+	@Override
+	public void setUp() throws Exception {
+		cacheKeyGenerator = new JavaMD5CacheKeyGenerator();
 	}
 
 }

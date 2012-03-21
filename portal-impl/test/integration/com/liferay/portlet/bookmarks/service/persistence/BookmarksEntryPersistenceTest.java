@@ -21,36 +21,48 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.bookmarks.NoSuchEntryException;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.impl.BookmarksEntryModelImpl;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class BookmarksEntryPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class BookmarksEntryPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (BookmarksEntryPersistence)PortalBeanLocatorUtil.locate(BookmarksEntryPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		BookmarksEntry bookmarksEntry = _persistence.create(pk);
 
-		assertNotNull(bookmarksEntry);
+		Assert.assertNotNull(bookmarksEntry);
 
-		assertEquals(bookmarksEntry.getPrimaryKey(), pk);
+		Assert.assertEquals(bookmarksEntry.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		BookmarksEntry newBookmarksEntry = addBookmarksEntry();
 
@@ -58,119 +70,127 @@ public class BookmarksEntryPersistenceTest extends BasePersistenceTestCase {
 
 		BookmarksEntry existingBookmarksEntry = _persistence.fetchByPrimaryKey(newBookmarksEntry.getPrimaryKey());
 
-		assertNull(existingBookmarksEntry);
+		Assert.assertNull(existingBookmarksEntry);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addBookmarksEntry();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		BookmarksEntry newBookmarksEntry = _persistence.create(pk);
 
-		newBookmarksEntry.setUuid(randomString());
+		newBookmarksEntry.setUuid(ServiceTestUtil.randomString());
 
-		newBookmarksEntry.setGroupId(nextLong());
+		newBookmarksEntry.setGroupId(ServiceTestUtil.nextLong());
 
-		newBookmarksEntry.setCompanyId(nextLong());
+		newBookmarksEntry.setCompanyId(ServiceTestUtil.nextLong());
 
-		newBookmarksEntry.setUserId(nextLong());
+		newBookmarksEntry.setUserId(ServiceTestUtil.nextLong());
 
-		newBookmarksEntry.setUserName(randomString());
+		newBookmarksEntry.setUserName(ServiceTestUtil.randomString());
 
-		newBookmarksEntry.setCreateDate(nextDate());
+		newBookmarksEntry.setCreateDate(ServiceTestUtil.nextDate());
 
-		newBookmarksEntry.setModifiedDate(nextDate());
+		newBookmarksEntry.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newBookmarksEntry.setResourceBlockId(nextLong());
+		newBookmarksEntry.setResourceBlockId(ServiceTestUtil.nextLong());
 
-		newBookmarksEntry.setFolderId(nextLong());
+		newBookmarksEntry.setFolderId(ServiceTestUtil.nextLong());
 
-		newBookmarksEntry.setName(randomString());
+		newBookmarksEntry.setName(ServiceTestUtil.randomString());
 
-		newBookmarksEntry.setUrl(randomString());
+		newBookmarksEntry.setUrl(ServiceTestUtil.randomString());
 
-		newBookmarksEntry.setDescription(randomString());
+		newBookmarksEntry.setDescription(ServiceTestUtil.randomString());
 
-		newBookmarksEntry.setVisits(nextInt());
+		newBookmarksEntry.setVisits(ServiceTestUtil.nextInt());
 
-		newBookmarksEntry.setPriority(nextInt());
+		newBookmarksEntry.setPriority(ServiceTestUtil.nextInt());
 
 		_persistence.update(newBookmarksEntry, false);
 
 		BookmarksEntry existingBookmarksEntry = _persistence.findByPrimaryKey(newBookmarksEntry.getPrimaryKey());
 
-		assertEquals(existingBookmarksEntry.getUuid(),
+		Assert.assertEquals(existingBookmarksEntry.getUuid(),
 			newBookmarksEntry.getUuid());
-		assertEquals(existingBookmarksEntry.getEntryId(),
+		Assert.assertEquals(existingBookmarksEntry.getEntryId(),
 			newBookmarksEntry.getEntryId());
-		assertEquals(existingBookmarksEntry.getGroupId(),
+		Assert.assertEquals(existingBookmarksEntry.getGroupId(),
 			newBookmarksEntry.getGroupId());
-		assertEquals(existingBookmarksEntry.getCompanyId(),
+		Assert.assertEquals(existingBookmarksEntry.getCompanyId(),
 			newBookmarksEntry.getCompanyId());
-		assertEquals(existingBookmarksEntry.getUserId(),
+		Assert.assertEquals(existingBookmarksEntry.getUserId(),
 			newBookmarksEntry.getUserId());
-		assertEquals(existingBookmarksEntry.getUserName(),
+		Assert.assertEquals(existingBookmarksEntry.getUserName(),
 			newBookmarksEntry.getUserName());
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingBookmarksEntry.getCreateDate()),
 			Time.getShortTimestamp(newBookmarksEntry.getCreateDate()));
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingBookmarksEntry.getModifiedDate()),
 			Time.getShortTimestamp(newBookmarksEntry.getModifiedDate()));
-		assertEquals(existingBookmarksEntry.getResourceBlockId(),
+		Assert.assertEquals(existingBookmarksEntry.getResourceBlockId(),
 			newBookmarksEntry.getResourceBlockId());
-		assertEquals(existingBookmarksEntry.getFolderId(),
+		Assert.assertEquals(existingBookmarksEntry.getFolderId(),
 			newBookmarksEntry.getFolderId());
-		assertEquals(existingBookmarksEntry.getName(),
+		Assert.assertEquals(existingBookmarksEntry.getName(),
 			newBookmarksEntry.getName());
-		assertEquals(existingBookmarksEntry.getUrl(), newBookmarksEntry.getUrl());
-		assertEquals(existingBookmarksEntry.getDescription(),
+		Assert.assertEquals(existingBookmarksEntry.getUrl(),
+			newBookmarksEntry.getUrl());
+		Assert.assertEquals(existingBookmarksEntry.getDescription(),
 			newBookmarksEntry.getDescription());
-		assertEquals(existingBookmarksEntry.getVisits(),
+		Assert.assertEquals(existingBookmarksEntry.getVisits(),
 			newBookmarksEntry.getVisits());
-		assertEquals(existingBookmarksEntry.getPriority(),
+		Assert.assertEquals(existingBookmarksEntry.getPriority(),
 			newBookmarksEntry.getPriority());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		BookmarksEntry newBookmarksEntry = addBookmarksEntry();
 
 		BookmarksEntry existingBookmarksEntry = _persistence.findByPrimaryKey(newBookmarksEntry.getPrimaryKey());
 
-		assertEquals(existingBookmarksEntry, newBookmarksEntry);
+		Assert.assertEquals(existingBookmarksEntry, newBookmarksEntry);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchEntryException");
+			Assert.fail("Missing entity did not throw NoSuchEntryException");
 		}
 		catch (NoSuchEntryException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		BookmarksEntry newBookmarksEntry = addBookmarksEntry();
 
 		BookmarksEntry existingBookmarksEntry = _persistence.fetchByPrimaryKey(newBookmarksEntry.getPrimaryKey());
 
-		assertEquals(existingBookmarksEntry, newBookmarksEntry);
+		Assert.assertEquals(existingBookmarksEntry, newBookmarksEntry);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		BookmarksEntry missingBookmarksEntry = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingBookmarksEntry);
+		Assert.assertNull(missingBookmarksEntry);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		BookmarksEntry newBookmarksEntry = addBookmarksEntry();
@@ -183,24 +203,27 @@ public class BookmarksEntryPersistenceTest extends BasePersistenceTestCase {
 
 		List<BookmarksEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		BookmarksEntry existingBookmarksEntry = result.get(0);
 
-		assertEquals(existingBookmarksEntry, newBookmarksEntry);
+		Assert.assertEquals(existingBookmarksEntry, newBookmarksEntry);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BookmarksEntry.class,
 				BookmarksEntry.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("entryId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("entryId",
+				ServiceTestUtil.nextLong()));
 
 		List<BookmarksEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		BookmarksEntry newBookmarksEntry = addBookmarksEntry();
@@ -217,13 +240,14 @@ public class BookmarksEntryPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingEntryId = result.get(0);
 
-		assertEquals(existingEntryId, newEntryId);
+		Assert.assertEquals(existingEntryId, newEntryId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BookmarksEntry.class,
 				BookmarksEntry.class.getClassLoader());
@@ -231,13 +255,14 @@ public class BookmarksEntryPersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("entryId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("entryId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -249,44 +274,45 @@ public class BookmarksEntryPersistenceTest extends BasePersistenceTestCase {
 
 		BookmarksEntryModelImpl existingBookmarksEntryModelImpl = (BookmarksEntryModelImpl)_persistence.findByPrimaryKey(newBookmarksEntry.getPrimaryKey());
 
-		assertTrue(Validator.equals(existingBookmarksEntryModelImpl.getUuid(),
+		Assert.assertTrue(Validator.equals(
+				existingBookmarksEntryModelImpl.getUuid(),
 				existingBookmarksEntryModelImpl.getOriginalUuid()));
-		assertEquals(existingBookmarksEntryModelImpl.getGroupId(),
+		Assert.assertEquals(existingBookmarksEntryModelImpl.getGroupId(),
 			existingBookmarksEntryModelImpl.getOriginalGroupId());
 	}
 
 	protected BookmarksEntry addBookmarksEntry() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		BookmarksEntry bookmarksEntry = _persistence.create(pk);
 
-		bookmarksEntry.setUuid(randomString());
+		bookmarksEntry.setUuid(ServiceTestUtil.randomString());
 
-		bookmarksEntry.setGroupId(nextLong());
+		bookmarksEntry.setGroupId(ServiceTestUtil.nextLong());
 
-		bookmarksEntry.setCompanyId(nextLong());
+		bookmarksEntry.setCompanyId(ServiceTestUtil.nextLong());
 
-		bookmarksEntry.setUserId(nextLong());
+		bookmarksEntry.setUserId(ServiceTestUtil.nextLong());
 
-		bookmarksEntry.setUserName(randomString());
+		bookmarksEntry.setUserName(ServiceTestUtil.randomString());
 
-		bookmarksEntry.setCreateDate(nextDate());
+		bookmarksEntry.setCreateDate(ServiceTestUtil.nextDate());
 
-		bookmarksEntry.setModifiedDate(nextDate());
+		bookmarksEntry.setModifiedDate(ServiceTestUtil.nextDate());
 
-		bookmarksEntry.setResourceBlockId(nextLong());
+		bookmarksEntry.setResourceBlockId(ServiceTestUtil.nextLong());
 
-		bookmarksEntry.setFolderId(nextLong());
+		bookmarksEntry.setFolderId(ServiceTestUtil.nextLong());
 
-		bookmarksEntry.setName(randomString());
+		bookmarksEntry.setName(ServiceTestUtil.randomString());
 
-		bookmarksEntry.setUrl(randomString());
+		bookmarksEntry.setUrl(ServiceTestUtil.randomString());
 
-		bookmarksEntry.setDescription(randomString());
+		bookmarksEntry.setDescription(ServiceTestUtil.randomString());
 
-		bookmarksEntry.setVisits(nextInt());
+		bookmarksEntry.setVisits(ServiceTestUtil.nextInt());
 
-		bookmarksEntry.setPriority(nextInt());
+		bookmarksEntry.setPriority(ServiceTestUtil.nextInt());
 
 		_persistence.update(bookmarksEntry, false);
 

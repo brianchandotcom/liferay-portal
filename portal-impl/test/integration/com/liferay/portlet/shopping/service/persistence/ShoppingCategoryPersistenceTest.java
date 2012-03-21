@@ -20,34 +20,46 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 
 import com.liferay.portlet.shopping.NoSuchCategoryException;
 import com.liferay.portlet.shopping.model.ShoppingCategory;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class ShoppingCategoryPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class ShoppingCategoryPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (ShoppingCategoryPersistence)PortalBeanLocatorUtil.locate(ShoppingCategoryPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ShoppingCategory shoppingCategory = _persistence.create(pk);
 
-		assertNotNull(shoppingCategory);
+		Assert.assertNotNull(shoppingCategory);
 
-		assertEquals(shoppingCategory.getPrimaryKey(), pk);
+		Assert.assertEquals(shoppingCategory.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		ShoppingCategory newShoppingCategory = addShoppingCategory();
 
@@ -55,100 +67,107 @@ public class ShoppingCategoryPersistenceTest extends BasePersistenceTestCase {
 
 		ShoppingCategory existingShoppingCategory = _persistence.fetchByPrimaryKey(newShoppingCategory.getPrimaryKey());
 
-		assertNull(existingShoppingCategory);
+		Assert.assertNull(existingShoppingCategory);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addShoppingCategory();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ShoppingCategory newShoppingCategory = _persistence.create(pk);
 
-		newShoppingCategory.setGroupId(nextLong());
+		newShoppingCategory.setGroupId(ServiceTestUtil.nextLong());
 
-		newShoppingCategory.setCompanyId(nextLong());
+		newShoppingCategory.setCompanyId(ServiceTestUtil.nextLong());
 
-		newShoppingCategory.setUserId(nextLong());
+		newShoppingCategory.setUserId(ServiceTestUtil.nextLong());
 
-		newShoppingCategory.setUserName(randomString());
+		newShoppingCategory.setUserName(ServiceTestUtil.randomString());
 
-		newShoppingCategory.setCreateDate(nextDate());
+		newShoppingCategory.setCreateDate(ServiceTestUtil.nextDate());
 
-		newShoppingCategory.setModifiedDate(nextDate());
+		newShoppingCategory.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newShoppingCategory.setParentCategoryId(nextLong());
+		newShoppingCategory.setParentCategoryId(ServiceTestUtil.nextLong());
 
-		newShoppingCategory.setName(randomString());
+		newShoppingCategory.setName(ServiceTestUtil.randomString());
 
-		newShoppingCategory.setDescription(randomString());
+		newShoppingCategory.setDescription(ServiceTestUtil.randomString());
 
 		_persistence.update(newShoppingCategory, false);
 
 		ShoppingCategory existingShoppingCategory = _persistence.findByPrimaryKey(newShoppingCategory.getPrimaryKey());
 
-		assertEquals(existingShoppingCategory.getCategoryId(),
+		Assert.assertEquals(existingShoppingCategory.getCategoryId(),
 			newShoppingCategory.getCategoryId());
-		assertEquals(existingShoppingCategory.getGroupId(),
+		Assert.assertEquals(existingShoppingCategory.getGroupId(),
 			newShoppingCategory.getGroupId());
-		assertEquals(existingShoppingCategory.getCompanyId(),
+		Assert.assertEquals(existingShoppingCategory.getCompanyId(),
 			newShoppingCategory.getCompanyId());
-		assertEquals(existingShoppingCategory.getUserId(),
+		Assert.assertEquals(existingShoppingCategory.getUserId(),
 			newShoppingCategory.getUserId());
-		assertEquals(existingShoppingCategory.getUserName(),
+		Assert.assertEquals(existingShoppingCategory.getUserName(),
 			newShoppingCategory.getUserName());
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingShoppingCategory.getCreateDate()),
 			Time.getShortTimestamp(newShoppingCategory.getCreateDate()));
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingShoppingCategory.getModifiedDate()),
 			Time.getShortTimestamp(newShoppingCategory.getModifiedDate()));
-		assertEquals(existingShoppingCategory.getParentCategoryId(),
+		Assert.assertEquals(existingShoppingCategory.getParentCategoryId(),
 			newShoppingCategory.getParentCategoryId());
-		assertEquals(existingShoppingCategory.getName(),
+		Assert.assertEquals(existingShoppingCategory.getName(),
 			newShoppingCategory.getName());
-		assertEquals(existingShoppingCategory.getDescription(),
+		Assert.assertEquals(existingShoppingCategory.getDescription(),
 			newShoppingCategory.getDescription());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ShoppingCategory newShoppingCategory = addShoppingCategory();
 
 		ShoppingCategory existingShoppingCategory = _persistence.findByPrimaryKey(newShoppingCategory.getPrimaryKey());
 
-		assertEquals(existingShoppingCategory, newShoppingCategory);
+		Assert.assertEquals(existingShoppingCategory, newShoppingCategory);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchCategoryException");
+			Assert.fail("Missing entity did not throw NoSuchCategoryException");
 		}
 		catch (NoSuchCategoryException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		ShoppingCategory newShoppingCategory = addShoppingCategory();
 
 		ShoppingCategory existingShoppingCategory = _persistence.fetchByPrimaryKey(newShoppingCategory.getPrimaryKey());
 
-		assertEquals(existingShoppingCategory, newShoppingCategory);
+		Assert.assertEquals(existingShoppingCategory, newShoppingCategory);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ShoppingCategory missingShoppingCategory = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingShoppingCategory);
+		Assert.assertNull(missingShoppingCategory);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		ShoppingCategory newShoppingCategory = addShoppingCategory();
@@ -161,24 +180,27 @@ public class ShoppingCategoryPersistenceTest extends BasePersistenceTestCase {
 
 		List<ShoppingCategory> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		ShoppingCategory existingShoppingCategory = result.get(0);
 
-		assertEquals(existingShoppingCategory, newShoppingCategory);
+		Assert.assertEquals(existingShoppingCategory, newShoppingCategory);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ShoppingCategory.class,
 				ShoppingCategory.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("categoryId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("categoryId",
+				ServiceTestUtil.nextLong()));
 
 		List<ShoppingCategory> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		ShoppingCategory newShoppingCategory = addShoppingCategory();
@@ -195,13 +217,14 @@ public class ShoppingCategoryPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingCategoryId = result.get(0);
 
-		assertEquals(existingCategoryId, newCategoryId);
+		Assert.assertEquals(existingCategoryId, newCategoryId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ShoppingCategory.class,
 				ShoppingCategory.class.getClassLoader());
@@ -209,35 +232,35 @@ public class ShoppingCategoryPersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("categoryId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("categoryId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
 	protected ShoppingCategory addShoppingCategory() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ShoppingCategory shoppingCategory = _persistence.create(pk);
 
-		shoppingCategory.setGroupId(nextLong());
+		shoppingCategory.setGroupId(ServiceTestUtil.nextLong());
 
-		shoppingCategory.setCompanyId(nextLong());
+		shoppingCategory.setCompanyId(ServiceTestUtil.nextLong());
 
-		shoppingCategory.setUserId(nextLong());
+		shoppingCategory.setUserId(ServiceTestUtil.nextLong());
 
-		shoppingCategory.setUserName(randomString());
+		shoppingCategory.setUserName(ServiceTestUtil.randomString());
 
-		shoppingCategory.setCreateDate(nextDate());
+		shoppingCategory.setCreateDate(ServiceTestUtil.nextDate());
 
-		shoppingCategory.setModifiedDate(nextDate());
+		shoppingCategory.setModifiedDate(ServiceTestUtil.nextDate());
 
-		shoppingCategory.setParentCategoryId(nextLong());
+		shoppingCategory.setParentCategoryId(ServiceTestUtil.nextLong());
 
-		shoppingCategory.setName(randomString());
+		shoppingCategory.setName(ServiceTestUtil.randomString());
 
-		shoppingCategory.setDescription(randomString());
+		shoppingCategory.setDescription(ServiceTestUtil.randomString());
 
 		_persistence.update(shoppingCategory, false);
 

@@ -23,32 +23,44 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Region;
 import com.liferay.portal.model.impl.RegionModelImpl;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.PersistenceEnvConfigTestListener;
 import com.liferay.portal.util.PropsValues;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class RegionPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceEnvConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class RegionPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (RegionPersistence)PortalBeanLocatorUtil.locate(RegionPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Region region = _persistence.create(pk);
 
-		assertNotNull(region);
+		Assert.assertNotNull(region);
 
-		assertEquals(region.getPrimaryKey(), pk);
+		Assert.assertEquals(region.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		Region newRegion = addRegion();
 
@@ -56,73 +68,83 @@ public class RegionPersistenceTest extends BasePersistenceTestCase {
 
 		Region existingRegion = _persistence.fetchByPrimaryKey(newRegion.getPrimaryKey());
 
-		assertNull(existingRegion);
+		Assert.assertNull(existingRegion);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addRegion();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Region newRegion = _persistence.create(pk);
 
-		newRegion.setCountryId(nextLong());
+		newRegion.setCountryId(ServiceTestUtil.nextLong());
 
-		newRegion.setRegionCode(randomString());
+		newRegion.setRegionCode(ServiceTestUtil.randomString());
 
-		newRegion.setName(randomString());
+		newRegion.setName(ServiceTestUtil.randomString());
 
-		newRegion.setActive(randomBoolean());
+		newRegion.setActive(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(newRegion, false);
 
 		Region existingRegion = _persistence.findByPrimaryKey(newRegion.getPrimaryKey());
 
-		assertEquals(existingRegion.getRegionId(), newRegion.getRegionId());
-		assertEquals(existingRegion.getCountryId(), newRegion.getCountryId());
-		assertEquals(existingRegion.getRegionCode(), newRegion.getRegionCode());
-		assertEquals(existingRegion.getName(), newRegion.getName());
-		assertEquals(existingRegion.getActive(), newRegion.getActive());
+		Assert.assertEquals(existingRegion.getRegionId(),
+			newRegion.getRegionId());
+		Assert.assertEquals(existingRegion.getCountryId(),
+			newRegion.getCountryId());
+		Assert.assertEquals(existingRegion.getRegionCode(),
+			newRegion.getRegionCode());
+		Assert.assertEquals(existingRegion.getName(), newRegion.getName());
+		Assert.assertEquals(existingRegion.getActive(), newRegion.getActive());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Region newRegion = addRegion();
 
 		Region existingRegion = _persistence.findByPrimaryKey(newRegion.getPrimaryKey());
 
-		assertEquals(existingRegion, newRegion);
+		Assert.assertEquals(existingRegion, newRegion);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchRegionException");
+			Assert.fail("Missing entity did not throw NoSuchRegionException");
 		}
 		catch (NoSuchRegionException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		Region newRegion = addRegion();
 
 		Region existingRegion = _persistence.fetchByPrimaryKey(newRegion.getPrimaryKey());
 
-		assertEquals(existingRegion, newRegion);
+		Assert.assertEquals(existingRegion, newRegion);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Region missingRegion = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingRegion);
+		Assert.assertNull(missingRegion);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		Region newRegion = addRegion();
@@ -135,24 +157,27 @@ public class RegionPersistenceTest extends BasePersistenceTestCase {
 
 		List<Region> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Region existingRegion = result.get(0);
 
-		assertEquals(existingRegion, newRegion);
+		Assert.assertEquals(existingRegion, newRegion);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Region.class,
 				Region.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("regionId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("regionId",
+				ServiceTestUtil.nextLong()));
 
 		List<Region> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		Region newRegion = addRegion();
@@ -169,13 +194,14 @@ public class RegionPersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingRegionId = result.get(0);
 
-		assertEquals(existingRegionId, newRegionId);
+		Assert.assertEquals(existingRegionId, newRegionId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Region.class,
 				Region.class.getClassLoader());
@@ -183,13 +209,14 @@ public class RegionPersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("regionId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("regionId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -201,24 +228,25 @@ public class RegionPersistenceTest extends BasePersistenceTestCase {
 
 		RegionModelImpl existingRegionModelImpl = (RegionModelImpl)_persistence.findByPrimaryKey(newRegion.getPrimaryKey());
 
-		assertEquals(existingRegionModelImpl.getCountryId(),
+		Assert.assertEquals(existingRegionModelImpl.getCountryId(),
 			existingRegionModelImpl.getOriginalCountryId());
-		assertTrue(Validator.equals(existingRegionModelImpl.getRegionCode(),
+		Assert.assertTrue(Validator.equals(
+				existingRegionModelImpl.getRegionCode(),
 				existingRegionModelImpl.getOriginalRegionCode()));
 	}
 
 	protected Region addRegion() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		Region region = _persistence.create(pk);
 
-		region.setCountryId(nextLong());
+		region.setCountryId(ServiceTestUtil.nextLong());
 
-		region.setRegionCode(randomString());
+		region.setRegionCode(ServiceTestUtil.randomString());
 
-		region.setName(randomString());
+		region.setName(ServiceTestUtil.randomString());
 
-		region.setActive(randomBoolean());
+		region.setActive(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(region, false);
 

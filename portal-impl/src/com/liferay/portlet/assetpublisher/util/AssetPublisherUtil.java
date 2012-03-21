@@ -411,7 +411,7 @@ public class AssetPublisherUtil {
 
 			for (int i = 0; i < scopeIds.length; i++) {
 				try {
-					groupIds[i] = getGroupId(
+					groupIds[i] = _getGroupId(
 						scopeIds[i], scopeGroupId, layout.isPrivateLayout());
 				}
 				catch (Exception e) {
@@ -423,7 +423,7 @@ public class AssetPublisherUtil {
 		}
 
 		try {
-			long groupId = getGroupId(
+			long groupId = _getGroupId(
 				defaultScopeId, scopeGroupId, layout.isPrivateLayout());
 
 			return new long[] {groupId};
@@ -490,31 +490,6 @@ public class AssetPublisherUtil {
 		}
 	}
 
-	protected static long getGroupId(
-			String scopeId, long scopeGroupId, boolean privateLayout)
-		throws Exception {
-
-		String[] scopeIdFragments = StringUtil.split(
-			scopeId, CharPool.UNDERLINE);
-
-		if (scopeIdFragments[0].equals("Layout")) {
-			long scopeIdLayoutId = GetterUtil.getLong(scopeIdFragments[1]);
-
-			Layout scopeIdLayout = LayoutLocalServiceUtil.getLayout(
-				scopeGroupId, privateLayout, scopeIdLayoutId);
-
-			Group scopeIdGroup = scopeIdLayout.getScopeGroup();
-
-			return scopeIdGroup.getGroupId();
-		}
-
-		if (scopeIdFragments[1].equals(GroupConstants.DEFAULT)) {
-			return scopeGroupId;
-		}
-
-		return GetterUtil.getLong(scopeIdFragments[1]);
-	}
-
 	private static String _getAssetEntryXml(
 		String assetEntryType, String assetEntryUuid) {
 
@@ -544,6 +519,31 @@ public class AssetPublisherUtil {
 		}
 
 		return xml;
+	}
+
+	private static long _getGroupId(
+			String scopeId, long scopeGroupId, boolean privateLayout)
+		throws Exception {
+
+		String[] scopeIdFragments = StringUtil.split(
+			scopeId, CharPool.UNDERLINE);
+
+		if (scopeIdFragments[0].equals("Layout")) {
+			long scopeIdLayoutId = GetterUtil.getLong(scopeIdFragments[1]);
+
+			Layout scopeIdLayout = LayoutLocalServiceUtil.getLayout(
+				scopeGroupId, privateLayout, scopeIdLayoutId);
+
+			Group scopeIdGroup = scopeIdLayout.getScopeGroup();
+
+			return scopeIdGroup.getGroupId();
+		}
+
+		if (scopeIdFragments[1].equals(GroupConstants.DEFAULT)) {
+			return scopeGroupId;
+		}
+
+		return GetterUtil.getLong(scopeIdFragments[1]);
 	}
 
 	private static Map<String, Long> _getRecentFolderIds(

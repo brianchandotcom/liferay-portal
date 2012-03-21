@@ -12,28 +12,26 @@
  * details.
  */
 
-package com.liferay.portal.service.persistence;
+package com.liferay.portal.test.persistence;
 
-import com.liferay.portal.util.BaseTestCase;
+import com.liferay.portal.test.AbstractExecutionTestListener;
+import com.liferay.portal.test.TestContext;
 import com.liferay.portal.util.PropsValues;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Miguel Pastor
  */
-public class BasePersistenceTestCase extends BaseTestCase {
+public class PersistenceEnvConfigTestListener
+	extends AbstractExecutionTestListener {
 
 	@Override
-	public void setUp() throws Exception {
-		super.setUp();
-
-		PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED = false;
+	public void runAfterClass(TestContext testContext) {
+		PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED = true;
 	}
 
 	@Override
-	public void tearDown() throws Exception {
-		super.tearDown();
-
-		PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED = true;
+	public void runBeforeClass(TestContext testContext) {
+		PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED = false;
 	}
 
 }

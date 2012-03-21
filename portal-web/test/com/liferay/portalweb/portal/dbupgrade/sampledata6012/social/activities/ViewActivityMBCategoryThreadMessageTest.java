@@ -46,7 +46,7 @@ public class ViewActivityMBCategoryThreadMessageTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
-				"Joe wrote a new message board post, MB Category Thread Message Subject."),
+				"Joe wrote a new message board post, MB Category Thread Message Subject, in Liferay."),
 			selenium.getText("xPath=(//div[@class='activity-title'])[1]"));
 		assertEquals(RuntimeVariables.replace(
 				"MB Category Thread Message Subject"),

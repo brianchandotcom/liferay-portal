@@ -22,8 +22,18 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddBlogsEntryScopeCurrentPageTest extends BaseTestCase {
 	public void testAddBlogsEntryScopeCurrentPage() throws Exception {
-		selenium.open("/web/guest/home/");
+		selenium.open("/web/group-page-scope-community/");
 		loadRequiredJavaScriptModules();
+		selenium.clickAt("link=Blogs Page Scope Current Page",
+			RuntimeVariables.replace("Blogs Page Scope Current Page"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		selenium.clickAt("//input[@value='Add Blog Entry']",
+			RuntimeVariables.replace("Add Blog Entry"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		selenium.type("//input[@id='_33_title']",
+			RuntimeVariables.replace("Blogs Entry Scope Current Page"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -31,7 +41,8 @@ public class AddBlogsEntryScopeCurrentPageTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isElementPresent(
+							"//textarea[@id='_33_editor' and @style='display: none;']")) {
 					break;
 				}
 			}
@@ -41,35 +52,51 @@ public class AddBlogsEntryScopeCurrentPageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		selenium.type("_134_name",
-			RuntimeVariables.replace("Group Page Scope Community"));
-		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("Open"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		selenium.clickAt("link=Blogs Page Scope Current Page",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace(
-				"Blogs (Blogs Page Scope Current Page)"),
-			selenium.getText("//span[@class='portlet-title-text']"));
-		selenium.clickAt("//input[@value='Add Blog Entry']",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		selenium.type("_33_title",
-			RuntimeVariables.replace("Blogs Entry Scope Current Page"));
-		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("Source"),
+			selenium.getText("//a/span[.='Source']"));
+		selenium.clickAt("//a/span[.='Source']",
+			RuntimeVariables.replace("Source"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//a[@class='cke_button_source cke_on']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//td[@id='cke_contents__33_editor']/textarea")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.type("//td[@id='cke_contents__33_editor']/textarea",
+			RuntimeVariables.replace(
+				"This is a blogs entry scope current page test."));
+		assertEquals(RuntimeVariables.replace("Source"),
+			selenium.getText("//a/span[.='Source']"));
+		selenium.clickAt("//a/span[.='Source']",
+			RuntimeVariables.replace("Source"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -78,6 +105,23 @@ public class AddBlogsEntryScopeCurrentPageTest extends BaseTestCase {
 
 			try {
 				if (selenium.isElementPresent(
+							"//textarea[@id='_33_editor' and @style='display: none;']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
 							"//td[@id='cke_contents__33_editor']/iframe")) {
 					break;
 				}
@@ -89,12 +133,28 @@ public class AddBlogsEntryScopeCurrentPageTest extends BaseTestCase {
 		}
 
 		selenium.selectFrame("//td[@id='cke_contents__33_editor']/iframe");
-		selenium.type("//body",
-			RuntimeVariables.replace(
-				"This is a blogs entry scope current page test."));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace(
+							"This is a blogs entry scope current page test.")
+										.equals(selenium.getText("//body"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
@@ -104,6 +164,6 @@ public class AddBlogsEntryScopeCurrentPageTest extends BaseTestCase {
 			selenium.getText("//div[@class='entry-title']/a"));
 		assertEquals(RuntimeVariables.replace(
 				"This is a blogs entry scope current page test."),
-			selenium.getText("//p"));
+			selenium.getText("//div[@class='entry-body']/p"));
 	}
 }

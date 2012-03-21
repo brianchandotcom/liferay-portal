@@ -85,7 +85,6 @@ public class SourceFormatter {
 				@Override
 				public void run() {
 					try {
-						_checkPersistenceTestSuite();
 						_formatJSP();
 						_formatAntXML();
 						_formatDDLStructuresXML();
@@ -450,51 +449,6 @@ public class SourceFormatter {
 
 			_sourceFormatterHelper.printError(
 				fileName, "missing parentheses: " + fileName + " " + lineCount);
-		}
-	}
-
-	private static void _checkPersistenceTestSuite() throws IOException {
-		String basedir = "./portal-impl/test/integration";
-
-		if (!_fileUtil.exists(basedir)) {
-			return;
-		}
-
-		DirectoryScanner directoryScanner = new DirectoryScanner();
-
-		directoryScanner.setBasedir(basedir);
-		directoryScanner.setIncludes(
-			new String[] {"**\\*PersistenceTest.java"});
-
-		List<String> fileNames = _sourceFormatterHelper.scanForFiles(
-			directoryScanner);
-
-		List<String> persistenceTests = new ArrayList<String>();
-
-		for (String fileName : fileNames) {
-			String persistenceTest = fileName.substring(
-				0, fileName.length() - 5);
-
-			persistenceTest = persistenceTest.substring(
-				persistenceTest.lastIndexOf(File.separator) + 1,
-				persistenceTest.length());
-
-			persistenceTests.add(persistenceTest);
-		}
-
-		String persistenceTestSuiteFileName =
-			basedir + "/com/liferay/portal/service/persistence/" +
-				"PersistenceTestSuite.java";
-
-		String persistenceTestSuiteContent = _fileUtil.read(
-			persistenceTestSuiteFileName);
-
-		for (String persistenceTest : persistenceTests) {
-			if (!persistenceTestSuiteContent.contains(persistenceTest)) {
-				_sourceFormatterHelper.printError(
-					persistenceTestSuiteFileName,
-					"PersistenceTestSuite: " + persistenceTest);
-			}
 		}
 	}
 

@@ -25,25 +25,27 @@ import org.junit.runners.model.Statement;
 /**
  * @author Miguel Pastor
  */
-public class RunAfterTestMethodCallback extends Statement {
+public class RunAfterTestMethodCallback extends AbstractStatementCallback {
 
 	public RunAfterTestMethodCallback(
 		Object instance, Method method, Statement statement,
 		TestContextHandler testContextHandler) {
 
+		super(statement, testContextHandler);
+
 		_instance = instance;
 		_method = method;
-		_statement = statement;
-		_testContextHandler = testContextHandler;
 	}
 
 	@Override
 	public void evaluate() throws Throwable {
 		List<Throwable> throwables = new ArrayList<Throwable>();
 
-		if (_statement != null) {
+		Statement statement = getStatement();
+
+		if (statement != null) {
 			try {
-				_statement.evaluate();
+				statement.evaluate();
 			}
 			catch (Throwable t) {
 				throwables.add(t);
@@ -51,7 +53,9 @@ public class RunAfterTestMethodCallback extends Statement {
 		}
 
 		try {
-			_testContextHandler.runAfterTestMethod(_instance, _method);
+			TestContextHandler testContextHandler = getTestContextHandler();
+
+			testContextHandler.runAfterTestMethod(_instance, _method);
 		}
 		catch (Exception e) {
 			throwables.add(e);
@@ -64,7 +68,5 @@ public class RunAfterTestMethodCallback extends Statement {
 
 	private Object _instance;
 	private Method _method;
-	private Statement _statement;
-	private TestContextHandler _testContextHandler;
 
 }

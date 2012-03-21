@@ -428,7 +428,7 @@ public class TranslationToXHTMLTest extends AbstractWikiParserTests {
 	@Test
 	public void testSimpleEscapedCharacter() {
 		Assert.assertEquals(
-			"<p>ESCAPED1 Esto no está escaped </p>",
+			"<p>ESCAPED1 Esto no est\u00E1 escaped </p>",
 			translate("escape-1.creole"));
 	}
 

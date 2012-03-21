@@ -19,6 +19,7 @@ import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentConfigTestListener;
 import com.liferay.portal.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.assertion.AssertUtils;
 import com.liferay.portlet.documentlibrary.model.DLContent;
 import com.liferay.portlet.documentlibrary.store.Store;
 
@@ -379,7 +380,7 @@ public class DLContentLocalServiceTest {
 			expectedDLContent.getPath(), actualDLContent.getPath());
 		Assert.assertEquals(
 			expectedDLContent.getVersion(), actualDLContent.getVersion());
-		Assert.assertEquals(
+		AssertUtils.assertEquals(
 			expectedDLContent.getData(), actualDLContent.getData());
 		Assert.assertEquals(
 			expectedDLContent.getSize(), actualDLContent.getSize());

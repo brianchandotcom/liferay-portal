@@ -302,6 +302,12 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 							AssetPublisherUtil.removeAndStoreSelection(deletedAssets, preferences);
 							%>
 
+							<c:if test="<%= !deletedAssets.isEmpty() %>">
+								<div class="portlet-msg-info">
+									<liferay-ui:message key="the-selected-assets-have-been-removed-from-the-list-because-they-do-not-belong-in-the-scope-of-this-portlet" />
+								</div>
+							</c:if>
+
 							<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
 						</aui:fieldset>
 					</liferay-ui:panel>

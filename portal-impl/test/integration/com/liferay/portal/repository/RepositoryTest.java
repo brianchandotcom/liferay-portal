@@ -25,6 +25,9 @@ import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.RepositoryServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.test.EnvironmentConfigTestListener;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
@@ -34,13 +37,18 @@ import com.liferay.portlet.documentlibrary.service.DLFolderServiceUtil;
 
 import java.io.InputStream;
 
-import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Alexander Chow
  */
-public class RepositoryTest extends TestCase {
+@ExecutionTestListeners(listeners = {EnvironmentConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class RepositoryTest {
 
+	@Test
 	public void testBasic() throws Exception {
 
 		// Create repositories
@@ -74,13 +82,15 @@ public class RepositoryTest extends TestCase {
 			try {
 				RepositoryServiceUtil.getLocalRepositoryImpl(repositoryId);
 
-				fail("Should not be able to access repository " + repositoryId);
+				Assert.fail(
+					"Should not be able to access repository " + repositoryId);
 			}
 			catch (Exception e) {
 			}
 		}
 	}
 
+	@Test
 	public void testCreateAndDeleteFileEntries() throws Exception {
 
 		// One default and one mapped repository
@@ -173,7 +183,7 @@ public class RepositoryTest extends TestCase {
 
 				localRepository.getFileEntry(fileEntryId);
 
-				fail(
+				Assert.fail(
 					"Should not be able to get file entry " + fileEntryId +
 						" from repository " + repositoryId);
 			}

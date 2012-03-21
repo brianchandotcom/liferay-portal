@@ -22,6 +22,9 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.test.EnvironmentConfigTestListener;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
@@ -31,14 +34,20 @@ import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 
 import java.io.InputStream;
 
-import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Mika Koivisto
  */
-public class CheckInCheckOutTest extends TestCase {
+@ExecutionTestListeners(listeners = {EnvironmentConfigTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class CheckInCheckOutTest {
 
-	@Override
+	@Before
 	public void setUp() throws Exception {
 		long repositoryId = TestPropsValues.getGroupId();
 
@@ -52,11 +61,12 @@ public class CheckInCheckOutTest extends TestCase {
 			repositoryId, _folder.getFolderId(), "test1.txt", _serviceContext);
 	}
 
-	@Override
+	@After
 	public void tearDown() throws Exception {
 		DLAppServiceUtil.deleteFolder(_folder.getFolderId());
 	}
 
+	@Test
 	public void testCancelCheckIn() throws Exception {
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -68,7 +78,7 @@ public class CheckInCheckOutTest extends TestCase {
 
 		FileVersion fileVersion = fileEntry.getLatestFileVersion();
 
-		assertEquals("PWC", fileVersion.getVersion());
+		Assert.assertEquals("PWC", fileVersion.getVersion());
 
 		getAssetEntry(fileVersion.getFileVersionId(), true);
 
@@ -76,9 +86,10 @@ public class CheckInCheckOutTest extends TestCase {
 
 		fileEntry = DLAppServiceUtil.getFileEntry(_fileEntry.getFileEntryId());
 
-		assertEquals("1.0", fileEntry.getVersion());
+		Assert.assertEquals("1.0", fileEntry.getVersion());
 	}
 
+	@Test
 	public void testCheckIn() throws Exception {
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -87,7 +98,7 @@ public class CheckInCheckOutTest extends TestCase {
 
 		FileVersion fileVersion = _fileEntry.getLatestFileVersion();
 
-		assertEquals("PWC", fileVersion.getVersion());
+		Assert.assertEquals("PWC", fileVersion.getVersion());
 
 		getAssetEntry(fileVersion.getFileVersionId(), true);
 
@@ -98,11 +109,12 @@ public class CheckInCheckOutTest extends TestCase {
 		FileEntry fileEntry = DLAppServiceUtil.getFileEntry(
 			_fileEntry.getFileEntryId());
 
-		assertEquals("1.1", fileEntry.getVersion());
+		Assert.assertEquals("1.1", fileEntry.getVersion());
 
 		getAssetEntry(fileVersion.getFileVersionId(), false);
 	}
 
+	@Test
 	public void testCheckOut() throws Exception {
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -111,20 +123,22 @@ public class CheckInCheckOutTest extends TestCase {
 
 		FileVersion fileVersion = _fileEntry.getLatestFileVersion();
 
-		assertEquals("PWC", fileVersion.getVersion());
+		Assert.assertEquals("PWC", fileVersion.getVersion());
 
 		getAssetEntry(fileVersion.getFileVersionId(), true);
 	}
 
+	@Test
 	public void testUpdateFileEntry() throws Exception {
 		FileEntry fileEntry = updateFileEntry(
 			_fileEntry.getFileEntryId(), _serviceContext);
 
-		assertEquals("1.1", fileEntry.getVersion());
+		Assert.assertEquals("1.1", fileEntry.getVersion());
 
 		getAssetEntry(fileEntry.getFileEntryId(), true);
 	}
 
+	@Test
 	public void testUpdateFileEntry2() throws Exception {
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -134,11 +148,11 @@ public class CheckInCheckOutTest extends TestCase {
 		FileEntry fileEntry = updateFileEntry(
 			_fileEntry.getFileEntryId(), _serviceContext);
 
-		assertEquals("1.0" , fileEntry.getVersion());
+		Assert.assertEquals("1.0" , fileEntry.getVersion());
 
 		FileVersion fileVersion = fileEntry.getLatestFileVersion();
 
-		assertEquals("PWC", fileVersion.getVersion());
+		Assert.assertEquals("PWC", fileVersion.getVersion());
 
 		DLAppServiceUtil.checkInFileEntry(
 			_fileEntry.getFileEntryId(), false, StringPool.BLANK,
@@ -146,7 +160,7 @@ public class CheckInCheckOutTest extends TestCase {
 
 		fileEntry = DLAppServiceUtil.getFileEntry(_fileEntry.getFileEntryId());
 
-		assertEquals("1.1", fileEntry.getVersion());
+		Assert.assertEquals("1.1", fileEntry.getVersion());
 
 		getAssetEntry(fileVersion.getFileVersionId(), false);
 	}
@@ -163,13 +177,13 @@ public class CheckInCheckOutTest extends TestCase {
 			repositoryId, folderId, fileName, ContentTypes.TEXT_PLAIN, fileName,
 			null, null, inputStream, _TEST_CONTENT.length(), serviceContext);
 
-		assertNotNull(fileEntry);
+		Assert.assertNotNull(fileEntry);
 
-		assertEquals("1.0", fileEntry.getVersion());
+		Assert.assertEquals("1.0", fileEntry.getVersion());
 
 		AssetEntry assetEntry = getAssetEntry(fileEntry.getFileEntryId(), true);
 
-		assertNotNull(assetEntry);
+		Assert.assertNotNull(assetEntry);
 
 		return fileEntry;
 	}
@@ -181,11 +195,11 @@ public class CheckInCheckOutTest extends TestCase {
 			repositoryId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			folderName, StringPool.BLANK, new ServiceContext());
 
-		assertNotNull(folder);
+		Assert.assertNotNull(folder);
 
 		folder = DLAppServiceUtil.getFolder(folder.getFolderId());
 
-		assertNotNull(folder);
+		Assert.assertNotNull(folder);
 
 		return folder;
 	}
@@ -197,10 +211,10 @@ public class CheckInCheckOutTest extends TestCase {
 			DLFileEntryConstants.getClassName(), assetClassPk);
 
 		if (expectExists) {
-			assertNotNull(assetEntry);
+			Assert.assertNotNull(assetEntry);
 		}
 		else {
-			assertNull(assetEntry);
+			Assert.assertNull(assetEntry);
 		}
 
 		return assetEntry;

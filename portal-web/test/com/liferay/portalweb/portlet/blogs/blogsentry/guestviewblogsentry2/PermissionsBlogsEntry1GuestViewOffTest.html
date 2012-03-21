@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Blogs Test Page</td>
-	<td>Blogs Test page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Blogs Test Page</td>
 	<td>Blogs Test Page</td>
@@ -26,17 +21,17 @@
 <tr>
 	<td>assertText</td>
 	<td>xPath=(//div[@class='entry-title']/h2/a)[2]</td>
-	<td>Blogs Entry Title</td>
+	<td>Blogs Entry1 Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>xPath=(//div[@class='entry-title']/h2/a)[2]</td>
-	<td>Blogs Entry Title</td>
+	<td>Blogs Entry1 Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//h1[@class='header-title']</td>
-	<td>Blogs Entry Title</td>
+	<td>Blogs Entry1 Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -50,22 +45,22 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//input[@name='16_ACTION_VIEW']</td>
+	<td>//input[@id='guest_ACTION_VIEW']</td>
 	<td>Guest View</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//input[@name='16_ACTION_VIEW']</td>
+	<td>//input[@id='guest_ACTION_VIEW']</td>
 	<td>Guest View</td>
 </tr>
 <tr>
 	<td>uncheck</td>
-	<td>//input[@name='16_ACTION_VIEW']</td>
+	<td>//input[@id='guest_ACTION_VIEW']</td>
 	<td>Guest View</td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
-	<td>//input[@name='16_ACTION_VIEW']</td>
+	<td>//input[@id='guest_ACTION_VIEW']</td>
 	<td>Guest View</td>
 </tr>
 <tr>
@@ -80,10 +75,9 @@
 </tr>
 <tr>
 	<td>assertNotChecked</td>
-	<td>//input[@name='16_ACTION_VIEW']</td>
+	<td>//input[@id='guest_ACTION_VIEW']</td>
 	<td>Guest View</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

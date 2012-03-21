@@ -64,6 +64,10 @@ public class BaseTestCase extends LiferaySeleneseTestCase {
 
 		String location = selenium.getLocation();
 
+		if (location.contains("/blogs/rss")) {
+			return;
+		}
+
 		if (location.contains("/documents/")) {
 			return;
 		}

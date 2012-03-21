@@ -45,9 +45,9 @@ public class Guest_ViewBlogsEntry2Test extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Blogs2 Entry2 Title2"),
+		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
 			selenium.getText("//div[@class='entry-title']/h2/a"));
-		assertEquals(RuntimeVariables.replace("Blogs2 Entry2 Content2"),
+		assertEquals(RuntimeVariables.replace("Blogs Entry2 Content"),
 			selenium.getText("//div[@class='entry-body']/p"));
 		assertFalse(selenium.isTextPresent("Blogs Entry Title"));
 		assertFalse(selenium.isTextPresent("Blogs Entry Content"));

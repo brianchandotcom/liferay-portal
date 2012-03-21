@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentrytitleescapecharacters;
+package com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,9 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddBlogsEntryTitleEscapeCharactersTest extends BaseTestCase {
-	public void testAddBlogsEntryTitleEscapeCharacters()
-		throws Exception {
+public class AddBlogsEntry3Test extends BaseTestCase {
+	public void testAddBlogsEntry3() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Blogs Test Page",
@@ -34,7 +33,7 @@ public class AddBlogsEntryTitleEscapeCharactersTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_33_title']",
-			RuntimeVariables.replace("<!--Blogs Entry Title-->"));
+			RuntimeVariables.replace("Blogs Entry3 Title"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -92,7 +91,7 @@ public class AddBlogsEntryTitleEscapeCharactersTest extends BaseTestCase {
 		}
 
 		selenium.type("//td[@id='cke_contents__33_editor']/textarea",
-			RuntimeVariables.replace("Blogs Entry Content"));
+			RuntimeVariables.replace("Blogs Entry3 Content"));
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
@@ -140,7 +139,7 @@ public class AddBlogsEntryTitleEscapeCharactersTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("Blogs Entry Content")
+				if (RuntimeVariables.replace("Blogs Entry3 Content")
 										.equals(selenium.getText("//body"))) {
 					break;
 				}
@@ -159,9 +158,9 @@ public class AddBlogsEntryTitleEscapeCharactersTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("<!--Blogs Entry Title-->"),
+		assertEquals(RuntimeVariables.replace("Blogs Entry3 Title"),
 			selenium.getText("//div[@class='entry-title']/h2/a"));
-		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
+		assertEquals(RuntimeVariables.replace("Blogs Entry3 Content"),
 			selenium.getText("//div[@class='entry-body']/p"));
 	}
 }

@@ -57,7 +57,7 @@ public class ViewImportLARTest extends BaseTestCase {
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
 			selenium.getText("//div[@class='entry-body']/p"));
-		assertEquals(RuntimeVariables.replace("Blogs Entry Comment Body"),
+		assertEquals(RuntimeVariables.replace("Blogs Entry Comment"),
 			selenium.getText("//div[@class='lfr-discussion-message']"));
 	}
 }

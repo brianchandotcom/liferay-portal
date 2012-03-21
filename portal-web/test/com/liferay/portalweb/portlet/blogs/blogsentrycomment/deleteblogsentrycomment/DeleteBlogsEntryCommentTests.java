@@ -16,6 +16,8 @@ package com.liferay.portalweb.portlet.blogs.blogsentrycomment.deleteblogsentryco
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.AddBlogsEntryTest;
+import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.TearDownBlogsEntryTest;
 import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPageBlogsTest;
 import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPortletBlogsTest;
 

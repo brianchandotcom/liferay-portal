@@ -289,9 +289,9 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public String getBodyText() {
-		WebElement body = findElement(By.tagName("body"));
+		WebElement webElement = findElement(By.tagName("body"));
 
-		return body.getText();
+		return webElement.getText();
 	}
 
 	public String getConfirmation() {

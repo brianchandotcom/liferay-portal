@@ -36,7 +36,7 @@ LinkedHashMap organizationParams = new LinkedHashMap();
 List<Organization> organizations = new ArrayList<Organization>();
 
 if (filterManageableOrganizations) {
-	organizations.addAll(user.getOrganizations());
+	organizations = OrganizationLocalServiceUtil.getUserOrganizations(user.getUserId(), true);
 }
 
 if (organizationId != OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) {

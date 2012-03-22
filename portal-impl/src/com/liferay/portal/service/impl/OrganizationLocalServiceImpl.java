@@ -48,6 +48,7 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.model.impl.OrganizationImpl;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -61,9 +62,11 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * The implementation of the organization local service.
@@ -183,11 +186,6 @@ public class OrganizationLocalServiceImpl
 
 		userGroupRoleLocalService.addUserGroupRoles(
 			userId, group.getGroupId(), new long[] {role.getRoleId()});
-
-		// User
-
-		userLocalService.addOrganizationUsers(
-			organizationId, new long[] {userId});
 
 		// Resources
 
@@ -667,6 +665,42 @@ public class OrganizationLocalServiceImpl
 
 		return getUserOrganizations(
 			userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	public List<Organization> getUserOrganizations(
+			long userId, boolean includeNonUser)
+		throws PortalException, SystemException {
+
+		if (!includeNonUser) {
+			return getUserOrganizations(userId);
+		}
+
+		Set<Organization> organizations = new HashSet<Organization>();
+
+		if (includeNonUser) {
+			List<UserGroupRole> userGroupRoles =
+				userGroupRoleLocalService.getUserGroupRoles(userId);
+
+			for (UserGroupRole userGroupRole : userGroupRoles) {
+				Role role = userGroupRole.getRole();
+
+				String roleName = role.getName();
+
+				if (roleName.equals(RoleConstants.ORGANIZATION_OWNER) ||
+					roleName.equals(RoleConstants.ORGANIZATION_ADMINISTRATOR)) {
+
+					Group organizationGroup = userGroupRole.getGroup();
+
+					organizations.add(
+						organizationPersistence.findByPrimaryKey(
+							organizationGroup.getOrganizationId()));
+				}
+			}
+		}
+
+		organizations.addAll(getUserOrganizations(userId));
+
+		return new ArrayList<Organization>(organizations);
 	}
 
 	/**

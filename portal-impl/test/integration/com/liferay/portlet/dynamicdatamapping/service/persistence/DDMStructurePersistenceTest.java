@@ -21,36 +21,48 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureModelImpl;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class DDMStructurePersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceExecutionTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class DDMStructurePersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (DDMStructurePersistence)PortalBeanLocatorUtil.locate(DDMStructurePersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		DDMStructure ddmStructure = _persistence.create(pk);
 
-		assertNotNull(ddmStructure);
+		Assert.assertNotNull(ddmStructure);
 
-		assertEquals(ddmStructure.getPrimaryKey(), pk);
+		Assert.assertEquals(ddmStructure.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		DDMStructure newDDMStructure = addDDMStructure();
 
@@ -58,116 +70,127 @@ public class DDMStructurePersistenceTest extends BasePersistenceTestCase {
 
 		DDMStructure existingDDMStructure = _persistence.fetchByPrimaryKey(newDDMStructure.getPrimaryKey());
 
-		assertNull(existingDDMStructure);
+		Assert.assertNull(existingDDMStructure);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addDDMStructure();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		DDMStructure newDDMStructure = _persistence.create(pk);
 
-		newDDMStructure.setUuid(randomString());
+		newDDMStructure.setUuid(ServiceTestUtil.randomString());
 
-		newDDMStructure.setGroupId(nextLong());
+		newDDMStructure.setGroupId(ServiceTestUtil.nextLong());
 
-		newDDMStructure.setCompanyId(nextLong());
+		newDDMStructure.setCompanyId(ServiceTestUtil.nextLong());
 
-		newDDMStructure.setUserId(nextLong());
+		newDDMStructure.setUserId(ServiceTestUtil.nextLong());
 
-		newDDMStructure.setUserName(randomString());
+		newDDMStructure.setUserName(ServiceTestUtil.randomString());
 
-		newDDMStructure.setCreateDate(nextDate());
+		newDDMStructure.setCreateDate(ServiceTestUtil.nextDate());
 
-		newDDMStructure.setModifiedDate(nextDate());
+		newDDMStructure.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newDDMStructure.setClassNameId(nextLong());
+		newDDMStructure.setClassNameId(ServiceTestUtil.nextLong());
 
-		newDDMStructure.setStructureKey(randomString());
+		newDDMStructure.setStructureKey(ServiceTestUtil.randomString());
 
-		newDDMStructure.setName(randomString());
+		newDDMStructure.setName(ServiceTestUtil.randomString());
 
-		newDDMStructure.setDescription(randomString());
+		newDDMStructure.setDescription(ServiceTestUtil.randomString());
 
-		newDDMStructure.setXsd(randomString());
+		newDDMStructure.setXsd(ServiceTestUtil.randomString());
 
-		newDDMStructure.setStorageType(randomString());
+		newDDMStructure.setStorageType(ServiceTestUtil.randomString());
 
-		newDDMStructure.setType(nextInt());
+		newDDMStructure.setType(ServiceTestUtil.nextInt());
 
 		_persistence.update(newDDMStructure, false);
 
 		DDMStructure existingDDMStructure = _persistence.findByPrimaryKey(newDDMStructure.getPrimaryKey());
 
-		assertEquals(existingDDMStructure.getUuid(), newDDMStructure.getUuid());
-		assertEquals(existingDDMStructure.getStructureId(),
+		Assert.assertEquals(existingDDMStructure.getUuid(),
+			newDDMStructure.getUuid());
+		Assert.assertEquals(existingDDMStructure.getStructureId(),
 			newDDMStructure.getStructureId());
-		assertEquals(existingDDMStructure.getGroupId(),
+		Assert.assertEquals(existingDDMStructure.getGroupId(),
 			newDDMStructure.getGroupId());
-		assertEquals(existingDDMStructure.getCompanyId(),
+		Assert.assertEquals(existingDDMStructure.getCompanyId(),
 			newDDMStructure.getCompanyId());
-		assertEquals(existingDDMStructure.getUserId(),
+		Assert.assertEquals(existingDDMStructure.getUserId(),
 			newDDMStructure.getUserId());
-		assertEquals(existingDDMStructure.getUserName(),
+		Assert.assertEquals(existingDDMStructure.getUserName(),
 			newDDMStructure.getUserName());
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingDDMStructure.getCreateDate()),
 			Time.getShortTimestamp(newDDMStructure.getCreateDate()));
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingDDMStructure.getModifiedDate()),
 			Time.getShortTimestamp(newDDMStructure.getModifiedDate()));
-		assertEquals(existingDDMStructure.getClassNameId(),
+		Assert.assertEquals(existingDDMStructure.getClassNameId(),
 			newDDMStructure.getClassNameId());
-		assertEquals(existingDDMStructure.getStructureKey(),
+		Assert.assertEquals(existingDDMStructure.getStructureKey(),
 			newDDMStructure.getStructureKey());
-		assertEquals(existingDDMStructure.getName(), newDDMStructure.getName());
-		assertEquals(existingDDMStructure.getDescription(),
+		Assert.assertEquals(existingDDMStructure.getName(),
+			newDDMStructure.getName());
+		Assert.assertEquals(existingDDMStructure.getDescription(),
 			newDDMStructure.getDescription());
-		assertEquals(existingDDMStructure.getXsd(), newDDMStructure.getXsd());
-		assertEquals(existingDDMStructure.getStorageType(),
+		Assert.assertEquals(existingDDMStructure.getXsd(),
+			newDDMStructure.getXsd());
+		Assert.assertEquals(existingDDMStructure.getStorageType(),
 			newDDMStructure.getStorageType());
-		assertEquals(existingDDMStructure.getType(), newDDMStructure.getType());
+		Assert.assertEquals(existingDDMStructure.getType(),
+			newDDMStructure.getType());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		DDMStructure newDDMStructure = addDDMStructure();
 
 		DDMStructure existingDDMStructure = _persistence.findByPrimaryKey(newDDMStructure.getPrimaryKey());
 
-		assertEquals(existingDDMStructure, newDDMStructure);
+		Assert.assertEquals(existingDDMStructure, newDDMStructure);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchStructureException");
+			Assert.fail("Missing entity did not throw NoSuchStructureException");
 		}
 		catch (NoSuchStructureException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		DDMStructure newDDMStructure = addDDMStructure();
 
 		DDMStructure existingDDMStructure = _persistence.fetchByPrimaryKey(newDDMStructure.getPrimaryKey());
 
-		assertEquals(existingDDMStructure, newDDMStructure);
+		Assert.assertEquals(existingDDMStructure, newDDMStructure);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		DDMStructure missingDDMStructure = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingDDMStructure);
+		Assert.assertNull(missingDDMStructure);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		DDMStructure newDDMStructure = addDDMStructure();
@@ -180,24 +203,27 @@ public class DDMStructurePersistenceTest extends BasePersistenceTestCase {
 
 		List<DDMStructure> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		DDMStructure existingDDMStructure = result.get(0);
 
-		assertEquals(existingDDMStructure, newDDMStructure);
+		Assert.assertEquals(existingDDMStructure, newDDMStructure);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMStructure.class,
 				DDMStructure.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("structureId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("structureId",
+				ServiceTestUtil.nextLong()));
 
 		List<DDMStructure> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		DDMStructure newDDMStructure = addDDMStructure();
@@ -214,13 +240,14 @@ public class DDMStructurePersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingStructureId = result.get(0);
 
-		assertEquals(existingStructureId, newStructureId);
+		Assert.assertEquals(existingStructureId, newStructureId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMStructure.class,
 				DDMStructure.class.getClassLoader());
@@ -228,13 +255,14 @@ public class DDMStructurePersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("structureId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("structureId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -246,50 +274,51 @@ public class DDMStructurePersistenceTest extends BasePersistenceTestCase {
 
 		DDMStructureModelImpl existingDDMStructureModelImpl = (DDMStructureModelImpl)_persistence.findByPrimaryKey(newDDMStructure.getPrimaryKey());
 
-		assertTrue(Validator.equals(existingDDMStructureModelImpl.getUuid(),
+		Assert.assertTrue(Validator.equals(
+				existingDDMStructureModelImpl.getUuid(),
 				existingDDMStructureModelImpl.getOriginalUuid()));
-		assertEquals(existingDDMStructureModelImpl.getGroupId(),
+		Assert.assertEquals(existingDDMStructureModelImpl.getGroupId(),
 			existingDDMStructureModelImpl.getOriginalGroupId());
 
-		assertEquals(existingDDMStructureModelImpl.getGroupId(),
+		Assert.assertEquals(existingDDMStructureModelImpl.getGroupId(),
 			existingDDMStructureModelImpl.getOriginalGroupId());
-		assertTrue(Validator.equals(
+		Assert.assertTrue(Validator.equals(
 				existingDDMStructureModelImpl.getStructureKey(),
 				existingDDMStructureModelImpl.getOriginalStructureKey()));
 	}
 
 	protected DDMStructure addDDMStructure() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		DDMStructure ddmStructure = _persistence.create(pk);
 
-		ddmStructure.setUuid(randomString());
+		ddmStructure.setUuid(ServiceTestUtil.randomString());
 
-		ddmStructure.setGroupId(nextLong());
+		ddmStructure.setGroupId(ServiceTestUtil.nextLong());
 
-		ddmStructure.setCompanyId(nextLong());
+		ddmStructure.setCompanyId(ServiceTestUtil.nextLong());
 
-		ddmStructure.setUserId(nextLong());
+		ddmStructure.setUserId(ServiceTestUtil.nextLong());
 
-		ddmStructure.setUserName(randomString());
+		ddmStructure.setUserName(ServiceTestUtil.randomString());
 
-		ddmStructure.setCreateDate(nextDate());
+		ddmStructure.setCreateDate(ServiceTestUtil.nextDate());
 
-		ddmStructure.setModifiedDate(nextDate());
+		ddmStructure.setModifiedDate(ServiceTestUtil.nextDate());
 
-		ddmStructure.setClassNameId(nextLong());
+		ddmStructure.setClassNameId(ServiceTestUtil.nextLong());
 
-		ddmStructure.setStructureKey(randomString());
+		ddmStructure.setStructureKey(ServiceTestUtil.randomString());
 
-		ddmStructure.setName(randomString());
+		ddmStructure.setName(ServiceTestUtil.randomString());
 
-		ddmStructure.setDescription(randomString());
+		ddmStructure.setDescription(ServiceTestUtil.randomString());
 
-		ddmStructure.setXsd(randomString());
+		ddmStructure.setXsd(ServiceTestUtil.randomString());
 
-		ddmStructure.setStorageType(randomString());
+		ddmStructure.setStorageType(ServiceTestUtil.randomString());
 
-		ddmStructure.setType(nextInt());
+		ddmStructure.setType(ServiceTestUtil.nextInt());
 
 		_persistence.update(ddmStructure, false);
 

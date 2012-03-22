@@ -754,6 +754,18 @@ public class LayoutLocalServiceUtil {
 	}
 
 	/**
+	* Returns all layouts belonging to the layout prototype
+	*
+	* @param uuid of the layout prototype
+	* @return the count of matching layouts
+	* @throws SystemException if a system exception occured
+	*/
+	public static int countLayoutsByLayoutPrototypeUuid(java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().countLayoutsByLayoutPrototypeUuid(uuid);
+	}
+
+	/**
 	* Returns all the layouts belonging to the group.
 	*
 	* @param groupId the primary key of the group

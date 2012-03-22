@@ -365,6 +365,7 @@ create index IX_6DE88B06 on Layout (groupId, privateLayout, parentLayoutId);
 create index IX_8CE8C0D9 on Layout (groupId, privateLayout, sourcePrototypeLayoutUuid);
 create index IX_1A1B61D2 on Layout (groupId, privateLayout, type_);
 create index IX_23922F7D on Layout (iconImageId);
+create index IX_B529BFD3 on Layout (layoutPrototypeUuid);
 create index IX_D0822724 on Layout (uuid_);
 create unique index IX_CED31606 on Layout (uuid_, groupId);
 

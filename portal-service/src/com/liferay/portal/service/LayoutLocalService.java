@@ -678,6 +678,16 @@ public interface LayoutLocalService extends PersistedModelLocalService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns all layouts belonging to the layout prototype
+	*
+	* @param uuid of the layout prototype
+	* @return the count of matching layouts
+	* @throws SystemException if a system exception occured
+	*/
+	public int countLayoutsByLayoutPrototypeUuid(java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the layouts belonging to the group.
 	*
 	* @param groupId the primary key of the group

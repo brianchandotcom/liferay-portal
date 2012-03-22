@@ -739,6 +739,18 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	}
 
 	/**
+	* Returns all layouts belonging to the layout prototype
+	*
+	* @param uuid of the layout prototype
+	* @return the count of matching layouts
+	* @throws SystemException if a system exception occured
+	*/
+	public int countLayoutsByLayoutPrototypeUuid(java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _layoutLocalService.countLayoutsByLayoutPrototypeUuid(uuid);
+	}
+
+	/**
 	* Returns all the layouts belonging to the group.
 	*
 	* @param groupId the primary key of the group

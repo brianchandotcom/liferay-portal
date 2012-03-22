@@ -909,6 +909,7 @@ Liferay.Service.registerClass(
 		getArticlesCountByArticleId: true,
 		getArticlesCountByFolderId: true,
 		getDisplayArticleByUrlTitle: true,
+		getFoldersArticlesCount: true,
 		getLatestArticle: true,
 		removeArticleLocale: true,
 		search: true,

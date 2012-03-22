@@ -20,36 +20,48 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.journal.NoSuchContentSearchException;
 import com.liferay.portlet.journal.model.JournalContentSearch;
 import com.liferay.portlet.journal.model.impl.JournalContentSearchModelImpl;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class JournalContentSearchPersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceExecutionTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class JournalContentSearchPersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (JournalContentSearchPersistence)PortalBeanLocatorUtil.locate(JournalContentSearchPersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		JournalContentSearch journalContentSearch = _persistence.create(pk);
 
-		assertNotNull(journalContentSearch);
+		Assert.assertNotNull(journalContentSearch);
 
-		assertEquals(journalContentSearch.getPrimaryKey(), pk);
+		Assert.assertEquals(journalContentSearch.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		JournalContentSearch newJournalContentSearch = addJournalContentSearch();
 
@@ -57,86 +69,96 @@ public class JournalContentSearchPersistenceTest extends BasePersistenceTestCase
 
 		JournalContentSearch existingJournalContentSearch = _persistence.fetchByPrimaryKey(newJournalContentSearch.getPrimaryKey());
 
-		assertNull(existingJournalContentSearch);
+		Assert.assertNull(existingJournalContentSearch);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addJournalContentSearch();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		JournalContentSearch newJournalContentSearch = _persistence.create(pk);
 
-		newJournalContentSearch.setGroupId(nextLong());
+		newJournalContentSearch.setGroupId(ServiceTestUtil.nextLong());
 
-		newJournalContentSearch.setCompanyId(nextLong());
+		newJournalContentSearch.setCompanyId(ServiceTestUtil.nextLong());
 
-		newJournalContentSearch.setPrivateLayout(randomBoolean());
+		newJournalContentSearch.setPrivateLayout(ServiceTestUtil.randomBoolean());
 
-		newJournalContentSearch.setLayoutId(nextLong());
+		newJournalContentSearch.setLayoutId(ServiceTestUtil.nextLong());
 
-		newJournalContentSearch.setPortletId(randomString());
+		newJournalContentSearch.setPortletId(ServiceTestUtil.randomString());
 
-		newJournalContentSearch.setArticleId(randomString());
+		newJournalContentSearch.setArticleId(ServiceTestUtil.randomString());
 
 		_persistence.update(newJournalContentSearch, false);
 
 		JournalContentSearch existingJournalContentSearch = _persistence.findByPrimaryKey(newJournalContentSearch.getPrimaryKey());
 
-		assertEquals(existingJournalContentSearch.getContentSearchId(),
+		Assert.assertEquals(existingJournalContentSearch.getContentSearchId(),
 			newJournalContentSearch.getContentSearchId());
-		assertEquals(existingJournalContentSearch.getGroupId(),
+		Assert.assertEquals(existingJournalContentSearch.getGroupId(),
 			newJournalContentSearch.getGroupId());
-		assertEquals(existingJournalContentSearch.getCompanyId(),
+		Assert.assertEquals(existingJournalContentSearch.getCompanyId(),
 			newJournalContentSearch.getCompanyId());
-		assertEquals(existingJournalContentSearch.getPrivateLayout(),
+		Assert.assertEquals(existingJournalContentSearch.getPrivateLayout(),
 			newJournalContentSearch.getPrivateLayout());
-		assertEquals(existingJournalContentSearch.getLayoutId(),
+		Assert.assertEquals(existingJournalContentSearch.getLayoutId(),
 			newJournalContentSearch.getLayoutId());
-		assertEquals(existingJournalContentSearch.getPortletId(),
+		Assert.assertEquals(existingJournalContentSearch.getPortletId(),
 			newJournalContentSearch.getPortletId());
-		assertEquals(existingJournalContentSearch.getArticleId(),
+		Assert.assertEquals(existingJournalContentSearch.getArticleId(),
 			newJournalContentSearch.getArticleId());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		JournalContentSearch newJournalContentSearch = addJournalContentSearch();
 
 		JournalContentSearch existingJournalContentSearch = _persistence.findByPrimaryKey(newJournalContentSearch.getPrimaryKey());
 
-		assertEquals(existingJournalContentSearch, newJournalContentSearch);
+		Assert.assertEquals(existingJournalContentSearch,
+			newJournalContentSearch);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchContentSearchException");
+			Assert.fail(
+				"Missing entity did not throw NoSuchContentSearchException");
 		}
 		catch (NoSuchContentSearchException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		JournalContentSearch newJournalContentSearch = addJournalContentSearch();
 
 		JournalContentSearch existingJournalContentSearch = _persistence.fetchByPrimaryKey(newJournalContentSearch.getPrimaryKey());
 
-		assertEquals(existingJournalContentSearch, newJournalContentSearch);
+		Assert.assertEquals(existingJournalContentSearch,
+			newJournalContentSearch);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		JournalContentSearch missingJournalContentSearch = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingJournalContentSearch);
+		Assert.assertNull(missingJournalContentSearch);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		JournalContentSearch newJournalContentSearch = addJournalContentSearch();
@@ -149,25 +171,28 @@ public class JournalContentSearchPersistenceTest extends BasePersistenceTestCase
 
 		List<JournalContentSearch> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		JournalContentSearch existingJournalContentSearch = result.get(0);
 
-		assertEquals(existingJournalContentSearch, newJournalContentSearch);
+		Assert.assertEquals(existingJournalContentSearch,
+			newJournalContentSearch);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(JournalContentSearch.class,
 				JournalContentSearch.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("contentSearchId",
-				nextLong()));
+				ServiceTestUtil.nextLong()));
 
 		List<JournalContentSearch> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		JournalContentSearch newJournalContentSearch = addJournalContentSearch();
@@ -185,13 +210,14 @@ public class JournalContentSearchPersistenceTest extends BasePersistenceTestCase
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingContentSearchId = result.get(0);
 
-		assertEquals(existingContentSearchId, newContentSearchId);
+		Assert.assertEquals(existingContentSearchId, newContentSearchId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(JournalContentSearch.class,
 				JournalContentSearch.class.getClassLoader());
@@ -200,13 +226,14 @@ public class JournalContentSearchPersistenceTest extends BasePersistenceTestCase
 				"contentSearchId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("contentSearchId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -218,37 +245,37 @@ public class JournalContentSearchPersistenceTest extends BasePersistenceTestCase
 
 		JournalContentSearchModelImpl existingJournalContentSearchModelImpl = (JournalContentSearchModelImpl)_persistence.findByPrimaryKey(newJournalContentSearch.getPrimaryKey());
 
-		assertEquals(existingJournalContentSearchModelImpl.getGroupId(),
+		Assert.assertEquals(existingJournalContentSearchModelImpl.getGroupId(),
 			existingJournalContentSearchModelImpl.getOriginalGroupId());
-		assertEquals(existingJournalContentSearchModelImpl.getPrivateLayout(),
+		Assert.assertEquals(existingJournalContentSearchModelImpl.getPrivateLayout(),
 			existingJournalContentSearchModelImpl.getOriginalPrivateLayout());
-		assertEquals(existingJournalContentSearchModelImpl.getLayoutId(),
+		Assert.assertEquals(existingJournalContentSearchModelImpl.getLayoutId(),
 			existingJournalContentSearchModelImpl.getOriginalLayoutId());
-		assertTrue(Validator.equals(
+		Assert.assertTrue(Validator.equals(
 				existingJournalContentSearchModelImpl.getPortletId(),
 				existingJournalContentSearchModelImpl.getOriginalPortletId()));
-		assertTrue(Validator.equals(
+		Assert.assertTrue(Validator.equals(
 				existingJournalContentSearchModelImpl.getArticleId(),
 				existingJournalContentSearchModelImpl.getOriginalArticleId()));
 	}
 
 	protected JournalContentSearch addJournalContentSearch()
 		throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		JournalContentSearch journalContentSearch = _persistence.create(pk);
 
-		journalContentSearch.setGroupId(nextLong());
+		journalContentSearch.setGroupId(ServiceTestUtil.nextLong());
 
-		journalContentSearch.setCompanyId(nextLong());
+		journalContentSearch.setCompanyId(ServiceTestUtil.nextLong());
 
-		journalContentSearch.setPrivateLayout(randomBoolean());
+		journalContentSearch.setPrivateLayout(ServiceTestUtil.randomBoolean());
 
-		journalContentSearch.setLayoutId(nextLong());
+		journalContentSearch.setLayoutId(ServiceTestUtil.nextLong());
 
-		journalContentSearch.setPortletId(randomString());
+		journalContentSearch.setPortletId(ServiceTestUtil.randomString());
 
-		journalContentSearch.setArticleId(randomString());
+		journalContentSearch.setArticleId(ServiceTestUtil.randomString());
 
 		_persistence.update(journalContentSearch, false);
 

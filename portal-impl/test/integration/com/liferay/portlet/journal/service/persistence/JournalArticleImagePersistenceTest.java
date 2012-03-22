@@ -20,36 +20,49 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
+import com.liferay.portal.test.AssertUtils;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.journal.NoSuchArticleImageException;
 import com.liferay.portlet.journal.model.JournalArticleImage;
 import com.liferay.portlet.journal.model.impl.JournalArticleImageModelImpl;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class JournalArticleImagePersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceExecutionTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class JournalArticleImagePersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (JournalArticleImagePersistence)PortalBeanLocatorUtil.locate(JournalArticleImagePersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		JournalArticleImage journalArticleImage = _persistence.create(pk);
 
-		assertNotNull(journalArticleImage);
+		Assert.assertNotNull(journalArticleImage);
 
-		assertEquals(journalArticleImage.getPrimaryKey(), pk);
+		Assert.assertEquals(journalArticleImage.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		JournalArticleImage newJournalArticleImage = addJournalArticleImage();
 
@@ -57,90 +70,98 @@ public class JournalArticleImagePersistenceTest extends BasePersistenceTestCase 
 
 		JournalArticleImage existingJournalArticleImage = _persistence.fetchByPrimaryKey(newJournalArticleImage.getPrimaryKey());
 
-		assertNull(existingJournalArticleImage);
+		Assert.assertNull(existingJournalArticleImage);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addJournalArticleImage();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		JournalArticleImage newJournalArticleImage = _persistence.create(pk);
 
-		newJournalArticleImage.setGroupId(nextLong());
+		newJournalArticleImage.setGroupId(ServiceTestUtil.nextLong());
 
-		newJournalArticleImage.setArticleId(randomString());
+		newJournalArticleImage.setArticleId(ServiceTestUtil.randomString());
 
-		newJournalArticleImage.setVersion(nextDouble());
+		newJournalArticleImage.setVersion(ServiceTestUtil.nextDouble());
 
-		newJournalArticleImage.setElInstanceId(randomString());
+		newJournalArticleImage.setElInstanceId(ServiceTestUtil.randomString());
 
-		newJournalArticleImage.setElName(randomString());
+		newJournalArticleImage.setElName(ServiceTestUtil.randomString());
 
-		newJournalArticleImage.setLanguageId(randomString());
+		newJournalArticleImage.setLanguageId(ServiceTestUtil.randomString());
 
-		newJournalArticleImage.setTempImage(randomBoolean());
+		newJournalArticleImage.setTempImage(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(newJournalArticleImage, false);
 
 		JournalArticleImage existingJournalArticleImage = _persistence.findByPrimaryKey(newJournalArticleImage.getPrimaryKey());
 
-		assertEquals(existingJournalArticleImage.getArticleImageId(),
+		Assert.assertEquals(existingJournalArticleImage.getArticleImageId(),
 			newJournalArticleImage.getArticleImageId());
-		assertEquals(existingJournalArticleImage.getGroupId(),
+		Assert.assertEquals(existingJournalArticleImage.getGroupId(),
 			newJournalArticleImage.getGroupId());
-		assertEquals(existingJournalArticleImage.getArticleId(),
+		Assert.assertEquals(existingJournalArticleImage.getArticleId(),
 			newJournalArticleImage.getArticleId());
-		assertEquals(existingJournalArticleImage.getVersion(),
+		AssertUtils.assertEquals(existingJournalArticleImage.getVersion(),
 			newJournalArticleImage.getVersion());
-		assertEquals(existingJournalArticleImage.getElInstanceId(),
+		Assert.assertEquals(existingJournalArticleImage.getElInstanceId(),
 			newJournalArticleImage.getElInstanceId());
-		assertEquals(existingJournalArticleImage.getElName(),
+		Assert.assertEquals(existingJournalArticleImage.getElName(),
 			newJournalArticleImage.getElName());
-		assertEquals(existingJournalArticleImage.getLanguageId(),
+		Assert.assertEquals(existingJournalArticleImage.getLanguageId(),
 			newJournalArticleImage.getLanguageId());
-		assertEquals(existingJournalArticleImage.getTempImage(),
+		Assert.assertEquals(existingJournalArticleImage.getTempImage(),
 			newJournalArticleImage.getTempImage());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		JournalArticleImage newJournalArticleImage = addJournalArticleImage();
 
 		JournalArticleImage existingJournalArticleImage = _persistence.findByPrimaryKey(newJournalArticleImage.getPrimaryKey());
 
-		assertEquals(existingJournalArticleImage, newJournalArticleImage);
+		Assert.assertEquals(existingJournalArticleImage, newJournalArticleImage);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchArticleImageException");
+			Assert.fail(
+				"Missing entity did not throw NoSuchArticleImageException");
 		}
 		catch (NoSuchArticleImageException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		JournalArticleImage newJournalArticleImage = addJournalArticleImage();
 
 		JournalArticleImage existingJournalArticleImage = _persistence.fetchByPrimaryKey(newJournalArticleImage.getPrimaryKey());
 
-		assertEquals(existingJournalArticleImage, newJournalArticleImage);
+		Assert.assertEquals(existingJournalArticleImage, newJournalArticleImage);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		JournalArticleImage missingJournalArticleImage = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingJournalArticleImage);
+		Assert.assertNull(missingJournalArticleImage);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		JournalArticleImage newJournalArticleImage = addJournalArticleImage();
@@ -153,24 +174,27 @@ public class JournalArticleImagePersistenceTest extends BasePersistenceTestCase 
 
 		List<JournalArticleImage> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		JournalArticleImage existingJournalArticleImage = result.get(0);
 
-		assertEquals(existingJournalArticleImage, newJournalArticleImage);
+		Assert.assertEquals(existingJournalArticleImage, newJournalArticleImage);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(JournalArticleImage.class,
 				JournalArticleImage.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("articleImageId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("articleImageId",
+				ServiceTestUtil.nextLong()));
 
 		List<JournalArticleImage> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		JournalArticleImage newJournalArticleImage = addJournalArticleImage();
@@ -188,13 +212,14 @@ public class JournalArticleImagePersistenceTest extends BasePersistenceTestCase 
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingArticleImageId = result.get(0);
 
-		assertEquals(existingArticleImageId, newArticleImageId);
+		Assert.assertEquals(existingArticleImageId, newArticleImageId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(JournalArticleImage.class,
 				JournalArticleImage.class.getClassLoader());
@@ -203,13 +228,14 @@ public class JournalArticleImagePersistenceTest extends BasePersistenceTestCase 
 				"articleImageId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("articleImageId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -221,43 +247,43 @@ public class JournalArticleImagePersistenceTest extends BasePersistenceTestCase 
 
 		JournalArticleImageModelImpl existingJournalArticleImageModelImpl = (JournalArticleImageModelImpl)_persistence.findByPrimaryKey(newJournalArticleImage.getPrimaryKey());
 
-		assertEquals(existingJournalArticleImageModelImpl.getGroupId(),
+		Assert.assertEquals(existingJournalArticleImageModelImpl.getGroupId(),
 			existingJournalArticleImageModelImpl.getOriginalGroupId());
-		assertTrue(Validator.equals(
+		Assert.assertTrue(Validator.equals(
 				existingJournalArticleImageModelImpl.getArticleId(),
 				existingJournalArticleImageModelImpl.getOriginalArticleId()));
-		assertEquals(existingJournalArticleImageModelImpl.getVersion(),
+		AssertUtils.assertEquals(existingJournalArticleImageModelImpl.getVersion(),
 			existingJournalArticleImageModelImpl.getOriginalVersion());
-		assertTrue(Validator.equals(
+		Assert.assertTrue(Validator.equals(
 				existingJournalArticleImageModelImpl.getElInstanceId(),
 				existingJournalArticleImageModelImpl.getOriginalElInstanceId()));
-		assertTrue(Validator.equals(
+		Assert.assertTrue(Validator.equals(
 				existingJournalArticleImageModelImpl.getElName(),
 				existingJournalArticleImageModelImpl.getOriginalElName()));
-		assertTrue(Validator.equals(
+		Assert.assertTrue(Validator.equals(
 				existingJournalArticleImageModelImpl.getLanguageId(),
 				existingJournalArticleImageModelImpl.getOriginalLanguageId()));
 	}
 
 	protected JournalArticleImage addJournalArticleImage()
 		throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		JournalArticleImage journalArticleImage = _persistence.create(pk);
 
-		journalArticleImage.setGroupId(nextLong());
+		journalArticleImage.setGroupId(ServiceTestUtil.nextLong());
 
-		journalArticleImage.setArticleId(randomString());
+		journalArticleImage.setArticleId(ServiceTestUtil.randomString());
 
-		journalArticleImage.setVersion(nextDouble());
+		journalArticleImage.setVersion(ServiceTestUtil.nextDouble());
 
-		journalArticleImage.setElInstanceId(randomString());
+		journalArticleImage.setElInstanceId(ServiceTestUtil.randomString());
 
-		journalArticleImage.setElName(randomString());
+		journalArticleImage.setElName(ServiceTestUtil.randomString());
 
-		journalArticleImage.setLanguageId(randomString());
+		journalArticleImage.setLanguageId(ServiceTestUtil.randomString());
 
-		journalArticleImage.setTempImage(randomBoolean());
+		journalArticleImage.setTempImage(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(journalArticleImage, false);
 

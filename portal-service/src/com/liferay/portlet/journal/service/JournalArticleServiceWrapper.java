@@ -234,6 +234,12 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 			urlTitle);
 	}
 
+	public int getFoldersArticlesCount(long groupId,
+		java.util.List<java.lang.Long> folderIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleService.getFoldersArticlesCount(groupId, folderIds);
+	}
+
 	public com.liferay.portlet.journal.model.JournalArticle getLatestArticle(
 		long resourcePrimKey)
 		throws com.liferay.portal.kernel.exception.PortalException,

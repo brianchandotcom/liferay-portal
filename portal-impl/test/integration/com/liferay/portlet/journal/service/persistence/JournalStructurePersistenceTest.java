@@ -21,36 +21,48 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.journal.NoSuchStructureException;
 import com.liferay.portlet.journal.model.JournalStructure;
 import com.liferay.portlet.journal.model.impl.JournalStructureModelImpl;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class JournalStructurePersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceExecutionTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class JournalStructurePersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (JournalStructurePersistence)PortalBeanLocatorUtil.locate(JournalStructurePersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		JournalStructure journalStructure = _persistence.create(pk);
 
-		assertNotNull(journalStructure);
+		Assert.assertNotNull(journalStructure);
 
-		assertEquals(journalStructure.getPrimaryKey(), pk);
+		Assert.assertEquals(journalStructure.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		JournalStructure newJournalStructure = addJournalStructure();
 
@@ -58,112 +70,119 @@ public class JournalStructurePersistenceTest extends BasePersistenceTestCase {
 
 		JournalStructure existingJournalStructure = _persistence.fetchByPrimaryKey(newJournalStructure.getPrimaryKey());
 
-		assertNull(existingJournalStructure);
+		Assert.assertNull(existingJournalStructure);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addJournalStructure();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		JournalStructure newJournalStructure = _persistence.create(pk);
 
-		newJournalStructure.setUuid(randomString());
+		newJournalStructure.setUuid(ServiceTestUtil.randomString());
 
-		newJournalStructure.setGroupId(nextLong());
+		newJournalStructure.setGroupId(ServiceTestUtil.nextLong());
 
-		newJournalStructure.setCompanyId(nextLong());
+		newJournalStructure.setCompanyId(ServiceTestUtil.nextLong());
 
-		newJournalStructure.setUserId(nextLong());
+		newJournalStructure.setUserId(ServiceTestUtil.nextLong());
 
-		newJournalStructure.setUserName(randomString());
+		newJournalStructure.setUserName(ServiceTestUtil.randomString());
 
-		newJournalStructure.setCreateDate(nextDate());
+		newJournalStructure.setCreateDate(ServiceTestUtil.nextDate());
 
-		newJournalStructure.setModifiedDate(nextDate());
+		newJournalStructure.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newJournalStructure.setStructureId(randomString());
+		newJournalStructure.setStructureId(ServiceTestUtil.randomString());
 
-		newJournalStructure.setParentStructureId(randomString());
+		newJournalStructure.setParentStructureId(ServiceTestUtil.randomString());
 
-		newJournalStructure.setName(randomString());
+		newJournalStructure.setName(ServiceTestUtil.randomString());
 
-		newJournalStructure.setDescription(randomString());
+		newJournalStructure.setDescription(ServiceTestUtil.randomString());
 
-		newJournalStructure.setXsd(randomString());
+		newJournalStructure.setXsd(ServiceTestUtil.randomString());
 
 		_persistence.update(newJournalStructure, false);
 
 		JournalStructure existingJournalStructure = _persistence.findByPrimaryKey(newJournalStructure.getPrimaryKey());
 
-		assertEquals(existingJournalStructure.getUuid(),
+		Assert.assertEquals(existingJournalStructure.getUuid(),
 			newJournalStructure.getUuid());
-		assertEquals(existingJournalStructure.getId(),
+		Assert.assertEquals(existingJournalStructure.getId(),
 			newJournalStructure.getId());
-		assertEquals(existingJournalStructure.getGroupId(),
+		Assert.assertEquals(existingJournalStructure.getGroupId(),
 			newJournalStructure.getGroupId());
-		assertEquals(existingJournalStructure.getCompanyId(),
+		Assert.assertEquals(existingJournalStructure.getCompanyId(),
 			newJournalStructure.getCompanyId());
-		assertEquals(existingJournalStructure.getUserId(),
+		Assert.assertEquals(existingJournalStructure.getUserId(),
 			newJournalStructure.getUserId());
-		assertEquals(existingJournalStructure.getUserName(),
+		Assert.assertEquals(existingJournalStructure.getUserName(),
 			newJournalStructure.getUserName());
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingJournalStructure.getCreateDate()),
 			Time.getShortTimestamp(newJournalStructure.getCreateDate()));
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingJournalStructure.getModifiedDate()),
 			Time.getShortTimestamp(newJournalStructure.getModifiedDate()));
-		assertEquals(existingJournalStructure.getStructureId(),
+		Assert.assertEquals(existingJournalStructure.getStructureId(),
 			newJournalStructure.getStructureId());
-		assertEquals(existingJournalStructure.getParentStructureId(),
+		Assert.assertEquals(existingJournalStructure.getParentStructureId(),
 			newJournalStructure.getParentStructureId());
-		assertEquals(existingJournalStructure.getName(),
+		Assert.assertEquals(existingJournalStructure.getName(),
 			newJournalStructure.getName());
-		assertEquals(existingJournalStructure.getDescription(),
+		Assert.assertEquals(existingJournalStructure.getDescription(),
 			newJournalStructure.getDescription());
-		assertEquals(existingJournalStructure.getXsd(),
+		Assert.assertEquals(existingJournalStructure.getXsd(),
 			newJournalStructure.getXsd());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		JournalStructure newJournalStructure = addJournalStructure();
 
 		JournalStructure existingJournalStructure = _persistence.findByPrimaryKey(newJournalStructure.getPrimaryKey());
 
-		assertEquals(existingJournalStructure, newJournalStructure);
+		Assert.assertEquals(existingJournalStructure, newJournalStructure);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchStructureException");
+			Assert.fail("Missing entity did not throw NoSuchStructureException");
 		}
 		catch (NoSuchStructureException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		JournalStructure newJournalStructure = addJournalStructure();
 
 		JournalStructure existingJournalStructure = _persistence.fetchByPrimaryKey(newJournalStructure.getPrimaryKey());
 
-		assertEquals(existingJournalStructure, newJournalStructure);
+		Assert.assertEquals(existingJournalStructure, newJournalStructure);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		JournalStructure missingJournalStructure = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingJournalStructure);
+		Assert.assertNull(missingJournalStructure);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		JournalStructure newJournalStructure = addJournalStructure();
@@ -176,24 +195,27 @@ public class JournalStructurePersistenceTest extends BasePersistenceTestCase {
 
 		List<JournalStructure> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		JournalStructure existingJournalStructure = result.get(0);
 
-		assertEquals(existingJournalStructure, newJournalStructure);
+		Assert.assertEquals(existingJournalStructure, newJournalStructure);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(JournalStructure.class,
 				JournalStructure.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("id", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("id",
+				ServiceTestUtil.nextLong()));
 
 		List<JournalStructure> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		JournalStructure newJournalStructure = addJournalStructure();
@@ -209,13 +231,14 @@ public class JournalStructurePersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingId = result.get(0);
 
-		assertEquals(existingId, newId);
+		Assert.assertEquals(existingId, newId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(JournalStructure.class,
 				JournalStructure.class.getClassLoader());
@@ -223,13 +246,14 @@ public class JournalStructurePersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("id"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("id",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -241,47 +265,47 @@ public class JournalStructurePersistenceTest extends BasePersistenceTestCase {
 
 		JournalStructureModelImpl existingJournalStructureModelImpl = (JournalStructureModelImpl)_persistence.findByPrimaryKey(newJournalStructure.getPrimaryKey());
 
-		assertTrue(Validator.equals(
+		Assert.assertTrue(Validator.equals(
 				existingJournalStructureModelImpl.getUuid(),
 				existingJournalStructureModelImpl.getOriginalUuid()));
-		assertEquals(existingJournalStructureModelImpl.getGroupId(),
+		Assert.assertEquals(existingJournalStructureModelImpl.getGroupId(),
 			existingJournalStructureModelImpl.getOriginalGroupId());
 
-		assertEquals(existingJournalStructureModelImpl.getGroupId(),
+		Assert.assertEquals(existingJournalStructureModelImpl.getGroupId(),
 			existingJournalStructureModelImpl.getOriginalGroupId());
-		assertTrue(Validator.equals(
+		Assert.assertTrue(Validator.equals(
 				existingJournalStructureModelImpl.getStructureId(),
 				existingJournalStructureModelImpl.getOriginalStructureId()));
 	}
 
 	protected JournalStructure addJournalStructure() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		JournalStructure journalStructure = _persistence.create(pk);
 
-		journalStructure.setUuid(randomString());
+		journalStructure.setUuid(ServiceTestUtil.randomString());
 
-		journalStructure.setGroupId(nextLong());
+		journalStructure.setGroupId(ServiceTestUtil.nextLong());
 
-		journalStructure.setCompanyId(nextLong());
+		journalStructure.setCompanyId(ServiceTestUtil.nextLong());
 
-		journalStructure.setUserId(nextLong());
+		journalStructure.setUserId(ServiceTestUtil.nextLong());
 
-		journalStructure.setUserName(randomString());
+		journalStructure.setUserName(ServiceTestUtil.randomString());
 
-		journalStructure.setCreateDate(nextDate());
+		journalStructure.setCreateDate(ServiceTestUtil.nextDate());
 
-		journalStructure.setModifiedDate(nextDate());
+		journalStructure.setModifiedDate(ServiceTestUtil.nextDate());
 
-		journalStructure.setStructureId(randomString());
+		journalStructure.setStructureId(ServiceTestUtil.randomString());
 
-		journalStructure.setParentStructureId(randomString());
+		journalStructure.setParentStructureId(ServiceTestUtil.randomString());
 
-		journalStructure.setName(randomString());
+		journalStructure.setName(ServiceTestUtil.randomString());
 
-		journalStructure.setDescription(randomString());
+		journalStructure.setDescription(ServiceTestUtil.randomString());
 
-		journalStructure.setXsd(randomString());
+		journalStructure.setXsd(ServiceTestUtil.randomString());
 
 		_persistence.update(journalStructure, false);
 

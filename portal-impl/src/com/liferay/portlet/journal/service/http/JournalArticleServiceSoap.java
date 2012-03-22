@@ -16,6 +16,7 @@ package com.liferay.portlet.journal.service.http;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 
 import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
@@ -358,6 +359,21 @@ public class JournalArticleServiceSoap {
 					urlTitle);
 
 			return com.liferay.portlet.journal.model.JournalArticleSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getFoldersArticlesCount(long groupId, Long[] folderIds)
+		throws RemoteException {
+		try {
+			int returnValue = JournalArticleServiceUtil.getFoldersArticlesCount(groupId,
+					ListUtil.toList(folderIds));
+
+			return returnValue;
 		}
 		catch (Exception e) {
 			_log.error(e, e);

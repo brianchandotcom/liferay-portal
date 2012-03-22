@@ -109,6 +109,12 @@ public class JournalFolderServiceUtil {
 		getService().getSubfolderIds(folderIds, groupId, folderId);
 	}
 
+	public static java.util.List<java.lang.Long> getSubfolderIds(long groupId,
+		long folderId, boolean recurse)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getSubfolderIds(groupId, folderId, recurse);
+	}
+
 	public static com.liferay.portlet.journal.model.JournalFolder updateFolder(
 		long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description, boolean mergeWithParentFolder,

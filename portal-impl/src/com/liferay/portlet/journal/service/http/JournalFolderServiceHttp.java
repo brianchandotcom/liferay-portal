@@ -416,6 +416,39 @@ public class JournalFolderServiceHttp {
 		}
 	}
 
+	public static java.util.List<java.lang.Long> getSubfolderIds(
+		HttpPrincipal httpPrincipal, long groupId, long folderId,
+		boolean recurse)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(JournalFolderServiceUtil.class.getName(),
+					"getSubfolderIds", _getSubfolderIdsParameterTypes11);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					folderId, recurse);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<java.lang.Long>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.portlet.journal.model.JournalFolder updateFolder(
 		HttpPrincipal httpPrincipal, long folderId, long parentFolderId,
 		java.lang.String name, java.lang.String description,
@@ -425,7 +458,7 @@ public class JournalFolderServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(JournalFolderServiceUtil.class.getName(),
-					"updateFolder", _updateFolderParameterTypes11);
+					"updateFolder", _updateFolderParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					folderId, parentFolderId, name, description,
@@ -494,7 +527,10 @@ public class JournalFolderServiceHttp {
 	private static final Class<?>[] _getSubfolderIdsParameterTypes10 = new Class[] {
 			java.util.List.class, long.class, long.class
 		};
-	private static final Class<?>[] _updateFolderParameterTypes11 = new Class[] {
+	private static final Class<?>[] _getSubfolderIdsParameterTypes11 = new Class[] {
+			long.class, long.class, boolean.class
+		};
+	private static final Class<?>[] _updateFolderParameterTypes12 = new Class[] {
 			long.class, long.class, java.lang.String.class,
 			java.lang.String.class, boolean.class,
 			com.liferay.portal.service.ServiceContext.class

@@ -21,36 +21,48 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.journal.NoSuchTemplateException;
 import com.liferay.portlet.journal.model.JournalTemplate;
 import com.liferay.portlet.journal.model.impl.JournalTemplateModelImpl;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class JournalTemplatePersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceExecutionTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class JournalTemplatePersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (JournalTemplatePersistence)PortalBeanLocatorUtil.locate(JournalTemplatePersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		JournalTemplate journalTemplate = _persistence.create(pk);
 
-		assertNotNull(journalTemplate);
+		Assert.assertNotNull(journalTemplate);
 
-		assertEquals(journalTemplate.getPrimaryKey(), pk);
+		Assert.assertEquals(journalTemplate.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		JournalTemplate newJournalTemplate = addJournalTemplate();
 
@@ -58,131 +70,139 @@ public class JournalTemplatePersistenceTest extends BasePersistenceTestCase {
 
 		JournalTemplate existingJournalTemplate = _persistence.fetchByPrimaryKey(newJournalTemplate.getPrimaryKey());
 
-		assertNull(existingJournalTemplate);
+		Assert.assertNull(existingJournalTemplate);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addJournalTemplate();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		JournalTemplate newJournalTemplate = _persistence.create(pk);
 
-		newJournalTemplate.setUuid(randomString());
+		newJournalTemplate.setUuid(ServiceTestUtil.randomString());
 
-		newJournalTemplate.setGroupId(nextLong());
+		newJournalTemplate.setGroupId(ServiceTestUtil.nextLong());
 
-		newJournalTemplate.setCompanyId(nextLong());
+		newJournalTemplate.setCompanyId(ServiceTestUtil.nextLong());
 
-		newJournalTemplate.setUserId(nextLong());
+		newJournalTemplate.setUserId(ServiceTestUtil.nextLong());
 
-		newJournalTemplate.setUserName(randomString());
+		newJournalTemplate.setUserName(ServiceTestUtil.randomString());
 
-		newJournalTemplate.setCreateDate(nextDate());
+		newJournalTemplate.setCreateDate(ServiceTestUtil.nextDate());
 
-		newJournalTemplate.setModifiedDate(nextDate());
+		newJournalTemplate.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newJournalTemplate.setTemplateId(randomString());
+		newJournalTemplate.setTemplateId(ServiceTestUtil.randomString());
 
-		newJournalTemplate.setStructureId(randomString());
+		newJournalTemplate.setStructureId(ServiceTestUtil.randomString());
 
-		newJournalTemplate.setName(randomString());
+		newJournalTemplate.setName(ServiceTestUtil.randomString());
 
-		newJournalTemplate.setDescription(randomString());
+		newJournalTemplate.setDescription(ServiceTestUtil.randomString());
 
-		newJournalTemplate.setXsl(randomString());
+		newJournalTemplate.setXsl(ServiceTestUtil.randomString());
 
-		newJournalTemplate.setLangType(randomString());
+		newJournalTemplate.setLangType(ServiceTestUtil.randomString());
 
-		newJournalTemplate.setCacheable(randomBoolean());
+		newJournalTemplate.setCacheable(ServiceTestUtil.randomBoolean());
 
-		newJournalTemplate.setSmallImage(randomBoolean());
+		newJournalTemplate.setSmallImage(ServiceTestUtil.randomBoolean());
 
-		newJournalTemplate.setSmallImageId(nextLong());
+		newJournalTemplate.setSmallImageId(ServiceTestUtil.nextLong());
 
-		newJournalTemplate.setSmallImageURL(randomString());
+		newJournalTemplate.setSmallImageURL(ServiceTestUtil.randomString());
 
 		_persistence.update(newJournalTemplate, false);
 
 		JournalTemplate existingJournalTemplate = _persistence.findByPrimaryKey(newJournalTemplate.getPrimaryKey());
 
-		assertEquals(existingJournalTemplate.getUuid(),
+		Assert.assertEquals(existingJournalTemplate.getUuid(),
 			newJournalTemplate.getUuid());
-		assertEquals(existingJournalTemplate.getId(), newJournalTemplate.getId());
-		assertEquals(existingJournalTemplate.getGroupId(),
+		Assert.assertEquals(existingJournalTemplate.getId(),
+			newJournalTemplate.getId());
+		Assert.assertEquals(existingJournalTemplate.getGroupId(),
 			newJournalTemplate.getGroupId());
-		assertEquals(existingJournalTemplate.getCompanyId(),
+		Assert.assertEquals(existingJournalTemplate.getCompanyId(),
 			newJournalTemplate.getCompanyId());
-		assertEquals(existingJournalTemplate.getUserId(),
+		Assert.assertEquals(existingJournalTemplate.getUserId(),
 			newJournalTemplate.getUserId());
-		assertEquals(existingJournalTemplate.getUserName(),
+		Assert.assertEquals(existingJournalTemplate.getUserName(),
 			newJournalTemplate.getUserName());
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingJournalTemplate.getCreateDate()),
 			Time.getShortTimestamp(newJournalTemplate.getCreateDate()));
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingJournalTemplate.getModifiedDate()),
 			Time.getShortTimestamp(newJournalTemplate.getModifiedDate()));
-		assertEquals(existingJournalTemplate.getTemplateId(),
+		Assert.assertEquals(existingJournalTemplate.getTemplateId(),
 			newJournalTemplate.getTemplateId());
-		assertEquals(existingJournalTemplate.getStructureId(),
+		Assert.assertEquals(existingJournalTemplate.getStructureId(),
 			newJournalTemplate.getStructureId());
-		assertEquals(existingJournalTemplate.getName(),
+		Assert.assertEquals(existingJournalTemplate.getName(),
 			newJournalTemplate.getName());
-		assertEquals(existingJournalTemplate.getDescription(),
+		Assert.assertEquals(existingJournalTemplate.getDescription(),
 			newJournalTemplate.getDescription());
-		assertEquals(existingJournalTemplate.getXsl(),
+		Assert.assertEquals(existingJournalTemplate.getXsl(),
 			newJournalTemplate.getXsl());
-		assertEquals(existingJournalTemplate.getLangType(),
+		Assert.assertEquals(existingJournalTemplate.getLangType(),
 			newJournalTemplate.getLangType());
-		assertEquals(existingJournalTemplate.getCacheable(),
+		Assert.assertEquals(existingJournalTemplate.getCacheable(),
 			newJournalTemplate.getCacheable());
-		assertEquals(existingJournalTemplate.getSmallImage(),
+		Assert.assertEquals(existingJournalTemplate.getSmallImage(),
 			newJournalTemplate.getSmallImage());
-		assertEquals(existingJournalTemplate.getSmallImageId(),
+		Assert.assertEquals(existingJournalTemplate.getSmallImageId(),
 			newJournalTemplate.getSmallImageId());
-		assertEquals(existingJournalTemplate.getSmallImageURL(),
+		Assert.assertEquals(existingJournalTemplate.getSmallImageURL(),
 			newJournalTemplate.getSmallImageURL());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		JournalTemplate newJournalTemplate = addJournalTemplate();
 
 		JournalTemplate existingJournalTemplate = _persistence.findByPrimaryKey(newJournalTemplate.getPrimaryKey());
 
-		assertEquals(existingJournalTemplate, newJournalTemplate);
+		Assert.assertEquals(existingJournalTemplate, newJournalTemplate);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchTemplateException");
+			Assert.fail("Missing entity did not throw NoSuchTemplateException");
 		}
 		catch (NoSuchTemplateException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		JournalTemplate newJournalTemplate = addJournalTemplate();
 
 		JournalTemplate existingJournalTemplate = _persistence.fetchByPrimaryKey(newJournalTemplate.getPrimaryKey());
 
-		assertEquals(existingJournalTemplate, newJournalTemplate);
+		Assert.assertEquals(existingJournalTemplate, newJournalTemplate);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		JournalTemplate missingJournalTemplate = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingJournalTemplate);
+		Assert.assertNull(missingJournalTemplate);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		JournalTemplate newJournalTemplate = addJournalTemplate();
@@ -195,24 +215,27 @@ public class JournalTemplatePersistenceTest extends BasePersistenceTestCase {
 
 		List<JournalTemplate> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		JournalTemplate existingJournalTemplate = result.get(0);
 
-		assertEquals(existingJournalTemplate, newJournalTemplate);
+		Assert.assertEquals(existingJournalTemplate, newJournalTemplate);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(JournalTemplate.class,
 				JournalTemplate.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("id", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("id",
+				ServiceTestUtil.nextLong()));
 
 		List<JournalTemplate> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		JournalTemplate newJournalTemplate = addJournalTemplate();
@@ -228,13 +251,14 @@ public class JournalTemplatePersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingId = result.get(0);
 
-		assertEquals(existingId, newId);
+		Assert.assertEquals(existingId, newId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(JournalTemplate.class,
 				JournalTemplate.class.getClassLoader());
@@ -242,13 +266,14 @@ public class JournalTemplatePersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("id"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("id",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -260,60 +285,60 @@ public class JournalTemplatePersistenceTest extends BasePersistenceTestCase {
 
 		JournalTemplateModelImpl existingJournalTemplateModelImpl = (JournalTemplateModelImpl)_persistence.findByPrimaryKey(newJournalTemplate.getPrimaryKey());
 
-		assertTrue(Validator.equals(
+		Assert.assertTrue(Validator.equals(
 				existingJournalTemplateModelImpl.getUuid(),
 				existingJournalTemplateModelImpl.getOriginalUuid()));
-		assertEquals(existingJournalTemplateModelImpl.getGroupId(),
+		Assert.assertEquals(existingJournalTemplateModelImpl.getGroupId(),
 			existingJournalTemplateModelImpl.getOriginalGroupId());
 
-		assertEquals(existingJournalTemplateModelImpl.getSmallImageId(),
+		Assert.assertEquals(existingJournalTemplateModelImpl.getSmallImageId(),
 			existingJournalTemplateModelImpl.getOriginalSmallImageId());
 
-		assertEquals(existingJournalTemplateModelImpl.getGroupId(),
+		Assert.assertEquals(existingJournalTemplateModelImpl.getGroupId(),
 			existingJournalTemplateModelImpl.getOriginalGroupId());
-		assertTrue(Validator.equals(
+		Assert.assertTrue(Validator.equals(
 				existingJournalTemplateModelImpl.getTemplateId(),
 				existingJournalTemplateModelImpl.getOriginalTemplateId()));
 	}
 
 	protected JournalTemplate addJournalTemplate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		JournalTemplate journalTemplate = _persistence.create(pk);
 
-		journalTemplate.setUuid(randomString());
+		journalTemplate.setUuid(ServiceTestUtil.randomString());
 
-		journalTemplate.setGroupId(nextLong());
+		journalTemplate.setGroupId(ServiceTestUtil.nextLong());
 
-		journalTemplate.setCompanyId(nextLong());
+		journalTemplate.setCompanyId(ServiceTestUtil.nextLong());
 
-		journalTemplate.setUserId(nextLong());
+		journalTemplate.setUserId(ServiceTestUtil.nextLong());
 
-		journalTemplate.setUserName(randomString());
+		journalTemplate.setUserName(ServiceTestUtil.randomString());
 
-		journalTemplate.setCreateDate(nextDate());
+		journalTemplate.setCreateDate(ServiceTestUtil.nextDate());
 
-		journalTemplate.setModifiedDate(nextDate());
+		journalTemplate.setModifiedDate(ServiceTestUtil.nextDate());
 
-		journalTemplate.setTemplateId(randomString());
+		journalTemplate.setTemplateId(ServiceTestUtil.randomString());
 
-		journalTemplate.setStructureId(randomString());
+		journalTemplate.setStructureId(ServiceTestUtil.randomString());
 
-		journalTemplate.setName(randomString());
+		journalTemplate.setName(ServiceTestUtil.randomString());
 
-		journalTemplate.setDescription(randomString());
+		journalTemplate.setDescription(ServiceTestUtil.randomString());
 
-		journalTemplate.setXsl(randomString());
+		journalTemplate.setXsl(ServiceTestUtil.randomString());
 
-		journalTemplate.setLangType(randomString());
+		journalTemplate.setLangType(ServiceTestUtil.randomString());
 
-		journalTemplate.setCacheable(randomBoolean());
+		journalTemplate.setCacheable(ServiceTestUtil.randomBoolean());
 
-		journalTemplate.setSmallImage(randomBoolean());
+		journalTemplate.setSmallImage(ServiceTestUtil.randomBoolean());
 
-		journalTemplate.setSmallImageId(nextLong());
+		journalTemplate.setSmallImageId(ServiceTestUtil.nextLong());
 
-		journalTemplate.setSmallImageURL(randomString());
+		journalTemplate.setSmallImageURL(ServiceTestUtil.randomString());
 
 		_persistence.update(journalTemplate, false);
 

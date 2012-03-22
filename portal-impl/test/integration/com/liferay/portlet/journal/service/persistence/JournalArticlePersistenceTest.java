@@ -21,36 +21,49 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
+import com.liferay.portal.test.AssertUtils;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.impl.JournalArticleModelImpl;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class JournalArticlePersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceExecutionTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class JournalArticlePersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (JournalArticlePersistence)PortalBeanLocatorUtil.locate(JournalArticlePersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		JournalArticle journalArticle = _persistence.create(pk);
 
-		assertNotNull(journalArticle);
+		Assert.assertNotNull(journalArticle);
 
-		assertEquals(journalArticle.getPrimaryKey(), pk);
+		Assert.assertEquals(journalArticle.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		JournalArticle newJournalArticle = addJournalArticle();
 
@@ -58,195 +71,203 @@ public class JournalArticlePersistenceTest extends BasePersistenceTestCase {
 
 		JournalArticle existingJournalArticle = _persistence.fetchByPrimaryKey(newJournalArticle.getPrimaryKey());
 
-		assertNull(existingJournalArticle);
+		Assert.assertNull(existingJournalArticle);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addJournalArticle();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		JournalArticle newJournalArticle = _persistence.create(pk);
 
-		newJournalArticle.setUuid(randomString());
+		newJournalArticle.setUuid(ServiceTestUtil.randomString());
 
-		newJournalArticle.setResourcePrimKey(nextLong());
+		newJournalArticle.setResourcePrimKey(ServiceTestUtil.nextLong());
 
-		newJournalArticle.setGroupId(nextLong());
+		newJournalArticle.setGroupId(ServiceTestUtil.nextLong());
 
-		newJournalArticle.setCompanyId(nextLong());
+		newJournalArticle.setCompanyId(ServiceTestUtil.nextLong());
 
-		newJournalArticle.setUserId(nextLong());
+		newJournalArticle.setUserId(ServiceTestUtil.nextLong());
 
-		newJournalArticle.setUserName(randomString());
+		newJournalArticle.setUserName(ServiceTestUtil.randomString());
 
-		newJournalArticle.setCreateDate(nextDate());
+		newJournalArticle.setCreateDate(ServiceTestUtil.nextDate());
 
-		newJournalArticle.setModifiedDate(nextDate());
+		newJournalArticle.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newJournalArticle.setFolderId(nextLong());
+		newJournalArticle.setFolderId(ServiceTestUtil.nextLong());
 
-		newJournalArticle.setClassNameId(nextLong());
+		newJournalArticle.setClassNameId(ServiceTestUtil.nextLong());
 
-		newJournalArticle.setClassPK(nextLong());
+		newJournalArticle.setClassPK(ServiceTestUtil.nextLong());
 
-		newJournalArticle.setArticleId(randomString());
+		newJournalArticle.setArticleId(ServiceTestUtil.randomString());
 
-		newJournalArticle.setVersion(nextDouble());
+		newJournalArticle.setVersion(ServiceTestUtil.nextDouble());
 
-		newJournalArticle.setTitle(randomString());
+		newJournalArticle.setTitle(ServiceTestUtil.randomString());
 
-		newJournalArticle.setUrlTitle(randomString());
+		newJournalArticle.setUrlTitle(ServiceTestUtil.randomString());
 
-		newJournalArticle.setDescription(randomString());
+		newJournalArticle.setDescription(ServiceTestUtil.randomString());
 
-		newJournalArticle.setContent(randomString());
+		newJournalArticle.setContent(ServiceTestUtil.randomString());
 
-		newJournalArticle.setType(randomString());
+		newJournalArticle.setType(ServiceTestUtil.randomString());
 
-		newJournalArticle.setStructureId(randomString());
+		newJournalArticle.setStructureId(ServiceTestUtil.randomString());
 
-		newJournalArticle.setTemplateId(randomString());
+		newJournalArticle.setTemplateId(ServiceTestUtil.randomString());
 
-		newJournalArticle.setLayoutUuid(randomString());
+		newJournalArticle.setLayoutUuid(ServiceTestUtil.randomString());
 
-		newJournalArticle.setDisplayDate(nextDate());
+		newJournalArticle.setDisplayDate(ServiceTestUtil.nextDate());
 
-		newJournalArticle.setExpirationDate(nextDate());
+		newJournalArticle.setExpirationDate(ServiceTestUtil.nextDate());
 
-		newJournalArticle.setReviewDate(nextDate());
+		newJournalArticle.setReviewDate(ServiceTestUtil.nextDate());
 
-		newJournalArticle.setIndexable(randomBoolean());
+		newJournalArticle.setIndexable(ServiceTestUtil.randomBoolean());
 
-		newJournalArticle.setSmallImage(randomBoolean());
+		newJournalArticle.setSmallImage(ServiceTestUtil.randomBoolean());
 
-		newJournalArticle.setSmallImageId(nextLong());
+		newJournalArticle.setSmallImageId(ServiceTestUtil.nextLong());
 
-		newJournalArticle.setSmallImageURL(randomString());
+		newJournalArticle.setSmallImageURL(ServiceTestUtil.randomString());
 
-		newJournalArticle.setStatus(nextInt());
+		newJournalArticle.setStatus(ServiceTestUtil.nextInt());
 
-		newJournalArticle.setStatusByUserId(nextLong());
+		newJournalArticle.setStatusByUserId(ServiceTestUtil.nextLong());
 
-		newJournalArticle.setStatusByUserName(randomString());
+		newJournalArticle.setStatusByUserName(ServiceTestUtil.randomString());
 
-		newJournalArticle.setStatusDate(nextDate());
+		newJournalArticle.setStatusDate(ServiceTestUtil.nextDate());
 
 		_persistence.update(newJournalArticle, false);
 
 		JournalArticle existingJournalArticle = _persistence.findByPrimaryKey(newJournalArticle.getPrimaryKey());
 
-		assertEquals(existingJournalArticle.getUuid(),
+		Assert.assertEquals(existingJournalArticle.getUuid(),
 			newJournalArticle.getUuid());
-		assertEquals(existingJournalArticle.getId(), newJournalArticle.getId());
-		assertEquals(existingJournalArticle.getResourcePrimKey(),
+		Assert.assertEquals(existingJournalArticle.getId(),
+			newJournalArticle.getId());
+		Assert.assertEquals(existingJournalArticle.getResourcePrimKey(),
 			newJournalArticle.getResourcePrimKey());
-		assertEquals(existingJournalArticle.getGroupId(),
+		Assert.assertEquals(existingJournalArticle.getGroupId(),
 			newJournalArticle.getGroupId());
-		assertEquals(existingJournalArticle.getCompanyId(),
+		Assert.assertEquals(existingJournalArticle.getCompanyId(),
 			newJournalArticle.getCompanyId());
-		assertEquals(existingJournalArticle.getUserId(),
+		Assert.assertEquals(existingJournalArticle.getUserId(),
 			newJournalArticle.getUserId());
-		assertEquals(existingJournalArticle.getUserName(),
+		Assert.assertEquals(existingJournalArticle.getUserName(),
 			newJournalArticle.getUserName());
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingJournalArticle.getCreateDate()),
 			Time.getShortTimestamp(newJournalArticle.getCreateDate()));
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingJournalArticle.getModifiedDate()),
 			Time.getShortTimestamp(newJournalArticle.getModifiedDate()));
-		assertEquals(existingJournalArticle.getFolderId(),
+		Assert.assertEquals(existingJournalArticle.getFolderId(),
 			newJournalArticle.getFolderId());
-		assertEquals(existingJournalArticle.getClassNameId(),
+		Assert.assertEquals(existingJournalArticle.getClassNameId(),
 			newJournalArticle.getClassNameId());
-		assertEquals(existingJournalArticle.getClassPK(),
+		Assert.assertEquals(existingJournalArticle.getClassPK(),
 			newJournalArticle.getClassPK());
-		assertEquals(existingJournalArticle.getArticleId(),
+		Assert.assertEquals(existingJournalArticle.getArticleId(),
 			newJournalArticle.getArticleId());
-		assertEquals(existingJournalArticle.getVersion(),
+		AssertUtils.assertEquals(existingJournalArticle.getVersion(),
 			newJournalArticle.getVersion());
-		assertEquals(existingJournalArticle.getTitle(),
+		Assert.assertEquals(existingJournalArticle.getTitle(),
 			newJournalArticle.getTitle());
-		assertEquals(existingJournalArticle.getUrlTitle(),
+		Assert.assertEquals(existingJournalArticle.getUrlTitle(),
 			newJournalArticle.getUrlTitle());
-		assertEquals(existingJournalArticle.getDescription(),
+		Assert.assertEquals(existingJournalArticle.getDescription(),
 			newJournalArticle.getDescription());
-		assertEquals(existingJournalArticle.getContent(),
+		Assert.assertEquals(existingJournalArticle.getContent(),
 			newJournalArticle.getContent());
-		assertEquals(existingJournalArticle.getType(),
+		Assert.assertEquals(existingJournalArticle.getType(),
 			newJournalArticle.getType());
-		assertEquals(existingJournalArticle.getStructureId(),
+		Assert.assertEquals(existingJournalArticle.getStructureId(),
 			newJournalArticle.getStructureId());
-		assertEquals(existingJournalArticle.getTemplateId(),
+		Assert.assertEquals(existingJournalArticle.getTemplateId(),
 			newJournalArticle.getTemplateId());
-		assertEquals(existingJournalArticle.getLayoutUuid(),
+		Assert.assertEquals(existingJournalArticle.getLayoutUuid(),
 			newJournalArticle.getLayoutUuid());
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingJournalArticle.getDisplayDate()),
 			Time.getShortTimestamp(newJournalArticle.getDisplayDate()));
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingJournalArticle.getExpirationDate()),
 			Time.getShortTimestamp(newJournalArticle.getExpirationDate()));
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingJournalArticle.getReviewDate()),
 			Time.getShortTimestamp(newJournalArticle.getReviewDate()));
-		assertEquals(existingJournalArticle.getIndexable(),
+		Assert.assertEquals(existingJournalArticle.getIndexable(),
 			newJournalArticle.getIndexable());
-		assertEquals(existingJournalArticle.getSmallImage(),
+		Assert.assertEquals(existingJournalArticle.getSmallImage(),
 			newJournalArticle.getSmallImage());
-		assertEquals(existingJournalArticle.getSmallImageId(),
+		Assert.assertEquals(existingJournalArticle.getSmallImageId(),
 			newJournalArticle.getSmallImageId());
-		assertEquals(existingJournalArticle.getSmallImageURL(),
+		Assert.assertEquals(existingJournalArticle.getSmallImageURL(),
 			newJournalArticle.getSmallImageURL());
-		assertEquals(existingJournalArticle.getStatus(),
+		Assert.assertEquals(existingJournalArticle.getStatus(),
 			newJournalArticle.getStatus());
-		assertEquals(existingJournalArticle.getStatusByUserId(),
+		Assert.assertEquals(existingJournalArticle.getStatusByUserId(),
 			newJournalArticle.getStatusByUserId());
-		assertEquals(existingJournalArticle.getStatusByUserName(),
+		Assert.assertEquals(existingJournalArticle.getStatusByUserName(),
 			newJournalArticle.getStatusByUserName());
-		assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(Time.getShortTimestamp(
 				existingJournalArticle.getStatusDate()),
 			Time.getShortTimestamp(newJournalArticle.getStatusDate()));
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		JournalArticle newJournalArticle = addJournalArticle();
 
 		JournalArticle existingJournalArticle = _persistence.findByPrimaryKey(newJournalArticle.getPrimaryKey());
 
-		assertEquals(existingJournalArticle, newJournalArticle);
+		Assert.assertEquals(existingJournalArticle, newJournalArticle);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchArticleException");
+			Assert.fail("Missing entity did not throw NoSuchArticleException");
 		}
 		catch (NoSuchArticleException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		JournalArticle newJournalArticle = addJournalArticle();
 
 		JournalArticle existingJournalArticle = _persistence.fetchByPrimaryKey(newJournalArticle.getPrimaryKey());
 
-		assertEquals(existingJournalArticle, newJournalArticle);
+		Assert.assertEquals(existingJournalArticle, newJournalArticle);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		JournalArticle missingJournalArticle = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingJournalArticle);
+		Assert.assertNull(missingJournalArticle);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		JournalArticle newJournalArticle = addJournalArticle();
@@ -259,24 +280,27 @@ public class JournalArticlePersistenceTest extends BasePersistenceTestCase {
 
 		List<JournalArticle> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		JournalArticle existingJournalArticle = result.get(0);
 
-		assertEquals(existingJournalArticle, newJournalArticle);
+		Assert.assertEquals(existingJournalArticle, newJournalArticle);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(JournalArticle.class,
 				JournalArticle.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("id", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("id",
+				ServiceTestUtil.nextLong()));
 
 		List<JournalArticle> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		JournalArticle newJournalArticle = addJournalArticle();
@@ -292,13 +316,14 @@ public class JournalArticlePersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingId = result.get(0);
 
-		assertEquals(existingId, newId);
+		Assert.assertEquals(existingId, newId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(JournalArticle.class,
 				JournalArticle.class.getClassLoader());
@@ -306,13 +331,14 @@ public class JournalArticlePersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("id"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("id",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -324,96 +350,97 @@ public class JournalArticlePersistenceTest extends BasePersistenceTestCase {
 
 		JournalArticleModelImpl existingJournalArticleModelImpl = (JournalArticleModelImpl)_persistence.findByPrimaryKey(newJournalArticle.getPrimaryKey());
 
-		assertTrue(Validator.equals(existingJournalArticleModelImpl.getUuid(),
+		Assert.assertTrue(Validator.equals(
+				existingJournalArticleModelImpl.getUuid(),
 				existingJournalArticleModelImpl.getOriginalUuid()));
-		assertEquals(existingJournalArticleModelImpl.getGroupId(),
+		Assert.assertEquals(existingJournalArticleModelImpl.getGroupId(),
 			existingJournalArticleModelImpl.getOriginalGroupId());
 
-		assertEquals(existingJournalArticleModelImpl.getGroupId(),
+		Assert.assertEquals(existingJournalArticleModelImpl.getGroupId(),
 			existingJournalArticleModelImpl.getOriginalGroupId());
-		assertEquals(existingJournalArticleModelImpl.getClassNameId(),
+		Assert.assertEquals(existingJournalArticleModelImpl.getClassNameId(),
 			existingJournalArticleModelImpl.getOriginalClassNameId());
-		assertTrue(Validator.equals(
+		Assert.assertTrue(Validator.equals(
 				existingJournalArticleModelImpl.getStructureId(),
 				existingJournalArticleModelImpl.getOriginalStructureId()));
 
-		assertEquals(existingJournalArticleModelImpl.getGroupId(),
+		Assert.assertEquals(existingJournalArticleModelImpl.getGroupId(),
 			existingJournalArticleModelImpl.getOriginalGroupId());
-		assertTrue(Validator.equals(
+		Assert.assertTrue(Validator.equals(
 				existingJournalArticleModelImpl.getArticleId(),
 				existingJournalArticleModelImpl.getOriginalArticleId()));
-		assertEquals(existingJournalArticleModelImpl.getVersion(),
+		AssertUtils.assertEquals(existingJournalArticleModelImpl.getVersion(),
 			existingJournalArticleModelImpl.getOriginalVersion());
 	}
 
 	protected JournalArticle addJournalArticle() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		JournalArticle journalArticle = _persistence.create(pk);
 
-		journalArticle.setUuid(randomString());
+		journalArticle.setUuid(ServiceTestUtil.randomString());
 
-		journalArticle.setResourcePrimKey(nextLong());
+		journalArticle.setResourcePrimKey(ServiceTestUtil.nextLong());
 
-		journalArticle.setGroupId(nextLong());
+		journalArticle.setGroupId(ServiceTestUtil.nextLong());
 
-		journalArticle.setCompanyId(nextLong());
+		journalArticle.setCompanyId(ServiceTestUtil.nextLong());
 
-		journalArticle.setUserId(nextLong());
+		journalArticle.setUserId(ServiceTestUtil.nextLong());
 
-		journalArticle.setUserName(randomString());
+		journalArticle.setUserName(ServiceTestUtil.randomString());
 
-		journalArticle.setCreateDate(nextDate());
+		journalArticle.setCreateDate(ServiceTestUtil.nextDate());
 
-		journalArticle.setModifiedDate(nextDate());
+		journalArticle.setModifiedDate(ServiceTestUtil.nextDate());
 
-		journalArticle.setFolderId(nextLong());
+		journalArticle.setFolderId(ServiceTestUtil.nextLong());
 
-		journalArticle.setClassNameId(nextLong());
+		journalArticle.setClassNameId(ServiceTestUtil.nextLong());
 
-		journalArticle.setClassPK(nextLong());
+		journalArticle.setClassPK(ServiceTestUtil.nextLong());
 
-		journalArticle.setArticleId(randomString());
+		journalArticle.setArticleId(ServiceTestUtil.randomString());
 
-		journalArticle.setVersion(nextDouble());
+		journalArticle.setVersion(ServiceTestUtil.nextDouble());
 
-		journalArticle.setTitle(randomString());
+		journalArticle.setTitle(ServiceTestUtil.randomString());
 
-		journalArticle.setUrlTitle(randomString());
+		journalArticle.setUrlTitle(ServiceTestUtil.randomString());
 
-		journalArticle.setDescription(randomString());
+		journalArticle.setDescription(ServiceTestUtil.randomString());
 
-		journalArticle.setContent(randomString());
+		journalArticle.setContent(ServiceTestUtil.randomString());
 
-		journalArticle.setType(randomString());
+		journalArticle.setType(ServiceTestUtil.randomString());
 
-		journalArticle.setStructureId(randomString());
+		journalArticle.setStructureId(ServiceTestUtil.randomString());
 
-		journalArticle.setTemplateId(randomString());
+		journalArticle.setTemplateId(ServiceTestUtil.randomString());
 
-		journalArticle.setLayoutUuid(randomString());
+		journalArticle.setLayoutUuid(ServiceTestUtil.randomString());
 
-		journalArticle.setDisplayDate(nextDate());
+		journalArticle.setDisplayDate(ServiceTestUtil.nextDate());
 
-		journalArticle.setExpirationDate(nextDate());
+		journalArticle.setExpirationDate(ServiceTestUtil.nextDate());
 
-		journalArticle.setReviewDate(nextDate());
+		journalArticle.setReviewDate(ServiceTestUtil.nextDate());
 
-		journalArticle.setIndexable(randomBoolean());
+		journalArticle.setIndexable(ServiceTestUtil.randomBoolean());
 
-		journalArticle.setSmallImage(randomBoolean());
+		journalArticle.setSmallImage(ServiceTestUtil.randomBoolean());
 
-		journalArticle.setSmallImageId(nextLong());
+		journalArticle.setSmallImageId(ServiceTestUtil.nextLong());
 
-		journalArticle.setSmallImageURL(randomString());
+		journalArticle.setSmallImageURL(ServiceTestUtil.randomString());
 
-		journalArticle.setStatus(nextInt());
+		journalArticle.setStatus(ServiceTestUtil.nextInt());
 
-		journalArticle.setStatusByUserId(nextLong());
+		journalArticle.setStatusByUserId(ServiceTestUtil.nextLong());
 
-		journalArticle.setStatusByUserName(randomString());
+		journalArticle.setStatusByUserName(ServiceTestUtil.randomString());
 
-		journalArticle.setStatusDate(nextDate());
+		journalArticle.setStatusDate(ServiceTestUtil.nextDate());
 
 		_persistence.update(journalArticle, false);
 

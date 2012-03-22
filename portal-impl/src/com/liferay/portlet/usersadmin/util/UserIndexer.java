@@ -54,6 +54,8 @@ public class UserIndexer extends BaseIndexer {
 
 	public static final String[] CLASS_NAMES = {User.class.getName()};
 
+	public static final int DEFAULT_INTERVAL = 10000;
+
 	public static final String PORTLET_ID = PortletKeys.USERS_ADMIN;
 
 	public UserIndexer() {
@@ -393,23 +395,28 @@ public class UserIndexer extends BaseIndexer {
 	}
 
 	protected void reindexUsers(long companyId) throws Exception {
-		int count = UserLocalServiceUtil.getCompanyUsersCount(companyId);
+		long[] minMaxUserId = UserLocalServiceUtil.getMinMaxUserIdByCompanyId(
+			companyId);
 
-		int pages = count / UserIndexer.DEFAULT_INTERVAL;
+		long start = minMaxUserId[0];
+		long end = start + UserIndexer.DEFAULT_INTERVAL;
 
-		for (int i = 0; i <= pages; i++) {
-			int start = (i * UserIndexer.DEFAULT_INTERVAL);
-			int end = start + UserIndexer.DEFAULT_INTERVAL;
+		while (start <= minMaxUserId[1]) {
 
 			reindexUsers(companyId, start, end);
+
+			start = end;
+			end = end + UserIndexer.DEFAULT_INTERVAL;
 		}
 	}
 
-	protected void reindexUsers(long companyId, int start, int end)
+	protected void reindexUsers(
+			long companyId, long lowerUserId, long upperUserId)
 		throws Exception {
 
-		List<User> users = UserLocalServiceUtil.getCompanyUsers(
-			companyId, start, end);
+		List<User> users =
+			UserLocalServiceUtil.getCompanyUsers(
+				companyId, lowerUserId, upperUserId);
 
 		if (users.isEmpty()) {
 			return;

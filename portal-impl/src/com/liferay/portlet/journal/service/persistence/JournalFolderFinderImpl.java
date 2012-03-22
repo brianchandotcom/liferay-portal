@@ -205,9 +205,10 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 				}
 				else {
 					String articleId = (String)array[5];
+					Double version = (Double)array[6];
 
-					obj = JournalArticleUtil.findByG_A_Last(
-						groupId, articleId, null);
+					obj = JournalArticleUtil.findByG_A_V(
+						groupId, articleId, version);
 				}
 
 				models.add(obj);

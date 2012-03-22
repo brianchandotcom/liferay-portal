@@ -35,7 +35,7 @@ import javax.portlet.filter.ResourceRequestWrapper;
 public class DynamicResourceRequest extends ResourceRequestWrapper {
 
 	public DynamicResourceRequest(ResourceRequest resourceRequest) {
-		this(resourceRequest, new HashMap<String, String[]>(), true);
+		this(resourceRequest, null, true);
 	}
 
 	public DynamicResourceRequest(
@@ -47,7 +47,7 @@ public class DynamicResourceRequest extends ResourceRequestWrapper {
 	public DynamicResourceRequest(
 		ResourceRequest resourceRequest, boolean inherit) {
 
-		this(resourceRequest, new HashMap<String, String[]>(), inherit);
+		this(resourceRequest, null, inherit);
 	}
 
 	public DynamicResourceRequest(
@@ -60,9 +60,7 @@ public class DynamicResourceRequest extends ResourceRequestWrapper {
 		_inherit = inherit;
 
 		if (params != null) {
-			for (Map.Entry<String, String[]> entry : params.entrySet()) {
-				_params.put(entry.getKey(), entry.getValue());
-			}
+			_params.putAll(params);
 		}
 
 		if (_inherit && (resourceRequest instanceof DynamicResourceRequest)) {
@@ -73,22 +71,19 @@ public class DynamicResourceRequest extends ResourceRequestWrapper {
 
 			params = dynamicResourceRequest.getDynamicParameterMap();
 
-			if (params != null) {
-				for (Map.Entry<String, String[]> entry : params.entrySet()) {
-					String name = entry.getKey();
-					String[] oldValues = entry.getValue();
+			for (Map.Entry<String, String[]> entry : params.entrySet()) {
+				String name = entry.getKey();
+				String[] oldValues = entry.getValue();
 
-					String[] curValues = _params.get(name);
+				String[] curValues = _params.get(name);
 
-					if (curValues == null) {
-						_params.put(name, oldValues);
-					}
-					else {
-						String[] newValues = ArrayUtil.append(
-							oldValues, curValues);
+				if (curValues == null) {
+					_params.put(name, oldValues);
+				}
+				else {
+					String[] newValues = ArrayUtil.append(oldValues, curValues);
 
-						_params.put(name, newValues);
-					}
+					_params.put(name, newValues);
 				}
 			}
 		}
@@ -118,13 +113,11 @@ public class DynamicResourceRequest extends ResourceRequestWrapper {
 	public Map<String, String[]> getParameterMap() {
 		Map<String, String[]> map = new HashMap<String, String[]>();
 
-		Enumeration<String> enu = getParameterNames();
-
-		while (enu.hasMoreElements()) {
-			String s = enu.nextElement();
-
-			map.put(s, getParameterValues(s));
+		if (_inherit) {
+			map.putAll(super.getParameterMap());
 		}
+
+		map.putAll(_params);
 
 		return map;
 	}

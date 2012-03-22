@@ -18,6 +18,7 @@ import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.messageboards.mbmessage.postnewmbthreadmessage.PostNewMBThreadMessageTest;
 import com.liferay.portalweb.portlet.messageboards.portlet.addportlet.AddPageMBTest;
 import com.liferay.portalweb.portlet.messageboards.portlet.addportlet.AddPortletMBTest;
 

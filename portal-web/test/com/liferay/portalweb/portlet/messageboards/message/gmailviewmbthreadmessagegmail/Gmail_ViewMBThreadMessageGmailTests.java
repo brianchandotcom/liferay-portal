@@ -15,6 +15,11 @@
 package com.liferay.portalweb.portlet.messageboards.message.gmailviewmbthreadmessagegmail;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.sites.site.addmemberssiteuser.AddMembersSiteUserTest;
+import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.AddSiteTest;
+import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.TearDownSiteTest;
+import com.liferay.portalweb.portal.controlpanel.sites.siteportlet.addportletsite.AddPageMBSiteTest;
+import com.liferay.portalweb.portal.controlpanel.sites.siteportlet.addportletsite.AddPortletMBSiteTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.TearDownUserTest;
 
 import junit.framework.Test;
@@ -28,15 +33,13 @@ public class Gmail_ViewMBThreadMessageGmailTests extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddSiteTest.class);
 		testSuite.addTestSuite(AddUserGmailTest.class);
-		testSuite.addTestSuite(AssignMembersSiteUserTest.class);
+		testSuite.addTestSuite(AddMembersSiteUserTest.class);
 		testSuite.addTestSuite(AddPageMBSiteTest.class);
 		testSuite.addTestSuite(AddPortletMBSiteTest.class);
 		testSuite.addTestSuite(ConfigurePortletEmailFromAddressTest.class);
 		testSuite.addTestSuite(AddMBCategorySiteTest.class);
-		testSuite.addTestSuite(EditMBCategoryMailingListActiveActionsTest.class);
-		testSuite.addTestSuite(Gmail_TearDownEmailTest.class);
-		testSuite.addTestSuite(GmailServer_TearDownEmailTest.class);
 		testSuite.addTestSuite(GmailServer_TearDownMailingListMessageTest.class);
+		testSuite.addTestSuite(EditMBCategoryMailingListActiveActionsTest.class);
 		testSuite.addTestSuite(PostNewMBCategoryThreadMessageSiteTest.class);
 		testSuite.addTestSuite(Gmail_ReplyMBCategoryThreadMessageEmailTest.class);
 		testSuite.addTestSuite(ViewMBThreadMessageGmailTest.class);
@@ -44,8 +47,6 @@ public class Gmail_ViewMBThreadMessageGmailTests extends BaseTestSuite {
 		testSuite.addTestSuite(Gmail_TearDownEmailTest.class);
 		testSuite.addTestSuite(GmailServer_TearDownEmailTest.class);
 		testSuite.addTestSuite(GmailServer_TearDownMailingListMessageTest.class);
-		testSuite.addTestSuite(TearDownMBCategoryTest.class);
-		testSuite.addTestSuite(TearDownPageSiteTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
 		testSuite.addTestSuite(TearDownSiteTest.class);
 

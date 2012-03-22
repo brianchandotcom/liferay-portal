@@ -40,27 +40,27 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[7]/span/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[7]/span/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move Thread')]/a</td>
 	<td>Move Thread</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move Thread')]/a</td>
 	<td>Move Thread</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
+	<td>clickAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move Thread')]/a</td>
 	<td>Move Thread</td>
 </tr>
 <tr>
@@ -107,6 +107,11 @@
 	<td>selectWindow</td>
 	<td>null</td>
 	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//a[@id='_19_categoryName']</td>
+	<td>MB Category2 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -178,7 +183,6 @@
 	<td>//td[1]/a</td>
 	<td>MB Category1 Thread Message Subject</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

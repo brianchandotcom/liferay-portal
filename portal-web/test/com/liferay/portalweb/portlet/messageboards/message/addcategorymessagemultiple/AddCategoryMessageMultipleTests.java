@@ -16,6 +16,11 @@ package com.liferay.portalweb.portlet.messageboards.message.addcategorymessagemu
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.messageboards.mbcategory.addmbcategory.AddMBCategoryTest;
+import com.liferay.portalweb.portlet.messageboards.mbcategory.addmbcategory.TearDownMBCategoryTest;
+import com.liferay.portalweb.portlet.messageboards.mbmessage.postnewmbcategorythreadmessage.PostNewMBCategoryThread1MessageTest;
+import com.liferay.portalweb.portlet.messageboards.mbmessage.postnewmbcategorythreadmessage.PostNewMBCategoryThread2MessageTest;
+import com.liferay.portalweb.portlet.messageboards.mbmessage.postnewmbcategorythreadmessage.PostNewMBCategoryThread3MessageTest;
 import com.liferay.portalweb.portlet.messageboards.portlet.addportlet.AddPageMBTest;
 import com.liferay.portalweb.portlet.messageboards.portlet.addportlet.AddPortletMBTest;
 
@@ -30,10 +35,10 @@ public class AddCategoryMessageMultipleTests extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddPageMBTest.class);
 		testSuite.addTestSuite(AddPortletMBTest.class);
-		testSuite.addTestSuite(AddCategoryTest.class);
-		testSuite.addTestSuite(AddCategoryMessage1Test.class);
-		testSuite.addTestSuite(AddCategoryMessage2Test.class);
-		testSuite.addTestSuite(AddCategoryMessage3Test.class);
+		testSuite.addTestSuite(AddMBCategoryTest.class);
+		testSuite.addTestSuite(PostNewMBCategoryThread1MessageTest.class);
+		testSuite.addTestSuite(PostNewMBCategoryThread2MessageTest.class);
+		testSuite.addTestSuite(PostNewMBCategoryThread3MessageTest.class);
 		testSuite.addTestSuite(TearDownMBCategoryTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

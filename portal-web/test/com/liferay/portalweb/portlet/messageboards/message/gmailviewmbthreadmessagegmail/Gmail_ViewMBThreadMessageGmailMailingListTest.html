@@ -240,23 +240,23 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//tr[2]/td/div/div/a</td>
+	<td>//a[@href='#!forum/liferay-mailinglist']</td>
 	<td>liferay-mailinglist</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//tr[2]/td/div/div/a</td>
+	<td>selectWindow</td>
+	<td>name=Google Groups</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>link=liferay-mailinglist</td>
 	<td>liferay-mailinglist</td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>//span/span[2]/span</td>
-	<td>liferay-mailinglist</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span/span[2]/span</td>
-	<td>liferay-mailinglist</td>
+	<td>waitForElementPresent</td>
+	<td>//div[3]/div/div[2]/a</td>
+	<td>[MB Category Name] MB Message Subject</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
@@ -269,24 +269,29 @@
 	<td>[MB Category Name] MB Message Subject</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div/span[2]/span/span</td>
-	<td>me</td>
+	<td>waitForPartialText</td>
+	<td>//td[2]/span/span[contains(.,'Liferay QA')]</td>
+	<td>Liferay QA</td>
 </tr>
 <tr>
 	<td>assertPartialText</td>
-	<td>//div/div/span[3]</td>
+	<td>//td[2]/span/span[contains(.,'Liferay QA')]</td>
+	<td>Liferay QA</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//div[contains(.,'MB Message Body')]</td>
 	<td>MB Message Body</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/span/span</td>
-	<td>Trunk Liferay QA</td>
+	<td>//td[2]/span/span[.='me']</td>
+	<td>me</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//td/div[4]/div</td>
-	<td>MB Message Email Reply- show quoted text -</td>
+	<td>assertPartialText</td>
+	<td>//div[contains(.,'MB Message Email Reply')]</td>
+	<td>MB Message Email Reply</td>
 </tr>
 <tr>
 	<td>store</td>

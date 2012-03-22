@@ -55,8 +55,8 @@ public class MoveCategoryMessageToCategoryTest extends BaseTestCase {
 				"MB Category1 Thread Message Subject"),
 			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//td[7]/span/ul/li/strong/a"));
-		selenium.clickAt("//td[7]/span/ul/li/strong/a",
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
@@ -66,7 +66,7 @@ public class MoveCategoryMessageToCategoryTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move Thread')]/a")) {
 					break;
 				}
 			}
@@ -78,9 +78,9 @@ public class MoveCategoryMessageToCategoryTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Move Thread"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a",
-			RuntimeVariables.replace("Move Thread"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move Thread')]/a"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move Thread')]/a"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("MB Category1 Name"),
@@ -112,6 +112,25 @@ public class MoveCategoryMessageToCategoryTest extends BaseTestCase {
 			selenium.getText("//tr[4]/td[1]/a"));
 		selenium.click("xPath=(//input[@value='Choose'])[2]");
 		selenium.selectWindow("null");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("MB Category2 Name")
+										.equals(selenium.getText(
+								"//a[@id='_19_categoryName']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("MB Category2 Name"),
 			selenium.getText("//a[@id='_19_categoryName']"));
 		selenium.clickAt("//input[@value='Move Thread']",

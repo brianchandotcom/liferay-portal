@@ -24,7 +24,7 @@ public class ViewMBThreadMessageGmailTest extends BaseTestCase {
 	public void testViewMBThreadMessageGmail() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.open("/web/site-name");
+		selenium.open("/web/site-name/");
 		loadRequiredJavaScriptModules();
 		Thread.sleep(60000);
 

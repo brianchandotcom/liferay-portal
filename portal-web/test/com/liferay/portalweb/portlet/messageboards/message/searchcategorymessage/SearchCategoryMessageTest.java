@@ -45,7 +45,7 @@ public class SearchCategoryMessageTest extends BaseTestCase {
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.type("//input[@id='_19_keywords']",
+		selenium.type("//input[@id='_19_keywords1']",
 			RuntimeVariables.replace("MB Category Thread Message Subject"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
@@ -77,7 +77,7 @@ public class SearchCategoryMessageTest extends BaseTestCase {
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.type("//input[@id='_19_keywords']",
+		selenium.type("//input[@id='_19_keywords1']",
 			RuntimeVariables.replace("MB1 Category1 Thread1 Message1 Subject1"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));

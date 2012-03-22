@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddMBCategorySiteTest extends BaseTestCase {
 	public void testAddMBCategorySite() throws Exception {
-		selenium.open("/web/site-name");
+		selenium.open("/web/site-name/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {

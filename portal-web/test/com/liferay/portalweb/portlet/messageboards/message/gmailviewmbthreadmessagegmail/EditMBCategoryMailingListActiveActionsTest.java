@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class EditMBCategoryMailingListActiveActionsTest extends BaseTestCase {
 	public void testEditMBCategoryMailingListActiveActions()
 		throws Exception {
-		selenium.open("/web/site-name");
+		selenium.open("/web/site-name/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {

@@ -537,6 +537,9 @@
 			<finder-column name="privateLayout" />
 			<finder-column name="sourcePrototypeLayoutUuid" />
 		</finder>
+		<finder name="LayoutsByLayoutPrototypeUuid" return-type="Collection">
+			<finder-column name="layoutPrototypeUuid" />
+		</finder>
 
 		<!-- References -->
 
@@ -2628,6 +2631,7 @@
 		<exception>RemoteExport</exception>
 		<exception>RequiredGroup</exception>
 		<exception>RequiredLayout</exception>
+		<exception>RequiredLayoutPrototype</exception>
 		<exception>RequiredLayoutSetBranch</exception>
 		<exception>RequiredLayoutSetPrototype</exception>
 		<exception>RequiredOrganization</exception>

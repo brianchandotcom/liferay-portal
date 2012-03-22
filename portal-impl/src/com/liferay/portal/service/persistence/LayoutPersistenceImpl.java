@@ -281,29 +281,28 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_LAYOUTSBYLAYOUTPROTOTYPEUUID =
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_LAYOUTPROTOTYPEUUID =
 		new FinderPath(LayoutModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByLayoutsByLayoutPrototypeUuid",
+			"findByLayoutPrototypeUuid",
 			new String[] {
 				String.class.getName(),
 				
 			"java.lang.Integer", "java.lang.Integer",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LAYOUTSBYLAYOUTPROTOTYPEUUID =
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LAYOUTPROTOTYPEUUID =
 		new FinderPath(LayoutModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByLayoutsByLayoutPrototypeUuid",
+			"findByLayoutPrototypeUuid",
 			new String[] { String.class.getName() },
 			LayoutModelImpl.LAYOUTPROTOTYPEUUID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_LAYOUTSBYLAYOUTPROTOTYPEUUID =
-		new FinderPath(LayoutModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_COUNT_BY_LAYOUTPROTOTYPEUUID = new FinderPath(LayoutModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByLayoutsByLayoutPrototypeUuid",
+			"countByLayoutPrototypeUuid",
 			new String[] { String.class.getName() });
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(LayoutModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
@@ -710,21 +709,21 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			}
 
 			if ((layoutModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LAYOUTSBYLAYOUTPROTOTYPEUUID.getColumnBitmask()) != 0) {
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LAYOUTPROTOTYPEUUID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						layoutModelImpl.getOriginalLayoutPrototypeUuid()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LAYOUTSBYLAYOUTPROTOTYPEUUID,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LAYOUTPROTOTYPEUUID,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LAYOUTSBYLAYOUTPROTOTYPEUUID,
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LAYOUTPROTOTYPEUUID,
 					args);
 
 				args = new Object[] { layoutModelImpl.getLayoutPrototypeUuid() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LAYOUTSBYLAYOUTPROTOTYPEUUID,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LAYOUTPROTOTYPEUUID,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LAYOUTSBYLAYOUTPROTOTYPEUUID,
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LAYOUTPROTOTYPEUUID,
 					args);
 			}
 		}
@@ -5466,9 +5465,9 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 * @return the matching layouts
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<Layout> findByLayoutsByLayoutPrototypeUuid(
-		String layoutPrototypeUuid) throws SystemException {
-		return findByLayoutsByLayoutPrototypeUuid(layoutPrototypeUuid,
+	public List<Layout> findByLayoutPrototypeUuid(String layoutPrototypeUuid)
+		throws SystemException {
+		return findByLayoutPrototypeUuid(layoutPrototypeUuid,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -5485,11 +5484,9 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 * @return the range of matching layouts
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<Layout> findByLayoutsByLayoutPrototypeUuid(
-		String layoutPrototypeUuid, int start, int end)
-		throws SystemException {
-		return findByLayoutsByLayoutPrototypeUuid(layoutPrototypeUuid, start,
-			end, null);
+	public List<Layout> findByLayoutPrototypeUuid(String layoutPrototypeUuid,
+		int start, int end) throws SystemException {
+		return findByLayoutPrototypeUuid(layoutPrototypeUuid, start, end, null);
 	}
 
 	/**
@@ -5506,19 +5503,19 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 * @return the ordered range of matching layouts
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<Layout> findByLayoutsByLayoutPrototypeUuid(
-		String layoutPrototypeUuid, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+	public List<Layout> findByLayoutPrototypeUuid(String layoutPrototypeUuid,
+		int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LAYOUTSBYLAYOUTPROTOTYPEUUID;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LAYOUTPROTOTYPEUUID;
 			finderArgs = new Object[] { layoutPrototypeUuid };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_LAYOUTSBYLAYOUTPROTOTYPEUUID;
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_LAYOUTPROTOTYPEUUID;
 			finderArgs = new Object[] {
 					layoutPrototypeUuid,
 					
@@ -5554,14 +5551,14 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			query.append(_SQL_SELECT_LAYOUT_WHERE);
 
 			if (layoutPrototypeUuid == null) {
-				query.append(_FINDER_COLUMN_LAYOUTSBYLAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_1);
+				query.append(_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_1);
 			}
 			else {
 				if (layoutPrototypeUuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_LAYOUTSBYLAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_3);
+					query.append(_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_LAYOUTSBYLAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_2);
+					query.append(_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_2);
 				}
 			}
 
@@ -5624,11 +5621,11 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 * @throws com.liferay.portal.NoSuchLayoutException if a matching layout could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Layout findByLayoutsByLayoutPrototypeUuid_First(
-		String layoutPrototypeUuid, OrderByComparator orderByComparator)
+	public Layout findByLayoutPrototypeUuid_First(String layoutPrototypeUuid,
+		OrderByComparator orderByComparator)
 		throws NoSuchLayoutException, SystemException {
-		List<Layout> list = findByLayoutsByLayoutPrototypeUuid(layoutPrototypeUuid,
-				0, 1, orderByComparator);
+		List<Layout> list = findByLayoutPrototypeUuid(layoutPrototypeUuid, 0,
+				1, orderByComparator);
 
 		if (list.isEmpty()) {
 			StringBundler msg = new StringBundler(4);
@@ -5660,12 +5657,12 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 * @throws com.liferay.portal.NoSuchLayoutException if a matching layout could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Layout findByLayoutsByLayoutPrototypeUuid_Last(
-		String layoutPrototypeUuid, OrderByComparator orderByComparator)
+	public Layout findByLayoutPrototypeUuid_Last(String layoutPrototypeUuid,
+		OrderByComparator orderByComparator)
 		throws NoSuchLayoutException, SystemException {
-		int count = countByLayoutsByLayoutPrototypeUuid(layoutPrototypeUuid);
+		int count = countByLayoutPrototypeUuid(layoutPrototypeUuid);
 
-		List<Layout> list = findByLayoutsByLayoutPrototypeUuid(layoutPrototypeUuid,
+		List<Layout> list = findByLayoutPrototypeUuid(layoutPrototypeUuid,
 				count - 1, count, orderByComparator);
 
 		if (list.isEmpty()) {
@@ -5699,7 +5696,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 * @throws com.liferay.portal.NoSuchLayoutException if a layout with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Layout[] findByLayoutsByLayoutPrototypeUuid_PrevAndNext(long plid,
+	public Layout[] findByLayoutPrototypeUuid_PrevAndNext(long plid,
 		String layoutPrototypeUuid, OrderByComparator orderByComparator)
 		throws NoSuchLayoutException, SystemException {
 		Layout layout = findByPrimaryKey(plid);
@@ -5711,13 +5708,13 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			Layout[] array = new LayoutImpl[3];
 
-			array[0] = getByLayoutsByLayoutPrototypeUuid_PrevAndNext(session,
-					layout, layoutPrototypeUuid, orderByComparator, true);
+			array[0] = getByLayoutPrototypeUuid_PrevAndNext(session, layout,
+					layoutPrototypeUuid, orderByComparator, true);
 
 			array[1] = layout;
 
-			array[2] = getByLayoutsByLayoutPrototypeUuid_PrevAndNext(session,
-					layout, layoutPrototypeUuid, orderByComparator, false);
+			array[2] = getByLayoutPrototypeUuid_PrevAndNext(session, layout,
+					layoutPrototypeUuid, orderByComparator, false);
 
 			return array;
 		}
@@ -5729,8 +5726,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		}
 	}
 
-	protected Layout getByLayoutsByLayoutPrototypeUuid_PrevAndNext(
-		Session session, Layout layout, String layoutPrototypeUuid,
+	protected Layout getByLayoutPrototypeUuid_PrevAndNext(Session session,
+		Layout layout, String layoutPrototypeUuid,
 		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
@@ -5745,14 +5742,14 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		query.append(_SQL_SELECT_LAYOUT_WHERE);
 
 		if (layoutPrototypeUuid == null) {
-			query.append(_FINDER_COLUMN_LAYOUTSBYLAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_1);
+			query.append(_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_1);
 		}
 		else {
 			if (layoutPrototypeUuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_LAYOUTSBYLAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_3);
+				query.append(_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_3);
 			}
 			else {
-				query.append(_FINDER_COLUMN_LAYOUTSBYLAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_2);
+				query.append(_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_2);
 			}
 		}
 
@@ -6121,10 +6118,9 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 * @param layoutPrototypeUuid the layout prototype uuid
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByLayoutsByLayoutPrototypeUuid(String layoutPrototypeUuid)
+	public void removeByLayoutPrototypeUuid(String layoutPrototypeUuid)
 		throws SystemException {
-		for (Layout layout : findByLayoutsByLayoutPrototypeUuid(
-				layoutPrototypeUuid)) {
+		for (Layout layout : findByLayoutPrototypeUuid(layoutPrototypeUuid)) {
 			remove(layout);
 		}
 	}
@@ -7093,11 +7089,11 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 * @return the number of matching layouts
 	 * @throws SystemException if a system exception occurred
 	 */
-	public int countByLayoutsByLayoutPrototypeUuid(String layoutPrototypeUuid)
+	public int countByLayoutPrototypeUuid(String layoutPrototypeUuid)
 		throws SystemException {
 		Object[] finderArgs = new Object[] { layoutPrototypeUuid };
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_LAYOUTSBYLAYOUTPROTOTYPEUUID,
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_LAYOUTPROTOTYPEUUID,
 				finderArgs, this);
 
 		if (count == null) {
@@ -7106,14 +7102,14 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			query.append(_SQL_COUNT_LAYOUT_WHERE);
 
 			if (layoutPrototypeUuid == null) {
-				query.append(_FINDER_COLUMN_LAYOUTSBYLAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_1);
+				query.append(_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_1);
 			}
 			else {
 				if (layoutPrototypeUuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_LAYOUTSBYLAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_3);
+					query.append(_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_LAYOUTSBYLAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_2);
+					query.append(_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_2);
 				}
 			}
 
@@ -7142,7 +7138,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_LAYOUTSBYLAYOUTPROTOTYPEUUID,
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_LAYOUTPROTOTYPEUUID,
 					finderArgs, count);
 
 				closeSession(session);
@@ -7401,11 +7397,11 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		"layout.sourcePrototypeLayoutUuid = ?";
 	private static final String _FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_3 =
 		"(layout.sourcePrototypeLayoutUuid IS NULL OR layout.sourcePrototypeLayoutUuid = ?)";
-	private static final String _FINDER_COLUMN_LAYOUTSBYLAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_1 =
+	private static final String _FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_1 =
 		"layout.layoutPrototypeUuid IS NULL";
-	private static final String _FINDER_COLUMN_LAYOUTSBYLAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_2 =
+	private static final String _FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_2 =
 		"layout.layoutPrototypeUuid = ?";
-	private static final String _FINDER_COLUMN_LAYOUTSBYLAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_3 =
+	private static final String _FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_3 =
 		"(layout.layoutPrototypeUuid IS NULL OR layout.layoutPrototypeUuid = ?)";
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "layout.plid";
 	private static final String _FILTER_SQL_SELECT_LAYOUT_WHERE = "SELECT DISTINCT {layout.*} FROM Layout layout WHERE ";

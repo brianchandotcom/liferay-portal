@@ -378,6 +378,16 @@ public interface LayoutLocalService extends PersistedModelLocalService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns all layouts belonging to the layout prototype
+	*
+	* @param uuid of the layout prototype
+	* @return the count of matching layouts
+	* @throws SystemException if a system exception occured
+	*/
+	public int countLayoutsByLayoutPrototypeUuid(java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Deletes the layout, its child layouts, and its associated resources.
 	*
 	* @param layout the layout
@@ -676,16 +686,6 @@ public interface LayoutLocalService extends PersistedModelLocalService {
 		long iconImageId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns all layouts belonging to the layout prototype
-	*
-	* @param uuid of the layout prototype
-	* @return the count of matching layouts
-	* @throws SystemException if a system exception occured
-	*/
-	public int countLayoutsByLayoutPrototypeUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Returns all the layouts belonging to the group.

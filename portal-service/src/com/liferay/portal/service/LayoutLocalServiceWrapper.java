@@ -404,6 +404,18 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	}
 
 	/**
+	* Returns all layouts belonging to the layout prototype
+	*
+	* @param uuid of the layout prototype
+	* @return the count of matching layouts
+	* @throws SystemException if a system exception occured
+	*/
+	public int countLayoutsByLayoutPrototypeUuid(java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _layoutLocalService.countLayoutsByLayoutPrototypeUuid(uuid);
+	}
+
+	/**
 	* Deletes the layout, its child layouts, and its associated resources.
 	*
 	* @param layout the layout
@@ -736,18 +748,6 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _layoutLocalService.getLayoutByIconImageId(iconImageId);
-	}
-
-	/**
-	* Returns all layouts belonging to the layout prototype
-	*
-	* @param uuid of the layout prototype
-	* @return the count of matching layouts
-	* @throws SystemException if a system exception occured
-	*/
-	public int countLayoutsByLayoutPrototypeUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _layoutLocalService.countLayoutsByLayoutPrototypeUuid(uuid);
 	}
 
 	/**

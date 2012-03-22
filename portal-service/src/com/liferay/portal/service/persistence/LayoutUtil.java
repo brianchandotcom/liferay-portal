@@ -1529,11 +1529,10 @@ public class LayoutUtil {
 	* @return the matching layouts
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portal.model.Layout> findByLayoutsByLayoutPrototypeUuid(
+	public static java.util.List<com.liferay.portal.model.Layout> findByLayoutPrototypeUuid(
 		java.lang.String layoutPrototypeUuid)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByLayoutsByLayoutPrototypeUuid(layoutPrototypeUuid);
+		return getPersistence().findByLayoutPrototypeUuid(layoutPrototypeUuid);
 	}
 
 	/**
@@ -1549,12 +1548,11 @@ public class LayoutUtil {
 	* @return the range of matching layouts
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portal.model.Layout> findByLayoutsByLayoutPrototypeUuid(
+	public static java.util.List<com.liferay.portal.model.Layout> findByLayoutPrototypeUuid(
 		java.lang.String layoutPrototypeUuid, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByLayoutsByLayoutPrototypeUuid(layoutPrototypeUuid,
-			start, end);
+				   .findByLayoutPrototypeUuid(layoutPrototypeUuid, start, end);
 	}
 
 	/**
@@ -1571,13 +1569,13 @@ public class LayoutUtil {
 	* @return the ordered range of matching layouts
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portal.model.Layout> findByLayoutsByLayoutPrototypeUuid(
+	public static java.util.List<com.liferay.portal.model.Layout> findByLayoutPrototypeUuid(
 		java.lang.String layoutPrototypeUuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByLayoutsByLayoutPrototypeUuid(layoutPrototypeUuid,
-			start, end, orderByComparator);
+				   .findByLayoutPrototypeUuid(layoutPrototypeUuid, start, end,
+			orderByComparator);
 	}
 
 	/**
@@ -1593,13 +1591,13 @@ public class LayoutUtil {
 	* @throws com.liferay.portal.NoSuchLayoutException if a matching layout could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.Layout findByLayoutsByLayoutPrototypeUuid_First(
+	public static com.liferay.portal.model.Layout findByLayoutPrototypeUuid_First(
 		java.lang.String layoutPrototypeUuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByLayoutsByLayoutPrototypeUuid_First(layoutPrototypeUuid,
+				   .findByLayoutPrototypeUuid_First(layoutPrototypeUuid,
 			orderByComparator);
 	}
 
@@ -1616,13 +1614,13 @@ public class LayoutUtil {
 	* @throws com.liferay.portal.NoSuchLayoutException if a matching layout could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.Layout findByLayoutsByLayoutPrototypeUuid_Last(
+	public static com.liferay.portal.model.Layout findByLayoutPrototypeUuid_Last(
 		java.lang.String layoutPrototypeUuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByLayoutsByLayoutPrototypeUuid_Last(layoutPrototypeUuid,
+				   .findByLayoutPrototypeUuid_Last(layoutPrototypeUuid,
 			orderByComparator);
 	}
 
@@ -1640,13 +1638,13 @@ public class LayoutUtil {
 	* @throws com.liferay.portal.NoSuchLayoutException if a layout with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.Layout[] findByLayoutsByLayoutPrototypeUuid_PrevAndNext(
+	public static com.liferay.portal.model.Layout[] findByLayoutPrototypeUuid_PrevAndNext(
 		long plid, java.lang.String layoutPrototypeUuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByLayoutsByLayoutPrototypeUuid_PrevAndNext(plid,
+				   .findByLayoutPrototypeUuid_PrevAndNext(plid,
 			layoutPrototypeUuid, orderByComparator);
 	}
 
@@ -1849,11 +1847,10 @@ public class LayoutUtil {
 	* @param layoutPrototypeUuid the layout prototype uuid
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByLayoutsByLayoutPrototypeUuid(
+	public static void removeByLayoutPrototypeUuid(
 		java.lang.String layoutPrototypeUuid)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence()
-			.removeByLayoutsByLayoutPrototypeUuid(layoutPrototypeUuid);
+		getPersistence().removeByLayoutPrototypeUuid(layoutPrototypeUuid);
 	}
 
 	/**
@@ -2081,11 +2078,10 @@ public class LayoutUtil {
 	* @return the number of matching layouts
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByLayoutsByLayoutPrototypeUuid(
+	public static int countByLayoutPrototypeUuid(
 		java.lang.String layoutPrototypeUuid)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .countByLayoutsByLayoutPrototypeUuid(layoutPrototypeUuid);
+		return getPersistence().countByLayoutPrototypeUuid(layoutPrototypeUuid);
 	}
 
 	/**

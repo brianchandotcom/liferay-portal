@@ -1238,7 +1238,7 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	* @return the matching layouts
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portal.model.Layout> findByLayoutsByLayoutPrototypeUuid(
+	public java.util.List<com.liferay.portal.model.Layout> findByLayoutPrototypeUuid(
 		java.lang.String layoutPrototypeUuid)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -1255,7 +1255,7 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	* @return the range of matching layouts
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portal.model.Layout> findByLayoutsByLayoutPrototypeUuid(
+	public java.util.List<com.liferay.portal.model.Layout> findByLayoutPrototypeUuid(
 		java.lang.String layoutPrototypeUuid, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -1273,7 +1273,7 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	* @return the ordered range of matching layouts
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portal.model.Layout> findByLayoutsByLayoutPrototypeUuid(
+	public java.util.List<com.liferay.portal.model.Layout> findByLayoutPrototypeUuid(
 		java.lang.String layoutPrototypeUuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -1291,7 +1291,7 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	* @throws com.liferay.portal.NoSuchLayoutException if a matching layout could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.Layout findByLayoutsByLayoutPrototypeUuid_First(
+	public com.liferay.portal.model.Layout findByLayoutPrototypeUuid_First(
 		java.lang.String layoutPrototypeUuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutException,
@@ -1310,7 +1310,7 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	* @throws com.liferay.portal.NoSuchLayoutException if a matching layout could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.Layout findByLayoutsByLayoutPrototypeUuid_Last(
+	public com.liferay.portal.model.Layout findByLayoutPrototypeUuid_Last(
 		java.lang.String layoutPrototypeUuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutException,
@@ -1330,7 +1330,7 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	* @throws com.liferay.portal.NoSuchLayoutException if a layout with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.Layout[] findByLayoutsByLayoutPrototypeUuid_PrevAndNext(
+	public com.liferay.portal.model.Layout[] findByLayoutPrototypeUuid_PrevAndNext(
 		long plid, java.lang.String layoutPrototypeUuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutException,
@@ -1504,7 +1504,7 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	* @param layoutPrototypeUuid the layout prototype uuid
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByLayoutsByLayoutPrototypeUuid(
+	public void removeByLayoutPrototypeUuid(
 		java.lang.String layoutPrototypeUuid)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -1696,8 +1696,7 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	* @return the number of matching layouts
 	* @throws SystemException if a system exception occurred
 	*/
-	public int countByLayoutsByLayoutPrototypeUuid(
-		java.lang.String layoutPrototypeUuid)
+	public int countByLayoutPrototypeUuid(java.lang.String layoutPrototypeUuid)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

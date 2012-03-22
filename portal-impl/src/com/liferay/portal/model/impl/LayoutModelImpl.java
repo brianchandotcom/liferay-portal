@@ -117,11 +117,12 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	public static long GROUPID_COLUMN_BITMASK = 4L;
 	public static long ICONIMAGEID_COLUMN_BITMASK = 8L;
 	public static long LAYOUTID_COLUMN_BITMASK = 16L;
-	public static long PARENTLAYOUTID_COLUMN_BITMASK = 32L;
-	public static long PRIVATELAYOUT_COLUMN_BITMASK = 64L;
-	public static long SOURCEPROTOTYPELAYOUTUUID_COLUMN_BITMASK = 128L;
-	public static long TYPE_COLUMN_BITMASK = 256L;
-	public static long UUID_COLUMN_BITMASK = 512L;
+	public static long LAYOUTPROTOTYPEUUID_COLUMN_BITMASK = 32L;
+	public static long PARENTLAYOUTID_COLUMN_BITMASK = 64L;
+	public static long PRIVATELAYOUT_COLUMN_BITMASK = 128L;
+	public static long SOURCEPROTOTYPELAYOUTUUID_COLUMN_BITMASK = 256L;
+	public static long TYPE_COLUMN_BITMASK = 512L;
+	public static long UUID_COLUMN_BITMASK = 1024L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -1024,7 +1025,17 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	}
 
 	public void setLayoutPrototypeUuid(String layoutPrototypeUuid) {
+		_columnBitmask |= LAYOUTPROTOTYPEUUID_COLUMN_BITMASK;
+
+		if (_originalLayoutPrototypeUuid == null) {
+			_originalLayoutPrototypeUuid = _layoutPrototypeUuid;
+		}
+
 		_layoutPrototypeUuid = layoutPrototypeUuid;
+	}
+
+	public String getOriginalLayoutPrototypeUuid() {
+		return GetterUtil.getString(_originalLayoutPrototypeUuid);
 	}
 
 	@JSON
@@ -1231,6 +1242,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		layoutModelImpl._originalIconImageId = layoutModelImpl._iconImageId;
 
 		layoutModelImpl._setOriginalIconImageId = false;
+
+		layoutModelImpl._originalLayoutPrototypeUuid = layoutModelImpl._layoutPrototypeUuid;
 
 		layoutModelImpl._originalSourcePrototypeLayoutUuid = layoutModelImpl._sourcePrototypeLayoutUuid;
 
@@ -1661,6 +1674,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	private String _css;
 	private int _priority;
 	private String _layoutPrototypeUuid;
+	private String _originalLayoutPrototypeUuid;
 	private boolean _layoutPrototypeLinkEnabled;
 	private String _sourcePrototypeLayoutUuid;
 	private String _originalSourcePrototypeLayoutUuid;

@@ -122,6 +122,14 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		return layoutSet;
 	}
 
+	public int countLayoutSetsByLayoutSetPrototypeUuid(
+			String layoutSetPrototypeUuid)
+		throws SystemException {
+
+		return layoutSetPersistence.countByLayoutSetPrototypeUuid(
+			layoutSetPrototypeUuid);
+	}
+
 	public void deleteLayoutSet(
 			long groupId, boolean privateLayout, ServiceContext serviceContext)
 		throws PortalException, SystemException {

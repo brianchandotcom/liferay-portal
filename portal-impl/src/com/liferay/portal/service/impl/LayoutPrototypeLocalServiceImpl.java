@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.RequiredLayoutPrototypeException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -33,6 +34,7 @@ import java.util.Map;
 /**
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
+ * @author Vilmos Papp
  */
 public class LayoutPrototypeLocalServiceImpl
 	extends LayoutPrototypeLocalServiceBaseImpl {
@@ -90,6 +92,13 @@ public class LayoutPrototypeLocalServiceImpl
 	public LayoutPrototype deleteLayoutPrototype(
 			LayoutPrototype layoutPrototype)
 		throws PortalException, SystemException {
+
+		int layoutsCount = layoutLocalService.countLayoutsByLayoutPrototypeUuid(
+			layoutPrototype.getUuid());
+
+		if (layoutsCount > 0) {
+			throw new RequiredLayoutPrototypeException();
+		}
 
 		// Group
 

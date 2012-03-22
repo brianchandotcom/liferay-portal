@@ -15,14 +15,17 @@
 package com.liferay.portlet.layoutprototypes.action;
 
 import com.liferay.portal.NoSuchLayoutPrototypeException;
+import com.liferay.portal.RequiredLayoutPrototypeException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.LayoutPrototypeServiceUtil;
 import com.liferay.portal.struts.PortletAction;
+import com.liferay.portal.util.PortalUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -39,6 +42,7 @@ import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Jorge Ferrer
+ * @author Vilmos Papp
  */
 public class EditLayoutPrototypeAction extends PortletAction {
 
@@ -65,6 +69,16 @@ public class EditLayoutPrototypeAction extends PortletAction {
 				SessionErrors.add(actionRequest, e.getClass().getName());
 
 				setForward(actionRequest, "portlet.layout_prototypes.error");
+			}
+			else if (e instanceof RequiredLayoutPrototypeException) {
+				SessionErrors.add(actionRequest, e.getClass().getName());
+
+				String redirect = PortalUtil.escapeRedirect(
+					ParamUtil.getString(actionRequest, "redirect"));
+
+				if (Validator.isNotNull(redirect)) {
+					actionResponse.sendRedirect(redirect);
+				}
 			}
 			else {
 				throw e;

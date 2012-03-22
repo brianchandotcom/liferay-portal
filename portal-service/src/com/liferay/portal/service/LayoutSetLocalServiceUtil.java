@@ -270,6 +270,13 @@ public class LayoutSetLocalServiceUtil {
 		return getService().addLayoutSet(groupId, privateLayout);
 	}
 
+	public static int countLayoutSetsByLayoutSetPrototypeUuid(
+		java.lang.String layoutSetPrototypeUuid)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .countLayoutSetsByLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
+	}
+
 	public static void deleteLayoutSet(long groupId, boolean privateLayout,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,

@@ -258,6 +258,12 @@ public class LayoutSetLocalServiceWrapper implements LayoutSetLocalService,
 		return _layoutSetLocalService.addLayoutSet(groupId, privateLayout);
 	}
 
+	public int countLayoutSetsByLayoutSetPrototypeUuid(
+		java.lang.String layoutSetPrototypeUuid)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _layoutSetLocalService.countLayoutSetsByLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
+	}
+
 	public void deleteLayoutSet(long groupId, boolean privateLayout,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,

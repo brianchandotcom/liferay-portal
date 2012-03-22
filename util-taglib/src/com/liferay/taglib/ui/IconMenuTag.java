@@ -127,6 +127,8 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 			_id = _id.concat("_menu");
 		}
 
+		request.setAttribute("liferay-ui:icon-menu:id", _id);
+
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		String namespace = portletDisplay.getNamespace();
@@ -230,6 +232,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 			"liferay-ui:icon-menu:icon-count");
 
 		request.removeAttribute("liferay-ui:icon-menu:icon-count");
+		request.removeAttribute("liferay-ui:icon-menu:id");
 
 		Boolean singleIcon = (Boolean)request.getAttribute(
 			"liferay-ui:icon-menu:single-icon");

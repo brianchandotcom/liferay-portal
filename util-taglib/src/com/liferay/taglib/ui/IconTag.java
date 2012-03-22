@@ -141,8 +141,7 @@ public class IconTag extends IncludeTag {
 		String id = _id;
 
 		if (Validator.isNull(id)) {
-			id = (String)request.getAttribute(
-				"liferay-ui:search-container-row:rowId");
+			id = (String)request.getAttribute("liferay-ui:icon-menu:id");
 
 			String message = _message;
 

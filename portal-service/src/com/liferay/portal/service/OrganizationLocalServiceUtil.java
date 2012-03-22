@@ -558,6 +558,13 @@ public class OrganizationLocalServiceUtil {
 		return getService().getUserOrganizations(userId);
 	}
 
+	public static java.util.List<com.liferay.portal.model.Organization> getUserOrganizations(
+		long userId, boolean includeNonMember)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getUserOrganizations(userId, includeNonMember);
+	}
+
 	/**
 	* Returns a range of all the organizations associated with the user.
 	*

@@ -43,6 +43,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.service.base.DDMStructureLocalServiceBaseImpl;
+import com.liferay.portlet.dynamicdatamapping.util.DDMTemplateHelperUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 
 import java.util.ArrayList;
@@ -502,7 +503,8 @@ public class DDMStructureLocalServiceImpl
 			DDMTemplate template, Element templateElement)
 		throws PortalException, SystemException {
 
-		DDMStructure structure = template.getStructure();
+		DDMStructure structure = DDMTemplateHelperUtil.getDDMStructure(
+			template);
 
 		List<Element> dynamicElementElements = templateElement.elements(
 			"dynamic-element");

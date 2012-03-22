@@ -46,6 +46,9 @@ page import="com.liferay.portlet.dynamicdatamapping.service.permission.DDMTempla
 page import="com.liferay.portlet.dynamicdatamapping.storage.StorageType" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.util.DDMXSDUtil" %>
 
+<%@ page
+import="com.liferay.portlet.dynamicdatamapping.util.DDMTemplateHelperUtil" %>
+
 <%
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(request);
 

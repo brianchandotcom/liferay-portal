@@ -36,7 +36,7 @@ long templateClassNameId = ParamUtil.getLong(request, "templateClassNameId");
 long templateClassPK = ParamUtil.getLong(request, "templateClassPK");
 
 if ((structure == null) && (template != null)) {
-	structure = template.getStructure();
+	structure = DDMTemplateHelperUtil.getDDMStructure(template);
 }
 
 if ((structure == null) && (templateClassNameId == PortalUtil.getClassNameId(DDMStructure.class))) {

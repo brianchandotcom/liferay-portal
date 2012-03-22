@@ -439,6 +439,9 @@ public class AssetCategoryLocalServiceImpl
 
 			category.setVocabularyId(vocabularyId);
 
+			parentCategoryId =
+				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID;
+
 			updateChildrenVocabularyId(category, vocabularyId);
 		}
 

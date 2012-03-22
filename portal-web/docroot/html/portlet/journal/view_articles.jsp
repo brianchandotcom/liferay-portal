@@ -31,7 +31,39 @@ headerNames.add(StringPool.BLANK);
 searchContainer.setRowChecker(new RowChecker(renderResponse));
 
 ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)searchContainer.getDisplayTerms();
+
+boolean showAddArticleButton = JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ARTICLE);
 %>
+
+<c:if test="<%= Validator.isNotNull(displayTerms.getStructureId()) %>">
+	<aui:input name="<%= displayTerms.STRUCTURE_ID %>" type="hidden" value="<%= displayTerms.getStructureId() %>" />
+
+	<c:if test="<%= showAddArticleButton %>">
+		<div class="portlet-msg-info">
+
+			<%
+			JournalStructure structure = JournalStructureLocalServiceUtil.getStructure(scopeGroupId, displayTerms.getStructureId());
+			%>
+
+			<liferay-ui:message arguments="<%= structure.getName(locale) %>" key="showing-content-filtered-by-structure-x" /> (<a href="javascript:<portlet:namespace />addArticle();"><liferay-ui:message key="add-new-web-content" /></a>)
+		</div>
+	</c:if>
+</c:if>
+
+<c:if test="<%= Validator.isNotNull(displayTerms.getTemplateId()) %>">
+	<aui:input name="<%= displayTerms.TEMPLATE_ID %>" type="hidden" value="<%= displayTerms.getTemplateId() %>" />
+
+	<c:if test="<%= showAddArticleButton %>">
+		<div class="portlet-msg-info">
+
+			<%
+			JournalTemplate template = JournalTemplateLocalServiceUtil.getTemplate(scopeGroupId, displayTerms.getTemplateId());
+			%>
+
+			<liferay-ui:message arguments="<%= template.getName(locale) %>" key="showing-content-filtered-by-template-x" /> (<a href="javascript:<portlet:namespace />addArticle();"><liferay-ui:message key="add-new-web-content" /></a>)
+		</div>
+	</c:if>
+</c:if>
 
 <c:if test="<%= portletName.equals(PortletKeys.JOURNAL) && !((themeDisplay.getScopeGroupId() == themeDisplay.getCompanyGroupId()) && (Validator.isNotNull(displayTerms.getStructureId()) || Validator.isNotNull(displayTerms.getTemplateId()))) %>">
 	<aui:input name="groupId" type="hidden" />

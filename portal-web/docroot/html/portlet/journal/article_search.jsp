@@ -117,35 +117,25 @@ ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)searchContainer.getDispl
 </liferay-ui:search-toggle>
 
 <%
-boolean showAddArticleButtonButton = false;
 boolean showPermissionsButton = false;
 boolean showSubscribeLink = false;
 
 if (portletName.equals(PortletKeys.JOURNAL)) {
-	showAddArticleButtonButton = JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ARTICLE);
 	showPermissionsButton = JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);
 	showSubscribeLink = JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE);
 }
 %>
 
-<c:if test="<%= showAddArticleButtonButton || showPermissionsButton %>">
+<c:if test="<%= showPermissionsButton %>">
 	<aui:button-row cssClass="add-permission-button-row">
-		<c:if test="<%= showAddArticleButtonButton %>">
-			<div class="add-article-selector">
-				<%@ include file="/html/portlet/journal/add_article.jspf" %>
-			</div>
-		</c:if>
+		<liferay-security:permissionsURL
+			modelResource="com.liferay.portlet.journal"
+			modelResourceDescription="<%= HtmlUtil.escape(themeDisplay.getScopeGroupName()) %>"
+			resourcePrimKey="<%= String.valueOf(scopeGroupId) %>"
+			var="permissionsURL"
+		/>
 
-		<c:if test="<%= showPermissionsButton %>">
-			<liferay-security:permissionsURL
-				modelResource="com.liferay.portlet.journal"
-				modelResourceDescription="<%= HtmlUtil.escape(themeDisplay.getScopeGroupName()) %>"
-				resourcePrimKey="<%= String.valueOf(scopeGroupId) %>"
-				var="permissionsURL"
-			/>
-
-			<aui:button href="<%= permissionsURL %>" value="permissions" />
-		</c:if>
+		<aui:button href="<%= permissionsURL %>" value="permissions" />
 	</aui:button-row>
 </c:if>
 
@@ -170,36 +160,6 @@ if (portletName.equals(PortletKeys.JOURNAL)) {
 			<liferay-ui:icon cssClass="subscribe-link" image="subscribe" label="<%= true %>" url="<%= subscribeURL %>" />
 		</c:otherwise>
 	</c:choose>
-</c:if>
-
-<c:if test="<%= Validator.isNotNull(displayTerms.getStructureId()) %>">
-	<aui:input name="<%= displayTerms.STRUCTURE_ID %>" type="hidden" value="<%= displayTerms.getStructureId() %>" />
-
-	<c:if test="<%= showAddArticleButtonButton %>">
-		<div class="portlet-msg-info">
-
-			<%
-			JournalStructure structure = JournalStructureLocalServiceUtil.getStructure(scopeGroupId, displayTerms.getStructureId());
-			%>
-
-			<liferay-ui:message arguments="<%= structure.getName(locale) %>" key="showing-content-filtered-by-structure-x" /> (<a href="javascript:<portlet:namespace />addArticle();"><liferay-ui:message key="add-new-web-content" /></a>)
-		</div>
-	</c:if>
-</c:if>
-
-<c:if test="<%= Validator.isNotNull(displayTerms.getTemplateId()) %>">
-	<aui:input name="<%= displayTerms.TEMPLATE_ID %>" type="hidden" value="<%= displayTerms.getTemplateId() %>" />
-
-	<c:if test="<%= showAddArticleButtonButton %>">
-		<div class="portlet-msg-info">
-
-			<%
-			JournalTemplate template = JournalTemplateLocalServiceUtil.getTemplate(scopeGroupId, displayTerms.getTemplateId());
-			%>
-
-			<liferay-ui:message arguments="<%= template.getName(locale) %>" key="showing-content-filtered-by-template-x" /> (<a href="javascript:<portlet:namespace />addArticle();"><liferay-ui:message key="add-new-web-content" /></a>)
-		</div>
-	</c:if>
 </c:if>
 
 <aui:script>

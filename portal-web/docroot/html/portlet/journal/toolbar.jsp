@@ -16,6 +16,10 @@
 
 <%@ include file="/html/portlet/journal/init.jsp" %>
 
+<span class="add-button" id="<portlet:namespace />addButtonContainer">
+	<liferay-util:include page="/html/portlet/journal/add_button.jsp" />
+</span>
+
 <span class="manage-button">
 	<c:if test="<%= !user.isDefaultUser() %>">
 		<liferay-ui:icon-menu align="left" direction="down" icon="" message="manage" showExpanded="<%= false %>" showWhenSingleIcon="<%= true %>">

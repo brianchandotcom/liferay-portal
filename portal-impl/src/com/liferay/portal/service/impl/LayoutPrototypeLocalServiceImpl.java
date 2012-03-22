@@ -101,7 +101,7 @@ public class LayoutPrototypeLocalServiceImpl
 			throw new RequiredLayoutPrototypeException();
 		}
 
-				// Group
+		// Group
 
 		Group group = layoutPrototype.getGroup();
 

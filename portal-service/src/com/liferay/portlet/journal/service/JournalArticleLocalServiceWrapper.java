@@ -61,28 +61,25 @@ public class JournalArticleLocalServiceWrapper
 	* Deletes the journal article with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param id the primary key of the journal article
-	* @return the journal article that was removed
 	* @throws PortalException if a journal article with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.journal.model.JournalArticle deleteJournalArticle(
-		long id)
+	public void deleteJournalArticle(long id)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _journalArticleLocalService.deleteJournalArticle(id);
+		_journalArticleLocalService.deleteJournalArticle(id);
 	}
 
 	/**
 	* Deletes the journal article from the database. Also notifies the appropriate model listeners.
 	*
 	* @param journalArticle the journal article
-	* @return the journal article that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.journal.model.JournalArticle deleteJournalArticle(
+	public void deleteJournalArticle(
 		com.liferay.portlet.journal.model.JournalArticle journalArticle)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _journalArticleLocalService.deleteJournalArticle(journalArticle);
+		_journalArticleLocalService.deleteJournalArticle(journalArticle);
 	}
 
 	/**
@@ -281,15 +278,16 @@ public class JournalArticleLocalServiceWrapper
 		java.lang.String articleId, boolean autoArticleId, double version,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String content, java.lang.String type,
-		java.lang.String structureId, java.lang.String templateId,
-		java.lang.String layoutUuid, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
-		int reviewDateMonth, int reviewDateDay, int reviewDateYear,
-		int reviewDateHour, int reviewDateMinute, boolean neverReview,
-		boolean indexable, boolean smallImage, java.lang.String smallImageURL,
+		java.lang.String content, java.lang.String urlTitle,
+		java.lang.String type, java.lang.String structureId,
+		java.lang.String templateId, java.lang.String layoutUuid,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire, int reviewDateMonth,
+		int reviewDateDay, int reviewDateYear, int reviewDateHour,
+		int reviewDateMinute, boolean neverReview, boolean indexable,
+		boolean smallImage, java.lang.String smallImageURL,
 		java.io.File smallImageFile,
 		java.util.Map<java.lang.String, byte[]> images,
 		java.lang.String articleURL,
@@ -298,14 +296,14 @@ public class JournalArticleLocalServiceWrapper
 			com.liferay.portal.kernel.exception.SystemException {
 		return _journalArticleLocalService.addArticle(userId, groupId,
 			classNameId, classPK, articleId, autoArticleId, version, titleMap,
-			descriptionMap, content, type, structureId, templateId, layoutUuid,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, reviewDateMonth, reviewDateDay, reviewDateYear,
-			reviewDateHour, reviewDateMinute, neverReview, indexable,
-			smallImage, smallImageURL, smallImageFile, images, articleURL,
-			serviceContext);
+			descriptionMap, content, urlTitle, type, structureId, templateId,
+			layoutUuid, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, reviewDateMonth, reviewDateDay,
+			reviewDateYear, reviewDateHour, reviewDateMinute, neverReview,
+			indexable, smallImage, smallImageURL, smallImageFile, images,
+			articleURL, serviceContext);
 	}
 
 	public void addArticleResources(
@@ -966,15 +964,16 @@ public class JournalArticleLocalServiceWrapper
 		long userId, long groupId, java.lang.String articleId, double version,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String content, java.lang.String type,
-		java.lang.String structureId, java.lang.String templateId,
-		java.lang.String layoutUuid, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
-		int reviewDateMonth, int reviewDateDay, int reviewDateYear,
-		int reviewDateHour, int reviewDateMinute, boolean neverReview,
-		boolean indexable, boolean smallImage, java.lang.String smallImageURL,
+		java.lang.String content, java.lang.String urlTitle,
+		java.lang.String type, java.lang.String structureId,
+		java.lang.String templateId, java.lang.String layoutUuid,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire, int reviewDateMonth,
+		int reviewDateDay, int reviewDateYear, int reviewDateHour,
+		int reviewDateMinute, boolean neverReview, boolean indexable,
+		boolean smallImage, java.lang.String smallImageURL,
 		java.io.File smallImageFile,
 		java.util.Map<java.lang.String, byte[]> images,
 		java.lang.String articleURL,
@@ -982,8 +981,8 @@ public class JournalArticleLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _journalArticleLocalService.updateArticle(userId, groupId,
-			articleId, version, titleMap, descriptionMap, content, type,
-			structureId, templateId, layoutUuid, displayDateMonth,
+			articleId, version, titleMap, descriptionMap, content, urlTitle,
+			type, structureId, templateId, layoutUuid, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,

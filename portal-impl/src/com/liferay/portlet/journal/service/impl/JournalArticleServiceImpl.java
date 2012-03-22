@@ -42,7 +42,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	public JournalArticle addArticle(
 			long groupId, long classNameId, long classPK, String articleId,
 			boolean autoArticleId, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, String content, String type,
+			Map<Locale, String> descriptionMap, String content, String urlTitle, String type,
 			String structureId, String templateId, String layoutUuid,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
@@ -61,7 +61,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		return journalArticleLocalService.addArticle(
 			getUserId(), groupId, classNameId, classPK, articleId,
 			autoArticleId, JournalArticleConstants.VERSION_DEFAULT, titleMap,
-			descriptionMap, content, type, structureId, templateId, layoutUuid,
+			descriptionMap, content, urlTitle, type, structureId, templateId, layoutUuid,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
@@ -74,7 +74,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	public JournalArticle addArticle(
 			long groupId, long classNameId, long classPK, String articleId,
 			boolean autoArticleId, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, String content, String type,
+			Map<Locale, String> descriptionMap, String content, String urlTitle, String type,
 			String structureId, String templateId, String layoutUuid,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
@@ -92,7 +92,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		return journalArticleLocalService.addArticle(
 			getUserId(), groupId, classNameId, classPK, articleId,
 			autoArticleId, JournalArticleConstants.VERSION_DEFAULT, titleMap,
-			descriptionMap, content, type, structureId, templateId, layoutUuid,
+			descriptionMap, content, urlTitle, type, structureId, templateId, layoutUuid,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
@@ -457,7 +457,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	public JournalArticle updateArticle(
 			long groupId, String articleId, double version,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			String content, String type, String structureId, String templateId,
+			String content, String urlTitle, String type, String structureId, String templateId,
 			String layoutUuid, int displayDateMonth, int displayDateDay,
 			int displayDateYear, int displayDateHour, int displayDateMinute,
 			int expirationDateMonth, int expirationDateDay,
@@ -476,7 +476,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 
 		return journalArticleLocalService.updateArticle(
 			getUserId(), groupId, articleId, version, titleMap, descriptionMap,
-			content, type, structureId, templateId, layoutUuid,
+			content, urlTitle, type, structureId, templateId, layoutUuid,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,

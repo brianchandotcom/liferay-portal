@@ -25,8 +25,11 @@ import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.search.Indexable;
-import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.CompanyLocalService;
@@ -138,12 +141,26 @@ public abstract class JournalArticleLocalServiceBaseImpl
 	 * @return the journal article that was added
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Indexable(type = IndexableType.REINDEX)
 	public JournalArticle addJournalArticle(JournalArticle journalArticle)
 		throws SystemException {
 		journalArticle.setNew(true);
 
-		return journalArticlePersistence.update(journalArticle, false);
+		journalArticle = journalArticlePersistence.update(journalArticle, false);
+
+		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
+
+		if (indexer != null) {
+			try {
+				indexer.reindex(journalArticle);
+			}
+			catch (SearchException se) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(se, se);
+				}
+			}
+		}
+
+		return journalArticle;
 	}
 
 	/**
@@ -160,27 +177,49 @@ public abstract class JournalArticleLocalServiceBaseImpl
 	 * Deletes the journal article with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param id the primary key of the journal article
-	 * @return the journal article that was removed
 	 * @throws PortalException if a journal article with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Indexable(type = IndexableType.DELETE)
-	public JournalArticle deleteJournalArticle(long id)
+	public void deleteJournalArticle(long id)
 		throws PortalException, SystemException {
-		return journalArticlePersistence.remove(id);
+		JournalArticle journalArticle = journalArticlePersistence.remove(id);
+
+		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
+
+		if (indexer != null) {
+			try {
+				indexer.delete(journalArticle);
+			}
+			catch (SearchException se) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(se, se);
+				}
+			}
+		}
 	}
 
 	/**
 	 * Deletes the journal article from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param journalArticle the journal article
-	 * @return the journal article that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Indexable(type = IndexableType.DELETE)
-	public JournalArticle deleteJournalArticle(JournalArticle journalArticle)
+	public void deleteJournalArticle(JournalArticle journalArticle)
 		throws SystemException {
-		return journalArticlePersistence.remove(journalArticle);
+		journalArticlePersistence.remove(journalArticle);
+
+		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
+
+		if (indexer != null) {
+			try {
+				indexer.delete(journalArticle);
+			}
+			catch (SearchException se) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(se, se);
+				}
+			}
+		}
 	}
 
 	/**
@@ -320,7 +359,6 @@ public abstract class JournalArticleLocalServiceBaseImpl
 	 * @return the journal article that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Indexable(type = IndexableType.REINDEX)
 	public JournalArticle updateJournalArticle(JournalArticle journalArticle)
 		throws SystemException {
 		return updateJournalArticle(journalArticle, true);
@@ -334,12 +372,26 @@ public abstract class JournalArticleLocalServiceBaseImpl
 	 * @return the journal article that was updated
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Indexable(type = IndexableType.REINDEX)
 	public JournalArticle updateJournalArticle(JournalArticle journalArticle,
 		boolean merge) throws SystemException {
 		journalArticle.setNew(false);
 
-		return journalArticlePersistence.update(journalArticle, merge);
+		journalArticle = journalArticlePersistence.update(journalArticle, merge);
+
+		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
+
+		if (indexer != null) {
+			try {
+				indexer.reindex(journalArticle);
+			}
+			catch (SearchException se) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(se, se);
+				}
+			}
+		}
+
+		return journalArticle;
 	}
 
 	/**
@@ -1928,5 +1980,6 @@ public abstract class JournalArticleLocalServiceBaseImpl
 	protected RatingsStatsFinder ratingsStatsFinder;
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
+	private static Log _log = LogFactoryUtil.getLog(JournalArticleLocalServiceBaseImpl.class);
 	private String _beanIdentifier;
 }

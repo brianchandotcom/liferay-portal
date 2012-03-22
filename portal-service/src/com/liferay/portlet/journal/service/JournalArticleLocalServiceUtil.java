@@ -66,28 +66,25 @@ public class JournalArticleLocalServiceUtil {
 	* Deletes the journal article with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param id the primary key of the journal article
-	* @return the journal article that was removed
 	* @throws PortalException if a journal article with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticle deleteJournalArticle(
-		long id)
+	public static void deleteJournalArticle(long id)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().deleteJournalArticle(id);
+		getService().deleteJournalArticle(id);
 	}
 
 	/**
 	* Deletes the journal article from the database. Also notifies the appropriate model listeners.
 	*
 	* @param journalArticle the journal article
-	* @return the journal article that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticle deleteJournalArticle(
+	public static void deleteJournalArticle(
 		com.liferay.portlet.journal.model.JournalArticle journalArticle)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().deleteJournalArticle(journalArticle);
+		getService().deleteJournalArticle(journalArticle);
 	}
 
 	/**
@@ -284,15 +281,16 @@ public class JournalArticleLocalServiceUtil {
 		java.lang.String articleId, boolean autoArticleId, double version,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String content, java.lang.String type,
-		java.lang.String structureId, java.lang.String templateId,
-		java.lang.String layoutUuid, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
-		int reviewDateMonth, int reviewDateDay, int reviewDateYear,
-		int reviewDateHour, int reviewDateMinute, boolean neverReview,
-		boolean indexable, boolean smallImage, java.lang.String smallImageURL,
+		java.lang.String content, java.lang.String urlTitle,
+		java.lang.String type, java.lang.String structureId,
+		java.lang.String templateId, java.lang.String layoutUuid,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire, int reviewDateMonth,
+		int reviewDateDay, int reviewDateYear, int reviewDateHour,
+		int reviewDateMinute, boolean neverReview, boolean indexable,
+		boolean smallImage, java.lang.String smallImageURL,
 		java.io.File smallImageFile,
 		java.util.Map<java.lang.String, byte[]> images,
 		java.lang.String articleURL,
@@ -302,7 +300,7 @@ public class JournalArticleLocalServiceUtil {
 		return getService()
 				   .addArticle(userId, groupId, classNameId, classPK,
 			articleId, autoArticleId, version, titleMap, descriptionMap,
-			content, type, structureId, templateId, layoutUuid,
+			content, urlTitle, type, structureId, templateId, layoutUuid,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
@@ -979,15 +977,16 @@ public class JournalArticleLocalServiceUtil {
 		long userId, long groupId, java.lang.String articleId, double version,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String content, java.lang.String type,
-		java.lang.String structureId, java.lang.String templateId,
-		java.lang.String layoutUuid, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
-		int reviewDateMonth, int reviewDateDay, int reviewDateYear,
-		int reviewDateHour, int reviewDateMinute, boolean neverReview,
-		boolean indexable, boolean smallImage, java.lang.String smallImageURL,
+		java.lang.String content, java.lang.String urlTitle,
+		java.lang.String type, java.lang.String structureId,
+		java.lang.String templateId, java.lang.String layoutUuid,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire, int reviewDateMonth,
+		int reviewDateDay, int reviewDateYear, int reviewDateHour,
+		int reviewDateMinute, boolean neverReview, boolean indexable,
+		boolean smallImage, java.lang.String smallImageURL,
 		java.io.File smallImageFile,
 		java.util.Map<java.lang.String, byte[]> images,
 		java.lang.String articleURL,
@@ -996,14 +995,14 @@ public class JournalArticleLocalServiceUtil {
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .updateArticle(userId, groupId, articleId, version,
-			titleMap, descriptionMap, content, type, structureId, templateId,
-			layoutUuid, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, reviewDateMonth, reviewDateDay,
-			reviewDateYear, reviewDateHour, reviewDateMinute, neverReview,
-			indexable, smallImage, smallImageURL, smallImageFile, images,
-			articleURL, serviceContext);
+			titleMap, descriptionMap, content, urlTitle, type, structureId,
+			templateId, layoutUuid, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			reviewDateMonth, reviewDateDay, reviewDateYear, reviewDateHour,
+			reviewDateMinute, neverReview, indexable, smallImage,
+			smallImageURL, smallImageFile, images, articleURL, serviceContext);
 	}
 
 	public static com.liferay.portlet.journal.model.JournalArticle updateArticle(

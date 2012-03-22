@@ -177,7 +177,8 @@ public class Gmail_ViewMBThreadMessageGmailMailingListTest extends BaseTestCase 
 					}
 
 					try {
-						if (selenium.isVisible("//tr[2]/td/div/div/a")) {
+						if (selenium.isVisible(
+									"//a[@href='#!forum/liferay-mailinglist']")) {
 							break;
 						}
 					}
@@ -187,7 +188,9 @@ public class Gmail_ViewMBThreadMessageGmailMailingListTest extends BaseTestCase 
 					Thread.sleep(1000);
 				}
 
-				selenium.click("//tr[2]/td/div/div/a");
+				selenium.selectWindow("name=Google Groups");
+				selenium.clickAt("link=liferay-mailinglist",
+					RuntimeVariables.replace("liferay-mailinglist"));
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -195,9 +198,7 @@ public class Gmail_ViewMBThreadMessageGmailMailingListTest extends BaseTestCase 
 					}
 
 					try {
-						if (RuntimeVariables.replace("liferay-mailinglist")
-												.equals(selenium.getText(
-										"//span/span[2]/span"))) {
+						if (selenium.isElementPresent("//div[3]/div/div[2]/a")) {
 							break;
 						}
 					}
@@ -207,19 +208,38 @@ public class Gmail_ViewMBThreadMessageGmailMailingListTest extends BaseTestCase 
 					Thread.sleep(1000);
 				}
 
-				assertEquals(RuntimeVariables.replace("liferay-mailinglist"),
-					selenium.getText("//span/span[2]/span"));
 				assertTrue(selenium.isElementPresent("//div[3]/div/div[2]/a"));
 				selenium.click("//div[3]/div/div[2]/a");
-				assertEquals(RuntimeVariables.replace("me"),
-					selenium.getText("//div/span[2]/span/span"));
-				assertTrue(selenium.isPartialText("//div/div/span[3]",
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isPartialText(
+									"//td[2]/span/span[contains(.,'Liferay QA')]",
+									"Liferay QA")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertTrue(selenium.isPartialText(
+						"//td[2]/span/span[contains(.,'Liferay QA')]",
+						"Liferay QA"));
+				assertTrue(selenium.isPartialText(
+						"//div[contains(.,'MB Message Body')]",
 						"MB Message Body"));
-				assertEquals(RuntimeVariables.replace("Trunk Liferay QA"),
-					selenium.getText("//td[2]/span/span"));
-				assertEquals(RuntimeVariables.replace(
-						"MB Message Email Reply- show quoted text -"),
-					selenium.getText("//td/div[4]/div"));
+				assertEquals(RuntimeVariables.replace("me"),
+					selenium.getText("//td[2]/span/span[.='me']"));
+				assertTrue(selenium.isPartialText(
+						"//div[contains(.,'MB Message Email Reply')]",
+						"MB Message Email Reply"));
 
 				boolean SignedIn2 = selenium.isElementPresent("link=Sign out");
 

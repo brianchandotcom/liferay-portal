@@ -56,8 +56,8 @@ public class MoveCategoryMessageToCategoryExplanationTest extends BaseTestCase {
 				"MB Category1 Thread Message Subject"),
 			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//td[7]/span/ul/li/strong/a"));
-		selenium.clickAt("//td[7]/span/ul/li/strong/a",
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
@@ -67,7 +67,7 @@ public class MoveCategoryMessageToCategoryExplanationTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move Thread')]/a")) {
 					break;
 				}
 			}
@@ -79,8 +79,8 @@ public class MoveCategoryMessageToCategoryExplanationTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Move Thread"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move Thread')]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move Thread')]/a",
 			RuntimeVariables.replace("Move Thread"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
@@ -140,7 +140,85 @@ public class MoveCategoryMessageToCategoryExplanationTest extends BaseTestCase {
 
 		selenium.type("//input[@id='_19_subject']",
 			RuntimeVariables.replace("MB Explanation Post Subject"));
-		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//textarea[@id='_19_editor' and contains(@style,'display: none;')]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Source"),
+			selenium.getText("//span[.='Source']"));
+		selenium.clickAt("//span[.='Source']",
+			RuntimeVariables.replace("Source"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//a[@class='cke_button_source cke_on']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//td[@id='cke_contents__19_editor']/textarea")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.type("//td[@id='cke_contents__19_editor']/textarea",
+			RuntimeVariables.replace("MB Explanation Post Body"));
+		assertEquals(RuntimeVariables.replace("Source"),
+			selenium.getText("//span[.='Source']"));
+		selenium.clickAt("//span[.='Source']",
+			RuntimeVariables.replace("Source"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//textarea[@id='_19_editor' and contains(@style,'display: none;')]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -160,8 +238,24 @@ public class MoveCategoryMessageToCategoryExplanationTest extends BaseTestCase {
 		}
 
 		selenium.selectFrame("//td[@id='cke_contents__19_editor']/iframe");
-		selenium.type("//body",
-			RuntimeVariables.replace("MB Explanation Post Body"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("MB Explanation Post Body")
+										.equals(selenium.getText("//body"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.selectFrame("relative=top");
 		selenium.click(RuntimeVariables.replace("//input[@value='Move Thread']"));
 		selenium.waitForPageToLoad("30000");

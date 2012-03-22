@@ -194,9 +194,11 @@ public class GmailServer_TearDownMailingListMessageTest extends BaseTestCase {
 
 				selenium.click("//span[contains(@class,'CheckBox')]/span/span");
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//div/span/span"));
-				selenium.clickAt("//div/span/span",
+					selenium.getText(
+						"//div[contains(@id,'more_actions')]/span/span"));
+				selenium.clickAt("//div[contains(@id,'more_actions')]/span/span",
 					RuntimeVariables.replace("Actions"));
+				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -251,9 +253,11 @@ public class GmailServer_TearDownMailingListMessageTest extends BaseTestCase {
 
 				selenium.click("//span[contains(@class,'CheckBox')]/span/span");
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//div/span/span"));
-				selenium.clickAt("//div/span/span",
+					selenium.getText(
+						"//div[contains(@id,'more_actions')]/span/span"));
+				selenium.clickAt("//div[contains(@id,'more_actions')]/span/span",
 					RuntimeVariables.replace("Actions"));
+				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -308,9 +312,11 @@ public class GmailServer_TearDownMailingListMessageTest extends BaseTestCase {
 
 				selenium.click("//span[contains(@class,'CheckBox')]/span/span");
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//div/span/span"));
-				selenium.clickAt("//div/span/span",
+					selenium.getText(
+						"//div[contains(@id,'more_actions')]/span/span"));
+				selenium.clickAt("//div[contains(@id,'more_actions')]/span/span",
 					RuntimeVariables.replace("Actions"));
+				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -365,9 +371,11 @@ public class GmailServer_TearDownMailingListMessageTest extends BaseTestCase {
 
 				selenium.click("//span[contains(@class,'CheckBox')]/span/span");
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//div/span/span"));
-				selenium.clickAt("//div/span/span",
+					selenium.getText(
+						"//div[contains(@id,'more_actions')]/span/span"));
+				selenium.clickAt("//div[contains(@id,'more_actions')]/span/span",
 					RuntimeVariables.replace("Actions"));
+				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -422,9 +430,11 @@ public class GmailServer_TearDownMailingListMessageTest extends BaseTestCase {
 
 				selenium.click("//span[contains(@class,'CheckBox')]/span/span");
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//div/span/span"));
-				selenium.clickAt("//div/span/span",
+					selenium.getText(
+						"//div[contains(@id,'more_actions')]/span/span"));
+				selenium.clickAt("//div[contains(@id,'more_actions')]/span/span",
 					RuntimeVariables.replace("Actions"));
+				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {

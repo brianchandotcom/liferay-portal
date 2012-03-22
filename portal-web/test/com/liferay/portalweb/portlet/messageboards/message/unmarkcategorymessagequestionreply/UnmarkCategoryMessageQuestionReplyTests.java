@@ -16,6 +16,8 @@ package com.liferay.portalweb.portlet.messageboards.message.unmarkcategorymessag
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.messageboards.mbcategory.addmbcategory.AddMBCategoryTest;
+import com.liferay.portalweb.portlet.messageboards.mbcategory.addmbcategory.TearDownMBCategoryTest;
 import com.liferay.portalweb.portlet.messageboards.portlet.addportlet.AddPageMBTest;
 import com.liferay.portalweb.portlet.messageboards.portlet.addportlet.AddPortletMBTest;
 
@@ -30,7 +32,7 @@ public class UnmarkCategoryMessageQuestionReplyTests extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddPageMBTest.class);
 		testSuite.addTestSuite(AddPortletMBTest.class);
-		testSuite.addTestSuite(AddCategoryTest.class);
+		testSuite.addTestSuite(AddMBCategoryTest.class);
 		testSuite.addTestSuite(AddCategoryMessageQuestionTest.class);
 		testSuite.addTestSuite(AddCategoryMessageQuestionReplyTest.class);
 		testSuite.addTestSuite(MarkAsAnswerCategoryMessageQuestionReplyTest.class);

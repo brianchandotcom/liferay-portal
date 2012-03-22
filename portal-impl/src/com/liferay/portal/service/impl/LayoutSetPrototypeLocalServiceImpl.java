@@ -106,11 +106,11 @@ public class LayoutSetPrototypeLocalServiceImpl
 			LayoutSetPrototype layoutSetPrototype)
 		throws PortalException, SystemException {
 
-		int layoutSetsByLayoutSetPrototypeUuidCount =
+		int layoutSetsCount =
 			layoutSetLocalService.countLayoutSetsByLayoutSetPrototypeUuid(
 				layoutSetPrototype.getUuid());
 
-		if (layoutSetsByLayoutSetPrototypeUuidCount > 0) {
+		if (layoutSetsCount > 0) {
 			throw new RequiredLayoutSetPrototypeException();
 		}
 

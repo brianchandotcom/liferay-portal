@@ -400,7 +400,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	public int countLayoutsByLayoutPrototypeUuid(String uuid)
 		throws SystemException {
 
-		return layoutPersistence.countByLayoutsByLayoutPrototypeUuid(uuid);
+		return layoutPersistence.countByLayoutPrototypeUuid(uuid);
 	}
 
 	/**

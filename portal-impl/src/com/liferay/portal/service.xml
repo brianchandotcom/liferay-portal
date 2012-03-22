@@ -537,7 +537,7 @@
 			<finder-column name="privateLayout" />
 			<finder-column name="sourcePrototypeLayoutUuid" />
 		</finder>
-		<finder name="LayoutsByLayoutPrototypeUuid" return-type="Collection">
+		<finder name="LayoutPrototypeUuid" return-type="Collection">
 			<finder-column name="layoutPrototypeUuid" />
 		</finder>
 

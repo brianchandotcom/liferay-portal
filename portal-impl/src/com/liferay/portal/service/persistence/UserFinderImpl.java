@@ -53,6 +53,9 @@ public class UserFinderImpl
 	public static final String COUNT_BY_C_FN_MN_LN_SN_EA_S =
 		UserFinder.class.getName() + ".countByC_FN_MN_LN_SN_EA_S";
 
+	public static final String FIND_BY_C_UID =
+		UserFinder.class.getName() + ".findByC_UID";
+
 	public static final String FIND_BY_NO_ANNOUNCEMENTS_DELIVERIES =
 		UserFinder.class.getName() + ".findByNoAnnouncementsDeliveries";
 
@@ -64,6 +67,9 @@ public class UserFinderImpl
 
 	public static final String FIND_BY_C_FN_MN_LN_SN_EA_S =
 		UserFinder.class.getName() + ".findByC_FN_MN_LN_SN_EA_S";
+
+	public static final String FIND_MIN_MAX_ID_BY_COMPANY_ID =
+		UserFinder.class.getName() + ".findMinMaxIdByCompanyId";
 
 	public static final String JOIN_BY_CONTACT_TWITTER_SN =
 		UserFinder.class.getName() + ".joinByContactTwitterSN";
@@ -285,6 +291,37 @@ public class UserFinderImpl
 		}
 	}
 
+	public List<User> findByC_UID(long companyId, long userIdGT, long userIdLT)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_C_UID);
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addEntity("User_", UserImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(companyId);
+
+			qPos.add(userIdGT);
+			qPos.add(userIdLT);
+
+			return q.list(true);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
 	public List<User> findByKeywords(
 			long companyId, String keywords, int status,
 			LinkedHashMap<String, Object> params, int start, int end,
@@ -470,6 +507,49 @@ public class UserFinderImpl
 			}
 
 			return (List<User>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	public long[] findMinMaxUserIdByCompanyId(long companyId)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_MIN_MAX_ID_BY_COMPANY_ID);
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addScalar("minUserId", Type.LONG);
+			q.addScalar("maxUserId", Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(companyId);
+
+			Iterator<Object[]> itr = (Iterator<Object[]>)QueryUtil.iterate(
+				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+			long[] minMaxUserIds = null;
+
+			if (itr.hasNext()) {
+				minMaxUserIds = new long[2];
+
+				Object[] array = itr.next();
+
+				minMaxUserIds[0] = (Long)array[0];
+				minMaxUserIds[1] = (Long)array[1];
+			}
+
+			return minMaxUserIds;
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

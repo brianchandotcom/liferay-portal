@@ -1895,6 +1895,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		return userPersistence.findByCompanyId(companyId, start, end);
 	}
 
+	public List<User> getCompanyUsers(
+			long companyId, long lowerUserId, long upperUserId)
+		throws SystemException {
+
+		return userFinder.findByC_UID(companyId, lowerUserId, upperUserId);
+	}
+
 	/**
 	 * Returns the number of users belonging to the company.
 	 *
@@ -2002,6 +2009,19 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		params.put("usersGroups", new Long(groupId));
 
 		return searchCount(group.getCompanyId(), null, status, params);
+	}
+
+	/**
+	 * Returns the lowest and the highest user id belonging to a company.
+	 *
+	 * @param companyId the companyId of the users
+	 * @return the lowest and the highest user id belonging to a company
+	 * @throws SystemException if a system exception occured
+	 */
+	public long[] getMinMaxUserIdByCompanyId(long companyId)
+		throws SystemException {
+
+		return userFinder.findMinMaxUserIdByCompanyId(companyId);
 	}
 
 	/**

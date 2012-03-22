@@ -666,12 +666,6 @@ public class DDMTemplateWrapper implements DDMTemplate,
 		_ddmTemplate.persist();
 	}
 
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure getStructure()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _ddmTemplate.getStructure();
-	}
-
 	/**
 	 * @deprecated Renamed to {@link #getWrappedModel}
 	 */

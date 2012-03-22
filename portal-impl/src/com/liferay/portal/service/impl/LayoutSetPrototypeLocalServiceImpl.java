@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutConstants;
-import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
@@ -107,11 +106,11 @@ public class LayoutSetPrototypeLocalServiceImpl
 			LayoutSetPrototype layoutSetPrototype)
 		throws PortalException, SystemException {
 
-		List<LayoutSet> layoutSets =
-			layoutSetLocalService.getLayoutSetsByLayoutSetPrototypeUuid(
+		int layoutSetsByLayoutSetPrototypeUuidCount =
+			layoutSetLocalService.countLayoutSetsByLayoutSetPrototypeUuid(
 				layoutSetPrototype.getUuid());
 
-		if (!layoutSets.isEmpty()) {
+		if (layoutSetsByLayoutSetPrototypeUuidCount > 0) {
 			throw new RequiredLayoutSetPrototypeException();
 		}
 

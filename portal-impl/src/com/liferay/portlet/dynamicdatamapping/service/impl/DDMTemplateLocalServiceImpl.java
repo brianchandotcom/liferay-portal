@@ -118,13 +118,14 @@ public class DDMTemplateLocalServiceImpl
 	}
 
 	public List<DDMTemplate> copyTemplates(
-			long userId, long classPK, long newClassPK, String type,
-			ServiceContext serviceContext)
+			long userId, long classNameId, long classPK, long newClassPK,
+			String type, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		List<DDMTemplate> newTemplates = new ArrayList<DDMTemplate>();
 
-		List<DDMTemplate> oldTemplates = getTemplates(classPK, type);
+		List<DDMTemplate> oldTemplates = getTemplates(
+			classNameId, classPK, type);
 
 		for (DDMTemplate oldTemplate : oldTemplates) {
 			DDMTemplate newTemplate = addTemplate(
@@ -186,60 +187,62 @@ public class DDMTemplateLocalServiceImpl
 		return ddmTemplatePersistence.findByClassPK(classPK);
 	}
 
-	public List<DDMTemplate> getTemplates(long classPK, String type)
+	public List<DDMTemplate> getTemplates(
+			long classNameId, long classPK, String type)
 		throws SystemException {
 
-		return ddmTemplatePersistence.findByC_T(classPK, type);
+		return ddmTemplatePersistence.findByC_C_T(classNameId, classPK, type);
 	}
 
 	public List<DDMTemplate> getTemplates(
-			long classPK, String type, String mode)
+			long classNameId, long classPK, String type, String mode)
 		throws SystemException {
 
-		return ddmTemplatePersistence.findByC_T_M(classPK, type, mode);
+		return ddmTemplatePersistence.findByC_C_T_M(
+			classNameId, classPK, type, mode);
 	}
 
 	public List<DDMTemplate> search(
-			long companyId, long groupId, long classPK, String keywords,
-			String type, String mode, int start, int end,
+			long companyId, long groupId, long classNameId, long classPK,
+			String keywords, String type, String mode, int start, int end,
 			OrderByComparator orderByComparator)
 		throws SystemException {
 
 		return ddmTemplateFinder.findByKeywords(
-			companyId, groupId, classPK, keywords, type, mode, start, end,
-			orderByComparator);
+			companyId, groupId, classNameId, classPK, keywords, type, mode,
+			start, end, orderByComparator);
 	}
 
 	public List<DDMTemplate> search(
-			long companyId, long groupId, long classPK, String name,
-			String description, String type, String mode, String language,
-			boolean andOperator, int start, int end,
+			long companyId, long groupId, long classNameId, long classPK,
+			String name, String description, String type, String mode,
+			String language, boolean andOperator, int start, int end,
 			OrderByComparator orderByComparator)
 		throws SystemException {
 
-		return ddmTemplateFinder.findByC_G_C_N_D_T_M_L(
-			companyId, groupId, classPK, name, description, type, mode,
-			language, andOperator, start, end, orderByComparator);
+		return ddmTemplateFinder.findByC_G_C_C_N_D_T_M_L(
+			companyId, groupId, classNameId, classPK, name, description, type,
+			mode, language, andOperator, start, end, orderByComparator);
 	}
 
 	public int searchCount(
-			long companyId, long groupId, long classPK, String keywords,
-			String type, String mode)
+			long companyId, long groupId, long classNameId, long classPK,
+			String keywords, String type, String mode)
 		throws SystemException {
 
 		return ddmTemplateFinder.countByKeywords(
-			companyId, groupId, classPK, keywords, type, mode);
+			companyId, groupId, classNameId, classPK, keywords, type, mode);
 	}
 
 	public int searchCount(
-			long companyId, long groupId, long classPK, String name,
-			String description, String type, String mode, String language,
-			boolean andOperator)
+			long companyId, long groupId, long classNameId, long classPK,
+			String name, String description, String type, String mode,
+			String language, boolean andOperator)
 		throws SystemException {
 
-		return ddmTemplateFinder.countByC_G_C_N_D_T_M_L(
-			companyId, groupId, classPK, name, description, type, mode,
-			language, andOperator);
+		return ddmTemplateFinder.countByC_G_C_C_N_D_T_M_L(
+			companyId, groupId, classNameId, classPK, name, description, type,
+			mode, language, andOperator);
 	}
 
 	public DDMTemplate updateTemplate(

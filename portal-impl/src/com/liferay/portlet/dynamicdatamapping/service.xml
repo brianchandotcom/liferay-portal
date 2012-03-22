@@ -179,11 +179,13 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
-		<finder name="C_T" return-type="Collection">
+		<finder name="C_C_T" return-type="Collection">
+			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 			<finder-column name="type" />
 		</finder>
-		<finder name="C_T_M" return-type="Collection">
+		<finder name="C_C_T_M" return-type="Collection">
+			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 			<finder-column name="type" />
 			<finder-column name="mode" />

@@ -15,6 +15,7 @@
 package com.liferay.portlet.dynamicdatamapping.util;
 
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 
 /**
  * <a href="DDMTemplate.java.html"><b><i>View Source</i></b></a>
@@ -23,7 +24,6 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
  */
 public interface DDMTemplateHelper {
 
-	public DDMStructure getDDMStructure(
-			com.liferay.portlet.dynamicdatamapping.model.DDMTemplate template);
+	public DDMStructure getDDMStructure(DDMTemplate template);
 
 }

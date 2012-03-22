@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.RequiredStructureException;
 import com.liferay.portlet.dynamicdatamapping.StructureDuplicateElementException;
 import com.liferay.portlet.dynamicdatamapping.StructureDuplicateStructureKeyException;
@@ -460,8 +461,10 @@ public class DDMStructureLocalServiceImpl
 	protected void syncStructureTemplatesFields(DDMStructure structure)
 		throws PortalException, SystemException {
 
+		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
+
 		List<DDMTemplate> templates = ddmTemplateLocalService.getTemplates(
-			structure.getStructureId(),
+			classNameId, structure.getStructureId(),
 			DDMTemplateConstants.TEMPLATE_TYPE_DETAIL);
 
 		for (DDMTemplate template : templates) {

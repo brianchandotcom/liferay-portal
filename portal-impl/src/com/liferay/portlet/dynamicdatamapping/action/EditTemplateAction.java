@@ -158,10 +158,8 @@ public class EditTemplateAction extends PortletAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long templateClassNameId = ParamUtil.getLong(
-			actionRequest, "templateClassNameId");
-		long templateClassPK = ParamUtil.getLong(
-			actionRequest, "templateClassPK");
+		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
+		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 		String availableFields = ParamUtil.getString(
 			actionRequest, "availableFields");
 		String saveCallback = ParamUtil.getString(
@@ -182,9 +180,8 @@ public class EditTemplateAction extends PortletAction {
 		portletURL.setParameter(
 			"groupId", String.valueOf(template.getGroupId()), false);
 		portletURL.setParameter(
-			"templateClassNameId", String.valueOf(templateClassNameId), false);
-		portletURL.setParameter(
-			"templateClassPK", String.valueOf(templateClassPK), false);
+			"classNameId", String.valueOf(classNameId), false);
+		portletURL.setParameter("classPK", String.valueOf(classPK), false);
 		portletURL.setParameter("type", template.getType(), false);
 		portletURL.setParameter("availableFields", availableFields, false);
 		portletURL.setParameter("saveCallback", saveCallback, false);
@@ -201,10 +198,9 @@ public class EditTemplateAction extends PortletAction {
 		long templateId = ParamUtil.getLong(uploadPortletRequest, "templateId");
 
 		long groupId = ParamUtil.getLong(uploadPortletRequest, "groupId");
-		long templateClassNameId = ParamUtil.getLong(
-			uploadPortletRequest, "templateClassNameId");
-		long templateClassPK = ParamUtil.getLong(
-			uploadPortletRequest, "templateClassPK");
+		long classNameId = ParamUtil.getLong(
+			uploadPortletRequest, "classNameId");
+		long classPK = ParamUtil.getLong(uploadPortletRequest, "classPK");
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "name");
 		Map<Locale, String> descriptionMap =
@@ -230,8 +226,8 @@ public class EditTemplateAction extends PortletAction {
 
 		if (templateId <= 0) {
 			template = DDMTemplateServiceUtil.addTemplate(
-				groupId, templateClassNameId, templateClassPK, nameMap,
-				descriptionMap, type, mode, language, script, serviceContext);
+				groupId, classNameId, classPK, nameMap, descriptionMap, type,
+				mode, language, script, serviceContext);
 		}
 		else {
 			template = DDMTemplateServiceUtil.updateTemplate(

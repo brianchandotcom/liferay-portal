@@ -24,6 +24,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
@@ -150,6 +151,8 @@ public class CopyStructureAction extends PortletAction {
 			ActionRequest actionRequest, long structureId, long newStructureId)
 		throws Exception {
 
+		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
+
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMTemplate.class.getName(), actionRequest);
 
@@ -158,7 +161,7 @@ public class CopyStructureAction extends PortletAction {
 
 		if (copyDetailTemplates) {
 			DDMTemplateServiceUtil.copyTemplates(
-				structureId, newStructureId,
+				classNameId, structureId, newStructureId,
 				DDMTemplateConstants.TEMPLATE_TYPE_DETAIL, serviceContext);
 		}
 
@@ -167,7 +170,7 @@ public class CopyStructureAction extends PortletAction {
 
 		if (copyListTemplates) {
 			DDMTemplateServiceUtil.copyTemplates(
-				structureId, newStructureId,
+				classNameId, structureId, newStructureId,
 				DDMTemplateConstants.TEMPLATE_TYPE_LIST, serviceContext);
 		}
 	}

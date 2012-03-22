@@ -437,10 +437,10 @@ public class AssetCategoryLocalServiceImpl
 		if (vocabularyId != category.getVocabularyId()) {
 			assetVocabularyPersistence.findByPrimaryKey(vocabularyId);
 
-			category.setVocabularyId(vocabularyId);
-
 			parentCategoryId =
 				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID;
+
+			category.setVocabularyId(vocabularyId);
 
 			updateChildrenVocabularyId(category, vocabularyId);
 		}

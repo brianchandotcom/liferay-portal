@@ -656,6 +656,10 @@
 		<put name="portlet_content" value="/portlet/journal/edit_feed.jsp" />
 	</definition>
 
+	<definition name="portlet.journal.edit_folder" extends="portlet.journal">
+		<put name="portlet_content" value="/portlet/journal/edit_folder.jsp" />
+	</definition>
+
 	<definition name="portlet.journal.edit_structure" extends="portlet.journal">
 		<put name="portlet_content" value="/portlet/journal/edit_structure.jsp" />
 	</definition>
@@ -678,6 +682,10 @@
 
 	<definition name="portlet.journal.select_document_library" extends="portlet.journal">
 		<put name="portlet_content" value="/portlet/journal/select_document_library.jsp" />
+	</definition>
+
+	<definition name="portlet.journal.select_folder" extends="portlet.journal">
+		<put name="portlet_content" value="/portlet/journal/select_folder.jsp" />
 	</definition>
 
 	<definition name="portlet.journal.select_structure" extends="portlet.journal">

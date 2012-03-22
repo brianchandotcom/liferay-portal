@@ -816,6 +816,11 @@
 			<forward name="portlet.journal.error" path="portlet.journal.error" />
 		</action>
 
+		<action path="/journal/edit_folder" type="com.liferay.portlet.journal.action.EditFolderAction">
+			<forward name="portlet.journal.edit_folder" path="portlet.journal.edit_folder" />
+			<forward name="portlet.journal.error" path="portlet.journal.error" />
+		</action>
+
 		<action path="/journal/edit_structure" type="com.liferay.portlet.journal.action.EditStructureAction">
 			<forward name="portlet.journal.edit_structure" path="portlet.journal.edit_structure" />
 			<forward name="portlet.journal.error" path="portlet.journal.error" />
@@ -852,6 +857,8 @@
 			<forward name="portlet.document_library.error" path="portlet.document_library.error" />
 			<forward name="portlet.document_library.view" path="portlet.journal.select_document_library" />
 		</action>
+
+		<action path="/journal/select_folder" forward="portlet.journal.select_folder" />
 
 		<action path="/journal/select_structure" forward="portlet.journal.select_structure" />
 

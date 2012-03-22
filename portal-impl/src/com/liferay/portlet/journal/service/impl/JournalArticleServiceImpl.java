@@ -16,6 +16,7 @@ package com.liferay.portlet.journal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
@@ -298,6 +299,14 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			getPermissionChecker(), article, ActionKeys.VIEW);
 
 		return article;
+	}
+
+	public int getFoldersArticlesCount(long groupId, List<Long> folderIds)
+		throws SystemException {
+
+		return journalArticlePersistence.filterCountByG_F(
+			groupId,
+			ArrayUtil.toArray(folderIds.toArray(new Long[folderIds.size()])));
 	}
 
 	public JournalArticle getLatestArticle(long resourcePrimKey)

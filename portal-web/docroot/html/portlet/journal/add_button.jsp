@@ -17,13 +17,27 @@
 <%@ include file="/html/portlet/journal/init.jsp" %>
 
 <%
-Map<String, PortletURL> addArticleURLs = getAddArticleURLs(liferayPortletRequest, liferayPortletResponse);
+JournalFolder folder = (JournalFolder)request.getAttribute("view.jsp-folder");
+
+long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
+
+Map<String, PortletURL> addArticleURLs = getAddArticleURLs(liferayPortletRequest, liferayPortletResponse, folderId);
 %>
 
 <liferay-ui:icon-menu align="left" direction="down" icon="" message="add" showExpanded="<%= false %>" showWhenSingleIcon="<%= true %>">
 
+	<c:if test="<%= JournalFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER) %>">
+		<portlet:renderURL var="addFolderURL">
+			<portlet:param name="struts_action" value="/journal/edit_folder" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="parentFolderId" value="<%= String.valueOf(folderId) %>" />
+		</portlet:renderURL>
+
+		<liferay-ui:icon image="folder" message='<%= (folder != null) ? "subfolder" : "folder" %>' url="<%= addFolderURL %>" />
+	</c:if>
+
 	<%
-	if (JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ARTICLE)) {
+	if (JournalFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_ARTICLE)) {
 		for (Map.Entry<String, PortletURL> entry : addArticleURLs.entrySet()) {
 			String className = entry.getKey();
 
@@ -58,7 +72,7 @@ Map<String, PortletURL> addArticleURLs = getAddArticleURLs(liferayPortletRequest
 </liferay-ui:icon-menu>
 
 <%!
-public PortletURL getAddArticleURL(LiferayPortletRequest liferayPortletRequest, LiferayPortletResponse liferayPortletResponse, String structureId) throws Exception {
+public PortletURL getAddArticleURL(LiferayPortletRequest liferayPortletRequest, LiferayPortletResponse liferayPortletResponse, long folderId, String structureId) throws Exception {
 	PortletURL addArticleURL = liferayPortletResponse.createRenderURL();
 
 	addArticleURL.setWindowState(LiferayWindowState.MAXIMIZED);
@@ -69,6 +83,7 @@ public PortletURL getAddArticleURL(LiferayPortletRequest liferayPortletRequest, 
 
 	addArticleURL.setParameter("redirect", currentURL);
 	addArticleURL.setParameter("backURL", currentURL);
+	addArticleURL.setParameter("folderId", String.valueOf(folderId));
 
 	if (Validator.isNotNull(structureId)) {
 		addArticleURL.setParameter("structureId", structureId);
@@ -77,7 +92,7 @@ public PortletURL getAddArticleURL(LiferayPortletRequest liferayPortletRequest, 
 	return addArticleURL;
 }
 
-public Map<String, PortletURL> getAddArticleURLs(LiferayPortletRequest liferayPortletRequest, LiferayPortletResponse liferayPortletResponse) throws Exception {
+public Map<String, PortletURL> getAddArticleURLs(LiferayPortletRequest liferayPortletRequest, LiferayPortletResponse liferayPortletResponse, long folderId) throws Exception {
 	ThemeDisplay themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 	Map<String, PortletURL> addArticleURLs = new TreeMap<String, PortletURL>();
@@ -90,12 +105,12 @@ public Map<String, PortletURL> getAddArticleURLs(LiferayPortletRequest liferayPo
 		structures.addAll(JournalStructureServiceUtil.getStructures(themeDisplay.getCompanyGroupId()));
 	}
 
-	PortletURL addArticleURL = getAddArticleURL(liferayPortletRequest, liferayPortletResponse, null);
+	PortletURL addArticleURL = getAddArticleURL(liferayPortletRequest, liferayPortletResponse, folderId, null);
 
 	addArticleURLs.put(JournalArticle.class.getName(), addArticleURL);
 
 	for (JournalStructure structure : structures) {
-		addArticleURL = getAddArticleURL(liferayPortletRequest, liferayPortletResponse, structure.getStructureId());
+		addArticleURL = getAddArticleURL(liferayPortletRequest, liferayPortletResponse, folderId, structure.getStructureId());
 
 		if (addArticleURL != null) {
 			String structureName = structure.getName(themeDisplay.getLocale());

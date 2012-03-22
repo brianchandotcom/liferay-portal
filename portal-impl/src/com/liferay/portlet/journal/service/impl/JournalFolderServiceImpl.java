@@ -24,6 +24,7 @@ import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.service.base.JournalFolderServiceBaseImpl;
 import com.liferay.portlet.journal.service.permission.JournalFolderPermission;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -159,6 +160,17 @@ public class JournalFolderServiceImpl
 			getSubfolderIds(
 				folderIds, folder.getGroupId(), folder.getFolderId());
 		}
+	}
+
+	public List<Long> getSubfolderIds(
+			long groupId, long folderId, boolean recurse)
+		throws SystemException {
+
+		List<Long> folderIds = new ArrayList<Long>();
+
+		getSubfolderIds(folderIds, groupId, folderId);
+
+		return folderIds;
 	}
 
 	public JournalFolder updateFolder(

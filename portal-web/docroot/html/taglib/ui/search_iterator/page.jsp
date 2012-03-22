@@ -339,6 +339,7 @@ int sortColumnIndex = -1;
 			</tr>
 
 		<%
+			request.removeAttribute("liferay-ui:search-container-row:rowId");
 		}
 		%>
 

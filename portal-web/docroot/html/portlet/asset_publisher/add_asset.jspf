@@ -19,9 +19,35 @@ addPortletURLs = getAddPortletURLs(liferayPortletRequest, liferayPortletResponse
 %>
 
 <c:if test="<%= !addPortletURLs.isEmpty() %>">
+	
+	<%
+	String taglibId = "addNew";
+		
+	if (groupIds.length > 1) {
+		taglibId = taglibId.concat("In");
+
+		if (themeDisplay.getCompanyGroupId() == groupId) {
+			taglibId = taglibId.concat("Global");
+		}
+		else {
+			Group curGroup = GroupLocalServiceUtil.getGroup(groupId);
+
+			if (curGroup.isLayout()) {
+				Layout scopeLayout = LayoutLocalServiceUtil.getLayout(curGroup.getClassPK());
+
+				taglibId = taglibId.concat(scopeLayout.getFriendlyURL().substring(1));
+			}
+			else {
+				taglibId = taglibId.concat(curGroup.getFriendlyURL().substring(1));
+			}
+		}
+	}
+	%>
+	
 	<liferay-ui:icon-menu
 		align="left"
 		icon='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>'
+		id='<%= taglibId %>'
 		message='<%= LanguageUtil.format(pageContext, (groupIds.length == 1) ? "add-new" : "add-new-in-x", new Object[] {(GroupLocalServiceUtil.getGroup(groupId)).getDescriptiveName(locale)}) %>'
 		showWhenSingleIcon="<%= true %>"
 	>

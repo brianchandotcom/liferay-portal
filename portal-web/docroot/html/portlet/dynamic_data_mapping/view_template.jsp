@@ -21,13 +21,15 @@ String tabs1 = ParamUtil.getString(request, "tabs1", "templates");
 
 String backURL = ParamUtil.getString(request, "backURL");
 
-long templateClassNameId = ParamUtil.getLong(request, "templateClassNameId");
-long templateClassPK = ParamUtil.getLong(request, "templateClassPK");
+long classNameId = ParamUtil.getLong(request, "classNameId");
+long classPK = ParamUtil.getLong(request, "classPK");
+
+long structureClassNameId = PortalUtil.getClassNameId(DDMStructure.class);
 
 DDMStructure structure = null;
 
-if (templateClassPK > 0) {
-	structure = DDMStructureServiceUtil.getStructure(templateClassPK);
+if ((classPK > 0) && (structureClassNameId == classNameId)) {
+	structure = DDMStructureServiceUtil.getStructure(classPK);
 }
 
 PortletURL portletURL = renderResponse.createRenderURL();
@@ -35,8 +37,8 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("struts_action", "/dynamic_data_mapping/view_template");
 portletURL.setParameter("tabs1", tabs1);
 portletURL.setParameter("backURL", backURL);
-portletURL.setParameter("templateClassNameId", String.valueOf(templateClassNameId));
-portletURL.setParameter("templateClassPK", String.valueOf(templateClassPK));
+portletURL.setParameter("classNameId", String.valueOf(classNameId));
+portletURL.setParameter("classPK", String.valueOf(classPK));
 %>
 
 <c:if test="<%= (structure != null) %>">
@@ -47,8 +49,8 @@ portletURL.setParameter("templateClassPK", String.valueOf(templateClassPK));
 </c:if>
 
 <liferay-util:include page="/html/portlet/dynamic_data_mapping/template_toolbar.jsp">
-	<liferay-util:param name="templateClassNameId" value="<%= String.valueOf(templateClassNameId) %>" />
-	<liferay-util:param name="templateClassPK" value="<%= String.valueOf(templateClassPK) %>" />
+	<liferay-util:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
+	<liferay-util:param name="classPK" value="<%= String.valueOf(classPK) %>" />
 	<liferay-util:param name="backURL" value="<%= backURL %>" />
 </liferay-util:include>
 

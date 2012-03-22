@@ -40,8 +40,8 @@ DDMStructure structure = (DDMStructure)row.getObject();
 		<portlet:renderURL var="manageViewURL">
 			<portlet:param name="struts_action" value="/dynamic_data_mapping/view_template" />
 			<portlet:param name="backURL" value="<%= currentURL %>" />
-			<portlet:param name="templateClassNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)) %>" />
-			<portlet:param name="templateClassPK" value="<%= String.valueOf(structure.getStructureId()) %>" />
+			<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)) %>" />
+			<portlet:param name="classPK" value="<%= String.valueOf(structure.getStructureId()) %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon

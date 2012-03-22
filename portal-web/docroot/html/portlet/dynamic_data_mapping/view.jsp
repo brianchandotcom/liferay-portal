@@ -92,7 +92,7 @@ portletURL.setParameter("tabs1", tabs1);
 			/>
 		</c:if>
 
-		<c:if test="<%= classNameId == 0 %>">
+		<c:if test="<%= scopeClassNameId == 0 %>">
 			<liferay-ui:search-container-column-text
 				buffer="buffer"
 				href="<%= rowHREF %>"

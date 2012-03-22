@@ -30,17 +30,14 @@ long templateId = BeanParamUtil.getLong(template, request, "templateId");
 
 long groupId = BeanParamUtil.getLong(template, request, "groupId", scopeGroupId);
 
-DDMStructure structure = (DDMStructure)request.getAttribute(WebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE);
+long classNameId = BeanParamUtil.getLong(template, request, "classNameId");
 
-long templateClassNameId = ParamUtil.getLong(request, "templateClassNameId");
-long templateClassPK = ParamUtil.getLong(request, "templateClassPK");
+long classPK = BeanParamUtil.getLong(template, request, "classPK");
+
+DDMStructure structure = (DDMStructure)request.getAttribute(WebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE);
 
 if ((structure == null) && (template != null)) {
 	structure = DDMTemplateHelperUtil.getDDMStructure(template);
-}
-
-if ((structure == null) && (templateClassNameId == PortalUtil.getClassNameId(DDMStructure.class))) {
-	structure = DDMStructureServiceUtil.getStructure(templateClassPK);
 }
 
 String mode = BeanParamUtil.getString(template, request, "mode", "create");
@@ -70,8 +67,8 @@ if (Validator.isNotNull(structureAvailableFields)) {
 	<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
 	<aui:input name="templateId" type="hidden" value="<%= templateId %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
-	<aui:input name="templateClassNameId" type="hidden" value="<%= templateClassNameId %>" />
-	<aui:input name="templateClassPK" type="hidden" value="<%= templateClassPK %>" />
+	<aui:input name="classNameId" type="hidden" value="<%= classNameId %>" />
+	<aui:input name="classPK" type="hidden" value="<%= classPK %>" />
 	<aui:input name="type" type="hidden" value="<%= type %>" />
 	<aui:input name="structureAvailableFields" type="hidden" value="<%= structureAvailableFields %>" />
 	<aui:input name="saveCallback" type="hidden" value="<%= saveCallback %>" />

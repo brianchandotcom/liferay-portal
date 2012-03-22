@@ -79,10 +79,10 @@ if (Validator.isNotNull(script)) {
 			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="structureDetailsSectionPanel" persistState="<%= true %>" title='<%= LanguageUtil.get(pageContext, "details") %>'>
 				<aui:layout cssClass="lfr-ddm-types-form-column">
 					<c:choose>
-						<c:when test="<%= classNameId == 0 %>">
+						<c:when test="<%= scopeClassNameId == 0 %>">
 							<aui:column first="<%= true %>">
 								<aui:field-wrapper>
-									<aui:select disabled="<%= structure != null %>" label="type" name="classNameId">
+									<aui:select disabled="<%= structure != null %>" label="type" name="scopeClassNameId">
 										<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, DDLRecordSet.class.getName()) %>" value="<%= PortalUtil.getClassNameId(DDLRecordSet.class.getName()) %>" />
 										<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, DLFileEntryMetadata.class.getName()) %>" value="<%= PortalUtil.getClassNameId(DLFileEntryMetadata.class.getName()) %>" />
 									</aui:select>
@@ -90,7 +90,7 @@ if (Validator.isNotNull(script)) {
 							</aui:column>
 						</c:when>
 						<c:otherwise>
-							<aui:input name="classNameId" type="hidden" value="<%= classNameId %>" />
+							<aui:input name="scopeClassNameId" type="hidden" value="<%= scopeClassNameId %>" />
 						</c:otherwise>
 					</c:choose>
 

@@ -21,8 +21,8 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 
 DDMTemplate template = (DDMTemplate)row.getObject();
 
-long templateClassNameId = ParamUtil.getLong(request, "templateClassNameId");
-long templateClassPK = ParamUtil.getLong(request, "templateClassPK");
+long classNameId = ParamUtil.getLong(request, "classNameId");
+long classPK = ParamUtil.getLong(request, "classPK");
 %>
 
 <liferay-ui:icon-menu showExpanded="<%= false %>" showWhenSingleIcon="<%= false %>">
@@ -33,8 +33,8 @@ long templateClassPK = ParamUtil.getLong(request, "templateClassPK");
 			<portlet:param name="backURL" value="<%= currentURL %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(template.getGroupId()) %>" />
 			<portlet:param name="templateId" value="<%= String.valueOf(template.getTemplateId()) %>" />
-			<portlet:param name="templateClassNameId" value="<%= String.valueOf(templateClassNameId) %>" />
-			<portlet:param name="templateClassPK" value="<%= String.valueOf(templateClassPK) %>" />
+			<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
+			<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
 			<portlet:param name="type" value="<%= template.getType() %>" />
 			<portlet:param name="structureAvailableFields" value='<%= renderResponse.getNamespace() + "structureAvailableFields" %>' />
 		</portlet:renderURL>

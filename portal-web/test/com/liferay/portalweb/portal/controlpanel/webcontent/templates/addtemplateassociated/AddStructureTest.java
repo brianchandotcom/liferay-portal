@@ -73,9 +73,9 @@ public class AddStructureTest extends BaseTestCase {
 			RuntimeVariables.replace("Add Row"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.type("//input[@id='_15_structure_el0_name']",
+		selenium.type("//input[@id='_15_structure_el1_name']",
 			RuntimeVariables.replace("title"));
-		selenium.select("//select[@id='_15_structure_el0_type']",
+		selenium.select("//select[@id='_15_structure_el1_type']",
 			RuntimeVariables.replace("label=Text"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

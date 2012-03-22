@@ -209,7 +209,7 @@ pageContext.setAttribute("portletURL", portletURL);
 			<liferay-ui:search-container-column-text
 				href="<%= rowURL %>"
 				name="type"
-				value="<%= group.getTypeLabel() %>"
+				value="<%= LanguageUtil.get(pageContext, group.getTypeLabel()) %>"
 			/>
 
 			<liferay-ui:search-container-column-text

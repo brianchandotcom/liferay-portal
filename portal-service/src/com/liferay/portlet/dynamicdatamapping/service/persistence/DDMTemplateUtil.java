@@ -957,26 +957,28 @@ public class DDMTemplateUtil {
 	}
 
 	/**
-	* Returns all the d d m templates where classPK = &#63; and type = &#63;.
+	* Returns all the d d m templates where classNameId = &#63; and classPK = &#63; and type = &#63;.
 	*
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param type the type
 	* @return the matching d d m templates
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByC_T(
-		long classPK, java.lang.String type)
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByC_C_T(
+		long classNameId, long classPK, java.lang.String type)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByC_T(classPK, type);
+		return getPersistence().findByC_C_T(classNameId, classPK, type);
 	}
 
 	/**
-	* Returns a range of all the d d m templates where classPK = &#63; and type = &#63;.
+	* Returns a range of all the d d m templates where classNameId = &#63; and classPK = &#63; and type = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param type the type
 	* @param start the lower bound of the range of d d m templates
@@ -984,173 +986,191 @@ public class DDMTemplateUtil {
 	* @return the range of matching d d m templates
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByC_T(
-		long classPK, java.lang.String type, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByC_T(classPK, type, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the d d m templates where classPK = &#63; and type = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param classPK the class p k
-	* @param type the type
-	* @param start the lower bound of the range of d d m templates
-	* @param end the upper bound of the range of d d m templates (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching d d m templates
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByC_T(
-		long classPK, java.lang.String type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByC_T(classPK, type, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns the first d d m template in the ordered set where classPK = &#63; and type = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param classPK the class p k
-	* @param type the type
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching d d m template
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByC_T_First(
-		long classPK, java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
-		return getPersistence().findByC_T_First(classPK, type, orderByComparator);
-	}
-
-	/**
-	* Returns the last d d m template in the ordered set where classPK = &#63; and type = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param classPK the class p k
-	* @param type the type
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching d d m template
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByC_T_Last(
-		long classPK, java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
-		return getPersistence().findByC_T_Last(classPK, type, orderByComparator);
-	}
-
-	/**
-	* Returns the d d m templates before and after the current d d m template in the ordered set where classPK = &#63; and type = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param templateId the primary key of the current d d m template
-	* @param classPK the class p k
-	* @param type the type
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next d d m template
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] findByC_T_PrevAndNext(
-		long templateId, long classPK, java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
-		return getPersistence()
-				   .findByC_T_PrevAndNext(templateId, classPK, type,
-			orderByComparator);
-	}
-
-	/**
-	* Returns all the d d m templates where classPK = &#63; and type = &#63; and mode = &#63;.
-	*
-	* @param classPK the class p k
-	* @param type the type
-	* @param mode the mode
-	* @return the matching d d m templates
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByC_T_M(
-		long classPK, java.lang.String type, java.lang.String mode)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByC_T_M(classPK, type, mode);
-	}
-
-	/**
-	* Returns a range of all the d d m templates where classPK = &#63; and type = &#63; and mode = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param classPK the class p k
-	* @param type the type
-	* @param mode the mode
-	* @param start the lower bound of the range of d d m templates
-	* @param end the upper bound of the range of d d m templates (not inclusive)
-	* @return the range of matching d d m templates
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByC_T_M(
-		long classPK, java.lang.String type, java.lang.String mode, int start,
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByC_C_T(
+		long classNameId, long classPK, java.lang.String type, int start,
 		int end) throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByC_T_M(classPK, type, mode, start, end);
+		return getPersistence()
+				   .findByC_C_T(classNameId, classPK, type, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the d d m templates where classPK = &#63; and type = &#63; and mode = &#63;.
+	* Returns an ordered range of all the d d m templates where classNameId = &#63; and classPK = &#63; and type = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param type the type
-	* @param mode the mode
 	* @param start the lower bound of the range of d d m templates
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d m templates
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByC_T_M(
-		long classPK, java.lang.String type, java.lang.String mode, int start,
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByC_C_T(
+		long classNameId, long classPK, java.lang.String type, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByC_T_M(classPK, type, mode, start, end,
+				   .findByC_C_T(classNameId, classPK, type, start, end,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the first d d m template in the ordered set where classPK = &#63; and type = &#63; and mode = &#63;.
+	* Returns the first d d m template in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching d d m template
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByC_C_T_First(
+		long classNameId, long classPK, java.lang.String type,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		return getPersistence()
+				   .findByC_C_T_First(classNameId, classPK, type,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last d d m template in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching d d m template
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByC_C_T_Last(
+		long classNameId, long classPK, java.lang.String type,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		return getPersistence()
+				   .findByC_C_T_Last(classNameId, classPK, type,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the d d m templates before and after the current d d m template in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param templateId the primary key of the current d d m template
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next d d m template
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] findByC_C_T_PrevAndNext(
+		long templateId, long classNameId, long classPK, java.lang.String type,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		return getPersistence()
+				   .findByC_C_T_PrevAndNext(templateId, classNameId, classPK,
+			type, orderByComparator);
+	}
+
+	/**
+	* Returns all the d d m templates where classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param type the type
+	* @param mode the mode
+	* @return the matching d d m templates
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByC_C_T_M(
+		long classNameId, long classPK, java.lang.String type,
+		java.lang.String mode)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByC_C_T_M(classNameId, classPK, type, mode);
+	}
+
+	/**
+	* Returns a range of all the d d m templates where classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param type the type
+	* @param mode the mode
+	* @param start the lower bound of the range of d d m templates
+	* @param end the upper bound of the range of d d m templates (not inclusive)
+	* @return the range of matching d d m templates
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByC_C_T_M(
+		long classNameId, long classPK, java.lang.String type,
+		java.lang.String mode, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_C_T_M(classNameId, classPK, type, mode, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the d d m templates where classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param type the type
+	* @param mode the mode
+	* @param start the lower bound of the range of d d m templates
+	* @param end the upper bound of the range of d d m templates (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching d d m templates
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByC_C_T_M(
+		long classNameId, long classPK, java.lang.String type,
+		java.lang.String mode, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_C_T_M(classNameId, classPK, type, mode, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first d d m template in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param type the type
 	* @param mode the mode
@@ -1159,64 +1179,70 @@ public class DDMTemplateUtil {
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByC_T_M_First(
-		long classPK, java.lang.String type, java.lang.String mode,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
-		return getPersistence()
-				   .findByC_T_M_First(classPK, type, mode, orderByComparator);
-	}
-
-	/**
-	* Returns the last d d m template in the ordered set where classPK = &#63; and type = &#63; and mode = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param classPK the class p k
-	* @param type the type
-	* @param mode the mode
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching d d m template
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByC_T_M_Last(
-		long classPK, java.lang.String type, java.lang.String mode,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
-		return getPersistence()
-				   .findByC_T_M_Last(classPK, type, mode, orderByComparator);
-	}
-
-	/**
-	* Returns the d d m templates before and after the current d d m template in the ordered set where classPK = &#63; and type = &#63; and mode = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param templateId the primary key of the current d d m template
-	* @param classPK the class p k
-	* @param type the type
-	* @param mode the mode
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next d d m template
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] findByC_T_M_PrevAndNext(
-		long templateId, long classPK, java.lang.String type,
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByC_C_T_M_First(
+		long classNameId, long classPK, java.lang.String type,
 		java.lang.String mode,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence()
-				   .findByC_T_M_PrevAndNext(templateId, classPK, type, mode,
+				   .findByC_C_T_M_First(classNameId, classPK, type, mode,
 			orderByComparator);
+	}
+
+	/**
+	* Returns the last d d m template in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param type the type
+	* @param mode the mode
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching d d m template
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByC_C_T_M_Last(
+		long classNameId, long classPK, java.lang.String type,
+		java.lang.String mode,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		return getPersistence()
+				   .findByC_C_T_M_Last(classNameId, classPK, type, mode,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the d d m templates before and after the current d d m template in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param templateId the primary key of the current d d m template
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param type the type
+	* @param mode the mode
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next d d m template
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] findByC_C_T_M_PrevAndNext(
+		long templateId, long classNameId, long classPK, java.lang.String type,
+		java.lang.String mode,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		return getPersistence()
+				   .findByC_C_T_M_PrevAndNext(templateId, classNameId, classPK,
+			type, mode, orderByComparator);
 	}
 
 	/**
@@ -1354,29 +1380,32 @@ public class DDMTemplateUtil {
 	}
 
 	/**
-	* Removes all the d d m templates where classPK = &#63; and type = &#63; from the database.
+	* Removes all the d d m templates where classNameId = &#63; and classPK = &#63; and type = &#63; from the database.
 	*
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param type the type
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByC_T(long classPK, java.lang.String type)
+	public static void removeByC_C_T(long classNameId, long classPK,
+		java.lang.String type)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByC_T(classPK, type);
+		getPersistence().removeByC_C_T(classNameId, classPK, type);
 	}
 
 	/**
-	* Removes all the d d m templates where classPK = &#63; and type = &#63; and mode = &#63; from the database.
+	* Removes all the d d m templates where classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63; from the database.
 	*
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param type the type
 	* @param mode the mode
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByC_T_M(long classPK, java.lang.String type,
-		java.lang.String mode)
+	public static void removeByC_C_T_M(long classNameId, long classPK,
+		java.lang.String type, java.lang.String mode)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByC_T_M(classPK, type, mode);
+		getPersistence().removeByC_C_T_M(classNameId, classPK, type, mode);
 	}
 
 	/**
@@ -1489,31 +1518,34 @@ public class DDMTemplateUtil {
 	}
 
 	/**
-	* Returns the number of d d m templates where classPK = &#63; and type = &#63;.
+	* Returns the number of d d m templates where classNameId = &#63; and classPK = &#63; and type = &#63;.
 	*
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param type the type
 	* @return the number of matching d d m templates
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByC_T(long classPK, java.lang.String type)
+	public static int countByC_C_T(long classNameId, long classPK,
+		java.lang.String type)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByC_T(classPK, type);
+		return getPersistence().countByC_C_T(classNameId, classPK, type);
 	}
 
 	/**
-	* Returns the number of d d m templates where classPK = &#63; and type = &#63; and mode = &#63;.
+	* Returns the number of d d m templates where classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
 	*
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param type the type
 	* @param mode the mode
 	* @return the number of matching d d m templates
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByC_T_M(long classPK, java.lang.String type,
-		java.lang.String mode)
+	public static int countByC_C_T_M(long classNameId, long classPK,
+		java.lang.String type, java.lang.String mode)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByC_T_M(classPK, type, mode);
+		return getPersistence().countByC_C_T_M(classNameId, classPK, type, mode);
 	}
 
 	/**

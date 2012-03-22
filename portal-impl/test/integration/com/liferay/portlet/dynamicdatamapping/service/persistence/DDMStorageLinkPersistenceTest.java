@@ -19,48 +19,36 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
-import com.liferay.portal.test.ExecutionTestListeners;
-import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.service.persistence.BasePersistenceTestCase;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink;
 import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStorageLinkModelImpl;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
-import org.junit.runner.RunWith;
-
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-@ExecutionTestListeners(listeners =  {
-	PersistenceExecutionTestListener.class})
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class DDMStorageLinkPersistenceTest {
-	@Before
+public class DDMStorageLinkPersistenceTest extends BasePersistenceTestCase {
+	@Override
 	public void setUp() throws Exception {
+		super.setUp();
+
 		_persistence = (DDMStorageLinkPersistence)PortalBeanLocatorUtil.locate(DDMStorageLinkPersistence.class.getName());
 	}
 
-	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = nextLong();
 
 		DDMStorageLink ddmStorageLink = _persistence.create(pk);
 
-		Assert.assertNotNull(ddmStorageLink);
+		assertNotNull(ddmStorageLink);
 
-		Assert.assertEquals(ddmStorageLink.getPrimaryKey(), pk);
+		assertEquals(ddmStorageLink.getPrimaryKey(), pk);
 	}
 
-	@Test
 	public void testRemove() throws Exception {
 		DDMStorageLink newDDMStorageLink = addDDMStorageLink();
 
@@ -68,86 +56,78 @@ public class DDMStorageLinkPersistenceTest {
 
 		DDMStorageLink existingDDMStorageLink = _persistence.fetchByPrimaryKey(newDDMStorageLink.getPrimaryKey());
 
-		Assert.assertNull(existingDDMStorageLink);
+		assertNull(existingDDMStorageLink);
 	}
 
-	@Test
 	public void testUpdateNew() throws Exception {
 		addDDMStorageLink();
 	}
 
-	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = nextLong();
 
 		DDMStorageLink newDDMStorageLink = _persistence.create(pk);
 
-		newDDMStorageLink.setUuid(ServiceTestUtil.randomString());
+		newDDMStorageLink.setUuid(randomString());
 
-		newDDMStorageLink.setClassNameId(ServiceTestUtil.nextLong());
+		newDDMStorageLink.setClassNameId(nextLong());
 
-		newDDMStorageLink.setClassPK(ServiceTestUtil.nextLong());
+		newDDMStorageLink.setClassPK(nextLong());
 
-		newDDMStorageLink.setStructureId(ServiceTestUtil.nextLong());
+		newDDMStorageLink.setStructureId(nextLong());
 
 		_persistence.update(newDDMStorageLink, false);
 
 		DDMStorageLink existingDDMStorageLink = _persistence.findByPrimaryKey(newDDMStorageLink.getPrimaryKey());
 
-		Assert.assertEquals(existingDDMStorageLink.getUuid(),
+		assertEquals(existingDDMStorageLink.getUuid(),
 			newDDMStorageLink.getUuid());
-		Assert.assertEquals(existingDDMStorageLink.getStorageLinkId(),
+		assertEquals(existingDDMStorageLink.getStorageLinkId(),
 			newDDMStorageLink.getStorageLinkId());
-		Assert.assertEquals(existingDDMStorageLink.getClassNameId(),
+		assertEquals(existingDDMStorageLink.getClassNameId(),
 			newDDMStorageLink.getClassNameId());
-		Assert.assertEquals(existingDDMStorageLink.getClassPK(),
+		assertEquals(existingDDMStorageLink.getClassPK(),
 			newDDMStorageLink.getClassPK());
-		Assert.assertEquals(existingDDMStorageLink.getStructureId(),
+		assertEquals(existingDDMStorageLink.getStructureId(),
 			newDDMStorageLink.getStructureId());
 	}
 
-	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		DDMStorageLink newDDMStorageLink = addDDMStorageLink();
 
 		DDMStorageLink existingDDMStorageLink = _persistence.findByPrimaryKey(newDDMStorageLink.getPrimaryKey());
 
-		Assert.assertEquals(existingDDMStorageLink, newDDMStorageLink);
+		assertEquals(existingDDMStorageLink, newDDMStorageLink);
 	}
 
-	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			Assert.fail(
-				"Missing entity did not throw NoSuchStorageLinkException");
+			fail("Missing entity did not throw NoSuchStorageLinkException");
 		}
 		catch (NoSuchStorageLinkException nsee) {
 		}
 	}
 
-	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		DDMStorageLink newDDMStorageLink = addDDMStorageLink();
 
 		DDMStorageLink existingDDMStorageLink = _persistence.fetchByPrimaryKey(newDDMStorageLink.getPrimaryKey());
 
-		Assert.assertEquals(existingDDMStorageLink, newDDMStorageLink);
+		assertEquals(existingDDMStorageLink, newDDMStorageLink);
 	}
 
-	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = nextLong();
 
 		DDMStorageLink missingDDMStorageLink = _persistence.fetchByPrimaryKey(pk);
 
-		Assert.assertNull(missingDDMStorageLink);
+		assertNull(missingDDMStorageLink);
 	}
 
-	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		DDMStorageLink newDDMStorageLink = addDDMStorageLink();
@@ -160,27 +140,24 @@ public class DDMStorageLinkPersistenceTest {
 
 		List<DDMStorageLink> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		Assert.assertEquals(1, result.size());
+		assertEquals(1, result.size());
 
 		DDMStorageLink existingDDMStorageLink = result.get(0);
 
-		Assert.assertEquals(existingDDMStorageLink, newDDMStorageLink);
+		assertEquals(existingDDMStorageLink, newDDMStorageLink);
 	}
 
-	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMStorageLink.class,
 				DDMStorageLink.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("storageLinkId",
-				ServiceTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("storageLinkId", nextLong()));
 
 		List<DDMStorageLink> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		Assert.assertEquals(0, result.size());
+		assertEquals(0, result.size());
 	}
 
-	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		DDMStorageLink newDDMStorageLink = addDDMStorageLink();
@@ -198,14 +175,13 @@ public class DDMStorageLinkPersistenceTest {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		Assert.assertEquals(1, result.size());
+		assertEquals(1, result.size());
 
 		Object existingStorageLinkId = result.get(0);
 
-		Assert.assertEquals(existingStorageLinkId, newStorageLinkId);
+		assertEquals(existingStorageLinkId, newStorageLinkId);
 	}
 
-	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMStorageLink.class,
 				DDMStorageLink.class.getClassLoader());
@@ -214,14 +190,13 @@ public class DDMStorageLinkPersistenceTest {
 				"storageLinkId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("storageLinkId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		Assert.assertEquals(0, result.size());
+		assertEquals(0, result.size());
 	}
 
-	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -233,22 +208,22 @@ public class DDMStorageLinkPersistenceTest {
 
 		DDMStorageLinkModelImpl existingDDMStorageLinkModelImpl = (DDMStorageLinkModelImpl)_persistence.findByPrimaryKey(newDDMStorageLink.getPrimaryKey());
 
-		Assert.assertEquals(existingDDMStorageLinkModelImpl.getClassPK(),
+		assertEquals(existingDDMStorageLinkModelImpl.getClassPK(),
 			existingDDMStorageLinkModelImpl.getOriginalClassPK());
 	}
 
 	protected DDMStorageLink addDDMStorageLink() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = nextLong();
 
 		DDMStorageLink ddmStorageLink = _persistence.create(pk);
 
-		ddmStorageLink.setUuid(ServiceTestUtil.randomString());
+		ddmStorageLink.setUuid(randomString());
 
-		ddmStorageLink.setClassNameId(ServiceTestUtil.nextLong());
+		ddmStorageLink.setClassNameId(nextLong());
 
-		ddmStorageLink.setClassPK(ServiceTestUtil.nextLong());
+		ddmStorageLink.setClassPK(nextLong());
 
-		ddmStorageLink.setStructureId(ServiceTestUtil.nextLong());
+		ddmStorageLink.setStructureId(nextLong());
 
 		_persistence.update(ddmStorageLink, false);
 

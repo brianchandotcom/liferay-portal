@@ -21,48 +21,36 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
-import com.liferay.portal.test.ExecutionTestListeners;
-import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.service.persistence.BasePersistenceTestCase;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.dynamicdatamapping.NoSuchContentException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMContent;
 import com.liferay.portlet.dynamicdatamapping.model.impl.DDMContentModelImpl;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
-import org.junit.runner.RunWith;
-
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-@ExecutionTestListeners(listeners =  {
-	PersistenceExecutionTestListener.class})
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class DDMContentPersistenceTest {
-	@Before
+public class DDMContentPersistenceTest extends BasePersistenceTestCase {
+	@Override
 	public void setUp() throws Exception {
+		super.setUp();
+
 		_persistence = (DDMContentPersistence)PortalBeanLocatorUtil.locate(DDMContentPersistence.class.getName());
 	}
 
-	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = nextLong();
 
 		DDMContent ddmContent = _persistence.create(pk);
 
-		Assert.assertNotNull(ddmContent);
+		assertNotNull(ddmContent);
 
-		Assert.assertEquals(ddmContent.getPrimaryKey(), pk);
+		assertEquals(ddmContent.getPrimaryKey(), pk);
 	}
 
-	@Test
 	public void testRemove() throws Exception {
 		DDMContent newDDMContent = addDDMContent();
 
@@ -70,110 +58,98 @@ public class DDMContentPersistenceTest {
 
 		DDMContent existingDDMContent = _persistence.fetchByPrimaryKey(newDDMContent.getPrimaryKey());
 
-		Assert.assertNull(existingDDMContent);
+		assertNull(existingDDMContent);
 	}
 
-	@Test
 	public void testUpdateNew() throws Exception {
 		addDDMContent();
 	}
 
-	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = nextLong();
 
 		DDMContent newDDMContent = _persistence.create(pk);
 
-		newDDMContent.setUuid(ServiceTestUtil.randomString());
+		newDDMContent.setUuid(randomString());
 
-		newDDMContent.setGroupId(ServiceTestUtil.nextLong());
+		newDDMContent.setGroupId(nextLong());
 
-		newDDMContent.setCompanyId(ServiceTestUtil.nextLong());
+		newDDMContent.setCompanyId(nextLong());
 
-		newDDMContent.setUserId(ServiceTestUtil.nextLong());
+		newDDMContent.setUserId(nextLong());
 
-		newDDMContent.setUserName(ServiceTestUtil.randomString());
+		newDDMContent.setUserName(randomString());
 
-		newDDMContent.setCreateDate(ServiceTestUtil.nextDate());
+		newDDMContent.setCreateDate(nextDate());
 
-		newDDMContent.setModifiedDate(ServiceTestUtil.nextDate());
+		newDDMContent.setModifiedDate(nextDate());
 
-		newDDMContent.setName(ServiceTestUtil.randomString());
+		newDDMContent.setName(randomString());
 
-		newDDMContent.setDescription(ServiceTestUtil.randomString());
+		newDDMContent.setDescription(randomString());
 
-		newDDMContent.setXml(ServiceTestUtil.randomString());
+		newDDMContent.setXml(randomString());
 
 		_persistence.update(newDDMContent, false);
 
 		DDMContent existingDDMContent = _persistence.findByPrimaryKey(newDDMContent.getPrimaryKey());
 
-		Assert.assertEquals(existingDDMContent.getUuid(),
-			newDDMContent.getUuid());
-		Assert.assertEquals(existingDDMContent.getContentId(),
+		assertEquals(existingDDMContent.getUuid(), newDDMContent.getUuid());
+		assertEquals(existingDDMContent.getContentId(),
 			newDDMContent.getContentId());
-		Assert.assertEquals(existingDDMContent.getGroupId(),
-			newDDMContent.getGroupId());
-		Assert.assertEquals(existingDDMContent.getCompanyId(),
+		assertEquals(existingDDMContent.getGroupId(), newDDMContent.getGroupId());
+		assertEquals(existingDDMContent.getCompanyId(),
 			newDDMContent.getCompanyId());
-		Assert.assertEquals(existingDDMContent.getUserId(),
-			newDDMContent.getUserId());
-		Assert.assertEquals(existingDDMContent.getUserName(),
+		assertEquals(existingDDMContent.getUserId(), newDDMContent.getUserId());
+		assertEquals(existingDDMContent.getUserName(),
 			newDDMContent.getUserName());
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingDDMContent.getCreateDate()),
+		assertEquals(Time.getShortTimestamp(existingDDMContent.getCreateDate()),
 			Time.getShortTimestamp(newDDMContent.getCreateDate()));
-		Assert.assertEquals(Time.getShortTimestamp(
+		assertEquals(Time.getShortTimestamp(
 				existingDDMContent.getModifiedDate()),
 			Time.getShortTimestamp(newDDMContent.getModifiedDate()));
-		Assert.assertEquals(existingDDMContent.getName(),
-			newDDMContent.getName());
-		Assert.assertEquals(existingDDMContent.getDescription(),
+		assertEquals(existingDDMContent.getName(), newDDMContent.getName());
+		assertEquals(existingDDMContent.getDescription(),
 			newDDMContent.getDescription());
-		Assert.assertEquals(existingDDMContent.getXml(), newDDMContent.getXml());
+		assertEquals(existingDDMContent.getXml(), newDDMContent.getXml());
 	}
 
-	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		DDMContent newDDMContent = addDDMContent();
 
 		DDMContent existingDDMContent = _persistence.findByPrimaryKey(newDDMContent.getPrimaryKey());
 
-		Assert.assertEquals(existingDDMContent, newDDMContent);
+		assertEquals(existingDDMContent, newDDMContent);
 	}
 
-	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			Assert.fail("Missing entity did not throw NoSuchContentException");
+			fail("Missing entity did not throw NoSuchContentException");
 		}
 		catch (NoSuchContentException nsee) {
 		}
 	}
 
-	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		DDMContent newDDMContent = addDDMContent();
 
 		DDMContent existingDDMContent = _persistence.fetchByPrimaryKey(newDDMContent.getPrimaryKey());
 
-		Assert.assertEquals(existingDDMContent, newDDMContent);
+		assertEquals(existingDDMContent, newDDMContent);
 	}
 
-	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = nextLong();
 
 		DDMContent missingDDMContent = _persistence.fetchByPrimaryKey(pk);
 
-		Assert.assertNull(missingDDMContent);
+		assertNull(missingDDMContent);
 	}
 
-	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		DDMContent newDDMContent = addDDMContent();
@@ -186,27 +162,24 @@ public class DDMContentPersistenceTest {
 
 		List<DDMContent> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		Assert.assertEquals(1, result.size());
+		assertEquals(1, result.size());
 
 		DDMContent existingDDMContent = result.get(0);
 
-		Assert.assertEquals(existingDDMContent, newDDMContent);
+		assertEquals(existingDDMContent, newDDMContent);
 	}
 
-	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMContent.class,
 				DDMContent.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("contentId",
-				ServiceTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("contentId", nextLong()));
 
 		List<DDMContent> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		Assert.assertEquals(0, result.size());
+		assertEquals(0, result.size());
 	}
 
-	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		DDMContent newDDMContent = addDDMContent();
@@ -223,14 +196,13 @@ public class DDMContentPersistenceTest {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		Assert.assertEquals(1, result.size());
+		assertEquals(1, result.size());
 
 		Object existingContentId = result.get(0);
 
-		Assert.assertEquals(existingContentId, newContentId);
+		assertEquals(existingContentId, newContentId);
 	}
 
-	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMContent.class,
 				DDMContent.class.getClassLoader());
@@ -238,14 +210,13 @@ public class DDMContentPersistenceTest {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("contentId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("contentId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		Assert.assertEquals(0, result.size());
+		assertEquals(0, result.size());
 	}
 
-	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -257,37 +228,36 @@ public class DDMContentPersistenceTest {
 
 		DDMContentModelImpl existingDDMContentModelImpl = (DDMContentModelImpl)_persistence.findByPrimaryKey(newDDMContent.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(
-				existingDDMContentModelImpl.getUuid(),
+		assertTrue(Validator.equals(existingDDMContentModelImpl.getUuid(),
 				existingDDMContentModelImpl.getOriginalUuid()));
-		Assert.assertEquals(existingDDMContentModelImpl.getGroupId(),
+		assertEquals(existingDDMContentModelImpl.getGroupId(),
 			existingDDMContentModelImpl.getOriginalGroupId());
 	}
 
 	protected DDMContent addDDMContent() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = nextLong();
 
 		DDMContent ddmContent = _persistence.create(pk);
 
-		ddmContent.setUuid(ServiceTestUtil.randomString());
+		ddmContent.setUuid(randomString());
 
-		ddmContent.setGroupId(ServiceTestUtil.nextLong());
+		ddmContent.setGroupId(nextLong());
 
-		ddmContent.setCompanyId(ServiceTestUtil.nextLong());
+		ddmContent.setCompanyId(nextLong());
 
-		ddmContent.setUserId(ServiceTestUtil.nextLong());
+		ddmContent.setUserId(nextLong());
 
-		ddmContent.setUserName(ServiceTestUtil.randomString());
+		ddmContent.setUserName(randomString());
 
-		ddmContent.setCreateDate(ServiceTestUtil.nextDate());
+		ddmContent.setCreateDate(nextDate());
 
-		ddmContent.setModifiedDate(ServiceTestUtil.nextDate());
+		ddmContent.setModifiedDate(nextDate());
 
-		ddmContent.setName(ServiceTestUtil.randomString());
+		ddmContent.setName(randomString());
 
-		ddmContent.setDescription(ServiceTestUtil.randomString());
+		ddmContent.setDescription(randomString());
 
-		ddmContent.setXml(ServiceTestUtil.randomString());
+		ddmContent.setXml(randomString());
 
 		_persistence.update(ddmContent, false);
 

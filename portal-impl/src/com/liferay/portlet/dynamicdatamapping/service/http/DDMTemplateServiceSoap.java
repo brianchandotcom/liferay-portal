@@ -100,13 +100,13 @@ public class DDMTemplateServiceSoap {
 	}
 
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap[] copyTemplates(
-		long classPK, long newClassPK, java.lang.String type,
+		long classNameId, long classPK, long newClassPK, java.lang.String type,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> returnValue =
-				DDMTemplateServiceUtil.copyTemplates(classPK, newClassPK, type,
-					serviceContext);
+				DDMTemplateServiceUtil.copyTemplates(classNameId, classPK,
+					newClassPK, type, serviceContext);
 
 			return com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap.toSoapModels(returnValue);
 		}
@@ -145,11 +145,12 @@ public class DDMTemplateServiceSoap {
 	}
 
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap[] getTemplates(
-		long classPK, java.lang.String type, java.lang.String mode)
-		throws RemoteException {
+		long classNameId, long classPK, java.lang.String type,
+		java.lang.String mode) throws RemoteException {
 		try {
 			java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> returnValue =
-				DDMTemplateServiceUtil.getTemplates(classPK, type, mode);
+				DDMTemplateServiceUtil.getTemplates(classNameId, classPK, type,
+					mode);
 
 			return com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap.toSoapModels(returnValue);
 		}
@@ -161,14 +162,15 @@ public class DDMTemplateServiceSoap {
 	}
 
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap[] search(
-		long companyId, long groupId, long classPK, java.lang.String keywords,
-		java.lang.String type, java.lang.String mode, int start, int end,
+		long companyId, long groupId, long classNameId, long classPK,
+		java.lang.String keywords, java.lang.String type,
+		java.lang.String mode, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> returnValue =
-				DDMTemplateServiceUtil.search(companyId, groupId, classPK,
-					keywords, type, mode, start, end, orderByComparator);
+				DDMTemplateServiceUtil.search(companyId, groupId, classNameId,
+					classPK, keywords, type, mode, start, end, orderByComparator);
 
 			return com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap.toSoapModels(returnValue);
 		}
@@ -180,17 +182,17 @@ public class DDMTemplateServiceSoap {
 	}
 
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap[] search(
-		long companyId, long groupId, long classPK, java.lang.String name,
-		java.lang.String description, java.lang.String type,
-		java.lang.String mode, java.lang.String language, boolean andOperator,
-		int start, int end,
+		long companyId, long groupId, long classNameId, long classPK,
+		java.lang.String name, java.lang.String description,
+		java.lang.String type, java.lang.String mode,
+		java.lang.String language, boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> returnValue =
-				DDMTemplateServiceUtil.search(companyId, groupId, classPK,
-					name, description, type, mode, language, andOperator,
-					start, end, orderByComparator);
+				DDMTemplateServiceUtil.search(companyId, groupId, classNameId,
+					classPK, name, description, type, mode, language,
+					andOperator, start, end, orderByComparator);
 
 			return com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap.toSoapModels(returnValue);
 		}
@@ -201,12 +203,12 @@ public class DDMTemplateServiceSoap {
 		}
 	}
 
-	public static int searchCount(long companyId, long groupId, long classPK,
-		java.lang.String keywords, java.lang.String type, java.lang.String mode)
-		throws RemoteException {
+	public static int searchCount(long companyId, long groupId,
+		long classNameId, long classPK, java.lang.String keywords,
+		java.lang.String type, java.lang.String mode) throws RemoteException {
 		try {
 			int returnValue = DDMTemplateServiceUtil.searchCount(companyId,
-					groupId, classPK, keywords, type, mode);
+					groupId, classNameId, classPK, keywords, type, mode);
 
 			return returnValue;
 		}
@@ -217,15 +219,15 @@ public class DDMTemplateServiceSoap {
 		}
 	}
 
-	public static int searchCount(long companyId, long groupId, long classPK,
-		java.lang.String name, java.lang.String description,
-		java.lang.String type, java.lang.String mode,
-		java.lang.String language, boolean andOperator)
+	public static int searchCount(long companyId, long groupId,
+		long classNameId, long classPK, java.lang.String name,
+		java.lang.String description, java.lang.String type,
+		java.lang.String mode, java.lang.String language, boolean andOperator)
 		throws RemoteException {
 		try {
 			int returnValue = DDMTemplateServiceUtil.searchCount(companyId,
-					groupId, classPK, name, description, type, mode, language,
-					andOperator);
+					groupId, classNameId, classPK, name, description, type,
+					mode, language, andOperator);
 
 			return returnValue;
 		}

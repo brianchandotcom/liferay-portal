@@ -308,12 +308,13 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	}
 
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> copyTemplates(
-		long userId, long classPK, long newClassPK, java.lang.String type,
+		long userId, long classNameId, long classPK, long newClassPK,
+		java.lang.String type,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _ddmTemplateLocalService.copyTemplates(userId, classPK,
-			newClassPK, type, serviceContext);
+		return _ddmTemplateLocalService.copyTemplates(userId, classNameId,
+			classPK, newClassPK, type, serviceContext);
 	}
 
 	public void deleteTemplate(
@@ -349,52 +350,57 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	}
 
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates(
-		long classPK, java.lang.String type)
+		long classNameId, long classPK, java.lang.String type)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _ddmTemplateLocalService.getTemplates(classPK, type);
+		return _ddmTemplateLocalService.getTemplates(classNameId, classPK, type);
 	}
 
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates(
-		long classPK, java.lang.String type, java.lang.String mode)
+		long classNameId, long classPK, java.lang.String type,
+		java.lang.String mode)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _ddmTemplateLocalService.getTemplates(classPK, type, mode);
+		return _ddmTemplateLocalService.getTemplates(classNameId, classPK,
+			type, mode);
 	}
 
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> search(
-		long companyId, long groupId, long classPK, java.lang.String keywords,
-		java.lang.String type, java.lang.String mode, int start, int end,
+		long companyId, long groupId, long classNameId, long classPK,
+		java.lang.String keywords, java.lang.String type,
+		java.lang.String mode, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _ddmTemplateLocalService.search(companyId, groupId, classPK,
-			keywords, type, mode, start, end, orderByComparator);
+		return _ddmTemplateLocalService.search(companyId, groupId, classNameId,
+			classPK, keywords, type, mode, start, end, orderByComparator);
 	}
 
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> search(
-		long companyId, long groupId, long classPK, java.lang.String name,
-		java.lang.String description, java.lang.String type,
-		java.lang.String mode, java.lang.String language, boolean andOperator,
-		int start, int end,
+		long companyId, long groupId, long classNameId, long classPK,
+		java.lang.String name, java.lang.String description,
+		java.lang.String type, java.lang.String mode,
+		java.lang.String language, boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _ddmTemplateLocalService.search(companyId, groupId, classPK,
-			name, description, type, mode, language, andOperator, start, end,
-			orderByComparator);
+		return _ddmTemplateLocalService.search(companyId, groupId, classNameId,
+			classPK, name, description, type, mode, language, andOperator,
+			start, end, orderByComparator);
 	}
 
-	public int searchCount(long companyId, long groupId, long classPK,
-		java.lang.String keywords, java.lang.String type, java.lang.String mode)
+	public int searchCount(long companyId, long groupId, long classNameId,
+		long classPK, java.lang.String keywords, java.lang.String type,
+		java.lang.String mode)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _ddmTemplateLocalService.searchCount(companyId, groupId,
-			classPK, keywords, type, mode);
+			classNameId, classPK, keywords, type, mode);
 	}
 
-	public int searchCount(long companyId, long groupId, long classPK,
-		java.lang.String name, java.lang.String description,
+	public int searchCount(long companyId, long groupId, long classNameId,
+		long classPK, java.lang.String name, java.lang.String description,
 		java.lang.String type, java.lang.String mode,
 		java.lang.String language, boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _ddmTemplateLocalService.searchCount(companyId, groupId,
-			classPK, name, description, type, mode, language, andOperator);
+			classNameId, classPK, name, description, type, mode, language,
+			andOperator);
 	}
 
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate updateTemplate(

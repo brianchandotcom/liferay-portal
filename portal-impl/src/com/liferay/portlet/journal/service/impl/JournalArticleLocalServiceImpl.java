@@ -133,15 +133,16 @@ public class JournalArticleLocalServiceImpl
 			long userId, long groupId, long classNameId, long classPK,
 			String articleId, boolean autoArticleId, double version,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			String content, String urlTitle, String type, String structureId, String templateId,
-			String layoutUuid, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire, int reviewDateMonth,
-			int reviewDateDay, int reviewDateYear, int reviewDateHour,
-			int reviewDateMinute, boolean neverReview, boolean indexable,
-			boolean smallImage, String smallImageURL, File smallImageFile,
+			String content, String urlTitle, String type, String structureId,
+			String templateId, String layoutUuid, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, int reviewDateMonth, int reviewDateDay,
+			int reviewDateYear, int reviewDateHour, int reviewDateMinute,
+			boolean neverReview, boolean indexable, boolean smallImage,
+			String smallImageURL, File smallImageFile,
 			Map<String, byte[]> images, String articleURL,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -227,8 +228,7 @@ public class JournalArticleLocalServiceImpl
 			}
 
 			if ((articleWithUrlTitle != null) &&
-				!(articleWithUrlTitle.getArticleId().equals(articleId))) {
-
+				!articleWithUrlTitle.getArticleId().equals(articleId)) {
 				urlTitle = getUniqueUrlTitle(id, groupId, articleId, urlTitle);
 			}
 		}
@@ -1891,29 +1891,30 @@ public class JournalArticleLocalServiceImpl
 
 		return updateArticle(
 			userId, groupId, articleId, version, titleMap, descriptionMap,
-			content, article.getUrlTitle(), article.getType(), article.getStructureId(),
-			article.getTemplateId(), layoutUuid, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			reviewDateMonth, reviewDateDay, reviewDateYear, reviewDateHour,
-			reviewDateMinute, neverReview, article.getIndexable(),
-			article.isSmallImage(), article.getSmallImageURL(), null, null,
-			null, serviceContext);
+			content, article.getUrlTitle(), article.getType(),
+			article.getStructureId(), article.getTemplateId(), layoutUuid,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, reviewDateMonth, reviewDateDay, reviewDateYear,
+			reviewDateHour, reviewDateMinute, neverReview,
+			article.getIndexable(), article.isSmallImage(),
+			article.getSmallImageURL(), null, null, null, serviceContext);
 	}
 
 	public JournalArticle updateArticle(
 			long userId, long groupId, String articleId, double version,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			String content, String urlTitle, String type, String structureId, String templateId,
-			String layoutUuid, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire, int reviewDateMonth,
-			int reviewDateDay, int reviewDateYear, int reviewDateHour,
-			int reviewDateMinute, boolean neverReview, boolean indexable,
-			boolean smallImage, String smallImageURL, File smallImageFile,
+			String content, String urlTitle, String type, String structureId,
+			String templateId, String layoutUuid, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, int reviewDateMonth, int reviewDateDay,
+			int reviewDateYear, int reviewDateHour, int reviewDateMinute,
+			boolean neverReview, boolean indexable, boolean smallImage,
+			String smallImageURL, File smallImageFile,
 			Map<String, byte[]> images, String articleURL,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -2054,10 +2055,10 @@ public class JournalArticleLocalServiceImpl
 			}
 
 			if ((articleWithUrlTitle != null) &&
-				!(articleWithUrlTitle.getArticleId().equals(articleId))) {
+				!articleWithUrlTitle.getArticleId().equals(articleId)) {
 
-				urlTitle = getUniqueUrlTitle(Long.valueOf(articleId), groupId,
-					articleId, urlTitle);
+				urlTitle = getUniqueUrlTitle(
+					Long.valueOf(articleId), groupId, articleId, urlTitle);
 			}
 		}
 		else {

@@ -32,11 +32,11 @@ import javax.servlet.http.HttpServletRequestWrapper;
 public class DynamicServletRequest extends HttpServletRequestWrapper {
 
 	public DynamicServletRequest(HttpServletRequest request) {
-		this(request, new HashMap<String, String[]>(), true);
+		this(request, null, true);
 	}
 
 	public DynamicServletRequest(HttpServletRequest request, boolean inherit) {
-		this(request, new HashMap<String, String[]>(), inherit);
+		this(request, null, inherit);
 	}
 
 	public DynamicServletRequest(
@@ -55,9 +55,7 @@ public class DynamicServletRequest extends HttpServletRequestWrapper {
 		_inherit = inherit;
 
 		if (params != null) {
-			for (Map.Entry<String, String[]> entry : params.entrySet()) {
-				_params.put(entry.getKey(), entry.getValue());
-			}
+			_params.putAll(params);
 		}
 
 		if (_inherit && (request instanceof DynamicServletRequest)) {
@@ -68,22 +66,19 @@ public class DynamicServletRequest extends HttpServletRequestWrapper {
 
 			params = dynamicRequest.getDynamicParameterMap();
 
-			if (params != null) {
-				for (Map.Entry<String, String[]> entry : params.entrySet()) {
-					String name = entry.getKey();
-					String[] oldValues = entry.getValue();
+			for (Map.Entry<String, String[]> entry : params.entrySet()) {
+				String name = entry.getKey();
+				String[] oldValues = entry.getValue();
 
-					String[] curValues = _params.get(name);
+				String[] curValues = _params.get(name);
 
-					if (curValues == null) {
-						_params.put(name, oldValues);
-					}
-					else {
-						String[] newValues = ArrayUtil.append(
-							oldValues, curValues);
+				if (curValues == null) {
+					_params.put(name, oldValues);
+				}
+				else {
+					String[] newValues = ArrayUtil.append(oldValues, curValues);
 
-						_params.put(name, newValues);
-					}
+					_params.put(name, newValues);
 				}
 			}
 		}
@@ -113,13 +108,11 @@ public class DynamicServletRequest extends HttpServletRequestWrapper {
 	public Map<String, String[]> getParameterMap() {
 		Map<String, String[]> map = new HashMap<String, String[]>();
 
-		Enumeration<String> enu = getParameterNames();
-
-		while (enu.hasMoreElements()) {
-			String s = enu.nextElement();
-
-			map.put(s, getParameterValues(s));
+		if (_inherit) {
+			map.putAll(super.getParameterMap());
 		}
+
+		map.putAll(_params);
 
 		return map;
 	}

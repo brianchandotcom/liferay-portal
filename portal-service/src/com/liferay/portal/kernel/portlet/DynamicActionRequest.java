@@ -36,7 +36,7 @@ import javax.portlet.filter.ActionRequestWrapper;
 public class DynamicActionRequest extends ActionRequestWrapper {
 
 	public DynamicActionRequest(ActionRequest actionRequest) {
-		this(actionRequest, new HashMap<String, String[]>(), true);
+		this(actionRequest, null, true);
 	}
 
 	public DynamicActionRequest(
@@ -46,7 +46,7 @@ public class DynamicActionRequest extends ActionRequestWrapper {
 	}
 
 	public DynamicActionRequest(ActionRequest actionRequest, boolean inherit) {
-		this(actionRequest, new HashMap<String, String[]>(), inherit);
+		this(actionRequest, null, inherit);
 	}
 
 	public DynamicActionRequest(
@@ -59,9 +59,7 @@ public class DynamicActionRequest extends ActionRequestWrapper {
 		_inherit = inherit;
 
 		if (params != null) {
-			for (Map.Entry<String, String[]> entry : params.entrySet()) {
-				_params.put(entry.getKey(), entry.getValue());
-			}
+			_params.putAll(params);
 		}
 
 		if (_inherit && (actionRequest instanceof DynamicActionRequest)) {
@@ -72,22 +70,19 @@ public class DynamicActionRequest extends ActionRequestWrapper {
 
 			params = dynamicActionRequest.getDynamicParameterMap();
 
-			if (params != null) {
-				for (Map.Entry<String, String[]> entry : params.entrySet()) {
-					String name = entry.getKey();
-					String[] oldValues = entry.getValue();
+			for (Map.Entry<String, String[]> entry : params.entrySet()) {
+				String name = entry.getKey();
+				String[] oldValues = entry.getValue();
 
-					String[] curValues = _params.get(name);
+				String[] curValues = _params.get(name);
 
-					if (curValues == null) {
-						_params.put(name, oldValues);
-					}
-					else {
-						String[] newValues = ArrayUtil.append(
-							oldValues, curValues);
+				if (curValues == null) {
+					_params.put(name, oldValues);
+				}
+				else {
+					String[] newValues = ArrayUtil.append(oldValues, curValues);
 
-						_params.put(name, newValues);
-					}
+					_params.put(name, newValues);
 				}
 			}
 		}
@@ -117,13 +112,11 @@ public class DynamicActionRequest extends ActionRequestWrapper {
 	public Map<String, String[]> getParameterMap() {
 		Map<String, String[]> map = new HashMap<String, String[]>();
 
-		Enumeration<String> enu = getParameterNames();
-
-		while (enu.hasMoreElements()) {
-			String s = enu.nextElement();
-
-			map.put(s, getParameterValues(s));
+		if (_inherit) {
+			map.putAll(super.getParameterMap());
 		}
+
+		map.putAll(_params);
 
 		return map;
 	}

@@ -69,6 +69,11 @@ public class UserFinderUtil {
 			end, obc);
 	}
 
+	public static long[] findMinMaxUserIdByCompanyId(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().findMinMaxUserIdByCompanyId(companyId);
+	}
+
 	public static java.util.List<com.liferay.portal.model.User> findByNoAnnouncementsDeliveries(
 		java.lang.String type)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -83,6 +88,12 @@ public class UserFinderUtil {
 	public static java.util.List<com.liferay.portal.model.User> findByNoGroups()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder().findByNoGroups();
+	}
+
+	public static java.util.List<com.liferay.portal.model.User> findByC_UID(
+		long companyId, long userIdGT, long userIdLT)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().findByC_UID(companyId, userIdGT, userIdLT);
 	}
 
 	public static java.util.List<com.liferay.portal.model.User> findByC_FN_MN_LN_SN_EA_S(

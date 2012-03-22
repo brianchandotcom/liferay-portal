@@ -891,6 +891,11 @@ public interface UserLocalService extends PersistedModelLocalService {
 		long companyId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.User> getCompanyUsers(
+		long companyId, long lowerUserId, long upperUserId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Returns the number of users belonging to the company.
 	*
@@ -978,6 +983,17 @@ public interface UserLocalService extends PersistedModelLocalService {
 	public int getGroupUsersCount(long groupId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the lowest and the highest user id belonging to a company.
+	*
+	* @param companyId the companyId of the users
+	* @return the lowest and the highest user id belonging to a company
+	* @throws SystemException if a system exception occured
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getMinMaxUserIdByCompanyId(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Returns all the users who have not had any announcements of the type

@@ -289,11 +289,21 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public String getBodyText() {
-		throw new UnsupportedOperationException();
+		WebElement body = findElement(By.tagName("body"));
+
+		return body.getText();
 	}
 
 	public String getConfirmation() {
-		throw new UnsupportedOperationException();
+		WebDriver.TargetLocator targetLocator = switchTo();
+
+		Alert alert = targetLocator.alert();
+
+		String alertText = alert.getText();
+
+		acceptConfirmation();
+
+		return alertText;
 	}
 
 	public String getCookie() {
@@ -341,11 +351,11 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public String getHtmlSource() {
-		throw new UnsupportedOperationException();
+		return getPageSource();
 	}
 
 	public String getLocation() {
-		throw new UnsupportedOperationException();
+		return getCurrentUrl();
 	}
 
 	public String getLog() {
@@ -377,11 +387,33 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public String getSelectedLabel(String selectLocator) {
-		throw new UnsupportedOperationException();
+		WebElement selectLocatorWebElement = getWebElement(selectLocator);
+
+		Select select = new Select(selectLocatorWebElement);
+
+		WebElement firstSelectedOptionWebElement =
+			select.getFirstSelectedOption();
+
+		return firstSelectedOptionWebElement.getText();
 	}
 
 	public String[] getSelectedLabels(String selectLocator) {
-		throw new UnsupportedOperationException();
+		WebElement selectLocatorWebElement = getWebElement(selectLocator);
+
+		Select select = new Select(selectLocatorWebElement);
+
+		List<WebElement> allSelectedOptionsWebElements =
+			select.getAllSelectedOptions();
+
+		String[] selectedOptionLabels =
+			new String[allSelectedOptionsWebElements.size()];
+
+		for (int i = 0; i < allSelectedOptionsWebElements.size(); i++) {
+			selectedOptionLabels[i] = allSelectedOptionsWebElements.get(
+				i).getText();
+		}
+
+		return selectedOptionLabels;
 	}
 
 	public String getSelectedValue(String selectLocator) {

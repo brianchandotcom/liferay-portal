@@ -39,14 +39,14 @@ else {
 <aui:input name="actionPlid" type="hidden" value="<%= actionPlid %>" />
 
 <aui:select label="page" name="plid">
-	<aui:option disabled="<%= true %>" label="select-a-layout" selected="<%= actionPlid == 0 %>" value="0" />
+	<aui:option disabled="<%= true %>" label="select-a-page" selected="<%= actionPlid == 0 %>" value="0" />
 
 	<%
 	List<Layout> publicLayouts = LayoutServiceUtil.getLayouts(actionGroupId, false);
 	%>
 
 	<c:if test="<%= !publicLayouts.isEmpty() %>">
-		<aui:option disabled="<%= true %>" label="public-layouts" value="0" />
+		<aui:option disabled="<%= true %>" label="public-pages" value="0" />
 
 		<%
 		for (Layout publicLayout : publicLayouts) {
@@ -65,7 +65,7 @@ else {
 	%>
 
 	<c:if test="<%= !privateLayouts.isEmpty() %>">
-		<aui:option disabled="<%= true %>" label="private-layouts" value="0" />
+		<aui:option disabled="<%= true %>" label="private-pages" value="0" />
 
 		<%
 		for (Layout privateLayout : privateLayouts) {
@@ -80,6 +80,6 @@ else {
 	</c:if>
 
 	<c:if test="<%= publicLayouts.isEmpty() && privateLayouts.isEmpty() %>">
-		<aui:option disabled="<%= true %>" label="no-available-layouts" value="0" />
+		<aui:option disabled="<%= true %>" label="no-available-pages" value="0" />
 	</c:if>
 </aui:select>

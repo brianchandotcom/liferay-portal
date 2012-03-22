@@ -65,6 +65,8 @@ public class NtlmFilter extends BasePortalFilter {
 
 	@Override
 	public void init(FilterConfig filterConfig) {
+		super.init(filterConfig);
+
 		try {
 			NtlmHttpFilter ntlmFilter = new NtlmHttpFilter();
 

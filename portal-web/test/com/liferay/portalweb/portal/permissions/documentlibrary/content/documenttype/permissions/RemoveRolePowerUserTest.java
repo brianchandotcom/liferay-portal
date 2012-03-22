@@ -64,6 +64,23 @@ public class RemoveRolePowerUserTest extends BaseTestCase {
 		assertTrue(selenium.isPartialText("//a[@id='_125_rolesLink']", "Roles"));
 		selenium.clickAt("//a[@id='_125_rolesLink']",
 			RuntimeVariables.replace("Roles"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//h1[@class='header-title']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.click("link=Remove");
 		assertFalse(selenium.isTextPresent("Power User"));
 		selenium.clickAt("//input[@value='Save']",

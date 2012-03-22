@@ -57,7 +57,7 @@ public class AddMemberRoleTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Regular Role')]/a")) {
 					break;
 				}
 			}
@@ -69,9 +69,9 @@ public class AddMemberRoleTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Regular Role"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Regular Role')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Regular Role')]/a"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_128_name']",

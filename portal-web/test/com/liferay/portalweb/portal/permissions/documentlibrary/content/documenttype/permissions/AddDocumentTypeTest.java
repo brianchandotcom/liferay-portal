@@ -62,7 +62,7 @@ public class AddDocumentTypeTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Document Types')]/a")) {
 					break;
 				}
 			}
@@ -74,8 +74,9 @@ public class AddDocumentTypeTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Document Types"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Document Types')]/a"));
+		selenium.click(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Document Types')]/a");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -101,7 +102,8 @@ public class AddDocumentTypeTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Add")) {
+				if (selenium.isVisible(
+							"//span[contains(@class, 'add-button')]/a")) {
 					break;
 				}
 			}
@@ -111,7 +113,8 @@ public class AddDocumentTypeTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
+		selenium.clickAt("//span[contains(@class, 'add-button')]/a",
+			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

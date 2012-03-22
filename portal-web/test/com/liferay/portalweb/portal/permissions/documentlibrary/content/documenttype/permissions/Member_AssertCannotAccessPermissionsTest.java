@@ -63,7 +63,7 @@ public class Member_AssertCannotAccessPermissionsTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Document Types')]/a")) {
 					break;
 				}
 			}
@@ -75,8 +75,9 @@ public class Member_AssertCannotAccessPermissionsTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Document Types"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Document Types')]/a"));
+		selenium.click(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Document Types')]/a");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

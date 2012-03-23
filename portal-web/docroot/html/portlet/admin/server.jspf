@@ -550,6 +550,26 @@ numberFormat.setMinimumIntegerDigits(2);
 							<aui:input label="enabled" name="imageMagickEnabled" type="checkbox" value="<%= PrefsPropsUtil.getBoolean(PropsKeys.IMAGEMAGICK_ENABLED) %>" />
 
 							<aui:input cssClass="lfr-input-text-container" label="path" name="imageMagickPath" type="text" value="<%= PDFProcessorUtil.getGlobalSearchPath() %>" />
+
+							<aui:fieldset label="resource-limits">
+
+								<%
+								Properties resourceLimits = PDFProcessorUtil.getResourceLimits();
+
+								String[] labels = new String[] { "area", "disk", "file", "map", "memory", "thread", "time" };
+
+								for (String label : labels) {
+									String value = (String)resourceLimits.get(label);
+									String name = "imageMagickLimit" + StringUtil.upperCaseFirstLetter(label);
+								%>
+
+									<aui:input cssClass="lfr-input-text-container" label="<%= label %>" name="<%= name %>" type="text" value="<%= value %>" />
+
+								<%
+								}
+								%>
+
+							</aui:fieldset>
 						</liferay-ui:panel>
 
 						<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="adminOpenOfficeConversionPanel" persistState="<%= true %>" title="enabling-openoffice-integration-provides-document-conversion-functionality">

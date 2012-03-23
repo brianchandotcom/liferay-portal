@@ -471,6 +471,20 @@ public class EditServerAction extends PortletAction {
 		boolean xugglerEnabled = ParamUtil.getBoolean(
 			actionRequest, "xugglerEnabled");
 
+		Enumeration<String> enu = actionRequest.getParameterNames();
+
+		while (enu.hasMoreElements()) {
+			String name = enu.nextElement();
+
+			if (name.startsWith("imageMagickLimit")) {
+				String key = name.substring(16, name.length()).toLowerCase();
+				String value = ParamUtil.getString(actionRequest, name);
+
+				preferences.setValue(
+					PropsKeys.IMAGEMAGICK_RESOURCE_LIMIT + key, value);
+			}
+		}
+
 		preferences.setValue(
 			PropsKeys.IMAGEMAGICK_ENABLED, String.valueOf(imageMagickEnabled));
 		preferences.setValue(

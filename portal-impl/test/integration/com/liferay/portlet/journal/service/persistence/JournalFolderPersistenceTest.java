@@ -263,6 +263,14 @@ public class JournalFolderPersistenceTest {
 				existingJournalFolderModelImpl.getOriginalUuid()));
 		Assert.assertEquals(existingJournalFolderModelImpl.getGroupId(),
 			existingJournalFolderModelImpl.getOriginalGroupId());
+
+		Assert.assertEquals(existingJournalFolderModelImpl.getGroupId(),
+			existingJournalFolderModelImpl.getOriginalGroupId());
+		Assert.assertEquals(existingJournalFolderModelImpl.getParentFolderId(),
+			existingJournalFolderModelImpl.getOriginalParentFolderId());
+		Assert.assertTrue(Validator.equals(
+				existingJournalFolderModelImpl.getName(),
+				existingJournalFolderModelImpl.getOriginalName()));
 	}
 
 	protected JournalFolder addJournalFolder() throws Exception {

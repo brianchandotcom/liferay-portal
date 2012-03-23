@@ -75,7 +75,7 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table JournalFolder (uuid_ VARCHAR(75) null,folderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentFolderId LONG,name VARCHAR(75) null,description VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table JournalFolder (uuid_ VARCHAR(75) null,folderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentFolderId LONG,name VARCHAR(100) null,description STRING null)";
 	public static final String TABLE_SQL_DROP = "drop table JournalFolder";
 	public static final String ORDER_BY_JPQL = " ORDER BY journalFolder.parentFolderId ASC, journalFolder.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY JournalFolder.parentFolderId ASC, JournalFolder.name ASC";
@@ -93,8 +93,9 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 			true);
 	public static long COMPANYID_COLUMN_BITMASK = 1L;
 	public static long GROUPID_COLUMN_BITMASK = 2L;
-	public static long PARENTFOLDERID_COLUMN_BITMASK = 4L;
-	public static long UUID_COLUMN_BITMASK = 8L;
+	public static long NAME_COLUMN_BITMASK = 4L;
+	public static long PARENTFOLDERID_COLUMN_BITMASK = 8L;
+	public static long UUID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -322,7 +323,15 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 	public void setName(String name) {
 		_columnBitmask = -1L;
 
+		if (_originalName == null) {
+			_originalName = _name;
+		}
+
 		_name = name;
+	}
+
+	public String getOriginalName() {
+		return GetterUtil.getString(_originalName);
 	}
 
 	@JSON
@@ -464,6 +473,8 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		journalFolderModelImpl._originalParentFolderId = journalFolderModelImpl._parentFolderId;
 
 		journalFolderModelImpl._setOriginalParentFolderId = false;
+
+		journalFolderModelImpl._originalName = journalFolderModelImpl._name;
 
 		journalFolderModelImpl._columnBitmask = 0;
 	}
@@ -645,6 +656,7 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 	private long _originalParentFolderId;
 	private boolean _setOriginalParentFolderId;
 	private String _name;
+	private String _originalName;
 	private String _description;
 	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;

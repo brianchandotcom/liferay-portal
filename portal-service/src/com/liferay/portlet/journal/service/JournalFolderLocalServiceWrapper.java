@@ -377,6 +377,15 @@ public class JournalFolderLocalServiceWrapper
 		_journalFolderLocalService.getSubfolderIds(folderIds, groupId, folderId);
 	}
 
+	public com.liferay.portlet.journal.model.JournalFolder moveFolder(
+		long folderId, long parentFolderId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalFolderLocalService.moveFolder(folderId, parentFolderId,
+			serviceContext);
+	}
+
 	public com.liferay.portlet.journal.model.JournalFolder updateFolder(
 		long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description, boolean mergeWithParentFolder,

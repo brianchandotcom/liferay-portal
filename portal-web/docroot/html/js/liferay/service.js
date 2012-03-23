@@ -942,6 +942,7 @@ Liferay.Service.registerClass(
 		getFoldersArticlesCount: true,
 		getFoldersCount: true,
 		getSubfolderIds: true,
+		moveFolder: true,
 		updateFolder: true
 	}
 );

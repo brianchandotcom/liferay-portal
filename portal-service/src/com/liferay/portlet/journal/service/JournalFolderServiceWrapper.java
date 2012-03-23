@@ -112,6 +112,15 @@ public class JournalFolderServiceWrapper implements JournalFolderService,
 		return _journalFolderService.getSubfolderIds(groupId, folderId, recurse);
 	}
 
+	public com.liferay.portlet.journal.model.JournalFolder moveFolder(
+		long folderId, long parentFolderId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalFolderService.moveFolder(folderId, parentFolderId,
+			serviceContext);
+	}
+
 	public com.liferay.portlet.journal.model.JournalFolder updateFolder(
 		long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description, boolean mergeWithParentFolder,

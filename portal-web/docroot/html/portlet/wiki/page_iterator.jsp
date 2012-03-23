@@ -141,7 +141,7 @@ OrderByComparator orderByComparator = WikiUtil.getPageOrderByComparator(orderByC
 
 Map orderableHeaders = new HashMap();
 
-SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, emptyResultsMessage);
+SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, currentURLObj, headerNames, emptyResultsMessage);
 
 searchContainer.setOrderableHeaders(orderableHeaders);
 searchContainer.setOrderByCol(orderByCol);

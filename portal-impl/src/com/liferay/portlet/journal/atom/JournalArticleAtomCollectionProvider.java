@@ -125,6 +125,7 @@ public class JournalArticleAtomCollectionProvider
 			return journalArticles;
 		}
 
+		long folderId = 0;
 		long classNameId = 0;
 		String keywords = null;
 		Double version = null;
@@ -139,7 +140,7 @@ public class JournalArticleAtomCollectionProvider
 		OrderByComparator obc = new ArticleVersionComparator();
 
 		int count = JournalArticleLocalServiceUtil.searchCount(
-			companyId, groupId, classNameId, keywords, version, type,
+			companyId, groupId, folderId, classNameId, keywords, version, type,
 			structureId, templateId, displayDateGT, displayDateLT, status,
 			reviewDate);
 
@@ -148,7 +149,7 @@ public class JournalArticleAtomCollectionProvider
 		AtomUtil.saveAtomPagerInRequest(atomRequestContext, atomPager);
 
 		journalArticles = JournalArticleLocalServiceUtil.search(
-			companyId, groupId, classNameId, keywords, version, type,
+			companyId, groupId, folderId, classNameId, keywords, version, type,
 			structureId, templateId, displayDateGT, displayDateLT, status,
 			reviewDate, atomPager.getStart(), atomPager.getEnd() + 1, obc);
 

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <custom-sql>
-	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.countByC_G_C_A_V_T_D_C_T_S_T_D_S_R">
+	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.countByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R">
 		<![CDATA[
 			SELECT
 				COUNT(*) AS COUNT_VALUE
@@ -14,6 +14,7 @@
 					WHERE
 						(companyId = ?) AND
 						(groupId = ?) AND
+						(folderId = ?) AND
 						(classNameId = ?) AND
 						(
 							(articleId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
@@ -103,7 +104,7 @@
 				version DESC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByC_G_C_A_V_T_D_C_T_S_T_D_S_R">
+	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R">
 		<![CDATA[
 			SELECT
 				JournalArticle.*
@@ -116,6 +117,7 @@
 					WHERE
 						(companyId = ?) AND
 						(groupId = ?) AND
+						(folderId = ?) AND
 						(classNameId = ?) AND
 						(
 							(articleId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]

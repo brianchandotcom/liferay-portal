@@ -24,23 +24,6 @@ public class AddWikiPageChildPage2Test extends BaseTestCase {
 	public void testAddWikiPageChildPage2() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Wiki Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -55,14 +38,13 @@ public class AddWikiPageChildPage2Test extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Add Child Page"),
-			selenium.getText("//div[7]/div[1]/span[1]/a/span"));
-		selenium.clickAt("//div[7]/div[1]/span[1]/a/span",
+			selenium.getText("//div[@class='article-actions']/span/a/span"));
+		selenium.clickAt("//div[@class='article-actions']/span/a/span",
 			RuntimeVariables.replace("Add Child Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_36_title']",
-			RuntimeVariables.replace("Wiki Page Child Page2 Title"));
-		Thread.sleep(5000);
+			RuntimeVariables.replace("Wiki Page ChildPage2 Title"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -71,7 +53,7 @@ public class AddWikiPageChildPage2Test extends BaseTestCase {
 
 			try {
 				if (selenium.isElementPresent(
-							"//td[@id='cke_contents__36_editor']/iframe")) {
+							"//textarea[@id='_36_editor' and @style='display: none;']")) {
 					break;
 				}
 			}
@@ -81,9 +63,89 @@ public class AddWikiPageChildPage2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		assertEquals(RuntimeVariables.replace("Source"),
+			selenium.getText("//span[.='Source']"));
+		selenium.clickAt("//span[.='Source']",
+			RuntimeVariables.replace("Source"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//a[@class='cke_button_source cke_on']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//td[@id='cke_contents__36_editor']/textarea")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.type("//td[@id='cke_contents__36_editor']/textarea",
+			RuntimeVariables.replace("Wiki Page ChildPage2 Content"));
+		assertEquals(RuntimeVariables.replace("Source"),
+			selenium.getText("//span[.='Source']"));
+		selenium.clickAt("//span[.='Source']",
+			RuntimeVariables.replace("Source"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//textarea[@id='_36_editor' and @style='display: none;']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertTrue(selenium.isVisible(
+				"//td[@id='cke_contents__36_editor']/iframe"));
 		selenium.selectFrame("//td[@id='cke_contents__36_editor']/iframe");
-		selenium.type("//body",
-			RuntimeVariables.replace("Wiki Page Child Page2 Content"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Wiki Page ChildPage2 Content")
+										.equals(selenium.getText("//body"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
@@ -92,17 +154,17 @@ public class AddWikiPageChildPage2Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Wiki Page Child Page1 Title"),
+		assertEquals(RuntimeVariables.replace("Wiki Page ChildPage1 Title"),
 			selenium.getText("xPath=(//div[@class='child-pages']/ul/li/a)[1]"));
-		assertEquals(RuntimeVariables.replace("Wiki Page Child Page2 Title"),
+		assertEquals(RuntimeVariables.replace("Wiki Page ChildPage2 Title"),
 			selenium.getText("xPath=(//div[@class='child-pages']/ul/li/a)[2]"));
 		selenium.clickAt("xPath=(//div[@class='child-pages']/ul/li/a)[2]",
-			RuntimeVariables.replace("Wiki Page Child Page2 Title"));
+			RuntimeVariables.replace("Wiki Page ChildPage2 Title"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Wiki Page Child Page2 Title"),
+		assertEquals(RuntimeVariables.replace("Wiki Page ChildPage2 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
-		assertEquals(RuntimeVariables.replace("Wiki Page Child Page2 Content"),
+		assertEquals(RuntimeVariables.replace("Wiki Page ChildPage2 Content"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 	}
 }

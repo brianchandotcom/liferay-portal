@@ -11,11 +11,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Wiki Test Page</td>
-	<td>Wiki Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Test Page</td>
 	<td>Wiki Test Page</td>
@@ -31,14 +26,9 @@
 	<td>This page is empty. Edit it to add some text.</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
 	<td>assertVisible</td>
 	<td>//select[@id='_36_format']</td>
-	<td>IFrame</td>
+	<td>Format</td>
 </tr>
 <tr>
 	<td>selectAndWait</td>
@@ -49,6 +39,11 @@
 	<td>assertConfirmation</td>
 	<td>You may lose some formatting when switching from Creole to HTML. Do you want to continue?</td>
 	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//textarea[@id='_36_editor' and @style='display: none;']</td>
+	<td>Text Area</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -62,12 +57,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//textarea[@class='cke_source cke_enable_context_menu']</td>
-	<td>HTML Editor</td>
+	<td>//a[@class='cke_button_source cke_on']</td>
+	<td>Source Button On</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//td[@id='cke_contents__36_editor']/textarea</td>
+	<td>CK Editor</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//textarea[@class='cke_source cke_enable_context_menu']</td>
+	<td>//td[@id='cke_contents__36_editor']/textarea</td>
 	<td><p id="demo">FAIL</p><script type="text/javascript">document.getElementById('demo').innerHTML="PASS";</script></td>
 </tr>
 <tr>

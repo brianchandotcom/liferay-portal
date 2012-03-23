@@ -25,23 +25,6 @@ public class DeleteWikiPageName255CharacterChildPageTest extends BaseTestCase {
 		throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Wiki Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -57,8 +40,10 @@ public class DeleteWikiPageName255CharacterChildPageTest extends BaseTestCase {
 				"lllllllll1lllllllll2lllllllll3lllllllll4lllllllll5lllllllll6lllllllll7lllllllll8lllllllll9llllllll10llllllll11llllllll12llllllll13llllllll14llllllll15llllllll16llllllll17llllllll18llllllll19llllllll20llllllll21llllllll22llllllll23llllllll24llllllll25llll"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Wiki Page ChildPage Title"),
+			selenium.getText("//div[@class='child-pages']/ul/li/a"));
 		selenium.clickAt("//div[@class='child-pages']/ul/li/a",
-			RuntimeVariables.replace("Wiki Page Child Page Title"));
+			RuntimeVariables.replace("Wiki Page ChildPage Title"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Details"),
@@ -77,10 +62,10 @@ public class DeleteWikiPageName255CharacterChildPageTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertFalse(selenium.isTextPresent("Wiki Page Child Page Title"));
+		assertFalse(selenium.isTextPresent("Wiki Page ChildPage Title"));
 		selenium.clickAt("link=All Pages", RuntimeVariables.replace("All Pages"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isTextPresent("Wiki Page Child Page Title"));
+		assertFalse(selenium.isTextPresent("Wiki Page ChildPage Title"));
 	}
 }

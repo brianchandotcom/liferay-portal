@@ -15,6 +15,7 @@
 package com.liferay.portalweb.portlet.wiki.wikinode.addwikinodenamesymbol;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portlet.wiki.wikinode.addwikinode.TearDownWikiNodeTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

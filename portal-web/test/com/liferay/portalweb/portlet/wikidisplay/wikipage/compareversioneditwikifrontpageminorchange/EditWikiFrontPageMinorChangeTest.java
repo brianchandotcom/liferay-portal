@@ -50,7 +50,7 @@ public class EditWikiFrontPageMinorChangeTest extends BaseTestCase {
 					RuntimeVariables.replace("Wiki Display Test Page"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-				assertEquals(RuntimeVariables.replace("Wiki Front Page Content"),
+				assertEquals(RuntimeVariables.replace("Wiki FrontPage Content"),
 					selenium.getText("//div[@class='wiki-body']/p"));
 				assertEquals(RuntimeVariables.replace("Edit"),
 					selenium.getText("//span[contains(.,'Edit')]/a/span"));
@@ -78,7 +78,7 @@ public class EditWikiFrontPageMinorChangeTest extends BaseTestCase {
 
 				selenium.selectFrame("//iframe");
 				selenium.type("//body",
-					RuntimeVariables.replace("Wiki Front Page Content Edit"));
+					RuntimeVariables.replace("Wiki FrontPage Content Edit"));
 				selenium.selectFrame("relative=top");
 
 				boolean minorEditChecked = selenium.isChecked(
@@ -102,10 +102,10 @@ public class EditWikiFrontPageMinorChangeTest extends BaseTestCase {
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				assertEquals(RuntimeVariables.replace(
-						"Wiki Front Page Content Edit"),
+						"Wiki FrontPage Content Edit"),
 					selenium.getText("//div[@class='wiki-body']/p"));
 				assertNotEquals(RuntimeVariables.replace(
-						"Wiki Front Page Content"),
+						"Wiki FrontPage Content"),
 					selenium.getText("//div[@class='wiki-body']/p"));
 				selenium.open("/web/guest/home/");
 				loadRequiredJavaScriptModules();

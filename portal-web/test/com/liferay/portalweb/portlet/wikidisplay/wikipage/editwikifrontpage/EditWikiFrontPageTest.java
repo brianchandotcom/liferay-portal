@@ -45,7 +45,7 @@ public class EditWikiFrontPageTest extends BaseTestCase {
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Wiki Front Page Content"),
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage Content"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText("//span[contains(.,'Edit')]/a/span"));
@@ -73,7 +73,7 @@ public class EditWikiFrontPageTest extends BaseTestCase {
 
 		selenium.selectFrame("//iframe");
 		selenium.type("//body",
-			RuntimeVariables.replace("Wiki Front Page Content Edit"));
+			RuntimeVariables.replace("Wiki FrontPage Content Edit"));
 		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
@@ -82,9 +82,9 @@ public class EditWikiFrontPageTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Wiki Front Page Content Edit"),
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage Content Edit"),
 			selenium.getText("//div[@class='wiki-body']/p"));
-		assertNotEquals(RuntimeVariables.replace("Wiki Front Page Content"),
+		assertNotEquals(RuntimeVariables.replace("Wiki FrontPage Content"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();

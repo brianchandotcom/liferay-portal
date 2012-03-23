@@ -71,7 +71,7 @@ public class CompareVersionEditFrontPageMinorChangeTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Comparing Versions 1.1 and 1.2 (Last Version)"),
 			selenium.getText("//span[@class='central-title']/span"));
-		assertEquals(RuntimeVariables.replace("Wiki Front Page Content Edit"),
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage Content Edit"),
 			selenium.getText("//p"));
 		assertEquals(RuntimeVariables.replace("Text Mode"),
 			selenium.getText("//div[3]/div/a"));
@@ -84,10 +84,10 @@ public class CompareVersionEditFrontPageMinorChangeTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("FrontPage 1.2"),
 			selenium.getText(
 				"xPath=(//table[@id='taglib-diff-results']/tbody/tr/td)[2]"));
-		assertEquals(RuntimeVariables.replace("Wiki Front Page Content"),
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage Content"),
 			selenium.getText(
 				"xPath=(//table[@class='taglib-diff-table']/tbody/tr/td)[1]"));
-		assertEquals(RuntimeVariables.replace("Wiki Front Page Content Edit"),
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage Content Edit"),
 			selenium.getText(
 				"xPath=(//table[@class='taglib-diff-table']/tbody/tr/td)[2]"));
 	}

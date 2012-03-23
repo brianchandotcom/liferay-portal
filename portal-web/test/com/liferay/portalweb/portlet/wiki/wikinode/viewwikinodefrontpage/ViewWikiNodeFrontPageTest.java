@@ -45,7 +45,7 @@ public class ViewWikiNodeFrontPageTest extends BaseTestCase {
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Wiki Front Page Content"),
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage Content"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 		selenium.clickAt("link=Wiki Node Name",
 			RuntimeVariables.replace("Wiki Node Name"));
@@ -56,7 +56,7 @@ public class ViewWikiNodeFrontPageTest extends BaseTestCase {
 		selenium.clickAt("link=Main", RuntimeVariables.replace("Main"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Wiki Front Page Content"),
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage Content"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 	}
 }

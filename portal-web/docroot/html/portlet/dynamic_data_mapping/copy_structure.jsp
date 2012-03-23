@@ -21,7 +21,8 @@ String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 
 DDMStructure structure = (DDMStructure)request.getAttribute(WebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE);
 
-long structureId = BeanParamUtil.getLong(structure, request, "structureId");
+long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
+long classPK = BeanParamUtil.getLong(structure, request, "structureId");
 
 boolean copyDetailTemplates = ParamUtil.getBoolean(request, "copyDetailTemplates");
 boolean copyListTemplates = ParamUtil.getBoolean(request, "copyListTemplates");
@@ -35,7 +36,8 @@ boolean copyListTemplates = ParamUtil.getBoolean(request, "copyListTemplates");
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.COPY %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
-	<aui:input name="structureId" type="hidden" value="<%= String.valueOf(structureId) %>" />
+	<aui:input name="classNameId" type="hidden" value="<%= String.valueOf(classNameId) %>" />
+	<aui:input name="classPK" type="hidden" value="<%= String.valueOf(classPK) %>" />
 	<aui:input name="saveAndContinue" type="hidden" value="<%= true %>" />
 
 	<liferay-ui:error exception="<%= StructureNameException.class %>" message="please-enter-a-valid-name" />

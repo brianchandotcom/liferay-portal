@@ -73,7 +73,7 @@
 				DDMStructure.structureId DESC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder.countByC_G_S_N_D_T_M_L">
+	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder.countByC_G_C_C_N_D_T_M_L">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT templateId) AS COUNT_VALUE
@@ -82,7 +82,8 @@
 			WHERE
 				(companyId = ?) AND
 				(groupId = ?) AND
-				(structureId = ?) AND
+				(classNameId = ?) AND
+				(classPK = ?) AND
 				(
 					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
@@ -92,7 +93,7 @@
 				)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder.findByC_G_S_N_D_T_M_L">
+	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder.findByC_G_C_C_N_D_T_M_L">
 		<![CDATA[
 			SELECT
 				{DDMTemplate.*}
@@ -101,7 +102,8 @@
 			WHERE
 				(companyId = ?) AND
 				(groupId = ?) AND
-				(structureId = ?) AND
+				(classNameId = ?) AND
+				(classPK = ?) AND
 				(
 					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]

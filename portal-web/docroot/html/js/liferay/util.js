@@ -1094,6 +1094,8 @@
 			ddmURL.setDoAsGroupId(config.doAsGroupId || themeDisplay.getScopeGroupId());
 
 			ddmURL.setParameter('chooseCallback', config.chooseCallback);
+			ddmURL.setParameter('classNameId', config.classNameId);
+			ddmURL.setParameter('classPK', config.classPK);
 			ddmURL.setParameter('ddmResource', config.ddmResource);
 			ddmURL.setParameter('saveCallback', config.saveCallback);
 			ddmURL.setParameter('scopeAvailableFields', config.availableFields);
@@ -1114,8 +1116,6 @@
 			if ('showToolbar' in config) {
 				ddmURL.setParameter('showToolbar', config.showToolbar);
 			}
-
-			ddmURL.setParameter('structureId', config.structureId);
 
 			if (config.struts_action) {
 				ddmURL.setParameter('struts_action', config.struts_action);

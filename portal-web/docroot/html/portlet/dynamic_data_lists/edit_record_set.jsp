@@ -153,13 +153,14 @@ if (Validator.isNotNull(ddmStructureId)) {
 		Liferay.Util.openDDMPortlet(
 			{
 				chooseCallback: '<portlet:namespace />selectDDMStructure',
+				classNameId: '<%= PortalUtil.getClassNameId(DDMStructure.class) %>',
+				classPK: ddmStructureId,
 				ddmResource: '<%= ddmResource %>',
 				dialog: {
 					width:820
 				},
 				saveCallback: '<portlet:namespace />selectDDMStructure',
 				storageType: '<%= PropsValues.DYNAMIC_DATA_LISTS_STORAGE_TYPE %>',
-				structureId: ddmStructureId,
 				structureName: 'data-definition',
 				structureType: 'com.liferay.portlet.dynamicdatalists.model.DDLRecordSet',
 				struts_action: strutsAction,

@@ -222,21 +222,48 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns the structure ID of this d d m template.
+	* Returns the fully qualified class name of this d d m template.
 	*
-	* @return the structure ID of this d d m template
+	* @return the fully qualified class name of this d d m template
 	*/
-	public long getStructureId() {
-		return _ddmTemplate.getStructureId();
+	public java.lang.String getClassName() {
+		return _ddmTemplate.getClassName();
 	}
 
 	/**
-	* Sets the structure ID of this d d m template.
+	* Returns the class name ID of this d d m template.
 	*
-	* @param structureId the structure ID of this d d m template
+	* @return the class name ID of this d d m template
 	*/
-	public void setStructureId(long structureId) {
-		_ddmTemplate.setStructureId(structureId);
+	public long getClassNameId() {
+		return _ddmTemplate.getClassNameId();
+	}
+
+	/**
+	* Sets the class name ID of this d d m template.
+	*
+	* @param classNameId the class name ID of this d d m template
+	*/
+	public void setClassNameId(long classNameId) {
+		_ddmTemplate.setClassNameId(classNameId);
+	}
+
+	/**
+	* Returns the class p k of this d d m template.
+	*
+	* @return the class p k of this d d m template
+	*/
+	public long getClassPK() {
+		return _ddmTemplate.getClassPK();
+	}
+
+	/**
+	* Sets the class p k of this d d m template.
+	*
+	* @param classPK the class p k of this d d m template
+	*/
+	public void setClassPK(long classPK) {
+		_ddmTemplate.setClassPK(classPK);
 	}
 
 	/**
@@ -637,12 +664,6 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_ddmTemplate.persist();
-	}
-
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure getStructure()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _ddmTemplate.getStructure();
 	}
 
 	/**

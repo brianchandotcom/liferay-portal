@@ -73,7 +73,7 @@ public class SelectOrganizationRolePage2Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@id='_125_roles']/span[2]/a")) {
+				if (selenium.isVisible("//div[@id='_125_roles']/span/a/span")) {
 					break;
 				}
 			}
@@ -84,8 +84,8 @@ public class SelectOrganizationRolePage2Test extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Select"),
-			selenium.getText("//div[@id='_125_roles']/span[2]/a"));
-		selenium.clickAt("//div[@id='_125_roles']/span[2]/a",
+			selenium.getText("//div[@id='_125_roles']/span/a/span"));
+		selenium.clickAt("//div[@id='_125_roles']/span/a/span",
 			RuntimeVariables.replace("Select"));
 		Thread.sleep(5000);
 		selenium.selectWindow("title=Users and Organizations");

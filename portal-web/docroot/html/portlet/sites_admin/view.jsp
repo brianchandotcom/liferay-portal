@@ -73,7 +73,7 @@ pageContext.setAttribute("portletURL", portletURL);
 			Group group = GroupLocalServiceUtil.getGroup(groupId);
 			%>
 
-			<liferay-ui:message arguments="<%= group.getDescriptiveName(locale) %>" key="site-x-does-not-have-any-private-pages" />
+			<liferay-ui:message arguments="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>" key="site-x-does-not-have-any-private-pages" />
 		</liferay-ui:error>
 
 		<liferay-ui:error exception="<%= RequiredGroupException.class %>">
@@ -122,7 +122,7 @@ pageContext.setAttribute("portletURL", portletURL);
 			>
 
 				<%
-				buffer.append(group.getDescriptiveName(locale));
+				buffer.append(HtmlUtil.escape(group.getDescriptiveName(locale)));
 
 				if (group.isOrganization()) {
 					Organization organization = OrganizationLocalServiceUtil.getOrganization(group.getOrganizationId());

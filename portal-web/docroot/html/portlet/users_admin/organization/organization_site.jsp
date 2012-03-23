@@ -88,7 +88,7 @@ if (organization != null) {
 					for (LayoutSetPrototype layoutSetPrototype : layoutSetPrototypes) {
 					%>
 
-						<aui:option label="<%= layoutSetPrototype.getName(user.getLanguageId()) %>" value="<%= layoutSetPrototype.getLayoutSetPrototypeId() %>" />
+						<aui:option label="<%= HtmlUtil.escape(layoutSetPrototype.getName(user.getLanguageId())) %>" value="<%= layoutSetPrototype.getLayoutSetPrototypeId() %>" />
 
 					<%
 					}
@@ -133,7 +133,7 @@ if (organization != null) {
 					for (LayoutSetPrototype layoutSetPrototype : layoutSetPrototypes) {
 					%>
 
-						<aui:option label="<%= layoutSetPrototype.getName(user.getLanguageId()) %>" value="<%= layoutSetPrototype.getLayoutSetPrototypeId() %>" />
+						<aui:option label="<%= HtmlUtil.escape(layoutSetPrototype.getName(user.getLanguageId())) %>" value="<%= layoutSetPrototype.getLayoutSetPrototypeId() %>" />
 
 					<%
 					}

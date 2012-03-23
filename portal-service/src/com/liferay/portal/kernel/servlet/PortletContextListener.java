@@ -80,42 +80,55 @@ public class PortletContextListener
 	}
 
 	private void _doPortletDestroy() {
-		HotDeployUtil.fireUndeployEvent(
-			new HotDeployEvent(_servletContext, _portletClassLoader));
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader classLoader = currentThread.getContextClassLoader();
+
+		if (classLoader != _portletClassLoader) {
+			currentThread.setContextClassLoader(_portletClassLoader);
+		}
 
 		try {
-			if (!_bindLiferayPool) {
-				return;
-			}
-
-			_bindLiferayPool = false;
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Dynamically unbinding the Liferay data source");
-			}
-
-			Context context = new InitialContext();
+			HotDeployUtil.fireUndeployEvent(
+				new HotDeployEvent(_servletContext, _portletClassLoader));
 
 			try {
-				context.lookup(_JNDI_JDBC_LIFERAY_POOL);
-				context.unbind(_JNDI_JDBC_LIFERAY_POOL);
-			}
-			catch (NamingException ne) {
-			}
+				if (!_bindLiferayPool) {
+					return;
+				}
 
-			try {
-				context.lookup(_JNDI_JDBC);
-				context.destroySubcontext(_JNDI_JDBC);
+				_bindLiferayPool = false;
+
+				if (_log.isDebugEnabled()) {
+					_log.debug("Dynamically unbinding the Liferay data source");
+				}
+
+				Context context = new InitialContext();
+
+				try {
+					context.lookup(_JNDI_JDBC_LIFERAY_POOL);
+					context.unbind(_JNDI_JDBC_LIFERAY_POOL);
+				}
+				catch (NamingException ne) {
+				}
+
+				try {
+					context.lookup(_JNDI_JDBC);
+					context.destroySubcontext(_JNDI_JDBC);
+				}
+				catch (NamingException ne) {
+				}
 			}
-			catch (NamingException ne) {
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to dynamically unbind the Liferay data source: "
+							+ e.getMessage());
+				}
 			}
 		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to dynamically unbind the Liferay data source: "
-						+ e.getMessage());
-			}
+		finally {
+			currentThread.setContextClassLoader(classLoader);
 		}
 	}
 
@@ -124,7 +137,7 @@ public class PortletContextListener
 
 		ClassLoader classLoader = currentThread.getContextClassLoader();
 
-		if (!_portletClassLoader.equals(classLoader)) {
+		if (classLoader != _portletClassLoader) {
 			currentThread.setContextClassLoader(_portletClassLoader);
 		}
 

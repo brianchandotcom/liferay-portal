@@ -17,6 +17,7 @@ package com.liferay.portlet.layoutsadmin.util;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -34,16 +35,21 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 
+import java.text.DateFormat;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 /**
  * @author Jorge Ferrer
+ * @author Vilmos Papp
  */
 public class SitemapImpl implements Sitemap {
 
@@ -74,7 +80,10 @@ public class SitemapImpl implements Sitemap {
 	}
 
 	protected void addURLElement(
-		Element element, String url, UnicodeProperties typeSettingsProperties) {
+		Element element, String url, UnicodeProperties typeSettingsProperties,
+		Date modifiedDate) {
+
+		DateFormat iso8601DateFormat = DateUtil.getISO8601Format();
 
 		Element urlElement = element.addElement("url");
 
@@ -83,25 +92,66 @@ public class SitemapImpl implements Sitemap {
 		locElement.addText(encodeXML(url));
 
 		if (typeSettingsProperties == null) {
-			return;
+			if (Validator.isNotNull(
+					PropsValues.SITES_SITEMAP_DEFAULT_CHANGE_FREQUENCY)) {
+
+				Element changefreqElement = urlElement.addElement("changefreq");
+
+				changefreqElement.addText(
+					PropsValues.SITES_SITEMAP_DEFAULT_CHANGE_FREQUENCY);
+			}
+
+			if (Validator.isNotNull(
+					PropsValues.SITES_SITEMAP_DEFAULT_PRIORITY)) {
+
+				Element priorityElement = urlElement.addElement("priority");
+
+				priorityElement.addText(
+					PropsValues.SITES_SITEMAP_DEFAULT_PRIORITY);
+			}
+		}
+		else {
+			String changefreq = typeSettingsProperties.getProperty(
+					"sitemap-changefreq");
+
+			if (Validator.isNotNull(changefreq)) {
+				Element changefreqElement = urlElement.addElement("changefreq");
+
+				changefreqElement.addText(changefreq);
+			}
+			else if (Validator.isNotNull(
+					PropsValues.SITES_SITEMAP_DEFAULT_CHANGE_FREQUENCY)) {
+
+				Element changefreqElement = urlElement.addElement("changefreq");
+
+				changefreqElement.addText(
+					PropsValues.SITES_SITEMAP_DEFAULT_CHANGE_FREQUENCY);
+			}
+
+			String priority = typeSettingsProperties.getProperty(
+				"sitemap-priority");
+
+			if (Validator.isNotNull(priority)) {
+				Element priorityElement = urlElement.addElement("priority");
+
+				priorityElement.addText(priority);
+			}
+			else if (Validator.isNotNull(
+					PropsValues.SITES_SITEMAP_DEFAULT_PRIORITY)) {
+
+				Element priorityElement = urlElement.addElement("priority");
+
+				priorityElement.addText(
+					PropsValues.SITES_SITEMAP_DEFAULT_PRIORITY);
+			}
 		}
 
-		String changefreq = typeSettingsProperties.getProperty(
-			"sitemap-changefreq");
+		if (modifiedDate != null) {
+			Element modifiedDateElement = urlElement.addElement("lastmod");
 
-		if (Validator.isNotNull(changefreq)) {
-			Element changefreqElement = urlElement.addElement("changefreq");
+			String formattedDate = iso8601DateFormat.format(modifiedDate);
 
-			changefreqElement.addText(changefreq);
-		}
-
-		String priority = typeSettingsProperties.getProperty(
-			"sitemap-priority");
-
-		if (Validator.isNotNull(priority)) {
-			Element priorityElement = urlElement.addElement("priority");
-
-			priorityElement.addText(priority);
+			modifiedDateElement.addText(formattedDate);
 		}
 	}
 
@@ -147,7 +197,8 @@ public class SitemapImpl implements Sitemap {
 			String articleURL = PortalUtil.getCanonicalURL(
 				sb.toString(), themeDisplay, layout);
 
-			addURLElement(element, articleURL, null);
+			addURLElement(
+				element, articleURL, null, journalArticle.getModifiedDate());
 
 			Locale[] availableLocales = LanguageUtil.getAvailableLocales();
 
@@ -159,7 +210,9 @@ public class SitemapImpl implements Sitemap {
 						String alternateURL = PortalUtil.getAlternateURL(
 							articleURL, themeDisplay, availableLocale);
 
-						addURLElement(element, alternateURL, null);
+						addURLElement(
+							element, alternateURL, null,
+							journalArticle.getModifiedDate());
 					}
 				}
 			}
@@ -188,7 +241,9 @@ public class SitemapImpl implements Sitemap {
 		layoutFullURL = PortalUtil.getCanonicalURL(
 			layoutFullURL, themeDisplay, layout);
 
-		addURLElement(element, layoutFullURL, typeSettingsProperties);
+		addURLElement(
+			element, layoutFullURL, typeSettingsProperties,
+			layout.getModifiedDate());
 
 		Locale[] availableLocales = LanguageUtil.getAvailableLocales();
 
@@ -203,7 +258,9 @@ public class SitemapImpl implements Sitemap {
 				String alternateURL = PortalUtil.getAlternateURL(
 					layoutFullURL, themeDisplay, availableLocale);
 
-				addURLElement(element, alternateURL, null);
+				addURLElement(
+					element, alternateURL, typeSettingsProperties,
+					layout.getModifiedDate());
 			}
 		}
 

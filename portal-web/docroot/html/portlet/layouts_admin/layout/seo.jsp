@@ -47,8 +47,8 @@ if (selLayout != null) {
 
 		<%
 		boolean include = GetterUtil.getBoolean(layoutTypeSettings.getProperty("sitemap-include"), true);
-		String changeFrequency = layoutTypeSettings.getProperty("sitemap-changefreq", "daily");
-		String sitemapPriority = layoutTypeSettings.getProperty("sitemap-priority", StringPool.BLANK);
+		String changeFrequency = layoutTypeSettings.getProperty("sitemap-changefreq", PropsValues.SITES_SITEMAP_DEFAULT_CHANGE_FREQUENCY);
+		String sitemapPriority = layoutTypeSettings.getProperty("sitemap-priority", PropsValues.SITES_SITEMAP_DEFAULT_PRIORITY);
 		%>
 
 		<aui:select label="include" name="TypeSettingsProperties--sitemap-include--">

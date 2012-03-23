@@ -1877,6 +1877,10 @@ public interface PropsKeys {
 
 	public static final String SITES_FORM_UPDATE_SEO = "sites.form.update.seo";
 
+	public static final String SITES_SITEMAP_DEFAULT_CHANGE_FREQUENCY = "sites.sitemap.default.change.frequency";
+
+	public static final String SITES_SITEMAP_DEFAULT_PRIORITY = "sites.sitemap.default.priority";
+
 	public static final String SOCIAL_ACTIVITY_CONTRIBUTION_INCREMENTS = "social.activity.contribution.increments";
 
 	public static final String SOCIAL_ACTIVITY_CONTRIBUTION_LIMIT_VALUES = "social.activity.contribution.limit.values";

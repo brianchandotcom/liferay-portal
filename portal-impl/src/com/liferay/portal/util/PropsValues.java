@@ -1358,6 +1358,10 @@ public class PropsValues {
 
 	public static String[] SITES_FORM_UPDATE_SEO = PropsUtil.getArray(PropsKeys.SITES_FORM_UPDATE_SEO);
 
+	public static String SITES_SITEMAP_DEFAULT_CHANGE_FREQUENCY = PropsUtil.get(PropsKeys.SITES_SITEMAP_DEFAULT_CHANGE_FREQUENCY);
+
+	public static String SITES_SITEMAP_DEFAULT_PRIORITY = PropsUtil.get(PropsKeys.SITES_SITEMAP_DEFAULT_PRIORITY);
+
 	public static final int[] SOCIAL_ACTIVITY_CONTRIBUTION_INCREMENTS = GetterUtil.getIntegerValues(PropsUtil.getArray(PropsKeys.SOCIAL_ACTIVITY_CONTRIBUTION_INCREMENTS));
 
 	public static final int[] SOCIAL_ACTIVITY_CONTRIBUTION_LIMIT_VALUES = GetterUtil.getIntegerValues(PropsUtil.getArray(PropsKeys.SOCIAL_ACTIVITY_CONTRIBUTION_LIMIT_VALUES));

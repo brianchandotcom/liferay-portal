@@ -1202,7 +1202,7 @@ public class SourceFormatter {
 			newContent = StringUtil.replace(
 				newContent,
 				new String[] {
-					";\n/**", "\t/*\n\t *", "if (", "for (", "while (", "List<",
+					";\n/**", "\t/*\n\t *", "if(", "for(", "while(", "List <",
 					"){\n", "]{\n", "\n\n\n"
 				},
 				new String[] {

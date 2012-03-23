@@ -25,34 +25,17 @@ public class PermissionsBlogsEntry1GuestViewOffTest extends BaseTestCase {
 		throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Blogs Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
+		assertEquals(RuntimeVariables.replace("Blogs Entry1 Title"),
 			selenium.getText("xPath=(//div[@class='entry-title']/h2/a)[2]"));
 		selenium.clickAt("xPath=(//div[@class='entry-title']/h2/a)[2]",
-			RuntimeVariables.replace("Blogs Entry Title"));
+			RuntimeVariables.replace("Blogs Entry1 Title"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
+		assertEquals(RuntimeVariables.replace("Blogs Entry1 Title"),
 			selenium.getText("//h1[@class='header-title']"));
 		assertEquals(RuntimeVariables.replace("Permissions"),
 			selenium.getText("//td[2]/span/a/span"));
@@ -67,7 +50,7 @@ public class PermissionsBlogsEntry1GuestViewOffTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//input[@name='16_ACTION_VIEW']")) {
+				if (selenium.isVisible("//input[@id='guest_ACTION_VIEW']")) {
 					break;
 				}
 			}
@@ -77,9 +60,9 @@ public class PermissionsBlogsEntry1GuestViewOffTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertTrue(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
-		selenium.uncheck("//input[@name='16_ACTION_VIEW']");
-		assertFalse(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
+		assertTrue(selenium.isChecked("//input[@id='guest_ACTION_VIEW']"));
+		selenium.uncheck("//input[@id='guest_ACTION_VIEW']");
+		assertFalse(selenium.isChecked("//input[@id='guest_ACTION_VIEW']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -87,6 +70,6 @@ public class PermissionsBlogsEntry1GuestViewOffTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertFalse(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
+		assertFalse(selenium.isChecked("//input[@id='guest_ACTION_VIEW']"));
 	}
 }

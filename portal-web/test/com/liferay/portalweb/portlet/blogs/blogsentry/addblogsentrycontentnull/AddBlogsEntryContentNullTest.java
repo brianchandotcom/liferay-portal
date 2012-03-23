@@ -24,23 +24,6 @@ public class AddBlogsEntryContentNullTest extends BaseTestCase {
 	public void testAddBlogsEntryContentNull() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Blogs Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -51,6 +34,85 @@ public class AddBlogsEntryContentNullTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_33_title']",
 			RuntimeVariables.replace("Blogs Entry Title"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//textarea[@id='_33_editor' and @style='display: none;']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Source"),
+			selenium.getText("//span[.='Source']"));
+		selenium.clickAt("//span[.='Source']",
+			RuntimeVariables.replace("Source"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//a[@class='cke_button_source cke_on']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//td[@id='cke_contents__33_editor']/textarea")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.type("//td[@id='cke_contents__33_editor']/textarea",
+			RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Source"),
+			selenium.getText("//span[.='Source']"));
+		selenium.clickAt("//span[.='Source']",
+			RuntimeVariables.replace("Source"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//textarea[@id='_33_editor' and @style='display: none;']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -70,17 +132,6 @@ public class AddBlogsEntryContentNullTest extends BaseTestCase {
 		}
 
 		selenium.selectFrame("//td[@id='cke_contents__33_editor']/iframe");
-		selenium.type("//body", RuntimeVariables.replace(""));
-		selenium.selectFrame("relative=top");
-		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace("Publish"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace(
-				"Your request failed to complete."),
-			selenium.getText("//div[@class='portlet-msg-error']"));
-		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -88,7 +139,8 @@ public class AddBlogsEntryContentNullTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Blogs Test Page")) {
+				if (RuntimeVariables.replace("")
+										.equals(selenium.getText("//body"))) {
 					break;
 				}
 			}
@@ -98,6 +150,18 @@ public class AddBlogsEntryContentNullTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		selenium.selectFrame("relative=top");
+		selenium.clickAt("//input[@value='Publish']",
+			RuntimeVariables.replace("Publish"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace(
+				"Your request failed to complete."),
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
+		assertEquals(RuntimeVariables.replace("Please enter valid content."),
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
+		selenium.open("/web/guest/home/");
+		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");

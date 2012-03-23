@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Blogs Test Page</td>
-	<td>Blogs Test page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Blogs Test Page</td>
 	<td>Blogs Test Page</td>
@@ -34,6 +29,51 @@
 	<td>Blogs Entry Title</td>
 </tr>
 <tr>
+	<td>waitForElementPresent</td>
+	<td>//textarea[@id='_33_editor' and @style='display: none;']</td>
+	<td>Text Area</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//a[@class='cke_button_source cke_on']</td>
+	<td>Source Button On</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//td[@id='cke_contents__33_editor']/textarea</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//td[@id='cke_contents__33_editor']/textarea</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//textarea[@id='_33_editor' and @style='display: none;']</td>
+	<td>Text Area</td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
 	<td>//td[@id='cke_contents__33_editor']/iframe</td>
 	<td>CK Editor</td>
@@ -44,7 +84,7 @@
 	<td>CK Editor</td>
 </tr>
 <tr>
-	<td>type</td>
+	<td>waitForText</td>
 	<td>//body</td>
 	<td></td>
 </tr>
@@ -60,18 +100,18 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='portlet-msg-error']</td>
+	<td>xPath=(//div[@class='portlet-msg-error'])[1]</td>
 	<td>Your request failed to complete.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='portlet-msg-error'])[2]</td>
+	<td>Please enter valid content.</td>
 </tr>
 <tr>
 	<td>open</td>
 	<td>/web/guest/home/</td>
 	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>link=Blogs Test Page</td>
-	<td>Blogs Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -83,7 +123,6 @@
 	<td>Blogs Entry Title</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

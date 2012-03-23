@@ -68,8 +68,6 @@ public class TearDownPortletScopeLayoutCurrentPageBlogsEntryPage2Test
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
-			case 2:
-
 				boolean blogsEntry2Present = selenium.isElementPresent(
 						"link=Delete");
 
@@ -84,8 +82,6 @@ public class TearDownPortletScopeLayoutCurrentPageBlogsEntryPage2Test
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-
-			case 3:
 
 				boolean blogsEntry3Present = selenium.isElementPresent(
 						"link=Delete");
@@ -102,8 +98,6 @@ public class TearDownPortletScopeLayoutCurrentPageBlogsEntryPage2Test
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
-			case 4:
-
 				boolean blogsEntry4Present = selenium.isElementPresent(
 						"link=Delete");
 
@@ -118,8 +112,6 @@ public class TearDownPortletScopeLayoutCurrentPageBlogsEntryPage2Test
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-
-			case 5:
 
 				boolean blogsEntry5Present = selenium.isElementPresent(
 						"link=Delete");
@@ -136,6 +128,10 @@ public class TearDownPortletScopeLayoutCurrentPageBlogsEntryPage2Test
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
+			case 2:
+			case 3:
+			case 4:
+			case 5:
 			case 6:
 			case 100:
 				label = -1;

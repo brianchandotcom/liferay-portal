@@ -109,7 +109,7 @@ FCKConfig.StylesXmlPath = FCKConfig.EditorPath + 'fckstyles.xml' ;
 FCKConfig.EditorAreaCSS = '<%= HtmlUtil.escape(cssPath) %>/main.css' ;
 
 FCKConfig.LinkBrowserURL = FCKConfig.BasePath + "filemanager/browser/liferay/browser.html?Connector=<%= connectorURL %>";
-FCKConfig.ImageBrowserURL = FCKConfig.BasePath + "filemanager/browser/liferay/browser.html?Type=Image&Connector=<%= connectorURL %>";
+FCKConfig.ImageBrowserURL = FCKConfig.BasePath + "filemanager/browser/liferay/browser.html?Type=Document&Connector=<%= connectorURL %>";
 FCKConfig.FlashBrowser = false ;
 FCKConfig.LinkUpload = false ;
 FCKConfig.ImageUpload = false ;

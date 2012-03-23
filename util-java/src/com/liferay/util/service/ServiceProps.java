@@ -17,6 +17,7 @@ package com.liferay.util.service;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 
 import java.util.Properties;
 
@@ -63,7 +64,7 @@ public class ServiceProps {
 
 	private ServiceProps() {
 		_configuration = ConfigurationFactoryUtil.getConfiguration(
-			ServiceProps.class.getClassLoader(), "service");
+			PortletClassLoaderUtil.getClassLoader(), "service");
 	}
 
 	private static ServiceProps _instance = new ServiceProps();

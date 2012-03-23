@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.wiki.engine.creole;
 
+import com.liferay.portal.kernel.util.OSDetector;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.parsers.creole.visitor.impl.XhtmlTranslationVisitor;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 
@@ -83,21 +85,23 @@ public class TranslationToXHTMLTest extends AbstractWikiParserTests {
 	@Test
 	public void testParseCorrectlyNoWikiBlockWitBraces() {
 		Assert.assertEquals(
-			"<pre>{\nfoo\n}\n</pre>", translate("nowikiblock-7.creole"));
+			"<pre>{" + NEW_LINE + "foo" + NEW_LINE + "}" + NEW_LINE + "</pre>",
+			translate("nowikiblock-7.creole"));
 	}
 
 	@Test
 	public void testParseCorrectlyNoWikiBlockWitMultipleAndText() {
 		Assert.assertEquals(
-			"<pre>public interface Foo {\nvoid foo();\n}\n</pre><p>Outside " +
-				"preserve </p>",
+			"<pre>public interface Foo {" + NEW_LINE + "void foo();" +
+				NEW_LINE + "}" + NEW_LINE + "</pre><p>Outside preserve </p>",
 			translate("nowikiblock-9.creole"));
 	}
 
 	@Test
 	public void testParseCorrectlyNoWikiBlockWitMultipleBraces() {
 		Assert.assertEquals(
-			"<pre>public interface Foo {\nvoid foo();\n}\n</pre>",
+			"<pre>public interface Foo {" + NEW_LINE + "void foo();" +
+				NEW_LINE + "}" + NEW_LINE + "</pre>",
 			translate("nowikiblock-8.creole"));
 	}
 
@@ -155,7 +159,8 @@ public class TranslationToXHTMLTest extends AbstractWikiParserTests {
 	@Test
 	public void testParseCorrectlyOneNonEmptyNoWikiBlockWitMultipleLines() {
 		Assert.assertEquals(
-			"<pre>Multiple\nlines</pre>", translate("nowikiblock-5.creole"));
+			"<pre>Multiple" + NEW_LINE + "lines</pre>",
+			translate("nowikiblock-5.creole"));
 	}
 
 	@Test
@@ -428,7 +433,7 @@ public class TranslationToXHTMLTest extends AbstractWikiParserTests {
 	@Test
 	public void testSimpleEscapedCharacter() {
 		Assert.assertEquals(
-			"<p>ESCAPED1 Esto no est\u00E1 escaped </p>",
+			"<p>ESCAPED1 This is not escaped </p>",
 			translate("escape-1.creole"));
 	}
 
@@ -442,6 +447,9 @@ public class TranslationToXHTMLTest extends AbstractWikiParserTests {
 	protected String translate(String fileName) {
 		return _xhtmlTranslationVisitor.translate(getWikiPageNode(fileName));
 	}
+
+	private static final String NEW_LINE =
+		OSDetector.isWindows()? StringPool.RETURN_NEW_LINE:StringPool.NEW_LINE;
 
 	private XhtmlTranslationVisitor _xhtmlTranslationVisitor =
 		new XhtmlTranslationVisitor();

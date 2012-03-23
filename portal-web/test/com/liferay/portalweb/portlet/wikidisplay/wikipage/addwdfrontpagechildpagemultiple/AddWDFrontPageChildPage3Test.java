@@ -51,9 +51,8 @@ public class AddWDFrontPageChildPage3Test extends BaseTestCase {
 			RuntimeVariables.replace("Add Child Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.type("//div/span[1]/span/span/input",
-			RuntimeVariables.replace("Wiki Front Page Child Page3 Title"));
-		Thread.sleep(5000);
+		selenium.type("//input[contains(@id,'_title')]",
+			RuntimeVariables.replace("Wiki FrontPage ChildPage3 Title"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -61,7 +60,8 @@ public class AddWDFrontPageChildPage3Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("//iframe")) {
+				if (selenium.isElementPresent(
+							"//textarea[contains(@id,'_editor') and contains(@style,'display: none;')]")) {
 					break;
 				}
 			}
@@ -71,9 +71,90 @@ public class AddWDFrontPageChildPage3Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.selectFrame("//iframe");
-		selenium.type("//body",
-			RuntimeVariables.replace("Wiki Front Page Child Page3 Content"));
+		assertEquals(RuntimeVariables.replace("Source"),
+			selenium.getText("//span[.='Source']"));
+		selenium.clickAt("//span[.='Source']",
+			RuntimeVariables.replace("Source"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//a[@class='cke_button_source cke_on']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//td[contains(@id,'cke_contents__54')]/textarea")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.type("//td[contains(@id,'cke_contents__54')]/textarea",
+			RuntimeVariables.replace("Wiki FrontPage ChildPage3 Content"));
+		assertEquals(RuntimeVariables.replace("Source"),
+			selenium.getText("//span[.='Source']"));
+		selenium.clickAt("//span[.='Source']",
+			RuntimeVariables.replace("Source"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//textarea[contains(@id,'_editor') and contains(@style,'display: none;')]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertTrue(selenium.isVisible(
+				"//td[contains(@id,'cke_contents__54')]/iframe"));
+		selenium.selectFrame("//td[contains(@id,'cke_contents__54')]/iframe");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace(
+							"Wiki FrontPage ChildPage3 Content")
+										.equals(selenium.getText("//body"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
@@ -82,24 +163,20 @@ public class AddWDFrontPageChildPage3Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace(
-				"Wiki Front Page Child Page1 Title"),
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage1 Title"),
 			selenium.getText("xPath=(//div[@class='child-pages']/ul/li/a)[1]"));
-		assertEquals(RuntimeVariables.replace(
-				"Wiki Front Page Child Page2 Title"),
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage2 Title"),
 			selenium.getText("xPath=(//div[@class='child-pages']/ul/li/a)[2]"));
-		assertEquals(RuntimeVariables.replace(
-				"Wiki Front Page Child Page3 Title"),
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage3 Title"),
 			selenium.getText("xPath=(//div[@class='child-pages']/ul/li/a)[3]"));
 		selenium.clickAt("xPath=(//div[@class='child-pages']/ul/li/a)[3]",
-			RuntimeVariables.replace("Wiki Front Page Child Page3 Title"));
+			RuntimeVariables.replace("Wiki FrontPage ChildPage3 Title"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace(
-				"Wiki Front Page Child Page3 Title"),
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage3 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace(
-				"Wiki Front Page Child Page3 Content"),
+				"Wiki FrontPage ChildPage3 Content"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 	}
 }

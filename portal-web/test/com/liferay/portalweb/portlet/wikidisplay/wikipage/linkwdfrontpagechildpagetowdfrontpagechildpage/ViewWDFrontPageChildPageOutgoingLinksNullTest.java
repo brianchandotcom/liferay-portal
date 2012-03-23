@@ -46,18 +46,16 @@ public class ViewWDFrontPageChildPageOutgoingLinksNullTest extends BaseTestCase 
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace(
-				"Wiki Front Page Child Page2 Title"),
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage2 Title"),
 			selenium.getText("xPath=(//div[@class='child-pages']/ul/li/a)[2]"));
 		selenium.clickAt("xPath=(//div[@class='child-pages']/ul/li/a)[2]",
-			RuntimeVariables.replace("Wiki Front Page Child Page2 Title"));
+			RuntimeVariables.replace("Wiki FrontPage ChildPage2 Title"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace(
-				"Wiki Front Page Child Page2 Title"),
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage2 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace(
-				"Wiki Front Page Child Page2 Content"),
+				"Wiki FrontPage ChildPage2 Content"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 		assertEquals(RuntimeVariables.replace("Details"),
 			selenium.getText("//div[3]/span[2]/a/span"));
@@ -71,6 +69,6 @@ public class ViewWDFrontPageChildPageOutgoingLinksNullTest extends BaseTestCase 
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("This page has no links."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
-		assertFalse(selenium.isTextPresent("Wiki Front Page Child Page1 Title"));
+		assertFalse(selenium.isTextPresent("Wiki FrontPage ChildPage1 Title"));
 	}
 }

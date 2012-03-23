@@ -58,7 +58,6 @@ public class EditWikiFrontPageMinorChangeTest extends BaseTestCase {
 					RuntimeVariables.replace("Edit"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -66,7 +65,8 @@ public class EditWikiFrontPageMinorChangeTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent("//iframe")) {
+						if (selenium.isElementPresent(
+									"//textarea[contains(@id,'_editor') and contains(@style,'display: none;')]")) {
 							break;
 						}
 					}
@@ -76,13 +76,97 @@ public class EditWikiFrontPageMinorChangeTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.selectFrame("//iframe");
-				selenium.type("//body",
+				assertEquals(RuntimeVariables.replace("Source"),
+					selenium.getText("//span[.='Source']"));
+				selenium.clickAt("//span[.='Source']",
+					RuntimeVariables.replace("Source"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//a[@class='cke_button_source cke_on']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//td[contains(@id,'cke_contents__54')]/textarea")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.type("//td[contains(@id,'cke_contents__54')]/textarea",
 					RuntimeVariables.replace("Wiki FrontPage Content Edit"));
+				assertEquals(RuntimeVariables.replace("Source"),
+					selenium.getText("//span[.='Source']"));
+				selenium.clickAt("//span[.='Source']",
+					RuntimeVariables.replace("Source"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isElementPresent(
+									"//textarea[contains(@id,'_editor') and contains(@style,'display: none;')]")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertTrue(selenium.isVisible(
+						"//td[contains(@id,'cke_contents__54')]/iframe"));
+				selenium.selectFrame(
+					"//td[contains(@id,'cke_contents__54')]/iframe");
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (RuntimeVariables.replace(
+									"Wiki FrontPage Content Edit")
+												.equals(selenium.getText(
+										"//body"))) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
 				selenium.selectFrame("relative=top");
 
 				boolean minorEditChecked = selenium.isChecked(
-						"//span[2]/span/span/input[2]");
+						"//input[contains(@id,'_minorEditCheckbox')]");
 
 				if (minorEditChecked) {
 					label = 2;
@@ -90,10 +174,14 @@ public class EditWikiFrontPageMinorChangeTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//span[2]/span/span/input[2]",
-					RuntimeVariables.replace(""));
+				assertFalse(selenium.isChecked(
+						"//input[contains(@id,'_minorEditCheckbox')]"));
+				selenium.clickAt("//input[contains(@id,'_minorEditCheckbox')]",
+					RuntimeVariables.replace("This is a minor edit."));
 
 			case 2:
+				assertTrue(selenium.isChecked(
+						"//input[contains(@id,'_minorEditCheckbox')]"));
 				selenium.clickAt("//input[@value='Publish']",
 					RuntimeVariables.replace("Publish"));
 				selenium.waitForPageToLoad("30000");

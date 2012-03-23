@@ -92,7 +92,7 @@ public class SelectMainNodeFrontPageChildPageTest extends BaseTestCase {
 		selenium.select("//select[@id='_86_nodeId']",
 			RuntimeVariables.replace("Main"));
 		selenium.select("//select[@id='_86_title']",
-			RuntimeVariables.replace("Wiki Front Page Child Page Title1"));
+			RuntimeVariables.replace("Wiki FrontPage ChildPage1 Title"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -102,7 +102,8 @@ public class SelectMainNodeFrontPageChildPageTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Main"),
 			selenium.getText("//select[@id='_86_nodeId']"));
-		assertTrue(selenium.isVisible("//select[@id='_86_title']"));
+		assertEquals("Wiki FrontPage ChildPage1 Title",
+			selenium.getSelectedLabel("//select[@id='_86_title']"));
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -126,11 +127,10 @@ public class SelectMainNodeFrontPageChildPageTest extends BaseTestCase {
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace(
-				"Wiki Front Page Child Page Title2"),
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage2 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace(
-				"Wiki Front Page Child Page Content1"),
+				"Wiki FrontPage ChildPage1 Content"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 	}
 }

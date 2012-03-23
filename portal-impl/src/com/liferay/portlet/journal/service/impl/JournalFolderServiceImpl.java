@@ -173,6 +173,19 @@ public class JournalFolderServiceImpl
 		return folderIds;
 	}
 
+	public JournalFolder moveFolder(
+			long folderId, long parentFolderId, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		JournalFolder folder = journalFolderLocalService.getFolder(folderId);
+
+		JournalFolderPermission.check(
+			getPermissionChecker(), folder, ActionKeys.UPDATE);
+
+		return journalFolderLocalService.moveFolder(
+			folderId, parentFolderId, serviceContext);
+	}
+
 	public JournalFolder updateFolder(
 			long folderId, long parentFolderId, String name, String description,
 			boolean mergeWithParentFolder, ServiceContext serviceContext)

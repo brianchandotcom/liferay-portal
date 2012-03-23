@@ -260,6 +260,13 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	}
 
 	public List<JournalArticle> getArticlesByFolderId(
+			long groupId, long folderId)
+		throws SystemException {
+
+		return journalArticlePersistence.filterFindByG_F(groupId, folderId);
+	}
+
+	public List<JournalArticle> getArticlesByFolderId(
 			long groupId, long folderId, int start, int end,
 			OrderByComparator obc)
 		throws SystemException {

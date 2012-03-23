@@ -225,6 +225,11 @@
 			<finder-column name="groupId" />
 			<finder-column name="parentFolderId" />
 		</finder>
+		<finder name="G_P_N" return-type="JournalFolder" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="parentFolderId" />
+			<finder-column name="name" />
+		</finder>
 
 		<!-- References -->
 

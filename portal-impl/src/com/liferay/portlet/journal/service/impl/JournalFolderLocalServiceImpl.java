@@ -24,6 +24,8 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.asset.util.AssetUtil;
+import com.liferay.portlet.journal.DuplicateFolderNameException;
 import com.liferay.portlet.journal.FolderNameException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolder;
@@ -238,6 +240,28 @@ public class JournalFolderLocalServiceImpl
 		}
 	}
 
+	public JournalFolder moveFolder(
+			long folderId, long parentFolderId, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		JournalFolder folder = journalFolderPersistence.findByPrimaryKey(
+			folderId);
+
+		parentFolderId = getParentFolderId(folder, parentFolderId);
+
+		validateFolder(
+			folder.getFolderId(), folder.getGroupId(), parentFolderId,
+			folder.getName());
+
+		folder.setModifiedDate(serviceContext.getModifiedDate(null));
+		folder.setParentFolderId(parentFolderId);
+		folder.setExpandoBridgeAttributes(serviceContext);
+
+		journalFolderPersistence.update(folder, false);
+
+		return folder;
+	}
+
 	public JournalFolder updateFolder(
 			long folderId, long parentFolderId, String name, String description,
 			boolean mergeWithParentFolder, ServiceContext serviceContext)
@@ -353,6 +377,26 @@ public class JournalFolderLocalServiceImpl
 		if ((Validator.isNull(name)) || (name.indexOf("\\\\") != -1) ||
 			(name.indexOf("//") != -1)) {
 
+			throw new FolderNameException();
+		}
+	}
+
+	protected void validateFolder(
+			long folderId, long groupId, long parentFolderId, String name)
+		throws PortalException, SystemException {
+
+		validateFolderName(name);
+
+		JournalFolder folder = journalFolderPersistence.fetchByG_P_N(
+			groupId, parentFolderId, name);
+
+		if ((folder != null) && (folder.getFolderId() != folderId)) {
+			throw new DuplicateFolderNameException(name);
+		}
+	}
+
+	protected void validateFolderName(String name) throws PortalException {
+		if (!AssetUtil.isValidWord(name)) {
 			throw new FolderNameException();
 		}
 	}

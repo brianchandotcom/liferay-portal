@@ -306,7 +306,7 @@ if (filterManageableOrganizations) {
 
 						usersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED, userParams);
 
-						if (!PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER)) {
+						if (!PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER) && !PortalPermissionUtil.contains(permissionChecker, ActionKeys.IMPERSONATE)) {
 							showOrganizations = true;
 						}
 						else if (organizationsCount > 0) {

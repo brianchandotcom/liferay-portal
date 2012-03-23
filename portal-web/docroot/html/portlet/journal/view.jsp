@@ -16,6 +16,27 @@
 
 <%@ include file="/html/portlet/journal/init.jsp" %>
 
+<%
+JournalFolder folder = (JournalFolder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
+
+long folderId = BeanParamUtil.getLong(folder, request, "folderId", JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+if ((folder == null) && (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
+	try {
+		folder = JournalFolderLocalServiceUtil.getFolder(folderId);
+	}
+	catch (NoSuchFolderException nsfe) {
+		folderId = JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+	}
+}
+
+request.setAttribute("view.jsp-folder", folder);
+
+request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
+	
+String navigation = ParamUtil.getString(request, "navigation");
+%>
+
 <div id="<portlet:namespace />journalContainer">
 	<aui:layout cssClass="lfr-app-column-view">
 		<aui:column columnWidth="<%= 20 %>" cssClass="navigation-pane" first="<%= true %>">
@@ -40,12 +61,9 @@
 			</div>
 
 			<%
-			String tabs1 = ParamUtil.getString(request, "tabs1", "web-content");
-
 			PortletURL portletURL = renderResponse.createRenderURL();
 
 			portletURL.setParameter("struts_action", "/journal/view");
-			portletURL.setParameter("tabs1", tabs1);
 			%>
 
 			<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
@@ -55,7 +73,14 @@
 				<aui:input name="expireArticleIds" type="hidden" />
 
 				<div class="journal-container" id="<portlet:namespace />journalContainer">
-					<liferay-util:include page="/html/portlet/journal/view_articles.jsp" />
+					<c:choose>
+						<c:when test='<%= (navigation.equals("recent")) %>'>
+							<liferay-util:include page="/html/portlet/journal/view_recent.jsp" />
+						</c:when>
+						<c:otherwise>
+							<liferay-util:include page="/html/portlet/journal/view_articles.jsp" />							
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</aui:form>
 		</aui:column>

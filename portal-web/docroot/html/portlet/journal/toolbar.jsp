@@ -50,15 +50,6 @@
 				message="feeds"
 				url="<%= taglibUrl %>"
 			/>
-
-			<%
-			taglibUrl = "javascript:" + renderResponse.getNamespace() + "openRecentView()";
-			%>
-
-			<liferay-ui:icon
-				message="recent"
-				url="<%= taglibUrl %>"
-			/>
 		</liferay-ui:icon-menu>
 	</c:if>
 </span>
@@ -73,19 +64,6 @@
 				id: '<portlet:namespace />openFeedsView',
 				title: '<%= UnicodeLanguageUtil.get(pageContext, "feeds") %>',
 				uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/journal/view_feeds" /></liferay-portlet:renderURL>'
-			}
-		);
-	}
-
-	function <portlet:namespace />openRecentView() {
-		Liferay.Util.openWindow(
-			{
-				dialog: {
-					width:820
-				},
-				id: '<portlet:namespace />openRecentView',
-				title: '<%= UnicodeLanguageUtil.get(pageContext, "recent") %>',
-				uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/journal/view_recent" /></liferay-portlet:renderURL>'
 			}
 		);
 	}

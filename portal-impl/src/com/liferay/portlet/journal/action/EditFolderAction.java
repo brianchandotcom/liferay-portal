@@ -21,9 +21,11 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
+import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.portlet.journal.DuplicateFolderNameException;
 import com.liferay.portlet.journal.FolderNameException;
 import com.liferay.portlet.journal.NoSuchFolderException;
+import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
 
@@ -53,6 +55,12 @@ public class EditFolderAction extends PortletAction {
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				updateFolder(actionRequest);
+			}
+			else if (cmd.equals(Constants.DELETE)) {
+				deleteFolder(actionRequest);
+			}
+			else if (cmd.equals(Constants.MOVE)) {
+				moveFolder(actionRequest);
 			}
 
 			sendRedirect(actionRequest, actionResponse);
@@ -100,6 +108,28 @@ public class EditFolderAction extends PortletAction {
 
 		return mapping.findForward(
 			getForward(renderRequest, "portlet.journal.edit_folder"));
+	}
+
+	protected void deleteFolder(ActionRequest actionRequest) throws Exception {
+		long folderId = ParamUtil.getLong(actionRequest, "folderId");
+
+		JournalFolderServiceUtil.deleteFolder(folderId);
+
+		AssetPublisherUtil.removeRecentFolderId(
+			actionRequest, JournalArticle.class.getName(), folderId);
+	}
+
+	protected void moveFolder(ActionRequest actionRequest) throws Exception {
+		long folderId = ParamUtil.getLong(actionRequest, "folderId");
+
+		long parentFolderId = ParamUtil.getLong(
+			actionRequest, "parentFolderId");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			JournalFolder.class.getName(), actionRequest);
+
+		JournalFolderServiceUtil.moveFolder(
+			folderId, parentFolderId, serviceContext);
 	}
 
 	protected void updateFolder(ActionRequest actionRequest) throws Exception {

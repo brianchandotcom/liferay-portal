@@ -183,6 +183,55 @@
 		position: relative;
 	}
 
+	.body-row li.selected {
+		background-color: #00A2EA;
+
+		a {
+			color: #FFF;
+		}
+	}
+
+	.overlay.article-action a, .overlay.folder-action a {
+		display: block;
+		float: right;
+		min-height: 15px;
+	}
+
+	.folder {
+		margin-top: 2px;
+		position: relative;
+
+		&:hover {
+			background-color: #D3E8F1;
+		}
+	}
+
+	.folder-display-style li {
+		.overlay {
+			clip: rect(0, 0, 0, 0);
+
+			&.article-action, &.folder-action {
+				display: block;
+				height: 16px;
+				overflow: hidden;
+				position: absolute;
+				right: 15px;
+				top: 5px;
+				width: 24px;
+
+				a {
+					display: block;
+					float: right;
+					min-height: 15px;
+				}
+			}
+		}
+
+		&:hover .overlay, &.hover .overlay {
+			clip: rect(auto auto auto auto);
+		}
+	}
+
 	.structure-tree {
 		position: relative;
 
@@ -385,6 +434,64 @@
 
 	.lfr-textarea {
 		width: 350px;
+	}
+
+	.lfr-header-row-content .parent-folder-title {
+		color: #FFF;
+		font-weight: bold;
+		padding: 6px 10px 6px 25px;
+		text-shadow: -1px -1px #505050;
+	}
+
+	.lfr-list-view-content {
+		ul .expand-folder {
+			height: 10px;
+			overflow: hidden;
+			padding-left: 5px;
+			padding-right: 5px;
+			position: absolute;
+			right: 0;
+			top: 5px;
+			width: 10px;
+
+			.expand-folder-arrow {
+				left: 2px;
+				position: absolute;
+				top: 1px;
+			}
+		}
+
+		li a {
+			display: block;
+			padding: 6px 8px;
+		}
+
+		ul li a {
+			color: #34404F;
+			text-decoration: none;
+		}
+
+		li.selected {
+			background-color: #00a2ea;
+
+			a {
+				font-weight: bold;
+			}
+		}
+	}
+
+	.lfr-menu-list ul {
+		background: #F0F0F0;
+		position: relative;
+
+		&:after {
+			border: 10px solid transparent;
+			border-bottom-color: #F0F0F0;
+			content: '';
+			position: absolute;
+			right: 5px;
+			top: -10px;
+		}
 	}
 
 	.lfr-template-editor {

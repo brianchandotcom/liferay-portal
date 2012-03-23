@@ -18,27 +18,27 @@
 
 // Article id
 
-row.addText(article.getArticleId(), rowURL);
+row.addText(curArticle.getArticleId(), rowURL);
 
 // Title
 
-row.addText(HtmlUtil.escape(article.getTitle(locale)), rowURL);
+row.addText(HtmlUtil.escape(curArticle.getTitle(locale)), rowURL);
 
 // Status
 
-row.addText(LanguageUtil.get(pageContext, WorkflowConstants.toLabel(article.getStatus())), rowURL);
+row.addText(LanguageUtil.get(pageContext, WorkflowConstants.toLabel(curArticle.getStatus())), rowURL);
 
 // Modified date
 
-row.addText(dateFormatDateTime.format(article.getModifiedDate()), rowURL);
+row.addText(dateFormatDateTime.format(curArticle.getModifiedDate()), rowURL);
 
 // Display date
 
-row.addText(dateFormatDateTime.format(article.getDisplayDate()), rowURL);
+row.addText(dateFormatDateTime.format(curArticle.getDisplayDate()), rowURL);
 
 // Author
 
-row.addText(HtmlUtil.escape(PortalUtil.getUserName(article.getUserId(), article.getUserName())), rowURL);
+row.addText(HtmlUtil.escape(PortalUtil.getUserName(curArticle.getUserId(), curArticle.getUserName())), rowURL);
 
 // Action
 

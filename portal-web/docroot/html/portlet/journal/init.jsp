@@ -96,6 +96,7 @@ page import="com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil"
 page import="com.liferay.portlet.journal.service.JournalArticleResourceLocalServiceUtil" %><%@
 page import="com.liferay.portlet.journal.service.JournalArticleServiceUtil" %><%@
 page import="com.liferay.portlet.journal.service.JournalFeedLocalServiceUtil" %><%@
+page import="com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil" %><%@
 page import="com.liferay.portlet.journal.service.JournalFolderServiceUtil" %><%@
 page import="com.liferay.portlet.journal.service.JournalStructureLocalServiceUtil" %><%@
 page import="com.liferay.portlet.journal.service.JournalStructureServiceUtil" %><%@

@@ -849,6 +849,11 @@
 
 		<action path="/journal/get_template_content" type="com.liferay.portlet.journal.action.GetTemplateContentAction" />
 
+		<action path="/journal/move_folder" type="com.liferay.portlet.journal.action.EditFolderAction">
+			<forward name="portlet.journal.edit_folder" path="portlet.journal.move_folder" />
+			<forward name="portlet.journal.error" path="portlet.journal.error" />
+		</action>
+
 		<action path="/journal/rss" type="com.liferay.portlet.journal.action.RSSAction" />
 
 		<action path="/journal/select_display_page" type="com.liferay.portlet.layoutsadmin.action.EditLayoutsAction" />

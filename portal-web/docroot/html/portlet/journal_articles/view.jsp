@@ -79,6 +79,7 @@ double version = ParamUtil.getDouble(request, "version");
 		searchTerms.setAdvancedSearch(true);
 
 		List<JournalArticle> results = null;
+		int total = 0;
 		%>
 
 		<c:choose>

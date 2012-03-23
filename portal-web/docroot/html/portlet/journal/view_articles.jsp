@@ -17,6 +17,8 @@
 <%@ include file="/html/portlet/journal/init.jsp" %>
 
 <%
+long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/journal/view");
@@ -79,15 +81,33 @@ ArticleSearchTerms searchTerms = (ArticleSearchTerms)searchContainer.getSearchTe
 
 searchTerms.setVersion(-1);
 
-List<JournalArticle> results = null;
+String search = ParamUtil.getString(request, displayTerms.ADVANCED_SEARCH, null);
+
+List results = null;
+int total = 0;
 %>
 
 <c:choose>
-	<c:when test="<%= PropsValues.JOURNAL_ARTICLES_SEARCH_WITH_INDEX %>">
-		<%@ include file="/html/portlet/journal/article_search_results_index.jspf" %>
+	<c:when test="<%= (search != null) %>">
+		<c:choose>
+			<c:when test="<%= PropsValues.JOURNAL_ARTICLES_SEARCH_WITH_INDEX %>">
+				<%@ include file="/html/portlet/journal/article_search_results_index.jspf" %>
+			</c:when>
+			<c:otherwise>
+				<%@ include file="/html/portlet/journal/article_search_results_database.jspf" %>
+			</c:otherwise>
+		</c:choose>
 	</c:when>
 	<c:otherwise>
-		<%@ include file="/html/portlet/journal/article_search_results_database.jspf" %>
+
+		<%
+		results = JournalFolderServiceUtil.getFoldersAndArticles(scopeGroupId, folderId, searchContainer.getStart(), searchContainer.getEnd(), null);
+		total = JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, folderId);
+
+		searchContainer.setResults(results);
+		searchContainer.setTotal(total);
+		%>
+
 	</c:otherwise>
 </c:choose>
 
@@ -107,26 +127,72 @@ List<JournalArticle> results = null;
 List resultRows = searchContainer.getResultRows();
 
 for (int i = 0; i < results.size(); i++) {
-	JournalArticle article = results.get(i);
-
-	ResultRow row = new ResultRow(article, article.getArticleId(), i);
-
-	PortletURL rowURL = renderResponse.createRenderURL();
-
-	rowURL.setParameter("struts_action", "/journal/edit_article");
-	rowURL.setParameter("redirect", currentURL);
-	rowURL.setParameter("originalRedirect", currentURL);
-	rowURL.setParameter("groupId", String.valueOf(article.getGroupId()));
-	rowURL.setParameter("articleId", article.getArticleId());
+	Object result = results.get(i);
 %>
 
-	<%@ include file="/html/portlet/journal/article_columns.jspf" %>
+	<%@ include file="/html/portlet/journal/cast_result.jspf" %>
+
+	<c:choose>
+		<c:when test="<%= curArticle != null %>">
+
+			<%
+			ResultRow row = new ResultRow(curArticle, curArticle.getArticleId(), i);
+
+			PortletURL rowURL = renderResponse.createRenderURL();
+
+			rowURL.setParameter("struts_action", "/journal/edit_article");
+			rowURL.setParameter("redirect", currentURL);
+			rowURL.setParameter("originalRedirect", currentURL);
+			rowURL.setParameter("groupId", String.valueOf(curArticle.getGroupId()));
+			rowURL.setParameter("articleId", curArticle.getArticleId());
+			%>
+
+			<%@ include file="/html/portlet/journal/article_columns.jspf" %>
+
+			<%
+
+			// Add result row
+
+			resultRows.add(row);
+			%>
+
+		</c:when>
+		<c:when test="<%= curFolder != null %>">
+
+			<%
+			int foldersCount = JournalFolderServiceUtil.getFoldersCount(scopeGroupId, curFolder.getFolderId());
+			int articlesCount = JournalArticleServiceUtil.getArticlesCountByFolderId(scopeGroupId, curFolder.getFolderId());
+
+			String folderImage = "folder_empty";
+
+			if ((foldersCount + articlesCount) > 0) {
+				folderImage = "folder_full_document";
+			}
+
+			ResultRow row = new ResultRow(curFolder, curFolder.getFolderId(), i);
+
+			PortletURL rowURL = renderResponse.createRenderURL();
+
+			rowURL.setParameter("struts_action", "/journal/view");
+			rowURL.setParameter("redirect", currentURL);
+			rowURL.setParameter("originalRedirect", currentURL);
+			rowURL.setParameter("groupId", String.valueOf(curFolder.getGroupId()));
+			rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
+			%>
+
+			<%@ include file="/html/portlet/journal/folder_columns.jspf" %>
+
+			<%
+
+			// Add result row
+
+			resultRows.add(row);
+			%>
+
+		</c:when>
+	</c:choose>
 
 <%
-
-	// Add result row
-
-	resultRows.add(row);
 }
 %>
 

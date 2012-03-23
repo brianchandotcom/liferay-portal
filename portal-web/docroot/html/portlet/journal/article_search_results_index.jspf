@@ -26,8 +26,6 @@ journalParams.put("expandoAttributes", searchTerms.getKeywords());
 
 Sort sort = SortFactoryUtil.getSort(JournalArticle.class, searchContainer.getOrderByCol(), searchContainer.getOrderByType());
 
-int total = 0;
-
 while (true) {
 	Hits hits = null;
 

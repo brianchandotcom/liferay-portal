@@ -866,7 +866,7 @@ public class JournalArticleLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> search(
-		long companyId, long groupId, long classNameId,
+		long companyId, long groupId, long folderId, long classNameId,
 		java.lang.String keywords, java.lang.Double version,
 		java.lang.String type, java.lang.String structureId,
 		java.lang.String templateId, java.util.Date displayDateGT,
@@ -874,13 +874,13 @@ public class JournalArticleLocalServiceUtil {
 		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .search(companyId, groupId, classNameId, keywords, version,
-			type, structureId, templateId, displayDateGT, displayDateLT,
-			status, reviewDate, start, end, obc);
+				   .search(companyId, groupId, folderId, classNameId, keywords,
+			version, type, structureId, templateId, displayDateGT,
+			displayDateLT, status, reviewDate, start, end, obc);
 	}
 
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> search(
-		long companyId, long groupId, long classNameId,
+		long companyId, long groupId, long folderId, long classNameId,
 		java.lang.String articleId, java.lang.Double version,
 		java.lang.String title, java.lang.String description,
 		java.lang.String content, java.lang.String type,
@@ -890,14 +890,14 @@ public class JournalArticleLocalServiceUtil {
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .search(companyId, groupId, classNameId, articleId, version,
-			title, description, content, type, structureId, templateId,
-			displayDateGT, displayDateLT, status, reviewDate, andOperator,
-			start, end, obc);
+				   .search(companyId, groupId, folderId, classNameId,
+			articleId, version, title, description, content, type, structureId,
+			templateId, displayDateGT, displayDateLT, status, reviewDate,
+			andOperator, start, end, obc);
 	}
 
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> search(
-		long companyId, long groupId, long classNameId,
+		long companyId, long groupId, long folderId, long classNameId,
 		java.lang.String articleId, java.lang.Double version,
 		java.lang.String title, java.lang.String description,
 		java.lang.String content, java.lang.String type,
@@ -907,52 +907,53 @@ public class JournalArticleLocalServiceUtil {
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .search(companyId, groupId, classNameId, articleId, version,
-			title, description, content, type, structureIds, templateIds,
-			displayDateGT, displayDateLT, status, reviewDate, andOperator,
-			start, end, obc);
+				   .search(companyId, groupId, folderId, classNameId,
+			articleId, version, title, description, content, type,
+			structureIds, templateIds, displayDateGT, displayDateLT, status,
+			reviewDate, andOperator, start, end, obc);
 	}
 
 	public static com.liferay.portal.kernel.search.Hits search(long companyId,
-		long groupId, long classNameId, java.lang.String structureId,
-		java.lang.String templateId, java.lang.String keywords,
+		long groupId, long folderId, long classNameId,
+		java.lang.String structureId, java.lang.String templateId,
+		java.lang.String keywords,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		int start, int end, com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .search(companyId, groupId, classNameId, structureId,
-			templateId, keywords, params, start, end, sort);
+				   .search(companyId, groupId, folderId, classNameId,
+			structureId, templateId, keywords, params, start, end, sort);
 	}
 
 	public static com.liferay.portal.kernel.search.Hits search(long companyId,
-		long groupId, long classNameId, java.lang.String articleId,
-		java.lang.String title, java.lang.String description,
-		java.lang.String content, java.lang.String type,
-		java.lang.String status, java.lang.String structureId,
-		java.lang.String templateId,
+		long groupId, long folderId, long classNameId,
+		java.lang.String articleId, java.lang.String title,
+		java.lang.String description, java.lang.String content,
+		java.lang.String type, java.lang.String status,
+		java.lang.String structureId, java.lang.String templateId,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andSearch, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .search(companyId, groupId, classNameId, articleId, title,
-			description, content, type, status, structureId, templateId,
-			params, andSearch, start, end, sort);
+				   .search(companyId, groupId, folderId, classNameId,
+			articleId, title, description, content, type, status, structureId,
+			templateId, params, andSearch, start, end, sort);
 	}
 
-	public static int searchCount(long companyId, long groupId,
+	public static int searchCount(long companyId, long groupId, long folderId,
 		long classNameId, java.lang.String keywords, java.lang.Double version,
 		java.lang.String type, java.lang.String structureId,
 		java.lang.String templateId, java.util.Date displayDateGT,
 		java.util.Date displayDateLT, int status, java.util.Date reviewDate)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .searchCount(companyId, groupId, classNameId, keywords,
-			version, type, structureId, templateId, displayDateGT,
+				   .searchCount(companyId, groupId, folderId, classNameId,
+			keywords, version, type, structureId, templateId, displayDateGT,
 			displayDateLT, status, reviewDate);
 	}
 
-	public static int searchCount(long companyId, long groupId,
+	public static int searchCount(long companyId, long groupId, long folderId,
 		long classNameId, java.lang.String articleId, java.lang.Double version,
 		java.lang.String title, java.lang.String description,
 		java.lang.String content, java.lang.String type,
@@ -961,13 +962,13 @@ public class JournalArticleLocalServiceUtil {
 		java.util.Date reviewDate, boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .searchCount(companyId, groupId, classNameId, articleId,
-			version, title, description, content, type, structureId,
+				   .searchCount(companyId, groupId, folderId, classNameId,
+			articleId, version, title, description, content, type, structureId,
 			templateId, displayDateGT, displayDateLT, status, reviewDate,
 			andOperator);
 	}
 
-	public static int searchCount(long companyId, long groupId,
+	public static int searchCount(long companyId, long groupId, long folderId,
 		long classNameId, java.lang.String articleId, java.lang.Double version,
 		java.lang.String title, java.lang.String description,
 		java.lang.String content, java.lang.String type,
@@ -976,10 +977,10 @@ public class JournalArticleLocalServiceUtil {
 		java.util.Date reviewDate, boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .searchCount(companyId, groupId, classNameId, articleId,
-			version, title, description, content, type, structureIds,
-			templateIds, displayDateGT, displayDateLT, status, reviewDate,
-			andOperator);
+				   .searchCount(companyId, groupId, folderId, classNameId,
+			articleId, version, title, description, content, type,
+			structureIds, templateIds, displayDateGT, displayDateLT, status,
+			reviewDate, andOperator);
 	}
 
 	public static void subscribe(long userId, long groupId)

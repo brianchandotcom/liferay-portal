@@ -1045,20 +1045,21 @@ public class JournalArticleServiceHttp {
 
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> search(
 		HttpPrincipal httpPrincipal, long companyId, long groupId,
-		long classNameId, java.lang.String keywords, java.lang.Double version,
-		java.lang.String type, java.lang.String structureId,
-		java.lang.String templateId, java.util.Date displayDateGT,
-		java.util.Date displayDateLT, int status, java.util.Date reviewDate,
-		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		long folderId, long classNameId, java.lang.String keywords,
+		java.lang.Double version, java.lang.String type,
+		java.lang.String structureId, java.lang.String templateId,
+		java.util.Date displayDateGT, java.util.Date displayDateLT, int status,
+		java.util.Date reviewDate, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(JournalArticleServiceUtil.class.getName(),
 					"search", _searchParameterTypes26);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					companyId, groupId, classNameId, keywords, version, type,
-					structureId, templateId, displayDateGT, displayDateLT,
-					status, reviewDate, start, end, obc);
+					companyId, groupId, folderId, classNameId, keywords,
+					version, type, structureId, templateId, displayDateGT,
+					displayDateLT, status, reviewDate, start, end, obc);
 
 			Object returnObj = null;
 
@@ -1084,12 +1085,13 @@ public class JournalArticleServiceHttp {
 
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> search(
 		HttpPrincipal httpPrincipal, long companyId, long groupId,
-		long classNameId, java.lang.String articleId, java.lang.Double version,
-		java.lang.String title, java.lang.String description,
-		java.lang.String content, java.lang.String type,
-		java.lang.String structureId, java.lang.String templateId,
-		java.util.Date displayDateGT, java.util.Date displayDateLT, int status,
-		java.util.Date reviewDate, boolean andOperator, int start, int end,
+		long folderId, long classNameId, java.lang.String articleId,
+		java.lang.Double version, java.lang.String title,
+		java.lang.String description, java.lang.String content,
+		java.lang.String type, java.lang.String structureId,
+		java.lang.String templateId, java.util.Date displayDateGT,
+		java.util.Date displayDateLT, int status, java.util.Date reviewDate,
+		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -1097,10 +1099,10 @@ public class JournalArticleServiceHttp {
 					"search", _searchParameterTypes27);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					companyId, groupId, classNameId, articleId, version, title,
-					description, content, type, structureId, templateId,
-					displayDateGT, displayDateLT, status, reviewDate,
-					andOperator, start, end, obc);
+					companyId, groupId, folderId, classNameId, articleId,
+					version, title, description, content, type, structureId,
+					templateId, displayDateGT, displayDateLT, status,
+					reviewDate, andOperator, start, end, obc);
 
 			Object returnObj = null;
 
@@ -1126,12 +1128,13 @@ public class JournalArticleServiceHttp {
 
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> search(
 		HttpPrincipal httpPrincipal, long companyId, long groupId,
-		long classNameId, java.lang.String articleId, java.lang.Double version,
-		java.lang.String title, java.lang.String description,
-		java.lang.String content, java.lang.String type,
-		java.lang.String[] structureIds, java.lang.String[] templateIds,
-		java.util.Date displayDateGT, java.util.Date displayDateLT, int status,
-		java.util.Date reviewDate, boolean andOperator, int start, int end,
+		long folderId, long classNameId, java.lang.String articleId,
+		java.lang.Double version, java.lang.String title,
+		java.lang.String description, java.lang.String content,
+		java.lang.String type, java.lang.String[] structureIds,
+		java.lang.String[] templateIds, java.util.Date displayDateGT,
+		java.util.Date displayDateLT, int status, java.util.Date reviewDate,
+		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -1139,10 +1142,10 @@ public class JournalArticleServiceHttp {
 					"search", _searchParameterTypes28);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					companyId, groupId, classNameId, articleId, version, title,
-					description, content, type, structureIds, templateIds,
-					displayDateGT, displayDateLT, status, reviewDate,
-					andOperator, start, end, obc);
+					companyId, groupId, folderId, classNameId, articleId,
+					version, title, description, content, type, structureIds,
+					templateIds, displayDateGT, displayDateLT, status,
+					reviewDate, andOperator, start, end, obc);
 
 			Object returnObj = null;
 
@@ -1167,20 +1170,20 @@ public class JournalArticleServiceHttp {
 	}
 
 	public static int searchCount(HttpPrincipal httpPrincipal, long companyId,
-		long groupId, long classNameId, java.lang.String keywords,
-		java.lang.Double version, java.lang.String type,
-		java.lang.String structureId, java.lang.String templateId,
-		java.util.Date displayDateGT, java.util.Date displayDateLT, int status,
-		java.util.Date reviewDate)
+		long groupId, long folderId, long classNameId,
+		java.lang.String keywords, java.lang.Double version,
+		java.lang.String type, java.lang.String structureId,
+		java.lang.String templateId, java.util.Date displayDateGT,
+		java.util.Date displayDateLT, int status, java.util.Date reviewDate)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(JournalArticleServiceUtil.class.getName(),
 					"searchCount", _searchCountParameterTypes29);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					companyId, groupId, classNameId, keywords, version, type,
-					structureId, templateId, displayDateGT, displayDateLT,
-					status, reviewDate);
+					companyId, groupId, folderId, classNameId, keywords,
+					version, type, structureId, templateId, displayDateGT,
+					displayDateLT, status, reviewDate);
 
 			Object returnObj = null;
 
@@ -1205,23 +1208,23 @@ public class JournalArticleServiceHttp {
 	}
 
 	public static int searchCount(HttpPrincipal httpPrincipal, long companyId,
-		long groupId, long classNameId, java.lang.String articleId,
-		java.lang.Double version, java.lang.String title,
-		java.lang.String description, java.lang.String content,
-		java.lang.String type, java.lang.String structureId,
-		java.lang.String templateId, java.util.Date displayDateGT,
-		java.util.Date displayDateLT, int status, java.util.Date reviewDate,
-		boolean andOperator)
+		long groupId, long folderId, long classNameId,
+		java.lang.String articleId, java.lang.Double version,
+		java.lang.String title, java.lang.String description,
+		java.lang.String content, java.lang.String type,
+		java.lang.String structureId, java.lang.String templateId,
+		java.util.Date displayDateGT, java.util.Date displayDateLT, int status,
+		java.util.Date reviewDate, boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(JournalArticleServiceUtil.class.getName(),
 					"searchCount", _searchCountParameterTypes30);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					companyId, groupId, classNameId, articleId, version, title,
-					description, content, type, structureId, templateId,
-					displayDateGT, displayDateLT, status, reviewDate,
-					andOperator);
+					companyId, groupId, folderId, classNameId, articleId,
+					version, title, description, content, type, structureId,
+					templateId, displayDateGT, displayDateLT, status,
+					reviewDate, andOperator);
 
 			Object returnObj = null;
 
@@ -1246,23 +1249,23 @@ public class JournalArticleServiceHttp {
 	}
 
 	public static int searchCount(HttpPrincipal httpPrincipal, long companyId,
-		long groupId, long classNameId, java.lang.String articleId,
-		java.lang.Double version, java.lang.String title,
-		java.lang.String description, java.lang.String content,
-		java.lang.String type, java.lang.String[] structureIds,
-		java.lang.String[] templateIds, java.util.Date displayDateGT,
-		java.util.Date displayDateLT, int status, java.util.Date reviewDate,
-		boolean andOperator)
+		long groupId, long folderId, long classNameId,
+		java.lang.String articleId, java.lang.Double version,
+		java.lang.String title, java.lang.String description,
+		java.lang.String content, java.lang.String type,
+		java.lang.String[] structureIds, java.lang.String[] templateIds,
+		java.util.Date displayDateGT, java.util.Date displayDateLT, int status,
+		java.util.Date reviewDate, boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(JournalArticleServiceUtil.class.getName(),
 					"searchCount", _searchCountParameterTypes31);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					companyId, groupId, classNameId, articleId, version, title,
-					description, content, type, structureIds, templateIds,
-					displayDateGT, displayDateLT, status, reviewDate,
-					andOperator);
+					companyId, groupId, folderId, classNameId, articleId,
+					version, title, description, content, type, structureIds,
+					templateIds, displayDateGT, displayDateLT, status,
+					reviewDate, andOperator);
 
 			Object returnObj = null;
 
@@ -1720,51 +1723,56 @@ public class JournalArticleServiceHttp {
 			java.lang.String.class
 		};
 	private static final Class<?>[] _searchParameterTypes26 = new Class[] {
-			long.class, long.class, long.class, java.lang.String.class,
-			java.lang.Double.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class, java.util.Date.class,
-			java.util.Date.class, int.class, java.util.Date.class, int.class,
-			int.class, com.liferay.portal.kernel.util.OrderByComparator.class
-		};
-	private static final Class<?>[] _searchParameterTypes27 = new Class[] {
-			long.class, long.class, long.class, java.lang.String.class,
-			java.lang.Double.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
+			long.class, long.class, long.class, long.class,
+			java.lang.String.class, java.lang.Double.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.util.Date.class, java.util.Date.class,
-			int.class, java.util.Date.class, boolean.class, int.class, int.class,
+			int.class, java.util.Date.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
+		};
+	private static final Class<?>[] _searchParameterTypes27 = new Class[] {
+			long.class, long.class, long.class, long.class,
+			java.lang.String.class, java.lang.Double.class,
+			java.lang.String.class, java.lang.String.class,
+			java.lang.String.class, java.lang.String.class,
+			java.lang.String.class, java.lang.String.class, java.util.Date.class,
+			java.util.Date.class, int.class, java.util.Date.class, boolean.class,
+			int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _searchParameterTypes28 = new Class[] {
-			long.class, long.class, long.class, java.lang.String.class,
-			java.lang.Double.class, java.lang.String.class,
+			long.class, long.class, long.class, long.class,
+			java.lang.String.class, java.lang.Double.class,
 			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String[].class,
-			java.lang.String[].class, java.util.Date.class, java.util.Date.class,
-			int.class, java.util.Date.class, boolean.class, int.class, int.class,
+			java.lang.String.class, java.lang.String.class,
+			java.lang.String[].class, java.lang.String[].class,
+			java.util.Date.class, java.util.Date.class, int.class,
+			java.util.Date.class, boolean.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _searchCountParameterTypes29 = new Class[] {
-			long.class, long.class, long.class, java.lang.String.class,
-			java.lang.Double.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class, java.util.Date.class,
-			java.util.Date.class, int.class, java.util.Date.class
-		};
-	private static final Class<?>[] _searchCountParameterTypes30 = new Class[] {
-			long.class, long.class, long.class, java.lang.String.class,
-			java.lang.Double.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
+			long.class, long.class, long.class, long.class,
+			java.lang.String.class, java.lang.Double.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.util.Date.class, java.util.Date.class,
-			int.class, java.util.Date.class, boolean.class
+			int.class, java.util.Date.class
+		};
+	private static final Class<?>[] _searchCountParameterTypes30 = new Class[] {
+			long.class, long.class, long.class, long.class,
+			java.lang.String.class, java.lang.Double.class,
+			java.lang.String.class, java.lang.String.class,
+			java.lang.String.class, java.lang.String.class,
+			java.lang.String.class, java.lang.String.class, java.util.Date.class,
+			java.util.Date.class, int.class, java.util.Date.class, boolean.class
 		};
 	private static final Class<?>[] _searchCountParameterTypes31 = new Class[] {
-			long.class, long.class, long.class, java.lang.String.class,
-			java.lang.Double.class, java.lang.String.class,
+			long.class, long.class, long.class, long.class,
+			java.lang.String.class, java.lang.Double.class,
 			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String[].class,
-			java.lang.String[].class, java.util.Date.class, java.util.Date.class,
-			int.class, java.util.Date.class, boolean.class
+			java.lang.String.class, java.lang.String.class,
+			java.lang.String[].class, java.lang.String[].class,
+			java.util.Date.class, java.util.Date.class, int.class,
+			java.util.Date.class, boolean.class
 		};
 	private static final Class<?>[] _subscribeParameterTypes32 = new Class[] {
 			long.class

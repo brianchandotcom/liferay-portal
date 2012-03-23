@@ -871,8 +871,8 @@ create table JournalFolder (
 	createDate DATE null,
 	modifiedDate DATE null,
 	parentFolderId LONG,
-	name VARCHAR(100) null,
-	description STRING null
+	name VARCHAR(75) null,
+	description VARCHAR(75) null
 );
 
 create table JournalStructure (

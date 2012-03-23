@@ -111,6 +111,10 @@ public class DynamicCSSFilter extends BasePortalFilter {
 
 		File file = new File(realPath);
 
+		if (!file.exists()) {
+			return null;
+		}
+
 		String cacheCommonFileName = getCacheFileName(request);
 
 		File cacheContentTypeFile = new File(

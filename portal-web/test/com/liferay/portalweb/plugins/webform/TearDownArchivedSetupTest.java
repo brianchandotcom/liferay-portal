@@ -119,7 +119,8 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//a[@id='_86_ctvk']")) {
+						if (selenium.isVisible(
+									"//a[@id='_86_ocerSearchContainer_1_menu_delete']")) {
 							break;
 						}
 					}
@@ -130,8 +131,10 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText("//a[@id='_86_ctvk']"));
-				selenium.click(RuntimeVariables.replace("//a[@id='_86_ctvk']"));
+					selenium.getText(
+						"//a[@id='_86_ocerSearchContainer_1_menu_delete']"));
+				selenium.click(RuntimeVariables.replace(
+						"//a[@id='_86_ocerSearchContainer_1_menu_delete']"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
@@ -155,7 +158,8 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//a[@id='_86_ctvk']")) {
+						if (selenium.isVisible(
+									"//a[@id='_86_ocerSearchContainer_1_menu_delete']")) {
 							break;
 						}
 					}
@@ -166,8 +170,10 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText("//a[@id='_86_ctvk']"));
-				selenium.click(RuntimeVariables.replace("//a[@id='_86_ctvk']"));
+					selenium.getText(
+						"//a[@id='_86_ocerSearchContainer_1_menu_delete']"));
+				selenium.click(RuntimeVariables.replace(
+						"//a[@id='_86_ocerSearchContainer_1_menu_delete']"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
@@ -263,7 +269,8 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//a[@id='_86_ctvk']")) {
+						if (selenium.isVisible(
+									"//a[@id='_86_ocerSearchContainer_1_menu_delete']")) {
 							break;
 						}
 					}
@@ -274,8 +281,10 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText("//a[@id='_86_ctvk']"));
-				selenium.click(RuntimeVariables.replace("//a[@id='_86_ctvk']"));
+					selenium.getText(
+						"//a[@id='_86_ocerSearchContainer_1_menu_delete']"));
+				selenium.click(RuntimeVariables.replace(
+						"//a[@id='_86_ocerSearchContainer_1_menu_delete']"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()

@@ -133,7 +133,7 @@ public class SearchEngineUtil {
 	public static void deleteDocument(long companyId, String uid)
 		throws SearchException {
 
-		for (String searchEngineId:_searchEngines.keySet()) {
+		for (String searchEngineId :_searchEngines.keySet()) {
 			deleteDocument(searchEngineId, companyId, uid);
 		}
 	}
@@ -164,7 +164,7 @@ public class SearchEngineUtil {
 	public static void deleteDocuments(long companyId, Collection<String> uids)
 		throws SearchException {
 
-		for (String searchEngineId:_searchEngines.keySet()) {
+		for (String searchEngineId :_searchEngines.keySet()) {
 			deleteDocuments(searchEngineId, companyId, uids);
 		}
 	}
@@ -195,7 +195,7 @@ public class SearchEngineUtil {
 	public static void deletePortletDocuments(long companyId, String portletId)
 		throws SearchException {
 
-		for (String searchEngineId:_searchEngines.keySet()) {
+		for (String searchEngineId :_searchEngines.keySet()) {
 			deletePortletDocuments(searchEngineId, companyId, portletId);
 		}
 	}

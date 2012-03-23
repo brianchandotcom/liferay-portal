@@ -204,7 +204,7 @@ public class MediaWikiImporter implements WikiImporter {
 	protected boolean isSpecialMediaWikiPage(
 		String title, List<String> specialNamespaces) {
 
-		for (String namespace: specialNamespaces) {
+		for (String namespace : specialNamespaces) {
 			if (title.startsWith(namespace + StringPool.COLON)) {
 				return true;
 			}

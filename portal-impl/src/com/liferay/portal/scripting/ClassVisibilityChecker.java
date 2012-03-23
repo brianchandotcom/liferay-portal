@@ -59,7 +59,7 @@ public class ClassVisibilityChecker {
 			return true;
 		}
 
-		for (Pattern allowedPattern: _allowedPatterns) {
+		for (Pattern allowedPattern : _allowedPatterns) {
 			Matcher matcher = allowedPattern.matcher(className);
 
 			if (matcher.find()) {

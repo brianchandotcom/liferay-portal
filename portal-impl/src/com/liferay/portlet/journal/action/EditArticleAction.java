@@ -545,7 +545,7 @@ public class EditArticleAction extends PortletAction {
 			description = ParamUtil.getString(
 				uploadPortletRequest, "description_" + defaultLanguageId);
 		}
-		else{
+		else {
 			toLocale = LocaleUtil.fromLanguageId(toLanguageId);
 
 			title = ParamUtil.getString(

@@ -139,7 +139,7 @@ public class SharepointUtil {
 		String[] tokens = PropsUtil.getArray(
 			PropsKeys.SHAREPOINT_STORAGE_TOKENS);
 
-		for (String token: tokens) {
+		for (String token : tokens) {
 			Filter filter = new Filter(token);
 
 			String className = PropsUtil.get(

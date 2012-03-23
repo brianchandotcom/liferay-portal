@@ -214,7 +214,7 @@ public class AssetVocabularyLocalServiceImpl
 				continue;
 			}
 
-			for (AssetVocabulary groupVocabulary: groupVocabularies) {
+			for (AssetVocabulary groupVocabulary : groupVocabularies) {
 				UnicodeProperties settingsProperties =
 					groupVocabulary.getSettingsProperties();
 

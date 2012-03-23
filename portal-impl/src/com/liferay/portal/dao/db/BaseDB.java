@@ -385,7 +385,7 @@ public abstract class BaseDB implements DB {
 
 					runSQLTemplateString(include, false, true);
 				}
-				else{
+				else {
 					sb.append(line);
 
 					if (line.endsWith(";")) {

@@ -732,7 +732,7 @@ public class JournalArticleLocalServiceImpl
 		List<JournalArticle> articles = journalArticlePersistence.findByG_L(
 			groupId, layoutUuid);
 
-		for (JournalArticle article: articles) {
+		for (JournalArticle article : articles) {
 			article.setLayoutUuid(StringPool.BLANK);
 
 			journalArticlePersistence.update(article, false);

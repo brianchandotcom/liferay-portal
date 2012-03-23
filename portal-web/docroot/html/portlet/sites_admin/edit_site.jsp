@@ -241,7 +241,7 @@ else if (layoutSetPrototype != null) {
 
 <%
 if (group != null) {
-	PortalUtil.addPortletBreadcrumbEntry(request, HtmlUtil.escape(group.getDescriptiveName(locale)), null);
+	PortalUtil.addPortletBreadcrumbEntry(request, group.getDescriptiveName(locale), null);
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "edit"), currentURL);
 }
 else {

@@ -272,7 +272,7 @@ public class PluginsEnvironmentBuilder {
 
 		boolean addJunitJars = false;
 
-		for (String testType:_TEST_TYPES) {
+		for (String testType :_TEST_TYPES) {
 			String testFolder = "test/" + testType;
 
 			if (_fileUtil.exists(projectDirName + "/" + testFolder)) {

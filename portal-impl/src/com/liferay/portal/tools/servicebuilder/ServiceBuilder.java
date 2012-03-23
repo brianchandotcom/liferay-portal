@@ -2014,7 +2014,7 @@ public class ServiceBuilder {
 
 					boolean badJsonType = false;
 
-					for (JavaParameter parameter: method.getParameters()) {
+					for (JavaParameter parameter : method.getParameters()) {
 						String parameterType = getParameterType(parameter);
 
 						if (_badJsonTypes.contains(parameterType)) {
@@ -4700,7 +4700,7 @@ public class ServiceBuilder {
 			String finderWhere = finderElement.attributeValue("where");
 
 			if (Validator.isNotNull(finderWhere)) {
-				for (EntityColumn column: columnList) {
+				for (EntityColumn column : columnList) {
 					String name = column.getName();
 
 					if (finderWhere.indexOf(name) != -1) {

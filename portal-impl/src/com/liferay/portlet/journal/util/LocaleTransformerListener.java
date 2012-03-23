@@ -77,7 +77,7 @@ public class LocaleTransformerListener extends BaseTransformerListener {
 			if (!languageId.equalsIgnoreCase(getLanguageId())) {
 				root.remove(element);
 			}
-			else{
+			else {
 				replace(element);
 			}
 

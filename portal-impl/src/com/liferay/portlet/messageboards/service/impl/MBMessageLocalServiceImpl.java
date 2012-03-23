@@ -1405,7 +1405,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			String[] fileNames = DLStoreUtil.getFileNames(
 				companyId, repositoryId, dirName);
 
-			for (String fileName: fileNames) {
+			for (String fileName : fileNames) {
 				if (!existingFiles.contains(fileName)) {
 					DLStoreUtil.deleteFile(companyId, repositoryId, fileName);
 				}

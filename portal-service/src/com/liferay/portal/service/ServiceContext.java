@@ -148,7 +148,7 @@ public class ServiceContext implements Cloneable, Serializable {
 				modelName);
 
 		for (String roleName : roleNames) {
-			for (String action: supportedActions) {
+			for (String action : supportedActions) {
 				if (roleName.equals(RoleConstants.GUEST) &&
 					!guestUnsupportedActions.contains(action) &&
 					guestDefaultActions.contains(action) &&

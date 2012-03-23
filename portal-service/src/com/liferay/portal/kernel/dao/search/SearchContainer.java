@@ -425,7 +425,7 @@ public class SearchContainer<R> {
 
 		_normalizedHeaderNames = new ArrayList<String>(headerNames.size());
 
-		for (String headerName: headerNames) {
+		for (String headerName : headerNames) {
 			_normalizedHeaderNames.add(
 				FriendlyURLNormalizerUtil.normalize(headerName));
 		}

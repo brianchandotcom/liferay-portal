@@ -62,7 +62,7 @@ public class ActionUtil {
 		List<Portlet> portlets = layoutTypePortlet.getAllPortlets();
 
 		for (Portlet portlet : portlets) {
-			for (PublicRenderParameter publicRenderParameter:
+			for (PublicRenderParameter publicRenderParameter :
 					portlet.getPublicRenderParameters()) {
 
 				if (!identifiers.contains(
@@ -96,7 +96,7 @@ public class ActionUtil {
 			publicRenderParameterConfigurations =
 				new ArrayList<PublicRenderParameterConfiguration>();
 
-		for (PublicRenderParameter publicRenderParameter:
+		for (PublicRenderParameter publicRenderParameter :
 				portlet.getPublicRenderParameters()) {
 
 			String mappingKey =

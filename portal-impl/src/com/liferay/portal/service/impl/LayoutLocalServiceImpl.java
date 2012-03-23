@@ -2134,7 +2134,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 				junction.add(criterion);
 			}
-			else{
+			else {
 				Criterion criterion = RestrictionsFactoryUtil.eq(
 					"portletId", scopablePortlet.getPortletId());
 

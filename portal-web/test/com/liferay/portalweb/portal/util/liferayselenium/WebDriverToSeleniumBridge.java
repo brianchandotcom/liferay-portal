@@ -430,16 +430,20 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public String getText(String locator) {
-		throw new UnsupportedOperationException();
+		WebElement webElement = getWebElement(locator);
+
+		return webElement.getText();
 	}
 
 	@Override
 	public String getTitle() {
-		throw new UnsupportedOperationException();
+		return super.getTitle();
 	}
 
 	public String getValue(String locator) {
-		throw new UnsupportedOperationException();
+		WebElement webElement = getWebElement(locator);
+
+		return webElement.getAttribute("value");
 	}
 
 	public boolean getWhetherThisFrameMatchFrameExpression(
@@ -475,7 +479,9 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public boolean isChecked(String locator) {
-		throw new UnsupportedOperationException();
+		WebElement webElement = getWebElement(locator);
+
+		return webElement.isSelected();
 	}
 
 	public boolean isConfirmationPresent() {
@@ -491,7 +497,9 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public boolean isElementPresent(String locator) {
-		throw new UnsupportedOperationException();
+		List<WebElement> webElements = getWebElements(locator);
+
+		return (webElements.size() > 0);
 	}
 
 	public boolean isOrdered(String locator1, String locator2) {
@@ -507,11 +515,17 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public boolean isTextPresent(String pattern) {
-		throw new UnsupportedOperationException();
+		WebElement webElement = findElement(By.tagName("body"));
+
+		String bodyText = webElement.getText();
+
+		return bodyText.contains(pattern);
 	}
 
 	public boolean isVisible(String locator) {
-		throw new UnsupportedOperationException();
+		WebElement webElement = getWebElement(locator);
+
+		return webElement.isDisplayed();
 	}
 
 	public void keyDown(String locator, String keySequence) {

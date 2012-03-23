@@ -224,8 +224,8 @@ public class LoginSocialOfficeTest extends BaseTestCase {
 					RuntimeVariables.replace("Search"));
 				assertEquals(RuntimeVariables.replace("Joe"),
 					selenium.getText(
-						"//tr[contains(@class, 'results-row')]/td[2]/a"));
-				selenium.clickAt("//tr[contains(@class, 'results-row')]/td[2]/a",
+						"//tr[contains(@class, 'results-row')]/td[contains(.,'Joe')]/a"));
+				selenium.clickAt("//tr[contains(@class, 'results-row')]/td[contains(.,'Joe')]/a",
 					RuntimeVariables.replace("Joe"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();

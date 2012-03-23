@@ -343,7 +343,9 @@ public class LayoutImporter {
 
 		String larType = headerElement.attributeValue("type");
 
-		if (!larType.equals("layout-set")) {
+		if (!larType.equals("layout-set") &&
+			!larType.equals("layout-set-prototype")) {
+
 			throw new LARTypeException(
 				"Invalid type of LAR file (" + larType + ")");
 		}
@@ -357,7 +359,39 @@ public class LayoutImporter {
 
 		// Layout set prototype
 
-		String layoutSetPrototypeUuid = headerElement.attributeValue(
+		if (group.isLayoutSetPrototype() &&
+			larType.equals("layout-set-prototype")) {
+
+			LayoutSetPrototype layoutSetPrototype =
+				LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototype(
+					group.getClassPK());
+
+			String layoutSetPrototypeUuid = GetterUtil.getString(
+				headerElement.attributeValue("type-uuid"));
+
+			LayoutSetPrototype existingLayoutSetPrototype = null;
+
+			if (Validator.isNotNull(layoutSetPrototypeUuid)) {
+				try {
+					existingLayoutSetPrototype =
+						LayoutSetPrototypeLocalServiceUtil.
+							getLayoutSetPrototypeByUuid(layoutSetPrototypeUuid);
+				}
+				catch(NoSuchLayoutSetPrototypeException nslspe) {
+				}
+			}
+
+			if (existingLayoutSetPrototype == null) {
+				layoutSetPrototype.setUuid(layoutSetPrototypeUuid);
+
+				LayoutSetPrototypeLocalServiceUtil.updateLayoutSetPrototype(
+					layoutSetPrototype);
+			}
+		}
+
+		Element layoutsElement = rootElement.element("layouts");
+
+		String layoutSetPrototypeUuid = layoutsElement.attributeValue(
 			"layout-set-prototype-uuid");
 
 		ServiceContext serviceContext =
@@ -513,8 +547,6 @@ public class LayoutImporter {
 		Map<Long, Layout> newLayoutsMap =
 			(Map<Long, Layout>)portletDataContext.getNewPrimaryKeysMap(
 				Layout.class);
-
-		Element layoutsElement = rootElement.element("layouts");
 
 		List<Element> layoutElements = layoutsElement.elements("layout");
 

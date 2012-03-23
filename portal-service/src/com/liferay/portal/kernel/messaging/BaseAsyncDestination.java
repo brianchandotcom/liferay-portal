@@ -57,8 +57,8 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 
 	@Override
 	public void close(boolean force) {
-		if (!_threadPoolExecutor.isShutdown()
-			&& !_threadPoolExecutor.isTerminating()) {
+		if (!_threadPoolExecutor.isShutdown() &&
+			!_threadPoolExecutor.isTerminating()) {
 
 			if (!force) {
 				_threadPoolExecutor.shutdown();

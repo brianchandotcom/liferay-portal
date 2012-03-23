@@ -78,10 +78,10 @@ if (enableTagBasedNavigation && selectionStyle.equals("manual") && ((assetEntryQ
 	selectionStyle = "dynamic";
 }
 
-Group group = themeDisplay.getScopeGroup();
+Group scopeGroup = themeDisplay.getScopeGroup();
 %>
 
-<c:if test="<%= (group != null) && (!group.hasStagingGroup() || group.isStagingGroup()) && !portletName.equals(PortletKeys.RELATED_ASSETS) %>">
+<c:if test="<%= (scopeGroup != null) && (!scopeGroup.hasStagingGroup() || scopeGroup.isStagingGroup()) && !portletName.equals(PortletKeys.RELATED_ASSETS) %>">
 	<aui:form name="fm">
 
 		<%

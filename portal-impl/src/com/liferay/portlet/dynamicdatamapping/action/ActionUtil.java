@@ -39,16 +39,12 @@ public class ActionUtil {
 		long structureClassNameId = PortalUtil.getClassNameId(
 			DDMStructure.class);
 
-		long structureId = ParamUtil.getLong(request, "structureId");
 		long classNameId = ParamUtil.getLong(request, "classNameId");
 		long classPK = ParamUtil.getLong(request, "classPK");
 
 		DDMStructure structure = null;
 
-		if (structureId > 0) {
-			structure = DDMStructureServiceUtil.getStructure(structureId);
-		}
-		else if ((classPK > 0) && (structureClassNameId == classNameId)) {
+		if ((classPK > 0) && (structureClassNameId == classNameId)) {
 			structure = DDMStructureServiceUtil.getStructure(classPK);
 		}
 

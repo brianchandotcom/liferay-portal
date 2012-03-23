@@ -51,6 +51,7 @@ import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Marcellus Tavares
+ * @author Eduardo Lundgren
  */
 public class CopyStructureAction extends PortletAction {
 
@@ -131,7 +132,7 @@ public class CopyStructureAction extends PortletAction {
 	protected DDMStructure copyStructure(ActionRequest actionRequest)
 		throws Exception {
 
-		long structureId = ParamUtil.getLong(actionRequest, "structureId");
+		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "name");
@@ -140,9 +141,9 @@ public class CopyStructureAction extends PortletAction {
 			DDMStructure.class.getName(), actionRequest);
 
 		DDMStructure structure = DDMStructureServiceUtil.copyStructure(
-			structureId, nameMap, null, serviceContext);
+			classPK, nameMap, null, serviceContext);
 
-		copyTemplates(actionRequest, structureId, structure.getStructureId());
+		copyTemplates(actionRequest, classPK, structure.getStructureId());
 
 		return structure;
 	}
@@ -180,6 +181,8 @@ public class CopyStructureAction extends PortletAction {
 			DDMStructure structure)
 		throws Exception {
 
+		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -192,7 +195,9 @@ public class CopyStructureAction extends PortletAction {
 		portletURL.setParameter(
 			"struts_action", "/dynamic_data_mapping/copy_structure");
 		portletURL.setParameter(
-			"structureId", String.valueOf(structure.getStructureId()), false);
+			"classNamId", String.valueOf(classNameId), false);
+		portletURL.setParameter(
+			"classPK", String.valueOf(structure.getStructureId()), false);
 		portletURL.setParameter(
 			"copyDetailTemplates",
 			ParamUtil.getString(actionRequest, "copyDetailTemplates"), false);

@@ -163,15 +163,17 @@ public class EditStructureAction extends PortletAction {
 	protected void deleteStructure(ActionRequest actionRequest)
 		throws Exception {
 
-		long structureId = ParamUtil.getLong(actionRequest, "structureId");
+		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 
-		DDMStructureServiceUtil.deleteStructure(structureId);
+		DDMStructureServiceUtil.deleteStructure(classPK);
 	}
 
 	protected String getSaveAndContinueRedirect(
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			DDMStructure structure, String redirect)
 		throws Exception {
+
+		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -194,7 +196,9 @@ public class EditStructureAction extends PortletAction {
 		portletURL.setParameter(
 			"groupId", String.valueOf(structure.getGroupId()), false);
 		portletURL.setParameter(
-			"structureId", String.valueOf(structure.getStructureId()), false);
+			"classNameId", String.valueOf(classNameId), false);
+		portletURL.setParameter(
+			"classPK", String.valueOf(structure.getStructureId()), false);
 		portletURL.setParameter("availableFields", availableFields, false);
 		portletURL.setParameter("saveCallback", saveCallback, false);
 
@@ -206,7 +210,7 @@ public class EditStructureAction extends PortletAction {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		long structureId = ParamUtil.getLong(actionRequest, "structureId");
+		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 		long scopeClassNameId = ParamUtil.getLong(
@@ -231,7 +235,7 @@ public class EditStructureAction extends PortletAction {
 		}
 		else if (cmd.equals(Constants.UPDATE)) {
 			structure = DDMStructureServiceUtil.updateStructure(
-				structureId, nameMap, descriptionMap, xsd, serviceContext);
+				classPK, nameMap, descriptionMap, xsd, serviceContext);
 		}
 
 		return structure;

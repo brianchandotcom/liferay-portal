@@ -33,8 +33,6 @@ long classPK = ParamUtil.getLong(request, "classPK");
 			<portlet:param name="backURL" value="<%= currentURL %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(template.getGroupId()) %>" />
 			<portlet:param name="templateId" value="<%= String.valueOf(template.getTemplateId()) %>" />
-			<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
-			<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
 			<portlet:param name="type" value="<%= template.getType() %>" />
 			<portlet:param name="structureAvailableFields" value='<%= renderResponse.getNamespace() + "structureAvailableFields" %>' />
 		</portlet:renderURL>

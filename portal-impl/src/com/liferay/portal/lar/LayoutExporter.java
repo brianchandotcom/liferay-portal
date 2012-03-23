@@ -313,49 +313,26 @@ public class LayoutExporter {
 				"end-date", String.valueOf(portletDataContext.getEndDate()));
 		}
 
-		headerElement.addAttribute("type", "layout-set");
 		headerElement.addAttribute("group-id", String.valueOf(groupId));
 		headerElement.addAttribute(
 			"private-layout", String.valueOf(privateLayout));
 
 		Group group = layoutSet.getGroup();
 
+		String type = "layout-set";
+
 		if (group.isLayoutSetPrototype()) {
+			type ="layout-set-prototype";
+
 			LayoutSetPrototype layoutSetPrototype =
 				LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototype(
 					group.getClassPK());
 
-			String layoutSetPrototypeUuid = layoutSetPrototype.getUuid();
-
 			headerElement.addAttribute(
-				"layout-set-prototype-uuid", layoutSetPrototypeUuid);
-
-			if (publishToRemote) {
-				String path = getLayoutSetPrototype(
-					portletDataContext, layoutSetPrototypeUuid);
-
-				File layoutSetPrototypeFile = null;
-
-				InputStream inputStream = null;
-
-				try {
-					layoutSetPrototypeFile = SitesUtil.exportLayoutSetPrototype(
-						layoutSetPrototype, serviceContext);
-
-					inputStream = new FileInputStream(layoutSetPrototypeFile);
-
-					portletDataContext.addZipEntry(
-						path.concat(".lar"), inputStream);
-					portletDataContext.addZipEntry(
-						path.concat(".xml"), layoutSetPrototype);
-				}
-				finally {
-					StreamUtil.cleanUp(inputStream);
-
-					FileUtil.delete(layoutSetPrototypeFile);
-				}
-			}
+				"type-uuid", layoutSetPrototype.getUuid());
 		}
+
+		headerElement.addAttribute("type", type);
 
 		if (exportTheme || exportThemeSettings) {
 			headerElement.addAttribute("theme-id", layoutSet.getThemeId());
@@ -433,6 +410,43 @@ public class LayoutExporter {
 		}
 
 		Element layoutsElement = rootElement.addElement("layouts");
+
+		String layoutSetPrototypeUuid = layoutSet.getLayoutSetPrototypeUuid();
+
+		if (Validator.isNotNull(layoutSetPrototypeUuid)) {
+			LayoutSetPrototype layoutSetPrototype =
+				LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuid(
+					layoutSetPrototypeUuid);
+
+			layoutsElement.addAttribute(
+				"layout-set-prototype-uuid", layoutSetPrototypeUuid);
+
+			if (publishToRemote) {
+				String path = getLayoutSetPrototype(
+					portletDataContext, layoutSetPrototypeUuid);
+
+				File layoutSetPrototypeFile = null;
+
+				InputStream inputStream = null;
+
+				try {
+					layoutSetPrototypeFile = SitesUtil.exportLayoutSetPrototype(
+						layoutSetPrototype, serviceContext);
+
+					inputStream = new FileInputStream(layoutSetPrototypeFile);
+
+					portletDataContext.addZipEntry(
+						path.concat(".lar"), inputStream);
+					portletDataContext.addZipEntry(
+						path.concat(".xml"), layoutSetPrototype);
+				}
+				finally {
+					StreamUtil.cleanUp(inputStream);
+
+					FileUtil.delete(layoutSetPrototypeFile);
+				}
+			}
+		}
 
 		for (Layout layout : layouts) {
 			exportLayout(

@@ -68,8 +68,12 @@ public class AddPermissionDocumentTypePermissionesTest extends BaseTestCase {
 			RuntimeVariables.replace("Documents and Media"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
+		assertFalse(selenium.isChecked(
+				"//input[@value='com.liferay.portlet.documentlibrary.model.DLFileEntryTypePERMISSIONS']"));
 		selenium.check(
 			"//input[@value='com.liferay.portlet.documentlibrary.model.DLFileEntryTypePERMISSIONS']");
+		assertTrue(selenium.isChecked(
+				"//input[@value='com.liferay.portlet.documentlibrary.model.DLFileEntryTypePERMISSIONS']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

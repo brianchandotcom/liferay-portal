@@ -85,7 +85,7 @@ public class Member_AssertPermissionsTest extends BaseTestCase {
 			RuntimeVariables.replace("Permissions"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertTrue(selenium.isVisible("//div[@id='rolesSearchContainer']"));
+		assertTrue(selenium.isVisible("//div[@id='_86_rolesSearchContainer']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

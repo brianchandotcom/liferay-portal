@@ -45,17 +45,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Document Types')]/a</td>
 	<td>Document Types</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Document Types')]/a</td>
 	<td>Document Types</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Document Types')]/a</td>
 	<td>Document Types</td>
 </tr>
 <tr>
@@ -70,12 +70,12 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>link=Add</td>
+	<td>//span[contains(@class, 'add-button')]/a</td>
 	<td>Add</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>link=Add</td>
+	<td>//span[contains(@class, 'add-button')]/a</td>
 	<td>Add</td>
 </tr>
 <tr>
@@ -123,7 +123,6 @@
 	<td>relative=top</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

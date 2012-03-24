@@ -26,7 +26,7 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='wiki-body']/p</td>
-	<td>Wiki Front Page Content</td>
+	<td>Wiki FrontPage Content</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -39,24 +39,64 @@
 	<td>Edit</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
 	<td>waitForElementPresent</td>
-	<td>//iframe</td>
-	<td>IFrame</td>
+	<td>//textarea[contains(@id,'_editor') and contains(@style,'display: none;')]</td>
+	<td>Text Area</td>
 </tr>
 <tr>
-	<td>selectFrame</td>
-	<td>//iframe</td>
-	<td>IFrame</td>
+	<td>assertText</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//a[@class='cke_button_source cke_on']</td>
+	<td>Source Button On</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//td[contains(@id,'cke_contents__54')]/textarea</td>
+	<td>CK Editor</td>
 </tr>
 <tr>
 	<td>type</td>
+	<td>//td[contains(@id,'cke_contents__54')]/textarea</td>
+	<td>Wiki FrontPage Content Edit</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//textarea[contains(@id,'_editor') and contains(@style,'display: none;')]</td>
+	<td>Text Area</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//td[contains(@id,'cke_contents__54')]/iframe</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//td[contains(@id,'cke_contents__54')]/iframe</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>waitForText</td>
 	<td>//body</td>
-	<td>Wiki Front Page Content Edit</td>
+	<td>Wiki FrontPage Content Edit</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
@@ -64,8 +104,8 @@
 	<td>top</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isChecked('//span[2]/span/span/input[2]'))</td>
+	<td>storeChecked</td>
+	<td>//input[contains(@id,'_minorEditCheckbox')]</td>
 	<td>minorEditChecked</td>
 </tr>
 <tr>
@@ -74,14 +114,24 @@
 	<td>MinorEditChecked</td>
 </tr>
 <tr>
+	<td>assertNotChecked</td>
+	<td>//input[contains(@id,'_minorEditCheckbox')]</td>
+	<td>This is a minor edit.</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//span[2]/span/span/input[2]</td>
-	<td></td>
+	<td>//input[contains(@id,'_minorEditCheckbox')]</td>
+	<td>This is a minor edit.</td>
 </tr>
 <tr>
 	<td>label</td>
 	<td>MinorEditChecked</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[contains(@id,'_minorEditCheckbox')]</td>
+	<td>This is a minor edit.</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -96,12 +146,12 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='wiki-body']/p</td>
-	<td>Wiki Front Page Content Edit</td>
+	<td>Wiki FrontPage Content Edit</td>
 </tr>
 <tr>
 	<td>assertNotText</td>
 	<td>//div[@class='wiki-body']/p</td>
-	<td>Wiki Front Page Content</td>
+	<td>Wiki FrontPage Content</td>
 </tr>
 <tr>
 	<td>open</td>
@@ -148,7 +198,6 @@
 	<td>//tr[5]/td[4]/a</td>
 	<td>1.0 (Minor Edit)</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

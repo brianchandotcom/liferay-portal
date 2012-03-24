@@ -51,9 +51,8 @@ public class AddWDFrontPageChildPageNameNullTest extends BaseTestCase {
 			RuntimeVariables.replace("Add Child Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.type("//div/span[1]/span/span/input",
+		selenium.type("//input[contains(@id,'_title')]",
 			RuntimeVariables.replace(""));
-		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -61,7 +60,8 @@ public class AddWDFrontPageChildPageNameNullTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("//iframe")) {
+				if (selenium.isElementPresent(
+							"//textarea[contains(@id,'_editor') and contains(@style,'display: none;')]")) {
 					break;
 				}
 			}
@@ -71,9 +71,90 @@ public class AddWDFrontPageChildPageNameNullTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.selectFrame("//iframe");
-		selenium.type("//body",
+		assertEquals(RuntimeVariables.replace("Source"),
+			selenium.getText("//span[.='Source']"));
+		selenium.clickAt("//span[.='Source']",
+			RuntimeVariables.replace("Source"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//a[@class='cke_button_source cke_on']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//td[contains(@id,'cke_contents__54')]/textarea")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.type("//td[contains(@id,'cke_contents__54')]/textarea",
 			RuntimeVariables.replace("Wiki Front Page Child Page Content"));
+		assertEquals(RuntimeVariables.replace("Source"),
+			selenium.getText("//span[.='Source']"));
+		selenium.clickAt("//span[.='Source']",
+			RuntimeVariables.replace("Source"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//textarea[contains(@id,'_editor') and contains(@style,'display: none;')]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertTrue(selenium.isVisible(
+				"//td[contains(@id,'cke_contents__54')]/iframe"));
+		selenium.selectFrame("//td[contains(@id,'cke_contents__54')]/iframe");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace(
+							"Wiki Front Page Child Page Content")
+										.equals(selenium.getText("//body"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));

@@ -26,7 +26,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_36_keywords']</td>
-	<td>"Wiki Page Test"</td>
+	<td>"Wiki Page Title"</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -34,14 +34,14 @@
 	<td>Search</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=Wiki Page Test</td>
-	<td>Wiki Page Test</td>
+	<td>assertText</td>
+	<td>//td[3]/a</td>
+	<td>Wiki Page Title</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@id='_36_keywords']</td>
-	<td>"Wiki1 Page1 Test1"</td>
+	<td>"Wiki1 Page1 Title1"</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -49,11 +49,15 @@
 	<td>Search</td>
 </tr>
 <tr>
-	<td>assertElementNotPresent</td>
-	<td>link=Wiki Page Test</td>
-	<td>Wiki Page Test</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>No pages were found that matched the keywords: "Wiki1 Page1 Title1".</td>
 </tr>
-
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Wiki Page Title</td>
+	<td></td>
+</tr>
 </tbody></table>
 </body>
 </html>

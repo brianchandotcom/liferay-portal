@@ -46,18 +46,22 @@ public class SearchWikiPageTitleQuotesTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_36_keywords']",
-			RuntimeVariables.replace("\"Wiki Page Test\""));
+			RuntimeVariables.replace("\"Wiki Page Title\""));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertTrue(selenium.isElementPresent("link=Wiki Page Test"));
+		assertEquals(RuntimeVariables.replace("Wiki Page Title"),
+			selenium.getText("//td[3]/a"));
 		selenium.type("//input[@id='_36_keywords']",
-			RuntimeVariables.replace("\"Wiki1 Page1 Test1\""));
+			RuntimeVariables.replace("\"Wiki1 Page1 Title1\""));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("link=Wiki Page Test"));
+		assertEquals(RuntimeVariables.replace(
+				"No pages were found that matched the keywords: \"Wiki1 Page1 Title1\"."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
+		assertFalse(selenium.isTextPresent("Wiki Page Title"));
 	}
 }

@@ -122,7 +122,7 @@ public class SelectWikiNode2Test extends BaseTestCase {
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Wiki Front Page2 Content"),
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage2 Content"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 	}
 }

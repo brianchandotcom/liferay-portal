@@ -48,15 +48,15 @@ public class RenameWikiPageTitleDuplicateTest extends BaseTestCase {
 		selenium.clickAt("link=All Pages", RuntimeVariables.replace("All Pages"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Wiki Page Title"),
+		assertEquals(RuntimeVariables.replace("Wiki Page1 Title"),
 			selenium.getText("//tr[4]/td[1]/a"));
 		selenium.clickAt("//tr[4]/td[1]/a",
-			RuntimeVariables.replace("Wiki Page Title"));
+			RuntimeVariables.replace("Wiki Page1 Title"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Wiki Page Title"),
+		assertEquals(RuntimeVariables.replace("Wiki Page1 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
-		assertEquals(RuntimeVariables.replace("Wiki Page Content"),
+		assertEquals(RuntimeVariables.replace("Wiki Page1 Content"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 		assertFalse(selenium.isTextPresent("(Redirected from Wiki Page Test)"));
 		assertEquals(RuntimeVariables.replace("Details"),
@@ -71,10 +71,10 @@ public class RenameWikiPageTitleDuplicateTest extends BaseTestCase {
 			RuntimeVariables.replace("Move"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Wiki Page Title"),
+		assertEquals(RuntimeVariables.replace("Wiki Page1 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		selenium.type("//input[@id='_36_newTitle']",
-			RuntimeVariables.replace("Wiki2 Page2 Title2"));
+			RuntimeVariables.replace("Wiki Page2 Title"));
 		selenium.clickAt("//input[@value='Rename']",
 			RuntimeVariables.replace("Rename"));
 		selenium.waitForPageToLoad("30000");
@@ -82,12 +82,12 @@ public class RenameWikiPageTitleDuplicateTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Wiki2 Page2 Title2"),
+		assertEquals(RuntimeVariables.replace("Wiki Page2 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace(
-				"(Redirected from Wiki Page Title)"),
+				"(Redirected from Wiki Page1 Title)"),
 			selenium.getText("//div[@class='page-redirect']"));
-		assertNotEquals(RuntimeVariables.replace("Wiki Page Title"),
+		assertNotEquals(RuntimeVariables.replace("Wiki Page1 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 	}
 }

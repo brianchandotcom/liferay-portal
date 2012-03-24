@@ -18,6 +18,9 @@ import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.wiki.portlet.addportlet.AddPageWikiTest;
 import com.liferay.portalweb.portlet.wiki.portlet.addportlet.AddPortletWikiTest;
+import com.liferay.portalweb.portlet.wiki.wikinode.addwikinode.TearDownWikiNodeTest;
+import com.liferay.portalweb.portlet.wiki.wikipage.addwikipage.AddWikiPage1Test;
+import com.liferay.portalweb.portlet.wiki.wikipage.addwikipage.AddWikiPage2Test;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

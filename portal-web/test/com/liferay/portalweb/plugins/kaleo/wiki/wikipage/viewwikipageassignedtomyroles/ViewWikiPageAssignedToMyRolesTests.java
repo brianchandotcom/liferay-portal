@@ -20,6 +20,7 @@ import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.wiki.portlet.addportlet.AddPageWikiTest;
 import com.liferay.portalweb.portlet.wiki.portlet.addportlet.AddPortletWikiTest;
+import com.liferay.portalweb.portlet.wiki.wikinode.addwikinode.TearDownWikiNodeTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

@@ -24,23 +24,6 @@ public class AddWikiPageEmptyAttachmentTest extends BaseTestCase {
 	public void testAddWikiPageEmptyAttachment() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Wiki Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -93,9 +76,6 @@ public class AddWikiPageEmptyAttachmentTest extends BaseTestCase {
 			RuntimeVariables.replace("Add Attachments"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.selectWindow("null");
-		Thread.sleep(5000);
-		selenium.windowFocus();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

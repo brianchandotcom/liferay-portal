@@ -16,7 +16,6 @@ package com.liferay.portalweb.portlet.wiki.wikipage;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portlet.wiki.wikipage.addchildpage1childpageduplicatechildpage2.AddChildPage1ChildPageDuplicateChildPage2Tests;
-import com.liferay.portalweb.portlet.wiki.wikipage.addfrontpage.AddFrontPageTests;
 import com.liferay.portalweb.portlet.wiki.wikipage.addfrontpagechildpage.AddFrontPageChildPageTests;
 import com.liferay.portalweb.portlet.wiki.wikipage.addfrontpagechildpagemultiple.AddFrontPageChildPageMultipleTests;
 import com.liferay.portalweb.portlet.wiki.wikipage.addfrontpagechildpagename255character.AddFrontPageChildPageName255CharacterTests;
@@ -38,6 +37,7 @@ import com.liferay.portalweb.portlet.wiki.wikipage.addfrontpagecreolepreformatte
 import com.liferay.portalweb.portlet.wiki.wikipage.addfrontpagecreoletableofcontents.AddFrontPageCreoleTableOfContentsTests;
 import com.liferay.portalweb.portlet.wiki.wikipage.addfrontpagecreoleulists.AddFrontPageCreoleUListsTests;
 import com.liferay.portalweb.portlet.wiki.wikipage.addfrontpagesearch.AddFrontPageSearchTests;
+import com.liferay.portalweb.portlet.wiki.wikipage.addwikifrontpage.AddWikiFrontPageTests;
 import com.liferay.portalweb.portlet.wiki.wikipage.addwikipage.AddWikiPageTests;
 import com.liferay.portalweb.portlet.wiki.wikipage.addwikipagechildpage.AddWikiPageChildPageTests;
 import com.liferay.portalweb.portlet.wiki.wikipage.addwikipagechildpagemultiple.AddWikiPageChildPageMultipleTests;
@@ -108,7 +108,6 @@ public class WikiPageTestPlan extends BaseTestSuite {
 
 		testSuite.addTest(
 			AddChildPage1ChildPageDuplicateChildPage2Tests.suite());
-		testSuite.addTest(AddFrontPageTests.suite());
 		testSuite.addTest(AddFrontPageChildPageTests.suite());
 		testSuite.addTest(AddFrontPageChildPageMultipleTests.suite());
 		testSuite.addTest(AddFrontPageChildPageName255CharacterTests.suite());
@@ -130,6 +129,7 @@ public class WikiPageTestPlan extends BaseTestSuite {
 		testSuite.addTest(AddFrontPageCreoleTableOfContentsTests.suite());
 		testSuite.addTest(AddFrontPageCreoleUListsTests.suite());
 		testSuite.addTest(AddFrontPageSearchTests.suite());
+		testSuite.addTest(AddWikiFrontPageTests.suite());
 		testSuite.addTest(AddWikiPageTests.suite());
 		testSuite.addTest(AddWikiPageChildPageTests.suite());
 		testSuite.addTest(AddWikiPageChildPageMultipleTests.suite());

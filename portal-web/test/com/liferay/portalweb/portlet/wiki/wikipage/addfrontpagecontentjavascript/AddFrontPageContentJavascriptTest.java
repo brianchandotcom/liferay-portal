@@ -24,23 +24,6 @@ public class AddFrontPageContentJavascriptTest extends BaseTestCase {
 	public void testAddFrontPageContentJavascript() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Wiki Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -53,7 +36,6 @@ public class AddFrontPageContentJavascriptTest extends BaseTestCase {
 				"This page is empty. Edit it to add some text."));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		Thread.sleep(5000);
 		assertTrue(selenium.isVisible("//select[@id='_36_format']"));
 		selenium.select("//select[@id='_36_format']",
 			RuntimeVariables.replace("HTML"));
@@ -61,6 +43,24 @@ public class AddFrontPageContentJavascriptTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.getConfirmation()
 						   .matches("^You may lose some formatting when switching from Creole to HTML. Do you want to continue[\\s\\S]$"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//textarea[@id='_36_editor' and @style='display: none;']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[@id='cke_48_label']"));
 		selenium.clickAt("//span[@id='cke_48_label']",
@@ -72,8 +72,7 @@ public class AddFrontPageContentJavascriptTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible(
-							"//textarea[@class='cke_source cke_enable_context_menu']")) {
+				if (selenium.isVisible("//a[@class='cke_button_source cke_on']")) {
 					break;
 				}
 			}
@@ -83,7 +82,24 @@ public class AddFrontPageContentJavascriptTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.type("//textarea[@class='cke_source cke_enable_context_menu']",
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//td[@id='cke_contents__36_editor']/textarea")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.type("//td[@id='cke_contents__36_editor']/textarea",
 			RuntimeVariables.replace(
 				"<p id=\"demo\">FAIL</p><script type=\"text/javascript\">document.getElementById('demo').innerHTML=\"PASS\";</script>"));
 		selenium.clickAt("//input[@value='Publish']",

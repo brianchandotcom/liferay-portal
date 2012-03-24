@@ -45,7 +45,7 @@ public class RevertEditFrontPageTest extends BaseTestCase {
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Wiki Front Page Content Edit"),
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage Content Edit"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 		assertEquals(RuntimeVariables.replace("Details"),
 			selenium.getText("//div[3]/span[2]/a/span"));
@@ -92,8 +92,8 @@ public class RevertEditFrontPageTest extends BaseTestCase {
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Wiki Front Page Content"),
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage Content"),
 			selenium.getText("//div[@class='wiki-body']/p"));
-		assertFalse(selenium.isTextPresent("Wiki Front Page Content Edit"));
+		assertFalse(selenium.isTextPresent("Wiki FrontPage Content Edit"));
 	}
 }

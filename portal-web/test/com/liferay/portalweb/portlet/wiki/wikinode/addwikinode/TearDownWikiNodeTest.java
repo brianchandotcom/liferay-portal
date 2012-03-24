@@ -29,6 +29,9 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 			case 1:
 				selenium.open("/web/guest/home/");
 				loadRequiredJavaScriptModules();
+				assertEquals(RuntimeVariables.replace("Go to"),
+					selenium.getText("//li[@id='_145_mySites']/a/span"));
+				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -36,7 +39,7 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent("link=Control Panel")) {
+						if (selenium.isVisible("link=Control Panel")) {
 							break;
 						}
 					}
@@ -52,14 +55,14 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Wiki"),
 					selenium.getText(
-						"//ul[@class='category-portlets']/li[11]/a"));
-				selenium.clickAt("//ul[@class='category-portlets']/li[11]/a",
+						"//ul[@class='category-portlets']/li[contains(.,'Wiki')]/a"));
+				selenium.clickAt("//ul[@class='category-portlets']/li[contains(.,'Wiki')]/a",
 					RuntimeVariables.replace("Wiki"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 
 				boolean wikiNode1Present = selenium.isElementPresent(
-						"//tr[4]/td[4]/span/ul/li/strong/a");
+						"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]");
 
 				if (!wikiNode1Present) {
 					label = 2;
@@ -67,8 +70,11 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//tr[4]/td[4]/span/ul/li/strong/a",
+				selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]",
 					RuntimeVariables.replace("Actions"));
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]"));
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -77,7 +83,7 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a")) {
 							break;
 						}
 					}
@@ -89,18 +95,16 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
-			case 2:
-
 				boolean wikiNode2Present = selenium.isElementPresent(
-						"//tr[4]/td[4]/span/ul/li/strong/a");
+						"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]");
 
 				if (!wikiNode2Present) {
 					label = 3;
@@ -108,7 +112,10 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//tr[4]/td[4]/span/ul/li/strong/a",
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]"));
+				selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -118,7 +125,7 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a")) {
 							break;
 						}
 					}
@@ -130,18 +137,16 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
-			case 3:
-
 				boolean wikiNode3Present = selenium.isElementPresent(
-						"//tr[4]/td[4]/span/ul/li/strong/a");
+						"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]");
 
 				if (!wikiNode3Present) {
 					label = 4;
@@ -149,7 +154,10 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//tr[4]/td[4]/span/ul/li/strong/a",
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]"));
+				selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -159,7 +167,7 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a")) {
 							break;
 						}
 					}
@@ -171,18 +179,16 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
-			case 4:
-
 				boolean wikiNode4Present = selenium.isElementPresent(
-						"//tr[4]/td[4]/span/ul/li/strong/a");
+						"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]");
 
 				if (!wikiNode4Present) {
 					label = 5;
@@ -190,7 +196,10 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//tr[4]/td[4]/span/ul/li/strong/a",
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]"));
+				selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -200,7 +209,7 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a")) {
 							break;
 						}
 					}
@@ -212,18 +221,16 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
-			case 5:
-
 				boolean wikiNode5Present = selenium.isElementPresent(
-						"//tr[4]/td[4]/span/ul/li/strong/a");
+						"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]");
 
 				if (!wikiNode5Present) {
 					label = 6;
@@ -231,7 +238,10 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//tr[4]/td[4]/span/ul/li/strong/a",
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]"));
+				selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -241,7 +251,7 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a")) {
 							break;
 						}
 					}
@@ -253,16 +263,23 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
+			case 2:
+			case 3:
+			case 4:
+			case 5:
 			case 6:
-				selenium.clickAt("//td[4]/span/ul/li/strong/a",
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -272,7 +289,7 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a")) {
 							break;
 						}
 					}
@@ -284,9 +301,9 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()

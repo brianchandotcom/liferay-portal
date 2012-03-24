@@ -47,16 +47,15 @@ public class ChangeParentWDFrontPageChildPageToNoneTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@class='child-pages']/ul/li/a",
-			RuntimeVariables.replace("Wiki Front Page Child Page Title"));
+			RuntimeVariables.replace("Wiki FrontPage ChildPage Title"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace(
-				"Wiki Front Page Child Page Title"),
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("\u00ab Back to FrontPage"),
 			selenium.getText("//span[@class='header-back-to']/a"));
 		assertEquals(RuntimeVariables.replace(
-				"Wiki Front Page Child Page Content"),
+				"Wiki FrontPage ChildPage Content"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 		assertEquals(RuntimeVariables.replace("Details"),
 			selenium.getText("//div[3]/span[2]/a/span"));
@@ -120,7 +119,7 @@ public class ChangeParentWDFrontPageChildPageToNoneTest extends BaseTestCase {
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isTextPresent("Wiki Front Page Child Page Title"));
+		assertFalse(selenium.isTextPresent("Wiki FrontPage ChildPage Title"));
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -147,19 +146,17 @@ public class ChangeParentWDFrontPageChildPageToNoneTest extends BaseTestCase {
 		selenium.clickAt("link=All Pages", RuntimeVariables.replace("All Pages"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace(
-				"Wiki Front Page Child Page Title"),
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage Title"),
 			selenium.getText("//tr[4]/td[1]/a"));
 		selenium.clickAt("//tr[4]/td[1]/a",
-			RuntimeVariables.replace("Wiki Front Page Child Page Title"));
+			RuntimeVariables.replace("Wiki FrontPage ChildPage Title"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace(
-				"Wiki Front Page Child Page Title"),
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertFalse(selenium.isTextPresent("\u00ab Back to FrontPage"));
 		assertEquals(RuntimeVariables.replace(
-				"Wiki Front Page Child Page Content"),
+				"Wiki FrontPage ChildPage Content"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 	}
 }

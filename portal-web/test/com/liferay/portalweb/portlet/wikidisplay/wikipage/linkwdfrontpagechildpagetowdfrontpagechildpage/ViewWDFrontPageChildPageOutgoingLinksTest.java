@@ -46,11 +46,10 @@ public class ViewWDFrontPageChildPageOutgoingLinksTest extends BaseTestCase {
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace(
-				"Wiki Front Page Child Page2 Title"),
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage2 Title"),
 			selenium.getText("xPath=(//div[@class='child-pages']/ul/li/a)[2]"));
 		selenium.clickAt("xPath=(//div[@class='child-pages']/ul/li/a)[2]",
-			RuntimeVariables.replace("Wiki Front Page Child Page2 Title"));
+			RuntimeVariables.replace("Wiki FrontPage ChildPage2 Title"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Details"),
@@ -63,8 +62,7 @@ public class ViewWDFrontPageChildPageOutgoingLinksTest extends BaseTestCase {
 			RuntimeVariables.replace("Outgoing Links"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace(
-				"Wiki Front Page Child Page1 Title"),
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage1 Title"),
 			selenium.getText("//td[1]/a"));
 		assertFalse(selenium.isTextPresent(
 				"There are no pages that link to this page."));

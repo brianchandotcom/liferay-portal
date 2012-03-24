@@ -101,7 +101,7 @@ public class CopyWDFrontPageTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("FrontPage2"),
 			selenium.getText("//h1[@class='header-title']"));
-		assertEquals(RuntimeVariables.replace("Wiki Front Page Content"),
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage Content"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 	}
 }

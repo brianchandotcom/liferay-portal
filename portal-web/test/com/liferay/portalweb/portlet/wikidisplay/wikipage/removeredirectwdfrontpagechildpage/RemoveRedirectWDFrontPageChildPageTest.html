@@ -31,37 +31,37 @@
 <tr>
 	<td>assertText</td>
 	<td>//tr[4]/td[1]/a</td>
-	<td>Wiki Front Page Child Page Title1</td>
+	<td>Wiki FrontPage ChildPage1 Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//tr[4]/td[1]/a</td>
-	<td>Wiki Front Page Child Page Title1</td>
+	<td>Wiki FrontPage ChildPage1 Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//h1[@class='header-title']/span</td>
-	<td>Wiki Front Page Child Page Title2</td>
+	<td>Wiki FrontPage ChildPage2 Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='wiki-body']/p</td>
-	<td>Wiki Front Page Child Page Content1</td>
+	<td>Wiki FrontPage ChildPage1 Content</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='page-redirect']</td>
-	<td>(Redirected from Wiki Front Page Child Page Title1)</td>
+	<td>(Redirected from Wiki FrontPage ChildPage1 Title)</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//div[@class='page-redirect']</td>
-	<td>(Redirected from Wiki Front Page Child Page Title1)</td>
+	<td>(Redirected from Wiki FrontPage ChildPage1 Title)</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='wiki-body']/div</td>
-	<td>This page is currently redirected to Wiki Front Page Child Page Title2.</td>
+	<td>This page is currently redirected to Wiki FrontPage ChildPage2 Title.</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -69,24 +69,64 @@
 	<td>Remove Redirect</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
 	<td>waitForElementPresent</td>
-	<td>//iframe</td>
-	<td>IFrame</td>
+	<td>//textarea[contains(@id,'_editor') and contains(@style,'display: none;')]</td>
+	<td>Text Area</td>
 </tr>
 <tr>
-	<td>selectFrame</td>
-	<td>//iframe</td>
-	<td>IFrame</td>
+	<td>assertText</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//a[@class='cke_button_source cke_on']</td>
+	<td>Source Button On</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//td[contains(@id,'cke_contents__54')]/textarea</td>
+	<td>CK Editor</td>
 </tr>
 <tr>
 	<td>type</td>
+	<td>//td[contains(@id,'cke_contents__54')]/textarea</td>
+	<td>Wiki FrontPage ChildPage2 Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//textarea[contains(@id,'_editor') and contains(@style,'display: none;')]</td>
+	<td>Text Area</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//td[contains(@id,'cke_contents__54')]/iframe</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//td[contains(@id,'cke_contents__54')]/iframe</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>waitForText</td>
 	<td>//body</td>
-	<td>Wiki Front Page Child Page Content2</td>
+	<td>Wiki FrontPage ChildPage2 Content</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
@@ -106,12 +146,12 @@
 <tr>
 	<td>assertText</td>
 	<td>//h1[@class='header-title']/span</td>
-	<td>Wiki Front Page Child Page Title1</td>
+	<td>Wiki FrontPage ChildPage1 Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='wiki-body']/p</td>
-	<td>Wiki Front Page Child Page Content2</td>
+	<td>Wiki FrontPage ChildPage2 Content</td>
 </tr>
 <tr>
 	<td>open</td>
@@ -136,22 +176,22 @@
 <tr>
 	<td>assertText</td>
 	<td>//tr[4]/td[1]/a</td>
-	<td>Wiki Front Page Child Page Title1</td>
+	<td>Wiki FrontPage ChildPage1 Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//tr[4]/td[1]/a</td>
-	<td>Wiki Front Page Child Page Title1</td>
+	<td>Wiki FrontPage ChildPage1 Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//h1[@class='header-title']/span</td>
-	<td>Wiki Front Page Child Page Title1</td>
+	<td>Wiki FrontPage ChildPage1 Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='wiki-body']/p</td>
-	<td>Wiki Front Page Child Page Content2</td>
+	<td>Wiki FrontPage ChildPage2 Content</td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
@@ -186,22 +226,22 @@
 <tr>
 	<td>assertText</td>
 	<td>//tr[5]/td[1]/a</td>
-	<td>Wiki Front Page Child Page Title2</td>
+	<td>Wiki FrontPage ChildPage2 Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//tr[5]/td[1]/a</td>
-	<td>Wiki Front Page Child Page Title2</td>
+	<td>Wiki FrontPage ChildPage2 Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//h1[@class='header-title']/span</td>
-	<td>Wiki Front Page Child Page Title2</td>
+	<td>Wiki FrontPage ChildPage2 Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='wiki-body']/p</td>
-	<td>Wiki Front Page Child Page Content1</td>
+	<td>Wiki FrontPage ChildPage1 Content</td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
@@ -213,7 +253,6 @@
 	<td>(Redirected from Wiki Front Page Child Page Title1)</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

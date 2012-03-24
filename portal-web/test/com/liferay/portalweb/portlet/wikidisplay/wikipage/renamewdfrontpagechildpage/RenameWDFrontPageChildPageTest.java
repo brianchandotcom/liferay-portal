@@ -46,14 +46,13 @@ public class RenameWDFrontPageChildPageTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@class='child-pages']/ul/li/a",
-			RuntimeVariables.replace("Wiki Front Page Child Page Title1"));
+			RuntimeVariables.replace("Wiki FrontPage ChildPage1 Title"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace(
-				"Wiki Front Page Child Page Title1"),
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage1 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace(
-				"Wiki Front Page Child Page Content1"),
+				"Wiki FrontPage ChildPage1 Content"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 		assertEquals(RuntimeVariables.replace("Details"),
 			selenium.getText("//div[3]/span[2]/a/span"));
@@ -67,11 +66,10 @@ public class RenameWDFrontPageChildPageTest extends BaseTestCase {
 			RuntimeVariables.replace("Move"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace(
-				"Wiki Front Page Child Page Title1"),
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage1 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		selenium.type("//div/span/span/span/input",
-			RuntimeVariables.replace("Wiki Front Page Child Page Title2"));
+			RuntimeVariables.replace("Wiki FrontPage ChildPage2 Title"));
 		selenium.clickAt("//input[@value='Rename']",
 			RuntimeVariables.replace("Rename"));
 		selenium.waitForPageToLoad("30000");
@@ -79,17 +77,16 @@ public class RenameWDFrontPageChildPageTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace(
-				"Wiki Front Page Child Page Title2"),
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage2 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace(
-				"(Redirected from Wiki Front Page Child Page Title1)"),
+				"(Redirected from Wiki FrontPage ChildPage1 Title)"),
 			selenium.getText("//div[@class='page-redirect']"));
 		assertEquals(RuntimeVariables.replace(
-				"Wiki Front Page Child Page Content1"),
+				"Wiki FrontPage ChildPage1 Content"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 		assertNotEquals(RuntimeVariables.replace(
-				"Wiki Front Page Child Page Title1"),
+				"Wiki FrontPage ChildPage1 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
@@ -114,10 +111,9 @@ public class RenameWDFrontPageChildPageTest extends BaseTestCase {
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace(
-				"Wiki Front Page Child Page Title2"),
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage2 Title"),
 			selenium.getText("//div[@class='child-pages']/ul/li/a"));
-		assertFalse(selenium.isTextPresent("Wiki Front Page Child Page Title1"));
+		assertFalse(selenium.isTextPresent("Wiki FrontPage ChildPage1 Title"));
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -144,11 +140,9 @@ public class RenameWDFrontPageChildPageTest extends BaseTestCase {
 		selenium.clickAt("link=All Pages", RuntimeVariables.replace("All Pages"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace(
-				"Wiki Front Page Child Page Title1"),
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage1 Title"),
 			selenium.getText("//tr[4]/td[1]/a"));
-		assertEquals(RuntimeVariables.replace(
-				"Wiki Front Page Child Page Title2"),
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage2 Title"),
 			selenium.getText("//tr[5]/td[1]/a"));
 	}
 }

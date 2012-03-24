@@ -257,6 +257,7 @@ public interface JournalArticleLocalService extends PersistedModelLocalService {
 		long userId, long groupId, long classNameId, long classPK,
 		java.lang.String articleId, boolean autoArticleId, double version,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.lang.String urlTitle,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String content, java.lang.String type,
 		java.lang.String structureId, java.lang.String templateId,
@@ -764,6 +765,7 @@ public interface JournalArticleLocalService extends PersistedModelLocalService {
 	public com.liferay.portlet.journal.model.JournalArticle updateArticle(
 		long userId, long groupId, java.lang.String articleId, double version,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.lang.String urlTitle,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String content, java.lang.String type,
 		java.lang.String structureId, java.lang.String templateId,

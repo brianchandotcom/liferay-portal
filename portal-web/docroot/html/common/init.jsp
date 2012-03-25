@@ -82,6 +82,7 @@ page import="com.liferay.portal.kernel.portlet.LiferayPortletURL" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.search.Field" %><%@
 page import="com.liferay.portal.kernel.servlet.BrowserSnifferUtil" %><%@
+page import="com.liferay.portal.kernel.servlet.DynamicServletRequest" %><%@
 page import="com.liferay.portal.kernel.servlet.ServletContextPool" %><%@
 page import="com.liferay.portal.kernel.servlet.ServletContextUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionErrors" %><%@
@@ -196,7 +197,6 @@ page import="com.liferay.util.StateUtil" %><%@
 page import="com.liferay.util.UniqueList" %><%@
 page import="com.liferay.util.log4j.Levels" %><%@
 page import="com.liferay.util.portlet.PortletRequestUtil" %><%@
-page import="com.liferay.util.servlet.DynamicServletRequest" %><%@
 page import="com.liferay.util.xml.XMLFormatter" %>
 
 <%@ page import="java.io.Serializable" %>

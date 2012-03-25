@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.mypages.action;
 
+import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
@@ -23,7 +24,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.RenderRequestImpl;
 import com.liferay.portlet.sites.action.ActionUtil;
-import com.liferay.util.servlet.DynamicServletRequest;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;

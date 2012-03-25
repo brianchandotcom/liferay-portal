@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
+import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.FileTimestampUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.HttpMethods;
@@ -187,7 +188,6 @@ import com.liferay.util.Encryptor;
 import com.liferay.util.JS;
 import com.liferay.util.PwdGenerator;
 import com.liferay.util.UniqueList;
-import com.liferay.util.servlet.DynamicServletRequest;
 
 import java.io.IOException;
 import java.io.Serializable;

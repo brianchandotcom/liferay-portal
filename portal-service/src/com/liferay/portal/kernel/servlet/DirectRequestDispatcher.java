@@ -14,26 +14,73 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+
 import java.io.IOException;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Shuyang Zhou
  */
 public class DirectRequestDispatcher implements RequestDispatcher {
 
-	public DirectRequestDispatcher(Servlet servlet) {
+	public DirectRequestDispatcher(Servlet servlet, String queryString) {
 		_servlet = servlet;
+
+		String[] queryParamsArray = StringUtil.split(
+			queryString, CharPool.AMPERSAND);
+
+		if (queryParamsArray.length > 0) {
+			_queryParams = new HashMap<String, String[]>();
+
+			for (String queryParam : queryParamsArray) {
+				String[] nameValuePair = StringUtil.split(
+					queryParam, CharPool.EQUAL);
+
+				String name = nameValuePair[0];
+				String value = StringPool.BLANK;
+
+				if (nameValuePair.length == 2) {
+					value = nameValuePair[1];
+				}
+
+				String[] values = _queryParams.get(name);
+
+				if (values == null) {
+					_queryParams.put(name, new String[] {value});
+				}
+				else {
+					String[] newValues = new String[values.length + 1];
+
+					System.arraycopy(values, 0, newValues, 0, values.length);
+
+					newValues[newValues.length - 1] = value;
+
+					_queryParams.put(name, newValues);
+				}
+			}
+		}
 	}
 
 	public void forward(
 			ServletRequest servletRequest, ServletResponse servletResponse)
 		throws IOException, ServletException {
+
+		if (_queryParams != null) {
+			servletRequest = new DynamicServletRequest(
+				(HttpServletRequest)servletRequest, _queryParams);
+		}
 
 		_servlet.service(servletRequest, servletResponse);
 	}
@@ -42,9 +89,15 @@ public class DirectRequestDispatcher implements RequestDispatcher {
 			ServletRequest servletRequest, ServletResponse servletResponse)
 		throws IOException, ServletException {
 
+		if (_queryParams != null) {
+			servletRequest = new DynamicServletRequest(
+				(HttpServletRequest)servletRequest, _queryParams);
+		}
+
 		_servlet.service(servletRequest, servletResponse);
 	}
 
+	private Map<String, String[]> _queryParams;
 	private Servlet _servlet;
 
 }

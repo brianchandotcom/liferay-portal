@@ -103,7 +103,7 @@ if ((folder == null) || folder.isSupportsMetadata()) {
 					<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryType.getFileEntryTypeId()) %>" />
 				</portlet:renderURL>
 
-				<liferay-ui:icon image="copy" message="<%= fileEntryType.getName() %>" url="<%= addFileEntryTypeURL %>" />
+				<liferay-ui:icon image="copy" message="<%= HtmlUtil.escape(fileEntryType.getName()) %>" url="<%= addFileEntryTypeURL %>" />
 
 			<%
 			}

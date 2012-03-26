@@ -341,7 +341,6 @@
 		<!-- Relationships -->
 
 		<column name="orgs" type="Collection" entity="Organization" mapping-table="Groups_Orgs" />
-		<column name="permissions" type="Collection" entity="Permission" mapping-table="Groups_Permissions" />
 		<column name="roles" type="Collection" entity="Role" mapping-table="Groups_Roles" />
 		<column name="userGroups" type="Collection" entity="UserGroup" mapping-table="Groups_UserGroups" />
 		<column name="users" type="Collection" entity="User" mapping-table="Users_Groups" />
@@ -1016,23 +1015,6 @@
 		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
 	</entity>
-	<entity name="OrgGroupPermission" local-service="false" remote-service="false">
-
-		<!-- PK fields -->
-
-		<column name="organizationId" type="long" primary="true" />
-		<column name="groupId" type="long" primary="true" />
-		<column name="permissionId" type="long" primary="true" />
-
-		<!-- Finder methods -->
-
-		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" />
-		</finder>
-		<finder name="PermissionId" return-type="Collection">
-			<finder-column name="permissionId" />
-		</finder>
-	</entity>
 	<entity name="OrgGroupRole" local-service="false" remote-service="false">
 
 		<!-- PK fields -->
@@ -1197,38 +1179,6 @@
 			<finder-column name="userId" />
 		</finder>
 	</entity>
-	<entity name="Permission" local-service="true" remote-service="true">
-
-		<!-- PK fields -->
-
-		<column name="permissionId" type="long" primary="true" accessor="true" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-
-		<!-- Other fields -->
-
-		<column name="actionId" type="String" />
-		<column name="resourceId" type="long" />
-
-		<!-- Relationships -->
-
-		<column name="groups" type="Collection" entity="Group" mapping-table="Groups_Permissions" />
-		<column name="roles" type="Collection" entity="Role" mapping-table="Roles_Permissions" />
-		<column name="users" type="Collection" entity="User" mapping-table="Users_Permissions" />
-
-		<!-- Finder methods -->
-
-		<finder name="ResourceId" return-type="Collection">
-			<finder-column name="resourceId" />
-		</finder>
-		<finder name="A_R" return-type="Permission" unique="true">
-			<finder-column name="actionId" />
-			<finder-column name="resourceId" />
-		</finder>
-	</entity>
-	<entity name="PermissionUser" local-service="false" remote-service="false" />
 	<entity name="Phone" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
@@ -1568,27 +1518,7 @@
 			<finder-column name="mappedId" />
 		</finder>
 	</entity>
-	<entity name="Resource" local-service="true" remote-service="true">
-
-		<!-- PK fields -->
-
-		<column name="resourceId" type="long" primary="true" />
-
-		<!-- Other fields -->
-
-		<column name="codeId" type="long" />
-		<column name="primKey" type="String" />
-
-		<!-- Finder methods -->
-
-		<finder name="CodeId" return-type="Collection">
-			<finder-column name="codeId" />
-		</finder>
-		<finder name="C_P" return-type="Resource" unique="true">
-			<finder-column name="codeId" />
-			<finder-column name="primKey" />
-		</finder>
-	</entity>
+	<entity name="Resource" local-service="true" remote-service="false"/>
 	<entity name="ResourceAction" local-service="true" remote-service="false">
 
 		<!-- PK fields -->
@@ -1838,7 +1768,6 @@
 		<!-- Relationships -->
 
 		<column name="groups" type="Collection" entity="Group" mapping-table="Groups_Roles" />
-		<column name="permissions" type="Collection" entity="Permission" mapping-table="Roles_Permissions" />
 		<column name="users" type="Collection" entity="User" mapping-table="Users_Roles" />
 
 		<!-- Order -->
@@ -2098,7 +2027,6 @@
 
 		<column name="groups" type="Collection" entity="Group" mapping-table="Users_Groups" />
 		<column name="orgs" type="Collection" entity="Organization" mapping-table="Users_Orgs" />
-		<column name="permissions" type="Collection" entity="Permission" mapping-table="Users_Permissions" />
 		<column name="roles" type="Collection" entity="Role" mapping-table="Users_Roles" />
 		<column name="teams" type="Collection" entity="Team" mapping-table="Users_Teams" />
 		<column name="userGroups" type="Collection" entity="UserGroup" mapping-table="Users_UserGroups" />

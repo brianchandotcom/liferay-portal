@@ -139,6 +139,8 @@ public class ResourceActionLocalServiceImpl
 				name, actionId);
 
 			if (resourceAction != null) {
+				_resourceActions.put(key, resourceAction);
+
 				continue;
 			}
 

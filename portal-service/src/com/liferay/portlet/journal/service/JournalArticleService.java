@@ -47,6 +47,7 @@ public interface JournalArticleService {
 		long groupId, long classNameId, long classPK,
 		java.lang.String articleId, boolean autoArticleId,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.lang.String urlTitle,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String content, java.lang.String type,
 		java.lang.String structureId, java.lang.String templateId,
@@ -67,6 +68,7 @@ public interface JournalArticleService {
 		long groupId, long classNameId, long classPK,
 		java.lang.String articleId, boolean autoArticleId,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.lang.String urlTitle,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String content, java.lang.String type,
 		java.lang.String structureId, java.lang.String templateId,
@@ -288,6 +290,7 @@ public interface JournalArticleService {
 	public com.liferay.portlet.journal.model.JournalArticle updateArticle(
 		long groupId, java.lang.String articleId, double version,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.lang.String urlTitle,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String content, java.lang.String type,
 		java.lang.String structureId, java.lang.String templateId,

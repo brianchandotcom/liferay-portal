@@ -25,28 +25,11 @@ public class DeleteThisVersionWCWebContentWCDActionsTest extends BaseTestCase {
 		throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Web Content Display Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.clickAt("link=Web Content Display Test Page",
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("WCD Web Content Content Edit"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Content Edit"),
 			selenium.getText("//div[@class='journal-content-article']/p"));
 		selenium.clickAt("//img[@title='Edit Web Content']",
 			RuntimeVariables.replace("Edit Web Content"));
@@ -60,8 +43,9 @@ public class DeleteThisVersionWCWebContentWCDActionsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//tr[4]/td[9]/span/ul/li/strong"));
-		selenium.clickAt("//tr[4]/td[9]/span/ul/li/strong",
+			selenium.getText(
+				"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]"));
+		selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
@@ -71,7 +55,7 @@ public class DeleteThisVersionWCWebContentWCDActionsTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a")) {
 					break;
 				}
 			}
@@ -83,40 +67,23 @@ public class DeleteThisVersionWCWebContentWCDActionsTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Delete"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-		assertEquals(RuntimeVariables.replace("WCD Web Content Title"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//tr[3]/td[3]"));
-		assertFalse(selenium.isTextPresent("WCD Web Content Title Edit"));
+		assertFalse(selenium.isTextPresent("WC WebContent Title Edit"));
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Web Content Display Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.clickAt("link=Web Content Display Test Page",
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("WCD Web Content Content"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Content"),
 			selenium.getText("//div[@class='journal-content-article']/p"));
 	}
 }

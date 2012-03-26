@@ -58,7 +58,7 @@ public class SelectPortletScopePage2WCWebContentWCDTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=WCD Web Content Title")) {
+				if (selenium.isVisible("link=WC WebContent Title")) {
 					break;
 				}
 			}
@@ -68,8 +68,8 @@ public class SelectPortletScopePage2WCWebContentWCDTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=WCD Web Content Title",
-			RuntimeVariables.replace("WCD Web Content Title"));
+		selenium.clickAt("link=WC WebContent Title",
+			RuntimeVariables.replace("WC WebContent Title"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -79,7 +79,7 @@ public class SelectPortletScopePage2WCWebContentWCDTest extends BaseTestCase {
 			try {
 				if (selenium.isPartialText(
 							"//form[@id='_86_fm1']/div[1]/span[2]",
-							"Displaying Content: WCD Web Content Title")) {
+							"Displaying Content: WC WebContent Title")) {
 					break;
 				}
 			}
@@ -91,7 +91,7 @@ public class SelectPortletScopePage2WCWebContentWCDTest extends BaseTestCase {
 
 		assertTrue(selenium.isPartialText(
 				"//form[@id='_86_fm1']/div[1]/span[2]",
-				"Displaying Content: WCD Web Content Title"));
+				"Displaying Content: WC WebContent Title"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 

@@ -26,7 +26,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_77_keywords']</td>
-	<td>"WCD Web Content Title"</td>
+	<td>"WC WebContent Title"</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -34,14 +34,14 @@
 	<td>Search</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>WCD Web Content Title</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//tr[3]/td[2]</td>
+	<td>WC WebContent Title</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>WCD Web Content Content</td>
-	<td></td>
+	<td>assertPartialText</td>
+	<td>//tr[3]/td[3]</td>
+	<td>WC WebContent Content</td>
 </tr>
 <tr>
 	<td>open</td>
@@ -61,7 +61,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_77_keywords']</td>
-	<td>"WCD1 Web1 Content1 Title1"</td>
+	<td>"WC1 WebContent1 Title1"</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -70,15 +70,14 @@
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>WCD Web Content Title</td>
+	<td>WC WebContent Title</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>WCD Web Content Content</td>
+	<td>WC WebContent Content</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

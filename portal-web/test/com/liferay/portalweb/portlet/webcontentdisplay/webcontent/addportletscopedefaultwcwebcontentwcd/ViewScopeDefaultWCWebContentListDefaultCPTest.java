@@ -61,7 +61,7 @@ public class ViewScopeDefaultWCWebContentListDefaultCPTest extends BaseTestCase 
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isPartialText("//div/span/ul/li/strong/a",
 				"Scope: Default"));
-		assertEquals(RuntimeVariables.replace("WCD Web Content Title"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Approved"),
 			selenium.getText("//td[4]/a"));

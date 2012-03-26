@@ -93,8 +93,8 @@ public class ViewScopeDefaultWebContentListDefaultTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isPartialText("//div[@class='portlet-msg-info']",
-				"Displaying Content: WCD Web Content Title"));
-		assertEquals(RuntimeVariables.replace("WCD Web Content Title"),
+				"Displaying Content: WC WebContent Title"));
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//td[2]/a"));
 	}
 }

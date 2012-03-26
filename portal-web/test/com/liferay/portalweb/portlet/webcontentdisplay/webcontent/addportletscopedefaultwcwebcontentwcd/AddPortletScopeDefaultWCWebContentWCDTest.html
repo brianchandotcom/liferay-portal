@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Web Content Display Test Page1</td>
-	<td>Web Content Display Test Page1</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Web Content Display Test Page1</td>
 	<td>Web Content Display Test Page1</td>
@@ -36,12 +31,52 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_15_title_en_US']</td>
-	<td>WCD Web Content Title</td>
+	<td>WC WebContent Title</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>waitForElementPresent</td>
+	<td>//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']</td>
+	<td>Text Area</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//a[@class='cke_button_source cke_on']</td>
+	<td>Source Button On</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea</td>
+	<td>WC WebContent Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']</td>
+	<td>Text Area</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -54,9 +89,9 @@
 	<td>CK Editor</td>
 </tr>
 <tr>
-	<td>type</td>
+	<td>waitForText</td>
 	<td>//body</td>
-	<td>WCD Web Content Content</td>
+	<td>WC WebContent Content</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
@@ -76,9 +111,8 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='journal-content-article']/p</td>
-	<td>WCD Web Content Content</td>
+	<td>WC WebContent Content</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

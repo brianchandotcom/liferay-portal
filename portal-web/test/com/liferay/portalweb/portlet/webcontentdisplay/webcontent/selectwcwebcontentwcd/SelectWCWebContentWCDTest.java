@@ -88,10 +88,10 @@ public class SelectWCWebContentWCDTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("WCD Web Content Title"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//td[2]/a"));
 		selenium.clickAt("//td[2]/a",
-			RuntimeVariables.replace("WCD Web Content Title"));
+			RuntimeVariables.replace("WC WebContent Title"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -110,8 +110,7 @@ public class SelectWCWebContentWCDTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace(
-				"WCD Web Content Title (Modified)"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Title (Modified)"),
 			selenium.getText("//span[@class='displaying-article-id modified']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

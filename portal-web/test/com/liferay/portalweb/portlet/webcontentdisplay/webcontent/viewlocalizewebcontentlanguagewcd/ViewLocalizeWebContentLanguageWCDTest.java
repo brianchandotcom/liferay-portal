@@ -53,7 +53,7 @@ public class ViewLocalizeWebContentLanguageWCDTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("WCD Web Content Content")
+				if (RuntimeVariables.replace("WC WebContent Content")
 										.equals(selenium.getText(
 								"//div[@class='journal-content-article']/p"))) {
 					break;
@@ -65,7 +65,7 @@ public class ViewLocalizeWebContentLanguageWCDTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("WCD Web Content Content"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Content"),
 			selenium.getText("//div[@class='journal-content-article']/p"));
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
@@ -205,7 +205,7 @@ public class ViewLocalizeWebContentLanguageWCDTest extends BaseTestCase {
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("WCD Web Content Content"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Content"),
 			selenium.getText("//div[@class='journal-content-article']/p"));
 	}
 }

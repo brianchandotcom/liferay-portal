@@ -42,9 +42,9 @@ public class EditWCWebContentCommentWCDTest extends BaseTestCase {
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("WCD Web Content Content"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Content"),
 			selenium.getText("//div[@class='journal-content-article']/p"));
-		assertEquals(RuntimeVariables.replace("WCD Web Content Comment"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Comment"),
 			selenium.getText("//div[@class='lfr-discussion-message']"));
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText("//li[3]/span/a/span"));
@@ -68,7 +68,7 @@ public class EditWCWebContentCommentWCDTest extends BaseTestCase {
 		}
 
 		selenium.type("//div[4]/div/div[2]/span/span/span/textarea",
-			RuntimeVariables.replace("WCD Web Content Comment Edit"));
+			RuntimeVariables.replace("WC WebContent Comment Edit"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 
@@ -93,9 +93,9 @@ public class EditWCWebContentCommentWCDTest extends BaseTestCase {
 				"Your request processed successfully."),
 			selenium.getText(
 				"//div[@class='lfr-message-response portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("WCD Web Content Comment Edit"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Comment Edit"),
 			selenium.getText("//div/div[3]/div/div[1]"));
-		assertNotEquals(RuntimeVariables.replace("WCD Web Content Comment"),
+		assertNotEquals(RuntimeVariables.replace("WC WebContent Comment"),
 			selenium.getText("//div/div[3]/div/div[1]"));
 	}
 }

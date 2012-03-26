@@ -128,7 +128,7 @@ public class ConfigurePortletEnableCommentRatingsTest extends BaseTestCase {
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("WCD Web Content Comment"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Comment"),
 			selenium.getText("//div[@class='lfr-discussion-message']"));
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
 			selenium.getText("//div[3]/div/div[2]/div/div/div/div"));

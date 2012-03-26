@@ -52,7 +52,7 @@ public class ViewPortletShowLocalesWebContentWCDTest extends BaseTestCase {
 			RuntimeVariables.replace("English (United States)"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("WCD Web Content Content"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Content"),
 			selenium.getText("//div[@class='journal-content-article']/p"));
 		assertTrue(selenium.isElementPresent(
 				"//img[@title='\u4e2d\u6587 (\u4e2d\u56fd)']"));

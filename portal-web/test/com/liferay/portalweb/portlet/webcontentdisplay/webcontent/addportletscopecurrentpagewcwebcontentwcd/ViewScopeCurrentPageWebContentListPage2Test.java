@@ -113,7 +113,7 @@ public class ViewScopeCurrentPageWebContentListPage2Test extends BaseTestCase {
 
 		assertTrue(selenium.isPartialText("//div[@class='portlet-msg-info']",
 				"Please select a web content from the list below."));
-		assertEquals(RuntimeVariables.replace("WCD Web Content Title"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//td[2]/a"));
 		selenium.selectFrame("relative=top");
 		selenium.click("//button[@id='closethick']");

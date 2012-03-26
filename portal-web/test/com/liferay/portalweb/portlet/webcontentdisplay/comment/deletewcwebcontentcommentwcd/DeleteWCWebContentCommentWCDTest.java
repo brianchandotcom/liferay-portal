@@ -45,9 +45,9 @@ public class DeleteWCWebContentCommentWCDTest extends BaseTestCase {
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("WCD Web Content Content"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Content"),
 			selenium.getText("//div[@class='journal-content-article']/p"));
-		assertEquals(RuntimeVariables.replace("WCD Web Content Comment"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Comment"),
 			selenium.getText("//div[@class='lfr-discussion-message']"));
 		assertEquals(RuntimeVariables.replace("Delete"),
 			selenium.getText("//li[4]/span/a/span"));
@@ -92,7 +92,6 @@ public class DeleteWCWebContentCommentWCDTest extends BaseTestCase {
 				"Your request processed successfully."),
 			selenium.getText(
 				"//div[@class='lfr-message-response portlet-msg-success']"));
-		assertFalse(selenium.isTextPresent(
-				"This is a test wcd web content comment."));
+		assertFalse(selenium.isTextPresent("WC WebContent Comment"));
 	}
 }

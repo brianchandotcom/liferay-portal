@@ -49,7 +49,7 @@ public class ViewSelectScopePage2WCWebContentNullDefaultTest
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Web Content Display"),
 			selenium.getText("//span[@class='portlet-title-text']"));
-		assertFalse(selenium.isTextPresent("WCD Web Content Content"));
+		assertFalse(selenium.isTextPresent("WC WebContent Content"));
 		assertEquals(RuntimeVariables.replace(
 				"Select existing web content or add some web content to be displayed in this portlet."),
 			selenium.getText("//div[@class='portlet-msg-info']"));

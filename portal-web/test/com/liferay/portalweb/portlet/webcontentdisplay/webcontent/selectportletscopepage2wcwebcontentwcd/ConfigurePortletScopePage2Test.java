@@ -24,23 +24,6 @@ public class ConfigurePortletScopePage2Test extends BaseTestCase {
 	public void testConfigurePortletScopePage2() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Web Content Display Test Page3")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.clickAt("link=Web Content Display Test Page3",
 			RuntimeVariables.replace("Web Content Display Test Page3"));
 		selenium.waitForPageToLoad("30000");
@@ -92,7 +75,7 @@ public class ConfigurePortletScopePage2Test extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.select("//select[@id='_86_scopeType']",
-			RuntimeVariables.replace("label=Select Layout"));
+			RuntimeVariables.replace("Select Page"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -119,7 +102,7 @@ public class ConfigurePortletScopePage2Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals("Select Layout",
+		assertEquals("Select Page",
 			selenium.getSelectedLabel("//select[@id='_86_scopeType']"));
 		assertEquals("Web Content Display Test Page2",
 			selenium.getSelectedLabel("//select[@id='_86_scopeLayoutUuid']"));

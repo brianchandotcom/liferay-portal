@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.webcontentdisplay.webcontent.localizewcwebcontentwcd;
+package com.liferay.portalweb.portlet.webcontentdisplay.webcontent.viewlocalizewebcontenttemplatelanguagewcd;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class TearDownWebContentTest extends BaseTestCase {
-	public void testTearDownWebContent() throws Exception {
+public class TearDownTemplateTest extends BaseTestCase {
+	public void testTearDownTemplate() throws Exception {
 		int label = 1;
 
 		while (label >= 1) {
@@ -54,42 +54,42 @@ public class TearDownWebContentTest extends BaseTestCase {
 					RuntimeVariables.replace("Web Content"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
+				selenium.clickAt("link=Templates",
+					RuntimeVariables.replace("Templates"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
 
-				boolean webContentPresent = selenium.isElementPresent(
+				boolean template1Present = selenium.isElementPresent(
 						"_15_rowIds");
 
-				if (!webContentPresent) {
+				if (!template1Present) {
 					label = 2;
 
 					continue;
 				}
 
 				selenium.clickAt("//input[@name='_15_allRowIds']",
-					RuntimeVariables.replace("Select All"));
+					RuntimeVariables.replace(""));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Delete']"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected web content[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete the selected templates[\\s\\S]$"));
 
 			case 2:
-				selenium.clickAt("link=Templates",
-					RuntimeVariables.replace("Templates"));
-				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
-				boolean templatePresent = selenium.isElementPresent(
+				boolean template2Present = selenium.isElementPresent(
 						"_15_rowIds");
 
-				if (!templatePresent) {
+				if (!template2Present) {
 					label = 3;
 
 					continue;
 				}
 
 				selenium.clickAt("//input[@name='_15_allRowIds']",
-					RuntimeVariables.replace("Select All"));
+					RuntimeVariables.replace(""));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Delete']"));
 				selenium.waitForPageToLoad("30000");
@@ -98,30 +98,66 @@ public class TearDownWebContentTest extends BaseTestCase {
 								   .matches("^Are you sure you want to delete the selected templates[\\s\\S]$"));
 
 			case 3:
-				selenium.clickAt("link=Structures",
-					RuntimeVariables.replace("Structures"));
-				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
-				boolean structurePresent = selenium.isElementPresent(
+				boolean template3Present = selenium.isElementPresent(
 						"_15_rowIds");
 
-				if (!structurePresent) {
+				if (!template3Present) {
 					label = 4;
 
 					continue;
 				}
 
 				selenium.clickAt("//input[@name='_15_allRowIds']",
-					RuntimeVariables.replace("Select All"));
+					RuntimeVariables.replace(""));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Delete']"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected structures[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete the selected templates[\\s\\S]$"));
 
 			case 4:
+
+				boolean template4Present = selenium.isElementPresent(
+						"_15_rowIds");
+
+				if (!template4Present) {
+					label = 5;
+
+					continue;
+				}
+
+				selenium.clickAt("//input[@name='_15_allRowIds']",
+					RuntimeVariables.replace(""));
+				selenium.click(RuntimeVariables.replace(
+						"//input[@value='Delete']"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+				assertTrue(selenium.getConfirmation()
+								   .matches("^Are you sure you want to delete the selected templates[\\s\\S]$"));
+
+			case 5:
+
+				boolean template5Present = selenium.isElementPresent(
+						"_15_rowIds");
+
+				if (!template5Present) {
+					label = 6;
+
+					continue;
+				}
+
+				selenium.clickAt("//input[@name='_15_allRowIds']",
+					RuntimeVariables.replace(""));
+				selenium.click(RuntimeVariables.replace(
+						"//input[@value='Delete']"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+				assertTrue(selenium.getConfirmation()
+								   .matches("^Are you sure you want to delete the selected templates[\\s\\S]$"));
+
+			case 6:
 			case 100:
 				label = -1;
 			}

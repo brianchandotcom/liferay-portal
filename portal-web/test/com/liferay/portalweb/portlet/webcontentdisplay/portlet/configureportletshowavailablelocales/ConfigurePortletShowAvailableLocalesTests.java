@@ -15,6 +15,7 @@
 package com.liferay.portalweb.portlet.webcontentdisplay.portlet.configureportletshowavailablelocales;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.TearDownWCWebContentTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.language.AddPageLanguageTest;
 import com.liferay.portalweb.portlet.language.AddPortletLanguageTest;
@@ -37,7 +38,7 @@ public class ConfigurePortletShowAvailableLocalesTests extends BaseTestSuite {
 		testSuite.addTestSuite(ConfigurePortletShowAvailableLocalesTest.class);
 		testSuite.addTestSuite(TearDownLanguageTest.class);
 		testSuite.addTestSuite(TearDownPortletSetupTest.class);
-		testSuite.addTestSuite(TearDownWebContentTest.class);
+		testSuite.addTestSuite(TearDownWCWebContentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

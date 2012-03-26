@@ -18,6 +18,7 @@ import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.webcontentdisplay.comment.addwcwebcontentcommentwcd.AddPageWCDTest;
 import com.liferay.portalweb.portlet.webcontentdisplay.comment.addwcwebcontentcommentwcd.AddPortletWCDTest;
+import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.addwcwebcontentwcd.AddWCWebContentWCDTest;
 import com.liferay.portalweb.portlet.webcontentsearch.portlet.addportlet.AddPageWCSTest;
 import com.liferay.portalweb.portlet.webcontentsearch.portlet.addportlet.AddPortletWCSTest;
 

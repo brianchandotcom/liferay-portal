@@ -23,27 +23,13 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ExpireThisVersionWCWebContentWCDDetailsTest extends BaseTestCase {
 	public void testExpireThisVersionWCWebContentWCDDetails()
 		throws Exception {
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Web Content Display Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.open("/web/guest/home/");
+		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Web Content Display Test Page",
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("WCD Web Content Content Edit"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Content Edit"),
 			selenium.getText("//div[@class='journal-content-article']/p"));
 		selenium.clickAt("//img[@title='Edit Web Content']",
 			RuntimeVariables.replace("Edit Web Content"));
@@ -57,8 +43,9 @@ public class ExpireThisVersionWCWebContentWCDDetailsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//tr[4]/td[9]/span/ul/li/strong"));
-		selenium.clickAt("//tr[4]/td[9]/span/ul/li/strong",
+			selenium.getText(
+				"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]"));
+		selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
@@ -68,7 +55,7 @@ public class ExpireThisVersionWCWebContentWCDDetailsTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Expire')]/a")) {
 					break;
 				}
 			}
@@ -80,14 +67,14 @@ public class ExpireThisVersionWCWebContentWCDDetailsTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Expire"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Expire')]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Expire')]/a",
 			RuntimeVariables.replace("Expire"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("WCD Web Content Title"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//tr[3]/td[3]"));
-		assertEquals(RuntimeVariables.replace("WCD Web Content Title Edit"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Title Edit"),
 			selenium.getText("//tr[4]/td[3]"));
 		assertEquals(RuntimeVariables.replace("1.1"),
 			selenium.getText("//tr[4]/td[4]"));
@@ -95,28 +82,11 @@ public class ExpireThisVersionWCWebContentWCDDetailsTest extends BaseTestCase {
 			selenium.getText("//tr[4]/td[5]"));
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Web Content Display Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.clickAt("link=Web Content Display Test Page",
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("WCD Web Content Content"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Content"),
 			selenium.getText("//div[@class='journal-content-article']/p"));
 	}
 }

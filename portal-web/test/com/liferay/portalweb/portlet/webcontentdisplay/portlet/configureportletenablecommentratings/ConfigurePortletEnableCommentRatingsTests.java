@@ -15,9 +15,11 @@
 package com.liferay.portalweb.portlet.webcontentdisplay.portlet.configureportletenablecommentratings;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.TearDownWCWebContentTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.webcontentdisplay.comment.addwcwebcontentcommentwcd.AddPageWCDTest;
 import com.liferay.portalweb.portlet.webcontentdisplay.comment.addwcwebcontentcommentwcd.AddPortletWCDTest;
+import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.addwcwebcontentwcd.AddWCWebContentWCDTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -35,7 +37,7 @@ public class ConfigurePortletEnableCommentRatingsTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddWCWebContentCommentWCDTest.class);
 		testSuite.addTestSuite(ConfigurePortletEnableCommentRatingsTest.class);
 		testSuite.addTestSuite(TearDownPortletSetupTest.class);
-		testSuite.addTestSuite(TearDownWebContentTest.class);
+		testSuite.addTestSuite(TearDownWCWebContentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

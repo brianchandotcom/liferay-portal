@@ -126,7 +126,7 @@ private String _buildAssetCategoryPath(AssetCategory assetCategory, Locale local
 	List<AssetCategory> assetCategories = assetCategory.getAncestors();
 
 	if (assetCategories.isEmpty()) {
-		return assetCategory.getName();
+		return HtmlUtil.escape(assetCategory.getName());
 	}
 
 	Collections.reverse(assetCategories);
@@ -134,11 +134,11 @@ private String _buildAssetCategoryPath(AssetCategory assetCategory, Locale local
 	StringBundler sb = new StringBundler(assetCategories.size() * 2 + 1);
 
 	for (AssetCategory curAssetCategory : assetCategories) {
-		sb.append(curAssetCategory.getTitle(locale));
+		sb.append(HtmlUtil.escape(curAssetCategory.getTitle(locale)));
 		sb.append(" &raquo; ");
 	}
 
-	sb.append(assetCategory.getName());
+	sb.append(HtmlUtil.escape(assetCategory.getName()));
 
 	return sb.toString();
 }

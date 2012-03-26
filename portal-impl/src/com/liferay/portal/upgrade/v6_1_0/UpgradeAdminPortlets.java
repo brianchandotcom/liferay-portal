@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PortletKeys;
@@ -297,7 +298,8 @@ public class UpgradeAdminPortlets extends UpgradeProcess {
 							actionIds + " where resourcePermissionId = " +
 								resourcePermissionId);
 
-					resourcePermissionId = increment();
+					resourcePermissionId = increment(
+						ResourcePermission.class.getName());
 
 					long companyId = rs.getLong("companyId");
 					long scope = rs.getLong("scope");

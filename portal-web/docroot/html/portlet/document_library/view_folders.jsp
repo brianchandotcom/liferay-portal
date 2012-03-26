@@ -243,7 +243,7 @@ if (folder != null) {
 										<liferay-ui:icon image="copy" message="" />
 
 										<span class="entry-title">
-											<%= fileEntryType.getName() %>
+											<%= HtmlUtil.escape(fileEntryType.getName()) %>
 										</span>
 									</a>
 								</li>

@@ -43,6 +43,7 @@ portletURL.setParameter("struts_action", "/document_library/view_file_entry_type
 
 	<liferay-ui:search-container-row
 		className="com.liferay.portlet.documentlibrary.model.DLFileEntryType"
+		escapedModel="<%= true %>"
 		keyProperty="fileEntryTypeId"
 		modelVar="fileEntryType"
 	>

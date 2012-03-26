@@ -14,9 +14,9 @@
 
 package com.liferay.taglib.util;
 
+import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.taglib.BaseBodyTagSupport;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.util.servlet.DynamicServletRequest;
 
 import java.util.HashSet;
 import java.util.LinkedHashMap;

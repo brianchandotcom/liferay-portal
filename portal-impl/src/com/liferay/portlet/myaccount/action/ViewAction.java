@@ -14,11 +14,11 @@
 
 package com.liferay.portlet.myaccount.action;
 
+import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.model.User;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.RenderRequestImpl;
-import com.liferay.util.servlet.DynamicServletRequest;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;

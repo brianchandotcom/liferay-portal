@@ -80,6 +80,7 @@ if (MathUtil.isEven(count.getValue())) {
 								<option <%= elType.equals("list") ? "selected" : "" %> value="list"><liferay-ui:message key="selection-list" /></option>
 								<option <%= elType.equals("multi-list") ? "selected" : "" %> value="multi-list"><liferay-ui:message key="multi-selection-list" /></option>
 								<option <%= elType.equals("link_to_layout") ? "selected" : "" %> value="link_to_layout"><liferay-ui:message key="link-to-layout" /></option>
+								<option <%= elType.equals("selection_break") ? "selected" : "" %> value="selection_break"><liferay-ui:message key="selection-break" /></option>
 							</select>
 						</aui:column>
 

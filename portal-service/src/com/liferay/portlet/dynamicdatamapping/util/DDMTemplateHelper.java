@@ -12,14 +12,18 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.model.impl;
+package com.liferay.portlet.dynamicdatamapping.util;
+
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 
 /**
- * @author Brian Wing Shun Chan
+ * <a href="DDMTemplate.java.html"><b><i>View Source</i></b></a>
+ *
+ * @author Juan Fernández
  */
-public class DDMTemplateImpl extends DDMTemplateBaseImpl {
+public interface DDMTemplateHelper {
 
-	public DDMTemplateImpl() {
-	}
+	public DDMStructure getDDMStructure(DDMTemplate template);
 
 }

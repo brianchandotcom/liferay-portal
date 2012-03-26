@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.RequiredStructureException;
 import com.liferay.portlet.dynamicdatamapping.StructureDuplicateElementException;
 import com.liferay.portlet.dynamicdatamapping.StructureDuplicateStructureKeyException;
@@ -43,6 +44,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.service.base.DDMStructureLocalServiceBaseImpl;
+import com.liferay.portlet.dynamicdatamapping.util.DDMTemplateHelperUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 
 import java.util.ArrayList;
@@ -459,8 +461,10 @@ public class DDMStructureLocalServiceImpl
 	protected void syncStructureTemplatesFields(DDMStructure structure)
 		throws PortalException, SystemException {
 
+		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
+
 		List<DDMTemplate> templates = ddmTemplateLocalService.getTemplates(
-			structure.getStructureId(),
+			classNameId, structure.getStructureId(),
 			DDMTemplateConstants.TEMPLATE_TYPE_DETAIL);
 
 		for (DDMTemplate template : templates) {
@@ -502,7 +506,8 @@ public class DDMStructureLocalServiceImpl
 			DDMTemplate template, Element templateElement)
 		throws PortalException, SystemException {
 
-		DDMStructure structure = template.getStructure();
+		DDMStructure structure = DDMTemplateHelperUtil.getDDMStructure(
+			template);
 
 		List<Element> dynamicElementElements = templateElement.elements(
 			"dynamic-element");

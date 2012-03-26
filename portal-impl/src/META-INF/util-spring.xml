@@ -670,6 +670,11 @@
 			<bean class="com.liferay.portlet.dynamicdatamapping.util.DDMIndexerImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.dynamicdatamapping.util.DDMTemplateHelperUtil" class="com.liferay.portlet.dynamicdatamapping.util.DDMTemplateHelperUtil">
+		<property name="DDMTemplateHelper">
+			<bean class="com.liferay.portlet.dynamicdatamapping.util.DDMTemplateHelperImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portlet.dynamicdatamapping.util.DDMUtil" class="com.liferay.portlet.dynamicdatamapping.util.DDMUtil">
 		<property name="DDM">
 			<bean class="com.liferay.portlet.dynamicdatamapping.util.DDMImpl" />

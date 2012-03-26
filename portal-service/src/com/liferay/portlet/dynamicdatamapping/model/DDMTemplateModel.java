@@ -16,6 +16,7 @@ package com.liferay.portlet.dynamicdatamapping.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
@@ -42,7 +43,8 @@ import java.util.Map;
  * @see com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateModelImpl
  * @generated
  */
-public interface DDMTemplateModel extends BaseModel<DDMTemplate>, GroupedModel {
+public interface DDMTemplateModel extends AttachedModel, BaseModel<DDMTemplate>,
+	GroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -193,18 +195,39 @@ public interface DDMTemplateModel extends BaseModel<DDMTemplate>, GroupedModel {
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the structure ID of this d d m template.
+	 * Returns the fully qualified class name of this d d m template.
 	 *
-	 * @return the structure ID of this d d m template
+	 * @return the fully qualified class name of this d d m template
 	 */
-	public long getStructureId();
+	public String getClassName();
 
 	/**
-	 * Sets the structure ID of this d d m template.
+	 * Returns the class name ID of this d d m template.
 	 *
-	 * @param structureId the structure ID of this d d m template
+	 * @return the class name ID of this d d m template
 	 */
-	public void setStructureId(long structureId);
+	public long getClassNameId();
+
+	/**
+	 * Sets the class name ID of this d d m template.
+	 *
+	 * @param classNameId the class name ID of this d d m template
+	 */
+	public void setClassNameId(long classNameId);
+
+	/**
+	 * Returns the class p k of this d d m template.
+	 *
+	 * @return the class p k of this d d m template
+	 */
+	public long getClassPK();
+
+	/**
+	 * Sets the class p k of this d d m template.
+	 *
+	 * @param classPK the class p k of this d d m template
+	 */
+	public void setClassPK(long classPK);
 
 	/**
 	 * Returns the name of this d d m template.

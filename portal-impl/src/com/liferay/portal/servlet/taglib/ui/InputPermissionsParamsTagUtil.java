@@ -40,8 +40,9 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
 /**
- * @author Brian Chan
- * @author Jorge Ferrer
+ * @author     Brian Chan
+ * @author     Jorge Ferrer
+ * @deprecated {@link com.liferay.taglib.ui.InputPermissionsParamsTag}
  */
 public class InputPermissionsParamsTagUtil {
 

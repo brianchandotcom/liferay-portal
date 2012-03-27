@@ -175,7 +175,7 @@ portlets = ListUtil.sort(portlets, new PortletTitleComparator(application, local
 				else if (portlet.getControlPanelEntryCategory().equals(PortletCategoryKeys.PORTAL) && (role.getType() == RoleConstants.TYPE_REGULAR)) {
 					portalPortlets.add(portlet);
 				}
-				else if (portlet.getControlPanelEntryCategory().equals(PortletCategoryKeys.SERVER) && (role.getType() == RoleConstants.TYPE_REGULAR)) {
+				else if (portlet.getControlPanelEntryCategory().equals(PortletCategoryKeys.SERVER) && (role.getType() == RoleConstants.TYPE_REGULAR) && !Validator.equals(portlet.getControlPanelEntryClass(), OmniadminControlPanelEntry.class.getName())) {
 					serverPortlets.add(portlet);
 				}
 			}

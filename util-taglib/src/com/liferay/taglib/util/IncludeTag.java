@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.TrackedServletRequest;
 import com.liferay.portal.kernel.servlet.taglib.FileAvailabilityUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
@@ -39,13 +38,8 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.CustomJspRegistryUtil;
 import com.liferay.portal.util.PortalUtil;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
@@ -315,25 +309,7 @@ public class IncludeTag extends AttributesTagSupport {
 		HttpServletResponse response = new PipingServletResponse(
 			pageContext, isTrimNewLines());
 
-		if (!isWARFile(request)) {
-			requestDispatcher.include(request, response);
-		}
-		else {
-			ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
-
-			Class<?> clazz = classLoader.loadClass(_LIFERAY_REQUEST_DISPATCHER);
-
-			Constructor<?> constructor = clazz.getConstructor(
-				RequestDispatcher.class, String.class);
-
-			Object obj = constructor.newInstance(requestDispatcher, page);
-
-			Method method = clazz.getMethod(
-				"include", ServletRequest.class, ServletResponse.class,
-				boolean.class);
-
-			method.invoke(obj, request, response, true);
-		}
+		requestDispatcher.include(request, response);
 
 		request.removeAttribute(WebKeys.SERVLET_CONTEXT_INCLUDE_FILTER_STRICT);
 	}
@@ -344,28 +320,6 @@ public class IncludeTag extends AttributesTagSupport {
 
 	protected boolean isTrimNewLines() {
 		return _TRIM_NEW_LINES;
-	}
-
-	protected boolean isWARFile(HttpServletRequest request)
-		throws SystemException {
-
-		if (Validator.isNull(_portletId)) {
-			return false;
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			themeDisplay.getCompanyId(), _portletId);
-
-		if (portlet == null) {
-			return false;
-		}
-
-		PortletApp portletApp = portlet.getPortletApp();
-
-		return portletApp.isWARFile();
 	}
 
 	protected int processEndTag() throws Exception {
@@ -443,9 +397,6 @@ public class IncludeTag extends AttributesTagSupport {
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = false;
-
-	private static final String _LIFERAY_REQUEST_DISPATCHER =
-		"com.liferay.portal.apache.bridges.struts.LiferayRequestDispatcher";
 
 	private static final boolean _THEME_JSP_OVERRIDE_ENABLED =
 		GetterUtil.getBoolean(

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portalweb.portal.util.TestPropsValues;
 
 import com.thoughtworks.selenium.Selenium;
 
@@ -27,6 +28,7 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverBackedSelenium;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
@@ -561,7 +563,10 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public void mouseDown(String locator) {
-		throw new UnsupportedOperationException();
+		WebDriverBackedSelenium webDriverBackedSelenium = new WebDriverBackedSelenium(
+			this, getCurrentUrl());
+
+		webDriverBackedSelenium.mouseDown(locator);
 	}
 
 	public void mouseDownAt(String locator, String coordString) {
@@ -577,7 +582,10 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public void mouseMove(String locator) {
-		throw new UnsupportedOperationException();
+		WebDriverBackedSelenium webDriverBackedSelenium = new WebDriverBackedSelenium(
+			this, getCurrentUrl());
+
+		webDriverBackedSelenium.mouseMove(locator);
 	}
 
 	public void mouseMoveAt(String locator, String coordString) {
@@ -589,11 +597,17 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public void mouseOver(String locator) {
-		throw new UnsupportedOperationException();
+		WebDriverBackedSelenium webDriverBackedSelenium = new WebDriverBackedSelenium(
+			this, getCurrentUrl());
+
+		webDriverBackedSelenium.mouseOver(locator);
 	}
 
 	public void mouseUp(String locator) {
-		throw new UnsupportedOperationException();
+		WebDriverBackedSelenium webDriverBackedSelenium = new WebDriverBackedSelenium(
+			this, getCurrentUrl());
+
+		webDriverBackedSelenium.mouseUp(locator);
 	}
 
 	public void mouseUpAt(String locator, String coordString) {
@@ -609,7 +623,12 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public void open(String url) {
-		throw new UnsupportedOperationException();
+		if (url.startsWith("/")) {
+			get(TestPropsValues.PORTAL_URL + url);
+		}
+		else {
+			get(url);
+		}
 	}
 
 	public void open(String url, String ignoreResponseCode) {
@@ -617,11 +636,13 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public void openWindow(String url, String windowID) {
-		throw new UnsupportedOperationException();
+		open(url);
 	}
 
 	public void refresh() {
-		throw new UnsupportedOperationException();
+		WebDriver.Navigation navigation = navigate();
+
+		navigation.refresh();
 	}
 
 	public void removeAllSelections(String locator) {

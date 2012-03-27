@@ -16,7 +16,10 @@
 		<property name="dataSource" ref="liferayDataSource" />
 		<property name="sessionFactory" ref="liferaySessionFactory" />
 	</bean>
-	<bean id="serviceAdvice" class="com.liferay.portal.messaging.async.AsyncAdvice">
+	<bean id="serviceAdvice" class="com.liferay.portal.security.pacl.PACLAdvice">
+		<property name="nextMethodInterceptor" ref="asyncAdvice" />
+	</bean>
+	<bean id="asyncAdvice" class="com.liferay.portal.messaging.async.AsyncAdvice">
 		<property name="defaultDestinationName" value="liferay/async_service" />
 		<property name="nextMethodInterceptor" ref="threadLocalCacheAdvice" />
 	</bean>

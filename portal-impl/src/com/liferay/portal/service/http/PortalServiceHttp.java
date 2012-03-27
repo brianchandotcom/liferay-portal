@@ -314,11 +314,37 @@ public class PortalServiceHttp {
 		}
 	}
 
+	public static int testGetBuildNumber(HttpPrincipal httpPrincipal)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(PortalServiceUtil.class.getName(),
+					"testGetBuildNumber", _testGetBuildNumberParameterTypes9);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static void testGetUserId(HttpPrincipal httpPrincipal)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(PortalServiceUtil.class.getName(),
-					"testGetUserId", _testGetUserIdParameterTypes9);
+					"testGetUserId", _testGetUserIdParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
 
@@ -340,7 +366,7 @@ public class PortalServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(PortalServiceUtil.class.getName(),
-					"testHasClassName", _testHasClassNameParameterTypes10);
+					"testHasClassName", _testHasClassNameParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
 
@@ -390,8 +416,13 @@ public class PortalServiceHttp {
 	private static final Class<?>[] _testDeleteClassNameParameterTypes8 = new Class[] {
 			
 		};
-	private static final Class<?>[] _testGetUserIdParameterTypes9 = new Class[] {  };
-	private static final Class<?>[] _testHasClassNameParameterTypes10 = new Class[] {
+	private static final Class<?>[] _testGetBuildNumberParameterTypes9 = new Class[] {
+			
+		};
+	private static final Class<?>[] _testGetUserIdParameterTypes10 = new Class[] {
+			
+		};
+	private static final Class<?>[] _testHasClassNameParameterTypes11 = new Class[] {
 			
 		};
 }

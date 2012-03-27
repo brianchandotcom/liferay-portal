@@ -163,6 +163,19 @@ public class PortalServiceSoap {
 		}
 	}
 
+	public static int testGetBuildNumber() throws RemoteException {
+		try {
+			int returnValue = PortalServiceUtil.testGetBuildNumber();
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void testGetUserId() throws RemoteException {
 		try {
 			PortalServiceUtil.testGetUserId();

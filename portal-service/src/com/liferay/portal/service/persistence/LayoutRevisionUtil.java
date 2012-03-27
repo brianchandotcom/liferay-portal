@@ -1714,14 +1714,13 @@ public class LayoutRevisionUtil {
 	* @param layoutSetBranchId the layout set branch ID
 	* @param head the head
 	* @param plid the plid
-	* @return the layout revision that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.LayoutRevision removeByL_H_P(
-		long layoutSetBranchId, boolean head, long plid)
+	public static void removeByL_H_P(long layoutSetBranchId, boolean head,
+		long plid)
 		throws com.liferay.portal.NoSuchLayoutRevisionException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByL_H_P(layoutSetBranchId, head, plid);
+		getPersistence().removeByL_H_P(layoutSetBranchId, head, plid);
 	}
 
 	/**

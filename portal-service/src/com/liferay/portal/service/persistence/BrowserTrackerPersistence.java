@@ -180,10 +180,9 @@ public interface BrowserTrackerPersistence extends BasePersistence<BrowserTracke
 	* Removes the browser tracker where userId = &#63; from the database.
 	*
 	* @param userId the user ID
-	* @return the browser tracker that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.BrowserTracker removeByUserId(long userId)
+	public void removeByUserId(long userId)
 		throws com.liferay.portal.NoSuchBrowserTrackerException,
 			com.liferay.portal.kernel.exception.SystemException;
 

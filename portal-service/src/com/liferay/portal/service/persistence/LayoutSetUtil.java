@@ -557,14 +557,12 @@ public class LayoutSetUtil {
 	*
 	* @param groupId the group ID
 	* @param privateLayout the private layout
-	* @return the layout set that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.LayoutSet removeByG_P(long groupId,
-		boolean privateLayout)
+	public static void removeByG_P(long groupId, boolean privateLayout)
 		throws com.liferay.portal.NoSuchLayoutSetException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByG_P(groupId, privateLayout);
+		getPersistence().removeByG_P(groupId, privateLayout);
 	}
 
 	/**

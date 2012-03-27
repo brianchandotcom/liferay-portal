@@ -281,14 +281,12 @@ public class ClassNameUtil {
 	* Removes the class name where value = &#63; from the database.
 	*
 	* @param value the value
-	* @return the class name that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.ClassName removeByValue(
-		java.lang.String value)
+	public static void removeByValue(java.lang.String value)
 		throws com.liferay.portal.NoSuchClassNameException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByValue(value);
+		getPersistence().removeByValue(value);
 	}
 
 	/**

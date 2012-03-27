@@ -482,14 +482,12 @@ public class PasswordPolicyRelUtil {
 	*
 	* @param classNameId the class name ID
 	* @param classPK the class p k
-	* @return the password policy rel that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.PasswordPolicyRel removeByC_C(
-		long classNameId, long classPK)
+	public static void removeByC_C(long classNameId, long classPK)
 		throws com.liferay.portal.NoSuchPasswordPolicyRelException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByC_C(classNameId, classPK);
+		getPersistence().removeByC_C(classNameId, classPK);
 	}
 
 	/**
@@ -498,15 +496,13 @@ public class PasswordPolicyRelUtil {
 	* @param passwordPolicyId the password policy ID
 	* @param classNameId the class name ID
 	* @param classPK the class p k
-	* @return the password policy rel that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.PasswordPolicyRel removeByP_C_C(
-		long passwordPolicyId, long classNameId, long classPK)
+	public static void removeByP_C_C(long passwordPolicyId, long classNameId,
+		long classPK)
 		throws com.liferay.portal.NoSuchPasswordPolicyRelException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .removeByP_C_C(passwordPolicyId, classNameId, classPK);
+		getPersistence().removeByP_C_C(passwordPolicyId, classNameId, classPK);
 	}
 
 	/**

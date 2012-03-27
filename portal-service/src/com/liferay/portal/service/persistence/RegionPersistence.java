@@ -519,11 +519,9 @@ public interface RegionPersistence extends BasePersistence<Region> {
 	*
 	* @param countryId the country ID
 	* @param regionCode the region code
-	* @return the region that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.Region removeByC_R(long countryId,
-		java.lang.String regionCode)
+	public void removeByC_R(long countryId, java.lang.String regionCode)
 		throws com.liferay.portal.NoSuchRegionException,
 			com.liferay.portal.kernel.exception.SystemException;
 

@@ -178,11 +178,9 @@ public interface ReleasePersistence extends BasePersistence<Release> {
 	* Removes the release where servletContextName = &#63; from the database.
 	*
 	* @param servletContextName the servlet context name
-	* @return the release that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.Release removeByServletContextName(
-		java.lang.String servletContextName)
+	public void removeByServletContextName(java.lang.String servletContextName)
 		throws com.liferay.portal.NoSuchReleaseException,
 			com.liferay.portal.kernel.exception.SystemException;
 

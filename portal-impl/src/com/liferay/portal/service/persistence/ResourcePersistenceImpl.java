@@ -1138,14 +1138,13 @@ public class ResourcePersistenceImpl extends BasePersistenceImpl<Resource>
 	 *
 	 * @param codeId the code ID
 	 * @param primKey the prim key
-	 * @return the resource that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Resource removeByC_P(long codeId, String primKey)
+	public void removeByC_P(long codeId, String primKey)
 		throws NoSuchResourceException, SystemException {
 		Resource resource = findByC_P(codeId, primKey);
 
-		return remove(resource);
+		remove(resource);
 	}
 
 	/**
@@ -1396,8 +1395,6 @@ public class ResourcePersistenceImpl extends BasePersistenceImpl<Resource>
 	protected MembershipRequestPersistence membershipRequestPersistence;
 	@BeanReference(type = OrganizationPersistence.class)
 	protected OrganizationPersistence organizationPersistence;
-	@BeanReference(type = OrgGroupPermissionPersistence.class)
-	protected OrgGroupPermissionPersistence orgGroupPermissionPersistence;
 	@BeanReference(type = OrgGroupRolePersistence.class)
 	protected OrgGroupRolePersistence orgGroupRolePersistence;
 	@BeanReference(type = OrgLaborPersistence.class)
@@ -1408,8 +1405,6 @@ public class ResourcePersistenceImpl extends BasePersistenceImpl<Resource>
 	protected PasswordPolicyRelPersistence passwordPolicyRelPersistence;
 	@BeanReference(type = PasswordTrackerPersistence.class)
 	protected PasswordTrackerPersistence passwordTrackerPersistence;
-	@BeanReference(type = PermissionPersistence.class)
-	protected PermissionPersistence permissionPersistence;
 	@BeanReference(type = PhonePersistence.class)
 	protected PhonePersistence phonePersistence;
 	@BeanReference(type = PluginSettingPersistence.class)

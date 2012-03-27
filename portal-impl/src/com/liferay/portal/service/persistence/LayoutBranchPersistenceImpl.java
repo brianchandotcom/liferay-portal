@@ -1836,14 +1836,13 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param plid the plid
 	 * @param name the name
-	 * @return the layout branch that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public LayoutBranch removeByL_P_N(long layoutSetBranchId, long plid,
-		String name) throws NoSuchLayoutBranchException, SystemException {
+	public void removeByL_P_N(long layoutSetBranchId, long plid, String name)
+		throws NoSuchLayoutBranchException, SystemException {
 		LayoutBranch layoutBranch = findByL_P_N(layoutSetBranchId, plid, name);
 
-		return remove(layoutBranch);
+		remove(layoutBranch);
 	}
 
 	/**
@@ -1852,14 +1851,13 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param plid the plid
 	 * @param master the master
-	 * @return the layout branch that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public LayoutBranch removeByL_P_M(long layoutSetBranchId, long plid,
-		boolean master) throws NoSuchLayoutBranchException, SystemException {
+	public void removeByL_P_M(long layoutSetBranchId, long plid, boolean master)
+		throws NoSuchLayoutBranchException, SystemException {
 		LayoutBranch layoutBranch = findByL_P_M(layoutSetBranchId, plid, master);
 
-		return remove(layoutBranch);
+		remove(layoutBranch);
 	}
 
 	/**
@@ -2239,8 +2237,6 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	protected MembershipRequestPersistence membershipRequestPersistence;
 	@BeanReference(type = OrganizationPersistence.class)
 	protected OrganizationPersistence organizationPersistence;
-	@BeanReference(type = OrgGroupPermissionPersistence.class)
-	protected OrgGroupPermissionPersistence orgGroupPermissionPersistence;
 	@BeanReference(type = OrgGroupRolePersistence.class)
 	protected OrgGroupRolePersistence orgGroupRolePersistence;
 	@BeanReference(type = OrgLaborPersistence.class)
@@ -2251,8 +2247,6 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	protected PasswordPolicyRelPersistence passwordPolicyRelPersistence;
 	@BeanReference(type = PasswordTrackerPersistence.class)
 	protected PasswordTrackerPersistence passwordTrackerPersistence;
-	@BeanReference(type = PermissionPersistence.class)
-	protected PermissionPersistence permissionPersistence;
 	@BeanReference(type = PhonePersistence.class)
 	protected PhonePersistence phonePersistence;
 	@BeanReference(type = PluginSettingPersistence.class)
@@ -2273,8 +2267,6 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	protected RepositoryPersistence repositoryPersistence;
 	@BeanReference(type = RepositoryEntryPersistence.class)
 	protected RepositoryEntryPersistence repositoryEntryPersistence;
-	@BeanReference(type = ResourcePersistence.class)
-	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = ResourceActionPersistence.class)
 	protected ResourceActionPersistence resourceActionPersistence;
 	@BeanReference(type = ResourceBlockPersistence.class)

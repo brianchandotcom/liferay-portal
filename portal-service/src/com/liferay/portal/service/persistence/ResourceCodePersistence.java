@@ -415,11 +415,9 @@ public interface ResourceCodePersistence extends BasePersistence<ResourceCode> {
 	* @param companyId the company ID
 	* @param name the name
 	* @param scope the scope
-	* @return the resource code that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.ResourceCode removeByC_N_S(long companyId,
-		java.lang.String name, int scope)
+	public void removeByC_N_S(long companyId, java.lang.String name, int scope)
 		throws com.liferay.portal.NoSuchResourceCodeException,
 			com.liferay.portal.kernel.exception.SystemException;
 

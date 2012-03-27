@@ -5975,14 +5975,13 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the layout that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Layout removeByUUID_G(String uuid, long groupId)
+	public void removeByUUID_G(String uuid, long groupId)
 		throws NoSuchLayoutException, SystemException {
 		Layout layout = findByUUID_G(uuid, groupId);
 
-		return remove(layout);
+		remove(layout);
 	}
 
 	/**
@@ -6013,14 +6012,13 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 * Removes the layout where iconImageId = &#63; from the database.
 	 *
 	 * @param iconImageId the icon image ID
-	 * @return the layout that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Layout removeByIconImageId(long iconImageId)
+	public void removeByIconImageId(long iconImageId)
 		throws NoSuchLayoutException, SystemException {
 		Layout layout = findByIconImageId(iconImageId);
 
-		return remove(layout);
+		remove(layout);
 	}
 
 	/**
@@ -6056,14 +6054,13 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param layoutId the layout ID
-	 * @return the layout that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Layout removeByG_P_L(long groupId, boolean privateLayout,
-		long layoutId) throws NoSuchLayoutException, SystemException {
+	public void removeByG_P_L(long groupId, boolean privateLayout, long layoutId)
+		throws NoSuchLayoutException, SystemException {
 		Layout layout = findByG_P_L(groupId, privateLayout, layoutId);
 
-		return remove(layout);
+		remove(layout);
 	}
 
 	/**
@@ -6087,14 +6084,13 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param friendlyURL the friendly u r l
-	 * @return the layout that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Layout removeByG_P_F(long groupId, boolean privateLayout,
+	public void removeByG_P_F(long groupId, boolean privateLayout,
 		String friendlyURL) throws NoSuchLayoutException, SystemException {
 		Layout layout = findByG_P_F(groupId, privateLayout, friendlyURL);
 
-		return remove(layout);
+		remove(layout);
 	}
 
 	/**
@@ -6118,16 +6114,15 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
-	 * @return the layout that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Layout removeByG_P_SPLU(long groupId, boolean privateLayout,
+	public void removeByG_P_SPLU(long groupId, boolean privateLayout,
 		String sourcePrototypeLayoutUuid)
 		throws NoSuchLayoutException, SystemException {
 		Layout layout = findByG_P_SPLU(groupId, privateLayout,
 				sourcePrototypeLayoutUuid);
 
-		return remove(layout);
+		remove(layout);
 	}
 
 	/**
@@ -7266,8 +7261,6 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	protected MembershipRequestPersistence membershipRequestPersistence;
 	@BeanReference(type = OrganizationPersistence.class)
 	protected OrganizationPersistence organizationPersistence;
-	@BeanReference(type = OrgGroupPermissionPersistence.class)
-	protected OrgGroupPermissionPersistence orgGroupPermissionPersistence;
 	@BeanReference(type = OrgGroupRolePersistence.class)
 	protected OrgGroupRolePersistence orgGroupRolePersistence;
 	@BeanReference(type = OrgLaborPersistence.class)
@@ -7278,8 +7271,6 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	protected PasswordPolicyRelPersistence passwordPolicyRelPersistence;
 	@BeanReference(type = PasswordTrackerPersistence.class)
 	protected PasswordTrackerPersistence passwordTrackerPersistence;
-	@BeanReference(type = PermissionPersistence.class)
-	protected PermissionPersistence permissionPersistence;
 	@BeanReference(type = PhonePersistence.class)
 	protected PhonePersistence phonePersistence;
 	@BeanReference(type = PluginSettingPersistence.class)
@@ -7300,8 +7291,6 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	protected RepositoryPersistence repositoryPersistence;
 	@BeanReference(type = RepositoryEntryPersistence.class)
 	protected RepositoryEntryPersistence repositoryEntryPersistence;
-	@BeanReference(type = ResourcePersistence.class)
-	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = ResourceActionPersistence.class)
 	protected ResourceActionPersistence resourceActionPersistence;
 	@BeanReference(type = ResourceBlockPersistence.class)

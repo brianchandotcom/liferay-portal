@@ -419,14 +419,13 @@ public class ResourceActionUtil {
 	*
 	* @param name the name
 	* @param actionId the action ID
-	* @return the resource action that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.ResourceAction removeByN_A(
-		java.lang.String name, java.lang.String actionId)
+	public static void removeByN_A(java.lang.String name,
+		java.lang.String actionId)
 		throws com.liferay.portal.NoSuchResourceActionException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByN_A(name, actionId);
+		getPersistence().removeByN_A(name, actionId);
 	}
 
 	/**

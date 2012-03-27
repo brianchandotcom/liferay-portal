@@ -483,42 +483,36 @@ public class CountryUtil {
 	* Removes the country where name = &#63; from the database.
 	*
 	* @param name the name
-	* @return the country that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.Country removeByName(
-		java.lang.String name)
+	public static void removeByName(java.lang.String name)
 		throws com.liferay.portal.NoSuchCountryException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByName(name);
+		getPersistence().removeByName(name);
 	}
 
 	/**
 	* Removes the country where a2 = &#63; from the database.
 	*
 	* @param a2 the a2
-	* @return the country that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.Country removeByA2(
-		java.lang.String a2)
+	public static void removeByA2(java.lang.String a2)
 		throws com.liferay.portal.NoSuchCountryException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByA2(a2);
+		getPersistence().removeByA2(a2);
 	}
 
 	/**
 	* Removes the country where a3 = &#63; from the database.
 	*
 	* @param a3 the a3
-	* @return the country that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.Country removeByA3(
-		java.lang.String a3)
+	public static void removeByA3(java.lang.String a3)
 		throws com.liferay.portal.NoSuchCountryException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByA3(a3);
+		getPersistence().removeByA3(a3);
 	}
 
 	/**

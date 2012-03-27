@@ -1462,42 +1462,39 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	 * Removes the country where name = &#63; from the database.
 	 *
 	 * @param name the name
-	 * @return the country that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Country removeByName(String name)
+	public void removeByName(String name)
 		throws NoSuchCountryException, SystemException {
 		Country country = findByName(name);
 
-		return remove(country);
+		remove(country);
 	}
 
 	/**
 	 * Removes the country where a2 = &#63; from the database.
 	 *
 	 * @param a2 the a2
-	 * @return the country that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Country removeByA2(String a2)
+	public void removeByA2(String a2)
 		throws NoSuchCountryException, SystemException {
 		Country country = findByA2(a2);
 
-		return remove(country);
+		remove(country);
 	}
 
 	/**
 	 * Removes the country where a3 = &#63; from the database.
 	 *
 	 * @param a3 the a3
-	 * @return the country that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Country removeByA3(String a3)
+	public void removeByA3(String a3)
 		throws NoSuchCountryException, SystemException {
 		Country country = findByA3(a3);
 
-		return remove(country);
+		remove(country);
 	}
 
 	/**
@@ -1884,8 +1881,6 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	protected MembershipRequestPersistence membershipRequestPersistence;
 	@BeanReference(type = OrganizationPersistence.class)
 	protected OrganizationPersistence organizationPersistence;
-	@BeanReference(type = OrgGroupPermissionPersistence.class)
-	protected OrgGroupPermissionPersistence orgGroupPermissionPersistence;
 	@BeanReference(type = OrgGroupRolePersistence.class)
 	protected OrgGroupRolePersistence orgGroupRolePersistence;
 	@BeanReference(type = OrgLaborPersistence.class)
@@ -1896,8 +1891,6 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	protected PasswordPolicyRelPersistence passwordPolicyRelPersistence;
 	@BeanReference(type = PasswordTrackerPersistence.class)
 	protected PasswordTrackerPersistence passwordTrackerPersistence;
-	@BeanReference(type = PermissionPersistence.class)
-	protected PermissionPersistence permissionPersistence;
 	@BeanReference(type = PhonePersistence.class)
 	protected PhonePersistence phonePersistence;
 	@BeanReference(type = PluginSettingPersistence.class)
@@ -1918,8 +1911,6 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	protected RepositoryPersistence repositoryPersistence;
 	@BeanReference(type = RepositoryEntryPersistence.class)
 	protected RepositoryEntryPersistence repositoryEntryPersistence;
-	@BeanReference(type = ResourcePersistence.class)
-	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = ResourceActionPersistence.class)
 	protected ResourceActionPersistence resourceActionPersistence;
 	@BeanReference(type = ResourceBlockPersistence.class)

@@ -69,8 +69,6 @@ import com.liferay.portal.service.PasswordPolicyLocalService;
 import com.liferay.portal.service.PasswordPolicyRelLocalService;
 import com.liferay.portal.service.PasswordPolicyService;
 import com.liferay.portal.service.PasswordTrackerLocalService;
-import com.liferay.portal.service.PermissionLocalService;
-import com.liferay.portal.service.PermissionService;
 import com.liferay.portal.service.PhoneLocalService;
 import com.liferay.portal.service.PhoneService;
 import com.liferay.portal.service.PluginSettingLocalService;
@@ -97,7 +95,6 @@ import com.liferay.portal.service.ResourceCodeLocalService;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.ResourcePermissionLocalService;
 import com.liferay.portal.service.ResourcePermissionService;
-import com.liferay.portal.service.ResourceService;
 import com.liferay.portal.service.ResourceTypePermissionLocalService;
 import com.liferay.portal.service.RoleLocalService;
 import com.liferay.portal.service.RoleService;
@@ -152,8 +149,6 @@ import com.liferay.portal.service.persistence.ListTypePersistence;
 import com.liferay.portal.service.persistence.LockFinder;
 import com.liferay.portal.service.persistence.LockPersistence;
 import com.liferay.portal.service.persistence.MembershipRequestPersistence;
-import com.liferay.portal.service.persistence.OrgGroupPermissionFinder;
-import com.liferay.portal.service.persistence.OrgGroupPermissionPersistence;
 import com.liferay.portal.service.persistence.OrgGroupRolePersistence;
 import com.liferay.portal.service.persistence.OrgLaborPersistence;
 import com.liferay.portal.service.persistence.OrganizationFinder;
@@ -162,8 +157,6 @@ import com.liferay.portal.service.persistence.PasswordPolicyFinder;
 import com.liferay.portal.service.persistence.PasswordPolicyPersistence;
 import com.liferay.portal.service.persistence.PasswordPolicyRelPersistence;
 import com.liferay.portal.service.persistence.PasswordTrackerPersistence;
-import com.liferay.portal.service.persistence.PermissionFinder;
-import com.liferay.portal.service.persistence.PermissionPersistence;
 import com.liferay.portal.service.persistence.PhonePersistence;
 import com.liferay.portal.service.persistence.PluginSettingPersistence;
 import com.liferay.portal.service.persistence.PortalPreferencesPersistence;
@@ -183,7 +176,6 @@ import com.liferay.portal.service.persistence.ResourceCodePersistence;
 import com.liferay.portal.service.persistence.ResourceFinder;
 import com.liferay.portal.service.persistence.ResourcePermissionFinder;
 import com.liferay.portal.service.persistence.ResourcePermissionPersistence;
-import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.ResourceTypePermissionFinder;
 import com.liferay.portal.service.persistence.ResourceTypePermissionPersistence;
 import com.liferay.portal.service.persistence.RoleFinder;
@@ -1490,44 +1482,6 @@ public abstract class ListTypeServiceBaseImpl extends PrincipalBean
 	}
 
 	/**
-	 * Returns the org group permission persistence.
-	 *
-	 * @return the org group permission persistence
-	 */
-	public OrgGroupPermissionPersistence getOrgGroupPermissionPersistence() {
-		return orgGroupPermissionPersistence;
-	}
-
-	/**
-	 * Sets the org group permission persistence.
-	 *
-	 * @param orgGroupPermissionPersistence the org group permission persistence
-	 */
-	public void setOrgGroupPermissionPersistence(
-		OrgGroupPermissionPersistence orgGroupPermissionPersistence) {
-		this.orgGroupPermissionPersistence = orgGroupPermissionPersistence;
-	}
-
-	/**
-	 * Returns the org group permission finder.
-	 *
-	 * @return the org group permission finder
-	 */
-	public OrgGroupPermissionFinder getOrgGroupPermissionFinder() {
-		return orgGroupPermissionFinder;
-	}
-
-	/**
-	 * Sets the org group permission finder.
-	 *
-	 * @param orgGroupPermissionFinder the org group permission finder
-	 */
-	public void setOrgGroupPermissionFinder(
-		OrgGroupPermissionFinder orgGroupPermissionFinder) {
-		this.orgGroupPermissionFinder = orgGroupPermissionFinder;
-	}
-
-	/**
 	 * Returns the org group role persistence.
 	 *
 	 * @return the org group role persistence
@@ -1751,80 +1705,6 @@ public abstract class ListTypeServiceBaseImpl extends PrincipalBean
 	public void setPasswordTrackerPersistence(
 		PasswordTrackerPersistence passwordTrackerPersistence) {
 		this.passwordTrackerPersistence = passwordTrackerPersistence;
-	}
-
-	/**
-	 * Returns the permission local service.
-	 *
-	 * @return the permission local service
-	 */
-	public PermissionLocalService getPermissionLocalService() {
-		return permissionLocalService;
-	}
-
-	/**
-	 * Sets the permission local service.
-	 *
-	 * @param permissionLocalService the permission local service
-	 */
-	public void setPermissionLocalService(
-		PermissionLocalService permissionLocalService) {
-		this.permissionLocalService = permissionLocalService;
-	}
-
-	/**
-	 * Returns the permission remote service.
-	 *
-	 * @return the permission remote service
-	 */
-	public PermissionService getPermissionService() {
-		return permissionService;
-	}
-
-	/**
-	 * Sets the permission remote service.
-	 *
-	 * @param permissionService the permission remote service
-	 */
-	public void setPermissionService(PermissionService permissionService) {
-		this.permissionService = permissionService;
-	}
-
-	/**
-	 * Returns the permission persistence.
-	 *
-	 * @return the permission persistence
-	 */
-	public PermissionPersistence getPermissionPersistence() {
-		return permissionPersistence;
-	}
-
-	/**
-	 * Sets the permission persistence.
-	 *
-	 * @param permissionPersistence the permission persistence
-	 */
-	public void setPermissionPersistence(
-		PermissionPersistence permissionPersistence) {
-		this.permissionPersistence = permissionPersistence;
-	}
-
-	/**
-	 * Returns the permission finder.
-	 *
-	 * @return the permission finder
-	 */
-	public PermissionFinder getPermissionFinder() {
-		return permissionFinder;
-	}
-
-	/**
-	 * Sets the permission finder.
-	 *
-	 * @param permissionFinder the permission finder
-	 */
-	public void setPermissionFinder(PermissionFinder permissionFinder) {
-		this.permissionFinder = permissionFinder;
 	}
 
 	/**
@@ -2381,42 +2261,6 @@ public abstract class ListTypeServiceBaseImpl extends PrincipalBean
 	public void setResourceLocalService(
 		ResourceLocalService resourceLocalService) {
 		this.resourceLocalService = resourceLocalService;
-	}
-
-	/**
-	 * Returns the resource remote service.
-	 *
-	 * @return the resource remote service
-	 */
-	public ResourceService getResourceService() {
-		return resourceService;
-	}
-
-	/**
-	 * Sets the resource remote service.
-	 *
-	 * @param resourceService the resource remote service
-	 */
-	public void setResourceService(ResourceService resourceService) {
-		this.resourceService = resourceService;
-	}
-
-	/**
-	 * Returns the resource persistence.
-	 *
-	 * @return the resource persistence
-	 */
-	public ResourcePersistence getResourcePersistence() {
-		return resourcePersistence;
-	}
-
-	/**
-	 * Sets the resource persistence.
-	 *
-	 * @param resourcePersistence the resource persistence
-	 */
-	public void setResourcePersistence(ResourcePersistence resourcePersistence) {
-		this.resourcePersistence = resourcePersistence;
 	}
 
 	/**
@@ -3934,10 +3778,6 @@ public abstract class ListTypeServiceBaseImpl extends PrincipalBean
 	protected OrganizationPersistence organizationPersistence;
 	@BeanReference(type = OrganizationFinder.class)
 	protected OrganizationFinder organizationFinder;
-	@BeanReference(type = OrgGroupPermissionPersistence.class)
-	protected OrgGroupPermissionPersistence orgGroupPermissionPersistence;
-	@BeanReference(type = OrgGroupPermissionFinder.class)
-	protected OrgGroupPermissionFinder orgGroupPermissionFinder;
 	@BeanReference(type = OrgGroupRolePersistence.class)
 	protected OrgGroupRolePersistence orgGroupRolePersistence;
 	@BeanReference(type = OrgLaborLocalService.class)
@@ -3962,14 +3802,6 @@ public abstract class ListTypeServiceBaseImpl extends PrincipalBean
 	protected PasswordTrackerLocalService passwordTrackerLocalService;
 	@BeanReference(type = PasswordTrackerPersistence.class)
 	protected PasswordTrackerPersistence passwordTrackerPersistence;
-	@BeanReference(type = PermissionLocalService.class)
-	protected PermissionLocalService permissionLocalService;
-	@BeanReference(type = PermissionService.class)
-	protected PermissionService permissionService;
-	@BeanReference(type = PermissionPersistence.class)
-	protected PermissionPersistence permissionPersistence;
-	@BeanReference(type = PermissionFinder.class)
-	protected PermissionFinder permissionFinder;
 	@BeanReference(type = PhoneLocalService.class)
 	protected PhoneLocalService phoneLocalService;
 	@BeanReference(type = PhoneService.class)
@@ -4030,10 +3862,6 @@ public abstract class ListTypeServiceBaseImpl extends PrincipalBean
 	protected RepositoryEntryPersistence repositoryEntryPersistence;
 	@BeanReference(type = ResourceLocalService.class)
 	protected ResourceLocalService resourceLocalService;
-	@BeanReference(type = ResourceService.class)
-	protected ResourceService resourceService;
-	@BeanReference(type = ResourcePersistence.class)
-	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = ResourceFinder.class)
 	protected ResourceFinder resourceFinder;
 	@BeanReference(type = ResourceActionLocalService.class)

@@ -296,11 +296,9 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	*
 	* @param companyId the company ID
 	* @param portletId the portlet ID
-	* @return the portlet that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.Portlet removeByC_P(long companyId,
-		java.lang.String portletId)
+	public void removeByC_P(long companyId, java.lang.String portletId)
 		throws com.liferay.portal.NoSuchPortletException,
 			com.liferay.portal.kernel.exception.SystemException;
 

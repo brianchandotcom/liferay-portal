@@ -334,14 +334,12 @@ public class PasswordPolicyUtil {
 	*
 	* @param companyId the company ID
 	* @param defaultPolicy the default policy
-	* @return the password policy that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.PasswordPolicy removeByC_DP(
-		long companyId, boolean defaultPolicy)
+	public static void removeByC_DP(long companyId, boolean defaultPolicy)
 		throws com.liferay.portal.NoSuchPasswordPolicyException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByC_DP(companyId, defaultPolicy);
+		getPersistence().removeByC_DP(companyId, defaultPolicy);
 	}
 
 	/**
@@ -349,14 +347,12 @@ public class PasswordPolicyUtil {
 	*
 	* @param companyId the company ID
 	* @param name the name
-	* @return the password policy that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.PasswordPolicy removeByC_N(
-		long companyId, java.lang.String name)
+	public static void removeByC_N(long companyId, java.lang.String name)
 		throws com.liferay.portal.NoSuchPasswordPolicyException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByC_N(companyId, name);
+		getPersistence().removeByC_N(companyId, name);
 	}
 
 	/**

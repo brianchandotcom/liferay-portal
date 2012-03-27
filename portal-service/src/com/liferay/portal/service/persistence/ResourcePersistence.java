@@ -294,11 +294,9 @@ public interface ResourcePersistence extends BasePersistence<Resource> {
 	*
 	* @param codeId the code ID
 	* @param primKey the prim key
-	* @return the resource that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.Resource removeByC_P(long codeId,
-		java.lang.String primKey)
+	public void removeByC_P(long codeId, java.lang.String primKey)
 		throws com.liferay.portal.NoSuchResourceException,
 			com.liferay.portal.kernel.exception.SystemException;
 

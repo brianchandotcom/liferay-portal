@@ -20,14 +20,8 @@ import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.search.Indexable;
-import com.liferay.portal.kernel.search.IndexableType;
-import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.model.PersistedModel;
-import com.liferay.portal.model.Resource;
+import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.service.AccountLocalService;
 import com.liferay.portal.service.AccountService;
 import com.liferay.portal.service.AddressLocalService;
@@ -75,9 +69,6 @@ import com.liferay.portal.service.PasswordPolicyLocalService;
 import com.liferay.portal.service.PasswordPolicyRelLocalService;
 import com.liferay.portal.service.PasswordPolicyService;
 import com.liferay.portal.service.PasswordTrackerLocalService;
-import com.liferay.portal.service.PermissionLocalService;
-import com.liferay.portal.service.PermissionService;
-import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.PhoneLocalService;
 import com.liferay.portal.service.PhoneService;
 import com.liferay.portal.service.PluginSettingLocalService;
@@ -104,7 +95,6 @@ import com.liferay.portal.service.ResourceCodeLocalService;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.ResourcePermissionLocalService;
 import com.liferay.portal.service.ResourcePermissionService;
-import com.liferay.portal.service.ResourceService;
 import com.liferay.portal.service.ResourceTypePermissionLocalService;
 import com.liferay.portal.service.RoleLocalService;
 import com.liferay.portal.service.RoleService;
@@ -159,8 +149,6 @@ import com.liferay.portal.service.persistence.ListTypePersistence;
 import com.liferay.portal.service.persistence.LockFinder;
 import com.liferay.portal.service.persistence.LockPersistence;
 import com.liferay.portal.service.persistence.MembershipRequestPersistence;
-import com.liferay.portal.service.persistence.OrgGroupPermissionFinder;
-import com.liferay.portal.service.persistence.OrgGroupPermissionPersistence;
 import com.liferay.portal.service.persistence.OrgGroupRolePersistence;
 import com.liferay.portal.service.persistence.OrgLaborPersistence;
 import com.liferay.portal.service.persistence.OrganizationFinder;
@@ -169,8 +157,6 @@ import com.liferay.portal.service.persistence.PasswordPolicyFinder;
 import com.liferay.portal.service.persistence.PasswordPolicyPersistence;
 import com.liferay.portal.service.persistence.PasswordPolicyRelPersistence;
 import com.liferay.portal.service.persistence.PasswordTrackerPersistence;
-import com.liferay.portal.service.persistence.PermissionFinder;
-import com.liferay.portal.service.persistence.PermissionPersistence;
 import com.liferay.portal.service.persistence.PhonePersistence;
 import com.liferay.portal.service.persistence.PluginSettingPersistence;
 import com.liferay.portal.service.persistence.PortalPreferencesPersistence;
@@ -190,7 +176,6 @@ import com.liferay.portal.service.persistence.ResourceCodePersistence;
 import com.liferay.portal.service.persistence.ResourceFinder;
 import com.liferay.portal.service.persistence.ResourcePermissionFinder;
 import com.liferay.portal.service.persistence.ResourcePermissionPersistence;
-import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.ResourceTypePermissionFinder;
 import com.liferay.portal.service.persistence.ResourceTypePermissionPersistence;
 import com.liferay.portal.service.persistence.RoleFinder;
@@ -218,10 +203,6 @@ import com.liferay.portal.service.persistence.WebsitePersistence;
 import com.liferay.portal.service.persistence.WorkflowDefinitionLinkPersistence;
 import com.liferay.portal.service.persistence.WorkflowInstanceLinkPersistence;
 
-import java.io.Serializable;
-
-import java.util.List;
-
 import javax.sql.DataSource;
 
 /**
@@ -243,198 +224,6 @@ public abstract class ResourceLocalServiceBaseImpl
 	 *
 	 * Never modify or reference this class directly. Always use {@link com.liferay.portal.service.ResourceLocalServiceUtil} to access the resource local service.
 	 */
-
-	/**
-	 * Adds the resource to the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param resource the resource
-	 * @return the resource that was added
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public Resource addResource(Resource resource) throws SystemException {
-		resource.setNew(true);
-
-		return resourcePersistence.update(resource, false);
-	}
-
-	/**
-	 * Creates a new resource with the primary key. Does not add the resource to the database.
-	 *
-	 * @param resourceId the primary key for the new resource
-	 * @return the new resource
-	 */
-	public Resource createResource(long resourceId) {
-		return resourcePersistence.create(resourceId);
-	}
-
-	/**
-	 * Deletes the resource with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param resourceId the primary key of the resource
-	 * @return the resource that was removed
-	 * @throws PortalException if a resource with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.DELETE)
-	public Resource deleteResource(long resourceId)
-		throws PortalException, SystemException {
-		return resourcePersistence.remove(resourceId);
-	}
-
-	/**
-	 * Deletes the resource from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param resource the resource
-	 * @return the resource that was removed
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.DELETE)
-	public Resource deleteResource(Resource resource) throws SystemException {
-		return resourcePersistence.remove(resource);
-	}
-
-	/**
-	 * Performs a dynamic query on the database and returns the matching rows.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
-	 */
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
-		return resourcePersistence.findWithDynamicQuery(dynamicQuery);
-	}
-
-	/**
-	 * Performs a dynamic query on the database and returns a range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
-	 */
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
-		return resourcePersistence.findWithDynamicQuery(dynamicQuery, start, end);
-	}
-
-	/**
-	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
-	 */
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
-		return resourcePersistence.findWithDynamicQuery(dynamicQuery, start,
-			end, orderByComparator);
-	}
-
-	/**
-	 * Returns the number of rows that match the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
-	 */
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
-		return resourcePersistence.countWithDynamicQuery(dynamicQuery);
-	}
-
-	public Resource fetchResource(long resourceId) throws SystemException {
-		return resourcePersistence.fetchByPrimaryKey(resourceId);
-	}
-
-	/**
-	 * Returns the resource with the primary key.
-	 *
-	 * @param resourceId the primary key of the resource
-	 * @return the resource
-	 * @throws PortalException if a resource with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Resource getResource(long resourceId)
-		throws PortalException, SystemException {
-		return resourcePersistence.findByPrimaryKey(resourceId);
-	}
-
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
-		return resourcePersistence.findByPrimaryKey(primaryKeyObj);
-	}
-
-	/**
-	 * Returns a range of all the resources.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of resources
-	 * @param end the upper bound of the range of resources (not inclusive)
-	 * @return the range of resources
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<Resource> getResources(int start, int end)
-		throws SystemException {
-		return resourcePersistence.findAll(start, end);
-	}
-
-	/**
-	 * Returns the number of resources.
-	 *
-	 * @return the number of resources
-	 * @throws SystemException if a system exception occurred
-	 */
-	public int getResourcesCount() throws SystemException {
-		return resourcePersistence.countAll();
-	}
-
-	/**
-	 * Updates the resource in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param resource the resource
-	 * @return the resource that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public Resource updateResource(Resource resource) throws SystemException {
-		return updateResource(resource, true);
-	}
-
-	/**
-	 * Updates the resource in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param resource the resource
-	 * @param merge whether to merge the resource with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the resource that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public Resource updateResource(Resource resource, boolean merge)
-		throws SystemException {
-		resource.setNew(false);
-
-		return resourcePersistence.update(resource, merge);
-	}
 
 	/**
 	 * Returns the account local service.
@@ -1693,44 +1482,6 @@ public abstract class ResourceLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the org group permission persistence.
-	 *
-	 * @return the org group permission persistence
-	 */
-	public OrgGroupPermissionPersistence getOrgGroupPermissionPersistence() {
-		return orgGroupPermissionPersistence;
-	}
-
-	/**
-	 * Sets the org group permission persistence.
-	 *
-	 * @param orgGroupPermissionPersistence the org group permission persistence
-	 */
-	public void setOrgGroupPermissionPersistence(
-		OrgGroupPermissionPersistence orgGroupPermissionPersistence) {
-		this.orgGroupPermissionPersistence = orgGroupPermissionPersistence;
-	}
-
-	/**
-	 * Returns the org group permission finder.
-	 *
-	 * @return the org group permission finder
-	 */
-	public OrgGroupPermissionFinder getOrgGroupPermissionFinder() {
-		return orgGroupPermissionFinder;
-	}
-
-	/**
-	 * Sets the org group permission finder.
-	 *
-	 * @param orgGroupPermissionFinder the org group permission finder
-	 */
-	public void setOrgGroupPermissionFinder(
-		OrgGroupPermissionFinder orgGroupPermissionFinder) {
-		this.orgGroupPermissionFinder = orgGroupPermissionFinder;
-	}
-
-	/**
 	 * Returns the org group role persistence.
 	 *
 	 * @return the org group role persistence
@@ -1954,80 +1705,6 @@ public abstract class ResourceLocalServiceBaseImpl
 	public void setPasswordTrackerPersistence(
 		PasswordTrackerPersistence passwordTrackerPersistence) {
 		this.passwordTrackerPersistence = passwordTrackerPersistence;
-	}
-
-	/**
-	 * Returns the permission local service.
-	 *
-	 * @return the permission local service
-	 */
-	public PermissionLocalService getPermissionLocalService() {
-		return permissionLocalService;
-	}
-
-	/**
-	 * Sets the permission local service.
-	 *
-	 * @param permissionLocalService the permission local service
-	 */
-	public void setPermissionLocalService(
-		PermissionLocalService permissionLocalService) {
-		this.permissionLocalService = permissionLocalService;
-	}
-
-	/**
-	 * Returns the permission remote service.
-	 *
-	 * @return the permission remote service
-	 */
-	public PermissionService getPermissionService() {
-		return permissionService;
-	}
-
-	/**
-	 * Sets the permission remote service.
-	 *
-	 * @param permissionService the permission remote service
-	 */
-	public void setPermissionService(PermissionService permissionService) {
-		this.permissionService = permissionService;
-	}
-
-	/**
-	 * Returns the permission persistence.
-	 *
-	 * @return the permission persistence
-	 */
-	public PermissionPersistence getPermissionPersistence() {
-		return permissionPersistence;
-	}
-
-	/**
-	 * Sets the permission persistence.
-	 *
-	 * @param permissionPersistence the permission persistence
-	 */
-	public void setPermissionPersistence(
-		PermissionPersistence permissionPersistence) {
-		this.permissionPersistence = permissionPersistence;
-	}
-
-	/**
-	 * Returns the permission finder.
-	 *
-	 * @return the permission finder
-	 */
-	public PermissionFinder getPermissionFinder() {
-		return permissionFinder;
-	}
-
-	/**
-	 * Sets the permission finder.
-	 *
-	 * @param permissionFinder the permission finder
-	 */
-	public void setPermissionFinder(PermissionFinder permissionFinder) {
-		this.permissionFinder = permissionFinder;
 	}
 
 	/**
@@ -2584,42 +2261,6 @@ public abstract class ResourceLocalServiceBaseImpl
 	public void setResourceLocalService(
 		ResourceLocalService resourceLocalService) {
 		this.resourceLocalService = resourceLocalService;
-	}
-
-	/**
-	 * Returns the resource remote service.
-	 *
-	 * @return the resource remote service
-	 */
-	public ResourceService getResourceService() {
-		return resourceService;
-	}
-
-	/**
-	 * Sets the resource remote service.
-	 *
-	 * @param resourceService the resource remote service
-	 */
-	public void setResourceService(ResourceService resourceService) {
-		this.resourceService = resourceService;
-	}
-
-	/**
-	 * Returns the resource persistence.
-	 *
-	 * @return the resource persistence
-	 */
-	public ResourcePersistence getResourcePersistence() {
-		return resourcePersistence;
-	}
-
-	/**
-	 * Sets the resource persistence.
-	 *
-	 * @param resourcePersistence the resource persistence
-	 */
-	public void setResourcePersistence(ResourcePersistence resourcePersistence) {
-		this.resourcePersistence = resourcePersistence;
 	}
 
 	/**
@@ -3945,13 +3586,9 @@ public abstract class ResourceLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register("com.liferay.portal.model.Resource",
-			resourceLocalService);
 	}
 
 	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.portal.model.Resource");
 	}
 
 	/**
@@ -3978,14 +3615,6 @@ public abstract class ResourceLocalServiceBaseImpl
 		return clazz.getClassLoader();
 	}
 
-	protected Class<?> getModelClass() {
-		return Resource.class;
-	}
-
-	protected String getModelClassName() {
-		return Resource.class.getName();
-	}
-
 	/**
 	 * Performs an SQL query.
 	 *
@@ -3993,7 +3622,7 @@ public abstract class ResourceLocalServiceBaseImpl
 	 */
 	protected void runSQL(String sql) throws SystemException {
 		try {
-			DataSource dataSource = resourcePersistence.getDataSource();
+			DataSource dataSource = InfrastructureUtil.getDataSource();
 
 			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
 					sql, new int[0]);
@@ -4141,10 +3770,6 @@ public abstract class ResourceLocalServiceBaseImpl
 	protected OrganizationPersistence organizationPersistence;
 	@BeanReference(type = OrganizationFinder.class)
 	protected OrganizationFinder organizationFinder;
-	@BeanReference(type = OrgGroupPermissionPersistence.class)
-	protected OrgGroupPermissionPersistence orgGroupPermissionPersistence;
-	@BeanReference(type = OrgGroupPermissionFinder.class)
-	protected OrgGroupPermissionFinder orgGroupPermissionFinder;
 	@BeanReference(type = OrgGroupRolePersistence.class)
 	protected OrgGroupRolePersistence orgGroupRolePersistence;
 	@BeanReference(type = OrgLaborLocalService.class)
@@ -4169,14 +3794,6 @@ public abstract class ResourceLocalServiceBaseImpl
 	protected PasswordTrackerLocalService passwordTrackerLocalService;
 	@BeanReference(type = PasswordTrackerPersistence.class)
 	protected PasswordTrackerPersistence passwordTrackerPersistence;
-	@BeanReference(type = PermissionLocalService.class)
-	protected PermissionLocalService permissionLocalService;
-	@BeanReference(type = PermissionService.class)
-	protected PermissionService permissionService;
-	@BeanReference(type = PermissionPersistence.class)
-	protected PermissionPersistence permissionPersistence;
-	@BeanReference(type = PermissionFinder.class)
-	protected PermissionFinder permissionFinder;
 	@BeanReference(type = PhoneLocalService.class)
 	protected PhoneLocalService phoneLocalService;
 	@BeanReference(type = PhoneService.class)
@@ -4237,10 +3854,6 @@ public abstract class ResourceLocalServiceBaseImpl
 	protected RepositoryEntryPersistence repositoryEntryPersistence;
 	@BeanReference(type = ResourceLocalService.class)
 	protected ResourceLocalService resourceLocalService;
-	@BeanReference(type = ResourceService.class)
-	protected ResourceService resourceService;
-	@BeanReference(type = ResourcePersistence.class)
-	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = ResourceFinder.class)
 	protected ResourceFinder resourceFinder;
 	@BeanReference(type = ResourceActionLocalService.class)
@@ -4383,7 +3996,5 @@ public abstract class ResourceLocalServiceBaseImpl
 	protected WorkflowInstanceLinkPersistence workflowInstanceLinkPersistence;
 	@BeanReference(type = CounterLocalService.class)
 	protected CounterLocalService counterLocalService;
-	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 	private String _beanIdentifier;
 }

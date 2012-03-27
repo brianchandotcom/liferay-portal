@@ -428,14 +428,13 @@ public class PluginSettingUtil {
 	* @param companyId the company ID
 	* @param pluginId the plugin ID
 	* @param pluginType the plugin type
-	* @return the plugin setting that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.PluginSetting removeByC_I_T(
-		long companyId, java.lang.String pluginId, java.lang.String pluginType)
+	public static void removeByC_I_T(long companyId, java.lang.String pluginId,
+		java.lang.String pluginType)
 		throws com.liferay.portal.NoSuchPluginSettingException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByC_I_T(companyId, pluginId, pluginType);
+		getPersistence().removeByC_I_T(companyId, pluginId, pluginType);
 	}
 
 	/**

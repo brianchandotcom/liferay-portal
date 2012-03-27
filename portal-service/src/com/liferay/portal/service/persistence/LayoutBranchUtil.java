@@ -624,14 +624,13 @@ public class LayoutBranchUtil {
 	* @param layoutSetBranchId the layout set branch ID
 	* @param plid the plid
 	* @param name the name
-	* @return the layout branch that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.LayoutBranch removeByL_P_N(
-		long layoutSetBranchId, long plid, java.lang.String name)
+	public static void removeByL_P_N(long layoutSetBranchId, long plid,
+		java.lang.String name)
 		throws com.liferay.portal.NoSuchLayoutBranchException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByL_P_N(layoutSetBranchId, plid, name);
+		getPersistence().removeByL_P_N(layoutSetBranchId, plid, name);
 	}
 
 	/**
@@ -640,14 +639,13 @@ public class LayoutBranchUtil {
 	* @param layoutSetBranchId the layout set branch ID
 	* @param plid the plid
 	* @param master the master
-	* @return the layout branch that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.LayoutBranch removeByL_P_M(
-		long layoutSetBranchId, long plid, boolean master)
+	public static void removeByL_P_M(long layoutSetBranchId, long plid,
+		boolean master)
 		throws com.liferay.portal.NoSuchLayoutBranchException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByL_P_M(layoutSetBranchId, plid, master);
+		getPersistence().removeByL_P_M(layoutSetBranchId, plid, master);
 	}
 
 	/**

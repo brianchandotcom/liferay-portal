@@ -449,12 +449,10 @@ public interface ResourceBlockPersistence extends BasePersistence<ResourceBlock>
 	* @param groupId the group ID
 	* @param name the name
 	* @param permissionsHash the permissions hash
-	* @return the resource block that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.ResourceBlock removeByC_G_N_P(
-		long companyId, long groupId, java.lang.String name,
-		java.lang.String permissionsHash)
+	public void removeByC_G_N_P(long companyId, long groupId,
+		java.lang.String name, java.lang.String permissionsHash)
 		throws com.liferay.portal.NoSuchResourceBlockException,
 			com.liferay.portal.kernel.exception.SystemException;
 

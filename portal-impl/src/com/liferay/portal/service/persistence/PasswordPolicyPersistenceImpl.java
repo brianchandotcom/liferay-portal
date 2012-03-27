@@ -973,14 +973,13 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	 *
 	 * @param companyId the company ID
 	 * @param defaultPolicy the default policy
-	 * @return the password policy that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public PasswordPolicy removeByC_DP(long companyId, boolean defaultPolicy)
+	public void removeByC_DP(long companyId, boolean defaultPolicy)
 		throws NoSuchPasswordPolicyException, SystemException {
 		PasswordPolicy passwordPolicy = findByC_DP(companyId, defaultPolicy);
 
-		return remove(passwordPolicy);
+		remove(passwordPolicy);
 	}
 
 	/**
@@ -988,14 +987,13 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	 *
 	 * @param companyId the company ID
 	 * @param name the name
-	 * @return the password policy that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public PasswordPolicy removeByC_N(long companyId, String name)
+	public void removeByC_N(long companyId, String name)
 		throws NoSuchPasswordPolicyException, SystemException {
 		PasswordPolicy passwordPolicy = findByC_N(companyId, name);
 
-		return remove(passwordPolicy);
+		remove(passwordPolicy);
 	}
 
 	/**
@@ -1252,8 +1250,6 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	protected MembershipRequestPersistence membershipRequestPersistence;
 	@BeanReference(type = OrganizationPersistence.class)
 	protected OrganizationPersistence organizationPersistence;
-	@BeanReference(type = OrgGroupPermissionPersistence.class)
-	protected OrgGroupPermissionPersistence orgGroupPermissionPersistence;
 	@BeanReference(type = OrgGroupRolePersistence.class)
 	protected OrgGroupRolePersistence orgGroupRolePersistence;
 	@BeanReference(type = OrgLaborPersistence.class)
@@ -1264,8 +1260,6 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	protected PasswordPolicyRelPersistence passwordPolicyRelPersistence;
 	@BeanReference(type = PasswordTrackerPersistence.class)
 	protected PasswordTrackerPersistence passwordTrackerPersistence;
-	@BeanReference(type = PermissionPersistence.class)
-	protected PermissionPersistence permissionPersistence;
 	@BeanReference(type = PhonePersistence.class)
 	protected PhonePersistence phonePersistence;
 	@BeanReference(type = PluginSettingPersistence.class)
@@ -1286,8 +1280,6 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	protected RepositoryPersistence repositoryPersistence;
 	@BeanReference(type = RepositoryEntryPersistence.class)
 	protected RepositoryEntryPersistence repositoryEntryPersistence;
-	@BeanReference(type = ResourcePersistence.class)
-	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = ResourceActionPersistence.class)
 	protected ResourceActionPersistence resourceActionPersistence;
 	@BeanReference(type = ResourceBlockPersistence.class)

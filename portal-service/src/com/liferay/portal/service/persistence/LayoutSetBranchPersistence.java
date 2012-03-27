@@ -557,11 +557,10 @@ public interface LayoutSetBranchPersistence extends BasePersistence<LayoutSetBra
 	* @param groupId the group ID
 	* @param privateLayout the private layout
 	* @param name the name
-	* @return the layout set branch that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.LayoutSetBranch removeByG_P_N(
-		long groupId, boolean privateLayout, java.lang.String name)
+	public void removeByG_P_N(long groupId, boolean privateLayout,
+		java.lang.String name)
 		throws com.liferay.portal.NoSuchLayoutSetBranchException,
 			com.liferay.portal.kernel.exception.SystemException;
 

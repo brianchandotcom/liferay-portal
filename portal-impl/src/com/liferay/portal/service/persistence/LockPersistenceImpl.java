@@ -1836,14 +1836,13 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	 *
 	 * @param className the class name
 	 * @param key the key
-	 * @return the lock that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Lock removeByC_K(String className, String key)
+	public void removeByC_K(String className, String key)
 		throws NoSuchLockException, SystemException {
 		Lock lock = findByC_K(className, key);
 
-		return remove(lock);
+		remove(lock);
 	}
 
 	/**
@@ -1852,14 +1851,13 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	 * @param className the class name
 	 * @param key the key
 	 * @param owner the owner
-	 * @return the lock that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Lock removeByC_K_O(String className, String key, String owner)
+	public void removeByC_K_O(String className, String key, String owner)
 		throws NoSuchLockException, SystemException {
 		Lock lock = findByC_K_O(className, key, owner);
 
-		return remove(lock);
+		remove(lock);
 	}
 
 	/**
@@ -2295,8 +2293,6 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	protected MembershipRequestPersistence membershipRequestPersistence;
 	@BeanReference(type = OrganizationPersistence.class)
 	protected OrganizationPersistence organizationPersistence;
-	@BeanReference(type = OrgGroupPermissionPersistence.class)
-	protected OrgGroupPermissionPersistence orgGroupPermissionPersistence;
 	@BeanReference(type = OrgGroupRolePersistence.class)
 	protected OrgGroupRolePersistence orgGroupRolePersistence;
 	@BeanReference(type = OrgLaborPersistence.class)
@@ -2307,8 +2303,6 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	protected PasswordPolicyRelPersistence passwordPolicyRelPersistence;
 	@BeanReference(type = PasswordTrackerPersistence.class)
 	protected PasswordTrackerPersistence passwordTrackerPersistence;
-	@BeanReference(type = PermissionPersistence.class)
-	protected PermissionPersistence permissionPersistence;
 	@BeanReference(type = PhonePersistence.class)
 	protected PhonePersistence phonePersistence;
 	@BeanReference(type = PluginSettingPersistence.class)
@@ -2329,8 +2323,6 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	protected RepositoryPersistence repositoryPersistence;
 	@BeanReference(type = RepositoryEntryPersistence.class)
 	protected RepositoryEntryPersistence repositoryEntryPersistence;
-	@BeanReference(type = ResourcePersistence.class)
-	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = ResourceActionPersistence.class)
 	protected ResourceActionPersistence resourceActionPersistence;
 	@BeanReference(type = ResourceBlockPersistence.class)

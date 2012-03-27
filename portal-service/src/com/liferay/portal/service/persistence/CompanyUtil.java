@@ -482,41 +482,36 @@ public class CompanyUtil {
 	* Removes the company where webId = &#63; from the database.
 	*
 	* @param webId the web ID
-	* @return the company that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.Company removeByWebId(
-		java.lang.String webId)
+	public static void removeByWebId(java.lang.String webId)
 		throws com.liferay.portal.NoSuchCompanyException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByWebId(webId);
+		getPersistence().removeByWebId(webId);
 	}
 
 	/**
 	* Removes the company where mx = &#63; from the database.
 	*
 	* @param mx the mx
-	* @return the company that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.Company removeByMx(
-		java.lang.String mx)
+	public static void removeByMx(java.lang.String mx)
 		throws com.liferay.portal.NoSuchCompanyException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByMx(mx);
+		getPersistence().removeByMx(mx);
 	}
 
 	/**
 	* Removes the company where logoId = &#63; from the database.
 	*
 	* @param logoId the logo ID
-	* @return the company that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.Company removeByLogoId(long logoId)
+	public static void removeByLogoId(long logoId)
 		throws com.liferay.portal.NoSuchCompanyException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByLogoId(logoId);
+		getPersistence().removeByLogoId(logoId);
 	}
 
 	/**

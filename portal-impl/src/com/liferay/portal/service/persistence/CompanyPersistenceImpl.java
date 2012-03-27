@@ -1439,42 +1439,39 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 * Removes the company where webId = &#63; from the database.
 	 *
 	 * @param webId the web ID
-	 * @return the company that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Company removeByWebId(String webId)
+	public void removeByWebId(String webId)
 		throws NoSuchCompanyException, SystemException {
 		Company company = findByWebId(webId);
 
-		return remove(company);
+		remove(company);
 	}
 
 	/**
 	 * Removes the company where mx = &#63; from the database.
 	 *
 	 * @param mx the mx
-	 * @return the company that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Company removeByMx(String mx)
+	public void removeByMx(String mx)
 		throws NoSuchCompanyException, SystemException {
 		Company company = findByMx(mx);
 
-		return remove(company);
+		remove(company);
 	}
 
 	/**
 	 * Removes the company where logoId = &#63; from the database.
 	 *
 	 * @param logoId the logo ID
-	 * @return the company that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Company removeByLogoId(long logoId)
+	public void removeByLogoId(long logoId)
 		throws NoSuchCompanyException, SystemException {
 		Company company = findByLogoId(logoId);
 
-		return remove(company);
+		remove(company);
 	}
 
 	/**
@@ -1849,8 +1846,6 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	protected MembershipRequestPersistence membershipRequestPersistence;
 	@BeanReference(type = OrganizationPersistence.class)
 	protected OrganizationPersistence organizationPersistence;
-	@BeanReference(type = OrgGroupPermissionPersistence.class)
-	protected OrgGroupPermissionPersistence orgGroupPermissionPersistence;
 	@BeanReference(type = OrgGroupRolePersistence.class)
 	protected OrgGroupRolePersistence orgGroupRolePersistence;
 	@BeanReference(type = OrgLaborPersistence.class)
@@ -1861,8 +1856,6 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	protected PasswordPolicyRelPersistence passwordPolicyRelPersistence;
 	@BeanReference(type = PasswordTrackerPersistence.class)
 	protected PasswordTrackerPersistence passwordTrackerPersistence;
-	@BeanReference(type = PermissionPersistence.class)
-	protected PermissionPersistence permissionPersistence;
 	@BeanReference(type = PhonePersistence.class)
 	protected PhonePersistence phonePersistence;
 	@BeanReference(type = PluginSettingPersistence.class)
@@ -1883,8 +1876,6 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	protected RepositoryPersistence repositoryPersistence;
 	@BeanReference(type = RepositoryEntryPersistence.class)
 	protected RepositoryEntryPersistence repositoryEntryPersistence;
-	@BeanReference(type = ResourcePersistence.class)
-	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = ResourceActionPersistence.class)
 	protected ResourceActionPersistence resourceActionPersistence;
 	@BeanReference(type = ResourceBlockPersistence.class)

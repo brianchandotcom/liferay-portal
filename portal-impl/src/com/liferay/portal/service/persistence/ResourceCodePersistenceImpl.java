@@ -1589,14 +1589,13 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 	 * @param companyId the company ID
 	 * @param name the name
 	 * @param scope the scope
-	 * @return the resource code that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public ResourceCode removeByC_N_S(long companyId, String name, int scope)
+	public void removeByC_N_S(long companyId, String name, int scope)
 		throws NoSuchResourceCodeException, SystemException {
 		ResourceCode resourceCode = findByC_N_S(companyId, name, scope);
 
-		return remove(resourceCode);
+		remove(resourceCode);
 	}
 
 	/**
@@ -1917,8 +1916,6 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 	protected MembershipRequestPersistence membershipRequestPersistence;
 	@BeanReference(type = OrganizationPersistence.class)
 	protected OrganizationPersistence organizationPersistence;
-	@BeanReference(type = OrgGroupPermissionPersistence.class)
-	protected OrgGroupPermissionPersistence orgGroupPermissionPersistence;
 	@BeanReference(type = OrgGroupRolePersistence.class)
 	protected OrgGroupRolePersistence orgGroupRolePersistence;
 	@BeanReference(type = OrgLaborPersistence.class)
@@ -1929,8 +1926,6 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 	protected PasswordPolicyRelPersistence passwordPolicyRelPersistence;
 	@BeanReference(type = PasswordTrackerPersistence.class)
 	protected PasswordTrackerPersistence passwordTrackerPersistence;
-	@BeanReference(type = PermissionPersistence.class)
-	protected PermissionPersistence permissionPersistence;
 	@BeanReference(type = PhonePersistence.class)
 	protected PhonePersistence phonePersistence;
 	@BeanReference(type = PluginSettingPersistence.class)
@@ -1951,8 +1946,6 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 	protected RepositoryPersistence repositoryPersistence;
 	@BeanReference(type = RepositoryEntryPersistence.class)
 	protected RepositoryEntryPersistence repositoryEntryPersistence;
-	@BeanReference(type = ResourcePersistence.class)
-	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = ResourceActionPersistence.class)
 	protected ResourceActionPersistence resourceActionPersistence;
 	@BeanReference(type = ResourceBlockPersistence.class)

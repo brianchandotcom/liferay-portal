@@ -470,16 +470,6 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		}
 
 		try {
-			clearPermissions.clear(group.getPrimaryKey());
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(GroupModelImpl.MAPPING_TABLE_GROUPS_PERMISSIONS_NAME);
-		}
-
-		try {
 			clearRoles.clear(group.getPrimaryKey());
 		}
 		catch (Exception e) {
@@ -2743,14 +2733,13 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	 * Removes the group where liveGroupId = &#63; from the database.
 	 *
 	 * @param liveGroupId the live group ID
-	 * @return the group that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Group removeByLiveGroupId(long liveGroupId)
+	public void removeByLiveGroupId(long liveGroupId)
 		throws NoSuchGroupException, SystemException {
 		Group group = findByLiveGroupId(liveGroupId);
 
-		return remove(group);
+		remove(group);
 	}
 
 	/**
@@ -2758,14 +2747,13 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	 *
 	 * @param companyId the company ID
 	 * @param name the name
-	 * @return the group that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Group removeByC_N(long companyId, String name)
+	public void removeByC_N(long companyId, String name)
 		throws NoSuchGroupException, SystemException {
 		Group group = findByC_N(companyId, name);
 
-		return remove(group);
+		remove(group);
 	}
 
 	/**
@@ -2773,14 +2761,13 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	 *
 	 * @param companyId the company ID
 	 * @param friendlyURL the friendly u r l
-	 * @return the group that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Group removeByC_F(long companyId, String friendlyURL)
+	public void removeByC_F(long companyId, String friendlyURL)
 		throws NoSuchGroupException, SystemException {
 		Group group = findByC_F(companyId, friendlyURL);
 
-		return remove(group);
+		remove(group);
 	}
 
 	/**
@@ -2802,14 +2789,13 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
-	 * @return the group that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Group removeByC_C_C(long companyId, long classNameId, long classPK)
+	public void removeByC_C_C(long companyId, long classNameId, long classPK)
 		throws NoSuchGroupException, SystemException {
 		Group group = findByC_C_C(companyId, classNameId, classPK);
 
-		return remove(group);
+		remove(group);
 	}
 
 	/**
@@ -2818,14 +2804,13 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	 * @param companyId the company ID
 	 * @param liveGroupId the live group ID
 	 * @param name the name
-	 * @return the group that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Group removeByC_L_N(long companyId, long liveGroupId, String name)
+	public void removeByC_L_N(long companyId, long liveGroupId, String name)
 		throws NoSuchGroupException, SystemException {
 		Group group = findByC_L_N(companyId, liveGroupId, name);
 
-		return remove(group);
+		remove(group);
 	}
 
 	/**
@@ -2835,15 +2820,14 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	 * @param classNameId the class name ID
 	 * @param liveGroupId the live group ID
 	 * @param name the name
-	 * @return the group that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Group removeByC_C_L_N(long companyId, long classNameId,
+	public void removeByC_C_L_N(long companyId, long classNameId,
 		long liveGroupId, String name)
 		throws NoSuchGroupException, SystemException {
 		Group group = findByC_C_L_N(companyId, classNameId, liveGroupId, name);
 
-		return remove(group);
+		remove(group);
 	}
 
 	/**
@@ -3902,489 +3886,6 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		}
 		finally {
 			FinderCacheUtil.clearCache(GroupModelImpl.MAPPING_TABLE_GROUPS_ORGS_NAME);
-		}
-	}
-
-	/**
-	 * Returns all the permissions associated with the group.
-	 *
-	 * @param pk the primary key of the group
-	 * @return the permissions associated with the group
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<com.liferay.portal.model.Permission> getPermissions(long pk)
-		throws SystemException {
-		return getPermissions(pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-	}
-
-	/**
-	 * Returns a range of all the permissions associated with the group.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param pk the primary key of the group
-	 * @param start the lower bound of the range of groups
-	 * @param end the upper bound of the range of groups (not inclusive)
-	 * @return the range of permissions associated with the group
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<com.liferay.portal.model.Permission> getPermissions(long pk,
-		int start, int end) throws SystemException {
-		return getPermissions(pk, start, end, null);
-	}
-
-	public static final FinderPath FINDER_PATH_GET_PERMISSIONS = new FinderPath(com.liferay.portal.model.impl.PermissionModelImpl.ENTITY_CACHE_ENABLED,
-			GroupModelImpl.FINDER_CACHE_ENABLED_GROUPS_PERMISSIONS,
-			com.liferay.portal.model.impl.PermissionImpl.class,
-			GroupModelImpl.MAPPING_TABLE_GROUPS_PERMISSIONS_NAME,
-			"getPermissions",
-			new String[] {
-				Long.class.getName(), "java.lang.Integer", "java.lang.Integer",
-				"com.liferay.portal.kernel.util.OrderByComparator"
-			});
-
-	static {
-		FINDER_PATH_GET_PERMISSIONS.setCacheKeyGeneratorCacheName(null);
-	}
-
-	/**
-	 * Returns an ordered range of all the permissions associated with the group.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param pk the primary key of the group
-	 * @param start the lower bound of the range of groups
-	 * @param end the upper bound of the range of groups (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of permissions associated with the group
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<com.liferay.portal.model.Permission> getPermissions(long pk,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
-		Object[] finderArgs = new Object[] { pk, start, end, orderByComparator };
-
-		List<com.liferay.portal.model.Permission> list = (List<com.liferay.portal.model.Permission>)FinderCacheUtil.getResult(FINDER_PATH_GET_PERMISSIONS,
-				finderArgs, this);
-
-		if (list == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				String sql = null;
-
-				if (orderByComparator != null) {
-					sql = _SQL_GETPERMISSIONS.concat(ORDER_BY_CLAUSE)
-											 .concat(orderByComparator.getOrderBy());
-				}
-				else {
-					sql = _SQL_GETPERMISSIONS;
-				}
-
-				SQLQuery q = session.createSQLQuery(sql);
-
-				q.addEntity("Permission_",
-					com.liferay.portal.model.impl.PermissionImpl.class);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(pk);
-
-				list = (List<com.liferay.portal.model.Permission>)QueryUtil.list(q,
-						getDialect(), start, end);
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_GET_PERMISSIONS,
-						finderArgs);
-				}
-				else {
-					permissionPersistence.cacheResult(list);
-
-					FinderCacheUtil.putResult(FINDER_PATH_GET_PERMISSIONS,
-						finderArgs, list);
-				}
-
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	public static final FinderPath FINDER_PATH_GET_PERMISSIONS_SIZE = new FinderPath(com.liferay.portal.model.impl.PermissionModelImpl.ENTITY_CACHE_ENABLED,
-			GroupModelImpl.FINDER_CACHE_ENABLED_GROUPS_PERMISSIONS, Long.class,
-			GroupModelImpl.MAPPING_TABLE_GROUPS_PERMISSIONS_NAME,
-			"getPermissionsSize", new String[] { Long.class.getName() });
-
-	static {
-		FINDER_PATH_GET_PERMISSIONS_SIZE.setCacheKeyGeneratorCacheName(null);
-	}
-
-	/**
-	 * Returns the number of permissions associated with the group.
-	 *
-	 * @param pk the primary key of the group
-	 * @return the number of permissions associated with the group
-	 * @throws SystemException if a system exception occurred
-	 */
-	public int getPermissionsSize(long pk) throws SystemException {
-		Object[] finderArgs = new Object[] { pk };
-
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_GET_PERMISSIONS_SIZE,
-				finderArgs, this);
-
-		if (count == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				SQLQuery q = session.createSQLQuery(_SQL_GETPERMISSIONSSIZE);
-
-				q.addScalar(COUNT_COLUMN_NAME,
-					com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(pk);
-
-				count = (Long)q.uniqueResult();
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (count == null) {
-					count = Long.valueOf(0);
-				}
-
-				FinderCacheUtil.putResult(FINDER_PATH_GET_PERMISSIONS_SIZE,
-					finderArgs, count);
-
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	public static final FinderPath FINDER_PATH_CONTAINS_PERMISSION = new FinderPath(com.liferay.portal.model.impl.PermissionModelImpl.ENTITY_CACHE_ENABLED,
-			GroupModelImpl.FINDER_CACHE_ENABLED_GROUPS_PERMISSIONS,
-			Boolean.class,
-			GroupModelImpl.MAPPING_TABLE_GROUPS_PERMISSIONS_NAME,
-			"containsPermission",
-			new String[] { Long.class.getName(), Long.class.getName() });
-
-	/**
-	 * Returns <code>true</code> if the permission is associated with the group.
-	 *
-	 * @param pk the primary key of the group
-	 * @param permissionPK the primary key of the permission
-	 * @return <code>true</code> if the permission is associated with the group; <code>false</code> otherwise
-	 * @throws SystemException if a system exception occurred
-	 */
-	public boolean containsPermission(long pk, long permissionPK)
-		throws SystemException {
-		Object[] finderArgs = new Object[] { pk, permissionPK };
-
-		Boolean value = (Boolean)FinderCacheUtil.getResult(FINDER_PATH_CONTAINS_PERMISSION,
-				finderArgs, this);
-
-		if (value == null) {
-			try {
-				value = Boolean.valueOf(containsPermission.contains(pk,
-							permissionPK));
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (value == null) {
-					value = Boolean.FALSE;
-				}
-
-				FinderCacheUtil.putResult(FINDER_PATH_CONTAINS_PERMISSION,
-					finderArgs, value);
-			}
-		}
-
-		return value.booleanValue();
-	}
-
-	/**
-	 * Returns <code>true</code> if the group has any permissions associated with it.
-	 *
-	 * @param pk the primary key of the group to check for associations with permissions
-	 * @return <code>true</code> if the group has any permissions associated with it; <code>false</code> otherwise
-	 * @throws SystemException if a system exception occurred
-	 */
-	public boolean containsPermissions(long pk) throws SystemException {
-		if (getPermissionsSize(pk) > 0) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	/**
-	 * Adds an association between the group and the permission. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the group
-	 * @param permissionPK the primary key of the permission
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void addPermission(long pk, long permissionPK)
-		throws SystemException {
-		try {
-			addPermission.add(pk, permissionPK);
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(GroupModelImpl.MAPPING_TABLE_GROUPS_PERMISSIONS_NAME);
-		}
-	}
-
-	/**
-	 * Adds an association between the group and the permission. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the group
-	 * @param permission the permission
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void addPermission(long pk,
-		com.liferay.portal.model.Permission permission)
-		throws SystemException {
-		try {
-			addPermission.add(pk, permission.getPrimaryKey());
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(GroupModelImpl.MAPPING_TABLE_GROUPS_PERMISSIONS_NAME);
-		}
-	}
-
-	/**
-	 * Adds an association between the group and the permissions. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the group
-	 * @param permissionPKs the primary keys of the permissions
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void addPermissions(long pk, long[] permissionPKs)
-		throws SystemException {
-		try {
-			for (long permissionPK : permissionPKs) {
-				addPermission.add(pk, permissionPK);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(GroupModelImpl.MAPPING_TABLE_GROUPS_PERMISSIONS_NAME);
-		}
-	}
-
-	/**
-	 * Adds an association between the group and the permissions. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the group
-	 * @param permissions the permissions
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void addPermissions(long pk,
-		List<com.liferay.portal.model.Permission> permissions)
-		throws SystemException {
-		try {
-			for (com.liferay.portal.model.Permission permission : permissions) {
-				addPermission.add(pk, permission.getPrimaryKey());
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(GroupModelImpl.MAPPING_TABLE_GROUPS_PERMISSIONS_NAME);
-		}
-	}
-
-	/**
-	 * Clears all associations between the group and its permissions. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the group to clear the associated permissions from
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void clearPermissions(long pk) throws SystemException {
-		try {
-			clearPermissions.clear(pk);
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(GroupModelImpl.MAPPING_TABLE_GROUPS_PERMISSIONS_NAME);
-		}
-	}
-
-	/**
-	 * Removes the association between the group and the permission. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the group
-	 * @param permissionPK the primary key of the permission
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void removePermission(long pk, long permissionPK)
-		throws SystemException {
-		try {
-			removePermission.remove(pk, permissionPK);
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(GroupModelImpl.MAPPING_TABLE_GROUPS_PERMISSIONS_NAME);
-		}
-	}
-
-	/**
-	 * Removes the association between the group and the permission. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the group
-	 * @param permission the permission
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void removePermission(long pk,
-		com.liferay.portal.model.Permission permission)
-		throws SystemException {
-		try {
-			removePermission.remove(pk, permission.getPrimaryKey());
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(GroupModelImpl.MAPPING_TABLE_GROUPS_PERMISSIONS_NAME);
-		}
-	}
-
-	/**
-	 * Removes the association between the group and the permissions. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the group
-	 * @param permissionPKs the primary keys of the permissions
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void removePermissions(long pk, long[] permissionPKs)
-		throws SystemException {
-		try {
-			for (long permissionPK : permissionPKs) {
-				removePermission.remove(pk, permissionPK);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(GroupModelImpl.MAPPING_TABLE_GROUPS_PERMISSIONS_NAME);
-		}
-	}
-
-	/**
-	 * Removes the association between the group and the permissions. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the group
-	 * @param permissions the permissions
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void removePermissions(long pk,
-		List<com.liferay.portal.model.Permission> permissions)
-		throws SystemException {
-		try {
-			for (com.liferay.portal.model.Permission permission : permissions) {
-				removePermission.remove(pk, permission.getPrimaryKey());
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(GroupModelImpl.MAPPING_TABLE_GROUPS_PERMISSIONS_NAME);
-		}
-	}
-
-	/**
-	 * Sets the permissions associated with the group, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the group
-	 * @param permissionPKs the primary keys of the permissions to be associated with the group
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void setPermissions(long pk, long[] permissionPKs)
-		throws SystemException {
-		try {
-			Set<Long> permissionPKSet = SetUtil.fromArray(permissionPKs);
-
-			List<com.liferay.portal.model.Permission> permissions = getPermissions(pk);
-
-			for (com.liferay.portal.model.Permission permission : permissions) {
-				if (!permissionPKSet.remove(permission.getPrimaryKey())) {
-					removePermission.remove(pk, permission.getPrimaryKey());
-				}
-			}
-
-			for (Long permissionPK : permissionPKSet) {
-				addPermission.add(pk, permissionPK);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(GroupModelImpl.MAPPING_TABLE_GROUPS_PERMISSIONS_NAME);
-		}
-	}
-
-	/**
-	 * Sets the permissions associated with the group, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the group
-	 * @param permissions the permissions to be associated with the group
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void setPermissions(long pk,
-		List<com.liferay.portal.model.Permission> permissions)
-		throws SystemException {
-		try {
-			long[] permissionPKs = new long[permissions.size()];
-
-			for (int i = 0; i < permissions.size(); i++) {
-				com.liferay.portal.model.Permission permission = permissions.get(i);
-
-				permissionPKs[i] = permission.getPrimaryKey();
-			}
-
-			setPermissions(pk, permissionPKs);
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(GroupModelImpl.MAPPING_TABLE_GROUPS_PERMISSIONS_NAME);
 		}
 	}
 
@@ -5832,12 +5333,6 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		clearOrganizations = new ClearOrganizations();
 		removeOrganization = new RemoveOrganization();
 
-		containsPermission = new ContainsPermission();
-
-		addPermission = new AddPermission();
-		clearPermissions = new ClearPermissions();
-		removePermission = new RemovePermission();
-
 		containsRole = new ContainsRole();
 
 		addRole = new AddRole();
@@ -5907,8 +5402,6 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	protected MembershipRequestPersistence membershipRequestPersistence;
 	@BeanReference(type = OrganizationPersistence.class)
 	protected OrganizationPersistence organizationPersistence;
-	@BeanReference(type = OrgGroupPermissionPersistence.class)
-	protected OrgGroupPermissionPersistence orgGroupPermissionPersistence;
 	@BeanReference(type = OrgGroupRolePersistence.class)
 	protected OrgGroupRolePersistence orgGroupRolePersistence;
 	@BeanReference(type = OrgLaborPersistence.class)
@@ -5919,8 +5412,6 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	protected PasswordPolicyRelPersistence passwordPolicyRelPersistence;
 	@BeanReference(type = PasswordTrackerPersistence.class)
 	protected PasswordTrackerPersistence passwordTrackerPersistence;
-	@BeanReference(type = PermissionPersistence.class)
-	protected PermissionPersistence permissionPersistence;
 	@BeanReference(type = PhonePersistence.class)
 	protected PhonePersistence phonePersistence;
 	@BeanReference(type = PluginSettingPersistence.class)
@@ -5941,8 +5432,6 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	protected RepositoryPersistence repositoryPersistence;
 	@BeanReference(type = RepositoryEntryPersistence.class)
 	protected RepositoryEntryPersistence repositoryEntryPersistence;
-	@BeanReference(type = ResourcePersistence.class)
-	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = ResourceActionPersistence.class)
 	protected ResourceActionPersistence resourceActionPersistence;
 	@BeanReference(type = ResourceBlockPersistence.class)
@@ -6039,10 +5528,6 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	protected AddOrganization addOrganization;
 	protected ClearOrganizations clearOrganizations;
 	protected RemoveOrganization removeOrganization;
-	protected ContainsPermission containsPermission;
-	protected AddPermission addPermission;
-	protected ClearPermissions clearPermissions;
-	protected RemovePermission removePermission;
 	protected ContainsRole containsRole;
 	protected AddRole addRole;
 	protected ClearRoles clearRoles;
@@ -6214,172 +5699,6 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 
 				for (ModelListener<com.liferay.portal.model.Organization> listener : organizationListeners) {
 					listener.onAfterRemoveAssociation(organizationId,
-						Group.class.getName(), groupId);
-				}
-			}
-		}
-
-		private SqlUpdate _sqlUpdate;
-	}
-
-	protected class ContainsPermission {
-		protected ContainsPermission() {
-			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
-					_SQL_CONTAINSPERMISSION,
-					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
-					RowMapper.COUNT);
-		}
-
-		protected boolean contains(long groupId, long permissionId) {
-			List<Integer> results = _mappingSqlQuery.execute(new Object[] {
-						new Long(groupId), new Long(permissionId)
-					});
-
-			if (results.size() > 0) {
-				Integer count = results.get(0);
-
-				if (count.intValue() > 0) {
-					return true;
-				}
-			}
-
-			return false;
-		}
-
-		private MappingSqlQuery<Integer> _mappingSqlQuery;
-	}
-
-	protected class AddPermission {
-		protected AddPermission() {
-			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
-					"INSERT INTO Groups_Permissions (groupId, permissionId) VALUES (?, ?)",
-					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-		}
-
-		protected void add(long groupId, long permissionId)
-			throws SystemException {
-			if (!containsPermission.contains(groupId, permissionId)) {
-				ModelListener<com.liferay.portal.model.Permission>[] permissionListeners =
-					permissionPersistence.getListeners();
-
-				for (ModelListener<Group> listener : listeners) {
-					listener.onBeforeAddAssociation(groupId,
-						com.liferay.portal.model.Permission.class.getName(),
-						permissionId);
-				}
-
-				for (ModelListener<com.liferay.portal.model.Permission> listener : permissionListeners) {
-					listener.onBeforeAddAssociation(permissionId,
-						Group.class.getName(), groupId);
-				}
-
-				_sqlUpdate.update(new Object[] {
-						new Long(groupId), new Long(permissionId)
-					});
-
-				for (ModelListener<Group> listener : listeners) {
-					listener.onAfterAddAssociation(groupId,
-						com.liferay.portal.model.Permission.class.getName(),
-						permissionId);
-				}
-
-				for (ModelListener<com.liferay.portal.model.Permission> listener : permissionListeners) {
-					listener.onAfterAddAssociation(permissionId,
-						Group.class.getName(), groupId);
-				}
-			}
-		}
-
-		private SqlUpdate _sqlUpdate;
-	}
-
-	protected class ClearPermissions {
-		protected ClearPermissions() {
-			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
-					"DELETE FROM Groups_Permissions WHERE groupId = ?",
-					new int[] { java.sql.Types.BIGINT });
-		}
-
-		protected void clear(long groupId) throws SystemException {
-			ModelListener<com.liferay.portal.model.Permission>[] permissionListeners =
-				permissionPersistence.getListeners();
-
-			List<com.liferay.portal.model.Permission> permissions = null;
-
-			if ((listeners.length > 0) || (permissionListeners.length > 0)) {
-				permissions = getPermissions(groupId);
-
-				for (com.liferay.portal.model.Permission permission : permissions) {
-					for (ModelListener<Group> listener : listeners) {
-						listener.onBeforeRemoveAssociation(groupId,
-							com.liferay.portal.model.Permission.class.getName(),
-							permission.getPrimaryKey());
-					}
-
-					for (ModelListener<com.liferay.portal.model.Permission> listener : permissionListeners) {
-						listener.onBeforeRemoveAssociation(permission.getPrimaryKey(),
-							Group.class.getName(), groupId);
-					}
-				}
-			}
-
-			_sqlUpdate.update(new Object[] { new Long(groupId) });
-
-			if ((listeners.length > 0) || (permissionListeners.length > 0)) {
-				for (com.liferay.portal.model.Permission permission : permissions) {
-					for (ModelListener<Group> listener : listeners) {
-						listener.onAfterRemoveAssociation(groupId,
-							com.liferay.portal.model.Permission.class.getName(),
-							permission.getPrimaryKey());
-					}
-
-					for (ModelListener<com.liferay.portal.model.Permission> listener : permissionListeners) {
-						listener.onAfterRemoveAssociation(permission.getPrimaryKey(),
-							Group.class.getName(), groupId);
-					}
-				}
-			}
-		}
-
-		private SqlUpdate _sqlUpdate;
-	}
-
-	protected class RemovePermission {
-		protected RemovePermission() {
-			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
-					"DELETE FROM Groups_Permissions WHERE groupId = ? AND permissionId = ?",
-					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-		}
-
-		protected void remove(long groupId, long permissionId)
-			throws SystemException {
-			if (containsPermission.contains(groupId, permissionId)) {
-				ModelListener<com.liferay.portal.model.Permission>[] permissionListeners =
-					permissionPersistence.getListeners();
-
-				for (ModelListener<Group> listener : listeners) {
-					listener.onBeforeRemoveAssociation(groupId,
-						com.liferay.portal.model.Permission.class.getName(),
-						permissionId);
-				}
-
-				for (ModelListener<com.liferay.portal.model.Permission> listener : permissionListeners) {
-					listener.onBeforeRemoveAssociation(permissionId,
-						Group.class.getName(), groupId);
-				}
-
-				_sqlUpdate.update(new Object[] {
-						new Long(groupId), new Long(permissionId)
-					});
-
-				for (ModelListener<Group> listener : listeners) {
-					listener.onAfterRemoveAssociation(groupId,
-						com.liferay.portal.model.Permission.class.getName(),
-						permissionId);
-				}
-
-				for (ModelListener<com.liferay.portal.model.Permission> listener : permissionListeners) {
-					listener.onAfterRemoveAssociation(permissionId,
 						Group.class.getName(), groupId);
 				}
 			}
@@ -6877,9 +6196,6 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	private static final String _SQL_GETORGANIZATIONS = "SELECT {Organization_.*} FROM Organization_ INNER JOIN Groups_Orgs ON (Groups_Orgs.organizationId = Organization_.organizationId) WHERE (Groups_Orgs.groupId = ?)";
 	private static final String _SQL_GETORGANIZATIONSSIZE = "SELECT COUNT(*) AS COUNT_VALUE FROM Groups_Orgs WHERE groupId = ?";
 	private static final String _SQL_CONTAINSORGANIZATION = "SELECT COUNT(*) AS COUNT_VALUE FROM Groups_Orgs WHERE groupId = ? AND organizationId = ?";
-	private static final String _SQL_GETPERMISSIONS = "SELECT {Permission_.*} FROM Permission_ INNER JOIN Groups_Permissions ON (Groups_Permissions.permissionId = Permission_.permissionId) WHERE (Groups_Permissions.groupId = ?)";
-	private static final String _SQL_GETPERMISSIONSSIZE = "SELECT COUNT(*) AS COUNT_VALUE FROM Groups_Permissions WHERE groupId = ?";
-	private static final String _SQL_CONTAINSPERMISSION = "SELECT COUNT(*) AS COUNT_VALUE FROM Groups_Permissions WHERE groupId = ? AND permissionId = ?";
 	private static final String _SQL_GETROLES = "SELECT {Role_.*} FROM Role_ INNER JOIN Groups_Roles ON (Groups_Roles.roleId = Role_.roleId) WHERE (Groups_Roles.groupId = ?)";
 	private static final String _SQL_GETROLESSIZE = "SELECT COUNT(*) AS COUNT_VALUE FROM Groups_Roles WHERE groupId = ?";
 	private static final String _SQL_CONTAINSROLE = "SELECT COUNT(*) AS COUNT_VALUE FROM Groups_Roles WHERE groupId = ? AND roleId = ?";

@@ -691,11 +691,10 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @param ownerType the owner type
 	* @param plid the plid
 	* @param portletId the portlet ID
-	* @return the portlet preferences that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.PortletPreferences removeByO_O_P_P(
-		long ownerId, int ownerType, long plid, java.lang.String portletId)
+	public void removeByO_O_P_P(long ownerId, int ownerType, long plid,
+		java.lang.String portletId)
 		throws com.liferay.portal.NoSuchPortletPreferencesException,
 			com.liferay.portal.kernel.exception.SystemException;
 

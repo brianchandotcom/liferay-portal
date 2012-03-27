@@ -180,11 +180,9 @@ public interface ClassNamePersistence extends BasePersistence<ClassName> {
 	* Removes the class name where value = &#63; from the database.
 	*
 	* @param value the value
-	* @return the class name that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.ClassName removeByValue(
-		java.lang.String value)
+	public void removeByValue(java.lang.String value)
 		throws com.liferay.portal.NoSuchClassNameException,
 			com.liferay.portal.kernel.exception.SystemException;
 

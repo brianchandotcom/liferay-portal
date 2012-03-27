@@ -719,14 +719,13 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 	 * Removes the release where servletContextName = &#63; from the database.
 	 *
 	 * @param servletContextName the servlet context name
-	 * @return the release that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Release removeByServletContextName(String servletContextName)
+	public void removeByServletContextName(String servletContextName)
 		throws NoSuchReleaseException, SystemException {
 		Release release = findByServletContextName(servletContextName);
 
-		return remove(release);
+		remove(release);
 	}
 
 	/**
@@ -919,8 +918,6 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 	protected MembershipRequestPersistence membershipRequestPersistence;
 	@BeanReference(type = OrganizationPersistence.class)
 	protected OrganizationPersistence organizationPersistence;
-	@BeanReference(type = OrgGroupPermissionPersistence.class)
-	protected OrgGroupPermissionPersistence orgGroupPermissionPersistence;
 	@BeanReference(type = OrgGroupRolePersistence.class)
 	protected OrgGroupRolePersistence orgGroupRolePersistence;
 	@BeanReference(type = OrgLaborPersistence.class)
@@ -931,8 +928,6 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 	protected PasswordPolicyRelPersistence passwordPolicyRelPersistence;
 	@BeanReference(type = PasswordTrackerPersistence.class)
 	protected PasswordTrackerPersistence passwordTrackerPersistence;
-	@BeanReference(type = PermissionPersistence.class)
-	protected PermissionPersistence permissionPersistence;
 	@BeanReference(type = PhonePersistence.class)
 	protected PhonePersistence phonePersistence;
 	@BeanReference(type = PluginSettingPersistence.class)
@@ -953,8 +948,6 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 	protected RepositoryPersistence repositoryPersistence;
 	@BeanReference(type = RepositoryEntryPersistence.class)
 	protected RepositoryEntryPersistence repositoryEntryPersistence;
-	@BeanReference(type = ResourcePersistence.class)
-	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = ResourceActionPersistence.class)
 	protected ResourceActionPersistence resourceActionPersistence;
 	@BeanReference(type = ResourceBlockPersistence.class)

@@ -479,9 +479,7 @@ public class PortletImporter {
 				layoutCache, layout.getCompanyId(), groupId, userId, layout,
 				portletElement, portletId, importUserPermissions);
 
-			if ((userId > 0) &&
-				((PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) ||
-				 (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6))) {
+			if (userId > 0) {
 
 				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 					User.class);

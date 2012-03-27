@@ -43,10 +43,6 @@ public class ResourceActionLocalServiceImpl
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void checkResourceActions() throws SystemException {
-		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM != 6) {
-			return;
-		}
-
 		List<ResourceAction> resourceActions =
 			resourceActionPersistence.findAll();
 
@@ -67,10 +63,6 @@ public class ResourceActionLocalServiceImpl
 	public void checkResourceActions(
 			String name, List<String> actionIds, boolean addDefaultActions)
 		throws SystemException {
-
-		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM != 6) {
-			return;
-		}
 
 		List<ResourceAction> resourceActions =
 			resourceActionPersistence.findByName(name);

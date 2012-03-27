@@ -423,10 +423,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	public void addPermissions(String resourceName, long resourcePK)
 		throws PortalException, SystemException {
 
-		if (((PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM != 5) &&
-			 (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM != 6)) ||
-			(!MapUtil.getBoolean(
-				_parameterMap, PortletDataHandlerKeys.PERMISSIONS))) {
+		if (!MapUtil.getBoolean(
+				_parameterMap, PortletDataHandlerKeys.PERMISSIONS)) {
 
 			return;
 		}
@@ -470,45 +468,26 @@ public class PortletDataContextImpl implements PortletDataContext {
 		List<String> actionIds = ResourceActionsUtil.getModelResourceActions(
 			resourceName);
 
-		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) {
-			for (Map.Entry<Long, String> entry : roleIdsToNames.entrySet()) {
-				long roleId = entry.getKey();
-				String name = entry.getValue();
+		Map<Long, Set<String>> roleIdsToActionIds = getActionIds_6(
+			_companyId, roleIds.getArray(), resourceName,
+			String.valueOf(resourcePK), actionIds);
 
-				String availableActionIds = getActionIds_5(
-					_companyId, roleId, resourceName,
-					String.valueOf(resourcePK), actionIds);
+		for (Map.Entry<Long, String> entry : roleIdsToNames.entrySet()) {
+			long roleId = entry.getKey();
+			String name = entry.getValue();
 
-				KeyValuePair permission = new KeyValuePair(
-					name, availableActionIds);
+			Set<String> availableActionIds = roleIdsToActionIds.get(roleId);
 
-				permissions.add(permission);
+			if ((availableActionIds == null) ||
+				availableActionIds.isEmpty()) {
+
+				continue;
 			}
 
-		}
-		else if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
+			KeyValuePair permission = new KeyValuePair(
+				name, StringUtil.merge(availableActionIds));
 
-			Map<Long, Set<String>> roleIdsToActionIds = getActionIds_6(
-				_companyId, roleIds.getArray(), resourceName,
-				String.valueOf(resourcePK), actionIds);
-
-			for (Map.Entry<Long, String> entry : roleIdsToNames.entrySet()) {
-				long roleId = entry.getKey();
-				String name = entry.getValue();
-
-				Set<String> availableActionIds = roleIdsToActionIds.get(roleId);
-
-				if ((availableActionIds == null) ||
-					availableActionIds.isEmpty()) {
-
-					continue;
-				}
-
-				KeyValuePair permission = new KeyValuePair(
-					name, StringUtil.merge(availableActionIds));
-
-				permissions.add(permission);
-			}
+			permissions.add(permission);
 		}
 
 		_permissionsMap.put(
@@ -517,12 +496,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	public void addPermissions(
 		String resourceName, long resourcePK, List<KeyValuePair> permissions) {
-
-		if ((PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM != 5) &&
-			(PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM != 6)) {
-
-			return;
-		}
 
 		_permissionsMap.put(
 			getPrimaryKeyString(resourceName, resourcePK), permissions);
@@ -1059,10 +1032,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 			String resourceName, long resourcePK, long newResourcePK)
 		throws PortalException, SystemException {
 
-		if (((PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM != 5) &&
-			 (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM != 6)) ||
-			(!MapUtil.getBoolean(
-				_parameterMap, PortletDataHandlerKeys.PERMISSIONS))) {
+		if (!MapUtil.getBoolean(
+				_parameterMap, PortletDataHandlerKeys.PERMISSIONS)) {
 
 			return;
 		}
@@ -1125,17 +1096,9 @@ public class PortletDataContextImpl implements PortletDataContext {
 			return;
 		}
 
-		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) {
-			PermissionLocalServiceUtil.setRolesPermissions(
-				_companyId, roleIdsToActionIds, resourceName,
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(newResourcePK));
-		}
-		else if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-			ResourcePermissionLocalServiceUtil.setResourcePermissions(
-				_companyId, resourceName, ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(newResourcePK), roleIdsToActionIds);
-		}
+		ResourcePermissionLocalServiceUtil.setResourcePermissions(
+			_companyId, resourceName, ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(newResourcePK), roleIdsToActionIds);
 	}
 
 	public void importRatingsEntries(

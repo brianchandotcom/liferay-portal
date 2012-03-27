@@ -490,23 +490,13 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		String primKey =
 			layout.getPlid() + PortletConstants.LAYOUT_SEPARATOR + "%";
 
-		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-			List<ResourcePermission> resourcePermissions =
-				resourcePermissionPersistence.findByC_P(
-					layout.getCompanyId(), primKey);
-
-			for (ResourcePermission resourcePermission : resourcePermissions) {
-				resourcePermissionLocalService.deleteResourcePermission(
-					resourcePermission);
-			}
-		}
-		else {
-			List<Resource> resources = resourceFinder.findByC_P(
+		List<ResourcePermission> resourcePermissions =
+			resourcePermissionPersistence.findByC_P(
 				layout.getCompanyId(), primKey);
 
-			for (Resource resource : resources) {
-				resourceLocalService.deleteResource(resource);
-			}
+		for (ResourcePermission resourcePermission : resourcePermissions) {
+			resourcePermissionLocalService.deleteResourcePermission(
+				resourcePermission);
 		}
 
 		resourceLocalService.deleteResource(

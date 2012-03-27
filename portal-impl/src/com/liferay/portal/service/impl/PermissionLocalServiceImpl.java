@@ -642,39 +642,14 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 
 		long[] resourceIds = null;
 
-		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM != 6) {
-			resourceIds = new long[resources.size()];
-
-			for (int i = 0; i < resources.size(); i++) {
-				Resource resource = resources.get(i);
-
-				resourceIds[i] = resource.getResourceId();
-			}
-		}
-
 		List<Permission> permissions = null;
-
-		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM != 6) {
-			permissions = permissionFinder.findByA_R(actionId, resourceIds);
-
-			// Return false if there are no permissions
-
-			if (permissions.size() == 0) {
-				return false;
-			}
-		}
 
 		// Record logs with the first resource id
 
 		long resourceId = 0;
 
-		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM != 6) {
-			resourceId = resourceIds[0];
-		}
-		else {
-			resourceId = resources.get(0).getResourceId();
-		}
-
+		resourceId = resources.get(0).getResourceId();
+		
 		logHasUserPermissions(userId, resourceId, actionId, stopWatch, block++);
 
 		//List<Group> userGroups = permissionCheckerBag.getUserGroups();
@@ -697,38 +672,9 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 
 		logHasUserPermissions(userId, resourceId, actionId, stopWatch, block++);
 
-		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 1) {
-			return hasUserPermissions_1(
-				userId, resourceId, actionId, permissions, groups, groupId,
-				stopWatch, block);
-		}
-		else if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 2) {
-			return hasUserPermissions_2(
-				userId, resourceId, actionId, permissions, groups, groupId,
-				stopWatch, block);
-		}
-		else if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 3) {
-			return hasUserPermissions_3(
-				userId, resourceId, actionId, permissions, groups, roles,
-				stopWatch, block);
-		}
-		else if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 4) {
-			return hasUserPermissions_4(
-				userId, resourceId, actionId, permissions, groups, roles,
-				stopWatch, block);
-		}
-		else if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) {
-			return hasUserPermissions_5(
-				userId, resourceId, actionId, permissions, roles, stopWatch,
-				block);
-		}
-		else if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-			return hasUserPermissions_6(
-				userId, resourceId, resources, actionId,
-				permissionCheckerBag.getRoleIds(), stopWatch, block);
-		}
-
-		return false;
+		return hasUserPermissions_6(
+			userId, resourceId, resources, actionId,
+			permissionCheckerBag.getRoleIds(), stopWatch, block);
 	}
 
 	/**
@@ -1561,8 +1507,7 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 			permissions.add(permission);
 		}
 
-		if ((PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) ||
-			!roleName.equals(RoleConstants.GUEST)) {
+		if (!roleName.equals(RoleConstants.GUEST)) {
 
 			rolePersistence.addPermissions(role.getRoleId(), permissions);
 		}

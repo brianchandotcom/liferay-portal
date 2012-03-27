@@ -5404,28 +5404,16 @@ public class PortalImpl implements Portal {
 			return;
 		}
 
-		try {
-			if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-				int count =
-					ResourcePermissionLocalServiceUtil.
-						getResourcePermissionsCount(
-							companyId, name, ResourceConstants.SCOPE_INDIVIDUAL,
-							primaryKey);
-
-				if (count == 0) {
-					throw new NoSuchResourceException();
-				}
-			}
-			else if (!portlet.isUndeployedPortlet()) {
-				ResourceLocalServiceUtil.getResource(
+		int count =
+			ResourcePermissionLocalServiceUtil.
+				getResourcePermissionsCount(
 					companyId, name, ResourceConstants.SCOPE_INDIVIDUAL,
 					primaryKey);
-			}
-		}
-		catch (NoSuchResourceException nsre) {
+
+		if (count == 0) {
 			ResourceLocalServiceUtil.addResources(
-				companyId, groupId, 0, name, primaryKey, portletActions, true,
-				true);
+					companyId, groupId, 0, name, primaryKey, portletActions, true,
+					true);
 		}
 	}
 

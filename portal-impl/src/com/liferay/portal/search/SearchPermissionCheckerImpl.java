@@ -93,14 +93,8 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 				return;
 			}
 
-			if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) {
-				doAddPermissionFields_5(
-					companyId, groupId, className, classPK, document);
-			}
-			else if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-				doAddPermissionFields_6(
-					companyId, groupId, className, classPK, document);
-			}
+			doAddPermissionFields_6(
+				companyId, groupId, className, classPK, document);
 		}
 		catch (NoSuchResourceException nsre) {
 		}
@@ -124,24 +118,11 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		return query;
 	}
 
-	public void updatePermissionFields(long resourceId) {
-		try {
-			if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) {
-				doUpdatePermissionFields_5(resourceId);
-			}
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-	}
-
 	public void updatePermissionFields(
 		String resourceName, String resourceClassPK) {
 
 		try {
-			if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-				doUpdatePermissionFields_6(resourceName, resourceClassPK);
-			}
+			doUpdatePermissionFields_6(resourceName, resourceClassPK);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -274,12 +255,6 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			Query query, SearchContext searchContext)
 		throws Exception {
 
-		if ((PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM != 5) &&
-			(PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM != 6)) {
-
-			return query;
-		}
-
 		Indexer indexer = IndexerRegistryUtil.getIndexer(className);
 
 		if (!indexer.isPermissionAware()) {
@@ -359,20 +334,10 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			roles.addAll(groupRoles);
 		}
 
-		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) {
-			return doGetPermissionQuery_5(
-				companyId, groupIds, userId, className, query, searchContext,
-				advancedPermissionChecker, groups, roles, userGroupRoles,
-				groupIdsToRoles);
-		}
-		else if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-			return doGetPermissionQuery_6(
-				companyId, groupIds, userId, className, query, searchContext,
-				advancedPermissionChecker, groups, roles, userGroupRoles,
-				groupIdsToRoles);
-		}
-
-		return query;
+		return doGetPermissionQuery_6(
+			companyId, groupIds, userId, className, query, searchContext,
+			advancedPermissionChecker, groups, roles, userGroupRoles,
+			groupIdsToRoles);
 	}
 
 	protected Query doGetPermissionQuery_5(

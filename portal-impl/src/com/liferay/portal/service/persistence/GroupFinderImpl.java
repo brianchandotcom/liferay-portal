@@ -808,8 +808,7 @@ public class GroupFinderImpl
 				continue;
 			}
 
-			if (key.equals("rolePermissions") &&
-				(PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6)) {
+			if (key.equals("rolePermissions")) {
 
 				List<Object> values = (List<Object>)value;
 
@@ -863,8 +862,7 @@ public class GroupFinderImpl
 				}
 			}
 			else {
-				if (key.equals("rolePermissions") &&
-					(PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6)) {
+				if (key.equals("rolePermissions")) {
 
 					List<Object> values = (List<Object>)entry.getValue();
 
@@ -947,8 +945,7 @@ public class GroupFinderImpl
 				String actionId = (String)values.get(2);
 				Long roleId = (Long)values.get(3);
 
-				if ((PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) &&
-					ResourceBlockLocalServiceUtil.isSupported(name)) {
+				if (ResourceBlockLocalServiceUtil.isSupported(name)) {
 
 					// Scope is assumed to always be group
 
@@ -1062,8 +1059,7 @@ public class GroupFinderImpl
 		for (Map.Entry<String, Object> entry : params.entrySet()) {
 			String key = entry.getKey();
 
-			if (key.equals("rolePermissions") &&
-				(PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6)) {
+			if (key.equals("rolePermissions")) {
 
 				List<Object> values = (List<Object>)entry.getValue();
 

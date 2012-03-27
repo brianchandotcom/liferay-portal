@@ -189,8 +189,7 @@ public class LayoutPermissionImpl implements LayoutPermission {
 		User user = UserLocalServiceUtil.getUserById(
 			permissionChecker.getUserId());
 
-		if ((PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) &&
-			!user.isDefaultUser() && !group.isUser()) {
+		if (!user.isDefaultUser() && !group.isUser()) {
 
 			// This is new way of doing an ownership check without having to
 			// have a userId field on the model. When the instance model was
@@ -254,25 +253,12 @@ public class LayoutPermissionImpl implements LayoutPermission {
 			}
 		}
 
-		try {
-			if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-				if (ResourcePermissionLocalServiceUtil.
-						getResourcePermissionsCount(
-							layout.getCompanyId(), Layout.class.getName(),
-							ResourceConstants.SCOPE_INDIVIDUAL,
-							String.valueOf(layout.getPlid())) == 0) {
-
-					throw new NoSuchResourceException();
-				}
-			}
-			else {
-				ResourceLocalServiceUtil.getResource(
+		if (ResourcePermissionLocalServiceUtil.
+				getResourcePermissionsCount(
 					layout.getCompanyId(), Layout.class.getName(),
 					ResourceConstants.SCOPE_INDIVIDUAL,
-					String.valueOf(layout.getPlid()));
-			}
-		}
-		catch (NoSuchResourceException nsre) {
+					String.valueOf(layout.getPlid())) == 0) {
+
 			boolean addGroupPermission = true;
 			boolean addGuestPermission = true;
 

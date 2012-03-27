@@ -187,21 +187,9 @@ public class PermissionExporter {
 
 		Element permissionsElement = layoutElement.addElement("permissions");
 
-		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) {
-			exportPermissions_5(
-				layoutCache, companyId, groupId, resourceName, resourcePrimKey,
-				permissionsElement, false);
-		}
-		else if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-			exportPermissions_6(
-				layoutCache, companyId, groupId, resourceName, resourcePrimKey,
-				permissionsElement, false);
-		}
-		else {
-			exportPermissions_1to4(
-				layoutCache, companyId, groupId, resourceName, resourcePrimKey,
-				permissionsElement, exportUserPermissions);
-		}
+		exportPermissions_6(
+			layoutCache, companyId, groupId, resourceName, resourcePrimKey,
+			permissionsElement, false);
 	}
 
 	protected void exportLayoutRoles(
@@ -225,79 +213,6 @@ public class PermissionExporter {
 		exportInheritedRoles(
 			layoutCache, companyId, groupId, resourceName, "user-group",
 			rolesElement);
-	}
-
-	protected void exportPermissions_1to4(
-			LayoutCache layoutCache, long companyId, long groupId,
-			String resourceName, String resourcePrimKey,
-			Element permissionsElement, boolean exportUserPermissions)
-		throws Exception {
-
-		Group guestGroup = GroupLocalServiceUtil.getGroup(
-			companyId, GroupConstants.GUEST);
-
-		exportGroupPermissions(
-			companyId, groupId, resourceName, resourcePrimKey,
-			permissionsElement, "community-actions");
-
-		if (groupId != guestGroup.getGroupId()) {
-			exportGroupPermissions(
-				companyId, guestGroup.getGroupId(), resourceName,
-				resourcePrimKey, permissionsElement, "guest-actions");
-		}
-
-		if (exportUserPermissions) {
-			exportUserPermissions(
-				layoutCache, companyId, groupId, resourceName, resourcePrimKey,
-				permissionsElement);
-		}
-
-		exportInheritedPermissions(
-			layoutCache, companyId, resourceName, resourcePrimKey,
-			permissionsElement, "organization");
-
-		exportInheritedPermissions(
-			layoutCache, companyId, resourceName, resourcePrimKey,
-			permissionsElement, "user-group");
-	}
-
-	protected void exportPermissions_5(
-			LayoutCache layoutCache, long companyId, long groupId,
-			String resourceName, String resourcePrimKey,
-			Element permissionsElement, boolean portletActions)
-		throws Exception {
-
-		Resource resource = layoutCache.getResource(
-			companyId, groupId, resourceName,
-			ResourceConstants.SCOPE_INDIVIDUAL, resourcePrimKey,
-			portletActions);
-
-		List<Role> roles = layoutCache.getGroupRoles_5(groupId, resourceName);
-
-		for (Role role : roles) {
-			if (role.getName().equals(RoleConstants.ADMINISTRATOR)) {
-				continue;
-			}
-
-			Element roleElement = permissionsElement.addElement("role");
-
-			roleElement.addAttribute("name", role.getName());
-			roleElement.addAttribute("title", role.getTitle());
-			roleElement.addAttribute("description", role.getDescription());
-			roleElement.addAttribute("type", String.valueOf(role.getType()));
-
-			List<Permission> permissions =
-				PermissionLocalServiceUtil.getRolePermissions(
-					role.getRoleId(), resource.getResourceId());
-
-			List<String> actions = ResourceActionsUtil.getActions(permissions);
-
-			for (String action : actions) {
-				Element actionKeyElement = roleElement.addElement("action-key");
-
-				actionKeyElement.addText(action);
-			}
-		}
 	}
 
 	protected void exportPermissions_6(
@@ -424,31 +339,10 @@ public class PermissionExporter {
 			layout.getPlid(), portletId);
 
 		Element permissionsElement = portletElement.addElement("permissions");
-
-		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) {
-			exportPermissions_5(
-				layoutCache, companyId, groupId, resourceName, resourcePrimKey,
-				permissionsElement, true);
-		}
-		else if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-			exportPermissions_6(
-				layoutCache, companyId, groupId, resourceName, resourcePrimKey,
-				permissionsElement, true);
-		}
-		else {
-			boolean exportUserPermissions = MapUtil.getBoolean(
-				portletDataContext.getParameterMap(),
-				PortletDataHandlerKeys.USER_PERMISSIONS);
-
-			exportPermissions_1to4(
-				layoutCache, companyId, groupId, resourceName, resourcePrimKey,
-				permissionsElement, exportUserPermissions);
-
-			Element rolesElement = portletElement.addElement("roles");
-
-			exportPortletRoles(
-				layoutCache, companyId, groupId, portletId, rolesElement);
-		}
+		
+		exportPermissions_6(
+			layoutCache, companyId, groupId, resourceName, resourcePrimKey,
+			permissionsElement, true);
 	}
 
 	protected void exportPortletRoles(

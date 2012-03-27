@@ -694,23 +694,13 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		// Resources
 
-		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-			List<ResourcePermission> resourcePermissions =
-				resourcePermissionPersistence.findByC_P(
-					group.getCompanyId(), String.valueOf(group.getGroupId()));
-
-			for (ResourcePermission resourcePermission : resourcePermissions) {
-				resourcePermissionLocalService.deleteResourcePermission(
-					resourcePermission);
-			}
-		}
-		else {
-			List<Resource> resources = resourceFinder.findByC_P(
+		List<ResourcePermission> resourcePermissions =
+			resourcePermissionPersistence.findByC_P(
 				group.getCompanyId(), String.valueOf(group.getGroupId()));
 
-			for (Resource resource : resources) {
-				resourceLocalService.deleteResource(resource);
-			}
+		for (ResourcePermission resourcePermission : resourcePermissions) {
+			resourcePermissionLocalService.deleteResourcePermission(
+				resourcePermission);
 		}
 
 		if (!group.isStagingGroup() &&
@@ -2330,24 +2320,16 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			Role role, String name, String[] actionIds)
 		throws PortalException, SystemException {
 
-		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-			if (resourceBlockLocalService.isSupported(name)) {
-				resourceBlockLocalService.setCompanyScopePermissions(
-					role.getCompanyId(), name, role.getRoleId(),
-					Arrays.asList(actionIds));
-			}
-			else {
-				resourcePermissionLocalService.setResourcePermissions(
-					role.getCompanyId(), name, ResourceConstants.SCOPE_COMPANY,
-					String.valueOf(role.getCompanyId()), role.getRoleId(),
-					actionIds);
-			}
+		if (resourceBlockLocalService.isSupported(name)) {
+			resourceBlockLocalService.setCompanyScopePermissions(
+				role.getCompanyId(), name, role.getRoleId(),
+				Arrays.asList(actionIds));
 		}
 		else {
-			permissionLocalService.setRolePermissions(
-				role.getRoleId(), role.getCompanyId(), name,
-				ResourceConstants.SCOPE_COMPANY,
-				String.valueOf(role.getCompanyId()), actionIds);
+			resourcePermissionLocalService.setResourcePermissions(
+				role.getCompanyId(), name, ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(role.getCompanyId()), role.getRoleId(),
+				actionIds);
 		}
 	}
 
@@ -2365,24 +2347,16 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			Group group, Role role, String name, String[] actionIds)
 		throws PortalException, SystemException {
 
-		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-			if (resourceBlockLocalService.isSupported(name)) {
-				resourceBlockLocalService.setGroupScopePermissions(
-					role.getCompanyId(), group.getGroupId(), name,
-					role.getRoleId(), Arrays.asList(actionIds));
-			}
-			else {
-				resourcePermissionLocalService.setResourcePermissions(
-					group.getCompanyId(), name, ResourceConstants.SCOPE_GROUP,
-					String.valueOf(group.getGroupId()), role.getRoleId(),
-					actionIds);
-			}
+		if (resourceBlockLocalService.isSupported(name)) {
+			resourceBlockLocalService.setGroupScopePermissions(
+				role.getCompanyId(), group.getGroupId(), name,
+				role.getRoleId(), Arrays.asList(actionIds));
 		}
 		else {
-			permissionLocalService.setRolePermissions(
-				role.getRoleId(), group.getCompanyId(), name,
-				ResourceConstants.SCOPE_GROUP,
-				String.valueOf(group.getGroupId()), actionIds);
+			resourcePermissionLocalService.setResourcePermissions(
+				group.getCompanyId(), name, ResourceConstants.SCOPE_GROUP,
+				String.valueOf(group.getGroupId()), role.getRoleId(),
+				actionIds);
 		}
 	}
 

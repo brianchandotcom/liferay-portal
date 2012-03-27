@@ -62,14 +62,8 @@ public class VerifyPermission extends VerifyProcess {
 			List<String> actionIds =
 				ResourceActionsUtil.getModelResourceActions(modelName);
 
-			if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) {
-				PermissionLocalServiceUtil.checkPermissions(
-					modelName, actionIds);
-			}
-			else if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
 				ResourceActionLocalServiceUtil.checkResourceActions(
 					modelName, actionIds, true);
-			}
 		}
 	}
 
@@ -78,15 +72,7 @@ public class VerifyPermission extends VerifyProcess {
 
 		for (long companyId : companyIds) {
 			try {
-				if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) {
-					deleteDefaultPrivateLayoutPermissions_5(companyId);
-				}
-				else if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-					deleteDefaultPrivateLayoutPermissions_6(companyId);
-				}
-				else {
-					deleteDefaultPrivateLayoutPermissions_1to4(companyId);
-				}
+				deleteDefaultPrivateLayoutPermissions_6(companyId);
 			}
 			catch (Exception e) {
 				if (_log.isDebugEnabled()) {
@@ -174,24 +160,13 @@ public class VerifyPermission extends VerifyProcess {
 	protected void doVerify() throws Exception {
 		deleteDefaultPrivateLayoutPermissions();
 
-		if ((PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM != 5) &&
-			(PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM != 6)) {
-
-			return;
-		}
-
 		checkPermissions();
 		fixOrganizationRolePermissions();
 	}
 
 	protected void fixOrganizationRolePermissions() throws Exception {
-		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) {
-			fixOrganizationRolePermissions_5();
-		}
-		else if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-			fixOrganizationRolePermissions_6();
-		}
-
+		fixOrganizationRolePermissions_6();
+		
 		PermissionCacheUtil.clearCache();
 	}
 

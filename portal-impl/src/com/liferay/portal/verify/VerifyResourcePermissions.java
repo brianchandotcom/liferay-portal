@@ -72,10 +72,6 @@ public class VerifyResourcePermissions extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM != 6) {
-			return;
-		}
-
 		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
 
 		for (long companyId : companyIds) {

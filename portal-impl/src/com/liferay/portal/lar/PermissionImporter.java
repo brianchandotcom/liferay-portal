@@ -203,34 +203,12 @@ public class PermissionImporter {
 			String resourceName = Layout.class.getName();
 			String resourcePrimKey = String.valueOf(layout.getPlid());
 
-			if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) {
-				importPermissions_5(
-					layoutCache, companyId, groupId, userId, resourceName,
-					resourcePrimKey, permissionsElement, false);
-			}
-			else if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
 				importPermissions_6(
 					layoutCache, companyId, groupId, userId, resourceName,
 					resourcePrimKey, permissionsElement, false);
-			}
-			else {
-				Group guestGroup = GroupLocalServiceUtil.getGroup(
-					companyId, GroupConstants.GUEST);
-
-				importLayoutPermissions_1to4(
-					layoutCache, companyId, groupId, guestGroup, layout,
-					resourceName, resourcePrimKey, permissionsElement,
-					importUserPermissions);
-			}
 		}
 
 		Element rolesElement = parentElement.element("roles");
-
-		if ((PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM < 5) &&
-			(rolesElement != null)) {
-
-			importLayoutRoles(layoutCache, companyId, groupId, rolesElement);
-		}
 	}
 
 	protected void importLayoutPermissions_1to4(
@@ -442,35 +420,12 @@ public class PermissionImporter {
 			String resourcePrimKey = PortletPermissionUtil.getPrimaryKey(
 				layout.getPlid(), portletId);
 
-			if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) {
-				importPermissions_5(
-					layoutCache, companyId, groupId, userId, resourceName,
-					resourcePrimKey, permissionsElement, true);
-			}
-			else if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-				importPermissions_6(
-					layoutCache, companyId, groupId, userId, resourceName,
-					resourcePrimKey, permissionsElement, true);
-			}
-			else {
-				Group guestGroup = GroupLocalServiceUtil.getGroup(
-					companyId, GroupConstants.GUEST);
-
-				importPortletPermissions_1to4(
-					layoutCache, companyId, groupId, guestGroup, layout,
-					permissionsElement, importUserPermissions);
-			}
+			importPermissions_6(
+				layoutCache, companyId, groupId, userId, resourceName,
+				resourcePrimKey, permissionsElement, true);
 		}
 
 		Element rolesElement = portletElement.element("roles");
-
-		if ((PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM < 5) &&
-			(rolesElement != null)) {
-
-			importPortletRoles(layoutCache, companyId, groupId, portletElement);
-			importPortletRoles(
-				layoutCache, companyId, groupId, portletId, rolesElement);
-		}
 	}
 
 	protected void importPortletPermissions_1to4(

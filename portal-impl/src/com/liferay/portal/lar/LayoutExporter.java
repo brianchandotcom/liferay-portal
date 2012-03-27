@@ -431,15 +431,6 @@ public class LayoutExporter {
 				layout, layoutsElement);
 		}
 
-		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM < 5) {
-			Element rolesElement = rootElement.addElement("roles");
-
-			if (exportPermissions) {
-				_permissionExporter.exportLayoutRoles(
-					layoutCache, companyId, groupId, rolesElement);
-			}
-		}
-
 		long previousScopeGroupId = portletDataContext.getScopeGroupId();
 
 		Element portletsElement = rootElement.addElement("portlets");

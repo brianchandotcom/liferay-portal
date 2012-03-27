@@ -1233,24 +1233,16 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			Role role, String name, String[] actionIds)
 		throws PortalException, SystemException {
 
-		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-			if (resourceBlockLocalService.isSupported(name)) {
-				resourceBlockLocalService.setCompanyScopePermissions(
-					role.getCompanyId(), name, role.getRoleId(),
-					Arrays.asList(actionIds));
-			}
-			else {
-				resourcePermissionLocalService.setResourcePermissions(
-					role.getCompanyId(), name, ResourceConstants.SCOPE_COMPANY,
-					String.valueOf(role.getCompanyId()), role.getRoleId(),
-					actionIds);
-			}
+		if (resourceBlockLocalService.isSupported(name)) {
+			resourceBlockLocalService.setCompanyScopePermissions(
+				role.getCompanyId(), name, role.getRoleId(),
+				Arrays.asList(actionIds));
 		}
 		else {
-			permissionLocalService.setRolePermissions(
-				role.getRoleId(), role.getCompanyId(), name,
-				ResourceConstants.SCOPE_COMPANY,
-				String.valueOf(role.getCompanyId()), actionIds);
+			resourcePermissionLocalService.setResourcePermissions(
+				role.getCompanyId(), name, ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(role.getCompanyId()), role.getRoleId(),
+				actionIds);
 		}
 	}
 

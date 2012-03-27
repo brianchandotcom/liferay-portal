@@ -107,6 +107,10 @@ public class PortalServiceUtil {
 		getService().testDeleteClassName();
 	}
 
+	public static int testGetBuildNumber() {
+		return getService().testGetBuildNumber();
+	}
+
 	public static void testGetUserId() {
 		getService().testGetUserId();
 	}

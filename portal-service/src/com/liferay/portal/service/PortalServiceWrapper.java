@@ -95,6 +95,10 @@ public class PortalServiceWrapper implements PortalService,
 		_portalService.testDeleteClassName();
 	}
 
+	public int testGetBuildNumber() {
+		return _portalService.testGetBuildNumber();
+	}
+
 	public void testGetUserId() {
 		_portalService.testGetUserId();
 	}

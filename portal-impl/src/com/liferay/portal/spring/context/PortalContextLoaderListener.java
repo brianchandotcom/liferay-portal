@@ -16,7 +16,6 @@ package com.liferay.portal.spring.context;
 
 import com.liferay.portal.bean.BeanLocatorImpl;
 import com.liferay.portal.cache.ehcache.ClearEhcacheThreadUtil;
-import com.liferay.portal.kernel.bean.BeanLocator;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
@@ -194,10 +193,12 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		ClassLoader portalClassLoader = PortalClassLoaderUtil.getClassLoader();
 
-		BeanLocator beanLocator = new BeanLocatorImpl(
+		BeanLocatorImpl beanLocatorImpl = new BeanLocatorImpl(
 			portalClassLoader, applicationContext);
 
-		PortalBeanLocatorUtil.setBeanLocator(beanLocator);
+		beanLocatorImpl.setWrapPersistenceWithPACLBeanHandler(true);
+
+		PortalBeanLocatorUtil.setBeanLocator(beanLocatorImpl);
 
 		ClassLoader classLoader = portalClassLoader;
 

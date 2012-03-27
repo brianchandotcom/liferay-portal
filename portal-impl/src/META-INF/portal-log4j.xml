@@ -414,12 +414,40 @@
 		<priority value="WARN" />
 	</category>
 
+	<category name="com.liferay.portal.security.lang.PortalSecurityManager#checkConnect">
+		<priority value="INFO" />
+	</category>
+
+	<category name="com.liferay.portal.security.lang.PortalSecurityManager#checkListen">
+		<priority value="INFO" />
+	</category>
+
 	<category name="com.liferay.portal.security.ldap">
 		<priority value="ERROR" />
 	</category>
 
 	<category name="com.liferay.portal.security.ldap.PortalLDAPUtil">
 		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.portal.security.pacl.ActivePACLPolicy">
+		<priority value="DEBUG" />
+	</category>
+
+	<category name="com.liferay.portal.security.pacl.PACLAdvice">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.portal.security.pacl.PACLBeanHandler">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.portal.security.pacl.PACLClassUtil">
+		<priority value="DEBUG" />
+	</category>
+
+	<category name="com.liferay.portal.security.pacl.PACLPolicyManager">
+		<priority value="INFO" />
 	</category>
 
 	<category name="com.liferay.portal.security.permission.AdvancedPermissionChecker">

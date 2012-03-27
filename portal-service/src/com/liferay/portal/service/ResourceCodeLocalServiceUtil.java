@@ -268,16 +268,6 @@ public class ResourceCodeLocalServiceUtil {
 		return getService().addResourceCode(companyId, name, scope);
 	}
 
-	public static void checkResourceCodes()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().checkResourceCodes();
-	}
-
-	public static void checkResourceCodes(long companyId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().checkResourceCodes(companyId, name);
-	}
-
 	public static com.liferay.portal.model.ResourceCode getResourceCode(
 		long companyId, java.lang.String name, int scope)
 		throws com.liferay.portal.kernel.exception.SystemException {

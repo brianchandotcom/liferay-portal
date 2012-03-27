@@ -257,16 +257,6 @@ public class ResourceCodeLocalServiceWrapper implements ResourceCodeLocalService
 		return _resourceCodeLocalService.addResourceCode(companyId, name, scope);
 	}
 
-	public void checkResourceCodes()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_resourceCodeLocalService.checkResourceCodes();
-	}
-
-	public void checkResourceCodes(long companyId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_resourceCodeLocalService.checkResourceCodes(companyId, name);
-	}
-
 	public com.liferay.portal.model.ResourceCode getResourceCode(
 		long companyId, java.lang.String name, int scope)
 		throws com.liferay.portal.kernel.exception.SystemException {

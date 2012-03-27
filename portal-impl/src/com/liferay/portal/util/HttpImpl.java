@@ -35,8 +35,12 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.SocketAddress;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.UnknownHostException;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -46,6 +50,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.net.SocketFactory;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.RenderRequest;
 
@@ -53,6 +59,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.httpclient.ConnectTimeoutException;
 import org.apache.commons.httpclient.Credentials;
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HostConfiguration;
@@ -84,6 +91,8 @@ import org.apache.commons.httpclient.params.HttpClientParams;
 import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
 import org.apache.commons.httpclient.params.HttpConnectionParams;
 import org.apache.commons.httpclient.params.HttpMethodParams;
+import org.apache.commons.httpclient.protocol.DefaultProtocolSocketFactory;
+import org.apache.commons.httpclient.protocol.Protocol;
 
 /**
  * @author Brian Wing Shun Chan
@@ -92,6 +101,16 @@ import org.apache.commons.httpclient.params.HttpMethodParams;
 public class HttpImpl implements Http {
 
 	public HttpImpl() {
+
+		// Override the default protocol socket factory because it uses
+		// reflection for JDK 1.4 compatibility, which we do not need. It also
+		// attemps to create a new socket in a different thread so that we
+		// cannot track which class loader initiated the call.
+
+		Protocol protocol = new Protocol(
+			"http", new FastProtocolSocketFactory(), 80);
+
+		Protocol.registerProtocol("http", protocol);
 
 		// Mimic behavior found in
 		// http://java.sun.com/j2se/1.5.0/docs/guide/net/properties.html
@@ -1290,5 +1309,40 @@ public class HttpImpl implements Http {
 	private Pattern _nonProxyHostsPattern;
 	private Credentials _proxyCredentials;
 	private HttpClient _proxyHttpClient = new HttpClient();
+
+	private class FastProtocolSocketFactory
+		extends DefaultProtocolSocketFactory {
+
+		@Override
+		public Socket createSocket(
+				final String host, final int port,
+				final InetAddress localInetAddress, final int localPort,
+				final HttpConnectionParams httpConnectionParams)
+			throws ConnectTimeoutException, IOException, UnknownHostException {
+
+			int connectionTimeout = httpConnectionParams.getConnectionTimeout();
+
+			if (connectionTimeout == 0) {
+				return createSocket(host, port, localInetAddress, localPort);
+			}
+
+			SocketFactory socketFactory = SocketFactory.getDefault();
+
+			Socket socket = socketFactory.createSocket();
+
+			SocketAddress localSocketAddress = new InetSocketAddress(
+				localInetAddress, localPort);
+
+			SocketAddress remoteSocketAddress = new InetSocketAddress(
+				host, port);
+
+			socket.bind(localSocketAddress);
+
+			socket.connect(remoteSocketAddress, connectionTimeout);
+
+			return socket;
+		}
+
+	}
 
 }

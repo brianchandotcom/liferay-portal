@@ -16,18 +16,15 @@ package com.liferay.portlet.admin.util;
 
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
-import com.liferay.portal.model.Permission;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.PermissionLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.List;
 
@@ -41,90 +38,25 @@ public class CleanUpPermissionsUtil {
 	public static void cleanUpAddToPagePermissions(ActionRequest actionRequest)
 		throws Exception {
 
-		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) {
-			_cleanUpAddToPagePermissions_5(actionRequest);
-		}
-		else if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-			_cleanUpAddToPagePermissions_6(actionRequest);
-		}
-	}
-
-	private static void _cleanUpAddToPagePermissions_5(
-			ActionRequest actionRequest)
-		throws Exception {
-
 		long companyId = PortalUtil.getCompanyId(actionRequest);
 
 		Role role = RoleLocalServiceUtil.getRole(
 			companyId, RoleConstants.GUEST);
 
-		_cleanUpAddToPagePermissions_5(companyId, role.getRoleId(), false);
+		_cleanUpAddToPagePermissions(companyId, role.getRoleId(), false);
 
 		role = RoleLocalServiceUtil.getRole(
 			companyId, RoleConstants.POWER_USER);
 
-		_cleanUpAddToPagePermissions_5(companyId, role.getRoleId(), false);
+		_cleanUpAddToPagePermissions(companyId, role.getRoleId(), false);
 
 		role = RoleLocalServiceUtil.getRole(companyId, RoleConstants.USER);
 
-		_cleanUpAddToPagePermissions_5(companyId, role.getRoleId(), true);
+		_cleanUpAddToPagePermissions(companyId, role.getRoleId(), true);
 	}
 
-	private static void _cleanUpAddToPagePermissions_5(
-			long companyId, long roleId, boolean limitScope)
-		throws Exception {
-
-		List<Permission> rolePermissions =
-			PermissionLocalServiceUtil.getRolePermissions(roleId);
-
-		Group userPersonalSite = GroupLocalServiceUtil.getGroup(
-			companyId, GroupConstants.USER_PERSONAL_SITE);
-
-		String groupIdString = String.valueOf(userPersonalSite.getGroupId());
-
-		for (Permission permission : rolePermissions) {
-			if (permission.getActionId() != ActionKeys.ADD_TO_PAGE) {
-				continue;
-			}
-
-			PermissionLocalServiceUtil.unsetRolePermission(
-				roleId, companyId, permission.getName(), permission.getScope(),
-				permission.getPrimKey(), ActionKeys.ADD_TO_PAGE);
-
-			if (!limitScope || groupIdString.equals(permission.getPrimKey())) {
-				continue;
-			}
-
-			PermissionLocalServiceUtil.setRolePermission(
-				roleId, companyId, permission.getName(),
-				ResourceConstants.SCOPE_GROUP, groupIdString,
-				ActionKeys.ADD_TO_PAGE);
-		}
-	}
-
-	private static void _cleanUpAddToPagePermissions_6(
-			ActionRequest actionRequest)
-		throws Exception {
-
-		long companyId = PortalUtil.getCompanyId(actionRequest);
-
-		Role role = RoleLocalServiceUtil.getRole(
-			companyId, RoleConstants.GUEST);
-
-		_cleanUpAddToPagePermissions_6(companyId, role.getRoleId(), false);
-
-		role = RoleLocalServiceUtil.getRole(
-			companyId, RoleConstants.POWER_USER);
-
-		_cleanUpAddToPagePermissions_6(companyId, role.getRoleId(), false);
-
-		role = RoleLocalServiceUtil.getRole(companyId, RoleConstants.USER);
-
-		_cleanUpAddToPagePermissions_6(companyId, role.getRoleId(), true);
-	}
-
-	private static void _cleanUpAddToPagePermissions_6(
-			long companyId, long roleId, boolean limitScope)
+	private static void _cleanUpAddToPagePermissions(
+		long companyId, long roleId, boolean limitScope)
 		throws Exception {
 
 		List<ResourcePermission> roleResourcePermissions =

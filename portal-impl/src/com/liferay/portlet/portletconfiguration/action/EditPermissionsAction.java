@@ -89,15 +89,8 @@ public class EditPermissionsAction extends EditConfigurationAction {
 				updateUserPermissions(actionRequest);
 			}
 
-			if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM < 5) {
-				String redirect = ParamUtil.getString(
-					actionRequest, "permissionsRedirect");
 
-				sendRedirect(actionRequest, actionResponse, redirect);
-			}
-			else {
-				addSuccessMessage(actionRequest, actionResponse);
-			}
+			addSuccessMessage(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
 			if (e instanceof PrincipalException) {
@@ -266,55 +259,7 @@ public class EditPermissionsAction extends EditConfigurationAction {
 	protected void updateRolePermissions(ActionRequest actionRequest)
 		throws Exception {
 
-		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) {
-			updateRolePermissions_5(actionRequest);
-		}
-		else if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-			updateRolePermissions_6(actionRequest);
-		}
-		else {
-			updateRolePermissions_1to4(actionRequest);
-		}
-	}
-
-	protected void updateRolePermissions_1to4(ActionRequest actionRequest)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long resourceId = ParamUtil.getLong(actionRequest, "resourceId");
-		long roleId = ParamUtil.getLong(actionRequest, "roleIdsPosValue");
-		String[] actionIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "roleIdActionIds"));
-
-		PermissionServiceUtil.setRolePermissions(
-			roleId, themeDisplay.getScopeGroupId(), actionIds, resourceId);
-	}
-
-	protected void updateRolePermissions_5(ActionRequest actionRequest)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long resourceId = ParamUtil.getLong(actionRequest, "resourceId");
-
-		Map<Long, String[]> roleIdsToActionIds = new HashMap<Long, String[]>();
-
-		long[] roleIds = StringUtil.split(
-			ParamUtil.getString(
-				actionRequest, "rolesSearchContainerPrimaryKeys"), 0L);
-
-		for (long roleId : roleIds) {
-			String[] actionIds = getActionIds(actionRequest, roleId, false);
-
-			roleIdsToActionIds.put(roleId, actionIds);
-		}
-
-		PermissionServiceUtil.setIndividualPermissions(
-			themeDisplay.getScopeGroupId(), themeDisplay.getCompanyId(),
-			roleIdsToActionIds, resourceId);
+		updateRolePermissions_6(actionRequest);
 	}
 
 	protected void updateRolePermissions_6(ActionRequest actionRequest)

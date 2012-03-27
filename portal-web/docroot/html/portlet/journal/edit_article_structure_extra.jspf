@@ -58,7 +58,7 @@
 				<aui:option label="select-box" value="list" />
 				<aui:option label="multi-selection-list" value="multi-list" />
 				<aui:option label="image-uploader" value="image" />
-				<aui:option label="document-library" value="document_library" />
+				<aui:option label="documents-and-media" value="documents_and_media" />
 				<aui:option label="link-to-page" value="link_to_layout" />
 				<aui:option label="selection-break" value="selection_break" />
 			</aui:select>
@@ -112,7 +112,7 @@
 			<aui:input cssClass="journal-image-field lfr-input-text-container flexible" label="" name="text" size="40" type="file" />
 		</div>
 
-		<div dataType="document_library">
+		<div dataType="documents_and_media">
 			<aui:input cssClass="lfr-input-text-container" inlineField="<%= true %>" label="" name="text" size="55" type="text" />
 
 			<portlet:renderURL var="selectDLURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">

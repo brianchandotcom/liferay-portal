@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.bean.BeanLocatorException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.security.pacl.PACLBeanHandler;
+import com.liferay.portal.service.persistence.BasePersistence;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,55 +83,84 @@ public class BeanLocatorImpl implements BeanLocator {
 		}
 	}
 
+	public void setWrapPersistenceWithPACLBeanHandler(
+		boolean wrapPersistenceWithPACLBeanHandler) {
+
+		_wrapPersistenceWithPACLBeanHandler =
+			wrapPersistenceWithPACLBeanHandler;
+	}
+
 	protected Object doLocate(String name) throws Exception {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Locating " + name);
 		}
 
 		if (name.endsWith(VELOCITY_SUFFIX)) {
-			Object bean = _velocityBeans.get(name);
+			Object velocityBean = _velocityBeans.get(name);
 
-			if (bean == null) {
+			if (velocityBean == null) {
 				String originalName = name.substring(
 					0, name.length() - VELOCITY_SUFFIX.length());
 
-				bean = _applicationContext.getBean(originalName);
+				Object bean = _applicationContext.getBean(originalName);
 
-				Class<?> beanClass = bean.getClass();
-
-				Class<?>[] interfaces = beanClass.getInterfaces();
-
-				List<Class<?>> interfacesList = new ArrayList<Class<?>>();
-
-				for (Class<?> clazz : interfaces) {
-					try {
-						interfacesList.add(
-							_classLoader.loadClass(clazz.getName()));
-					}
-					catch (ClassNotFoundException cnfe) {
-					}
-				}
-
-				bean = ProxyUtil.newProxyInstance(
-					_classLoader,
-					interfacesList.toArray(new Class<?>[interfacesList.size()]),
+				velocityBean = ProxyUtil.newProxyInstance(
+					_classLoader, getInterfaces(bean),
 					new VelocityBeanHandler(bean, _classLoader));
 
-				_velocityBeans.put(name, bean);
+				_velocityBeans.put(name, velocityBean);
 			}
 
-			return bean;
+			return velocityBean;
 		}
-		else {
-			return _applicationContext.getBean(name);
+
+		Object bean = _applicationContext.getBean(name);
+
+		if (_wrapPersistenceWithPACLBeanHandler && (bean != null) &&
+			(bean instanceof BasePersistence)) {
+
+			Object paclPersistenceBean = _paclPersistenceBeans.get(name);
+
+			if (paclPersistenceBean != null) {
+				return paclPersistenceBean;
+			}
+
+			paclPersistenceBean = ProxyUtil.newProxyInstance(
+				_classLoader, getInterfaces(bean), new PACLBeanHandler(bean));
+
+			_paclPersistenceBeans.put(name, paclPersistenceBean);
+
+			return paclPersistenceBean;
 		}
+
+		return bean;
+	}
+
+	protected Class<?>[] getInterfaces(Object object) {
+		List<Class<?>> interfaceClasses = new ArrayList<Class<?>>();
+
+		Class<?> clazz = object.getClass();
+
+		for (Class<?> interfaceClass : clazz.getInterfaces()) {
+			try {
+				interfaceClasses.add(
+					_classLoader.loadClass(interfaceClass.getName()));
+			}
+			catch (ClassNotFoundException cnfe) {
+			}
+		}
+
+		return interfaceClasses.toArray(new Class<?>[interfaceClasses.size()]);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(BeanLocatorImpl.class);
 
 	private ApplicationContext _applicationContext;
 	private ClassLoader _classLoader;
+	private Map<String, Object> _paclPersistenceBeans =
+		new ConcurrentHashMap<String, Object>();
 	private Map<String, Object> _velocityBeans =
 		new ConcurrentHashMap<String, Object>();
+	private boolean _wrapPersistenceWithPACLBeanHandler;
 
 }

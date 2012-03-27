@@ -16,37 +16,102 @@ package com.liferay.portal.security.pacl;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.WebDirDetector;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.FilePermission;
+
 import java.lang.reflect.Method;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+import java.security.Permission;
+
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class ActivePACLPolicy extends BasePACLPolicy {
 
-	public ActivePACLPolicy(String servletContextName, Properties properties) {
+	public ActivePACLPolicy(
+		String servletContextName, ClassLoader classLoader,
+		Properties properties) {
+
 		super(servletContextName, properties);
 
+		_rootDir = WebDirDetector.getRootDir(classLoader);
+
+		initFiles();
 		initServices();
 		initSocketConnectHostsAndPorts();
 		initSocketListenPorts();
 	}
 
-	public boolean hasAccess(Object object, Method method) {
+	public boolean hasFileDeletePermission(String fileName) {
+		Permission permission = new FilePermission(
+			fileName, _FILE_PERMISSION_DELETE);
+
+		for (Permission deleteFilePermission : _deleteFilePermissions) {
+			if (deleteFilePermission.implies(permission)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public boolean hasFileExecutePermission(String fileName) {
+		Permission permission = new FilePermission(
+			fileName, _FILE_PERMISSION_EXECUTE);
+
+		for (Permission executeFilePermission : _executeFilePermissions) {
+			if (executeFilePermission.implies(permission)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public boolean hasFileReadPermission(String fileName) {
+		Permission permission = new FilePermission(
+			fileName, _FILE_PERMISSION_READ);
+
+		for (Permission readFilePermission : _readFilePermissions) {
+			if (readFilePermission.implies(permission)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public boolean hasFileWritePermission(String fileName) {
+		Permission permission = new FilePermission(
+			fileName, _FILE_PERMISSION_WRITE);
+
+		for (Permission writeFilePermission : _writeFilePermissions) {
+			if (writeFilePermission.implies(permission)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public boolean hasServicePermission(Object object, Method method) {
 		Class<?> clazz = object.getClass();
 
 		ClassLoader classLoader = clazz.getClassLoader();
@@ -83,11 +148,7 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		return false;
 	}
 
-	public boolean isActive() {
-		return true;
-	}
-
-	public boolean isSocketConnect(String host, int port) {
+	public boolean hasSocketConnectPermission(String host, int port) {
 		Set<Integer> ports = _socketConnectHostsAndPorts.get(host);
 
 		if (ports == null) {
@@ -97,8 +158,62 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		return ports.contains(port);
 	}
 
-	public boolean isSocketListen(int port) {
+	public boolean hasSocketListenPermission(int port) {
 		return _socketListenPorts.contains(port);
+	}
+
+	public boolean isActive() {
+		return true;
+	}
+
+	protected List<Permission> getFilePermissions(String key, String action) {
+		List<Permission> permissions = new CopyOnWriteArrayList<Permission>();
+
+		Properties properties = getProperties();
+
+		String value = properties.getProperty(key);
+
+		String[] paths = StringUtil.split(value);
+
+		if (value.contains("${comma}")) {
+			for (int i = 0; i < paths.length; i++) {
+				paths[i] = StringUtil.replace(
+					paths[i], "${comma}", StringPool.COMMA);
+			}
+		}
+
+		for (String path : paths) {
+			Permission permission = new FilePermission(path, action);
+
+			permissions.add(permission);
+		}
+
+		if (action.equals(_FILE_PERMISSION_READ)) {
+			Permission permission = new FilePermission(_rootDir + "-", action);
+
+			permissions.add(permission);
+
+			permission = new FilePermission(
+				System.getProperty("catalina.home") +
+					"/work/Catalina/localhost/" + getServletContextName() +
+						"/-",
+				action);
+
+			permissions.add(permission);
+		}
+
+		return permissions;
+	}
+
+	protected void initFiles() {
+		_deleteFilePermissions = getFilePermissions(
+			"security-manager-files-delete", _FILE_PERMISSION_DELETE);
+		_executeFilePermissions = getFilePermissions(
+			"security-manager-files-execute", _FILE_PERMISSION_EXECUTE);
+		_readFilePermissions = getFilePermissions(
+			"security-manager-files-read", _FILE_PERMISSION_READ);
+		_writeFilePermissions = getFilePermissions(
+			"security-manager-files-write", _FILE_PERMISSION_WRITE);
 	}
 
 	protected void initServices() {
@@ -298,15 +413,28 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		}
 	}
 
+	private static final String _FILE_PERMISSION_DELETE = "delete";
+
+	private static final String _FILE_PERMISSION_EXECUTE = "execute";
+
+	private static final String _FILE_PERMISSION_READ = "read";
+
+	private static final String _FILE_PERMISSION_WRITE = "write";
+
 	private static final String _PORTAL_SERVLET_CONTEXT_NAME = "portal";
 
 	private static Log _log = LogFactoryUtil.getLog(ActivePACLPolicy.class);
 
+	private List<Permission> _deleteFilePermissions;
+	private List<Permission> _executeFilePermissions;
 	private Map<String, Set<String>> _pluginServices =
 		new HashMap<String, Set<String>>();
 	private Set<String> _portalServices;
+	private List<Permission> _readFilePermissions;
+	private String _rootDir;
 	private Map<String, Set<Integer>> _socketConnectHostsAndPorts =
 		new HashMap<String, Set<Integer>>();
 	private Set<Integer> _socketListenPorts = new HashSet<Integer>();
+	private List<Permission> _writeFilePermissions;
 
 }

@@ -29,8 +29,9 @@ public class PortalSecurityManager extends SecurityManager {
 	@Override
 	public void checkConnect(String host, int port) {
 		if (port == -1) {
-			if (_logCheckConnect.isInfoEnabled()) {
-				_logCheckConnect.info("Always allow resolving of host " + host);
+			if (_logCheckConnect.isDebugEnabled()) {
+				_logCheckConnect.debug(
+					"Always allow resolving of host " + host);
 			}
 
 			return;
@@ -39,14 +40,15 @@ public class PortalSecurityManager extends SecurityManager {
 		PACLPolicy paclPolicy = getPACLPolicy(
 			_logCheckConnect.isDebugEnabled());
 
-		if (_logCheckConnect.isInfoEnabled()) {
-			_logCheckConnect.info(
-				"Checking permissions to connect to host " + host +
-					" on port " + port + " with PACL policy " + paclPolicy);
+		if (_logCheckConnect.isDebugEnabled()) {
+			_logCheckConnect.debug(
+				"Using PACL policy " + paclPolicy +
+					" to check permissions to connect to host " + host +
+						" on port " + port);
 		}
 
 		if (paclPolicy != null) {
-			if (!paclPolicy.isSocketConnect(host, port)) {
+			if (!paclPolicy.hasSocketConnectPermission(host, port)) {
 				throw new SecurityException(
 					"Attempted to connect to host " + host + " on port " +
 						port);
@@ -57,17 +59,57 @@ public class PortalSecurityManager extends SecurityManager {
 	}
 
 	@Override
-	public void checkListen(int port) {
-		PACLPolicy paclPolicy = getPACLPolicy(_logCheckListen.isDebugEnabled());
+	public void checkDelete(String fileName) {
+		PACLPolicy paclPolicy = getPACLPolicy(_logCheckDelete.isDebugEnabled());
 
-		if (_logCheckListen.isInfoEnabled()) {
-			_logCheckListen.info(
-				"Checking permissions to listen on port " + port +
-					" with PACL policy " + paclPolicy);
+		if (_logCheckDelete.isDebugEnabled()) {
+			_logCheckDelete.debug(
+				"Using PACL policy " + paclPolicy +
+					" to check permissions to delete file " + fileName);
 		}
 
 		if (paclPolicy != null) {
-			if (!paclPolicy.isSocketListen(port)) {
+			if (!paclPolicy.hasFileDeletePermission(fileName)) {
+				throw new SecurityException(
+					"Attempted to delete file " + fileName);
+			}
+		}
+
+		super.checkDelete(fileName);
+	}
+
+	@Override
+	public void checkExec(String fileName) {
+		PACLPolicy paclPolicy = getPACLPolicy(_logCheckExec.isDebugEnabled());
+
+		if (_logCheckExec.isDebugEnabled()) {
+			_logCheckExec.debug(
+				"Using PACL policy " + paclPolicy +
+					" to check permissions to execute file " + fileName);
+		}
+
+		if (paclPolicy != null) {
+			if (!paclPolicy.hasFileExecutePermission(fileName)) {
+				throw new SecurityException(
+					"Attempted to execute file " + fileName);
+			}
+		}
+
+		super.checkExec(fileName);
+	}
+
+	@Override
+	public void checkListen(int port) {
+		PACLPolicy paclPolicy = getPACLPolicy(_logCheckListen.isDebugEnabled());
+
+		if (_logCheckListen.isDebugEnabled()) {
+			_logCheckListen.debug(
+				"Using PACL policy " + paclPolicy +
+					" to check permissions to listen on port " + port);
+		}
+
+		if (paclPolicy != null) {
+			if (!paclPolicy.hasSocketListenPermission(port)) {
 				throw new SecurityException(
 					"Attempted to listen on port " + port);
 			}
@@ -101,6 +143,55 @@ public class PortalSecurityManager extends SecurityManager {
 	public void checkPermission(Permission permission, Object context) {
 	}
 
+	@Override
+	public void checkRead(String fileName) {
+		PACLPolicy paclPolicy = null;
+
+		try {
+			paclPolicy = getPACLPolicy(_logCheckRead.isDebugEnabled());
+		}
+		catch (ClassCircularityError cce) {
+			super.checkRead(fileName);
+
+			return;
+		}
+
+		if (_logCheckRead.isDebugEnabled()) {
+			_logCheckRead.debug(
+				"Using PACL policy " + paclPolicy +
+					" to check permissions to read file " + fileName);
+		}
+
+		if (paclPolicy != null) {
+			if (!paclPolicy.hasFileReadPermission(fileName)) {
+				throw new SecurityException(
+					"Attempted to read file " + fileName);
+			}
+		}
+
+		super.checkRead(fileName);
+	}
+
+	@Override
+	public void checkWrite(String fileName) {
+		PACLPolicy paclPolicy = getPACLPolicy(_logCheckWrite.isDebugEnabled());
+
+		if (_logCheckWrite.isDebugEnabled()) {
+			_logCheckWrite.debug(
+				"Using PACL policy " + paclPolicy +
+					" to check permissions to write file " + fileName);
+		}
+
+		if (paclPolicy != null) {
+			if (!paclPolicy.hasFileWritePermission(fileName)) {
+				throw new SecurityException(
+					"Attempted to write file " + fileName);
+			}
+		}
+
+		super.checkWrite(fileName);
+	}
+
 	protected PACLPolicy getPACLPolicy(boolean debug) {
 		return PACLClassUtil.getPACLPolicyBySecurityManagerClassContext(
 			getClassContext(), debug);
@@ -114,7 +205,19 @@ public class PortalSecurityManager extends SecurityManager {
 	private static Log _logCheckConnect = LogFactoryUtil.getLog(
 		PortalSecurityManager.class.getName() + "#checkConnect");
 
+	private static Log _logCheckDelete = LogFactoryUtil.getLog(
+		PortalSecurityManager.class.getName() + "#checkDelete");
+
+	private static Log _logCheckExec = LogFactoryUtil.getLog(
+		PortalSecurityManager.class.getName() + "#checkExec");
+
 	private static Log _logCheckListen = LogFactoryUtil.getLog(
 		PortalSecurityManager.class.getName() + "#checkListen");
+
+	private static Log _logCheckRead = LogFactoryUtil.getLog(
+		PortalSecurityManager.class.getName() + "#checkRead");
+
+	private static Log _logCheckWrite = LogFactoryUtil.getLog(
+		PortalSecurityManager.class.getName() + "#checkWrite");
 
 }

@@ -31,7 +31,8 @@ import java.util.Properties;
 public class PACLPolicyManager {
 
 	public static PACLPolicy buildPACLPolicy(
-		String servletContextName, Properties properties) {
+		String servletContextName, ClassLoader classLoader,
+		Properties properties) {
 
 		boolean active = GetterUtil.getBoolean(
 			properties.get("security-manager-enabled"));
@@ -39,7 +40,8 @@ public class PACLPolicyManager {
 		PACLPolicy paclPolicy = null;
 
 		if (active) {
-			paclPolicy = new ActivePACLPolicy(servletContextName, properties);
+			paclPolicy = new ActivePACLPolicy(
+				servletContextName, classLoader, properties);
 		}
 		else {
 			paclPolicy = new InactivePACLPolicy(servletContextName, properties);

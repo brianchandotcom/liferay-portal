@@ -82,8 +82,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 	@After
 	@Override
 	public void tearDown() throws Exception {
-		super.tearDown();
-
 		if (_fileEntry != null) {
 			DLAppServiceUtil.deleteFileEntry(_fileEntry.getFileEntryId());
 		}

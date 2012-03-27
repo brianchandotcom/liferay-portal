@@ -415,11 +415,23 @@
 	</category>
 
 	<category name="com.liferay.portal.security.lang.PortalSecurityManager#checkConnect">
-		<priority value="INFO" />
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.portal.security.lang.PortalSecurityManager#checkExec">
+		<priority value="ERROR" />
 	</category>
 
 	<category name="com.liferay.portal.security.lang.PortalSecurityManager#checkListen">
-		<priority value="INFO" />
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.portal.security.lang.PortalSecurityManager#checkRead">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.portal.security.lang.PortalSecurityManager#checkWrite">
+		<priority value="ERROR" />
 	</category>
 
 	<category name="com.liferay.portal.security.ldap">

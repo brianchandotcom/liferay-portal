@@ -121,9 +121,9 @@ public class PACLClassUtil {
 				return paclPolicy;
 			}
 
-			_log.error(
+			/*_log.error(
 				"Unable to locate PACL policy for caller class loader " +
-					callerClassLoader);
+					callerClassLoader);*/
 		}
 
 		return null;
@@ -186,9 +186,9 @@ public class PACLClassUtil {
 				return paclPolicy;
 			}
 
-			_log.error(
+			/*_log.error(
 				"Unable to locate PACL policy for caller class loader " +
-					callerClassLoader);
+					callerClassLoader);*/
 		}
 
 		return null;

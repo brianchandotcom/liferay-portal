@@ -29,20 +29,36 @@ public class InactivePACLPolicy extends BasePACLPolicy {
 		super(servletContextName, properties);
 	}
 
-	public boolean hasAccess(Object object, Method method) {
+	public boolean hasFileDeletePermission(String fileName) {
+		return true;
+	}
+
+	public boolean hasFileExecutePermission(String fileName) {
+		return true;
+	}
+
+	public boolean hasFileReadPermission(String fileName) {
+		return true;
+	}
+
+	public boolean hasFileWritePermission(String fileName) {
+		return true;
+	}
+
+	public boolean hasServicePermission(Object object, Method method) {
+		return true;
+	}
+
+	public boolean hasSocketConnectPermission(String host, int port) {
+		return true;
+	}
+
+	public boolean hasSocketListenPermission(int port) {
 		return true;
 	}
 
 	public boolean isActive() {
 		return false;
-	}
-
-	public boolean isSocketConnect(String host, int port) {
-		return true;
-	}
-
-	public boolean isSocketListen(int port) {
-		return true;
 	}
 
 }

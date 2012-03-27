@@ -23,12 +23,20 @@ public interface PACLPolicy {
 
 	public String getServletContextName();
 
-	public boolean hasAccess(Object object, Method method);
+	public boolean hasFileDeletePermission(String fileName);
+
+	public boolean hasFileExecutePermission(String fileName);
+
+	public boolean hasFileReadPermission(String fileName);
+
+	public boolean hasFileWritePermission(String fileName);
+
+	public boolean hasServicePermission(Object object, Method method);
+
+	public boolean hasSocketConnectPermission(String host, int port);
+
+	public boolean hasSocketListenPermission(int port);
 
 	public boolean isActive();
-
-	public boolean isSocketConnect(String host, int port);
-
-	public boolean isSocketListen(int port);
 
 }

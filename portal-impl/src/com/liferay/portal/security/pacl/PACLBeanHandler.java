@@ -100,7 +100,7 @@ public class PACLBeanHandler implements InvocationHandler {
 		}
 
 		if (paclPolicy != null) {
-			if (!paclPolicy.hasAccess(_bean, method)) {
+			if (!paclPolicy.hasServicePermission(_bean, method)) {
 				throw new SecurityException("Attempted to invoke " + method);
 			}
 		}

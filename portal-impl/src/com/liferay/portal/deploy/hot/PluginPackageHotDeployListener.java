@@ -353,7 +353,7 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 		}
 
 		PACLPolicy paclPolicy = PACLPolicyManager.buildPACLPolicy(
-			servletContext.getServletContextName(), properties);
+			servletContext.getServletContextName(), classLoader, properties);
 
 		PACLPolicyManager.register(classLoader, paclPolicy);
 	}

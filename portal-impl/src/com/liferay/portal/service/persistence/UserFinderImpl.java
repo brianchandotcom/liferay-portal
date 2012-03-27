@@ -291,7 +291,8 @@ public class UserFinderImpl
 		}
 	}
 
-	public List<User> findByC_UID(long companyId, long userIdGT, long userIdLT)
+	public List<User> findByC_UID(
+			long companyId, long minUserId, long maxUserId)
 		throws SystemException {
 
 		Session session = null;
@@ -309,8 +310,8 @@ public class UserFinderImpl
 
 			qPos.add(companyId);
 
-			qPos.add(userIdGT);
-			qPos.add(userIdLT);
+			qPos.add(minUserId);
+			qPos.add(maxUserId);
 
 			return q.list(true);
 		}

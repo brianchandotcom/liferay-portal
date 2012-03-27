@@ -402,21 +402,18 @@ public class UserIndexer extends BaseIndexer {
 		long end = start + UserIndexer.DEFAULT_INTERVAL;
 
 		while (start <= minMaxUserId[1]) {
-
 			reindexUsers(companyId, start, end);
 
 			start = end;
-			end = end + UserIndexer.DEFAULT_INTERVAL;
+			end += UserIndexer.DEFAULT_INTERVAL;
 		}
 	}
 
-	protected void reindexUsers(
-			long companyId, long lowerUserId, long upperUserId)
+	protected void reindexUsers(long companyId, long minUserId, long maxUserId)
 		throws Exception {
 
-		List<User> users =
-			UserLocalServiceUtil.getCompanyUsers(
-				companyId, lowerUserId, upperUserId);
+		List<User> users = UserLocalServiceUtil.getCompanyUsers
+			(companyId, minUserId, maxUserId);
 
 		if (users.isEmpty()) {
 			return;

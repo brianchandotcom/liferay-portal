@@ -1896,10 +1896,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	public List<User> getCompanyUsers(
-			long companyId, long lowerUserId, long upperUserId)
+			long companyId, long minUserId, long maxUserId)
 		throws SystemException {
 
-		return userFinder.findByC_UID(companyId, lowerUserId, upperUserId);
+		return userFinder.findByC_UID(companyId, minUserId, maxUserId);
 	}
 
 	/**

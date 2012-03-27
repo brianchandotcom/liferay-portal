@@ -37,7 +37,7 @@ public class ClassLoaderBeanHandler implements InvocationHandler {
 		return _classLoader;
 	}
 
-	public Object invoke(Object proxy, Method method, Object[] args)
+	public Object invoke(Object proxy, Method method, Object[] arguments)
 		throws Throwable {
 
 		Thread currentThread = Thread.currentThread();
@@ -55,7 +55,7 @@ public class ClassLoaderBeanHandler implements InvocationHandler {
 				String methodName = method.getName();
 
 				if (methodName.equals("equals")) {
-					if (proxy == args[0]) {
+					if (proxy == arguments[0]) {
 						return true;
 					}
 					else {
@@ -64,7 +64,7 @@ public class ClassLoaderBeanHandler implements InvocationHandler {
 				}
 			}
 
-			return method.invoke(_bean, args);
+			return method.invoke(_bean, arguments);
 		}
 		catch (InvocationTargetException ite) {
 			throw ite.getTargetException();

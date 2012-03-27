@@ -45,6 +45,12 @@ import org.springframework.util.ReflectionUtils;
 public class BeanReferenceAnnotationBeanPostProcessor
 	implements BeanFactoryAware, BeanPostProcessor {
 
+	public BeanReferenceAnnotationBeanPostProcessor() {
+		if (_log.isDebugEnabled()) {
+			_log.debug("Creating instance " + this.hashCode());
+		}
+	}
+
 	public void destroy() {
 		_beans.clear();
 	}

@@ -1004,6 +1004,8 @@ public class LayoutImporter {
 			}
 			else {
 				importedLayout.setUuid(layout.getUuid());
+				importedLayout.setCreateDate(layout.getCreateDate());
+				importedLayout.setModifiedDate(layout.getModifiedDate());
 				importedLayout.setLayoutPrototypeUuid(
 					layout.getLayoutPrototypeUuid());
 				importedLayout.setLayoutPrototypeLinkEnabled(

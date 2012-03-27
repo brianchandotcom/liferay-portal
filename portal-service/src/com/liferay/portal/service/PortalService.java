@@ -75,6 +75,8 @@ public interface PortalService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public int testGetBuildNumber();
+
 	public void testGetUserId();
 
 	public boolean testHasClassName()

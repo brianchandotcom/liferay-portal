@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.webdav;
+package com.liferay.portlet.documentlibrary.webdav;
 
 import com.liferay.portal.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.repository;
+package com.liferay.portlet.documentlibrary.service;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -45,7 +45,7 @@ import org.junit.runner.RunWith;
  */
 @ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class CheckInCheckOutTest {
+public class DLCheckInCheckOutTest {
 
 	@Before
 	public void setUp() throws Exception {

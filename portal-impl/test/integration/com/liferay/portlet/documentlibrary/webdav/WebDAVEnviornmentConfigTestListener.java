@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.webdav;
+package com.liferay.portlet.documentlibrary.webdav;
 
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;

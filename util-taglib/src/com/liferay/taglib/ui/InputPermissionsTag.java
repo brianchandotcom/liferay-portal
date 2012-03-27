@@ -14,17 +14,21 @@
 
 package com.liferay.taglib.ui;
 
-import com.liferay.portal.kernel.util.MethodKey;
-import com.liferay.portal.kernel.util.PortalClassInvoker;
+import com.liferay.portal.kernel.servlet.PortalIncludeUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.taglib.util.IncludeTag;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Wilson S. Man
+ * @see    com.liferay.portal.servlet.taglib.ui.InputPermissionsTagUtil
  */
 public class InputPermissionsTag extends IncludeTag {
 
@@ -40,15 +44,43 @@ public class InputPermissionsTag extends IncludeTag {
 			PageContext pageContext)
 		throws Exception {
 
-		Object returnObj = PortalClassInvoker.invoke(
-			false, _doEndTagMethodKey, page, formName, modelName, pageContext);
+		HttpServletRequest request =
+			(HttpServletRequest)pageContext.getRequest();
 
-		if (returnObj != null) {
-			return returnObj.toString();
+		request.setAttribute("liferay-ui:input-permissions:formName", formName);
+
+		if (modelName != null) {
+			List<String> supportedActions =
+				ResourceActionsUtil.getModelResourceActions(modelName);
+			List<String> groupDefaultActions =
+				ResourceActionsUtil.getModelResourceGroupDefaultActions(
+					modelName);
+			List<String> guestDefaultActions =
+				ResourceActionsUtil.getModelResourceGuestDefaultActions(
+					modelName);
+			List<String> guestUnsupportedActions =
+				ResourceActionsUtil.getModelResourceGuestUnsupportedActions(
+					modelName);
+
+			request.setAttribute(
+				"liferay-ui:input-permissions:modelName", modelName);
+			request.setAttribute(
+				"liferay-ui:input-permissions:supportedActions",
+				supportedActions);
+			request.setAttribute(
+				"liferay-ui:input-permissions:groupDefaultActions",
+				groupDefaultActions);
+			request.setAttribute(
+				"liferay-ui:input-permissions:guestDefaultActions",
+				guestDefaultActions);
+			request.setAttribute(
+				"liferay-ui:input-permissions:guestUnsupportedActions",
+				guestUnsupportedActions);
 		}
-		else {
-			return StringPool.BLANK;
-		}
+
+		PortalIncludeUtil.include(pageContext, page);
+
+		return StringPool.BLANK;
 	}
 
 	@Override
@@ -79,14 +111,7 @@ public class InputPermissionsTag extends IncludeTag {
 	private static final String _PAGE =
 		"/html/taglib/ui/input_permissions/page.jsp";
 
-	private static final String _TAG_CLASS =
-		"com.liferay.portal.servlet.taglib.ui.InputPermissionsTagUtil";
-
-	private static MethodKey _doEndTagMethodKey = new MethodKey(
-		_TAG_CLASS, "doEndTag", String.class, String.class, String.class,
-		PageContext.class);
-
 	private String _formName = "fm";
-	private String _modelName = null;
+	private String _modelName;
 
 }

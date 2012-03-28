@@ -24,6 +24,9 @@ public class AddStructureTest extends BaseTestCase {
 	public void testAddStructure() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -31,7 +34,7 @@ public class AddStructureTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -68,7 +71,7 @@ public class AddStructureTest extends BaseTestCase {
 		selenium.type("//input[@id='_15_structure_el0_name']",
 			RuntimeVariables.replace("Itp"));
 		selenium.select("//select[@id='_15_structure_el0_type']",
-			RuntimeVariables.replace("label=Link to Page"));
+			RuntimeVariables.replace("Link to Page"));
 		selenium.clickAt("//input[@value='Add Row']",
 			RuntimeVariables.replace("Add Row"));
 		selenium.waitForPageToLoad("30000");
@@ -76,7 +79,7 @@ public class AddStructureTest extends BaseTestCase {
 		selenium.type("//input[@id='_15_structure_el1_name']",
 			RuntimeVariables.replace("title"));
 		selenium.select("//select[@id='_15_structure_el1_type']",
-			RuntimeVariables.replace("label=Text"));
+			RuntimeVariables.replace("Text"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

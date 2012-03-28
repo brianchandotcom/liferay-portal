@@ -43,7 +43,7 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 
 				if (publicId.equals(kvp.getKey())) {
 					InputStream is = classLoader.getResourceAsStream(
-						_DEFINITIONS_PATH + kvp.getValue());
+						PropsValues.DEFINITIONS_PATH + kvp.getValue());
 
 					if (_log.isDebugEnabled()) {
 						_log.debug("Entity found for public id " + systemId);
@@ -59,7 +59,7 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 
 				if (systemId.equals(kvp.getKey())) {
 					InputStream is = classLoader.getResourceAsStream(
-						_DEFINITIONS_PATH + kvp.getValue());
+						PropsValues.DEFINITIONS_PATH + kvp.getValue());
 
 					if (_log.isDebugEnabled()) {
 						_log.debug("Entity found for system id " + systemId);
@@ -102,9 +102,6 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 
 		return null;
 	}
-
-	private static final String _DEFINITIONS_PATH =
-		"com/liferay/portal/definitions/";
 
 	private static final KeyValuePair[] _PUBLIC_IDS = {
 		new KeyValuePair(

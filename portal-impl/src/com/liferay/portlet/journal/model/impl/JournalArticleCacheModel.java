@@ -35,7 +35,7 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 	Serializable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(65);
+		StringBundler sb = new StringBundler(67);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -55,6 +55,8 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", folderId=");
+		sb.append(folderId);
 		sb.append(", classNameId=");
 		sb.append(classNameId);
 		sb.append(", classPK=");
@@ -143,6 +145,7 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 			journalArticleImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		journalArticleImpl.setFolderId(folderId);
 		journalArticleImpl.setClassNameId(classNameId);
 		journalArticleImpl.setClassPK(classPK);
 
@@ -274,6 +277,7 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public long folderId;
 	public long classNameId;
 	public long classPK;
 	public String articleId;

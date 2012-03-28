@@ -21,49 +21,36 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
-import com.liferay.portal.test.AssertUtils;
-import com.liferay.portal.test.ExecutionTestListeners;
-import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.service.persistence.BasePersistenceTestCase;
 import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.journal.NoSuchFeedException;
 import com.liferay.portlet.journal.model.JournalFeed;
 import com.liferay.portlet.journal.model.impl.JournalFeedModelImpl;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
-import org.junit.runner.RunWith;
-
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-@ExecutionTestListeners(listeners =  {
-	PersistenceExecutionTestListener.class})
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class JournalFeedPersistenceTest {
-	@Before
+public class JournalFeedPersistenceTest extends BasePersistenceTestCase {
+	@Override
 	public void setUp() throws Exception {
+		super.setUp();
+
 		_persistence = (JournalFeedPersistence)PortalBeanLocatorUtil.locate(JournalFeedPersistence.class.getName());
 	}
 
-	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = nextLong();
 
 		JournalFeed journalFeed = _persistence.create(pk);
 
-		Assert.assertNotNull(journalFeed);
+		assertNotNull(journalFeed);
 
-		Assert.assertEquals(journalFeed.getPrimaryKey(), pk);
+		assertEquals(journalFeed.getPrimaryKey(), pk);
 	}
 
-	@Test
 	public void testRemove() throws Exception {
 		JournalFeed newJournalFeed = addJournalFeed();
 
@@ -71,158 +58,144 @@ public class JournalFeedPersistenceTest {
 
 		JournalFeed existingJournalFeed = _persistence.fetchByPrimaryKey(newJournalFeed.getPrimaryKey());
 
-		Assert.assertNull(existingJournalFeed);
+		assertNull(existingJournalFeed);
 	}
 
-	@Test
 	public void testUpdateNew() throws Exception {
 		addJournalFeed();
 	}
 
-	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = nextLong();
 
 		JournalFeed newJournalFeed = _persistence.create(pk);
 
-		newJournalFeed.setUuid(ServiceTestUtil.randomString());
+		newJournalFeed.setUuid(randomString());
 
-		newJournalFeed.setGroupId(ServiceTestUtil.nextLong());
+		newJournalFeed.setGroupId(nextLong());
 
-		newJournalFeed.setCompanyId(ServiceTestUtil.nextLong());
+		newJournalFeed.setCompanyId(nextLong());
 
-		newJournalFeed.setUserId(ServiceTestUtil.nextLong());
+		newJournalFeed.setUserId(nextLong());
 
-		newJournalFeed.setUserName(ServiceTestUtil.randomString());
+		newJournalFeed.setUserName(randomString());
 
-		newJournalFeed.setCreateDate(ServiceTestUtil.nextDate());
+		newJournalFeed.setCreateDate(nextDate());
 
-		newJournalFeed.setModifiedDate(ServiceTestUtil.nextDate());
+		newJournalFeed.setModifiedDate(nextDate());
 
-		newJournalFeed.setFeedId(ServiceTestUtil.randomString());
+		newJournalFeed.setFeedId(randomString());
 
-		newJournalFeed.setName(ServiceTestUtil.randomString());
+		newJournalFeed.setName(randomString());
 
-		newJournalFeed.setDescription(ServiceTestUtil.randomString());
+		newJournalFeed.setDescription(randomString());
 
-		newJournalFeed.setType(ServiceTestUtil.randomString());
+		newJournalFeed.setType(randomString());
 
-		newJournalFeed.setStructureId(ServiceTestUtil.randomString());
+		newJournalFeed.setStructureId(randomString());
 
-		newJournalFeed.setTemplateId(ServiceTestUtil.randomString());
+		newJournalFeed.setTemplateId(randomString());
 
-		newJournalFeed.setRendererTemplateId(ServiceTestUtil.randomString());
+		newJournalFeed.setRendererTemplateId(randomString());
 
-		newJournalFeed.setDelta(ServiceTestUtil.nextInt());
+		newJournalFeed.setDelta(nextInt());
 
-		newJournalFeed.setOrderByCol(ServiceTestUtil.randomString());
+		newJournalFeed.setOrderByCol(randomString());
 
-		newJournalFeed.setOrderByType(ServiceTestUtil.randomString());
+		newJournalFeed.setOrderByType(randomString());
 
-		newJournalFeed.setTargetLayoutFriendlyUrl(ServiceTestUtil.randomString());
+		newJournalFeed.setTargetLayoutFriendlyUrl(randomString());
 
-		newJournalFeed.setTargetPortletId(ServiceTestUtil.randomString());
+		newJournalFeed.setTargetPortletId(randomString());
 
-		newJournalFeed.setContentField(ServiceTestUtil.randomString());
+		newJournalFeed.setContentField(randomString());
 
-		newJournalFeed.setFeedType(ServiceTestUtil.randomString());
+		newJournalFeed.setFeedType(randomString());
 
-		newJournalFeed.setFeedVersion(ServiceTestUtil.nextDouble());
+		newJournalFeed.setFeedVersion(nextDouble());
 
 		_persistence.update(newJournalFeed, false);
 
 		JournalFeed existingJournalFeed = _persistence.findByPrimaryKey(newJournalFeed.getPrimaryKey());
 
-		Assert.assertEquals(existingJournalFeed.getUuid(),
-			newJournalFeed.getUuid());
-		Assert.assertEquals(existingJournalFeed.getId(), newJournalFeed.getId());
-		Assert.assertEquals(existingJournalFeed.getGroupId(),
+		assertEquals(existingJournalFeed.getUuid(), newJournalFeed.getUuid());
+		assertEquals(existingJournalFeed.getId(), newJournalFeed.getId());
+		assertEquals(existingJournalFeed.getGroupId(),
 			newJournalFeed.getGroupId());
-		Assert.assertEquals(existingJournalFeed.getCompanyId(),
+		assertEquals(existingJournalFeed.getCompanyId(),
 			newJournalFeed.getCompanyId());
-		Assert.assertEquals(existingJournalFeed.getUserId(),
-			newJournalFeed.getUserId());
-		Assert.assertEquals(existingJournalFeed.getUserName(),
+		assertEquals(existingJournalFeed.getUserId(), newJournalFeed.getUserId());
+		assertEquals(existingJournalFeed.getUserName(),
 			newJournalFeed.getUserName());
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingJournalFeed.getCreateDate()),
+		assertEquals(Time.getShortTimestamp(existingJournalFeed.getCreateDate()),
 			Time.getShortTimestamp(newJournalFeed.getCreateDate()));
-		Assert.assertEquals(Time.getShortTimestamp(
+		assertEquals(Time.getShortTimestamp(
 				existingJournalFeed.getModifiedDate()),
 			Time.getShortTimestamp(newJournalFeed.getModifiedDate()));
-		Assert.assertEquals(existingJournalFeed.getFeedId(),
-			newJournalFeed.getFeedId());
-		Assert.assertEquals(existingJournalFeed.getName(),
-			newJournalFeed.getName());
-		Assert.assertEquals(existingJournalFeed.getDescription(),
+		assertEquals(existingJournalFeed.getFeedId(), newJournalFeed.getFeedId());
+		assertEquals(existingJournalFeed.getName(), newJournalFeed.getName());
+		assertEquals(existingJournalFeed.getDescription(),
 			newJournalFeed.getDescription());
-		Assert.assertEquals(existingJournalFeed.getType(),
-			newJournalFeed.getType());
-		Assert.assertEquals(existingJournalFeed.getStructureId(),
+		assertEquals(existingJournalFeed.getType(), newJournalFeed.getType());
+		assertEquals(existingJournalFeed.getStructureId(),
 			newJournalFeed.getStructureId());
-		Assert.assertEquals(existingJournalFeed.getTemplateId(),
+		assertEquals(existingJournalFeed.getTemplateId(),
 			newJournalFeed.getTemplateId());
-		Assert.assertEquals(existingJournalFeed.getRendererTemplateId(),
+		assertEquals(existingJournalFeed.getRendererTemplateId(),
 			newJournalFeed.getRendererTemplateId());
-		Assert.assertEquals(existingJournalFeed.getDelta(),
-			newJournalFeed.getDelta());
-		Assert.assertEquals(existingJournalFeed.getOrderByCol(),
+		assertEquals(existingJournalFeed.getDelta(), newJournalFeed.getDelta());
+		assertEquals(existingJournalFeed.getOrderByCol(),
 			newJournalFeed.getOrderByCol());
-		Assert.assertEquals(existingJournalFeed.getOrderByType(),
+		assertEquals(existingJournalFeed.getOrderByType(),
 			newJournalFeed.getOrderByType());
-		Assert.assertEquals(existingJournalFeed.getTargetLayoutFriendlyUrl(),
+		assertEquals(existingJournalFeed.getTargetLayoutFriendlyUrl(),
 			newJournalFeed.getTargetLayoutFriendlyUrl());
-		Assert.assertEquals(existingJournalFeed.getTargetPortletId(),
+		assertEquals(existingJournalFeed.getTargetPortletId(),
 			newJournalFeed.getTargetPortletId());
-		Assert.assertEquals(existingJournalFeed.getContentField(),
+		assertEquals(existingJournalFeed.getContentField(),
 			newJournalFeed.getContentField());
-		Assert.assertEquals(existingJournalFeed.getFeedType(),
+		assertEquals(existingJournalFeed.getFeedType(),
 			newJournalFeed.getFeedType());
-		AssertUtils.assertEquals(existingJournalFeed.getFeedVersion(),
+		assertEquals(existingJournalFeed.getFeedVersion(),
 			newJournalFeed.getFeedVersion());
 	}
 
-	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		JournalFeed newJournalFeed = addJournalFeed();
 
 		JournalFeed existingJournalFeed = _persistence.findByPrimaryKey(newJournalFeed.getPrimaryKey());
 
-		Assert.assertEquals(existingJournalFeed, newJournalFeed);
+		assertEquals(existingJournalFeed, newJournalFeed);
 	}
 
-	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			Assert.fail("Missing entity did not throw NoSuchFeedException");
+			fail("Missing entity did not throw NoSuchFeedException");
 		}
 		catch (NoSuchFeedException nsee) {
 		}
 	}
 
-	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		JournalFeed newJournalFeed = addJournalFeed();
 
 		JournalFeed existingJournalFeed = _persistence.fetchByPrimaryKey(newJournalFeed.getPrimaryKey());
 
-		Assert.assertEquals(existingJournalFeed, newJournalFeed);
+		assertEquals(existingJournalFeed, newJournalFeed);
 	}
 
-	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = nextLong();
 
 		JournalFeed missingJournalFeed = _persistence.fetchByPrimaryKey(pk);
 
-		Assert.assertNull(missingJournalFeed);
+		assertNull(missingJournalFeed);
 	}
 
-	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		JournalFeed newJournalFeed = addJournalFeed();
@@ -234,27 +207,24 @@ public class JournalFeedPersistenceTest {
 
 		List<JournalFeed> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		Assert.assertEquals(1, result.size());
+		assertEquals(1, result.size());
 
 		JournalFeed existingJournalFeed = result.get(0);
 
-		Assert.assertEquals(existingJournalFeed, newJournalFeed);
+		assertEquals(existingJournalFeed, newJournalFeed);
 	}
 
-	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(JournalFeed.class,
 				JournalFeed.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("id",
-				ServiceTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("id", nextLong()));
 
 		List<JournalFeed> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		Assert.assertEquals(0, result.size());
+		assertEquals(0, result.size());
 	}
 
-	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		JournalFeed newJournalFeed = addJournalFeed();
@@ -270,14 +240,13 @@ public class JournalFeedPersistenceTest {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		Assert.assertEquals(1, result.size());
+		assertEquals(1, result.size());
 
 		Object existingId = result.get(0);
 
-		Assert.assertEquals(existingId, newId);
+		assertEquals(existingId, newId);
 	}
 
-	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(JournalFeed.class,
 				JournalFeed.class.getClassLoader());
@@ -285,14 +254,13 @@ public class JournalFeedPersistenceTest {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("id"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("id",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		Assert.assertEquals(0, result.size());
+		assertEquals(0, result.size());
 	}
 
-	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -304,67 +272,65 @@ public class JournalFeedPersistenceTest {
 
 		JournalFeedModelImpl existingJournalFeedModelImpl = (JournalFeedModelImpl)_persistence.findByPrimaryKey(newJournalFeed.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(
-				existingJournalFeedModelImpl.getUuid(),
+		assertTrue(Validator.equals(existingJournalFeedModelImpl.getUuid(),
 				existingJournalFeedModelImpl.getOriginalUuid()));
-		Assert.assertEquals(existingJournalFeedModelImpl.getGroupId(),
+		assertEquals(existingJournalFeedModelImpl.getGroupId(),
 			existingJournalFeedModelImpl.getOriginalGroupId());
 
-		Assert.assertEquals(existingJournalFeedModelImpl.getGroupId(),
+		assertEquals(existingJournalFeedModelImpl.getGroupId(),
 			existingJournalFeedModelImpl.getOriginalGroupId());
-		Assert.assertTrue(Validator.equals(
-				existingJournalFeedModelImpl.getFeedId(),
+		assertTrue(Validator.equals(existingJournalFeedModelImpl.getFeedId(),
 				existingJournalFeedModelImpl.getOriginalFeedId()));
 	}
 
 	protected JournalFeed addJournalFeed() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = nextLong();
 
 		JournalFeed journalFeed = _persistence.create(pk);
 
-		journalFeed.setUuid(ServiceTestUtil.randomString());
+		journalFeed.setUuid(randomString());
 
-		journalFeed.setGroupId(ServiceTestUtil.nextLong());
+		journalFeed.setGroupId(nextLong());
 
-		journalFeed.setCompanyId(ServiceTestUtil.nextLong());
+		journalFeed.setCompanyId(nextLong());
 
-		journalFeed.setUserId(ServiceTestUtil.nextLong());
+		journalFeed.setUserId(nextLong());
 
-		journalFeed.setUserName(ServiceTestUtil.randomString());
+		journalFeed.setUserName(randomString());
 
-		journalFeed.setCreateDate(ServiceTestUtil.nextDate());
+		journalFeed.setCreateDate(nextDate());
 
-		journalFeed.setModifiedDate(ServiceTestUtil.nextDate());
+		journalFeed.setModifiedDate(nextDate());
 
-		journalFeed.setFeedId(ServiceTestUtil.randomString());
+		journalFeed.setFeedId(randomString());
 
-		journalFeed.setName(ServiceTestUtil.randomString());
+		journalFeed.setName(randomString());
 
-		journalFeed.setDescription(ServiceTestUtil.randomString());
+		journalFeed.setDescription(randomString());
 
-		journalFeed.setType(ServiceTestUtil.randomString());
+		journalFeed.setType(randomString());
 
-		journalFeed.setStructureId(ServiceTestUtil.randomString());
+		journalFeed.setStructureId(randomString());
 
-		journalFeed.setTemplateId(ServiceTestUtil.randomString());
+		journalFeed.setTemplateId(randomString());
 
-		journalFeed.setRendererTemplateId(ServiceTestUtil.randomString());
+		journalFeed.setRendererTemplateId(randomString());
 
-		journalFeed.setDelta(ServiceTestUtil.nextInt());
+		journalFeed.setDelta(nextInt());
 
-		journalFeed.setOrderByCol(ServiceTestUtil.randomString());
+		journalFeed.setOrderByCol(randomString());
 
-		journalFeed.setOrderByType(ServiceTestUtil.randomString());
+		journalFeed.setOrderByType(randomString());
 
-		journalFeed.setTargetLayoutFriendlyUrl(ServiceTestUtil.randomString());
+		journalFeed.setTargetLayoutFriendlyUrl(randomString());
 
-		journalFeed.setTargetPortletId(ServiceTestUtil.randomString());
+		journalFeed.setTargetPortletId(randomString());
 
-		journalFeed.setContentField(ServiceTestUtil.randomString());
+		journalFeed.setContentField(randomString());
 
-		journalFeed.setFeedType(ServiceTestUtil.randomString());
+		journalFeed.setFeedType(randomString());
 
-		journalFeed.setFeedVersion(ServiceTestUtil.nextDouble());
+		journalFeed.setFeedVersion(nextDouble());
 
 		_persistence.update(journalFeed, false);
 

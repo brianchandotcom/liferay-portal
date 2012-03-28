@@ -42,6 +42,8 @@ import com.liferay.portlet.journal.service.JournalArticleService;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalService;
 import com.liferay.portlet.journal.service.JournalFeedLocalService;
 import com.liferay.portlet.journal.service.JournalFeedService;
+import com.liferay.portlet.journal.service.JournalFolderLocalService;
+import com.liferay.portlet.journal.service.JournalFolderService;
 import com.liferay.portlet.journal.service.JournalStructureLocalService;
 import com.liferay.portlet.journal.service.JournalStructureService;
 import com.liferay.portlet.journal.service.JournalTemplateLocalService;
@@ -53,6 +55,7 @@ import com.liferay.portlet.journal.service.persistence.JournalArticleResourcePer
 import com.liferay.portlet.journal.service.persistence.JournalContentSearchPersistence;
 import com.liferay.portlet.journal.service.persistence.JournalFeedFinder;
 import com.liferay.portlet.journal.service.persistence.JournalFeedPersistence;
+import com.liferay.portlet.journal.service.persistence.JournalFolderPersistence;
 import com.liferay.portlet.journal.service.persistence.JournalStructureFinder;
 import com.liferay.portlet.journal.service.persistence.JournalStructurePersistence;
 import com.liferay.portlet.journal.service.persistence.JournalTemplateFinder;
@@ -567,6 +570,63 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the journal folder local service.
+	 *
+	 * @return the journal folder local service
+	 */
+	public JournalFolderLocalService getJournalFolderLocalService() {
+		return journalFolderLocalService;
+	}
+
+	/**
+	 * Sets the journal folder local service.
+	 *
+	 * @param journalFolderLocalService the journal folder local service
+	 */
+	public void setJournalFolderLocalService(
+		JournalFolderLocalService journalFolderLocalService) {
+		this.journalFolderLocalService = journalFolderLocalService;
+	}
+
+	/**
+	 * Returns the journal folder remote service.
+	 *
+	 * @return the journal folder remote service
+	 */
+	public JournalFolderService getJournalFolderService() {
+		return journalFolderService;
+	}
+
+	/**
+	 * Sets the journal folder remote service.
+	 *
+	 * @param journalFolderService the journal folder remote service
+	 */
+	public void setJournalFolderService(
+		JournalFolderService journalFolderService) {
+		this.journalFolderService = journalFolderService;
+	}
+
+	/**
+	 * Returns the journal folder persistence.
+	 *
+	 * @return the journal folder persistence
+	 */
+	public JournalFolderPersistence getJournalFolderPersistence() {
+		return journalFolderPersistence;
+	}
+
+	/**
+	 * Sets the journal folder persistence.
+	 *
+	 * @param journalFolderPersistence the journal folder persistence
+	 */
+	public void setJournalFolderPersistence(
+		JournalFolderPersistence journalFolderPersistence) {
+		this.journalFolderPersistence = journalFolderPersistence;
+	}
+
+	/**
 	 * Returns the journal structure local service.
 	 *
 	 * @return the journal structure local service
@@ -916,6 +976,12 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	protected JournalFeedPersistence journalFeedPersistence;
 	@BeanReference(type = JournalFeedFinder.class)
 	protected JournalFeedFinder journalFeedFinder;
+	@BeanReference(type = JournalFolderLocalService.class)
+	protected JournalFolderLocalService journalFolderLocalService;
+	@BeanReference(type = JournalFolderService.class)
+	protected JournalFolderService journalFolderService;
+	@BeanReference(type = JournalFolderPersistence.class)
+	protected JournalFolderPersistence journalFolderPersistence;
 	@BeanReference(type = JournalStructureLocalService.class)
 	protected JournalStructureLocalService journalStructureLocalService;
 	@BeanReference(type = JournalStructureService.class)

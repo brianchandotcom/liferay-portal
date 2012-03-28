@@ -929,6 +929,19 @@ Liferay.Service.registerClass(
 );
 
 Liferay.Service.registerClass(
+	Liferay.Service.Journal, "JournalFolder",
+	{
+		addFolder: true,
+		deleteFolder: true,
+		getFolder: true,
+		getFolders: true,
+		getFoldersCount: true,
+		getSubfolderIds: true,
+		updateFolder: true
+	}
+);
+
+Liferay.Service.registerClass(
 	Liferay.Service.Journal, "JournalStructure",
 	{
 		addStructure: true,

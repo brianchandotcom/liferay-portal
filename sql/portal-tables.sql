@@ -781,6 +781,7 @@ create table JournalArticle (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	folderId LONG,
 	classNameId LONG,
 	classPK LONG,
 	articleId VARCHAR(75) null,
@@ -858,6 +859,20 @@ create table JournalFeed (
 	contentField VARCHAR(75) null,
 	feedType VARCHAR(75) null,
 	feedVersion DOUBLE
+);
+
+create table JournalFolder (
+	uuid_ VARCHAR(75) null,
+	folderId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	parentFolderId LONG,
+	name VARCHAR(75) null,
+	description VARCHAR(75) null
 );
 
 create table JournalStructure (

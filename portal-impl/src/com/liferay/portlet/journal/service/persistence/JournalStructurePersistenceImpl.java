@@ -5073,6 +5073,8 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 	protected JournalContentSearchPersistence journalContentSearchPersistence;
 	@BeanReference(type = JournalFeedPersistence.class)
 	protected JournalFeedPersistence journalFeedPersistence;
+	@BeanReference(type = JournalFolderPersistence.class)
+	protected JournalFolderPersistence journalFolderPersistence;
 	@BeanReference(type = JournalStructurePersistence.class)
 	protected JournalStructurePersistence journalStructurePersistence;
 	@BeanReference(type = JournalTemplatePersistence.class)

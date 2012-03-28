@@ -117,6 +117,7 @@
 	<import class="com.liferay.portlet.journal.model.JournalArticleResource" />
 	<import class="com.liferay.portlet.journal.model.JournalContentSearch" />
 	<import class="com.liferay.portlet.journal.model.JournalFeed" />
+	<import class="com.liferay.portlet.journal.model.JournalFolder" />
 	<import class="com.liferay.portlet.journal.model.JournalStructure" />
 	<import class="com.liferay.portlet.journal.model.JournalTemplate" />
 	<import class="com.liferay.portlet.messageboards.model.MBBan" />
@@ -1740,6 +1741,7 @@
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="folderId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="articleId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -1825,6 +1827,22 @@
 		<property name="contentField" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="feedType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="feedVersion" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+	</class>
+	<class name="com.liferay.portlet.journal.model.impl.JournalFolderImpl" table="JournalFolder">
+		<cache usage="read-write" />
+		<id name="folderId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="parentFolderId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portlet.journal.model.impl.JournalStructureImpl" table="JournalStructure">
 		<cache usage="read-write" />

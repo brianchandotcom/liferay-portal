@@ -40,6 +40,7 @@ public class JournalArticleSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setFolderId(model.getFolderId());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setArticleId(model.getArticleId());
@@ -185,6 +186,14 @@ public class JournalArticleSoap implements Serializable {
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+	}
+
+	public long getFolderId() {
+		return _folderId;
+	}
+
+	public void setFolderId(long folderId) {
+		_folderId = folderId;
 	}
 
 	public long getClassNameId() {
@@ -388,6 +397,7 @@ public class JournalArticleSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private long _folderId;
 	private long _classNameId;
 	private long _classPK;
 	private String _articleId;

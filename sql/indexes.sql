@@ -319,6 +319,7 @@ create index IX_9CE6E0FA on JournalArticle (groupId, classNameId, classPK);
 create index IX_A2534AC2 on JournalArticle (groupId, classNameId, layoutUuid);
 create index IX_91E78C35 on JournalArticle (groupId, classNameId, structureId);
 create index IX_F43B9FF2 on JournalArticle (groupId, classNameId, templateId);
+create index IX_5CD17502 on JournalArticle (groupId, folderId);
 create index IX_3C028C1E on JournalArticle (groupId, layoutUuid);
 create index IX_301D024B on JournalArticle (groupId, status);
 create index IX_2E207659 on JournalArticle (groupId, structureId);
@@ -358,6 +359,12 @@ create unique index IX_65576CBC on JournalFeed (groupId, feedId);
 create index IX_50C36D79 on JournalFeed (uuid_);
 create index IX_CB37A10F on JournalFeed (uuid_, companyId);
 create unique index IX_39031F51 on JournalFeed (uuid_, groupId);
+
+create index IX_E6E2725D on JournalFolder (companyId);
+create index IX_742DEC1F on JournalFolder (groupId);
+create index IX_190483C6 on JournalFolder (groupId, parentFolderId);
+create index IX_63BDFA69 on JournalFolder (uuid_);
+create unique index IX_E002061 on JournalFolder (uuid_, groupId);
 
 create index IX_B97F5608 on JournalStructure (groupId);
 create index IX_CA0BD48C on JournalStructure (groupId, parentStructureId);

@@ -213,6 +213,20 @@ public interface JournalArticleModel extends AttachedModel,
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the folder ID of this journal article.
+	 *
+	 * @return the folder ID of this journal article
+	 */
+	public long getFolderId();
+
+	/**
+	 * Sets the folder ID of this journal article.
+	 *
+	 * @param folderId the folder ID of this journal article
+	 */
+	public void setFolderId(long folderId);
+
+	/**
 	 * Returns the fully qualified class name of this journal article.
 	 *
 	 * @return the fully qualified class name of this journal article

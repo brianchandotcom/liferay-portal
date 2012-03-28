@@ -817,6 +817,18 @@
 		<property name="service" ref="com.liferay.portlet.journal.service.JournalFeedService" />
 		<property name="serviceInterface" value="com.liferay.portlet.journal.service.JournalFeedService" />
 	</bean>
+	<bean name="/com_liferay_portlet_journal_service_spring_JournalFolderService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
+		<property name="service" ref="com.liferay.portlet.journal.service.JournalFolderService" />
+		<property name="serviceInterface" value="com.liferay.portlet.journal.service.JournalFolderService" />
+	</bean>
+	<bean name="/com_liferay_portlet_journal_service_spring_JournalFolderService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
+		<property name="service" ref="com.liferay.portlet.journal.service.JournalFolderService" />
+		<property name="serviceInterface" value="com.liferay.portlet.journal.service.JournalFolderService" />
+	</bean>
+	<bean name="/com_liferay_portlet_journal_service_spring_JournalFolderService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service" ref="com.liferay.portlet.journal.service.JournalFolderService" />
+		<property name="serviceInterface" value="com.liferay.portlet.journal.service.JournalFolderService" />
+	</bean>
 	<bean name="/com_liferay_portlet_journal_service_spring_JournalStructureService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
 		<property name="service" ref="com.liferay.portlet.journal.service.JournalStructureService" />
 		<property name="serviceInterface" value="com.liferay.portlet.journal.service.JournalStructureService" />

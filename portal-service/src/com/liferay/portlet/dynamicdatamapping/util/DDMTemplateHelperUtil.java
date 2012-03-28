@@ -18,8 +18,6 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 
 /**
- * <a href="DDMTemplateUtil.java.html"><b><i>View Source</i></b></a>
- *
  * @author Juan Fernández
  */
 public class DDMTemplateHelperUtil {

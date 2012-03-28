@@ -21,8 +21,6 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 
 /**
- * <a href="DDMTemplateImpl.java.html"><b><i>View Source</i></b></a>
- *
  * @author Juan Fernández
  */
 public class DDMTemplateHelperImpl implements

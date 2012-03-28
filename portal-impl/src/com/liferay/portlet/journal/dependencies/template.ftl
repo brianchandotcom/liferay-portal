@@ -37,8 +37,7 @@ ${ms-list.options} - A collection with up to three string entries
 
 Another special accessor exists for elements of type "link_to_layout":
 
-${linkToPage.url} - The URL that links to the selected page in the current
-                    community, organization, etc.
+${linkToPage.url} - The URL that links to the selected page in the current site.
 
 The variable ${journalTemplatesPath} can be used to include
 another Journal template, e.g. <#include "${journalTemplatesPath}/LAYOUT-PARENT" />

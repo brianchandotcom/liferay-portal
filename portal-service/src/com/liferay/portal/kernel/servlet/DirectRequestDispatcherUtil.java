@@ -57,8 +57,8 @@ public class DirectRequestDispatcherUtil {
 		int pos = fullPath.indexOf(CharPool.QUESTION);
 
 		if (pos != -1) {
-			fullPath = fullPath.substring(0, pos);
 			queryString = fullPath.substring(pos + 1);
+			fullPath = fullPath.substring(0, pos);
 		}
 
 		Servlet servlet = DirectServletRegistry.getServlet(fullPath);

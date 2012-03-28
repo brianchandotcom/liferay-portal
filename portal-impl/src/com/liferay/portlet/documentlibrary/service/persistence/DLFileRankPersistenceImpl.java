@@ -37,7 +37,6 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.LayoutPersistence;
-import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -2011,14 +2010,13 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	 * @param companyId the company ID
 	 * @param userId the user ID
 	 * @param fileEntryId the file entry ID
-	 * @return the document library file rank that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public DLFileRank removeByC_U_F(long companyId, long userId,
-		long fileEntryId) throws NoSuchFileRankException, SystemException {
+	public void removeByC_U_F(long companyId, long userId, long fileEntryId)
+		throws NoSuchFileRankException, SystemException {
 		DLFileRank dlFileRank = findByC_U_F(companyId, userId, fileEntryId);
 
-		return remove(dlFileRank);
+		remove(dlFileRank);
 	}
 
 	/**
@@ -2349,8 +2347,6 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	protected DLSyncPersistence dlSyncPersistence;
 	@BeanReference(type = LayoutPersistence.class)
 	protected LayoutPersistence layoutPersistence;
-	@BeanReference(type = ResourcePersistence.class)
-	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	private static final String _SQL_SELECT_DLFILERANK = "SELECT dlFileRank FROM DLFileRank dlFileRank";

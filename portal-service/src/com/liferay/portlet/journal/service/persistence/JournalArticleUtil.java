@@ -4344,14 +4344,12 @@ public class JournalArticleUtil {
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
-	* @return the journal article that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticle removeByUUID_G(
-		java.lang.String uuid, long groupId)
+	public static void removeByUUID_G(java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.journal.NoSuchArticleException {
-		return getPersistence().removeByUUID_G(uuid, groupId);
+		getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -4548,14 +4546,13 @@ public class JournalArticleUtil {
 	* @param groupId the group ID
 	* @param classNameId the class name ID
 	* @param structureId the structure ID
-	* @return the journal article that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticle removeByG_C_S(
-		long groupId, long classNameId, java.lang.String structureId)
+	public static void removeByG_C_S(long groupId, long classNameId,
+		java.lang.String structureId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.journal.NoSuchArticleException {
-		return getPersistence().removeByG_C_S(groupId, classNameId, structureId);
+		getPersistence().removeByG_C_S(groupId, classNameId, structureId);
 	}
 
 	/**
@@ -4592,14 +4589,13 @@ public class JournalArticleUtil {
 	* @param groupId the group ID
 	* @param articleId the article ID
 	* @param version the version
-	* @return the journal article that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticle removeByG_A_V(
-		long groupId, java.lang.String articleId, double version)
+	public static void removeByG_A_V(long groupId, java.lang.String articleId,
+		double version)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.journal.NoSuchArticleException {
-		return getPersistence().removeByG_A_V(groupId, articleId, version);
+		getPersistence().removeByG_A_V(groupId, articleId, version);
 	}
 
 	/**

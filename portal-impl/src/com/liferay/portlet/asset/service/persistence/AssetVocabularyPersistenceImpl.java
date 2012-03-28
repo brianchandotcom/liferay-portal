@@ -41,7 +41,6 @@ import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.GroupPersistence;
-import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -2528,14 +2527,13 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the asset vocabulary that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public AssetVocabulary removeByUUID_G(String uuid, long groupId)
+	public void removeByUUID_G(String uuid, long groupId)
 		throws NoSuchVocabularyException, SystemException {
 		AssetVocabulary assetVocabulary = findByUUID_G(uuid, groupId);
 
-		return remove(assetVocabulary);
+		remove(assetVocabulary);
 	}
 
 	/**
@@ -2567,14 +2565,13 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 *
 	 * @param groupId the group ID
 	 * @param name the name
-	 * @return the asset vocabulary that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public AssetVocabulary removeByG_N(long groupId, String name)
+	public void removeByG_N(long groupId, String name)
 		throws NoSuchVocabularyException, SystemException {
 		AssetVocabulary assetVocabulary = findByG_N(groupId, name);
 
-		return remove(assetVocabulary);
+		remove(assetVocabulary);
 	}
 
 	/**
@@ -3035,8 +3032,6 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	protected AssetVocabularyPersistence assetVocabularyPersistence;
 	@BeanReference(type = GroupPersistence.class)
 	protected GroupPersistence groupPersistence;
-	@BeanReference(type = ResourcePersistence.class)
-	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	private static final String _SQL_SELECT_ASSETVOCABULARY = "SELECT assetVocabulary FROM AssetVocabulary assetVocabulary";

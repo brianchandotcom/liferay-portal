@@ -1393,14 +1393,12 @@ public class DLFolderUtil {
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
-	* @return the document library folder that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.documentlibrary.model.DLFolder removeByUUID_G(
-		java.lang.String uuid, long groupId)
+	public static void removeByUUID_G(java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.documentlibrary.NoSuchFolderException {
-		return getPersistence().removeByUUID_G(uuid, groupId);
+		getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -1429,14 +1427,12 @@ public class DLFolderUtil {
 	* Removes the document library folder where repositoryId = &#63; from the database.
 	*
 	* @param repositoryId the repository ID
-	* @return the document library folder that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.documentlibrary.model.DLFolder removeByRepositoryId(
-		long repositoryId)
+	public static void removeByRepositoryId(long repositoryId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.documentlibrary.NoSuchFolderException {
-		return getPersistence().removeByRepositoryId(repositoryId);
+		getPersistence().removeByRepositoryId(repositoryId);
 	}
 
 	/**
@@ -1483,14 +1479,13 @@ public class DLFolderUtil {
 	* @param groupId the group ID
 	* @param parentFolderId the parent folder ID
 	* @param name the name
-	* @return the document library folder that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.documentlibrary.model.DLFolder removeByG_P_N(
-		long groupId, long parentFolderId, java.lang.String name)
+	public static void removeByG_P_N(long groupId, long parentFolderId,
+		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.documentlibrary.NoSuchFolderException {
-		return getPersistence().removeByG_P_N(groupId, parentFolderId, name);
+		getPersistence().removeByG_P_N(groupId, parentFolderId, name);
 	}
 
 	/**

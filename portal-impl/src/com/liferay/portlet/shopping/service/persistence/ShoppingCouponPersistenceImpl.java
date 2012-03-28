@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
-import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -1147,14 +1146,13 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 * Removes the shopping coupon where code = &#63; from the database.
 	 *
 	 * @param code the code
-	 * @return the shopping coupon that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public ShoppingCoupon removeByCode(String code)
+	public void removeByCode(String code)
 		throws NoSuchCouponException, SystemException {
 		ShoppingCoupon shoppingCoupon = findByCode(code);
 
-		return remove(shoppingCoupon);
+		remove(shoppingCoupon);
 	}
 
 	/**
@@ -1371,8 +1369,6 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	protected ShoppingOrderPersistence shoppingOrderPersistence;
 	@BeanReference(type = ShoppingOrderItemPersistence.class)
 	protected ShoppingOrderItemPersistence shoppingOrderItemPersistence;
-	@BeanReference(type = ResourcePersistence.class)
-	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	private static final String _SQL_SELECT_SHOPPINGCOUPON = "SELECT shoppingCoupon FROM ShoppingCoupon shoppingCoupon";

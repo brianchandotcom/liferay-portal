@@ -752,11 +752,9 @@ public interface MDRRuleGroupInstancePersistence extends BasePersistence<MDRRule
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
-	* @return the m d r rule group instance that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance removeByUUID_G(
-		java.lang.String uuid, long groupId)
+	public void removeByUUID_G(java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupInstanceException;
 
@@ -796,11 +794,9 @@ public interface MDRRuleGroupInstancePersistence extends BasePersistence<MDRRule
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param ruleGroupId the rule group ID
-	* @return the m d r rule group instance that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance removeByC_C_R(
-		long classNameId, long classPK, long ruleGroupId)
+	public void removeByC_C_R(long classNameId, long classPK, long ruleGroupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupInstanceException;
 

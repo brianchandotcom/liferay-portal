@@ -449,11 +449,9 @@ public interface JournalArticleResourcePersistence extends BasePersistence<Journ
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
-	* @return the journal article resource that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.journal.model.JournalArticleResource removeByUUID_G(
-		java.lang.String uuid, long groupId)
+	public void removeByUUID_G(java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.journal.NoSuchArticleResourceException;
 
@@ -471,11 +469,9 @@ public interface JournalArticleResourcePersistence extends BasePersistence<Journ
 	*
 	* @param groupId the group ID
 	* @param articleId the article ID
-	* @return the journal article resource that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.journal.model.JournalArticleResource removeByG_A(
-		long groupId, java.lang.String articleId)
+	public void removeByG_A(long groupId, java.lang.String articleId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.journal.NoSuchArticleResourceException;
 

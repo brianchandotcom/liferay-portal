@@ -47,7 +47,6 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
-import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.WorkflowDefinitionLinkPersistence;
 import com.liferay.portal.service.persistence.WorkflowInstanceLinkPersistence;
@@ -2404,14 +2403,13 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the document library file entry type that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public DLFileEntryType removeByUUID_G(String uuid, long groupId)
+	public void removeByUUID_G(String uuid, long groupId)
 		throws NoSuchFileEntryTypeException, SystemException {
 		DLFileEntryType dlFileEntryType = findByUUID_G(uuid, groupId);
 
-		return remove(dlFileEntryType);
+		remove(dlFileEntryType);
 	}
 
 	/**
@@ -2431,14 +2429,13 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	 *
 	 * @param groupId the group ID
 	 * @param name the name
-	 * @return the document library file entry type that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public DLFileEntryType removeByG_N(long groupId, String name)
+	public void removeByG_N(long groupId, String name)
 		throws NoSuchFileEntryTypeException, SystemException {
 		DLFileEntryType dlFileEntryType = findByG_N(groupId, name);
 
-		return remove(dlFileEntryType);
+		remove(dlFileEntryType);
 	}
 
 	/**
@@ -3971,8 +3968,6 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	protected DLFolderPersistence dlFolderPersistence;
 	@BeanReference(type = DLSyncPersistence.class)
 	protected DLSyncPersistence dlSyncPersistence;
-	@BeanReference(type = ResourcePersistence.class)
-	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	@BeanReference(type = WorkflowDefinitionLinkPersistence.class)

@@ -513,28 +513,24 @@ public class SCProductScreenshotUtil {
 	* Removes the s c product screenshot where thumbnailId = &#63; from the database.
 	*
 	* @param thumbnailId the thumbnail ID
-	* @return the s c product screenshot that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductScreenshot removeByThumbnailId(
-		long thumbnailId)
+	public static void removeByThumbnailId(long thumbnailId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException {
-		return getPersistence().removeByThumbnailId(thumbnailId);
+		getPersistence().removeByThumbnailId(thumbnailId);
 	}
 
 	/**
 	* Removes the s c product screenshot where fullImageId = &#63; from the database.
 	*
 	* @param fullImageId the full image ID
-	* @return the s c product screenshot that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductScreenshot removeByFullImageId(
-		long fullImageId)
+	public static void removeByFullImageId(long fullImageId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException {
-		return getPersistence().removeByFullImageId(fullImageId);
+		getPersistence().removeByFullImageId(fullImageId);
 	}
 
 	/**
@@ -542,14 +538,12 @@ public class SCProductScreenshotUtil {
 	*
 	* @param productEntryId the product entry ID
 	* @param priority the priority
-	* @return the s c product screenshot that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductScreenshot removeByP_P(
-		long productEntryId, int priority)
+	public static void removeByP_P(long productEntryId, int priority)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException {
-		return getPersistence().removeByP_P(productEntryId, priority);
+		getPersistence().removeByP_P(productEntryId, priority);
 	}
 
 	/**

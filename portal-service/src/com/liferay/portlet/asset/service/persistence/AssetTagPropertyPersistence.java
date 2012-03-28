@@ -539,11 +539,9 @@ public interface AssetTagPropertyPersistence extends BasePersistence<AssetTagPro
 	*
 	* @param tagId the tag ID
 	* @param key the key
-	* @return the asset tag property that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.asset.model.AssetTagProperty removeByT_K(
-		long tagId, java.lang.String key)
+	public void removeByT_K(long tagId, java.lang.String key)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.asset.NoSuchTagPropertyException;
 

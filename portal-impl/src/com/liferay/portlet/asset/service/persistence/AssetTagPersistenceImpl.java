@@ -45,7 +45,6 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
-import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -1481,14 +1480,13 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	 *
 	 * @param groupId the group ID
 	 * @param name the name
-	 * @return the asset tag that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public AssetTag removeByG_N(long groupId, String name)
+	public void removeByG_N(long groupId, String name)
 		throws NoSuchTagException, SystemException {
 		AssetTag assetTag = findByG_N(groupId, name);
 
-		return remove(assetTag);
+		remove(assetTag);
 	}
 
 	/**
@@ -2248,8 +2246,6 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	protected AssetTagStatsPersistence assetTagStatsPersistence;
 	@BeanReference(type = AssetVocabularyPersistence.class)
 	protected AssetVocabularyPersistence assetVocabularyPersistence;
-	@BeanReference(type = ResourcePersistence.class)
-	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	protected ContainsAssetEntry containsAssetEntry;

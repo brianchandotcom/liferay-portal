@@ -624,42 +624,36 @@ public class ShoppingItemUtil {
 	* Removes the shopping item where smallImageId = &#63; from the database.
 	*
 	* @param smallImageId the small image ID
-	* @return the shopping item that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.shopping.model.ShoppingItem removeBySmallImageId(
-		long smallImageId)
+	public static void removeBySmallImageId(long smallImageId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.shopping.NoSuchItemException {
-		return getPersistence().removeBySmallImageId(smallImageId);
+		getPersistence().removeBySmallImageId(smallImageId);
 	}
 
 	/**
 	* Removes the shopping item where mediumImageId = &#63; from the database.
 	*
 	* @param mediumImageId the medium image ID
-	* @return the shopping item that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.shopping.model.ShoppingItem removeByMediumImageId(
-		long mediumImageId)
+	public static void removeByMediumImageId(long mediumImageId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.shopping.NoSuchItemException {
-		return getPersistence().removeByMediumImageId(mediumImageId);
+		getPersistence().removeByMediumImageId(mediumImageId);
 	}
 
 	/**
 	* Removes the shopping item where largeImageId = &#63; from the database.
 	*
 	* @param largeImageId the large image ID
-	* @return the shopping item that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.shopping.model.ShoppingItem removeByLargeImageId(
-		long largeImageId)
+	public static void removeByLargeImageId(long largeImageId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.shopping.NoSuchItemException {
-		return getPersistence().removeByLargeImageId(largeImageId);
+		getPersistence().removeByLargeImageId(largeImageId);
 	}
 
 	/**
@@ -679,14 +673,12 @@ public class ShoppingItemUtil {
 	*
 	* @param companyId the company ID
 	* @param sku the sku
-	* @return the shopping item that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.shopping.model.ShoppingItem removeByC_S(
-		long companyId, java.lang.String sku)
+	public static void removeByC_S(long companyId, java.lang.String sku)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.shopping.NoSuchItemException {
-		return getPersistence().removeByC_S(companyId, sku);
+		getPersistence().removeByC_S(companyId, sku);
 	}
 
 	/**

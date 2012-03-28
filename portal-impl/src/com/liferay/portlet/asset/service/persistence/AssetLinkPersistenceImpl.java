@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
-import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -2876,14 +2875,13 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 * @param entryId1 the entry id1
 	 * @param entryId2 the entry id2
 	 * @param type the type
-	 * @return the asset link that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public AssetLink removeByE_E_T(long entryId1, long entryId2, int type)
+	public void removeByE_E_T(long entryId1, long entryId2, int type)
 		throws NoSuchLinkException, SystemException {
 		AssetLink assetLink = findByE_E_T(entryId1, entryId2, type);
 
-		return remove(assetLink);
+		remove(assetLink);
 	}
 
 	/**
@@ -3327,8 +3325,6 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	protected AssetTagStatsPersistence assetTagStatsPersistence;
 	@BeanReference(type = AssetVocabularyPersistence.class)
 	protected AssetVocabularyPersistence assetVocabularyPersistence;
-	@BeanReference(type = ResourcePersistence.class)
-	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	private static final String _SQL_SELECT_ASSETLINK = "SELECT assetLink FROM AssetLink assetLink";

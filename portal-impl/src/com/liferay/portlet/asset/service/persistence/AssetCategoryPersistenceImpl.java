@@ -46,7 +46,6 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
-import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -5915,14 +5914,13 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the asset category that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public AssetCategory removeByUUID_G(String uuid, long groupId)
+	public void removeByUUID_G(String uuid, long groupId)
 		throws NoSuchCategoryException, SystemException {
 		AssetCategory assetCategory = findByUUID_G(uuid, groupId);
 
-		return remove(assetCategory);
+		remove(assetCategory);
 	}
 
 	/**
@@ -6043,15 +6041,14 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	 * @param parentCategoryId the parent category ID
 	 * @param name the name
 	 * @param vocabularyId the vocabulary ID
-	 * @return the asset category that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public AssetCategory removeByP_N_V(long parentCategoryId, String name,
+	public void removeByP_N_V(long parentCategoryId, String name,
 		long vocabularyId) throws NoSuchCategoryException, SystemException {
 		AssetCategory assetCategory = findByP_N_V(parentCategoryId, name,
 				vocabularyId);
 
-		return remove(assetCategory);
+		remove(assetCategory);
 	}
 
 	/**
@@ -7815,8 +7812,6 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	protected AssetTagStatsPersistence assetTagStatsPersistence;
 	@BeanReference(type = AssetVocabularyPersistence.class)
 	protected AssetVocabularyPersistence assetVocabularyPersistence;
-	@BeanReference(type = ResourcePersistence.class)
-	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	protected ContainsAssetEntry containsAssetEntry;

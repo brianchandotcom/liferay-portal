@@ -42,7 +42,6 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.LayoutPersistence;
 import com.liferay.portal.service.persistence.LayoutSetPersistence;
-import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -3007,14 +3006,13 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the m d r rule group instance that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public MDRRuleGroupInstance removeByUUID_G(String uuid, long groupId)
+	public void removeByUUID_G(String uuid, long groupId)
 		throws NoSuchRuleGroupInstanceException, SystemException {
 		MDRRuleGroupInstance mdrRuleGroupInstance = findByUUID_G(uuid, groupId);
 
-		return remove(mdrRuleGroupInstance);
+		remove(mdrRuleGroupInstance);
 	}
 
 	/**
@@ -3067,16 +3065,14 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param ruleGroupId the rule group ID
-	 * @return the m d r rule group instance that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public MDRRuleGroupInstance removeByC_C_R(long classNameId, long classPK,
-		long ruleGroupId)
+	public void removeByC_C_R(long classNameId, long classPK, long ruleGroupId)
 		throws NoSuchRuleGroupInstanceException, SystemException {
 		MDRRuleGroupInstance mdrRuleGroupInstance = findByC_C_R(classNameId,
 				classPK, ruleGroupId);
 
-		return remove(mdrRuleGroupInstance);
+		remove(mdrRuleGroupInstance);
 	}
 
 	/**
@@ -3606,8 +3602,6 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 	protected LayoutPersistence layoutPersistence;
 	@BeanReference(type = LayoutSetPersistence.class)
 	protected LayoutSetPersistence layoutSetPersistence;
-	@BeanReference(type = ResourcePersistence.class)
-	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	private static final String _SQL_SELECT_MDRRULEGROUPINSTANCE = "SELECT mdrRuleGroupInstance FROM MDRRuleGroupInstance mdrRuleGroupInstance";

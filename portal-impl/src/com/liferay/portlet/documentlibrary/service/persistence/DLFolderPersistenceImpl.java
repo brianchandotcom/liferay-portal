@@ -48,7 +48,6 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.LockPersistence;
-import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.WebDAVPropsPersistence;
 import com.liferay.portal.service.persistence.WorkflowDefinitionLinkPersistence;
@@ -4715,14 +4714,13 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the document library folder that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public DLFolder removeByUUID_G(String uuid, long groupId)
+	public void removeByUUID_G(String uuid, long groupId)
 		throws NoSuchFolderException, SystemException {
 		DLFolder dlFolder = findByUUID_G(uuid, groupId);
 
-		return remove(dlFolder);
+		remove(dlFolder);
 	}
 
 	/**
@@ -4753,14 +4751,13 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 * Removes the document library folder where repositoryId = &#63; from the database.
 	 *
 	 * @param repositoryId the repository ID
-	 * @return the document library folder that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public DLFolder removeByRepositoryId(long repositoryId)
+	public void removeByRepositoryId(long repositoryId)
 		throws NoSuchFolderException, SystemException {
 		DLFolder dlFolder = findByRepositoryId(repositoryId);
 
-		return remove(dlFolder);
+		remove(dlFolder);
 	}
 
 	/**
@@ -4812,14 +4809,13 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 * @param groupId the group ID
 	 * @param parentFolderId the parent folder ID
 	 * @param name the name
-	 * @return the document library folder that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public DLFolder removeByG_P_N(long groupId, long parentFolderId, String name)
+	public void removeByG_P_N(long groupId, long parentFolderId, String name)
 		throws NoSuchFolderException, SystemException {
 		DLFolder dlFolder = findByG_P_N(groupId, parentFolderId, name);
 
-		return remove(dlFolder);
+		remove(dlFolder);
 	}
 
 	/**
@@ -6144,8 +6140,6 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	protected GroupPersistence groupPersistence;
 	@BeanReference(type = LockPersistence.class)
 	protected LockPersistence lockPersistence;
-	@BeanReference(type = ResourcePersistence.class)
-	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	@BeanReference(type = WebDAVPropsPersistence.class)

@@ -512,11 +512,9 @@ public interface DDLRecordSetPersistence extends BasePersistence<DDLRecordSet> {
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
-	* @return the d d l record set that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet removeByUUID_G(
-		java.lang.String uuid, long groupId)
+	public void removeByUUID_G(java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException;
 
@@ -534,11 +532,9 @@ public interface DDLRecordSetPersistence extends BasePersistence<DDLRecordSet> {
 	*
 	* @param groupId the group ID
 	* @param recordSetKey the record set key
-	* @return the d d l record set that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet removeByG_R(
-		long groupId, java.lang.String recordSetKey)
+	public void removeByG_R(long groupId, java.lang.String recordSetKey)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException;
 

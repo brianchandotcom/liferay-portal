@@ -5852,14 +5852,13 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the cal event that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public CalEvent removeByUUID_G(String uuid, long groupId)
+	public void removeByUUID_G(String uuid, long groupId)
 		throws NoSuchEventException, SystemException {
 		CalEvent calEvent = findByUUID_G(uuid, groupId);
 
-		return remove(calEvent);
+		remove(calEvent);
 	}
 
 	/**

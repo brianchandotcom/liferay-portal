@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
-import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -2049,14 +2048,13 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 *
 	 * @param tagId the tag ID
 	 * @param key the key
-	 * @return the asset tag property that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public AssetTagProperty removeByT_K(long tagId, String key)
+	public void removeByT_K(long tagId, String key)
 		throws NoSuchTagPropertyException, SystemException {
 		AssetTagProperty assetTagProperty = findByT_K(tagId, key);
 
-		return remove(assetTagProperty);
+		remove(assetTagProperty);
 	}
 
 	/**
@@ -2401,8 +2399,6 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	protected AssetTagStatsPersistence assetTagStatsPersistence;
 	@BeanReference(type = AssetVocabularyPersistence.class)
 	protected AssetVocabularyPersistence assetVocabularyPersistence;
-	@BeanReference(type = ResourcePersistence.class)
-	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	private static final String _SQL_SELECT_ASSETTAGPROPERTY = "SELECT assetTagProperty FROM AssetTagProperty assetTagProperty";

@@ -1205,17 +1205,15 @@ public class JournalContentSearchUtil {
 	* @param layoutId the layout ID
 	* @param portletId the portlet ID
 	* @param articleId the article ID
-	* @return the journal content search that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.journal.model.JournalContentSearch removeByG_P_L_P_A(
-		long groupId, boolean privateLayout, long layoutId,
-		java.lang.String portletId, java.lang.String articleId)
+	public static void removeByG_P_L_P_A(long groupId, boolean privateLayout,
+		long layoutId, java.lang.String portletId, java.lang.String articleId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.journal.NoSuchContentSearchException {
-		return getPersistence()
-				   .removeByG_P_L_P_A(groupId, privateLayout, layoutId,
-			portletId, articleId);
+		getPersistence()
+			.removeByG_P_L_P_A(groupId, privateLayout, layoutId, portletId,
+			articleId);
 	}
 
 	/**

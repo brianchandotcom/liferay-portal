@@ -2488,14 +2488,13 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the wiki node that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public WikiNode removeByUUID_G(String uuid, long groupId)
+	public void removeByUUID_G(String uuid, long groupId)
 		throws NoSuchNodeException, SystemException {
 		WikiNode wikiNode = findByUUID_G(uuid, groupId);
 
-		return remove(wikiNode);
+		remove(wikiNode);
 	}
 
 	/**
@@ -2527,14 +2526,13 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	 *
 	 * @param groupId the group ID
 	 * @param name the name
-	 * @return the wiki node that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public WikiNode removeByG_N(long groupId, String name)
+	public void removeByG_N(long groupId, String name)
 		throws NoSuchNodeException, SystemException {
 		WikiNode wikiNode = findByG_N(groupId, name);
 
-		return remove(wikiNode);
+		remove(wikiNode);
 	}
 
 	/**

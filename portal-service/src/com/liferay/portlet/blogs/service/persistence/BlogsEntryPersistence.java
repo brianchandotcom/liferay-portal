@@ -2310,11 +2310,9 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
-	* @return the blogs entry that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry removeByUUID_G(
-		java.lang.String uuid, long groupId)
+	public void removeByUUID_G(java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.blogs.NoSuchEntryException;
 
@@ -2371,11 +2369,9 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	*
 	* @param groupId the group ID
 	* @param urlTitle the url title
-	* @return the blogs entry that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry removeByG_UT(
-		long groupId, java.lang.String urlTitle)
+	public void removeByG_UT(long groupId, java.lang.String urlTitle)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.blogs.NoSuchEntryException;
 

@@ -422,14 +422,13 @@ public class SCProductVersionUtil {
 	* Removes the s c product version where directDownloadURL = &#63; from the database.
 	*
 	* @param directDownloadURL the direct download u r l
-	* @return the s c product version that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductVersion removeByDirectDownloadURL(
+	public static void removeByDirectDownloadURL(
 		java.lang.String directDownloadURL)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.softwarecatalog.NoSuchProductVersionException {
-		return getPersistence().removeByDirectDownloadURL(directDownloadURL);
+		getPersistence().removeByDirectDownloadURL(directDownloadURL);
 	}
 
 	/**

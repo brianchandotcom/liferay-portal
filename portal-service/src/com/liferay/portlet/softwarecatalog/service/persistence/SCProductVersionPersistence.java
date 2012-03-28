@@ -301,11 +301,9 @@ public interface SCProductVersionPersistence extends BasePersistence<SCProductVe
 	* Removes the s c product version where directDownloadURL = &#63; from the database.
 	*
 	* @param directDownloadURL the direct download u r l
-	* @return the s c product version that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.softwarecatalog.model.SCProductVersion removeByDirectDownloadURL(
-		java.lang.String directDownloadURL)
+	public void removeByDirectDownloadURL(java.lang.String directDownloadURL)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.softwarecatalog.NoSuchProductVersionException;
 

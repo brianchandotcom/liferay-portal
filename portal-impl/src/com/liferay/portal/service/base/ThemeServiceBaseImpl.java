@@ -149,8 +149,6 @@ import com.liferay.portal.service.persistence.ListTypePersistence;
 import com.liferay.portal.service.persistence.LockFinder;
 import com.liferay.portal.service.persistence.LockPersistence;
 import com.liferay.portal.service.persistence.MembershipRequestPersistence;
-import com.liferay.portal.service.persistence.OrgGroupPermissionFinder;
-import com.liferay.portal.service.persistence.OrgGroupPermissionPersistence;
 import com.liferay.portal.service.persistence.OrgGroupRolePersistence;
 import com.liferay.portal.service.persistence.OrgLaborPersistence;
 import com.liferay.portal.service.persistence.OrganizationFinder;
@@ -1480,44 +1478,6 @@ public abstract class ThemeServiceBaseImpl extends PrincipalBean
 	 */
 	public void setOrganizationFinder(OrganizationFinder organizationFinder) {
 		this.organizationFinder = organizationFinder;
-	}
-
-	/**
-	 * Returns the org group permission persistence.
-	 *
-	 * @return the org group permission persistence
-	 */
-	public OrgGroupPermissionPersistence getOrgGroupPermissionPersistence() {
-		return orgGroupPermissionPersistence;
-	}
-
-	/**
-	 * Sets the org group permission persistence.
-	 *
-	 * @param orgGroupPermissionPersistence the org group permission persistence
-	 */
-	public void setOrgGroupPermissionPersistence(
-		OrgGroupPermissionPersistence orgGroupPermissionPersistence) {
-		this.orgGroupPermissionPersistence = orgGroupPermissionPersistence;
-	}
-
-	/**
-	 * Returns the org group permission finder.
-	 *
-	 * @return the org group permission finder
-	 */
-	public OrgGroupPermissionFinder getOrgGroupPermissionFinder() {
-		return orgGroupPermissionFinder;
-	}
-
-	/**
-	 * Sets the org group permission finder.
-	 *
-	 * @param orgGroupPermissionFinder the org group permission finder
-	 */
-	public void setOrgGroupPermissionFinder(
-		OrgGroupPermissionFinder orgGroupPermissionFinder) {
-		this.orgGroupPermissionFinder = orgGroupPermissionFinder;
 	}
 
 	/**
@@ -3791,10 +3751,6 @@ public abstract class ThemeServiceBaseImpl extends PrincipalBean
 	protected OrganizationPersistence organizationPersistence;
 	@BeanReference(type = OrganizationFinder.class)
 	protected OrganizationFinder organizationFinder;
-	@BeanReference(type = OrgGroupPermissionPersistence.class)
-	protected OrgGroupPermissionPersistence orgGroupPermissionPersistence;
-	@BeanReference(type = OrgGroupPermissionFinder.class)
-	protected OrgGroupPermissionFinder orgGroupPermissionFinder;
 	@BeanReference(type = OrgGroupRolePersistence.class)
 	protected OrgGroupRolePersistence orgGroupRolePersistence;
 	@BeanReference(type = OrgLaborLocalService.class)

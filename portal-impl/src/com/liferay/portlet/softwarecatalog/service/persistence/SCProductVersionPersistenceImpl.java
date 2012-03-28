@@ -1183,14 +1183,13 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 	 * Removes the s c product version where directDownloadURL = &#63; from the database.
 	 *
 	 * @param directDownloadURL the direct download u r l
-	 * @return the s c product version that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public SCProductVersion removeByDirectDownloadURL(String directDownloadURL)
+	public void removeByDirectDownloadURL(String directDownloadURL)
 		throws NoSuchProductVersionException, SystemException {
 		SCProductVersion scProductVersion = findByDirectDownloadURL(directDownloadURL);
 
-		return remove(scProductVersion);
+		remove(scProductVersion);
 	}
 
 	/**

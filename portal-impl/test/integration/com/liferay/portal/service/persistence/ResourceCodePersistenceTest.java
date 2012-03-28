@@ -23,32 +23,44 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ResourceCode;
 import com.liferay.portal.model.impl.ResourceCodeModelImpl;
-import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PropsValues;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class ResourceCodePersistenceTest extends BasePersistenceTestCase {
-	@Override
+@ExecutionTestListeners(listeners =  {
+	PersistenceExecutionTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class ResourceCodePersistenceTest {
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_persistence = (ResourceCodePersistence)PortalBeanLocatorUtil.locate(ResourceCodePersistence.class.getName());
 	}
 
+	@Test
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ResourceCode resourceCode = _persistence.create(pk);
 
-		assertNotNull(resourceCode);
+		Assert.assertNotNull(resourceCode);
 
-		assertEquals(resourceCode.getPrimaryKey(), pk);
+		Assert.assertEquals(resourceCode.getPrimaryKey(), pk);
 	}
 
+	@Test
 	public void testRemove() throws Exception {
 		ResourceCode newResourceCode = addResourceCode();
 
@@ -56,72 +68,82 @@ public class ResourceCodePersistenceTest extends BasePersistenceTestCase {
 
 		ResourceCode existingResourceCode = _persistence.fetchByPrimaryKey(newResourceCode.getPrimaryKey());
 
-		assertNull(existingResourceCode);
+		Assert.assertNull(existingResourceCode);
 	}
 
+	@Test
 	public void testUpdateNew() throws Exception {
 		addResourceCode();
 	}
 
+	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ResourceCode newResourceCode = _persistence.create(pk);
 
-		newResourceCode.setCompanyId(nextLong());
+		newResourceCode.setCompanyId(ServiceTestUtil.nextLong());
 
-		newResourceCode.setName(randomString());
+		newResourceCode.setName(ServiceTestUtil.randomString());
 
-		newResourceCode.setScope(nextInt());
+		newResourceCode.setScope(ServiceTestUtil.nextInt());
 
 		_persistence.update(newResourceCode, false);
 
 		ResourceCode existingResourceCode = _persistence.findByPrimaryKey(newResourceCode.getPrimaryKey());
 
-		assertEquals(existingResourceCode.getCodeId(),
+		Assert.assertEquals(existingResourceCode.getCodeId(),
 			newResourceCode.getCodeId());
-		assertEquals(existingResourceCode.getCompanyId(),
+		Assert.assertEquals(existingResourceCode.getCompanyId(),
 			newResourceCode.getCompanyId());
-		assertEquals(existingResourceCode.getName(), newResourceCode.getName());
-		assertEquals(existingResourceCode.getScope(), newResourceCode.getScope());
+		Assert.assertEquals(existingResourceCode.getName(),
+			newResourceCode.getName());
+		Assert.assertEquals(existingResourceCode.getScope(),
+			newResourceCode.getScope());
 	}
 
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ResourceCode newResourceCode = addResourceCode();
 
 		ResourceCode existingResourceCode = _persistence.findByPrimaryKey(newResourceCode.getPrimaryKey());
 
-		assertEquals(existingResourceCode, newResourceCode);
+		Assert.assertEquals(existingResourceCode, newResourceCode);
 	}
 
+	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
 
-			fail("Missing entity did not throw NoSuchResourceCodeException");
+			Assert.fail(
+				"Missing entity did not throw NoSuchResourceCodeException");
 		}
 		catch (NoSuchResourceCodeException nsee) {
 		}
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		ResourceCode newResourceCode = addResourceCode();
 
 		ResourceCode existingResourceCode = _persistence.fetchByPrimaryKey(newResourceCode.getPrimaryKey());
 
-		assertEquals(existingResourceCode, newResourceCode);
+		Assert.assertEquals(existingResourceCode, newResourceCode);
 	}
 
+	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ResourceCode missingResourceCode = _persistence.fetchByPrimaryKey(pk);
 
-		assertNull(missingResourceCode);
+		Assert.assertNull(missingResourceCode);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
 		ResourceCode newResourceCode = addResourceCode();
@@ -134,24 +156,27 @@ public class ResourceCodePersistenceTest extends BasePersistenceTestCase {
 
 		List<ResourceCode> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		ResourceCode existingResourceCode = result.get(0);
 
-		assertEquals(existingResourceCode, newResourceCode);
+		Assert.assertEquals(existingResourceCode, newResourceCode);
 	}
 
+	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ResourceCode.class,
 				ResourceCode.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("codeId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("codeId",
+				ServiceTestUtil.nextLong()));
 
 		List<ResourceCode> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
 		ResourceCode newResourceCode = addResourceCode();
@@ -168,13 +193,14 @@ public class ResourceCodePersistenceTest extends BasePersistenceTestCase {
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(1, result.size());
+		Assert.assertEquals(1, result.size());
 
 		Object existingCodeId = result.get(0);
 
-		assertEquals(existingCodeId, newCodeId);
+		Assert.assertEquals(existingCodeId, newCodeId);
 	}
 
+	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ResourceCode.class,
 				ResourceCode.class.getClassLoader());
@@ -182,13 +208,14 @@ public class ResourceCodePersistenceTest extends BasePersistenceTestCase {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("codeId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("codeId",
-				new Object[] { nextLong() }));
+				new Object[] { ServiceTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
-		assertEquals(0, result.size());
+		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
 	public void testResetOriginalValues() throws Exception {
 		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
 			return;
@@ -200,24 +227,25 @@ public class ResourceCodePersistenceTest extends BasePersistenceTestCase {
 
 		ResourceCodeModelImpl existingResourceCodeModelImpl = (ResourceCodeModelImpl)_persistence.findByPrimaryKey(newResourceCode.getPrimaryKey());
 
-		assertEquals(existingResourceCodeModelImpl.getCompanyId(),
+		Assert.assertEquals(existingResourceCodeModelImpl.getCompanyId(),
 			existingResourceCodeModelImpl.getOriginalCompanyId());
-		assertTrue(Validator.equals(existingResourceCodeModelImpl.getName(),
+		Assert.assertTrue(Validator.equals(
+				existingResourceCodeModelImpl.getName(),
 				existingResourceCodeModelImpl.getOriginalName()));
-		assertEquals(existingResourceCodeModelImpl.getScope(),
+		Assert.assertEquals(existingResourceCodeModelImpl.getScope(),
 			existingResourceCodeModelImpl.getOriginalScope());
 	}
 
 	protected ResourceCode addResourceCode() throws Exception {
-		long pk = nextLong();
+		long pk = ServiceTestUtil.nextLong();
 
 		ResourceCode resourceCode = _persistence.create(pk);
 
-		resourceCode.setCompanyId(nextLong());
+		resourceCode.setCompanyId(ServiceTestUtil.nextLong());
 
-		resourceCode.setName(randomString());
+		resourceCode.setName(ServiceTestUtil.randomString());
 
-		resourceCode.setScope(nextInt());
+		resourceCode.setScope(ServiceTestUtil.nextInt());
 
 		_persistence.update(resourceCode, false);
 

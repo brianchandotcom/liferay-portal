@@ -3381,14 +3381,13 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the message boards category that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public MBCategory removeByUUID_G(String uuid, long groupId)
+	public void removeByUUID_G(String uuid, long groupId)
 		throws NoSuchCategoryException, SystemException {
 		MBCategory mbCategory = findByUUID_G(uuid, groupId);
 
-		return remove(mbCategory);
+		remove(mbCategory);
 	}
 
 	/**
@@ -4101,8 +4100,6 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	protected MBThreadFlagPersistence mbThreadFlagPersistence;
 	@BeanReference(type = GroupPersistence.class)
 	protected GroupPersistence groupPersistence;
-	@BeanReference(type = ResourcePersistence.class)
-	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = SubscriptionPersistence.class)
 	protected SubscriptionPersistence subscriptionPersistence;
 	@BeanReference(type = UserPersistence.class)

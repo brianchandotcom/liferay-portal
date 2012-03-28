@@ -854,14 +854,12 @@ public class DLFileVersionUtil {
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
-	* @return the document library file version that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.documentlibrary.model.DLFileVersion removeByUUID_G(
-		java.lang.String uuid, long groupId)
+	public static void removeByUUID_G(java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
-		return getPersistence().removeByUUID_G(uuid, groupId);
+		getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -880,14 +878,12 @@ public class DLFileVersionUtil {
 	*
 	* @param fileEntryId the file entry ID
 	* @param version the version
-	* @return the document library file version that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.documentlibrary.model.DLFileVersion removeByF_V(
-		long fileEntryId, java.lang.String version)
+	public static void removeByF_V(long fileEntryId, java.lang.String version)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
-		return getPersistence().removeByF_V(fileEntryId, version);
+		getPersistence().removeByF_V(fileEntryId, version);
 	}
 
 	/**

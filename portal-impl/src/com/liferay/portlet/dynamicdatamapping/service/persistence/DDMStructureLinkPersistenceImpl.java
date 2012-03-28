@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
-import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -1516,14 +1515,13 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	 * Removes the d d m structure link where classPK = &#63; from the database.
 	 *
 	 * @param classPK the class p k
-	 * @return the d d m structure link that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public DDMStructureLink removeByClassPK(long classPK)
+	public void removeByClassPK(long classPK)
 		throws NoSuchStructureLinkException, SystemException {
 		DDMStructureLink ddmStructureLink = findByClassPK(classPK);
 
-		return remove(ddmStructureLink);
+		remove(ddmStructureLink);
 	}
 
 	/**
@@ -1787,8 +1785,6 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	protected DDMStructureLinkPersistence ddmStructureLinkPersistence;
 	@BeanReference(type = DDMTemplatePersistence.class)
 	protected DDMTemplatePersistence ddmTemplatePersistence;
-	@BeanReference(type = ResourcePersistence.class)
-	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	private static final String _SQL_SELECT_DDMSTRUCTURELINK = "SELECT ddmStructureLink FROM DDMStructureLink ddmStructureLink";

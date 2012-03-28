@@ -39,7 +39,6 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.GroupPersistence;
-import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -2858,14 +2857,13 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	 *
 	 * @param groupId the group ID
 	 * @param userId the user ID
-	 * @return the blogs stats user that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public BlogsStatsUser removeByG_U(long groupId, long userId)
+	public void removeByG_U(long groupId, long userId)
 		throws NoSuchStatsUserException, SystemException {
 		BlogsStatsUser blogsStatsUser = findByG_U(groupId, userId);
 
-		return remove(blogsStatsUser);
+		remove(blogsStatsUser);
 	}
 
 	/**
@@ -3344,8 +3342,6 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	protected BlogsStatsUserPersistence blogsStatsUserPersistence;
 	@BeanReference(type = GroupPersistence.class)
 	protected GroupPersistence groupPersistence;
-	@BeanReference(type = ResourcePersistence.class)
-	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	private static final String _SQL_SELECT_BLOGSSTATSUSER = "SELECT blogsStatsUser FROM BlogsStatsUser blogsStatsUser";

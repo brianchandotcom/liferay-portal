@@ -15,13 +15,8 @@
 package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.model.Resource;
-
-import java.util.List;
 
 /**
  * The utility for the resource local service. This utility wraps {@link com.liferay.portal.service.impl.ResourceLocalServiceImpl} and is the primary access point for service operations in application layer code running on the local server.
@@ -146,6 +141,16 @@ public class ResourceLocalServiceUtil {
 		return getService().getResource(companyId, name, scope, primKey);
 	}
 
+	public static boolean hasUserPermissions(long userId, long resourceId,
+		java.util.List<com.liferay.portal.model.Resource> resources,
+		java.lang.String actionId, long[] roleIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .hasUserPermissions(userId, resourceId, resources, actionId,
+			roleIds);
+	}
+
 	public static void updateModelResources(
 		com.liferay.portal.model.AuditedModel auditedModel,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -191,14 +196,6 @@ public class ResourceLocalServiceUtil {
 		}
 
 		return _service;
-	}
-
-	public static boolean hasUserPermissions(
-		long userId, long resourceId, List<Resource> resources,
-		String actionId, long[] roleIds)
-		throws PortalException, SystemException{
-			return getService().hasUserPermissions(userId, resourceId,
-				resources, actionId, roleIds);
 	}
 
 	public void setService(ResourceLocalService service) {

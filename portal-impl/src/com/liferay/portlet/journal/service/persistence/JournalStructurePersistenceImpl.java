@@ -3793,14 +3793,13 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the journal structure that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public JournalStructure removeByUUID_G(String uuid, long groupId)
+	public void removeByUUID_G(String uuid, long groupId)
 		throws NoSuchStructureException, SystemException {
 		JournalStructure journalStructure = findByUUID_G(uuid, groupId);
 
-		return remove(journalStructure);
+		remove(journalStructure);
 	}
 
 	/**
@@ -3847,14 +3846,13 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 	 *
 	 * @param groupId the group ID
 	 * @param structureId the structure ID
-	 * @return the journal structure that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public JournalStructure removeByG_S(long groupId, String structureId)
+	public void removeByG_S(long groupId, String structureId)
 		throws NoSuchStructureException, SystemException {
 		JournalStructure journalStructure = findByG_S(groupId, structureId);
 
-		return remove(journalStructure);
+		remove(journalStructure);
 	}
 
 	/**

@@ -551,14 +551,12 @@ public class PollsChoiceUtil {
 	*
 	* @param questionId the question ID
 	* @param name the name
-	* @return the polls choice that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.polls.model.PollsChoice removeByQ_N(
-		long questionId, java.lang.String name)
+	public static void removeByQ_N(long questionId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.polls.NoSuchChoiceException {
-		return getPersistence().removeByQ_N(questionId, name);
+		getPersistence().removeByQ_N(questionId, name);
 	}
 
 	/**

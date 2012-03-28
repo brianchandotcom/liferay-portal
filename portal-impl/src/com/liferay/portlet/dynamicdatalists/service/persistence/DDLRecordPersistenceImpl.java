@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
-import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.WorkflowInstanceLinkPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
@@ -2378,14 +2377,13 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the d d l record that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public DDLRecord removeByUUID_G(String uuid, long groupId)
+	public void removeByUUID_G(String uuid, long groupId)
 		throws NoSuchRecordException, SystemException {
 		DDLRecord ddlRecord = findByUUID_G(uuid, groupId);
 
-		return remove(ddlRecord);
+		remove(ddlRecord);
 	}
 
 	/**
@@ -2813,8 +2811,6 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 	protected DDLRecordSetPersistence ddlRecordSetPersistence;
 	@BeanReference(type = DDLRecordVersionPersistence.class)
 	protected DDLRecordVersionPersistence ddlRecordVersionPersistence;
-	@BeanReference(type = ResourcePersistence.class)
-	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	@BeanReference(type = WorkflowInstanceLinkPersistence.class)

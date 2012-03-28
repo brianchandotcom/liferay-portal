@@ -189,11 +189,9 @@ public interface RatingsStatsPersistence extends BasePersistence<RatingsStats> {
 	*
 	* @param classNameId the class name ID
 	* @param classPK the class p k
-	* @return the ratings stats that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.ratings.model.RatingsStats removeByC_C(
-		long classNameId, long classPK)
+	public void removeByC_C(long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.ratings.NoSuchStatsException;
 

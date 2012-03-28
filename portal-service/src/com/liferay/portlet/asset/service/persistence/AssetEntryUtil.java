@@ -867,14 +867,12 @@ public class AssetEntryUtil {
 	*
 	* @param groupId the group ID
 	* @param classUuid the class uuid
-	* @return the asset entry that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.asset.model.AssetEntry removeByG_CU(
-		long groupId, java.lang.String classUuid)
+	public static void removeByG_CU(long groupId, java.lang.String classUuid)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.asset.NoSuchEntryException {
-		return getPersistence().removeByG_CU(groupId, classUuid);
+		getPersistence().removeByG_CU(groupId, classUuid);
 	}
 
 	/**
@@ -882,14 +880,12 @@ public class AssetEntryUtil {
 	*
 	* @param classNameId the class name ID
 	* @param classPK the class p k
-	* @return the asset entry that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.asset.model.AssetEntry removeByC_C(
-		long classNameId, long classPK)
+	public static void removeByC_C(long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.asset.NoSuchEntryException {
-		return getPersistence().removeByC_C(classNameId, classPK);
+		getPersistence().removeByC_C(classNameId, classPK);
 	}
 
 	/**

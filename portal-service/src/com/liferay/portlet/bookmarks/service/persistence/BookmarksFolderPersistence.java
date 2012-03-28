@@ -870,11 +870,9 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
-	* @return the bookmarks folder that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.bookmarks.model.BookmarksFolder removeByUUID_G(
-		java.lang.String uuid, long groupId)
+	public void removeByUUID_G(java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.bookmarks.NoSuchFolderException;
 

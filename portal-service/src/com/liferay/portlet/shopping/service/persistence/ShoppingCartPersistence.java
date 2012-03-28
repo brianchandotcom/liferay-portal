@@ -415,11 +415,9 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	*
 	* @param groupId the group ID
 	* @param userId the user ID
-	* @return the shopping cart that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.shopping.model.ShoppingCart removeByG_U(
-		long groupId, long userId)
+	public void removeByG_U(long groupId, long userId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.shopping.NoSuchCartException;
 

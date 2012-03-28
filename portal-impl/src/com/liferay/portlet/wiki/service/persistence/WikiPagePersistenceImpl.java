@@ -8410,14 +8410,13 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the wiki page that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public WikiPage removeByUUID_G(String uuid, long groupId)
+	public void removeByUUID_G(String uuid, long groupId)
 		throws NoSuchPageException, SystemException {
 		WikiPage wikiPage = findByUUID_G(uuid, groupId);
 
-		return remove(wikiPage);
+		remove(wikiPage);
 	}
 
 	/**
@@ -8533,14 +8532,13 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 * @param resourcePrimKey the resource prim key
 	 * @param nodeId the node ID
 	 * @param version the version
-	 * @return the wiki page that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public WikiPage removeByR_N_V(long resourcePrimKey, long nodeId,
-		double version) throws NoSuchPageException, SystemException {
+	public void removeByR_N_V(long resourcePrimKey, long nodeId, double version)
+		throws NoSuchPageException, SystemException {
 		WikiPage wikiPage = findByR_N_V(resourcePrimKey, nodeId, version);
 
-		return remove(wikiPage);
+		remove(wikiPage);
 	}
 
 	/**
@@ -8579,14 +8577,13 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 * @param nodeId the node ID
 	 * @param title the title
 	 * @param version the version
-	 * @return the wiki page that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public WikiPage removeByN_T_V(long nodeId, String title, double version)
+	public void removeByN_T_V(long nodeId, String title, double version)
 		throws NoSuchPageException, SystemException {
 		WikiPage wikiPage = findByN_T_V(nodeId, title, version);
 
-		return remove(wikiPage);
+		remove(wikiPage);
 	}
 
 	/**

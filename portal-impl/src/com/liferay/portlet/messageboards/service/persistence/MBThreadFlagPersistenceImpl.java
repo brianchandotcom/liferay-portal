@@ -1528,14 +1528,13 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	 *
 	 * @param userId the user ID
 	 * @param threadId the thread ID
-	 * @return the message boards thread flag that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public MBThreadFlag removeByU_T(long userId, long threadId)
+	public void removeByU_T(long userId, long threadId)
 		throws NoSuchThreadFlagException, SystemException {
 		MBThreadFlag mbThreadFlag = findByU_T(userId, threadId);
 
-		return remove(mbThreadFlag);
+		remove(mbThreadFlag);
 	}
 
 	/**

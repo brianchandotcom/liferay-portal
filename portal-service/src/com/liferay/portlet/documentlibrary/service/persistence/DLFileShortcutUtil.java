@@ -972,14 +972,12 @@ public class DLFileShortcutUtil {
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
-	* @return the document library file shortcut that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.documentlibrary.model.DLFileShortcut removeByUUID_G(
-		java.lang.String uuid, long groupId)
+	public static void removeByUUID_G(java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.documentlibrary.NoSuchFileShortcutException {
-		return getPersistence().removeByUUID_G(uuid, groupId);
+		getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
 	/**

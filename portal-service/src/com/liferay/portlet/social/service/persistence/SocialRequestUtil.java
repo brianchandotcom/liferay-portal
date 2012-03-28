@@ -1415,14 +1415,12 @@ public class SocialRequestUtil {
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
-	* @return the social request that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.social.model.SocialRequest removeByUUID_G(
-		java.lang.String uuid, long groupId)
+	public static void removeByUUID_G(java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.social.NoSuchRequestException {
-		return getPersistence().removeByUUID_G(uuid, groupId);
+		getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -1490,16 +1488,14 @@ public class SocialRequestUtil {
 	* @param classPK the class p k
 	* @param type the type
 	* @param receiverUserId the receiver user ID
-	* @return the social request that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.social.model.SocialRequest removeByU_C_C_T_R(
-		long userId, long classNameId, long classPK, int type,
-		long receiverUserId)
+	public static void removeByU_C_C_T_R(long userId, long classNameId,
+		long classPK, int type, long receiverUserId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.social.NoSuchRequestException {
-		return getPersistence()
-				   .removeByU_C_C_T_R(userId, classNameId, classPK, type,
+		getPersistence()
+			.removeByU_C_C_T_R(userId, classNameId, classPK, type,
 			receiverUserId);
 	}
 

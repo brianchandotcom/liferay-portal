@@ -47,7 +47,6 @@ import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.CompanyPersistence;
 import com.liferay.portal.service.persistence.GroupPersistence;
-import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -2642,14 +2641,13 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 *
 	 * @param groupId the group ID
 	 * @param classUuid the class uuid
-	 * @return the asset entry that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public AssetEntry removeByG_CU(long groupId, String classUuid)
+	public void removeByG_CU(long groupId, String classUuid)
 		throws NoSuchEntryException, SystemException {
 		AssetEntry assetEntry = findByG_CU(groupId, classUuid);
 
-		return remove(assetEntry);
+		remove(assetEntry);
 	}
 
 	/**
@@ -2657,14 +2655,13 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
-	 * @return the asset entry that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public AssetEntry removeByC_C(long classNameId, long classPK)
+	public void removeByC_C(long classNameId, long classPK)
 		throws NoSuchEntryException, SystemException {
 		AssetEntry assetEntry = findByC_C(classNameId, classPK);
 
-		return remove(assetEntry);
+		remove(assetEntry);
 	}
 
 	/**
@@ -4102,8 +4099,6 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	protected CompanyPersistence companyPersistence;
 	@BeanReference(type = GroupPersistence.class)
 	protected GroupPersistence groupPersistence;
-	@BeanReference(type = ResourcePersistence.class)
-	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	@BeanReference(type = BlogsEntryPersistence.class)

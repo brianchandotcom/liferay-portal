@@ -761,28 +761,24 @@ public class ShoppingOrderUtil {
 	* Removes the shopping order where number = &#63; from the database.
 	*
 	* @param number the number
-	* @return the shopping order that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.shopping.model.ShoppingOrder removeByNumber(
-		java.lang.String number)
+	public static void removeByNumber(java.lang.String number)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.shopping.NoSuchOrderException {
-		return getPersistence().removeByNumber(number);
+		getPersistence().removeByNumber(number);
 	}
 
 	/**
 	* Removes the shopping order where ppTxnId = &#63; from the database.
 	*
 	* @param ppTxnId the pp txn ID
-	* @return the shopping order that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.shopping.model.ShoppingOrder removeByPPTxnId(
-		java.lang.String ppTxnId)
+	public static void removeByPPTxnId(java.lang.String ppTxnId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.shopping.NoSuchOrderException {
-		return getPersistence().removeByPPTxnId(ppTxnId);
+		getPersistence().removeByPPTxnId(ppTxnId);
 	}
 
 	/**

@@ -304,11 +304,9 @@ public interface AnnouncementsDeliveryPersistence extends BasePersistence<Announ
 	*
 	* @param userId the user ID
 	* @param type the type
-	* @return the announcements delivery that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.announcements.model.AnnouncementsDelivery removeByU_T(
-		long userId, java.lang.String type)
+	public void removeByU_T(long userId, java.lang.String type)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.announcements.NoSuchDeliveryException;
 

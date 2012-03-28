@@ -535,11 +535,9 @@ public interface MBStatsUserPersistence extends BasePersistence<MBStatsUser> {
 	*
 	* @param groupId the group ID
 	* @param userId the user ID
-	* @return the message boards stats user that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.messageboards.model.MBStatsUser removeByG_U(
-		long groupId, long userId)
+	public void removeByG_U(long groupId, long userId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.messageboards.NoSuchStatsUserException;
 

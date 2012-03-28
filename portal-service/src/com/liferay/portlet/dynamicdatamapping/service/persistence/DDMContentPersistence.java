@@ -515,11 +515,9 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
-	* @return the d d m content that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.dynamicdatamapping.model.DDMContent removeByUUID_G(
-		java.lang.String uuid, long groupId)
+	public void removeByUUID_G(java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.dynamicdatamapping.NoSuchContentException;
 

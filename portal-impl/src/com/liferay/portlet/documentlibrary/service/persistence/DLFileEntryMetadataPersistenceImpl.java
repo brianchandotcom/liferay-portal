@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
-import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -2614,16 +2613,14 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	 *
 	 * @param DDMStructureId the d d m structure ID
 	 * @param fileVersionId the file version ID
-	 * @return the document library file entry metadata that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public DLFileEntryMetadata removeByD_F(long DDMStructureId,
-		long fileVersionId)
+	public void removeByD_F(long DDMStructureId, long fileVersionId)
 		throws NoSuchFileEntryMetadataException, SystemException {
 		DLFileEntryMetadata dlFileEntryMetadata = findByD_F(DDMStructureId,
 				fileVersionId);
 
-		return remove(dlFileEntryMetadata);
+		remove(dlFileEntryMetadata);
 	}
 
 	/**
@@ -2631,15 +2628,14 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	 *
 	 * @param fileEntryId the file entry ID
 	 * @param fileVersionId the file version ID
-	 * @return the document library file entry metadata that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public DLFileEntryMetadata removeByF_V(long fileEntryId, long fileVersionId)
+	public void removeByF_V(long fileEntryId, long fileVersionId)
 		throws NoSuchFileEntryMetadataException, SystemException {
 		DLFileEntryMetadata dlFileEntryMetadata = findByF_V(fileEntryId,
 				fileVersionId);
 
-		return remove(dlFileEntryMetadata);
+		remove(dlFileEntryMetadata);
 	}
 
 	/**
@@ -3084,8 +3080,6 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	protected DLFolderPersistence dlFolderPersistence;
 	@BeanReference(type = DLSyncPersistence.class)
 	protected DLSyncPersistence dlSyncPersistence;
-	@BeanReference(type = ResourcePersistence.class)
-	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	@BeanReference(type = DDMStructureLinkPersistence.class)

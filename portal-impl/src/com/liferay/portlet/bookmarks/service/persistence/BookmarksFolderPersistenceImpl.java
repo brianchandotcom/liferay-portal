@@ -40,7 +40,6 @@ import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.GroupPersistence;
-import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -3370,14 +3369,13 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the bookmarks folder that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public BookmarksFolder removeByUUID_G(String uuid, long groupId)
+	public void removeByUUID_G(String uuid, long groupId)
 		throws NoSuchFolderException, SystemException {
 		BookmarksFolder bookmarksFolder = findByUUID_G(uuid, groupId);
 
-		return remove(bookmarksFolder);
+		remove(bookmarksFolder);
 	}
 
 	/**
@@ -3957,8 +3955,6 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	protected BookmarksFolderPersistence bookmarksFolderPersistence;
 	@BeanReference(type = GroupPersistence.class)
 	protected GroupPersistence groupPersistence;
-	@BeanReference(type = ResourcePersistence.class)
-	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	@BeanReference(type = ExpandoValuePersistence.class)

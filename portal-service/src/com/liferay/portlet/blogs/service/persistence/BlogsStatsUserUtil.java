@@ -938,14 +938,12 @@ public class BlogsStatsUserUtil {
 	*
 	* @param groupId the group ID
 	* @param userId the user ID
-	* @return the blogs stats user that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.blogs.model.BlogsStatsUser removeByG_U(
-		long groupId, long userId)
+	public static void removeByG_U(long groupId, long userId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.blogs.NoSuchStatsUserException {
-		return getPersistence().removeByG_U(groupId, userId);
+		getPersistence().removeByG_U(groupId, userId);
 	}
 
 	/**

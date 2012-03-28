@@ -39,7 +39,6 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.RepositoryPersistence;
-import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -1184,14 +1183,13 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 	 * Removes the d l sync where fileId = &#63; from the database.
 	 *
 	 * @param fileId the file ID
-	 * @return the d l sync that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public DLSync removeByFileId(long fileId)
+	public void removeByFileId(long fileId)
 		throws NoSuchSyncException, SystemException {
 		DLSync dlSync = findByFileId(fileId);
 
-		return remove(dlSync);
+		remove(dlSync);
 	}
 
 	/**
@@ -1433,8 +1431,6 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 	protected DLSyncPersistence dlSyncPersistence;
 	@BeanReference(type = RepositoryPersistence.class)
 	protected RepositoryPersistence repositoryPersistence;
-	@BeanReference(type = ResourcePersistence.class)
-	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	private static final String _SQL_SELECT_DLSYNC = "SELECT dlSync FROM DLSync dlSync";

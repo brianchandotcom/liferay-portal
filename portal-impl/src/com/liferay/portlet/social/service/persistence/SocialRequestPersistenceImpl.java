@@ -4545,14 +4545,13 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the social request that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public SocialRequest removeByUUID_G(String uuid, long groupId)
+	public void removeByUUID_G(String uuid, long groupId)
 		throws NoSuchRequestException, SystemException {
 		SocialRequest socialRequest = findByUUID_G(uuid, groupId);
 
-		return remove(socialRequest);
+		remove(socialRequest);
 	}
 
 	/**
@@ -4627,16 +4626,15 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @param classPK the class p k
 	 * @param type the type
 	 * @param receiverUserId the receiver user ID
-	 * @return the social request that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public SocialRequest removeByU_C_C_T_R(long userId, long classNameId,
-		long classPK, int type, long receiverUserId)
+	public void removeByU_C_C_T_R(long userId, long classNameId, long classPK,
+		int type, long receiverUserId)
 		throws NoSuchRequestException, SystemException {
 		SocialRequest socialRequest = findByU_C_C_T_R(userId, classNameId,
 				classPK, type, receiverUserId);
 
-		return remove(socialRequest);
+		remove(socialRequest);
 	}
 
 	/**

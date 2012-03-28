@@ -683,11 +683,9 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	*
 	* @param groupId the group ID
 	* @param classUuid the class uuid
-	* @return the asset entry that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.asset.model.AssetEntry removeByG_CU(
-		long groupId, java.lang.String classUuid)
+	public void removeByG_CU(long groupId, java.lang.String classUuid)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.asset.NoSuchEntryException;
 
@@ -696,11 +694,9 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	*
 	* @param classNameId the class name ID
 	* @param classPK the class p k
-	* @return the asset entry that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.asset.model.AssetEntry removeByC_C(
-		long classNameId, long classPK)
+	public void removeByC_C(long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.asset.NoSuchEntryException;
 

@@ -420,14 +420,12 @@ public class WikiPageResourceUtil {
 	*
 	* @param nodeId the node ID
 	* @param title the title
-	* @return the wiki page resource that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.wiki.model.WikiPageResource removeByN_T(
-		long nodeId, java.lang.String title)
+	public static void removeByN_T(long nodeId, java.lang.String title)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.wiki.NoSuchPageResourceException {
-		return getPersistence().removeByN_T(nodeId, title);
+		getPersistence().removeByN_T(nodeId, title);
 	}
 
 	/**

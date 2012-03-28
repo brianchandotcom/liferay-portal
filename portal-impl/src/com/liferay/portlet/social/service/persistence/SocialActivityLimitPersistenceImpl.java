@@ -1297,17 +1297,16 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 	 * @param classPK the class p k
 	 * @param activityType the activity type
 	 * @param activityCounterName the activity counter name
-	 * @return the social activity limit that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public SocialActivityLimit removeByG_U_C_C_A_A(long groupId, long userId,
+	public void removeByG_U_C_C_A_A(long groupId, long userId,
 		long classNameId, long classPK, int activityType,
 		String activityCounterName)
 		throws NoSuchActivityLimitException, SystemException {
 		SocialActivityLimit socialActivityLimit = findByG_U_C_C_A_A(groupId,
 				userId, classNameId, classPK, activityType, activityCounterName);
 
-		return remove(socialActivityLimit);
+		remove(socialActivityLimit);
 	}
 
 	/**

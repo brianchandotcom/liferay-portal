@@ -686,11 +686,9 @@ public interface DLFileEntryMetadataPersistence extends BasePersistence<DLFileEn
 	*
 	* @param DDMStructureId the d d m structure ID
 	* @param fileVersionId the file version ID
-	* @return the document library file entry metadata that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata removeByD_F(
-		long DDMStructureId, long fileVersionId)
+	public void removeByD_F(long DDMStructureId, long fileVersionId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException;
 
@@ -699,11 +697,9 @@ public interface DLFileEntryMetadataPersistence extends BasePersistence<DLFileEn
 	*
 	* @param fileEntryId the file entry ID
 	* @param fileVersionId the file version ID
-	* @return the document library file entry metadata that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata removeByF_V(
-		long fileEntryId, long fileVersionId)
+	public void removeByF_V(long fileEntryId, long fileVersionId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException;
 

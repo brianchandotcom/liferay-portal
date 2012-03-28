@@ -720,6 +720,7 @@ public abstract class WikiPageLocalServiceBaseImpl
 		ResourceLocalService resourceLocalService) {
 		this.resourceLocalService = resourceLocalService;
 	}
+
 	/**
 	 * Returns the subscription local service.
 	 *

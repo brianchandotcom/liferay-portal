@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
-import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -2706,14 +2705,13 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the document library file version that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public DLFileVersion removeByUUID_G(String uuid, long groupId)
+	public void removeByUUID_G(String uuid, long groupId)
 		throws NoSuchFileVersionException, SystemException {
 		DLFileVersion dlFileVersion = findByUUID_G(uuid, groupId);
 
-		return remove(dlFileVersion);
+		remove(dlFileVersion);
 	}
 
 	/**
@@ -2733,14 +2731,13 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	 *
 	 * @param fileEntryId the file entry ID
 	 * @param version the version
-	 * @return the document library file version that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public DLFileVersion removeByF_V(long fileEntryId, String version)
+	public void removeByF_V(long fileEntryId, String version)
 		throws NoSuchFileVersionException, SystemException {
 		DLFileVersion dlFileVersion = findByF_V(fileEntryId, version);
 
-		return remove(dlFileVersion);
+		remove(dlFileVersion);
 	}
 
 	/**
@@ -3253,8 +3250,6 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	protected DLFolderPersistence dlFolderPersistence;
 	@BeanReference(type = DLSyncPersistence.class)
 	protected DLSyncPersistence dlSyncPersistence;
-	@BeanReference(type = ResourcePersistence.class)
-	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	private static final String _SQL_SELECT_DLFILEVERSION = "SELECT dlFileVersion FROM DLFileVersion dlFileVersion";

@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
-import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -1178,14 +1177,13 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 * @param userId the user ID
 	 * @param entryId the entry ID
 	 * @param value the value
-	 * @return the announcements flag that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public AnnouncementsFlag removeByU_E_V(long userId, long entryId, int value)
+	public void removeByU_E_V(long userId, long entryId, int value)
 		throws NoSuchFlagException, SystemException {
 		AnnouncementsFlag announcementsFlag = findByU_E_V(userId, entryId, value);
 
-		return remove(announcementsFlag);
+		remove(announcementsFlag);
 	}
 
 	/**
@@ -1391,8 +1389,6 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	protected AnnouncementsEntryPersistence announcementsEntryPersistence;
 	@BeanReference(type = AnnouncementsFlagPersistence.class)
 	protected AnnouncementsFlagPersistence announcementsFlagPersistence;
-	@BeanReference(type = ResourcePersistence.class)
-	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	private static final String _SQL_SELECT_ANNOUNCEMENTSFLAG = "SELECT announcementsFlag FROM AnnouncementsFlag announcementsFlag";

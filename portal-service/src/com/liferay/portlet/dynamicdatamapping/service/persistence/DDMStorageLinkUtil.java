@@ -538,14 +538,12 @@ public class DDMStorageLinkUtil {
 	* Removes the d d m storage link where classPK = &#63; from the database.
 	*
 	* @param classPK the class p k
-	* @return the d d m storage link that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink removeByClassPK(
-		long classPK)
+	public static void removeByClassPK(long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException {
-		return getPersistence().removeByClassPK(classPK);
+		getPersistence().removeByClassPK(classPK);
 	}
 
 	/**

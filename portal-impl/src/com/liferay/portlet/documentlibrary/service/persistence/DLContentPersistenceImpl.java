@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
-import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -2262,16 +2261,14 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 	 * @param repositoryId the repository ID
 	 * @param path the path
 	 * @param version the version
-	 * @return the document library content that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public DLContent removeByC_R_P_V(long companyId, long repositoryId,
-		String path, String version)
-		throws NoSuchContentException, SystemException {
+	public void removeByC_R_P_V(long companyId, long repositoryId, String path,
+		String version) throws NoSuchContentException, SystemException {
 		DLContent dlContent = findByC_R_P_V(companyId, repositoryId, path,
 				version);
 
-		return remove(dlContent);
+		remove(dlContent);
 	}
 
 	/**
@@ -2678,8 +2675,6 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 	protected DLFolderPersistence dlFolderPersistence;
 	@BeanReference(type = DLSyncPersistence.class)
 	protected DLSyncPersistence dlSyncPersistence;
-	@BeanReference(type = ResourcePersistence.class)
-	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	private static final String _SQL_SELECT_DLCONTENT = "SELECT dlContent FROM DLContent dlContent";

@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
-import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -1555,14 +1554,13 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	 *
 	 * @param tagId the tag ID
 	 * @param classNameId the class name ID
-	 * @return the asset tag stats that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public AssetTagStats removeByT_C(long tagId, long classNameId)
+	public void removeByT_C(long tagId, long classNameId)
 		throws NoSuchTagStatsException, SystemException {
 		AssetTagStats assetTagStats = findByT_C(tagId, classNameId);
 
-		return remove(assetTagStats);
+		remove(assetTagStats);
 	}
 
 	/**
@@ -1826,8 +1824,6 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	protected AssetTagStatsPersistence assetTagStatsPersistence;
 	@BeanReference(type = AssetVocabularyPersistence.class)
 	protected AssetVocabularyPersistence assetVocabularyPersistence;
-	@BeanReference(type = ResourcePersistence.class)
-	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	private static final String _SQL_SELECT_ASSETTAGSTATS = "SELECT assetTagStats FROM AssetTagStats assetTagStats";

@@ -1205,14 +1205,13 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param name the name
-	 * @return the expando table that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public ExpandoTable removeByC_C_N(long companyId, long classNameId,
-		String name) throws NoSuchTableException, SystemException {
+	public void removeByC_C_N(long companyId, long classNameId, String name)
+		throws NoSuchTableException, SystemException {
 		ExpandoTable expandoTable = findByC_C_N(companyId, classNameId, name);
 
-		return remove(expandoTable);
+		remove(expandoTable);
 	}
 
 	/**

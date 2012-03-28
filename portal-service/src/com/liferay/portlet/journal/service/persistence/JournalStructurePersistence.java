@@ -897,11 +897,9 @@ public interface JournalStructurePersistence extends BasePersistence<JournalStru
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
-	* @return the journal structure that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.journal.model.JournalStructure removeByUUID_G(
-		java.lang.String uuid, long groupId)
+	public void removeByUUID_G(java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.journal.NoSuchStructureException;
 
@@ -937,11 +935,9 @@ public interface JournalStructurePersistence extends BasePersistence<JournalStru
 	*
 	* @param groupId the group ID
 	* @param structureId the structure ID
-	* @return the journal structure that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.journal.model.JournalStructure removeByG_S(
-		long groupId, java.lang.String structureId)
+	public void removeByG_S(long groupId, java.lang.String structureId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.journal.NoSuchStructureException;
 

@@ -909,11 +909,9 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
-	* @return the d d m structure that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure removeByUUID_G(
-		java.lang.String uuid, long groupId)
+	public void removeByUUID_G(java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 
@@ -940,11 +938,9 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*
 	* @param groupId the group ID
 	* @param structureKey the structure key
-	* @return the d d m structure that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure removeByG_S(
-		long groupId, java.lang.String structureKey)
+	public void removeByG_S(long groupId, java.lang.String structureKey)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 

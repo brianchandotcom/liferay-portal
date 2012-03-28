@@ -1303,14 +1303,13 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 	 * Removes the message boards discussion where threadId = &#63; from the database.
 	 *
 	 * @param threadId the thread ID
-	 * @return the message boards discussion that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public MBDiscussion removeByThreadId(long threadId)
+	public void removeByThreadId(long threadId)
 		throws NoSuchDiscussionException, SystemException {
 		MBDiscussion mbDiscussion = findByThreadId(threadId);
 
-		return remove(mbDiscussion);
+		remove(mbDiscussion);
 	}
 
 	/**
@@ -1318,14 +1317,13 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
-	 * @return the message boards discussion that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public MBDiscussion removeByC_C(long classNameId, long classPK)
+	public void removeByC_C(long classNameId, long classPK)
 		throws NoSuchDiscussionException, SystemException {
 		MBDiscussion mbDiscussion = findByC_C(classNameId, classPK);
 
-		return remove(mbDiscussion);
+		remove(mbDiscussion);
 	}
 
 	/**

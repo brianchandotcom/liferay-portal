@@ -1165,11 +1165,9 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	* Removes the social activity where mirrorActivityId = &#63; from the database.
 	*
 	* @param mirrorActivityId the mirror activity ID
-	* @return the social activity that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.social.model.SocialActivity removeByMirrorActivityId(
-		long mirrorActivityId)
+	public void removeByMirrorActivityId(long mirrorActivityId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.social.NoSuchActivityException;
 
@@ -1238,12 +1236,11 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	* @param classPK the class p k
 	* @param type the type
 	* @param receiverUserId the receiver user ID
-	* @return the social activity that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.social.model.SocialActivity removeByG_U_CD_C_C_T_R(
-		long groupId, long userId, long createDate, long classNameId,
-		long classPK, int type, long receiverUserId)
+	public void removeByG_U_CD_C_C_T_R(long groupId, long userId,
+		long createDate, long classNameId, long classPK, int type,
+		long receiverUserId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.social.NoSuchActivityException;
 

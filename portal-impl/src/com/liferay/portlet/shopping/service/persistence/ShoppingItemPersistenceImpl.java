@@ -43,7 +43,6 @@ import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.ImagePersistence;
-import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -2060,42 +2059,39 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 * Removes the shopping item where smallImageId = &#63; from the database.
 	 *
 	 * @param smallImageId the small image ID
-	 * @return the shopping item that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public ShoppingItem removeBySmallImageId(long smallImageId)
+	public void removeBySmallImageId(long smallImageId)
 		throws NoSuchItemException, SystemException {
 		ShoppingItem shoppingItem = findBySmallImageId(smallImageId);
 
-		return remove(shoppingItem);
+		remove(shoppingItem);
 	}
 
 	/**
 	 * Removes the shopping item where mediumImageId = &#63; from the database.
 	 *
 	 * @param mediumImageId the medium image ID
-	 * @return the shopping item that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public ShoppingItem removeByMediumImageId(long mediumImageId)
+	public void removeByMediumImageId(long mediumImageId)
 		throws NoSuchItemException, SystemException {
 		ShoppingItem shoppingItem = findByMediumImageId(mediumImageId);
 
-		return remove(shoppingItem);
+		remove(shoppingItem);
 	}
 
 	/**
 	 * Removes the shopping item where largeImageId = &#63; from the database.
 	 *
 	 * @param largeImageId the large image ID
-	 * @return the shopping item that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public ShoppingItem removeByLargeImageId(long largeImageId)
+	public void removeByLargeImageId(long largeImageId)
 		throws NoSuchItemException, SystemException {
 		ShoppingItem shoppingItem = findByLargeImageId(largeImageId);
 
-		return remove(shoppingItem);
+		remove(shoppingItem);
 	}
 
 	/**
@@ -2117,14 +2113,13 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 *
 	 * @param companyId the company ID
 	 * @param sku the sku
-	 * @return the shopping item that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public ShoppingItem removeByC_S(long companyId, String sku)
+	public void removeByC_S(long companyId, String sku)
 		throws NoSuchItemException, SystemException {
 		ShoppingItem shoppingItem = findByC_S(companyId, sku);
 
-		return remove(shoppingItem);
+		remove(shoppingItem);
 	}
 
 	/**
@@ -2804,8 +2799,6 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	protected ShoppingOrderItemPersistence shoppingOrderItemPersistence;
 	@BeanReference(type = ImagePersistence.class)
 	protected ImagePersistence imagePersistence;
-	@BeanReference(type = ResourcePersistence.class)
-	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	protected ContainsShoppingItemPrice containsShoppingItemPrice;

@@ -4517,14 +4517,13 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param userId1 the user id1
 	 * @param userId2 the user id2
 	 * @param type the type
-	 * @return the social relation that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public SocialRelation removeByU1_U2_T(long userId1, long userId2, int type)
+	public void removeByU1_U2_T(long userId1, long userId2, int type)
 		throws NoSuchRelationException, SystemException {
 		SocialRelation socialRelation = findByU1_U2_T(userId1, userId2, type);
 
-		return remove(socialRelation);
+		remove(socialRelation);
 	}
 
 	/**

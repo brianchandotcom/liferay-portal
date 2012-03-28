@@ -4382,14 +4382,13 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 *
 	 * @param columnId the column ID
 	 * @param rowId the row ID
-	 * @return the expando value that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public ExpandoValue removeByC_R(long columnId, long rowId)
+	public void removeByC_R(long columnId, long rowId)
 		throws NoSuchValueException, SystemException {
 		ExpandoValue expandoValue = findByC_R(columnId, rowId);
 
-		return remove(expandoValue);
+		remove(expandoValue);
 	}
 
 	/**
@@ -4412,14 +4411,13 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 * @param tableId the table ID
 	 * @param columnId the column ID
 	 * @param classPK the class p k
-	 * @return the expando value that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public ExpandoValue removeByT_C_C(long tableId, long columnId, long classPK)
+	public void removeByT_C_C(long tableId, long columnId, long classPK)
 		throws NoSuchValueException, SystemException {
 		ExpandoValue expandoValue = findByT_C_C(tableId, columnId, classPK);
 
-		return remove(expandoValue);
+		remove(expandoValue);
 	}
 
 	/**

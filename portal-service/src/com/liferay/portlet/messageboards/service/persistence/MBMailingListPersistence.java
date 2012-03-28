@@ -449,11 +449,9 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
-	* @return the message boards mailing list that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.messageboards.model.MBMailingList removeByUUID_G(
-		java.lang.String uuid, long groupId)
+	public void removeByUUID_G(java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.messageboards.NoSuchMailingListException;
 
@@ -471,11 +469,9 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	*
 	* @param groupId the group ID
 	* @param categoryId the category ID
-	* @return the message boards mailing list that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.messageboards.model.MBMailingList removeByG_C(
-		long groupId, long categoryId)
+	public void removeByG_C(long groupId, long categoryId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.messageboards.NoSuchMailingListException;
 

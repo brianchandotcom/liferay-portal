@@ -40,7 +40,6 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
-import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -2079,14 +2078,13 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the d d l record set that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public DDLRecordSet removeByUUID_G(String uuid, long groupId)
+	public void removeByUUID_G(String uuid, long groupId)
 		throws NoSuchRecordSetException, SystemException {
 		DDLRecordSet ddlRecordSet = findByUUID_G(uuid, groupId);
 
-		return remove(ddlRecordSet);
+		remove(ddlRecordSet);
 	}
 
 	/**
@@ -2106,14 +2104,13 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 	 *
 	 * @param groupId the group ID
 	 * @param recordSetKey the record set key
-	 * @return the d d l record set that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public DDLRecordSet removeByG_R(long groupId, String recordSetKey)
+	public void removeByG_R(long groupId, String recordSetKey)
 		throws NoSuchRecordSetException, SystemException {
 		DDLRecordSet ddlRecordSet = findByG_R(groupId, recordSetKey);
 
-		return remove(ddlRecordSet);
+		remove(ddlRecordSet);
 	}
 
 	/**
@@ -2510,8 +2507,6 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 	protected DDLRecordSetPersistence ddlRecordSetPersistence;
 	@BeanReference(type = DDLRecordVersionPersistence.class)
 	protected DDLRecordVersionPersistence ddlRecordVersionPersistence;
-	@BeanReference(type = ResourcePersistence.class)
-	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	@BeanReference(type = DDMStructurePersistence.class)

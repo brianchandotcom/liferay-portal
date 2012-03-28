@@ -43,7 +43,6 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.ImagePersistence;
 import com.liferay.portal.service.persistence.LockPersistence;
-import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.WebDAVPropsPersistence;
 import com.liferay.portal.service.persistence.WorkflowInstanceLinkPersistence;
@@ -7334,14 +7333,13 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the document library file entry that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public DLFileEntry removeByUUID_G(String uuid, long groupId)
+	public void removeByUUID_G(String uuid, long groupId)
 		throws NoSuchFileEntryException, SystemException {
 		DLFileEntry dlFileEntry = findByUUID_G(uuid, groupId);
 
-		return remove(dlFileEntry);
+		remove(dlFileEntry);
 	}
 
 	/**
@@ -7429,14 +7427,13 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
 	 * @param name the name
-	 * @return the document library file entry that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public DLFileEntry removeByG_F_N(long groupId, long folderId, String name)
+	public void removeByG_F_N(long groupId, long folderId, String name)
 		throws NoSuchFileEntryException, SystemException {
 		DLFileEntry dlFileEntry = findByG_F_N(groupId, folderId, name);
 
-		return remove(dlFileEntry);
+		remove(dlFileEntry);
 	}
 
 	/**
@@ -7445,14 +7442,13 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
 	 * @param title the title
-	 * @return the document library file entry that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public DLFileEntry removeByG_F_T(long groupId, long folderId, String title)
+	public void removeByG_F_T(long groupId, long folderId, String title)
 		throws NoSuchFileEntryException, SystemException {
 		DLFileEntry dlFileEntry = findByG_F_T(groupId, folderId, title);
 
-		return remove(dlFileEntry);
+		remove(dlFileEntry);
 	}
 
 	/**
@@ -9106,8 +9102,6 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	protected ImagePersistence imagePersistence;
 	@BeanReference(type = LockPersistence.class)
 	protected LockPersistence lockPersistence;
-	@BeanReference(type = ResourcePersistence.class)
-	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	@BeanReference(type = WebDAVPropsPersistence.class)

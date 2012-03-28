@@ -969,14 +969,12 @@ public class AssetLinkUtil {
 	* @param entryId1 the entry id1
 	* @param entryId2 the entry id2
 	* @param type the type
-	* @return the asset link that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.asset.model.AssetLink removeByE_E_T(
-		long entryId1, long entryId2, int type)
+	public static void removeByE_E_T(long entryId1, long entryId2, int type)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.asset.NoSuchLinkException {
-		return getPersistence().removeByE_E_T(entryId1, entryId2, type);
+		getPersistence().removeByE_E_T(entryId1, entryId2, type);
 	}
 
 	/**

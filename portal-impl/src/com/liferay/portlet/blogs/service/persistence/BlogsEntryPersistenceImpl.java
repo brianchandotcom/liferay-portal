@@ -51,7 +51,6 @@ import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.ImagePersistence;
 import com.liferay.portal.service.persistence.OrganizationPersistence;
 import com.liferay.portal.service.persistence.PortletPreferencesPersistence;
-import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.SubscriptionPersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.WorkflowInstanceLinkPersistence;
@@ -9619,14 +9618,13 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the blogs entry that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public BlogsEntry removeByUUID_G(String uuid, long groupId)
+	public void removeByUUID_G(String uuid, long groupId)
 		throws NoSuchEntryException, SystemException {
 		BlogsEntry blogsEntry = findByUUID_G(uuid, groupId);
 
-		return remove(blogsEntry);
+		remove(blogsEntry);
 	}
 
 	/**
@@ -9700,14 +9698,13 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	 *
 	 * @param groupId the group ID
 	 * @param urlTitle the url title
-	 * @return the blogs entry that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public BlogsEntry removeByG_UT(long groupId, String urlTitle)
+	public void removeByG_UT(long groupId, String urlTitle)
 		throws NoSuchEntryException, SystemException {
 		BlogsEntry blogsEntry = findByG_UT(groupId, urlTitle);
 
-		return remove(blogsEntry);
+		remove(blogsEntry);
 	}
 
 	/**
@@ -11386,8 +11383,6 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	protected OrganizationPersistence organizationPersistence;
 	@BeanReference(type = PortletPreferencesPersistence.class)
 	protected PortletPreferencesPersistence portletPreferencesPersistence;
-	@BeanReference(type = ResourcePersistence.class)
-	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = SubscriptionPersistence.class)
 	protected SubscriptionPersistence subscriptionPersistence;
 	@BeanReference(type = UserPersistence.class)

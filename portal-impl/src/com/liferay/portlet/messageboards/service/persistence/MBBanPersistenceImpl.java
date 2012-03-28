@@ -1910,14 +1910,13 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	 *
 	 * @param groupId the group ID
 	 * @param banUserId the ban user ID
-	 * @return the message boards ban that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public MBBan removeByG_B(long groupId, long banUserId)
+	public void removeByG_B(long groupId, long banUserId)
 		throws NoSuchBanException, SystemException {
 		MBBan mbBan = findByG_B(groupId, banUserId);
 
-		return remove(mbBan);
+		remove(mbBan);
 	}
 
 	/**

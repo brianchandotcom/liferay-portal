@@ -1430,14 +1430,12 @@ public class SocialActivityUtil {
 	* Removes the social activity where mirrorActivityId = &#63; from the database.
 	*
 	* @param mirrorActivityId the mirror activity ID
-	* @return the social activity that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.social.model.SocialActivity removeByMirrorActivityId(
-		long mirrorActivityId)
+	public static void removeByMirrorActivityId(long mirrorActivityId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.social.NoSuchActivityException {
-		return getPersistence().removeByMirrorActivityId(mirrorActivityId);
+		getPersistence().removeByMirrorActivityId(mirrorActivityId);
 	}
 
 	/**
@@ -1517,17 +1515,16 @@ public class SocialActivityUtil {
 	* @param classPK the class p k
 	* @param type the type
 	* @param receiverUserId the receiver user ID
-	* @return the social activity that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.social.model.SocialActivity removeByG_U_CD_C_C_T_R(
-		long groupId, long userId, long createDate, long classNameId,
-		long classPK, int type, long receiverUserId)
+	public static void removeByG_U_CD_C_C_T_R(long groupId, long userId,
+		long createDate, long classNameId, long classPK, int type,
+		long receiverUserId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.social.NoSuchActivityException {
-		return getPersistence()
-				   .removeByG_U_CD_C_C_T_R(groupId, userId, createDate,
-			classNameId, classPK, type, receiverUserId);
+		getPersistence()
+			.removeByG_U_CD_C_C_T_R(groupId, userId, createDate, classNameId,
+			classPK, type, receiverUserId);
 	}
 
 	/**

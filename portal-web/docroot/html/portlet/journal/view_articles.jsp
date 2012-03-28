@@ -80,6 +80,7 @@ boolean showAddArticleButton = JournalPermission.contains(permissionChecker, sco
 ArticleSearchTerms searchTerms = (ArticleSearchTerms)searchContainer.getSearchTerms();
 
 searchTerms.setVersion(-1);
+searchTerms.setFolderId(-1);
 
 String search = ParamUtil.getString(request, displayTerms.ADVANCED_SEARCH, null);
 
@@ -144,6 +145,7 @@ for (int i = 0; i < results.size(); i++) {
 			rowURL.setParameter("redirect", currentURL);
 			rowURL.setParameter("originalRedirect", currentURL);
 			rowURL.setParameter("groupId", String.valueOf(curArticle.getGroupId()));
+			rowURL.setParameter("folderId", String.valueOf(curArticle.getFolderId()));
 			rowURL.setParameter("articleId", curArticle.getArticleId());
 			%>
 

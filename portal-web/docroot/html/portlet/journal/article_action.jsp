@@ -31,6 +31,7 @@ JournalArticle article = (JournalArticle)row.getObject();
 				<portlet:param name="originalRedirect" value="<%= currentURL %>" />
 				<portlet:param name="backURL" value="<%= currentURL %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
+				<portlet:param name="folderId" value="<%= String.valueOf(article.getFolderId()) %>" />
 				<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
 				<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
 			</portlet:renderURL>

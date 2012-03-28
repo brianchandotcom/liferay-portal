@@ -22,10 +22,10 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.layoutconfiguration.util.RuntimePortletUtil;
 
 import javax.portlet.WindowState;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -44,9 +44,6 @@ public class RenderPortletAction extends Action {
 			ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response)
 		throws Exception {
-
-		ServletContext servletContext = (ServletContext)request.getAttribute(
-			WebKeys.CTX);
 
 		String ajaxId = request.getParameter("ajax_id");
 
@@ -83,9 +80,9 @@ public class RenderPortletAction extends Action {
 		PortalUtil.updateWindowState(
 			portletId, user, layout, windowState, request);
 
-		PortalUtil.renderPortlet(
-			servletContext, request, response, portlet, queryString, columnId,
-			new Integer(columnPos), new Integer(columnCount), true);
+		RuntimePortletUtil.processPortlet(
+			request, response, portlet, queryString, columnId, columnPos,
+			columnCount, null);
 
 		return null;
 	}

@@ -75,7 +75,7 @@ boolean expired = true;
 					AssetEntryServiceUtil.incrementViewCounter(JournalArticle.class.getName(), articleDisplay.getResourcePrimKey());
 				}
 
-				RuntimeLogic portletLogic = new PortletLogic(application, request, response, renderRequest, renderResponse);
+				RuntimeLogic portletLogic = new PortletLogic(request, response);
 				RuntimeLogic actionURLLogic = new ActionURLLogic(renderResponse);
 				RuntimeLogic renderURLLogic = new RenderURLLogic(renderResponse);
 

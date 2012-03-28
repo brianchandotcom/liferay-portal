@@ -17,8 +17,12 @@ package com.liferay.portlet.layoutconfiguration.util;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.DirectRequestDispatcherUtil;
 import com.liferay.portal.kernel.servlet.PipingPageContext;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
+import com.liferay.portal.kernel.servlet.StringServletResponse;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
@@ -29,12 +33,15 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.velocity.VelocityContext;
 import com.liferay.portal.kernel.velocity.VelocityEngineUtil;
 import com.liferay.portal.kernel.velocity.VelocityVariablesUtil;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.PortletDisplayFactory;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.layoutconfiguration.util.velocity.CustomizationSettingsProcessor;
 import com.liferay.portlet.layoutconfiguration.util.velocity.TemplateProcessor;
@@ -44,13 +51,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 
 /**
@@ -60,15 +69,19 @@ import javax.servlet.jsp.PageContext;
  */
 public class RuntimePortletImpl implements RuntimePortlet {
 
-	public String processCustomizationSettings(
-			ServletContext servletContext, HttpServletRequest request,
-			HttpServletResponse response, PageContext pageContext,
-			String velocityTemplateId, String velocityTemplateContent)
+	public void processCustomizationSettings(
+			PageContext pageContext, String velocityTemplateId,
+			String velocityTemplateContent)
 		throws Exception {
 
 		if (Validator.isNull(velocityTemplateContent)) {
-			return StringPool.BLANK;
+			return;
 		}
+
+		HttpServletRequest request =
+			(HttpServletRequest)pageContext.getRequest();
+		HttpServletResponse response =
+			(HttpServletResponse)pageContext.getResponse();
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
@@ -89,7 +102,7 @@ public class RuntimePortletImpl implements RuntimePortlet {
 		// liferay:include tag library
 
 		MethodHandler methodHandler = new MethodHandler(
-			_initMethodKey, servletContext, request,
+			_initMethodKey, pageContext.getServletContext(), request,
 			new PipingServletResponse(response, unsyncStringWriter),
 			pageContext);
 
@@ -109,53 +122,30 @@ public class RuntimePortletImpl implements RuntimePortlet {
 			throw e;
 		}
 
-		return unsyncStringWriter.toString();
+		unsyncStringWriter.getStringBundler().writeTo(pageContext.getOut());
 	}
 
-	public String processPortlet(
-			ServletContext servletContext, HttpServletRequest request,
-			HttpServletResponse response, Portlet portlet, String queryString,
-			String columnId, Integer columnPos, Integer columnCount,
-			String path, boolean writeOutput)
+	public void processPortlet(
+			HttpServletRequest request, HttpServletResponse response,
+			Portlet portlet, String queryString)
 		throws Exception {
 
-		return processPortlet(
-			servletContext, request, response, null, null, portlet,
-			portlet.getPortletId(), queryString, columnId, columnPos,
-			columnCount, path, writeOutput);
+		processPortlet(
+			request, response, portlet, queryString, null, null, null, null);
 	}
 
-	public String processPortlet(
-			ServletContext servletContext, HttpServletRequest request,
-			HttpServletResponse response, RenderRequest renderRequest,
-			RenderResponse renderResponse, Portlet portlet, String portletId,
-			String queryString, String columnId, Integer columnPos,
-			Integer columnCount, String path, boolean writeOutput)
+	public void processPortlet(
+			HttpServletRequest request, HttpServletResponse response,
+			Portlet portlet, String queryString, String columnId,
+			Integer columnPos, Integer columnCount, String path)
 		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (portlet == null) {
-			portlet = PortletLocalServiceUtil.getPortletById(
-				themeDisplay.getCompanyId(), portletId);
-		}
 
 		if ((portlet != null) && portlet.isInstanceable() &&
 			!portlet.isAddDefaultResource()) {
 
 			String instanceId = portlet.getInstanceId();
 
-			if (Validator.isNotNull(instanceId) &&
-				Validator.isPassword(instanceId) &&
-				(instanceId.length() >= 4)) {
-
-				/*portletId += PortletConstants.INSTANCE_SEPARATOR + instanceId;
-
-				portlet = PortletLocalServiceUtil.getPortletById(
-					themeDisplay.getCompanyId(), portletId);*/
-			}
-			else {
+			if (!Validator.isPassword(instanceId)) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						"Portlet " + portlet.getPortletId() +
@@ -168,8 +158,11 @@ public class RuntimePortletImpl implements RuntimePortlet {
 		}
 
 		if (portlet == null) {
-			return StringPool.BLANK;
+			return;
 		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		// Capture the current portlet's settings to reset them once the child
 		// portlet is rendered
@@ -183,72 +176,156 @@ public class RuntimePortletImpl implements RuntimePortlet {
 		PortletConfig portletConfig = (PortletConfig)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_CONFIG);
 
+		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
+		   JavaConstants.JAVAX_PORTLET_REQUEST);
+
+		if (!(portletRequest instanceof RenderRequest)) {
+			portletRequest = null;
+		}
+
+		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		if (!(portletResponse instanceof RenderResponse)) {
+			portletResponse = null;
+		}
+
+		columnId = GetterUtil.getString(columnId);
+
+		if (columnPos == null) {
+			columnPos = Integer.valueOf(0);
+		}
+
+		if (columnCount == null) {
+			columnCount = Integer.valueOf(0);
+		}
+
+		request.setAttribute(WebKeys.RENDER_PORTLET, portlet);
+		request.setAttribute(WebKeys.RENDER_PORTLET_COLUMN_ID, columnId);
+		request.setAttribute(WebKeys.RENDER_PORTLET_COLUMN_POS, columnPos);
+		request.setAttribute(WebKeys.RENDER_PORTLET_COLUMN_COUNT, columnCount);
+
+		if (path == null) {
+			path = "/html/portal/render_portlet.jsp";
+		}
+
+		if (Validator.isNotNull(queryString)) {
+			path = path.concat(StringPool.QUESTION).concat(queryString);
+		}
+
+		RequestDispatcher requestDispatcher =
+			DirectRequestDispatcherUtil.getRequestDispatcher(request, path);
+
+		StringServletResponse stringServletResponse = null;
+
+		boolean writeOutput = false;
+
+		if (response instanceof StringServletResponse) {
+			stringServletResponse = (StringServletResponse)response;
+		}
+		else {
+			writeOutput = true;
+			stringServletResponse = new StringServletResponse(response);
+		}
+
 		try {
-			return PortalUtil.renderPortlet(
-				servletContext, request, response, portlet, queryString,
-				columnId, columnPos, columnCount, path, writeOutput);
+			requestDispatcher.include(request, stringServletResponse);
+
+			Boolean portletConfiguratorVisibility =
+				(Boolean)request.getAttribute(
+					WebKeys.PORTLET_CONFIGURATOR_VISIBILITY);
+
+			if (portletConfiguratorVisibility != null) {
+				request.removeAttribute(
+					WebKeys.PORTLET_CONFIGURATOR_VISIBILITY);
+
+				Layout layout = themeDisplay.getLayout();
+
+				if (!layout.isTypeControlPanel() &&
+					!LayoutPermissionUtil.contains(
+						themeDisplay.getPermissionChecker(), layout,
+						ActionKeys.UPDATE) &&
+					!PortletPermissionUtil.contains(
+						themeDisplay.getPermissionChecker(),
+						themeDisplay.getPlid(), portlet.getPortletId(),
+						ActionKeys.CONFIGURATION)) {
+
+					response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+
+					stringServletResponse.setString(StringPool.BLANK);
+
+					return;
+				}
+			}
+
+			if (writeOutput) {
+				response.setContentType(ContentTypes.TEXT_HTML_UTF8);
+
+				stringServletResponse.writeTo(response.getWriter());
+			}
 		}
 		finally {
 			portletDisplay.copyFrom(portletDisplayClone);
 
 			portletDisplayClone.recycle();
 
-			_defineObjects(
-				request, portletConfig, renderRequest, renderResponse);
+			if (portletConfig != null) {
+				request.setAttribute(
+					JavaConstants.JAVAX_PORTLET_CONFIG, portletConfig);
+			}
+
+			if (portletRequest != null) {
+				request.setAttribute(
+					JavaConstants.JAVAX_PORTLET_REQUEST, portletRequest);
+			}
+
+			if (portletResponse != null) {
+				request.setAttribute(
+					JavaConstants.JAVAX_PORTLET_RESPONSE, portletResponse);
+			}
 		}
 	}
 
-	public String processPortlet(
-			ServletContext servletContext, HttpServletRequest request,
-			HttpServletResponse response, RenderRequest renderRequest,
-			RenderResponse renderResponse, String portletId, String queryString,
-			boolean writeOutput)
+	public void processPortlet(
+			HttpServletRequest request, HttpServletResponse response,
+			String portletId, String queryString)
 		throws Exception {
 
-		return processPortlet(
-			servletContext, request, response, renderRequest, renderResponse,
-			portletId, queryString, null, null, null, writeOutput);
-	}
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				com.liferay.portal.util.WebKeys.THEME_DISPLAY);
 
-	public String processPortlet(
-			ServletContext servletContext, HttpServletRequest request,
-			HttpServletResponse response, RenderRequest renderRequest,
-			RenderResponse renderResponse, String portletId, String queryString,
-			String columnId, Integer columnPos, Integer columnCount,
-			boolean writeOutput)
-		throws Exception {
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			themeDisplay.getCompanyId(), portletId);
 
-		return processPortlet(
-			servletContext, request, response, renderRequest, renderResponse,
-			null, portletId, queryString, columnId, columnPos, columnCount,
-			null, writeOutput);
+		processPortlet(
+			request, response, portlet, queryString, null, null, null, null);
 	}
 
 	public void processTemplate(
-			ServletContext servletContext, HttpServletRequest request,
-			HttpServletResponse response, PageContext pageContext,
-			JspWriter jspWriter, String velocityTemplateId,
+			PageContext pageContext, String velocityTemplateId,
 			String velocityTemplateContent)
 		throws Exception {
 
 		processTemplate(
-			servletContext, request, response, pageContext, jspWriter, null,
-			velocityTemplateId, velocityTemplateContent);
+			pageContext, null, velocityTemplateId, velocityTemplateContent);
 	}
 
 	public void processTemplate(
-			ServletContext servletContext, HttpServletRequest request,
-			HttpServletResponse response, PageContext pageContext,
-			JspWriter jspWriter, String portletId, String velocityTemplateId,
-			String velocityTemplateContent)
+			PageContext pageContext, String portletId,
+			String velocityTemplateId, String velocityTemplateContent)
 		throws Exception {
 
 		if (Validator.isNull(velocityTemplateContent)) {
 			return;
 		}
 
+		HttpServletRequest request =
+			(HttpServletRequest)pageContext.getRequest();
+		HttpServletResponse response =
+			(HttpServletResponse)pageContext.getResponse();
+
 		TemplateProcessor processor = new TemplateProcessor(
-			servletContext, request, response, portletId);
+			request, response, portletId);
 
 		VelocityContext velocityContext =
 			VelocityEngineUtil.getWrappedStandardToolsContext();
@@ -264,7 +341,7 @@ public class RuntimePortletImpl implements RuntimePortlet {
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
 		MethodHandler methodHandler = new MethodHandler(
-			_initMethodKey, servletContext, request,
+			_initMethodKey, pageContext.getServletContext(), request,
 			new PipingServletResponse(response, unsyncStringWriter),
 			pageContext);
 
@@ -307,8 +384,8 @@ public class RuntimePortletImpl implements RuntimePortlet {
 				new PipingServletResponse(response, portletUnsyncStringWriter);
 
 			processPortlet(
-				servletContext, request, pipingServletResponse, portlet,
-				queryString, columnId, columnPos, columnCount, null, true);
+				request, pipingServletResponse, portlet, queryString, columnId,
+				columnPos, columnCount, null);
 
 			contentsMap.put(
 				portlet.getPortletId(),
@@ -318,7 +395,7 @@ public class RuntimePortletImpl implements RuntimePortlet {
 		StringBundler sb = StringUtil.replaceWithStringBundler(
 			output, "[$TEMPLATE_PORTLET_", "$]", contentsMap);
 
-		sb.writeTo(jspWriter);
+		sb.writeTo(pageContext.getOut());
 	}
 
 	public String processXML(
@@ -396,26 +473,6 @@ public class RuntimePortletImpl implements RuntimePortlet {
 				request.setAttribute(
 					WebKeys.RENDER_PORTLET_RESOURCE, renderPortletResource);
 			}
-		}
-	}
-
-	private static void _defineObjects(
-		HttpServletRequest request, PortletConfig portletConfig,
-		RenderRequest renderRequest, RenderResponse renderResponse) {
-
-		if (portletConfig != null) {
-			request.setAttribute(
-				JavaConstants.JAVAX_PORTLET_CONFIG, portletConfig);
-		}
-
-		if (renderRequest != null) {
-			request.setAttribute(
-				JavaConstants.JAVAX_PORTLET_REQUEST, renderRequest);
-		}
-
-		if (renderResponse != null) {
-			request.setAttribute(
-				JavaConstants.JAVAX_PORTLET_RESPONSE, renderResponse);
 		}
 	}
 

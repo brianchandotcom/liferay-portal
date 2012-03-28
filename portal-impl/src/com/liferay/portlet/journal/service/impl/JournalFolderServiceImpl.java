@@ -106,14 +106,14 @@ public class JournalFolderServiceImpl
 			OrderByComparator obc)
 		throws SystemException {
 
-		return journalFolderFinder.filterFindF_JAByG_F(
+		return journalFolderFinder.filterFindF_AByG_F(
 			groupId, folderId, start, end, obc);
 	}
 
 	public int getFoldersAndArticlesCount(long groupId, long folderId)
 		throws SystemException {
 
-		return journalFolderFinder.filterCountF_JA_ByG_F(groupId, folderId);
+		return journalFolderFinder.filterCountF_A_ByG_F(groupId, folderId);
 	}
 
 	public int getFoldersArticlesCount(

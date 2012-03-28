@@ -185,14 +185,14 @@ public class JournalFolderLocalServiceImpl
 			OrderByComparator obc)
 		throws SystemException {
 
-		return journalFolderFinder.findF_JAByG_F(
+		return journalFolderFinder.findF_AByG_F(
 			groupId, folderId, start, end, obc);
 	}
 
 	public int getFoldersAndArticlesCount(long groupId, long folderId)
 		throws SystemException {
 
-		return journalFolderFinder.countF_JA_ByG_F(groupId, folderId);
+		return journalFolderFinder.countF_A_ByG_F(groupId, folderId);
 	}
 
 	public int getFoldersArticlesCount(

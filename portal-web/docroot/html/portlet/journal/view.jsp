@@ -33,7 +33,7 @@ if ((folder == null) && (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDE
 request.setAttribute("view.jsp-folder", folder);
 
 request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
-	
+
 String navigation = ParamUtil.getString(request, "navigation");
 %>
 
@@ -78,7 +78,7 @@ String navigation = ParamUtil.getString(request, "navigation");
 							<liferay-util:include page="/html/portlet/journal/view_recent.jsp" />
 						</c:when>
 						<c:otherwise>
-							<liferay-util:include page="/html/portlet/journal/view_articles.jsp" />							
+							<liferay-util:include page="/html/portlet/journal/view_articles.jsp" />
 						</c:otherwise>
 					</c:choose>
 				</div>

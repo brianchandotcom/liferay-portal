@@ -43,48 +43,46 @@ import java.util.List;
 public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 	implements JournalFolderFinder {
 
-	public static final String COUNT_F_BY_G_F =
-		JournalFolderFinder.class.getName() + ".countF_ByG_F";
+	public static final String COUNT_A_BY_G_F =
+		JournalFolderFinder.class.getName() + ".countA_ByG_F";
 
-	public static final String COUNT_JA_BY_G_F =
-		JournalFolderFinder.class.getName() + ".countJA_ByG_F";
+	public static final String COUNT_BY_G_F =
+		JournalFolderFinder.class.getName() + ".countByG_F";
 
-	public static final String FIND_F_BY_G_F =
-		JournalFolderFinder.class.getName() + ".findF_ByG_F";
+	public static final String FIND_A_BY_G_F =
+		JournalFolderFinder.class.getName() + ".findA_ByG_F";
 
-	public static final String FIND_JA_BY_G_F =
-		JournalFolderFinder.class.getName() + ".findJA_ByG_F";
+	public static final String FIND_BY_G_F =
+		JournalFolderFinder.class.getName() + ".findByG_F";
 
-	public int countF_JA_ByG_F(long groupId, long folderId)
+	public int countF_A_ByG_F(long groupId, long folderId)
 		throws SystemException {
 
-		return doCountF_JA_ByG_F(groupId, folderId, false);
+		return doCountF_A_ByG_F(groupId, folderId, false);
 	}
 
-	public int filterCountF_JA_ByG_F(long groupId, long folderId)
+	public int filterCountF_A_ByG_F(long groupId, long folderId)
 		throws SystemException {
 
-		return doCountF_JA_ByG_F(groupId, folderId, true);
+		return doCountF_A_ByG_F(groupId, folderId, true);
 	}
 
-	public List<Object> filterFindF_JAByG_F(
-			long groupId, long folderId, int start, int end,
-			OrderByComparator obc)
+	public List<Object> filterFindF_AByG_F(
+		long groupId, long folderId, int start, int end, OrderByComparator obc)
 		throws SystemException {
 
-		return doFindF_JAByG_F(groupId, folderId, start, end, obc, true);
+		return doFindF_AByG_F(groupId, folderId, start, end, obc, true);
 	}
 
-	public List<Object> findF_JAByG_F(
-			long groupId, long folderId, int start, int end,
-			OrderByComparator obc)
+	public List<Object> findF_AByG_F(
+		long groupId, long folderId, int start, int end, OrderByComparator obc)
 		throws SystemException {
 
-		return doFindF_JAByG_F(groupId, folderId, start, end, obc, false);
+		return doFindF_AByG_F(groupId, folderId, start, end, obc, false);
 	}
 
-	protected int doCountF_JA_ByG_F(
-			long groupId, long folderId, boolean inlineSQLHelper)
+	protected int doCountF_A_ByG_F(
+		long groupId, long folderId, boolean inlineSQLHelper)
 		throws SystemException {
 
 	   Session session = null;
@@ -96,7 +94,7 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 
 			sb.append(StringPool.OPEN_PARENTHESIS);
 
-			String sql = CustomSQLUtil.get(COUNT_F_BY_G_F);
+			String sql = CustomSQLUtil.get(COUNT_BY_G_F);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -106,7 +104,7 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 
 			sb.append(sql);
 			sb.append(") UNION ALL (");
-			sb.append(getCountJournalArticlesSQL(groupId, inlineSQLHelper));
+			sb.append(getCountArticlesSQL(groupId, inlineSQLHelper));
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 
 			sql = sb.toString();
@@ -151,9 +149,9 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 		}
 	}
 
-	protected List<Object> doFindF_JAByG_F(
-			long groupId, long folderId, int start, int end,
-			OrderByComparator obc, boolean inlineSQLHelper)
+	protected List<Object> doFindF_AByG_F(
+		long groupId, long folderId, int start, int end, OrderByComparator obc,
+		boolean inlineSQLHelper)
 		throws SystemException {
 
 		Session session = null;
@@ -165,7 +163,7 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 
 			sb.append(StringPool.OPEN_PARENTHESIS);
 
-			String sql = CustomSQLUtil.get(FIND_F_BY_G_F);
+			String sql = CustomSQLUtil.get(FIND_BY_G_F);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -175,7 +173,7 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 
 			sb.append(sql);
 			sb.append(") UNION ALL (");
-			sb.append(getJournalArticlesSQL(groupId, inlineSQLHelper));
+			sb.append(getArticlesSQL(groupId, inlineSQLHelper));
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 
 			sql = updateSQL(sb.toString(), folderId);
@@ -236,10 +234,22 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 		}
 	}
 
-	protected String getCountJournalArticlesSQL(
+	protected String getArticlesSQL(long groupId, boolean inlineSQLHelper) {
+		String sql = CustomSQLUtil.get(FIND_A_BY_G_F);
+
+		if (inlineSQLHelper) {
+			sql = InlineSQLHelperUtil.replacePermissionCheck(
+				sql, JournalArticle.class.getName(),
+				"JournalArticle.resourcePrimKey", groupId);
+		}
+
+		return sql;
+	}
+
+	protected String getCountArticlesSQL(
 		long groupId, boolean inlineSQLHelper) {
 
-		String sql = CustomSQLUtil.get(COUNT_JA_BY_G_F);
+		String sql = CustomSQLUtil.get(COUNT_A_BY_G_F);
 
 		if (inlineSQLHelper) {
 			sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -269,20 +279,6 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 		}
 
 		return sb.toString();
-	}
-
-	protected String getJournalArticlesSQL(
-		long groupId, boolean inlineSQLHelper) {
-
-		String sql = CustomSQLUtil.get(FIND_JA_BY_G_F);
-
-		if (inlineSQLHelper) {
-			sql = InlineSQLHelperUtil.replacePermissionCheck(
-				sql, JournalArticle.class.getName(),
-				"JournalArticle.resourcePrimKey", groupId);
-		}
-
-		return sql;
 	}
 
 	protected String updateSQL(String sql, long folderId) {

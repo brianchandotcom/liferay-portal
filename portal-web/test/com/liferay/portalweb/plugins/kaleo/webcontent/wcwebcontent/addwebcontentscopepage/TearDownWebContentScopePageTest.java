@@ -47,7 +47,7 @@ public class TearDownWebContentScopePageTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("link=Control Panel",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				Thread.sleep(5000);

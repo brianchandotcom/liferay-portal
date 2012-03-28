@@ -319,6 +319,19 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 		return _ddlRecordLocalService.fetchRecord(recordId);
 	}
 
+	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecord> getCompanyRecords(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _ddlRecordLocalService.getCompanyRecords(companyId, start, end,
+			orderByComparator);
+	}
+
+	public int getCompanyRecordsCount(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _ddlRecordLocalService.getCompanyRecordsCount(companyId);
+	}
+
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion getLatestRecordVersion(
 		long recordId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -392,6 +405,12 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 			com.liferay.portal.kernel.exception.SystemException {
 		_ddlRecordLocalService.revertRecordVersion(userId, recordId, version,
 			serviceContext);
+	}
+
+	public com.liferay.portal.kernel.search.Hits search(
+		com.liferay.portal.kernel.search.SearchContext searchContext)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _ddlRecordLocalService.search(searchContext);
 	}
 
 	public void updateAsset(long userId,

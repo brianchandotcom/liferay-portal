@@ -16,6 +16,7 @@ package com.liferay.portlet.layoutconfiguration.util.velocity;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.StringServletResponse;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -31,7 +32,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -43,10 +43,9 @@ import javax.servlet.http.HttpServletResponse;
 public class TemplateProcessor implements ColumnProcessor {
 
 	public TemplateProcessor(
-		ServletContext servletContext, HttpServletRequest request,
-		HttpServletResponse response, String portletId) {
+		HttpServletRequest request, HttpServletResponse response,
+		String portletId) {
 
-		_servletContext = servletContext;
 		_request = request;
 		_response = response;
 		_portletId = portletId;
@@ -145,11 +144,14 @@ public class TemplateProcessor implements ColumnProcessor {
 				}
 			}
 
-			String content = RuntimePortletUtil.processPortlet(
-				_servletContext, _request, _response, portlet, queryString,
-				columnId, columnPos, columnCount, path, false);
+			StringServletResponse stringServletResponse =
+				new StringServletResponse(_response);
 
-			sb.append(content);
+			RuntimePortletUtil.processPortlet(
+				_request, stringServletResponse, portlet, queryString, columnId,
+				columnPos, columnCount, path);
+
+			sb.append(stringServletResponse.getString());
 		}
 
 		sb.append("</div>");
@@ -162,9 +164,13 @@ public class TemplateProcessor implements ColumnProcessor {
 	}
 
 	public String processMax(String classNames) throws Exception {
-		return RuntimePortletUtil.processPortlet(
-			_servletContext, _request, _response, null, null, _portletId, null,
-			false);
+		StringServletResponse stringServletResponse =
+			new StringServletResponse(_response);
+
+		RuntimePortletUtil.processPortlet(
+			_request, stringServletResponse, _portletId, null);
+
+		return stringServletResponse.getString();
 	}
 
 	public String processPortlet(String portletId) throws Exception {
@@ -172,9 +178,13 @@ public class TemplateProcessor implements ColumnProcessor {
 			_request.setAttribute(
 				WebKeys.RENDER_PORTLET_RESOURCE, Boolean.TRUE);
 
-			return RuntimePortletUtil.processPortlet(
-				_servletContext, _request, _response, null, null, _portletId,
-				null, false);
+			StringServletResponse stringServletResponse =
+				new StringServletResponse(_response);
+
+			RuntimePortletUtil.processPortlet(
+				_request, stringServletResponse, _portletId, null);
+
+			return stringServletResponse.getString();
 		}
 		finally {
 			_request.removeAttribute(WebKeys.RENDER_PORTLET_RESOURCE);
@@ -187,6 +197,5 @@ public class TemplateProcessor implements ColumnProcessor {
 	private Map<Portlet, Object[]> _portletsMap;
 	private HttpServletRequest _request;
 	private HttpServletResponse _response;
-	private ServletContext _servletContext;
 
 }

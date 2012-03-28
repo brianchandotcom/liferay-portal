@@ -27,7 +27,6 @@ String instanceId = portlet.getInstanceId();
 
 String portletPrimaryKey = PortletPermissionUtil.getPrimaryKey(plid, portletId);
 
-String queryString = (String)request.getAttribute(WebKeys.RENDER_PORTLET_QUERY_STRING);
 String columnId = (String)request.getAttribute(WebKeys.RENDER_PORTLET_COLUMN_ID);
 Integer columnPos = (Integer)request.getAttribute(WebKeys.RENDER_PORTLET_COLUMN_POS);
 Integer columnCount = (Integer)request.getAttribute(WebKeys.RENDER_PORTLET_COLUMN_COUNT);
@@ -145,23 +144,6 @@ else if (allowAddPortletDefaultResource) {
 HttpServletRequest originalRequest = PortalUtil.getOriginalServletRequest(request);
 
 RenderRequestImpl renderRequestImpl = RenderRequestFactory.create(originalRequest, portlet, invokerPortlet, portletCtx, windowState, portletMode, portletPreferences, plid);
-
-if (Validator.isNotNull(queryString)) {
-	DynamicServletRequest dynamicRequest = (DynamicServletRequest)renderRequestImpl.getHttpServletRequest();
-
-	String[] params = StringUtil.split(queryString, CharPool.AMPERSAND);
-
-	for (int i = 0; i < params.length; i++) {
-		String[] kvp = StringUtil.split(params[i], CharPool.EQUAL);
-
-		if (kvp.length > 1) {
-			dynamicRequest.setParameter(kvp[0], kvp[1]);
-		}
-		else {
-			dynamicRequest.setParameter(kvp[0], StringPool.BLANK);
-		}
-	}
-}
 
 StringServletResponse stringResponse = new StringServletResponse(response);
 

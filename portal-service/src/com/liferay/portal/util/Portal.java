@@ -1074,31 +1074,6 @@ public interface Portal {
 	public void removePortalPortEventListener(
 		PortalPortEventListener portalPortEventListener);
 
-	public String renderPage(
-			ServletContext servletContext, HttpServletRequest request,
-			HttpServletResponse response, String path)
-		throws IOException, ServletException;
-
-	public String renderPortlet(
-			ServletContext servletContext, HttpServletRequest request,
-			HttpServletResponse response, Portlet portlet, String queryString,
-			boolean writeOutput)
-		throws IOException, ServletException;
-
-	public String renderPortlet(
-			ServletContext servletContext, HttpServletRequest request,
-			HttpServletResponse response, Portlet portlet, String queryString,
-			String columnId, Integer columnPos, Integer columnCount,
-			boolean writeOutput)
-		throws IOException, ServletException;
-
-	public String renderPortlet(
-			ServletContext servletContext, HttpServletRequest request,
-			HttpServletResponse response, Portlet portlet, String queryString,
-			String columnId, Integer columnPos, Integer columnCount,
-			String path, boolean writeOutput)
-		throws IOException, ServletException;
-
 	public void resetCDNHosts();
 
 	public Set<String> resetPortletAddDefaultResourceCheckWhitelist();

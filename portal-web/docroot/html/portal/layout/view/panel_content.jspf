@@ -62,7 +62,7 @@ if (!denyAccess && (themeDisplay.isStateExclusive() || themeDisplay.isStatePopUp
 		request.setAttribute(WebKeys.RUNTIME_PORTLET_IDS, runtimePortletIds);
 	}
 
-	RuntimePortletUtil.processTemplate(application, request, response, pageContext, out, ppid, velocityTemplateId, content);
+	RuntimePortletUtil.processTemplate(pageContext, ppid, velocityTemplateId, content);
 }
 else {
 	String description = StringPool.BLANK;

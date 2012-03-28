@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -44,9 +43,7 @@ import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.FileTimestampUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.HttpMethods;
-import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.servlet.StringServletResponse;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
@@ -4865,135 +4862,6 @@ public class PortalImpl implements Portal {
 		PortalPortEventListener portalPortEventListener) {
 
 		_portalPortEventListeners.remove(portalPortEventListener);
-	}
-
-	public String renderPage(
-			ServletContext servletContext, HttpServletRequest request,
-			HttpServletResponse response, String path)
-		throws IOException, ServletException {
-
-		RequestDispatcher requestDispatcher =
-			servletContext.getRequestDispatcher(path);
-
-		StringServletResponse stringResponse = new StringServletResponse(
-			response);
-
-		requestDispatcher.include(request, stringResponse);
-
-		return stringResponse.getString();
-	}
-
-	public String renderPortlet(
-			ServletContext servletContext, HttpServletRequest request,
-			HttpServletResponse response, Portlet portlet, String queryString,
-			boolean writeOutput)
-		throws IOException, ServletException {
-
-		return renderPortlet(
-			servletContext, request, response, portlet, queryString, null, null,
-			null, writeOutput);
-	}
-
-	public String renderPortlet(
-			ServletContext servletContext, HttpServletRequest request,
-			HttpServletResponse response, Portlet portlet, String queryString,
-			String columnId, Integer columnPos, Integer columnCount,
-			boolean writeOutput)
-		throws IOException, ServletException {
-
-		return renderPortlet(
-			servletContext, request, response, portlet, queryString, columnId,
-			columnPos, columnCount, null, writeOutput);
-	}
-
-	public String renderPortlet(
-			ServletContext servletContext, HttpServletRequest request,
-			HttpServletResponse response, Portlet portlet, String queryString,
-			String columnId, Integer columnPos, Integer columnCount,
-			String path, boolean writeOutput)
-		throws IOException, ServletException {
-
-		queryString = GetterUtil.getString(queryString);
-		columnId = GetterUtil.getString(columnId);
-
-		if (columnPos == null) {
-			columnPos = Integer.valueOf(0);
-		}
-
-		if (columnCount == null) {
-			columnCount = Integer.valueOf(0);
-		}
-
-		request.setAttribute(WebKeys.RENDER_PORTLET, portlet);
-		request.setAttribute(WebKeys.RENDER_PORTLET_QUERY_STRING, queryString);
-		request.setAttribute(WebKeys.RENDER_PORTLET_COLUMN_ID, columnId);
-		request.setAttribute(WebKeys.RENDER_PORTLET_COLUMN_POS, columnPos);
-		request.setAttribute(WebKeys.RENDER_PORTLET_COLUMN_COUNT, columnCount);
-
-		if (path == null) {
-			path = "/html/portal/render_portlet.jsp";
-		}
-
-		RequestDispatcher requestDispatcher =
-			servletContext.getRequestDispatcher(path);
-
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-		PipingServletResponse pipingServletResponse = new PipingServletResponse(
-			response, unsyncStringWriter);
-
-		requestDispatcher.include(request, pipingServletResponse);
-
-		boolean showPortlet = true;
-
-		Boolean portletConfiguratorVisibility = (Boolean)request.getAttribute(
-			WebKeys.PORTLET_CONFIGURATOR_VISIBILITY);
-
-		if (portletConfiguratorVisibility != null) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-			try {
-				Layout layout = themeDisplay.getLayout();
-
-				if (!layout.isTypeControlPanel() &&
-					!LayoutPermissionUtil.contains(
-						themeDisplay.getPermissionChecker(), layout,
-						ActionKeys.UPDATE) &&
-					!PortletPermissionUtil.contains(
-						themeDisplay.getPermissionChecker(),
-						themeDisplay.getPlid(), portlet.getPortletId(),
-						ActionKeys.CONFIGURATION)) {
-
-					showPortlet = false;
-				}
-			}
-			catch (Exception e) {
-				throw new ServletException(e);
-			}
-
-			request.removeAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY);
-		}
-
-		if (showPortlet) {
-			if (writeOutput) {
-				response.setContentType(ContentTypes.TEXT_HTML_UTF8);
-
-				StringBundler sb = unsyncStringWriter.getStringBundler();
-
-				sb.writeTo(response.getWriter());
-
-				return StringPool.BLANK;
-			}
-			else {
-				return unsyncStringWriter.toString();
-			}
-		}
-		else {
-			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-
-			return StringPool.BLANK;
-		}
 	}
 
 	public void resetCDNHosts() {

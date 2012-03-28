@@ -39,7 +39,7 @@ if (!layoutMaximized) {
 	String velocityTemplateId = themeId + LayoutTemplateConstants.CUSTOM_SEPARATOR + layoutTypePortlet.getLayoutTemplateId();
 	String velocityTemplateContent = LayoutTemplateLocalServiceUtil.getWapContent(layoutTypePortlet.getLayoutTemplateId(), false, theme.getThemeId());
 
-	RuntimePortletUtil.processTemplate(application, request, response, pageContext, out, velocityTemplateId, velocityTemplateContent);
+	RuntimePortletUtil.processTemplate(pageContext, velocityTemplateId, velocityTemplateContent);
 }
 else {
 	String velocityTemplateId = null;
@@ -54,6 +54,6 @@ else {
 		velocityTemplateContent = LayoutTemplateLocalServiceUtil.getWapContent("max", true, theme.getThemeId());
 	}
 
-	RuntimePortletUtil.processTemplate(application, request, response, pageContext, out, StringUtil.split(layoutTypePortlet.getStateMax())[0], velocityTemplateId, velocityTemplateContent);
+	RuntimePortletUtil.processTemplate(pageContext, StringUtil.split(layoutTypePortlet.getStateMax())[0], velocityTemplateId, velocityTemplateContent);
 }
 %>

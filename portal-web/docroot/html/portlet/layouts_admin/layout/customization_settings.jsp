@@ -19,10 +19,11 @@
 <%
 Layout selLayout = (Layout)request.getAttribute("edit_pages.jsp-selLayout");
 
-String content = StringPool.BLANK;
-
 boolean curFreeformLayout = false;
 boolean prototypeGroup = false;
+
+String velocityTemplateId = null;
+String velocityTemplateContent = null;
 
 if (selLayout != null) {
 	Group group = selLayout.getGroup();
@@ -50,13 +51,9 @@ if (selLayout != null) {
 		if (layoutTemplate != null) {
 			themeId = layoutTemplate.getThemeId();
 
-			String velocityTemplateId = themeId + LayoutTemplateConstants.CUSTOM_SEPARATOR + curLayoutTypePortlet.getLayoutTemplateId();
+			velocityTemplateId = themeId + LayoutTemplateConstants.CUSTOM_SEPARATOR + curLayoutTypePortlet.getLayoutTemplateId();
 
-			String velocityTemplateContent = LayoutTemplateLocalServiceUtil.getContent(curLayoutTypePortlet.getLayoutTemplateId(), false, themeId);
-
-			ServletContext layoutTemplateServletContext = ServletContextPool.get(layoutTemplate.getServletContextName());
-
-			content = RuntimePortletUtil.processCustomizationSettings(layoutTemplateServletContext, request, response, pageContext, velocityTemplateId, velocityTemplateContent);
+			velocityTemplateContent = LayoutTemplateLocalServiceUtil.getContent(curLayoutTypePortlet.getLayoutTemplateId(), false, themeId);
 		}
 	}
 }
@@ -87,5 +84,9 @@ if (selLayout != null) {
 </c:choose>
 
 <div class="customization-settings">
-	<%= content %>
+<%
+if (velocityTemplateId != null) {
+	RuntimePortletUtil.processCustomizationSettings(pageContext, velocityTemplateId, velocityTemplateContent);
+}
+%>
 </div>

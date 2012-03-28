@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.layoutconfiguration.util.xml;
 
+import com.liferay.portal.kernel.servlet.StringServletResponse;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -21,10 +22,6 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portlet.layoutconfiguration.util.RuntimePortletUtil;
 
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -40,15 +37,10 @@ public class PortletLogic extends RuntimeLogic {
 	public static final String OPEN_TAG = "<runtime-portlet";
 
 	public PortletLogic(
-		ServletContext servletContext, HttpServletRequest request,
-		HttpServletResponse response, RenderRequest renderRequest,
-		RenderResponse renderResponse) {
+		HttpServletRequest request, HttpServletResponse response) {
 
-		_servletContext = servletContext;
 		_request = request;
 		_response = response;
-		_renderRequest = renderRequest;
-		_renderResponse = renderResponse;
 	}
 
 	@Override
@@ -77,15 +69,16 @@ public class PortletLogic extends RuntimeLogic {
 			portletId += PortletConstants.INSTANCE_SEPARATOR + instanceId;
 		}
 
-		return RuntimePortletUtil.processPortlet(
-			_servletContext, _request, _response, _renderRequest,
-			_renderResponse, portletId, queryString, false);
+		StringServletResponse stringServletResponse =
+			new StringServletResponse(_response);
+
+		RuntimePortletUtil.processPortlet(
+			_request, stringServletResponse, portletId, queryString);
+
+		return stringServletResponse.getString();
 	}
 
-	private RenderRequest _renderRequest;
-	private RenderResponse _renderResponse;
 	private HttpServletRequest _request;
 	private HttpServletResponse _response;
-	private ServletContext _servletContext;
 
 }

@@ -85,8 +85,14 @@ private void _buildLayoutBreadcrumb(Layout selLayout, String selLayoutParam, boo
 	breadcrumbSB.append(layoutURL);
 	breadcrumbSB.append("\" ");
 
+	String layoutName = selLayout.getName(themeDisplay.getLocale());
+
 	if (selLayout.isTypeControlPanel()) {
 		breadcrumbSB.append(" target=\"_top\"");
+
+		if (layoutName.equals(LayoutConstants.DEFAULT_NAME_CONTROL_PANEL)) {
+			layoutName = LanguageUtil.get(themeDisplay.getLocale(), "control-panel");
+		}
 	}
 	else {
 		breadcrumbSB.append(target);
@@ -94,7 +100,7 @@ private void _buildLayoutBreadcrumb(Layout selLayout, String selLayoutParam, boo
 
 	breadcrumbSB.append(">");
 
-	breadcrumbSB.append(HtmlUtil.escape(selLayout.getName(themeDisplay.getLocale())));
+	breadcrumbSB.append(HtmlUtil.escape(layoutName));
 
 	breadcrumbSB.append("</a></span></li>");
 

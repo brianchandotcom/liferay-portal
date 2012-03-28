@@ -12,13 +12,10 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.webcontentdisplay;
+package com.liferay.portalweb.portlet.webcontentdisplay.wcwebcontent;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portlet.webcontentdisplay.comment.CommentTestPlan;
-import com.liferay.portalweb.portlet.webcontentdisplay.portlet.PortletTestPlan;
-import com.liferay.portalweb.portlet.webcontentdisplay.wcwebcontent.WCWebContentTestPlan;
-import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.WebContentTestPlan;
+import com.liferay.portalweb.portlet.webcontentdisplay.wcwebcontent.addwcwebcontentwcd.AddWCWebContentWCDTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -26,15 +23,12 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class WebContentDisplayTestPlan extends BaseTestSuite {
+public class WCWebContentTestPlan extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(CommentTestPlan.suite());
-		testSuite.addTest(PortletTestPlan.suite());
-		testSuite.addTest(WCWebContentTestPlan.suite());
-		testSuite.addTest(WebContentTestPlan.suite());
+		testSuite.addTest(AddWCWebContentWCDTests.suite());
 
 		return testSuite;
 	}

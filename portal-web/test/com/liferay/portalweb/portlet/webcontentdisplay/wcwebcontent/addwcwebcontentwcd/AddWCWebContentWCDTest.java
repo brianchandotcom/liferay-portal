@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.webcontentdisplay.webcontent.addwcwebcontentwcd;
+package com.liferay.portalweb.portlet.webcontentdisplay.wcwebcontent.addwcwebcontentwcd;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;

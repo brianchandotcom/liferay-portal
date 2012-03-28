@@ -30,6 +30,7 @@ auto.login.hooks
 captcha.check.portal.create_account
 captcha.engine.impl
 com.liferay.portal.servlet.filters.*Filter
+company.settings.form.authentication.sections
 company.settings.form.configuration
 company.settings.form.identification
 company.settings.form.miscellaneous

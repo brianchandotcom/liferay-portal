@@ -389,6 +389,8 @@ public interface PropsKeys {
 
 	public static final String COMPANY_SECURITY_STRANGERS_WITH_MX = "company.security.strangers.with.mx";
 
+	public static final String COMPANY_SETTINGS_FORM_AUTHENTICATION_SECTIONS = "company.settings.form.authentication.sections";
+
 	public static final String COMPANY_SETTINGS_FORM_CONFIGURATION = "company.settings.form.configuration";
 
 	public static final String COMPANY_SETTINGS_FORM_IDENTIFICATION = "company.settings.form.identification";

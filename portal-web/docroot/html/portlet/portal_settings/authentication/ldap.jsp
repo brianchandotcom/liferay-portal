@@ -14,6 +14,8 @@
  */
 --%>
 
+<%@ include file="/html/portlet/portal_settings/init.jsp" %>
+
 <%
 String authenticationURL = currentURL + "#_LFR_FN_authentication";
 

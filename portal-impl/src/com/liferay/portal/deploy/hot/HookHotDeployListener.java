@@ -181,6 +181,7 @@ public class HookHotDeployListener
 		"auth.max.failures", "auth.token.impl", "auth.pipeline.post",
 		"auth.pipeline.pre", "auto.login.hooks",
 		"captcha.check.portal.create_account", "captcha.engine.impl",
+		"company.settings.form.authentication.sections",
 		"company.settings.form.configuration",
 		"company.settings.form.identification",
 		"company.settings.form.miscellaneous",
@@ -2231,6 +2232,7 @@ public class HookHotDeployListener
 	private static final String[] _PROPS_VALUES_MERGE_STRING_ARRAY = {
 		"admin.default.group.names", "admin.default.role.names",
 		"admin.default.user.group.names", "asset.publisher.display.styles",
+		"company.settings.form.authentication.sections",
 		"company.settings.form.configuration",
 		"company.settings.form.identification",
 		"company.settings.form.miscellaneous", "convert.processes",

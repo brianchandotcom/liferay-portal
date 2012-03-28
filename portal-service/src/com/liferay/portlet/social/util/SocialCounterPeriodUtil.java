@@ -209,7 +209,7 @@ public class SocialCounterPeriodUtil {
 			return getActivityDay(calendar.getTime().getTime());
 		}
 
-		return getStartPeriod() - offset * getPeriodLength();
+		return getStartPeriod() + offset * getPeriodLength();
 	}
 
 	public static int getStartPeriod(long time) {

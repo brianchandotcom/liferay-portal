@@ -297,4 +297,5 @@
 	<classpathentry kind="lib" path="lib/portal/xstream.jar"/>
 	<classpathentry kind="lib" path="lib/portal/xuggle-xuggler.jar"/>
 	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="src" path="definitions"/>
 </classpath>

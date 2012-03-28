@@ -154,6 +154,26 @@
 		}
 	}
 
+	.lfr-app-column-view {
+		.lfr-app-column-view-content {
+			background-color: #FAFAFA;
+		}
+	}
+
+	.lfr-actions {
+		&.lfr-extended .lfr-trigger {
+			min-width: auto;
+
+			strong {
+				min-width: 10px;
+			}
+		}
+
+		&.show-arrow.direction-down .lfr-trigger strong a {
+			background: url(@theme_image_path@/arrows/08_down.png) 100% -5px no-repeat;
+		}
+	}
+
 	.journal-article-container ul {
 		margin: 0;
 	}

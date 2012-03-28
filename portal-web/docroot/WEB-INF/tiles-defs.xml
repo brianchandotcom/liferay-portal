@@ -708,6 +708,22 @@
 		<put name="portlet_content" value="/portlet/journal/view_article_history.jsp" />
 	</definition>
 
+	<definition name="portlet.journal.view_feeds" extends="portlet.journal">
+		<put name="portlet_content" value="/portlet/journal/view_feeds.jsp" />
+	</definition>
+
+	<definition name="portlet.journal.view_recent" extends="portlet.journal">
+		<put name="portlet_content" value="/portlet/journal/view_recent.jsp" />
+	</definition>
+
+	<definition name="portlet.journal.view_structures" extends="portlet.journal">
+		<put name="portlet_content" value="/portlet/journal/view_structures.jsp" />
+	</definition>
+
+	<definition name="portlet.journal.view_templates" extends="portlet.journal">
+		<put name="portlet_content" value="/portlet/journal/view_templates.jsp" />
+	</definition>
+
 	<!-- Journal Articles -->
 
 	<definition name="portlet.journal_articles" extends="portlet" />

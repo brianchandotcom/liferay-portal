@@ -874,6 +874,14 @@
 			<forward name="portlet.journal.edit_article" path="portlet.journal.view_article_history" />
 		</action>
 
+		<action path="/journal/view_feeds" forward="portlet.journal.view_feeds" />
+
+		<action path="/journal/view_recent" forward="portlet.journal.view_recent" />
+
+		<action path="/journal/view_structures" forward="portlet.journal.view_structures" />
+
+		<action path="/journal/view_templates" forward="portlet.journal.view_templates" />
+
 		<!-- Journal Articles -->
 
 		<action path="/journal_articles/view" type="com.liferay.portlet.journalarticles.action.ViewAction">

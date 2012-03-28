@@ -806,6 +806,11 @@ public class JournalUtil {
 	}
 
 	public static String getUrlTitle(long id, String title) {
+
+		if (title == null) {
+			return String.valueOf(id);
+		}
+
 		title = title.trim().toLowerCase();
 
 		if (Validator.isNull(title) || Validator.isNumber(title) ||

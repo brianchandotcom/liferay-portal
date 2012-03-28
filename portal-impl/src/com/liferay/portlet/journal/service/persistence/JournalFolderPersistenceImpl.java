@@ -3298,13 +3298,14 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @return the journal folder that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByUUID_G(String uuid, long groupId)
+	public JournalFolder removeByUUID_G(String uuid, long groupId)
 		throws NoSuchFolderException, SystemException {
 		JournalFolder journalFolder = findByUUID_G(uuid, groupId);
 
-		remove(journalFolder);
+		return remove(journalFolder);
 	}
 
 	/**
@@ -3351,13 +3352,14 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 * @param groupId the group ID
 	 * @param parentFolderId the parent folder ID
 	 * @param name the name
+	 * @return the journal folder that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByG_P_N(long groupId, long parentFolderId, String name)
-		throws NoSuchFolderException, SystemException {
+	public JournalFolder removeByG_P_N(long groupId, long parentFolderId,
+		String name) throws NoSuchFolderException, SystemException {
 		JournalFolder journalFolder = findByG_P_N(groupId, parentFolderId, name);
 
-		remove(journalFolder);
+		return remove(journalFolder);
 	}
 
 	/**

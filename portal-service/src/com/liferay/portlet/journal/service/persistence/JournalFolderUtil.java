@@ -995,12 +995,14 @@ public class JournalFolderUtil {
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @return the journal folder that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUUID_G(java.lang.String uuid, long groupId)
+	public static com.liferay.portlet.journal.model.JournalFolder removeByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.journal.NoSuchFolderException {
-		getPersistence().removeByUUID_G(uuid, groupId);
+		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -1043,13 +1045,14 @@ public class JournalFolderUtil {
 	* @param groupId the group ID
 	* @param parentFolderId the parent folder ID
 	* @param name the name
+	* @return the journal folder that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByG_P_N(long groupId, long parentFolderId,
-		java.lang.String name)
+	public static com.liferay.portlet.journal.model.JournalFolder removeByG_P_N(
+		long groupId, long parentFolderId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.journal.NoSuchFolderException {
-		getPersistence().removeByG_P_N(groupId, parentFolderId, name);
+		return getPersistence().removeByG_P_N(groupId, parentFolderId, name);
 	}
 
 	/**

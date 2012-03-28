@@ -21,29 +21,28 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @author Brian Wing Shun Chan
  */
 public class JournalFolderFinderUtil {
-	public static int countF_JA_ByG_F(long groupId, long folderId)
+	public static int countF_A_ByG_F(long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder().countF_JA_ByG_F(groupId, folderId);
+		return getFinder().countF_A_ByG_F(groupId, folderId);
 	}
 
-	public static int filterCountF_JA_ByG_F(long groupId, long folderId)
+	public static int filterCountF_A_ByG_F(long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder().filterCountF_JA_ByG_F(groupId, folderId);
+		return getFinder().filterCountF_A_ByG_F(groupId, folderId);
 	}
 
-	public static java.util.List<java.lang.Object> filterFindF_JAByG_F(
+	public static java.util.List<java.lang.Object> filterFindF_AByG_F(
 		long groupId, long folderId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder()
-				   .filterFindF_JAByG_F(groupId, folderId, start, end, obc);
+		return getFinder().filterFindF_AByG_F(groupId, folderId, start, end, obc);
 	}
 
-	public static java.util.List<java.lang.Object> findF_JAByG_F(long groupId,
+	public static java.util.List<java.lang.Object> findF_AByG_F(long groupId,
 		long folderId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder().findF_JAByG_F(groupId, folderId, start, end, obc);
+		return getFinder().findF_AByG_F(groupId, folderId, start, end, obc);
 	}
 
 	public static JournalFolderFinder getFinder() {

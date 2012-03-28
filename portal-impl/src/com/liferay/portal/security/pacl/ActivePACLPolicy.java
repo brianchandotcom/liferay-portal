@@ -249,7 +249,7 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		Properties properties = getProperties();
 
 		String socketConnect = properties.getProperty(
-			"security-manager-socket-connect");
+			"security-manager-sockets-connect");
 
 		String[] socketConnectParts = StringUtil.split(socketConnect);
 
@@ -335,7 +335,7 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		Properties properties = getProperties();
 
 		String socketListen = properties.getProperty(
-			"security-manager-socket-listen");
+			"security-manager-sockets-listen");
 
 		String[] socketListenParts = StringUtil.split(socketListen);
 

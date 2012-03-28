@@ -35,6 +35,7 @@ public class SocialActivityCounterDefinition implements Serializable {
 		SocialActivityCounterDefinition activityCounterDefinition =
 			new SocialActivityCounterDefinition();
 
+		activityCounterDefinition.setEnabled(_enabled);
 		activityCounterDefinition.setIncrement(_increment);
 		activityCounterDefinition.setLimitEnabled(_limitEnabled);
 		activityCounterDefinition.setLimitPeriod(_limitPeriod);
@@ -47,8 +48,13 @@ public class SocialActivityCounterDefinition implements Serializable {
 		return activityCounterDefinition;
 	}
 
-	public boolean equals(
-		SocialActivityCounterDefinition activityCounterDefinition) {
+	public boolean equals(Object obj) {
+		if (!(obj instanceof SocialActivityCounterDefinition)) {
+			return false;
+		}
+
+		SocialActivityCounterDefinition activityCounterDefinition =
+			(SocialActivityCounterDefinition)obj;
 
 		if (Validator.isNotNull(activityCounterDefinition) &&
 			Validator.equals(_enabled, activityCounterDefinition._enabled) &&

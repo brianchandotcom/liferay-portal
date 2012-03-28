@@ -496,7 +496,7 @@ public abstract class BaseDB implements DB {
 		if (words.length == 7) {
 			words[5] = "not null;";
 		}
-		eles {
+		else {
 			words[5] = "";
 		}
 

@@ -80,8 +80,8 @@
                     <type>java</type>
                     <location>util-java/test/integration</location>
                     <encoding>UTF-8</encoding>
-                </source-folder>
-				<source-folder>-->
+                </source-folder-->
+				<source-folder>
                     <label>util-java\test\unit</label>
                     <type>java</type>
                     <location>util-java/test/unit</location>

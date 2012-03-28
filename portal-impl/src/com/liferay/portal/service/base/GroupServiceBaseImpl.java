@@ -2338,24 +2338,6 @@ public abstract class GroupServiceBaseImpl extends PrincipalBean
 	}
 
 	/**
-	 * Returns the resource finder.
-	 *
-	 * @return the resource finder
-	 */
-	public ResourceFinder getResourceFinder() {
-		return resourceFinder;
-	}
-
-	/**
-	 * Sets the resource finder.
-	 *
-	 * @param resourceFinder the resource finder
-	 */
-	public void setResourceFinder(ResourceFinder resourceFinder) {
-		this.resourceFinder = resourceFinder;
-	}
-
-	/**
 	 * Returns the resource action local service.
 	 *
 	 * @return the resource action local service
@@ -5325,8 +5307,6 @@ public abstract class GroupServiceBaseImpl extends PrincipalBean
 	protected RepositoryEntryPersistence repositoryEntryPersistence;
 	@BeanReference(type = ResourceLocalService.class)
 	protected ResourceLocalService resourceLocalService;
-	@BeanReference(type = ResourceFinder.class)
-	protected ResourceFinder resourceFinder;
 	@BeanReference(type = ResourceActionLocalService.class)
 	protected ResourceActionLocalService resourceActionLocalService;
 	@BeanReference(type = ResourceActionPersistence.class)

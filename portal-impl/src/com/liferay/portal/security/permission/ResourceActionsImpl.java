@@ -36,7 +36,6 @@ import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.PasswordPolicy;
-import com.liferay.portal.model.Permission;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.ResourceAction;
@@ -165,16 +164,6 @@ public class ResourceActionsImpl implements ResourceActions {
 
 	public String getActionNamePrefix() {
 		return _ACTION_NAME_PREFIX;
-	}
-
-	public List<String> getActions(List<Permission> permissions) {
-		List<String> actions = new UniqueList<String>();
-
-		for (Permission permission : permissions) {
-			actions.add(permission.getActionId());
-		}
-
-		return actions;
 	}
 
 	public List<String> getActionsNames(

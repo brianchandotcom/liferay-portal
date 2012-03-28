@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Role;
-import com.liferay.portal.service.PermissionLocalServiceUtil;
 
 import javax.portlet.RenderResponse;
 

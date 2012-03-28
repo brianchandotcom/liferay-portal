@@ -493,15 +493,17 @@ public abstract class BaseDB implements DB {
 	protected String[] buildColumnNameTokens(String line) {
 		String[] words = StringUtil.split(line, ' ');
 
+		String nullable = "";
+
 		if (words.length == 7) {
-			words[5] = "not null;";
+			nullable = "not null;";
 		}
 		eles {
 			words[5] = "";
 		}
 
 		String[] template = {
-			words[1], words[2], words[3], words[4], words[5]
+			words[1], words[2], words[3], words[4], nullable
 		};
 
 		return template;

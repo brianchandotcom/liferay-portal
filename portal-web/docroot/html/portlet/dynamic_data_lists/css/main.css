@@ -10,6 +10,16 @@
 			text-transform: lowercase;
 		}
 	}
+	
+	.taglib-search-toggle {
+		padding: 5px;
+	}
+}
+
+.portlet-dynamic-data-lists, .dynamic_data_list_display {
+	.add-record-button-container {
+		margin: 10px 0;
+	}
 }
 
 .yui3-skin-sam .lfr-spreadsheet-container {

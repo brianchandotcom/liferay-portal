@@ -70,17 +70,14 @@ if (modelResource.equals(Layout.class.getName())) {
 Resource resource = null;
 
 try {
-	if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-		if (ResourceBlockLocalServiceUtil.isSupported(selResource)) {
-			ResourceBlockLocalServiceUtil.verifyResourceBlockId(company.getCompanyId(), selResource, Long.valueOf(resourcePrimKey));
-		}
-		else {
-			if (ResourcePermissionLocalServiceUtil.getResourcePermissionsCount(company.getCompanyId(), selResource, ResourceConstants.SCOPE_INDIVIDUAL, resourcePrimKey) == 0) {
-				throw new NoSuchResourceException();
-			}
+	if (ResourceBlockLocalServiceUtil.isSupported(selResource)) {
+		ResourceBlockLocalServiceUtil.verifyResourceBlockId(company.getCompanyId(), selResource, Long.valueOf(resourcePrimKey));
+	}
+	else {
+		if (ResourcePermissionLocalServiceUtil.getResourcePermissionsCount(company.getCompanyId(), selResource, ResourceConstants.SCOPE_INDIVIDUAL, resourcePrimKey) == 0) {
+			throw new NoSuchResourceException();
 		}
 	}
-
 	resource = ResourceLocalServiceUtil.getResource(company.getCompanyId(), selResource, ResourceConstants.SCOPE_INDIVIDUAL, resourcePrimKey);
 }
 catch (NoSuchResourceException nsre) {
@@ -326,70 +323,30 @@ definePermissionsURL.setParameter(Constants.CMD, Constants.VIEW);
 				List<String> currentGroupTemplateActions = null;
 				List<String> currentCompanyActions = null;
 
-				if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-					if (ResourceBlockLocalServiceUtil.isSupported(resource.getName())) {
-						ResourceBlock resourceBlock = ResourceBlockLocalServiceUtil.getResourceBlock(resource.getName(), Long.valueOf(resource.getPrimKey()));
+				if (ResourceBlockLocalServiceUtil.isSupported(resource.getName())) {
+					ResourceBlock resourceBlock = ResourceBlockLocalServiceUtil.getResourceBlock(resource.getName(), Long.valueOf(resource.getPrimKey()));
 
-						// Individual actions are not stored separately, so currentIndividualActions will include group and company actions as well
+					// Individual actions are not stored separately, so currentIndividualActions will include group and company actions as well
 
-						currentIndividualActions = ResourceBlockLocalServiceUtil.getPermissions(resourceBlock, role.getRoleId());
-						currentGroupActions = ResourceBlockLocalServiceUtil.getGroupScopePermissions(resourceBlock, role.getRoleId());
+					currentIndividualActions = ResourceBlockLocalServiceUtil.getPermissions(resourceBlock, role.getRoleId());
+					currentGroupActions = ResourceBlockLocalServiceUtil.getGroupScopePermissions(resourceBlock, role.getRoleId());
 
-						// Resource blocks do not dinstinguish between company scope and group-template scope permissions, so the distinction must be simulated here
+					// Resource blocks do not dinstinguish between company scope and group-template scope permissions, so the distinction must be simulated here
 
-						if (role.getType() == RoleConstants.TYPE_REGULAR) {
-							currentGroupTemplateActions = new ArrayList<String>();
-							currentCompanyActions = ResourceBlockLocalServiceUtil.getCompanyScopePermissions(resourceBlock, role.getRoleId());
-						}
-						else {
-							currentGroupTemplateActions = ResourceBlockLocalServiceUtil.getCompanyScopePermissions(resourceBlock, role.getRoleId());
-							currentCompanyActions = new ArrayList<String>();
-						}
+					if (role.getType() == RoleConstants.TYPE_REGULAR) {
+						currentGroupTemplateActions = new ArrayList<String>();
+						currentCompanyActions = ResourceBlockLocalServiceUtil.getCompanyScopePermissions(resourceBlock, role.getRoleId());
 					}
 					else {
-						currentIndividualActions = ResourcePermissionLocalServiceUtil.getAvailableResourcePermissionActionIds(resource.getCompanyId(), resource.getName(), resource.getScope(), resource.getPrimKey(), role.getRoleId(), actions);
-						currentGroupActions = ResourcePermissionLocalServiceUtil.getAvailableResourcePermissionActionIds(resource.getCompanyId(), resource.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(groupId), role.getRoleId(), actions);
-						currentGroupTemplateActions = ResourcePermissionLocalServiceUtil.getAvailableResourcePermissionActionIds(resource.getCompanyId(), resource.getName(), ResourceConstants.SCOPE_GROUP_TEMPLATE, "0", role.getRoleId(), actions);
-						currentCompanyActions = ResourcePermissionLocalServiceUtil.getAvailableResourcePermissionActionIds(resource.getCompanyId(), resource.getName(), ResourceConstants.SCOPE_COMPANY, String.valueOf(resource.getCompanyId()), role.getRoleId(), actions);
+						currentGroupTemplateActions = ResourceBlockLocalServiceUtil.getCompanyScopePermissions(resourceBlock, role.getRoleId());
+						currentCompanyActions = new ArrayList<String>();
 					}
 				}
 				else {
-					List<Permission> permissions = PermissionLocalServiceUtil.getRolePermissions(role.getRoleId(), resource.getResourceId());
-
-					currentIndividualActions = ResourceActionsUtil.getActions(permissions);
-
-					try {
-						Resource groupResource = ResourceLocalServiceUtil.getResource(resource.getCompanyId(), resource.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(groupId));
-
-						permissions = PermissionLocalServiceUtil.getRolePermissions(role.getRoleId(), groupResource.getResourceId());
-
-						currentGroupActions = ResourceActionsUtil.getActions(permissions);
-					}
-					catch (NoSuchResourceException nsre) {
-						currentGroupActions = new ArrayList<String>();
-					}
-
-					try {
-						Resource groupTemplateResource = ResourceLocalServiceUtil.getResource(resource.getCompanyId(), resource.getName(), ResourceConstants.SCOPE_GROUP_TEMPLATE, "0");
-
-						permissions = PermissionLocalServiceUtil.getRolePermissions(role.getRoleId(), groupTemplateResource.getResourceId());
-
-						currentGroupTemplateActions = ResourceActionsUtil.getActions(permissions);
-					}
-					catch (NoSuchResourceException nsre) {
-						currentGroupTemplateActions = new ArrayList<String>();
-					}
-
-					try {
-						Resource companyResource = ResourceLocalServiceUtil.getResource(resource.getCompanyId(), resource.getName(), ResourceConstants.SCOPE_COMPANY, String.valueOf(resource.getCompanyId()));
-
-						permissions = PermissionLocalServiceUtil.getRolePermissions(role.getRoleId(), companyResource.getResourceId());
-
-						currentCompanyActions = ResourceActionsUtil.getActions(permissions);
-					}
-					catch (NoSuchResourceException nsre) {
-						currentCompanyActions = new ArrayList<String>();
-					}
+					currentIndividualActions = ResourcePermissionLocalServiceUtil.getAvailableResourcePermissionActionIds(resource.getCompanyId(), resource.getName(), resource.getScope(), resource.getPrimKey(), role.getRoleId(), actions);
+					currentGroupActions = ResourcePermissionLocalServiceUtil.getAvailableResourcePermissionActionIds(resource.getCompanyId(), resource.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(groupId), role.getRoleId(), actions);
+					currentGroupTemplateActions = ResourcePermissionLocalServiceUtil.getAvailableResourcePermissionActionIds(resource.getCompanyId(), resource.getName(), ResourceConstants.SCOPE_GROUP_TEMPLATE, "0", role.getRoleId(), actions);
+					currentCompanyActions = ResourcePermissionLocalServiceUtil.getAvailableResourcePermissionActionIds(resource.getCompanyId(), resource.getName(), ResourceConstants.SCOPE_COMPANY, String.valueOf(resource.getCompanyId()), role.getRoleId(), actions);
 				}
 
 				List<String> currentActions = new ArrayList<String>();

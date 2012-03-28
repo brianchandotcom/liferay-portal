@@ -84,6 +84,10 @@ public class ArticleSearchTerms extends ArticleDisplayTerms {
 		this.articleId = articleId;
 	}
 
+	public void setFolderId(long folderId) {
+		this.folderId = folderId;
+	}
+
 	public void setGroupId(long groupId) {
 		this.groupId = groupId;
 	}

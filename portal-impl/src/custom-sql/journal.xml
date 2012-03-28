@@ -49,7 +49,7 @@
 			FROM
 				JournalArticle
 			WHERE
-				(JournalArticle.groupId = ?) AND
+				(JournalArticle.groupId = ?)
 				[$FOLDER_ID$]
 		]]>
 	</sql>
@@ -61,7 +61,7 @@
 				JournalArticle
 			WHERE
 				(JournalArticle.groupId = ?) AND
-				(JournalArticle.status = ?) AND
+				(JournalArticle.status = ?)
 				[$FOLDER_ID$]
 		]]>
 	</sql>
@@ -188,7 +188,7 @@
 			FROM
 				JournalFolder
 			WHERE
-				(JournalFolder.groupId = ?) AND
+				(JournalFolder.groupId = ?)
 				[$FOLDER_PARENT_FOLDER_ID$]
 		]]>
 	</sql>
@@ -199,7 +199,7 @@
 			FROM
 				JournalArticle
 			WHERE
-				(JournalArticle.groupId = ?) AND
+				(JournalArticle.groupId = ?)
 				[$JOURNAL_ARTICLE_FOLDER_ID$]
 		]]>
 	</sql>
@@ -210,7 +210,7 @@
 			FROM
 				JournalFolder
 			WHERE
-				(JournalFolder.groupId = ?) AND
+				(JournalFolder.groupId = ?)
 				[$FOLDER_PARENT_FOLDER_ID$]
 		]]>
 	</sql>
@@ -221,7 +221,7 @@
 			FROM
 				JournalArticle
 			WHERE
-				(JournalArticle.groupId = ?) AND
+				(JournalArticle.groupId = ?)
 				[$JOURNAL_ARTICLE_FOLDER_ID$]
 			GROUP BY
 				articleId

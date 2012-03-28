@@ -111,17 +111,23 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 
 			sql = sb.toString();
 
-			sql = updateSQL(sql);
+			sql = updateSQL(sql, folderId);
 
 			SQLQuery q = session.createSQLQuery(sql);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(groupId);
-			qPos.add(folderId);
+
+			if (folderId >= 0) {
+				qPos.add(folderId);
+			}
 
 			qPos.add(groupId);
-			qPos.add(folderId);
+
+			if (folderId >= 0) {
+				qPos.add(folderId);
+			}
 
 			int count = 0;
 
@@ -172,7 +178,7 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 			sb.append(getJournalArticlesSQL(groupId, inlineSQLHelper));
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 
-			sql = updateSQL(sb.toString());
+			sql = updateSQL(sb.toString(), folderId);
 
 			sql = CustomSQLUtil.replaceOrderBy(sql, obc);
 
@@ -181,10 +187,16 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(groupId);
-			qPos.add(folderId);
+
+			if (folderId >= 0) {
+				qPos.add(folderId);
+			}
 
 			qPos.add(groupId);
-			qPos.add(folderId);
+
+			if (folderId >= 0) {
+				qPos.add(folderId);
+			}
 
 			List<Object> models = new ArrayList<Object>();
 
@@ -238,20 +250,23 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 		return sql;
 	}
 
-	protected String getFolderId(String table) {
-		StringBundler sb = new StringBundler(4);
+	protected String getFolderId(String table, long folderId) {
+		StringBundler sb = new StringBundler(5);
 
-		sb.append(table);
-		sb.append(".");
+		if (folderId >= 0) {
+			sb.append(" AND ");
+			sb.append(table);
+			sb.append(".");
 
-		if (table.equals("JournalFolder")) {
-			sb.append("parentFolderId");
+			if (table.equals("JournalFolder")) {
+				sb.append("parentFolderId");
+			}
+			else {
+				sb.append("folderId");
+			}
+
+			sb.append(" = ? ");
 		}
-		else {
-			sb.append("folderId");
-		}
-
-		sb.append("= ? ");
 
 		return sb.toString();
 	}
@@ -270,13 +285,14 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 		return sql;
 	}
 
-	protected String updateSQL(String sql) {
+	protected String updateSQL(String sql, long folderId) {
 		sql = StringUtil.replace(
-			sql, "[$FOLDER_PARENT_FOLDER_ID$]", getFolderId("JournalFolder"));
+			sql, "[$FOLDER_PARENT_FOLDER_ID$]",
+			getFolderId("JournalFolder", folderId));
 
 		sql = StringUtil.replace(
 			sql, "[$JOURNAL_ARTICLE_FOLDER_ID$]",
-			getFolderId("JournalArticle"));
+			getFolderId("JournalArticle", folderId));
 
 		return sql;
 	}

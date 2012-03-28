@@ -131,18 +131,19 @@ public class JournalArticleLocalServiceImpl
 	extends JournalArticleLocalServiceBaseImpl {
 
 	public JournalArticle addArticle(
-			long userId, long groupId, long classNameId, long classPK,
-			String articleId, boolean autoArticleId, double version,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			String content, String type, String structureId, String templateId,
-			String layoutUuid, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire, int reviewDateMonth,
-			int reviewDateDay, int reviewDateYear, int reviewDateHour,
-			int reviewDateMinute, boolean neverReview, boolean indexable,
-			boolean smallImage, String smallImageURL, File smallImageFile,
+			long userId, long groupId, long folderId, long classNameId,
+			long classPK, String articleId, boolean autoArticleId,
+			double version, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, String content, String type,
+			String structureId, String templateId, String layoutUuid,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, int reviewDateMonth, int reviewDateDay,
+			int reviewDateYear, int reviewDateHour, int reviewDateMinute,
+			boolean neverReview, boolean indexable, boolean smallImage,
+			String smallImageURL, File smallImageFile,
 			Map<String, byte[]> images, String articleURL,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -224,6 +225,7 @@ public class JournalArticleLocalServiceImpl
 		article.setUserName(user.getFullName());
 		article.setCreateDate(serviceContext.getCreateDate(now));
 		article.setModifiedDate(serviceContext.getModifiedDate(now));
+		article.setFolderId(folderId);
 		article.setClassNameId(classNameId);
 		article.setClassPK(classPK);
 		article.setArticleId(articleId);
@@ -728,6 +730,16 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
+	public void deleteArticles(long groupId, long folderId)
+		throws PortalException, SystemException {
+
+		for (JournalArticle article :
+			journalArticlePersistence.findByG_F(groupId, folderId)) {
+
+			deleteArticle(article, null, null);
+		}
+	}
+
 	public void deleteLayoutArticleReferences(long groupId, String layoutUuid)
 		throws SystemException {
 
@@ -1215,6 +1227,29 @@ public class JournalArticleLocalServiceImpl
 		return journalArticlePersistence.findByG_A(groupId, articleId);
 	}
 
+	public List<JournalArticle> getArticles(long groupId, long folderId)
+		throws SystemException {
+
+		return journalArticlePersistence.findByG_F(groupId, folderId);
+	}
+
+	public List<JournalArticle> getArticles(
+			long groupId, long folderId, int start, int end)
+		throws SystemException {
+
+		return journalArticlePersistence.findByG_F(
+			groupId, folderId, start, end);
+	}
+
+	public List<JournalArticle> getArticles(
+			long groupId, long folderId, int start, int end,
+			OrderByComparator orderByComparator)
+		throws SystemException {
+
+		return journalArticlePersistence.findByG_F(
+			groupId, folderId, start, end, orderByComparator);
+	}
+
 	public List<JournalArticle> getArticlesBySmallImageId(long smallImageId)
 		throws SystemException {
 
@@ -1223,6 +1258,12 @@ public class JournalArticleLocalServiceImpl
 
 	public int getArticlesCount(long groupId) throws SystemException {
 		return journalArticlePersistence.countByGroupId(groupId);
+	}
+
+	public int getArticlesCount(long groupId, long folderId)
+		throws SystemException {
+
+		return journalArticlePersistence.countByG_F(groupId, folderId);
 	}
 
 	public List<JournalArticle> getCompanyArticles(
@@ -1792,9 +1833,10 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public JournalArticle updateArticle(
-			long userId, long groupId, String articleId, double version,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			String content, String layoutUuid, ServiceContext serviceContext)
+			long userId, long groupId, long folderId, String articleId,
+			double version, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, String content,
+			String layoutUuid, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
@@ -1882,30 +1924,31 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		return updateArticle(
-			userId, groupId, articleId, version, titleMap, descriptionMap,
-			content, article.getType(), article.getStructureId(),
-			article.getTemplateId(), layoutUuid, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			reviewDateMonth, reviewDateDay, reviewDateYear, reviewDateHour,
-			reviewDateMinute, neverReview, article.getIndexable(),
-			article.isSmallImage(), article.getSmallImageURL(), null, null,
-			null, serviceContext);
+			userId, groupId, folderId, articleId, version, titleMap,
+			descriptionMap, content, article.getType(),
+			article.getStructureId(), article.getTemplateId(), layoutUuid,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, reviewDateMonth, reviewDateDay, reviewDateYear,
+			reviewDateHour, reviewDateMinute, neverReview,
+			article.getIndexable(), article.isSmallImage(),
+			article.getSmallImageURL(), null, null, null, serviceContext);
 	}
 
 	public JournalArticle updateArticle(
-			long userId, long groupId, String articleId, double version,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			String content, String type, String structureId, String templateId,
-			String layoutUuid, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire, int reviewDateMonth,
-			int reviewDateDay, int reviewDateYear, int reviewDateHour,
-			int reviewDateMinute, boolean neverReview, boolean indexable,
-			boolean smallImage, String smallImageURL, File smallImageFile,
+			long userId, long groupId, long folderId, String articleId,
+			double version, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, String content, String type,
+			String structureId, String templateId, String layoutUuid,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, int reviewDateMonth, int reviewDateDay,
+			int reviewDateYear, int reviewDateHour, int reviewDateMinute,
+			boolean neverReview, boolean indexable, boolean smallImage,
+			String smallImageURL, File smallImageFile,
 			Map<String, byte[]> images, String articleURL,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -2035,6 +2078,7 @@ public class JournalArticleLocalServiceImpl
 			user, groupId, articleId, article.getVersion(), incrementVersion,
 			content, structureId, images);
 
+		article.setFolderId(folderId);
 		article.setModifiedDate(serviceContext.getModifiedDate(now));
 		article.setTitleMap(titleMap, locale);
 		article.setUrlTitle(
@@ -2123,17 +2167,17 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public JournalArticle updateArticle(
-			long userId, long groupId, String articleId, double version,
-			String content, ServiceContext serviceContext)
+			long userId, long groupId, long folderId, String articleId,
+			double version, String content, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		JournalArticle article = journalArticlePersistence.findByG_A_V(
 			groupId, articleId, version);
 
 		return updateArticle(
-			userId, groupId, articleId, version, article.getTitleMap(),
-			article.getDescriptionMap(), content, article.getLayoutUuid(),
-			serviceContext);
+			userId, groupId, folderId, articleId, version,
+			article.getTitleMap(), article.getDescriptionMap(), content,
+			article.getLayoutUuid(), serviceContext);
 	}
 
 	/**

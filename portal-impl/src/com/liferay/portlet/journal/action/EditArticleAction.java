@@ -507,6 +507,7 @@ public class EditArticleAction extends PortletAction {
 
 		long groupId = ParamUtil.getLong(uploadPortletRequest, "groupId");
 
+		long folderId = ParamUtil.getLong(uploadPortletRequest, "folderId");
 		long classNameId = ParamUtil.getLong(
 			uploadPortletRequest, "classNameId");
 		long classPK = ParamUtil.getLong(uploadPortletRequest, "classPK");
@@ -674,15 +675,16 @@ public class EditArticleAction extends PortletAction {
 			// Add article
 
 			article = JournalArticleServiceUtil.addArticle(
-				groupId, classNameId, classPK, articleId, autoArticleId,
-				titleMap, descriptionMap, content, type, structureId,
-				templateId, layoutUuid, displayDateMonth, displayDateDay,
-				displayDateYear, displayDateHour, displayDateMinute,
-				expirationDateMonth, expirationDateDay, expirationDateYear,
-				expirationDateHour, expirationDateMinute, neverExpire,
-				reviewDateMonth, reviewDateDay, reviewDateYear, reviewDateHour,
-				reviewDateMinute, neverReview, indexable, smallImage,
-				smallImageURL, smallFile, images, articleURL, serviceContext);
+				groupId, folderId, classNameId, classPK, articleId,
+				autoArticleId, titleMap, descriptionMap, content, type,
+				structureId, templateId, layoutUuid, displayDateMonth,
+				displayDateDay, displayDateYear, displayDateHour,
+				displayDateMinute, expirationDateMonth, expirationDateDay,
+				expirationDateYear, expirationDateHour, expirationDateMinute,
+				neverExpire, reviewDateMonth, reviewDateDay, reviewDateYear,
+				reviewDateHour, reviewDateMinute, neverReview, indexable,
+				smallImage, smallImageURL, smallFile, images, articleURL,
+				serviceContext);
 
 			AssetPublisherUtil.addAndStoreSelection(
 				actionRequest, JournalArticle.class.getName(),
@@ -742,15 +744,15 @@ public class EditArticleAction extends PortletAction {
 				descriptionMap.put(defaultLocale, description);
 
 				article = JournalArticleServiceUtil.updateArticle(
-					groupId, articleId, version, titleMap, descriptionMap,
-					content, type, structureId, templateId, layoutUuid,
-					displayDateMonth, displayDateDay, displayDateYear,
-					displayDateHour, displayDateMinute, expirationDateMonth,
-					expirationDateDay, expirationDateYear, expirationDateHour,
-					expirationDateMinute, neverExpire, reviewDateMonth,
-					reviewDateDay, reviewDateYear, reviewDateHour,
-					reviewDateMinute, neverReview, indexable, smallImage,
-					smallImageURL, smallFile, images, articleURL,
+					groupId, folderId, articleId, version, titleMap,
+					descriptionMap, content, type, structureId, templateId,
+					layoutUuid, displayDateMonth, displayDateDay,
+					displayDateYear, displayDateHour, displayDateMinute,
+					expirationDateMonth, expirationDateDay, expirationDateYear,
+					expirationDateHour, expirationDateMinute, neverExpire,
+					reviewDateMonth, reviewDateDay, reviewDateYear,
+					reviewDateHour, reviewDateMinute, neverReview, indexable,
+					smallImage, smallImageURL, smallFile, images, articleURL,
 					serviceContext);
 			}
 			else if (cmd.equals(Constants.TRANSLATE)) {

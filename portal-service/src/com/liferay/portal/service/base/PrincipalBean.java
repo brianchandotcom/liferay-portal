@@ -74,7 +74,7 @@ public class PrincipalBean {
 		}
 	}
 
-	public PermissionChecker getPermissionChecker() throws PrincipalException {
+	public static PermissionChecker getPermissionChecker() throws PrincipalException {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 

@@ -360,16 +360,6 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 				ResourceActionsUtil.getPortletModelResources(
 					portlet.getPortletId());
 
-			for (long companyId : companyIds) {
-				ResourceCodeLocalServiceUtil.checkResourceCodes(
-					companyId, portlet.getPortletId());
-
-				for (String modelName : modelNames) {
-					ResourceCodeLocalServiceUtil.checkResourceCodes(
-						companyId, modelName);
-				}
-			}
-
 			List<String> portletActions =
 				ResourceActionsUtil.getPortletResourceActions(
 					portlet.getPortletId());

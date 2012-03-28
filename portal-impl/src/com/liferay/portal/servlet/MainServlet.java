@@ -927,16 +927,6 @@ public class MainServlet extends ActionServlet {
 			List<String> modelNames =
 				ResourceActionsUtil.getPortletModelResources(
 					portlet.getPortletId());
-
-			for (long companyId : companyIds) {
-				ResourceCodeLocalServiceUtil.checkResourceCodes(
-					companyId, portlet.getPortletId());
-
-				for (String modelName : modelNames) {
-					ResourceCodeLocalServiceUtil.checkResourceCodes(
-						companyId, modelName);
-				}
-			}
 		}
 	}
 

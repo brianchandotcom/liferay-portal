@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Organization;
-import com.liferay.portal.model.Permission;
 import com.liferay.portal.model.Resource;
 import com.liferay.portal.model.ResourceCode;
 import com.liferay.portal.model.ResourcePermission;
@@ -34,7 +33,6 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.PermissionLocalServiceUtil;
 import com.liferay.portal.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.service.ResourceCodeLocalServiceUtil;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
@@ -43,7 +41,6 @@ import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.impl.ResourcePermissionLocalServiceImpl;
 import com.liferay.portal.util.PortalInstances;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.List;
 
@@ -82,59 +79,6 @@ public class VerifyPermission extends VerifyProcess {
 		}
 	}
 
-	protected void deleteDefaultPrivateLayoutPermissions_1to4(long companyId)
-		throws Exception {
-
-		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(companyId);
-
-		List<Permission> permissions =
-			PermissionLocalServiceUtil.getUserPermissions(defaultUserId);
-
-		for (Permission permission : permissions) {
-			Resource resource = ResourceLocalServiceUtil.getResource(
-				permission.getResourceId());
-
-			ResourceCode resourceCode =
-				ResourceCodeLocalServiceUtil.getResourceCode(
-					resource.getCodeId());
-
-			if (isPrivateLayout(
-					resourceCode.getName(), resource.getPrimKey())) {
-
-				String[] actionIds = new String[] {permission.getActionId()};
-
-				PermissionLocalServiceUtil.unsetUserPermissions(
-					defaultUserId, actionIds, permission.getResourceId());
-			}
-		}
-	}
-
-	protected void deleteDefaultPrivateLayoutPermissions_5(long companyId)
-		throws Exception {
-
-		Role role = RoleLocalServiceUtil.getRole(
-			companyId, RoleConstants.GUEST);
-
-		List<Permission> permissions =
-			PermissionLocalServiceUtil.getRolePermissions(role.getRoleId());
-
-		for (Permission permission : permissions) {
-			Resource resource = ResourceLocalServiceUtil.getResource(
-				permission.getResourceId());
-
-			ResourceCode resourceCode =
-				ResourceCodeLocalServiceUtil.getResourceCode(
-					resource.getCodeId());
-
-			if (isPrivateLayout(
-					resourceCode.getName(), resource.getPrimKey())) {
-
-				PermissionLocalServiceUtil.unsetRolePermission(
-					role.getRoleId(), permission.getPermissionId());
-			}
-		}
-	}
-
 	protected void deleteDefaultPrivateLayoutPermissions_6(long companyId)
 		throws Exception {
 
@@ -168,41 +112,6 @@ public class VerifyPermission extends VerifyProcess {
 		fixOrganizationRolePermissions_6();
 		
 		PermissionCacheUtil.clearCache();
-	}
-
-	protected void fixOrganizationRolePermissions_5() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			ResourceCode.class);
-
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq("name", Organization.class.getName()));
-
-		List<ResourceCode> resouceCodes =
-			ResourceCodeLocalServiceUtil.dynamicQuery(dynamicQuery);
-
-		for (ResourceCode resourceCode : resouceCodes) {
-			dynamicQuery = DynamicQueryFactoryUtil.forClass(Resource.class);
-
-			dynamicQuery.add(
-				RestrictionsFactoryUtil.eq("codeId", resourceCode.getCodeId()));
-
-			List<Resource> resources = ResourceLocalServiceUtil.dynamicQuery(
-				dynamicQuery);
-
-			for (Resource resource : resources) {
-				dynamicQuery = DynamicQueryFactoryUtil.forClass(
-					Permission.class);
-
-				dynamicQuery.add(
-					RestrictionsFactoryUtil.eq(
-						"resourceId", resource.getResourceId()));
-
-				List<Permission> permissions =
-					PermissionLocalServiceUtil.dynamicQuery(dynamicQuery);
-
-				processPermissions(resource, permissions);
-			}
-		}
 	}
 
 	protected void fixOrganizationRolePermissions_6() throws Exception {
@@ -294,55 +203,6 @@ public class VerifyPermission extends VerifyProcess {
 		}
 
 		return true;
-	}
-
-	protected void processPermissions(
-			Resource resource, List<Permission> permissions)
-		throws Exception {
-
-		Resource groupResource = null;
-
-		try {
-			groupResource = ResourceLocalServiceUtil.getResource(
-				resource.getCompanyId(), Group.class.getName(),
-				resource.getScope(), resource.getPrimKey());
-		}
-		catch (NoSuchResourceException nsre) {
-			groupResource = ResourceLocalServiceUtil.addResource(
-				resource.getCompanyId(), Group.class.getName(),
-				resource.getScope(), resource.getPrimKey());
-		}
-
-		for (Permission permission : permissions) {
-			for (Object[] actionIdToMask : _ORGANIZATION_ACTION_IDS_TO_MASKS) {
-				String actionId = (String)actionIdToMask[0];
-				long mask = (Long)actionIdToMask[2];
-
-				if (!actionId.equals(permission.getActionId())) {
-					continue;
-				}
-
-				try {
-					if (mask != 0L) {
-						permission.resetOriginalValues();
-
-						permission.setResourceId(groupResource.getResourceId());
-
-						PermissionLocalServiceUtil.updatePermission(
-							permission, false);
-					}
-					else {
-						PermissionLocalServiceUtil.deletePermission(
-							permission.getPermissionId());
-					}
-				}
-				catch (Exception e) {
-					_log.error(e, e);
-				}
-
-				break;
-			}
-		}
 	}
 
 	private static final Object[][] _ORGANIZATION_ACTION_IDS_TO_MASKS =

@@ -38,8 +38,6 @@ public class UserGroupGroupRoleLocalServiceImpl
 			long userGroupId, long groupId, long[] roleIds)
 		throws PortalException, SystemException {
 
-		checkGroupResource(groupId);
-
 		for (long roleId : roleIds) {
 			UserGroupGroupRolePK pk = new UserGroupGroupRolePK(
 				userGroupId, groupId, roleId);
@@ -60,8 +58,6 @@ public class UserGroupGroupRoleLocalServiceImpl
 	public void addUserGroupGroupRoles(
 			long[] userGroupIds, long groupId, long roleId)
 		throws PortalException, SystemException {
-
-		checkGroupResource(groupId);
 
 		for (long userGroupId : userGroupIds) {
 			UserGroupGroupRolePK pk = new UserGroupGroupRolePK(
@@ -224,18 +220,6 @@ public class UserGroupGroupRoleLocalServiceImpl
 		long roleId = role.getRoleId();
 
 		return hasUserGroupGroupRole(userGroupId, groupId, roleId);
-	}
-
-	protected void checkGroupResource(long groupId)
-		throws PortalException, SystemException {
-
-		// Make sure that the individual resource for the group exists
-
-		Group group = groupPersistence.findByPrimaryKey(groupId);
-
-		resourceLocalService.addResource(
-			group.getCompanyId(), Group.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(groupId));
 	}
 
 }

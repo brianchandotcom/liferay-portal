@@ -17,6 +17,7 @@ package com.liferay.portal.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Role;
+import com.liferay.portal.security.permission.PermissionCheckerUtil;
 import com.liferay.portal.service.base.ResourceBlockServiceBaseImpl;
 
 import java.util.List;
@@ -32,7 +33,7 @@ public class ResourceBlockServiceImpl extends ResourceBlockServiceBaseImpl {
 			String actionId)
 		throws PortalException, SystemException {
 
-		permissionService.checkPermission(
+		PermissionCheckerUtil.checkPermission(
 			scopeGroupId, Role.class.getName(), roleId);
 
 		resourceBlockLocalService.addCompanyScopePermission(
@@ -44,7 +45,7 @@ public class ResourceBlockServiceImpl extends ResourceBlockServiceBaseImpl {
 			long roleId, String actionId)
 		throws PortalException, SystemException {
 
-		permissionService.checkPermission(
+		PermissionCheckerUtil.checkPermission(
 			scopeGroupId, Role.class.getName(), roleId);
 
 		resourceBlockLocalService.addGroupScopePermission(
@@ -56,7 +57,7 @@ public class ResourceBlockServiceImpl extends ResourceBlockServiceBaseImpl {
 			long roleId, String actionId)
 		throws PortalException, SystemException {
 
-		permissionService.checkPermission(groupId, name, primKey);
+		PermissionCheckerUtil.checkPermission(groupId, name, primKey);
 
 		resourceBlockLocalService.addIndividualScopePermission(
 			companyId, groupId, name, primKey, roleId, actionId);
@@ -67,7 +68,7 @@ public class ResourceBlockServiceImpl extends ResourceBlockServiceBaseImpl {
 			String actionId)
 		throws PortalException, SystemException {
 
-		permissionService.checkPermission(
+		PermissionCheckerUtil.checkPermission(
 			scopeGroupId, Role.class.getName(), roleId);
 
 		resourceBlockLocalService.removeAllGroupScopePermissions(
@@ -79,7 +80,7 @@ public class ResourceBlockServiceImpl extends ResourceBlockServiceBaseImpl {
 			String actionId)
 		throws PortalException, SystemException {
 
-		permissionService.checkPermission(
+		PermissionCheckerUtil.checkPermission(
 			scopeGroupId, Role.class.getName(), roleId);
 
 		resourceBlockLocalService.removeCompanyScopePermission(
@@ -91,7 +92,7 @@ public class ResourceBlockServiceImpl extends ResourceBlockServiceBaseImpl {
 			long roleId, String actionId)
 		throws PortalException, SystemException {
 
-		permissionService.checkPermission(
+		PermissionCheckerUtil.checkPermission(
 			scopeGroupId, Role.class.getName(), roleId);
 
 		resourceBlockLocalService.removeGroupScopePermission(
@@ -103,7 +104,7 @@ public class ResourceBlockServiceImpl extends ResourceBlockServiceBaseImpl {
 			long roleId, String actionId)
 		throws PortalException, SystemException {
 
-		permissionService.checkPermission(groupId, name, primKey);
+		PermissionCheckerUtil.checkPermission(groupId, name, primKey);
 
 		resourceBlockLocalService.removeIndividualScopePermission(
 			companyId, groupId, name, primKey, roleId, actionId);
@@ -114,7 +115,7 @@ public class ResourceBlockServiceImpl extends ResourceBlockServiceBaseImpl {
 			List<String> actionIds)
 		throws PortalException, SystemException {
 
-		permissionService.checkPermission(
+		PermissionCheckerUtil.checkPermission(
 			scopeGroupId, Role.class.getName(), roleId);
 
 		resourceBlockLocalService.setCompanyScopePermissions(
@@ -126,7 +127,7 @@ public class ResourceBlockServiceImpl extends ResourceBlockServiceBaseImpl {
 			long roleId, List<String> actionIds)
 		throws PortalException, SystemException {
 
-		permissionService.checkPermission(
+		PermissionCheckerUtil.checkPermission(
 			scopeGroupId, Role.class.getName(), roleId);
 
 		resourceBlockLocalService.setGroupScopePermissions(
@@ -138,7 +139,7 @@ public class ResourceBlockServiceImpl extends ResourceBlockServiceBaseImpl {
 			long roleId, List<String> actionIds)
 		throws PortalException, SystemException {
 
-		permissionService.checkPermission(groupId, name, primKey);
+		PermissionCheckerUtil.checkPermission(groupId, name, primKey);
 
 		resourceBlockLocalService.setIndividualScopePermissions(
 			companyId, groupId, name, primKey, roleId, actionIds);
@@ -149,7 +150,7 @@ public class ResourceBlockServiceImpl extends ResourceBlockServiceBaseImpl {
 			Map<Long, String[]> roleIdsToActionIds)
 		throws PortalException, SystemException {
 
-		permissionService.checkPermission(groupId, name, primKey);
+		PermissionCheckerUtil.checkPermission(groupId, name, primKey);
 
 		resourceBlockLocalService.setIndividualScopePermissions(
 			companyId, groupId, name, primKey, roleIdsToActionIds);

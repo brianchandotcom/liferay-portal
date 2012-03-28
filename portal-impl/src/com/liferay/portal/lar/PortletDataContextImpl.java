@@ -50,13 +50,11 @@ import com.liferay.portal.model.impl.LockImpl;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LockLocalServiceUtil;
-import com.liferay.portal.service.PermissionLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.TeamLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.NoSuchEntryException;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -1310,26 +1308,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 
 		return serviceContext;
-	}
-
-	protected String getActionIds_5(
-			long companyId, long roleId, String className, String primKey,
-			List<String> actionIds)
-		throws SystemException {
-
-		List<String> availableActionIds = new ArrayList<String>(
-			actionIds.size());
-
-		for (String actionId : actionIds) {
-			if (PermissionLocalServiceUtil.hasRolePermission(
-					roleId, companyId, className,
-					ResourceConstants.SCOPE_INDIVIDUAL, primKey, actionId)) {
-
-				availableActionIds.add(actionId);
-			}
-		}
-
-		return StringUtil.merge(availableActionIds);
 	}
 
 	protected Map<Long, Set<String>> getActionIds_6(

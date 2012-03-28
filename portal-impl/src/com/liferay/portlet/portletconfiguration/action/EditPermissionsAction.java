@@ -27,6 +27,7 @@ import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.Resource;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.PermissionCheckerUtil;
 import com.liferay.portal.security.permission.PermissionPropagator;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
@@ -69,25 +70,7 @@ public class EditPermissionsAction extends EditConfigurationAction {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
-			if (cmd.equals("group_permissions")) {
-				updateGroupPermissions(actionRequest);
-			}
-			else if (cmd.equals("guest_permissions")) {
-				updateGuestPermissions(actionRequest);
-			}
-			else if (cmd.equals("organization_permissions")) {
-				updateOrganizationPermissions(actionRequest);
-			}
-			else if (cmd.equals("role_permissions")) {
-				updateRolePermissions(actionRequest);
-			}
-			else if (cmd.equals("user_group_permissions")) {
-				updateUserGroupPermissions(actionRequest);
-			}
-			else if (cmd.equals("user_permissions")) {
-				updateUserPermissions(actionRequest);
-			}
-
+			updateRolePermissions(actionRequest);
 
 			addSuccessMessage(actionRequest, actionResponse);
 		}
@@ -129,7 +112,7 @@ public class EditPermissionsAction extends EditConfigurationAction {
 		}
 
 		try {
-			PermissionServiceUtil.checkPermission(
+			PermissionCheckerUtil.checkPermission(
 				groupId, selResource, resourcePrimKey);
 		}
 		catch (PrincipalException pe) {
@@ -188,71 +171,6 @@ public class EditPermissionsAction extends EditConfigurationAction {
 		}
 
 		return actionIds;
-	}
-
-	protected void updateGroupPermissions(ActionRequest actionRequest)
-		throws Exception {
-
-		Layout layout = (Layout)actionRequest.getAttribute(WebKeys.LAYOUT);
-
-		long resourceId = ParamUtil.getLong(actionRequest, "resourceId");
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-		String[] actionIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "groupIdActionIds"));
-
-		PermissionServiceUtil.setGroupPermissions(
-			groupId, actionIds, resourceId);
-
-		if (!layout.isPrivateLayout()) {
-			Resource resource = ResourceLocalServiceUtil.getResource(
-				resourceId);
-
-			if (resource.getPrimKey().startsWith(
-					layout.getPlid() + PortletConstants.LAYOUT_SEPARATOR)) {
-
-				CacheUtil.clearCache(layout.getCompanyId());
-			}
-		}
-	}
-
-	protected void updateGuestPermissions(ActionRequest actionRequest)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long resourceId = ParamUtil.getLong(actionRequest, "resourceId");
-		String[] actionIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "guestActionIds"));
-
-		PermissionServiceUtil.setUserPermissions(
-			themeDisplay.getDefaultUserId(), themeDisplay.getScopeGroupId(),
-			actionIds, resourceId);
-	}
-
-	protected void updateOrganizationPermissions(ActionRequest actionRequest)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long resourceId = ParamUtil.getLong(actionRequest, "resourceId");
-		long organizationId = ParamUtil.getLong(
-			actionRequest, "organizationIdsPosValue");
-		String[] actionIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "organizationIdActionIds"));
-		//boolean organizationIntersection = ParamUtil.getBoolean(
-		//	actionRequest, "organizationIntersection");
-
-		//if (!organizationIntersection) {
-			PermissionServiceUtil.setGroupPermissions(
-				Organization.class.getName(), String.valueOf(organizationId),
-				themeDisplay.getScopeGroupId(), actionIds, resourceId);
-		/*}
-		else {
-			PermissionServiceUtil.setOrgGroupPermissions(
-				organizationId, layout.getGroupId(), actionIds, resourceId);
-		}*/
 	}
 
 	protected void updateRolePermissions(ActionRequest actionRequest)
@@ -325,37 +243,4 @@ public class EditPermissionsAction extends EditConfigurationAction {
 			}
 		}
 	}
-
-	protected void updateUserGroupPermissions(ActionRequest actionRequest)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long resourceId = ParamUtil.getLong(actionRequest, "resourceId");
-		long userGroupId = ParamUtil.getLong(
-			actionRequest, "userGroupIdsPosValue");
-		String[] actionIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "userGroupIdActionIds"));
-
-		PermissionServiceUtil.setGroupPermissions(
-			UserGroup.class.getName(), String.valueOf(userGroupId),
-			themeDisplay.getScopeGroupId(), actionIds, resourceId);
-	}
-
-	protected void updateUserPermissions(ActionRequest actionRequest)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long resourceId = ParamUtil.getLong(actionRequest, "resourceId");
-		long userId = ParamUtil.getLong(actionRequest, "userIdsPosValue");
-		String[] actionIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "userIdActionIds"));
-
-		PermissionServiceUtil.setUserPermissions(
-			userId, themeDisplay.getScopeGroupId(), actionIds, resourceId);
-	}
-
 }

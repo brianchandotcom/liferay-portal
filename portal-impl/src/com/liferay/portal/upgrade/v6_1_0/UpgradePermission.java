@@ -30,7 +30,6 @@ import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
-import com.liferay.portal.service.PermissionLocalServiceUtil;
 import com.liferay.portal.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;

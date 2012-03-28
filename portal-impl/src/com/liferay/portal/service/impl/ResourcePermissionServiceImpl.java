@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Role;
+import com.liferay.portal.security.permission.PermissionCheckerUtil;
 import com.liferay.portal.service.base.ResourcePermissionServiceBaseImpl;
 
 import java.util.Map;
@@ -83,7 +84,7 @@ public class ResourcePermissionServiceImpl
 			String primKey, long roleId, String actionId)
 		throws PortalException, SystemException {
 
-		permissionService.checkPermission(
+		PermissionCheckerUtil.checkPermission(
 			groupId, Role.class.getName(), roleId);
 
 		resourcePermissionLocalService.addResourcePermission(
@@ -119,7 +120,7 @@ public class ResourcePermissionServiceImpl
 			String primKey, long roleId, String actionId)
 		throws PortalException, SystemException {
 
-		permissionService.checkPermission(
+		PermissionCheckerUtil.checkPermission(
 			groupId, Role.class.getName(), roleId);
 
 		resourcePermissionLocalService.removeResourcePermission(
@@ -149,7 +150,7 @@ public class ResourcePermissionServiceImpl
 			String actionId)
 		throws PortalException, SystemException {
 
-		permissionService.checkPermission(
+		PermissionCheckerUtil.checkPermission(
 			groupId, Role.class.getName(), roleId);
 
 		resourcePermissionLocalService.removeResourcePermissions(
@@ -189,7 +190,7 @@ public class ResourcePermissionServiceImpl
 			long roleId, String[] actionIds)
 		throws PortalException, SystemException {
 
-		permissionService.checkPermission(groupId, name, primKey);
+		PermissionCheckerUtil.checkPermission(groupId, name, primKey);
 
 		resourcePermissionLocalService.setResourcePermissions(
 			companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey,
@@ -228,7 +229,7 @@ public class ResourcePermissionServiceImpl
 			Map<Long, String[]> roleIdsToActionIds)
 		throws PortalException, SystemException {
 
-		permissionService.checkPermission(groupId, name, primKey);
+		PermissionCheckerUtil.checkPermission(groupId, name, primKey);
 
 		resourcePermissionLocalService.setResourcePermissions(
 			companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey,

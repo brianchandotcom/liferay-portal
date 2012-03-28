@@ -36,7 +36,6 @@ import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.model.ModelHintsUtil;
-import com.liferay.portal.model.Permission;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.Resource;
 import com.liferay.portal.model.ResourceCode;
@@ -50,7 +49,6 @@ import com.liferay.portal.model.impl.CompanyImpl;
 import com.liferay.portal.model.impl.ContactImpl;
 import com.liferay.portal.model.impl.GroupImpl;
 import com.liferay.portal.model.impl.LayoutImpl;
-import com.liferay.portal.model.impl.PermissionImpl;
 import com.liferay.portal.model.impl.PortletPreferencesImpl;
 import com.liferay.portal.model.impl.ResourceCodeImpl;
 import com.liferay.portal.model.impl.ResourceImpl;
@@ -576,28 +574,6 @@ public class DataFactory {
 		return mbThread;
 	}
 
-	public List<Permission> addPermissions(Resource resource) {
-		List<Permission> permissions = new ArrayList<Permission>();
-
-		String name = _individualResourceNames.get(resource.getCodeId());
-
-		List<String> actions = ResourceActionsUtil.getModelResourceActions(
-			name);
-
-		for (String action : actions) {
-			Permission permission = new PermissionImpl();
-
-			permission.setPermissionId(_permissionCounter.get());
-			permission.setCompanyId(_company.getCompanyId());
-			permission.setActionId(action);
-			permission.setResourceId(resource.getResourceId());
-
-			permissions.add(permission);
-		}
-
-		return permissions;
-	}
-
 	public PortletPreferences addPortletPreferences(
 		long ownerId, long plid, String portletId, String preferences) {
 
@@ -660,59 +636,6 @@ public class DataFactory {
 		resourcePermissions.add(resourcePermission);
 
 		return resourcePermissions;
-	}
-
-	public List<KeyValuePair> addRolesPermissions(
-		Resource resource, List<Permission> permissions, Role memberRole) {
-
-		List<KeyValuePair> rolesPermissions = new ArrayList<KeyValuePair>();
-
-		for (Permission permission : permissions) {
-			KeyValuePair kvp = new KeyValuePair();
-
-			kvp.setKey(String.valueOf(_ownerRole.getRoleId()));
-			kvp.setValue(String.valueOf(permission.getPermissionId()));
-
-			rolesPermissions.add(kvp);
-		}
-
-		String name = _individualResourceNames.get(resource.getCodeId());
-
-		if (memberRole != null) {
-			List<String> groupDefaultActions =
-				ResourceActionsUtil.getModelResourceGroupDefaultActions(name);
-
-			for (Permission permission : permissions) {
-				if (!groupDefaultActions.contains(permission.getActionId())) {
-					continue;
-				}
-
-				KeyValuePair kvp = new KeyValuePair();
-
-				kvp.setKey(String.valueOf(memberRole.getRoleId()));
-				kvp.setValue(String.valueOf(permission.getPermissionId()));
-
-				rolesPermissions.add(kvp);
-			}
-		}
-
-		List<String> guestDefaultactions =
-			ResourceActionsUtil.getModelResourceGuestDefaultActions(name);
-
-		for (Permission permission : permissions) {
-			if (!guestDefaultactions.contains(permission.getActionId())) {
-				continue;
-			}
-
-			KeyValuePair kvp = new KeyValuePair();
-
-			kvp.setKey(String.valueOf(_guestRole.getRoleId()));
-			kvp.setValue(String.valueOf(permission.getPermissionId()));
-
-			rolesPermissions.add(kvp);
-		}
-
-		return rolesPermissions;
 	}
 
 	public SocialActivity addSocialActivity(
@@ -993,15 +916,6 @@ public class DataFactory {
 
 		counter.setName(Counter.class.getName());
 		counter.setCurrentId(_counter.get());
-
-		_counters.add(counter);
-
-		// Permission
-
-		counter = new CounterModelImpl();
-
-		counter.setName(Permission.class.getName());
-		counter.setCurrentId(_permissionCounter.get());
 
 		_counters.add(counter);
 

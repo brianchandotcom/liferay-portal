@@ -159,14 +159,6 @@ public class DBUpgrader {
 
 		ResourceActionLocalServiceUtil.checkResourceActions();
 
-		// Resource codes
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Check resource codes");
-		}
-
-		ResourceCodeLocalServiceUtil.checkResourceCodes();
-
 		// Delete temporary images
 
 		if (_log.isDebugEnabled()) {

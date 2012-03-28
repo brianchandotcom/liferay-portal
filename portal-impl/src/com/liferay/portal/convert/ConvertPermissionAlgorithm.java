@@ -48,9 +48,7 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.model.impl.PermissionModelImpl;
 import com.liferay.portal.model.impl.ResourceCodeModelImpl;
-import com.liferay.portal.model.impl.ResourceModelImpl;
 import com.liferay.portal.model.impl.ResourcePermissionModelImpl;
 import com.liferay.portal.model.impl.RoleModelImpl;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
@@ -615,8 +613,8 @@ public class ConvertPermissionAlgorithm extends ConvertProcess {
 		DB db = DBFactoryUtil.getDB();
 
 		db.runSQL("DELETE FROM " + ResourceCodeModelImpl.TABLE_NAME);
-		db.runSQL("DELETE FROM " + PermissionModelImpl.TABLE_NAME);
-		db.runSQL("DELETE FROM " + ResourceModelImpl.TABLE_NAME);
+		db.runSQL("DELETE FROM " + _TABLE_NAME_PERMISSION);
+		db.runSQL("DELETE FROM " + _TABLE_NAME_RESOURCE);
 		db.runSQL("DELETE FROM Roles_Permissions");
 
 		Release release = null;
@@ -813,6 +811,10 @@ public class ConvertPermissionAlgorithm extends ConvertProcess {
 	private static final String _EXT_ROLES_PERMIMISSIONS = ".roles_permissions";
 
 	private static final String _UPDATED = ".updated";
+
+	public static final String _TABLE_NAME_PERMISSION = "Permission_";
+
+	public static final String _TABLE_NAME_RESOURCE = "Resource_";
 
 	private static Log _log = LogFactoryUtil.getLog(
 		ConvertPermissionAlgorithm.class);

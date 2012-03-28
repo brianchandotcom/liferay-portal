@@ -31,7 +31,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.ServletContext;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyTag;
 
@@ -259,10 +258,6 @@ public class SearchContainerRowTag<R>
 
 	public void setRowVar(String rowVar) {
 		_rowVar = rowVar;
-	}
-
-	@Override
-	public void setServletContext(ServletContext servletContext) {
 	}
 
 	public void setStringKey(boolean stringKey) {

@@ -26,7 +26,7 @@ public class DLOpenSearchImpl extends HitsOpenSearchImpl {
 
 	public static final String SEARCH_PATH = "/c/document_library/open_search";
 
-	public static final String TITLE = "Liferay Document Library Search: ";
+	public static final String TITLE = "Liferay Documents and Media Search: ";
 
 	@Override
 	public Indexer getIndexer() {

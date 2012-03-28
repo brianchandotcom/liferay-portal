@@ -90,6 +90,9 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
+		<finder name="GroupIds" return-type="Collection">
+			<finder-column name="groupId" arrayable-operator="OR" />
+		</finder>
 		<finder name="ClassNameId" return-type="Collection">
 			<finder-column name="classNameId" />
 		</finder>

@@ -112,6 +112,9 @@ public class GroupImpl extends GroupBaseImpl {
 		if (isCompany()) {
 			name = LanguageUtil.get(locale, "global");
 		}
+		else if (isControlPanel()) {
+			name = LanguageUtil.get(locale, "control-panel");
+		}
 		else if (isLayout()) {
 			Layout layout = LayoutLocalServiceUtil.getLayout(getClassPK());
 

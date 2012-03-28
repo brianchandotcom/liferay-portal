@@ -68,7 +68,7 @@ public class BrowseServerPluginsInstallationTest extends BaseTestCase {
 
 		assertTrue(selenium.isElementPresent(
 				"//input[@value='Install More Portlets']"));
-		selenium.select("//select[@id='_136_page']",
+		selenium.select("//select[@name='_136_page']",
 			RuntimeVariables.replace("label=4"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();

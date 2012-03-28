@@ -15,8 +15,13 @@
 package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
+import com.liferay.portal.model.Resource;
+
+import java.util.List;
 
 /**
  * The utility for the resource local service. This utility wraps {@link com.liferay.portal.service.impl.ResourceLocalServiceImpl} and is the primary access point for service operations in application layer code running on the local server.
@@ -84,13 +89,6 @@ public class ResourceLocalServiceUtil {
 			groupPermissions, guestPermissions);
 	}
 
-	public static com.liferay.portal.model.Resource addResource(
-		long companyId, java.lang.String name, int scope,
-		java.lang.String primKey)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().addResource(companyId, name, scope, primKey);
-	}
-
 	public static void addResources(long companyId, long groupId, long userId,
 		java.lang.String name, long primKey, boolean portletActions,
 		boolean addGroupPermissions, boolean addGuestPermissions)
@@ -126,12 +124,6 @@ public class ResourceLocalServiceUtil {
 		getService().deleteResource(auditedModel, scope);
 	}
 
-	public static com.liferay.portal.model.Resource deleteResource(
-		long resourceId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().deleteResource(resourceId);
-	}
-
 	public static void deleteResource(long companyId, java.lang.String name,
 		int scope, long primKey)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -146,40 +138,12 @@ public class ResourceLocalServiceUtil {
 		getService().deleteResource(companyId, name, scope, primKey);
 	}
 
-	public static com.liferay.portal.model.Resource deleteResource(
-		com.liferay.portal.model.Resource resource)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().deleteResource(resource);
-	}
-
-	public static void deleteResources(java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteResources(name);
-	}
-
-	public static com.liferay.portal.model.Resource fetchResource(
-		long companyId, java.lang.String name, int scope,
-		java.lang.String primKey)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchResource(companyId, name, scope, primKey);
-	}
-
-	public static long getLatestResourceId()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getLatestResourceId();
-	}
-
 	public static com.liferay.portal.model.Resource getResource(
 		long companyId, java.lang.String name, int scope,
 		java.lang.String primKey)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getResource(companyId, name, scope, primKey);
-	}
-
-	public static java.util.List<com.liferay.portal.model.Resource> getResources()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getResources();
 	}
 
 	public static void updateModelResources(
@@ -227,6 +191,14 @@ public class ResourceLocalServiceUtil {
 		}
 
 		return _service;
+	}
+
+	public static boolean hasUserPermissions(
+		long userId, long resourceId, List<Resource> resources,
+		String actionId, long[] roleIds)
+		throws PortalException, SystemException{
+			return getService().hasUserPermissions(userId, resourceId,
+				resources, actionId, roleIds);
 	}
 
 	public void setService(ResourceLocalService service) {

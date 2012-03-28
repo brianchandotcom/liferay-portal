@@ -18,12 +18,10 @@ package com.liferay.portal.model;
  * The extended model interface for the Resource service. Represents a row in the &quot;Resource_&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
- * @see ResourceModel
  * @see com.liferay.portal.model.impl.ResourceImpl
- * @see com.liferay.portal.model.impl.ResourceModelImpl
  * @generated
  */
-public interface Resource extends ResourceModel, PersistedModel {
+public interface Resource {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -37,6 +35,10 @@ public interface Resource extends ResourceModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public java.lang.String getPrimKey()
+		throws com.liferay.portal.kernel.exception.PortalException,
+		com.liferay.portal.kernel.exception.SystemException;
+
 	public int getScope()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -44,6 +46,8 @@ public interface Resource extends ResourceModel, PersistedModel {
 	public void setCompanyId(long companyId);
 
 	public void setName(java.lang.String name);
+
+	public void setPrimKey(String primKey);
 
 	public void setScope(int scope);
 }

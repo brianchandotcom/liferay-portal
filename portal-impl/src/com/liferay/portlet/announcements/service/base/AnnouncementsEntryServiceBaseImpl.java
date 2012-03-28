@@ -43,8 +43,6 @@ import com.liferay.portal.service.persistence.GroupFinder;
 import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.OrganizationFinder;
 import com.liferay.portal.service.persistence.OrganizationPersistence;
-import com.liferay.portal.service.persistence.ResourceFinder;
-import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.RoleFinder;
 import com.liferay.portal.service.persistence.RolePersistence;
 import com.liferay.portal.service.persistence.UserFinder;

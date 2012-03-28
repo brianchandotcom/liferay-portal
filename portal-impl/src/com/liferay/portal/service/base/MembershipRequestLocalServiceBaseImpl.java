@@ -182,7 +182,6 @@ import com.liferay.portal.service.persistence.ResourceBlockFinder;
 import com.liferay.portal.service.persistence.ResourceBlockPermissionPersistence;
 import com.liferay.portal.service.persistence.ResourceBlockPersistence;
 import com.liferay.portal.service.persistence.ResourceCodePersistence;
-import com.liferay.portal.service.persistence.ResourceFinder;
 import com.liferay.portal.service.persistence.ResourcePermissionFinder;
 import com.liferay.portal.service.persistence.ResourcePermissionPersistence;
 import com.liferay.portal.service.persistence.ResourceTypePermissionFinder;

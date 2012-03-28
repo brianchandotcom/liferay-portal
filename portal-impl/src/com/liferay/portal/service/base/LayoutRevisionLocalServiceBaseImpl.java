@@ -180,7 +180,6 @@ import com.liferay.portal.service.persistence.ResourceBlockFinder;
 import com.liferay.portal.service.persistence.ResourceBlockPermissionPersistence;
 import com.liferay.portal.service.persistence.ResourceBlockPersistence;
 import com.liferay.portal.service.persistence.ResourceCodePersistence;
-import com.liferay.portal.service.persistence.ResourceFinder;
 import com.liferay.portal.service.persistence.ResourcePermissionFinder;
 import com.liferay.portal.service.persistence.ResourcePermissionPersistence;
 import com.liferay.portal.service.persistence.ResourceTypePermissionFinder;
@@ -2473,24 +2472,6 @@ public abstract class LayoutRevisionLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the resource finder.
-	 *
-	 * @return the resource finder
-	 */
-	public ResourceFinder getResourceFinder() {
-		return resourceFinder;
-	}
-
-	/**
-	 * Sets the resource finder.
-	 *
-	 * @param resourceFinder the resource finder
-	 */
-	public void setResourceFinder(ResourceFinder resourceFinder) {
-		this.resourceFinder = resourceFinder;
-	}
-
-	/**
 	 * Returns the resource action local service.
 	 *
 	 * @return the resource action local service
@@ -4075,8 +4056,6 @@ public abstract class LayoutRevisionLocalServiceBaseImpl
 	protected RepositoryEntryPersistence repositoryEntryPersistence;
 	@BeanReference(type = ResourceLocalService.class)
 	protected ResourceLocalService resourceLocalService;
-	@BeanReference(type = ResourceFinder.class)
-	protected ResourceFinder resourceFinder;
 	@BeanReference(type = ResourceActionLocalService.class)
 	protected ResourceActionLocalService resourceActionLocalService;
 	@BeanReference(type = ResourceActionPersistence.class)

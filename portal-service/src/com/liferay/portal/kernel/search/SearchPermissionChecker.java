@@ -27,8 +27,6 @@ public interface SearchPermissionChecker {
 		long companyId, long[] groupIds, long userId, String className,
 		Query query, SearchContext searchContext);
 
-	public void updatePermissionFields(long resourceId);
-
 	public void updatePermissionFields(String name, String primKey);
 
 }

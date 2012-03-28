@@ -29,7 +29,6 @@ import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Organization;
-import com.liferay.portal.model.Permission;
 import com.liferay.portal.model.PermissionedModel;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.Resource;
@@ -39,11 +38,9 @@ import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.Team;
 import com.liferay.portal.model.UserGroup;
-import com.liferay.portal.security.permission.comparator.PermissionActionIdComparator;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
-import com.liferay.portal.service.PermissionLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
@@ -51,7 +48,6 @@ import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.TeamLocalServiceUtil;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.util.UniqueList;
 
 import java.util.ArrayList;
@@ -888,8 +884,8 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 					resourceBlockIdsBag);
 			}
 
-			return PermissionLocalServiceUtil.hasUserPermissions(
-				defaultUserId, groupId, resources, actionId, bag);
+			return ResourceLocalServiceUtil.hasUserPermissions(
+				defaultUserId, groupId, resources, actionId, bag.getRoleIds());
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -1010,8 +1006,8 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 		PermissionCheckerBag bag = getUserBag(user.getUserId(), groupId);
 
-		boolean value = PermissionLocalServiceUtil.hasUserPermissions(
-			user.getUserId(), groupId, resources, actionId, bag);
+		boolean value = ResourceLocalServiceUtil.hasUserPermissions(
+			user.getUserId(), groupId, resources, actionId, bag.getRoleIds());
 
 		logHasUserPermission(groupId, name, primKey, actionId, stopWatch, 4);
 

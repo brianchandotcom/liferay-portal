@@ -547,14 +547,6 @@ public class SearchEngineUtil {
 		indexWriter.updateDocuments(searchContext, documents);
 	}
 
-	public static void updatePermissionFields(long resourceId) {
-		if (isIndexReadOnly() || !PermissionThreadLocal.isFlushEnabled()) {
-			return;
-		}
-
-		_searchPermissionChecker.updatePermissionFields(resourceId);
-	}
-
 	public static void updatePermissionFields(String name, String primKey) {
 		if (isIndexReadOnly() || !PermissionThreadLocal.isFlushEnabled()) {
 			return;

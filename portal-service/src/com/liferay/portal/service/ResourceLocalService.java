@@ -19,6 +19,9 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.model.Resource;
+
+import java.util.List;
 
 /**
  * The interface for the resource local service.
@@ -74,10 +77,6 @@ public interface ResourceLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public com.liferay.portal.model.Resource addResource(long companyId,
-		java.lang.String name, int scope, java.lang.String primKey)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
 	public void addResources(long companyId, long groupId, long userId,
 		java.lang.String name, long primKey, boolean portletActions,
 		boolean addGroupPermissions, boolean addGuestPermissions)
@@ -101,9 +100,6 @@ public interface ResourceLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public com.liferay.portal.model.Resource deleteResource(long resourceId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
 	public void deleteResource(long companyId, java.lang.String name,
 		int scope, long primKey)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -114,31 +110,16 @@ public interface ResourceLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public com.liferay.portal.model.Resource deleteResource(
-		com.liferay.portal.model.Resource resource)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public void deleteResources(java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Resource fetchResource(long companyId,
-		java.lang.String name, int scope, java.lang.String primKey)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getLatestResourceId()
-		throws com.liferay.portal.kernel.exception.SystemException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Resource getResource(long companyId,
 		java.lang.String name, int scope, java.lang.String primKey)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Resource> getResources()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public boolean hasUserPermissions(
+		long userId, long resourceId, List<Resource> resources,
+		String actionId, long[] roleIds)
+		throws PortalException, SystemException;
 
 	public void updateModelResources(
 		com.liferay.portal.model.AuditedModel auditedModel,

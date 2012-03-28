@@ -1522,52 +1522,6 @@ public interface UserPersistence extends BasePersistence<User> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns all the permissions associated with the user.
-	*
-	* @param pk the primary key of the user
-	* @return the permissions associated with the user
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.Permission> getPermissions(
-		long pk) throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns a range of all the permissions associated with the user.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param pk the primary key of the user
-	* @param start the lower bound of the range of users
-	* @param end the upper bound of the range of users (not inclusive)
-	* @return the range of permissions associated with the user
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.Permission> getPermissions(
-		long pk, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns an ordered range of all the permissions associated with the user.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param pk the primary key of the user
-	* @param start the lower bound of the range of users
-	* @param end the upper bound of the range of users (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of permissions associated with the user
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.Permission> getPermissions(
-		long pk, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns the number of permissions associated with the user.
 	*
 	* @param pk the primary key of the user
@@ -1609,17 +1563,6 @@ public interface UserPersistence extends BasePersistence<User> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Adds an association between the user and the permission. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	*
-	* @param pk the primary key of the user
-	* @param permission the permission
-	* @throws SystemException if a system exception occurred
-	*/
-	public void addPermission(long pk,
-		com.liferay.portal.model.Permission permission)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Adds an association between the user and the permissions. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	*
 	* @param pk the primary key of the user
@@ -1627,17 +1570,6 @@ public interface UserPersistence extends BasePersistence<User> {
 	* @throws SystemException if a system exception occurred
 	*/
 	public void addPermissions(long pk, long[] permissionPKs)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Adds an association between the user and the permissions. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	*
-	* @param pk the primary key of the user
-	* @param permissions the permissions
-	* @throws SystemException if a system exception occurred
-	*/
-	public void addPermissions(long pk,
-		java.util.List<com.liferay.portal.model.Permission> permissions)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -1660,17 +1592,6 @@ public interface UserPersistence extends BasePersistence<User> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Removes the association between the user and the permission. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	*
-	* @param pk the primary key of the user
-	* @param permission the permission
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removePermission(long pk,
-		com.liferay.portal.model.Permission permission)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Removes the association between the user and the permissions. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	*
 	* @param pk the primary key of the user
@@ -1681,17 +1602,6 @@ public interface UserPersistence extends BasePersistence<User> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Removes the association between the user and the permissions. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	*
-	* @param pk the primary key of the user
-	* @param permissions the permissions
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removePermissions(long pk,
-		java.util.List<com.liferay.portal.model.Permission> permissions)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Sets the permissions associated with the user, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	*
 	* @param pk the primary key of the user
@@ -1699,17 +1609,6 @@ public interface UserPersistence extends BasePersistence<User> {
 	* @throws SystemException if a system exception occurred
 	*/
 	public void setPermissions(long pk, long[] permissionPKs)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Sets the permissions associated with the user, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	*
-	* @param pk the primary key of the user
-	* @param permissions the permissions to be associated with the user
-	* @throws SystemException if a system exception occurred
-	*/
-	public void setPermissions(long pk,
-		java.util.List<com.liferay.portal.model.Permission> permissions)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

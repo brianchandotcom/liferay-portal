@@ -1689,6 +1689,15 @@ public abstract class UserGroupLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the org group role persistence.
+	 *
+	 * @return the org group role persistence
+	 */
+	public OrgGroupRolePersistence getOrgGroupRolePersistence() {
+		return orgGroupRolePersistence;
+	}
+
+	/**
 	 * Sets the org group role persistence.
 	 *
 	 * @param orgGroupRolePersistence the org group role persistence

@@ -69,8 +69,6 @@
 	<bean id="com.liferay.portal.service.OrganizationService" class="com.liferay.portal.service.impl.OrganizationServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.OrganizationPersistence" class="com.liferay.portal.service.persistence.OrganizationPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.persistence.OrganizationFinder" class="com.liferay.portal.service.persistence.OrganizationFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.service.persistence.OrgGroupPermissionPersistence" class="com.liferay.portal.service.persistence.OrgGroupPermissionPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.service.persistence.OrgGroupPermissionFinder" class="com.liferay.portal.service.persistence.OrgGroupPermissionFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.persistence.OrgGroupRolePersistence" class="com.liferay.portal.service.persistence.OrgGroupRolePersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.OrgLaborLocalService" class="com.liferay.portal.service.impl.OrgLaborLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.OrgLaborService" class="com.liferay.portal.service.impl.OrgLaborServiceImpl" />
@@ -83,10 +81,6 @@
 	<bean id="com.liferay.portal.service.persistence.PasswordPolicyRelPersistence" class="com.liferay.portal.service.persistence.PasswordPolicyRelPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.PasswordTrackerLocalService" class="com.liferay.portal.service.impl.PasswordTrackerLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.PasswordTrackerPersistence" class="com.liferay.portal.service.persistence.PasswordTrackerPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.service.PermissionLocalService" class="com.liferay.portal.service.impl.PermissionLocalServiceImpl" />
-	<bean id="com.liferay.portal.service.PermissionService" class="com.liferay.portal.service.impl.PermissionServiceImpl" />
-	<bean id="com.liferay.portal.service.persistence.PermissionPersistence" class="com.liferay.portal.service.persistence.PermissionPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.service.persistence.PermissionFinder" class="com.liferay.portal.service.persistence.PermissionFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.PhoneLocalService" class="com.liferay.portal.service.impl.PhoneLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.PhoneService" class="com.liferay.portal.service.impl.PhoneServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.PhonePersistence" class="com.liferay.portal.service.persistence.PhonePersistenceImpl" parent="basePersistence" />
@@ -117,9 +111,6 @@
 	<bean id="com.liferay.portal.service.RepositoryEntryLocalService" class="com.liferay.portal.service.impl.RepositoryEntryLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.RepositoryEntryPersistence" class="com.liferay.portal.service.persistence.RepositoryEntryPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.ResourceLocalService" class="com.liferay.portal.service.impl.ResourceLocalServiceImpl" />
-	<bean id="com.liferay.portal.service.ResourceService" class="com.liferay.portal.service.impl.ResourceServiceImpl" />
-	<bean id="com.liferay.portal.service.persistence.ResourcePersistence" class="com.liferay.portal.service.persistence.ResourcePersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.service.persistence.ResourceFinder" class="com.liferay.portal.service.persistence.ResourceFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.ResourceActionLocalService" class="com.liferay.portal.service.impl.ResourceActionLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.ResourceActionPersistence" class="com.liferay.portal.service.persistence.ResourceActionPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.ResourceBlockLocalService" class="com.liferay.portal.service.impl.ResourceBlockLocalServiceImpl" />

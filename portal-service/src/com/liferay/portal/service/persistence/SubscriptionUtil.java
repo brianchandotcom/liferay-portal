@@ -723,15 +723,13 @@ public class SubscriptionUtil {
 	* @param userId the user ID
 	* @param classNameId the class name ID
 	* @param classPK the class p k
-	* @return the subscription that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.Subscription removeByC_U_C_C(
-		long companyId, long userId, long classNameId, long classPK)
+	public static void removeByC_U_C_C(long companyId, long userId,
+		long classNameId, long classPK)
 		throws com.liferay.portal.NoSuchSubscriptionException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .removeByC_U_C_C(companyId, userId, classNameId, classPK);
+		getPersistence().removeByC_U_C_C(companyId, userId, classNameId, classPK);
 	}
 
 	/**

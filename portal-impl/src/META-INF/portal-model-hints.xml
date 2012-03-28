@@ -478,11 +478,6 @@
 			<hint name="display-width">400</hint>
 		</field>
 	</model>
-	<model name="com.liferay.portal.model.OrgGroupPermission">
-		<field name="organizationId" type="long" />
-		<field name="groupId" type="long" />
-		<field name="permissionId" type="long" />
-	</model>
 	<model name="com.liferay.portal.model.OrgGroupRole">
 		<field name="organizationId" type="long" />
 		<field name="groupId" type="long" />
@@ -568,12 +563,6 @@
 		<field name="userId" type="long" />
 		<field name="createDate" type="Date" />
 		<field name="password" type="String" />
-	</model>
-	<model name="com.liferay.portal.model.Permission">
-		<field name="permissionId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="actionId" type="String" />
-		<field name="resourceId" type="long" />
 	</model>
 	<model name="com.liferay.portal.model.Phone">
 		<field name="phoneId" type="long" />
@@ -692,13 +681,6 @@
 		<field name="groupId" type="long" />
 		<field name="repositoryId" type="long" />
 		<field name="mappedId" type="String" />
-	</model>
-	<model name="com.liferay.portal.model.Resource">
-		<field name="resourceId" type="long" />
-		<field name="codeId" type="long" />
-		<field name="primKey" type="String">
-			<hint name="max-length">255</hint>
-		</field>
 	</model>
 	<model name="com.liferay.portal.model.ResourceAction">
 		<field name="resourceActionId" type="long" />

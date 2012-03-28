@@ -1104,14 +1104,12 @@ public class UserUtil {
 	* Removes the user where contactId = &#63; from the database.
 	*
 	* @param contactId the contact ID
-	* @return the user that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.User removeByContactId(
-		long contactId)
+	public static void removeByContactId(long contactId)
 		throws com.liferay.portal.NoSuchUserException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByContactId(contactId);
+		getPersistence().removeByContactId(contactId);
 	}
 
 	/**
@@ -1129,14 +1127,12 @@ public class UserUtil {
 	* Removes the user where portraitId = &#63; from the database.
 	*
 	* @param portraitId the portrait ID
-	* @return the user that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.User removeByPortraitId(
-		long portraitId)
+	public static void removeByPortraitId(long portraitId)
 		throws com.liferay.portal.NoSuchUserException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByPortraitId(portraitId);
+		getPersistence().removeByPortraitId(portraitId);
 	}
 
 	/**
@@ -1144,14 +1140,12 @@ public class UserUtil {
 	*
 	* @param companyId the company ID
 	* @param userId the user ID
-	* @return the user that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.User removeByC_U(long companyId,
-		long userId)
+	public static void removeByC_U(long companyId, long userId)
 		throws com.liferay.portal.NoSuchUserException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByC_U(companyId, userId);
+		getPersistence().removeByC_U(companyId, userId);
 	}
 
 	/**
@@ -1159,14 +1153,12 @@ public class UserUtil {
 	*
 	* @param companyId the company ID
 	* @param defaultUser the default user
-	* @return the user that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.User removeByC_DU(long companyId,
-		boolean defaultUser)
+	public static void removeByC_DU(long companyId, boolean defaultUser)
 		throws com.liferay.portal.NoSuchUserException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByC_DU(companyId, defaultUser);
+		getPersistence().removeByC_DU(companyId, defaultUser);
 	}
 
 	/**
@@ -1174,14 +1166,12 @@ public class UserUtil {
 	*
 	* @param companyId the company ID
 	* @param screenName the screen name
-	* @return the user that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.User removeByC_SN(long companyId,
-		java.lang.String screenName)
+	public static void removeByC_SN(long companyId, java.lang.String screenName)
 		throws com.liferay.portal.NoSuchUserException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByC_SN(companyId, screenName);
+		getPersistence().removeByC_SN(companyId, screenName);
 	}
 
 	/**
@@ -1189,14 +1179,13 @@ public class UserUtil {
 	*
 	* @param companyId the company ID
 	* @param emailAddress the email address
-	* @return the user that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.User removeByC_EA(long companyId,
+	public static void removeByC_EA(long companyId,
 		java.lang.String emailAddress)
 		throws com.liferay.portal.NoSuchUserException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByC_EA(companyId, emailAddress);
+		getPersistence().removeByC_EA(companyId, emailAddress);
 	}
 
 	/**
@@ -1204,14 +1193,12 @@ public class UserUtil {
 	*
 	* @param companyId the company ID
 	* @param facebookId the facebook ID
-	* @return the user that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.User removeByC_FID(long companyId,
-		long facebookId)
+	public static void removeByC_FID(long companyId, long facebookId)
 		throws com.liferay.portal.NoSuchUserException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByC_FID(companyId, facebookId);
+		getPersistence().removeByC_FID(companyId, facebookId);
 	}
 
 	/**
@@ -1219,14 +1206,12 @@ public class UserUtil {
 	*
 	* @param companyId the company ID
 	* @param openId the open ID
-	* @return the user that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.User removeByC_O(long companyId,
-		java.lang.String openId)
+	public static void removeByC_O(long companyId, java.lang.String openId)
 		throws com.liferay.portal.NoSuchUserException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByC_O(companyId, openId);
+		getPersistence().removeByC_O(companyId, openId);
 	}
 
 	/**
@@ -1860,114 +1845,6 @@ public class UserUtil {
 		java.util.List<com.liferay.portal.model.Organization> organizations)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getPersistence().setOrganizations(pk, organizations);
-	}
-
-	/**
-	* Returns the number of permissions associated with the user.
-	*
-	* @param pk the primary key of the user
-	* @return the number of permissions associated with the user
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int getPermissionsSize(long pk)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().getPermissionsSize(pk);
-	}
-
-	/**
-	* Returns <code>true</code> if the permission is associated with the user.
-	*
-	* @param pk the primary key of the user
-	* @param permissionPK the primary key of the permission
-	* @return <code>true</code> if the permission is associated with the user; <code>false</code> otherwise
-	* @throws SystemException if a system exception occurred
-	*/
-	public static boolean containsPermission(long pk, long permissionPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().containsPermission(pk, permissionPK);
-	}
-
-	/**
-	* Returns <code>true</code> if the user has any permissions associated with it.
-	*
-	* @param pk the primary key of the user to check for associations with permissions
-	* @return <code>true</code> if the user has any permissions associated with it; <code>false</code> otherwise
-	* @throws SystemException if a system exception occurred
-	*/
-	public static boolean containsPermissions(long pk)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().containsPermissions(pk);
-	}
-
-	/**
-	* Adds an association between the user and the permission. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	*
-	* @param pk the primary key of the user
-	* @param permissionPK the primary key of the permission
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void addPermission(long pk, long permissionPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().addPermission(pk, permissionPK);
-	}
-
-	/**
-	* Adds an association between the user and the permissions. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	*
-	* @param pk the primary key of the user
-	* @param permissionPKs the primary keys of the permissions
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void addPermissions(long pk, long[] permissionPKs)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().addPermissions(pk, permissionPKs);
-	}
-
-	/**
-	* Clears all associations between the user and its permissions. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	*
-	* @param pk the primary key of the user to clear the associated permissions from
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void clearPermissions(long pk)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().clearPermissions(pk);
-	}
-
-	/**
-	* Removes the association between the user and the permission. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	*
-	* @param pk the primary key of the user
-	* @param permissionPK the primary key of the permission
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removePermission(long pk, long permissionPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removePermission(pk, permissionPK);
-	}
-
-	/**
-	* Removes the association between the user and the permissions. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	*
-	* @param pk the primary key of the user
-	* @param permissionPKs the primary keys of the permissions
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removePermissions(long pk, long[] permissionPKs)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removePermissions(pk, permissionPKs);
-	}
-
-	/**
-	* Sets the permissions associated with the user, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	*
-	* @param pk the primary key of the user
-	* @param permissionPKs the primary keys of the permissions to be associated with the user
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void setPermissions(long pk, long[] permissionPKs)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().setPermissions(pk, permissionPKs);
 	}
 
 	/**

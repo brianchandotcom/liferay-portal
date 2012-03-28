@@ -6180,17 +6180,15 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	 * @param roleId the role ID
 	 * @param ownerId the owner ID
 	 * @param actionIds the action IDs
-	 * @return the resource permission that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public ResourcePermission removeByC_N_S_P_R_O_A(long companyId,
-		String name, int scope, String primKey, long roleId, long ownerId,
-		long actionIds)
+	public void removeByC_N_S_P_R_O_A(long companyId, String name, int scope,
+		String primKey, long roleId, long ownerId, long actionIds)
 		throws NoSuchResourcePermissionException, SystemException {
 		ResourcePermission resourcePermission = findByC_N_S_P_R_O_A(companyId,
 				name, scope, primKey, roleId, ownerId, actionIds);
 
-		return remove(resourcePermission);
+		remove(resourcePermission);
 	}
 
 	/**
@@ -7552,8 +7550,6 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	protected MembershipRequestPersistence membershipRequestPersistence;
 	@BeanReference(type = OrganizationPersistence.class)
 	protected OrganizationPersistence organizationPersistence;
-	@BeanReference(type = OrgGroupPermissionPersistence.class)
-	protected OrgGroupPermissionPersistence orgGroupPermissionPersistence;
 	@BeanReference(type = OrgGroupRolePersistence.class)
 	protected OrgGroupRolePersistence orgGroupRolePersistence;
 	@BeanReference(type = OrgLaborPersistence.class)
@@ -7564,8 +7560,6 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	protected PasswordPolicyRelPersistence passwordPolicyRelPersistence;
 	@BeanReference(type = PasswordTrackerPersistence.class)
 	protected PasswordTrackerPersistence passwordTrackerPersistence;
-	@BeanReference(type = PermissionPersistence.class)
-	protected PermissionPersistence permissionPersistence;
 	@BeanReference(type = PhonePersistence.class)
 	protected PhonePersistence phonePersistence;
 	@BeanReference(type = PluginSettingPersistence.class)
@@ -7586,8 +7580,6 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	protected RepositoryPersistence repositoryPersistence;
 	@BeanReference(type = RepositoryEntryPersistence.class)
 	protected RepositoryEntryPersistence repositoryEntryPersistence;
-	@BeanReference(type = ResourcePersistence.class)
-	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = ResourceActionPersistence.class)
 	protected ResourceActionPersistence resourceActionPersistence;
 	@BeanReference(type = ResourceBlockPersistence.class)

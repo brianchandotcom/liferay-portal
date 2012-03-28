@@ -609,17 +609,14 @@ public class WorkflowDefinitionLinkUtil {
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param typePK the type p k
-	* @return the workflow definition link that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.WorkflowDefinitionLink removeByG_C_C_C_T(
-		long groupId, long companyId, long classNameId, long classPK,
-		long typePK)
+	public static void removeByG_C_C_C_T(long groupId, long companyId,
+		long classNameId, long classPK, long typePK)
 		throws com.liferay.portal.NoSuchWorkflowDefinitionLinkException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .removeByG_C_C_C_T(groupId, companyId, classNameId, classPK,
-			typePK);
+		getPersistence()
+			.removeByG_C_C_C_T(groupId, companyId, classNameId, classPK, typePK);
 	}
 
 	/**

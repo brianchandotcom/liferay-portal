@@ -377,16 +377,6 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		}
 
 		try {
-			clearPermissions.clear(role.getPrimaryKey());
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(RoleModelImpl.MAPPING_TABLE_ROLES_PERMISSIONS_NAME);
-		}
-
-		try {
 			clearUsers.clear(role.getPrimaryKey());
 		}
 		catch (Exception e) {
@@ -4000,14 +3990,13 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 *
 	 * @param companyId the company ID
 	 * @param name the name
-	 * @return the role that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Role removeByC_N(long companyId, String name)
+	public void removeByC_N(long companyId, String name)
 		throws NoSuchRoleException, SystemException {
 		Role role = findByC_N(companyId, name);
 
-		return remove(role);
+		remove(role);
 	}
 
 	/**
@@ -4029,14 +4018,13 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
-	 * @return the role that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Role removeByC_C_C(long companyId, long classNameId, long classPK)
+	public void removeByC_C_C(long companyId, long classNameId, long classPK)
 		throws NoSuchRoleException, SystemException {
 		Role role = findByC_C_C(companyId, classNameId, classPK);
 
-		return remove(role);
+		remove(role);
 	}
 
 	/**
@@ -5176,488 +5164,6 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	}
 
 	/**
-	 * Returns all the permissions associated with the role.
-	 *
-	 * @param pk the primary key of the role
-	 * @return the permissions associated with the role
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<com.liferay.portal.model.Permission> getPermissions(long pk)
-		throws SystemException {
-		return getPermissions(pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-	}
-
-	/**
-	 * Returns a range of all the permissions associated with the role.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param pk the primary key of the role
-	 * @param start the lower bound of the range of roles
-	 * @param end the upper bound of the range of roles (not inclusive)
-	 * @return the range of permissions associated with the role
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<com.liferay.portal.model.Permission> getPermissions(long pk,
-		int start, int end) throws SystemException {
-		return getPermissions(pk, start, end, null);
-	}
-
-	public static final FinderPath FINDER_PATH_GET_PERMISSIONS = new FinderPath(com.liferay.portal.model.impl.PermissionModelImpl.ENTITY_CACHE_ENABLED,
-			RoleModelImpl.FINDER_CACHE_ENABLED_ROLES_PERMISSIONS,
-			com.liferay.portal.model.impl.PermissionImpl.class,
-			RoleModelImpl.MAPPING_TABLE_ROLES_PERMISSIONS_NAME,
-			"getPermissions",
-			new String[] {
-				Long.class.getName(), "java.lang.Integer", "java.lang.Integer",
-				"com.liferay.portal.kernel.util.OrderByComparator"
-			});
-
-	static {
-		FINDER_PATH_GET_PERMISSIONS.setCacheKeyGeneratorCacheName(null);
-	}
-
-	/**
-	 * Returns an ordered range of all the permissions associated with the role.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param pk the primary key of the role
-	 * @param start the lower bound of the range of roles
-	 * @param end the upper bound of the range of roles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of permissions associated with the role
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<com.liferay.portal.model.Permission> getPermissions(long pk,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
-		Object[] finderArgs = new Object[] { pk, start, end, orderByComparator };
-
-		List<com.liferay.portal.model.Permission> list = (List<com.liferay.portal.model.Permission>)FinderCacheUtil.getResult(FINDER_PATH_GET_PERMISSIONS,
-				finderArgs, this);
-
-		if (list == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				String sql = null;
-
-				if (orderByComparator != null) {
-					sql = _SQL_GETPERMISSIONS.concat(ORDER_BY_CLAUSE)
-											 .concat(orderByComparator.getOrderBy());
-				}
-				else {
-					sql = _SQL_GETPERMISSIONS;
-				}
-
-				SQLQuery q = session.createSQLQuery(sql);
-
-				q.addEntity("Permission_",
-					com.liferay.portal.model.impl.PermissionImpl.class);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(pk);
-
-				list = (List<com.liferay.portal.model.Permission>)QueryUtil.list(q,
-						getDialect(), start, end);
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_GET_PERMISSIONS,
-						finderArgs);
-				}
-				else {
-					permissionPersistence.cacheResult(list);
-
-					FinderCacheUtil.putResult(FINDER_PATH_GET_PERMISSIONS,
-						finderArgs, list);
-				}
-
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	public static final FinderPath FINDER_PATH_GET_PERMISSIONS_SIZE = new FinderPath(com.liferay.portal.model.impl.PermissionModelImpl.ENTITY_CACHE_ENABLED,
-			RoleModelImpl.FINDER_CACHE_ENABLED_ROLES_PERMISSIONS, Long.class,
-			RoleModelImpl.MAPPING_TABLE_ROLES_PERMISSIONS_NAME,
-			"getPermissionsSize", new String[] { Long.class.getName() });
-
-	static {
-		FINDER_PATH_GET_PERMISSIONS_SIZE.setCacheKeyGeneratorCacheName(null);
-	}
-
-	/**
-	 * Returns the number of permissions associated with the role.
-	 *
-	 * @param pk the primary key of the role
-	 * @return the number of permissions associated with the role
-	 * @throws SystemException if a system exception occurred
-	 */
-	public int getPermissionsSize(long pk) throws SystemException {
-		Object[] finderArgs = new Object[] { pk };
-
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_GET_PERMISSIONS_SIZE,
-				finderArgs, this);
-
-		if (count == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				SQLQuery q = session.createSQLQuery(_SQL_GETPERMISSIONSSIZE);
-
-				q.addScalar(COUNT_COLUMN_NAME,
-					com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(pk);
-
-				count = (Long)q.uniqueResult();
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (count == null) {
-					count = Long.valueOf(0);
-				}
-
-				FinderCacheUtil.putResult(FINDER_PATH_GET_PERMISSIONS_SIZE,
-					finderArgs, count);
-
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	public static final FinderPath FINDER_PATH_CONTAINS_PERMISSION = new FinderPath(com.liferay.portal.model.impl.PermissionModelImpl.ENTITY_CACHE_ENABLED,
-			RoleModelImpl.FINDER_CACHE_ENABLED_ROLES_PERMISSIONS,
-			Boolean.class, RoleModelImpl.MAPPING_TABLE_ROLES_PERMISSIONS_NAME,
-			"containsPermission",
-			new String[] { Long.class.getName(), Long.class.getName() });
-
-	/**
-	 * Returns <code>true</code> if the permission is associated with the role.
-	 *
-	 * @param pk the primary key of the role
-	 * @param permissionPK the primary key of the permission
-	 * @return <code>true</code> if the permission is associated with the role; <code>false</code> otherwise
-	 * @throws SystemException if a system exception occurred
-	 */
-	public boolean containsPermission(long pk, long permissionPK)
-		throws SystemException {
-		Object[] finderArgs = new Object[] { pk, permissionPK };
-
-		Boolean value = (Boolean)FinderCacheUtil.getResult(FINDER_PATH_CONTAINS_PERMISSION,
-				finderArgs, this);
-
-		if (value == null) {
-			try {
-				value = Boolean.valueOf(containsPermission.contains(pk,
-							permissionPK));
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (value == null) {
-					value = Boolean.FALSE;
-				}
-
-				FinderCacheUtil.putResult(FINDER_PATH_CONTAINS_PERMISSION,
-					finderArgs, value);
-			}
-		}
-
-		return value.booleanValue();
-	}
-
-	/**
-	 * Returns <code>true</code> if the role has any permissions associated with it.
-	 *
-	 * @param pk the primary key of the role to check for associations with permissions
-	 * @return <code>true</code> if the role has any permissions associated with it; <code>false</code> otherwise
-	 * @throws SystemException if a system exception occurred
-	 */
-	public boolean containsPermissions(long pk) throws SystemException {
-		if (getPermissionsSize(pk) > 0) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	/**
-	 * Adds an association between the role and the permission. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the role
-	 * @param permissionPK the primary key of the permission
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void addPermission(long pk, long permissionPK)
-		throws SystemException {
-		try {
-			addPermission.add(pk, permissionPK);
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(RoleModelImpl.MAPPING_TABLE_ROLES_PERMISSIONS_NAME);
-		}
-	}
-
-	/**
-	 * Adds an association between the role and the permission. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the role
-	 * @param permission the permission
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void addPermission(long pk,
-		com.liferay.portal.model.Permission permission)
-		throws SystemException {
-		try {
-			addPermission.add(pk, permission.getPrimaryKey());
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(RoleModelImpl.MAPPING_TABLE_ROLES_PERMISSIONS_NAME);
-		}
-	}
-
-	/**
-	 * Adds an association between the role and the permissions. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the role
-	 * @param permissionPKs the primary keys of the permissions
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void addPermissions(long pk, long[] permissionPKs)
-		throws SystemException {
-		try {
-			for (long permissionPK : permissionPKs) {
-				addPermission.add(pk, permissionPK);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(RoleModelImpl.MAPPING_TABLE_ROLES_PERMISSIONS_NAME);
-		}
-	}
-
-	/**
-	 * Adds an association between the role and the permissions. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the role
-	 * @param permissions the permissions
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void addPermissions(long pk,
-		List<com.liferay.portal.model.Permission> permissions)
-		throws SystemException {
-		try {
-			for (com.liferay.portal.model.Permission permission : permissions) {
-				addPermission.add(pk, permission.getPrimaryKey());
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(RoleModelImpl.MAPPING_TABLE_ROLES_PERMISSIONS_NAME);
-		}
-	}
-
-	/**
-	 * Clears all associations between the role and its permissions. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the role to clear the associated permissions from
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void clearPermissions(long pk) throws SystemException {
-		try {
-			clearPermissions.clear(pk);
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(RoleModelImpl.MAPPING_TABLE_ROLES_PERMISSIONS_NAME);
-		}
-	}
-
-	/**
-	 * Removes the association between the role and the permission. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the role
-	 * @param permissionPK the primary key of the permission
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void removePermission(long pk, long permissionPK)
-		throws SystemException {
-		try {
-			removePermission.remove(pk, permissionPK);
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(RoleModelImpl.MAPPING_TABLE_ROLES_PERMISSIONS_NAME);
-		}
-	}
-
-	/**
-	 * Removes the association between the role and the permission. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the role
-	 * @param permission the permission
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void removePermission(long pk,
-		com.liferay.portal.model.Permission permission)
-		throws SystemException {
-		try {
-			removePermission.remove(pk, permission.getPrimaryKey());
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(RoleModelImpl.MAPPING_TABLE_ROLES_PERMISSIONS_NAME);
-		}
-	}
-
-	/**
-	 * Removes the association between the role and the permissions. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the role
-	 * @param permissionPKs the primary keys of the permissions
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void removePermissions(long pk, long[] permissionPKs)
-		throws SystemException {
-		try {
-			for (long permissionPK : permissionPKs) {
-				removePermission.remove(pk, permissionPK);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(RoleModelImpl.MAPPING_TABLE_ROLES_PERMISSIONS_NAME);
-		}
-	}
-
-	/**
-	 * Removes the association between the role and the permissions. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the role
-	 * @param permissions the permissions
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void removePermissions(long pk,
-		List<com.liferay.portal.model.Permission> permissions)
-		throws SystemException {
-		try {
-			for (com.liferay.portal.model.Permission permission : permissions) {
-				removePermission.remove(pk, permission.getPrimaryKey());
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(RoleModelImpl.MAPPING_TABLE_ROLES_PERMISSIONS_NAME);
-		}
-	}
-
-	/**
-	 * Sets the permissions associated with the role, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the role
-	 * @param permissionPKs the primary keys of the permissions to be associated with the role
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void setPermissions(long pk, long[] permissionPKs)
-		throws SystemException {
-		try {
-			Set<Long> permissionPKSet = SetUtil.fromArray(permissionPKs);
-
-			List<com.liferay.portal.model.Permission> permissions = getPermissions(pk);
-
-			for (com.liferay.portal.model.Permission permission : permissions) {
-				if (!permissionPKSet.remove(permission.getPrimaryKey())) {
-					removePermission.remove(pk, permission.getPrimaryKey());
-				}
-			}
-
-			for (Long permissionPK : permissionPKSet) {
-				addPermission.add(pk, permissionPK);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(RoleModelImpl.MAPPING_TABLE_ROLES_PERMISSIONS_NAME);
-		}
-	}
-
-	/**
-	 * Sets the permissions associated with the role, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the role
-	 * @param permissions the permissions to be associated with the role
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void setPermissions(long pk,
-		List<com.liferay.portal.model.Permission> permissions)
-		throws SystemException {
-		try {
-			long[] permissionPKs = new long[permissions.size()];
-
-			for (int i = 0; i < permissions.size(); i++) {
-				com.liferay.portal.model.Permission permission = permissions.get(i);
-
-				permissionPKs[i] = permission.getPrimaryKey();
-			}
-
-			setPermissions(pk, permissionPKs);
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(RoleModelImpl.MAPPING_TABLE_ROLES_PERMISSIONS_NAME);
-		}
-	}
-
-	/**
 	 * Returns all the users associated with the role.
 	 *
 	 * @param pk the primary key of the role
@@ -6154,12 +5660,6 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		clearGroups = new ClearGroups();
 		removeGroup = new RemoveGroup();
 
-		containsPermission = new ContainsPermission();
-
-		addPermission = new AddPermission();
-		clearPermissions = new ClearPermissions();
-		removePermission = new RemovePermission();
-
 		containsUser = new ContainsUser();
 
 		addUser = new AddUser();
@@ -6217,8 +5717,6 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	protected MembershipRequestPersistence membershipRequestPersistence;
 	@BeanReference(type = OrganizationPersistence.class)
 	protected OrganizationPersistence organizationPersistence;
-	@BeanReference(type = OrgGroupPermissionPersistence.class)
-	protected OrgGroupPermissionPersistence orgGroupPermissionPersistence;
 	@BeanReference(type = OrgGroupRolePersistence.class)
 	protected OrgGroupRolePersistence orgGroupRolePersistence;
 	@BeanReference(type = OrgLaborPersistence.class)
@@ -6229,8 +5727,6 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	protected PasswordPolicyRelPersistence passwordPolicyRelPersistence;
 	@BeanReference(type = PasswordTrackerPersistence.class)
 	protected PasswordTrackerPersistence passwordTrackerPersistence;
-	@BeanReference(type = PermissionPersistence.class)
-	protected PermissionPersistence permissionPersistence;
 	@BeanReference(type = PhonePersistence.class)
 	protected PhonePersistence phonePersistence;
 	@BeanReference(type = PluginSettingPersistence.class)
@@ -6251,8 +5747,6 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	protected RepositoryPersistence repositoryPersistence;
 	@BeanReference(type = RepositoryEntryPersistence.class)
 	protected RepositoryEntryPersistence repositoryEntryPersistence;
-	@BeanReference(type = ResourcePersistence.class)
-	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = ResourceActionPersistence.class)
 	protected ResourceActionPersistence resourceActionPersistence;
 	@BeanReference(type = ResourceBlockPersistence.class)
@@ -6307,10 +5801,6 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	protected AddGroup addGroup;
 	protected ClearGroups clearGroups;
 	protected RemoveGroup removeGroup;
-	protected ContainsPermission containsPermission;
-	protected AddPermission addPermission;
-	protected ClearPermissions clearPermissions;
-	protected RemovePermission removePermission;
 	protected ContainsUser containsUser;
 	protected AddUser addUser;
 	protected ClearUsers clearUsers;
@@ -6466,172 +5956,6 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 				for (ModelListener<com.liferay.portal.model.Group> listener : groupListeners) {
 					listener.onAfterRemoveAssociation(groupId,
-						Role.class.getName(), roleId);
-				}
-			}
-		}
-
-		private SqlUpdate _sqlUpdate;
-	}
-
-	protected class ContainsPermission {
-		protected ContainsPermission() {
-			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
-					_SQL_CONTAINSPERMISSION,
-					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
-					RowMapper.COUNT);
-		}
-
-		protected boolean contains(long roleId, long permissionId) {
-			List<Integer> results = _mappingSqlQuery.execute(new Object[] {
-						new Long(roleId), new Long(permissionId)
-					});
-
-			if (results.size() > 0) {
-				Integer count = results.get(0);
-
-				if (count.intValue() > 0) {
-					return true;
-				}
-			}
-
-			return false;
-		}
-
-		private MappingSqlQuery<Integer> _mappingSqlQuery;
-	}
-
-	protected class AddPermission {
-		protected AddPermission() {
-			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
-					"INSERT INTO Roles_Permissions (roleId, permissionId) VALUES (?, ?)",
-					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-		}
-
-		protected void add(long roleId, long permissionId)
-			throws SystemException {
-			if (!containsPermission.contains(roleId, permissionId)) {
-				ModelListener<com.liferay.portal.model.Permission>[] permissionListeners =
-					permissionPersistence.getListeners();
-
-				for (ModelListener<Role> listener : listeners) {
-					listener.onBeforeAddAssociation(roleId,
-						com.liferay.portal.model.Permission.class.getName(),
-						permissionId);
-				}
-
-				for (ModelListener<com.liferay.portal.model.Permission> listener : permissionListeners) {
-					listener.onBeforeAddAssociation(permissionId,
-						Role.class.getName(), roleId);
-				}
-
-				_sqlUpdate.update(new Object[] {
-						new Long(roleId), new Long(permissionId)
-					});
-
-				for (ModelListener<Role> listener : listeners) {
-					listener.onAfterAddAssociation(roleId,
-						com.liferay.portal.model.Permission.class.getName(),
-						permissionId);
-				}
-
-				for (ModelListener<com.liferay.portal.model.Permission> listener : permissionListeners) {
-					listener.onAfterAddAssociation(permissionId,
-						Role.class.getName(), roleId);
-				}
-			}
-		}
-
-		private SqlUpdate _sqlUpdate;
-	}
-
-	protected class ClearPermissions {
-		protected ClearPermissions() {
-			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
-					"DELETE FROM Roles_Permissions WHERE roleId = ?",
-					new int[] { java.sql.Types.BIGINT });
-		}
-
-		protected void clear(long roleId) throws SystemException {
-			ModelListener<com.liferay.portal.model.Permission>[] permissionListeners =
-				permissionPersistence.getListeners();
-
-			List<com.liferay.portal.model.Permission> permissions = null;
-
-			if ((listeners.length > 0) || (permissionListeners.length > 0)) {
-				permissions = getPermissions(roleId);
-
-				for (com.liferay.portal.model.Permission permission : permissions) {
-					for (ModelListener<Role> listener : listeners) {
-						listener.onBeforeRemoveAssociation(roleId,
-							com.liferay.portal.model.Permission.class.getName(),
-							permission.getPrimaryKey());
-					}
-
-					for (ModelListener<com.liferay.portal.model.Permission> listener : permissionListeners) {
-						listener.onBeforeRemoveAssociation(permission.getPrimaryKey(),
-							Role.class.getName(), roleId);
-					}
-				}
-			}
-
-			_sqlUpdate.update(new Object[] { new Long(roleId) });
-
-			if ((listeners.length > 0) || (permissionListeners.length > 0)) {
-				for (com.liferay.portal.model.Permission permission : permissions) {
-					for (ModelListener<Role> listener : listeners) {
-						listener.onAfterRemoveAssociation(roleId,
-							com.liferay.portal.model.Permission.class.getName(),
-							permission.getPrimaryKey());
-					}
-
-					for (ModelListener<com.liferay.portal.model.Permission> listener : permissionListeners) {
-						listener.onAfterRemoveAssociation(permission.getPrimaryKey(),
-							Role.class.getName(), roleId);
-					}
-				}
-			}
-		}
-
-		private SqlUpdate _sqlUpdate;
-	}
-
-	protected class RemovePermission {
-		protected RemovePermission() {
-			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
-					"DELETE FROM Roles_Permissions WHERE roleId = ? AND permissionId = ?",
-					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-		}
-
-		protected void remove(long roleId, long permissionId)
-			throws SystemException {
-			if (containsPermission.contains(roleId, permissionId)) {
-				ModelListener<com.liferay.portal.model.Permission>[] permissionListeners =
-					permissionPersistence.getListeners();
-
-				for (ModelListener<Role> listener : listeners) {
-					listener.onBeforeRemoveAssociation(roleId,
-						com.liferay.portal.model.Permission.class.getName(),
-						permissionId);
-				}
-
-				for (ModelListener<com.liferay.portal.model.Permission> listener : permissionListeners) {
-					listener.onBeforeRemoveAssociation(permissionId,
-						Role.class.getName(), roleId);
-				}
-
-				_sqlUpdate.update(new Object[] {
-						new Long(roleId), new Long(permissionId)
-					});
-
-				for (ModelListener<Role> listener : listeners) {
-					listener.onAfterRemoveAssociation(roleId,
-						com.liferay.portal.model.Permission.class.getName(),
-						permissionId);
-				}
-
-				for (ModelListener<com.liferay.portal.model.Permission> listener : permissionListeners) {
-					listener.onAfterRemoveAssociation(permissionId,
 						Role.class.getName(), roleId);
 				}
 			}
@@ -6805,9 +6129,6 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	private static final String _SQL_GETGROUPS = "SELECT {Group_.*} FROM Group_ INNER JOIN Groups_Roles ON (Groups_Roles.groupId = Group_.groupId) WHERE (Groups_Roles.roleId = ?)";
 	private static final String _SQL_GETGROUPSSIZE = "SELECT COUNT(*) AS COUNT_VALUE FROM Groups_Roles WHERE roleId = ?";
 	private static final String _SQL_CONTAINSGROUP = "SELECT COUNT(*) AS COUNT_VALUE FROM Groups_Roles WHERE roleId = ? AND groupId = ?";
-	private static final String _SQL_GETPERMISSIONS = "SELECT {Permission_.*} FROM Permission_ INNER JOIN Roles_Permissions ON (Roles_Permissions.permissionId = Permission_.permissionId) WHERE (Roles_Permissions.roleId = ?)";
-	private static final String _SQL_GETPERMISSIONSSIZE = "SELECT COUNT(*) AS COUNT_VALUE FROM Roles_Permissions WHERE roleId = ?";
-	private static final String _SQL_CONTAINSPERMISSION = "SELECT COUNT(*) AS COUNT_VALUE FROM Roles_Permissions WHERE roleId = ? AND permissionId = ?";
 	private static final String _SQL_GETUSERS = "SELECT {User_.*} FROM User_ INNER JOIN Users_Roles ON (Users_Roles.userId = User_.userId) WHERE (Users_Roles.roleId = ?)";
 	private static final String _SQL_GETUSERSSIZE = "SELECT COUNT(*) AS COUNT_VALUE FROM Users_Roles WHERE roleId = ?";
 	private static final String _SQL_CONTAINSUSER = "SELECT COUNT(*) AS COUNT_VALUE FROM Users_Roles WHERE roleId = ? AND userId = ?";

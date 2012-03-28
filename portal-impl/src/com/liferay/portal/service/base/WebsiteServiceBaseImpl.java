@@ -1697,6 +1697,16 @@ public abstract class WebsiteServiceBaseImpl extends PrincipalBean
 	}
 
 	/**
+	 * Sets the password tracker persistence.
+	 *
+	 * @param passwordTrackerPersistence the password tracker persistence
+	 */
+	public void setPasswordTrackerPersistence(
+		PasswordTrackerPersistence passwordTrackerPersistence) {
+		this.passwordTrackerPersistence = passwordTrackerPersistence;
+	}
+
+	/**
 	 * Returns the phone local service.
 	 *
 	 * @return the phone local service

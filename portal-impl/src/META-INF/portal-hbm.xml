@@ -27,14 +27,11 @@
 	<import class="com.liferay.portal.model.Lock" />
 	<import class="com.liferay.portal.model.MembershipRequest" />
 	<import class="com.liferay.portal.model.Organization" />
-	<import class="com.liferay.portal.model.OrgGroupPermission" />
 	<import class="com.liferay.portal.model.OrgGroupRole" />
 	<import class="com.liferay.portal.model.OrgLabor" />
 	<import class="com.liferay.portal.model.PasswordPolicy" />
 	<import class="com.liferay.portal.model.PasswordPolicyRel" />
 	<import class="com.liferay.portal.model.PasswordTracker" />
-	<import class="com.liferay.portal.model.Permission" />
-	<import class="com.liferay.portal.model.PermissionUser" />
 	<import class="com.liferay.portal.model.Phone" />
 	<import class="com.liferay.portal.model.PluginSetting" />
 	<import class="com.liferay.portal.model.Portal" />
@@ -562,14 +559,6 @@
 		<property name="statusId" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="comments" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
-	<class name="com.liferay.portal.model.impl.OrgGroupPermissionImpl" table="OrgGroupPermission">
-		<cache usage="read-write" />
-		<composite-id name="primaryKey" class="com.liferay.portal.service.persistence.OrgGroupPermissionPK">
-			<key-property name="organizationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-			<key-property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-			<key-property name="permissionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		</composite-id>
-	</class>
 	<class name="com.liferay.portal.model.impl.OrgGroupRoleImpl" table="OrgGroupRole">
 		<cache usage="read-write" />
 		<composite-id name="primaryKey" class="com.liferay.portal.service.persistence.OrgGroupRolePK">
@@ -654,15 +643,6 @@
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="password" type="com.liferay.portal.dao.orm.hibernate.StringType" column="password_" />
-	</class>
-	<class name="com.liferay.portal.model.impl.PermissionImpl" table="Permission_">
-		<cache usage="read-write" />
-		<id name="permissionId" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="actionId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="resourceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.PhoneImpl" table="Phone">
 		<cache usage="read-write" />
@@ -789,14 +769,6 @@
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="repositoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="mappedId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-	</class>
-	<class name="com.liferay.portal.model.impl.ResourceImpl" table="Resource_">
-		<cache usage="read-write" />
-		<id name="resourceId" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="codeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="primKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.ResourceActionImpl" table="ResourceAction">
 		<cache usage="read-write" />

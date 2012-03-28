@@ -549,11 +549,9 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	*
 	* @param companyId the company ID
 	* @param name the name
-	* @return the user group that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.UserGroup removeByC_N(long companyId,
-		java.lang.String name)
+	public void removeByC_N(long companyId, java.lang.String name)
 		throws com.liferay.portal.NoSuchUserGroupException,
 			com.liferay.portal.kernel.exception.SystemException;
 

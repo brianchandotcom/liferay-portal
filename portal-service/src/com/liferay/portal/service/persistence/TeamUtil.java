@@ -486,14 +486,12 @@ public class TeamUtil {
 	*
 	* @param groupId the group ID
 	* @param name the name
-	* @return the team that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.Team removeByG_N(long groupId,
-		java.lang.String name)
+	public static void removeByG_N(long groupId, java.lang.String name)
 		throws com.liferay.portal.NoSuchTeamException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByG_N(groupId, name);
+		getPersistence().removeByG_N(groupId, name);
 	}
 
 	/**

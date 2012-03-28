@@ -338,11 +338,9 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 	*
 	* @param userId the user ID
 	* @param type the type
-	* @return the user ID mapper that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.UserIdMapper removeByU_T(long userId,
-		java.lang.String type)
+	public void removeByU_T(long userId, java.lang.String type)
 		throws com.liferay.portal.NoSuchUserIdMapperException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -351,11 +349,10 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 	*
 	* @param type the type
 	* @param externalUserId the external user ID
-	* @return the user ID mapper that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.UserIdMapper removeByT_E(
-		java.lang.String type, java.lang.String externalUserId)
+	public void removeByT_E(java.lang.String type,
+		java.lang.String externalUserId)
 		throws com.liferay.portal.NoSuchUserIdMapperException,
 			com.liferay.portal.kernel.exception.SystemException;
 

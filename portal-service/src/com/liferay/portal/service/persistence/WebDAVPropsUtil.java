@@ -289,14 +289,12 @@ public class WebDAVPropsUtil {
 	*
 	* @param classNameId the class name ID
 	* @param classPK the class p k
-	* @return the web d a v props that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.WebDAVProps removeByC_C(
-		long classNameId, long classPK)
+	public static void removeByC_C(long classNameId, long classPK)
 		throws com.liferay.portal.NoSuchWebDAVPropsException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByC_C(classNameId, classPK);
+		getPersistence().removeByC_C(classNameId, classPK);
 	}
 
 	/**

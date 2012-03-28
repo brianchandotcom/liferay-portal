@@ -2463,6 +2463,16 @@ public abstract class ResourcePermissionLocalServiceBaseImpl
 	}
 
 	/**
+	 * Sets the resource local service.
+	 *
+	 * @param resourceLocalService the resource local service
+	 */
+	public void setResourceLocalService(
+		ResourceLocalService resourceLocalService) {
+		this.resourceLocalService = resourceLocalService;
+	}
+
+	/**
 	 * Returns the resource action local service.
 	 *
 	 * @return the resource action local service

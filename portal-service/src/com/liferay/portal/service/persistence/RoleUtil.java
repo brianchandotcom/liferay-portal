@@ -1150,14 +1150,12 @@ public class RoleUtil {
 	*
 	* @param companyId the company ID
 	* @param name the name
-	* @return the role that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.Role removeByC_N(long companyId,
-		java.lang.String name)
+	public static void removeByC_N(long companyId, java.lang.String name)
 		throws com.liferay.portal.NoSuchRoleException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByC_N(companyId, name);
+		getPersistence().removeByC_N(companyId, name);
 	}
 
 	/**
@@ -1178,14 +1176,13 @@ public class RoleUtil {
 	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class p k
-	* @return the role that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.Role removeByC_C_C(long companyId,
-		long classNameId, long classPK)
+	public static void removeByC_C_C(long companyId, long classNameId,
+		long classPK)
 		throws com.liferay.portal.NoSuchRoleException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByC_C_C(companyId, classNameId, classPK);
+		getPersistence().removeByC_C_C(companyId, classNameId, classPK);
 	}
 
 	/**
@@ -1556,114 +1553,6 @@ public class RoleUtil {
 		java.util.List<com.liferay.portal.model.Group> groups)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getPersistence().setGroups(pk, groups);
-	}
-
-	/**
-	* Returns the number of permissions associated with the role.
-	*
-	* @param pk the primary key of the role
-	* @return the number of permissions associated with the role
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int getPermissionsSize(long pk)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().getPermissionsSize(pk);
-	}
-
-	/**
-	* Returns <code>true</code> if the permission is associated with the role.
-	*
-	* @param pk the primary key of the role
-	* @param permissionPK the primary key of the permission
-	* @return <code>true</code> if the permission is associated with the role; <code>false</code> otherwise
-	* @throws SystemException if a system exception occurred
-	*/
-	public static boolean containsPermission(long pk, long permissionPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().containsPermission(pk, permissionPK);
-	}
-
-	/**
-	* Returns <code>true</code> if the role has any permissions associated with it.
-	*
-	* @param pk the primary key of the role to check for associations with permissions
-	* @return <code>true</code> if the role has any permissions associated with it; <code>false</code> otherwise
-	* @throws SystemException if a system exception occurred
-	*/
-	public static boolean containsPermissions(long pk)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().containsPermissions(pk);
-	}
-
-	/**
-	* Adds an association between the role and the permission. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	*
-	* @param pk the primary key of the role
-	* @param permissionPK the primary key of the permission
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void addPermission(long pk, long permissionPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().addPermission(pk, permissionPK);
-	}
-
-	/**
-	* Adds an association between the role and the permissions. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	*
-	* @param pk the primary key of the role
-	* @param permissionPKs the primary keys of the permissions
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void addPermissions(long pk, long[] permissionPKs)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().addPermissions(pk, permissionPKs);
-	}
-
-	/**
-	* Clears all associations between the role and its permissions. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	*
-	* @param pk the primary key of the role to clear the associated permissions from
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void clearPermissions(long pk)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().clearPermissions(pk);
-	}
-
-	/**
-	* Removes the association between the role and the permission. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	*
-	* @param pk the primary key of the role
-	* @param permissionPK the primary key of the permission
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removePermission(long pk, long permissionPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removePermission(pk, permissionPK);
-	}
-
-	/**
-	* Removes the association between the role and the permissions. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	*
-	* @param pk the primary key of the role
-	* @param permissionPKs the primary keys of the permissions
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removePermissions(long pk, long[] permissionPKs)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removePermissions(pk, permissionPKs);
-	}
-
-	/**
-	* Sets the permissions associated with the role, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	*
-	* @param pk the primary key of the role
-	* @param permissionPKs the primary keys of the permissions to be associated with the role
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void setPermissions(long pk, long[] permissionPKs)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().setPermissions(pk, permissionPKs);
 	}
 
 	/**

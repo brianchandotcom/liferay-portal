@@ -899,14 +899,13 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 	 * Removes the shard where name = &#63; from the database.
 	 *
 	 * @param name the name
-	 * @return the shard that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Shard removeByName(String name)
+	public void removeByName(String name)
 		throws NoSuchShardException, SystemException {
 		Shard shard = findByName(name);
 
-		return remove(shard);
+		remove(shard);
 	}
 
 	/**
@@ -914,14 +913,13 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
-	 * @return the shard that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Shard removeByC_C(long classNameId, long classPK)
+	public void removeByC_C(long classNameId, long classPK)
 		throws NoSuchShardException, SystemException {
 		Shard shard = findByC_C(classNameId, classPK);
 
-		return remove(shard);
+		remove(shard);
 	}
 
 	/**
@@ -1172,8 +1170,6 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 	protected MembershipRequestPersistence membershipRequestPersistence;
 	@BeanReference(type = OrganizationPersistence.class)
 	protected OrganizationPersistence organizationPersistence;
-	@BeanReference(type = OrgGroupPermissionPersistence.class)
-	protected OrgGroupPermissionPersistence orgGroupPermissionPersistence;
 	@BeanReference(type = OrgGroupRolePersistence.class)
 	protected OrgGroupRolePersistence orgGroupRolePersistence;
 	@BeanReference(type = OrgLaborPersistence.class)
@@ -1184,8 +1180,6 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 	protected PasswordPolicyRelPersistence passwordPolicyRelPersistence;
 	@BeanReference(type = PasswordTrackerPersistence.class)
 	protected PasswordTrackerPersistence passwordTrackerPersistence;
-	@BeanReference(type = PermissionPersistence.class)
-	protected PermissionPersistence permissionPersistence;
 	@BeanReference(type = PhonePersistence.class)
 	protected PhonePersistence phonePersistence;
 	@BeanReference(type = PluginSettingPersistence.class)
@@ -1206,8 +1200,6 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 	protected RepositoryPersistence repositoryPersistence;
 	@BeanReference(type = RepositoryEntryPersistence.class)
 	protected RepositoryEntryPersistence repositoryEntryPersistence;
-	@BeanReference(type = ResourcePersistence.class)
-	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = ResourceActionPersistence.class)
 	protected ResourceActionPersistence resourceActionPersistence;
 	@BeanReference(type = ResourceBlockPersistence.class)

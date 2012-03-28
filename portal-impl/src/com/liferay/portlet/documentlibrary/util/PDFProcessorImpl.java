@@ -201,9 +201,10 @@ public class PDFProcessorImpl
 			StringBundler sb = new StringBundler(5);
 
 			sb.append("Liferay is not configured to use ImageMagick for ");
-			sb.append("generating Document Library previews and will default ");
-			sb.append("to PDFBox. For better quality previews, install ");
-			sb.append("ImageMagick and enable it in portal-ext.properties.");
+			sb.append("generating Documents and Media previews and will ");
+			sb.append("default to PDFBox. For better quality previews, ");
+			sb.append("install ImageMagick and enable it in ");
+			sb.append("portal-ext.properties.");
 
 			_log.warn(sb.toString());
 

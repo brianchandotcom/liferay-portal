@@ -125,7 +125,7 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 		int count = DLFileEntryLocalServiceUtil.getFileEntriesCount();
 
 		MaintenanceUtil.appendStatus(
-			"Migrating " + count + " document library files");
+			"Migrating " + count + " documents and media files");
 
 		int pages = count / Indexer.DEFAULT_INTERVAL;
 

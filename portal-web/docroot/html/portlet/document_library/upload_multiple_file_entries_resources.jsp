@@ -72,7 +72,7 @@ long assetClassPK = 0;
 
 <aui:form action="<%= editMultipleFileEntriesURL %>" method="post" name="fm2" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "updateMultipleFiles();" %>'>
 	<div class="no-files-selected-info portlet-msg-info aui-helper-hidden" id="<portlet:namespace />metadataExplanationContainer">
-		<liferay-ui:message key="select-documents-from-the-left-to-add-them-to-the-document-library" />
+		<liferay-ui:message key="select-documents-from-the-left-to-add-them-to-the-documents-and-media" />
 	</div>
 
 	<aui:input name="repositoryId" type="hidden" value="<%= String.valueOf(repositoryId) %>" />

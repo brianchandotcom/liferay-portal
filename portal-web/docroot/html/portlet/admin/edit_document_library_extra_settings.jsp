@@ -58,7 +58,7 @@ if (!dlFileEntries.isEmpty()) {
 <c:choose>
 	<c:when test="<%= dlFileEntry == null %>">
 			<div class="portlet-msg-success">
-				<liferay-ui:message key="there-are-no-longer-any-document-library-files-with-extra-settings" />
+				<liferay-ui:message key="there-are-no-longer-any-documents-and-media-files-with-extra-settings" />
 			</div>
 	</c:when>
 	<c:otherwise>

@@ -125,7 +125,7 @@ int mountFoldersCount = DLAppServiceUtil.getMountFoldersCount(scopeGroupId, DLFo
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
-					_log.warn("Document library search index is stale and contains file entry {" + fileEntryId + "}");
+					_log.warn("Documents and Media search index is stale and contains file entry {" + fileEntryId + "}");
 				}
 
 				continue;

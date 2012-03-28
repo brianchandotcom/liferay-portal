@@ -142,11 +142,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 			}
 		}
 		else {
-			if ((destination.getParentFile() != null) &&
-				!destination.getParentFile().exists()) {
-
-				destination.getParentFile().mkdirs();
-			}
+			mkdirsParentFile(destination);
 
 			StreamUtil.transfer(
 				new FileInputStream(source), new FileOutputStream(destination));
@@ -213,12 +209,25 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 	}
 
 	public boolean delete(File file) {
-		if ((file != null) && file.exists()) {
-			return file.delete();
+		if (file != null) {
+			boolean exists = true;
+
+			try {
+				exists = file.exists();
+			}
+			catch (SecurityException se) {
+
+				// We may have the permission to delete a specific file without
+				// having the permission to check if the file exists
+
+			}
+
+			if (exists) {
+				return file.delete();
+			}
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public boolean delete(String file) {
@@ -737,9 +746,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 	public void write(File file, byte[] bytes, int offset, int length)
 		throws IOException {
 
-		if (file.getParent() != null) {
-			mkdirs(file.getParent());
-		}
+		mkdirsParentFile(file);
 
 		FileOutputStream fileOutputStream = new FileOutputStream(file);
 
@@ -749,9 +756,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 	}
 
 	public void write(File file, InputStream is) throws IOException {
-		if (file.getParent() != null) {
-			mkdirs(file.getParent());
-		}
+		mkdirsParentFile(file);
 
 		StreamUtil.transfer(is, new FileOutputStream(file));
 	}
@@ -771,9 +776,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 			return;
 		}
 
-		if (file.getParent() != null) {
-			mkdirs(file.getParent());
-		}
+		mkdirsParentFile(file);
 
 		if (lazy && file.exists()) {
 			String content = read(file);
@@ -833,6 +836,26 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		throws IOException {
 
 		write(new File(pathName, fileName), s, lazy, append);
+	}
+
+	protected void mkdirsParentFile(File file) {
+		File parentFile = file.getParentFile();
+
+		if (parentFile == null) {
+			return;
+		}
+
+		try {
+			if (!parentFile.exists()) {
+				parentFile.mkdirs();
+			}
+		}
+		catch (SecurityException se) {
+
+			// We may have the permission to write a specific file without
+			// having the permission to check if the parent file exists
+
+		}
 	}
 
 	private static final String[] _SAFE_FILE_NAME_1 = {

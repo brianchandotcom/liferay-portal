@@ -898,9 +898,6 @@ public interface Portal {
 			PortletRequest portletRequest, boolean checkPermission)
 		throws PortalException, SystemException;
 
-	public ServletContext getServletContext(
-		Portlet portlet, ServletContext servletContext);
-
 	/**
 	 * Returns the URL of the login page for the current site if one is
 	 * available.

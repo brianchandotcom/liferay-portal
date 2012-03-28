@@ -150,7 +150,6 @@ import com.liferay.portlet.ControlPanelEntry;
 import com.liferay.portlet.DefaultControlPanelEntryFactory;
 import com.liferay.portlet.PortletConfigFactoryUtil;
 import com.liferay.portlet.PortletConfigImpl;
-import com.liferay.portlet.PortletContextImpl;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.PortletPreferencesThreadLocal;
@@ -3653,18 +3652,6 @@ public class PortalImpl implements Portal {
 
 		return getSelectedUser(
 			getHttpServletRequest(portletRequest), checkPermission);
-	}
-
-	public ServletContext getServletContext(
-		Portlet portlet, ServletContext servletContext) {
-
-		PortletConfig portletConfig = PortletConfigFactoryUtil.create(
-			portlet, servletContext);
-
-		PortletContextImpl portletContextImpl =
-			(PortletContextImpl)portletConfig.getPortletContext();
-
-		return portletContextImpl.getServletContext();
 	}
 
 	public String getSiteLoginURL(ThemeDisplay themeDisplay)

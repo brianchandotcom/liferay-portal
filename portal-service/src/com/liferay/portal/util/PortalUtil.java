@@ -1110,12 +1110,6 @@ public class PortalUtil {
 		return getPortal().getSelectedUser(portletRequest, checkPermission);
 	}
 
-	public static ServletContext getServletContext(
-		Portlet portlet, ServletContext servletContext) {
-
-		return getPortal().getServletContext(portlet, servletContext);
-	}
-
 	public static String getSiteLoginURL(ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 

@@ -14,10 +14,11 @@
 
 package com.liferay.taglib.util;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.log.LogUtil;
+import com.liferay.portal.kernel.portlet.PortletBag;
+import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherUtil;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.TrackedServletRequest;
@@ -30,13 +31,10 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.model.PortletApp;
+import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.Theme;
-import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.CustomJspRegistryUtil;
-import com.liferay.portal.util.PortalUtil;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -137,36 +135,15 @@ public class IncludeTag extends AttributesTagSupport {
 
 	@Override
 	public ServletContext getServletContext() {
-		ServletContext servletContext = super.getServletContext();
-
-		try {
-			if (Validator.isNull(_portletId)) {
-				return servletContext;
-			}
-
-			HttpServletRequest request = getServletRequest();
-
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(
-				themeDisplay.getCompanyId(), _portletId);
-
-			if (portlet == null) {
-				return servletContext;
-			}
-
-			PortletApp portletApp = portlet.getPortletApp();
-
-			if (!portletApp.isWARFile()) {
-				return servletContext;
-			}
-
-			return PortalUtil.getServletContext(portlet, servletContext);
+		if (Validator.isNull(_portletId)) {
+			return super.getServletContext();
 		}
-		catch (SystemException se) {
-			return servletContext;
-		}
+
+		String rootPortletId = PortletConstants.getRootPortletId(_portletId);
+
+		PortletBag portletBag = PortletBagPool.get(rootPortletId);
+
+		return portletBag.getServletContext();
 	}
 
 	public void runEndTag() throws JspException {

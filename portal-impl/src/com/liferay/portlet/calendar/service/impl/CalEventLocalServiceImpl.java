@@ -1304,6 +1304,10 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 	protected void remindUser(
 		CalEvent event, User user, Calendar startDate, Calendar now) {
 
+		if (startDate.getTime().getTime() < now.getTime().getTime()) {
+			return;
+		}
+
 		long diff =
 			(startDate.getTime().getTime() - now.getTime().getTime()) /
 				_CALENDAR_EVENT_CHECK_INTERVAL;

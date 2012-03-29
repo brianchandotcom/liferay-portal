@@ -68,6 +68,8 @@ locales.beta
 login.create.account.allow.custom.password
 login.events.post
 login.events.pre
+login.form.navigation.post
+login.form.navigation.pre
 logout.events.post
 logout.events.pre
 mail.hook.impl

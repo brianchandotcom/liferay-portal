@@ -16,6 +16,7 @@ package com.liferay.portal.upgrade.v5_2_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.jdbc.SmartResultSet;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -23,8 +24,11 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.Resource;
+import com.liferay.portal.model.ResourceCode;
 import com.liferay.portal.model.ResourceConstants;
-import com.liferay.portal.service.ResourceLocalServiceUtil;
+import com.liferay.portal.model.impl.ResourceImpl;
+import com.liferay.portal.service.persistence.ResourceCodeUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -172,8 +176,16 @@ public class UpgradePortletPermissions extends UpgradeProcess {
 		long groupId = (Long)layout[0];
 		long companyId = (Long)layout[1];
 
-		Resource resource = ResourceLocalServiceUtil.addResource(
-			companyId, modelName, scope, String.valueOf(groupId));
+		Resource resource = null;
+
+		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
+			resource = addResource_6(companyId,
+					modelName, scope, String.valueOf(groupId));
+		}
+		else {
+			resource = addResource_1to5(companyId,
+					modelName, scope, String.valueOf(groupId));
+		}
 
 		long portletPermissionCount = getPortletPermissionsCount(
 			actionId, resource.getResourceId(), modelName);
@@ -254,6 +266,63 @@ public class UpgradePortletPermissions extends UpgradeProcess {
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
 		}
+	}
+
+	protected Resource addResource_1to5(
+			long companyId, String name, int scope, String primKey)
+		throws SystemException {
+		ResourceCode resourceCode = ResourceCodeUtil.fetchByC_N_S(
+				companyId, name, scope);
+
+		long codeId = resourceCode.getCodeId();
+		// TODO put sql version here
+
+		return null;
+
+//		Resource resource = resourcePersistence.fetchByC_P(codeId, primKey);
+//
+//		if (resource == null) {
+//			long resourceId = counterLocalService.increment(
+//				Resource.class.getName());
+//
+//			resource = resourcePersistence.create(resourceId);
+//
+//			resource.setCodeId(codeId);
+//			resource.setPrimKey(primKey);
+//
+//			try {
+//				resourcePersistence.update(resource, false);
+//			}
+//			catch (SystemException se) {
+//				if (_log.isWarnEnabled()) {
+//					_log.warn(
+//						"Add failed, fetch {codeId=" + codeId + ", primKey=" +
+//							primKey + "}");
+//				}
+//
+//				resource = resourcePersistence.fetchByC_P(
+//					codeId, primKey, false);
+//
+//				if (resource == null) {
+//					throw se;
+//				}
+//			}
+//		}
+//
+//		return resource;
+	}
+
+	protected Resource addResource_6(
+		long companyId, String name, int scope, String primKey) {
+
+		Resource resource = new ResourceImpl();
+
+		resource.setCompanyId(companyId);
+		resource.setName(name);
+		resource.setScope(scope);
+		resource.setPrimKey(primKey);
+
+		return resource;
 	}
 
 	private static final String _GET_LAYOUT =

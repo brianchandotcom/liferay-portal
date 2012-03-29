@@ -53,10 +53,10 @@ public class SocialActivitySettingLocalServiceTest {
 		SocialConfigurationUtil.read(
 			clazz.getClassLoader(), new String[] {xml});
 
-		defaultActivityDefinition =
+		_defaultActivityDefinition =
 			SocialConfigurationUtil.getActivityDefinition(TEST_MODEL, 1);
 
-		guestGroup = GroupLocalServiceUtil.fetchGroup(
+		_guestGroup = GroupLocalServiceUtil.fetchGroup(
 			PortalUtil.getDefaultCompanyId(), GroupConstants.GUEST);
 	}
 
@@ -64,18 +64,18 @@ public class SocialActivitySettingLocalServiceTest {
 	public void testGetActivityDefinition() throws SystemException {
 		SocialActivityDefinition activityDefinition =
 			SocialActivitySettingLocalServiceUtil.getActivityDefinition(
-				guestGroup.getGroupId(), TEST_MODEL, 1);
+				_guestGroup.getGroupId(), TEST_MODEL, 1);
 
-		Assert.assertEquals(defaultActivityDefinition, activityDefinition);
+		Assert.assertEquals(_defaultActivityDefinition, activityDefinition);
 
 		List<SocialActivityDefinition> activityDefinitions =
 			SocialActivitySettingLocalServiceUtil.getActivityDefinitions(
-				guestGroup.getGroupId(), TEST_MODEL);
+				_guestGroup.getGroupId(), TEST_MODEL);
 
 		Assert.assertNotNull(activityDefinitions);
 		Assert.assertEquals(1, activityDefinitions.size());
 		Assert.assertEquals(
-			defaultActivityDefinition, activityDefinitions.get(0));
+			_defaultActivityDefinition, activityDefinitions.get(0));
 	}
 
 	@Test
@@ -85,23 +85,23 @@ public class SocialActivitySettingLocalServiceTest {
 		long classNameId = PortalUtil.getClassNameId(TEST_MODEL);
 
 		boolean enabled = SocialActivitySettingLocalServiceUtil.isEnabled(
-			guestGroup.getGroupId(), classNameId);
+			_guestGroup.getGroupId(), classNameId);
 
 		Assert.assertFalse(enabled);
 
 		SocialActivitySettingLocalServiceUtil.updateActivitySetting(
-			guestGroup.getGroupId(), TEST_MODEL, true);
+			_guestGroup.getGroupId(), TEST_MODEL, true);
 
 		enabled = SocialActivitySettingLocalServiceUtil.isEnabled(
-			guestGroup.getGroupId(), classNameId);
+			_guestGroup.getGroupId(), classNameId);
 
 		Assert.assertTrue(enabled);
 	}
 
 	private static final String TEST_MODEL = "TEST_MODEL";
 
-	private SocialActivityDefinition defaultActivityDefinition;
+	private SocialActivityDefinition _defaultActivityDefinition;
 
-	private Group guestGroup;
+	private Group _guestGroup;
 
 }

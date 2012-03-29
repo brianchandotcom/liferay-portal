@@ -24,23 +24,6 @@ public class AddWCDWebContentTest extends BaseTestCase {
 	public void testAddWCDWebContent() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Web Content Display Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.clickAt("link=Web Content Display Test Page",
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -70,9 +53,25 @@ public class AddWCDWebContentTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[@id='cke_49_label' and .='Source']"));
-		selenium.clickAt("//span[@id='cke_49_label' and .='Source']",
+			selenium.getText("//span[.='Source']"));
+		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//a[@class='cke_button_source cke_on']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -94,8 +93,8 @@ public class AddWCDWebContentTest extends BaseTestCase {
 		selenium.type("//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea",
 			RuntimeVariables.replace("WC Web Content Content"));
 		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[@id='cke_49_label' and .='Source']"));
-		selenium.clickAt("//span[@id='cke_49_label' and .='Source']",
+			selenium.getText("//span[.='Source']"));
+		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
 
 		for (int second = 0;; second++) {

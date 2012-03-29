@@ -53,7 +53,9 @@ public class EventTimeComparator implements Comparator<CalEvent> {
 		Date startDate1 = null;
 		Date startDate2 = null;
 
-		if (event1.isRepeating() || event2.isRepeating()) {
+		boolean repeating = event1.isRepeating() || event2.isRepeating();
+
+		if (repeating) {
 			startDate1 = getNormalizedDate(
 				event1.getStartDate(), event1.isTimeZoneSensitive());
 			startDate2 = getNormalizedDate(
@@ -73,7 +75,7 @@ public class EventTimeComparator implements Comparator<CalEvent> {
 		Date endDate1 = null;
 		Date endDate2 = null;
 
-		if (event1.isRepeating() || event2.isRepeating()) {
+		if (repeating) {
 			endDate1 = getNormalizedDate(
 				CalUtil.getEndTime(event1), event1.isTimeZoneSensitive());
 			endDate2 = getNormalizedDate(

@@ -49,6 +49,9 @@ public interface UserFinder {
 		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public long[] findMinMaxUserIdByCompanyId(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public java.util.List<com.liferay.portal.model.User> findByNoAnnouncementsDeliveries(
 		java.lang.String type)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -57,6 +60,10 @@ public interface UserFinder {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<com.liferay.portal.model.User> findByNoGroups()
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.liferay.portal.model.User> findByC_UID(
+		long companyId, long userIdGT, long userIdLT)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<com.liferay.portal.model.User> findByC_FN_MN_LN_SN_EA_S(

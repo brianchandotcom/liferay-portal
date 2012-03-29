@@ -1574,6 +1574,28 @@
 				) AND (User_.status = ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.service.persistence.UserFinder.findByC_UID">
+		<![CDATA[
+			SELECT
+				{User_.*}
+			FROM
+				User_
+			WHERE
+				(User_.companyId = ?) AND
+				(User_.userId >= ?) AND
+				(User_.userId < ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.portal.service.persistence.UserFinder.findMinMaxIdByCompanyId">
+		<![CDATA[
+			SELECT
+				MIN(User_.userId) AS minUserId, MAX(User_.userId) AS maxUserId
+			FROM
+				User_
+			WHERE
+				(User_.companyId = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.service.persistence.UserFinder.findByNoAnnouncementsDeliveries">
 		<![CDATA[
 			SELECT

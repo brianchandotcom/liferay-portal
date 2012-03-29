@@ -992,6 +992,13 @@ public class UserLocalServiceWrapper implements UserLocalService,
 		return _userLocalService.getCompanyUsers(companyId, start, end);
 	}
 
+	public java.util.List<com.liferay.portal.model.User> getCompanyUsers(
+		long companyId, long lowerUserId, long upperUserId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _userLocalService.getCompanyUsers(companyId, lowerUserId,
+			upperUserId);
+	}
+
 	/**
 	* Returns the number of users belonging to the company.
 	*
@@ -1085,6 +1092,18 @@ public class UserLocalServiceWrapper implements UserLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _userLocalService.getGroupUsersCount(groupId, status);
+	}
+
+	/**
+	* Returns the lowest and the highest user id belonging to a company.
+	*
+	* @param companyId the companyId of the users
+	* @return the lowest and the highest user id belonging to a company
+	* @throws SystemException if a system exception occured
+	*/
+	public long[] getMinMaxUserIdByCompanyId(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _userLocalService.getMinMaxUserIdByCompanyId(companyId);
 	}
 
 	/**

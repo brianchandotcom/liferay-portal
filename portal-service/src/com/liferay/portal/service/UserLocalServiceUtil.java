@@ -1013,6 +1013,12 @@ public class UserLocalServiceUtil {
 		return getService().getCompanyUsers(companyId, start, end);
 	}
 
+	public static java.util.List<com.liferay.portal.model.User> getCompanyUsers(
+		long companyId, long lowerUserId, long upperUserId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getCompanyUsers(companyId, lowerUserId, upperUserId);
+	}
+
 	/**
 	* Returns the number of users belonging to the company.
 	*
@@ -1106,6 +1112,18 @@ public class UserLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getGroupUsersCount(groupId, status);
+	}
+
+	/**
+	* Returns the lowest and the highest user id belonging to a company.
+	*
+	* @param companyId the companyId of the users
+	* @return the lowest and the highest user id belonging to a company
+	* @throws SystemException if a system exception occured
+	*/
+	public static long[] getMinMaxUserIdByCompanyId(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getMinMaxUserIdByCompanyId(companyId);
 	}
 
 	/**

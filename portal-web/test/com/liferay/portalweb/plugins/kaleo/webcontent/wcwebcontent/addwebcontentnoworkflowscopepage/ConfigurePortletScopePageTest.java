@@ -92,10 +92,9 @@ public class ConfigurePortletScopePageTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.select("//select[@id='_86_scopeType']",
-			RuntimeVariables.replace("label=Select Layout"));
+			RuntimeVariables.replace("Select Page"));
 		selenium.select("//select[@id='_86_scopeLayoutUuid']",
-			RuntimeVariables.replace(
-				"label=Current Page (Web Content Display Page)"));
+			RuntimeVariables.replace("Current Page (Web Content Display Page)"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -103,7 +102,7 @@ public class ConfigurePortletScopePageTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals("Select Layout",
+		assertEquals("Select Page",
 			selenium.getSelectedLabel("//select[@id='_86_scopeType']"));
 		assertEquals("Current Page (Web Content Display Page)",
 			selenium.getSelectedLabel("//select[@id='_86_scopeLayoutUuid']"));

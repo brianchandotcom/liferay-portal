@@ -24,6 +24,9 @@ public class BrowseServerPluginsInstallationTest extends BaseTestCase {
 	public void testBrowseServerPluginsInstallation() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -31,7 +34,7 @@ public class BrowseServerPluginsInstallationTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -49,27 +52,9 @@ public class BrowseServerPluginsInstallationTest extends BaseTestCase {
 			RuntimeVariables.replace("Plugins Installation"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("//li[3]/span/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertTrue(selenium.isElementPresent(
-				"//input[@value='Install More Portlets']"));
-		selenium.select("//select[@id='_136_page']",
-			RuntimeVariables.replace("label=4"));
+		assertTrue(selenium.isVisible("//input[@value='Install More Portlets']"));
+		selenium.select("//select[@name='_136_page']",
+			RuntimeVariables.replace("4"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isTextPresent("Wiki"));
@@ -77,13 +62,12 @@ public class BrowseServerPluginsInstallationTest extends BaseTestCase {
 			RuntimeVariables.replace("Theme Plugins"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertTrue(selenium.isElementPresent(
-				"//input[@value='Install More Themes']"));
+		assertTrue(selenium.isVisible("//input[@value='Install More Themes']"));
 		selenium.clickAt("link=Layout Template Plugins",
 			RuntimeVariables.replace("Layout Template Plugins"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertTrue(selenium.isElementPresent(
+		assertTrue(selenium.isVisible(
 				"//input[@value='Install More Layout Templates']"));
 	}
 }

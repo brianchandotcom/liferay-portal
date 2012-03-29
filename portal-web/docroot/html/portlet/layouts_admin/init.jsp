@@ -28,6 +28,7 @@ page import="com.liferay.portal.NoSuchLayoutException" %><%@
 page import="com.liferay.portal.NoSuchLayoutRevisionException" %><%@
 page import="com.liferay.portal.NoSuchLayoutSetBranchException" %><%@
 page import="com.liferay.portal.NoSuchRoleException" %><%@
+page import="com.liferay.portal.PrototypeException" %><%@
 page import="com.liferay.portal.RemoteExportException" %><%@
 page import="com.liferay.portal.RemoteOptionsException" %><%@
 page import="com.liferay.portal.RequiredLayoutException" %><%@

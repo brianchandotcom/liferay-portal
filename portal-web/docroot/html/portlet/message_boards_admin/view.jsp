@@ -248,7 +248,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 
 							row.setBold(!MBThreadFlagLocalServiceUtil.hasThreadFlag(themeDisplay.getUserId(), thread));
 							row.setObject(new Object[] {message});
-							row.setRestricted(!MBMessagePermission.contains(permissionChecker, message, ActionKeys.VIEW));
+							row.setSkip(!MBMessagePermission.contains(permissionChecker, message, ActionKeys.VIEW));
 							%>
 
 							<liferay-portlet:renderURL varImpl="rowURL">
@@ -446,7 +446,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 
 					row.setBold(!MBThreadFlagLocalServiceUtil.hasThreadFlag(themeDisplay.getUserId(), thread));
 					row.setObject(new Object[] {message});
-					row.setRestricted(!MBMessagePermission.contains(permissionChecker, message, ActionKeys.VIEW));
+					row.setSkip(!MBMessagePermission.contains(permissionChecker, message, ActionKeys.VIEW));
 					%>
 
 					<liferay-portlet:renderURL varImpl="rowURL">

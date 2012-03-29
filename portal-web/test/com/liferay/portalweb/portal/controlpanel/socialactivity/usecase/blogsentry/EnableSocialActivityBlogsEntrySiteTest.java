@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class EnableSocialActivityBlogsEntrySiteTest extends BaseTestCase {
 	public void testEnableSocialActivityBlogsEntrySite()
 		throws Exception {
-		selenium.open("/web/guest/home/");
+		selenium.open("/web/site-name/");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));

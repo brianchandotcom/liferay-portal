@@ -32,11 +32,6 @@ public class FieldWeightSimilarity extends DefaultSimilarity {
 	}
 
 	@Override
-	public float lengthNorm(String fieldName, int numTerms) {
-		return 1;
-	}
-
-	@Override
 	public float queryNorm(float sumOfSquaredWeights) {
 		return 1;
 	}

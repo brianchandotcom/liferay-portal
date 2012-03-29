@@ -18,6 +18,6 @@
 
 <c:if test="<%= !themeDisplay.isFacebook() %>">
 	<aui:script>
-		Liferay.Portal.Tabs.show("<%= namespace + param %>", <%= namesJS %>, "<%= value %>");
+		Liferay.Portal.Tabs.show("<%= namespace + param %>", <%= namesJS %>, "<%= UnicodeFormatter.toString(value) %>");
 	</aui:script>
 </c:if>

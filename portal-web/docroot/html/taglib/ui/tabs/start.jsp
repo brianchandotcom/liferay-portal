@@ -138,7 +138,7 @@ String onClick = GetterUtil.getString((String)request.getAttribute("liferay-ui:t
 						curURL += "document." + namespace + formName + "." + namespace + param + ".value = '" + names[i] + "';";
 					}
 
-					curURL += "Liferay.Portal.Tabs.show('" + namespace + param + "', " + namesJS + ", '" + names[i] + "');";
+					curURL += "Liferay.Portal.Tabs.show('" + namespace + param + "', " + namesJS + ", '" + UnicodeFormatter.toString(names[i]) + "');";
 				}
 			}
 		}
@@ -150,8 +150,7 @@ String onClick = GetterUtil.getString((String)request.getAttribute("liferay-ui:t
 				curOnClick = onClick + "('" + curURL + "', '" + values[i] + "'); return false;";
 			}
 			else {
-				curOnClick = "Liferay.Portal.Tabs.show('" + namespace + param + "', " + namesJS + ", '" + names[i] + "', " + onClick + ");";
-
+				curOnClick = "Liferay.Portal.Tabs.show('" + namespace + param + "', " + namesJS + ", '" + UnicodeFormatter.toString(names[i]) + "', " + onClick + ");";
 				curURL = "javascript:;";
 			}
 		}

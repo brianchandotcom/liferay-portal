@@ -25,6 +25,9 @@ public class AddWebContentNoWorkflowScopePageTest extends BaseTestCase {
 		throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -32,7 +35,7 @@ public class AddWebContentNoWorkflowScopePageTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -104,9 +107,25 @@ public class AddWebContentNoWorkflowScopePageTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[@id='cke_49_label' and .='Source']"));
-		selenium.clickAt("//span[@id='cke_49_label' and .='Source']",
+			selenium.getText("//span[.='Source']"));
+		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//a[@class='cke_button_source cke_on']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -128,8 +147,8 @@ public class AddWebContentNoWorkflowScopePageTest extends BaseTestCase {
 		selenium.type("//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea",
 			RuntimeVariables.replace("Web Content Content"));
 		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[@id='cke_49_label' and .='Source']"));
-		selenium.clickAt("//span[@id='cke_49_label' and .='Source']",
+			selenium.getText("//span[.='Source']"));
+		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
 
 		for (int second = 0;; second++) {

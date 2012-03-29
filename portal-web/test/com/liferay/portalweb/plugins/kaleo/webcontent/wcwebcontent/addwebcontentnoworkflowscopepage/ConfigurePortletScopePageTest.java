@@ -92,10 +92,9 @@ public class ConfigurePortletScopePageTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.select("//select[@id='_86_scopeType']",
-			RuntimeVariables.replace("label=Select Page"));
+			RuntimeVariables.replace("Select Page"));
 		selenium.select("//select[@id='_86_scopeLayoutUuid']",
-			RuntimeVariables.replace(
-				"label=Current Page (Web Content Display Page)"));
+			RuntimeVariables.replace("Current Page (Web Content Display Page)"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

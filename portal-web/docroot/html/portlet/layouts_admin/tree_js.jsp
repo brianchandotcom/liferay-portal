@@ -154,7 +154,7 @@ if (!selectableTree) {
 						id: TreeUtil.createListItemId(node.layoutId, node.plid),
 						type: '<%= selectableTree ? "task" : "io" %>'
 						<c:if test='<%= !saveState && defaultStateChecked %>'>
-							,checked: true
+							, checked: true
 						</c:if>
 					};
 

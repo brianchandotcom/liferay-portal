@@ -141,29 +141,27 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 					if (layoutsExportTreeOutput) {
 						var treeView = layoutsExportTreeOutput.getData('treeInstance');
 
-						var children = treeView.getChildren(true);
 						var layoutIds = [];
-						var length = children.length;
-						var regExpLayoutId = /layoutId_(\d+)/;
 
-						for (var i in children) {
-							var child = children[i];
+						var regexLayoutId = /layoutId_(\d+)/;
 
-							if (child.isChecked()) {
-								var layoutIdMatch = regExpLayoutId.exec(child.get('id'));
+						treeView.eachChildren(
+							function(item, index, collection) {
+								if (item.isChecked()) {
+									var match = regexLayoutId.exec(item.get('id'));
 
-								if (layoutIdMatch) {
-									var layoutId = layoutIdMatch[1];
-
-									layoutIds.push(
-										{
-											"includeChildren": !child.hasChildNodes(),
-											"layoutId": layoutId
-										}
-									);
+									if (match) {
+										layoutIds.push(
+											{
+												includeChildren: !item.hasChildNodes(),
+												layoutId: match[1]
+											}
+										);
+									}
 								}
-							}
-						}
+							},
+							true
+						);
 
 						var layoutIdsInput = A.one('#<portlet:namespace />layoutIds');
 

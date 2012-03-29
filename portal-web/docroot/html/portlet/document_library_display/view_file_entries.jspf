@@ -27,7 +27,7 @@
 	<%
 	RowChecker rowChecker = null;
 
-	if (showActions) {
+	if (showActions && showDeleteButton) {
 		rowChecker = new RowChecker(renderResponse);
 	}
 	%>
@@ -126,7 +126,7 @@
 
 		</liferay-ui:search-container-row>
 
-		<c:if test="<%= (total > 0) && showActions %>">
+		<c:if test="<%= (total > 0) && showActions && showDeleteButton %>">
 			<aui:button onClick='<%= renderResponse.getNamespace() + "deleteEntries();" %>' value="delete" />
 		</c:if>
 

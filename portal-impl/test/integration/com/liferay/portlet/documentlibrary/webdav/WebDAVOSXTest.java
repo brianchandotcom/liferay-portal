@@ -21,8 +21,6 @@ import com.liferay.portal.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.webdav.methods.Method;
 
-import java.io.File;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,9 +43,14 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 
 	@Test
 	public void testMSOffice0Setup() throws Exception {
-		_testFileBytes = FileUtil.getBytes(new File(_OFFICE_TEST_DOCX));
-		_testMetaBytes = FileUtil.getBytes(new File(_OFFICE_TEST_META_DOCX));
-		_testDeltaBytes = FileUtil.getBytes(new File(_OFFICE_TEST_DELTA_DOCX));
+		Class<?> clazz = getClass();
+
+		_testFileBytes = FileUtil.getBytes(
+			clazz.getResourceAsStream(_OFFICE_TEST_DOCX));
+		_testMetaBytes = FileUtil.getBytes(
+			clazz.getResourceAsStream(_OFFICE_TEST_META_DOCX));
+		_testDeltaBytes = FileUtil.getBytes(
+			clazz.getResourceAsStream(_OFFICE_TEST_DELTA_DOCX));
 	}
 
 	@Test
@@ -357,16 +360,13 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 	}
 
 	private static final String _OFFICE_TEST_DELTA_DOCX =
-		WebDAVOSXTest._OFFICE_TEST_FILE_PREFIX + "OSX_Test_Delta.docx";
+		"dependencies/OSX_Test_Delta.docx";
 
 	private static final String _OFFICE_TEST_DOCX =
-		WebDAVOSXTest._OFFICE_TEST_FILE_PREFIX + "OSX_Test.docx";
-
-	private static final String _OFFICE_TEST_FILE_PREFIX =
-		"portal-impl/test/integration/com/liferay/portal/webdav/dependencies/";
+		"dependencies/OSX_Test.docx";
 
 	private static final String _OFFICE_TEST_META_DOCX =
-		_OFFICE_TEST_FILE_PREFIX + "OSX_Test_Meta.docx";
+		"dependencies/OSX_Test_Meta.docx";
 
 	private static final String _TEMP_FILE_NAME_1 = "Word Work File D_1.tmp";
 

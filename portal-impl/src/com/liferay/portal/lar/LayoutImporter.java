@@ -398,14 +398,6 @@ public class LayoutImporter {
 			ServiceContextThreadLocal.getServiceContext();
 
 		if (Validator.isNotNull(layoutSetPrototypeUuid)) {
-			if (layoutSetPrototypeLinkEnabled) {
-				if (publishToRemote) {
-					importLayoutSetPrototype(
-						portletDataContext, user, layoutSetPrototypeUuid,
-						serviceContext);
-				}
-			}
-
 			layoutSet.setLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
 			layoutSet.setLayoutSetPrototypeLinkEnabled(
 				layoutSetPrototypeLinkEnabled);

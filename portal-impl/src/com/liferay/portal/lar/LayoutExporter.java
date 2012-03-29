@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -78,13 +77,9 @@ import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.lar.JournalPortletDataHandlerImpl;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.portlet.sites.util.SitesUtil;
 import com.liferay.util.ContentUtil;
 
-import de.schlichtherle.io.FileInputStream;
-
 import java.io.File;
-import java.io.InputStream;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -421,32 +416,7 @@ public class LayoutExporter {
 			layoutsElement.addAttribute(
 				"layout-set-prototype-uuid", layoutSetPrototypeUuid);
 
-			if (publishToRemote) {
-				String path = getLayoutSetPrototype(
-					portletDataContext, layoutSetPrototypeUuid);
-
-				File layoutSetPrototypeFile = null;
-
-				InputStream inputStream = null;
-
-				try {
-					layoutSetPrototypeFile = SitesUtil.exportLayoutSetPrototype(
-						layoutSetPrototype, serviceContext);
-
-					inputStream = new FileInputStream(layoutSetPrototypeFile);
-
-					portletDataContext.addZipEntry(
-						path.concat(".lar"), inputStream);
-					portletDataContext.addZipEntry(
-						path.concat(".xml"), layoutSetPrototype);
-				}
-				finally {
-					StreamUtil.cleanUp(inputStream);
-
-					FileUtil.delete(layoutSetPrototypeFile);
-				}
 			}
-		}
 
 		for (Layout layout : layouts) {
 			exportLayout(

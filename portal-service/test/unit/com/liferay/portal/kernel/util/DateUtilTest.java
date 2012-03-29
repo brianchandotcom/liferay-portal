@@ -25,10 +25,12 @@ import java.text.SimpleDateFormat;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -44,8 +46,6 @@ public class DateUtilTest extends PowerMockito {
 
 	@Test
 	public void testGetDaysBetweenSame() throws Exception {
-		DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
-
 		_testGetDaysBetween(new Date(), new Date(), 0);
 	}
 

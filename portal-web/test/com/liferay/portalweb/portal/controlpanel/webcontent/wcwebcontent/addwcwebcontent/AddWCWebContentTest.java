@@ -53,7 +53,7 @@ public class AddWCWebContentTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.clickAt("//input[@value='Add']",
-			RuntimeVariables.replace("Add Web Content"));
+			RuntimeVariables.replace("Add"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_15_title_en_US']",

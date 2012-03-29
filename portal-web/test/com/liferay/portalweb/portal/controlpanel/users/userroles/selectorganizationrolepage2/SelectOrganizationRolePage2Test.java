@@ -24,6 +24,9 @@ public class SelectOrganizationRolePage2Test extends BaseTestCase {
 	public void testSelectOrganizationRolePage2() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -31,7 +34,7 @@ public class SelectOrganizationRolePage2Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -73,7 +76,8 @@ public class SelectOrganizationRolePage2Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@id='_125_roles']/span/a/span")) {
+				if (selenium.isVisible(
+							"xPath=(//div[@id='_125_roles']/span/a/span)[2]")) {
 					break;
 				}
 			}
@@ -84,8 +88,8 @@ public class SelectOrganizationRolePage2Test extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Select"),
-			selenium.getText("//div[@id='_125_roles']/span/a/span"));
-		selenium.clickAt("//div[@id='_125_roles']/span/a/span",
+			selenium.getText("xPath=(//div[@id='_125_roles']/span/a/span)[2]"));
+		selenium.clickAt("xPath=(//div[@id='_125_roles']/span/a/span)[2]",
 			RuntimeVariables.replace("Select"));
 		Thread.sleep(5000);
 		selenium.selectWindow("title=Users and Organizations");

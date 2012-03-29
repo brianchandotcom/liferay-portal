@@ -2390,7 +2390,7 @@
 	</library>
 	<library>
 		<file-name>portal/lucene-analyzers.jar</file-name>
-		<version>3.0.3</version>
+		<version>3.5.0</version>
 		<project-name>Lucene Analyzers</project-name>
 		<project-url>http://lucene.apache.org</project-url>
 		<licenses>
@@ -2401,7 +2401,7 @@
 	</library>
 	<library>
 		<file-name>portal/lucene-core.jar</file-name>
-		<version>3.0.3</version>
+		<version>3.5.0</version>
 		<project-name>Lucene</project-name>
 		<project-url>http://lucene.apache.org</project-url>
 		<licenses>
@@ -2412,7 +2412,7 @@
 	</library>
 	<library>
 		<file-name>portal/lucene-highlighter.jar</file-name>
-		<version>3.0.3</version>
+		<version>3.5.0</version>
 		<project-name>Lucene Highlighter</project-name>
 		<project-url>http://lucene.apache.org</project-url>
 		<licenses>
@@ -2423,7 +2423,7 @@
 	</library>
 	<library>
 		<file-name>portal/lucene-memory.jar</file-name>
-		<version>3.0.3</version>
+		<version>3.5.0</version>
 		<project-name>Lucene Memory</project-name>
 		<project-url>http://lucene.apache.org</project-url>
 		<licenses>

@@ -176,12 +176,6 @@ public class EditPermissionsAction extends EditConfigurationAction {
 	protected void updateRolePermissions(ActionRequest actionRequest)
 		throws Exception {
 
-		updateRolePermissions_6(actionRequest);
-	}
-
-	protected void updateRolePermissions_6(ActionRequest actionRequest)
-		throws Exception {
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 

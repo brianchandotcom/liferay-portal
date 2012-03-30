@@ -51,9 +51,9 @@ else if ((role.getType() == RoleConstants.TYPE_ORGANIZATION) || (role.getType() 
 	scopes = new int[] {ResourceConstants.SCOPE_GROUP_TEMPLATE};
 }
 
-List<Permission> permissions = null;
+List<Object[]> permissions = null;
 
-permissions = new ArrayList<Permission>();
+permissions = new ArrayList<Object[]>();
 
 List<ResourcePermission> resourcePermissions = ResourcePermissionLocalServiceUtil.getRoleResourcePermissions(role.getRoleId(), scopes, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
@@ -62,12 +62,12 @@ for (ResourcePermission resourcePermission : resourcePermissions) {
 
 	for (ResourceAction resourceAction : resourceActions) {
 		if (ResourcePermissionLocalServiceUtil.hasActionId(resourcePermission, resourceAction)) {
-			Permission permission = new PermissionImpl();
+			Object[] permission = new Object[4];
 
-			permission.setName(resourcePermission.getName());
-			permission.setScope(resourcePermission.getScope());
-			permission.setPrimKey(resourcePermission.getPrimKey());
-			permission.setActionId(resourceAction.getActionId());
+			permission[0] = resourcePermission.getName();
+			permission[1] = resourcePermission.getScope();
+			permission[2] = resourcePermission.getPrimKey();
+			permission[3] = resourceAction.getActionId();
 
 			permissions.add(permission);
 		}
@@ -80,24 +80,24 @@ for (ResourceTypePermission resourceTypePermission : resourceTypePermissions) {
 	List<String> actionIds = ResourceBlockLocalServiceUtil.getActionIds(resourceTypePermission.getName(), resourceTypePermission.getActionIds());
 
 	for (String actionId : actionIds) {
-		Permission permission = new PermissionImpl();
+        Object[] permission = new Object[4];
 
-		permission.setName(resourceTypePermission.getName());
+		permission[0] = resourceTypePermission.getName();
 
 		if (role.getType() == RoleConstants.TYPE_REGULAR) {
 			if (resourceTypePermission.isCompanyScope()) {
-				permission.setScope(ResourceConstants.SCOPE_COMPANY);
+				permission[1] = ResourceConstants.SCOPE_COMPANY;
 			}
 			else {
-				permission.setScope(ResourceConstants.SCOPE_GROUP);
+				permission[1] = ResourceConstants.SCOPE_GROUP;
 			}
 		}
 		else {
-			permission.setScope(ResourceConstants.SCOPE_GROUP_TEMPLATE);
+			permission[1] = ResourceConstants.SCOPE_GROUP_TEMPLATE;
 		}
 
-		permission.setPrimKey(String.valueOf(resourceTypePermission.getGroupId()));
-		permission.setActionId(actionId);
+		permission[2] = String.valueOf(resourceTypePermission.getGroupId());
+		permission[3] = actionId;
 
 		permissions.add(permission);
 	}
@@ -106,22 +106,22 @@ for (ResourceTypePermission resourceTypePermission : resourceTypePermissions) {
 List<PermissionDisplay> permissionsDisplay = new ArrayList<PermissionDisplay>(permissions.size());
 
 for (int i = 0; i < permissions.size(); i++) {
-	Permission permission = permissions.get(i);
+	Object[] permission = permissions.get(i);
 
 	Resource resource = null;
 
 	resource = new ResourceImpl();
 
 	resource.setCompanyId(themeDisplay.getCompanyId());
-	resource.setName(permission.getName());
-	resource.setScope(permission.getScope());
-	resource.setPrimKey(permission.getPrimKey());
+	resource.setName((String)permission[0]);
+	resource.setScope((Integer)permission[1]);
+	resource.setPrimKey((String)permission[2]);
 
 	String curPortletName = null;
 	String curPortletLabel = null;
 	String curModelName = null;
 	String curModelLabel = null;
-	String actionId = permission.getActionId();
+	String actionId = (String)permission[4];
 	String actionLabel = ResourceActionsUtil.getAction(pageContext, actionId);
 
 	if (PortletLocalServiceUtil.hasPortlet(company.getCompanyId(), resource.getName())) {
@@ -175,7 +175,7 @@ List resultRows = searchContainer.getResultRows();
 for (int i = 0; i < results.size(); i++) {
 	PermissionDisplay permissionDisplay = (PermissionDisplay)results.get(i);
 
-	Permission permission = permissionDisplay.getPermission();
+	Object[] permission = permissionDisplay.getPermission();
 	Resource resource = permissionDisplay.getResource();
 	String curResource = resource.getName();
 	String curPortletName = permissionDisplay.getPortletName();

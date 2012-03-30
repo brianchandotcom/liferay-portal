@@ -15,6 +15,8 @@
 package com.liferay.portalweb.properties.managepages.layouttypes.savepagetypewebcontent;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.AddWCWebContentTest;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.TearDownWCWebContentTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 
 import junit.framework.Test;
@@ -27,9 +29,9 @@ public class SavePageTypeWebContentTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddPageTest.class);
-		testSuite.addTestSuite(AddWebContentTest.class);
+		testSuite.addTestSuite(AddWCWebContentTest.class);
 		testSuite.addTestSuite(SavePageTypeWebContentTest.class);
-		testSuite.addTestSuite(TearDownWebContentTest.class);
+		testSuite.addTestSuite(TearDownWCWebContentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

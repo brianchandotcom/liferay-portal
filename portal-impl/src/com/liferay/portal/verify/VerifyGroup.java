@@ -159,8 +159,8 @@ public class VerifyGroup extends VerifyProcess {
 			GroupLocalServiceUtil.updateGroup(
 				group.getGroupId(), typeSettingsProperties.toString());
 		}
-
 	}
+
 	protected void verifyStagedGroups() throws Exception {
 		List<Group> groups = GroupLocalServiceUtil.getLiveGroups();
 

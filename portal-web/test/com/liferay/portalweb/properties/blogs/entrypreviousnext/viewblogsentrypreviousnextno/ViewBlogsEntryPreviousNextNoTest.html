@@ -14,9 +14,34 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>clickAtAndWait</td>
 	<td>link=Blogs Test Page</td>
 	<td>Blogs Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='entry-title']/h2/a)[1]</td>
+	<td>Blogs Entry2 Title</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>xPath=(//div[@class='entry-title']/h2/a)[1]</td>
+	<td>Blogs Entry2 Title</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Previous</td>
+	<td>Previous</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Next</td>
+	<td>Next</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -25,13 +50,13 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='entry-title']/h2/a</td>
-	<td>Blogs Entry2 Title</td>
+	<td>xPath=(//div[@class='entry-title']/h2/a)[2]</td>
+	<td>Blogs Entry1 Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[@class='entry-title']/h2/a</td>
-	<td>Blogs Entry2 Title</td>
+	<td>xPath=(//div[@class='entry-title']/h2/a)[2]</td>
+	<td>Blogs Entry1 Title</td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>

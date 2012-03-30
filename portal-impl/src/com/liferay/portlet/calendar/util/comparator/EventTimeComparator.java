@@ -80,13 +80,17 @@ public class EventTimeComparator implements Comparator<CalEvent> {
 
 	protected Long getDuration(CalEvent event) {
 		return (Time.HOUR * event.getDurationHour()) +
-		(Time.MINUTE * event.getDurationMinute());
+			(Time.MINUTE * event.getDurationMinute());
 	}
 
 	protected Date getStartDate(
 		CalEvent event, TimeZone timeZone, boolean repeating) {
 
 		if (repeating) {
+
+			// Normalize the start date of the event when at least one of the
+			// events is a recurring event
+
 			Calendar calendar = null;
 
 			if (event.isTimeZoneSensitive()) {

@@ -111,7 +111,7 @@ portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 
 		row.setBold(!MBThreadFlagLocalServiceUtil.hasThreadFlag(themeDisplay.getUserId(), thread));
 		row.setObject(new Object[] {message, threadSubscriptionClassPKs});
-		row.setRestricted(!MBMessagePermission.contains(permissionChecker, message, ActionKeys.VIEW));
+		row.setSkip(!MBMessagePermission.contains(permissionChecker, message, ActionKeys.VIEW));
 		%>
 
 		<liferay-portlet:renderURL varImpl="rowURL">

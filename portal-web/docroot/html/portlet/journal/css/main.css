@@ -154,10 +154,8 @@
 		}
 	}
 
-	.lfr-app-column-view {
-		.lfr-app-column-view-content {
-			background-color: #FAFAFA;
-		}
+	.lfr-app-column-view .lfr-app-column-view-content {
+		background-color: #FAFAFA;
 	}
 
 	.lfr-actions {
@@ -472,7 +470,7 @@
 		}
 
 		li.selected {
-			background-color: #00a2ea;
+			background-color: #00A2EA;
 
 			a {
 				font-weight: bold;

@@ -27,5 +27,5 @@ if (displayStyle.equals("simple")) {
 <a class="twitter-share-button" data-count="<%= twitterDisplayStyle %>" data-lang="<%= locale.getDisplayLanguage() %>" data-text="<%= HtmlUtil.escapeAttribute(title) %>" data-url="<%= url %>" href="http://twitter.com/share"><liferay-ui:message key="tweet" /></a>
 
 <liferay-util:html-bottom outputKey="twitter">
-	<script src="http://platform.twitter.com/widgets.js" type="text/javascript"></script>
+	<script src="https://platform.twitter.com/widgets.js" type="text/javascript"></script>
 </liferay-util:html-bottom>

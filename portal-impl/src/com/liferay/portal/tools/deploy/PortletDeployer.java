@@ -119,11 +119,6 @@ public class PortletDeployer extends BaseDeployer {
 
 		StringBundler sb = new StringBundler();
 
-		String extraContent = super.getExtraContent(
-			webXmlVersion, srcFile, displayName);
-
-		sb.append(extraContent);
-
 		if (ServerDetector.isWebSphere()) {
 			sb.append("<context-param>");
 			sb.append("<param-name>");
@@ -157,13 +152,10 @@ public class PortletDeployer extends BaseDeployer {
 			sb.append("</listener>");
 		}
 
-		// PortletContextListener
+		String extraContent = super.getExtraContent(
+			webXmlVersion, srcFile, displayName);
 
-		sb.append("<listener>");
-		sb.append("<listener-class>");
-		sb.append("com.liferay.portal.kernel.servlet.PortletContextListener");
-		sb.append("</listener-class>");
-		sb.append("</listener>");
+		sb.append(extraContent);
 
 		return sb.toString();
 	}
@@ -191,6 +183,21 @@ public class PortletDeployer extends BaseDeployer {
 
 		sb.append(
 			getServletContextIncludeFiltersContent(webXmlVersion, srcFile));
+
+		return sb.toString();
+	}
+
+	@Override
+	public String getPluginContextListener() {
+		StringBundler sb = new StringBundler(5);
+
+		// PortletContextListener
+
+		sb.append("<listener>");
+		sb.append("<listener-class>");
+		sb.append("com.liferay.portal.kernel.servlet.PortletContextListener");
+		sb.append("</listener-class>");
+		sb.append("</listener>");
 
 		return sb.toString();
 	}

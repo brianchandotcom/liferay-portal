@@ -103,8 +103,8 @@ public class MBeanRegistry {
 					_mBeanServer.unregisterMBean(defaultObjectName);
 				}
 				catch (InstanceNotFoundException infe) {
-					if (_log.isInfoEnabled()) {
-						_log.info(
+					if (_log.isDebugEnabled()) {
+						_log.debug(
 							"Unable to unregister " + defaultObjectName, infe);
 					}
 				}

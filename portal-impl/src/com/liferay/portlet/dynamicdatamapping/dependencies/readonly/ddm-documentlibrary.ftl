@@ -17,3 +17,5 @@
 <@aui["field-wrapper"] label=label>
 	<a href="${fileEntryURL}">${fileEntryTitle}</a>
 </@>
+
+<@aui.input name=namespacedFieldName type="hidden" value=fieldRawValue />

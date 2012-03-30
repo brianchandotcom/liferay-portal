@@ -124,7 +124,7 @@
 
 				Liferay.Util.openWindow(
 					{
-						id: '${portletNamespace}selectDocumentLibrary'
+						id: '${portletNamespace}selectDocumentLibrary',
 						uri: portletURL.toString()
 					}
 				);

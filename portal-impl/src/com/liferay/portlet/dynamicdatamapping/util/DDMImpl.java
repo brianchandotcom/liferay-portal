@@ -265,6 +265,8 @@ public class DDMImpl implements DDM {
 
 		InputStream inputStream = null;
 
+		Fields fields = StorageEngineUtil.getFields(storageId);
+
 		try {
 			inputStream = uploadRequest.getFileAsStream(
 				fieldNamespace + fieldName, true);
@@ -285,8 +287,9 @@ public class DDMImpl implements DDM {
 
 				fieldValue = recordFileJSONObject.toString();
 			}
-
-			Fields fields = new Fields();
+			else if (fields.contains(fieldName)) {
+				return StringPool.BLANK;
+			}
 
 			Field field = new Field(structureId, fieldName, fieldValue);
 

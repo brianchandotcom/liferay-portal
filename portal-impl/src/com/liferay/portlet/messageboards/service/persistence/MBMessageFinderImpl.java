@@ -117,6 +117,12 @@ public class MBMessageFinderImpl
 			groupId, userId, categoryIds, anonymous, status, false);
 	}
 
+	public int filterCountByG_C_S(long groupId, long[] categoryIds, int status)
+		throws SystemException {
+
+		return doCountByG_U_C_S(groupId, 0, categoryIds, status, true);
+	}
+
 	public int filterCountByG_U_C_S(
 			long groupId, long userId, long[] categoryIds, int status)
 		throws SystemException {
@@ -131,6 +137,14 @@ public class MBMessageFinderImpl
 
 		return doCountByG_U_C_A_S(
 			groupId, userId, categoryIds, anonymous, status, true);
+	}
+
+	public List<Long> filterFindByG_C_S(
+			long groupId, long[] categoryIds, int status, int start, int end)
+		throws SystemException {
+
+		return doFindByG_U_C_S(
+			groupId, 0, categoryIds, status, start, end, true);
 	}
 
 	public List<Long> filterFindByG_U_C_S(
@@ -203,6 +217,10 @@ public class MBMessageFinderImpl
 
 			String sql = CustomSQLUtil.get(COUNT_BY_G_U_C_S);
 
+			if (userId <= 0) {
+				sql = StringUtil.replace(sql, USER_ID_SQL, StringPool.BLANK);
+			}
+
 			if ((categoryIds == null) || (categoryIds.length == 0)) {
 				sql = StringUtil.replace(
 					sql, "(currentMessage.categoryId = ?) AND",
@@ -234,7 +252,10 @@ public class MBMessageFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(groupId);
-			qPos.add(userId);
+
+			if (userId > 0) {
+				qPos.add(userId);
+			}
 
 			if (status != WorkflowConstants.STATUS_ANY) {
 				qPos.add(status);
@@ -342,6 +363,10 @@ public class MBMessageFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_G_U_C_S);
 
+			if (userId <= 0) {
+				sql = StringUtil.replace(sql, USER_ID_SQL, StringPool.BLANK);
+			}
+
 			if ((categoryIds == null) || (categoryIds.length == 0)) {
 				sql = StringUtil.replace(
 					sql, "(currentMessage.categoryId = ?) AND",
@@ -373,7 +398,10 @@ public class MBMessageFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(groupId);
-			qPos.add(userId);
+
+			if (userId > 0) {
+				qPos.add(userId);
+			}
 
 			if (status != WorkflowConstants.STATUS_ANY) {
 				qPos.add(status);
@@ -448,5 +476,8 @@ public class MBMessageFinderImpl
 			closeSession(session);
 		}
 	}
+
+	protected static final String USER_ID_SQL =
+		"AND (currentMessage.userId = ?)";
 
 }

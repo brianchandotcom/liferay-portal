@@ -110,7 +110,7 @@ public class ConfigurePortletScopeLayoutCurrentPagePage2Test
 		}
 
 		selenium.select("//select[@id='_86_scopeType']",
-			RuntimeVariables.replace("Select Layout"));
+			RuntimeVariables.replace("Select Page"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

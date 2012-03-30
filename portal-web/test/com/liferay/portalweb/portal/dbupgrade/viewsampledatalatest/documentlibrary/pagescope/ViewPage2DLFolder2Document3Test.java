@@ -93,7 +93,7 @@ public class ViewPage2DLFolder2Document3Test extends BaseTestCase {
 		}
 
 		assertTrue(selenium.isVisible(
-				"//img[@src='/html/themes/classic/images/file_system/large/default.png']"));
+				"xPath=(//span[@class='document-thumbnail']/img)[2]"));
 		assertEquals(RuntimeVariables.replace("DL Folder2 Document3 Title.txt"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"));
@@ -120,8 +120,7 @@ public class ViewPage2DLFolder2Document3Test extends BaseTestCase {
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("DL Folder2 Document3 Title.txt"),
 			selenium.getText("//h2[@class='document-title']"));
-		assertTrue(selenium.isVisible(
-				"//img[@src='/html/themes/classic/images/file_system/large/default.png']"));
+		assertTrue(selenium.isVisible("//span[@class='document-thumbnail']/img"));
 		assertTrue(selenium.isPartialText("//span[@class='user-date']",
 				"Uploaded by Joe Bloggs"));
 		assertEquals(RuntimeVariables.replace("Version 1.0"),
@@ -213,7 +212,7 @@ public class ViewPage2DLFolder2Document3Test extends BaseTestCase {
 		}
 
 		assertTrue(selenium.isVisible(
-				"//img[@src='/html/themes/classic/images/file_system/large/default.png']"));
+				"xPath=(//span[@class='document-thumbnail']/img)[2]"));
 		assertEquals(RuntimeVariables.replace("DL Folder2 Document3 Title.txt"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"));
@@ -240,8 +239,7 @@ public class ViewPage2DLFolder2Document3Test extends BaseTestCase {
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("DL Folder2 Document3 Title.txt"),
 			selenium.getText("//h2[@class='document-title']"));
-		assertTrue(selenium.isVisible(
-				"//img[@src='/html/themes/classic/images/file_system/large/default.png']"));
+		assertTrue(selenium.isVisible("//span[@class='document-thumbnail']/img"));
 		assertTrue(selenium.isPartialText("//span[@class='user-date']",
 				"Uploaded by Joe Bloggs"));
 		assertEquals(RuntimeVariables.replace("Version 1.0"),

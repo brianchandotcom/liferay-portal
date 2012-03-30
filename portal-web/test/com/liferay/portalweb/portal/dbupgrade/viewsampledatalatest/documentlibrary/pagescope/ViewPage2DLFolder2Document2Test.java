@@ -92,8 +92,7 @@ public class ViewPage2DLFolder2Document2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertTrue(selenium.isVisible(
-				"//img[@src='/html/themes/classic/images/file_system/large/spreadsheet.png']"));
+		assertTrue(selenium.isVisible("//span[@class='document-thumbnail']/img"));
 		assertEquals(RuntimeVariables.replace("DL Folder2 Document2 Title.xls"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
@@ -120,8 +119,7 @@ public class ViewPage2DLFolder2Document2Test extends BaseTestCase {
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("DL Folder2 Document2 Title.xls"),
 			selenium.getText("//h2[@class='document-title']"));
-		assertTrue(selenium.isVisible(
-				"//img[@src='/html/themes/classic/images/file_system/large/spreadsheet.png']"));
+		assertTrue(selenium.isVisible("//span[@class='document-thumbnail']/img"));
 		assertTrue(selenium.isPartialText("//span[@class='user-date']",
 				"Uploaded by Joe Bloggs"));
 		assertEquals(RuntimeVariables.replace("Version 1.0"),
@@ -213,8 +211,7 @@ public class ViewPage2DLFolder2Document2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertTrue(selenium.isVisible(
-				"//img[@src='/html/themes/classic/images/file_system/large/spreadsheet.png']"));
+		assertTrue(selenium.isVisible("//span[@class='document-thumbnail']/img"));
 		assertEquals(RuntimeVariables.replace("DL Folder2 Document2 Title.xls"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
@@ -241,8 +238,7 @@ public class ViewPage2DLFolder2Document2Test extends BaseTestCase {
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("DL Folder2 Document2 Title.xls"),
 			selenium.getText("//h2[@class='document-title']"));
-		assertTrue(selenium.isVisible(
-				"//img[@src='/html/themes/classic/images/file_system/large/spreadsheet.png']"));
+		assertTrue(selenium.isVisible("//span[@class='document-thumbnail']/img"));
 		assertTrue(selenium.isPartialText("//span[@class='user-date']",
 				"Uploaded by Joe Bloggs"));
 		assertEquals(RuntimeVariables.replace("Version 1.0"),

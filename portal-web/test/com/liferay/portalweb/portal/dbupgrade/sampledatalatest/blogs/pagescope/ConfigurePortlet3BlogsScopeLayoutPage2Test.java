@@ -134,8 +134,8 @@ public class ConfigurePortlet3BlogsScopeLayoutPage2Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Scope"),
 			selenium.getText("//label[@for='scopeType']"));
 		selenium.select("//select[@id='_86_scopeType']",
-			RuntimeVariables.replace("Select Layout"));
-		assertEquals(RuntimeVariables.replace("Scope Layout"),
+			RuntimeVariables.replace("Select Page"));
+		assertEquals(RuntimeVariables.replace("Scope Page"),
 			selenium.getText("//label[@for='scopeLayoutUuid']"));
 		selenium.select("//select[@id='_86_scopeLayoutUuid']",
 			RuntimeVariables.replace("Blogs Test Page2"));
@@ -146,7 +146,7 @@ public class ConfigurePortlet3BlogsScopeLayoutPage2Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals("Select Layout",
+		assertEquals("Select Page",
 			selenium.getSelectedLabel("//select[@id='_86_scopeType']"));
 		assertEquals("Blogs Test Page2",
 			selenium.getSelectedLabel("//select[@id='_86_scopeLayoutUuid']"));

@@ -85,7 +85,7 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			selenium.getText("//a[@class='next']"));
 		assertEquals(RuntimeVariables.replace("Last"),
 			selenium.getText("//a[@class='last']"));
-		selenium.select("//select[@id='_33_page']",
+		selenium.select("//select[@name='_33_page']",
 			RuntimeVariables.replace("label=2"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
@@ -124,7 +124,7 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			selenium.getText("//span[@class='next']"));
 		assertEquals(RuntimeVariables.replace("Last"),
 			selenium.getText("//span[@class='last']"));
-		selenium.select("//select[@id='_33_page']",
+		selenium.select("//select[@name='_33_page']",
 			RuntimeVariables.replace("label=1"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
@@ -396,7 +396,7 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			selenium.getText("//a[@class='next']"));
 		assertEquals(RuntimeVariables.replace("Last"),
 			selenium.getText("//a[@class='last']"));
-		selenium.select("//select[@id='_33_page']",
+		selenium.select("//select[@name='_33_page']",
 			RuntimeVariables.replace("label=2"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
@@ -435,7 +435,7 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			selenium.getText("//span[@class='next']"));
 		assertEquals(RuntimeVariables.replace("Last"),
 			selenium.getText("//span[@class='last']"));
-		selenium.select("//select[@id='_33_page']",
+		selenium.select("//select[@name='_33_page']",
 			RuntimeVariables.replace("label=1"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();

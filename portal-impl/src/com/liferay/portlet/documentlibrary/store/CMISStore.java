@@ -31,7 +31,6 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -458,11 +457,7 @@ public class CMISStore extends BaseStore {
 	protected Document getDocument(Folder parentFolder, String name) {
 		ItemIterable<CmisObject> cmisObjects = parentFolder.getChildren();
 
-		Iterator<CmisObject> itr = cmisObjects.iterator();
-
-		while (itr.hasNext()) {
-			CmisObject cmisObject = itr.next();
-
+		for (CmisObject cmisObject : cmisObjects) {
 			if (name.equals(cmisObject.getName()) &&
 				cmisObject instanceof Document) {
 
@@ -476,11 +471,7 @@ public class CMISStore extends BaseStore {
 	protected Folder getFolder(Folder parentFolder, String name) {
 		ItemIterable<CmisObject> cmisObjects = parentFolder.getChildren();
 
-		Iterator<CmisObject> itr = cmisObjects.iterator();
-
-		while (itr.hasNext()) {
-			CmisObject cmisObject = itr.next();
-
+		for (CmisObject cmisObject : cmisObjects) {
 			if (name.equals(cmisObject.getName()) &&
 				cmisObject instanceof Folder) {
 
@@ -496,11 +487,7 @@ public class CMISStore extends BaseStore {
 
 		ItemIterable<CmisObject> cmisObjects = folder.getChildren();
 
-		Iterator<CmisObject> itr = cmisObjects.iterator();
-
-		while (itr.hasNext()) {
-			CmisObject cmisObject = itr.next();
-
+		for (CmisObject cmisObject : cmisObjects) {
 			if (cmisObject instanceof Folder) {
 				folders.add((Folder)cmisObject);
 			}

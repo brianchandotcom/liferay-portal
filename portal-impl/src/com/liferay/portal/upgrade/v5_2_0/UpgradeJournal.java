@@ -28,7 +28,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
@@ -36,11 +36,9 @@ import java.util.Iterator;
 public class UpgradeJournal extends UpgradeProcess {
 
 	protected void addDynamicElementInstanceId(Element root) throws Exception {
-		Iterator<Element> itr = root.elements().iterator();
+		List<Element> elements = root.elements();
 
-		while (itr.hasNext()) {
-			Element element = itr.next();
-
+		for (Element element : elements) {
 			if (!element.getName().equals("dynamic-element")) {
 				continue;
 			}
@@ -145,12 +143,9 @@ public class UpgradeJournal extends UpgradeProcess {
 			Element parentElement, String instanceId)
 		throws Exception {
 
-		Iterator<Element> itr = parentElement.elements(
-			"dynamic-content").iterator();
+		List<Element> elements = parentElement.elements("dynamic-content");
 
-		while (itr.hasNext()) {
-			Element element = itr.next();
-
+		for (Element element : elements) {
 			long articleImageId = GetterUtil.getLong(
 				element.attributeValue("id"));
 

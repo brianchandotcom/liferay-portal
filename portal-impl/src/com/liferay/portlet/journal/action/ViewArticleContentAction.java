@@ -42,7 +42,7 @@ import com.liferay.util.PwdGenerator;
 import java.io.File;
 
 import java.util.Date;
-import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -186,17 +186,15 @@ public class ViewArticleContentAction extends Action {
 			UploadServletRequest uploadServletRequest)
 		throws Exception {
 
-		Iterator<Element> itr = root.elements().iterator();
+		List<Element> elements = root.elements();
 
-		while (itr.hasNext()) {
-			Element el = itr.next();
+		for (Element element : elements) {
+			Element dynamicContent = element.element("dynamic-content");
 
-			Element dynamicContent = el.element("dynamic-content");
-
-			String elInstanceId = el.attributeValue(
+			String elInstanceId = element.attributeValue(
 				"instance-id", StringPool.BLANK);
-			String elName = el.attributeValue("name", StringPool.BLANK);
-			String elType = el.attributeValue("type", StringPool.BLANK);
+			String elName = element.attributeValue("name", StringPool.BLANK);
+			String elType = element.attributeValue("type", StringPool.BLANK);
 			String elContent = StringPool.BLANK;
 			String elLanguage = StringPool.BLANK;
 
@@ -248,7 +246,7 @@ public class ViewArticleContentAction extends Action {
 			}
 
 			format(
-				groupId, articleId, version, previewArticleId, el,
+				groupId, articleId, version, previewArticleId, element,
 				uploadServletRequest);
 		}
 	}

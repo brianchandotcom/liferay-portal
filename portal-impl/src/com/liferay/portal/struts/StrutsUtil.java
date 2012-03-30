@@ -22,7 +22,6 @@ import java.io.IOException;
 
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import javax.portlet.PortletContext;
@@ -155,11 +154,7 @@ public class StrutsUtil {
 			}
 		}
 
-		Iterator<String> itr = strutsAttributes.keySet().iterator();
-
-		while (itr.hasNext()) {
-			String attributeName = itr.next();
-
+		for (String attributeName : strutsAttributes.keySet()) {
 			portletRequest.setAttribute(attributeName, null);
 		}
 

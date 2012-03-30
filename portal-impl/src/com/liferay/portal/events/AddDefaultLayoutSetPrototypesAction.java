@@ -36,7 +36,6 @@ import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.calendar.model.CalEvent;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -335,12 +334,7 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
 				layout, portletId);
 
-		Iterator<Map.Entry<String, String>> itr =
-			preferences.entrySet().iterator();
-
-		while (itr.hasNext()) {
-			Map.Entry<String, String> entry = itr.next();
-
+		for (Map.Entry<String, String> entry : preferences.entrySet()) {
 			String key = entry.getKey();
 			String value = entry.getValue();
 

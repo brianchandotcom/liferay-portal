@@ -70,7 +70,6 @@ import java.text.Format;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -1031,11 +1030,7 @@ public class LayoutTypePortletImpl
 		String lastNewColumnId = newColumns.get(newColumns.size() - 1);
 		String lastNewColumnValue = getTypeSettingsProperty(lastNewColumnId);
 
-		Iterator<String> itr = oldColumns.iterator();
-
-		while (itr.hasNext()) {
-			String oldColumnId = itr.next();
-
+		for (String oldColumnId : oldColumns) {
 			if (!newColumns.contains(oldColumnId)) {
 				String oldColumnValue = getTypeSettingsProperties().remove(
 					oldColumnId);

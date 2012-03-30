@@ -28,7 +28,6 @@ import com.liferay.portal.util.InitUtil;
 import java.io.File;
 
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
@@ -196,21 +195,16 @@ public class PluginsSummaryBuilder {
 		}
 
 		StringBundler sb = new StringBundler(
-			parentElement.elements(name).size() * 2 - 1);
+			parentElement.elements(name).size() * 2);
 
-		Iterator<Element> itr = elements.iterator();
-
-		while (itr.hasNext()) {
-			Element element = itr.next();
-
+		for (Element element : elements) {
 			String text = element.getText().trim();
 
 			sb.append(text);
-
-			if (itr.hasNext()) {
-				sb.append(", ");
-			}
+			sb.append(", ");
 		}
+
+		sb.setIndex(sb.index() - 1);
 
 		return sb.toString();
 	}

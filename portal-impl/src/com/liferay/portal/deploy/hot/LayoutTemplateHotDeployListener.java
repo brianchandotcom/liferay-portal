@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.service.LayoutTemplateLocalServiceUtil;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -128,14 +127,11 @@ public class LayoutTemplateHotDeployListener extends BaseHotDeployListener {
 				"Unregistering layout templates for " + servletContextName);
 		}
 
-		Iterator<ObjectValuePair<String, Boolean>> itr =
-			layoutTemplateIds.iterator();
+		for (ObjectValuePair<String, Boolean> layoutTemplateIdValuePair :
+			layoutTemplateIds) {
 
-		while (itr.hasNext()) {
-			ObjectValuePair<String, Boolean> ovp = itr.next();
-
-			String layoutTemplateId = ovp.getKey();
-			Boolean standard = ovp.getValue();
+			String layoutTemplateId = layoutTemplateIdValuePair.getKey();
+			Boolean standard = layoutTemplateIdValuePair.getValue();
 
 			try {
 				LayoutTemplateLocalServiceUtil.uninstallLayoutTemplate(

@@ -35,7 +35,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -224,11 +223,9 @@ public class ModelHintsImpl implements ModelHints {
 
 		Element root = doc.getRootElement();
 
-		Iterator<Element> itr1 = root.elements("hint-collection").iterator();
+		List<Element> rootElements = root.elements("hint-collection");
 
-		while (itr1.hasNext()) {
-			Element hintCollection = itr1.next();
-
+		for (Element hintCollection : rootElements) {
 			String name = hintCollection.attributeValue("name");
 
 			Map<String, String> hints = _hintCollections.get(name);
@@ -239,11 +236,9 @@ public class ModelHintsImpl implements ModelHints {
 				_hintCollections.put(name, hints);
 			}
 
-			Iterator<Element> itr2 = hintCollection.elements("hint").iterator();
+			List<Element> hintElements = hintCollection.elements("hint");
 
-			while (itr2.hasNext()) {
-				Element hint = itr2.next();
-
+			for (Element hint : hintElements) {
 				String hintName = hint.attributeValue("name");
 				String hintValue = hint.getText();
 
@@ -251,11 +246,9 @@ public class ModelHintsImpl implements ModelHints {
 			}
 		}
 
-		itr1 = root.elements("model").iterator();
+		rootElements = root.elements("model");
 
-		while (itr1.hasNext()) {
-			Element model = itr1.next();
-
+		for (Element model : rootElements) {
 			String name = model.attributeValue("name");
 
 			if (classLoader != ModelHintsImpl.class.getClassLoader()) {
@@ -269,12 +262,9 @@ public class ModelHintsImpl implements ModelHints {
 			Element defaultHintsEl = model.element("default-hints");
 
 			if (defaultHintsEl != null) {
-				Iterator<Element> itr2 = defaultHintsEl.elements(
-					"hint").iterator();
+				List<Element> hintElements = defaultHintsEl.elements("hint");
 
-				while (itr2.hasNext()) {
-					Element hint = itr2.next();
-
+				for (Element hint : hintElements) {
 					String hintName = hint.attributeValue("name");
 					String hintValue = hint.getText();
 
@@ -293,11 +283,9 @@ public class ModelHintsImpl implements ModelHints {
 
 			_models.add(name);
 
-			Iterator<Element> itr2 = model.elements("field").iterator();
+			List<Element> modelElements = model.elements("field");
 
-			while (itr2.hasNext()) {
-				Element field = itr2.next();
-
+			for (Element field : modelElements) {
 				String fieldName = field.attributeValue("name");
 				String fieldType = field.attributeValue("type");
 				boolean fieldLocalized = GetterUtil.getBoolean(
@@ -307,23 +295,18 @@ public class ModelHintsImpl implements ModelHints {
 
 				fieldHints.putAll(defaultHints);
 
-				Iterator<Element> itr3 = field.elements(
-					"hint-collection").iterator();
+				List<Element> fieldElements = field.elements("hint-collection");
 
-				while (itr3.hasNext()) {
-					Element hintCollection = itr3.next();
-
+				for (Element hintCollection : fieldElements) {
 					Map<String, String> hints = _hintCollections.get(
 						hintCollection.attributeValue("name"));
 
 					fieldHints.putAll(hints);
 				}
 
-				itr3 = field.elements("hint").iterator();
+				fieldElements = field.elements("hint");
 
-				while (itr3.hasNext()) {
-					Element hint = itr3.next();
-
+				for (Element hint : fieldElements) {
 					String hintName = hint.attributeValue("name");
 					String hintValue = hint.getText();
 
@@ -345,11 +328,9 @@ public class ModelHintsImpl implements ModelHints {
 				Map<String, Tuple> fieldValidators =
 					new TreeMap<String, Tuple>();
 
-				itr3 = field.elements("validator").iterator();
+				fieldElements = field.elements("validator");
 
-				while (itr3.hasNext()) {
-					Element validator = itr3.next();
-
+				for (Element validator : fieldElements) {
 					String validatorName = validator.attributeValue("name");
 
 					if (Validator.isNull(validatorName)) {

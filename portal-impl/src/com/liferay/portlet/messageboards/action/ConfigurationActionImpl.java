@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -130,11 +129,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 			int count = 0;
 
-			Iterator<Map.Entry<String, String>> itr = map.entrySet().iterator();
-
-			while (itr.hasNext()) {
-				Map.Entry<String, String> entry = itr.next();
-
+			for (Map.Entry<String, String> entry : map.entrySet()) {
 				String kvpValue = entry.getKey();
 				String kvpName = entry.getValue();
 

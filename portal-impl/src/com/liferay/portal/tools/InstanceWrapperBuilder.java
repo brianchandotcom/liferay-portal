@@ -32,7 +32,6 @@ import com.thoughtworks.qdox.model.TypeVariable;
 import java.io.File;
 import java.io.IOException;
 
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -178,14 +177,16 @@ public class InstanceWrapperBuilder {
 			if (newExceptions.size() > 0) {
 				sb.append(" throws ");
 
-				Iterator<String> itr = newExceptions.iterator();
+				int i = 0;
 
-				while (itr.hasNext()) {
-					sb.append(itr.next());
+				for (String newException : newExceptions) {
+					sb.append(newException);
 
-					if (itr.hasNext()) {
+					if (i < newExceptions.size() - 1) {
 						sb.append(", ");
 					}
+
+					i++;
 				}
 			}
 

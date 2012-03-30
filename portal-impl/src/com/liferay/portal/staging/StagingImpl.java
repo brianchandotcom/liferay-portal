@@ -95,11 +95,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map.Entry;
 import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
@@ -264,12 +262,7 @@ public class StagingImpl implements Staging {
 		else {
 			List<Layout> layouts = new ArrayList<Layout>();
 
-			Iterator<Map.Entry<Long, Boolean>> itr1 =
-				layoutIdMap.entrySet().iterator();
-
-			while (itr1.hasNext()) {
-				Entry<Long, Boolean> entry = itr1.next();
-
+			for (Map.Entry<Long, Boolean> entry : layoutIdMap.entrySet()) {
 				long plid = GetterUtil.getLong(String.valueOf(entry.getKey()));
 				boolean includeChildren = entry.getValue();
 
@@ -279,23 +272,19 @@ public class StagingImpl implements Staging {
 					layouts.add(layout);
 				}
 
-				Iterator<Layout> itr2 = getMissingParentLayouts(
-					layout, sourceGroupId).iterator();
+				List<Layout> parentLayouts = getMissingParentLayouts(
+					layout, sourceGroupId);
 
-				while (itr2.hasNext()) {
-					Layout parentLayout = itr2.next();
-
+				for (Layout parentLayout : parentLayouts) {
 					if (!layouts.contains(parentLayout)) {
 						layouts.add(parentLayout);
 					}
 				}
 
 				if (includeChildren) {
-					itr2 = layout.getAllChildren().iterator();
+					List<Layout> children = layout.getAllChildren();
 
-					while (itr2.hasNext()) {
-						Layout childLayout = itr2.next();
-
+					for (Layout childLayout : children) {
 						if (!layouts.contains(childLayout)) {
 							layouts.add(childLayout);
 						}
@@ -925,14 +914,10 @@ public class StagingImpl implements Staging {
 			layouts.addAll(layout.getAllChildren());
 		}
 
-		Iterator<Layout> itr = layouts.iterator();
-
 		long[] layoutIds = new long[layouts.size()];
 
-		for (int i = 0; itr.hasNext(); i++) {
-			Layout curLayout = itr.next();
-
-			layoutIds[i] = curLayout.getLayoutId();
+		for(int i = 0; i < layouts.size(); i++) {
+			layoutIds[i] = layouts.get(i).getLayoutId();
 		}
 
 		publishLayouts(
@@ -971,12 +956,7 @@ public class StagingImpl implements Staging {
 
 		List<Layout> layouts = new ArrayList<Layout>();
 
-		Iterator<Map.Entry<Long, Boolean>> itr1 =
-			layoutIdMap.entrySet().iterator();
-
-		while (itr1.hasNext()) {
-			Entry<Long, Boolean> entry = itr1.next();
-
+		for (Map.Entry<Long, Boolean> entry : layoutIdMap.entrySet()) {
 			long plid = GetterUtil.getLong(String.valueOf(entry.getKey()));
 			boolean includeChildren = entry.getValue();
 
@@ -986,23 +966,19 @@ public class StagingImpl implements Staging {
 				layouts.add(layout);
 			}
 
-			Iterator<Layout> itr2 = getMissingParentLayouts(
-				layout, targetGroupId).iterator();
+			List<Layout> parentLayouts = getMissingParentLayouts(
+				layout, targetGroupId);
 
-			while (itr2.hasNext()) {
-				Layout parentLayout = itr2.next();
-
+			for (Layout parentLayout : parentLayouts) {
 				if (!layouts.contains(parentLayout)) {
 					layouts.add(parentLayout);
 				}
 			}
 
 			if (includeChildren) {
-				itr2 = layout.getAllChildren().iterator();
+				List<Layout> children = layout.getAllChildren();
 
-				while (itr2.hasNext()) {
-					Layout childLayout = itr2.next();
-
+				for (Layout childLayout : children) {
 					if (!layouts.contains(childLayout)) {
 						layouts.add(childLayout);
 					}

@@ -40,7 +40,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.velocity.VelocityResourceListener;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -492,12 +491,7 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 	public void setSpriteImages(
 		String spriteFileName, Properties spriteProperties) {
 
-		Iterator<Map.Entry<Object, Object>> itr =
-			spriteProperties.entrySet().iterator();
-
-		while (itr.hasNext()) {
-			Map.Entry<Object, Object> entry = itr.next();
-
+		for (Map.Entry<Object, Object> entry : spriteProperties.entrySet()) {
 			String key = (String)entry.getKey();
 			String value = (String)entry.getValue();
 

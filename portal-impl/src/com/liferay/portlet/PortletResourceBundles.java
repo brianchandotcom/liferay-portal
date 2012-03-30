@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import java.io.IOException;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -146,11 +145,8 @@ public class PortletResourceBundles {
 			return resourceBundle.getString(key);
 		}
 
-		Iterator<Map.Entry<String, Map<String, ResourceBundle>>> itr =
-			_resourceBundles.entrySet().iterator();
-
-		while (itr.hasNext()) {
-			Map.Entry<String, Map<String, ResourceBundle>> entry = itr.next();
+		for (Map.Entry<String, Map<String, ResourceBundle>> entry :
+			_resourceBundles.entrySet()) {
 
 			Map<String, ResourceBundle> resourceBundles = entry.getValue();
 

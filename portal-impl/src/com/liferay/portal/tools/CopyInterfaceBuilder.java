@@ -30,7 +30,6 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.TreeSet;
@@ -132,14 +131,16 @@ public class CopyInterfaceBuilder {
 				if (newExceptions.size() > 0) {
 					sb.append(" throws ");
 
-					Iterator<String> itr = newExceptions.iterator();
+					int count = 0;
 
-					while (itr.hasNext()) {
-						sb.append(itr.next());
+					for (String newException : newExceptions) {
+						sb.append(newException);
 
-						if (itr.hasNext()) {
+						if (count < newExceptions.size() - 1) {
 							sb.append(", ");
 						}
+
+						count++;
 					}
 				}
 
@@ -180,11 +181,7 @@ public class CopyInterfaceBuilder {
 
 		sb = new StringBuilder();
 
-		Iterator<String> itr = imports.iterator();
-
-		while (itr.hasNext()) {
-			String importClass = itr.next();
-
+		for (String importClass : imports) {
 			if (!importClass.equals("boolean") && !importClass.equals("double") && !importClass.equals("int") && !importClass.equals("long") && !importClass.equals("short") && !importClass.equals("void")) {
 				sb.append("import " + importClass + ";");
 			}

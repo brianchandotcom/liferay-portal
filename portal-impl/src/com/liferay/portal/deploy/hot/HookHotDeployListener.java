@@ -148,7 +148,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -682,21 +681,17 @@ public class HookHotDeployListener
 					customJspDir, customJspGlobal, customJsps);
 
 				if (_log.isDebugEnabled()) {
-					StringBundler sb = new StringBundler(customJsps.size() * 2);
+					StringBundler sb = new StringBundler(
+						customJsps.size() * 2 + 1);
 
 					sb.append("Custom JSP files:\n");
 
-					Iterator<String> itr = customJsps.iterator();
-
-					while (itr.hasNext()) {
-						String customJsp = itr.next();
-
+					for (String customJsp : customJsps) {
 						sb.append(customJsp);
-
-						if (itr.hasNext()) {
-							sb.append(StringPool.NEW_LINE);
-						}
+						sb.append(StringPool.NEW_LINE);
 					}
+
+					sb.setIndex(sb.index() - 1);
 
 					_log.debug(sb.toString());
 				}

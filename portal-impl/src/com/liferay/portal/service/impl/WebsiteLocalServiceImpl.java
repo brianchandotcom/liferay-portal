@@ -25,7 +25,6 @@ import com.liferay.portal.service.base.WebsiteLocalServiceBaseImpl;
 import com.liferay.portal.util.PortalUtil;
 
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -118,12 +117,10 @@ public class WebsiteLocalServiceImpl extends WebsiteLocalServiceBaseImpl {
 		// id, class name, and class pk that also has primary set to true
 
 		if (primary) {
-			Iterator<Website> itr = websitePersistence.findByC_C_C_P(
-				companyId, classNameId, classPK, primary).iterator();
+			List<Website> websites = websitePersistence.findByC_C_C_P(
+				companyId, classNameId, classPK, primary);
 
-			while (itr.hasNext()) {
-				Website website = itr.next();
-
+			for (Website website : websites) {
 				if ((websiteId <= 0) || (website.getWebsiteId() != websiteId)) {
 					website.setPrimary(false);
 

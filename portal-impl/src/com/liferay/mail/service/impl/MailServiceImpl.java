@@ -36,7 +36,6 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -220,11 +219,8 @@ public class MailServiceImpl implements MailService, IdentifiableBean {
 				Properties advancedProperties = PropertiesUtil.load(
 					advancedPropertiesString);
 
-				Iterator<Map.Entry<Object, Object>> itr =
-					advancedProperties.entrySet().iterator();
-
-				while (itr.hasNext()) {
-					Map.Entry<Object, Object> entry = itr.next();
+				for (Map.Entry<Object, Object> entry :
+					advancedProperties.entrySet()) {
 
 					String key = (String)entry.getKey();
 					String value = (String)entry.getValue();

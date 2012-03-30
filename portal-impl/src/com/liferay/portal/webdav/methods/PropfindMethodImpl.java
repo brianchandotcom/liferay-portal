@@ -31,7 +31,7 @@ import com.liferay.portal.webdav.InvalidRequestException;
 import com.liferay.util.xml.XMLFormatter;
 
 import java.util.HashSet;
-import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -112,17 +112,16 @@ public class PropfindMethodImpl extends BasePropMethodImpl implements Method {
 
 			Element prop = root.element("prop");
 
-			Iterator<Element> itr = prop.elements().iterator();
+			List<Element> elements = prop.elements();
 
-			while (itr.hasNext()) {
-				Element el = itr.next();
-
-				String prefix = el.getNamespacePrefix();
-				String uri = el.getNamespaceURI();
+			for (Element element : elements) {
+				String prefix = element.getNamespacePrefix();
+				String uri = element.getNamespaceURI();
 
 				Namespace namespace = WebDAVUtil.createNamespace(prefix, uri);
 
-				props.add(SAXReaderUtil.createQName(el.getName(), namespace));
+				props.add(SAXReaderUtil.createQName(
+					element.getName(), namespace));
 			}
 
 			return props;

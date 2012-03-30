@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.pop.POPServerUtil;
 import com.liferay.util.mail.MailEngine;
 
-import java.util.Iterator;
 import java.util.List;
 
 import javax.mail.Address;
@@ -132,11 +131,7 @@ public class POPNotificationsMessageListener
 			_log.debug("Recipient " + recipient);
 		}
 
-		Iterator<MessageListener> itr = listeners.iterator();
-
-		while (itr.hasNext()) {
-			MessageListener messageListener = itr.next();
-
+		for (MessageListener messageListener : listeners) {
 			try {
 				if (messageListener.accept(from, recipient, message)) {
 					messageListener.deliver(from, recipient, message);

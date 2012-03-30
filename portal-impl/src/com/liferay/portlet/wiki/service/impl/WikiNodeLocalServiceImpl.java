@@ -43,7 +43,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -207,12 +206,9 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 	public void deleteNodes(long groupId)
 		throws PortalException, SystemException {
 
-		Iterator<WikiNode> itr = wikiNodePersistence.findByGroupId(
-			groupId).iterator();
+		List<WikiNode> nodes = wikiNodePersistence.findByGroupId(groupId);
 
-		while (itr.hasNext()) {
-			WikiNode node = itr.next();
-
+		for (WikiNode node : nodes) {
 			deleteNode(node);
 		}
 	}

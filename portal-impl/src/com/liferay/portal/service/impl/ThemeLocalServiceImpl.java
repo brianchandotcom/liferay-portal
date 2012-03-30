@@ -174,12 +174,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 				"No theme found for default theme id " + themeId +
 					". Returning a random theme.");
 
-			Iterator<Map.Entry<String, Theme>> itr =
-				_themes.entrySet().iterator();
-
-			while (itr.hasNext()) {
-				Map.Entry<String, Theme> entry = itr.next();
-
+			for (Map.Entry<String, Theme> entry : _themes.entrySet()) {
 				theme = entry.getValue();
 			}
 		}

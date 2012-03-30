@@ -29,7 +29,6 @@ import com.liferay.portal.service.base.PhoneLocalServiceBaseImpl;
 import com.liferay.portal.util.PortalUtil;
 
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -125,12 +124,10 @@ public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 		// id, class name, and class pk that also has primary set to true
 
 		if (primary) {
-			Iterator<Phone> itr = phonePersistence.findByC_C_C_P(
-				companyId, classNameId, classPK, primary).iterator();
+			List<Phone> phones = phonePersistence.findByC_C_C_P(
+				companyId, classNameId, classPK, primary);
 
-			while (itr.hasNext()) {
-				Phone phone = itr.next();
-
+			for (Phone phone : phones) {
 				if ((phoneId <= 0) || (phone.getPhoneId() != phoneId)) {
 					phone.setPrimary(false);
 

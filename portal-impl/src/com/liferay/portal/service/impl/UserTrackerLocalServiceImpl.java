@@ -22,7 +22,6 @@ import com.liferay.portal.service.base.UserTrackerLocalServiceBaseImpl;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -54,11 +53,7 @@ public class UserTrackerLocalServiceImpl
 
 			userTrackerPersistence.update(userTracker, false);
 
-			Iterator<UserTrackerPath> itr = userTrackerPaths.iterator();
-
-			while (itr.hasNext()) {
-				UserTrackerPath userTrackerPath = itr.next();
-
+			for (UserTrackerPath userTrackerPath : userTrackerPaths) {
 				long pathId = counterLocalService.increment(
 					UserTrackerPath.class.getName());
 

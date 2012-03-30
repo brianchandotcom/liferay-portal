@@ -70,7 +70,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -457,19 +456,10 @@ public class PortletImpl extends PortletBaseImpl {
 	public Set<String> getAllPortletModes() {
 		Set<String> allPortletModes = new TreeSet<String>();
 
-		Iterator<Map.Entry <String, Set<String>>> itr1 =
-			_portletModes.entrySet().iterator();
-
-		while (itr1.hasNext()) {
-			Map.Entry<String, Set<String>> entry = itr1.next();
-
+		for (Map.Entry<String, Set<String>> entry : _portletModes.entrySet()) {
 			Set<String> mimeTypePortletModes = entry.getValue();
 
-			Iterator<String> itr2 = mimeTypePortletModes.iterator();
-
-			while (itr2.hasNext()) {
-				String portletMode = itr2.next();
-
+			for (String portletMode : mimeTypePortletModes) {
 				allPortletModes.add(portletMode);
 			}
 		}
@@ -485,19 +475,10 @@ public class PortletImpl extends PortletBaseImpl {
 	public Set<String> getAllWindowStates() {
 		Set<String> allWindowStates = new TreeSet<String>();
 
-		Iterator<Map.Entry <String, Set<String>>> itr1 =
-			_windowStates.entrySet().iterator();
-
-		while (itr1.hasNext()) {
-			Map.Entry<String, Set<String>> entry = itr1.next();
-
+		for (Map.Entry<String, Set<String>> entry : _windowStates.entrySet()) {
 			Set<String> mimeTypeWindowStates = entry.getValue();
 
-			Iterator<String> itr2 = mimeTypeWindowStates.iterator();
-
-			while (itr2.hasNext()) {
-				String windowState = itr2.next();
-
+			for (String windowState : mimeTypeWindowStates) {
 				allWindowStates.add(windowState);
 			}
 		}
@@ -2232,11 +2213,7 @@ public class PortletImpl extends PortletBaseImpl {
 	public void linkRoles() {
 		List<String> linkedRoles = new ArrayList<String>();
 
-		Iterator<String> itr = _unlinkedRoles.iterator();
-
-		while (itr.hasNext()) {
-			String unlinkedRole = itr.next();
-
+		for (String unlinkedRole : _unlinkedRoles) {
 			String roleLink = _roleMappers.get(unlinkedRole);
 
 			if (Validator.isNotNull(roleLink)) {

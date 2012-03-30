@@ -1488,11 +1488,7 @@ public class CMISRepository extends BaseCmisRepository {
 			ItemIterable<CmisObject> cmisObjects =
 				cmisParentFolder.getChildren();
 
-			Iterator<CmisObject> itr = cmisObjects.iterator();
-
-			while (itr.hasNext()) {
-				CmisObject cmisObject = itr.next();
-
+			for (CmisObject cmisObject : cmisObjects) {
 				if (cmisObject instanceof
 						org.apache.chemistry.opencmis.client.api.Folder) {
 
@@ -1589,11 +1585,7 @@ public class CMISRepository extends BaseCmisRepository {
 
 		ItemIterable<CmisObject> cmisObjects = cmisFolder.getChildren();
 
-		Iterator<CmisObject> itr = cmisObjects.iterator();
-
-		while (itr.hasNext()) {
-			CmisObject cmisObject = itr.next();
-
+		for (CmisObject cmisObject : cmisObjects) {
 			if (cmisObject instanceof Document) {
 				Document document = (Document)cmisObject;
 
@@ -1664,11 +1656,7 @@ public class CMISRepository extends BaseCmisRepository {
 		List<String> snippets = new ArrayList<String>();
 		List<Float> scores = new ArrayList<Float>();
 
-		Iterator<QueryResult> itr = queryResults.iterator();
-
-		while (itr.hasNext()) {
-			QueryResult queryResult = itr.next();
-
+		for (QueryResult queryResult : queryResults) {
 			total++;
 
 			if (total <= start) {
@@ -1785,13 +1773,9 @@ public class CMISRepository extends BaseCmisRepository {
 
 		ItemIterable<QueryResult> queryResults = session.query(query, false);
 
-		Iterator<QueryResult> itr = queryResults.iterator();
-
 		List<String> cmsFolderIds = new ArrayList<String>();
 
-		while (itr.hasNext()) {
-			QueryResult queryResult = itr.next();
-
+		for (QueryResult queryResult : queryResults) {
 			PropertyData<String> propertyData = queryResult.getPropertyById(
 				PropertyIds.OBJECT_ID);
 
@@ -1868,13 +1852,9 @@ public class CMISRepository extends BaseCmisRepository {
 
 		ItemIterable<QueryResult> queryResults = session.query(query, false);
 
-		Iterator<QueryResult> itr = queryResults.iterator();
-
 		List<String> cmisDocumentIds = new ArrayList<String>();
 
-		while (itr.hasNext()) {
-			QueryResult queryResult = itr.next();
-
+		for (QueryResult queryResult : queryResults) {
 			String objectId = queryResult.getPropertyValueByQueryName(
 				PropertyIds.OBJECT_ID);
 

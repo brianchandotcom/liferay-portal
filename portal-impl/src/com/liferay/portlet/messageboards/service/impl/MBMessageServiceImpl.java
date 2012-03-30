@@ -59,7 +59,6 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -195,12 +194,11 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 		List<MBMessage> messages = new ArrayList<MBMessage>();
 
-		Iterator<MBMessage> itr = mbMessageLocalService.getCategoryMessages(
-			groupId, categoryId, status, start, end).iterator();
+		List<MBMessage> categoryMessages =
+			mbMessageLocalService.getCategoryMessages(
+				groupId, categoryId, status, start, end);
 
-		while (itr.hasNext()) {
-			MBMessage message = itr.next();
-
+		for (MBMessage message : categoryMessages) {
 			if (MBMessagePermission.contains(
 					getPermissionChecker(), message, ActionKeys.VIEW)) {
 
@@ -258,13 +256,13 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 					groupId, categoryId, status, lastIntervalStart,
 					lastIntervalStart + max, comparator);
 
-			Iterator<MBMessage> itr = messageList.iterator();
-
 			lastIntervalStart += max;
 			listNotExhausted = (messageList.size() == max);
 
-			while (itr.hasNext() && (messages.size() < max)) {
-				MBMessage message = itr.next();
+			for (MBMessage message : messageList) {
+				if (messages.size() >= max) {
+					break;
+				}
 
 				if (MBMessagePermission.contains(
 						getPermissionChecker(), message, ActionKeys.VIEW)) {
@@ -301,15 +299,15 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			List<MBMessage> messageList =
 				mbMessageLocalService.getCompanyMessages(
 					companyId, status, lastIntervalStart,
-					lastIntervalStart + max, comparator);
-
-			Iterator<MBMessage> itr = messageList.iterator();
+						lastIntervalStart + max, comparator);
 
 			lastIntervalStart += max;
 			listNotExhausted = (messageList.size() == max);
 
-			while (itr.hasNext() && (messages.size() < max)) {
-				MBMessage message = itr.next();
+			for (MBMessage message : messageList) {
+				if (messages.size() >= max) {
+					break;
+				}
 
 				if (MBMessagePermission.contains(
 						getPermissionChecker(), message, ActionKeys.VIEW)) {
@@ -357,13 +355,13 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 					groupId, status, lastIntervalStart, lastIntervalStart + max,
 					comparator);
 
-			Iterator<MBMessage> itr = messageList.iterator();
-
 			lastIntervalStart += max;
 			listNotExhausted = (messageList.size() == max);
 
-			while (itr.hasNext() && (messages.size() < max)) {
-				MBMessage message = itr.next();
+			for (MBMessage message : messageList) {
+				if (messages.size() >= max) {
+					break;
+				}
 
 				if (MBMessagePermission.contains(
 						getPermissionChecker(), message, ActionKeys.VIEW)) {
@@ -407,13 +405,13 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 					groupId, userId, status, lastIntervalStart,
 					lastIntervalStart + max, comparator);
 
-			Iterator<MBMessage> itr = messageList.iterator();
-
 			lastIntervalStart += max;
 			listNotExhausted = (messageList.size() == max);
 
-			while (itr.hasNext() && (messages.size() < max)) {
-				MBMessage message = itr.next();
+			for (MBMessage message : messageList) {
+				if (messages.size() >= max) {
+					break;
+				}
 
 				if (MBMessagePermission.contains(
 						getPermissionChecker(), message, ActionKeys.VIEW)) {
@@ -514,11 +512,14 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			MessageCreateDateComparator comparator =
 				new MessageCreateDateComparator(false);
 
-			Iterator<MBMessage> itr = mbMessageLocalService.getThreadMessages(
-				threadId, status, comparator).iterator();
+			List<MBMessage> threadMessages =
+				mbMessageLocalService.getThreadMessages(
+					threadId, status, comparator);
 
-			while (itr.hasNext() && (messages.size() < max)) {
-				MBMessage message = itr.next();
+			for (MBMessage message : threadMessages) {
+				if (messages.size() >= max) {
+					break;
+				}
 
 				if (MBMessagePermission.contains(
 						getPermissionChecker(), message, ActionKeys.VIEW)) {
@@ -680,11 +681,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 		syndFeed.setEntries(syndEntries);
 
-		Iterator<MBMessage> itr = messages.iterator();
-
-		while (itr.hasNext()) {
-			MBMessage message = itr.next();
-
+		for (MBMessage message : messages) {
 			String author = HtmlUtil.escape(
 				PortalUtil.getUserName(
 					message.getUserId(), message.getUserName()));

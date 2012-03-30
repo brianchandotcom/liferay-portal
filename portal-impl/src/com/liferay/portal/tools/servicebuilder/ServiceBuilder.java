@@ -3318,13 +3318,9 @@ public class ServiceBuilder {
 
 		StringBundler sb = new StringBundler();
 
-		Iterator<String> itr = indexSQLs.values().iterator();
-
 		String prevEntityName = null;
 
-		while (itr.hasNext()) {
-			String indexSQL = itr.next();
-
+		for (String indexSQL : indexSQLs.values()) {
 			int pos = indexSQL.indexOf(" on ");
 
 			String indexSQLSuffix = indexSQL.substring(pos + 4);
@@ -3338,12 +3334,13 @@ public class ServiceBuilder {
 			}
 
 			sb.append(indexSQL);
-
-			if (itr.hasNext()) {
-				sb.append("\n");
-			}
+			sb.append("\n");
 
 			prevEntityName = entityName;
+		}
+
+		if (!indexSQLs.values().isEmpty()) {
+			sb.setIndex(sb.index() - 1);
 		}
 
 		FileUtil.write(sqlFile, sb.toString(), true);
@@ -3352,13 +3349,9 @@ public class ServiceBuilder {
 
 		sb.setIndex(0);
 
-		itr = indexProps.keySet().iterator();
-
 		prevEntityName = null;
 
-		while (itr.hasNext()) {
-			String finderName = itr.next();
-
+		for (String finderName : indexProps.keySet()) {
 			String indexName = indexProps.get(finderName);
 
 			String entityName = finderName.split("\\.")[0];
@@ -3370,12 +3363,13 @@ public class ServiceBuilder {
 			}
 
 			sb.append(indexName + StringPool.EQUAL + finderName);
-
-			if (itr.hasNext()) {
-				sb.append("\n");
-			}
+			sb.append("\n");
 
 			prevEntityName = entityName;
+		}
+
+		if (!indexProps.keySet().isEmpty()) {
+			sb.setIndex(sb.index() - 1);
 		}
 
 		FileUtil.write(propsFile, sb.toString(), true);
@@ -3506,18 +3500,15 @@ public class ServiceBuilder {
 			}
 		}
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(sequenceSQLs.size() * 2);
 
-		Iterator<String> itr = sequenceSQLs.iterator();
-
-		while (itr.hasNext()) {
-			String sequenceSQL = itr.next();
-
+		for (String sequenceSQL : sequenceSQLs) {
 			sb.append(sequenceSQL);
+			sb.append("\n");
+		}
 
-			if (itr.hasNext()) {
-				sb.append("\n");
-			}
+		if (!sequenceSQLs.isEmpty()) {
+			sb.setIndex(sb.index() - 1);
 		}
 
 		FileUtil.write(sqlFile, sb.toString(), true);

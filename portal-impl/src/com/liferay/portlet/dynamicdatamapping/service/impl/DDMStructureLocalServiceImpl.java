@@ -48,7 +48,6 @@ import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -414,11 +413,8 @@ public class DDMStructureLocalServiceImpl
 
 		List<Node> nodes = structureXPath.selectNodes(structureDocument);
 
-		Iterator<Node> itr = nodes.iterator();
-
-		while (itr.hasNext()) {
-			Element element = (Element)itr.next();
-
+		for (Node node : nodes) {
+			Element element = (Element)node;
 			String name = element.attributeValue("name");
 
 			XPath templateXPath = SAXReaderUtil.createXPath(

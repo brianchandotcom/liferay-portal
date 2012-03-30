@@ -49,7 +49,6 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -103,13 +102,13 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 					companyId, displayDate, status, lastIntervalStart,
 					lastIntervalStart + max, new EntryDisplayDateComparator());
 
-			Iterator<BlogsEntry> itr = entryList.iterator();
-
 			lastIntervalStart += max;
 			listNotExhausted = (entryList.size() == max);
 
-			while (itr.hasNext() && (entries.size() < max)) {
-				BlogsEntry entry = itr.next();
+			for (BlogsEntry entry : entryList) {
+				if (entries.size() >= max) {
+					break;
+				}
 
 				if (BlogsEntryPermission.contains(
 						getPermissionChecker(), entry, ActionKeys.VIEW)) {
@@ -271,13 +270,13 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 					companyId, groupId, displayDate, status, lastIntervalStart,
 					lastIntervalStart + max);
 
-			Iterator<BlogsEntry> itr = entryList.iterator();
-
 			lastIntervalStart += max;
 			listNotExhausted = (entryList.size() == max);
 
-			while (itr.hasNext() && (entries.size() < max)) {
-				BlogsEntry entry = itr.next();
+			for (BlogsEntry entry : entryList) {
+				if (entries.size() >= max) {
+					break;
+				}
 
 				if (BlogsEntryPermission.contains(
 						getPermissionChecker(), entry, ActionKeys.VIEW)) {
@@ -304,13 +303,13 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 				organizationId, displayDate, status, lastIntervalStart,
 				lastIntervalStart + max, new EntryDisplayDateComparator());
 
-			Iterator<BlogsEntry> itr = entryList.iterator();
-
 			lastIntervalStart += max;
 			listNotExhausted = (entryList.size() == max);
 
-			while (itr.hasNext() && (entries.size() < max)) {
-				BlogsEntry entry = itr.next();
+			for (BlogsEntry entry : entryList) {
+				if (entries.size() >= max) {
+					break;
+				}
 
 				if (BlogsEntryPermission.contains(
 						getPermissionChecker(), entry, ActionKeys.VIEW)) {

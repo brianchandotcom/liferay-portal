@@ -61,7 +61,6 @@ import com.sun.syndication.io.FeedException;
 import java.io.OutputStream;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.portlet.PortletConfig;
@@ -129,11 +128,7 @@ public class RSSAction extends PortletAction {
 			_log.debug("Syndicating " + articles.size() + " articles");
 		}
 
-		Iterator<JournalArticle> itr = articles.iterator();
-
-		while (itr.hasNext()) {
-			JournalArticle article = itr.next();
-
+		for (JournalArticle article : articles) {
 			String author = HtmlUtil.escape(
 				PortalUtil.getUserName(
 					article.getUserId(), article.getUserName()));

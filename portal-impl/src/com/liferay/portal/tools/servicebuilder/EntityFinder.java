@@ -17,7 +17,6 @@ package com.liferay.portal.tools.servicebuilder;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.TextFormatter;
 
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -57,18 +56,15 @@ public class EntityFinder {
 			return _columns.get(0).getHumanCondition(arrayable);
 		}
 
-		Iterator<EntityColumn> itr = _columns.iterator();
+		StringBundler sb = new StringBundler(_columns.size() * 2);
 
-		StringBundler sb = new StringBundler();
-
-		while (itr.hasNext()) {
-			EntityColumn column = itr.next();
-
+		for (EntityColumn column : _columns) {
 			sb.append(column.getHumanCondition(arrayable));
+			sb.append(" and ");
+		}
 
-			if (itr.hasNext()) {
-				sb.append(" and ");
-			}
+		if (!_columns.isEmpty()) {
+			sb.setIndex(sb.index() - 1);
 		}
 
 		return sb.toString();

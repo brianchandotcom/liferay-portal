@@ -39,7 +39,6 @@ import com.liferay.util.xml.descriptor.FacesXMLDescriptor;
 import java.io.File;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -211,11 +210,9 @@ public class PortletDeployer extends BaseDeployer {
 
 		Element root = doc.getRootElement();
 
-		Iterator<Element> itr1 = root.elements("portlet").iterator();
+		List<Element> portletElements = root.elements("portlet");
 
-		while (itr1.hasNext()) {
-			Element portlet = itr1.next();
-
+		for (Element portlet : portletElements) {
 			String portletName = PortalUtil.getJsSafePortletId(
 				portlet.elementText("portlet-name"));
 			String portletClass = portlet.elementText("portlet-class");
@@ -256,11 +253,9 @@ public class PortletDeployer extends BaseDeployer {
 
 		// Remove deprecated references to SharedServletWrapper
 
-		itr1 = root.elements("servlet").iterator();
+		List<Element> servletElements = root.elements("servlet");
 
-		while (itr1.hasNext()) {
-			Element servlet = itr1.next();
-
+		for (Element servlet : servletElements) {
 			String icon = servlet.elementText("icon");
 			String servletName = servlet.elementText("servlet-name");
 			String displayName = servlet.elementText("display-name");
@@ -302,11 +297,7 @@ public class PortletDeployer extends BaseDeployer {
 					sb.append("</description>");
 				}
 
-				Iterator<Element> itr2 = initParams.iterator();
-
-				while (itr2.hasNext()) {
-					Element initParam = itr2.next();
-
+				for (Element initParam : initParams) {
 					String paramName = initParam.elementText("param-name");
 					String paramValue = initParam.elementText("param-value");
 
@@ -319,11 +310,7 @@ public class PortletDeployer extends BaseDeployer {
 					}
 				}
 
-				itr2 = initParams.iterator();
-
-				while (itr2.hasNext()) {
-					Element initParam = itr2.next();
-
+				for (Element initParam : initParams) {
 					String paramName = initParam.elementText("param-name");
 					String paramValue = initParam.elementText("param-value");
 					String paramDesc = initParam.elementText("description");
@@ -364,11 +351,7 @@ public class PortletDeployer extends BaseDeployer {
 					sb.append("</run-as>");
 				}
 
-				itr2 = securityRoleRefs.iterator();
-
-				while (itr2.hasNext()) {
-					Element roleRef = itr2.next();
-
+				for (Element roleRef : securityRoleRefs) {
 					String roleDesc = roleRef.elementText("description");
 					String roleName = roleRef.elementText("role-name");
 					String roleLink = roleRef.elementText("role-link");
@@ -419,11 +402,7 @@ public class PortletDeployer extends BaseDeployer {
 
 		List<Element> elements = root.elements("portlet");
 
-		Iterator<Element> itr = elements.iterator();
-
-		while (itr.hasNext()) {
-			Element portlet = itr.next();
-
+		for (Element portlet : elements) {
 			String portletClass = portlet.elementText("portlet-class");
 
 			if (portletClass.equals(JSF_MYFACES)) {

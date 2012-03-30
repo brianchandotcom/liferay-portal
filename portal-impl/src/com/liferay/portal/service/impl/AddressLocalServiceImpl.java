@@ -31,7 +31,6 @@ import com.liferay.portal.service.base.AddressLocalServiceBaseImpl;
 import com.liferay.portal.util.PortalUtil;
 
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -146,12 +145,10 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 		// id, class name, and class pk that also has mailing set to true
 
 		if (mailing) {
-			Iterator<Address> itr = addressPersistence.findByC_C_C_M(
-				companyId, classNameId, classPK, mailing).iterator();
+			List<Address> addresses = addressPersistence.findByC_C_C_M(
+				companyId, classNameId, classPK, mailing);
 
-			while (itr.hasNext()) {
-				Address address = itr.next();
-
+			for (Address address : addresses) {
 				if ((addressId <= 0) || (address.getAddressId() != addressId)) {
 					address.setMailing(false);
 
@@ -164,12 +161,10 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 		// id, class name, and class pk that also has primary set to true
 
 		if (primary) {
-			Iterator<Address> itr = addressPersistence.findByC_C_C_P(
-				companyId, classNameId, classPK, primary).iterator();
+			List<Address> addresses = addressPersistence.findByC_C_C_P(
+				companyId, classNameId, classPK, primary);
 
-			while (itr.hasNext()) {
-				Address address = itr.next();
-
+			for (Address address : addresses) {
 				if ((addressId <= 0) || (address.getAddressId() != addressId)) {
 					address.setPrimary(false);
 

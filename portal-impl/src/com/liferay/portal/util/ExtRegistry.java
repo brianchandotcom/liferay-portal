@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -42,14 +41,9 @@ public class ExtRegistry {
 		Set<String> files = _readExtFiles(
 			servletContext, "/WEB-INF/ext-" + servletContextName + ".xml");
 
-		Iterator<Map.Entry<String, Set<String>>> itr =
-			_extMap.entrySet().iterator();
-
 		Map<String, Set<String>> conflicts = new HashMap<String, Set<String>>();
 
-		while (itr.hasNext()) {
-			Map.Entry<String, Set<String>> entry = itr.next();
-
+		for (Map.Entry<String, Set<String>> entry : _extMap.entrySet()) {
 			String curServletContextName = entry.getKey();
 			Set<String> curFiles = entry.getValue();
 

@@ -25,7 +25,6 @@ import com.liferay.portal.util.InitUtil;
 import java.io.File;
 import java.io.IOException;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -68,11 +67,9 @@ public class WSDDMerger {
 
 		Map<String, Element> servicesMap = new TreeMap<String, Element>();
 
-		Iterator<Element> itr = root.elements("service").iterator();
+		List<Element> serviceElements = root.elements("service");
 
-		while (itr.hasNext()) {
-			Element service = itr.next();
-
+		for (Element service : serviceElements) {
 			String name = service.attributeValue("name");
 
 			servicesMap.put(name, service);
@@ -80,11 +77,7 @@ public class WSDDMerger {
 			service.detach();
 		}
 
-		itr = sourceServices.iterator();
-
-		while (itr.hasNext()) {
-			Element service = itr.next();
-
+		for (Element service : sourceServices) {
 			String name = service.attributeValue("name");
 
 			servicesMap.put(name, service);

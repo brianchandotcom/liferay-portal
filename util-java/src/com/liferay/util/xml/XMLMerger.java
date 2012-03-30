@@ -18,7 +18,6 @@ import com.liferay.util.xml.descriptor.XMLDescriptor;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
@@ -73,10 +72,8 @@ public class XMLMerger {
 
 		Collection<Element> clones = new Vector<Element>();
 
-		Iterator<Element> itr = childrenToJoin.iterator();
-
-		while (itr.hasNext()) {
-			clones.add((Element)itr.next().clone());
+		for (Element childToJoin : childrenToJoin) {
+			clones.add((Element)childToJoin.clone());
 		}
 
 		first.elements().addAll(clones);
@@ -87,11 +84,7 @@ public class XMLMerger {
 	private boolean _containsObjectEqualTo(
 		Element example, List<Element> list, ElementComparator comparator) {
 
-		Iterator<Element> itr = list.iterator();
-
-		while (itr.hasNext()) {
-			Element candidate = itr.next();
-
+		for (Element candidate : list) {
 			if (comparator.compare(example, candidate) == 0) {
 				return true;
 			}
@@ -103,11 +96,7 @@ public class XMLMerger {
 	private Element _findObjectEqualTo(
 		Element example, List<Element> list, ElementComparator comparator) {
 
-		Iterator<Element> itr = list.iterator();
-
-		while (itr.hasNext()) {
-			Element candidate = itr.next();
-
+		for (Element candidate : list) {
 			if (comparator.compare(example, candidate) == 0) {
 				return candidate;
 			}
@@ -149,11 +138,7 @@ public class XMLMerger {
 				duplicate.detach();
 			}
 
-			Iterator<Element> itr = originals.iterator();
-
-			while (itr.hasNext()) {
-				Element child = itr.next();
-
+			for(Element child : originals) {
 				_mergeDuplicateElements(child, comparator);
 			}
 		}

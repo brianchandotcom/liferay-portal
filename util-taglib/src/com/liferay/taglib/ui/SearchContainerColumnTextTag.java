@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.search.SearchEntry;
 import com.liferay.portal.kernel.dao.search.TextSearchEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -167,7 +168,7 @@ public class SearchContainerColumnTextTag<R>
 			return SKIP_BODY;
 		}
 		else if (Validator.isNotNull(_buffer)) {
-			_sb = new StringBuilder();
+			_sb = new StringBundler();
 
 			pageContext.setAttribute(_buffer, _sb);
 
@@ -258,7 +259,7 @@ public class SearchContainerColumnTextTag<R>
 	private boolean _orderable;
 	private String _orderableProperty;
 	private String _property;
-	private StringBuilder _sb;
+	private StringBundler _sb;
 	private String _target;
 	private String _title;
 	private boolean _translate;

@@ -26,10 +26,10 @@ import com.liferay.portal.kernel.staging.LayoutStagingUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -46,6 +46,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
@@ -57,6 +58,7 @@ import com.liferay.portal.model.Theme;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
@@ -78,13 +80,9 @@ import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.lar.JournalPortletDataHandlerImpl;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.portlet.sites.util.SitesUtil;
 import com.liferay.util.ContentUtil;
 
-import de.schlichtherle.io.FileInputStream;
-
 import java.io.File;
-import java.io.InputStream;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -421,31 +419,9 @@ public class LayoutExporter {
 			layoutsElement.addAttribute(
 				"layout-set-prototype-uuid", layoutSetPrototypeUuid);
 
-			if (publishToRemote) {
-				String path = getLayoutSetPrototype(
-					portletDataContext, layoutSetPrototypeUuid);
-
-				File layoutSetPrototypeFile = null;
-
-				InputStream inputStream = null;
-
-				try {
-					layoutSetPrototypeFile = SitesUtil.exportLayoutSetPrototype(
-						layoutSetPrototype, serviceContext);
-
-					inputStream = new FileInputStream(layoutSetPrototypeFile);
-
-					portletDataContext.addZipEntry(
-						path.concat(".lar"), inputStream);
-					portletDataContext.addZipEntry(
-						path.concat(".xml"), layoutSetPrototype);
-				}
-				finally {
-					StreamUtil.cleanUp(inputStream);
-
-					FileUtil.delete(layoutSetPrototypeFile);
-				}
-			}
+			layoutsElement.addAttribute(
+				"layout-set-prototype-name",
+				layoutSetPrototype.getName(LocaleUtil.getDefault()));
 		}
 
 		for (Layout layout : layouts) {
@@ -722,6 +698,20 @@ public class LayoutExporter {
 				layoutElement.addAttribute(
 					"parent-layout-uuid", parentLayout.getUuid());
 			}
+		}
+
+		String layoutPrototypeUuid = layout.getLayoutPrototypeUuid();
+
+		if (Validator.isNotNull(layoutPrototypeUuid)) {
+			LayoutPrototype layoutPrototype =
+				LayoutPrototypeLocalServiceUtil.getLayoutPrototypeByUuid(
+					layoutPrototypeUuid);
+
+			layoutElement.addAttribute(
+				"layout-prototype-uuid", layoutPrototypeUuid);
+			layoutElement.addAttribute(
+				"layout-prototype-name",
+				layoutPrototype.getName(LocaleUtil.getDefault()));
 		}
 
 		boolean deleteLayout = MapUtil.getBoolean(

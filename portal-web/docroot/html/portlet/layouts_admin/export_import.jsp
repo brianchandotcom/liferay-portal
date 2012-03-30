@@ -93,6 +93,34 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 			<liferay-ui:error exception="<%= LARTypeException.class %>" message="please-import-a-lar-file-of-the-correct-type" />
 			<liferay-ui:error exception="<%= LayoutImportException.class %>" message="an-unexpected-error-occurred-while-importing-your-file" />
 
+			<liferay-ui:error exception="<%= PrototypeException.class %>">
+
+				<%
+				PrototypeException pe = (PrototypeException)errorException;
+				%>
+
+				<liferay-ui:message key="the-lar-file-could-not-be-imported-because-it-requires-templates-which-can-not-be-found.-plase-import-the-following-templates-in-advanced-manually" />
+
+				<ul>
+
+				<%
+				List<Tuple> missingPrototypes = pe.getMissingPrototypes();
+
+				for (Tuple missingPrototype : missingPrototypes) {
+					String prototypeType = (String)missingPrototype.getObject(0);
+					String prototypeUuid = (String)missingPrototype.getObject(1);
+					String prototypeName = (String)missingPrototype.getObject(2);
+				%>
+
+					<li><liferay-ui:message key='<%= "model.resource." + prototypeType %>' />: <strong><%= prototypeName %></strong> (<%= prototypeUuid %>)</li>
+
+				<%
+				}
+				%>
+
+				</ul>
+			</liferay-ui:error>
+
 			<c:choose>
 				<c:when test="<%= (layout.getGroupId() != groupId) || (layout.isPrivateLayout() != privateLayout) %>">
 					<%@ include file="/html/portlet/layouts_admin/export_import_options.jspf" %>

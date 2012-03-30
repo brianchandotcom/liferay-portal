@@ -114,7 +114,7 @@ public class ViewPage2DLFolder4Test extends BaseTestCase {
 				"Documents and Media (DL Page2 Name)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertTrue(selenium.isVisible(
-				"xPath=(//img[@src='/html/themes/classic/images/file_system/large/folder_empty.png'])[2]"));
+				"xPath=(//span[@class='document-thumbnail']/img)[3]"));
 		assertEquals(RuntimeVariables.replace("DL Folder4 Name"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[3]"));
@@ -199,7 +199,7 @@ public class ViewPage2DLFolder4Test extends BaseTestCase {
 				"Documents and Media (DL Page2 Name)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertTrue(selenium.isVisible(
-				"xPath=(//img[@src='/html/themes/classic/images/file_system/large/folder_empty.png'])[2]"));
+				"xPath=(//span[@class='document-thumbnail']/img)[3]"));
 		assertEquals(RuntimeVariables.replace("DL Folder4 Name"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[3]"));

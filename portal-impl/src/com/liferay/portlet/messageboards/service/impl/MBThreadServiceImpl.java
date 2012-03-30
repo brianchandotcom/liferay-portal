@@ -82,14 +82,8 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 		List<Long> threadIds = null;
 
 		if (userId <= 0) {
-			if (status == WorkflowConstants.STATUS_ANY) {
-				threadIds = mbMessageFinder.filterFindByG_C(
-					groupId, categoryIds, start, end);
-			}
-			else {
-				threadIds = mbMessageFinder.filterFindByG_C_S(
-					groupId, categoryIds, status, start, end);
-			}
+			threadIds = mbMessageFinder.filterFindByG_C_S(
+				groupId, categoryIds, status, start, end);
 		}
 		else {
 			if (subscribed) {
@@ -167,13 +161,8 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 		}
 
 		if (userId <= 0) {
-			if (status == WorkflowConstants.STATUS_ANY) {
-				return mbMessageFinder.filterCountByG_C(groupId, categoryIds);
-			}
-			else {
-				return mbMessageFinder.filterCountByG_C_S(
-					groupId, categoryIds, status);
-			}
+			return mbMessageFinder.filterCountByG_C_S(
+				groupId, categoryIds, status);
 		}
 		else {
 			if (subscribed) {

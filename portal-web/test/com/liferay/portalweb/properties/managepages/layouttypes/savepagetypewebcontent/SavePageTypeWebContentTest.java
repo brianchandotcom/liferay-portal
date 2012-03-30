@@ -234,7 +234,7 @@ public class SavePageTypeWebContentTest extends BaseTestCase {
 					RuntimeVariables.replace("Manage Pages Test Page"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-				assertEquals(RuntimeVariables.replace("Web Content Content"),
+				assertEquals(RuntimeVariables.replace("WC WebContent Content"),
 					selenium.getText("//p"));
 
 			case 100:

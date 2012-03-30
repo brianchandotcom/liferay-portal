@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE liferay-social PUBLIC "-//Liferay//DTD Social 6.1.0//EN" "http://www.liferay.com/dtd/liferay-social_6_1_0.dtd">
+
+<liferay-social>
+	<activity>
+		<model-name>TEST_MODEL</model-name>
+		<activity-type>1</activity-type>
+		<language-key>TEST_ACTIVITY</language-key>
+		<log-activity>true</log-activity>
+		<contribution-value>1</contribution-value>
+		<contribution-limit enabled="false" />
+		<participation-value>2</participation-value>
+		<participation-limit period="day">3</participation-limit>
+	</activity>
+</liferay-social>

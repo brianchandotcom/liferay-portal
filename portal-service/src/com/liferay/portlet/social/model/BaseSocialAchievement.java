@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -33,6 +34,14 @@ import com.liferay.portlet.social.service.SocialActivityCounterLocalServiceUtil;
  * @author Zsolt Berentey
  */
 public class BaseSocialAchievement implements SocialAchievement {
+
+	public boolean equals(SocialAchievement other) {
+		if (!Validator.equals(_name, other.getName())) {
+			return false;
+		}
+
+		return true;
+	}
 
 	public int getCounterIncrement() {
 		return _counterIncrement;

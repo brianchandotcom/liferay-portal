@@ -47,6 +47,7 @@ public class ConfigurePage2PortletDLScopeLayoutCurrentPageTest
 			RuntimeVariables.replace("DL Page2 Name"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
+		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -133,7 +134,7 @@ public class ConfigurePage2PortletDLScopeLayoutCurrentPageTest
 		assertEquals(RuntimeVariables.replace("Scope"),
 			selenium.getText("//label[@for='scopeType']"));
 		selenium.select("//select[@id='_86_scopeType']",
-			RuntimeVariables.replace("Select Layout"));
+			RuntimeVariables.replace("Select Page"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -151,7 +152,7 @@ public class ConfigurePage2PortletDLScopeLayoutCurrentPageTest
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Scope Layout"),
+		assertEquals(RuntimeVariables.replace("Scope Page"),
 			selenium.getText("//label[@for='scopeLayoutUuid']"));
 		selenium.select("//select[@id='_86_scopeLayoutUuid']",
 			RuntimeVariables.replace("Current Page (DL Page2 Name)"));
@@ -162,7 +163,7 @@ public class ConfigurePage2PortletDLScopeLayoutCurrentPageTest
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals("Select Layout",
+		assertEquals("Select Page",
 			selenium.getSelectedLabel("//select[@id='_86_scopeType']"));
 		assertEquals("Current Page (DL Page2 Name)",
 			selenium.getSelectedLabel("//select[@id='_86_scopeLayoutUuid']"));

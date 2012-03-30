@@ -24,11 +24,9 @@
 	<%
 	RepositoryReport repositoryReport = (RepositoryReport)SessionMessages.get(renderRequest, WebKeys.PLUGIN_REPOSITORY_REPORT);
 
-	Iterator itr = repositoryReport.getRepositoryURLs().iterator();
+	Set<String> repositoryURLs = repositoryReport.getRepositoryURLs();
 
-	while (itr.hasNext()) {
-		String repositoryURL = (String)itr.next();
-
+	for (String repositoryURL : repositoryURLs) {
 		String status = repositoryReport.getState(repositoryURL);
 	%>
 

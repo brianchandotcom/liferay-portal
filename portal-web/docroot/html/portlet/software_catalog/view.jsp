@@ -204,27 +204,22 @@ portletURL.setParameter("tabs1", tabs1);
 
 			// Licenses
 
-			List licenses = productEntry.getLicenses();
+			List<SCLicense> licenses = productEntry.getLicenses();
 
 			if (licenses.isEmpty()) {
 				row.addText(StringPool.BLANK, rowURL);
 			}
 			else {
-				sb = new StringBundler(licenses.size() * 2 - 1);
+				sb = new StringBundler(licenses.size() * 2);
 
-				Iterator itr = licenses.iterator();
-
-				while (itr.hasNext()) {
-					SCLicense license = (SCLicense)itr.next();
-
+				for (SCLicense license : licenses) {
 					license = license.toEscapedModel();
 
 					sb.append(license.getName());
-
-					if (itr.hasNext()) {
-						sb.append(", ");
-					}
+					sb.append(", ");
 				}
+
+				sb.setIndex(sb.index() - 1);
 
 				row.addText(sb.toString(), rowURL);
 			}
@@ -412,27 +407,22 @@ portletURL.setParameter("tabs1", tabs1);
 
 			// Licenses
 
-			List licenses = productEntry.getLicenses();
+			List<SCLicense> licenses = productEntry.getLicenses();
 
 			if (licenses.isEmpty()) {
 				row.addText(StringPool.BLANK, rowURL);
 			}
 			else {
-				sb = new StringBundler(licenses.size() * 2 - 1);
+				sb = new StringBundler(licenses.size() * 2);
 
-				Iterator itr = licenses.iterator();
-
-				while (itr.hasNext()) {
-					SCLicense license = (SCLicense)itr.next();
-
+				for (SCLicense license : licenses) {
 					license = license.toEscapedModel();
 
 					sb.append(license.getName());
-
-					if (itr.hasNext()) {
-						sb.append(", ");
-					}
+					sb.append(", ");
 				}
+
+				sb.setIndex(sb.index() - 1);
 
 				row.addText(sb.toString(), rowURL);
 			}

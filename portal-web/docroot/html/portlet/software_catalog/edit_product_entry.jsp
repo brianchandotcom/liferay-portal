@@ -28,11 +28,9 @@ String type = BeanParamUtil.getString(productEntry, request, "type");
 Set licenseIds = new HashSet();
 
 if ((productEntry != null) && (request.getParameterValues("licenses") == null)) {
-	Iterator itr = productEntry.getLicenses().iterator();
+	List<SCLicense> scLicenses = productEntry.getLicenses();
 
-	while (itr.hasNext()) {
-		SCLicense license = (SCLicense)itr.next();
-
+	for (SCLicense license : scLicenses) {
 		licenseIds.add(new Long(license.getLicenseId()));
 	}
 }
@@ -108,10 +106,9 @@ int screenshotsCount = ParamUtil.getInteger(request, "screenshotsCount", product
 			<optgroup label="<liferay-ui:message key="recommended-licenses" />">
 
 				<%
-				Iterator itr = SCLicenseLocalServiceUtil.getLicenses(true, true).iterator();
+				List<SCLicense> scLicenses = SCLicenseLocalServiceUtil.getLicenses(true, true);
 
-				while (itr.hasNext()) {
-					SCLicense license = (SCLicense)itr.next();
+				for (SCLicense license : scLicenses) {
 				%>
 
 					<option <%= licenseIds.contains(new Long(license.getLicenseId())) ? "selected" : "" %> value="<%= license.getLicenseId() %>"><%= license.getName() %></option>
@@ -125,10 +122,9 @@ int screenshotsCount = ParamUtil.getInteger(request, "screenshotsCount", product
 			<optgroup label="<liferay-ui:message key="other-licenses" />">
 
 				<%
-				itr = SCLicenseLocalServiceUtil.getLicenses(true, false).iterator();
+				scLicenses = SCLicenseLocalServiceUtil.getLicenses(true, false);
 
-				while (itr.hasNext()) {
-					SCLicense license = (SCLicense)itr.next();
+				for (SCLicense license : scLicenses) {
 				%>
 
 					<option <%= licenseIds.contains(new Long(license.getLicenseId())) ? "selected" : "" %> value="<%= license.getLicenseId() %>"><%= license.getName() %></option>

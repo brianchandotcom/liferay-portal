@@ -145,7 +145,7 @@
 	<aui:field-wrapper label="metadata-fields">
 
 		<%
-		Set availableMetadataFields = SetUtil.fromArray(StringUtil.split(allMetadataFields));
+		Set<String> availableMetadataFields = SetUtil.fromArray(StringUtil.split(allMetadataFields));
 
 		// Left list
 
@@ -163,11 +163,7 @@
 
 		Arrays.sort(metadataFields);
 
-		Iterator itr = availableMetadataFields.iterator();
-
-		while (itr.hasNext()) {
-			String folderColumn = (String)itr.next();
-
+		for (String folderColumn : availableMetadataFields) {
 			if (Arrays.binarySearch(metadataFields, folderColumn) < 0) {
 				rightList.add(new KeyValuePair(folderColumn, LanguageUtil.get(pageContext, folderColumn)));
 			}

@@ -77,7 +77,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 				<aui:field-wrapper label="display-style-views">
 
 					<%
-					Set availableDisplayViews = SetUtil.fromArray(PropsValues.DL_DISPLAY_VIEWS);
+					Set<String> availableDisplayViews = SetUtil.fromArray(PropsValues.DL_DISPLAY_VIEWS);
 
 					// Left list
 
@@ -95,11 +95,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 					Arrays.sort(displayViews);
 
-					Iterator itr = availableDisplayViews.iterator();
-
-					while (itr.hasNext()) {
-						String displayView = (String)itr.next();
-
+					for (String displayView : availableDisplayViews) {
 						if (Arrays.binarySearch(displayViews, displayView) < 0) {
 							rightList.add(new KeyValuePair(displayView, LanguageUtil.get(pageContext, displayView)));
 						}
@@ -128,7 +124,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 				<aui:field-wrapper label="show-columns">
 
 					<%
-					Set availableEntryColumns = SetUtil.fromArray(StringUtil.split(allEntryColumns));
+					Set<String> availableEntryColumns = SetUtil.fromArray(StringUtil.split(allEntryColumns));
 
 					// Left list
 
@@ -146,11 +142,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 					Arrays.sort(entryColumns);
 
-					Iterator itr = availableEntryColumns.iterator();
-
-					while (itr.hasNext()) {
-						String entryColumn = (String)itr.next();
-
+					for (String entryColumn : availableEntryColumns) {
 						if (Arrays.binarySearch(entryColumns, entryColumn) < 0) {
 							rightList.add(new KeyValuePair(entryColumn, LanguageUtil.get(pageContext, entryColumn)));
 						}

@@ -114,11 +114,7 @@ List<CalEvent> results = CalEventServiceUtil.getEvents(scopeGroupId, selCal, eve
 List<CalEvent> allDayResults = new ArrayList<CalEvent>();
 List<CalEvent> partDayResults = new ArrayList<CalEvent>();
 
-Iterator<CalEvent> itr = results.iterator();
-
-while (itr.hasNext()) {
-	CalEvent event = itr.next();
-
+for (CalEvent event : results) {
 	if (event.isAllDay()) {
 		allDayResults.add(event);
 	}

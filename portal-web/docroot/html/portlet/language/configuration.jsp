@@ -30,7 +30,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 		<aui:input name="preferences--languageIds--" type="hidden" />
 
 		<%
-		Set availableLanguageIdsSet = SetUtil.fromArray(availableLanguageIds);
+		Set<String> availableLanguageIdsSet = SetUtil.fromArray(availableLanguageIds);
 
 		// Left list
 
@@ -48,11 +48,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 		Arrays.sort(languageIds);
 
-		Iterator itr = availableLanguageIdsSet.iterator();
-
-		while (itr.hasNext()) {
-			String languageId = (String)itr.next();
-
+		for (String languageId : availableLanguageIdsSet) {
 			if (Arrays.binarySearch(languageIds, languageId) < 0) {
 				rightList.add(new KeyValuePair(languageId, LocaleUtil.fromLanguageId(languageId).getDisplayName(locale)));
 			}

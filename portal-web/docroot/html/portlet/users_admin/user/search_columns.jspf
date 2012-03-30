@@ -53,16 +53,14 @@
 			<%
 			List<UserGroupRole> userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(user2.getUserId(), organizationGroupId);
 
-			Iterator itr = userGroupRoles.iterator();
-
-			while (itr.hasNext()) {
-				UserGroupRole userGroupRole = (UserGroupRole)itr.next();
+			for (int i = 0; i < userGroupRoles.size(); i++) {
+				UserGroupRole userGroupRole = userGroupRoles.get(i);
 
 				Role curRole = RoleLocalServiceUtil.getRole(userGroupRole.getRoleId());
 
 				buffer.append(HtmlUtil.escape(curRole.getTitle(locale)));
 
-				if (itr.hasNext()) {
+				if (i < userGroupRoles.size() - 1) {
 					buffer.append(StringPool.COMMA_AND_SPACE);
 				}
 			}

@@ -202,11 +202,9 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 						<aui:select label="" name="list">
 
 							<%
-							Iterator<Element> itr = el.elements().iterator();
+							List<Element> children = el.elements();
 
-							while (itr.hasNext()) {
-								Element child = itr.next();
-
+							for (Element child : children) {
 								String listElName = JS.decodeURIComponent(child.attributeValue("name", StringPool.BLANK));
 								String listElValue = JS.decodeURIComponent(child.attributeValue("type", StringPool.BLANK));
 
@@ -250,11 +248,9 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 						<aui:select label="" multiple="true" name="multiList">
 
 							<%
-							Iterator<Element> itr = el.elements().iterator();
+							List<Element> children = el.elements();
 
-							while (itr.hasNext()) {
-								Element child = itr.next();
-
+							for (Element child : children) {
 								String listElName = JS.decodeURIComponent(child.attributeValue("name", StringPool.BLANK));
 								String listElValue = JS.decodeURIComponent(child.attributeValue("type", StringPool.BLANK));
 
@@ -263,11 +259,9 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 								Element dynConEl = contentEl.element("dynamic-content");
 
 								if (dynConEl != null) {
-									Iterator itr2 = dynConEl.elements("option").iterator();
+									List<Element> dynConElements = dynConEl.elements("option");
 
-									while (itr2.hasNext()) {
-										Element option = (Element)itr2.next();
-
+									for (Element option : dynConElements) {
 										if (listElValue.equals(option.getText())) {
 											contains = true;
 										}
@@ -375,11 +369,7 @@ private String _buildMetaDataHTMLAttributes(Map<String, String> elMetaData, Stri
 
 	StringBundler sb = new StringBundler(elMetaData.size() * 5);
 
-	Iterator<String> keys = elMetaData.keySet().iterator();
-
-	while (keys.hasNext()) {
-		String name = keys.next();
-
+	for (String name : elMetaData.keySet()) {
 		String content = elMetaData.get(name);
 
 		sb.append("data");

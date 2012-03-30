@@ -60,16 +60,14 @@ List<Group> groups = (List<Group>)request.getAttribute("user.groups");
 			<%
 			List<UserGroupRole> userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(selUser.getUserId(), group.getGroupId());
 
-			Iterator itr = userGroupRoles.iterator();
-
-			while (itr.hasNext()) {
-				UserGroupRole userGroupRole = (UserGroupRole)itr.next();
+			for (int i = 0; i < userGroupRoles.size(); i++) {
+				UserGroupRole userGroupRole = userGroupRoles.get(i);
 
 				Role role = RoleLocalServiceUtil.getRole(userGroupRole.getRoleId());
 
 				buffer.append(HtmlUtil.escape(role.getTitle(locale)));
 
-				if (itr.hasNext()) {
+				if (i < userGroupRoles.size() - 1) {
 					buffer.append(StringPool.COMMA_AND_SPACE);
 				}
 			}

@@ -39,15 +39,11 @@ try {
 		modelString = "<table class=\"lfr-table\">\n</table>";
 	}
 	else {
-		Iterator<Element> itr = elements.iterator();
-
 		StringBundler sb = new StringBundler(elements.size() * 5 + 2);
 
 		sb.append("<table class=\"lfr-table\">\n");
 
-		while (itr.hasNext()) {
-			Element column = itr.next();
-
+		for (Element column : elements) {
 			String name = column.elementText("column-name");
 			String value = column.elementText("column-value");
 

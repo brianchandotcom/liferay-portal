@@ -202,7 +202,6 @@ String[][] categorySections = {mainSections};
 							var buttonRow = A.one('#<portlet:namespace />layoutToolbar');
 
 							var popup = null;
-							var exportPopup = null;
 
 							var layoutToolbarChildren = [];
 
@@ -264,44 +263,6 @@ String[][] categorySections = {mainSections};
 										},
 										icon: 'delete',
 										label: '<%= UnicodeLanguageUtil.get(pageContext, "delete") %>'
-									}
-								);
-							</c:if>
-
-							<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, liveGroupId, ActionKeys.EXPORT_IMPORT_LAYOUTS) %>">
-								layoutToolbarChildren.push(
-									{
-										type: 'ToolbarSpacer'
-									},
-									{
-										handler: function(event) {
-											<portlet:renderURL var="exportPagesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-												<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
-												<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
-												<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-												<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
-												<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-												<portlet:param name="layoutIds" value="<%= String.valueOf(layoutId) %>" />
-												<portlet:param name="rootNodeName" value="<%= selLayout.getName(locale) %>" />
-											</portlet:renderURL>
-
-											Liferay.Util.openWindow(
-												{
-													dialog:
-														{
-															centered: true,
-															constrain: true,
-															modal: true,
-															width: 600
-														},
-													id: '<portlet:namespace />exportLayoutDialog',
-													title: '<%= UnicodeLanguageUtil.get(pageContext, "export") %>',
-													uri: '<%= exportPagesURL.toString() %>'
-												}
-											);
-										},
-										icon: 'export',
-										label: '<%= UnicodeLanguageUtil.get(pageContext, "export") %>'
 									}
 								);
 							</c:if>

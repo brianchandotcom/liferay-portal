@@ -25,6 +25,7 @@ String treeLoading = PortalUtil.generateRandomKey(request, "treeLoading");
 
 String treeId = ParamUtil.getString(request, "treeId");
 boolean checkContentDisplayPage = ParamUtil.getBoolean(request, "checkContentDisplayPage", false);
+boolean defaultStateChecked = ParamUtil.getBoolean(request, "defaultStateChecked", false);
 boolean expandFirstNode = ParamUtil.getBoolean(request, "expandFirstNode", true);
 boolean saveState = ParamUtil.getBoolean(request, "saveState", true);
 boolean selectableTree = ParamUtil.getBoolean(request, "selectableTree");
@@ -152,6 +153,9 @@ if (!selectableTree) {
 						expanded : node.selLayoutAncestor,
 						id: TreeUtil.createListItemId(node.layoutId, node.plid),
 						type: '<%= selectableTree ? "task" : "io" %>'
+						<c:if test='<%= !saveState && defaultStateChecked %>'>
+							, checked: true
+						</c:if>
 					};
 
 					var cssClass = '';
@@ -291,9 +295,11 @@ if (!selectableTree) {
 	var rootNode = new RootNodeType(
 		{
 			after: {
+				<c:if test="<%= saveState %>">
 				checkedChange: function(event) {
 					TreeUtil.updateSessionTreeClick(<%= LayoutConstants.DEFAULT_PLID %>, event.newVal, '<%= HtmlUtil.escape(treeId) %>SelectedNode');
 				},
+				</c:if>
 				expandedChange: function(event) {
 					var sessionClickURL = themeDisplay.getPathMain() + '/portal/session_click';
 
@@ -309,10 +315,20 @@ if (!selectableTree) {
 			},
 			alwaysShowHitArea: true,
 			draggable: false,
-			expanded: <%= rootNodeExpanded %>,
+			<c:choose>
+				<c:when test="<%= saveState %>">
+					expanded: <%= rootNodeExpanded %>,
+				</c:when>
+				<c:otherwise>
+					expanded: <%= expandFirstNode %>,
+				</c:otherwise>
+			</c:choose>
 			id: rootId,
 			label: rootLabel,
 			leaf: false
+			<c:if test='<%= !saveState && defaultStateChecked %>'>
+				,checked: true
+			</c:if>
 		}
 	);
 

@@ -36,7 +36,6 @@ if (group.isStagingGroup()) {
 long liveGroupId = ParamUtil.getLong(request, "liveGroupId");
 
 boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
-long[] layoutIds = ParamUtil.getLongValues(request, "layoutIds");
 
 String rootNodeName = ParamUtil.getString(request, "rootNodeName");
 
@@ -127,7 +126,7 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 	</aui:script>
 </c:if>
 
-<aui:script use="aui-base,aui-loading-mask,selector-css3">
+<aui:script use="aui-base,aui-loading-mask,json-stringify">
 	var form = A.one('#<portlet:namespace />fm1');
 
 	form.on(
@@ -137,11 +136,44 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 
 			<c:choose>
 				<c:when test="<%= cmd.equals(Constants.EXPORT) %>">
+					var layoutsExportTreeOutput = A.one('#<portlet:namespace />layoutsExportTreeOutput');
+
+					if (layoutsExportTreeOutput) {
+						var treeView = layoutsExportTreeOutput.getData('treeInstance');
+
+						var layoutIds = [];
+
+						var regexLayoutId = /layoutId_(\d+)/;
+
+						treeView.eachChildren(
+							function(item, index, collection) {
+								if (item.isChecked()) {
+									var match = regexLayoutId.exec(item.get('id'));
+
+									if (match) {
+										layoutIds.push(
+											{
+												includeChildren: !item.hasChildNodes(),
+												layoutId: match[1]
+											}
+										);
+									}
+								}
+							},
+							true
+						);
+
+						var layoutIdsInput = A.one('#<portlet:namespace />layoutIds');
+
+						if (layoutIdsInput) {
+							layoutIdsInput.val(A.JSON.stringify(layoutIds));
+						}
+					}
+
 					<portlet:actionURL var="exportPagesURL">
 						<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
 						<portlet:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
 						<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-						<portlet:param name="layoutIds" value="<%= StringUtil.merge(layoutIds) %>" />
 					</portlet:actionURL>
 
 					submitForm(form, '<%= exportPagesURL + "&etag=0" %>', false);

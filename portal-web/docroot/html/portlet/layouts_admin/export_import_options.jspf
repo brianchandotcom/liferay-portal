@@ -26,11 +26,20 @@
 
 	<liferay-ui:panel-container extended="<%= true %>" id="export-dialog-tree-panel-container" persistState="<%= true %>">
 		<liferay-ui:panel collapsible="<%= true %>" cssClass="export-group-panel" id="pagesPanel" persistState="<%= true %>" title="pages">
-			<ul class="lfr-tree lfr-component">
-				<li class="tree-item">
-					<aui:input disabled="<%= true %>" name="pages" type="checkbox" value="<%= true %>" />
-				</li>
+			<c:if test="<%= cmd.equals(Constants.EXPORT) %>">
+				<aui:input name="layoutIds" type="hidden" />
 
+				<liferay-util:include page="/html/portlet/layouts_admin/tree_js.jsp">
+					<liferay-util:param name="defaultStateChecked" value="1" />
+					<liferay-util:param name="expandFirstNode" value="0" />
+					<liferay-util:param name="saveState" value="0" />
+					<liferay-util:param name="selectableTree" value="1" />
+					<liferay-util:param name="tabs1" value='<%= privateLayout ? "private-pages" : "public-pages" %>' />
+					<liferay-util:param name="treeId" value="layoutsExportTree" />
+				</liferay-util:include>
+			</c:if>
+
+			<ul class="lfr-tree lfr-component">
 				<c:if test="<%= cmd.equals(Constants.IMPORT) %>">
 					<li class="tree-item">
 						<aui:input helpMessage="delete-missing-layouts-help" label="delete-missing-layouts" name="<%= PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS %>" type="checkbox" value="<%= false %>" />

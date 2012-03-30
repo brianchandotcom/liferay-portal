@@ -79,13 +79,15 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 			return Collections.emptyList();
 		}
 
+		List<Long> threadIds = null;
+
 		if (userId <= 0) {
 			if (status == WorkflowConstants.STATUS_ANY) {
-				return mbThreadPersistence.findByG_C(
+				threadIds = mbMessageFinder.filterFindByG_C(
 					groupId, categoryIds, start, end);
 			}
 			else {
-				return mbThreadPersistence.findByG_C_S(
+				threadIds = mbMessageFinder.filterFindByG_C_S(
 					groupId, categoryIds, status, start, end);
 			}
 		}
@@ -95,8 +97,6 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 					groupId, userId, categoryIds, status, start, end);
 			}
 			else {
-				List<Long> threadIds = null;
-
 				if (includeAnonymous) {
 					threadIds = mbMessageFinder.filterFindByG_U_C_S(
 						groupId, userId, categoryIds, status, start, end);
@@ -106,20 +106,18 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 						groupId, userId, categoryIds, false, status, start,
 						end);
 				}
-
-				List<MBThread> threads = new ArrayList<MBThread>(
-					threadIds.size());
-
-				for (long threadId : threadIds) {
-					MBThread thread = mbThreadPersistence.findByPrimaryKey(
-						threadId);
-
-					threads.add(thread);
-				}
-
-				return threads;
 			}
 		}
+
+		List<MBThread> threads = new ArrayList<MBThread>(threadIds.size());
+
+		for (long threadId : threadIds) {
+			MBThread thread = mbThreadPersistence.findByPrimaryKey(threadId);
+
+			threads.add(thread);
+		}
+
+		return threads;
 	}
 
 	public List<MBThread> getGroupThreads(
@@ -170,10 +168,10 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 
 		if (userId <= 0) {
 			if (status == WorkflowConstants.STATUS_ANY) {
-				return mbThreadPersistence.countByG_C(groupId, categoryIds);
+				return mbMessageFinder.filterCountByG_C(groupId, categoryIds);
 			}
 			else {
-				return mbThreadPersistence.countByG_C_S(
+				return mbMessageFinder.filterCountByG_C_S(
 					groupId, categoryIds, status);
 			}
 		}

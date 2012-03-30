@@ -232,7 +232,7 @@ if (Validator.isNotNull(content)) {
 									</span>
 
 									<c:if test="<%= classNameId == 0 %>">
-										<c:if test="<%= ((structure != null) && JournalStructurePermission.contains(permissionChecker, structure, ActionKeys.UPDATE)) %>">
+										<c:if test="<%= (structure == null) || JournalStructurePermission.contains(permissionChecker, structure, ActionKeys.UPDATE) %>">
 											<liferay-ui:icon id="editStructureLink" image="edit" url="javascript:;" />
 										</c:if>
 

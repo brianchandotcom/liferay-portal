@@ -211,7 +211,7 @@ public class SQLTransformer {
 			return matcher.replaceAll("CAST($1 AS TEXT)");
 		}
 		else if (_vendorSQLServer) {
-			return matcher.replaceAll("CAST($1 AS NVARCHAR(4000))");
+			return matcher.replaceAll("CAST($1 AS NVARCHAR(MAX))");
 		}
 		else if (_vendorSybase) {
 			return matcher.replaceAll("CAST($1 AS NVARCHAR(16384))");

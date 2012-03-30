@@ -234,7 +234,8 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 			"[$REPORTED_USER_ADDRESS$]", reportedEmailAddress,
 			"[$REPORTED_USER_NAME$]", reportedUserName, "[$REPORTED_USER_URL$]",
 			reportedUserURL, "[$REPORTER_USER_ADDRESS$]", reporterEmailAddress,
-			"[$REPORTER_USER_NAME$]", reporterUserName);
+			"[$REPORTER_USER_NAME$]", reporterUserName, "[$SITE_NAME$]",
+			groupName);
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setMailId("flags_request", contentId);

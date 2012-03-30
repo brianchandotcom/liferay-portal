@@ -320,14 +320,14 @@ public class OrganizationIndexer extends BaseIndexer {
 
 		Object[] minAndMaxOrganizationIds = results.get(0);
 
-		long minOrganizationId = (Long)minAndMaxOrganizationIds[0];
-		long maxOrganizationId = (Long)minAndMaxOrganizationIds[1];
-
 		if ((minAndMaxOrganizationIds[0] == null) ||
 			(minAndMaxOrganizationIds[1] == null)) {
 
 			return;
 		}
+
+		long minOrganizationId = (Long)minAndMaxOrganizationIds[0];
+		long maxOrganizationId = (Long)minAndMaxOrganizationIds[1];
 
 		long startOrganizationId = minOrganizationId;
 		long endOrganizationId = startOrganizationId + DEFAULT_INTERVAL;

@@ -70,7 +70,7 @@ public class UpgradeAssetPublisherManualEntries
 	public static void upgradeToAssetEntryUuidElement(Element rootElement)
 		throws Exception {
 
-		Element assetEntryIdElement = rootElement.element("asset-entry-id");
+		Element assetEntryIdElement = rootElement.element("assetEntryId");
 
 		long assetEntryId = GetterUtil.getLong(assetEntryIdElement.getText());
 

@@ -66,8 +66,7 @@ public class ViewPage1DLFolder1Test extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText("//span[@class='portlet-title-text']"));
-		assertTrue(selenium.isVisible(
-				"//img[@src='/html/themes/classic/images/file_system/large/folder_full_document.png']"));
+		assertTrue(selenium.isVisible("//span[@class='document-thumbnail']/img"));
 		assertEquals(RuntimeVariables.replace("DL Folder1 Name"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));

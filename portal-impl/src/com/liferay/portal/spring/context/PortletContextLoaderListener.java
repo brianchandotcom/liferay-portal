@@ -18,6 +18,8 @@ import com.liferay.portal.bean.BeanLocatorImpl;
 import com.liferay.portal.kernel.bean.BeanLocator;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.concurrent.LockRegistry;
+import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
+import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
@@ -88,6 +90,19 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 		MethodCache.reset();
 
 		ServletContext servletContext = servletContextEvent.getServletContext();
+
+		HotDeployEvent event = new HotDeployEvent(
+			servletContext, PortletClassLoaderUtil.getClassLoader());
+
+		boolean missingDependencies = HotDeployUtil.checkMissingDependencies(
+			event);
+
+		if (missingDependencies) {
+			HotDeployUtil.registerDependentServletContextListener(
+				event, servletContextEvent, this);
+
+			return;
+		}
 
 		Object previousApplicationContext = servletContext.getAttribute(
 			WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);

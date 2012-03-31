@@ -24,45 +24,14 @@ public class ViewCalendarEventRatingsNoTest extends BaseTestCase {
 	public void testViewCalendarEventRatingsNo() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Calendar Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.clickAt("link=Calendar Test Page",
 			RuntimeVariables.replace("Calendar Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Test Event")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("link=Test Event",
+		assertEquals(RuntimeVariables.replace("Test Event"),
+			selenium.getText(
+				"//table[contains(@data-searchcontainerid,'SearchContainer')]/tbody/tr[3]/td[2]/a"));
+		selenium.clickAt("//table[contains(@data-searchcontainerid,'SearchContainer')]/tbody/tr[3]/td[2]/a",
 			RuntimeVariables.replace("Test Event"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();

@@ -12,26 +12,20 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Calendar Test Page</td>
-	<td></td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Calendar Test Page</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[1]/table/tbody/tr[3]/td[2]/a</td>
+	<td>//table[contains(@data-searchcontainerid,'SearchContainer')]/tbody/tr[3]/td[2]/a</td>
 	<td>Test Event</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Test Event</td>
-	<td></td>
+	<td>clickAtAndWait</td>
+	<td>//table[contains(@data-searchcontainerid,'SearchContainer')]/tbody/tr[3]/td[2]/a</td>
+	<td>Test Event</td>
 </tr>
-
 <tr>
 	<td>assertTextNotPresent</td>
 	<td>No comments yet.</td>
@@ -42,7 +36,6 @@
 	<td>Be the first.</td>
 	<td></td>
 </tr>
-
 <tr>
 	<td>assertTextNotPresent</td>
 	<td>Subscribe to Comments</td>

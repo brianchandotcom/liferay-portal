@@ -13,23 +13,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Calendar Test Page</td>
-	<td>Calendar Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Calendar Test Page</td>
 	<td>Calendar Test Page</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Test Event</td>
+	<td>assertText</td>
+	<td>//table[contains(@data-searchcontainerid,'SearchContainer')]/tbody/tr[3]/td[2]/a</td>
 	<td>Test Event</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Test Event</td>
+	<td>//table[contains(@data-searchcontainerid,'SearchContainer')]/tbody/tr[3]/td[2]/a</td>
 	<td>Test Event</td>
 </tr>
 <tr>
@@ -42,7 +37,6 @@
 	<td>Average (0 Votes)</td>
 	<td></td>
 </tr>
-
 </tbody>
 </table>
 </body>

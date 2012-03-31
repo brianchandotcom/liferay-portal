@@ -166,6 +166,14 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		return true;
 	}
 
+	protected Permission getFilePermission(String path, String action) {
+		if (_log.isDebugEnabled()) {
+			_log.debug("Allowing " + action + " on " + path);
+		}
+
+		return new FilePermission(path, action);
+	}
+
 	protected List<Permission> getFilePermissions(String key, String action) {
 		List<Permission> permissions = new CopyOnWriteArrayList<Permission>();
 
@@ -183,17 +191,17 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		}
 
 		for (String path : paths) {
-			Permission permission = new FilePermission(path, action);
+			Permission permission = getFilePermission(path, action);
 
 			permissions.add(permission);
 		}
 
 		if (action.equals(_FILE_PERMISSION_READ)) {
-			Permission permission = new FilePermission(_rootDir + "-", action);
+			Permission permission = getFilePermission(_rootDir + "-", action);
 
 			permissions.add(permission);
 
-			permission = new FilePermission(
+			permission = getFilePermission(
 				System.getProperty("catalina.home") +
 					"/work/Catalina/localhost/" + getServletContextName() +
 						"/-",

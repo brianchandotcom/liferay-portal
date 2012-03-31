@@ -276,7 +276,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="7" />
+		<property name="build-test-ant-scripts.version" value="8" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -1682,6 +1682,18 @@
 			<param name="test.ant.script.command" value="properties-blogs-trackback" />
 			<param name="test.ant.script.properties" value="blogs.trackback.enabled=false" />
 			<param name="test.ant.script.suite" value="PropertiesBlogsTrackbackTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="properties-calendar-event-comments" />
+			<param name="test.ant.script.properties" value="calendar.event.comments.enabled=false" />
+			<param name="test.ant.script.suite" value="PropertiesCalendarEventCommentsTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="properties-calendar-event-ratings" />
+			<param name="test.ant.script.properties" value="calendar.event.ratings.enabled=false" />
+			<param name="test.ant.script.suite" value="PropertiesCalendarEventRatingsTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">

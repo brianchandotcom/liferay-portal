@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.security.pacl.PACLClassUtil;
+import com.liferay.portal.security.pacl.PACLPolicy;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,7 +32,7 @@ import org.hibernate.criterion.DetachedCriteria;
 public class DynamicQueryFactoryImpl implements DynamicQueryFactory {
 
 	public DynamicQuery forClass(Class<?> clazz) {
-		clazz = getImplClass(clazz);
+		clazz = getImplClass(clazz, null);
 
 		return new DynamicQueryImpl(DetachedCriteria.forClass(clazz));
 	}
@@ -42,7 +44,7 @@ public class DynamicQueryFactoryImpl implements DynamicQueryFactory {
 	}
 
 	public DynamicQuery forClass(Class<?> clazz, String alias) {
-		clazz = getImplClass(clazz);
+		clazz = getImplClass(clazz, null);
 
 		return new DynamicQueryImpl(DetachedCriteria.forClass(clazz, alias));
 	}
@@ -55,34 +57,82 @@ public class DynamicQueryFactoryImpl implements DynamicQueryFactory {
 		return new DynamicQueryImpl(DetachedCriteria.forClass(clazz, alias));
 	}
 
-	protected Class<?> getImplClass(Class<?> clazz) {
-		return getImplClass(clazz, null);
-	}
-
 	protected Class<?> getImplClass(Class<?> clazz, ClassLoader classLoader) {
-		if (!clazz.getName().endsWith("Impl")) {
-			String implClassName =
-				clazz.getPackage().getName() + ".impl." +
-					clazz.getSimpleName() + "Impl";
+		Class<?> implClass = clazz;
 
-			clazz = _classMap.get(implClassName);
+		String className = clazz.getName();
 
-			if (clazz == null) {
+		if (className.endsWith("Impl")) {
+			return implClass;
+		}
+
+		if (classLoader == null) {
+			Thread currentThread = Thread.currentThread();
+
+			classLoader = currentThread.getContextClassLoader();
+		}
+
+		Package pakkage = clazz.getPackage();
+
+		String implClassName =
+			pakkage.getName() + ".impl." + clazz.getSimpleName() + "Impl";
+
+		try {
+			implClass = getImplClass(implClassName, classLoader);
+		}
+		catch (Exception e1) {
+			if (classLoader != _portalClassLoader) {
 				try {
-					if (classLoader == null) {
-						Thread currentThread = Thread.currentThread();
-
-						classLoader = currentThread.getContextClassLoader();
-					}
-
-					clazz = classLoader.loadClass(implClassName);
-
-					_classMap.put(implClassName, clazz);
+					implClass = getImplClass(implClassName, _portalClassLoader);
 				}
-				catch (Exception e) {
-					_log.error("Unable find model " + implClassName, e);
+				catch (Exception e2) {
+					_log.error("Unable find model " + implClassName, e2);
 				}
 			}
+			else {
+				_log.error("Unable find model " + implClassName, e1);
+			}
+		}
+
+		PACLPolicy paclPolicy = PACLClassUtil.getPACLPolicyByReflection(
+			_log.isDebugEnabled());
+
+		if (_log.isDebugEnabled()) {
+			if (paclPolicy != null) {
+				_log.debug(
+					"Retrieved PACL policy for " +
+						paclPolicy.getServletContextName());
+			}
+		}
+
+		if (paclPolicy != null) {
+			if (!paclPolicy.hasDynamicQueryPermission(implClass)) {
+				throw new SecurityException(
+					"Attempted to create a dynamic query for " + implClass);
+			}
+		}
+
+		return implClass;
+	}
+
+	protected Class<?> getImplClass(
+			String implClassName, ClassLoader classLoader)
+		throws ClassNotFoundException {
+
+		Map<String, Class<?>> classes = _classes.get(classLoader);
+
+		if (classes == null) {
+			classes = new HashMap<String, Class<?>>();
+
+			_classes.put(classLoader, classes);
+		}
+
+		Class<?> clazz = classes.get(implClassName);
+
+		if (clazz == null) {
+			clazz = classLoader.loadClass(implClassName);
+
+			classes.put(implClassName, clazz);
 		}
 
 		return clazz;
@@ -91,6 +141,9 @@ public class DynamicQueryFactoryImpl implements DynamicQueryFactory {
 	private static Log _log = LogFactoryUtil.getLog(
 		DynamicQueryFactoryImpl.class);
 
-	private Map<String, Class<?>> _classMap = new HashMap<String, Class<?>>();
+	private Map<ClassLoader, Map<String, Class<?>>> _classes =
+		new HashMap<ClassLoader, Map<String, Class<?>>>();
+	private ClassLoader _portalClassLoader =
+		DynamicQueryFactoryImpl.class.getClassLoader();
 
 }

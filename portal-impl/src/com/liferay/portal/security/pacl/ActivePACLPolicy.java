@@ -59,6 +59,26 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		initSocketListenPorts();
 	}
 
+	public boolean hasDynamicQueryPermission(Class<?> clazz) {
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(classLoader);
+
+		if (paclPolicy == this) {
+			return true;
+		}
+
+		Set<String> services = getServices(paclPolicy);
+
+		String className = clazz.getName();
+
+		if (services.contains(className)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean hasFileDeletePermission(String fileName) {
 		Permission permission = new FilePermission(
 			fileName, _FILE_PERMISSION_DELETE);
@@ -122,14 +142,7 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 			return true;
 		}
 
-		Set<String> services = null;
-
-		if (paclPolicy == null) {
-			services = _portalServices;
-		}
-		else {
-			services = _pluginServices.get(paclPolicy.getServletContextName());
-		}
+		Set<String> services = getServices(paclPolicy);
 
 		String className = clazz.getName();
 
@@ -211,6 +224,19 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		}
 
 		return permissions;
+	}
+
+	protected Set<String> getServices(PACLPolicy paclPolicy) {
+		Set<String> services = null;
+
+		if (paclPolicy == null) {
+			services = _portalServices;
+		}
+		else {
+			services = _pluginServices.get(paclPolicy.getServletContextName());
+		}
+
+		return services;
 	}
 
 	protected void initFiles() {

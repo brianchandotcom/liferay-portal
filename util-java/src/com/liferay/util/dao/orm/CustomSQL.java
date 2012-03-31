@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -38,6 +39,8 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -188,14 +191,51 @@ public class CustomSQL {
 
 		keywords = keywords.trim();
 
-		String[] keywordsArray = keywords.split("\\s+");
+		List<String> keywordsList = new ArrayList<String>();
 
-		for (int i = 0; i < keywordsArray.length; i++) {
-			String keyword = keywordsArray[i];
+		for (int i = 0; i < keywords.length(); i++) {
+			char ch = keywords.charAt(i);
 
-			keywordsArray[i] =
-				StringPool.PERCENT + keyword + StringPool.PERCENT;
+			if (ch == CharPool.QUOTE) {
+				int pos = i + 1;
+
+				i = keywords.indexOf(CharPool.QUOTE, pos);
+
+				if (i == -1) {
+					i = keywords.length();
+				}
+
+				if (i > pos) {
+					String keyword = keywords.substring(pos, i);
+
+					keywordsList.add(
+						StringPool.PERCENT + keyword + StringPool.PERCENT);
+				}
+			}
+			else {
+				while (Character.isWhitespace(ch)) {
+					i++;
+
+					ch = keywords.charAt(i);
+				}
+
+				int pos = i;
+
+				while ((i < keywords.length()) && !Character.isWhitespace(ch)) {
+					i++;
+
+					ch = keywords.charAt(i);
+				}
+
+				String keyword = keywords.substring(pos, i);
+
+				keywordsList.add(
+					StringPool.PERCENT + keyword + StringPool.PERCENT);
+			}
 		}
+
+		String[] keywordsArray = new String[keywordsList.size()];
+		keywordsArray = keywordsList.toArray(keywordsArray);
 
 		return keywordsArray;
 	}

@@ -29,6 +29,10 @@ public class InactivePACLPolicy extends BasePACLPolicy {
 		super(servletContextName, properties);
 	}
 
+	public boolean hasDynamicQueryPermission(Class<?> clazz) {
+		return true;
+	}
+
 	public boolean hasFileDeletePermission(String fileName) {
 		return true;
 	}

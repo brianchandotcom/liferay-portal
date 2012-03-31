@@ -23,6 +23,8 @@ public interface PACLPolicy {
 
 	public String getServletContextName();
 
+	public boolean hasDynamicQueryPermission(Class<?> clazz);
+
 	public boolean hasFileDeletePermission(String fileName);
 
 	public boolean hasFileExecutePermission(String fileName);

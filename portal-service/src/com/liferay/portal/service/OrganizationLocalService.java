@@ -501,9 +501,24 @@ public interface OrganizationLocalService extends PersistedModelLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Returns all the organizations associated with the user. If
+	* includeNonUser is true, the result includes those organizations that are
+	* not directly associated to the user but he is an owner or an
+	* administrator of the organization.
+	*
+	* @param userId the primary key of the user
+	* @param includeNonUser if <code>true</code> the result includes those
+	organizations that are not directly associated to the user but he
+	is an owner or an administrator of the organization. Otherwise
+	returns the same result as #getUserOrganizations(long).
+	* @return the organizations associated with the user
+	* @throws PortalException if a user with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Organization> getUserOrganizations(
-		long userId, boolean includeNonMember)
+		long userId, boolean includeNonUser)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

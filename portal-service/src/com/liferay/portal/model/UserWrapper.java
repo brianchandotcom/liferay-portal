@@ -1042,10 +1042,23 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		return _user.getOrganizationIds();
 	}
 
+	public long[] getOrganizationIds(boolean includeNonuser)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _user.getOrganizationIds(includeNonuser);
+	}
+
 	public java.util.List<com.liferay.portal.model.Organization> getOrganizations()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _user.getOrganizations();
+	}
+
+	public java.util.List<com.liferay.portal.model.Organization> getOrganizations(
+		boolean includeNonUser)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _user.getOrganizations(includeNonUser);
 	}
 
 	public boolean getPasswordModified() {

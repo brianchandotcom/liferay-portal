@@ -19,27 +19,29 @@
 <%
 DDLRecordSet recordSet = (DDLRecordSet)request.getAttribute(WebKeys.DYNAMIC_DATA_LISTS_RECORD_SET);
 
-long detailDDMTemplateId = ParamUtil.getLong(request, "detailDDMTemplateId");
-
 SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:search:searchContainer");
-
-boolean showAddRecordButton = GetterUtil.getBoolean(request.getAttribute("liferay-ui:search:showAddButton"));
 
 DisplayTerms displayTerms = searchContainer.getDisplayTerms();
 %>
 
-<div class="taglib-search-toggle">
-	<div class="taglib-search-toggle-basic">
-		<span class="aui-search-bar">
-			<aui:input inlineField="<%= true %>" label="" name="<%= displayTerms.KEYWORDS %>" size="30" value="<%= displayTerms.getKeywords() %>" />
+<liferay-ui:search-toggle
+	buttonLabel="search"
+	displayTerms="<%= displayTerms %>"
+	id="toggle_id_dynamic_data_lists_record_search"
+>
+	<aui:fieldset>
+		<aui:input name="<%= displayTerms.KEYWORDS %>" size="30" value="<%= displayTerms.getKeywords() %>" />
+	</aui:fieldset>
+</liferay-ui:search-toggle>
 
-			<aui:button type="submit" value="search" />
-		</span>
-	</div>
-</div>
+<%
+boolean showAddRecordButton = GetterUtil.getBoolean(request.getAttribute("liferay-ui:search:showAddButton"));
+
+long detailDDMTemplateId = ParamUtil.getLong(request, "detailDDMTemplateId");
+%>
 
 <c:if test="<%= showAddRecordButton %>">
-	<div class="add-record-button-container">
+	<div class="add-record-button-row">
 		<aui:button onClick='<%= renderResponse.getNamespace() + "addRecord();" %>' value="add-record" />
 	</div>
 

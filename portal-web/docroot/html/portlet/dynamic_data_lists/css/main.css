@@ -10,14 +10,10 @@
 			text-transform: lowercase;
 		}
 	}
-	
-	.taglib-search-toggle {
-		padding: 5px;
-	}
 }
 
 .portlet-dynamic-data-lists, .dynamic_data_list_display {
-	.add-record-button-container {
+	.add-record-button-row {
 		margin: 10px 0;
 	}
 }

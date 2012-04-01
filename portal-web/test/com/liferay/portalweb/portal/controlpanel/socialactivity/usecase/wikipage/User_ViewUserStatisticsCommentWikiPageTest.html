@@ -1,0 +1,95 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>User_ViewUserStatisticsCommentWikiPageTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">User_ViewUserStatisticsCommentWikiPageTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/web/site-name/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=User Statistics Test Page</td>
+	<td>User Statistics Test Page</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=User Statistics Test Page</td>
+	<td>User Statistics Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td/div[1]/a/span[2]</td>
+	<td>Joe Bloggs</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td/div/div/div[1]</td>
+	<td>exact:Rank: 1</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td/div/div/div[2]</td>
+	<td>Contribution Score: 4</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td/div/div/div[3]</td>
+	<td>Participation Score: 27</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td/div[3]</td>
+	<td>User's Wiki Pages: 2</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td/div[4]</td>
+	<td>User's Attachments: 2</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td/div[5]</td>
+	<td>User's Wiki Page Updates: 1</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[2]/td/div[1]/a/span[2]</td>
+	<td>User User</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[2]/td/div[1]/div/div[1]</td>
+	<td>exact:Rank: 2</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[2]/td/div[1]/div/div[2]</td>
+	<td>Contribution Score: 0</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[2]/td/div[1]/div/div[3]</td>
+	<td>Participation Score: 15</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[2]/td/div[3]</td>
+	<td>User's Comments: 1</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[2]/td/div[4]</td>
+	<td>User's Subscriptions: 1</td>
+</tr>
+
+
+</tbody></table>
+</body>
+</html>

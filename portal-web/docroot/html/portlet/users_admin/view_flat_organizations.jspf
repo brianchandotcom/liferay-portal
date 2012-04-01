@@ -15,7 +15,7 @@
 --%>
 
 <%
-List<Organization> userOrganizations = OrganizationLocalServiceUtil.getUserOrganizations(user.getUserId(), true);
+List<Organization> userOrganizations = user.getOrganizations(true);
 
 LinkedHashMap organizationParams = new LinkedHashMap();
 

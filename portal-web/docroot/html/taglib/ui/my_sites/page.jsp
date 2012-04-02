@@ -300,7 +300,7 @@ List<Group> mySites = user.getMySites(true, max);
 												siteName = LanguageUtil.get(pageContext, "my-private-pages");
 											}
 											else if (escapedSiteName.equals(GroupConstants.GUEST)) {
-												siteName = HtmlUtil.escape(themeDisplay.getAccount().getName());
+												siteName = themeDisplay.getAccount().getName();
 											}
 											else {
 												siteName = mySite.getDescriptiveName(locale);

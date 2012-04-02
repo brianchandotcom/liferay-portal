@@ -6,6 +6,18 @@
 		<param-value>com.liferay.portal.servlet.filters.compoundsessionid.CompoundSessionIdFilter</param-value>
 	</init-param>
 </filter>
+<filter>
+	<filter-name>Thread Local Filter</filter-name>
+	<filter-class>com.liferay.portal.kernel.servlet.PortalClassLoaderFilter</filter-class>
+	<init-param>
+		<param-name>filter-class</param-name>
+		<param-value>com.liferay.portal.servlet.filters.threadlocal.ThreadLocalFilter</param-value>
+	</init-param>
+</filter>
+<filter-mapping>
+	<filter-name>Thread Local Filter</filter-name>
+	<url-pattern>/*</url-pattern>
+</filter-mapping>
 <filter-mapping>
 	<filter-name>Compound Session Id Filter</filter-name>
 	<url-pattern>/*</url-pattern>

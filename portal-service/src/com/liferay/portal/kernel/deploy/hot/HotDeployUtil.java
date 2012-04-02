@@ -111,7 +111,15 @@ public class HotDeployUtil {
 					listener.invokeDeploy(event);
 				}
 				catch (HotDeployException hde) {
-					_log.error(hde, hde);
+					Throwable cause = hde.getCause();
+
+					if (cause instanceof LiferayPackageHotDeployException) {
+						_log.error(
+							hde.getMessage() + ". " + cause.getMessage());
+					}
+					else {
+						_log.error(hde, hde);
+					}
 				}
 			}
 

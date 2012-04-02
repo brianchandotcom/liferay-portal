@@ -17,6 +17,8 @@ package com.liferay.portal.jsonwebservice;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionMapping;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManager;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.BinarySearch;
 import com.liferay.portal.kernel.util.CharPool;
@@ -57,6 +59,11 @@ public class JSONWebServiceActionsManagerImpl
 
 		String path = GetterUtil.getString(request.getPathInfo());
 		String method = GetterUtil.getString(request.getMethod());
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Request JSONWS [context: /" + servletContextPath +
+				" path: " + path + " method: " + method + "]");
+		}
 
 		String parameterPath = null;
 
@@ -126,6 +133,11 @@ public class JSONWebServiceActionsManagerImpl
 
 		String servletContextPath = ContextPathUtil.getContextPath(
 			servletContext);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Require JSONWS [context: /" + servletContextPath +
+				" path: " + path + " method: " + method + "]");
+		}
 
 		int jsonWebServiceActionConfigIndex =
 			_getJSONWebServiceActionConfigIndex(
@@ -253,6 +265,11 @@ public class JSONWebServiceActionsManagerImpl
 		int firstIndex = _pathBinarySearch.findFirst(path);
 
 		if (firstIndex < 0) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("JSONWS path NOT found: " + path + " for context: /"
+					+ servletContextPath);
+			}
+
 			return -1;
 		}
 
@@ -265,6 +282,14 @@ public class JSONWebServiceActionsManagerImpl
 		int index = -1;
 
 		int max = -1;
+
+		if (_log.isDebugEnabled()) {
+			int total = lastIndex - firstIndex + 1;
+
+			_log.debug("Found " + total + " JSONWS path(s): " + path +
+				" for context: /" + servletContextPath +
+				", now matching parameters");
+		}
 
 		for (int i = firstIndex; i <= lastIndex; i++) {
 			JSONWebServiceActionConfig jsonWebServiceActionConfig
@@ -305,6 +330,15 @@ public class JSONWebServiceActionsManagerImpl
 			}
 		}
 
+		if (_log.isDebugEnabled()) {
+			if (index == -1) {
+				_log.debug("No matched JSONWS action found!");
+			}
+			else {
+				_log.debug("JSONWS action found and matched!");
+			}
+		}
+
 		return index;
 	}
 
@@ -341,5 +375,8 @@ public class JSONWebServiceActionsManagerImpl
 		}
 
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		JSONWebServiceActionParameters.class);
 
 }

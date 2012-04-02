@@ -177,6 +177,11 @@ public class JSONWebServiceActionParameters {
 			else if (!name.startsWith(StringPool.PLUS)) {
 				i++;
 
+				if (i >= parameterPathParts.length) {
+					throw new IllegalArgumentException(
+						"Missing value for path parameter: " + name);
+				}
+
 				value = parameterPathParts[i];
 			}
 

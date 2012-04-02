@@ -14,6 +14,8 @@
 
 package com.liferay.portal.jsonwebservice;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.ContextPathUtil;
@@ -92,9 +94,17 @@ public class JSONWebServiceServlet extends JSONServlet {
 				uri = uri.concat(StringPool.QUESTION).concat(queryString);
 			}
 
+			if (_log.isDebugEnabled()) {
+				_log.debug("Redirect from secure to public JSONWS api list");
+			}
+
 			response.sendRedirect(uri);
 
 			return;
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("JSONWS api list for /" + request.getContextPath());
 		}
 
 		String apiPath = PortalUtil.getPathMain() + "/portal/api/jsonws";
@@ -186,6 +196,9 @@ public class JSONWebServiceServlet extends JSONServlet {
 			request.setAttribute("userId", user.getUserId());
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		JSONWebServiceServlet.class);
 
 	private JSONWebServiceServiceAction _jsonWebServiceServiceAction;
 

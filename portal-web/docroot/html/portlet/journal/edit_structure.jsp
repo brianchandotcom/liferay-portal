@@ -520,7 +520,7 @@ int tabIndex = 1;
 private void _format(Element root, IntegerWrapper count, Integer depth, IntegerWrapper tabIndex, PageContext pageContext, HttpServletRequest request) throws Exception {
 	depth = new Integer(depth.intValue() + 1);
 
-	List children = root.elements();
+	List<Element> children = root.elements();
 
 	Boolean hasSiblings = null;
 
@@ -531,16 +531,12 @@ private void _format(Element root, IntegerWrapper count, Integer depth, IntegerW
 		hasSiblings = Boolean.FALSE;
 	}
 
-	Iterator itr = children.iterator();
-
-	while (itr.hasNext()) {
-		Element el = (Element)itr.next();
-
-		if (el.getName().equals("meta-data")) {
+	for (Element child : children) {
+		if (child.getName().equals("meta-data")) {
 			continue;
 		}
 
-		request.setAttribute(WebKeys.JOURNAL_STRUCTURE_EL, el);
+		request.setAttribute(WebKeys.JOURNAL_STRUCTURE_EL, child);
 		request.setAttribute(WebKeys.JOURNAL_STRUCTURE_EL_COUNT, count);
 		request.setAttribute(WebKeys.JOURNAL_STRUCTURE_EL_DEPTH, depth);
 		request.setAttribute(WebKeys.JOURNAL_STRUCTURE_EL_SIBLINGS, hasSiblings);
@@ -550,17 +546,17 @@ private void _format(Element root, IntegerWrapper count, Integer depth, IntegerW
 
 		count.increment();
 
-		_format(el, count, depth, tabIndex, pageContext, request);
+		_format(child, count, depth, tabIndex, pageContext, request);
 	}
 }
 
 private void _move(Element root, IntegerWrapper count, boolean up, int depth, BooleanWrapper halt) throws Exception {
-	List children = root.elements();
+	List<Element> children = root.elements();
 
 	for (int i = 0; i < children.size(); i++) {
-		Element el = (Element)children.get(i);
+		Element child = children.get(i);
 
-		String nodeName = el.getName();
+		String nodeName = child.getName();
 
 		if (Validator.isNotNull(nodeName) && nodeName.equals("meta-data")) {
 			continue;
@@ -574,21 +570,21 @@ private void _move(Element root, IntegerWrapper count, boolean up, int depth, Bo
 			if (up) {
 				if (i == 0) {
 					children.remove(i);
-					children.add(children.size(), el);
+					children.add(children.size(), child);
 				}
 				else {
 					children.remove(i);
-					children.add(i - 1, el);
+					children.add(i - 1, child);
 				}
 			}
 			else {
 				if ((i + 1) == children.size()) {
 					children.remove(i);
-					children.add(0, el);
+					children.add(0, child);
 				}
 				else {
 					children.remove(i);
-					children.add(i + 1, el);
+					children.add(i + 1, child);
 				}
 			}
 
@@ -599,7 +595,7 @@ private void _move(Element root, IntegerWrapper count, boolean up, int depth, Bo
 
 		count.increment();
 
-		_move(el, count, up, depth, halt);
+		_move(child, count, up, depth, halt);
 	}
 }
 %>

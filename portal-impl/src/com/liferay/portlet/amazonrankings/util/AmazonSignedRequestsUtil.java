@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.net.URLEncoder;
 
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -57,25 +56,20 @@ public class AmazonSignedRequestsUtil {
 			return StringPool.EMPTY;
 		}
 
-		StringBundler sb = new StringBundler();
-
 		parameters = new TreeMap<String, String>(parameters);
 
 		Set<Map.Entry<String, String>> parametersSet = parameters.entrySet();
 
-		Iterator<Map.Entry<String, String>> itr = parametersSet.iterator();
+		StringBundler sb = new StringBundler(parametersSet.size() * 4);
 
-		while (itr.hasNext()) {
-			Map.Entry<String, String> parameter = itr.next();
-
+		for (Map.Entry<String, String> parameter : parametersSet) {
 			sb.append(_rfc3986Encode(parameter.getKey()));
 			sb.append(StringPool.EQUALS);
 			sb.append(_rfc3986Encode(parameter.getValue()));
-
-			if (itr.hasNext()) {
-				sb.append(StringPool.AMPERSAND);
-			}
+			sb.append(StringPool.AMPERSAND);
 		}
+
+		sb.setIndex(sb.index() - 1);
 
 		return sb.toString();
 	}

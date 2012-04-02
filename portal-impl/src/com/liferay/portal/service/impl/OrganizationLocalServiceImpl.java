@@ -61,7 +61,6 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -644,11 +643,7 @@ public class OrganizationLocalServiceImpl
 
 		List<Organization> subsetOrganizations = new ArrayList<Organization>();
 
-		Iterator<Organization> itr = allOrganizations.iterator();
-
-		while (itr.hasNext()) {
-			Organization organization = itr.next();
-
+		for (Organization organization : allOrganizations) {
 			if (availableOrganizations.contains(organization)) {
 				subsetOrganizations.add(organization);
 			}

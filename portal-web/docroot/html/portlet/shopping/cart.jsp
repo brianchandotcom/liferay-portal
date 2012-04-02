@@ -21,7 +21,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 ShoppingCart cart = ShoppingUtil.getCart(renderRequest);
 
-Map items = cart.getItems();
+Map<ShoppingCartItem, Integer> items = cart.getItems();
 
 ShoppingCoupon coupon = cart.getCoupon();
 
@@ -62,17 +62,13 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 		var count = 0;
 
 		<%
-		Iterator itr = items.entrySet().iterator();
+		int itemCount= 0;
 
-		for (int i = 0; itr.hasNext(); i++) {
-			Map.Entry entry = (Map.Entry)itr.next();
-
-			ShoppingCartItem cartItem = (ShoppingCartItem)entry.getKey();
-
+		for (ShoppingCartItem cartItem : items.keySet()) {
 			ShoppingItem item = cartItem.getItem();
 		%>
 
-			count = document.<portlet:namespace />fm.<portlet:namespace />item_<%= item.getItemId() %>_<%= i %>_count.value;
+			count = document.<portlet:namespace />fm.<portlet:namespace />item_<%= item.getItemId() %>_<%= itemCount %>_count.value;
 
 			for (var i = 0; i < count; i++) {
 				itemIds += "<%= cartItem.getCartItemId() %>,";
@@ -81,6 +77,7 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 			count = 0;
 
 		<%
+			itemCount++;
 		}
 		%>
 
@@ -155,20 +152,17 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 	searchContainer.setEmptyResultsMessage("your-cart-is-empty");
 	searchContainer.setHover(false);
 
-	Set results = items.entrySet();
 	int total = items.size();
 
 	searchContainer.setTotal(total);
 
 	List resultRows = searchContainer.getResultRows();
 
-	Iterator itr = results.iterator();
+	int itemCount = 0;
 
-	for (int i = 0; itr.hasNext(); i++) {
-		Map.Entry entry = (Map.Entry)itr.next();
-
-		ShoppingCartItem cartItem = (ShoppingCartItem)entry.getKey();
-		Integer count = (Integer)entry.getValue();
+	for (Map.Entry<ShoppingCartItem, Integer> entry : items.entrySet()) {
+		ShoppingCartItem cartItem = entry.getKey();
+		Integer count = entry.getValue();
 
 		ShoppingItem item = cartItem.getItem();
 
@@ -180,10 +174,10 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 		ShoppingItemPrice[] itemPrices = (ShoppingItemPrice[])ShoppingItemPriceLocalServiceUtil.getItemPrices(item.getItemId()).toArray(new ShoppingItemPrice[0]);
 
 		if (!SessionErrors.isEmpty(renderRequest)) {
-			count = new Integer(ParamUtil.getInteger(request, "item_" + item.getItemId() + "_" + i + "_count"));
+			count = new Integer(ParamUtil.getInteger(request, "item_" + item.getItemId() + "_" + itemCount + "_count"));
 		}
 
-		ResultRow row = new ResultRow(item, item.getItemId(), i);
+		ResultRow row = new ResultRow(item, item.getItemId(), itemCount);
 
 		PortletURL rowURL = renderResponse.createRenderURL();
 
@@ -342,7 +336,7 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 			sb.append("item_");
 			sb.append(item.getItemId());
 			sb.append("_");
-			sb.append(i);
+			sb.append(itemCount);
 			sb.append("_count\">");
 
 			sb.append("<option value=\"0\">0</option>");
@@ -371,7 +365,7 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 			sb.append("item_");
 			sb.append(item.getItemId());
 			sb.append("_");
-			sb.append(i);
+			sb.append(itemCount);
 			sb.append("_count\" size=\"2\" type=\"text\" value=\"");
 			sb.append(count);
 			sb.append("\">");
@@ -386,6 +380,8 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 		// Add result row
 
 		resultRows.add(row);
+
+		itemCount++;
 	}
 	%>
 

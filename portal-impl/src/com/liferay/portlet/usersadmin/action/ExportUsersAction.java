@@ -43,7 +43,6 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.usersadmin.search.UserSearch;
 import com.liferay.portlet.usersadmin.search.UserSearchTerms;
 
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -215,18 +214,18 @@ public class ExportUsersAction extends PortletAction {
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(users.size() * 4);
+		StringBundler sb = new StringBundler(users.size());
 
-		Iterator<User> itr = users.iterator();
+		int i = 0;
 
-		for (int i = 0; itr.hasNext(); i++) {
-			User user = itr.next();
-
+		for (User user : users) {
 			sb.append(getUserCSV(user));
 
 			percentage = Math.min(10 + (i * 90) / total, 99);
 
 			progressTracker.updateProgress(percentage);
+
+			i++;
 		}
 
 		progressTracker.finish();

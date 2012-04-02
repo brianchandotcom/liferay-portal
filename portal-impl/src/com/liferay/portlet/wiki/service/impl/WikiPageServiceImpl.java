@@ -59,7 +59,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -207,13 +206,13 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			List<WikiPage> pageList = wikiPageLocalService.getPages(
 				nodeId, true, lastIntervalStart, lastIntervalStart + max);
 
-			Iterator<WikiPage> itr = pageList.iterator();
-
 			lastIntervalStart += max;
 			listNotExhausted = (pageList.size() == max);
 
-			while (itr.hasNext() && (pages.size() < max)) {
-				WikiPage page = itr.next();
+			for (WikiPage page : pageList) {
+				if (pages.size() >= max) {
+					break;
+				}
 
 				if (WikiPagePermission.contains(
 						getPermissionChecker(), page, ActionKeys.VIEW)) {

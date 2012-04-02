@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.util;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.Iterator;
 
 /**
  * @author Igor Spasic
@@ -57,12 +56,10 @@ public class SortedArrayList<E> extends ArrayList<E> {
 	public boolean addAll(Collection<? extends E> c) {
 		boolean modified = false;
 
-		Iterator<? extends E> itr = c.iterator();
+		for (E e : c) {
+			add(e);
 
-		while (itr.hasNext()) {
-			if (add(itr.next()) && !modified) {
-				modified = true;
-			}
+			modified = true;
 		}
 
 		return modified;

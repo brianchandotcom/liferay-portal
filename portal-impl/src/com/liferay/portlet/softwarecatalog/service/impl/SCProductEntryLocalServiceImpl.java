@@ -51,7 +51,6 @@ import com.liferay.portlet.softwarecatalog.service.base.SCProductEntryLocalServi
 import com.liferay.util.xml.DocUtil;
 
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -691,18 +690,14 @@ public class SCProductEntryLocalServiceImpl
 			throw new ProductEntryScreenshotsException();
 		}
 		else {
-			Iterator<byte[]> itr = thumbnails.iterator();
-
-			while (itr.hasNext()) {
-				if (itr.next() == null) {
+			for (byte[] thumbnail : thumbnails) {
+				if (thumbnail == null) {
 					throw new ProductEntryScreenshotsException();
 				}
 			}
 
-			itr = fullImages.iterator();
-
-			while (itr.hasNext()) {
-				if (itr.next() == null) {
+			for (byte[] fullImage : fullImages) {
+				if (fullImage == null) {
 					throw new ProductEntryScreenshotsException();
 				}
 			}

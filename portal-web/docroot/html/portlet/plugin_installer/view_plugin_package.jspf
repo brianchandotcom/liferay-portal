@@ -57,13 +57,13 @@ PluginPackage pluginPackage = PluginPackageUtil.getPluginPackageByModuleId(modul
 	<td>
 
 		<%
-		Iterator itr = pluginPackage.getTypes().iterator();
+		List<String> pluginPackageTypes = pluginPackage.getTypes();
 
-		while (itr.hasNext()) {
-			String type = (String)itr.next();
+		for (int i = 0; i < pluginPackageTypes.size(); i++) {
+			String type = pluginPackageTypes.get(i);
 		%>
 
-			<liferay-ui:message key="<%= type %>" /><c:if test="<%= itr.hasNext() %>">, </c:if>
+			<liferay-ui:message key="<%= type %>" /><c:if test="<%= i < pluginPackageTypes.size() - 1 %>">, </c:if>
 
 		<%
 		}
@@ -78,13 +78,13 @@ PluginPackage pluginPackage = PluginPackageUtil.getPluginPackageByModuleId(modul
 	<td>
 
 		<%
-		itr = pluginPackage.getTags().iterator();
+		List<String> pluginPackageTags = pluginPackage.getTags();
 
-		while (itr.hasNext()) {
-			String tag = (String)itr.next();
+		for (int i = 0; i < pluginPackageTags.size(); i++) {
+			String tag = pluginPackageTags.get(i);
 		%>
 
-			<%= tag %><c:if test="<%= itr.hasNext() %>">, </c:if>
+			<%= tag %><c:if test="<%= i < pluginPackageTags.size() - 1 %>">, </c:if>
 
 		<%
 		}
@@ -99,10 +99,10 @@ PluginPackage pluginPackage = PluginPackageUtil.getPluginPackageByModuleId(modul
 	<td>
 
 		<%
-		itr = pluginPackage.getLicenses().iterator();
+		List<License> pluginPackageLicenses = pluginPackage.getLicenses();
 
-		while (itr.hasNext()) {
-			License license = (License)itr.next();
+		for (int i = 0; i < pluginPackageLicenses.size(); i++) {
+			License license = pluginPackageLicenses.get(i);
 		%>
 
 			<c:if test="<%= Validator.isNotNull(license.getUrl()) %>">
@@ -113,7 +113,7 @@ PluginPackage pluginPackage = PluginPackageUtil.getPluginPackageByModuleId(modul
 				(<liferay-ui:message key="open-source" />)
 			</c:if>
 
-			<c:if test="<%= itr.hasNext() %>">, </c:if>
+			<c:if test="<%= i < pluginPackageLicenses.size() - 1 %>">, </c:if>
 
 		<%
 		}
@@ -128,13 +128,13 @@ PluginPackage pluginPackage = PluginPackageUtil.getPluginPackageByModuleId(modul
 	<td>
 
 		<%
-		Iterator itr3 = pluginPackage.getLiferayVersions().iterator();
+		List<String> liferayVersions = pluginPackage.getLiferayVersions();
 
-		while (itr3.hasNext()) {
-			String liferayVersion = (String)itr3.next();
+		for (int i = 0; i < liferayVersions.size(); i++) {
+			String liferayVersion = liferayVersions.get(i);
 		%>
 
-			<%= liferayVersion %><c:if test="<%= itr3.hasNext() %>">, </c:if>
+			<%= liferayVersion %><c:if test="<%= i < liferayVersions.size() - 1 %>">, </c:if>
 
 		<%
 		}
@@ -196,7 +196,7 @@ PluginPackage pluginPackage = PluginPackageUtil.getPluginPackageByModuleId(modul
 </c:if>
 
 <%
-List screenshots = pluginPackage.getScreenshots();
+List<Screenshot> screenshots = pluginPackage.getScreenshots();
 %>
 
 <c:if test="<%= (screenshots != null) && !screenshots.isEmpty() %>">
@@ -205,10 +205,7 @@ List screenshots = pluginPackage.getScreenshots();
 			<br />
 
 			<%
-			itr = screenshots.iterator();
-
-			while (itr.hasNext()) {
-				Screenshot screenshot = (Screenshot)itr.next();
+			for (Screenshot screenshot : screenshots) {
 			%>
 
 				<aui:a href="<%= screenshot.getLargeImageURL() %>" target="_blank"><img alt="<liferay-ui:message key="thumbnail" />" src="<%= screenshot.getThumbnailURL() %>" /></aui:a>

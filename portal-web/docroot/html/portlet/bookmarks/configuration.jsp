@@ -62,7 +62,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 				<aui:field-wrapper label="show-columns">
 
 					<%
-					Set availableFolderColumns = SetUtil.fromArray(StringUtil.split(allFolderColumns));
+					Set<String> availableFolderColumns = SetUtil.fromArray(StringUtil.split(allFolderColumns));
 
 					// Left list
 
@@ -80,11 +80,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 					Arrays.sort(folderColumns);
 
-					Iterator itr = availableFolderColumns.iterator();
-
-					while (itr.hasNext()) {
-						String folderColumn = (String)itr.next();
-
+					for (String folderColumn : availableFolderColumns) {
 						if (Arrays.binarySearch(folderColumns, folderColumn) < 0) {
 							rightList.add(new KeyValuePair(folderColumn, LanguageUtil.get(pageContext, folderColumn)));
 						}
@@ -115,7 +111,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 				<aui:field-wrapper label="show-columns">
 
 					<%
-					Set availableEntryColumns = SetUtil.fromArray(StringUtil.split(allEntryColumns));
+					Set<String> availableEntryColumns = SetUtil.fromArray(StringUtil.split(allEntryColumns));
 
 					// Left list
 
@@ -133,11 +129,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 					Arrays.sort(entryColumns);
 
-					Iterator itr = availableEntryColumns.iterator();
-
-					while (itr.hasNext()) {
-						String entryColumn = (String)itr.next();
-
+					for (String entryColumn : availableEntryColumns) {
 						if (Arrays.binarySearch(entryColumns, entryColumn) < 0) {
 							rightList.add(new KeyValuePair(entryColumn, LanguageUtil.get(pageContext, entryColumn)));
 						}

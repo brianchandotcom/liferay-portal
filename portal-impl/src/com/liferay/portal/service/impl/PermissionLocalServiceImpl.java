@@ -47,7 +47,6 @@ import com.liferay.portal.util.comparator.PermissionComparator;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -277,11 +276,7 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 	public List<String> getActions(List<Permission> permissions) {
 		List<String> actionIds = new ArrayList<String>();
 
-		Iterator<Permission> itr = permissions.iterator();
-
-		while (itr.hasNext()) {
-			Permission permission = itr.next();
-
+		for (Permission permission : permissions) {
 			actionIds.add(permission.getActionId());
 		}
 

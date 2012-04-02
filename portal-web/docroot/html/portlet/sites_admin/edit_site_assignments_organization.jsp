@@ -68,8 +68,8 @@ if (group.isOrganization()) {
 					buffer.append(StringPool.COMMA_AND_SPACE);
 				}
 
-				if (buffer.length() > 2) {
-					buffer.delete(buffer.length() - 2, buffer.length());
+				if (!orgUsers.isEmpty()) {
+					buffer.setIndex(buffer.index() - 1);
 				}
 
 				if (orgUsersCount > 5) {

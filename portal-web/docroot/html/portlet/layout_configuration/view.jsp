@@ -49,17 +49,13 @@
 
 				portletCategory = _getRelevantPortletCategory(permissionChecker, portletCategory, panelSelectedPortlets, layoutTypePortlet, layout, user);
 
-				List categories = ListUtil.fromCollection(portletCategory.getCategories());
+				List<PortletCategory> categories = ListUtil.fromCollection(portletCategory.getCategories());
 
 				categories = ListUtil.sort(categories, new PortletCategoryComparator(locale));
 
 				int portletCategoryIndex = 0;
 
-				Iterator itr = categories.iterator();
-
-				while (itr.hasNext()) {
-					PortletCategory curPortletCategory = (PortletCategory)itr.next();
-
+				for (PortletCategory curPortletCategory : categories) {
 					if (curPortletCategory.isHidden()) {
 						continue;
 					}

@@ -355,11 +355,7 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 
 		// Resource actions, resource codes, and check
 
-		itr = portlets.iterator();
-
-		while (itr.hasNext()) {
-			Portlet portlet = itr.next();
-
+		for (Portlet portlet : portlets) {
 			List<String> modelNames =
 				ResourceActionsUtil.getPortletModelResources(
 					portlet.getPortletId());
@@ -468,11 +464,7 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 				_log.info("Unregistering portlets for " + servletContextName);
 			}
 
-			Iterator<Portlet> itr = portlets.iterator();
-
-			while (itr.hasNext()) {
-				Portlet portlet = itr.next();
-
+			for (Portlet portlet : portlets) {
 				destroyPortlet(portlet, portletIds);
 			}
 		}

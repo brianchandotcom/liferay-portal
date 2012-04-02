@@ -65,7 +65,6 @@ import com.liferay.util.PwdGenerator;
 
 import java.util.Currency;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -328,12 +327,7 @@ public class ShoppingOrderLocalServiceImpl
 
 		boolean requiresShipping = false;
 
-		Iterator<Map.Entry<ShoppingCartItem, Integer>> itr =
-			items.entrySet().iterator();
-
-		while (itr.hasNext()) {
-			Map.Entry<ShoppingCartItem, Integer> entry = itr.next();
-
+		for (Map.Entry<ShoppingCartItem, Integer> entry : items.entrySet()) {
 			ShoppingCartItem cartItem = entry.getKey();
 			Integer count = entry.getValue();
 

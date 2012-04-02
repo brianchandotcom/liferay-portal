@@ -22,7 +22,6 @@ import java.security.acl.Group;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -47,23 +46,21 @@ public class PortalGroup
 	}
 
 	public boolean isMember(Principal member) {
-		boolean isMember = _members.containsKey(member);
+		if (_members.containsKey(member)) {
+			return true;
+		}
 
-		if (!isMember) {
-			Iterator<Principal> itr = _members.values().iterator();
+		for (Principal principal : _members.values()) {
+			if (principal instanceof Group) {
+				Group group = (Group)principal;
 
-			while (!isMember && itr.hasNext()) {
-				Principal principal = itr.next();
-
-				if (principal instanceof Group) {
-					Group group = (Group)principal;
-
-					isMember = group.isMember(member);
+				if (group.isMember(member)) {
+					return true;
 				}
 			}
 		}
 
-		return isMember;
+		return false;
 	}
 
 	public Enumeration<Principal> members() {

@@ -64,7 +64,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -638,12 +637,10 @@ public class MediaWikiImporter implements WikiImporter {
 			throw new ImportFilesException("Invalid pages XML file");
 		}
 
-		Iterator<Element> itr = siteinfoEl.element(
-			"namespaces").elements("namespace").iterator();
+		List<Element> namespaceElements = siteinfoEl.element(
+			"namespaces").elements("namespace");
 
-		while (itr.hasNext()) {
-			Element namespace = itr.next();
-
+		for (Element namespace : namespaceElements) {
 			if (!namespace.attribute("key").getData().equals("0")) {
 				namespaces.add(namespace.getText());
 			}

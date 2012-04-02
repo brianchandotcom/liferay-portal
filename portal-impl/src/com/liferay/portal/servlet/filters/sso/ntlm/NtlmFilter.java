@@ -36,7 +36,6 @@ import com.liferay.portal.util.WebKeys;
 
 import java.security.SecureRandom;
 
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
@@ -74,12 +73,7 @@ public class NtlmFilter extends BasePortalFilter {
 
 			Properties properties = PropsUtil.getProperties("jcifs.", false);
 
-			Iterator<Map.Entry<Object, Object>> itr =
-				properties.entrySet().iterator();
-
-			while (itr.hasNext()) {
-				Map.Entry<Object, Object> entry = itr.next();
-
+			for (Map.Entry<Object, Object> entry : properties.entrySet()) {
 				String key = (String)entry.getKey();
 				String value = (String)entry.getValue();
 

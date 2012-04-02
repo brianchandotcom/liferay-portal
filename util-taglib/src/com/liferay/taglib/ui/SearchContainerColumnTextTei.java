@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import javax.servlet.jsp.tagext.TagData;
@@ -32,7 +33,7 @@ public class SearchContainerColumnTextTei extends TagExtraInfo {
 		if (Validator.isNotNull(buffer)) {
 			return new VariableInfo[] {
 				new VariableInfo(
-					buffer, StringBuilder.class.getName(), true,
+					buffer, StringBundler.class.getName(), true,
 					VariableInfo.NESTED)
 			};
 		}

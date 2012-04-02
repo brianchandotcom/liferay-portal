@@ -24,7 +24,7 @@
 		<table class="lfr-table">
 
 		<%
-		Set amazonRankingsSet = new TreeSet();
+		Set<AmazonRankings> amazonRankingsSet = new TreeSet<AmazonRankings>();
 
 		for (int i = 0; i < isbns.length; i++) {
 			AmazonRankings rankings = AmazonRankingsUtil.getAmazonRankings(isbns[i]);
@@ -34,10 +34,9 @@
 			}
 		}
 
-		Iterator itr = amazonRankingsSet.iterator();
+		int i = 0;
 
-		while (itr.hasNext()) {
-			AmazonRankings amazonRankings = (AmazonRankings)itr.next();
+		for (AmazonRankings amazonRankings : amazonRankingsSet) {
 		%>
 
 			<tr>
@@ -57,7 +56,7 @@
 				</td>
 			</tr>
 
-			<c:if test="<%= itr.hasNext() %>">
+			<c:if test="<%= i < amazonRankingsSet.size() - 1 %>">
 				<tr>
 					<td>
 						<br />
@@ -66,6 +65,7 @@
 			</c:if>
 
 		<%
+			i++;
 		}
 		%>
 

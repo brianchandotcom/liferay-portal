@@ -95,6 +95,7 @@ import net.fortuna.ical4j.data.CalendarBuilder;
 import net.fortuna.ical4j.data.CalendarOutputter;
 import net.fortuna.ical4j.data.ParserException;
 import net.fortuna.ical4j.model.Component;
+import net.fortuna.ical4j.model.ComponentList;
 import net.fortuna.ical4j.model.DateTime;
 import net.fortuna.ical4j.model.Dur;
 import net.fortuna.ical4j.model.Parameter;
@@ -102,6 +103,7 @@ import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.model.PropertyList;
 import net.fortuna.ical4j.model.Recur;
 import net.fortuna.ical4j.model.WeekDay;
+import net.fortuna.ical4j.model.WeekDayList;
 import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.property.CalScale;
 import net.fortuna.ical4j.model.property.Comment;
@@ -421,12 +423,9 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 	public void deleteEvents(long groupId)
 		throws PortalException, SystemException {
 
-		Iterator<CalEvent> itr = calEventPersistence.findByGroupId(
-			groupId).iterator();
+		List<CalEvent> events = calEventPersistence.findByGroupId(groupId);
 
-		while (itr.hasNext()) {
-			CalEvent event = itr.next();
-
+		for (CalEvent event : events) {
 			deleteEvent(event);
 		}
 	}
@@ -622,13 +621,9 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 				cal.get(Calendar.YEAR), cal.get(Calendar.MONTH),
 				cal.get(Calendar.DATE));
 
-			Iterator<CalEvent> itr = events.iterator();
-
 			List<CalEvent> repeatingEvents = new ArrayList<CalEvent>();
 
-			while (itr.hasNext()) {
-				CalEvent event = itr.next();
-
+			for (CalEvent event : events) {
 				TZSRecurrence recurrence = event.getRecurrenceObj();
 
 				try {
@@ -700,11 +695,10 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 			net.fortuna.ical4j.model.Calendar calendar = builder.build(
 				inputStream);
 
-			Iterator<VEvent> itr = calendar.getComponents(
-				Component.VEVENT).iterator();
+			ComponentList vEvents = calendar.getComponents(Component.VEVENT);
 
-			while (itr.hasNext()) {
-				VEvent vEvent = itr.next();
+			for (Object vEventObject : vEvents) {
+				VEvent vEvent = (VEvent)vEventObject;
 
 				importICal4j(userId, groupId, vEvent);
 			}
@@ -1401,11 +1395,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
 		List<VEvent> components = iCal.getComponents();
 
-		Iterator<CalEvent> itr = events.iterator();
-
-		while (itr.hasNext()) {
-			CalEvent event = itr.next();
-
+		for (CalEvent event : events) {
 			components.add(toICalVEvent(event, timeZone));
 		}
 
@@ -1662,10 +1652,10 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
 			List<DayAndPosition> dayPosList = new ArrayList<DayAndPosition>();
 
-			Iterator<WeekDay> itr = recur.getDayList().iterator();
+			WeekDayList weekDays = recur.getDayList();
 
-			while (itr.hasNext()) {
-				WeekDay weekDay = itr.next();
+			for (Object weekDayObject : weekDays) {
+				WeekDay weekDay = (WeekDay)weekDayObject;
 
 				dayPosList.add(
 					new DayAndPosition(toCalendarWeekDay(weekDay), 0));
@@ -1681,10 +1671,10 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
 			List<DayAndPosition> dayPosList = new ArrayList<DayAndPosition>();
 
-			Iterator<WeekDay> itr = recur.getDayList().iterator();
+			WeekDayList weekDays = recur.getDayList();
 
-			while (itr.hasNext()) {
-				WeekDay weekDay = itr.next();
+			for (Object weekDayObject : weekDays) {
+				WeekDay weekDay = (WeekDay)weekDayObject;
 
 				dayPosList.add(
 					new DayAndPosition(toCalendarWeekDay(weekDay), 0));

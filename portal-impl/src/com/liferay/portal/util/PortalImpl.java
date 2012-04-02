@@ -3112,11 +3112,7 @@ public class PortalImpl implements Portal {
 		List<Portlet> portlets =
 			PortletLocalServiceUtil.getFriendlyURLMapperPortlets();
 
-		Iterator<Portlet> itr = portlets.iterator();
-
-		while (itr.hasNext()) {
-			Portlet portlet = itr.next();
-
+		for (Portlet portlet : portlets) {
 			FriendlyURLMapper friendlyURLMapper =
 				portlet.getFriendlyURLMapperInstance();
 

@@ -37,7 +37,6 @@ import com.liferay.portlet.shopping.util.ShoppingUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -123,12 +122,7 @@ public class ShoppingCartLocalServiceImpl
 		boolean minQtyMultiple = GetterUtil.getBoolean(PropsUtil.get(
 			PropsKeys.SHOPPING_CART_MIN_QTY_MULTIPLE));
 
-		Iterator<Map.Entry<ShoppingCartItem, Integer>> itr =
-			items.entrySet().iterator();
-
-		while (itr.hasNext()) {
-			Map.Entry<ShoppingCartItem, Integer> entry = itr.next();
-
+		for (Map.Entry<ShoppingCartItem, Integer> entry : items.entrySet()) {
 			ShoppingCartItem cartItem = entry.getKey();
 			Integer count = entry.getValue();
 

@@ -21,7 +21,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 PollsQuestion question = (PollsQuestion)request.getAttribute(WebKeys.POLLS_QUESTION);
 
-List choices = PollsChoiceLocalServiceUtil.getChoices(question.getQuestionId());
+List<PollsChoice> choices = PollsChoiceLocalServiceUtil.getChoices(question.getQuestionId());
 
 boolean hasVoted = PollsUtil.hasVoted(request, question.getQuestionId());
 
@@ -68,11 +68,7 @@ if (viewResults && !PollsQuestionPermission.contains(permissionChecker, question
 				<aui:field-wrapper>
 
 					<%
-					Iterator itr = choices.iterator();
-
-					while (itr.hasNext()) {
-						PollsChoice choice = (PollsChoice)itr.next();
-
+					for (PollsChoice choice : choices) {
 						choice = choice.toEscapedModel();
 					%>
 

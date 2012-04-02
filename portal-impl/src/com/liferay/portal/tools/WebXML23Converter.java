@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.util.xml.XMLFormatter;
 
-import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
@@ -62,17 +62,13 @@ public class WebXML23Converter {
 				return;
 			}
 
-			Iterator<Element> itr1 = root.elements("filter-mapping").iterator();
+			List<Element> filterMappings = root.elements("filter-mapping");
 
-			while (itr1.hasNext()) {
-				Element filterMapping = itr1.next();
+			for (Element filterMapping : filterMappings) {
+				List<Element> dispatchers = filterMapping.elements(
+					"dispatcher");
 
-				Iterator<Element> itr2 = filterMapping.elements(
-					"dispatcher").iterator();
-
-				while (itr2.hasNext()) {
-					Element dispatcher = itr2.next();
-
+				for (Element dispatcher : dispatchers) {
 					dispatcher.detach();
 				}
 			}

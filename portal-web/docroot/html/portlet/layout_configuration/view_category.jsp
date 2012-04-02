@@ -41,19 +41,17 @@ if (Validator.isNotNull(oldCategoryPath)) {
 	newCategoryPath = oldCategoryPath + ":" + newCategoryPath;
 }
 
-List categories = ListUtil.fromCollection(portletCategory.getCategories());
+List<PortletCategory> categories = ListUtil.fromCollection(portletCategory.getCategories());
 
 categories = ListUtil.sort(categories, new PortletCategoryComparator(locale));
 
-List portlets = new ArrayList();
+List<Portlet> portlets = new ArrayList<Portlet>();
 
-Iterator itr = portletCategory.getPortletIds().iterator();
+Set<String> portletIds = portletCategory.getPortletIds();
 
 String externalPortletCategory = null;
 
-while (itr.hasNext()) {
-	String portletId = (String)itr.next();
-
+for (String portletId : portletIds) {
 	Portlet portlet = PortletLocalServiceUtil.getPortletById(user.getCompanyId(), portletId);
 
 	if ((portlet != null) && PortletPermissionUtil.contains(permissionChecker, layout, portlet, ActionKeys.ADD_TO_PAGE)) {
@@ -84,10 +82,8 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 		<div class="lfr-content-category <%= layout.isTypePortlet() ? "aui-helper-hidden" : "" %>">
 
 			<%
-			itr = categories.iterator();
-
-			while (itr.hasNext()) {
-				request.setAttribute(WebKeys.PORTLET_CATEGORY, itr.next());
+			for (PortletCategory category : categories) {
+				request.setAttribute(WebKeys.PORTLET_CATEGORY, category);
 				request.setAttribute(WebKeys.PORTLET_CATEGORY_INDEX, String.valueOf(portletCategoryIndex));
 				request.setAttribute(WebKeys.PORTLET_CATEGORY_PATH, newCategoryPath);
 			%>
@@ -102,11 +98,7 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 
 			String[] runtimePortletIds = StringUtil.split(ParamUtil.getString(request, "runtimePortletIds"));
 
-			itr = portlets.iterator();
-
-			while (itr.hasNext()) {
-				Portlet portlet = (Portlet)itr.next();
-
+			for (Portlet portlet : portlets) {
 				divId.setIndex(0);
 
 				divId.append(newCategoryPath);

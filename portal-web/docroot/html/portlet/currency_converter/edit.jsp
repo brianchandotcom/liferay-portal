@@ -38,13 +38,9 @@ List rightList = new ArrayList();
 
 Arrays.sort(symbols);
 
-Iterator itr = allSymbols.entrySet().iterator();
-
-while (itr.hasNext()) {
-	Map.Entry entry = (Map.Entry)itr.next();
-
-	String symbol = (String)entry.getValue();
-	String currencyValue = (String)entry.getKey();
+for (Map.Entry<String, String> entry : allSymbols.entrySet()) {
+	String symbol = entry.getValue();
+	String currencyValue = entry.getKey();
 
 	if (Arrays.binarySearch(symbols, symbol) < 0) {
 		rightList.add(new KeyValuePair(symbol, LanguageUtil.get(pageContext, "currency." + currencyValue)));

@@ -28,7 +28,6 @@ import com.liferay.util.ant.Wsdl2JavaTask;
 
 import java.io.File;
 
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -55,11 +54,9 @@ public class PortalClientBuilder {
 
 			Element rootElement = document.getRootElement();
 
-			Iterator<Element> itr = rootElement.elements("service").iterator();
+			List<Element> serviceElements = rootElement.elements("service");
 
-			while (itr.hasNext()) {
-				Element serviceElement = itr.next();
-
+			for (Element serviceElement : serviceElements) {
 				String serviceName = serviceElement.attributeValue("name");
 
 				if (serviceName.startsWith("Plugin_") &&

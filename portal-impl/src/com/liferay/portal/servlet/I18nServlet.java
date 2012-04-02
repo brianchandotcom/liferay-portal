@@ -30,7 +30,7 @@ import java.io.IOException;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
@@ -51,15 +51,13 @@ public class I18nServlet extends HttpServlet {
 	}
 
 	public static void setLanguageIds(Element root) {
-		Iterator<Element> itr = root.elements("servlet-mapping").iterator();
+		List<Element> rootElements = root.elements("servlet-mapping");
 
-		while (itr.hasNext()) {
-			Element el = itr.next();
-
-			String servletName = el.elementText("servlet-name");
+		for (Element element : rootElements) {
+			String servletName = element.elementText("servlet-name");
 
 			if (servletName.equals("I18n Servlet")) {
-				String urlPattern = el.elementText("url-pattern");
+				String urlPattern = element.elementText("url-pattern");
 
 				String languageId = urlPattern.substring(
 					0, urlPattern.lastIndexOf(CharPool.SLASH));

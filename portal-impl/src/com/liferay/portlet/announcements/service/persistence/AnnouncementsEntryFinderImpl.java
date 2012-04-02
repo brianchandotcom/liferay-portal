@@ -329,24 +329,19 @@ public class AnnouncementsEntryFinderImpl
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(scopes.size() * 4 - 1);
+		StringBundler sb = new StringBundler(scopes.size() * 4);
 
-		Iterator<Map.Entry<Long, long[]>> itr = scopes.entrySet().iterator();
-
-		while (itr.hasNext()) {
-			Map.Entry<Long, long[]> entry = itr.next();
-
+		for (Map.Entry<Long, long[]> entry : scopes.entrySet()) {
 			Long classNameId = entry.getKey();
 			long[] classPKs = entry.getValue();
 
 			sb.append("(");
 			sb.append(getClassPKs(classNameId.longValue(), classPKs));
 			sb.append(")");
-
-			if (itr.hasNext()) {
-				sb.append(" OR ");
-			}
+			sb.append(" OR ");
 		}
+
+		sb.setIndex(sb.index() - 1);
 
 		return sb.toString();
 	}
@@ -381,11 +376,7 @@ public class AnnouncementsEntryFinderImpl
 			return;
 		}
 
-		Iterator<Map.Entry<Long, long[]>> itr = scopes.entrySet().iterator();
-
-		while (itr.hasNext()) {
-			Map.Entry<Long, long[]> entry = itr.next();
-
+		for (Map.Entry<Long, long[]> entry : scopes.entrySet()) {
 			Long classNameId = entry.getKey();
 			long[] classPKs = entry.getValue();
 

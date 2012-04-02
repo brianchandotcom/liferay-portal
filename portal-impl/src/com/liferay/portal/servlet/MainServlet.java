@@ -98,7 +98,6 @@ import com.liferay.util.servlet.EncryptedServletRequest;
 
 import java.io.IOException;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -643,11 +642,7 @@ public class MainServlet extends ActionServlet {
 	}
 
 	protected void destroyPortlets(List<Portlet> portlets) throws Exception {
-		Iterator<Portlet> itr = portlets.iterator();
-
-		while (itr.hasNext()) {
-			Portlet portlet = itr.next();
-
+		for (Portlet portlet : portlets) {
 			PortletInstanceFactoryUtil.destroy(portlet);
 		}
 	}
@@ -923,11 +918,7 @@ public class MainServlet extends ActionServlet {
 			return;
 		}
 
-		Iterator<Portlet> itr = portlets.iterator();
-
-		while (itr.hasNext()) {
-			Portlet portlet = itr.next();
-
+		for (Portlet portlet : portlets) {
 			List<String> portletActions =
 				ResourceActionsUtil.getPortletResourceActions(portlet);
 
@@ -951,11 +942,7 @@ public class MainServlet extends ActionServlet {
 	protected void initResourceCodes(List<Portlet> portlets) throws Exception {
 		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
 
-		Iterator<Portlet> itr = portlets.iterator();
-
-		while (itr.hasNext()) {
-			Portlet portlet = itr.next();
-
+		for (Portlet portlet : portlets) {
 			List<String> modelNames =
 				ResourceActionsUtil.getPortletModelResources(
 					portlet.getPortletId());

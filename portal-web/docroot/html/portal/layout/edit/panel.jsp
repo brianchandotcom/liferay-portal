@@ -82,10 +82,10 @@ String panelTreeKey = "panelSelectedPortletsPanelTree";
 
 	TreeView treeView = portletLister.getTreeView();
 
-	Iterator itr = treeView.getList().iterator();
+	List<TreeNodeView> treeNodeViews = treeView.getList();
 
-	for (int i = 0; itr.hasNext(); i++) {
-		TreeNodeView treeNodeView = (TreeNodeView)itr.next();
+	for (int i = 0; i < treeNodeViews.size(); i++) {
+		TreeNodeView treeNodeView = treeNodeViews.get(i);
 	%>
 
 		var parentNode<%= i %> = treeView.getNodeById('treePanel<%= treeNodeView.getParentId() %>') || treeView;

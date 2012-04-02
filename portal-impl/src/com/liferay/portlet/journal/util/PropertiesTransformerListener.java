@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
 
@@ -121,12 +120,7 @@ public class PropertiesTransformerListener extends BaseTransformerListener {
 
 		int counter = 0;
 
-		Iterator<Map.Entry<Object, Object>> itr =
-			properties.entrySet().iterator();
-
-		while (itr.hasNext()) {
-			Map.Entry<Object, Object> entry = itr.next();
-
+		for (Map.Entry<Object, Object> entry : properties.entrySet()) {
 			String key = (String)entry.getKey();
 			String value = (String)entry.getValue();
 

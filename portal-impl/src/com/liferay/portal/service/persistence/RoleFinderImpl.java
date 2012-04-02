@@ -690,11 +690,7 @@ public class RoleFinderImpl
 
 		StringBundler sb = new StringBundler(params.size());
 
-		Iterator<Map.Entry<String, Object>> itr = params.entrySet().iterator();
-
-		while (itr.hasNext()) {
-			Map.Entry<String, Object> entry = itr.next();
-
+		for (Map.Entry<String, Object> entry : params.entrySet()) {
 			String key = entry.getKey();
 			Object value = entry.getValue();
 
@@ -756,11 +752,7 @@ public class RoleFinderImpl
 
 		StringBundler sb = new StringBundler(params.size());
 
-		Iterator<Map.Entry<String, Object>> itr = params.entrySet().iterator();
-
-		while (itr.hasNext()) {
-			Map.Entry<String, Object> entry = itr.next();
-
+		for (Map.Entry<String, Object> entry : params.entrySet()) {
 			String key = entry.getKey();
 			Object value = entry.getValue();
 

@@ -331,11 +331,7 @@ else if (tabs2.equals("page-updated-email")) {
 				Arrays.sort(visibleNodes);
 				Arrays.sort(hiddenNodes);
 
-				Iterator<String> itr = currentVisibleNodes.iterator();
-
-				while (itr.hasNext()) {
-					String folderColumn = itr.next();
-
+				for (String folderColumn : currentVisibleNodes) {
 					if ((Arrays.binarySearch(hiddenNodes, folderColumn) < 0) && (Arrays.binarySearch(visibleNodes, folderColumn) < 0)) {
 						leftList.add(new KeyValuePair(folderColumn, LanguageUtil.get(pageContext, folderColumn)));
 					}

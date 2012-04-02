@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -115,12 +114,7 @@ public class DefaultPollerResponse implements PollerResponse {
 
 		JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject();
 
-		Iterator<Map.Entry<String, Object>> itr =
-			_parameterMap.entrySet().iterator();
-
-		while (itr.hasNext()) {
-			Map.Entry<String, Object> entry = itr.next();
-
+		for (Map.Entry<String, Object> entry : _parameterMap.entrySet()) {
 			String name = entry.getKey();
 			Object value = entry.getValue();
 

@@ -57,11 +57,7 @@ else if (tabs2.equals("sites")) {
 
 List<Role> roles = RoleLocalServiceUtil.getRoles(roleType, "lfr-permission-algorithm-5");
 
-Iterator<Role> rolesItr = roles.iterator();
-
-while (rolesItr.hasNext()) {
-	Role role = rolesItr.next();
-
+for (Role role : roles) {
 	if (tabs2.equals("users")) {
 		List<User> users = UserLocalServiceUtil.getRoleUsers(role.getRoleId());
 

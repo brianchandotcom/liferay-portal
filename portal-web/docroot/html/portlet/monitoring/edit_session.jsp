@@ -142,21 +142,17 @@ userTracker = userTracker.toEscapedModel();
 								try {
 									int counter = 0;
 
-									Set sortedAttrNames = new TreeSet();
+									Set<String> sortedAttrNames = new TreeSet<String>();
 
-									Enumeration enu = userSession.getAttributeNames();
+									Enumeration<String> enu = userSession.getAttributeNames();
 
 									while (enu.hasMoreElements()) {
-										String attrName = (String)enu.nextElement();
+										String attrName = enu.nextElement();
 
 										sortedAttrNames.add(attrName);
 									}
 
-									Iterator itr = sortedAttrNames.iterator();
-
-									while (itr.hasNext()) {
-										String attrName = (String)itr.next();
-
+									for (String attrName : sortedAttrNames) {
 										String className = "portlet-section-body results-row";
 										String classHoverName = "portlet-section-body-hover results-row hover";
 

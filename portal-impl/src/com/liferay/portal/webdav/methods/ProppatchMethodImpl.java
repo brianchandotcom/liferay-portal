@@ -39,7 +39,6 @@ import com.liferay.portal.webdav.LockException;
 import com.liferay.util.xml.XMLFormatter;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -132,11 +131,9 @@ public class ProppatchMethodImpl extends BasePropMethodImpl {
 
 			Element rootElement = document.getRootElement();
 
-			Iterator<Element> itr = rootElement.elements().iterator();
+			List<Element> instructionElements = rootElement.elements();
 
-			while (itr.hasNext()) {
-				Element instructionElement = itr.next();
-
+			for (Element instructionElement : instructionElements) {
 				List<Element> propElements = instructionElement.elements();
 
 				if (propElements.size() != 1) {

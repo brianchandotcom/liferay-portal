@@ -47,7 +47,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -225,9 +224,6 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 	public String getLuceneProperties() {
 		UnicodeProperties extraSettingsProps = getExtraSettingsProperties();
 
-		Iterator<Map.Entry<String, String>> itr =
-			extraSettingsProps.entrySet().iterator();
-
 		StringBundler sb = new StringBundler(
 			extraSettingsProps.entrySet().size() + 4);
 
@@ -236,9 +232,7 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 		sb.append(getDescription());
 		sb.append(StringPool.SPACE);
 
-		while (itr.hasNext()) {
-			Map.Entry<String, String> entry = itr.next();
-
+		for (Map.Entry<String, String> entry : extraSettingsProps.entrySet()) {
 			String value = GetterUtil.getString(entry.getValue());
 
 			sb.append(value);

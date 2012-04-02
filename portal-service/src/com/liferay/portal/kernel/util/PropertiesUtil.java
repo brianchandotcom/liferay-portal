@@ -38,7 +38,6 @@ import java.nio.charset.CharsetEncoder;
 
 import java.util.Collections;
 import java.util.Enumeration;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -63,11 +62,7 @@ public class PropertiesUtil {
 	public static Properties fromMap(Map<String, String> map) {
 		Properties properties = new Properties();
 
-		Iterator<Map.Entry<String, String>> itr = map.entrySet().iterator();
-
-		while (itr.hasNext()) {
-			Map.Entry<String, String> entry = itr.next();
-
+		for (Map.Entry<String, String> entry : map.entrySet()) {
 			String key = entry.getKey();
 			String value = entry.getValue();
 
@@ -88,12 +83,7 @@ public class PropertiesUtil {
 
 		map.clear();
 
-		Iterator<Map.Entry<Object, Object>> itr =
-			properties.entrySet().iterator();
-
-		while (itr.hasNext()) {
-			Map.Entry<Object, Object> entry = itr.next();
-
+		for (Map.Entry<Object, Object> entry : properties.entrySet()) {
 			map.put((String)entry.getKey(), (String)entry.getValue());
 		}
 	}

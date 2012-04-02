@@ -46,10 +46,9 @@ try {
 			<aui:option label="all" value="" />
 
 			<%
-			Iterator itr = PluginPackageUtil.getAvailableTags().iterator();
+			Collection<String> pluginPackageTags = PluginPackageUtil.getAvailableTags();
 
-			while (itr.hasNext()) {
-				String curTag = (String)itr.next();
+			for (String curTag : pluginPackageTags) {
 			%>
 
 				<aui:option label="<%= curTag %>" selected="<%= tag.equals(curTag) %>" />

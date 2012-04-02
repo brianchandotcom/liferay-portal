@@ -58,7 +58,6 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -121,12 +120,7 @@ public class ShoppingUtil {
 
 		ShoppingPreferences preferences = null;
 
-		Iterator<Map.Entry<ShoppingCartItem, Integer>> itr =
-			items.entrySet().iterator();
-
-		while (itr.hasNext()) {
-			Map.Entry<ShoppingCartItem, Integer> entry = itr.next();
-
+		for (Map.Entry<ShoppingCartItem, Integer> entry : items.entrySet()) {
 			ShoppingCartItem cartItem = entry.getKey();
 
 			ShoppingItem item = cartItem.getItem();
@@ -204,11 +198,8 @@ public class ShoppingUtil {
 			Map<ShoppingCartItem, Integer> newItems =
 				new HashMap<ShoppingCartItem, Integer>();
 
-			Iterator<Map.Entry<ShoppingCartItem, Integer>> itr =
-				items.entrySet().iterator();
-
-			while (itr.hasNext()) {
-				Map.Entry<ShoppingCartItem, Integer> entry = itr.next();
+			for (Map.Entry<ShoppingCartItem, Integer> entry :
+				items.entrySet()) {
 
 				ShoppingCartItem cartItem = entry.getKey();
 				Integer count = entry.getValue();
@@ -293,12 +284,7 @@ public class ShoppingUtil {
 
 		double subtotal = 0.0;
 
-		Iterator<Map.Entry<ShoppingCartItem, Integer>> itr =
-			items.entrySet().iterator();
-
-		while (itr.hasNext()) {
-			Map.Entry<ShoppingCartItem, Integer> entry = itr.next();
-
+		for (Map.Entry<ShoppingCartItem, Integer> entry : items.entrySet()) {
 			ShoppingCartItem cartItem = entry.getKey();
 			Integer count = entry.getValue();
 
@@ -319,12 +305,7 @@ public class ShoppingUtil {
 
 		ShoppingPreferences preferences = null;
 
-		Iterator<Map.Entry<ShoppingCartItem, Integer>> itr =
-			items.entrySet().iterator();
-
-		while (itr.hasNext()) {
-			Map.Entry<ShoppingCartItem, Integer> entry = itr.next();
-
+		for (Map.Entry<ShoppingCartItem, Integer> entry : items.entrySet()) {
 			ShoppingCartItem cartItem = entry.getKey();
 			Integer count = entry.getValue();
 
@@ -388,12 +369,7 @@ public class ShoppingUtil {
 
 		ShoppingPreferences preferences = null;
 
-		Iterator<Map.Entry<ShoppingCartItem, Integer>> itr =
-			items.entrySet().iterator();
-
-		while (itr.hasNext()) {
-			Map.Entry<ShoppingCartItem, Integer> entry = itr.next();
-
+		for (Map.Entry<ShoppingCartItem, Integer> entry : items.entrySet()) {
 			ShoppingCartItem cartItem = entry.getKey();
 			Integer count = entry.getValue();
 
@@ -455,12 +431,7 @@ public class ShoppingUtil {
 
 		double subtotal = 0.0;
 
-		Iterator<Map.Entry<ShoppingCartItem, Integer>> itr =
-			items.entrySet().iterator();
-
-		while (itr.hasNext()) {
-			Map.Entry<ShoppingCartItem, Integer> entry = itr.next();
-
+		for (Map.Entry<ShoppingCartItem, Integer> entry : items.entrySet()) {
 			ShoppingCartItem cartItem = entry.getKey();
 			Integer count = entry.getValue();
 
@@ -480,12 +451,7 @@ public class ShoppingUtil {
 
 		ShoppingPreferences preferences = null;
 
-		Iterator<Map.Entry<ShoppingCartItem, Integer>> itr =
-			items.entrySet().iterator();
-
-		while (itr.hasNext()) {
-			Map.Entry<ShoppingCartItem, Integer> entry = itr.next();
-
+		for (Map.Entry<ShoppingCartItem, Integer> entry : items.entrySet()) {
 			ShoppingCartItem cartItem = entry.getKey();
 
 			ShoppingItem item = cartItem.getItem();
@@ -505,10 +471,8 @@ public class ShoppingUtil {
 
 			double subtotal = 0.0;
 
-			itr = items.entrySet().iterator();
-
-			while (itr.hasNext()) {
-				Map.Entry<ShoppingCartItem, Integer> entry = itr.next();
+			for (Map.Entry<ShoppingCartItem, Integer> entry :
+				items.entrySet()) {
 
 				ShoppingCartItem cartItem = entry.getKey();
 				Integer count = entry.getValue();

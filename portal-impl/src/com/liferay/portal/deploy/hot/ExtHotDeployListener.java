@@ -37,7 +37,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -135,12 +134,7 @@ public class ExtHotDeployListener extends BaseHotDeployListener {
 				"Extension environment for " + servletContextName +
 					" cannot be applied because of detected conflicts:");
 
-			Iterator<Map.Entry<String, Set<String>>> itr =
-				conflicts.entrySet().iterator();
-
-			while (itr.hasNext()) {
-				Map.Entry<String, Set<String>> entry = itr.next();
-
+			for (Map.Entry<String, Set<String>> entry : conflicts.entrySet()) {
 				String conflictServletContextName = entry.getKey();
 				Set<String> conflictFiles = entry.getValue();
 

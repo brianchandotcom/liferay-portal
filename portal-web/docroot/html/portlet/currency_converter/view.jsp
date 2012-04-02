@@ -41,13 +41,9 @@ decimalFormat.setMinimumFractionDigits(2);
 <select name="<portlet:namespace />from">
 
 	<%
-	Iterator itr = allSymbols.entrySet().iterator();
-
-	while (itr.hasNext()) {
-		Map.Entry entry = (Map.Entry)itr.next();
-
-		String symbol = (String)entry.getValue();
-		String currencyValue = (String)entry.getKey();
+	for (Map.Entry<String, String> entry : allSymbols.entrySet()) {
+		String symbol = entry.getValue();
+		String currencyValue = entry.getKey();
 	%>
 
 		<option <%= symbol.equals(from) ? "selected" : "" %> value="<%= symbol %>"><%= currencyValue %></option value>
@@ -63,13 +59,9 @@ decimalFormat.setMinimumFractionDigits(2);
 <select name="<portlet:namespace />to">
 
 	<%
-	itr = allSymbols.entrySet().iterator();
-
-	while (itr.hasNext()) {
-		Map.Entry entry = (Map.Entry)itr.next();
-
-		String symbol = (String)entry.getValue();
-		String currencyValue = (String)entry.getKey();
+	for (Map.Entry<String, String> entry : allSymbols.entrySet()) {
+		String symbol = entry.getValue();
+		String currencyValue = entry.getKey();
 	%>
 
 		<option <%= symbol.equals(to) ? "selected" : "" %> value="<%= symbol %>"><%= currencyValue %></option value>

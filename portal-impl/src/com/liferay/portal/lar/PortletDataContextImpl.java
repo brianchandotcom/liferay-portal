@@ -113,7 +113,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -349,11 +348,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 			return;
 		}
 
-		Iterator<MBMessage> itr = messages.iterator();
-
-		while (itr.hasNext()) {
-			MBMessage message = itr.next();
-
+		for (MBMessage message : messages) {
 			message.setUserUuid(message.getUserUuid());
 
 			addRatingsEntries(MBDiscussion.class, message.getPrimaryKey());
@@ -553,11 +548,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 			return;
 		}
 
-		Iterator<RatingsEntry> itr = ratingsEntries.iterator();
-
-		while (itr.hasNext()) {
-			RatingsEntry entry = itr.next();
-
+		for (RatingsEntry entry : ratingsEntries) {
 			entry.setUserUuid(entry.getUserUuid());
 		}
 

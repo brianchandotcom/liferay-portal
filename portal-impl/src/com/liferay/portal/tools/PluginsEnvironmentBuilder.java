@@ -30,7 +30,6 @@ import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -90,12 +89,7 @@ public class PluginsEnvironmentBuilder {
 
 		sb.append("\">\n\t\t<attributes>\n");
 
-		Iterator<Map.Entry<String, String>> itr =
-			attributes.entrySet().iterator();
-
-		while (itr.hasNext()) {
-			Map.Entry<String, String> entry = itr.next();
-
+		for (Map.Entry<String, String> entry : attributes.entrySet()) {
 			sb.append("\t\t\t<attribute name=\"");
 			sb.append(entry.getKey());
 			sb.append("\" value=\"");

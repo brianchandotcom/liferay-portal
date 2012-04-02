@@ -33,11 +33,9 @@ Set frameworkVersionIds = new HashSet();
 String[] frameworkVersions = request.getParameterValues("frameworkVersions");
 
 if ((productVersion != null) && (frameworkVersions == null)) {
-	Iterator itr = productVersion.getFrameworkVersions().iterator();
+	List<SCFrameworkVersion> scFrameworkVersions = productVersion.getFrameworkVersions();
 
-	while (itr.hasNext()) {
-		SCFrameworkVersion frameworkVersion = (SCFrameworkVersion)itr.next();
-
+	for (SCFrameworkVersion frameworkVersion : scFrameworkVersions) {
 		frameworkVersionIds.add(new Long(frameworkVersion.getFrameworkVersionId()));
 	}
 }
@@ -104,10 +102,9 @@ editProductEntryURL.setParameter("productEntryId", String.valueOf(productEntryId
 			<select multiple="true" name="<portlet:namespace />frameworkVersions">
 
 				<%
-				Iterator itr = SCFrameworkVersionServiceUtil.getFrameworkVersions(scopeGroupId, true).iterator();
+				List<SCFrameworkVersion> scFrameworkVersions = SCFrameworkVersionServiceUtil.getFrameworkVersions(scopeGroupId, true);
 
-				while (itr.hasNext()) {
-					SCFrameworkVersion frameworkVersion = (SCFrameworkVersion)itr.next();
+				for (SCFrameworkVersion frameworkVersion : scFrameworkVersions) {
 				%>
 
 					<option <%= (frameworkVersionIds.contains(new Long(frameworkVersion.getFrameworkVersionId()))) ? "selected" : "" %> value="<%= frameworkVersion.getFrameworkVersionId() %>"><%= frameworkVersion.getName() %></option>

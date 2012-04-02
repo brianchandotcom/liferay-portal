@@ -37,7 +37,6 @@ import com.liferay.util.xml.DocUtil;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -343,13 +342,12 @@ public abstract class BasePropMethodImpl implements Method {
 		addResponse(webDavRequest, resource, props, multistatusElement);
 
 		if (resource.isCollection() && (depth != 0)) {
-			Iterator<Resource> itr = storage.getResources(
-				webDavRequest).iterator();
+			List<Resource> storageResources = storage.getResources(
+				webDavRequest);
 
-			while (itr.hasNext()) {
-				resource = itr.next();
-
-				addResponse(webDavRequest, resource, props, multistatusElement);
+			for (Resource storageResource : storageResources) {
+				addResponse(
+					webDavRequest, storageResource, props, multistatusElement);
 			}
 		}
 	}

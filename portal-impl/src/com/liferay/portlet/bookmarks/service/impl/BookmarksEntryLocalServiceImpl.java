@@ -37,7 +37,6 @@ import com.liferay.portlet.bookmarks.social.BookmarksActivityKeys;
 import com.liferay.portlet.bookmarks.util.comparator.EntryModifiedDateComparator;
 
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -113,12 +112,10 @@ public class BookmarksEntryLocalServiceImpl
 	public void deleteEntries(long groupId, long folderId)
 		throws PortalException, SystemException {
 
-		Iterator<BookmarksEntry> itr = bookmarksEntryPersistence.findByG_F(
-			groupId, folderId).iterator();
+		List<BookmarksEntry> entries = bookmarksEntryPersistence.findByG_F(
+			groupId, folderId);
 
-		while (itr.hasNext()) {
-			BookmarksEntry entry = itr.next();
-
+		for (BookmarksEntry entry : entries) {
 			deleteEntry(entry);
 		}
 	}

@@ -24,7 +24,7 @@ import com.liferay.portlet.journal.NoSuchStructureException;
 import com.liferay.portlet.journal.model.JournalStructure;
 import com.liferay.portlet.journal.service.JournalStructureLocalServiceUtil;
 
-import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
@@ -88,14 +88,13 @@ public class JournalStructureImpl extends JournalStructureBaseImpl {
 	protected void addParentStructureId(
 		Element parentEl, String parentStructureId) {
 
-		Iterator<Element> itr = parentEl.elements(_DYNAMIC_ELEMENT).iterator();
+		List<Element> dynamicElements = parentEl.elements(_DYNAMIC_ELEMENT);
 
-		while (itr.hasNext()) {
-			Element dynamicEl = itr.next();
+		for (Element dynamicElement : dynamicElements) {
+			dynamicElement.addAttribute(
+				_PARENT_STRUCTURE_ID, parentStructureId);
 
-			dynamicEl.addAttribute(_PARENT_STRUCTURE_ID, parentStructureId);
-
-			addParentStructureId(dynamicEl, parentStructureId);
+			addParentStructureId(dynamicElement, parentStructureId);
 		}
 	}
 

@@ -64,7 +64,6 @@ import java.io.Writer;
 import java.security.Key;
 
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -970,10 +969,9 @@ public class PortletURLImpl
 			sb.append(StringPool.AMPERSAND);
 		}
 
-		Iterator<Map.Entry<String, String[]>> itr =
-			_removePublicRenderParameters.entrySet().iterator();
+		for (Map.Entry<String, String[]> entry :
+			_removePublicRenderParameters.entrySet()) {
 
-		while (itr.hasNext()) {
 			String lastString = sb.stringAt(sb.index() - 1);
 
 			if (lastString.charAt(lastString.length() - 1) !=
@@ -981,8 +979,6 @@ public class PortletURLImpl
 
 				sb.append(StringPool.AMPERSAND);
 			}
-
-			Map.Entry<String, String[]> entry = itr.next();
 
 			sb.append(entry.getKey());
 			sb.append(StringPool.EQUAL);
@@ -994,11 +990,9 @@ public class PortletURLImpl
 			mergeRenderParameters();
 		}
 
-		itr = _params.entrySet().iterator();
+		int previousSbIndex = sb.index();
 
-		while (itr.hasNext()) {
-			Map.Entry<String, String[]> entry = itr.next();
-
+		for (Map.Entry<String, String[]> entry : _params.entrySet()) {
 			String name = entry.getKey();
 			String[] values = entry.getValue();
 
@@ -1019,11 +1013,12 @@ public class PortletURLImpl
 				sb.append(name);
 				sb.append(StringPool.EQUAL);
 				sb.append(processValue(key, values[i]));
-
-				if (((i + 1) < values.length) || itr.hasNext()) {
-					sb.append(StringPool.AMPERSAND);
-				}
+				sb.append(StringPool.AMPERSAND);
 			}
+		}
+
+		if (sb.index() > previousSbIndex) {
+			sb.setIndex(sb.index() - 1);
 		}
 
 		if (_encrypt) {
@@ -1158,12 +1153,9 @@ public class PortletURLImpl
 
 		StringBundler parameterSb = new StringBundler();
 
-		Iterator<Map.Entry<String, String[]>> itr =
-			_params.entrySet().iterator();
+		int previousSbIndex = sb.index();
 
-		while (itr.hasNext()) {
-			Map.Entry<String, String[]> entry = itr.next();
-
+		for (Map.Entry<String, String[]> entry : _params.entrySet()) {
 			String name = entry.getKey();
 			String[] values = entry.getValue();
 
@@ -1184,11 +1176,12 @@ public class PortletURLImpl
 				parameterSb.append(name);
 				parameterSb.append(StringPool.EQUAL);
 				parameterSb.append(HttpUtil.encodeURL(values[i]));
-
-				if (((i + 1) < values.length) || itr.hasNext()) {
-					parameterSb.append(StringPool.AMPERSAND);
-				}
+				parameterSb.append(StringPool.AMPERSAND);
 			}
+		}
+
+		if (sb.index() > previousSbIndex) {
+			sb.setIndex(sb.index() - 1);
 		}
 
 		sb.append("wsrp-navigationalState");

@@ -32,7 +32,6 @@ import com.liferay.portal.util.comparator.PortletTitleComparator;
 import com.liferay.portlet.PortletConfigFactoryUtil;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -106,10 +105,8 @@ public class PortletListerImpl implements PortletLister {
 		categories = ListUtil.sort(
 			categories, new PortletCategoryComparator(_user.getLocale()));
 
-		Iterator<PortletCategory> itr = categories.iterator();
-
-		for (int i = 0; itr.hasNext();) {
-			PortletCategory portletCategory = itr.next();
+		for (int i = 0; i < categories.size(); i++) {
+			PortletCategory portletCategory = categories.get(i);
 
 			if (portletCategory.isHidden()) {
 				continue;
@@ -153,8 +150,6 @@ public class PortletListerImpl implements PortletLister {
 					portletCategory, portletCategory.getPortletIds(), nodeId,
 					depth + 1);
 			}
-
-			i++;
 		}
 	}
 
@@ -165,13 +160,9 @@ public class PortletListerImpl implements PortletLister {
 
 		List<Portlet> portlets = new ArrayList<Portlet>();
 
-		Iterator<String> portletIdsItr = portletIds.iterator();
-
 		String externalPortletCategory = null;
 
-		while (portletIdsItr.hasNext()) {
-			String portletId = portletIdsItr.next();
-
+		for (String portletId : portletIds) {
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(
 				_user.getCompanyId(), portletId);
 
@@ -216,10 +207,8 @@ public class PortletListerImpl implements PortletLister {
 		portlets = ListUtil.sort(
 			portlets, new PortletTitleComparator(_user.getLocale()));
 
-		Iterator<Portlet> portletsItr = portlets.iterator();
-
-		for (int i = 0; portletsItr.hasNext(); i++) {
-			Portlet portlet = portletsItr.next();
+		for (int i = 0; i < portlets.size(); i++) {
+			Portlet portlet = portlets.get(i);
 
 			TreeNodeView nodeView = new TreeNodeView(++_nodeId);
 

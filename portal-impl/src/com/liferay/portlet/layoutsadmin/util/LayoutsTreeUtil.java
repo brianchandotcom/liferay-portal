@@ -39,6 +39,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Eduardo Lundgren
  * @author Bruno Basto
  */
 public class LayoutsTreeUtil {

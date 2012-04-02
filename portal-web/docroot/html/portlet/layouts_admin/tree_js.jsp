@@ -161,7 +161,7 @@ String openNodes = SessionTreeJSClicks.getOpenNodes(request, treeId);
 						</c:if>
 						children: TreeUtil.formatJSONResults(node.children),
 						draggable: node.updateable,
-						expanded: !!(node.children && node.children.length),
+						expanded: !!(node.children && (node.children.length > 0)),
 						id: TreeUtil.createListItemId(node.layoutId, node.plid),
 						type: '<%= selectableTree ? "task" : "io" %>'
 					};

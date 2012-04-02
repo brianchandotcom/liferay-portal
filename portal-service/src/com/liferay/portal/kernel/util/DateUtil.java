@@ -122,10 +122,18 @@ public class DateUtil {
 		return dateFormat.format(date);
 	}
 
+	public static int getDaysBetween(Date date1, Date date2) {
+		return getDaysBetween(date1, date2, null);
+	}
+
 	public static int getDaysBetween(
 		Date date1, Date date2, TimeZone timeZone) {
 
-		int offset = timeZone.getRawOffset();
+		int offset = 0;
+
+		if (timeZone != null) {
+			offset = timeZone.getRawOffset();
+		}
 
 		if (date1.after(date2)) {
 			Date tempDate = date1;

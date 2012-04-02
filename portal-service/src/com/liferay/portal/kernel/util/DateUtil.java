@@ -122,6 +122,33 @@ public class DateUtil {
 		return dateFormat.format(date);
 	}
 
+	public static int getDaysBetween(Date date1, Date date2) {
+		if (date1.after(date2)) {
+			Date tempDate = date1;
+
+			date1 = date2;
+			date2 = tempDate;
+		}
+
+		Calendar startCal = new GregorianCalendar();
+
+		startCal.setTime(date1);
+
+		Calendar endCal = new GregorianCalendar();
+
+		endCal.setTime(date2);
+
+		int daysBetween = 0;
+
+		while (CalendarUtil.beforeByDay(startCal.getTime(), endCal.getTime())) {
+			startCal.add(Calendar.DAY_OF_MONTH, 1);
+
+			daysBetween++;
+		}
+
+		return daysBetween;
+	}
+
 	public static int getDaysBetween(
 		Date date1, Date date2, TimeZone timeZone) {
 

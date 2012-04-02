@@ -324,28 +324,25 @@ String openNodes = SessionTreeJSClicks.getOpenNodes(request, treeId);
 
 	var rootNode = new RootNodeType(
 		{
-			after: {
-				<c:if test="<%= saveState %>">
+			<c:if test="<%= saveState %>">
+				after: {
 					checkedChange: function(event) {
-						TreeUtil.updateSessionTreeClick(<%= LayoutConstants.DEFAULT_PLID %>, event.newVal, '<%= HtmlUtil.escape(treeId) %>SelectedNode');
+						TreeUtil.updateSessionTreeCheckedState('<%= HtmlUtil.escape(treeId) %>SelectedNode', <%= LayoutConstants.DEFAULT_PLID %>, event.newVal);
 					},
-				</c:if>
-				checkedChange: function(event) {
-					TreeUtil.updateSessionTreeCheckedState('<%= HtmlUtil.escape(treeId) %>SelectedNode', <%= LayoutConstants.DEFAULT_PLID %>, event.newVal);
-				},
-				expandedChange: function(event) {
-					var sessionClickURL = themeDisplay.getPathMain() + '/portal/session_click';
+					expandedChange: function(event) {
+						var sessionClickURL = themeDisplay.getPathMain() + '/portal/session_click';
 
-					A.io.request(
-						sessionClickURL,
-						{
-							data: {
-								'<%= HtmlUtil.escape(treeId) %>RootNode': event.newVal
+						A.io.request(
+							sessionClickURL,
+							{
+								data: {
+									'<%= HtmlUtil.escape(treeId) %>RootNode': event.newVal
+								}
 							}
-						}
-					);
-				}
-			},
+						);
+					}
+				},
+			</c:if>
 			alwaysShowHitArea: true,
 			<c:if test='<%= !saveState && defaultStateChecked %>'>
 				checked: true,

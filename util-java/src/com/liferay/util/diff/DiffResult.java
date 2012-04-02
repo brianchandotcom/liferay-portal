@@ -86,7 +86,7 @@ public class DiffResult {
 		sb.append(_lineNumber);
 		sb.append("\n");
 
-		for(String changedLine : _changedLines) {
+		for (String changedLine : _changedLines) {
 			sb.append(changedLine);
 			sb.append("\n");
 		}

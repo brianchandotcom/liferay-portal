@@ -120,7 +120,7 @@ public class PortletCategory implements Serializable {
 	}
 
 	public void separate(Set<String> portletIds) {
-		for(PortletCategory category : _categories.values()) {
+		for (PortletCategory category : _categories.values()) {
 			category.separate(portletIds);
 		}
 

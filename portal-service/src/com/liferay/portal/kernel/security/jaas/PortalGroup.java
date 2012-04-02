@@ -54,7 +54,7 @@ public class PortalGroup
 			if (principal instanceof Group) {
 				Group group = (Group)principal;
 
-				if(group.isMember(member)) {
+				if (group.isMember(member)) {
 					return true;
 				}
 			}

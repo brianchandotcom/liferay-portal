@@ -62,7 +62,7 @@ public class PropertiesUtil {
 	public static Properties fromMap(Map<String, String> map) {
 		Properties properties = new Properties();
 
-		for(Map.Entry<String, String> entry : map.entrySet()) {
+		for (Map.Entry<String, String> entry : map.entrySet()) {
 			String key = entry.getKey();
 			String value = entry.getValue();
 

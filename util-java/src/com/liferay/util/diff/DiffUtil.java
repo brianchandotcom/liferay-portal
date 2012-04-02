@@ -447,7 +447,7 @@ public class DiffUtil {
 
 		// Iterate over Differences between chars of these lines.
 
-		for(Difference difference : differences) {
+		for (Difference difference : differences) {
 			if (difference.getAddedEnd() == Difference.NONE) {
 
 				// Chars were deleted from source only.

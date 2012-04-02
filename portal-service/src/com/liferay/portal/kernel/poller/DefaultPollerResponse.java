@@ -114,7 +114,7 @@ public class DefaultPollerResponse implements PollerResponse {
 
 		JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject();
 
-		for(Map.Entry<String, Object> entry : _parameterMap.entrySet()) {
+		for (Map.Entry<String, Object> entry : _parameterMap.entrySet()) {
 			String name = entry.getKey();
 			Object value = entry.getValue();
 

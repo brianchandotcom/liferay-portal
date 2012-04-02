@@ -269,12 +269,15 @@ public class InstanceWrapperBuilder {
 	private String _getTypeGenericsName(Type type) {
 		Type[] actualTypeArguments = type.getActualTypeArguments();
 
-		StringBundler sb = new StringBundler(
-			actualTypeArguments.length * 2 + 4);
+		if (actualTypeArguments == null) {
+			return type.getValue().concat(_getDimensions(type));
+		}
+		else {
+			StringBundler sb = new StringBundler(
+				actualTypeArguments.length * 2 + 3);
 
-		sb.append(type.getValue());		
+			sb.append(type.getValue());
 
-		if (actualTypeArguments != null) {
 			sb.append("<");
 
 			if (actualTypeArguments.length > 0) {
@@ -287,11 +290,11 @@ public class InstanceWrapperBuilder {
 			}
 
 			sb.append(">");
+
+			sb.append(_getDimensions(type));
+
+			return sb.toString();
 		}
-
-		sb.append(_getDimensions(type));
-
-		return sb.toString();
 	}
 
 }

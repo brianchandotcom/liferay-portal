@@ -916,7 +916,7 @@ public class StagingImpl implements Staging {
 
 		long[] layoutIds = new long[layouts.size()];
 
-		for(int i = 0; i < layouts.size(); i++) {
+		for (int i = 0; i < layouts.size(); i++) {
 			layoutIds[i] = layouts.get(i).getLayoutId();
 		}
 

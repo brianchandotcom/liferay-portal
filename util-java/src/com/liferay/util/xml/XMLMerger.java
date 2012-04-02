@@ -138,7 +138,7 @@ public class XMLMerger {
 				duplicate.detach();
 			}
 
-			for(Element child : originals) {
+			for (Element child : originals) {
 				_mergeDuplicateElements(child, comparator);
 			}
 		}

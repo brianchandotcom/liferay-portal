@@ -40,7 +40,7 @@ public class BasicSpellCheckListener implements SpellCheckListener {
 		List<String> suggestions = new ArrayList<String>();
 		List<Word> words = (List<Word>)event.getSuggestions();
 
-		for(Word word : words) {
+		for (Word word : words) {
 			suggestions.add(word.getWord());
 		}
 

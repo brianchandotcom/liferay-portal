@@ -143,6 +143,10 @@ public class PortalLDAPExporterImpl implements PortalLDAPExporter {
 		LdapContext ldapContext = PortalLDAPUtil.getContext(
 			ldapServerId, companyId);
 
+		if (ldapContext == null) {
+			return;
+		}
+
 		UserGroup userGroup = UserGroupLocalServiceUtil.getUserGroup(
 			userGroupId);
 
@@ -155,10 +159,6 @@ public class PortalLDAPExporterImpl implements PortalLDAPExporter {
 			ldapServerId, companyId, userGroup.getName());
 
 		try {
-			if (ldapContext == null) {
-				return;
-			}
-
 			if (binding == null) {
 				if (ldapOperation == LDAPOperation.ADD) {
 					addGroup(

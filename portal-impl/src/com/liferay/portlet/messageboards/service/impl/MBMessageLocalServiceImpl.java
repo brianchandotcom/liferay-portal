@@ -1979,7 +1979,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		boolean htmlFormat = MBUtil.getEmailHtmlFormat(preferences);
 
-		if (htmlFormat && message.getFormat().equals("bbcode")) {
+		if (htmlFormat && message.isFormatBBCode()) {
 			try {
 				messageBody = BBCodeTranslatorUtil.getHTML(messageBody);
 			}

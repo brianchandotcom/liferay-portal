@@ -162,13 +162,20 @@ public class TunnelServlet extends HttpServlet {
 		}
 
 		if (returnObj != null) {
-			ObjectOutputStream oos = new ObjectOutputStream(
-				response.getOutputStream());
+			try {
+				ObjectOutputStream oos = new ObjectOutputStream(
+					response.getOutputStream());
 
-			oos.writeObject(returnObj);
+				oos.writeObject(returnObj);
 
-			oos.flush();
-			oos.close();
+				oos.flush();
+				oos.close();
+			}
+			catch (IOException ioe) {
+				_log.error(ioe, ioe);
+
+				throw ioe;
+			}
 		}
 	}
 

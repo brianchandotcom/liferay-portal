@@ -1737,14 +1737,16 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	 * @param name the name
 	 * @param portletId the portlet ID
 	 * @param classNameId the class name ID
+	 * @return the portlet item that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByG_N_P_C(long groupId, String name, String portletId,
-		long classNameId) throws NoSuchPortletItemException, SystemException {
+	public PortletItem removeByG_N_P_C(long groupId, String name,
+		String portletId, long classNameId)
+		throws NoSuchPortletItemException, SystemException {
 		PortletItem portletItem = findByG_N_P_C(groupId, name, portletId,
 				classNameId);
 
-		remove(portletItem);
+		return remove(portletItem);
 	}
 
 	/**

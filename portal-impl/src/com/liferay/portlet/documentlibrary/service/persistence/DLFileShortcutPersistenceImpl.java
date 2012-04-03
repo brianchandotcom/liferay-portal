@@ -3092,13 +3092,14 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @return the document library file shortcut that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByUUID_G(String uuid, long groupId)
+	public DLFileShortcut removeByUUID_G(String uuid, long groupId)
 		throws NoSuchFileShortcutException, SystemException {
 		DLFileShortcut dlFileShortcut = findByUUID_G(uuid, groupId);
 
-		remove(dlFileShortcut);
+		return remove(dlFileShortcut);
 	}
 
 	/**

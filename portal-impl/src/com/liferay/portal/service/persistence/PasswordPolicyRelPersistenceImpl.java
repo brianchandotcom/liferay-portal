@@ -1373,13 +1373,14 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
+	 * @return the password policy rel that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByC_C(long classNameId, long classPK)
+	public PasswordPolicyRel removeByC_C(long classNameId, long classPK)
 		throws NoSuchPasswordPolicyRelException, SystemException {
 		PasswordPolicyRel passwordPolicyRel = findByC_C(classNameId, classPK);
 
-		remove(passwordPolicyRel);
+		return remove(passwordPolicyRel);
 	}
 
 	/**
@@ -1388,14 +1389,16 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	 * @param passwordPolicyId the password policy ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
+	 * @return the password policy rel that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByP_C_C(long passwordPolicyId, long classNameId,
-		long classPK) throws NoSuchPasswordPolicyRelException, SystemException {
+	public PasswordPolicyRel removeByP_C_C(long passwordPolicyId,
+		long classNameId, long classPK)
+		throws NoSuchPasswordPolicyRelException, SystemException {
 		PasswordPolicyRel passwordPolicyRel = findByP_C_C(passwordPolicyId,
 				classNameId, classPK);
 
-		remove(passwordPolicyRel);
+		return remove(passwordPolicyRel);
 	}
 
 	/**

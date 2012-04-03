@@ -966,10 +966,12 @@ public interface JournalContentSearchPersistence extends BasePersistence<Journal
 	* @param layoutId the layout ID
 	* @param portletId the portlet ID
 	* @param articleId the article ID
+	* @return the journal content search that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByG_P_L_P_A(long groupId, boolean privateLayout,
-		long layoutId, java.lang.String portletId, java.lang.String articleId)
+	public com.liferay.portlet.journal.model.JournalContentSearch removeByG_P_L_P_A(
+		long groupId, boolean privateLayout, long layoutId,
+		java.lang.String portletId, java.lang.String articleId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.journal.NoSuchContentSearchException;
 

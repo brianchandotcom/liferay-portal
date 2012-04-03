@@ -9618,13 +9618,14 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @return the blogs entry that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByUUID_G(String uuid, long groupId)
+	public BlogsEntry removeByUUID_G(String uuid, long groupId)
 		throws NoSuchEntryException, SystemException {
 		BlogsEntry blogsEntry = findByUUID_G(uuid, groupId);
 
-		remove(blogsEntry);
+		return remove(blogsEntry);
 	}
 
 	/**
@@ -9698,13 +9699,14 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	 *
 	 * @param groupId the group ID
 	 * @param urlTitle the url title
+	 * @return the blogs entry that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByG_UT(long groupId, String urlTitle)
+	public BlogsEntry removeByG_UT(long groupId, String urlTitle)
 		throws NoSuchEntryException, SystemException {
 		BlogsEntry blogsEntry = findByG_UT(groupId, urlTitle);
 
-		remove(blogsEntry);
+		return remove(blogsEntry);
 	}
 
 	/**

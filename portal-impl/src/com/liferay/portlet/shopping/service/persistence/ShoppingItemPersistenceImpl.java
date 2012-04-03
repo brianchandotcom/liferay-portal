@@ -2059,39 +2059,42 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 * Removes the shopping item where smallImageId = &#63; from the database.
 	 *
 	 * @param smallImageId the small image ID
+	 * @return the shopping item that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeBySmallImageId(long smallImageId)
+	public ShoppingItem removeBySmallImageId(long smallImageId)
 		throws NoSuchItemException, SystemException {
 		ShoppingItem shoppingItem = findBySmallImageId(smallImageId);
 
-		remove(shoppingItem);
+		return remove(shoppingItem);
 	}
 
 	/**
 	 * Removes the shopping item where mediumImageId = &#63; from the database.
 	 *
 	 * @param mediumImageId the medium image ID
+	 * @return the shopping item that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByMediumImageId(long mediumImageId)
+	public ShoppingItem removeByMediumImageId(long mediumImageId)
 		throws NoSuchItemException, SystemException {
 		ShoppingItem shoppingItem = findByMediumImageId(mediumImageId);
 
-		remove(shoppingItem);
+		return remove(shoppingItem);
 	}
 
 	/**
 	 * Removes the shopping item where largeImageId = &#63; from the database.
 	 *
 	 * @param largeImageId the large image ID
+	 * @return the shopping item that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByLargeImageId(long largeImageId)
+	public ShoppingItem removeByLargeImageId(long largeImageId)
 		throws NoSuchItemException, SystemException {
 		ShoppingItem shoppingItem = findByLargeImageId(largeImageId);
 
-		remove(shoppingItem);
+		return remove(shoppingItem);
 	}
 
 	/**
@@ -2113,13 +2116,14 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 *
 	 * @param companyId the company ID
 	 * @param sku the sku
+	 * @return the shopping item that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByC_S(long companyId, String sku)
+	public ShoppingItem removeByC_S(long companyId, String sku)
 		throws NoSuchItemException, SystemException {
 		ShoppingItem shoppingItem = findByC_S(companyId, sku);
 
-		remove(shoppingItem);
+		return remove(shoppingItem);
 	}
 
 	/**

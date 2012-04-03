@@ -460,15 +460,16 @@ public class SocialActivityLimitUtil {
 	* @param classPK the class p k
 	* @param activityType the activity type
 	* @param activityCounterName the activity counter name
+	* @return the social activity limit that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByG_U_C_C_A_A(long groupId, long userId,
-		long classNameId, long classPK, int activityType,
-		java.lang.String activityCounterName)
+	public static com.liferay.portlet.social.model.SocialActivityLimit removeByG_U_C_C_A_A(
+		long groupId, long userId, long classNameId, long classPK,
+		int activityType, java.lang.String activityCounterName)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.social.NoSuchActivityLimitException {
-		getPersistence()
-			.removeByG_U_C_C_A_A(groupId, userId, classNameId, classPK,
+		return getPersistence()
+				   .removeByG_U_C_C_A_A(groupId, userId, classNameId, classPK,
 			activityType, activityCounterName);
 	}
 

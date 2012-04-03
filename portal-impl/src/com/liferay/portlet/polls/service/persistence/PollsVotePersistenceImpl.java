@@ -1536,13 +1536,14 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	 *
 	 * @param questionId the question ID
 	 * @param userId the user ID
+	 * @return the polls vote that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByQ_U(long questionId, long userId)
+	public PollsVote removeByQ_U(long questionId, long userId)
 		throws NoSuchVoteException, SystemException {
 		PollsVote pollsVote = findByQ_U(questionId, userId);
 
-		remove(pollsVote);
+		return remove(pollsVote);
 	}
 
 	/**

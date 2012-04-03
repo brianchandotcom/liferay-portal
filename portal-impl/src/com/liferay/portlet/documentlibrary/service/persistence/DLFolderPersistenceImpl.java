@@ -4714,13 +4714,14 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @return the document library folder that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByUUID_G(String uuid, long groupId)
+	public DLFolder removeByUUID_G(String uuid, long groupId)
 		throws NoSuchFolderException, SystemException {
 		DLFolder dlFolder = findByUUID_G(uuid, groupId);
 
-		remove(dlFolder);
+		return remove(dlFolder);
 	}
 
 	/**
@@ -4751,13 +4752,14 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 * Removes the document library folder where repositoryId = &#63; from the database.
 	 *
 	 * @param repositoryId the repository ID
+	 * @return the document library folder that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByRepositoryId(long repositoryId)
+	public DLFolder removeByRepositoryId(long repositoryId)
 		throws NoSuchFolderException, SystemException {
 		DLFolder dlFolder = findByRepositoryId(repositoryId);
 
-		remove(dlFolder);
+		return remove(dlFolder);
 	}
 
 	/**
@@ -4809,13 +4811,14 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 * @param groupId the group ID
 	 * @param parentFolderId the parent folder ID
 	 * @param name the name
+	 * @return the document library folder that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByG_P_N(long groupId, long parentFolderId, String name)
+	public DLFolder removeByG_P_N(long groupId, long parentFolderId, String name)
 		throws NoSuchFolderException, SystemException {
 		DLFolder dlFolder = findByG_P_N(groupId, parentFolderId, name);
 
-		remove(dlFolder);
+		return remove(dlFolder);
 	}
 
 	/**

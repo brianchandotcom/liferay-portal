@@ -1165,13 +1165,14 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	 *
 	 * @param userId the user ID
 	 * @param type the type
+	 * @return the announcements delivery that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByU_T(long userId, String type)
+	public AnnouncementsDelivery removeByU_T(long userId, String type)
 		throws NoSuchDeliveryException, SystemException {
 		AnnouncementsDelivery announcementsDelivery = findByU_T(userId, type);
 
-		remove(announcementsDelivery);
+		return remove(announcementsDelivery);
 	}
 
 	/**

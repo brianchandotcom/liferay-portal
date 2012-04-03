@@ -3678,15 +3678,16 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	 * @param layoutId the layout ID
 	 * @param portletId the portlet ID
 	 * @param articleId the article ID
+	 * @return the journal content search that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByG_P_L_P_A(long groupId, boolean privateLayout,
-		long layoutId, String portletId, String articleId)
+	public JournalContentSearch removeByG_P_L_P_A(long groupId,
+		boolean privateLayout, long layoutId, String portletId, String articleId)
 		throws NoSuchContentSearchException, SystemException {
 		JournalContentSearch journalContentSearch = findByG_P_L_P_A(groupId,
 				privateLayout, layoutId, portletId, articleId);
 
-		remove(journalContentSearch);
+		return remove(journalContentSearch);
 	}
 
 	/**

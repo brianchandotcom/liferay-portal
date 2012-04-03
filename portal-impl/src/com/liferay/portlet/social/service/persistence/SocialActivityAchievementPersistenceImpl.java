@@ -2988,14 +2988,15 @@ public class SocialActivityAchievementPersistenceImpl
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param name the name
+	 * @return the social activity achievement that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByG_U_N(long groupId, long userId, String name)
-		throws NoSuchActivityAchievementException, SystemException {
+	public SocialActivityAchievement removeByG_U_N(long groupId, long userId,
+		String name) throws NoSuchActivityAchievementException, SystemException {
 		SocialActivityAchievement socialActivityAchievement = findByG_U_N(groupId,
 				userId, name);
 
-		remove(socialActivityAchievement);
+		return remove(socialActivityAchievement);
 	}
 
 	/**

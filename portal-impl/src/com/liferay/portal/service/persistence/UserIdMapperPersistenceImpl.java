@@ -1373,13 +1373,14 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 *
 	 * @param userId the user ID
 	 * @param type the type
+	 * @return the user ID mapper that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByU_T(long userId, String type)
+	public UserIdMapper removeByU_T(long userId, String type)
 		throws NoSuchUserIdMapperException, SystemException {
 		UserIdMapper userIdMapper = findByU_T(userId, type);
 
-		remove(userIdMapper);
+		return remove(userIdMapper);
 	}
 
 	/**
@@ -1387,13 +1388,14 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 *
 	 * @param type the type
 	 * @param externalUserId the external user ID
+	 * @return the user ID mapper that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByT_E(String type, String externalUserId)
+	public UserIdMapper removeByT_E(String type, String externalUserId)
 		throws NoSuchUserIdMapperException, SystemException {
 		UserIdMapper userIdMapper = findByT_E(type, externalUserId);
 
-		remove(userIdMapper);
+		return remove(userIdMapper);
 	}
 
 	/**

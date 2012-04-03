@@ -1427,9 +1427,11 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @return the asset category that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByUUID_G(java.lang.String uuid, long groupId)
+	public com.liferay.portlet.asset.model.AssetCategory removeByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.asset.NoSuchCategoryException;
 
@@ -1518,10 +1520,11 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	* @param parentCategoryId the parent category ID
 	* @param name the name
 	* @param vocabularyId the vocabulary ID
+	* @return the asset category that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByP_N_V(long parentCategoryId, java.lang.String name,
-		long vocabularyId)
+	public com.liferay.portlet.asset.model.AssetCategory removeByP_N_V(
+		long parentCategoryId, java.lang.String name, long vocabularyId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.asset.NoSuchCategoryException;
 

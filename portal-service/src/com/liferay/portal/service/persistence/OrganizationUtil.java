@@ -928,12 +928,14 @@ public class OrganizationUtil {
 	*
 	* @param companyId the company ID
 	* @param name the name
+	* @return the organization that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByC_N(long companyId, java.lang.String name)
+	public static com.liferay.portal.model.Organization removeByC_N(
+		long companyId, java.lang.String name)
 		throws com.liferay.portal.NoSuchOrganizationException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByC_N(companyId, name);
+		return getPersistence().removeByC_N(companyId, name);
 	}
 
 	/**

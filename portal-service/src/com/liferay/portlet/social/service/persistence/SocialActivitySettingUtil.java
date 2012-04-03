@@ -600,14 +600,15 @@ public class SocialActivitySettingUtil {
 	* @param classNameId the class name ID
 	* @param activityType the activity type
 	* @param name the name
+	* @return the social activity setting that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByG_C_A_N(long groupId, long classNameId,
-		int activityType, java.lang.String name)
+	public static com.liferay.portlet.social.model.SocialActivitySetting removeByG_C_A_N(
+		long groupId, long classNameId, int activityType, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.social.NoSuchActivitySettingException {
-		getPersistence()
-			.removeByG_C_A_N(groupId, classNameId, activityType, name);
+		return getPersistence()
+				   .removeByG_C_A_N(groupId, classNameId, activityType, name);
 	}
 
 	/**

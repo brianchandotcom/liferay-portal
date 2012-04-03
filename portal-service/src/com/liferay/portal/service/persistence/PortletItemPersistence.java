@@ -446,10 +446,11 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	* @param name the name
 	* @param portletId the portlet ID
 	* @param classNameId the class name ID
+	* @return the portlet item that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByG_N_P_C(long groupId, java.lang.String name,
-		java.lang.String portletId, long classNameId)
+	public com.liferay.portal.model.PortletItem removeByG_N_P_C(long groupId,
+		java.lang.String name, java.lang.String portletId, long classNameId)
 		throws com.liferay.portal.NoSuchPortletItemException,
 			com.liferay.portal.kernel.exception.SystemException;
 

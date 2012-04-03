@@ -1136,9 +1136,11 @@ public interface DLFolderPersistence extends BasePersistence<DLFolder> {
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @return the document library folder that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByUUID_G(java.lang.String uuid, long groupId)
+	public com.liferay.portlet.documentlibrary.model.DLFolder removeByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.documentlibrary.NoSuchFolderException;
 
@@ -1164,9 +1166,11 @@ public interface DLFolderPersistence extends BasePersistence<DLFolder> {
 	* Removes the document library folder where repositoryId = &#63; from the database.
 	*
 	* @param repositoryId the repository ID
+	* @return the document library folder that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByRepositoryId(long repositoryId)
+	public com.liferay.portlet.documentlibrary.model.DLFolder removeByRepositoryId(
+		long repositoryId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.documentlibrary.NoSuchFolderException;
 
@@ -1208,10 +1212,11 @@ public interface DLFolderPersistence extends BasePersistence<DLFolder> {
 	* @param groupId the group ID
 	* @param parentFolderId the parent folder ID
 	* @param name the name
+	* @return the document library folder that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByG_P_N(long groupId, long parentFolderId,
-		java.lang.String name)
+	public com.liferay.portlet.documentlibrary.model.DLFolder removeByG_P_N(
+		long groupId, long parentFolderId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.documentlibrary.NoSuchFolderException;
 

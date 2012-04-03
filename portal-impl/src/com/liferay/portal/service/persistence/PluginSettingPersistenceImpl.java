@@ -1202,14 +1202,15 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 	 * @param companyId the company ID
 	 * @param pluginId the plugin ID
 	 * @param pluginType the plugin type
+	 * @return the plugin setting that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByC_I_T(long companyId, String pluginId, String pluginType)
-		throws NoSuchPluginSettingException, SystemException {
+	public PluginSetting removeByC_I_T(long companyId, String pluginId,
+		String pluginType) throws NoSuchPluginSettingException, SystemException {
 		PluginSetting pluginSetting = findByC_I_T(companyId, pluginId,
 				pluginType);
 
-		remove(pluginSetting);
+		return remove(pluginSetting);
 	}
 
 	/**

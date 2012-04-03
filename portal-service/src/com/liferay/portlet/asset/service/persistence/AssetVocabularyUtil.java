@@ -780,12 +780,14 @@ public class AssetVocabularyUtil {
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @return the asset vocabulary that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUUID_G(java.lang.String uuid, long groupId)
+	public static com.liferay.portlet.asset.model.AssetVocabulary removeByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.asset.NoSuchVocabularyException {
-		getPersistence().removeByUUID_G(uuid, groupId);
+		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -815,12 +817,14 @@ public class AssetVocabularyUtil {
 	*
 	* @param groupId the group ID
 	* @param name the name
+	* @return the asset vocabulary that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByG_N(long groupId, java.lang.String name)
+	public static com.liferay.portlet.asset.model.AssetVocabulary removeByG_N(
+		long groupId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.asset.NoSuchVocabularyException {
-		getPersistence().removeByG_N(groupId, name);
+		return getPersistence().removeByG_N(groupId, name);
 	}
 
 	/**

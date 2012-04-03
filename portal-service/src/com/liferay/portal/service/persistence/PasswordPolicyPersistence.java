@@ -225,9 +225,11 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	*
 	* @param companyId the company ID
 	* @param defaultPolicy the default policy
+	* @return the password policy that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByC_DP(long companyId, boolean defaultPolicy)
+	public com.liferay.portal.model.PasswordPolicy removeByC_DP(
+		long companyId, boolean defaultPolicy)
 		throws com.liferay.portal.NoSuchPasswordPolicyException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -236,9 +238,11 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	*
 	* @param companyId the company ID
 	* @param name the name
+	* @return the password policy that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByC_N(long companyId, java.lang.String name)
+	public com.liferay.portal.model.PasswordPolicy removeByC_N(long companyId,
+		java.lang.String name)
 		throws com.liferay.portal.NoSuchPasswordPolicyException,
 			com.liferay.portal.kernel.exception.SystemException;
 

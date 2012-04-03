@@ -1953,13 +1953,14 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @return the d d m content that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByUUID_G(String uuid, long groupId)
+	public DDMContent removeByUUID_G(String uuid, long groupId)
 		throws NoSuchContentException, SystemException {
 		DDMContent ddmContent = findByUUID_G(uuid, groupId);
 
-		remove(ddmContent);
+		return remove(ddmContent);
 	}
 
 	/**

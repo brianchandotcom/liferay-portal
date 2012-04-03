@@ -1640,13 +1640,14 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	 * @param userId the user ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
+	 * @return the ratings entry that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByU_C_C(long userId, long classNameId, long classPK)
-		throws NoSuchEntryException, SystemException {
+	public RatingsEntry removeByU_C_C(long userId, long classNameId,
+		long classPK) throws NoSuchEntryException, SystemException {
 		RatingsEntry ratingsEntry = findByU_C_C(userId, classNameId, classPK);
 
-		remove(ratingsEntry);
+		return remove(ratingsEntry);
 	}
 
 	/**

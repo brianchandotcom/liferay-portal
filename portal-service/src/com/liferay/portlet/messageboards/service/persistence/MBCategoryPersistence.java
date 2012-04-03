@@ -860,9 +860,11 @@ public interface MBCategoryPersistence extends BasePersistence<MBCategory> {
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @return the message boards category that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByUUID_G(java.lang.String uuid, long groupId)
+	public com.liferay.portlet.messageboards.model.MBCategory removeByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.messageboards.NoSuchCategoryException;
 

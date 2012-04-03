@@ -586,12 +586,14 @@ public class MBMailingListUtil {
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @return the message boards mailing list that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUUID_G(java.lang.String uuid, long groupId)
+	public static com.liferay.portlet.messageboards.model.MBMailingList removeByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.messageboards.NoSuchMailingListException {
-		getPersistence().removeByUUID_G(uuid, groupId);
+		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -610,12 +612,14 @@ public class MBMailingListUtil {
 	*
 	* @param groupId the group ID
 	* @param categoryId the category ID
+	* @return the message boards mailing list that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByG_C(long groupId, long categoryId)
+	public static com.liferay.portlet.messageboards.model.MBMailingList removeByG_C(
+		long groupId, long categoryId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.messageboards.NoSuchMailingListException {
-		getPersistence().removeByG_C(groupId, categoryId);
+		return getPersistence().removeByG_C(groupId, categoryId);
 	}
 
 	/**

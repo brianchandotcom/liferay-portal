@@ -2733,13 +2733,14 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	 * Removes the group where liveGroupId = &#63; from the database.
 	 *
 	 * @param liveGroupId the live group ID
+	 * @return the group that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByLiveGroupId(long liveGroupId)
+	public Group removeByLiveGroupId(long liveGroupId)
 		throws NoSuchGroupException, SystemException {
 		Group group = findByLiveGroupId(liveGroupId);
 
-		remove(group);
+		return remove(group);
 	}
 
 	/**
@@ -2747,13 +2748,14 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	 *
 	 * @param companyId the company ID
 	 * @param name the name
+	 * @return the group that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByC_N(long companyId, String name)
+	public Group removeByC_N(long companyId, String name)
 		throws NoSuchGroupException, SystemException {
 		Group group = findByC_N(companyId, name);
 
-		remove(group);
+		return remove(group);
 	}
 
 	/**
@@ -2761,13 +2763,14 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	 *
 	 * @param companyId the company ID
 	 * @param friendlyURL the friendly u r l
+	 * @return the group that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByC_F(long companyId, String friendlyURL)
+	public Group removeByC_F(long companyId, String friendlyURL)
 		throws NoSuchGroupException, SystemException {
 		Group group = findByC_F(companyId, friendlyURL);
 
-		remove(group);
+		return remove(group);
 	}
 
 	/**
@@ -2789,13 +2792,14 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
+	 * @return the group that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByC_C_C(long companyId, long classNameId, long classPK)
+	public Group removeByC_C_C(long companyId, long classNameId, long classPK)
 		throws NoSuchGroupException, SystemException {
 		Group group = findByC_C_C(companyId, classNameId, classPK);
 
-		remove(group);
+		return remove(group);
 	}
 
 	/**
@@ -2804,13 +2808,14 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	 * @param companyId the company ID
 	 * @param liveGroupId the live group ID
 	 * @param name the name
+	 * @return the group that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByC_L_N(long companyId, long liveGroupId, String name)
+	public Group removeByC_L_N(long companyId, long liveGroupId, String name)
 		throws NoSuchGroupException, SystemException {
 		Group group = findByC_L_N(companyId, liveGroupId, name);
 
-		remove(group);
+		return remove(group);
 	}
 
 	/**
@@ -2820,14 +2825,15 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	 * @param classNameId the class name ID
 	 * @param liveGroupId the live group ID
 	 * @param name the name
+	 * @return the group that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByC_C_L_N(long companyId, long classNameId,
+	public Group removeByC_C_L_N(long companyId, long classNameId,
 		long liveGroupId, String name)
 		throws NoSuchGroupException, SystemException {
 		Group group = findByC_C_L_N(companyId, classNameId, liveGroupId, name);
 
-		remove(group);
+		return remove(group);
 	}
 
 	/**

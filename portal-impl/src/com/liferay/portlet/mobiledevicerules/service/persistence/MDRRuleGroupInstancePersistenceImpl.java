@@ -3006,13 +3006,14 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @return the m d r rule group instance that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByUUID_G(String uuid, long groupId)
+	public MDRRuleGroupInstance removeByUUID_G(String uuid, long groupId)
 		throws NoSuchRuleGroupInstanceException, SystemException {
 		MDRRuleGroupInstance mdrRuleGroupInstance = findByUUID_G(uuid, groupId);
 
-		remove(mdrRuleGroupInstance);
+		return remove(mdrRuleGroupInstance);
 	}
 
 	/**
@@ -3065,14 +3066,16 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param ruleGroupId the rule group ID
+	 * @return the m d r rule group instance that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByC_C_R(long classNameId, long classPK, long ruleGroupId)
+	public MDRRuleGroupInstance removeByC_C_R(long classNameId, long classPK,
+		long ruleGroupId)
 		throws NoSuchRuleGroupInstanceException, SystemException {
 		MDRRuleGroupInstance mdrRuleGroupInstance = findByC_C_R(classNameId,
 				classPK, ruleGroupId);
 
-		remove(mdrRuleGroupInstance);
+		return remove(mdrRuleGroupInstance);
 	}
 
 	/**

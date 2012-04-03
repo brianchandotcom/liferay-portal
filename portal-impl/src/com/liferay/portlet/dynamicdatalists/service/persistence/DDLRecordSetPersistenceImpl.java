@@ -2078,13 +2078,14 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @return the d d l record set that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByUUID_G(String uuid, long groupId)
+	public DDLRecordSet removeByUUID_G(String uuid, long groupId)
 		throws NoSuchRecordSetException, SystemException {
 		DDLRecordSet ddlRecordSet = findByUUID_G(uuid, groupId);
 
-		remove(ddlRecordSet);
+		return remove(ddlRecordSet);
 	}
 
 	/**
@@ -2104,13 +2105,14 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 	 *
 	 * @param groupId the group ID
 	 * @param recordSetKey the record set key
+	 * @return the d d l record set that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByG_R(long groupId, String recordSetKey)
+	public DDLRecordSet removeByG_R(long groupId, String recordSetKey)
 		throws NoSuchRecordSetException, SystemException {
 		DDLRecordSet ddlRecordSet = findByG_R(groupId, recordSetKey);
 
-		remove(ddlRecordSet);
+		return remove(ddlRecordSet);
 	}
 
 	/**

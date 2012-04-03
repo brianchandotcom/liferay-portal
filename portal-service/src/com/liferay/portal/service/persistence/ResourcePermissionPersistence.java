@@ -1615,11 +1615,12 @@ public interface ResourcePermissionPersistence extends BasePersistence<ResourceP
 	* @param roleId the role ID
 	* @param ownerId the owner ID
 	* @param actionIds the action IDs
+	* @return the resource permission that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByC_N_S_P_R_O_A(long companyId, java.lang.String name,
-		int scope, java.lang.String primKey, long roleId, long ownerId,
-		long actionIds)
+	public com.liferay.portal.model.ResourcePermission removeByC_N_S_P_R_O_A(
+		long companyId, java.lang.String name, int scope,
+		java.lang.String primKey, long roleId, long ownerId, long actionIds)
 		throws com.liferay.portal.NoSuchResourcePermissionException,
 			com.liferay.portal.kernel.exception.SystemException;
 

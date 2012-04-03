@@ -691,12 +691,14 @@ public class AssetTagPropertyUtil {
 	*
 	* @param tagId the tag ID
 	* @param key the key
+	* @return the asset tag property that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByT_K(long tagId, java.lang.String key)
+	public static com.liferay.portlet.asset.model.AssetTagProperty removeByT_K(
+		long tagId, java.lang.String key)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.asset.NoSuchTagPropertyException {
-		getPersistence().removeByT_K(tagId, key);
+		return getPersistence().removeByT_K(tagId, key);
 	}
 
 	/**

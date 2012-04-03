@@ -440,10 +440,11 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	* @param groupId the group ID
 	* @param name the name
 	* @param roleId the role ID
+	* @return the resource type permission that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByC_G_N_R(long companyId, long groupId,
-		java.lang.String name, long roleId)
+	public com.liferay.portal.model.ResourceTypePermission removeByC_G_N_R(
+		long companyId, long groupId, java.lang.String name, long roleId)
 		throws com.liferay.portal.NoSuchResourceTypePermissionException,
 			com.liferay.portal.kernel.exception.SystemException;
 

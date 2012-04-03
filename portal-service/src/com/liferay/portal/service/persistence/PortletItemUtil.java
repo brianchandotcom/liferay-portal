@@ -598,13 +598,16 @@ public class PortletItemUtil {
 	* @param name the name
 	* @param portletId the portlet ID
 	* @param classNameId the class name ID
+	* @return the portlet item that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByG_N_P_C(long groupId, java.lang.String name,
-		java.lang.String portletId, long classNameId)
+	public static com.liferay.portal.model.PortletItem removeByG_N_P_C(
+		long groupId, java.lang.String name, java.lang.String portletId,
+		long classNameId)
 		throws com.liferay.portal.NoSuchPortletItemException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByG_N_P_C(groupId, name, portletId, classNameId);
+		return getPersistence()
+				   .removeByG_N_P_C(groupId, name, portletId, classNameId);
 	}
 
 	/**

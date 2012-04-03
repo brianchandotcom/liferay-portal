@@ -698,12 +698,14 @@ public class AssetCategoryPropertyUtil {
 	*
 	* @param categoryId the category ID
 	* @param key the key
+	* @return the asset category property that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByCA_K(long categoryId, java.lang.String key)
+	public static com.liferay.portlet.asset.model.AssetCategoryProperty removeByCA_K(
+		long categoryId, java.lang.String key)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.asset.NoSuchCategoryPropertyException {
-		getPersistence().removeByCA_K(categoryId, key);
+		return getPersistence().removeByCA_K(categoryId, key);
 	}
 
 	/**

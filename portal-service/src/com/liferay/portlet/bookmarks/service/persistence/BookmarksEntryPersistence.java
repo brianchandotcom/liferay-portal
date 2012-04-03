@@ -1047,9 +1047,11 @@ public interface BookmarksEntryPersistence extends BasePersistence<BookmarksEntr
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @return the bookmarks entry that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByUUID_G(java.lang.String uuid, long groupId)
+	public com.liferay.portlet.bookmarks.model.BookmarksEntry removeByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.bookmarks.NoSuchEntryException;
 

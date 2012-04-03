@@ -5214,14 +5214,15 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param head the head
 	 * @param plid the plid
+	 * @return the layout revision that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByL_H_P(long layoutSetBranchId, boolean head, long plid)
-		throws NoSuchLayoutRevisionException, SystemException {
+	public LayoutRevision removeByL_H_P(long layoutSetBranchId, boolean head,
+		long plid) throws NoSuchLayoutRevisionException, SystemException {
 		LayoutRevision layoutRevision = findByL_H_P(layoutSetBranchId, head,
 				plid);
 
-		remove(layoutRevision);
+		return remove(layoutRevision);
 	}
 
 	/**

@@ -414,9 +414,11 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	*
 	* @param questionId the question ID
 	* @param userId the user ID
+	* @return the polls vote that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByQ_U(long questionId, long userId)
+	public com.liferay.portlet.polls.model.PollsVote removeByQ_U(
+		long questionId, long userId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.polls.NoSuchVoteException;
 

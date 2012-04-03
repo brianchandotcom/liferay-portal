@@ -849,13 +849,14 @@ public class SCProductEntryUtil {
 	*
 	* @param repoGroupId the repo group ID
 	* @param repoArtifactId the repo artifact ID
+	* @return the s c product entry that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByRG_RA(java.lang.String repoGroupId,
-		java.lang.String repoArtifactId)
+	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry removeByRG_RA(
+		java.lang.String repoGroupId, java.lang.String repoArtifactId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.softwarecatalog.NoSuchProductEntryException {
-		getPersistence().removeByRG_RA(repoGroupId, repoArtifactId);
+		return getPersistence().removeByRG_RA(repoGroupId, repoArtifactId);
 	}
 
 	/**

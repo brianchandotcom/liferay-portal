@@ -733,13 +733,14 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
+	 * @return the ratings stats that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByC_C(long classNameId, long classPK)
+	public RatingsStats removeByC_C(long classNameId, long classPK)
 		throws NoSuchStatsException, SystemException {
 		RatingsStats ratingsStats = findByC_C(classNameId, classPK);
 
-		remove(ratingsStats);
+		return remove(ratingsStats);
 	}
 
 	/**

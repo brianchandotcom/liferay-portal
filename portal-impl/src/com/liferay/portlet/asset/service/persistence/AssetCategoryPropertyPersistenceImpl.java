@@ -2068,13 +2068,14 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	 *
 	 * @param categoryId the category ID
 	 * @param key the key
+	 * @return the asset category property that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByCA_K(long categoryId, String key)
+	public AssetCategoryProperty removeByCA_K(long categoryId, String key)
 		throws NoSuchCategoryPropertyException, SystemException {
 		AssetCategoryProperty assetCategoryProperty = findByCA_K(categoryId, key);
 
-		remove(assetCategoryProperty);
+		return remove(assetCategoryProperty);
 	}
 
 	/**

@@ -1569,13 +1569,14 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @return the repository that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByUUID_G(String uuid, long groupId)
+	public Repository removeByUUID_G(String uuid, long groupId)
 		throws NoSuchRepositoryException, SystemException {
 		Repository repository = findByUUID_G(uuid, groupId);
 
-		remove(repository);
+		return remove(repository);
 	}
 
 	/**

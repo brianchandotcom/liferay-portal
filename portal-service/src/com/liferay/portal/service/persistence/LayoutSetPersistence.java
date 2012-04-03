@@ -412,9 +412,11 @@ public interface LayoutSetPersistence extends BasePersistence<LayoutSet> {
 	*
 	* @param groupId the group ID
 	* @param privateLayout the private layout
+	* @return the layout set that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByG_P(long groupId, boolean privateLayout)
+	public com.liferay.portal.model.LayoutSet removeByG_P(long groupId,
+		boolean privateLayout)
 		throws com.liferay.portal.NoSuchLayoutSetException,
 			com.liferay.portal.kernel.exception.SystemException;
 

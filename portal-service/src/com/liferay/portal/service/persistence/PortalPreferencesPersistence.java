@@ -189,9 +189,11 @@ public interface PortalPreferencesPersistence extends BasePersistence<PortalPref
 	*
 	* @param ownerId the owner ID
 	* @param ownerType the owner type
+	* @return the portal preferences that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByO_O(long ownerId, int ownerType)
+	public com.liferay.portal.model.PortalPreferences removeByO_O(
+		long ownerId, int ownerType)
 		throws com.liferay.portal.NoSuchPreferencesException,
 			com.liferay.portal.kernel.exception.SystemException;
 

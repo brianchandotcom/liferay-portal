@@ -908,13 +908,14 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 	 * Removes the virtual host where hostname = &#63; from the database.
 	 *
 	 * @param hostname the hostname
+	 * @return the virtual host that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByHostname(String hostname)
+	public VirtualHost removeByHostname(String hostname)
 		throws NoSuchVirtualHostException, SystemException {
 		VirtualHost virtualHost = findByHostname(hostname);
 
-		remove(virtualHost);
+		return remove(virtualHost);
 	}
 
 	/**
@@ -922,13 +923,14 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 	 *
 	 * @param companyId the company ID
 	 * @param layoutSetId the layout set ID
+	 * @return the virtual host that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByC_L(long companyId, long layoutSetId)
+	public VirtualHost removeByC_L(long companyId, long layoutSetId)
 		throws NoSuchVirtualHostException, SystemException {
 		VirtualHost virtualHost = findByC_L(companyId, layoutSetId);
 
-		remove(virtualHost);
+		return remove(virtualHost);
 	}
 
 	/**

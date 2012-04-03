@@ -362,9 +362,11 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	*
 	* @param groupId the group ID
 	* @param name the name
+	* @return the asset tag that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByG_N(long groupId, java.lang.String name)
+	public com.liferay.portlet.asset.model.AssetTag removeByG_N(long groupId,
+		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.asset.NoSuchTagException;
 

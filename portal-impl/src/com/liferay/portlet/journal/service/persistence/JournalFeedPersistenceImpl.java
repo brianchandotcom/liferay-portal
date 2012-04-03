@@ -2120,13 +2120,14 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @return the journal feed that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByUUID_G(String uuid, long groupId)
+	public JournalFeed removeByUUID_G(String uuid, long groupId)
 		throws NoSuchFeedException, SystemException {
 		JournalFeed journalFeed = findByUUID_G(uuid, groupId);
 
-		remove(journalFeed);
+		return remove(journalFeed);
 	}
 
 	/**
@@ -2146,13 +2147,14 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 	 *
 	 * @param groupId the group ID
 	 * @param feedId the feed ID
+	 * @return the journal feed that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByG_F(long groupId, String feedId)
+	public JournalFeed removeByG_F(long groupId, String feedId)
 		throws NoSuchFeedException, SystemException {
 		JournalFeed journalFeed = findByG_F(groupId, feedId);
 
-		remove(journalFeed);
+		return remove(journalFeed);
 	}
 
 	/**

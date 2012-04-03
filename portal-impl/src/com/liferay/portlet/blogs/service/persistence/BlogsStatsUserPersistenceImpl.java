@@ -2857,13 +2857,14 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	 *
 	 * @param groupId the group ID
 	 * @param userId the user ID
+	 * @return the blogs stats user that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByG_U(long groupId, long userId)
+	public BlogsStatsUser removeByG_U(long groupId, long userId)
 		throws NoSuchStatsUserException, SystemException {
 		BlogsStatsUser blogsStatsUser = findByG_U(groupId, userId);
 
-		remove(blogsStatsUser);
+		return remove(blogsStatsUser);
 	}
 
 	/**

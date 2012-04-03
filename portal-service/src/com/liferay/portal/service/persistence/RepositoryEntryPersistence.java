@@ -446,9 +446,11 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @return the repository entry that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByUUID_G(java.lang.String uuid, long groupId)
+	public com.liferay.portal.model.RepositoryEntry removeByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.NoSuchRepositoryEntryException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -466,9 +468,11 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 	*
 	* @param repositoryId the repository ID
 	* @param mappedId the mapped ID
+	* @return the repository entry that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByR_M(long repositoryId, java.lang.String mappedId)
+	public com.liferay.portal.model.RepositoryEntry removeByR_M(
+		long repositoryId, java.lang.String mappedId)
 		throws com.liferay.portal.NoSuchRepositoryEntryException,
 			com.liferay.portal.kernel.exception.SystemException;
 

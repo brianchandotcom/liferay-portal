@@ -610,9 +610,11 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @return the document library file entry type that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByUUID_G(java.lang.String uuid, long groupId)
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType removeByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 
@@ -630,9 +632,11 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	*
 	* @param groupId the group ID
 	* @param name the name
+	* @return the document library file entry type that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByG_N(long groupId, java.lang.String name)
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType removeByG_N(
+		long groupId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 

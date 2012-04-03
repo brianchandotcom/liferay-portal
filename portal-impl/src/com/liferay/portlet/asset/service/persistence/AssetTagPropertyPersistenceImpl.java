@@ -2048,13 +2048,14 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 *
 	 * @param tagId the tag ID
 	 * @param key the key
+	 * @return the asset tag property that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByT_K(long tagId, String key)
+	public AssetTagProperty removeByT_K(long tagId, String key)
 		throws NoSuchTagPropertyException, SystemException {
 		AssetTagProperty assetTagProperty = findByT_K(tagId, key);
 
-		remove(assetTagProperty);
+		return remove(assetTagProperty);
 	}
 
 	/**

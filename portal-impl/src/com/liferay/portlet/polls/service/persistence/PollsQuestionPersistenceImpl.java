@@ -1908,13 +1908,14 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @return the polls question that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByUUID_G(String uuid, long groupId)
+	public PollsQuestion removeByUUID_G(String uuid, long groupId)
 		throws NoSuchQuestionException, SystemException {
 		PollsQuestion pollsQuestion = findByUUID_G(uuid, groupId);
 
-		remove(pollsQuestion);
+		return remove(pollsQuestion);
 	}
 
 	/**

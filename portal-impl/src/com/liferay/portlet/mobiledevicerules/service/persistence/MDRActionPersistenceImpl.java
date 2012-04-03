@@ -1577,13 +1577,14 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @return the m d r action that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByUUID_G(String uuid, long groupId)
+	public MDRAction removeByUUID_G(String uuid, long groupId)
 		throws NoSuchActionException, SystemException {
 		MDRAction mdrAction = findByUUID_G(uuid, groupId);
 
-		remove(mdrAction);
+		return remove(mdrAction);
 	}
 
 	/**

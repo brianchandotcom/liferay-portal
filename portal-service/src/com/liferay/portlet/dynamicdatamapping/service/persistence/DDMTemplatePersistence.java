@@ -1019,9 +1019,11 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @return the d d m template that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByUUID_G(java.lang.String uuid, long groupId)
+	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate removeByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 

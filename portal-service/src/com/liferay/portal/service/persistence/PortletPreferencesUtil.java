@@ -876,13 +876,15 @@ public class PortletPreferencesUtil {
 	* @param ownerType the owner type
 	* @param plid the plid
 	* @param portletId the portlet ID
+	* @return the portlet preferences that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByO_O_P_P(long ownerId, int ownerType, long plid,
-		java.lang.String portletId)
+	public static com.liferay.portal.model.PortletPreferences removeByO_O_P_P(
+		long ownerId, int ownerType, long plid, java.lang.String portletId)
 		throws com.liferay.portal.NoSuchPortletPreferencesException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByO_O_P_P(ownerId, ownerType, plid, portletId);
+		return getPersistence()
+				   .removeByO_O_P_P(ownerId, ownerType, plid, portletId);
 	}
 
 	/**

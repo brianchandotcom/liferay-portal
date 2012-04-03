@@ -2403,13 +2403,14 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @return the document library file entry type that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByUUID_G(String uuid, long groupId)
+	public DLFileEntryType removeByUUID_G(String uuid, long groupId)
 		throws NoSuchFileEntryTypeException, SystemException {
 		DLFileEntryType dlFileEntryType = findByUUID_G(uuid, groupId);
 
-		remove(dlFileEntryType);
+		return remove(dlFileEntryType);
 	}
 
 	/**
@@ -2429,13 +2430,14 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	 *
 	 * @param groupId the group ID
 	 * @param name the name
+	 * @return the document library file entry type that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByG_N(long groupId, String name)
+	public DLFileEntryType removeByG_N(long groupId, String name)
 		throws NoSuchFileEntryTypeException, SystemException {
 		DLFileEntryType dlFileEntryType = findByG_N(groupId, name);
 
-		remove(dlFileEntryType);
+		return remove(dlFileEntryType);
 	}
 
 	/**

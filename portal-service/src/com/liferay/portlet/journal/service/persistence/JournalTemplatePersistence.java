@@ -933,9 +933,11 @@ public interface JournalTemplatePersistence extends BasePersistence<JournalTempl
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @return the journal template that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByUUID_G(java.lang.String uuid, long groupId)
+	public com.liferay.portlet.journal.model.JournalTemplate removeByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.journal.NoSuchTemplateException;
 
@@ -970,9 +972,11 @@ public interface JournalTemplatePersistence extends BasePersistence<JournalTempl
 	* Removes the journal template where smallImageId = &#63; from the database.
 	*
 	* @param smallImageId the small image ID
+	* @return the journal template that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeBySmallImageId(long smallImageId)
+	public com.liferay.portlet.journal.model.JournalTemplate removeBySmallImageId(
+		long smallImageId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.journal.NoSuchTemplateException;
 
@@ -981,9 +985,11 @@ public interface JournalTemplatePersistence extends BasePersistence<JournalTempl
 	*
 	* @param groupId the group ID
 	* @param templateId the template ID
+	* @return the journal template that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByG_T(long groupId, java.lang.String templateId)
+	public com.liferay.portlet.journal.model.JournalTemplate removeByG_T(
+		long groupId, java.lang.String templateId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.journal.NoSuchTemplateException;
 

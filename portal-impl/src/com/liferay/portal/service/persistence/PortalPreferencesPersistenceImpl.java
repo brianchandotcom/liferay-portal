@@ -737,13 +737,14 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 	 *
 	 * @param ownerId the owner ID
 	 * @param ownerType the owner type
+	 * @return the portal preferences that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByO_O(long ownerId, int ownerType)
+	public PortalPreferences removeByO_O(long ownerId, int ownerType)
 		throws NoSuchPreferencesException, SystemException {
 		PortalPreferences portalPreferences = findByO_O(ownerId, ownerType);
 
-		remove(portalPreferences);
+		return remove(portalPreferences);
 	}
 
 	/**

@@ -1121,12 +1121,14 @@ public class DDMStructureUtil {
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @return the d d m structure that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUUID_G(java.lang.String uuid, long groupId)
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure removeByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.dynamicdatamapping.NoSuchStructureException {
-		getPersistence().removeByUUID_G(uuid, groupId);
+		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -1156,12 +1158,14 @@ public class DDMStructureUtil {
 	*
 	* @param groupId the group ID
 	* @param structureKey the structure key
+	* @return the d d m structure that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByG_S(long groupId, java.lang.String structureKey)
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure removeByG_S(
+		long groupId, java.lang.String structureKey)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.dynamicdatamapping.NoSuchStructureException {
-		getPersistence().removeByG_S(groupId, structureKey);
+		return getPersistence().removeByG_S(groupId, structureKey);
 	}
 
 	/**

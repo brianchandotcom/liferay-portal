@@ -899,13 +899,14 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 	 * Removes the shard where name = &#63; from the database.
 	 *
 	 * @param name the name
+	 * @return the shard that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByName(String name)
+	public Shard removeByName(String name)
 		throws NoSuchShardException, SystemException {
 		Shard shard = findByName(name);
 
-		remove(shard);
+		return remove(shard);
 	}
 
 	/**
@@ -913,13 +914,14 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
+	 * @return the shard that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByC_C(long classNameId, long classPK)
+	public Shard removeByC_C(long classNameId, long classPK)
 		throws NoSuchShardException, SystemException {
 		Shard shard = findByC_C(classNameId, classPK);
 
-		remove(shard);
+		return remove(shard);
 	}
 
 	/**

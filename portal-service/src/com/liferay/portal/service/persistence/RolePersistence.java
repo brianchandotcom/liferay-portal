@@ -930,9 +930,11 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*
 	* @param companyId the company ID
 	* @param name the name
+	* @return the role that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByC_N(long companyId, java.lang.String name)
+	public com.liferay.portal.model.Role removeByC_N(long companyId,
+		java.lang.String name)
 		throws com.liferay.portal.NoSuchRoleException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -952,9 +954,11 @@ public interface RolePersistence extends BasePersistence<Role> {
 	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class p k
+	* @return the role that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByC_C_C(long companyId, long classNameId, long classPK)
+	public com.liferay.portal.model.Role removeByC_C_C(long companyId,
+		long classNameId, long classPK)
 		throws com.liferay.portal.NoSuchRoleException,
 			com.liferay.portal.kernel.exception.SystemException;
 

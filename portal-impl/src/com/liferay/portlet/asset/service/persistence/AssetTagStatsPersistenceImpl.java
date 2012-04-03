@@ -1554,13 +1554,14 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	 *
 	 * @param tagId the tag ID
 	 * @param classNameId the class name ID
+	 * @return the asset tag stats that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByT_C(long tagId, long classNameId)
+	public AssetTagStats removeByT_C(long tagId, long classNameId)
 		throws NoSuchTagStatsException, SystemException {
 		AssetTagStats assetTagStats = findByT_C(tagId, classNameId);
 
-		remove(assetTagStats);
+		return remove(assetTagStats);
 	}
 
 	/**

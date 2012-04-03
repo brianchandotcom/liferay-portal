@@ -3005,13 +3005,14 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param companyId the company ID
 	 * @param name the name
+	 * @return the organization that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByC_N(long companyId, String name)
+	public Organization removeByC_N(long companyId, String name)
 		throws NoSuchOrganizationException, SystemException {
 		Organization organization = findByC_N(companyId, name);
 
-		remove(organization);
+		return remove(organization);
 	}
 
 	/**

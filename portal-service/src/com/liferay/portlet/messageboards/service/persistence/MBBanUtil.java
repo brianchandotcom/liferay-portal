@@ -679,12 +679,14 @@ public class MBBanUtil {
 	*
 	* @param groupId the group ID
 	* @param banUserId the ban user ID
+	* @return the message boards ban that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByG_B(long groupId, long banUserId)
+	public static com.liferay.portlet.messageboards.model.MBBan removeByG_B(
+		long groupId, long banUserId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.messageboards.NoSuchBanException {
-		getPersistence().removeByG_B(groupId, banUserId);
+		return getPersistence().removeByG_B(groupId, banUserId);
 	}
 
 	/**

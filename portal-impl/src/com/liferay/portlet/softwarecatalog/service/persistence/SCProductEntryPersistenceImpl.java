@@ -2707,13 +2707,15 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 	 *
 	 * @param repoGroupId the repo group ID
 	 * @param repoArtifactId the repo artifact ID
+	 * @return the s c product entry that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByRG_RA(String repoGroupId, String repoArtifactId)
+	public SCProductEntry removeByRG_RA(String repoGroupId,
+		String repoArtifactId)
 		throws NoSuchProductEntryException, SystemException {
 		SCProductEntry scProductEntry = findByRG_RA(repoGroupId, repoArtifactId);
 
-		remove(scProductEntry);
+		return remove(scProductEntry);
 	}
 
 	/**

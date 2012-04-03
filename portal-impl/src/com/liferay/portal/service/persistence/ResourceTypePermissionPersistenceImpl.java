@@ -1706,15 +1706,16 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 	 * @param groupId the group ID
 	 * @param name the name
 	 * @param roleId the role ID
+	 * @return the resource type permission that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByC_G_N_R(long companyId, long groupId, String name,
-		long roleId)
+	public ResourceTypePermission removeByC_G_N_R(long companyId, long groupId,
+		String name, long roleId)
 		throws NoSuchResourceTypePermissionException, SystemException {
 		ResourceTypePermission resourceTypePermission = findByC_G_N_R(companyId,
 				groupId, name, roleId);
 
-		remove(resourceTypePermission);
+		return remove(resourceTypePermission);
 	}
 
 	/**

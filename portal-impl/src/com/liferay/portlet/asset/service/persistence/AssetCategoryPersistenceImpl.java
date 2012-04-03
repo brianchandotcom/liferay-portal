@@ -5914,13 +5914,14 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @return the asset category that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByUUID_G(String uuid, long groupId)
+	public AssetCategory removeByUUID_G(String uuid, long groupId)
 		throws NoSuchCategoryException, SystemException {
 		AssetCategory assetCategory = findByUUID_G(uuid, groupId);
 
-		remove(assetCategory);
+		return remove(assetCategory);
 	}
 
 	/**
@@ -6041,14 +6042,15 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	 * @param parentCategoryId the parent category ID
 	 * @param name the name
 	 * @param vocabularyId the vocabulary ID
+	 * @return the asset category that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByP_N_V(long parentCategoryId, String name,
+	public AssetCategory removeByP_N_V(long parentCategoryId, String name,
 		long vocabularyId) throws NoSuchCategoryException, SystemException {
 		AssetCategory assetCategory = findByP_N_V(parentCategoryId, name,
 				vocabularyId);
 
-		remove(assetCategory);
+		return remove(assetCategory);
 	}
 
 	/**

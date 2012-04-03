@@ -426,13 +426,14 @@ public class ServiceComponentUtil {
 	*
 	* @param buildNamespace the build namespace
 	* @param buildNumber the build number
+	* @return the service component that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByBNS_BNU(java.lang.String buildNamespace,
-		long buildNumber)
+	public static com.liferay.portal.model.ServiceComponent removeByBNS_BNU(
+		java.lang.String buildNamespace, long buildNumber)
 		throws com.liferay.portal.NoSuchServiceComponentException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByBNS_BNU(buildNamespace, buildNumber);
+		return getPersistence().removeByBNS_BNU(buildNamespace, buildNumber);
 	}
 
 	/**

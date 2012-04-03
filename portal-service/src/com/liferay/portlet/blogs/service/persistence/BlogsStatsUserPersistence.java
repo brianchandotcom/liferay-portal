@@ -751,9 +751,11 @@ public interface BlogsStatsUserPersistence extends BasePersistence<BlogsStatsUse
 	*
 	* @param groupId the group ID
 	* @param userId the user ID
+	* @return the blogs stats user that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByG_U(long groupId, long userId)
+	public com.liferay.portlet.blogs.model.BlogsStatsUser removeByG_U(
+		long groupId, long userId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.blogs.NoSuchStatsUserException;
 

@@ -599,13 +599,14 @@ public class LockUtil {
 	*
 	* @param className the class name
 	* @param key the key
+	* @return the lock that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByC_K(java.lang.String className,
-		java.lang.String key)
+	public static com.liferay.portal.model.Lock removeByC_K(
+		java.lang.String className, java.lang.String key)
 		throws com.liferay.portal.NoSuchLockException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByC_K(className, key);
+		return getPersistence().removeByC_K(className, key);
 	}
 
 	/**
@@ -614,13 +615,14 @@ public class LockUtil {
 	* @param className the class name
 	* @param key the key
 	* @param owner the owner
+	* @return the lock that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByC_K_O(java.lang.String className,
-		java.lang.String key, java.lang.String owner)
+	public static com.liferay.portal.model.Lock removeByC_K_O(
+		java.lang.String className, java.lang.String key, java.lang.String owner)
 		throws com.liferay.portal.NoSuchLockException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByC_K_O(className, key, owner);
+		return getPersistence().removeByC_K_O(className, key, owner);
 	}
 
 	/**

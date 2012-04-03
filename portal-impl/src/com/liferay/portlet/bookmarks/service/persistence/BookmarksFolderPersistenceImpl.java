@@ -3369,13 +3369,14 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @return the bookmarks folder that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByUUID_G(String uuid, long groupId)
+	public BookmarksFolder removeByUUID_G(String uuid, long groupId)
 		throws NoSuchFolderException, SystemException {
 		BookmarksFolder bookmarksFolder = findByUUID_G(uuid, groupId);
 
-		remove(bookmarksFolder);
+		return remove(bookmarksFolder);
 	}
 
 	/**

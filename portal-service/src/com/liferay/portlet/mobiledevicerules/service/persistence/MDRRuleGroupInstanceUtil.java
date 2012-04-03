@@ -947,12 +947,14 @@ public class MDRRuleGroupInstanceUtil {
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @return the m d r rule group instance that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUUID_G(java.lang.String uuid, long groupId)
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance removeByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupInstanceException {
-		getPersistence().removeByUUID_G(uuid, groupId);
+		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -998,13 +1000,14 @@ public class MDRRuleGroupInstanceUtil {
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param ruleGroupId the rule group ID
+	* @return the m d r rule group instance that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByC_C_R(long classNameId, long classPK,
-		long ruleGroupId)
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance removeByC_C_R(
+		long classNameId, long classPK, long ruleGroupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupInstanceException {
-		getPersistence().removeByC_C_R(classNameId, classPK, ruleGroupId);
+		return getPersistence().removeByC_C_R(classNameId, classPK, ruleGroupId);
 	}
 
 	/**

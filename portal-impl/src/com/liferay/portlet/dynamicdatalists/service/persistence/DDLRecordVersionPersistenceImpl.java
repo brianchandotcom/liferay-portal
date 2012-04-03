@@ -1587,13 +1587,14 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	 *
 	 * @param recordId the record ID
 	 * @param version the version
+	 * @return the d d l record version that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByR_V(long recordId, String version)
+	public DDLRecordVersion removeByR_V(long recordId, String version)
 		throws NoSuchRecordVersionException, SystemException {
 		DDLRecordVersion ddlRecordVersion = findByR_V(recordId, version);
 
-		remove(ddlRecordVersion);
+		return remove(ddlRecordVersion);
 	}
 
 	/**

@@ -785,12 +785,14 @@ public class GroupUtil {
 	* Removes the group where liveGroupId = &#63; from the database.
 	*
 	* @param liveGroupId the live group ID
+	* @return the group that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByLiveGroupId(long liveGroupId)
+	public static com.liferay.portal.model.Group removeByLiveGroupId(
+		long liveGroupId)
 		throws com.liferay.portal.NoSuchGroupException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByLiveGroupId(liveGroupId);
+		return getPersistence().removeByLiveGroupId(liveGroupId);
 	}
 
 	/**
@@ -798,12 +800,14 @@ public class GroupUtil {
 	*
 	* @param companyId the company ID
 	* @param name the name
+	* @return the group that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByC_N(long companyId, java.lang.String name)
+	public static com.liferay.portal.model.Group removeByC_N(long companyId,
+		java.lang.String name)
 		throws com.liferay.portal.NoSuchGroupException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByC_N(companyId, name);
+		return getPersistence().removeByC_N(companyId, name);
 	}
 
 	/**
@@ -811,12 +815,14 @@ public class GroupUtil {
 	*
 	* @param companyId the company ID
 	* @param friendlyURL the friendly u r l
+	* @return the group that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByC_F(long companyId, java.lang.String friendlyURL)
+	public static com.liferay.portal.model.Group removeByC_F(long companyId,
+		java.lang.String friendlyURL)
 		throws com.liferay.portal.NoSuchGroupException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByC_F(companyId, friendlyURL);
+		return getPersistence().removeByC_F(companyId, friendlyURL);
 	}
 
 	/**
@@ -837,13 +843,14 @@ public class GroupUtil {
 	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class p k
+	* @return the group that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByC_C_C(long companyId, long classNameId,
-		long classPK)
+	public static com.liferay.portal.model.Group removeByC_C_C(long companyId,
+		long classNameId, long classPK)
 		throws com.liferay.portal.NoSuchGroupException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByC_C_C(companyId, classNameId, classPK);
+		return getPersistence().removeByC_C_C(companyId, classNameId, classPK);
 	}
 
 	/**
@@ -852,13 +859,14 @@ public class GroupUtil {
 	* @param companyId the company ID
 	* @param liveGroupId the live group ID
 	* @param name the name
+	* @return the group that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByC_L_N(long companyId, long liveGroupId,
-		java.lang.String name)
+	public static com.liferay.portal.model.Group removeByC_L_N(long companyId,
+		long liveGroupId, java.lang.String name)
 		throws com.liferay.portal.NoSuchGroupException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByC_L_N(companyId, liveGroupId, name);
+		return getPersistence().removeByC_L_N(companyId, liveGroupId, name);
 	}
 
 	/**
@@ -868,14 +876,16 @@ public class GroupUtil {
 	* @param classNameId the class name ID
 	* @param liveGroupId the live group ID
 	* @param name the name
+	* @return the group that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByC_C_L_N(long companyId, long classNameId,
-		long liveGroupId, java.lang.String name)
+	public static com.liferay.portal.model.Group removeByC_C_L_N(
+		long companyId, long classNameId, long liveGroupId,
+		java.lang.String name)
 		throws com.liferay.portal.NoSuchGroupException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getPersistence()
-			.removeByC_C_L_N(companyId, classNameId, liveGroupId, name);
+		return getPersistence()
+				   .removeByC_C_L_N(companyId, classNameId, liveGroupId, name);
 	}
 
 	/**

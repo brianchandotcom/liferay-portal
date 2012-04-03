@@ -1827,9 +1827,11 @@ public interface DLFileEntryPersistence extends BasePersistence<DLFileEntry> {
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @return the document library file entry that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByUUID_G(java.lang.String uuid, long groupId)
+	public com.liferay.portlet.documentlibrary.model.DLFileEntry removeByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 
@@ -1897,9 +1899,11 @@ public interface DLFileEntryPersistence extends BasePersistence<DLFileEntry> {
 	* @param groupId the group ID
 	* @param folderId the folder ID
 	* @param name the name
+	* @return the document library file entry that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByG_F_N(long groupId, long folderId, java.lang.String name)
+	public com.liferay.portlet.documentlibrary.model.DLFileEntry removeByG_F_N(
+		long groupId, long folderId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 
@@ -1909,10 +1913,11 @@ public interface DLFileEntryPersistence extends BasePersistence<DLFileEntry> {
 	* @param groupId the group ID
 	* @param folderId the folder ID
 	* @param title the title
+	* @return the document library file entry that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByG_F_T(long groupId, long folderId,
-		java.lang.String title)
+	public com.liferay.portlet.documentlibrary.model.DLFileEntry removeByG_F_T(
+		long groupId, long folderId, java.lang.String title)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 

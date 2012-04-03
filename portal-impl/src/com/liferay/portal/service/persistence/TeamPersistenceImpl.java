@@ -1472,13 +1472,14 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	 *
 	 * @param groupId the group ID
 	 * @param name the name
+	 * @return the team that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByG_N(long groupId, String name)
+	public Team removeByG_N(long groupId, String name)
 		throws NoSuchTeamException, SystemException {
 		Team team = findByG_N(groupId, name);
 
-		remove(team);
+		return remove(team);
 	}
 
 	/**

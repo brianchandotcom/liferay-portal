@@ -2527,13 +2527,14 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @return the asset vocabulary that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByUUID_G(String uuid, long groupId)
+	public AssetVocabulary removeByUUID_G(String uuid, long groupId)
 		throws NoSuchVocabularyException, SystemException {
 		AssetVocabulary assetVocabulary = findByUUID_G(uuid, groupId);
 
-		remove(assetVocabulary);
+		return remove(assetVocabulary);
 	}
 
 	/**
@@ -2565,13 +2566,14 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 *
 	 * @param groupId the group ID
 	 * @param name the name
+	 * @return the asset vocabulary that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByG_N(long groupId, String name)
+	public AssetVocabulary removeByG_N(long groupId, String name)
 		throws NoSuchVocabularyException, SystemException {
 		AssetVocabulary assetVocabulary = findByG_N(groupId, name);
 
-		remove(assetVocabulary);
+		return remove(assetVocabulary);
 	}
 
 	/**

@@ -291,12 +291,14 @@ public class PortalPreferencesUtil {
 	*
 	* @param ownerId the owner ID
 	* @param ownerType the owner type
+	* @return the portal preferences that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByO_O(long ownerId, int ownerType)
+	public static com.liferay.portal.model.PortalPreferences removeByO_O(
+		long ownerId, int ownerType)
 		throws com.liferay.portal.NoSuchPreferencesException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByO_O(ownerId, ownerType);
+		return getPersistence().removeByO_O(ownerId, ownerType);
 	}
 
 	/**

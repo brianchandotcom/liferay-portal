@@ -3810,13 +3810,14 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * Removes the user where contactId = &#63; from the database.
 	 *
 	 * @param contactId the contact ID
+	 * @return the user that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByContactId(long contactId)
+	public User removeByContactId(long contactId)
 		throws NoSuchUserException, SystemException {
 		User user = findByContactId(contactId);
 
-		remove(user);
+		return remove(user);
 	}
 
 	/**
@@ -3836,13 +3837,14 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * Removes the user where portraitId = &#63; from the database.
 	 *
 	 * @param portraitId the portrait ID
+	 * @return the user that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByPortraitId(long portraitId)
+	public User removeByPortraitId(long portraitId)
 		throws NoSuchUserException, SystemException {
 		User user = findByPortraitId(portraitId);
 
-		remove(user);
+		return remove(user);
 	}
 
 	/**
@@ -3850,13 +3852,14 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 *
 	 * @param companyId the company ID
 	 * @param userId the user ID
+	 * @return the user that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByC_U(long companyId, long userId)
+	public User removeByC_U(long companyId, long userId)
 		throws NoSuchUserException, SystemException {
 		User user = findByC_U(companyId, userId);
 
-		remove(user);
+		return remove(user);
 	}
 
 	/**
@@ -3864,13 +3867,14 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 *
 	 * @param companyId the company ID
 	 * @param defaultUser the default user
+	 * @return the user that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByC_DU(long companyId, boolean defaultUser)
+	public User removeByC_DU(long companyId, boolean defaultUser)
 		throws NoSuchUserException, SystemException {
 		User user = findByC_DU(companyId, defaultUser);
 
-		remove(user);
+		return remove(user);
 	}
 
 	/**
@@ -3878,13 +3882,14 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 *
 	 * @param companyId the company ID
 	 * @param screenName the screen name
+	 * @return the user that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByC_SN(long companyId, String screenName)
+	public User removeByC_SN(long companyId, String screenName)
 		throws NoSuchUserException, SystemException {
 		User user = findByC_SN(companyId, screenName);
 
-		remove(user);
+		return remove(user);
 	}
 
 	/**
@@ -3892,13 +3897,14 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 *
 	 * @param companyId the company ID
 	 * @param emailAddress the email address
+	 * @return the user that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByC_EA(long companyId, String emailAddress)
+	public User removeByC_EA(long companyId, String emailAddress)
 		throws NoSuchUserException, SystemException {
 		User user = findByC_EA(companyId, emailAddress);
 
-		remove(user);
+		return remove(user);
 	}
 
 	/**
@@ -3906,13 +3912,14 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 *
 	 * @param companyId the company ID
 	 * @param facebookId the facebook ID
+	 * @return the user that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByC_FID(long companyId, long facebookId)
+	public User removeByC_FID(long companyId, long facebookId)
 		throws NoSuchUserException, SystemException {
 		User user = findByC_FID(companyId, facebookId);
 
-		remove(user);
+		return remove(user);
 	}
 
 	/**
@@ -3920,13 +3927,14 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 *
 	 * @param companyId the company ID
 	 * @param openId the open ID
+	 * @return the user that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByC_O(long companyId, String openId)
+	public User removeByC_O(long companyId, String openId)
 		throws NoSuchUserException, SystemException {
 		User user = findByC_O(companyId, openId);
 
-		remove(user);
+		return remove(user);
 	}
 
 	/**

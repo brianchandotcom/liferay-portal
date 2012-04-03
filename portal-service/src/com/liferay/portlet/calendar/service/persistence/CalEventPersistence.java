@@ -1442,9 +1442,11 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @return the cal event that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByUUID_G(java.lang.String uuid, long groupId)
+	public com.liferay.portlet.calendar.model.CalEvent removeByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.calendar.NoSuchEventException;
 

@@ -689,14 +689,16 @@ public class SocialActivityCounterUtil {
 	* @param name the name
 	* @param ownerType the owner type
 	* @param startPeriod the start period
+	* @return the social activity counter that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByG_C_C_N_O_S(long groupId, long classNameId,
-		long classPK, java.lang.String name, int ownerType, int startPeriod)
+	public static com.liferay.portlet.social.model.SocialActivityCounter removeByG_C_C_N_O_S(
+		long groupId, long classNameId, long classPK, java.lang.String name,
+		int ownerType, int startPeriod)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.social.NoSuchActivityCounterException {
-		getPersistence()
-			.removeByG_C_C_N_O_S(groupId, classNameId, classPK, name,
+		return getPersistence()
+				   .removeByG_C_C_N_O_S(groupId, classNameId, classPK, name,
 			ownerType, startPeriod);
 	}
 
@@ -709,14 +711,16 @@ public class SocialActivityCounterUtil {
 	* @param name the name
 	* @param ownerType the owner type
 	* @param endPeriod the end period
+	* @return the social activity counter that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByG_C_C_N_O_E(long groupId, long classNameId,
-		long classPK, java.lang.String name, int ownerType, int endPeriod)
+	public static com.liferay.portlet.social.model.SocialActivityCounter removeByG_C_C_N_O_E(
+		long groupId, long classNameId, long classPK, java.lang.String name,
+		int ownerType, int endPeriod)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.social.NoSuchActivityCounterException {
-		getPersistence()
-			.removeByG_C_C_N_O_E(groupId, classNameId, classPK, name,
+		return getPersistence()
+				   .removeByG_C_C_N_O_E(groupId, classNameId, classPK, name,
 			ownerType, endPeriod);
 	}
 

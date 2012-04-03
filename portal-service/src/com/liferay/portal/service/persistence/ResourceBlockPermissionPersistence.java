@@ -303,9 +303,11 @@ public interface ResourceBlockPermissionPersistence extends BasePersistence<Reso
 	*
 	* @param resourceBlockId the resource block ID
 	* @param roleId the role ID
+	* @return the resource block permission that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByR_R(long resourceBlockId, long roleId)
+	public com.liferay.portal.model.ResourceBlockPermission removeByR_R(
+		long resourceBlockId, long roleId)
 		throws com.liferay.portal.NoSuchResourceBlockPermissionException,
 			com.liferay.portal.kernel.exception.SystemException;
 

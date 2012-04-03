@@ -3958,13 +3958,14 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @return the journal template that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByUUID_G(String uuid, long groupId)
+	public JournalTemplate removeByUUID_G(String uuid, long groupId)
 		throws NoSuchTemplateException, SystemException {
 		JournalTemplate journalTemplate = findByUUID_G(uuid, groupId);
 
-		remove(journalTemplate);
+		return remove(journalTemplate);
 	}
 
 	/**
@@ -4008,13 +4009,14 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 	 * Removes the journal template where smallImageId = &#63; from the database.
 	 *
 	 * @param smallImageId the small image ID
+	 * @return the journal template that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeBySmallImageId(long smallImageId)
+	public JournalTemplate removeBySmallImageId(long smallImageId)
 		throws NoSuchTemplateException, SystemException {
 		JournalTemplate journalTemplate = findBySmallImageId(smallImageId);
 
-		remove(journalTemplate);
+		return remove(journalTemplate);
 	}
 
 	/**
@@ -4022,13 +4024,14 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 	 *
 	 * @param groupId the group ID
 	 * @param templateId the template ID
+	 * @return the journal template that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByG_T(long groupId, String templateId)
+	public JournalTemplate removeByG_T(long groupId, String templateId)
 		throws NoSuchTemplateException, SystemException {
 		JournalTemplate journalTemplate = findByG_T(groupId, templateId);
 
-		remove(journalTemplate);
+		return remove(journalTemplate);
 	}
 
 	/**

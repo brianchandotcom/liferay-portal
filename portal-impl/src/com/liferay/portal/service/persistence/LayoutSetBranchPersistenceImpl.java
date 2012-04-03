@@ -2291,14 +2291,15 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param name the name
+	 * @return the layout set branch that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByG_P_N(long groupId, boolean privateLayout, String name)
-		throws NoSuchLayoutSetBranchException, SystemException {
+	public LayoutSetBranch removeByG_P_N(long groupId, boolean privateLayout,
+		String name) throws NoSuchLayoutSetBranchException, SystemException {
 		LayoutSetBranch layoutSetBranch = findByG_P_N(groupId, privateLayout,
 				name);
 
-		remove(layoutSetBranch);
+		return remove(layoutSetBranch);
 	}
 
 	/**

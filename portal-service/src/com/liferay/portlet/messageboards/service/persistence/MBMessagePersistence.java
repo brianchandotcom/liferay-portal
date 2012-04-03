@@ -3760,9 +3760,11 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @return the message-boards message that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByUUID_G(java.lang.String uuid, long groupId)
+	public com.liferay.portlet.messageboards.model.MBMessage removeByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.messageboards.NoSuchMessageException;
 

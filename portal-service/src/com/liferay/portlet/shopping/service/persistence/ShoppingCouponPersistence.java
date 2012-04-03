@@ -301,9 +301,11 @@ public interface ShoppingCouponPersistence extends BasePersistence<ShoppingCoupo
 	* Removes the shopping coupon where code = &#63; from the database.
 	*
 	* @param code the code
+	* @return the shopping coupon that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByCode(java.lang.String code)
+	public com.liferay.portlet.shopping.model.ShoppingCoupon removeByCode(
+		java.lang.String code)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.shopping.NoSuchCouponException;
 

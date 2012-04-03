@@ -2482,12 +2482,14 @@ public class WikiPageUtil {
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @return the wiki page that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUUID_G(java.lang.String uuid, long groupId)
+	public static com.liferay.portlet.wiki.model.WikiPage removeByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.wiki.NoSuchPageException {
-		getPersistence().removeByUUID_G(uuid, groupId);
+		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -2590,13 +2592,14 @@ public class WikiPageUtil {
 	* @param resourcePrimKey the resource prim key
 	* @param nodeId the node ID
 	* @param version the version
+	* @return the wiki page that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByR_N_V(long resourcePrimKey, long nodeId,
-		double version)
+	public static com.liferay.portlet.wiki.model.WikiPage removeByR_N_V(
+		long resourcePrimKey, long nodeId, double version)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.wiki.NoSuchPageException {
-		getPersistence().removeByR_N_V(resourcePrimKey, nodeId, version);
+		return getPersistence().removeByR_N_V(resourcePrimKey, nodeId, version);
 	}
 
 	/**
@@ -2631,13 +2634,14 @@ public class WikiPageUtil {
 	* @param nodeId the node ID
 	* @param title the title
 	* @param version the version
+	* @return the wiki page that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByN_T_V(long nodeId, java.lang.String title,
-		double version)
+	public static com.liferay.portlet.wiki.model.WikiPage removeByN_T_V(
+		long nodeId, java.lang.String title, double version)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.wiki.NoSuchPageException {
-		getPersistence().removeByN_T_V(nodeId, title, version);
+		return getPersistence().removeByN_T_V(nodeId, title, version);
 	}
 
 	/**

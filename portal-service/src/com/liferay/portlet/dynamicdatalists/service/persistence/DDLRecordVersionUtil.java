@@ -549,12 +549,14 @@ public class DDLRecordVersionUtil {
 	*
 	* @param recordId the record ID
 	* @param version the version
+	* @return the d d l record version that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByR_V(long recordId, java.lang.String version)
+	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion removeByR_V(
+		long recordId, java.lang.String version)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException {
-		getPersistence().removeByR_V(recordId, version);
+		return getPersistence().removeByR_V(recordId, version);
 	}
 
 	/**

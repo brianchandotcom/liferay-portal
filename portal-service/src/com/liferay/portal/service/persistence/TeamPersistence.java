@@ -356,9 +356,11 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	*
 	* @param groupId the group ID
 	* @param name the name
+	* @return the team that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByG_N(long groupId, java.lang.String name)
+	public com.liferay.portal.model.Team removeByG_N(long groupId,
+		java.lang.String name)
 		throws com.liferay.portal.NoSuchTeamException,
 			com.liferay.portal.kernel.exception.SystemException;
 

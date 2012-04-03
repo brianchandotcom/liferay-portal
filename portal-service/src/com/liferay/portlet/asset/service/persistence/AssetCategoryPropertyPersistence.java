@@ -540,9 +540,11 @@ public interface AssetCategoryPropertyPersistence extends BasePersistence<AssetC
 	*
 	* @param categoryId the category ID
 	* @param key the key
+	* @return the asset category property that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByCA_K(long categoryId, java.lang.String key)
+	public com.liferay.portlet.asset.model.AssetCategoryProperty removeByCA_K(
+		long categoryId, java.lang.String key)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.asset.NoSuchCategoryPropertyException;
 

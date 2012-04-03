@@ -437,13 +437,14 @@ public class ExpandoTableUtil {
 	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param name the name
+	* @return the expando table that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByC_C_N(long companyId, long classNameId,
-		java.lang.String name)
+	public static com.liferay.portlet.expando.model.ExpandoTable removeByC_C_N(
+		long companyId, long classNameId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.expando.NoSuchTableException {
-		getPersistence().removeByC_C_N(companyId, classNameId, name);
+		return getPersistence().removeByC_C_N(companyId, classNameId, name);
 	}
 
 	/**

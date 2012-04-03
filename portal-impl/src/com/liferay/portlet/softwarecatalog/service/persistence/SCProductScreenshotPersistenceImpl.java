@@ -1523,26 +1523,28 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 	 * Removes the s c product screenshot where thumbnailId = &#63; from the database.
 	 *
 	 * @param thumbnailId the thumbnail ID
+	 * @return the s c product screenshot that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByThumbnailId(long thumbnailId)
+	public SCProductScreenshot removeByThumbnailId(long thumbnailId)
 		throws NoSuchProductScreenshotException, SystemException {
 		SCProductScreenshot scProductScreenshot = findByThumbnailId(thumbnailId);
 
-		remove(scProductScreenshot);
+		return remove(scProductScreenshot);
 	}
 
 	/**
 	 * Removes the s c product screenshot where fullImageId = &#63; from the database.
 	 *
 	 * @param fullImageId the full image ID
+	 * @return the s c product screenshot that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByFullImageId(long fullImageId)
+	public SCProductScreenshot removeByFullImageId(long fullImageId)
 		throws NoSuchProductScreenshotException, SystemException {
 		SCProductScreenshot scProductScreenshot = findByFullImageId(fullImageId);
 
-		remove(scProductScreenshot);
+		return remove(scProductScreenshot);
 	}
 
 	/**
@@ -1550,14 +1552,15 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 	 *
 	 * @param productEntryId the product entry ID
 	 * @param priority the priority
+	 * @return the s c product screenshot that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByP_P(long productEntryId, int priority)
+	public SCProductScreenshot removeByP_P(long productEntryId, int priority)
 		throws NoSuchProductScreenshotException, SystemException {
 		SCProductScreenshot scProductScreenshot = findByP_P(productEntryId,
 				priority);
 
-		remove(scProductScreenshot);
+		return remove(scProductScreenshot);
 	}
 
 	/**

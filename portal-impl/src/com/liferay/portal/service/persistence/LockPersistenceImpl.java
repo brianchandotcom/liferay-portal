@@ -1836,13 +1836,14 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	 *
 	 * @param className the class name
 	 * @param key the key
+	 * @return the lock that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByC_K(String className, String key)
+	public Lock removeByC_K(String className, String key)
 		throws NoSuchLockException, SystemException {
 		Lock lock = findByC_K(className, key);
 
-		remove(lock);
+		return remove(lock);
 	}
 
 	/**
@@ -1851,13 +1852,14 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	 * @param className the class name
 	 * @param key the key
 	 * @param owner the owner
+	 * @return the lock that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByC_K_O(String className, String key, String owner)
+	public Lock removeByC_K_O(String className, String key, String owner)
 		throws NoSuchLockException, SystemException {
 		Lock lock = findByC_K_O(className, key, owner);
 
-		remove(lock);
+		return remove(lock);
 	}
 
 	/**

@@ -1971,13 +1971,14 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 *
 	 * @param countryId the country ID
 	 * @param regionCode the region code
+	 * @return the region that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByC_R(long countryId, String regionCode)
+	public Region removeByC_R(long countryId, String regionCode)
 		throws NoSuchRegionException, SystemException {
 		Region region = findByC_R(countryId, regionCode);
 
-		remove(region);
+		return remove(region);
 	}
 
 	/**

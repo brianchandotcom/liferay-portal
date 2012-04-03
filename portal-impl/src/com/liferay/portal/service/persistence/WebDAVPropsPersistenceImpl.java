@@ -731,13 +731,14 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
+	 * @return the web d a v props that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByC_C(long classNameId, long classPK)
+	public WebDAVProps removeByC_C(long classNameId, long classPK)
 		throws NoSuchWebDAVPropsException, SystemException {
 		WebDAVProps webDAVProps = findByC_C(classNameId, classPK);
 
-		remove(webDAVProps);
+		return remove(webDAVProps);
 	}
 
 	/**

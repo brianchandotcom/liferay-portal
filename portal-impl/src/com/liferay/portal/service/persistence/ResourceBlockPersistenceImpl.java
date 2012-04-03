@@ -1772,15 +1772,16 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 * @param groupId the group ID
 	 * @param name the name
 	 * @param permissionsHash the permissions hash
+	 * @return the resource block that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByC_G_N_P(long companyId, long groupId, String name,
-		String permissionsHash)
+	public ResourceBlock removeByC_G_N_P(long companyId, long groupId,
+		String name, String permissionsHash)
 		throws NoSuchResourceBlockException, SystemException {
 		ResourceBlock resourceBlock = findByC_G_N_P(companyId, groupId, name,
 				permissionsHash);
 
-		remove(resourceBlock);
+		return remove(resourceBlock);
 	}
 
 	/**

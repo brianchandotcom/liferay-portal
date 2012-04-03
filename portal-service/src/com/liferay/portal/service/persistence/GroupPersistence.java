@@ -608,9 +608,10 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	* Removes the group where liveGroupId = &#63; from the database.
 	*
 	* @param liveGroupId the live group ID
+	* @return the group that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByLiveGroupId(long liveGroupId)
+	public com.liferay.portal.model.Group removeByLiveGroupId(long liveGroupId)
 		throws com.liferay.portal.NoSuchGroupException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -619,9 +620,11 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	*
 	* @param companyId the company ID
 	* @param name the name
+	* @return the group that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByC_N(long companyId, java.lang.String name)
+	public com.liferay.portal.model.Group removeByC_N(long companyId,
+		java.lang.String name)
 		throws com.liferay.portal.NoSuchGroupException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -630,9 +633,11 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	*
 	* @param companyId the company ID
 	* @param friendlyURL the friendly u r l
+	* @return the group that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByC_F(long companyId, java.lang.String friendlyURL)
+	public com.liferay.portal.model.Group removeByC_F(long companyId,
+		java.lang.String friendlyURL)
 		throws com.liferay.portal.NoSuchGroupException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -652,9 +657,11 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class p k
+	* @return the group that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByC_C_C(long companyId, long classNameId, long classPK)
+	public com.liferay.portal.model.Group removeByC_C_C(long companyId,
+		long classNameId, long classPK)
 		throws com.liferay.portal.NoSuchGroupException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -664,10 +671,11 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	* @param companyId the company ID
 	* @param liveGroupId the live group ID
 	* @param name the name
+	* @return the group that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByC_L_N(long companyId, long liveGroupId,
-		java.lang.String name)
+	public com.liferay.portal.model.Group removeByC_L_N(long companyId,
+		long liveGroupId, java.lang.String name)
 		throws com.liferay.portal.NoSuchGroupException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -678,10 +686,11 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	* @param classNameId the class name ID
 	* @param liveGroupId the live group ID
 	* @param name the name
+	* @return the group that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByC_C_L_N(long companyId, long classNameId,
-		long liveGroupId, java.lang.String name)
+	public com.liferay.portal.model.Group removeByC_C_L_N(long companyId,
+		long classNameId, long liveGroupId, java.lang.String name)
 		throws com.liferay.portal.NoSuchGroupException,
 			com.liferay.portal.kernel.exception.SystemException;
 

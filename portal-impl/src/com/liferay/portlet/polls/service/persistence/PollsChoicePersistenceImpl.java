@@ -1600,13 +1600,14 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 *
 	 * @param questionId the question ID
 	 * @param name the name
+	 * @return the polls choice that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByQ_N(long questionId, String name)
+	public PollsChoice removeByQ_N(long questionId, String name)
 		throws NoSuchChoiceException, SystemException {
 		PollsChoice pollsChoice = findByQ_N(questionId, name);
 
-		remove(pollsChoice);
+		return remove(pollsChoice);
 	}
 
 	/**

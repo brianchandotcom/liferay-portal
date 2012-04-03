@@ -1538,13 +1538,14 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 	 * Removes the d d m storage link where classPK = &#63; from the database.
 	 *
 	 * @param classPK the class p k
+	 * @return the d d m storage link that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByClassPK(long classPK)
+	public DDMStorageLink removeByClassPK(long classPK)
 		throws NoSuchStorageLinkException, SystemException {
 		DDMStorageLink ddmStorageLink = findByClassPK(classPK);
 
-		remove(ddmStorageLink);
+		return remove(ddmStorageLink);
 	}
 
 	/**

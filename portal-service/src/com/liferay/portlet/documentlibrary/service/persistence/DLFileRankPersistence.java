@@ -543,9 +543,11 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @param companyId the company ID
 	* @param userId the user ID
 	* @param fileEntryId the file entry ID
+	* @return the document library file rank that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByC_U_F(long companyId, long userId, long fileEntryId)
+	public com.liferay.portlet.documentlibrary.model.DLFileRank removeByC_U_F(
+		long companyId, long userId, long fileEntryId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.documentlibrary.NoSuchFileRankException;
 

@@ -330,12 +330,14 @@ public class VirtualHostUtil {
 	* Removes the virtual host where hostname = &#63; from the database.
 	*
 	* @param hostname the hostname
+	* @return the virtual host that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByHostname(java.lang.String hostname)
+	public static com.liferay.portal.model.VirtualHost removeByHostname(
+		java.lang.String hostname)
 		throws com.liferay.portal.NoSuchVirtualHostException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByHostname(hostname);
+		return getPersistence().removeByHostname(hostname);
 	}
 
 	/**
@@ -343,12 +345,14 @@ public class VirtualHostUtil {
 	*
 	* @param companyId the company ID
 	* @param layoutSetId the layout set ID
+	* @return the virtual host that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByC_L(long companyId, long layoutSetId)
+	public static com.liferay.portal.model.VirtualHost removeByC_L(
+		long companyId, long layoutSetId)
 		throws com.liferay.portal.NoSuchVirtualHostException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByC_L(companyId, layoutSetId);
+		return getPersistence().removeByC_L(companyId, layoutSetId);
 	}
 
 	/**

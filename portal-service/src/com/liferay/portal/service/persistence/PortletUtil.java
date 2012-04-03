@@ -416,12 +416,14 @@ public class PortletUtil {
 	*
 	* @param companyId the company ID
 	* @param portletId the portlet ID
+	* @return the portlet that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByC_P(long companyId, java.lang.String portletId)
+	public static com.liferay.portal.model.Portlet removeByC_P(long companyId,
+		java.lang.String portletId)
 		throws com.liferay.portal.NoSuchPortletException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByC_P(companyId, portletId);
+		return getPersistence().removeByC_P(companyId, portletId);
 	}
 
 	/**

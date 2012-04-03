@@ -6180,15 +6180,17 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	 * @param roleId the role ID
 	 * @param ownerId the owner ID
 	 * @param actionIds the action IDs
+	 * @return the resource permission that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByC_N_S_P_R_O_A(long companyId, String name, int scope,
-		String primKey, long roleId, long ownerId, long actionIds)
+	public ResourcePermission removeByC_N_S_P_R_O_A(long companyId,
+		String name, int scope, String primKey, long roleId, long ownerId,
+		long actionIds)
 		throws NoSuchResourcePermissionException, SystemException {
 		ResourcePermission resourcePermission = findByC_N_S_P_R_O_A(companyId,
 				name, scope, primKey, roleId, ownerId, actionIds);
 
-		remove(resourcePermission);
+		return remove(resourcePermission);
 	}
 
 	/**

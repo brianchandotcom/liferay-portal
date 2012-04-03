@@ -1248,9 +1248,11 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	* @param userId1 the user id1
 	* @param userId2 the user id2
 	* @param type the type
+	* @return the social relation that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByU1_U2_T(long userId1, long userId2, int type)
+	public com.liferay.portlet.social.model.SocialRelation removeByU1_U2_T(
+		long userId1, long userId2, int type)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.social.NoSuchRelationException;
 

@@ -1189,13 +1189,14 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	 *
 	 * @param nodeId the node ID
 	 * @param title the title
+	 * @return the wiki page resource that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByN_T(long nodeId, String title)
+	public WikiPageResource removeByN_T(long nodeId, String title)
 		throws NoSuchPageResourceException, SystemException {
 		WikiPageResource wikiPageResource = findByN_T(nodeId, title);
 
-		remove(wikiPageResource);
+		return remove(wikiPageResource);
 	}
 
 	/**

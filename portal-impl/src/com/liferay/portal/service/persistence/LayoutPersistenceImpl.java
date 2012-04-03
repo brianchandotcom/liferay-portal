@@ -5975,13 +5975,14 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @return the layout that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByUUID_G(String uuid, long groupId)
+	public Layout removeByUUID_G(String uuid, long groupId)
 		throws NoSuchLayoutException, SystemException {
 		Layout layout = findByUUID_G(uuid, groupId);
 
-		remove(layout);
+		return remove(layout);
 	}
 
 	/**
@@ -6012,13 +6013,14 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 * Removes the layout where iconImageId = &#63; from the database.
 	 *
 	 * @param iconImageId the icon image ID
+	 * @return the layout that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByIconImageId(long iconImageId)
+	public Layout removeByIconImageId(long iconImageId)
 		throws NoSuchLayoutException, SystemException {
 		Layout layout = findByIconImageId(iconImageId);
 
-		remove(layout);
+		return remove(layout);
 	}
 
 	/**
@@ -6054,13 +6056,14 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param layoutId the layout ID
+	 * @return the layout that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByG_P_L(long groupId, boolean privateLayout, long layoutId)
-		throws NoSuchLayoutException, SystemException {
+	public Layout removeByG_P_L(long groupId, boolean privateLayout,
+		long layoutId) throws NoSuchLayoutException, SystemException {
 		Layout layout = findByG_P_L(groupId, privateLayout, layoutId);
 
-		remove(layout);
+		return remove(layout);
 	}
 
 	/**
@@ -6084,13 +6087,14 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param friendlyURL the friendly u r l
+	 * @return the layout that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByG_P_F(long groupId, boolean privateLayout,
+	public Layout removeByG_P_F(long groupId, boolean privateLayout,
 		String friendlyURL) throws NoSuchLayoutException, SystemException {
 		Layout layout = findByG_P_F(groupId, privateLayout, friendlyURL);
 
-		remove(layout);
+		return remove(layout);
 	}
 
 	/**
@@ -6114,15 +6118,16 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @return the layout that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByG_P_SPLU(long groupId, boolean privateLayout,
+	public Layout removeByG_P_SPLU(long groupId, boolean privateLayout,
 		String sourcePrototypeLayoutUuid)
 		throws NoSuchLayoutException, SystemException {
 		Layout layout = findByG_P_SPLU(groupId, privateLayout,
 				sourcePrototypeLayoutUuid);
 
-		remove(layout);
+		return remove(layout);
 	}
 
 	/**

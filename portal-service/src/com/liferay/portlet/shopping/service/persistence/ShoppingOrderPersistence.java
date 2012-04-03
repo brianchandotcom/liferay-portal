@@ -590,9 +590,11 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	* Removes the shopping order where number = &#63; from the database.
 	*
 	* @param number the number
+	* @return the shopping order that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByNumber(java.lang.String number)
+	public com.liferay.portlet.shopping.model.ShoppingOrder removeByNumber(
+		java.lang.String number)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.shopping.NoSuchOrderException;
 
@@ -600,9 +602,11 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	* Removes the shopping order where ppTxnId = &#63; from the database.
 	*
 	* @param ppTxnId the pp txn ID
+	* @return the shopping order that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByPPTxnId(java.lang.String ppTxnId)
+	public com.liferay.portlet.shopping.model.ShoppingOrder removeByPPTxnId(
+		java.lang.String ppTxnId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.shopping.NoSuchOrderException;
 

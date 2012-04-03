@@ -3659,9 +3659,11 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @return the journal article that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByUUID_G(java.lang.String uuid, long groupId)
+	public com.liferay.portlet.journal.model.JournalArticle removeByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.journal.NoSuchArticleException;
 
@@ -3826,10 +3828,11 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 	* @param groupId the group ID
 	* @param classNameId the class name ID
 	* @param structureId the structure ID
+	* @return the journal article that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByG_C_S(long groupId, long classNameId,
-		java.lang.String structureId)
+	public com.liferay.portlet.journal.model.JournalArticle removeByG_C_S(
+		long groupId, long classNameId, java.lang.String structureId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.journal.NoSuchArticleException;
 
@@ -3863,10 +3866,11 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 	* @param groupId the group ID
 	* @param articleId the article ID
 	* @param version the version
+	* @return the journal article that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByG_A_V(long groupId, java.lang.String articleId,
-		double version)
+	public com.liferay.portlet.journal.model.JournalArticle removeByG_A_V(
+		long groupId, java.lang.String articleId, double version)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.journal.NoSuchArticleException;
 

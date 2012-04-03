@@ -714,13 +714,14 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	 * Removes the ticket where key = &#63; from the database.
 	 *
 	 * @param key the key
+	 * @return the ticket that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByKey(String key)
+	public Ticket removeByKey(String key)
 		throws NoSuchTicketException, SystemException {
 		Ticket ticket = findByKey(key);
 
-		remove(ticket);
+		return remove(ticket);
 	}
 
 	/**

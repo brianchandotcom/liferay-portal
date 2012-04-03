@@ -585,10 +585,12 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* @param repositoryId the repository ID
 	* @param path the path
 	* @param version the version
+	* @return the document library content that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByC_R_P_V(long companyId, long repositoryId,
-		java.lang.String path, java.lang.String version)
+	public com.liferay.portlet.documentlibrary.model.DLContent removeByC_R_P_V(
+		long companyId, long repositoryId, java.lang.String path,
+		java.lang.String version)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.documentlibrary.NoSuchContentException;
 

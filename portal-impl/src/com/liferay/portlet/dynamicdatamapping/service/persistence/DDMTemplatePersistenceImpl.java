@@ -4008,13 +4008,14 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @return the d d m template that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByUUID_G(String uuid, long groupId)
+	public DDMTemplate removeByUUID_G(String uuid, long groupId)
 		throws NoSuchTemplateException, SystemException {
 		DDMTemplate ddmTemplate = findByUUID_G(uuid, groupId);
 
-		remove(ddmTemplate);
+		return remove(ddmTemplate);
 	}
 
 	/**

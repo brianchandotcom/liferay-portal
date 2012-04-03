@@ -418,12 +418,14 @@ public class ExpandoRowUtil {
 	*
 	* @param tableId the table ID
 	* @param classPK the class p k
+	* @return the expando row that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByT_C(long tableId, long classPK)
+	public static com.liferay.portlet.expando.model.ExpandoRow removeByT_C(
+		long tableId, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.expando.NoSuchRowException {
-		getPersistence().removeByT_C(tableId, classPK);
+		return getPersistence().removeByT_C(tableId, classPK);
 	}
 
 	/**

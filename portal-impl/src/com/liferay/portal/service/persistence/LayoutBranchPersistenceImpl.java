@@ -1836,13 +1836,14 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param plid the plid
 	 * @param name the name
+	 * @return the layout branch that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByL_P_N(long layoutSetBranchId, long plid, String name)
-		throws NoSuchLayoutBranchException, SystemException {
+	public LayoutBranch removeByL_P_N(long layoutSetBranchId, long plid,
+		String name) throws NoSuchLayoutBranchException, SystemException {
 		LayoutBranch layoutBranch = findByL_P_N(layoutSetBranchId, plid, name);
 
-		remove(layoutBranch);
+		return remove(layoutBranch);
 	}
 
 	/**
@@ -1851,13 +1852,14 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param plid the plid
 	 * @param master the master
+	 * @return the layout branch that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByL_P_M(long layoutSetBranchId, long plid, boolean master)
-		throws NoSuchLayoutBranchException, SystemException {
+	public LayoutBranch removeByL_P_M(long layoutSetBranchId, long plid,
+		boolean master) throws NoSuchLayoutBranchException, SystemException {
 		LayoutBranch layoutBranch = findByL_P_M(layoutSetBranchId, plid, master);
 
-		remove(layoutBranch);
+		return remove(layoutBranch);
 	}
 
 	/**

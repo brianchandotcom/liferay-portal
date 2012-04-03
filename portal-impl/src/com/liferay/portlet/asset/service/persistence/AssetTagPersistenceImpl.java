@@ -1480,13 +1480,14 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	 *
 	 * @param groupId the group ID
 	 * @param name the name
+	 * @return the asset tag that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByG_N(long groupId, String name)
+	public AssetTag removeByG_N(long groupId, String name)
 		throws NoSuchTagException, SystemException {
 		AssetTag assetTag = findByG_N(groupId, name);
 
-		remove(assetTag);
+		return remove(assetTag);
 	}
 
 	/**

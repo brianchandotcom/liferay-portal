@@ -1758,15 +1758,16 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param typePK the type p k
+	 * @return the workflow definition link that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByG_C_C_C_T(long groupId, long companyId,
-		long classNameId, long classPK, long typePK)
+	public WorkflowDefinitionLink removeByG_C_C_C_T(long groupId,
+		long companyId, long classNameId, long classPK, long typePK)
 		throws NoSuchWorkflowDefinitionLinkException, SystemException {
 		WorkflowDefinitionLink workflowDefinitionLink = findByG_C_C_C_T(groupId,
 				companyId, classNameId, classPK, typePK);
 
-		remove(workflowDefinitionLink);
+		return remove(workflowDefinitionLink);
 	}
 
 	/**

@@ -1189,13 +1189,14 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	 *
 	 * @param name the name
 	 * @param actionId the action ID
+	 * @return the resource action that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByN_A(String name, String actionId)
+	public ResourceAction removeByN_A(String name, String actionId)
 		throws NoSuchResourceActionException, SystemException {
 		ResourceAction resourceAction = findByN_A(name, actionId);
 
-		remove(resourceAction);
+		return remove(resourceAction);
 	}
 
 	/**

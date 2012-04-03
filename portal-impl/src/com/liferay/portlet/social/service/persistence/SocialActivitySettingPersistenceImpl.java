@@ -1715,15 +1715,16 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 	 * @param classNameId the class name ID
 	 * @param activityType the activity type
 	 * @param name the name
+	 * @return the social activity setting that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByG_C_A_N(long groupId, long classNameId,
-		int activityType, String name)
+	public SocialActivitySetting removeByG_C_A_N(long groupId,
+		long classNameId, int activityType, String name)
 		throws NoSuchActivitySettingException, SystemException {
 		SocialActivitySetting socialActivitySetting = findByG_C_A_N(groupId,
 				classNameId, activityType, name);
 
-		remove(socialActivitySetting);
+		return remove(socialActivitySetting);
 	}
 
 	/**

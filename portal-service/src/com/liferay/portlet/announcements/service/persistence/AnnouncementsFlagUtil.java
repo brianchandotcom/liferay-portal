@@ -426,12 +426,14 @@ public class AnnouncementsFlagUtil {
 	* @param userId the user ID
 	* @param entryId the entry ID
 	* @param value the value
+	* @return the announcements flag that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByU_E_V(long userId, long entryId, int value)
+	public static com.liferay.portlet.announcements.model.AnnouncementsFlag removeByU_E_V(
+		long userId, long entryId, int value)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.announcements.NoSuchFlagException {
-		getPersistence().removeByU_E_V(userId, entryId, value);
+		return getPersistence().removeByU_E_V(userId, entryId, value);
 	}
 
 	/**

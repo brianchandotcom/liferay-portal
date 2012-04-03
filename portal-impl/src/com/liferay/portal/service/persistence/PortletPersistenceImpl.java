@@ -1144,13 +1144,14 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 	 *
 	 * @param companyId the company ID
 	 * @param portletId the portlet ID
+	 * @return the portlet that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByC_P(long companyId, String portletId)
+	public Portlet removeByC_P(long companyId, String portletId)
 		throws NoSuchPortletException, SystemException {
 		Portlet portlet = findByC_P(companyId, portletId);
 
-		remove(portlet);
+		return remove(portlet);
 	}
 
 	/**

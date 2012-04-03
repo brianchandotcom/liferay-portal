@@ -1557,13 +1557,14 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @return the m d r rule that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByUUID_G(String uuid, long groupId)
+	public MDRRule removeByUUID_G(String uuid, long groupId)
 		throws NoSuchRuleException, SystemException {
 		MDRRule mdrRule = findByUUID_G(uuid, groupId);
 
-		remove(mdrRule);
+		return remove(mdrRule);
 	}
 
 	/**

@@ -1515,13 +1515,14 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	 * Removes the d d m structure link where classPK = &#63; from the database.
 	 *
 	 * @param classPK the class p k
+	 * @return the d d m structure link that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByClassPK(long classPK)
+	public DDMStructureLink removeByClassPK(long classPK)
 		throws NoSuchStructureLinkException, SystemException {
 		DDMStructureLink ddmStructureLink = findByClassPK(classPK);
 
-		remove(ddmStructureLink);
+		return remove(ddmStructureLink);
 	}
 
 	/**

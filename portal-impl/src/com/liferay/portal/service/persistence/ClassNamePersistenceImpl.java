@@ -711,13 +711,14 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	 * Removes the class name where value = &#63; from the database.
 	 *
 	 * @param value the value
+	 * @return the class name that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByValue(String value)
+	public ClassName removeByValue(String value)
 		throws NoSuchClassNameException, SystemException {
 		ClassName className = findByValue(value);
 
-		remove(className);
+		return remove(className);
 	}
 
 	/**

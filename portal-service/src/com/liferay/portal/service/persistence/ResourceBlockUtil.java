@@ -595,14 +595,16 @@ public class ResourceBlockUtil {
 	* @param groupId the group ID
 	* @param name the name
 	* @param permissionsHash the permissions hash
+	* @return the resource block that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByC_G_N_P(long companyId, long groupId,
-		java.lang.String name, java.lang.String permissionsHash)
+	public static com.liferay.portal.model.ResourceBlock removeByC_G_N_P(
+		long companyId, long groupId, java.lang.String name,
+		java.lang.String permissionsHash)
 		throws com.liferay.portal.NoSuchResourceBlockException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getPersistence()
-			.removeByC_G_N_P(companyId, groupId, name, permissionsHash);
+		return getPersistence()
+				   .removeByC_G_N_P(companyId, groupId, name, permissionsHash);
 	}
 
 	/**

@@ -1505,12 +1505,14 @@ public class SocialRelationUtil {
 	* @param userId1 the user id1
 	* @param userId2 the user id2
 	* @param type the type
+	* @return the social relation that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByU1_U2_T(long userId1, long userId2, int type)
+	public static com.liferay.portlet.social.model.SocialRelation removeByU1_U2_T(
+		long userId1, long userId2, int type)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.social.NoSuchRelationException {
-		getPersistence().removeByU1_U2_T(userId1, userId2, type);
+		return getPersistence().removeByU1_U2_T(userId1, userId2, type);
 	}
 
 	/**

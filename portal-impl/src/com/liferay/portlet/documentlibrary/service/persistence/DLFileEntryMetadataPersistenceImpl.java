@@ -2613,14 +2613,16 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	 *
 	 * @param DDMStructureId the d d m structure ID
 	 * @param fileVersionId the file version ID
+	 * @return the document library file entry metadata that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByD_F(long DDMStructureId, long fileVersionId)
+	public DLFileEntryMetadata removeByD_F(long DDMStructureId,
+		long fileVersionId)
 		throws NoSuchFileEntryMetadataException, SystemException {
 		DLFileEntryMetadata dlFileEntryMetadata = findByD_F(DDMStructureId,
 				fileVersionId);
 
-		remove(dlFileEntryMetadata);
+		return remove(dlFileEntryMetadata);
 	}
 
 	/**
@@ -2628,14 +2630,15 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	 *
 	 * @param fileEntryId the file entry ID
 	 * @param fileVersionId the file version ID
+	 * @return the document library file entry metadata that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByF_V(long fileEntryId, long fileVersionId)
+	public DLFileEntryMetadata removeByF_V(long fileEntryId, long fileVersionId)
 		throws NoSuchFileEntryMetadataException, SystemException {
 		DLFileEntryMetadata dlFileEntryMetadata = findByF_V(fileEntryId,
 				fileVersionId);
 
-		remove(dlFileEntryMetadata);
+		return remove(dlFileEntryMetadata);
 	}
 
 	/**

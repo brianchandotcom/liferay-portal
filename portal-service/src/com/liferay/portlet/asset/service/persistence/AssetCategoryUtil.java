@@ -1740,12 +1740,14 @@ public class AssetCategoryUtil {
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @return the asset category that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUUID_G(java.lang.String uuid, long groupId)
+	public static com.liferay.portlet.asset.model.AssetCategory removeByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.asset.NoSuchCategoryException {
-		getPersistence().removeByUUID_G(uuid, groupId);
+		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -1849,13 +1851,15 @@ public class AssetCategoryUtil {
 	* @param parentCategoryId the parent category ID
 	* @param name the name
 	* @param vocabularyId the vocabulary ID
+	* @return the asset category that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByP_N_V(long parentCategoryId,
-		java.lang.String name, long vocabularyId)
+	public static com.liferay.portlet.asset.model.AssetCategory removeByP_N_V(
+		long parentCategoryId, java.lang.String name, long vocabularyId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.asset.NoSuchCategoryException {
-		getPersistence().removeByP_N_V(parentCategoryId, name, vocabularyId);
+		return getPersistence()
+				   .removeByP_N_V(parentCategoryId, name, vocabularyId);
 	}
 
 	/**

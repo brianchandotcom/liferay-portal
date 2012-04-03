@@ -2377,13 +2377,14 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @return the d d l record that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByUUID_G(String uuid, long groupId)
+	public DDLRecord removeByUUID_G(String uuid, long groupId)
 		throws NoSuchRecordException, SystemException {
 		DDLRecord ddlRecord = findByUUID_G(uuid, groupId);
 
-		remove(ddlRecord);
+		return remove(ddlRecord);
 	}
 
 	/**

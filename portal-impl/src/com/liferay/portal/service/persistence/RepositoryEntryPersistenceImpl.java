@@ -1791,13 +1791,14 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @return the repository entry that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByUUID_G(String uuid, long groupId)
+	public RepositoryEntry removeByUUID_G(String uuid, long groupId)
 		throws NoSuchRepositoryEntryException, SystemException {
 		RepositoryEntry repositoryEntry = findByUUID_G(uuid, groupId);
 
-		remove(repositoryEntry);
+		return remove(repositoryEntry);
 	}
 
 	/**
@@ -1818,13 +1819,14 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	 *
 	 * @param repositoryId the repository ID
 	 * @param mappedId the mapped ID
+	 * @return the repository entry that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByR_M(long repositoryId, String mappedId)
+	public RepositoryEntry removeByR_M(long repositoryId, String mappedId)
 		throws NoSuchRepositoryEntryException, SystemException {
 		RepositoryEntry repositoryEntry = findByR_M(repositoryId, mappedId);
 
-		remove(repositoryEntry);
+		return remove(repositoryEntry);
 	}
 
 	/**

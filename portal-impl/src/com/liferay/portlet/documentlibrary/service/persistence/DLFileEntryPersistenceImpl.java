@@ -7333,13 +7333,14 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @return the document library file entry that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByUUID_G(String uuid, long groupId)
+	public DLFileEntry removeByUUID_G(String uuid, long groupId)
 		throws NoSuchFileEntryException, SystemException {
 		DLFileEntry dlFileEntry = findByUUID_G(uuid, groupId);
 
-		remove(dlFileEntry);
+		return remove(dlFileEntry);
 	}
 
 	/**
@@ -7427,13 +7428,14 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
 	 * @param name the name
+	 * @return the document library file entry that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByG_F_N(long groupId, long folderId, String name)
+	public DLFileEntry removeByG_F_N(long groupId, long folderId, String name)
 		throws NoSuchFileEntryException, SystemException {
 		DLFileEntry dlFileEntry = findByG_F_N(groupId, folderId, name);
 
-		remove(dlFileEntry);
+		return remove(dlFileEntry);
 	}
 
 	/**
@@ -7442,13 +7444,14 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
 	 * @param title the title
+	 * @return the document library file entry that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByG_F_T(long groupId, long folderId, String title)
+	public DLFileEntry removeByG_F_T(long groupId, long folderId, String title)
 		throws NoSuchFileEntryException, SystemException {
 		DLFileEntry dlFileEntry = findByG_F_T(groupId, folderId, title);
 
-		remove(dlFileEntry);
+		return remove(dlFileEntry);
 	}
 
 	/**

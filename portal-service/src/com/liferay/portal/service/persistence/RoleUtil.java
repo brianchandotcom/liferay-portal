@@ -1150,12 +1150,14 @@ public class RoleUtil {
 	*
 	* @param companyId the company ID
 	* @param name the name
+	* @return the role that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByC_N(long companyId, java.lang.String name)
+	public static com.liferay.portal.model.Role removeByC_N(long companyId,
+		java.lang.String name)
 		throws com.liferay.portal.NoSuchRoleException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByC_N(companyId, name);
+		return getPersistence().removeByC_N(companyId, name);
 	}
 
 	/**
@@ -1176,13 +1178,14 @@ public class RoleUtil {
 	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class p k
+	* @return the role that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByC_C_C(long companyId, long classNameId,
-		long classPK)
+	public static com.liferay.portal.model.Role removeByC_C_C(long companyId,
+		long classNameId, long classPK)
 		throws com.liferay.portal.NoSuchRoleException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByC_C_C(companyId, classNameId, classPK);
+		return getPersistence().removeByC_C_C(companyId, classNameId, classPK);
 	}
 
 	/**

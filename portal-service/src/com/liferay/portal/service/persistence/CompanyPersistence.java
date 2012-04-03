@@ -347,9 +347,11 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	* Removes the company where webId = &#63; from the database.
 	*
 	* @param webId the web ID
+	* @return the company that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByWebId(java.lang.String webId)
+	public com.liferay.portal.model.Company removeByWebId(
+		java.lang.String webId)
 		throws com.liferay.portal.NoSuchCompanyException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -357,9 +359,10 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	* Removes the company where mx = &#63; from the database.
 	*
 	* @param mx the mx
+	* @return the company that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByMx(java.lang.String mx)
+	public com.liferay.portal.model.Company removeByMx(java.lang.String mx)
 		throws com.liferay.portal.NoSuchCompanyException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -367,9 +370,10 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	* Removes the company where logoId = &#63; from the database.
 	*
 	* @param logoId the logo ID
+	* @return the company that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByLogoId(long logoId)
+	public com.liferay.portal.model.Company removeByLogoId(long logoId)
 		throws com.liferay.portal.NoSuchCompanyException,
 			com.liferay.portal.kernel.exception.SystemException;
 

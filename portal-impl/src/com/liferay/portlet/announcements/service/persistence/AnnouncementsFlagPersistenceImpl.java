@@ -1177,13 +1177,14 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 * @param userId the user ID
 	 * @param entryId the entry ID
 	 * @param value the value
+	 * @return the announcements flag that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByU_E_V(long userId, long entryId, int value)
+	public AnnouncementsFlag removeByU_E_V(long userId, long entryId, int value)
 		throws NoSuchFlagException, SystemException {
 		AnnouncementsFlag announcementsFlag = findByU_E_V(userId, entryId, value);
 
-		remove(announcementsFlag);
+		return remove(announcementsFlag);
 	}
 
 	/**

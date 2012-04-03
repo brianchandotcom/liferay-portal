@@ -3626,13 +3626,14 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @return the d d m structure that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByUUID_G(String uuid, long groupId)
+	public DDMStructure removeByUUID_G(String uuid, long groupId)
 		throws NoSuchStructureException, SystemException {
 		DDMStructure ddmStructure = findByUUID_G(uuid, groupId);
 
-		remove(ddmStructure);
+		return remove(ddmStructure);
 	}
 
 	/**
@@ -3664,13 +3665,14 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 *
 	 * @param groupId the group ID
 	 * @param structureKey the structure key
+	 * @return the d d m structure that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByG_S(long groupId, String structureKey)
+	public DDMStructure removeByG_S(long groupId, String structureKey)
 		throws NoSuchStructureException, SystemException {
 		DDMStructure ddmStructure = findByG_S(groupId, structureKey);
 
-		remove(ddmStructure);
+		return remove(ddmStructure);
 	}
 
 	/**

@@ -2074,14 +2074,16 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	 * @param userId the user ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
+	 * @return the subscription that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByC_U_C_C(long companyId, long userId, long classNameId,
-		long classPK) throws NoSuchSubscriptionException, SystemException {
+	public Subscription removeByC_U_C_C(long companyId, long userId,
+		long classNameId, long classPK)
+		throws NoSuchSubscriptionException, SystemException {
 		Subscription subscription = findByC_U_C_C(companyId, userId,
 				classNameId, classPK);
 
-		remove(subscription);
+		return remove(subscription);
 	}
 
 	/**

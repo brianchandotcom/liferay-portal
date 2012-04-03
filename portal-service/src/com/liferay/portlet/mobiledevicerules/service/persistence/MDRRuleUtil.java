@@ -540,12 +540,14 @@ public class MDRRuleUtil {
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @return the m d r rule that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUUID_G(java.lang.String uuid, long groupId)
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRule removeByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.mobiledevicerules.NoSuchRuleException {
-		getPersistence().removeByUUID_G(uuid, groupId);
+		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
 	/**

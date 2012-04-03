@@ -508,9 +508,11 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @return the journal feed that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByUUID_G(java.lang.String uuid, long groupId)
+	public com.liferay.portlet.journal.model.JournalFeed removeByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.journal.NoSuchFeedException;
 
@@ -528,9 +530,11 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	*
 	* @param groupId the group ID
 	* @param feedId the feed ID
+	* @return the journal feed that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByG_F(long groupId, java.lang.String feedId)
+	public com.liferay.portlet.journal.model.JournalFeed removeByG_F(
+		long groupId, java.lang.String feedId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.journal.NoSuchFeedException;
 

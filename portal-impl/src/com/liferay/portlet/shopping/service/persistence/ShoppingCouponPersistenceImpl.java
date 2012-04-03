@@ -1146,13 +1146,14 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 * Removes the shopping coupon where code = &#63; from the database.
 	 *
 	 * @param code the code
+	 * @return the shopping coupon that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByCode(String code)
+	public ShoppingCoupon removeByCode(String code)
 		throws NoSuchCouponException, SystemException {
 		ShoppingCoupon shoppingCoupon = findByCode(code);
 
-		remove(shoppingCoupon);
+		return remove(shoppingCoupon);
 	}
 
 	/**

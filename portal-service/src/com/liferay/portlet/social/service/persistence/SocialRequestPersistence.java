@@ -1156,9 +1156,11 @@ public interface SocialRequestPersistence extends BasePersistence<SocialRequest>
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @return the social request that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByUUID_G(java.lang.String uuid, long groupId)
+	public com.liferay.portlet.social.model.SocialRequest removeByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.social.NoSuchRequestException;
 
@@ -1217,10 +1219,12 @@ public interface SocialRequestPersistence extends BasePersistence<SocialRequest>
 	* @param classPK the class p k
 	* @param type the type
 	* @param receiverUserId the receiver user ID
+	* @return the social request that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByU_C_C_T_R(long userId, long classNameId, long classPK,
-		int type, long receiverUserId)
+	public com.liferay.portlet.social.model.SocialRequest removeByU_C_C_T_R(
+		long userId, long classNameId, long classPK, int type,
+		long receiverUserId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.social.NoSuchRequestException;
 

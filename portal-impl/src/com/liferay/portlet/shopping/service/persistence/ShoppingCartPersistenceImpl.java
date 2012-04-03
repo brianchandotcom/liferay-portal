@@ -1533,13 +1533,14 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 	 *
 	 * @param groupId the group ID
 	 * @param userId the user ID
+	 * @return the shopping cart that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByG_U(long groupId, long userId)
+	public ShoppingCart removeByG_U(long groupId, long userId)
 		throws NoSuchCartException, SystemException {
 		ShoppingCart shoppingCart = findByG_U(groupId, userId);
 
-		remove(shoppingCart);
+		return remove(shoppingCart);
 	}
 
 	/**

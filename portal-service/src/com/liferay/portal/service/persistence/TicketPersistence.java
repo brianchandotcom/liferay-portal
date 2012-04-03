@@ -176,9 +176,10 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	* Removes the ticket where key = &#63; from the database.
 	*
 	* @param key the key
+	* @return the ticket that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByKey(java.lang.String key)
+	public com.liferay.portal.model.Ticket removeByKey(java.lang.String key)
 		throws com.liferay.portal.NoSuchTicketException,
 			com.liferay.portal.kernel.exception.SystemException;
 

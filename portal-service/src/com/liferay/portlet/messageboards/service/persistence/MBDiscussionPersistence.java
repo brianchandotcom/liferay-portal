@@ -340,9 +340,11 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* Removes the message boards discussion where threadId = &#63; from the database.
 	*
 	* @param threadId the thread ID
+	* @return the message boards discussion that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByThreadId(long threadId)
+	public com.liferay.portlet.messageboards.model.MBDiscussion removeByThreadId(
+		long threadId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.messageboards.NoSuchDiscussionException;
 
@@ -351,9 +353,11 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	*
 	* @param classNameId the class name ID
 	* @param classPK the class p k
+	* @return the message boards discussion that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByC_C(long classNameId, long classPK)
+	public com.liferay.portlet.messageboards.model.MBDiscussion removeByC_C(
+		long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.messageboards.NoSuchDiscussionException;
 

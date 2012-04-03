@@ -2194,12 +2194,14 @@ public class DLFileEntryUtil {
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @return the document library file entry that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUUID_G(java.lang.String uuid, long groupId)
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntry removeByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
-		getPersistence().removeByUUID_G(uuid, groupId);
+		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -2278,13 +2280,14 @@ public class DLFileEntryUtil {
 	* @param groupId the group ID
 	* @param folderId the folder ID
 	* @param name the name
+	* @return the document library file entry that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByG_F_N(long groupId, long folderId,
-		java.lang.String name)
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntry removeByG_F_N(
+		long groupId, long folderId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
-		getPersistence().removeByG_F_N(groupId, folderId, name);
+		return getPersistence().removeByG_F_N(groupId, folderId, name);
 	}
 
 	/**
@@ -2293,13 +2296,14 @@ public class DLFileEntryUtil {
 	* @param groupId the group ID
 	* @param folderId the folder ID
 	* @param title the title
+	* @return the document library file entry that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByG_F_T(long groupId, long folderId,
-		java.lang.String title)
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntry removeByG_F_T(
+		long groupId, long folderId, java.lang.String title)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
-		getPersistence().removeByG_F_T(groupId, folderId, title);
+		return getPersistence().removeByG_F_T(groupId, folderId, title);
 	}
 
 	/**

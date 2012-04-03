@@ -1205,14 +1205,16 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	 *
 	 * @param buildNamespace the build namespace
 	 * @param buildNumber the build number
+	 * @return the service component that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByBNS_BNU(String buildNamespace, long buildNumber)
+	public ServiceComponent removeByBNS_BNU(String buildNamespace,
+		long buildNumber)
 		throws NoSuchServiceComponentException, SystemException {
 		ServiceComponent serviceComponent = findByBNS_BNU(buildNamespace,
 				buildNumber);
 
-		remove(serviceComponent);
+		return remove(serviceComponent);
 	}
 
 	/**

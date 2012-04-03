@@ -418,9 +418,11 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	*
 	* @param userId the user ID
 	* @param threadId the thread ID
+	* @return the message boards thread flag that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByU_T(long userId, long threadId)
+	public com.liferay.portlet.messageboards.model.MBThreadFlag removeByU_T(
+		long userId, long threadId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.messageboards.NoSuchThreadFlagException;
 

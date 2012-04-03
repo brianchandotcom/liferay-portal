@@ -1104,12 +1104,14 @@ public class UserUtil {
 	* Removes the user where contactId = &#63; from the database.
 	*
 	* @param contactId the contact ID
+	* @return the user that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByContactId(long contactId)
+	public static com.liferay.portal.model.User removeByContactId(
+		long contactId)
 		throws com.liferay.portal.NoSuchUserException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByContactId(contactId);
+		return getPersistence().removeByContactId(contactId);
 	}
 
 	/**
@@ -1127,12 +1129,14 @@ public class UserUtil {
 	* Removes the user where portraitId = &#63; from the database.
 	*
 	* @param portraitId the portrait ID
+	* @return the user that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByPortraitId(long portraitId)
+	public static com.liferay.portal.model.User removeByPortraitId(
+		long portraitId)
 		throws com.liferay.portal.NoSuchUserException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByPortraitId(portraitId);
+		return getPersistence().removeByPortraitId(portraitId);
 	}
 
 	/**
@@ -1140,12 +1144,14 @@ public class UserUtil {
 	*
 	* @param companyId the company ID
 	* @param userId the user ID
+	* @return the user that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByC_U(long companyId, long userId)
+	public static com.liferay.portal.model.User removeByC_U(long companyId,
+		long userId)
 		throws com.liferay.portal.NoSuchUserException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByC_U(companyId, userId);
+		return getPersistence().removeByC_U(companyId, userId);
 	}
 
 	/**
@@ -1153,12 +1159,14 @@ public class UserUtil {
 	*
 	* @param companyId the company ID
 	* @param defaultUser the default user
+	* @return the user that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByC_DU(long companyId, boolean defaultUser)
+	public static com.liferay.portal.model.User removeByC_DU(long companyId,
+		boolean defaultUser)
 		throws com.liferay.portal.NoSuchUserException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByC_DU(companyId, defaultUser);
+		return getPersistence().removeByC_DU(companyId, defaultUser);
 	}
 
 	/**
@@ -1166,12 +1174,14 @@ public class UserUtil {
 	*
 	* @param companyId the company ID
 	* @param screenName the screen name
+	* @return the user that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByC_SN(long companyId, java.lang.String screenName)
+	public static com.liferay.portal.model.User removeByC_SN(long companyId,
+		java.lang.String screenName)
 		throws com.liferay.portal.NoSuchUserException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByC_SN(companyId, screenName);
+		return getPersistence().removeByC_SN(companyId, screenName);
 	}
 
 	/**
@@ -1179,13 +1189,14 @@ public class UserUtil {
 	*
 	* @param companyId the company ID
 	* @param emailAddress the email address
+	* @return the user that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByC_EA(long companyId,
+	public static com.liferay.portal.model.User removeByC_EA(long companyId,
 		java.lang.String emailAddress)
 		throws com.liferay.portal.NoSuchUserException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByC_EA(companyId, emailAddress);
+		return getPersistence().removeByC_EA(companyId, emailAddress);
 	}
 
 	/**
@@ -1193,12 +1204,14 @@ public class UserUtil {
 	*
 	* @param companyId the company ID
 	* @param facebookId the facebook ID
+	* @return the user that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByC_FID(long companyId, long facebookId)
+	public static com.liferay.portal.model.User removeByC_FID(long companyId,
+		long facebookId)
 		throws com.liferay.portal.NoSuchUserException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByC_FID(companyId, facebookId);
+		return getPersistence().removeByC_FID(companyId, facebookId);
 	}
 
 	/**
@@ -1206,12 +1219,14 @@ public class UserUtil {
 	*
 	* @param companyId the company ID
 	* @param openId the open ID
+	* @return the user that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByC_O(long companyId, java.lang.String openId)
+	public static com.liferay.portal.model.User removeByC_O(long companyId,
+		java.lang.String openId)
 		throws com.liferay.portal.NoSuchUserException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByC_O(companyId, openId);
+		return getPersistence().removeByC_O(companyId, openId);
 	}
 
 	/**

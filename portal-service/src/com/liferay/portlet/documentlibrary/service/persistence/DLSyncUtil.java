@@ -425,12 +425,14 @@ public class DLSyncUtil {
 	* Removes the d l sync where fileId = &#63; from the database.
 	*
 	* @param fileId the file ID
+	* @return the d l sync that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByFileId(long fileId)
+	public static com.liferay.portlet.documentlibrary.model.DLSync removeByFileId(
+		long fileId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.documentlibrary.NoSuchSyncException {
-		getPersistence().removeByFileId(fileId);
+		return getPersistence().removeByFileId(fileId);
 	}
 
 	/**

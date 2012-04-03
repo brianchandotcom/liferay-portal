@@ -973,13 +973,14 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	 *
 	 * @param companyId the company ID
 	 * @param defaultPolicy the default policy
+	 * @return the password policy that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByC_DP(long companyId, boolean defaultPolicy)
+	public PasswordPolicy removeByC_DP(long companyId, boolean defaultPolicy)
 		throws NoSuchPasswordPolicyException, SystemException {
 		PasswordPolicy passwordPolicy = findByC_DP(companyId, defaultPolicy);
 
-		remove(passwordPolicy);
+		return remove(passwordPolicy);
 	}
 
 	/**
@@ -987,13 +988,14 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	 *
 	 * @param companyId the company ID
 	 * @param name the name
+	 * @return the password policy that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByC_N(long companyId, String name)
+	public PasswordPolicy removeByC_N(long companyId, String name)
 		throws NoSuchPasswordPolicyException, SystemException {
 		PasswordPolicy passwordPolicy = findByC_N(companyId, name);
 
-		remove(passwordPolicy);
+		return remove(passwordPolicy);
 	}
 
 	/**

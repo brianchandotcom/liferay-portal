@@ -611,9 +611,11 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @return the wiki node that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByUUID_G(java.lang.String uuid, long groupId)
+	public com.liferay.portlet.wiki.model.WikiNode removeByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.wiki.NoSuchNodeException;
 
@@ -640,9 +642,11 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*
 	* @param groupId the group ID
 	* @param name the name
+	* @return the wiki node that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByG_N(long groupId, java.lang.String name)
+	public com.liferay.portlet.wiki.model.WikiNode removeByG_N(long groupId,
+		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.wiki.NoSuchNodeException;
 

@@ -305,9 +305,11 @@ public interface WikiPageResourcePersistence extends BasePersistence<WikiPageRes
 	*
 	* @param nodeId the node ID
 	* @param title the title
+	* @return the wiki page resource that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByN_T(long nodeId, java.lang.String title)
+	public com.liferay.portlet.wiki.model.WikiPageResource removeByN_T(
+		long nodeId, java.lang.String title)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.wiki.NoSuchPageResourceException;
 

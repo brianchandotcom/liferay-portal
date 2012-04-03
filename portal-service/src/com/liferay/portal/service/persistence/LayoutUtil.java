@@ -1713,12 +1713,14 @@ public class LayoutUtil {
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @return the layout that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUUID_G(java.lang.String uuid, long groupId)
+	public static com.liferay.portal.model.Layout removeByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.NoSuchLayoutException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByUUID_G(uuid, groupId);
+		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -1747,12 +1749,14 @@ public class LayoutUtil {
 	* Removes the layout where iconImageId = &#63; from the database.
 	*
 	* @param iconImageId the icon image ID
+	* @return the layout that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByIconImageId(long iconImageId)
+	public static com.liferay.portal.model.Layout removeByIconImageId(
+		long iconImageId)
 		throws com.liferay.portal.NoSuchLayoutException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByIconImageId(iconImageId);
+		return getPersistence().removeByIconImageId(iconImageId);
 	}
 
 	/**
@@ -1785,13 +1789,14 @@ public class LayoutUtil {
 	* @param groupId the group ID
 	* @param privateLayout the private layout
 	* @param layoutId the layout ID
+	* @return the layout that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByG_P_L(long groupId, boolean privateLayout,
-		long layoutId)
+	public static com.liferay.portal.model.Layout removeByG_P_L(long groupId,
+		boolean privateLayout, long layoutId)
 		throws com.liferay.portal.NoSuchLayoutException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByG_P_L(groupId, privateLayout, layoutId);
+		return getPersistence().removeByG_P_L(groupId, privateLayout, layoutId);
 	}
 
 	/**
@@ -1814,13 +1819,15 @@ public class LayoutUtil {
 	* @param groupId the group ID
 	* @param privateLayout the private layout
 	* @param friendlyURL the friendly u r l
+	* @return the layout that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByG_P_F(long groupId, boolean privateLayout,
-		java.lang.String friendlyURL)
+	public static com.liferay.portal.model.Layout removeByG_P_F(long groupId,
+		boolean privateLayout, java.lang.String friendlyURL)
 		throws com.liferay.portal.NoSuchLayoutException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByG_P_F(groupId, privateLayout, friendlyURL);
+		return getPersistence()
+				   .removeByG_P_F(groupId, privateLayout, friendlyURL);
 	}
 
 	/**
@@ -1843,14 +1850,17 @@ public class LayoutUtil {
 	* @param groupId the group ID
 	* @param privateLayout the private layout
 	* @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	* @return the layout that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByG_P_SPLU(long groupId, boolean privateLayout,
+	public static com.liferay.portal.model.Layout removeByG_P_SPLU(
+		long groupId, boolean privateLayout,
 		java.lang.String sourcePrototypeLayoutUuid)
 		throws com.liferay.portal.NoSuchLayoutException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getPersistence()
-			.removeByG_P_SPLU(groupId, privateLayout, sourcePrototypeLayoutUuid);
+		return getPersistence()
+				   .removeByG_P_SPLU(groupId, privateLayout,
+			sourcePrototypeLayoutUuid);
 	}
 
 	/**

@@ -15541,13 +15541,14 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @return the journal article that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByUUID_G(String uuid, long groupId)
+	public JournalArticle removeByUUID_G(String uuid, long groupId)
 		throws NoSuchArticleException, SystemException {
 		JournalArticle journalArticle = findByUUID_G(uuid, groupId);
 
-		remove(journalArticle);
+		return remove(journalArticle);
 	}
 
 	/**
@@ -15774,14 +15775,15 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param structureId the structure ID
+	 * @return the journal article that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByG_C_S(long groupId, long classNameId, String structureId)
-		throws NoSuchArticleException, SystemException {
+	public JournalArticle removeByG_C_S(long groupId, long classNameId,
+		String structureId) throws NoSuchArticleException, SystemException {
 		JournalArticle journalArticle = findByG_C_S(groupId, classNameId,
 				structureId);
 
-		remove(journalArticle);
+		return remove(journalArticle);
 	}
 
 	/**
@@ -15822,13 +15824,14 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	 * @param groupId the group ID
 	 * @param articleId the article ID
 	 * @param version the version
+	 * @return the journal article that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByG_A_V(long groupId, String articleId, double version)
-		throws NoSuchArticleException, SystemException {
+	public JournalArticle removeByG_A_V(long groupId, String articleId,
+		double version) throws NoSuchArticleException, SystemException {
 		JournalArticle journalArticle = findByG_A_V(groupId, articleId, version);
 
-		remove(journalArticle);
+		return remove(journalArticle);
 	}
 
 	/**

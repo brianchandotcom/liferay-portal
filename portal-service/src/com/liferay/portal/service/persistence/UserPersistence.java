@@ -883,9 +883,10 @@ public interface UserPersistence extends BasePersistence<User> {
 	* Removes the user where contactId = &#63; from the database.
 	*
 	* @param contactId the contact ID
+	* @return the user that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByContactId(long contactId)
+	public com.liferay.portal.model.User removeByContactId(long contactId)
 		throws com.liferay.portal.NoSuchUserException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -902,9 +903,10 @@ public interface UserPersistence extends BasePersistence<User> {
 	* Removes the user where portraitId = &#63; from the database.
 	*
 	* @param portraitId the portrait ID
+	* @return the user that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByPortraitId(long portraitId)
+	public com.liferay.portal.model.User removeByPortraitId(long portraitId)
 		throws com.liferay.portal.NoSuchUserException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -913,9 +915,10 @@ public interface UserPersistence extends BasePersistence<User> {
 	*
 	* @param companyId the company ID
 	* @param userId the user ID
+	* @return the user that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByC_U(long companyId, long userId)
+	public com.liferay.portal.model.User removeByC_U(long companyId, long userId)
 		throws com.liferay.portal.NoSuchUserException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -924,9 +927,11 @@ public interface UserPersistence extends BasePersistence<User> {
 	*
 	* @param companyId the company ID
 	* @param defaultUser the default user
+	* @return the user that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByC_DU(long companyId, boolean defaultUser)
+	public com.liferay.portal.model.User removeByC_DU(long companyId,
+		boolean defaultUser)
 		throws com.liferay.portal.NoSuchUserException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -935,9 +940,11 @@ public interface UserPersistence extends BasePersistence<User> {
 	*
 	* @param companyId the company ID
 	* @param screenName the screen name
+	* @return the user that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByC_SN(long companyId, java.lang.String screenName)
+	public com.liferay.portal.model.User removeByC_SN(long companyId,
+		java.lang.String screenName)
 		throws com.liferay.portal.NoSuchUserException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -946,9 +953,11 @@ public interface UserPersistence extends BasePersistence<User> {
 	*
 	* @param companyId the company ID
 	* @param emailAddress the email address
+	* @return the user that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByC_EA(long companyId, java.lang.String emailAddress)
+	public com.liferay.portal.model.User removeByC_EA(long companyId,
+		java.lang.String emailAddress)
 		throws com.liferay.portal.NoSuchUserException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -957,9 +966,11 @@ public interface UserPersistence extends BasePersistence<User> {
 	*
 	* @param companyId the company ID
 	* @param facebookId the facebook ID
+	* @return the user that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByC_FID(long companyId, long facebookId)
+	public com.liferay.portal.model.User removeByC_FID(long companyId,
+		long facebookId)
 		throws com.liferay.portal.NoSuchUserException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -968,9 +979,11 @@ public interface UserPersistence extends BasePersistence<User> {
 	*
 	* @param companyId the company ID
 	* @param openId the open ID
+	* @return the user that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByC_O(long companyId, java.lang.String openId)
+	public com.liferay.portal.model.User removeByC_O(long companyId,
+		java.lang.String openId)
 		throws com.liferay.portal.NoSuchUserException,
 			com.liferay.portal.kernel.exception.SystemException;
 

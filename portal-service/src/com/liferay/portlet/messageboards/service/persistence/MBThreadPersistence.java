@@ -1901,9 +1901,11 @@ public interface MBThreadPersistence extends BasePersistence<MBThread> {
 	* Removes the message boards thread where rootMessageId = &#63; from the database.
 	*
 	* @param rootMessageId the root message ID
+	* @return the message boards thread that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByRootMessageId(long rootMessageId)
+	public com.liferay.portlet.messageboards.model.MBThread removeByRootMessageId(
+		long rootMessageId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.messageboards.NoSuchThreadException;
 

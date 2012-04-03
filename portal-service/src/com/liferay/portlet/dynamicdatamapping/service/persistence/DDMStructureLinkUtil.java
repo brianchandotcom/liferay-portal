@@ -541,12 +541,14 @@ public class DDMStructureLinkUtil {
 	* Removes the d d m structure link where classPK = &#63; from the database.
 	*
 	* @param classPK the class p k
+	* @return the d d m structure link that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByClassPK(long classPK)
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink removeByClassPK(
+		long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException {
-		getPersistence().removeByClassPK(classPK);
+		return getPersistence().removeByClassPK(classPK);
 	}
 
 	/**

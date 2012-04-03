@@ -1589,13 +1589,14 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 	 * @param companyId the company ID
 	 * @param name the name
 	 * @param scope the scope
+	 * @return the resource code that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByC_N_S(long companyId, String name, int scope)
+	public ResourceCode removeByC_N_S(long companyId, String name, int scope)
 		throws NoSuchResourceCodeException, SystemException {
 		ResourceCode resourceCode = findByC_N_S(companyId, name, scope);
 
-		remove(resourceCode);
+		return remove(resourceCode);
 	}
 
 	/**

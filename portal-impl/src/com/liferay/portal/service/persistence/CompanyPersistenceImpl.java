@@ -1439,39 +1439,42 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 * Removes the company where webId = &#63; from the database.
 	 *
 	 * @param webId the web ID
+	 * @return the company that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByWebId(String webId)
+	public Company removeByWebId(String webId)
 		throws NoSuchCompanyException, SystemException {
 		Company company = findByWebId(webId);
 
-		remove(company);
+		return remove(company);
 	}
 
 	/**
 	 * Removes the company where mx = &#63; from the database.
 	 *
 	 * @param mx the mx
+	 * @return the company that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByMx(String mx)
+	public Company removeByMx(String mx)
 		throws NoSuchCompanyException, SystemException {
 		Company company = findByMx(mx);
 
-		remove(company);
+		return remove(company);
 	}
 
 	/**
 	 * Removes the company where logoId = &#63; from the database.
 	 *
 	 * @param logoId the logo ID
+	 * @return the company that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByLogoId(long logoId)
+	public Company removeByLogoId(long logoId)
 		throws NoSuchCompanyException, SystemException {
 		Company company = findByLogoId(logoId);
 
-		remove(company);
+		return remove(company);
 	}
 
 	/**

@@ -2623,15 +2623,16 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 * @param ownerType the owner type
 	 * @param plid the plid
 	 * @param portletId the portlet ID
+	 * @return the portlet preferences that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByO_O_P_P(long ownerId, int ownerType, long plid,
-		String portletId)
+	public PortletPreferences removeByO_O_P_P(long ownerId, int ownerType,
+		long plid, String portletId)
 		throws NoSuchPortletPreferencesException, SystemException {
 		PortletPreferences portletPreferences = findByO_O_P_P(ownerId,
 				ownerType, plid, portletId);
 
-		remove(portletPreferences);
+		return remove(portletPreferences);
 	}
 
 	/**

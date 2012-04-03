@@ -7645,13 +7645,14 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 * Removes the message boards thread where rootMessageId = &#63; from the database.
 	 *
 	 * @param rootMessageId the root message ID
+	 * @return the message boards thread that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByRootMessageId(long rootMessageId)
+	public MBThread removeByRootMessageId(long rootMessageId)
 		throws NoSuchThreadException, SystemException {
 		MBThread mbThread = findByRootMessageId(rootMessageId);
 
-		remove(mbThread);
+		return remove(mbThread);
 	}
 
 	/**

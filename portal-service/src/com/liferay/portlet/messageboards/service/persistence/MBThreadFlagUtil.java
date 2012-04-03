@@ -551,12 +551,14 @@ public class MBThreadFlagUtil {
 	*
 	* @param userId the user ID
 	* @param threadId the thread ID
+	* @return the message boards thread flag that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByU_T(long userId, long threadId)
+	public static com.liferay.portlet.messageboards.model.MBThreadFlag removeByU_T(
+		long userId, long threadId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.messageboards.NoSuchThreadFlagException {
-		getPersistence().removeByU_T(userId, threadId);
+		return getPersistence().removeByU_T(userId, threadId);
 	}
 
 	/**

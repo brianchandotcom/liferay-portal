@@ -551,12 +551,14 @@ public class AssetTagStatsUtil {
 	*
 	* @param tagId the tag ID
 	* @param classNameId the class name ID
+	* @return the asset tag stats that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByT_C(long tagId, long classNameId)
+	public static com.liferay.portlet.asset.model.AssetTagStats removeByT_C(
+		long tagId, long classNameId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.asset.NoSuchTagStatsException {
-		getPersistence().removeByT_C(tagId, classNameId);
+		return getPersistence().removeByT_C(tagId, classNameId);
 	}
 
 	/**

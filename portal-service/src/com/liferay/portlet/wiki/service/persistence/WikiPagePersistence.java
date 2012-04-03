@@ -2088,9 +2088,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @return the wiki page that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByUUID_G(java.lang.String uuid, long groupId)
+	public com.liferay.portlet.wiki.model.WikiPage removeByUUID_G(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.wiki.NoSuchPageException;
 
@@ -2178,9 +2180,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param resourcePrimKey the resource prim key
 	* @param nodeId the node ID
 	* @param version the version
+	* @return the wiki page that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByR_N_V(long resourcePrimKey, long nodeId, double version)
+	public com.liferay.portlet.wiki.model.WikiPage removeByR_N_V(
+		long resourcePrimKey, long nodeId, double version)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.wiki.NoSuchPageException;
 
@@ -2212,10 +2216,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param title the title
 	* @param version the version
+	* @return the wiki page that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByN_T_V(long nodeId, java.lang.String title,
-		double version)
+	public com.liferay.portlet.wiki.model.WikiPage removeByN_T_V(long nodeId,
+		java.lang.String title, double version)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.wiki.NoSuchPageException;
 

@@ -2875,13 +2875,14 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 * @param entryId1 the entry id1
 	 * @param entryId2 the entry id2
 	 * @param type the type
+	 * @return the asset link that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByE_E_T(long entryId1, long entryId2, int type)
+	public AssetLink removeByE_E_T(long entryId1, long entryId2, int type)
 		throws NoSuchLinkException, SystemException {
 		AssetLink assetLink = findByE_E_T(entryId1, entryId2, type);
 
-		remove(assetLink);
+		return remove(assetLink);
 	}
 
 	/**

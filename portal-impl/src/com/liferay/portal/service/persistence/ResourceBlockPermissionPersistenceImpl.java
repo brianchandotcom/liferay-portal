@@ -1162,14 +1162,15 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	 *
 	 * @param resourceBlockId the resource block ID
 	 * @param roleId the role ID
+	 * @return the resource block permission that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByR_R(long resourceBlockId, long roleId)
+	public ResourceBlockPermission removeByR_R(long resourceBlockId, long roleId)
 		throws NoSuchResourceBlockPermissionException, SystemException {
 		ResourceBlockPermission resourceBlockPermission = findByR_R(resourceBlockId,
 				roleId);
 
-		remove(resourceBlockPermission);
+		return remove(resourceBlockPermission);
 	}
 
 	/**

@@ -14986,13 +14986,14 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @return the message-boards message that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByUUID_G(String uuid, long groupId)
+	public MBMessage removeByUUID_G(String uuid, long groupId)
 		throws NoSuchMessageException, SystemException {
 		MBMessage mbMessage = findByUUID_G(uuid, groupId);
 
-		remove(mbMessage);
+		return remove(mbMessage);
 	}
 
 	/**

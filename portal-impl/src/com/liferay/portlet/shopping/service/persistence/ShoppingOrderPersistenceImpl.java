@@ -2529,26 +2529,28 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	 * Removes the shopping order where number = &#63; from the database.
 	 *
 	 * @param number the number
+	 * @return the shopping order that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByNumber(String number)
+	public ShoppingOrder removeByNumber(String number)
 		throws NoSuchOrderException, SystemException {
 		ShoppingOrder shoppingOrder = findByNumber(number);
 
-		remove(shoppingOrder);
+		return remove(shoppingOrder);
 	}
 
 	/**
 	 * Removes the shopping order where ppTxnId = &#63; from the database.
 	 *
 	 * @param ppTxnId the pp txn ID
+	 * @return the shopping order that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByPPTxnId(String ppTxnId)
+	public ShoppingOrder removeByPPTxnId(String ppTxnId)
 		throws NoSuchOrderException, SystemException {
 		ShoppingOrder shoppingOrder = findByPPTxnId(ppTxnId);
 
-		remove(shoppingOrder);
+		return remove(shoppingOrder);
 	}
 
 	/**

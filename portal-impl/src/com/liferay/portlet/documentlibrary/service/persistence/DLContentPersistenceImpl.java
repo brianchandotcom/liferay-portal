@@ -2261,14 +2261,16 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 	 * @param repositoryId the repository ID
 	 * @param path the path
 	 * @param version the version
+	 * @return the document library content that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByC_R_P_V(long companyId, long repositoryId, String path,
-		String version) throws NoSuchContentException, SystemException {
+	public DLContent removeByC_R_P_V(long companyId, long repositoryId,
+		String path, String version)
+		throws NoSuchContentException, SystemException {
 		DLContent dlContent = findByC_R_P_V(companyId, repositoryId, path,
 				version);
 
-		remove(dlContent);
+		return remove(dlContent);
 	}
 
 	/**

@@ -45,10 +45,8 @@ public class User_ReadMessageBoardThreadSiteTest extends BaseTestCase {
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Root Thread"),
-			selenium.getText("link=Root Thread"));
-		selenium.clickAt("link=Root Thread",
-			RuntimeVariables.replace("Root Thread"));
+		selenium.clickAt("link=MB Thread Message Subject",
+			RuntimeVariables.replace("MB Thread Message Subject"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 	}

@@ -55,6 +55,7 @@ public class ViewUserStatisticsAddMessageBoardThreadTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Participation Score: 5"),
 			selenium.getText("//div[@class='participation-score']"));
 		assertEquals(RuntimeVariables.replace("User's Message Board Posts: 1"),
-			selenium.getText("//td/div[3]"));
+			selenium.getText(
+				"//div[@class='social-counter-user.message-posts']"));
 	}
 }

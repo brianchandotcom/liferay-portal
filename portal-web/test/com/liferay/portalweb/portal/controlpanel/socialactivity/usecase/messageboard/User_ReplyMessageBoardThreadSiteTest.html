@@ -25,28 +25,68 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>link=Root Thread</td>
-	<td>Root Thread</td>
+	<td>//td[1]/a</td>
+	<td>MB Thread Message Subject</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Root Thread</td>
-	<td>Root Thread</td>
+	<td>//td[1]/a</td>
+	<td>MB Thread Message Subject</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[@id='_19_xnby']/span</td>
+	<td>//span[.='Reply']</td>
 	<td>Reply</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//a[@id='_19_xnby']/span</td>
+	<td>clickAtAndWait</td>
+	<td>//span[.='Reply']</td>
 	<td>Reply</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>waitForElementPresent</td>
+	<td>//textarea[@id='_19_editor' and @style='display: none;']</td>
+	<td>Text Area</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//a[@class='cke_button_source cke_on']</td>
+	<td>Source Button On</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//td[@id='cke_contents__19_editor']/textarea</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//td[@id='cke_contents__19_editor']/textarea</td>
+	<td>MB Thread Message Reply Body</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//textarea[@id='_19_editor' and @style='display: none;']</td>
+	<td>Text Area</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -59,14 +99,9 @@
 	<td>CK Editor</td>
 </tr>
 <tr>
-	<td>type</td>
+	<td>waitForText</td>
 	<td>//body</td>
-	<td>Root Thread Reply</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>MB Thread Message Reply Body</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
@@ -74,12 +109,7 @@
 	<td>top</td>
 </tr>
 <tr>
-	<td>selectWindow</td>
-	<td>null</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
+	<td>clickAtAndWait</td>
 	<td>//input[@value='Publish']</td>
 	<td>Publish</td>
 </tr>
@@ -90,10 +120,14 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//h1[@class='header-title']/span</td>
-	<td>RE: Root Thread</td>
+	<td>xPath=(//div[@class='subject'])[2]/a/strong</td>
+	<td>RE: MB Thread Message Subject</td>
 </tr>
-
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='thread-body'])[2]</td>
+	<td>MB Thread Message Reply Body</td>
+</tr>
 </tbody>
 </table>
 </body>

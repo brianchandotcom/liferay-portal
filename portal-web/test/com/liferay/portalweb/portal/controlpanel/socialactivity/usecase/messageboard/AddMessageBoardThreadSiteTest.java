@@ -49,9 +49,87 @@ public class AddMessageBoardThreadSiteTest extends BaseTestCase {
 			RuntimeVariables.replace("Post New Thread"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		Thread.sleep(5000);
 		selenium.type("//input[@id='_19_subject']",
-			RuntimeVariables.replace("Root Thread"));
+			RuntimeVariables.replace("MB Thread Message Subject"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//textarea[@id='_19_editor' and @style='display: none;']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Source"),
+			selenium.getText("//span[.='Source']"));
+		selenium.clickAt("//span[.='Source']",
+			RuntimeVariables.replace("Source"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//a[@class='cke_button_source cke_on']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//td[@id='cke_contents__19_editor']/textarea")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.type("//td[@id='cke_contents__19_editor']/textarea",
+			RuntimeVariables.replace("MB Thread Message Body"));
+		assertEquals(RuntimeVariables.replace("Source"),
+			selenium.getText("//span[.='Source']"));
+		selenium.clickAt("//span[.='Source']",
+			RuntimeVariables.replace("Source"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//textarea[@id='_19_editor' and @style='display: none;']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -71,16 +149,6 @@ public class AddMessageBoardThreadSiteTest extends BaseTestCase {
 		}
 
 		selenium.selectFrame("//td[@id='cke_contents__19_editor']/iframe");
-		selenium.type("//body", RuntimeVariables.replace("Root Thread Content"));
-		Thread.sleep(5000);
-		selenium.selectFrame("relative=top");
-		selenium.selectWindow("null");
-		assertTrue(selenium.isChecked("//input[@id='_19_subscribeCheckbox']"));
-		selenium.clickAt("//input[@id='_19_subscribeCheckbox']",
-			RuntimeVariables.replace("Subscribe"));
-		assertFalse(selenium.isChecked("//input[@id='_19_subscribeCheckbox']"));
-		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace("Publish"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -88,10 +156,8 @@ public class AddMessageBoardThreadSiteTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace(
-							"Your request completed successfully.")
-										.equals(selenium.getText(
-								"//div[@class='portlet-msg-success']"))) {
+				if (RuntimeVariables.replace("MB Thread Message Body")
+										.equals(selenium.getText("//body"))) {
 					break;
 				}
 			}
@@ -101,12 +167,21 @@ public class AddMessageBoardThreadSiteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		selenium.selectFrame("relative=top");
+		assertTrue(selenium.isChecked("//input[@id='_19_subscribeCheckbox']"));
+		selenium.clickAt("//input[@id='_19_subscribeCheckbox']",
+			RuntimeVariables.replace("Subscribe"));
+		assertFalse(selenium.isChecked("//input[@id='_19_subscribeCheckbox']"));
+		selenium.clickAt("//input[@value='Publish']",
+			RuntimeVariables.replace("Publish"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Root Thread"),
+		assertEquals(RuntimeVariables.replace("MB Thread Message Subject"),
 			selenium.getText("//h1[@class='header-title']/span"));
-		assertEquals(RuntimeVariables.replace("Root Thread Content"),
+		assertEquals(RuntimeVariables.replace("MB Thread Message Body"),
 			selenium.getText("//div[@class='thread-body']"));
 	}
 }

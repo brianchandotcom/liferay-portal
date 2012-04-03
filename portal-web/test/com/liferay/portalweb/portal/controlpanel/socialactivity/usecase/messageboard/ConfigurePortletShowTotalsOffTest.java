@@ -50,6 +50,28 @@ public class ConfigurePortletShowTotalsOffTest extends BaseTestCase {
 					RuntimeVariables.replace("User Statistics Test Page"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
+				assertEquals(RuntimeVariables.replace("User Statistics"),
+					selenium.getText("//span[@class='portlet-title-text']"));
+				selenium.clickAt("//span[@class='portlet-title-text']",
+					RuntimeVariables.replace("User Statistics"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isElementPresent(
+									"//div[@class='yui3-dd-shim']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
 				assertEquals(RuntimeVariables.replace("Options"),
 					selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 				selenium.clickAt("//span[@title='Options']/ul/li/strong/a",

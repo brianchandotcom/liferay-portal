@@ -15,14 +15,15 @@
 package com.liferay.portalweb.portal.controlpanel.socialactivity.usecase.messageboard;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.controlpanel.sites.site.addmemberssiteuser.AddMembersSiteUserTest;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.AddSiteTest;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.TearDownSiteTest;
 import com.liferay.portalweb.portal.controlpanel.sites.siteportlet.addportletsite.AddPageMBSiteTest;
 import com.liferay.portalweb.portal.controlpanel.sites.siteportlet.addportletsite.AddPortletMBSiteTest;
+import com.liferay.portalweb.portal.controlpanel.socialactivity.usecase.blogsentry.User_ViewUserStatisticsUnsubscribeBlogsEntry2Test;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUserTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.TearDownUserTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.edituserpassword.EditUserPasswordTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.editusersite.EditUserSiteTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.User_SignInTest;
@@ -52,7 +53,7 @@ public class MessageBoardsMessageTests extends BaseTestSuite {
 		testSuite.addTestSuite(ViewUserStatisticsAddMessageBoardThreadTest.class);
 		testSuite.addTestSuite(AddUserTest.class);
 		testSuite.addTestSuite(EditUserPasswordTest.class);
-		testSuite.addTestSuite(AddMembersSiteUserTest.class);
+		testSuite.addTestSuite(EditUserSiteTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(User_SignInTest.class);
 		testSuite.addTestSuite(User_ReadMessageBoardThreadSiteTest.class);
@@ -63,6 +64,8 @@ public class MessageBoardsMessageTests extends BaseTestSuite {
 		testSuite.addTestSuite(User_ViewUserStatisticsVoteMessageBoardThreadTest.class);
 		testSuite.addTestSuite(User_ReplyMessageBoardThreadSiteTest.class);
 		testSuite.addTestSuite(User_ViewUserStatisticsReplyMessageBoardThreadTest.class);
+		testSuite.addTestSuite(User_UnsubscribeMessageBoardThreadSiteTest.class);
+		testSuite.addTestSuite(User_ViewUserStatisticsUnsubscribeBlogsEntry2Test.class);
 		testSuite.addTestSuite(User_SignOutTest.class);
 		testSuite.addTestSuite(SignInTest.class);
 		testSuite.addTestSuite(TearDownSiteTest.class);

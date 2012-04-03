@@ -46,17 +46,116 @@ public class User_SubscribeMessageBoardThreadSiteTest extends BaseTestCase {
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (!selenium.isElementPresent("//body[contains(@id,'aui')]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("link=Actions"));
-		selenium.clickAt("link=Actions", RuntimeVariables.replace("Actions"));
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+			RuntimeVariables.replace("Actions"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//a[@id='_19_mbThreadsSearchContainer_1_menu_subscribe']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("Subscribe"),
-			selenium.getText("link=Subscribe"));
-		selenium.clickAt("link=Subscribe", RuntimeVariables.replace("Subscribe"));
-		Thread.sleep(5000);
+			selenium.getText(
+				"//a[@id='_19_mbThreadsSearchContainer_1_menu_subscribe']"));
+		selenium.clickAt("//a[@id='_19_mbThreadsSearchContainer_1_menu_subscribe']",
+			RuntimeVariables.replace("Subscribe"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		selenium.open("/web/site-name/");
+		loadRequiredJavaScriptModules();
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=Message Boards Test Page")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.clickAt("link=Message Boards Test Page",
+			RuntimeVariables.replace("Message Boards Test Page"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (!selenium.isElementPresent("//body[contains(@id,'aui')]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("link=Actions"));
-		selenium.clickAt("link=Actions", RuntimeVariables.replace("Actions"));
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+			RuntimeVariables.replace("Actions"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//a[@id='_19_mbThreadsSearchContainer_1_menu_unsubscribe']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("Unsubscribe"),
-			selenium.getText("link=Unsubscribe"));
+			selenium.getText(
+				"//a[@id='_19_mbThreadsSearchContainer_1_menu_unsubscribe']"));
 	}
 }

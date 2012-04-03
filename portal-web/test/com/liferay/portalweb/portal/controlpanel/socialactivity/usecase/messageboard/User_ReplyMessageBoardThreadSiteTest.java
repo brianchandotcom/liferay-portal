@@ -46,18 +46,96 @@ public class User_ReplyMessageBoardThreadSiteTest extends BaseTestCase {
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Root Thread"),
-			selenium.getText("link=Root Thread"));
-		selenium.clickAt("link=Root Thread",
-			RuntimeVariables.replace("Root Thread"));
+		assertEquals(RuntimeVariables.replace("MB Thread Message Subject"),
+			selenium.getText("//td[1]/a"));
+		selenium.clickAt("//td[1]/a",
+			RuntimeVariables.replace("MB Thread Message Subject"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Reply"),
-			selenium.getText("//a[@id='_19_xnby']/span"));
-		selenium.click(RuntimeVariables.replace("//a[@id='_19_xnby']/span"));
+			selenium.getText("//span[.='Reply']"));
+		selenium.clickAt("//span[.='Reply']", RuntimeVariables.replace("Reply"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//textarea[@id='_19_editor' and @style='display: none;']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Source"),
+			selenium.getText("//span[.='Source']"));
+		selenium.clickAt("//span[.='Source']",
+			RuntimeVariables.replace("Source"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//a[@class='cke_button_source cke_on']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//td[@id='cke_contents__19_editor']/textarea")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.type("//td[@id='cke_contents__19_editor']/textarea",
+			RuntimeVariables.replace("MB Thread Message Reply Body"));
+		assertEquals(RuntimeVariables.replace("Source"),
+			selenium.getText("//span[.='Source']"));
+		selenium.clickAt("//span[.='Source']",
+			RuntimeVariables.replace("Source"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//textarea[@id='_19_editor' and @style='display: none;']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -77,17 +155,35 @@ public class User_ReplyMessageBoardThreadSiteTest extends BaseTestCase {
 		}
 
 		selenium.selectFrame("//td[@id='cke_contents__19_editor']/iframe");
-		selenium.type("//body", RuntimeVariables.replace("Root Thread Reply"));
-		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("MB Thread Message Reply Body")
+										.equals(selenium.getText("//body"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.selectFrame("relative=top");
-		selenium.selectWindow("null");
-		selenium.click(RuntimeVariables.replace("//input[@value='Publish']"));
+		selenium.clickAt("//input[@value='Publish']",
+			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("RE: Root Thread"),
-			selenium.getText("//h1[@class='header-title']/span"));
+		assertEquals(RuntimeVariables.replace("RE: MB Thread Message Subject"),
+			selenium.getText("xPath=(//div[@class='subject'])[2]/a/strong"));
+		assertEquals(RuntimeVariables.replace("MB Thread Message Reply Body"),
+			selenium.getText("xPath=(//div[@class='thread-body'])[2]"));
 	}
 }

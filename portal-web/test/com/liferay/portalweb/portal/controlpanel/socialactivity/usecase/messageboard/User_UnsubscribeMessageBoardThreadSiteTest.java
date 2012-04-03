@@ -20,8 +20,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class User_VoteMessageBoardThreadSiteTest extends BaseTestCase {
-	public void testUser_VoteMessageBoardThreadSite() throws Exception {
+public class User_UnsubscribeMessageBoardThreadSiteTest extends BaseTestCase {
+	public void testUser_UnsubscribeMessageBoardThreadSite()
+		throws Exception {
 		selenium.open("/web/site-name/");
 		loadRequiredJavaScriptModules();
 
@@ -45,17 +46,6 @@ public class User_VoteMessageBoardThreadSiteTest extends BaseTestCase {
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("MB Thread Message Subject"),
-			selenium.getText(
-				"//td[@id='_19_mbThreadsSearchContainer_col-thread_row-1']/a"));
-		selenium.clickAt("//td[@id='_19_mbThreadsSearchContainer_col-thread_row-1']/a",
-			RuntimeVariables.replace("MB Thread Message Subject"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		assertTrue(selenium.isElementPresent(
-				"//a[contains(@class,'aui-rating-thumb-up')]"));
-		selenium.clickAt("//a[contains(@class,'aui-rating-thumb-up')]",
-			RuntimeVariables.replace("Rate this as good."));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -63,9 +53,7 @@ public class User_VoteMessageBoardThreadSiteTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("+1 (1 Vote)")
-										.equals(selenium.getText(
-								"//div[@class='aui-rating-label-element']"))) {
+				if (!selenium.isElementPresent("//body[contains(@id,'aui')]")) {
 					break;
 				}
 			}
@@ -75,7 +63,34 @@ public class User_VoteMessageBoardThreadSiteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("+1 (1 Vote)"),
-			selenium.getText("//div[@class='aui-rating-label-element']"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+			RuntimeVariables.replace("Actions"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//a[@id='_19_mbThreadsSearchContainer_1_menu_unsubscribe']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Unsubscribe"),
+			selenium.getText(
+				"//a[@id='_19_mbThreadsSearchContainer_1_menu_unsubscribe']"));
+		selenium.clickAt("//a[@id='_19_mbThreadsSearchContainer_1_menu_unsubscribe']",
+			RuntimeVariables.replace("Unsubscribe"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 	}
 }

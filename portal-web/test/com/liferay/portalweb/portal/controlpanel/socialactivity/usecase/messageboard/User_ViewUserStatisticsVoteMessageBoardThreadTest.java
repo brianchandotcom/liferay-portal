@@ -56,7 +56,8 @@ public class User_ViewUserStatisticsVoteMessageBoardThreadTest
 		assertEquals(RuntimeVariables.replace("Participation Score: 5"),
 			selenium.getText("xPath=(//div[@class='participation-score'])[1]"));
 		assertEquals(RuntimeVariables.replace("User's Message Board Posts: 1"),
-			selenium.getText("//td/div[3]"));
+			selenium.getText(
+				"//div[@class='social-counter-user.message-posts']"));
 		assertEquals(RuntimeVariables.replace("userfn userln"),
 			selenium.getText("xPath=(//span[@class='user-name'])[2]"));
 		assertEquals(RuntimeVariables.replace("exact:Rank: 2"),
@@ -66,8 +67,9 @@ public class User_ViewUserStatisticsVoteMessageBoardThreadTest
 		assertEquals(RuntimeVariables.replace("Participation Score: 5"),
 			selenium.getText("xPath=(//div[@class='participation-score'])[2]"));
 		assertEquals(RuntimeVariables.replace("User's Votes: 1"),
-			selenium.getText("//tr[2]/td/div[3]"));
+			selenium.getText("//div[@class='social-counter-user.votes']"));
 		assertEquals(RuntimeVariables.replace("User's Subscriptions: 1"),
-			selenium.getText("//tr[2]/td/div[4]"));
+			selenium.getText(
+				"//div[@class='social-counter-user.subscriptions']"));
 	}
 }

@@ -49,27 +49,30 @@ public class User_ViewUserStatisticsReplyMessageBoardThreadTest
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("xPath=(//span[@class='user-name'])[1]"));
-		assertEquals(RuntimeVariables.replace("exact:Rank: 1"),
+		assertEquals(RuntimeVariables.replace("Rank: 1"),
 			selenium.getText("xPath=(//div[@class='user-rank'])[1]"));
 		assertEquals(RuntimeVariables.replace("Contribution Score: 9"),
 			selenium.getText("xPath=(//div[@class='contribution-score'])[1]"));
 		assertEquals(RuntimeVariables.replace("Participation Score: 5"),
 			selenium.getText("xPath=(//div[@class='participation-score'])[1]"));
 		assertEquals(RuntimeVariables.replace("User's Message Board Posts: 1"),
-			selenium.getText("//td/div[3]"));
+			selenium.getText(
+				"//div[@class='social-counter-user.message-posts']"));
 		assertEquals(RuntimeVariables.replace("userfn userln"),
 			selenium.getText("xPath=(//span[@class='user-name'])[2]"));
-		assertEquals(RuntimeVariables.replace("exact:Rank: 2"),
+		assertEquals(RuntimeVariables.replace("Rank: 2"),
 			selenium.getText("xPath=(//div[@class='user-rank'])[2]"));
 		assertEquals(RuntimeVariables.replace("Contribution Score: 0"),
 			selenium.getText("xPath=(//div[@class='contribution-score'])[2]"));
 		assertEquals(RuntimeVariables.replace("Participation Score: 12"),
 			selenium.getText("xPath=(//div[@class='participation-score'])[2]"));
 		assertEquals(RuntimeVariables.replace("User's Message Board Posts: 1"),
-			selenium.getText("//tr[2]/td/div[3]"));
+			selenium.getText(
+				"xPath=(//div[@class='social-counter-user.message-posts'])[2]"));
 		assertEquals(RuntimeVariables.replace("User's Votes: 1"),
-			selenium.getText("//tr[2]/td/div[4]"));
+			selenium.getText("//div[@class='social-counter-user.votes']"));
 		assertEquals(RuntimeVariables.replace("User's Subscriptions: 1"),
-			selenium.getText("//tr[2]/td/div[5]"));
+			selenium.getText(
+				"//div[@class='social-counter-user.subscriptions']"));
 	}
 }

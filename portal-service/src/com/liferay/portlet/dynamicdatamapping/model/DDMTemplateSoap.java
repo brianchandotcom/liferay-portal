@@ -39,7 +39,8 @@ public class DDMTemplateSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setStructureId(model.getStructureId());
+		soapModel.setClassNameId(model.getClassNameId());
+		soapModel.setClassPK(model.getClassPK());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setType(model.getType());
@@ -162,12 +163,20 @@ public class DDMTemplateSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public long getStructureId() {
-		return _structureId;
+	public long getClassNameId() {
+		return _classNameId;
 	}
 
-	public void setStructureId(long structureId) {
-		_structureId = structureId;
+	public void setClassNameId(long classNameId) {
+		_classNameId = classNameId;
+	}
+
+	public long getClassPK() {
+		return _classPK;
+	}
+
+	public void setClassPK(long classPK) {
+		_classPK = classPK;
 	}
 
 	public String getName() {
@@ -226,7 +235,8 @@ public class DDMTemplateSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private long _structureId;
+	private long _classNameId;
+	private long _classPK;
 	private String _name;
 	private String _description;
 	private String _type;

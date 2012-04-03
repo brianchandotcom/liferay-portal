@@ -32,10 +32,8 @@ import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 import com.liferay.portlet.dynamicdatamapping.TemplateNameException;
 import com.liferay.portlet.dynamicdatamapping.TemplateScriptException;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil;
 import com.liferay.util.JS;
 
@@ -160,7 +158,8 @@ public class EditTemplateAction extends PortletAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long structureId = ParamUtil.getLong(actionRequest, "structureId");
+		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
+		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 		String availableFields = ParamUtil.getString(
 			actionRequest, "availableFields");
 		String saveCallback = ParamUtil.getString(
@@ -181,7 +180,8 @@ public class EditTemplateAction extends PortletAction {
 		portletURL.setParameter(
 			"groupId", String.valueOf(template.getGroupId()), false);
 		portletURL.setParameter(
-			"structureId", String.valueOf(structureId), false);
+			"classNameId", String.valueOf(classNameId), false);
+		portletURL.setParameter("classPK", String.valueOf(classPK), false);
 		portletURL.setParameter("type", template.getType(), false);
 		portletURL.setParameter("availableFields", availableFields, false);
 		portletURL.setParameter("saveCallback", saveCallback, false);
@@ -198,8 +198,9 @@ public class EditTemplateAction extends PortletAction {
 		long templateId = ParamUtil.getLong(uploadPortletRequest, "templateId");
 
 		long groupId = ParamUtil.getLong(uploadPortletRequest, "groupId");
-		long structureId = ParamUtil.getLong(
-			uploadPortletRequest, "structureId");
+		long classNameId = ParamUtil.getLong(
+			uploadPortletRequest, "classNameId");
+		long classPK = ParamUtil.getLong(uploadPortletRequest, "classPK");
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "name");
 		Map<Locale, String> descriptionMap =
@@ -224,12 +225,9 @@ public class EditTemplateAction extends PortletAction {
 		DDMTemplate template = null;
 
 		if (templateId <= 0) {
-			DDMStructure structure = DDMStructureLocalServiceUtil.getStructure(
-				structureId);
-
 			template = DDMTemplateServiceUtil.addTemplate(
-				groupId, structure.getStructureId(), nameMap, descriptionMap,
-				type, mode, language, script, serviceContext);
+				groupId, classNameId, classPK, nameMap, descriptionMap, type,
+				mode, language, script, serviceContext);
 		}
 		else {
 			template = DDMTemplateServiceUtil.updateTemplate(

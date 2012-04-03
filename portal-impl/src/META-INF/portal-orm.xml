@@ -2171,7 +2171,8 @@
 			<basic name="modifiedDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
-			<basic name="structureId" />
+			<basic name="classNameId" />
+			<basic name="classPK" />
 			<basic name="name" />
 			<basic name="description" />
 			<basic name="type">

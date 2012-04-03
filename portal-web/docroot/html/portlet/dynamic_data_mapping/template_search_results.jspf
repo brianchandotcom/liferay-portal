@@ -18,12 +18,12 @@
 TemplateSearchTerms searchTerms = (TemplateSearchTerms)searchContainer.getSearchTerms();
 
 if (searchTerms.isAdvancedSearch()) {
-	results = DDMTemplateServiceUtil.search(company.getCompanyId(), scopeGroupId, structure.getStructureId(), searchTerms.getName(), searchTerms.getDescription(), templateTypeValue, scopeTemplateMode, null, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-	total = DDMTemplateServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, structure.getStructureId(), searchTerms.getName(), searchTerms.getDescription(), templateTypeValue, null, null, searchTerms.isAndOperator());
+	results = DDMTemplateServiceUtil.search(company.getCompanyId(), scopeGroupId, classNameId, classPK, searchTerms.getName(), searchTerms.getDescription(), templateTypeValue, scopeTemplateMode, null, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+	total = DDMTemplateServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, classNameId, classPK, searchTerms.getName(), searchTerms.getDescription(), templateTypeValue, null, null, searchTerms.isAndOperator());
 }
 else {
-	results = DDMTemplateServiceUtil.search(company.getCompanyId(), scopeGroupId, structure.getStructureId(), searchTerms.getKeywords(), templateTypeValue, scopeTemplateMode, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-	total = DDMTemplateServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, structure.getStructureId(), searchTerms.getKeywords(), templateTypeValue, scopeTemplateMode);
+	results = DDMTemplateServiceUtil.search(company.getCompanyId(), scopeGroupId, classNameId, classPK, searchTerms.getKeywords(), templateTypeValue, scopeTemplateMode, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+	total = DDMTemplateServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, classNameId, classPK, searchTerms.getKeywords(), templateTypeValue, scopeTemplateMode);
 }
 
 pageContext.setAttribute("results", results);

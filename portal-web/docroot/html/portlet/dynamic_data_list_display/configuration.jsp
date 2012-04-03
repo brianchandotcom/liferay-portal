@@ -17,6 +17,8 @@
 <%@ include file="/html/portlet/dynamic_data_list_display/init.jsp" %>
 
 <%
+long structureClassNameId = PortalUtil.getClassNameId(DDMStructure.class);
+
 int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
 
 String redirect = ParamUtil.getString(request, "redirect");
@@ -62,7 +64,7 @@ request.setAttribute("record_set_action.jsp-selRecordSet", selRecordSet);
 				<%
 				long ddmStructureId = selRecordSet.getDDMStructureId();
 
-				List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.getTemplates(ddmStructureId, DDMTemplateConstants.TEMPLATE_TYPE_LIST);
+				List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.getTemplates(structureClassNameId, ddmStructureId, DDMTemplateConstants.TEMPLATE_TYPE_LIST);
 
 				for (DDMTemplate template : templates) {
 					boolean selected = false;
@@ -86,7 +88,7 @@ request.setAttribute("record_set_action.jsp-selRecordSet", selRecordSet);
 				<%
 				long ddmStructureId = selRecordSet.getDDMStructureId();
 
-				List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.getTemplates(ddmStructureId, DDMTemplateConstants.TEMPLATE_TYPE_DETAIL, DDMTemplateConstants.TEMPLATE_MODE_CREATE);
+				List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.getTemplates(structureClassNameId, ddmStructureId, DDMTemplateConstants.TEMPLATE_TYPE_DETAIL, DDMTemplateConstants.TEMPLATE_MODE_CREATE);
 
 				for (DDMTemplate template : templates) {
 					boolean selected = false;

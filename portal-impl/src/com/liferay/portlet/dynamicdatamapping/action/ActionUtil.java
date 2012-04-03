@@ -36,12 +36,16 @@ public class ActionUtil {
 	public static void getStructure(HttpServletRequest request)
 		throws Exception {
 
-		long structureId = ParamUtil.getLong(request, "structureId");
+		long structureClassNameId = PortalUtil.getClassNameId(
+			DDMStructure.class);
+
+		long classNameId = ParamUtil.getLong(request, "classNameId");
+		long classPK = ParamUtil.getLong(request, "classPK");
 
 		DDMStructure structure = null;
 
-		if (structureId > 0) {
-			structure = DDMStructureServiceUtil.getStructure(structureId);
+		if ((classPK > 0) && (structureClassNameId == classNameId)) {
+			structure = DDMStructureServiceUtil.getStructure(classPK);
 		}
 
 		request.setAttribute(WebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE, structure);

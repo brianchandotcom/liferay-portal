@@ -98,7 +98,9 @@ public class DDMTemplatePersistenceTest {
 
 		newDDMTemplate.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newDDMTemplate.setStructureId(ServiceTestUtil.nextLong());
+		newDDMTemplate.setClassNameId(ServiceTestUtil.nextLong());
+
+		newDDMTemplate.setClassPK(ServiceTestUtil.nextLong());
 
 		newDDMTemplate.setName(ServiceTestUtil.randomString());
 
@@ -134,8 +136,10 @@ public class DDMTemplatePersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingDDMTemplate.getModifiedDate()),
 			Time.getShortTimestamp(newDDMTemplate.getModifiedDate()));
-		Assert.assertEquals(existingDDMTemplate.getStructureId(),
-			newDDMTemplate.getStructureId());
+		Assert.assertEquals(existingDDMTemplate.getClassNameId(),
+			newDDMTemplate.getClassNameId());
+		Assert.assertEquals(existingDDMTemplate.getClassPK(),
+			newDDMTemplate.getClassPK());
 		Assert.assertEquals(existingDDMTemplate.getName(),
 			newDDMTemplate.getName());
 		Assert.assertEquals(existingDDMTemplate.getDescription(),
@@ -279,6 +283,13 @@ public class DDMTemplatePersistenceTest {
 				existingDDMTemplateModelImpl.getOriginalUuid()));
 		Assert.assertEquals(existingDDMTemplateModelImpl.getGroupId(),
 			existingDDMTemplateModelImpl.getOriginalGroupId());
+
+		Assert.assertEquals(existingDDMTemplateModelImpl.getGroupId(),
+			existingDDMTemplateModelImpl.getOriginalGroupId());
+		Assert.assertEquals(existingDDMTemplateModelImpl.getClassNameId(),
+			existingDDMTemplateModelImpl.getOriginalClassNameId());
+		Assert.assertEquals(existingDDMTemplateModelImpl.getClassPK(),
+			existingDDMTemplateModelImpl.getOriginalClassPK());
 	}
 
 	protected DDMTemplate addDDMTemplate() throws Exception {
@@ -300,7 +311,9 @@ public class DDMTemplatePersistenceTest {
 
 		ddmTemplate.setModifiedDate(ServiceTestUtil.nextDate());
 
-		ddmTemplate.setStructureId(ServiceTestUtil.nextLong());
+		ddmTemplate.setClassNameId(ServiceTestUtil.nextLong());
+
+		ddmTemplate.setClassPK(ServiceTestUtil.nextLong());
 
 		ddmTemplate.setName(ServiceTestUtil.randomString());
 

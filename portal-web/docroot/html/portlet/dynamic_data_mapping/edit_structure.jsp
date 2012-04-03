@@ -24,7 +24,8 @@ String portletResourceNamespace = ParamUtil.getString(request, "portletResourceN
 
 DDMStructure structure = (DDMStructure)request.getAttribute(WebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE);
 
-long structureId = BeanParamUtil.getLong(structure, request, "structureId");
+long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
+long classPK = BeanParamUtil.getLong(structure, request, "structureId");
 
 String script = BeanParamUtil.getString(structure, request, "xsd");
 
@@ -42,7 +43,8 @@ if (Validator.isNotNull(script)) {
 <aui:form action="<%= editStructureURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveStructure();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (structure != null) ? Constants.UPDATE : Constants.ADD %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="structureId" type="hidden" value="<%= structureId %>" />
+	<aui:input name="classNameId" type="hidden" value="<%= String.valueOf(classNameId) %>" />
+	<aui:input name="classPK" type="hidden" value="<%= String.valueOf(classPK) %>" />
 	<aui:input name="xsd" type="hidden" />
 	<aui:input name="saveCallback" type="hidden" value="<%= saveCallback %>" />
 	<aui:input name="saveAndContinue" type="hidden" value="<%= false %>" />
@@ -79,10 +81,10 @@ if (Validator.isNotNull(script)) {
 			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="structureDetailsSectionPanel" persistState="<%= true %>" title='<%= LanguageUtil.get(pageContext, "details") %>'>
 				<aui:layout cssClass="lfr-ddm-types-form-column">
 					<c:choose>
-						<c:when test="<%= classNameId == 0 %>">
+						<c:when test="<%= scopeClassNameId == 0 %>">
 							<aui:column first="<%= true %>">
 								<aui:field-wrapper>
-									<aui:select disabled="<%= structure != null %>" label="type" name="classNameId">
+									<aui:select disabled="<%= structure != null %>" label="type" name="scopeClassNameId">
 										<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, DDLRecordSet.class.getName()) %>" value="<%= PortalUtil.getClassNameId(DDLRecordSet.class.getName()) %>" />
 										<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, DLFileEntryMetadata.class.getName()) %>" value="<%= PortalUtil.getClassNameId(DLFileEntryMetadata.class.getName()) %>" />
 									</aui:select>
@@ -90,7 +92,7 @@ if (Validator.isNotNull(script)) {
 							</aui:column>
 						</c:when>
 						<c:otherwise>
-							<aui:input name="classNameId" type="hidden" value="<%= classNameId %>" />
+							<aui:input name="scopeClassNameId" type="hidden" value="<%= scopeClassNameId %>" />
 						</c:otherwise>
 					</c:choose>
 
@@ -146,7 +148,7 @@ if (Validator.isNotNull(script)) {
 		['aui-base']
 	);
 
-	<c:if test="<%= Validator.isNotNull(saveCallback) && (structureId != 0) %>">
-		window.parent['<%= HtmlUtil.escapeJS(saveCallback) %>']('<%= structureId %>', '<%= HtmlUtil.escape(structure.getName(locale)) %>');
+	<c:if test="<%= Validator.isNotNull(saveCallback) && (classPK != 0) %>">
+		window.parent['<%= HtmlUtil.escapeJS(saveCallback) %>']('<%= classPK %>', '<%= HtmlUtil.escape(structure.getName(locale)) %>');
 	</c:if>
 </aui:script>

@@ -196,7 +196,7 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 				DDMStructure.class);
 
 		long structureId = MapUtil.getLong(
-			structureIds, template.getStructureId(), template.getStructureId());
+			structureIds, template.getClassPK(), template.getClassPK());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			templateElement, template, _NAMESPACE);
@@ -211,7 +211,8 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 				serviceContext.setUuid(template.getUuid());
 
 				importedTemplate = DDMTemplateLocalServiceUtil.addTemplate(
-					userId, portletDataContext.getScopeGroupId(), structureId,
+					userId, portletDataContext.getScopeGroupId(),
+					template.getClassNameId(), template.getClassPK(),
 					template.getNameMap(), template.getDescriptionMap(),
 					template.getType(), template.getMode(),
 					template.getLanguage(), template.getScript(),
@@ -227,7 +228,8 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 		}
 		else {
 			importedTemplate = DDMTemplateLocalServiceUtil.addTemplate(
-				userId, portletDataContext.getScopeGroupId(), structureId,
+				userId, portletDataContext.getScopeGroupId(),
+				template.getClassNameId(), template.getClassPK(),
 				template.getNameMap(), template.getDescriptionMap(),
 				template.getType(), template.getMode(), template.getLanguage(),
 				template.getScript(), serviceContext);

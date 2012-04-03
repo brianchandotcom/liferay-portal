@@ -91,20 +91,8 @@ public class LayoutSetBranchLocalServiceImpl
 			settings = copyLayoutSetBranch.getSettings();
 		}
 		else {
-			LayoutSet layoutSet = null;
-
-			if (master) {
-
-				// When creating the master branch, we have to ensure we don't
-				// go through the Advice, which will result in error
-
-				layoutSet = layoutSetPersistence.findByG_P(
-					groupId, privateLayout);
-			}
-			else {
-				layoutSet = layoutSetLocalService.getLayoutSet(
-					groupId, privateLayout);
-			}
+			LayoutSet layoutSet = layoutSetLocalService.getLayoutSet(
+				groupId, privateLayout);
 
 			logo = layoutSet.getLogo();
 			logoId = layoutSet.getLogoId();
@@ -372,11 +360,7 @@ public class LayoutSetBranchLocalServiceImpl
 			User user = userPersistence.findByPrimaryKey(userId);
 
 			if (layoutSetId <= 0) {
-
-				// No need to go through Advice here since all we need is the
-				// layoutSetId
-
-				LayoutSet layoutSet = layoutSetPersistence.findByG_P(
+				LayoutSet layoutSet = layoutSetLocalService.getLayoutSet(
 					groupId, privateLayout);
 
 				layoutSetId = layoutSet.getLayoutSetId();

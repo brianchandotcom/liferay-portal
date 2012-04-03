@@ -113,7 +113,11 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//tr[3]/td[4]/span/ul/li/strong/a",
+				Thread.sleep(5000);
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -123,7 +127,7 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a[@id='_86_ctvk']")) {
+									"//a[@id='_86_ocerSearchContainer_1_menu_delete']")) {
 							break;
 						}
 					}
@@ -135,8 +139,8 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a[@id='_86_ctvk']"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a[@id='_86_ctvk']",
+						"//a[@id='_86_ocerSearchContainer_1_menu_delete']"));
+				selenium.clickAt("//a[@id='_86_ocerSearchContainer_1_menu_delete']",
 					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
@@ -154,7 +158,11 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//tr[3]/td[4]/span/ul/li/strong/a",
+				Thread.sleep(5000);
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -164,7 +172,7 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a[@id='_86_ctvk']")) {
+									"//a[@id='_86_ocerSearchContainer_1_menu_delete']")) {
 							break;
 						}
 					}
@@ -176,8 +184,8 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a[@id='_86_ctvk']"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a[@id='_86_ctvk']",
+						"//a[@id='_86_ocerSearchContainer_1_menu_delete']"));
+				selenium.clickAt("//a[@id='_86_ocerSearchContainer_1_menu_delete']",
 					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
@@ -195,7 +203,11 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//tr[3]/td[4]/span/ul/li/strong/a",
+				Thread.sleep(5000);
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -205,7 +217,7 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a[@id='_86_ctvk']")) {
+									"//a[@id='_86_ocerSearchContainer_1_menu_delete']")) {
 							break;
 						}
 					}
@@ -217,8 +229,8 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a[@id='_86_ctvk']"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a[@id='_86_ctvk']",
+						"//a[@id='_86_ocerSearchContainer_1_menu_delete']"));
+				selenium.clickAt("//a[@id='_86_ocerSearchContainer_1_menu_delete']",
 					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
@@ -236,7 +248,11 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//tr[3]/td[4]/span/ul/li/strong/a",
+				Thread.sleep(5000);
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -246,7 +262,7 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a[@id='_86_ctvk']")) {
+									"//a[@id='_86_ocerSearchContainer_1_menu_delete']")) {
 							break;
 						}
 					}
@@ -258,8 +274,8 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a[@id='_86_ctvk']"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a[@id='_86_ctvk']",
+						"//a[@id='_86_ocerSearchContainer_1_menu_delete']"));
+				selenium.clickAt("//a[@id='_86_ocerSearchContainer_1_menu_delete']",
 					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
@@ -277,7 +293,11 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//tr[3]/td[4]/span/ul/li/strong/a",
+				Thread.sleep(5000);
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -287,7 +307,7 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a[@id='_86_ctvk']")) {
+									"//a[@id='_86_ocerSearchContainer_1_menu_delete']")) {
 							break;
 						}
 					}
@@ -299,8 +319,8 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a[@id='_86_ctvk']"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a[@id='_86_ctvk']",
+						"//a[@id='_86_ocerSearchContainer_1_menu_delete']"));
+				selenium.clickAt("//a[@id='_86_ocerSearchContainer_1_menu_delete']",
 					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();

@@ -131,12 +131,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		indexer.delete(thread);
 
-		// Subscriptions
-
-		subscriptionLocalService.deleteSubscriptions(
-			thread.getCompanyId(), MBThread.class.getName(),
-			thread.getThreadId());
-
 		// Attachments
 
 		long companyId = rootMessage.getCompanyId();
@@ -148,6 +142,12 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		}
 		catch (NoSuchDirectoryException nsde) {
 		}
+
+		// Subscriptions
+
+		subscriptionLocalService.deleteSubscriptions(
+			thread.getCompanyId(), MBThread.class.getName(),
+			thread.getThreadId());
 
 		// Thread flags
 

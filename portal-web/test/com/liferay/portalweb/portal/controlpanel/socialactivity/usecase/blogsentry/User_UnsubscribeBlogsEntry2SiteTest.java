@@ -20,9 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewUserStatisticsAddBlogsEntry2Test extends BaseTestCase {
-	public void testViewUserStatisticsAddBlogsEntry2()
-		throws Exception {
+public class User_UnsubscribeBlogsEntry2SiteTest extends BaseTestCase {
+	public void testUser_UnsubscribeBlogsEntry2Site() throws Exception {
 		selenium.open("/web/site-name/");
 		loadRequiredJavaScriptModules();
 
@@ -32,7 +31,7 @@ public class ViewUserStatisticsAddBlogsEntry2Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=User Statistics Test Page")) {
+				if (selenium.isVisible("link=Blogs Test Page")) {
 					break;
 				}
 			}
@@ -42,10 +41,20 @@ public class ViewUserStatisticsAddBlogsEntry2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=User Statistics Test Page",
-			RuntimeVariables.replace("User Statistics Test Page"));
+		selenium.clickAt("link=Blogs Test Page",
+			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
+			selenium.getText("//div[@class='entry-title']/h2/a"));
+		selenium.clickAt("//div[@class='entry-title']/h2/a",
+			RuntimeVariables.replace("Blogs Entry2 Title"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Unsubscribe from Comments"),
+			selenium.getText("//span[@class='subscribe-link']/a/span"));
+		selenium.clickAt("//span[@class='subscribe-link']/a/span",
+			RuntimeVariables.replace("Unsubscribe from Comments"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -53,9 +62,10 @@ public class ViewUserStatisticsAddBlogsEntry2Test extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("Joe Bloggs")
+				if (RuntimeVariables.replace(
+							"Your request processed successfully.")
 										.equals(selenium.getText(
-								"//span[@class='user-name']"))) {
+								"//div[@id='_33_discussion-status-messages']"))) {
 					break;
 				}
 			}
@@ -65,15 +75,10 @@ public class ViewUserStatisticsAddBlogsEntry2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//span[@class='user-name']"));
-		assertEquals(RuntimeVariables.replace("Rank: 1"),
-			selenium.getText("//div[@class='user-rank']"));
-		assertEquals(RuntimeVariables.replace("Contribution Score: 0"),
-			selenium.getText("//div[@class='contribution-score']"));
-		assertEquals(RuntimeVariables.replace("Participation Score: 5"),
-			selenium.getText("//div[@class='participation-score']"));
-		assertEquals(RuntimeVariables.replace("User's Blog Entries: 2"),
-			selenium.getText("//div[@class='social-counter-user.blogs']"));
+		assertEquals(RuntimeVariables.replace(
+				"Your request processed successfully."),
+			selenium.getText("//div[@id='_33_discussion-status-messages']"));
+		assertEquals(RuntimeVariables.replace("Subscribe to Comments"),
+			selenium.getText("//span[@class='subscribe-link']/a/span"));
 	}
 }

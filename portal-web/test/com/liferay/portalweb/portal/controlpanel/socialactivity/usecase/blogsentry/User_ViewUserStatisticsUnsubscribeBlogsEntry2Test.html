@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>User_ViewUserStatisticsCommentBlogsEntry2Test</title>
+<title>User_ViewUserStatisticsUnsubscribeBlogsEntry2Test</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">User_ViewUserStatisticsCommentBlogsEntry2Test</td></tr>
+<tr><td rowspan="1" colspan="3">User_ViewUserStatisticsUnsubscribeBlogsEntry2Test</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -24,11 +24,6 @@
 	<td>User Statistics Test Page</td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>xPath=(//span[@class='user-name'])[1]</td>
-	<td>Joe Bloggs</td>
-</tr>
-<tr>
 	<td>assertText</td>
 	<td>xPath=(//span[@class='user-name'])[1]</td>
 	<td>Joe Bloggs</td>
@@ -41,7 +36,7 @@
 <tr>
 	<td>assertText</td>
 	<td>xPath=(//div[@class='contribution-score'])[1]</td>
-	<td>Contribution Score: 4</td>
+	<td>Contribution Score: 9</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -50,8 +45,8 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='social-counter-user.blogs']</td>
-	<td>User's Blog Entries: 2</td>
+	<td>//div[@class='social-counter-user.message-posts']</td>
+	<td>User's Message Board Posts: 1</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -71,18 +66,25 @@
 <tr>
 	<td>assertText</td>
 	<td>xPath=(//div[@class='participation-score'])[2]</td>
-	<td>Participation Score: 7</td>
+	<td>Participation Score: 12</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>//div[@class='social-counter-user.comments']</td>
-	<td>User's Comments: 1</td>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='social-counter-user.message-posts'])[2]</td>
+	<td>User's Message Board Posts: 1</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='social-counter-user.votes']</td>
+	<td>User's Votes: 1</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='social-counter-user.subscriptions']</td>
 	<td>User's Subscriptions: 1</td>
 </tr>
+
+
 </tbody></table>
 </body>
 </html>

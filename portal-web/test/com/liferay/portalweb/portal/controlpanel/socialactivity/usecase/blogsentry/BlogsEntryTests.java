@@ -15,7 +15,6 @@
 package com.liferay.portalweb.portal.controlpanel.socialactivity.usecase.blogsentry;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.controlpanel.sites.site.addmemberssiteuser.AddMembersSiteUserTest;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.AddSiteTest;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.TearDownSiteTest;
 import com.liferay.portalweb.portal.controlpanel.sites.siteportlet.addportletsite.AddPageBlogsSiteTest;
@@ -23,6 +22,7 @@ import com.liferay.portalweb.portal.controlpanel.sites.siteportlet.addportletsit
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUserTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.TearDownUserTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.edituserpassword.EditUserPasswordTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.editusersite.EditUserSiteTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.User_SignInTest;
@@ -56,7 +56,7 @@ public class BlogsEntryTests extends BaseTestSuite {
 		testSuite.addTestSuite(ViewUserStatisticsAddBlogsEntry2Test.class);
 		testSuite.addTestSuite(AddUserTest.class);
 		testSuite.addTestSuite(EditUserPasswordTest.class);
-		testSuite.addTestSuite(AddMembersSiteUserTest.class);
+		testSuite.addTestSuite(EditUserSiteTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(User_SignInTest.class);
 		testSuite.addTestSuite(User_SubscribeBlogsEntry2SiteTest.class);
@@ -65,6 +65,7 @@ public class BlogsEntryTests extends BaseTestSuite {
 		testSuite.addTestSuite(User_ViewUserStatisticsCommentBlogsEntry2Test.class);
 		testSuite.addTestSuite(User_VoteBlogsEntry2SiteTest.class);
 		testSuite.addTestSuite(User_ViewUserStatisticsVoteBlogsEntry2Test.class);
+		testSuite.addTestSuite(User_UnsubscribeBlogsEntry2SiteTest.class);
 		testSuite.addTestSuite(User_SignOutTest.class);
 		testSuite.addTestSuite(SignInTest.class);
 		testSuite.addTestSuite(EditBlogsEntry2SiteTest.class);

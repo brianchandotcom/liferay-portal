@@ -20,9 +20,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class User_ViewUserStatisticsSubscribeBlogsEntry2Test
+public class User_ViewUserStatisticsUnsubscribeBlogsEntry2Test
 	extends BaseTestCase {
-	public void testUser_ViewUserStatisticsSubscribeBlogsEntry2()
+	public void testUser_ViewUserStatisticsUnsubscribeBlogsEntry2()
 		throws Exception {
 		selenium.open("/web/site-name/");
 		loadRequiredJavaScriptModules();
@@ -47,43 +47,30 @@ public class User_ViewUserStatisticsSubscribeBlogsEntry2Test
 			RuntimeVariables.replace("User Statistics Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Joe Bloggs")
-										.equals(selenium.getText(
-								"xPath=(//span[@class='user-name'])[1]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("xPath=(//span[@class='user-name'])[1]"));
 		assertEquals(RuntimeVariables.replace("Rank: 1"),
 			selenium.getText("xPath=(//div[@class='user-rank'])[1]"));
-		assertEquals(RuntimeVariables.replace("Contribution Score: 2"),
+		assertEquals(RuntimeVariables.replace("Contribution Score: 9"),
 			selenium.getText("xPath=(//div[@class='contribution-score'])[1]"));
 		assertEquals(RuntimeVariables.replace("Participation Score: 5"),
 			selenium.getText("xPath=(//div[@class='participation-score'])[1]"));
-		assertEquals(RuntimeVariables.replace("User's Blog Entries: 2"),
-			selenium.getText("//div[@class='social-counter-user.blogs']"));
+		assertEquals(RuntimeVariables.replace("User's Message Board Posts: 1"),
+			selenium.getText(
+				"//div[@class='social-counter-user.message-posts']"));
 		assertEquals(RuntimeVariables.replace("userfn userln"),
 			selenium.getText("xPath=(//span[@class='user-name'])[2]"));
 		assertEquals(RuntimeVariables.replace("Rank: 2"),
 			selenium.getText("xPath=(//div[@class='user-rank'])[2]"));
 		assertEquals(RuntimeVariables.replace("Contribution Score: 0"),
 			selenium.getText("xPath=(//div[@class='contribution-score'])[2]"));
-		assertEquals(RuntimeVariables.replace("Participation Score: 3"),
+		assertEquals(RuntimeVariables.replace("Participation Score: 12"),
 			selenium.getText("xPath=(//div[@class='participation-score'])[2]"));
+		assertEquals(RuntimeVariables.replace("User's Message Board Posts: 1"),
+			selenium.getText(
+				"xPath=(//div[@class='social-counter-user.message-posts'])[2]"));
+		assertEquals(RuntimeVariables.replace("User's Votes: 1"),
+			selenium.getText("//div[@class='social-counter-user.votes']"));
 		assertEquals(RuntimeVariables.replace("User's Subscriptions: 1"),
 			selenium.getText(
 				"//div[@class='social-counter-user.subscriptions']"));

@@ -29,6 +29,9 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 			case 1:
 				selenium.open("/web/guest/home/");
 				loadRequiredJavaScriptModules();
+				assertEquals(RuntimeVariables.replace("Go to"),
+					selenium.getText("//li[@id='_145_mySites']/a/span"));
+				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -87,7 +90,7 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 			case 2:
 
 				boolean dlDocumentPresent = selenium.isElementPresent(
-						"//div[1]/a/span[1]/img");
+						"//span[@class='document-thumbnail']/img");
 
 				if (!dlDocumentPresent) {
 					label = 3;
@@ -102,6 +105,24 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 					RuntimeVariables.replace("All Entries Check Box"));
 				assertTrue(selenium.isChecked(
 						"//input[@id='_20_allRowIdsCheckbox']"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@id='_20_entries']/div[contains(@class,'selected')]")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
 						"//span[@title='Actions']/ul/li/strong/a/span"));

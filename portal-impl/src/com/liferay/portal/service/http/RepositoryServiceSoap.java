@@ -88,12 +88,72 @@ public class RepositoryServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.kernel.repository.LocalRepository getLocalRepositoryImpl(
+		long repositoryId) throws RemoteException {
+		try {
+			com.liferay.portal.kernel.repository.LocalRepository returnValue = RepositoryServiceUtil.getLocalRepositoryImpl(repositoryId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portal.kernel.repository.LocalRepository getLocalRepositoryImpl(
+		long folderId, long fileEntryId, long fileVersionId)
+		throws RemoteException {
+		try {
+			com.liferay.portal.kernel.repository.LocalRepository returnValue = RepositoryServiceUtil.getLocalRepositoryImpl(folderId,
+					fileEntryId, fileVersionId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portal.model.RepositorySoap getRepository(
 		long repositoryId) throws RemoteException {
 		try {
 			com.liferay.portal.model.Repository returnValue = RepositoryServiceUtil.getRepository(repositoryId);
 
 			return com.liferay.portal.model.RepositorySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portal.kernel.repository.Repository getRepositoryImpl(
+		long repositoryId) throws RemoteException {
+		try {
+			com.liferay.portal.kernel.repository.Repository returnValue = RepositoryServiceUtil.getRepositoryImpl(repositoryId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portal.kernel.repository.Repository getRepositoryImpl(
+		long folderId, long fileEntryId, long fileVersionId)
+		throws RemoteException {
+		try {
+			com.liferay.portal.kernel.repository.Repository returnValue = RepositoryServiceUtil.getRepositoryImpl(folderId,
+					fileEntryId, fileVersionId);
+
+			return returnValue;
 		}
 		catch (Exception e) {
 			_log.error(e, e);

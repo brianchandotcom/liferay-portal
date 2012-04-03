@@ -16,18 +16,24 @@ package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
+import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.HttpPrincipal;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import java.util.List;
 
@@ -71,6 +77,48 @@ public class TestPropsValues {
 		return _groupId;
 	}
 
+	public static HttpPrincipal getHttpPrincipal() throws Exception {
+		return getHttpPrincipal(getLogin());
+	}
+
+	public static HttpPrincipal getHttpPrincipal(String login) {
+		return getHttpPrincipal(login, true);
+	}
+
+	public static HttpPrincipal getHttpPrincipal(
+		String login, boolean authenticated) {
+
+		HttpPrincipal httpPrincipal = null;
+
+		if (authenticated) {
+			httpPrincipal = new HttpPrincipal(PORTAL_URL, login, USER_PASSWORD);
+		}
+		else {
+			httpPrincipal = new HttpPrincipal(PORTAL_URL);
+		}
+
+		return httpPrincipal;
+	}
+
+	public static String getLogin() throws Exception {
+		String login = null;
+
+		String authType = PropsValues.COMPANY_SECURITY_AUTH_TYPE;
+
+		if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
+			login = getUser().getEmailAddress();
+			login = HttpUtil.encodeURL(login);
+		}
+		else if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
+			login = getUser().getScreenName();
+		}
+		else if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
+			login = Long.toString(getUserId());
+		}
+
+		return login;
+	}
+
 	public static long getPlid() throws Exception {
 		if (_plid > 0) {
 			return _plid;
@@ -81,20 +129,61 @@ public class TestPropsValues {
 		return _plid;
 	}
 
-	public static long getUserId() throws Exception {
-		if (_userId > 0) {
-			return _userId;
+	public static URL getSoapURL(String serviceName) throws Exception {
+		return getSoapURL(getLogin(), serviceName);
+	}
+
+	public static URL getSoapURL(
+			String login, boolean authenticated, String serviceName)
+		throws MalformedURLException {
+
+		String url = PORTAL_URL;
+
+		if (authenticated) {
+			String password = USER_PASSWORD;
+
+			int pos = url.indexOf("://");
+
+			String protocol = url.substring(0, pos + 3);
+			String host = url.substring(pos + 3);
+
+			url =
+				protocol + login + ":" + password + "@" + host +
+					"/api/secure/axis/" + serviceName;
+		}
+		else {
+			url += "/api/axis/" + serviceName;
 		}
 
-		Role role = RoleLocalServiceUtil.getRole(
-			getCompanyId(), RoleConstants.ADMINISTRATOR);
+		return new URL(url);
+	}
 
-		List<User> users = UserLocalServiceUtil.getRoleUsers(
-			role.getRoleId(), 0, 2);
+	public static URL getSoapURL(String login, String serviceName)
+		throws MalformedURLException {
 
-		User user = users.get(0);
+		return getSoapURL(login, true, serviceName);
+	}
 
-		_userId = user.getUserId();
+	public static User getUser() throws Exception {
+		if (_user == null) {
+			Role role = RoleLocalServiceUtil.getRole(
+				getCompanyId(), RoleConstants.ADMINISTRATOR);
+
+			List<User> users = UserLocalServiceUtil.getRoleUsers(
+				role.getRoleId(), 0, 2);
+
+			_user = users.get(0);
+
+			_userId = _user.getUserId();
+		}
+
+		return _user;
+	}
+
+	public static long getUserId() throws Exception {
+		if (_userId == 0) {
+			_userId = getUser().getUserId();
+		}
 
 		return _userId;
 	}
@@ -104,6 +193,7 @@ public class TestPropsValues {
 	private static long _companyId;
 	private static long _groupId;
 	private static long _plid;
+	private static User _user;
 	private static long _userId;
 
 	static {

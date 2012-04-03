@@ -1023,7 +1023,7 @@ public class PortalImpl implements Portal {
 		String[] loginAndPassword = StringUtil.split(
 			credentials, CharPool.COLON);
 
-		String login = loginAndPassword[0].trim();
+		String login = HttpUtil.decodeURL(loginAndPassword[0].trim());
 
 		String password = null;
 

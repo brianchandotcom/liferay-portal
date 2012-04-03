@@ -83,6 +83,8 @@ public class ${entity.name}ServiceSoap {
 				${returnValueName}Soap${returnValueDimension}
 			<#elseif stringUtil.startsWith(returnValueName, "com.liferay.portal.kernel.json.JSON")>
 				java.lang.String
+			<#elseif stringUtil.startsWith(returnValueName, "com.liferay.portal.kernel.repository.model.")>
+				${returnValueName}Soap
 			<#elseif returnValueName == "java.util.List">
 				<#if returnTypeGenericsName == "java.util.List<java.lang.Boolean>">
 					java.lang.Boolean[]
@@ -98,6 +100,10 @@ public class ${entity.name}ServiceSoap {
 					java.lang.Short[]
 				<#elseif returnTypeGenericsName == "java.util.List<java.lang.String>">
 					java.lang.String[]
+				<#elseif returnTypeGenericsName == "java.util.List<com.liferay.portal.kernel.repository.model.FileEntry>">
+					com.liferay.portal.kernel.repository.model.FileEntrySoap[]
+				<#elseif returnTypeGenericsName == "java.util.List<com.liferay.portal.kernel.repository.model.Folder>">
+					com.liferay.portal.kernel.repository.model.FolderSoap[]
 				<#elseif entity.hasColumns() && serviceBuilder.hasEntityByGenericsName(serviceBuilder.getListActualTypeArguments(method.getReturns()))>
 					${soapModelName}[]
 				<#else>
@@ -204,6 +210,8 @@ public class ${entity.name}ServiceSoap {
 							</#if>
 						<#elseif stringUtil.startsWith(returnValueName, "com.liferay.portal.kernel.json.JSON")>
 							return returnValue.toString();
+						<#elseif stringUtil.startsWith(returnValueName, "com.liferay.portal.kernel.repository.model.")>
+							return ${returnValueName}Soap.toSoapModel(returnValue);
 						<#elseif returnValueName == "java.util.List">
 							<#if returnTypeGenericsName == "java.util.List<java.lang.Boolean>">
 								return returnValue.toArray(new java.lang.Boolean[returnValue.size()]);
@@ -219,6 +227,10 @@ public class ${entity.name}ServiceSoap {
 								return returnValue.toArray(new java.lang.Short[returnValue.size()]);
 							<#elseif returnTypeGenericsName == "java.util.List<java.lang.String>">
 								return returnValue.toArray(new java.lang.String[returnValue.size()]);
+							<#elseif returnTypeGenericsName == "java.util.List<com.liferay.portal.kernel.repository.model.FileEntry>">
+								return com.liferay.portal.kernel.repository.model.FileEntrySoap.toSoapModels(returnValue);
+							<#elseif returnTypeGenericsName == "java.util.List<com.liferay.portal.kernel.repository.model.Folder>">
+								return com.liferay.portal.kernel.repository.model.FolderSoap.toSoapModels(returnValue);
 							<#elseif entity.hasColumns() && serviceBuilder.hasEntityByGenericsName(serviceBuilder.getListActualTypeArguments(method.getReturns()))>
 								return ${soapModelName}.toSoapModels(returnValue);
 							<#else>

@@ -1492,8 +1492,6 @@ public class ServiceBuilder {
 		String returnValueName = returnType.getValue();
 
 		if (returnTypeGenericsName.contains(
-				"com.liferay.portal.kernel.repository.") ||
-			returnTypeGenericsName.contains(
 				"com.liferay.portal.kernel.search.") ||
 			returnTypeGenericsName.contains("com.liferay.portal.model.Theme") ||
 			returnTypeGenericsName.contains(
@@ -1506,6 +1504,17 @@ public class ServiceBuilder {
 			returnValueName.equals("java.util.Map") ||
 			returnValueName.equals("java.util.Properties") ||
 			returnValueName.startsWith("javax")) {
+
+			return false;
+		}
+
+		if (returnTypeGenericsName.contains(
+				"com.liferay.portal.kernel.repository.model.FileEntry") ||
+			returnTypeGenericsName.contains(
+				"com.liferay.portal.kernel.repository.model.Folder")) {
+		}
+		else if (returnTypeGenericsName.startsWith(
+				"com.liferay.portal.kernel.repository.model.")) {
 
 			return false;
 		}

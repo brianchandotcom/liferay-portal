@@ -23,7 +23,8 @@ import com.liferay.portal.model.GroupedModel;
 /**
  * @author Alexander Chow
  */
-public interface RepositoryModel<T> extends GroupedModel, ClassedModel {
+public interface RepositoryModel<T>
+	extends GroupedModel, ClassedModel, Serializable {
 
 	public Map<String, Serializable> getAttributes();
 

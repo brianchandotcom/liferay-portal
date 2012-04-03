@@ -167,6 +167,11 @@ public abstract class BasePreferencesImpl implements Serializable {
 			throw new ReadOnlyException(key);
 		}
 		else {
+			// Lazy clone
+			preference = (Preference)preference.clone();
+
+			modifiedPreferences.put(key, preference);
+
 			preference.setValues(new String[] {value});
 		}
 	}
@@ -194,6 +199,11 @@ public abstract class BasePreferencesImpl implements Serializable {
 			throw new ReadOnlyException(key);
 		}
 		else {
+			// Lazy clone
+			preference = (Preference)preference.clone();
+
+			modifiedPreferences.put(key, preference);
+
 			preference.setValues(values);
 		}
 	}
@@ -240,16 +250,8 @@ public abstract class BasePreferencesImpl implements Serializable {
 
 	protected Map<String, Preference> getModifiedPreferences() {
 		if (_modifiedPreferences == null) {
-			_modifiedPreferences = new ConcurrentHashMap<String, Preference>();
-
-			for (Map.Entry<String, Preference> entry :
-					_originalPreferences.entrySet()) {
-
-				String key = entry.getKey();
-				Preference preference = entry.getValue();
-
-				_modifiedPreferences.put(key, (Preference)preference.clone());
-			}
+			_modifiedPreferences = new ConcurrentHashMap<String, Preference>(
+				_originalPreferences);
 		}
 
 		return _modifiedPreferences;

@@ -1,13 +1,20 @@
 .taglib-language-option {
-	background-position: 0 50%;
-	background-repeat: no-repeat;
 	padding-left: 26px;
 	margin: 1px;
 }
 
 .taglib-language-list-text {
-	border-right: 1px solid #CCC;
 	padding: 0 0.2em;
+}
+
+/*Skin*/
+.taglib-language-option {
+	background-position: 0 50%;
+	background-repeat: no-repeat;
+}
+
+.taglib-language-list-text {
+	border-right: 1px solid #CCC;
 }
 
 .taglib-language-list-text.last {

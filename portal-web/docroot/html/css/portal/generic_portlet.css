@@ -4,7 +4,6 @@
 }
 
 .lfr-button {
-	background: url() no-repeat 0 50%;
 	padding: 2px 0 2px 20px;
 }
 
@@ -17,7 +16,6 @@
 }
 
 .configuration-frame, .control-panel-frame {
-	border-width: 0;
 	overflow: auto;
 	width: 100%;
 }
@@ -47,10 +45,6 @@
 	padding: 0 5px;
 }
 
-.lfr-table tr th {
-	font-weight: bold;
-}
-
 .lfr-table tr td:first-child, .lfr-table tr td.first-child, .lfr-table tr th:first-child, .lfr-table tr th.first-child {
 	padding-left: 0;
 }
@@ -75,6 +69,34 @@
 	margin-bottom: 1.5em;
 }
 
+.lfr-input-time {
+	float: left;
+	clear: right;
+}
+
+.gecko .lfr-input-time, .ie .lfr-input-time {
+	padding-left: 2px;
+}
+
+.lfr-change-logo {
+	display: block;
+	margin-bottom: 10px;
+}
+
+/*Skin*/
+
+.lfr-button {
+	background: url() no-repeat 0 50%;
+}
+
+.configuration-frame, .control-panel-frame {
+	border-width: 0;
+}
+
+.lfr-table tr th {
+	font-weight: bold;
+}
+
 .lfr-checkbox-preselected {
 	opacity: 0.5;
 }
@@ -93,17 +115,6 @@
 	zoom: 1;
 }
 
-.lfr-input-time {
-	float: left;
-	clear: right;
-}
-
-.gecko .lfr-input-time, .ie .lfr-input-time {
-	padding-left: 2px;
-}
-
 .lfr-change-logo {
 	background: url(@theme_image_path@/common/checkerboard.png);
-	display: block;
-	margin-bottom: 10px;
 }

@@ -4,10 +4,15 @@
 }
 
 .lfr-rich-editor.ace_editor {
-	border: 1px solid #A1A2A4;
 	height: 400px;
 	position: relative;
 	width: 100%;
+}
+
+/*Skin*/
+
+.lfr-rich-editor.ace_editor {
+	border: 1px solid #A1A2A4;
 }
 
 .lfr-plain-editor textarea, .lfr-rich-editor.ace_editor {

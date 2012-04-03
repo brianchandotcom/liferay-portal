@@ -3,12 +3,9 @@
 }
 
 .lfr-upload-container .upload-target {
-	background-color: #8FBE31;
-	border: 1px solid #729A22;
 	margin-right: 1.5em;
 	min-height: 30px;
 	text-align: center;
-	text-shadow: 1px 1px #656565;
 }
 
 .lfr-upload-container .manage-upload-target {
@@ -20,58 +17,26 @@
 	padding-top: 5px;
 }
 
-.lfr-upload-container a.browse-button {
-	background-image: url(@theme_image_path@/dock/add_content.png);
-	background-repeat: no-repeat;
-	color: white;
-	font-size: 1.2em;
-	font-weight: bold;
-	text-decoration: none;
-}
-
 .lfr-upload-container a.clear-uploads {
-	background-image: url(@theme_image_path@/portlet/refresh.png);
-	background-repeat: no-repeat;
 	float: right;
 }
 
 .lfr-upload-container a.cancel-uploads {
-	background-image: url(@theme_image_path@/common/close.png);
-	background-repeat: no-repeat;
 	float: right;
 	margin-right: 0;
 }
 
 .lfr-upload-container .upload-file {
-	background: url(@theme_image_path@/file_system/small/jpg.png) no-repeat 5px 50%;
-	border: 1px solid #CCC;
 	display: block;
-	font-weight: bold;
 	margin: 0.3em 1.5em 0.3em 0;
 	overflow: hidden;
 	padding: 5px;
 	padding-left: 25px;
 	position: relative;
-	text-shadow: 1px 1px #FFF;
 }
 
 .lfr-upload-container .upload-file .file-title {
 	padding-right: 16px;
-}
-
-.lfr-upload-container .upload-file.upload-complete {
-	background-position: 22px 50%;
-}
-
-.lfr-upload-container .upload-file.upload-complete.file-saved, .lfr-upload-container .upload-file.upload-complete.upload-error {
-	background-position: 5px 50%;
-}
-
-.lfr-upload-container .upload-list .upload-file.upload-complete.selected, .lfr-upload-container .upload-list .upload-file.upload-complete.pending-file.selected {
-	background-color: #D3E8F1;
-	border-color: #38F;
-	color: #047;
-	text-shadow: 1px 1px #FFF;
 }
 
 .lfr-upload-container .pending-files-info {
@@ -82,22 +47,13 @@
 	margin: 1em 1.5em 0.5em 0;
 }
 
-.lfr-upload-container .upload-list-info h4 {
-	font-size: 1.3em;
-}
-
 .lfr-upload-container .cancel-button {
-	background-image: url(@theme_image_path@/common/delete.png);
-	background-repeat: no-repeat;
 	position: absolute;
 	right: 5px;
 }
 
 .select-files {
-	border: 1px solid #FFF;
-	border-color: #F0F1F2 #B2B2B2 #949494 #F0F1F1;
 	float: left;
-	line-height: 0;
 	margin-right: 2px;
 	padding: 0;
 
@@ -111,9 +67,6 @@
 }
 
 .lfr-upload-container .delete-button {
-	background-image: url(@theme_image_path@/portlet/close.png);
-	background-repeat: no-repeat;
-	font-size: 0;
 	height: 16px;
 	margin-top: -8px;
 	padding: 0;
@@ -133,34 +86,20 @@
 }
 
 .lfr-upload-container .upload-file.upload-complete.file-saved {
-	background-color: #B4DDAD;
-	background-image: url(@theme_image_path@/dock/my_place_current.png);
-	font-weight: bold;
 	opacity: 0.6;
 	padding-left: 25px;
 }
 
-.lfr-upload-container .pending-file {
-	background-color: #E0E0E0;
-	color: #777;
-	text-shadow: -1px -1px #FFF;
-}
-
 .lfr-upload-container .file-added .success-message {
 	float: right;
-	font-weight: normal;
 }
 
 .lfr-upload-container .upload-error {
-	background-color: #FDD;
-	background-image: url(@theme_image_path@/messages/error.png);
-	font-weight: normal;
 	opacity: 1;
 	padding-left: 25px;
 }
 
 .lfr-upload-container .upload-complete .error-message, .lfr-upload-container .upload-complete .success-message {
-	font-weight: bold;
 	margin-left: 1em;
 }
 
@@ -172,23 +111,16 @@
 	display: inline;
 }
 
-.lfr-upload-container .file-uploading {
-	background-color: #ffc;
-}
-
 .lfr-upload-container .file-uploading .cancel-button {
 	top: 0;
 }
 
 .lfr-upload-container .progress-bar {
-	background: #fff;
-	border: 1px solid #83a8d9;
 	display: none;
 	height: 15px;
 }
 
 .lfr-upload-container .progress {
-	background: #8db2e3;
 	display: block;
 	height: 15px;
 	width: 0;
@@ -218,4 +150,112 @@
 
 .ie6 .lfr-upload-movie-content {
 	position: absolute;
+}
+
+/*Skin*/
+.lfr-upload-container .upload-target {
+	background-color: #8FBE31;
+	border: 1px solid #729A22;
+	text-shadow: 1px 1px #656565;
+}
+
+.lfr-upload-container a.browse-button {
+	background-image: url(@theme_image_path@/dock/add_content.png);
+	background-repeat: no-repeat;
+	color: white;
+	font-size: 1.2em;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.lfr-upload-container a.clear-uploads {
+	background-image: url(@theme_image_path@/portlet/refresh.png);
+	background-repeat: no-repeat;
+}
+
+.lfr-upload-container a.cancel-uploads {
+	background-image: url(@theme_image_path@/common/close.png);
+	background-repeat: no-repeat;
+}
+
+.lfr-upload-container .upload-file {
+	background: url(@theme_image_path@/file_system/small/jpg.png) no-repeat 5px 50%;
+	border: 1px solid #CCC;
+	font-weight: bold;
+	text-shadow: 1px 1px #FFF;
+}
+
+.lfr-upload-container .upload-file.upload-complete {
+	background-position: 22px 50%;
+}
+
+.lfr-upload-container .upload-file.upload-complete.file-saved, .lfr-upload-container .upload-file.upload-complete.upload-error {
+	background-position: 5px 50%;
+}
+
+.lfr-upload-container .upload-list .upload-file.upload-complete.selected, .lfr-upload-container .upload-list .upload-file.upload-complete.pending-file.selected {
+	background-color: #D3E8F1;
+	border-color: #38F;
+	color: #047;
+	text-shadow: 1px 1px #FFF;
+}
+
+.lfr-upload-container .upload-list-info h4 {
+	font-size: 1.3em;
+}
+
+.lfr-upload-container .cancel-button {
+	background-image: url(@theme_image_path@/common/delete.png);
+	background-repeat: no-repeat;
+}
+
+.select-files {
+	border: 1px solid #FFF;
+	border-color: #F0F1F2 #B2B2B2 #949494 #F0F1F1;
+	line-height: 0;
+}
+
+.lfr-upload-container .delete-button {
+	background-image: url(@theme_image_path@/portlet/close.png);
+	background-repeat: no-repeat;
+	font-size: 0;
+}
+
+.lfr-upload-container .upload-file.upload-complete.file-saved {
+	background-color: #B4DDAD;
+	background-image: url(@theme_image_path@/dock/my_place_current.png);
+	font-weight: bold;
+}
+
+.lfr-upload-container .pending-file {
+	background-color: #E0E0E0;
+	color: #777;
+	text-shadow: -1px -1px #FFF;
+}
+
+.lfr-upload-container .file-added .success-message {
+	font-weight: normal;
+}
+
+.lfr-upload-container .upload-error {
+	background-color: #FDD;
+	background-image: url(@theme_image_path@/messages/error.png);
+	font-weight: normal;
+}
+
+.lfr-upload-container .upload-complete .error-message, .lfr-upload-container .upload-complete .success-message {
+	font-weight: bold;
+}
+
+.lfr-upload-container .file-uploading {
+	background-color: #ffc;
+}
+
+.lfr-upload-container .progress-bar {
+	background: #fff;
+	border: 1px solid #83a8d9;
+}
+
+.lfr-upload-container .progress {
+	background: #8db2e3;
 }

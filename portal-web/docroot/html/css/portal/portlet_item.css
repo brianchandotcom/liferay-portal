@@ -1,24 +1,11 @@
 .lfr-portlet-item {
-	background: url(@theme_image_path@/add_content/portlet_item.png) no-repeat 0 50%;
-	border: 1px solid #fff;
 	cursor: move;
-	font-size: 1.1em;
 	margin-bottom: 3px;
 	padding: 0 5px 0 20px;
 }
 
-.lfr-add-content .lfr-portlet-item.lfr-instanceable {
-	background-image: url(@theme_image_path@/add_content/portlet_item_instanceable.png);
-}
-
 .lfr-add-content .lfr-portlet-item.lfr-archived-setup {
-	background-image: url(@theme_image_path@/add_content/portlet_item_archived_setup.png);
 	margin-left: 20px;
-}
-
-.lfr-portlet-item:hover, .lfr-portlet-item.over {
-	background-color: #ffc;
-	border-color: #fc0;
 }
 
 .ie .lfr-portlet-item {
@@ -26,7 +13,6 @@
 }
 
 .lfr-portlet-item p {
-	font-size: 1em;
 	margin: 0;
 	padding-right: 30px;
 	position: relative;
@@ -34,8 +20,6 @@
 
 .lfr-portlet-item p a {
 	cursor: pointer;
-	font-size: 0.9em;
-	font-weight: bold;
 	position: absolute;
 	right: 0;
 	top: 0;
@@ -51,4 +35,33 @@
 
 #layout_configuration_content {
 	width: 95%;
+}
+
+/*Skin*/
+.lfr-portlet-item {
+	background: url(@theme_image_path@/add_content/portlet_item.png) no-repeat 0 50%;
+	border: 1px solid #fff;
+	font-size: 1.1em;
+}
+
+.lfr-add-content .lfr-portlet-item.lfr-instanceable {
+	background-image: url(@theme_image_path@/add_content/portlet_item_instanceable.png);
+}
+
+.lfr-add-content .lfr-portlet-item.lfr-archived-setup {
+	background-image: url(@theme_image_path@/add_content/portlet_item_archived_setup.png);
+}
+
+.lfr-portlet-item:hover, .lfr-portlet-item.over {
+	background-color: #ffc;
+	border-color: #fc0;
+}
+
+.lfr-portlet-item p {
+	font-size: 1em;
+}
+
+.lfr-portlet-item p a {
+	font-size: 0.9em;
+	font-weight: bold;
 }

@@ -1,5 +1,4 @@
 .lfr-toolbar {
-	background-color: #e5e4e8;
 	padding-top: 3px;
 }
 
@@ -20,7 +19,6 @@
 }
 
 .lfr-toolbar .lfr-button, .lfr-emoticon-container .lfr-button {
-	border: 1px solid #e5e4e8;
 	cursor: pointer;
 	margin: 0 2px;
 	padding: 2px 4px;
@@ -30,20 +28,7 @@
 	vertical-align: text-top;
 }
 
-.lfr-toolbar .lfr-button:focus {
-	border: 1px solid #000;
-}
-
-.lfr-toolbar .lfr-button:hover {
-	border-bottom-color: #777;
-	border-right-color: #777;
-	border: 1px solid #ccc;
-}
-
 .lfr-toolbar .lfr-separator {
-	border-left: 1px solid #fff;
-	border-right: 1px solid #ccc;
-	font-size: 12px;
 	height: 25px;
 	margin: 0 5px;
 }
@@ -61,8 +46,6 @@
 }
 
 .lfr-emoticon-container {
-	background: #e5e4e8;
-	border: 1px solid #ccc;
 	padding-top: 5px;
 	overflow: hidden;
 	width: 180px;
@@ -70,4 +53,34 @@
 
 .lfr-emoticon-container .lfr-button {
 	margin: 0;
+}
+
+/*Skin*/
+.lfr-toolbar {
+	background-color: #e5e4e8;
+}
+
+.lfr-toolbar .lfr-button, .lfr-emoticon-container .lfr-button {
+	border: 1px solid #e5e4e8;
+}
+
+.lfr-toolbar .lfr-button:focus {
+	border: 1px solid #000;
+}
+
+.lfr-toolbar .lfr-button:hover {
+	border-bottom-color: #777;
+	border-right-color: #777;
+	border: 1px solid #ccc;
+}
+
+.lfr-toolbar .lfr-separator {
+	border-left: 1px solid #fff;
+	border-right: 1px solid #ccc;
+	font-size: 12px;
+}
+
+.lfr-emoticon-container {
+	background: #e5e4e8;
+	border: 1px solid #ccc;
 }

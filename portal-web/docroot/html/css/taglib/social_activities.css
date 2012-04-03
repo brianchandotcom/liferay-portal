@@ -8,7 +8,6 @@
 }
 
 .taglib-social-activities .day-separator {
-	border-bottom: 1px dotted #CCC;
 	margin-bottom: 0px;
 	margin-top: 10px;
 	padding-bottom: 2px;
@@ -16,4 +15,10 @@
 
 .taglib-social-activities .portlet-icon {
 	width: 16px;
+}
+
+/*Skin*/
+
+.taglib-social-activities .day-separator {
+	border-bottom: 1px dotted #CCC;
 }

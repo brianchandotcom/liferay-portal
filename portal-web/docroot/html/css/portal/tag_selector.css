@@ -11,21 +11,17 @@
 }
 
 .lfr-tags-selector-list {
-	border: solid #ccc;
-	border-width: 0 1px 1px;
 	height: 265px;
 	margin-bottom: 0.5em;
 	overflow: auto;
 }
 
 .lfr-tag-selector-popup fieldset {
-	border-width: 0;
 	margin: 0;
 	padding: 0;
 }
 
 .lfr-tag-selector-popup label {
-	border-bottom: 1px solid #ccc;
 	cursor: pointer;
 	display: block;
 	padding: 2px;
@@ -50,8 +46,6 @@
 }
 
 .lfr-tag-selector-popup .aui-textfield-content {
-	background-color: #D3DADD;
-	border-bottom: 1px solid #AEB8BC;
 	padding: 5px;
 }
 
@@ -60,10 +54,32 @@
 }
 
 .lfr-tag-selector-popup .no-matches {
-	color: #999;
 	padding: 3px;
 }
 
 .lfr-tag-selector-popup .no-matches .lfr-tag-message {
 	display: block;
+}
+
+/*Skin*/
+.lfr-tags-selector-list {
+	border: solid #ccc;
+	border-width: 0 1px 1px;
+}
+
+.lfr-tag-selector-popup fieldset {
+	border-width: 0;
+}
+
+.lfr-tag-selector-popup label {
+	border-bottom: 1px solid #ccc;
+}
+
+.lfr-tag-selector-popup .aui-textfield-content {
+	background-color: #D3DADD;
+	border-bottom: 1px solid #AEB8BC;
+}
+
+.lfr-tag-selector-popup .no-matches {
+	color: #999;
 }

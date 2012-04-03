@@ -1,11 +1,3 @@
-.taglib-diff-html div.diff-removed-image {
-	background: #fdc6c6 url(@theme_image_path@/diff/minus.png);
-}
-
-.taglib-diff-html div.diff-added-image {
-	background: #cfc url(@theme_image_path@/diff/plus.png) no-repeat;
-}
-
 .taglib-diff-html div.diff-removed-image, div.diff-added-image {
 	height: 300px;
 	margin: 2px;
@@ -20,6 +12,15 @@
 
 .ie .taglib-diff-html div.diff-removed-image, .ie div.diff-added-image {
 	filter: alpha(opacity=55);
+}
+
+/*Skin*/
+.taglib-diff-html div.diff-removed-image {
+	background: #fdc6c6 url(@theme_image_path@/diff/minus.png);
+}
+
+.taglib-diff-html div.diff-added-image {
+	background: #cfc url(@theme_image_path@/diff/plus.png) no-repeat;
 }
 
 .taglib-diff-html span.diff-html-added img {

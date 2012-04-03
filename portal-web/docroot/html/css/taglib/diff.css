@@ -1,3 +1,8 @@
+.taglib-diff-table {
+	width: 100%;
+}
+
+/*Skin*/
 .taglib-diff-addedline, #taglib-diff-results ins {
 	background: #E6FFE6;
 }
@@ -13,5 +18,4 @@
 .taglib-diff-table {
 	border-collapse: separate;
 	border-spacing: 5pt;
-	width: 100%;
 }

@@ -23,7 +23,6 @@ td.lfr-middle {
 }
 
 .definition-of-terms dt {
-	font-weight: bold;
 	float: left;
 }
 
@@ -60,9 +59,6 @@ td.lfr-middle {
 }
 
 .popup-alert-notice, .popup-alert-warning {
-	background: #ffc url() no-repeat 5px 50%;
-	border-bottom: 1px solid;
-	font-size: 1.1em;
 	left: 0;
 	padding: 10px;
 	padding-left: 25px;
@@ -70,6 +66,56 @@ td.lfr-middle {
 	top: 0;
 	width: 100%;
 	z-index: 10000;
+}
+
+.ie6 .popup-alert-notice, .ie6 .popup-alert-warning {
+	bottom: auto;
+	left: expression( ( LFR_IGNORE_ME2 = document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft ) + 'px' );
+	position: absolute;
+	right: auto;
+	top: expression( ( LFR_IGNORE_ME = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop ) + 'px' );
+}
+
+.popup-alert-notice input, .popup-alert-warning input {
+	vertical-align: middle;
+}
+
+.lfr-token-list {
+	clear: both;
+	margin: 1em 0;
+}
+
+.lfr-token {
+	cursor: pointer;
+	display: inline-block;
+	line-height: 1;
+	padding: 0.3em 0.5em 0.3em;
+	margin: 0 0.2em;
+}
+
+.lfr-token-primary, .lfr-token-primary:hover {
+	cursor: auto;
+}
+
+.lfr-token img {
+	margin-right: 0.3em;
+}
+
+.lfr-token-close, .lfr-token-text {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+/*Skin*/
+
+.definition-of-terms dt {
+	font-weight: bold;
+}
+
+.popup-alert-notice, .popup-alert-warning {
+	background: #ffc url() no-repeat 5px 50%;
+	border-bottom: 1px solid;
+	font-size: 1.1em;
 }
 
 .popup-alert-notice {
@@ -85,37 +131,15 @@ td.lfr-middle {
 	font-weight: bold;
 }
 
-.ie6 .popup-alert-notice, .ie6 .popup-alert-warning {
-	bottom: auto;
-	left: expression( ( LFR_IGNORE_ME2 = document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft ) + 'px' );
-	position: absolute;
-	right: auto;
-	top: expression( ( LFR_IGNORE_ME = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop ) + 'px' );
-}
-
 .popup-alert-notice .countdown-timer {
 	font-size: 1.1em;
 	font-weight: bold;
-}
-
-.popup-alert-notice input, .popup-alert-warning input {
-	vertical-align: middle;
-}
-
-.lfr-token-list {
-	clear: both;
-	margin: 1em 0;
 }
 
 .lfr-token {
 	background-color: #B3DAEF;
 	border: 1px solid #5FA8FF;
 	color: #444;
-	cursor: pointer;
-	display: inline-block;
-	line-height: 1;
-	padding: 0.3em 0.5em 0.3em;
-	margin: 0 0.2em;
 	text-decoration: none;
 }
 
@@ -130,14 +154,4 @@ td.lfr-middle {
 
 .lfr-token-primary, .lfr-token-primary:hover {
 	background-color: #B3DAEF;
-	cursor: auto;
-}
-
-.lfr-token img {
-	margin-right: 0.3em;
-}
-
-.lfr-token-close, .lfr-token-text {
-	display: inline-block;
-	vertical-align: middle;
 }

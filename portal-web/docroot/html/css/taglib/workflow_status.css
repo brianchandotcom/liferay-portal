@@ -3,23 +3,34 @@
 }
 
 .taglib-workflow-status .workflow-id {
-	background: url(@theme_image_path@/common/history.png) no-repeat 0 50%;
-	color: #999;
 	padding: 2px 20px;
 }
 
 .taglib-workflow-status .workflow-version {
-	background: url(@theme_image_path@/common/pages.png) no-repeat 0 50%;
-	color: #999;
 	margin-right: 5px;
 	padding: 2px 20px;
 }
 
 .taglib-workflow-status .workflow-status {
-	background: url(@theme_image_path@/common/recent_changes.png) no-repeat 0 50%;
-	color: #999;
 	margin-right: 5px;
 	padding: 2px 0 2px 20px;
+}
+
+/*Skin*/
+
+.taglib-workflow-status .workflow-id {
+	background: url(@theme_image_path@/common/history.png) no-repeat 0 50%;
+	color: #999;
+}
+
+.taglib-workflow-status .workflow-version {
+	background: url(@theme_image_path@/common/pages.png) no-repeat 0 50%;
+	color: #999;
+}
+
+.taglib-workflow-status .workflow-status {
+	background: url(@theme_image_path@/common/recent_changes.png) no-repeat 0 50%;
+	color: #999;
 }
 
 .taglib-workflow-status .workflow-status .workflow-status-approved {

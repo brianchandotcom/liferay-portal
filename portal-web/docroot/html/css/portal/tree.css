@@ -1,25 +1,12 @@
-.lfr-tree {
-}
-
 .lfr-tree .aui-tree-label {
 	display: table-cell;
 	float: none;
 	padding-left: 2px;
 }
 
-.lfr-tree .expand-image {
-}
-
-.lfr-tree a {
-	text-decoration: none;
-}
-
 .lfr-tree li {
 	margin-bottom: 2px;
 	padding-left: 0;
-}
-
-.lfr-tree li ul {
 }
 
 .lfr-tree li ul li, .lfr-tree li.tree-item {
@@ -37,4 +24,9 @@
 .lfr-tree li.tree-item ul {
 	margin-left: 0;
 	margin-top: 5px;
+}
+
+/*Skin*/
+.lfr-tree a {
+	text-decoration: none;
 }

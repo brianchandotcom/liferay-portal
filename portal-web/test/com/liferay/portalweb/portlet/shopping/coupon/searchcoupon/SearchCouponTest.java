@@ -90,9 +90,7 @@ public class SearchCouponTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_34_code']",
-			RuntimeVariables.replace(RuntimeVariables.getValue("codeSearch")));
-		selenium.typeKeys("//input[@id='_34_code']",
-			RuntimeVariables.replace("1"));
+			RuntimeVariables.replace("testtest"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");

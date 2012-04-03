@@ -24,23 +24,6 @@ public class AddCategoryItemNameNullTest extends BaseTestCase {
 	public void testAddCategoryItemNameNull() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Shopping Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.clickAt("link=Shopping Test Page",
 			RuntimeVariables.replace("Shopping Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -75,10 +58,12 @@ public class AddCategoryItemNameNullTest extends BaseTestCase {
 				"//input[@id='_34_requiresShippingCheckbox']"));
 		selenium.type("//input[@id='_34_stockQuantity']",
 			RuntimeVariables.replace("50"));
-		selenium.type("//input[@id='_34_price']",
-			RuntimeVariables.replace("$9.99"));
-		selenium.type("//input[@id='_34_minQuantity']",
+		selenium.type("//input[@id='_34_minQuantity0']",
 			RuntimeVariables.replace("1"));
+		selenium.type("//input[@id='_34_maxQuantity0']",
+			RuntimeVariables.replace("1"));
+		selenium.type("//input[@id='_34_price0']",
+			RuntimeVariables.replace("$9.99"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

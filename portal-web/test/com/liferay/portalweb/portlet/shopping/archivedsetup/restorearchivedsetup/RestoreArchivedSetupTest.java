@@ -136,5 +136,6 @@ public class RestoreArchivedSetupTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("//tr[3]/td[2]"));
 		assertTrue(selenium.isElementPresent("//tr[3]/td[3]"));
+		selenium.selectFrame("relative=top");
 	}
 }

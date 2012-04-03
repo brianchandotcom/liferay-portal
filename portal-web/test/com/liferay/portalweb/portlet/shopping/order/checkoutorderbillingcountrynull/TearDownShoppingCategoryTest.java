@@ -29,23 +29,6 @@ public class TearDownShoppingCategoryTest extends BaseTestCase {
 			case 1:
 				selenium.open("/web/guest/home/");
 				loadRequiredJavaScriptModules();
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("link=Shopping Test Page")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
 				selenium.clickAt("link=Shopping Test Page",
 					RuntimeVariables.replace("Shopping Test Page"));
 				selenium.waitForPageToLoad("30000");
@@ -56,7 +39,7 @@ public class TearDownShoppingCategoryTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 
 				boolean shoppingCategory1Present = selenium.isElementPresent(
-						"//td[4]/span/ul/li/strong/a");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!shoppingCategory1Present) {
 					label = 2;
@@ -64,9 +47,11 @@ public class TearDownShoppingCategoryTest extends BaseTestCase {
 					continue;
 				}
 
+				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[4]/span/ul/li/strong/a"));
-				selenium.clickAt("//td[4]/span/ul/li/strong/a",
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -76,7 +61,7 @@ public class TearDownShoppingCategoryTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
+									"//a[@id='_34_ocerSearchContainer_1_menu_delete']")) {
 							break;
 						}
 					}
@@ -88,9 +73,9 @@ public class TearDownShoppingCategoryTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+						"//a[@id='_34_ocerSearchContainer_1_menu_delete']"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+						"//a[@id='_34_ocerSearchContainer_1_menu_delete']"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
@@ -99,7 +84,7 @@ public class TearDownShoppingCategoryTest extends BaseTestCase {
 			case 2:
 
 				boolean shoppingCategory2Present = selenium.isElementPresent(
-						"//td[4]/span/ul/li/strong/a");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!shoppingCategory2Present) {
 					label = 3;
@@ -107,9 +92,11 @@ public class TearDownShoppingCategoryTest extends BaseTestCase {
 					continue;
 				}
 
+				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[4]/span/ul/li/strong/a"));
-				selenium.clickAt("//td[4]/span/ul/li/strong/a",
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -119,7 +106,7 @@ public class TearDownShoppingCategoryTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
+									"//a[@id='_34_ocerSearchContainer_1_menu_delete']")) {
 							break;
 						}
 					}
@@ -131,9 +118,9 @@ public class TearDownShoppingCategoryTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+						"//a[@id='_34_ocerSearchContainer_1_menu_delete']"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+						"//a[@id='_34_ocerSearchContainer_1_menu_delete']"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
@@ -142,7 +129,7 @@ public class TearDownShoppingCategoryTest extends BaseTestCase {
 			case 3:
 
 				boolean shoppingCategory3Present = selenium.isElementPresent(
-						"//td[4]/span/ul/li/strong/a");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!shoppingCategory3Present) {
 					label = 4;
@@ -150,9 +137,11 @@ public class TearDownShoppingCategoryTest extends BaseTestCase {
 					continue;
 				}
 
+				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[4]/span/ul/li/strong/a"));
-				selenium.clickAt("//td[4]/span/ul/li/strong/a",
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -162,7 +151,7 @@ public class TearDownShoppingCategoryTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
+									"//a[@id='_34_ocerSearchContainer_1_menu_delete']")) {
 							break;
 						}
 					}
@@ -174,9 +163,9 @@ public class TearDownShoppingCategoryTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+						"//a[@id='_34_ocerSearchContainer_1_menu_delete']"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+						"//a[@id='_34_ocerSearchContainer_1_menu_delete']"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
@@ -185,7 +174,7 @@ public class TearDownShoppingCategoryTest extends BaseTestCase {
 			case 4:
 
 				boolean shoppingCategory4Present = selenium.isElementPresent(
-						"//td[4]/span/ul/li/strong/a");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!shoppingCategory4Present) {
 					label = 5;
@@ -193,9 +182,11 @@ public class TearDownShoppingCategoryTest extends BaseTestCase {
 					continue;
 				}
 
+				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[4]/span/ul/li/strong/a"));
-				selenium.clickAt("//td[4]/span/ul/li/strong/a",
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -205,7 +196,7 @@ public class TearDownShoppingCategoryTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
+									"//a[@id='_34_ocerSearchContainer_1_menu_delete']")) {
 							break;
 						}
 					}
@@ -217,9 +208,9 @@ public class TearDownShoppingCategoryTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+						"//a[@id='_34_ocerSearchContainer_1_menu_delete']"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+						"//a[@id='_34_ocerSearchContainer_1_menu_delete']"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
@@ -228,7 +219,7 @@ public class TearDownShoppingCategoryTest extends BaseTestCase {
 			case 5:
 
 				boolean shoppingCategory5Present = selenium.isElementPresent(
-						"//td[4]/span/ul/li/strong/a");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!shoppingCategory5Present) {
 					label = 6;
@@ -236,9 +227,11 @@ public class TearDownShoppingCategoryTest extends BaseTestCase {
 					continue;
 				}
 
+				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[4]/span/ul/li/strong/a"));
-				selenium.clickAt("//td[4]/span/ul/li/strong/a",
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -248,7 +241,7 @@ public class TearDownShoppingCategoryTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
+									"//a[@id='_34_ocerSearchContainer_1_menu_delete']")) {
 							break;
 						}
 					}
@@ -260,9 +253,9 @@ public class TearDownShoppingCategoryTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+						"//a[@id='_34_ocerSearchContainer_1_menu_delete']"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+						"//a[@id='_34_ocerSearchContainer_1_menu_delete']"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()

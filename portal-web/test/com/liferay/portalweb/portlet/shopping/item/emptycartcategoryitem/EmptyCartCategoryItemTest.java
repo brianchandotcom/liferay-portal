@@ -49,7 +49,7 @@ public class EmptyCartCategoryItemTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
-				"Shopping Category Item Name\nShopping Category Item Description\n\nAvailability: In Stock\n\n\nPrice for 1 Items and Above:$9.99"),
+				"Shopping Category Item Name\nShopping Category Item Description\n\nAvailability: In Stock\n\n\nPrice for 1 to 1 Items:$9.99"),
 			selenium.getText("//td[2]/a"));
 		selenium.clickAt("//input[@value='Empty Cart']",
 			RuntimeVariables.replace(""));
@@ -68,6 +68,6 @@ public class EmptyCartCategoryItemTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Your cart is empty."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertFalse(selenium.isTextPresent(
-				"Shopping Category Item Name\nShopping Category Item Description\n\nAvailability: In Stock\n\n\nPrice for 1 Items and Above:$9.99"));
+				"Shopping Category Item Name\nShopping Category Item Description\n\nAvailability: In Stock\n\n\nPrice for 1 to 1 Items:$9.99"));
 	}
 }

@@ -31,10 +31,14 @@ page import="com.liferay.portlet.usersadmin.util.UsersAdminUtil" %>
 
 <%
 boolean filterManageableOrganizations = true;
+
+if (portletName.equals(PortletKeys.MY_ACCOUNT) || permissionChecker.hasPermission(scopeGroupId, Organization.class.getName(), String.valueOf(company.getCompanyId()), ActionKeys.VIEW)) {
+	filterManageableOrganizations = false;
+}
+
 boolean filterManageableUserGroups = true;
 
-if (portletName.equals(PortletKeys.MY_ACCOUNT) || permissionChecker.isCompanyAdmin()) {
-	filterManageableOrganizations = false;
+if (portletName.equals(PortletKeys.MY_ACCOUNT) || permissionChecker.hasPermission(scopeGroupId, PortletKeys.USER_GROUPS_ADMIN, String.valueOf(company.getCompanyId()), ActionKeys.VIEW)) {
 	filterManageableUserGroups = false;
 }
 %>

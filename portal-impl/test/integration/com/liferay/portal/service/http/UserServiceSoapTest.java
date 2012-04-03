@@ -36,7 +36,7 @@ import org.junit.runner.RunWith;
  */
 @ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class UserServiceSoapTest extends BaseServiceSoapTestCase {
+public class UserServiceSoapTest {
 
 	@Test
 	public void testAddUser() throws Exception {
@@ -100,7 +100,8 @@ public class UserServiceSoapTest extends BaseServiceSoapTestCase {
 			new UserServiceSoapServiceLocator();
 
 		UserServiceSoap service = locator.getPortal_UserService(
-			getURL(TestPropsValues.getUserId(), "Portal_UserService"));
+			TestPropsValues.getSoapURL(
+				locator.getPortal_UserServiceWSDDServiceName()));
 
 		return service;
 	}

@@ -35,7 +35,7 @@ import org.junit.runner.RunWith;
  */
 @ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class UserServiceHttpTest extends BaseServiceHttpTestCase {
+public class UserServiceHttpTest {
 
 	@Test
 	public void testAddUser() throws Exception {
@@ -47,7 +47,7 @@ public class UserServiceHttpTest extends BaseServiceHttpTestCase {
 		User user = addUser();
 
 		UserServiceHttp.deleteUser(
-			getHttpPrincipal(TestPropsValues.getUserId()), user.getUserId());
+			TestPropsValues.getHttpPrincipal(), user.getUserId());
 	}
 
 	@Test
@@ -55,8 +55,8 @@ public class UserServiceHttpTest extends BaseServiceHttpTestCase {
 		User user = addUser();
 
 		UserServiceHttp.getUserByEmailAddress(
-			getHttpPrincipal(TestPropsValues.getUserId()),
-			TestPropsValues.getCompanyId(), user.getEmailAddress());
+			TestPropsValues.getHttpPrincipal(), TestPropsValues.getCompanyId(),
+			user.getEmailAddress());
 	}
 
 	protected User addUser() throws Exception {
@@ -90,12 +90,12 @@ public class UserServiceHttpTest extends BaseServiceHttpTestCase {
 		ServiceContext serviceContext = new ServiceContext();
 
 		return UserServiceHttp.addUser(
-			getHttpPrincipal(TestPropsValues.getUserId()),
-			TestPropsValues.getCompanyId(), autoPassword, password1, password2,
-			autoScreenName, screenName, emailAddress, facebookId, openId,
-			locale, firstName, middleName, lastName, prefixId, suffixId, male,
-			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
-			organizationIds, roleIds, userGroupIds, sendMail, serviceContext);
+			TestPropsValues.getHttpPrincipal(), TestPropsValues.getCompanyId(),
+			autoPassword, password1, password2, autoScreenName, screenName,
+			emailAddress, facebookId, openId, locale, firstName, middleName,
+			lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay,
+			birthdayYear, jobTitle, groupIds, organizationIds, roleIds,
+			userGroupIds, sendMail, serviceContext);
 	}
 
 }

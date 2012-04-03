@@ -34,7 +34,6 @@ public class BaseDLAppTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-
 		String name = "Test Folder";
 		String description = "This is a test folder.";
 

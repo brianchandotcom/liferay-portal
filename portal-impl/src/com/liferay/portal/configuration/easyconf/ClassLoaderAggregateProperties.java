@@ -214,7 +214,21 @@ public class ClassLoaderAggregateProperties extends AggregatedProperties {
 			Conventions.INCLUDE_PROPERTY);
 
 		for (String fileName : fileNames) {
-			URL url = _classLoader.getResource(fileName);
+			URL url = null;
+
+			try {
+				url = _classLoader.getResource(fileName);
+			}
+			catch (RuntimeException rtex) {
+				if (fileName.startsWith("file:/") == false) {
+					fileName = "file:/".concat(fileName);
+
+					url = _classLoader.getResource(fileName);
+				}
+				else {
+					throw rtex;
+				}
+			}
 
 			_addPropertiesSource(fileName, url, loadedCompositeConfiguration);
 		}
@@ -271,9 +285,11 @@ public class ClassLoaderAggregateProperties extends AggregatedProperties {
 
 			return newConfiguration;
 		}
-		catch (Exception ignore) {
+		catch (Exception ex) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Configuration source " + sourceName + " ignored");
+
+				_log.debug("Configuration source " + sourceName + " ignored: "
+					+ ex.getMessage());
 			}
 
 			return null;

@@ -140,11 +140,9 @@ public class PortletPreferencesImpl
 		}
 		else {
 			Map<String, Preference> modifiedPreferences =
-				getModifiedPreferences(false);
+				getModifiedPreferences();
 
-			if (modifiedPreferences != null) {
-				modifiedPreferences.remove(key);
-			}
+			modifiedPreferences.remove(key);
 		}
 	}
 

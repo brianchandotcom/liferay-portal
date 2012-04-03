@@ -141,12 +141,7 @@ public abstract class BasePreferencesImpl implements Serializable {
 	}
 
 	public void reset() {
-		Map<String, Preference> modifiedPreferences = getModifiedPreferences(
-			false);
-
-		if (modifiedPreferences != null) {
-			modifiedPreferences.clear();
-		}
+		_modifiedPreferences = new ConcurrentHashMap<String, Preference>();
 	}
 
 	public abstract void reset(String key) throws ReadOnlyException;
@@ -158,8 +153,7 @@ public abstract class BasePreferencesImpl implements Serializable {
 
 		value = getXMLSafeValue(value);
 
-		Map<String, Preference> modifiedPreferences = getModifiedPreferences(
-			true);
+		Map<String, Preference> modifiedPreferences = getModifiedPreferences();
 
 		Preference preference = modifiedPreferences.get(key);
 
@@ -186,8 +180,7 @@ public abstract class BasePreferencesImpl implements Serializable {
 
 		values = getXMLSafeValues(values);
 
-		Map<String, Preference> modifiedPreferences = getModifiedPreferences(
-			true);
+		Map<String, Preference> modifiedPreferences = getModifiedPreferences();
 
 		Preference preference = modifiedPreferences.get(key);
 
@@ -245,10 +238,8 @@ public abstract class BasePreferencesImpl implements Serializable {
 		return _companyId;
 	}
 
-	protected Map<String, Preference> getModifiedPreferences(
-		boolean createIfAbsent) {
-
-		if ((_modifiedPreferences == null) && createIfAbsent) {
+	protected Map<String, Preference> getModifiedPreferences() {
+		if (_modifiedPreferences == null) {
 			_modifiedPreferences = new ConcurrentHashMap<String, Preference>();
 
 			for (Map.Entry<String, Preference> entry :

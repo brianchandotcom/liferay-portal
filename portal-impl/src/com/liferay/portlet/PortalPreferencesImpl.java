@@ -128,12 +128,9 @@ public class PortalPreferencesImpl
 			throw new ReadOnlyException(key);
 		}
 
-		Map<String, Preference> modifiedPreferences = getModifiedPreferences(
-			false);
+		Map<String, Preference> modifiedPreferences = getModifiedPreferences();
 
-		if (modifiedPreferences != null) {
-			modifiedPreferences.remove(key);
-		}
+		modifiedPreferences.remove(key);
 	}
 
 	public void resetValues(String namespace) {

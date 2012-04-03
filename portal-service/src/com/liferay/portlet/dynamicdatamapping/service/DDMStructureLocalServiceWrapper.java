@@ -445,6 +445,12 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 		return _ddmStructureLocalService.getStructures(groupId, start, end);
 	}
 
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getStructures(
+		long[] groupIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _ddmStructureLocalService.getStructures(groupIds);
+	}
+
 	public int getStructuresCount(long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _ddmStructureLocalService.getStructuresCount(groupId);

@@ -16,6 +16,7 @@ package com.liferay.portlet.dynamicdatalists.util;
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -45,6 +46,8 @@ public interface DDL {
 	public JSONObject getRecordJSONObject(
 			DDLRecord record, boolean latestRecordVersion)
 		throws Exception;
+
+	public List<DDLRecord> getRecords(Hits hits) throws Exception;
 
 	public JSONArray getRecordSetJSONArray(DDLRecordSet recordSet)
 		throws Exception;

@@ -19,6 +19,10 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -177,6 +181,13 @@ public class DDLRecordLocalServiceImpl
 				_log.debug(nsde.getMessage());
 			}
 		}
+
+		// Indexer
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			DDLRecord.class);
+
+		indexer.delete(record);
 	}
 
 	public void deleteRecord(long recordId)
@@ -200,6 +211,19 @@ public class DDLRecordLocalServiceImpl
 
 	public DDLRecord fetchRecord(long recordId) throws SystemException {
 		return ddlRecordPersistence.fetchByPrimaryKey(recordId);
+	}
+
+	public List<DDLRecord> getCompanyRecords(
+			long companyId, int start, int end,
+			OrderByComparator orderByComparator)
+		throws SystemException {
+
+		return ddlRecordPersistence.findByCompanyId(
+			companyId, start, end, orderByComparator);
+	}
+
+	public int getCompanyRecordsCount(long companyId) throws SystemException {
+		return ddlRecordPersistence.countByCompanyId(companyId);
 	}
 
 	public DDLRecordVersion getLatestRecordVersion(long recordId)
@@ -298,6 +322,18 @@ public class DDLRecordLocalServiceImpl
 		updateRecord(
 			userId, recordId, true, recordVersion.getDisplayIndex(), fields,
 			false, serviceContext);
+	}
+
+	public Hits search(SearchContext searchContext) throws SystemException {
+		try {
+			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				DDLRecord.class);
+
+			return indexer.search(searchContext);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
 	}
 
 	public void updateAsset(
@@ -482,6 +518,26 @@ public class DDLRecordLocalServiceImpl
 
 				ddlRecordPersistence.update(record, false);
 			}
+
+			// Indexer
+
+			if (recordVersion.getVersion().equals(
+					DDLRecordConstants.VERSION_DEFAULT)) {
+
+				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+					DDLRecord.class);
+
+				indexer.delete(record);
+			}
+		}
+
+		// Indexer
+
+		if (status == WorkflowConstants.STATUS_APPROVED) {
+			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				DDLRecord.class);
+
+			indexer.reindex(record);
 		}
 
 		return record;

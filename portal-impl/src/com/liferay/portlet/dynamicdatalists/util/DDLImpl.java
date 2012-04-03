@@ -18,7 +18,12 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.templateparser.Transformer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -32,6 +37,7 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.dynamicdatalists.NoSuchRecordException;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordConstants;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
@@ -52,6 +58,7 @@ import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
 import com.liferay.util.portlet.PortletRequestUtil;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -162,6 +169,44 @@ public class DDLImpl implements DDL {
 		}
 
 		return jsonObject;
+	}
+
+	public List<DDLRecord> getRecords(Hits hits) throws Exception {
+		List<DDLRecord> records = new ArrayList<DDLRecord>();
+
+		List<com.liferay.portal.kernel.search.Document> documents =
+			hits.toList();
+
+		for (com.liferay.portal.kernel.search.Document document : documents) {
+			long recordId = GetterUtil.getLong(
+				document.get(
+					com.liferay.portal.kernel.search.Field.ENTRY_CLASS_PK));
+
+			try {
+				DDLRecord record = DDLRecordLocalServiceUtil.getRecord(
+					recordId);
+
+				records.add(record);
+			}
+			catch (NoSuchRecordException nsre) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"DDL record index is stale and contais record { "+
+							recordId + "}");
+				}
+
+				Indexer indexer = IndexerRegistryUtil.getIndexer(
+					DDLRecord.class);
+
+				long companyId = GetterUtil.getLong(
+					document.get(
+						com.liferay.portal.kernel.search.Field.COMPANY_ID));
+
+				indexer.delete(companyId, document.getUID());
+			}
+		}
+
+		return records;
 	}
 
 	public JSONArray getRecordSetJSONArray(DDLRecordSet recordSet)
@@ -423,6 +468,8 @@ public class DDLImpl implements DDL {
 			}
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(DDLImpl.class);
 
 	private Transformer _transformer = new DDLTransformer();
 

@@ -95,8 +95,8 @@ public class LayoutSetBranchLocalServiceImpl
 
 			if (master) {
 
-				// Do not go through LayoutSetLocalServiceStagingAdvice when
-				// creating the master branch
+				// When creating the master branch, we have to ensure we don't
+				// go through the Advice, which will result in error
 
 				layoutSet = layoutSetPersistence.findByG_P(
 					groupId, privateLayout);
@@ -373,8 +373,8 @@ public class LayoutSetBranchLocalServiceImpl
 
 			if (layoutSetId <= 0) {
 
-				// Do not go throug hLayoutSetLocalServiceStagingAdvice since
-				// all we need is the layout set ID
+				// No need to go through Advice here since all we need is the
+				// layoutSetId
 
 				LayoutSet layoutSet = layoutSetPersistence.findByG_P(
 					groupId, privateLayout);

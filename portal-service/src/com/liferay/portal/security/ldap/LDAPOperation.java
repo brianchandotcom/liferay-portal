@@ -14,29 +14,11 @@
 
 package com.liferay.portal.security.ldap;
 
-import com.liferay.portal.model.Contact;
-import com.liferay.portal.model.User;
-
-import java.io.Serializable;
-
-import java.util.Map;
-
 /**
- * @author Michael C. Han
  * @author Marcellus Tavares
  */
-public interface PortalLDAPExporter {
+public enum LDAPOperation {
 
-	public void exportToLDAP(
-			Contact contact, Map<String, Serializable> contactExpandoAttributes)
-		throws Exception;
-
-	public void exportToLDAP(
-			long userId, long userGroupId, LDAPOperation ldapOperation)
-		throws Exception;
-
-	public void exportToLDAP(
-			User user, Map<String, Serializable> userExpandoAttributes)
-		throws Exception;
+	ADD, UPDATE, REMOVE
 
 }

@@ -39,6 +39,7 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL.toString() %>" />
 	<aui:input name="assetEntryType" type="hidden" value="<%= typeSelection %>" />
 	<aui:input name="typeSelection" type="hidden" />
+	<aui:input name="groupId" type="hidden" />
 	<aui:input name="assetEntryId" type="hidden" />
 	<aui:input name="assetParentId" type="hidden" />
 	<aui:input name="preferences--assetTitle--" type="hidden" />
@@ -80,6 +81,8 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 
 			List<KeyValuePair> scopesLeftList = new ArrayList<KeyValuePair>();
 
+			groupIds = AssetPublisherUtil.getGroupIds(preferences, scopeGroupId, layout);
+
 			for (long groupId : groupIds) {
 				Group group = GroupLocalServiceUtil.getGroup(groupId);
 
@@ -93,7 +96,7 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 			Arrays.sort(groupIds);
 			%>
 
-			<aui:select label="" name="preferences--defaultScope--">
+			<aui:select label="" name="preferences--defaultScope--" onChange='<%= renderResponse.getNamespace() + "selectScope();" %>'>
 				<aui:option label='<%= LanguageUtil.get(pageContext,"select-more-than-one") + "..." %>' selected="<%= groupIds.length > 1 %>" value="<%= false %>" />
 
 				<optgroup label="<liferay-ui:message key="scopes" />">
@@ -160,7 +163,7 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 											<%
 											for (AssetRendererFactory curRendererFactory : AssetRendererFactoryRegistryUtil.getAssetRendererFactories()) {
 												if (curRendererFactory.isSelectable() && (IndexerRegistryUtil.getIndexer(curRendererFactory.getClassName()) != null)) {
-													String taglibURL = "javascript:" + renderResponse.getNamespace() + "selectionForType('" + curRendererFactory.getClassName() + "')";
+													String taglibURL = "javascript:" + renderResponse.getNamespace() + "selectionForType('" + curRendererFactory.getClassName() + "','" + groupId + "')";
 												%>
 
 													<liferay-ui:icon
@@ -741,12 +744,36 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 		submitForm(document.<portlet:namespace />fm);
 	}
 
-	function <portlet:namespace />selectionForType(type) {
+	function <portlet:namespace />selectionForType(type, groupId) {
 		document.<portlet:namespace />fm.<portlet:namespace />typeSelection.value = type;
 		document.<portlet:namespace />fm.<portlet:namespace />assetEntryOrder.value = -1;
+		document.<portlet:namespace />fm.<portlet:namespace />groupId.value = groupId;
 
 		submitForm(document.<portlet:namespace />fm, '<%= configurationRenderURL.toString() %>');
 	}
+
+	function <portlet:namespace />selectScope() {
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'select-scope';
+
+		if (document.<portlet:namespace />fm.<portlet:namespace />defaultScope.value != 'false') {
+			submitForm(document.<portlet:namespace />fm);
+		}
+	}
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />selectScopes',
+		function() {
+			if (document.<portlet:namespace />fm.<portlet:namespace />scopeIds) {
+				document.<portlet:namespace />fm.<portlet:namespace />scopeIds.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentScopeIds);
+			}
+
+			document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'select-scope-ids';
+
+			submitForm(document.<portlet:namespace />fm);
+		},
+		['liferay-util-list-fields']
+	);
 
 	Liferay.provide(
 		window,
@@ -785,6 +812,15 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 	Liferay.Util.toggleBoxes('<portlet:namespace />enableRssCheckbox','<portlet:namespace />rssOptions');
 
 	Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />selectionStyle);
+
+	Liferay.after(
+		'inputmoveboxes:moveItem',
+		function(event){
+			if ((event.fromBox.get('id') == '<portlet:namespace />currentScopeIds') || ( event.toBox.get('id') == '<portlet:namespace />currentScopeIds')) {
+				<portlet:namespace />selectScopes();
+			}
+		}
+	);
 </aui:script>
 
 <c:if test='<%= selectionStyle.equals("dynamic") %>'>

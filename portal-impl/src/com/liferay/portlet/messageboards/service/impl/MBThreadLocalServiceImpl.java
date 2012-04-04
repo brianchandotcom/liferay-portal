@@ -143,6 +143,12 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		catch (NoSuchDirectoryException nsde) {
 		}
 
+		// Subscriptions
+
+		subscriptionLocalService.deleteSubscriptions(
+			thread.getCompanyId(), MBThread.class.getName(),
+			thread.getThreadId());
+
 		// Thread flags
 
 		mbThreadFlagPersistence.removeByThreadId(thread.getThreadId());

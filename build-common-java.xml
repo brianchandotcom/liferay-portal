@@ -174,6 +174,7 @@
 						project.setProperty("release.info.code.name", ReleaseInfo.getCodeName());
 						project.setProperty("release.info.build.date", String.valueOf(ReleaseInfo.getBuildDate()));
 						project.setProperty("release.info.build.number", String.valueOf(ReleaseInfo.getBuildNumber()));
+						project.setProperty("release.info.parent.build.number", String.valueOf(ReleaseInfo.getParentBuildNumber()));
 						project.setProperty("release.info.release.info", ReleaseInfo.getReleaseInfo());
 						project.setProperty("release.info.server.info", ReleaseInfo.getServerInfo());
 						project.setProperty("release.info.vendor", ReleaseInfo.getVendor());
@@ -210,6 +211,7 @@
 					<attribute name="Liferay-Portal-Build-Number" value="${release.info.build.number}" />
 					<attribute name="Liferay-Portal-Build-Revision" value="${build.revision}" />
 					<attribute name="Liferay-Portal-Build-Time" value="${build.time}" />
+					<attribute name="Liferay-Portal-Parent-Build-Number" value="${release.info.parent.build.number}" />
 					<attribute name="Liferay-Portal-Release-Info" value="${release.info.release.info}" />
 					<attribute name="Liferay-Portal-Server-Info" value="${release.info.server.info}" />
 					<attribute name="Liferay-Portal-Version" value="${release.info.version}" />

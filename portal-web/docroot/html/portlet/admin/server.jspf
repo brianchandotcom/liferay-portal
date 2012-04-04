@@ -674,30 +674,29 @@ numberFormat.setMinimumIntegerDigits(2);
 
 				numberFormat = NumberFormat.getInstance(locale);
 
-				long usedMemory = runtime.totalMemory() - runtime.freeMemory();
+				long maxMemory = runtime.maxMemory();
+				long totalMemory = runtime.totalMemory();
+				long usedMemory = totalMemory - runtime.freeMemory();
 				%>
 
 				<div>
+					<portlet:actionURL var="totalChartURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+						<portlet:param name="struts_action" value="/admin_server/view_chart" />
+						<portlet:param name="usedMemory" value = "<%= String.valueOf(usedMemory) %>" />
+						<portlet:param name="totalMemory" value = "<%= String.valueOf(totalMemory) %>" />
+						<portlet:param name="type" value = "total" />
+					</portlet:actionURL>
 
-					<%
-					DefaultValueDataset dataset = new DefaultValueDataset(usedMemory * 100 / runtime.totalMemory());
+					<img border="0" src="<%= totalChartURL %>" />
 
-					MeterPlot plot = _getMeterPlot(dataset, pageContext);
+					<portlet:actionURL var="maxChartURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+						<portlet:param name="struts_action" value="/admin_server/view_chart" />
+						<portlet:param name="usedMemory" value = "<%= String.valueOf(usedMemory) %>" />
+						<portlet:param name="maxMemory" value = "<%= String.valueOf(maxMemory) %>" />
+						<portlet:param name="type" value = "max" />
+					</portlet:actionURL>
 
-					JFreeChart chart = _getChart(LanguageUtil.get(pageContext, "used-memory") + " / " + LanguageUtil.get(pageContext, "total-memory"), plot);
-					%>
-
-					<img border="0" src="<%= themeDisplay.getPathContext() %>/display_chart?filename=<%= ServletUtilities.saveChartAsPNG(chart, 280, 180, null, null) %>" />
-
-					<%
-					dataset = new DefaultValueDataset(usedMemory * 100 / runtime.maxMemory());
-
-					plot = _getMeterPlot(dataset, pageContext);
-
-					chart = _getChart(LanguageUtil.get(pageContext, "used-memory") + " / " + LanguageUtil.get(pageContext, "maximum-memory"), plot);
-					%>
-
-					<img border="0" src="<%= themeDisplay.getPathContext() %>/display_chart?filename=<%= ServletUtilities.saveChartAsPNG(chart, 280, 180, null, null) %>" />
+					<img border="0" src="<%= maxChartURL %>" />
 				</div>
 
 				<br />
@@ -817,38 +816,4 @@ numberFormat.setMinimumIntegerDigits(2);
 <%!
 private static final String[] _IMAGEMAGICK_RESOURCE_LIMIT_LABELS= {"area", "disk", "file", "map", "memory", "thread", "time"};
 
-private JFreeChart _getChart(String title, MeterPlot plot) {
-	JFreeChart chart = new JFreeChart(title, new Font(null, Font.PLAIN, 13), plot, true);
-
-	chart.setBackgroundPaint(Color.white);
-
-	chart.removeLegend();
-
-	return chart;
-}
-
-private MeterPlot _getMeterPlot(DefaultValueDataset dataset, PageContext pageContext) {
-	MeterPlot plot = new MeterPlot(dataset);
-
-	plot.setDialBackgroundPaint(Color.white);
-	plot.setDialShape(DialShape.PIE);
-	plot.setDialOutlinePaint(Color.gray);
-	plot.setTickLabelFont(new Font(null, Font.PLAIN, 10));
-	plot.setTickLabelPaint(Color.darkGray);
-	plot.setTickLabelsVisible(true);
-	plot.setTickPaint(Color.lightGray);
-	plot.setTickSize(5D);
-	plot.setMeterAngle(180);
-	plot.setNeedlePaint(Color.darkGray);
-	plot.setRange(new Range(0.0D, 100D));
-	plot.setValueFont(new Font(null, Font.PLAIN, 10));
-	plot.setValuePaint(Color.black);
-	plot.setUnits("%");
-
-	plot.addInterval(new MeterInterval(LanguageUtil.get(pageContext, "normal"), new Range(0.0D, 75D), Color.lightGray, new BasicStroke(2.0F), new Color(0, 255, 0, 64)));
-	plot.addInterval(new MeterInterval(LanguageUtil.get(pageContext, "warning"), new Range(75D, 90D), Color.lightGray, new BasicStroke(2.0F), new Color(255, 255, 0, 64)));
-	plot.addInterval(new MeterInterval(LanguageUtil.get(pageContext, "critical"), new Range(90D, 100D), Color.lightGray, new BasicStroke(2.0F), new Color(255, 0, 0, 128)));
-
-	return plot;
-}
 %>

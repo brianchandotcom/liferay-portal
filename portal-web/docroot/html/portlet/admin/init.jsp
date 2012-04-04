@@ -37,22 +37,10 @@ page import="com.liferay.portlet.documentlibrary.util.PDFProcessorUtil" %><%@
 page import="com.liferay.portlet.expando.model.ExpandoBridge" %><%@
 page import="com.liferay.portlet.expando.model.ExpandoColumnConstants" %>
 
-<%@ page import="java.awt.BasicStroke" %><%@
-page import="java.awt.Color" %><%@
-page import="java.awt.Font" %>
-
 <%@ page import="org.apache.commons.collections.map.MultiValueMap" %><%@
 page import="org.apache.log4j.Level" %><%@
 page import="org.apache.log4j.LogManager" %><%@
 page import="org.apache.log4j.Logger" %>
-
-<%@ page import="org.jfree.chart.JFreeChart" %><%@
-page import="org.jfree.chart.plot.DialShape" %><%@
-page import="org.jfree.chart.plot.MeterInterval" %><%@
-page import="org.jfree.chart.plot.MeterPlot" %><%@
-page import="org.jfree.chart.servlet.ServletUtilities" %><%@
-page import="org.jfree.data.Range" %><%@
-page import="org.jfree.data.general.DefaultValueDataset" %>
 
 <%
 boolean showShardSelector = false;

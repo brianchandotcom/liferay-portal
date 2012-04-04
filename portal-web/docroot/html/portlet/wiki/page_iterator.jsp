@@ -359,9 +359,12 @@ for (int i = 0; i < results.size(); i++) {
 			<portlet:param name="struts_action" value="/wiki/edit_page" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
-			<portlet:param name="title" value="<%= StringPool.BLANK %>" />
 			<portlet:param name="editTitle" value="1" />
 		</portlet:actionURL>
+
+		<%
+			addPageURL = HttpUtil.setParameter(addPageURL, "title", StringPool.BLANK);
+		%>
 
 		<aui:button href="<%= addPageURL %>" name="addPageButton" value="add-page" />
 	</aui:button-row>

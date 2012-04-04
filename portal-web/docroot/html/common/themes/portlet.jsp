@@ -143,7 +143,7 @@ boolean wsrp = ParamUtil.getBoolean(request, "wsrp");
 			<c:otherwise>
 
 				<%
-				boolean showPortletActions = group.isLayoutPrototype() || (tilesPortletDecorateBoolean && (portletDisplay.isShowPortletCssIcon() || portletDisplay.isShowConfigurationIcon() || portletDisplay.isShowEditIcon() || portletDisplay.isShowCloseIcon()));
+				boolean showPortletActions = (group.isLayoutPrototype() || tilesPortletDecorateBoolean) && (portletDisplay.isShowPortletCssIcon() || portletDisplay.isShowConfigurationIcon() || portletDisplay.isShowEditIcon() || portletDisplay.isShowCloseIcon());
 				%>
 
 				<div class="portlet-borderless-container" <%= containerStyles %>>

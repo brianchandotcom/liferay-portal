@@ -384,11 +384,12 @@ AUI.add(
 					bodyNode.on(
 						'key',
 						function(event) {
-							var anchor = instance._activeTrigger.one(SELECTOR_ANCHOR);
+							if (instance._activeTrigger){
 
-							instance._closeActiveMenu();
+								var anchor = instance._activeTrigger.one(SELECTOR_ANCHOR);
 
-							if (anchor) {
+								instance._closeActiveMenu();
+
 								anchor.focus();
 							}
 						},

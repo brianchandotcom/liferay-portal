@@ -169,6 +169,11 @@ AUI.add(
 
 			dialog.set('title', title);
 
+			dialog.iframe.after('load', function() {
+
+				dialog.iframe.node.focus();
+			});
+
 			return dialog;
 		};
 	},

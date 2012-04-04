@@ -161,7 +161,7 @@ String openNodes = SessionTreeJSClicks.getOpenNodes(request, treeId);
 						</c:if>
 						children: TreeUtil.formatJSONResults(node.children),
 						draggable: node.updateable,
-						expanded: !!(node.children && (node.children.length > 0)),
+						expanded: (node.children && (node.children.length > 0)),
 						id: TreeUtil.createListItemId(node.layoutId, node.plid),
 						type: '<%= selectableTree ? "task" : "io" %>'
 					};
@@ -193,13 +193,13 @@ String openNodes = SessionTreeJSClicks.getOpenNodes(request, treeId);
 					if (!<%= selectableTree %>) {
 						newNode.label = TreeUtil.createLink(
 							{
+								contentDisplayPage: node.contentDisplayPage,
 								cssClass: cssClass,
 								id: TreeUtil.createLinkId(node.friendlyURL),
 								label: newNode.label,
 								plid: node.plid,
 								title: title,
-								uuid: node.uuid,
-								contentDisplayPage: node.contentDisplayPage
+								uuid: node.uuid
 							}
 						);
 					}
@@ -229,12 +229,7 @@ String openNodes = SessionTreeJSClicks.getOpenNodes(request, treeId);
 				}
 			}
 
-			A.Array.each(
-				node.get('children'),
-				function(item, index, collection) {
-					TreeUtil.restoreNodeState(item);
-				}
-			);
+			A.Array.each(node.get('children'), TreeUtil.restoreNodeState);
 		},
 
 		updateLayout: function(data) {
@@ -281,7 +276,7 @@ String openNodes = SessionTreeJSClicks.getOpenNodes(request, treeId);
 			updateSessionTreeClick: function(treeId, data) {
 				var sessionClickURL = themeDisplay.getPathMain() + '/portal/session_tree_js_click';
 
-				var data = A.merge(
+				data = A.merge(
 					{
 						groupId: <%= groupId %>,
 						privateLayout: <%= privateLayout %>,

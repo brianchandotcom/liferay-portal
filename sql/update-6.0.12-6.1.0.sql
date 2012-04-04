@@ -216,6 +216,7 @@ COMMIT_TRANSACTION;
 
 update DLFileShortcut set repositoryId = groupId;
 
+alter table DLFileVersion add uuid_ VARCHAR(75) null;
 alter table DLFileVersion add modifiedDate DATE null;
 alter table DLFileVersion add repositoryId LONG;
 alter table DLFileVersion add folderId LONG;

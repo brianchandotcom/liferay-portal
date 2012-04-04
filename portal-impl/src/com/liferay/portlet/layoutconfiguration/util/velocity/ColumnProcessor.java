@@ -26,8 +26,6 @@ public interface ColumnProcessor {
 
 	public String processMax() throws Exception;
 
-	public String processMax(String classNames) throws Exception;
-
 	public String processPortlet(String portletId) throws Exception;
 
 }

@@ -112,10 +112,6 @@ public class CustomizationSettingsProcessor implements ColumnProcessor {
 	}
 
 	public String processMax() throws Exception {
-		return processMax(StringPool.BLANK);
-	}
-
-	public String processMax(String classNames) throws Exception {
 		return StringPool.BLANK;
 	}
 

@@ -314,6 +314,16 @@ String signature = ParamUtil.getString(request, "signature");
 			</aui:form>
 		</div>
 
+		<%
+		String servletContextPath = jsonWebServiceActionMapping.getServletContextPath();
+
+		String jsServicePath = servletContextPath + jsonWebServiceActionMapping.getPath();
+
+		if (Validator.isNotNull(servletContextPath)) {
+			jsServicePath = StringUtil.replace(jsServicePath, servletContextPath + StringPool.FORWARD_SLASH, servletContextPath + StringPool.POUND);
+		}
+		%>
+
 		<aui:script use="aui-io,aui-template,querystring-parse">
 			var REGEX_QUERY_STRING = new RegExp('([^?=&]+)(?:=([^&]*))?', 'g');
 
@@ -367,7 +377,7 @@ String signature = ParamUtil.getString(request, "signature");
 					var formEl = form.getDOM();
 
 					Liferay.Service(
-						'<%= jsonWebServiceActionMapping.getServletContextPath() + jsonWebServiceActionMapping.getPath() %>',
+						'<%= jsServicePath %>',
 						formEl,
 						function(obj) {
 							serviceOutput.html(A.JSON.stringify(obj, null, 2));
@@ -415,7 +425,7 @@ String signature = ParamUtil.getString(request, "signature");
 
 <textarea class="aui-helper-hidden" id="scriptTpl">
 Liferay.Service(
-  '<%= jsonWebServiceActionMapping.getServletContextPath() + jsonWebServiceActionMapping.getPath() %>',
+  '<%= jsServicePath %>',
   <tpl if="data.length">{
 <%= StringPool.FOUR_SPACES %><tpl for="data">{key}: {[this.formatDataType(values.key, values.value)]}<tpl if="!$last">,
 <%= StringPool.FOUR_SPACES %></tpl></tpl>
@@ -427,14 +437,14 @@ Liferay.Service(
 </textarea>
 
 <textarea class="aui-helper-hidden" id="curlTpl">
-curl <%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() %>/api/secure/jsonws<%= jsonWebServiceActionMapping.getServletContextPath() + jsonWebServiceActionMapping.getPath() %> \\
+curl <%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + jsonWebServiceActionMapping.getServletContextPath() %>/api/secure/jsonws<%= jsonWebServiceActionMapping.getPath() %> \\
   -u test@liferay.com:test <tpl if="data.length">\\
   <tpl for="data">-d {key}={[this.formatDataType(values.key, values.value)]} <tpl if="!$last">\\
   </tpl></tpl></tpl>
 </textarea>
 
 <textarea class="aui-helper-hidden" id="urlTpl">
-<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() %>/api/secure/jsonws<%= jsonWebServiceActionMapping.getServletContextPath() + jsonWebServiceActionMapping.getPath() %><tpl if="data.length">/<tpl for="data">{key:this.toURIParam}/{value}<tpl if="!$last">/</tpl></tpl></tpl>
+<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + jsonWebServiceActionMapping.getServletContextPath() %>/api/secure/jsonws<%= jsonWebServiceActionMapping.getPath() %><tpl if="data.length">/<tpl for="data">{key:this.toURIParam}/{value}<tpl if="!$last">/</tpl></tpl></tpl>
 </textarea>
 	</c:when>
 	<c:otherwise>

@@ -3,6 +3,8 @@ Liferay = window.Liferay || {};
 ;(function(A, Liferay) {
 	var Lang = A.Lang;
 
+	var CONTEXT = themeDisplay.getPathContext();
+
 	var REGEX_SELECTOR_ID = /^#/;
 
 	var REGEX_TRIM_SLASH = /^\/|\/$/g;
@@ -138,16 +140,29 @@ Liferay = window.Liferay || {};
 			throw 'You must specify a service.';
 		}
 
+		var pieces = service.split('#');
+
+		var url;
+
+		if (pieces.length > 1) {
+			url = Lang.sub(Service.PLUGIN_URL_BASE, pieces);
+		}
+		else {
+			url = Service.URL_BASE + service;
+		}
+
 		if (String(method).toUpperCase() == 'GET') {
 			config.cache = false;
 		}
 
 		config.method = method;
 
-		return Service._ioRequest(Service.URL_BASE + service, config);
+		return Service._ioRequest(url, config);
 	};
 
-	Service.URL_BASE = themeDisplay.getPathContext() + '/api/jsonws/';
+	Service.PLUGIN_URL_BASE = CONTEXT + '/{0}/api/jsonws/{1}';
+
+	Service.URL_BASE = CONTEXT + '/api/jsonws/';
 
 	A.mix(
 		Service,

@@ -24,7 +24,7 @@ Portlet selPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId
 	Liferay.fire(
 		'closeWindow',
 		{
-			id: '<%= renderResponse.getNamespace() %>',
+			id: '<portlet:namespace />editAsset',
 			portletAjaxable: <%= selPortlet.isAjaxable() %>,
 			refresh: '<%= portletDisplay.getId() %>'
 		}

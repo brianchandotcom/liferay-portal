@@ -279,20 +279,20 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			ActionRequest actionRequest, PortletPreferences preferences)
 		throws Exception {
 
-		String scope = getParameter(actionRequest, "defaultScope");
+		String defaultScope = getParameter(actionRequest, "defaultScope");
 
-		preferences.setValue("defaultScope", scope);
+		preferences.setValue("defaultScope", defaultScope);
 	}
 
 	protected void setScopeIds(
 			ActionRequest actionRequest, PortletPreferences preferences)
 		throws Exception {
 
-		String scope = getParameter(actionRequest, "defaultScope");
+		String defaultScope = getParameter(actionRequest, "defaultScope");
 		String[] scopeIds = StringUtil.split(
-				getParameter(actionRequest, "scopeIds"));
+			getParameter(actionRequest, "scopeIds"));
 
-		preferences.setValue("defaultScope", scope);
+		preferences.setValue("defaultScope", defaultScope);
 		preferences.setValues("scopeIds", scopeIds);
 	}
 

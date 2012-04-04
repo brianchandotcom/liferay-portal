@@ -881,7 +881,7 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 		Liferay.after(
 			'inputmoveboxes:moveItem',
 			function(event){
-				if ((event.fromBox.get('id') == '<portlet:namespace />currentClassNameIds') || ( event.toBox.get('id') == '<portlet:namespace />currentClassNameIds')) {
+				if ((event.fromBox.get('id') == '<portlet:namespace />currentClassNameIds') || (event.toBox.get('id') == '<portlet:namespace />currentClassNameIds')) {
 					<portlet:namespace />toggleSubclasses();
 				}
 			}

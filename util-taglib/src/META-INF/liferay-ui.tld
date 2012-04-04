@@ -920,6 +920,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>message</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>url</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -67,7 +67,7 @@ public class Guest_ViewShoppingItemTest extends BaseTestCase {
 		assertTrue(selenium.isPartialText("//td[3]", "Shopping Item Description"));
 		assertTrue(selenium.isPartialText("//td[3]", "Shopping: Item Properties"));
 		assertTrue(selenium.isPartialText("//td[3]",
-				"Price for 1 Items and Above: \\$9.99"));
+				"Price for 1 to 1 Items: \\$9.99"));
 		assertEquals(RuntimeVariables.replace("In Stock"),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 	}

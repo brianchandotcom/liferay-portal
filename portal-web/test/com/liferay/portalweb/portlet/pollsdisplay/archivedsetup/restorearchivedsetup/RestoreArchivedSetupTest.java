@@ -101,9 +101,10 @@ public class RestoreArchivedSetupTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("//tr[3]/td[2]"));
 		assertTrue(selenium.isVisible("//tr[3]/td[3]"));
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//tr[3]/td[4]/span/ul/li/strong/a"));
-		selenium.clickAt("//tr[3]/td[4]/span/ul/li/strong/a",
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
@@ -113,7 +114,7 @@ public class RestoreArchivedSetupTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a[@id='_86_rjus']")) {
+							"//a[@id='_86_ocerSearchContainer_1_menu_restore']")) {
 					break;
 				}
 			}
@@ -125,8 +126,8 @@ public class RestoreArchivedSetupTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Restore"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a[@id='_86_rjus']"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a[@id='_86_rjus']",
+				"//a[@id='_86_ocerSearchContainer_1_menu_restore']"));
+		selenium.clickAt("//a[@id='_86_ocerSearchContainer_1_menu_restore']",
 			RuntimeVariables.replace("Restore"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();

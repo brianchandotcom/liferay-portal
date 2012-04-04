@@ -76,10 +76,12 @@ public class AddCategoryItemSKUNullTest extends BaseTestCase {
 				"//input[@id='_34_requiresShippingCheckbox']"));
 		selenium.type("//input[@id='_34_stockQuantity']",
 			RuntimeVariables.replace("50"));
-		selenium.type("//input[@id='_34_price']",
-			RuntimeVariables.replace("$9.99"));
-		selenium.type("//input[@id='_34_minQuantity']",
+		selenium.type("//input[@id='_34_minQuantity0']",
 			RuntimeVariables.replace("1"));
+		selenium.type("//input[@id='_34_maxQuantity0']",
+			RuntimeVariables.replace("1"));
+		selenium.type("//input[@id='_34_price0']",
+			RuntimeVariables.replace("$9.99"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

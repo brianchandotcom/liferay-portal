@@ -49,7 +49,7 @@ public class UpdateCartCategoryItemQuantityTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
-				"Shopping Category Item Name\nShopping Category Item Description\n\nAvailability: In Stock\n\n\nPrice for 1 Items and Above:$9.99"),
+				"Shopping Category Item Name\nShopping Category Item Description\n\nAvailability: In Stock\n\n\nPrice for 1 to 1 Items:$9.99"),
 			selenium.getText("//td[2]/a"));
 		selenium.select("//select", RuntimeVariables.replace("10"));
 		selenium.clickAt("//input[@value='Update Cart']",

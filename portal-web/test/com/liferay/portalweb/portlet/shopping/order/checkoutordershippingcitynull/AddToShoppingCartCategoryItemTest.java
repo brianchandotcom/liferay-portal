@@ -64,7 +64,7 @@ public class AddToShoppingCartCategoryItemTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Shopping Category Item Name"),
 			selenium.getText("//span[1]/strong"));
 		assertEquals(RuntimeVariables.replace(
-				"Shopping Category Item Name\n \n Shopping Category Item Description \n Shopping: Category Item Properties \n\n Price for 1 Items and Above: $9.99\n \n Availability: In Stock"),
+				"Shopping Category Item Name\n \n Shopping Category Item Description \n Shopping: Category Item Properties \n\n Price for 1 to 1 Items: $9.99\n \n Availability: In Stock"),
 			selenium.getText("//td[3]"));
 		selenium.clickAt("//input[@value='Add to Shopping Cart']",
 			RuntimeVariables.replace("Add to Shopping Cart"));
@@ -100,7 +100,7 @@ public class AddToShoppingCartCategoryItemTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
-				"Shopping Category Item Name\nShopping Category Item Description\n\nAvailability: In Stock\n\n\nPrice for 1 Items and Above:$9.99"),
+				"Shopping Category Item Name\nShopping Category Item Description\n\nAvailability: In Stock\n\n\nPrice for 1 to 1 Items:$9.99"),
 			selenium.getText("//td[2]/a"));
 	}
 }

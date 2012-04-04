@@ -21,7 +21,6 @@
 <%
 Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("aui:panel:dynamicAttributes");
 Map<String, Object> scopedAttributes = (Map<String, Object>)request.getAttribute("aui:panel:scopedAttributes");
-CustomAttributes customAttributes = (CustomAttributes)request.getAttribute("aui:panel:customAttributes");
 
 Map<String, Object> _options = new HashMap<String, Object>();
 

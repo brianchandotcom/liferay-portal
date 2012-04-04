@@ -21,7 +21,6 @@
 <%
 Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("aui:button-row:dynamicAttributes");
 Map<String, Object> scopedAttributes = (Map<String, Object>)request.getAttribute("aui:button-row:scopedAttributes");
-CustomAttributes customAttributes = (CustomAttributes)request.getAttribute("aui:button-row:customAttributes");
 
 Map<String, Object> _options = new HashMap<String, Object>();
 

@@ -219,14 +219,14 @@ public class ClassLoaderAggregateProperties extends AggregatedProperties {
 			try {
 				url = _classLoader.getResource(fileName);
 			}
-			catch (RuntimeException rtex) {
-				if (fileName.startsWith("file:/") == false) {
+			catch (RuntimeException re) {
+				if (!fileName.startsWith("file:/")) {
 					fileName = "file:/".concat(fileName);
 
 					url = _classLoader.getResource(fileName);
 				}
 				else {
-					throw rtex;
+					throw re;
 				}
 			}
 
@@ -285,11 +285,11 @@ public class ClassLoaderAggregateProperties extends AggregatedProperties {
 
 			return newConfiguration;
 		}
-		catch (Exception ex) {
+		catch (Exception e) {
 			if (_log.isDebugEnabled()) {
-
-				_log.debug("Configuration source " + sourceName + " ignored: "
-					+ ex.getMessage());
+				_log.debug(
+					"Configuration source " + sourceName + " ignored: "
+						+ e.getMessage());
 			}
 
 			return null;

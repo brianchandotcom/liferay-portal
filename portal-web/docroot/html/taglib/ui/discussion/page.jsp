@@ -673,7 +673,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 					function(event) {
 						<portlet:namespace />showStatusMessage('success', '<%= UnicodeLanguageUtil.get(pageContext, "your-request-processed-successfully") %>');
 
-						location.hash = '#' + response.randomNamespace + 'messageScroll' + response.messageId;
+						location.hash = '#' + A.one("#<portlet:namespace />randomNamespace").val() + 'message_' + response.messageId;
 					}
 				);
 

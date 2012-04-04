@@ -155,10 +155,6 @@ public class DDLIndexer extends BaseIndexer {
 		Property companyIdProperty = PropertyFactoryUtil.forName("companyId");
 
 		dynamicQuery.add(companyIdProperty.eq(companyId));
-
-		Property statusProperty = PropertyFactoryUtil.forName("status");
-
-		dynamicQuery.add(statusProperty.eq(WorkflowConstants.STATUS_APPROVED));
 	}
 
 	@Override
@@ -332,6 +328,10 @@ public class DDLIndexer extends BaseIndexer {
 			records.size());
 
 		for (DDLRecord record : records) {
+			if (record.getStatus() != WorkflowConstants.STATUS_APPROVED) {
+				continue;
+			}
+
 			Document document = getDocument(record);
 
 			documents.add(document);

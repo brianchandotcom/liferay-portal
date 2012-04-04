@@ -674,29 +674,28 @@ numberFormat.setMinimumIntegerDigits(2);
 
 				numberFormat = NumberFormat.getInstance(locale);
 
-				long maxMemory = runtime.maxMemory();
 				long totalMemory = runtime.totalMemory();
 				long usedMemory = totalMemory - runtime.freeMemory();
 				%>
 
 				<div>
-					<portlet:actionURL var="totalChartURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+					<portlet:actionURL var="totalMemoryChartURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
 						<portlet:param name="struts_action" value="/admin_server/view_chart" />
-						<portlet:param name="usedMemory" value = "<%= String.valueOf(usedMemory) %>" />
-						<portlet:param name="totalMemory" value = "<%= String.valueOf(totalMemory) %>" />
-						<portlet:param name="type" value = "total" />
+						<portlet:param name="totalMemory" value="<%= String.valueOf(totalMemory) %>" />
+						<portlet:param name="type" value="total" />
+						<portlet:param name="usedMemory" value="<%= String.valueOf(usedMemory) %>" />
 					</portlet:actionURL>
 
-					<img border="0" src="<%= totalChartURL %>" />
+					<img border="0" src="<%= totalMemoryChartURL %>" />
 
-					<portlet:actionURL var="maxChartURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+					<portlet:actionURL var="maxMemoryChartURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
 						<portlet:param name="struts_action" value="/admin_server/view_chart" />
-						<portlet:param name="usedMemory" value = "<%= String.valueOf(usedMemory) %>" />
-						<portlet:param name="maxMemory" value = "<%= String.valueOf(maxMemory) %>" />
-						<portlet:param name="type" value = "max" />
+						<portlet:param name="maxMemory" value="<%= String.valueOf(runtime.maxMemory()) %>" />
+						<portlet:param name="type" value="max" />
+						<portlet:param name="usedMemory" value="<%= String.valueOf(usedMemory) %>" />
 					</portlet:actionURL>
 
-					<img border="0" src="<%= maxChartURL %>" />
+					<img border="0" src="<%= maxMemoryChartURL %>" />
 				</div>
 
 				<br />
@@ -815,5 +814,4 @@ numberFormat.setMinimumIntegerDigits(2);
 
 <%!
 private static final String[] _IMAGEMAGICK_RESOURCE_LIMIT_LABELS= {"area", "disk", "file", "map", "memory", "thread", "time"};
-
 %>

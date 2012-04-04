@@ -66,8 +66,7 @@ public class ViewChartAction extends PortletAction {
 
 			long maxMemory = ParamUtil.getLong(actionRequest, "maxMemory");
 			long totalMemory = ParamUtil.getLong(actionRequest, "totalMemory");
-			long usedMemory =
-				ParamUtil.getLong(actionRequest, "usedMemory") * 100;
+			long usedMemory = ParamUtil.getLong(actionRequest, "usedMemory");
 
 			String type = ParamUtil.getString(actionRequest, "type", "max");
 
@@ -81,12 +80,14 @@ public class ViewChartAction extends PortletAction {
 			sb.append(StringPool.SPACE);
 
 			if (type.equals("total")) {
-				dataset = new DefaultValueDataset(usedMemory / totalMemory);
+				dataset = new DefaultValueDataset(
+					(usedMemory * 100) / totalMemory);
 
 				sb.append(LanguageUtil.get(locale, "total-memory"));
 			}
 			else {
-				dataset = new DefaultValueDataset(usedMemory / maxMemory);
+				dataset = new DefaultValueDataset(
+					(usedMemory * 100) / maxMemory);
 
 				sb.append(LanguageUtil.get(locale, "maximum-memory"));
 			}
@@ -117,8 +118,8 @@ public class ViewChartAction extends PortletAction {
 	}
 
 	private JFreeChart _getChart(String title, MeterPlot plot) {
-		JFreeChart chart =
-			new JFreeChart(title, new Font(null, Font.PLAIN, 13), plot, true);
+		JFreeChart chart = new JFreeChart(
+			title, new Font(null, Font.PLAIN, 13), plot, true);
 
 		chart.setBackgroundPaint(Color.white);
 

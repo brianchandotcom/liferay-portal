@@ -27,23 +27,18 @@ import org.apache.lucene.document.Fieldable;
 
 /**
  * @author Raymond Augé
+ * @author Mate Thurzo
  */
-public class PerFieldAnalyzerWrapper
-	extends org.apache.lucene.analysis.PerFieldAnalyzerWrapper {
+public class PerFieldAnalyzer extends Analyzer {
 
-	public PerFieldAnalyzerWrapper(
-		Analyzer defaultAnalyzer, Map<String, Analyzer> analyzerMap) {
-
-		super(defaultAnalyzer, analyzerMap);
+	public PerFieldAnalyzer(
+			Analyzer defaultAnalyzer, Map<String, Analyzer> analyzerMap) {
 
 		_analyzer = defaultAnalyzer;
 		_analyzers = analyzerMap;
 	}
 
-	@Override
 	public void addAnalyzer(String fieldName, Analyzer analyzer) {
-		super.addAnalyzer(fieldName, analyzer);
-
 		_analyzers.put(fieldName, analyzer);
 	}
 

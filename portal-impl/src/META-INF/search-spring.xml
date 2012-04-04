@@ -109,7 +109,7 @@
 		<property name="vendor" value="Lucene" />
 	</bean>
 	<bean id="com.liferay.portal.search.lucene.LuceneHelperImpl" class="com.liferay.portal.search.lucene.LuceneHelperImpl">
-		<property name="analyzer" ref="com.liferay.portal.search.lucene.PerFieldAnalyzerWrapper" />
+		<property name="analyzer" ref="com.liferay.portal.search.lucene.PerFieldAnalyzer" />
 		<property name="version" ref="org.apache.lucene.util.Version" />
 	</bean>
 	<bean id="com.liferay.portal.search.lucene.LuceneHelperUtil" class="com.liferay.portal.search.lucene.LuceneHelperUtil">
@@ -118,7 +118,7 @@
 
 	<!-- Lucene analyzers -->
 
-	<bean id="com.liferay.portal.search.lucene.PerFieldAnalyzerWrapper" class="com.liferay.portal.search.lucene.PerFieldAnalyzerWrapper">
+	<bean id="com.liferay.portal.search.lucene.PerFieldAnalyzer" class="com.liferay.portal.search.lucene.PerFieldAnalyzer">
 		<constructor-arg>
 			<ref bean="org.apache.lucene.analysis.standard.StandardAnalyzer" />
 		</constructor-arg>
@@ -207,7 +207,7 @@
 		<constructor-arg ref="org.apache.lucene.util.Version" />
 	</bean>
 	<bean id="org.apache.lucene.util.Version" class="org.apache.lucene.util.Version" factory-method="valueOf">
-		<constructor-arg value="LUCENE_30" />
+		<constructor-arg value="LUCENE_35" />
 	</bean>
 
 	<!-- Configurator -->

@@ -14,13 +14,6 @@
 
 package com.liferay.portlet.dynamicdatalists.util;
 
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.Projection;
-import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.ProjectionList;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -34,7 +27,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -42,6 +34,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
+import com.liferay.portlet.dynamicdatalists.model.DDLRecordSetConstants;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetLocalServiceUtil;
@@ -149,18 +142,6 @@ public class DDLIndexer extends BaseIndexer {
 		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
 	}
 
-	protected void addReindexCriteria(
-		DynamicQuery dynamicQuery, long companyId) {
-
-		Property companyIdProperty = PropertyFactoryUtil.forName("companyId");
-
-		dynamicQuery.add(companyIdProperty.eq(companyId));
-
-		Property statusProperty = PropertyFactoryUtil.forName("status");
-
-		dynamicQuery.add(statusProperty.eq(WorkflowConstants.STATUS_APPROVED));
-	}
-
 	@Override
 	protected void doDelete(Object obj) throws Exception {
 		DDLRecord record = (DDLRecord)obj;
@@ -221,6 +202,12 @@ public class DDLIndexer extends BaseIndexer {
 	protected void doReindex(Object obj) throws Exception {
 		DDLRecord record = (DDLRecord)obj;
 
+		DDLRecordVersion recordVersion = record.getRecordVersion();
+
+		if (!recordVersion.isApproved()) {
+			return;
+		}
+
 		Document document = getDocument(record);
 
 		if (document != null) {
@@ -265,68 +252,26 @@ public class DDLIndexer extends BaseIndexer {
 	}
 
 	protected void reindexRecords(long companyId) throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			DDLRecord.class, PortalClassLoaderUtil.getClassLoader());
+		int recordsCount = DDLRecordLocalServiceUtil.getCompanyRecordsCount(
+			companyId, WorkflowConstants.STATUS_APPROVED,
+			DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS);
 
-		Projection minRecordIdProjection = ProjectionFactoryUtil.min(
-			"recordId");
-		Projection maxRecordIdProjection = ProjectionFactoryUtil.max(
-			"recordId");
+		int recordPages = recordsCount / DEFAULT_INTERVAL;
 
-		ProjectionList projectionList = ProjectionFactoryUtil.projectionList();
+		for (int i = 0; i <= recordPages; i++) {
+			int start = (i * DEFAULT_INTERVAL);
+			int end = start + DEFAULT_INTERVAL;
 
-		projectionList.add(minRecordIdProjection);
-		projectionList.add(maxRecordIdProjection);
-
-		dynamicQuery.setProjection(projectionList);
-
-		addReindexCriteria(dynamicQuery, companyId);
-
-		List<Object[]> results = DDLRecordLocalServiceUtil.dynamicQuery(
-			dynamicQuery);
-
-		Object[] minAndMaxRecordIds = results.get(0);
-
-		if ((minAndMaxRecordIds[0] == null) ||
-			(minAndMaxRecordIds[1] == null)) {
-
-			return;
-		}
-
-		long minRecordId = (Long)minAndMaxRecordIds[0];
-		long maxRecordId = (Long)minAndMaxRecordIds[1];
-
-		long startRecordId = minRecordId;
-		long endRecordId = startRecordId + DEFAULT_INTERVAL;
-
-		while (startRecordId <= maxRecordId) {
-			reindexRecords(companyId, startRecordId, endRecordId);
-
-			startRecordId = endRecordId;
-			endRecordId += DEFAULT_INTERVAL;
+			reindexRecords(companyId, start, end);
 		}
 	}
 
-	protected void reindexRecords(
-			long companyId, long startRecordId, long endRecordId)
+	protected void reindexRecords(long companyId, int start, int end)
 		throws Exception {
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			DDLRecord.class, PortalClassLoaderUtil.getClassLoader());
-
-		Property property = PropertyFactoryUtil.forName("recordId");
-
-		dynamicQuery.add(property.ge(startRecordId));
-		dynamicQuery.add(property.lt(endRecordId));
-
-		addReindexCriteria(dynamicQuery, companyId);
-
-		List<DDLRecord> records = DDLRecordLocalServiceUtil.dynamicQuery(
-			dynamicQuery);
-
-		if (records.isEmpty()) {
-			return;
-		}
+		List<DDLRecord> records = DDLRecordLocalServiceUtil.getCompanyRecords(
+			companyId, WorkflowConstants.STATUS_APPROVED,
+			DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS, start, end, null);
 
 		Collection<Document> documents = new ArrayList<Document>(
 			records.size());

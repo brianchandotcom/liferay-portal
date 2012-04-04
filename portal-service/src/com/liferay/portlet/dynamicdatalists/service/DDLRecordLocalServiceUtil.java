@@ -328,16 +328,17 @@ public class DDLRecordLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecord> getCompanyRecords(
-		long companyId, int start, int end,
+		long companyId, int status, int scope, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .getCompanyRecords(companyId, start, end, orderByComparator);
+				   .getCompanyRecords(companyId, status, scope, start, end,
+			orderByComparator);
 	}
 
-	public static int getCompanyRecordsCount(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getCompanyRecordsCount(companyId);
+	public static int getCompanyRecordsCount(long companyId, int status,
+		int scope) throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getCompanyRecordsCount(companyId, status, scope);
 	}
 
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion getLatestRecordVersion(

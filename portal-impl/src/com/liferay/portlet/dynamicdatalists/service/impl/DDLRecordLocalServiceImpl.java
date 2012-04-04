@@ -215,16 +215,18 @@ public class DDLRecordLocalServiceImpl
 	}
 
 	public List<DDLRecord> getCompanyRecords(
-			long companyId, int start, int end,
+			long companyId, int status, int scope, int start, int end,
 			OrderByComparator orderByComparator)
 		throws SystemException {
 
-		return ddlRecordPersistence.findByCompanyId(
-			companyId, start, end, orderByComparator);
+		return ddlRecordFinder.findByC_S_S(
+			companyId, status, scope, start, end, orderByComparator);
 	}
 
-	public int getCompanyRecordsCount(long companyId) throws SystemException {
-		return ddlRecordPersistence.countByCompanyId(companyId);
+	public int getCompanyRecordsCount(long companyId, int status, int scope)
+		throws SystemException {
+
+		return ddlRecordFinder.countByC_S_S(companyId, status, scope);
 	}
 
 	public DDLRecordVersion getLatestRecordVersion(long recordId)

@@ -37,11 +37,65 @@ import java.util.List;
 public class DDLRecordFinderImpl extends BasePersistenceImpl<DDLRecord>
 	implements DDLRecordFinder {
 
+	public static final String COUNT_BY_C_S_S =
+		DDLRecordFinder.class.getName() + ".countByC_S_S";
+
 	public static final String COUNT_BY_R_S =
 		DDLRecordFinder.class.getName() + ".countByR_S";
 
+	public static final String FIND_BY_C_S_S =
+		DDLRecordFinder.class.getName() + ".findByC_S_S";
+
 	public static final String FIND_BY_R_S =
 		DDLRecordFinder.class.getName() + ".findByR_S";
+
+	public int countByC_S_S(long companyId, int status, int scope)
+		throws SystemException{
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(COUNT_BY_C_S_S);
+
+			if (status == WorkflowConstants.STATUS_ANY) {
+				sql = StringUtil.replace(
+					sql, "(DDLRecordVersion.status = ?) AND", "");
+			}
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			if (status != WorkflowConstants.STATUS_ANY) {
+				qPos.add(status);
+			}
+
+			qPos.add(scope);
+			qPos.add(companyId);
+
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
 
 	public int countByR_S(long recordSetId, int status)
 		throws SystemException{
@@ -81,6 +135,48 @@ public class DDLRecordFinderImpl extends BasePersistenceImpl<DDLRecord>
 			}
 
 			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	public List<DDLRecord> findByC_S_S(
+			long companyId, int status, int scope, int start, int end,
+			OrderByComparator orderByComparator)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_C_S_S);
+
+			if (status == WorkflowConstants.STATUS_ANY) {
+				sql = StringUtil.replace(
+					sql, "(DDLRecordVersion.status = ?) AND", "");
+			}
+
+			sql = CustomSQLUtil.replaceOrderBy(sql, orderByComparator);
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addEntity("DDLRecord", DDLRecordImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			if (status != WorkflowConstants.STATUS_ANY) {
+				qPos.add(status);
+			}
+
+			qPos.add(scope);
+			qPos.add(companyId);
+
+			return (List<DDLRecord>)QueryUtil.list(q, getDialect(), start, end);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

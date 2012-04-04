@@ -320,16 +320,17 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 	}
 
 	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecord> getCompanyRecords(
-		long companyId, int start, int end,
+		long companyId, int status, int scope, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _ddlRecordLocalService.getCompanyRecords(companyId, start, end,
-			orderByComparator);
+		return _ddlRecordLocalService.getCompanyRecords(companyId, status,
+			scope, start, end, orderByComparator);
 	}
 
-	public int getCompanyRecordsCount(long companyId)
+	public int getCompanyRecordsCount(long companyId, int status, int scope)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _ddlRecordLocalService.getCompanyRecordsCount(companyId);
+		return _ddlRecordLocalService.getCompanyRecordsCount(companyId, status,
+			scope);
 	}
 
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion getLatestRecordVersion(

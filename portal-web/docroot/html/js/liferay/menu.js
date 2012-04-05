@@ -276,7 +276,11 @@ AUI.add(
 						trigger.addClass(CSS_STATE_ACTIVE);
 					}
 
-					overlay.bodyNode.focusManager.focus(0);
+					var focusManager = overlay.bodyNode.focusManager;
+
+					if (focusManager) {
+						focusManager.focus(0);
+					}
 				}
 			},
 
@@ -472,7 +476,11 @@ AUI.add(
 					liveSearch.after(
 						'search',
 						function(event) {
-							bodyNode.focusManager.refresh();
+							var focusManager = bodyNode.focusManager;
+
+							if (focusManager) {
+								focusManager.refresh();
+							}
 						},
 						instance
 					);

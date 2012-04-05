@@ -91,6 +91,8 @@ public class SourceFormatter {
 						_formatFriendlyURLRoutesXML();
 						_formatPortletXML();
 						_formatSH();
+						_formatStrutsConfigXML();
+						_formatTilesDefsXML();
 						_formatWebXML();
 					}
 					catch (Exception e) {
@@ -2084,6 +2086,47 @@ public class SourceFormatter {
 		}
 	}
 
+	private static void _formatStrutsConfigXML()
+		throws IOException, DocumentException {
+
+		String basedir = "./";
+
+		if (!_fileUtil.exists(basedir + "portal-impl")) {
+			return;
+		}
+
+		String fileName = "portal-web/docroot/WEB-INF/struts-config.xml";
+
+		File file = new File(basedir + fileName);
+
+		String content = _fileUtil.read(file);
+
+		Document document = _saxReaderUtil.read(content);
+
+		Element rootElement = document.getRootElement();
+
+		Element actionMappingsElement = rootElement.element("action-mappings");
+
+		List<Element> actionElements = actionMappingsElement.elements("action");
+
+		String previousPath = StringPool.BLANK;
+
+		for (Element actionElement : actionElements) {
+			String path = actionElement.attributeValue("path");
+
+			if (Validator.isNotNull(previousPath) &&
+				(previousPath.compareTo(path) > 0) &&
+				(!previousPath.startsWith("/portal/") ||
+				 path.startsWith("/portal/"))) {
+
+				_sourceFormatterHelper.printError(
+					fileName, "sort: " + fileName + " " + path);
+			}
+
+			previousPath = path;
+		}
+	}
+
 	private static String _formatTaglibQuotes(
 		String fileName, String content, String quoteType) {
 
@@ -2143,6 +2186,45 @@ public class SourceFormatter {
 		}
 
 		return content;
+	}
+
+	private static void _formatTilesDefsXML()
+		throws IOException, DocumentException {
+
+		String basedir = "./";
+
+		if (!_fileUtil.exists(basedir + "portal-impl")) {
+			return;
+		}
+
+		String fileName = "portal-web/docroot/WEB-INF/tiles-defs.xml";
+
+		File file = new File(basedir + fileName);
+
+		String content = _fileUtil.read(file);
+
+		Document document = _saxReaderUtil.read(content);
+
+		Element rootElement = document.getRootElement();
+
+		List<Element> definitionElements = rootElement.elements("definition");
+
+		String previousName = StringPool.BLANK;
+
+		for (Element definitionElement : definitionElements) {
+			String name = definitionElement.attributeValue("name");
+
+			if (Validator.isNotNull(previousName) &&
+				(previousName.compareTo(name) > 0) &&
+				!previousName.equals("portlet")) {
+
+				_sourceFormatterHelper.printError(
+					fileName, "sort: " + fileName + " " + name);
+
+			}
+
+			previousName = name;
+		}
 	}
 
 	private static void _formatWebXML() throws IOException {

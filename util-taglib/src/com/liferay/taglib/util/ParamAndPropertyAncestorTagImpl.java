@@ -42,7 +42,7 @@ public class ParamAndPropertyAncestorTagImpl
 
 		// PLT.26.6
 
-		if ((value == null) || (value.length() == 0)) {
+		if (!_allowEmptyParam && ((value == null) || (value.length() == 0))) {
 			_params.remove(name);
 
 			if (_removedParameterNames == null) {
@@ -159,10 +159,19 @@ public class ParamAndPropertyAncestorTagImpl
 		return response;
 	}
 
+	public boolean isAllowEmptyParam() {
+		return _allowEmptyParam;
+	}
+
+	public void setAllowEmptyParam(boolean allowEmptyParam) {
+		_allowEmptyParam = allowEmptyParam;
+	}
+
 	public void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
 	}
 
+	private boolean _allowEmptyParam;
 	private Map<String, String[]> _params;
 	private Map<String, String[]> _properties;
 	private Set<String> _removedParameterNames;

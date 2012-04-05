@@ -39,6 +39,11 @@
 		<tei-class>com.liferay.taglib.portlet.ActionURLTei</tei-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<name>allowEmptyParam</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>anchor</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -271,6 +276,11 @@
 		<tag-class>com.liferay.taglib.portlet.RenderURLTag</tag-class>
 		<tei-class>com.liferay.taglib.portlet.RenderURLTei</tei-class>
 		<body-content>JSP</body-content>
+		<attribute>
+			<name>allowEmptyParam</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 		<attribute>
 			<name>anchor</name>
 			<required>false</required>

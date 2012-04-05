@@ -685,6 +685,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		shoppingCouponLocalService.deleteCoupons(group.getGroupId());
 		shoppingOrderLocalService.deleteOrders(group.getGroupId());
 
+		// Social
+
+		socialActivitySettingLocalService.deleteActivitySettings(
+			group.getGroupId());
+
 		// Software catalog
 
 		scFrameworkVersionLocalService.deleteFrameworkVersions(

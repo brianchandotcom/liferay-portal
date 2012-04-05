@@ -114,6 +114,7 @@ if (!dlFileEntries.isEmpty()) {
 						</optgroup>
 					</aui:select>
 				</aui:fieldset>
+
 			<%
 			}
 			%>

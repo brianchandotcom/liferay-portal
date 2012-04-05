@@ -34,7 +34,6 @@ Boolean hasLock = (Boolean)objArray[5];
 <%
 for (int i = 0; i < conversions.length; i++) {
 	String conversion = conversions[i];
-
 %>
 
 	<td>

@@ -164,6 +164,7 @@ if (row == null) {
 		<%
 		}
 		%>
+
 	</c:if>
 
 	<c:if test="<%= OrganizationPermissionUtil.contains(permissionChecker, organizationId, ActionKeys.DELETE) %>">

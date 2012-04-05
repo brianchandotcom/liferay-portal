@@ -58,6 +58,7 @@ for (int i = 0; i < controls.length; i++) {
 					for (int j = 0; j < choices.length; j++) {
 						String choice = choices[j];
 					%>
+
 						<aui:input checked="<%= control.getDefaultChoiceIndex() == j %>" label="<%= choice %>" name="<%= control.getNamespacedControlName() %>" type="radio" value="<%= choices[j] %>" />
 
 					<%

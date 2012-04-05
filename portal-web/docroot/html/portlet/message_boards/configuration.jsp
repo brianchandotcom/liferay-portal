@@ -464,7 +464,6 @@ else if (tabs2.equals("message-updated-email")) {
 									value = StringPool.BLANK;
 								}
 							}
-
 					%>
 
 							<aui:input name='<%= "priorityName" + j + "_" + LocaleUtil.toLanguageId(locales[i]) %>' type="hidden" value="<%= name %>" />

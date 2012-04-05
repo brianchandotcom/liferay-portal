@@ -89,6 +89,7 @@ List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(repositoryId, DLFol
 						src: Liferay.DL_SEARCH
 					}
 				);
+
 			<%
 			}
 		}

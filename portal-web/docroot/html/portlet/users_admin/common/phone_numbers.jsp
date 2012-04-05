@@ -59,7 +59,6 @@ else {
 		phonesIndexes = new int[0];
 	}
 }
-
 %>
 
 <liferay-ui:error-marker key="errorSection" value="phoneNumbers" />

@@ -45,7 +45,6 @@
 
 			mySites.add(0, GroupLocalServiceUtil.getGroup(themeDisplay.getCompanyGroupId()));
 		}
-
 		%>
 
 		<liferay-ui:search-container-results

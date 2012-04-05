@@ -76,9 +76,11 @@ request.setAttribute("view.jsp-showIconLabel", false);
 		<%
 		for (int m = 0; m < metadataFields.length; m++) {
 		%>
+
 			<th>
 				<liferay-ui:message key="<%= metadataFields[m] %>" />
 			</th>
+
 		<%
 		}
 		%>

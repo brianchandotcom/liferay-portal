@@ -128,6 +128,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 		_log.error(e.getMessage());
 	}
 	%>
+
 </aui:form>
 
 <c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">

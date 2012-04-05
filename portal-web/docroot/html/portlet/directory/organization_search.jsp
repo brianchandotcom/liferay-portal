@@ -46,6 +46,7 @@ String type = displayTerms.getType();
 			<%
 			}
 			%>
+
 		</aui:select>
 
 		<aui:input name="<%= displayTerms.STREET %>" size="20" type="text" value="<%= displayTerms.getStreet() %>" />

@@ -77,6 +77,7 @@ for (AssetVocabulary vocabulary : vocabularies) {
 			</c:choose>
 		</span>
 	</c:if>
+
 <%
 }
 %>

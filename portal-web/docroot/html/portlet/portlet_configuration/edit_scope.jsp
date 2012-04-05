@@ -58,7 +58,6 @@ Group group = layout.getGroup();
 					if (curLayout.getPlid() == layout.getPlid()) {
 						continue;
 					}
-
 				%>
 
 					<aui:option label="<%= HtmlUtil.escape(curLayout.getName(locale)) %>" selected="<%= scopeLayoutUuid.equals(curLayout.getUuid()) %>" value="<%= curLayout.getUuid() %>" />

@@ -134,6 +134,7 @@ List addresses = AddressServiceUtil.getAddresses(Contact.class.getName(), contac
 						<%
 						}
 						%>
+
 					</aui:select>
 
 					<aui:input bean="<%= null %>" label="other-state" name="billingState" value="<%= billingState %>" />

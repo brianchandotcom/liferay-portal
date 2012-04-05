@@ -123,6 +123,7 @@ Format timeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("HH:mm", local
 				</table>
 			</li>
 		</ul>
+
 	<%
 	}
 	%>

@@ -143,6 +143,7 @@ int total = 0;
 					}
 				}
 				%>
+
 			}
 		</aui:script>
 
@@ -372,6 +373,7 @@ int total = 0;
 
 						</c:otherwise>
 					</c:choose>
+
 				<%
 				}
 				%>

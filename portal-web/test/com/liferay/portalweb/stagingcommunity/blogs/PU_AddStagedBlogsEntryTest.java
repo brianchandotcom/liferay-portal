@@ -27,17 +27,11 @@ public class PU_AddStagedBlogsEntryTest extends BaseTestCase {
 		assertTrue(selenium.isElementPresent("//div[@class='staging-bar']"));
 		assertEquals(RuntimeVariables.replace("Live"),
 			selenium.getText("//li[1]/span/span"));
-		assertEquals(RuntimeVariables.replace(
-				"You are viewing the live version of Liferay and cannot make changes here. Make your changes in staging and publish them to Live afterwards to make them public."),
-			selenium.getText("//span[@class='staging-live-help']"));
 		assertEquals(RuntimeVariables.replace("Staging"),
 			selenium.getText("//li[2]/span/a"));
 		selenium.clickAt("//li[2]/span/a", RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace(
-				"You are viewing the staged version of Liferay. You can make changes here and publish them to Live afterwards to make them public."),
-			selenium.getText("//span[@class='staging-live-help']"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

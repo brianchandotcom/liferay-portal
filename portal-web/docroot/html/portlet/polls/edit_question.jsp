@@ -155,10 +155,10 @@ if (choiceName > 0) {
 
 <aui:script>
 	function <portlet:namespace />addPollChoice() {
-		<portlet:actionURL var="addPollChoiceURL">
-			<portlet:param name="struts_action" value="/polls/edit_question" />
-			<portlet:param name="<%= EditQuestionAction.CHOICE_DESCRIPTION_PREFIX + (char)(96 + choicesCount + 1) %>" value="" />
-		</portlet:actionURL>
+		<liferay-portlet:actionURL allowEmptyParam="true" var="addPollChoiceURL">
+			<liferay-portlet:param name="struts_action" value="/polls/edit_question" />
+			<liferay-portlet:param name="<%= EditQuestionAction.CHOICE_DESCRIPTION_PREFIX + (char)(96 + choicesCount + 1) %>" value="" />
+		</liferay-portlet:actionURL>
 
 		document.<portlet:namespace />fm.<portlet:namespace />choicesCount.value = '<%= choicesCount + 1 %>';
 		submitForm(document.<portlet:namespace />fm, '<%= addPollChoiceURL %>');

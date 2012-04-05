@@ -51,15 +51,15 @@ WikiPage wikiPage = (WikiPage)row.getObject();
 	</c:if>
 
 	<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) && WikiNodePermission.contains(permissionChecker, wikiPage.getNodeId(), ActionKeys.ADD_PAGE) %>">
-		<portlet:renderURL var="copyPageURL">
-			<portlet:param name="struts_action" value="/wiki/edit_page" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
-			<portlet:param name="title" value="" />
-			<portlet:param name="editTitle" value="1" />
-			<portlet:param name="templateNodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
-			<portlet:param name="templateTitle" value="<%= HtmlUtil.unescape(wikiPage.getTitle()) %>" />
-		</portlet:renderURL>
+		<liferay-portlet:renderURL allowEmptyParam="true" var="copyPageURL">
+			<liferay-portlet:param name="struts_action" value="/wiki/edit_page" />
+			<liferay-portlet:param name="redirect" value="<%= currentURL %>" />
+			<liferay-portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
+			<liferay-portlet:param name="title" value="" />
+			<liferay-portlet:param name="editTitle" value="1" />
+			<liferay-portlet:param name="templateNodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
+			<liferay-portlet:param name="templateTitle" value="<%= HtmlUtil.unescape(wikiPage.getTitle()) %>" />
+		</liferay-portlet:renderURL>
 
 		<liferay-ui:icon
 			image="copy"

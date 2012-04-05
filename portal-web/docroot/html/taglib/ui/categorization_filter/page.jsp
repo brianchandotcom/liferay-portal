@@ -66,9 +66,9 @@ if (assetCategoryId != 0) {
 		<span class="asset-entry">
 			<%= assetTagName %>
 
-			<portlet:renderURL var="viewURLWithoutTag">
-				<portlet:param name="tag" value="" />
-			</portlet:renderURL>
+			<liferay-portlet:renderURL allowEmptyParam="true" var="viewURLWithoutTag">
+				<liferay-portlet:param name="tag" value="" />
+			</liferay-portlet:renderURL>
 
 			<a href="<%= viewURLWithoutTag %>" title="<liferay-ui:message key="remove" />">
 				<span class="aui-icon aui-icon-close aui-textboxlistentry-close"></span>

@@ -18,7 +18,7 @@ package com.liferay.portal.upgrade.v6_0_0;
  * @author Brian Wing Shun Chan
  */
 public class UpgradePortletId
-	extends com.liferay.portal.upgrade.v5_2_0.UpgradePortletId {
+	extends com.liferay.portal.upgrade.util.UpgradePortletId {
 
 	@Override
 	protected String[][] getPortletIdsArray() {

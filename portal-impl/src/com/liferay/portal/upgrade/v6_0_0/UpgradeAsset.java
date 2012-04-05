@@ -390,7 +390,7 @@ public class UpgradeAsset extends UpgradeProcess {
 		updateAssetEntries();
 		updateAssetCategories();
 		updateAssetTags();
-		updateResourceCodes();
+		updateResources();
 	}
 
 	protected void updateAssetCategories() throws Exception {
@@ -551,36 +551,28 @@ public class UpgradeAsset extends UpgradeProcess {
 						" and primKey = '" + categoryId + "';");
 	}
 
-	protected void updateResourceCodes() throws Exception {
-		updateResourceCodes(
+	protected void updateResources() throws Exception {
+		updateResources(
 			"com.liferay.portlet.tags", "com.liferay.portlet.asset"
 		);
 
-		updateResourceCodes(
+		updateResources(
 			"com.liferay.portlet.tags.model.TagsEntry", AssetTag.class.getName()
 		);
 
-		updateResourceCodes(
+		updateResources(
 			"com.liferay.portlet.tags.model.TagsAsset",
 			AssetEntry.class.getName()
 		);
 
-		updateResourceCodes(
+		updateResources(
 			"com.liferay.portlet.tags.model.TagsVocabulary",
 			AssetVocabulary.class.getName()
 		);
 	}
 
-	protected void updateResourceCodes(String oldCodeName, String newCodeName)
+	protected void updateResources(String oldCodeName, String newCodeName)
 		throws Exception {
-
-		// Algorithm 1-5
-
-		runSQL(
-			"update ResourceCode set name = '" + newCodeName + "' where" +
-				" name = '" + oldCodeName + "';");
-
-		// Algorithm 6
 
 		runSQL(
 			"update ResourceAction set name = '" + newCodeName + "' where" +

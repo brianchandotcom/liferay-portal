@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v5_1_0.util;
+package com.liferay.portal.upgrade.util;
 
 import com.liferay.portal.kernel.upgrade.util.BaseUpgradeColumnImpl;
 import com.liferay.portal.kernel.upgrade.util.UpgradeColumn;

@@ -902,7 +902,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		String messageListenerClassName = message.getString(
 			MESSAGE_LISTENER_CLASS_NAME);
 
-		if (messageListenerClassName == null) {
+		if (Validator.isNull(messageListenerClassName)) {
 			return;
 		}
 

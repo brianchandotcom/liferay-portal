@@ -36,6 +36,7 @@ import com.liferay.portal.util.InitUtil;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -102,8 +103,8 @@ public class DBUpgrader {
 
 			throw new IllegalStateException(sb.toString());
 		}
-		else if (buildNumber < ReleaseInfo.RELEASE_5_0_0_BUILD_NUMBER) {
-			String msg = "You must first upgrade to Liferay Portal 5.0.0";
+		else if (buildNumber < ReleaseInfo.RELEASE_5_2_3_BUILD_NUMBER) {
+			String msg = "You must first upgrade to Liferay Portal 5.2.3";
 
 			System.out.println(msg);
 
@@ -121,6 +122,7 @@ public class DBUpgrader {
 			_log.debug("Update build " + buildNumber);
 		}
 
+		_checkPermissionConversionState();
 		_checkReleaseState();
 
 		try {
@@ -228,6 +230,26 @@ public class DBUpgrader {
 		CacheRegistryUtil.setActive(true);
 	}
 
+	private static void _checkPermissionConversionState() throws Exception {
+		int state = _getPermissionConversionState();
+
+		if (state <= 0) {
+			return;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append("Permission conversion to algorithm 6 has not been ");
+		sb.append("completed. Please complete the conversion prior to ");
+		sb.append("starting the portal. The conversion process is ");
+		sb.append("available in portal versions starting with ");
+		sb.append(ReleaseInfo.RELEASE_5_2_3_BUILD_NUMBER);
+		sb.append(" and prior to ");
+		sb.append(ReleaseInfo.RELEASE_6_2_0_BUILD_NUMBER);
+
+		throw new IllegalStateException(sb.toString());
+	}
+
 	private static void _checkReleaseState() throws Exception {
 		int state = _getReleaseState();
 
@@ -252,6 +274,41 @@ public class DBUpgrader {
 
 		db.runSQL(_DELETE_TEMP_IMAGES_1);
 		db.runSQL(_DELETE_TEMP_IMAGES_2);
+	}
+
+	private static int _getPermissionConversionState() throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getConnection();
+
+			DatabaseMetaData metaData = con.getMetaData();
+
+			String catalog = con.getCatalog();
+
+			ResultSet tables = metaData.getTables(
+				catalog, null, "ResourceCode", null);
+
+			if (!tables.next()) {
+				return 0;
+			}
+
+			ps = con.prepareStatement(
+				"select count(*) as total from ResourceCode");
+
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				return rs.getInt("total");
+			}
+
+			return 0;
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
 	}
 
 	private static int _getReleaseState() throws Exception {

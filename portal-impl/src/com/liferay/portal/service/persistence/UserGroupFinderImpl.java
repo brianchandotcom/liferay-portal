@@ -51,9 +51,6 @@ public class UserGroupFinderImpl
 	public static final String FIND_BY_C_N_D =
 		UserGroupFinder.class.getName() + ".findByC_N_D";
 
-	public static final String JOIN_BY_GROUPS_PERMISSIONS =
-		UserGroupFinder.class.getName() + ".joinByGroupsPermissions";
-
 	public static final String JOIN_BY_USER_GROUP_GROUP_ROLE =
 		UserGroupFinder.class.getName() + ".joinByUserGroupGroupRole";
 
@@ -311,10 +308,7 @@ public class UserGroupFinderImpl
 	protected String getJoin(String key) {
 		String join = StringPool.BLANK;
 
-		if (key.equals("permissionsResourceId")) {
-			join = CustomSQLUtil.get(JOIN_BY_GROUPS_PERMISSIONS);
-		}
-		else if (key.equals("userGroupGroupRole")) {
+		if (key.equals("userGroupGroupRole")) {
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUP_GROUP_ROLE);
 		}
 		else if (key.equals("userGroupsGroups")) {
@@ -363,10 +357,7 @@ public class UserGroupFinderImpl
 	protected String getWhere(String key) {
 		String join = StringPool.BLANK;
 
-		if (key.equals("permissionsResourceId")) {
-			join = CustomSQLUtil.get(JOIN_BY_GROUPS_PERMISSIONS);
-		}
-		else if (key.equals("userGroupGroupRole")) {
+		if (key.equals("userGroupGroupRole")) {
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUP_GROUP_ROLE);
 		}
 		else if (key.equals("userGroupsGroups")) {
@@ -416,9 +407,9 @@ public class UserGroupFinderImpl
 			else if (value instanceof Long[]) {
 				Long[] valueArray = (Long[])value;
 
-				for (int i = 0; i < valueArray.length; i++) {
-					if (Validator.isNotNull(valueArray[i])) {
-						qPos.add(valueArray[i]);
+				for (Long element : valueArray) {
+					if (Validator.isNotNull(element)) {
+						qPos.add(element);
 					}
 				}
 			}

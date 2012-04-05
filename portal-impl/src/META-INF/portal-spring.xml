@@ -119,8 +119,6 @@
 	<bean id="com.liferay.portal.service.persistence.ResourceBlockFinder" class="com.liferay.portal.service.persistence.ResourceBlockFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.ResourceBlockPermissionLocalService" class="com.liferay.portal.service.impl.ResourceBlockPermissionLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.ResourceBlockPermissionPersistence" class="com.liferay.portal.service.persistence.ResourceBlockPermissionPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.service.ResourceCodeLocalService" class="com.liferay.portal.service.impl.ResourceCodeLocalServiceImpl" />
-	<bean id="com.liferay.portal.service.persistence.ResourceCodePersistence" class="com.liferay.portal.service.persistence.ResourceCodePersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.ResourcePermissionLocalService" class="com.liferay.portal.service.impl.ResourcePermissionLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.ResourcePermissionService" class="com.liferay.portal.service.impl.ResourcePermissionServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.ResourcePermissionPersistence" class="com.liferay.portal.service.persistence.ResourcePermissionPersistenceImpl" parent="basePersistence" />

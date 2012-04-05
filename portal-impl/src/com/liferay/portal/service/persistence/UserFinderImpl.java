@@ -71,9 +71,6 @@ public class UserFinderImpl
 	public static final String JOIN_BY_NO_ORGANIZATIONS =
 		UserFinder.class.getName() + ".joinByNoOrganizations";
 
-	public static final String JOIN_BY_PERMISSION =
-		UserFinder.class.getName() + ".joinByPermission";
-
 	public static final String JOIN_BY_USER_GROUP_ROLE =
 		UserFinder.class.getName() + ".joinByUserGroupRole";
 
@@ -512,9 +509,6 @@ public class UserFinderImpl
 		else if (key.equals("noOrganizations")) {
 			join = CustomSQLUtil.get(JOIN_BY_NO_ORGANIZATIONS);
 		}
-		else if (key.equals("permission")) {
-			join = CustomSQLUtil.get(JOIN_BY_PERMISSION);
-		}
 		else if (key.equals("userGroupRole")) {
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUP_ROLE);
 		}
@@ -604,9 +598,6 @@ public class UserFinderImpl
 		}
 		else if (key.equals("noOrganizations")) {
 			join = CustomSQLUtil.get(JOIN_BY_NO_ORGANIZATIONS);
-		}
-		else if (key.equals("permission")) {
-			join = CustomSQLUtil.get(JOIN_BY_PERMISSION);
 		}
 		else if (key.equals("userGroupRole")) {
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUP_ROLE);

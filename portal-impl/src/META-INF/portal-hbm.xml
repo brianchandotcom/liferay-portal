@@ -48,7 +48,6 @@
 	<import class="com.liferay.portal.model.ResourceAction" />
 	<import class="com.liferay.portal.model.ResourceBlock" />
 	<import class="com.liferay.portal.model.ResourceBlockPermission" />
-	<import class="com.liferay.portal.model.ResourceCode" />
 	<import class="com.liferay.portal.model.ResourcePermission" />
 	<import class="com.liferay.portal.model.ResourceTypePermission" />
 	<import class="com.liferay.portal.model.Role" />
@@ -798,15 +797,6 @@
 		<property name="resourceBlockId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="roleId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="actionIds" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-	</class>
-	<class name="com.liferay.portal.model.impl.ResourceCodeImpl" table="ResourceCode">
-		<cache usage="read-write" />
-		<id name="codeId" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="scope" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.ResourcePermissionImpl" table="ResourcePermission">
 		<cache usage="read-write" />

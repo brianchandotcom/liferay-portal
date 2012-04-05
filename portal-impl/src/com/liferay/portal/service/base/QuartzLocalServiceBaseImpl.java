@@ -91,7 +91,6 @@ import com.liferay.portal.service.ResourceActionLocalService;
 import com.liferay.portal.service.ResourceBlockLocalService;
 import com.liferay.portal.service.ResourceBlockPermissionLocalService;
 import com.liferay.portal.service.ResourceBlockService;
-import com.liferay.portal.service.ResourceCodeLocalService;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.ResourcePermissionLocalService;
 import com.liferay.portal.service.ResourcePermissionService;
@@ -172,7 +171,6 @@ import com.liferay.portal.service.persistence.ResourceActionPersistence;
 import com.liferay.portal.service.persistence.ResourceBlockFinder;
 import com.liferay.portal.service.persistence.ResourceBlockPermissionPersistence;
 import com.liferay.portal.service.persistence.ResourceBlockPersistence;
-import com.liferay.portal.service.persistence.ResourceCodePersistence;
 import com.liferay.portal.service.persistence.ResourcePermissionFinder;
 import com.liferay.portal.service.persistence.ResourcePermissionPersistence;
 import com.liferay.portal.service.persistence.ResourceTypePermissionFinder;
@@ -2414,44 +2412,6 @@ public abstract class QuartzLocalServiceBaseImpl implements QuartzLocalService,
 	}
 
 	/**
-	 * Returns the resource code local service.
-	 *
-	 * @return the resource code local service
-	 */
-	public ResourceCodeLocalService getResourceCodeLocalService() {
-		return resourceCodeLocalService;
-	}
-
-	/**
-	 * Sets the resource code local service.
-	 *
-	 * @param resourceCodeLocalService the resource code local service
-	 */
-	public void setResourceCodeLocalService(
-		ResourceCodeLocalService resourceCodeLocalService) {
-		this.resourceCodeLocalService = resourceCodeLocalService;
-	}
-
-	/**
-	 * Returns the resource code persistence.
-	 *
-	 * @return the resource code persistence
-	 */
-	public ResourceCodePersistence getResourceCodePersistence() {
-		return resourceCodePersistence;
-	}
-
-	/**
-	 * Sets the resource code persistence.
-	 *
-	 * @param resourceCodePersistence the resource code persistence
-	 */
-	public void setResourceCodePersistence(
-		ResourceCodePersistence resourceCodePersistence) {
-		this.resourceCodePersistence = resourceCodePersistence;
-	}
-
-	/**
 	 * Returns the resource permission local service.
 	 *
 	 * @return the resource permission local service
@@ -3851,10 +3811,6 @@ public abstract class QuartzLocalServiceBaseImpl implements QuartzLocalService,
 	protected ResourceBlockPermissionLocalService resourceBlockPermissionLocalService;
 	@BeanReference(type = ResourceBlockPermissionPersistence.class)
 	protected ResourceBlockPermissionPersistence resourceBlockPermissionPersistence;
-	@BeanReference(type = ResourceCodeLocalService.class)
-	protected ResourceCodeLocalService resourceCodeLocalService;
-	@BeanReference(type = ResourceCodePersistence.class)
-	protected ResourceCodePersistence resourceCodePersistence;
 	@BeanReference(type = ResourcePermissionLocalService.class)
 	protected ResourcePermissionLocalService resourcePermissionLocalService;
 	@BeanReference(type = ResourcePermissionService.class)

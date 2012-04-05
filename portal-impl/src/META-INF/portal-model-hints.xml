@@ -704,14 +704,6 @@
 		<field name="roleId" type="long" />
 		<field name="actionIds" type="long" />
 	</model>
-	<model name="com.liferay.portal.model.ResourceCode">
-		<field name="codeId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="name" type="String">
-			<hint name="max-length">255</hint>
-		</field>
-		<field name="scope" type="int" />
-	</model>
 	<model name="com.liferay.portal.model.ResourcePermission">
 		<field name="resourcePermissionId" type="long" />
 		<field name="companyId" type="long" />

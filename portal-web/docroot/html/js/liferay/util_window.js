@@ -133,8 +133,6 @@ AUI.add(
 					'popupReady',
 					function(event) {
 						if (event.windowName == id) {
-							var dialogIframeNode = event.currentTarget.node;
-
 							event.dialog = dialog;
 							event.details[0].dialog = dialog;
 
@@ -147,6 +145,8 @@ AUI.add(
 
 								dialogUtil.Window._name = id;
 							}
+
+							dialog.iframe.node.focus();
 						}
 					}
 				);
@@ -168,11 +168,6 @@ AUI.add(
 			}
 
 			dialog.set('title', title);
-
-			dialog.iframe.after('load', function() {
-
-				dialog.iframe.node.focus();
-			});
 
 			return dialog;
 		};

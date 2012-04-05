@@ -384,9 +384,10 @@ AUI.add(
 					bodyNode.on(
 						'key',
 						function(event) {
-							if (instance._activeTrigger){
+							var activeTrigger = instance._activeTrigger;
 
-								var anchor = instance._activeTrigger.one(SELECTOR_ANCHOR);
+							if (activeTrigger) {
+								var anchor = activeTrigger.one(SELECTOR_ANCHOR);
 
 								instance._closeActiveMenu();
 

@@ -279,9 +279,6 @@ create index IX_7B590A7A on Group_ (type_, active_);
 create index IX_75267DCA on Groups_Orgs (groupId);
 create index IX_6BBB7682 on Groups_Orgs (organizationId);
 
-create index IX_C48736B on Groups_Permissions (groupId);
-create index IX_EC97689D on Groups_Permissions (permissionId);
-
 create index IX_84471FD2 on Groups_Roles (groupId);
 create index IX_3103EF3D on Groups_Roles (roleId);
 
@@ -497,9 +494,6 @@ create index IX_C28C72EC on MembershipRequest (groupId, statusId);
 create index IX_35AA8FA6 on MembershipRequest (groupId, userId, statusId);
 create index IX_66D70879 on MembershipRequest (userId);
 
-create index IX_A425F71A on OrgGroupPermission (groupId);
-create index IX_6C53DA4E on OrgGroupPermission (permissionId);
-
 create index IX_4A527DD3 on OrgGroupRole (groupId);
 create index IX_AB044D1C on OrgGroupRole (roleId);
 
@@ -517,9 +511,6 @@ create index IX_CD25266E on PasswordPolicyRel (passwordPolicyId);
 create index IX_ED7CF243 on PasswordPolicyRel (passwordPolicyId, classNameId, classPK);
 
 create index IX_326F75BD on PasswordTracker (userId);
-
-create unique index IX_4D19C2B8 on Permission_ (actionId, resourceId);
-create index IX_F090C113 on Permission_ (resourceId);
 
 create index IX_9F704A14 on Phone (companyId);
 create index IX_A2E4AFBA on Phone (companyId, classNameId);
@@ -592,10 +583,6 @@ create index IX_2D4CC782 on ResourceBlock (companyId, name);
 create index IX_4AB3756 on ResourceBlockPermission (resourceBlockId);
 create unique index IX_D63D20BB on ResourceBlockPermission (resourceBlockId, roleId);
 
-create index IX_717FDD47 on ResourceCode (companyId);
-create unique index IX_A32C097E on ResourceCode (companyId, name, scope);
-create index IX_AACAFF40 on ResourceCode (name);
-
 create index IX_88705859 on ResourcePermission (companyId, name, primKey, ownerId);
 create index IX_C94C7708 on ResourcePermission (companyId, name, primKey, roleId, actionIds);
 create index IX_60B99860 on ResourcePermission (companyId, name, scope);
@@ -611,18 +598,12 @@ create unique index IX_BA497163 on ResourceTypePermission (companyId, groupId, n
 create index IX_7D81F66F on ResourceTypePermission (companyId, name, roleId);
 create index IX_A82690E2 on ResourceTypePermission (roleId);
 
-create index IX_2578FBD3 on Resource_ (codeId);
-create unique index IX_67DE7856 on Resource_ (codeId, primKey);
-
 create index IX_449A10B9 on Role_ (companyId);
 create unique index IX_A88E424E on Role_ (companyId, classNameId, classPK);
 create unique index IX_EBC931B8 on Role_ (companyId, name);
 create index IX_F436EC8E on Role_ (name);
 create index IX_5EB4E2FB on Role_ (subtype);
 create index IX_CBE204 on Role_ (type_, subtype);
-
-create index IX_7A3619C6 on Roles_Permissions (permissionId);
-create index IX_E04E486D on Roles_Permissions (roleId);
 
 create index IX_3BB93ECA on SCFrameworkVersi_SCProductVers (frameworkVersionId);
 create index IX_E8D33FF9 on SCFrameworkVersi_SCProductVers (productVersionId);
@@ -796,9 +777,6 @@ create index IX_F10B6C6B on Users_Groups (userId);
 
 create index IX_7EF4EC0E on Users_Orgs (organizationId);
 create index IX_FB646CA6 on Users_Orgs (userId);
-
-create index IX_8AE58A91 on Users_Permissions (permissionId);
-create index IX_C26AA64D on Users_Permissions (userId);
 
 create index IX_C19E5F31 on Users_Roles (roleId);
 create index IX_C1A01806 on Users_Roles (userId);

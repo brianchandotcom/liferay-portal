@@ -129,17 +129,16 @@ public class RuntimePortletImpl implements RuntimePortlet {
 
 	public void processPortlet(
 			HttpServletRequest request, HttpServletResponse response,
-			Portlet portlet, String queryString)
+			Portlet portlet)
 		throws Exception {
 
-		processPortlet(
-			request, response, portlet, queryString, null, null, null, null);
+		processPortlet(request, response, portlet, null, null, null, null);
 	}
 
 	public void processPortlet(
 			HttpServletRequest request, HttpServletResponse response,
-			Portlet portlet, String queryString, String columnId,
-			Integer columnPos, Integer columnCount, String path)
+			Portlet portlet, String columnId, Integer columnPos,
+			Integer columnCount, String path)
 		throws Exception {
 
 		if ((portlet != null) && portlet.isInstanceable() &&
@@ -209,10 +208,6 @@ public class RuntimePortletImpl implements RuntimePortlet {
 
 		if (path == null) {
 			path = "/html/portal/render_portlet.jsp";
-		}
-
-		if (Validator.isNotNull(queryString)) {
-			path = path.concat(StringPool.QUESTION).concat(queryString);
 		}
 
 		RequestDispatcher requestDispatcher =
@@ -290,7 +285,7 @@ public class RuntimePortletImpl implements RuntimePortlet {
 
 	public void processPortlet(
 			HttpServletRequest request, HttpServletResponse response,
-			String portletId, String queryString)
+			String portletId)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -299,8 +294,7 @@ public class RuntimePortletImpl implements RuntimePortlet {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			themeDisplay.getCompanyId(), portletId);
 
-		processPortlet(
-			request, response, portlet, queryString, null, null, null, null);
+		processPortlet(request, response, portlet, null, null, null, null);
 	}
 
 	public void processTemplate(
@@ -374,10 +368,9 @@ public class RuntimePortletImpl implements RuntimePortlet {
 			Portlet portlet = entry.getKey();
 			Object[] value = entry.getValue();
 
-			String queryString = (String)value[0];
-			String columnId = (String)value[1];
-			Integer columnPos = (Integer)value[2];
-			Integer columnCount = (Integer)value[3];
+			String columnId = (String)value[0];
+			Integer columnPos = (Integer)value[1];
+			Integer columnCount = (Integer)value[2];
 
 			UnsyncStringWriter portletUnsyncStringWriter =
 				new UnsyncStringWriter();
@@ -386,8 +379,8 @@ public class RuntimePortletImpl implements RuntimePortlet {
 				new PipingServletResponse(response, portletUnsyncStringWriter);
 
 			processPortlet(
-				request, pipingServletResponse, portlet, queryString, columnId,
-				columnPos, columnCount, null);
+				request, pipingServletResponse, portlet, columnId, columnPos,
+				columnCount, null);
 
 			contentsMap.put(
 				portlet.getPortletId(),

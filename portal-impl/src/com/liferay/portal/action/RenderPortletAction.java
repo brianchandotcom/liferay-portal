@@ -55,7 +55,6 @@ public class RenderPortletAction extends Action {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			companyId, portletId);
 
-		String queryString = null;
 		String columnId = ParamUtil.getString(request, "p_p_col_id");
 		int columnPos = ParamUtil.getInteger(request, "p_p_col_pos");
 		int columnCount = ParamUtil.getInteger(request, "p_p_col_count");
@@ -81,8 +80,7 @@ public class RenderPortletAction extends Action {
 			portletId, user, layout, windowState, request);
 
 		RuntimePortletUtil.processPortlet(
-			request, response, portlet, queryString, columnId, columnPos,
-			columnCount, null);
+			request, response, portlet, columnId, columnPos, columnCount, null);
 
 		return null;
 	}

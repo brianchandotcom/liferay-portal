@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.layoutconfiguration.util.xml;
 
+import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.StringServletResponse;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
@@ -72,8 +73,11 @@ public class PortletLogic extends RuntimeLogic {
 		StringServletResponse stringServletResponse =
 			new StringServletResponse(_response);
 
+		HttpServletRequest request =
+			DynamicServletRequest.addDynamicQueryString(_request, queryString);
+
 		RuntimePortletUtil.processPortlet(
-			_request, stringServletResponse, portletId, queryString);
+			request, stringServletResponse, portletId);
 
 		return stringServletResponse.getString();
 	}

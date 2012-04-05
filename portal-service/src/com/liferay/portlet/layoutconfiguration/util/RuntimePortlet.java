@@ -35,18 +35,18 @@ public interface RuntimePortlet {
 
 	public void processPortlet(
 			HttpServletRequest request, HttpServletResponse response,
-			Portlet portlet, String queryString)
+			Portlet portlet)
 		throws Exception;
 
 	public void processPortlet(
 			HttpServletRequest request, HttpServletResponse response,
-			Portlet portlet, String queryString, String columnId,
-			Integer columnPos, Integer columnCount, String path)
+			Portlet portlet, String columnId, Integer columnPos,
+			Integer columnCount, String path)
 		throws Exception;
 
 	public void processPortlet(
 			HttpServletRequest request, HttpServletResponse response,
-			String portletId, String queryString)
+			String portletId)
 		throws Exception;
 
 	public void processTemplate(

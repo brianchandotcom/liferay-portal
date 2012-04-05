@@ -14,14 +14,7 @@
 
 package com.liferay.portal.kernel.servlet;
 
-import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-
 import java.io.IOException;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.Servlet;
@@ -37,49 +30,15 @@ public class DirectRequestDispatcher implements RequestDispatcher {
 
 	public DirectRequestDispatcher(Servlet servlet, String queryString) {
 		_servlet = servlet;
-
-		String[] parameters = StringUtil.split(queryString, CharPool.AMPERSAND);
-
-		if (parameters.length > 0) {
-			_parameters = new HashMap<String, String[]>();
-
-			for (String parameter : parameters) {
-				String[] parameterParts = StringUtil.split(
-					parameter, CharPool.EQUAL);
-
-				String name = parameterParts[0];
-				String value = StringPool.BLANK;
-
-				if (parameterParts.length == 2) {
-					value = parameterParts[1];
-				}
-
-				String[] values = _parameters.get(name);
-
-				if (values == null) {
-					_parameters.put(name, new String[] {value});
-				}
-				else {
-					String[] newValues = new String[values.length + 1];
-
-					System.arraycopy(values, 0, newValues, 0, values.length);
-
-					newValues[newValues.length - 1] = value;
-
-					_parameters.put(name, newValues);
-				}
-			}
-		}
+		_queryString = queryString;
 	}
 
 	public void forward(
 			ServletRequest servletRequest, ServletResponse servletResponse)
 		throws IOException, ServletException {
 
-		if (_parameters != null) {
-			servletRequest = new DynamicServletRequest(
-				(HttpServletRequest)servletRequest, _parameters);
-		}
+		servletRequest = DynamicServletRequest.addDynamicQueryString(
+			(HttpServletRequest)servletRequest, _queryString);
 
 		_servlet.service(servletRequest, servletResponse);
 	}
@@ -88,15 +47,13 @@ public class DirectRequestDispatcher implements RequestDispatcher {
 			ServletRequest servletRequest, ServletResponse servletResponse)
 		throws IOException, ServletException {
 
-		if (_parameters != null) {
-			servletRequest = new DynamicServletRequest(
-				(HttpServletRequest)servletRequest, _parameters);
-		}
+		servletRequest = DynamicServletRequest.addDynamicQueryString(
+			(HttpServletRequest)servletRequest, _queryString);
 
 		_servlet.service(servletRequest, servletResponse);
 	}
 
-	private Map<String, String[]> _parameters;
+	private String _queryString;
 	private Servlet _servlet;
 
 }

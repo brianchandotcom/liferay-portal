@@ -14,7 +14,7 @@
 
 package com.liferay.portalweb.portal;
 
-import com.liferay.portalweb.demo.devcon6100.fundamentals.FundamentalsTestPlan;
+import com.liferay.portalweb.demo.devcon6100.sitemanagement.SiteManagementTestPlan;
 import com.liferay.portalweb.portal.login.LoginTests;
 
 import junit.framework.Test;
@@ -29,7 +29,7 @@ public class DemoDevcon6100SiteManagementTestSuite extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(LoginTests.suite());
-		testSuite.addTest(FundamentalsTestPlan.suite());
+		testSuite.addTest(SiteManagementTestPlan.suite());
 
 		testSuite.addTestSuite(StopSeleniumTest.class);
 

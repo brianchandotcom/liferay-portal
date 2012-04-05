@@ -80,7 +80,7 @@ for (ResourceTypePermission resourceTypePermission : resourceTypePermissions) {
 	List<String> actionIds = ResourceBlockLocalServiceUtil.getActionIds(resourceTypePermission.getName(), resourceTypePermission.getActionIds());
 
 	for (String actionId : actionIds) {
-        Object[] permission = new Object[4];
+		Object[] permission = new Object[4];
 
 		permission[0] = resourceTypePermission.getName();
 
@@ -121,7 +121,7 @@ for (int i = 0; i < permissions.size(); i++) {
 	String curPortletLabel = null;
 	String curModelName = null;
 	String curModelLabel = null;
-	String actionId = (String)permission[4];
+	String actionId = (String)permission[3];
 	String actionLabel = ResourceActionsUtil.getAction(pageContext, actionId);
 
 	if (PortletLocalServiceUtil.hasPortlet(company.getCompanyId(), resource.getName())) {

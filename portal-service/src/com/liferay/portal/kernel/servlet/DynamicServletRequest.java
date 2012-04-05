@@ -15,6 +15,9 @@
 package com.liferay.portal.kernel.servlet;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Collections;
 import java.util.Enumeration;
@@ -28,8 +31,57 @@ import javax.servlet.http.HttpServletRequestWrapper;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public class DynamicServletRequest extends HttpServletRequestWrapper {
+
+	public static HttpServletRequest addDynamicQueryString(
+		HttpServletRequest request, String queryString) {
+
+		return addDynamicQueryString(request, queryString, true);
+	}
+
+	public static HttpServletRequest addDynamicQueryString(
+		HttpServletRequest request, String queryString, boolean inherit) {
+
+		String[] parameters = StringUtil.split(queryString, CharPool.AMPERSAND);
+
+		if (parameters.length > 0) {
+			Map<String, String[]> parameterMap =
+				new HashMap<String, String[]>();
+
+			for (String parameter : parameters) {
+				String[] parameterParts = StringUtil.split(
+					parameter, CharPool.EQUAL);
+
+				String name = parameterParts[0];
+				String value = StringPool.BLANK;
+
+				if (parameterParts.length == 2) {
+					value = parameterParts[1];
+				}
+
+				String[] values = parameterMap.get(name);
+
+				if (values == null) {
+					parameterMap.put(name, new String[] {value});
+				}
+				else {
+					String[] newValues = new String[values.length + 1];
+
+					System.arraycopy(values, 0, newValues, 0, values.length);
+
+					newValues[newValues.length - 1] = value;
+
+					parameterMap.put(name, newValues);
+				}
+			}
+
+			request = new DynamicServletRequest(request, parameterMap, inherit);
+		}
+
+		return request;
+	}
 
 	public DynamicServletRequest(HttpServletRequest request) {
 		this(request, null, true);

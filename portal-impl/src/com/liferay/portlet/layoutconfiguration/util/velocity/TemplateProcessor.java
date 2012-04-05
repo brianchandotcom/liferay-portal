@@ -127,7 +127,6 @@ public class TemplateProcessor implements ColumnProcessor {
 		for (int i = 0; i < portlets.size(); i++) {
 			Portlet portlet = portlets.get(i);
 
-			String queryString = null;
 			Integer columnPos = new Integer(i);
 			Integer columnCount = new Integer(portlets.size());
 			String path = null;
@@ -139,7 +138,7 @@ public class TemplateProcessor implements ColumnProcessor {
 					_portletsMap.put(
 						portlet,
 						new Object[] {
-							queryString, columnId, columnPos, columnCount
+							columnId, columnPos, columnCount
 						});
 				}
 			}
@@ -148,8 +147,8 @@ public class TemplateProcessor implements ColumnProcessor {
 				new StringServletResponse(_response);
 
 			RuntimePortletUtil.processPortlet(
-				_request, stringServletResponse, portlet, queryString, columnId,
-				columnPos, columnCount, path);
+				_request, stringServletResponse, portlet, columnId, columnPos,
+				columnCount, path);
 
 			sb.append(stringServletResponse.getString());
 		}
@@ -164,7 +163,7 @@ public class TemplateProcessor implements ColumnProcessor {
 			new StringServletResponse(_response);
 
 		RuntimePortletUtil.processPortlet(
-			_request, stringServletResponse, _portletId, null);
+			_request, stringServletResponse, _portletId);
 
 		return stringServletResponse.getString();
 	}
@@ -178,7 +177,7 @@ public class TemplateProcessor implements ColumnProcessor {
 				new StringServletResponse(_response);
 
 			RuntimePortletUtil.processPortlet(
-				_request, stringServletResponse, _portletId, null);
+				_request, stringServletResponse, _portletId);
 
 			return stringServletResponse.getString();
 		}

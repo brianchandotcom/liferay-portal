@@ -43,31 +43,28 @@ public class RuntimePortletUtil {
 
 	public static void processPortlet(
 			HttpServletRequest request, HttpServletResponse response,
-			Portlet portlet, String queryString)
+			Portlet portlet)
 		throws Exception {
 
-		getRuntimePortlet().processPortlet(
-			request, response, portlet, queryString);
+		getRuntimePortlet().processPortlet(request, response, portlet);
 	}
 
 	public static void processPortlet(
 			HttpServletRequest request, HttpServletResponse response,
-			Portlet portlet, String queryString, String columnId,
-			Integer columnPos, Integer columnCount, String path)
+			Portlet portlet, String columnId, Integer columnPos,
+			Integer columnCount, String path)
 		throws Exception {
 
 		getRuntimePortlet().processPortlet(
-			request, response, portlet, queryString, columnId, columnPos,
-			columnCount, path);
+			request, response, portlet, columnId, columnPos, columnCount, path);
 	}
 
 	public static void processPortlet(
 			HttpServletRequest request, HttpServletResponse response,
-			String portletId, String queryString)
+			String portletId)
 		throws Exception {
 
-		getRuntimePortlet().processPortlet(
-			request, response, portletId, queryString);
+		getRuntimePortlet().processPortlet(request, response, portletId);
 	}
 
 	public static void processTemplate(

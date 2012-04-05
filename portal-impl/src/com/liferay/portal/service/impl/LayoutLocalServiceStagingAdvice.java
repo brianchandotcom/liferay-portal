@@ -180,6 +180,9 @@ public class LayoutLocalServiceStagingAdvice
 		Layout originalLayout = layoutPersistence.findByG_P_L(
 			groupId, privateLayout, layoutId);
 
+		LayoutSet layoutSet = layoutSetLocalService.getLayoutSet(
+			groupId, privateLayout);
+
 		Layout layout = wrapLayout(originalLayout);
 
 		LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(
@@ -193,8 +196,11 @@ public class LayoutLocalServiceStagingAdvice
 		}
 
 		if (parentLayoutId != originalLayout.getParentLayoutId()) {
-			originalLayout.setPriority(
-				getNextPriority(groupId, privateLayout, parentLayoutId));
+			int priority = getNextPriority(
+				layoutSet, parentLayoutId,
+				originalLayout.getSourcePrototypeLayoutUuid(), -1);
+
+			originalLayout.setPriority(priority);
 		}
 
 		originalLayout.setParentLayoutId(parentLayoutId);

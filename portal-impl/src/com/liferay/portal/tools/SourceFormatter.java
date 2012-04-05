@@ -1856,19 +1856,19 @@ public class SourceFormatter {
 				}
 			}
 
+			if ((trimmedLine.startsWith("if (") ||
+				 trimmedLine.startsWith("else if (") ||
+				 trimmedLine.startsWith("while (")) &&
+				trimmedLine.endsWith(") {")) {
+
+				_checkIfClause(trimmedLine, fileName, lineCount);
+			}
+
 			if (readAttributes) {
 				if (!trimmedLine.startsWith(StringPool.FORWARD_SLASH) &&
 					!trimmedLine.startsWith(StringPool.GREATER_THAN)) {
 
 					int pos = trimmedLine.indexOf(StringPool.EQUAL);
-
-					if ((trimmedLine.startsWith("if (") ||
-						 trimmedLine.startsWith("else if (") ||
-						 trimmedLine.startsWith("while (")) &&
-						trimmedLine.endsWith(") {")) {
-
-						_checkIfClause(trimmedLine, fileName, lineCount);
-					}
 
 					if (pos != -1) {
 						String attribute = trimmedLine.substring(0, pos);

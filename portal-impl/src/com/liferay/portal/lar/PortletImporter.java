@@ -69,7 +69,6 @@ import com.liferay.portal.service.persistence.PortletPreferencesUtil;
 import com.liferay.portal.service.persistence.UserUtil;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.asset.NoSuchCategoryException;
@@ -89,6 +88,7 @@ import com.liferay.portlet.asset.service.permission.AssetPermission;
 import com.liferay.portlet.asset.service.persistence.AssetCategoryUtil;
 import com.liferay.portlet.asset.service.persistence.AssetTagUtil;
 import com.liferay.portlet.asset.service.persistence.AssetVocabularyUtil;
+import com.liferay.portlet.documentlibrary.lar.DLPortletDataHandlerImpl;
 import com.liferay.portlet.expando.NoSuchTableException;
 import com.liferay.portlet.expando.model.ExpandoColumn;
 import com.liferay.portlet.expando.model.ExpandoTable;
@@ -477,7 +477,7 @@ public class PortletImporter {
 
 			_permissionImporter.importPortletPermissions(
 				layoutCache, layout.getCompanyId(), groupId, userId, layout,
-				portletElement, portletId, importUserPermissions);
+				portletElement, portletId);
 
 			if (userId > 0) {
 

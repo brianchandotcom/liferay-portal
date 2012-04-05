@@ -108,6 +108,4 @@ public class PortletDataHandlerKeys {
 
 	public static final String USER_ID_STRATEGY = "USER_ID_STRATEGY";
 
-	public static final String USER_PERMISSIONS = "USER_PERMISSIONS";
-
 }

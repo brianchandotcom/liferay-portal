@@ -67,8 +67,7 @@ public class PermissionImporter {
 
 	protected void importLayoutPermissions(
 			LayoutCache layoutCache, long companyId, long groupId, long userId,
-			Layout layout, Element layoutElement, Element parentElement,
-			boolean importUserPermissions)
+			Layout layout, Element layoutElement, Element parentElement)
 		throws Exception {
 
 		Element permissionsElement = layoutElement.element("permissions");
@@ -157,8 +156,7 @@ public class PermissionImporter {
 
 	protected void importPortletPermissions(
 			LayoutCache layoutCache, long companyId, long groupId, long userId,
-			Layout layout, Element portletElement, String portletId,
-			boolean importUserPermissions)
+			Layout layout, Element portletElement, String portletId)
 		throws Exception {
 
 		Element permissionsElement = portletElement.element("permissions");

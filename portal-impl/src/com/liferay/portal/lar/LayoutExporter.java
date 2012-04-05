@@ -205,8 +205,6 @@ public class LayoutExporter {
 			parameterMap, PortletDataHandlerKeys.IGNORE_LAST_PUBLISH_DATE);
 		boolean exportPermissions = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.PERMISSIONS);
-		boolean exportUserPermissions = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.USER_PERMISSIONS);
 		boolean exportPortletArchivedSetups = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS);
 		boolean exportPortletUserPreferences = MapUtil.getBoolean(
@@ -227,7 +225,6 @@ public class LayoutExporter {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Export categories " + exportCategories);
 			_log.debug("Export permissions " + exportPermissions);
-			_log.debug("Export user permissions " + exportUserPermissions);
 			_log.debug(
 				"Export portlet archived setups " +
 					exportPortletArchivedSetups);
@@ -427,8 +424,8 @@ public class LayoutExporter {
 		for (Layout layout : layouts) {
 			exportLayout(
 				portletDataContext, layoutConfigurationPortlet, layoutCache,
-				portlets, portletIds, exportPermissions, exportUserPermissions,
-				layout, layoutsElement);
+				portlets, portletIds, exportPermissions, layout,
+				layoutsElement);
 		}
 
 		long previousScopeGroupId = portletDataContext.getScopeGroupId();
@@ -475,8 +472,7 @@ public class LayoutExporter {
 				portletDataContext, layoutCache, portletId, layout,
 				portletsElement, defaultUserId, exportPermissions,
 				exportPortletArchivedSetups, exportPortletControls[0],
-				exportPortletControls[1], exportPortletUserPreferences,
-				exportUserPermissions);
+				exportPortletControls[1], exportPortletUserPreferences);
 		}
 
 		portletDataContext.setScopeGroupId(previousScopeGroupId);
@@ -624,8 +620,7 @@ public class LayoutExporter {
 			PortletDataContext portletDataContext,
 			Portlet layoutConfigurationPortlet, LayoutCache layoutCache,
 			List<Portlet> portlets, Map<String, Object[]> portletIds,
-			boolean exportPermissions, boolean exportUserPermissions,
-			Layout layout, Element layoutsElement)
+			boolean exportPermissions, Layout layout, Element layoutsElement)
 		throws Exception {
 
 		String path = portletDataContext.getLayoutPath(
@@ -740,8 +735,7 @@ public class LayoutExporter {
 			_permissionExporter.exportLayoutPermissions(
 				portletDataContext, layoutCache,
 				portletDataContext.getCompanyId(),
-				portletDataContext.getScopeGroupId(), layout, layoutElement,
-				exportUserPermissions);
+				portletDataContext.getScopeGroupId(), layout, layoutElement);
 		}
 
 		if (layout.isTypeArticle()) {
@@ -764,7 +758,7 @@ public class LayoutExporter {
 					exportLayout(
 						portletDataContext, layoutConfigurationPortlet,
 						layoutCache, portlets, portletIds, exportPermissions,
-						exportUserPermissions, linkedToLayout, layoutsElement);
+						linkedToLayout, layoutsElement);
 				}
 				catch (NoSuchLayoutException nsle) {
 				}

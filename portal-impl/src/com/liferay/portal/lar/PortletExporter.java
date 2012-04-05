@@ -167,8 +167,6 @@ public class PortletExporter {
 			parameterMap, PortletDataHandlerKeys.PORTLET_SETUP);
 		boolean exportPortletUserPreferences = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.PORTLET_USER_PREFERENCES);
-		boolean exportUserPermissions = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.USER_PERMISSIONS);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Export categories " + exportCategories);
@@ -182,7 +180,6 @@ public class PortletExporter {
 			_log.debug(
 				"Export portlet user preferences " +
 					exportPortletUserPreferences);
-			_log.debug("Export user permissions " + exportUserPermissions);
 		}
 
 		if (exportPortletDataAll) {
@@ -280,8 +277,8 @@ public class PortletExporter {
 		exportPortlet(
 			portletDataContext, layoutCache, portletId, layout, rootElement,
 			defaultUserId, exportPermissions, exportPortletArchivedSetups,
-			exportPortletData, exportPortletSetup, exportPortletUserPreferences,
-			exportUserPermissions);
+			exportPortletData, exportPortletSetup,
+			exportPortletUserPreferences);
 
 		if (exportCategories) {
 			exportAssetCategories(portletDataContext);
@@ -743,8 +740,7 @@ public class PortletExporter {
 			String portletId, Layout layout, Element parentElement,
 			long defaultUserId, boolean exportPermissions,
 			boolean exportPortletArchivedSetups, boolean exportPortletData,
-			boolean exportPortletSetup, boolean exportPortletUserPreferences,
-			boolean exportUserPermissions)
+			boolean exportPortletSetup, boolean exportPortletUserPreferences)
 		throws Exception {
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(

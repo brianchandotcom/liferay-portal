@@ -111,8 +111,7 @@ public class PermissionExporter {
 
 	protected void exportLayoutPermissions(
 			PortletDataContext portletDataContext, LayoutCache layoutCache,
-			long companyId, long groupId, Layout layout, Element layoutElement,
-			boolean exportUserPermissions)
+			long companyId, long groupId, Layout layout, Element layoutElement)
 		throws Exception {
 
 		String resourceName = Layout.class.getName();
@@ -272,7 +271,7 @@ public class PermissionExporter {
 			layout.getPlid(), portletId);
 
 		Element permissionsElement = portletElement.addElement("permissions");
-		
+
 		exportPermissions(
 			layoutCache, companyId, groupId, resourceName, resourcePrimKey,
 			permissionsElement, true);

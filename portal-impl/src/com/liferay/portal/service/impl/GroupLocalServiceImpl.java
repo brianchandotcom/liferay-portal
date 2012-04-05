@@ -57,7 +57,6 @@ import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.model.Resource;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.Role;
@@ -2125,9 +2124,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		parameterMap.put(
 			PortletDataHandlerKeys.PORTLET_SETUP,
 			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.USER_PERMISSIONS,
-			new String[] {Boolean.FALSE.toString()});
 
 		layoutLocalService.importLayouts(
 			defaultUserId, group.getGroupId(), false, parameterMap, larFile);

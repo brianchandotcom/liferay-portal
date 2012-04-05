@@ -14,7 +14,6 @@
 
 package com.liferay.portal.verify;
 
-import com.liferay.portal.NoSuchResourceException;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
@@ -24,8 +23,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Organization;
-import com.liferay.portal.model.Resource;
-import com.liferay.portal.model.ResourceCode;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
@@ -34,11 +31,8 @@ import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ResourceActionLocalServiceUtil;
-import com.liferay.portal.service.ResourceCodeLocalServiceUtil;
-import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.impl.ResourcePermissionLocalServiceImpl;
 import com.liferay.portal.util.PortalInstances;
 
@@ -109,12 +103,6 @@ public class VerifyPermission extends VerifyProcess {
 	}
 
 	protected void fixOrganizationRolePermissions() throws Exception {
-		fixOrganizationRolePermissions_6();
-		
-		PermissionCacheUtil.clearCache();
-	}
-
-	protected void fixOrganizationRolePermissions_6() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			ResourcePermission.class);
 
@@ -185,6 +173,8 @@ public class VerifyPermission extends VerifyProcess {
 				_log.error(e, e);
 			}
 		}
+
+		PermissionCacheUtil.clearCache();
 	}
 
 	protected boolean isPrivateLayout(String name, String primKey)

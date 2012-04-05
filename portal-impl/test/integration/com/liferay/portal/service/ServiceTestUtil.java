@@ -23,7 +23,9 @@ import com.liferay.portal.kernel.messaging.sender.MessageSender;
 import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineUtil;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.util.*;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.User;
@@ -280,10 +282,6 @@ public class ServiceTestUtil {
 	}
 
 	private static void _checkResourceActions() throws Exception {
-		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM != 6) {
-			return;
-		}
-
 		for (int i = 0; i < 200; i++) {
 			String portletId = String.valueOf(i);
 

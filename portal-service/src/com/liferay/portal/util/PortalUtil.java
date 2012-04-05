@@ -29,7 +29,6 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.model.Resource;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.User;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -217,12 +216,6 @@ public class PortalUtil {
 
 	public static Set<String> getAuthTokenIgnorePortlets() {
 		return getPortal().getAuthTokenIgnorePortlets();
-	}
-
-	public static BaseModel<?> getBaseModel(Resource resource)
-		throws PortalException, SystemException {
-
-		return getPortal().getBaseModel(resource);
 	}
 
 	public static BaseModel<?> getBaseModel(
@@ -718,15 +711,6 @@ public class PortalUtil {
 		String mx, String popPortletPrefix, Object... ids) {
 
 		return getPortal().getMailId(mx, popPortletPrefix, ids);
-	}
-
-	/**
-	 * @deprecated {@link #getBaseModel(Resource)}
-	 */
-	public static BaseModel<?> getModel(Resource resource)
-		throws PortalException, SystemException {
-
-		return getPortal().getBaseModel(resource);
 	}
 
 	/**

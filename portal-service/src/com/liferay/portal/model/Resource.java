@@ -15,11 +15,8 @@
 package com.liferay.portal.model;
 
 /**
- * The extended model interface for the Resource service. Represents a row in the &quot;Resource_&quot; database table, with each column mapped to a property of this class.
- *
  * @author Brian Wing Shun Chan
  * @see com.liferay.portal.model.impl.ResourceImpl
- * @generated
  */
 public interface Resource {
 
@@ -46,4 +43,5 @@ public interface Resource {
 	public void setResourceId(long resourceId);
 
 	public void setScope(int scope);
+
 }

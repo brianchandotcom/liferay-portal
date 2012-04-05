@@ -32,7 +32,6 @@ import com.liferay.portal.model.ReleaseConstants;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.service.ReleaseLocalServiceUtil;
 import com.liferay.portal.service.ResourceActionLocalServiceUtil;
-import com.liferay.portal.service.ResourceCodeLocalServiceUtil;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 

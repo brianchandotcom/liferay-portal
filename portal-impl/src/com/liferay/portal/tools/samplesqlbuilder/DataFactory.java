@@ -19,15 +19,11 @@ import com.liferay.counter.model.impl.CounterModelImpl;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.IntegerWrapper;
-import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.ClassName;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Contact;
@@ -37,8 +33,6 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.PortletPreferences;
-import com.liferay.portal.model.Resource;
-import com.liferay.portal.model.ResourceCode;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.Role;
@@ -50,12 +44,9 @@ import com.liferay.portal.model.impl.ContactImpl;
 import com.liferay.portal.model.impl.GroupImpl;
 import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.model.impl.PortletPreferencesImpl;
-import com.liferay.portal.model.impl.ResourceCodeImpl;
-import com.liferay.portal.model.impl.ResourceImpl;
 import com.liferay.portal.model.impl.ResourcePermissionImpl;
 import com.liferay.portal.model.impl.RoleImpl;
 import com.liferay.portal.model.impl.UserImpl;
-import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.impl.AssetEntryImpl;
@@ -119,9 +110,7 @@ import java.text.Format;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
@@ -132,7 +121,7 @@ public class DataFactory {
 		String baseDir, int maxGroupsCount, int maxJournalArticleSize,
 		int maxUserToGroupCount, SimpleCounter counter,
 		SimpleCounter dlDateCounter, SimpleCounter permissionCounter,
-		SimpleCounter resourceCounter, SimpleCounter resourceCodeCounter,
+		SimpleCounter resourceCounter,
 		SimpleCounter resourcePermissionCounter,
 		SimpleCounter socialActivityCounter) {
 
@@ -143,9 +132,6 @@ public class DataFactory {
 
 			_counter = counter;
 			_dlDateCounter = dlDateCounter;
-			_permissionCounter = permissionCounter;
-			_resourceCounter = resourceCounter;
-			_resourceCodeCounter = resourceCodeCounter;
 			_resourcePermissionCounter = resourcePermissionCounter;
 			_socialActivityCounter = socialActivityCounter;
 
@@ -154,7 +140,6 @@ public class DataFactory {
 			initDefaultUser();
 			initGroups();
 			initJournalArticle(maxJournalArticleSize);
-			initResourceCodes();
 			initRoles();
 			initUserNames();
 		}
@@ -589,18 +574,6 @@ public class DataFactory {
 		return portletPreferences;
 	}
 
-	public Resource addResource(String name, String primKey) {
-		Long codeId = _individualResourceCodeIds.get(name);
-
-		Resource resource = new ResourceImpl();
-
-		resource.setResourceId(_resourceCounter.get());
-		resource.setCodeId(codeId);
-		resource.setPrimKey(primKey);
-
-		return resource;
-	}
-
 	public List<ResourcePermission> addResourcePermission(
 		long companyId, String name, String primKey) {
 
@@ -806,10 +779,6 @@ public class DataFactory {
 		return _powerUserRole;
 	}
 
-	public List<ResourceCode> getResourceCodes() {
-		return _resourceCodes;
-	}
-
 	public ClassName getRoleClassName() {
 		return _roleClassName;
 	}
@@ -919,24 +888,6 @@ public class DataFactory {
 
 		_counters.add(counter);
 
-		// Resource
-
-		counter = new CounterModelImpl();
-
-		counter.setName(Resource.class.getName());
-		counter.setCurrentId(_resourceCounter.get());
-
-		_counters.add(counter);
-
-		// ResourceCode
-
-		counter = new CounterModelImpl();
-
-		counter.setName(ResourceCode.class.getName());
-		counter.setCurrentId(_resourceCodeCounter.get());
-
-		_counters.add(counter);
-
 		// ResourcePermission
 
 		counter = new CounterModelImpl();
@@ -997,80 +948,6 @@ public class DataFactory {
 		}
 
 		_journalArticleContent = new String(chars);
-	}
-
-	public void initResourceCodes() throws Exception {
-		if (_resourceCodes != null) {
-			return;
-		}
-
-		_resourceCodes = new ArrayList<ResourceCode>();
-
-		_individualResourceCodeIds = new HashMap<String, Long>();
-		_individualResourceNames = new HashMap<Long, String>();
-
-		List<String> models = ModelHintsUtil.getModels();
-
-		for (String model : models) {
-			initResourceCodes(model);
-		}
-
-		Document document = SAXReaderUtil.read(
-			new File(
-				_baseDir, "../portal-web/docroot/WEB-INF/portlet-custom.xml"),
-			false);
-
-		Element rootElement = document.getRootElement();
-
-		List<Element> portletElements = rootElement.elements("portlet");
-
-		for (Element portletElement : portletElements) {
-			String portletName = portletElement.elementText("portlet-name");
-
-			initResourceCodes(portletName);
-		}
-	}
-
-	public void initResourceCodes(String name) {
-
-		// Company
-
-		ResourceCode resourceCode = newResourceCode();
-
-		resourceCode.setName(name);
-		resourceCode.setScope(ResourceConstants.SCOPE_COMPANY);
-
-		_resourceCodes.add(resourceCode);
-
-		// Group
-
-		resourceCode = newResourceCode();
-
-		resourceCode.setName(name);
-		resourceCode.setScope(ResourceConstants.SCOPE_GROUP);
-
-		_resourceCodes.add(resourceCode);
-
-		// Group template
-
-		resourceCode = newResourceCode();
-
-		resourceCode.setName(name);
-		resourceCode.setScope(ResourceConstants.SCOPE_GROUP_TEMPLATE);
-
-		_resourceCodes.add(resourceCode);
-
-		// Individual
-
-		resourceCode = newResourceCode();
-
-		resourceCode.setName(name);
-		resourceCode.setScope(ResourceConstants.SCOPE_INDIVIDUAL);
-
-		_resourceCodes.add(resourceCode);
-
-		_individualResourceCodeIds.put(name, resourceCode.getCodeId());
-		_individualResourceNames.put(resourceCode.getCodeId(), name);
 	}
 
 	public void initRoles() {
@@ -1230,14 +1107,6 @@ public class DataFactory {
 		return new Date(_baseCreateTime + (_dlDateCounter.get() * Time.SECOND));
 	}
 
-	protected ResourceCode newResourceCode() {
-		ResourceCode resourceCode = new ResourceCodeImpl();
-
-		resourceCode.setCodeId(_resourceCodeCounter.get());
-
-		return resourceCode;
-	}
-
 	protected Role newRole() {
 		Role role = new RoleImpl();
 
@@ -1265,8 +1134,6 @@ public class DataFactory {
 	private List<Group> _groups;
 	private Group _guestGroup;
 	private Role _guestRole;
-	private Map<String, Long> _individualResourceCodeIds;
-	private Map<Long, String> _individualResourceNames;
 	private ClassName _journalArticleClassName;
 	private String _journalArticleContent;
 	private int _maxGroupsCount;
@@ -1276,11 +1143,7 @@ public class DataFactory {
 	private Role _organizationOwnerRole;
 	private Role _organizationUserRole;
 	private Role _ownerRole;
-	private SimpleCounter _permissionCounter;
 	private Role _powerUserRole;
-	private SimpleCounter _resourceCodeCounter;
-	private List<ResourceCode> _resourceCodes;
-	private SimpleCounter _resourceCounter;
 	private SimpleCounter _resourcePermissionCounter;
 	private ClassName _roleClassName;
 	private List<Role> _roles;

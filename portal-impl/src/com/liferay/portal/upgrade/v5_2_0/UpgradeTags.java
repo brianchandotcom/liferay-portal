@@ -14,8 +14,6 @@
 
 package com.liferay.portal.upgrade.v5_2_0;
 
-import com.liferay.counter.service.CounterLocalServiceUtil;
-import com.liferay.portal.NoSuchResourceException;
 import com.liferay.portal.NoSuchRoleException;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.jdbc.SmartResultSet;
@@ -24,14 +22,10 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ResourceCode;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.service.ResourceCodeLocalServiceUtil;
-import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.NoSuchTagException;
 
 import java.sql.Connection;
@@ -83,7 +77,7 @@ public class UpgradeTags extends UpgradeProcess {
 			DataAccess.cleanUp(con, ps);
 		}
 
-		addResources(
+		addResourcePermission(
 			companyId, "com.liferay.portlet.tags.model.TagsEntry",
 			String.valueOf(entryId));
 	}
@@ -122,46 +116,6 @@ public class UpgradeTags extends UpgradeProcess {
 		}
 	}
 
-	protected void addResource(long resourceCodeId, String primKey)
-		throws Exception {
-
-		long resourceId = CounterLocalServiceUtil.increment(
-			"com.liferay.portal.model.Resource");
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append("insert into Resource_ (resourceId, codeId, primKey) ");
-		sb.append("values (");
-		sb.append(resourceId);
-		sb.append(", ");
-		sb.append(resourceCodeId);
-		sb.append(", '");
-		sb.append(primKey);
-		sb.append("')");
-
-		runSQL(sb.toString());
-	}
-
-	protected void addResourceCode(
-			long resourceCodeId, long companyId, String resourceName)
-		throws Exception {
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append("insert into ResourceCode (codeId, companyId, name, scope) ");
-		sb.append("values (");
-		sb.append(resourceCodeId);
-		sb.append(", ");
-		sb.append(companyId);
-		sb.append(", '");
-		sb.append(resourceName);
-		sb.append("', ");
-		sb.append(ResourceConstants.SCOPE_INDIVIDUAL);
-		sb.append(")");
-
-		runSQL(sb.toString());
-	}
-
 	protected void addResourcePermission(
 			long companyId, long roleId, String resourceName, String primKey)
 		throws Exception {
@@ -187,35 +141,18 @@ public class UpgradeTags extends UpgradeProcess {
 		runSQL(sb.toString());
 	}
 
-	protected void addResources(
+	protected void addResourcePermission(
 			long companyId, String resourceName, String primKey)
 		throws Exception {
 
-		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) {
-			ResourceCode resourceCode =
-				ResourceCodeLocalServiceUtil.getResourceCode(
-					companyId, resourceName,
-					ResourceConstants.SCOPE_INDIVIDUAL);
+		try {
+			Role role = RoleLocalServiceUtil.getRole(
+				companyId, RoleConstants.OWNER);
 
-			try {
-				ResourceLocalServiceUtil.getResource(
-					companyId, resourceName, ResourceConstants.SCOPE_INDIVIDUAL,
-					primKey);
-			}
-			catch (NoSuchResourceException nsre) {
-				addResource(resourceCode.getCodeId(), primKey);
-			}
+			addResourcePermission(
+				companyId, role.getRoleId(), resourceName, primKey);
 		}
-		else if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-			try {
-				Role role = RoleLocalServiceUtil.getRole(
-					companyId, RoleConstants.OWNER);
-
-				addResourcePermission(
-					companyId, role.getRoleId(), resourceName, primKey);
-			}
-			catch (NoSuchRoleException nsre) {
-			}
+		catch (NoSuchRoleException nsre) {
 		}
 	}
 
@@ -262,7 +199,7 @@ public class UpgradeTags extends UpgradeProcess {
 			DataAccess.cleanUp(con, ps, rs);
 		}
 
-		addResources(
+		addResourcePermission(
 			companyId, "com.liferay.portlet.tags.model.TagsVocabulary",
 			String.valueOf(vocabularyId));
 

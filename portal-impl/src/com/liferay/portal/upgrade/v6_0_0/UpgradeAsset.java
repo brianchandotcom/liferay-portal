@@ -18,9 +18,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-import com.liferay.portal.model.ResourceCode;
 import com.liferay.portal.model.ResourceConstants;
-import com.liferay.portal.service.ResourceCodeLocalServiceUtil;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -544,28 +542,7 @@ public class UpgradeAsset extends UpgradeProcess {
 
 		String oldName = "com.liferay.portlet.tags.model.TagsEntry";
 
-		ResourceCode oldResourceCode =
-			ResourceCodeLocalServiceUtil.getResourceCode(
-				companyId, oldName, ResourceConstants.SCOPE_INDIVIDUAL);
-
-		long oldCodeId = oldResourceCode.getCodeId();
-
 		String newName = AssetCategory.class.getName();
-
-		ResourceCode newResourceCode =
-			ResourceCodeLocalServiceUtil.getResourceCode(
-				companyId, newName, ResourceConstants.SCOPE_INDIVIDUAL);
-
-		long newCodeId = newResourceCode.getCodeId();
-
-		// Algorithm 1-5
-
-		runSQL(
-			"update Resource_ set codeId = " + newCodeId + " where " +
-				"codeId = " + oldCodeId + " and primKey = '" + categoryId +
-					"';");
-
-		// Algorithm 6
 
 		runSQL(
 			"update ResourcePermission set name = '" + newName + "' where " +

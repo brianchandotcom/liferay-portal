@@ -59,7 +59,6 @@ import com.liferay.portal.pop.POPServerUtil;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ResourceActionLocalServiceUtil;
-import com.liferay.portal.service.ResourceCodeLocalServiceUtil;
 import com.liferay.portal.spring.context.PortletContextLoader;
 import com.liferay.portal.spring.context.PortletContextLoaderListener;
 import com.liferay.portal.util.Portal;

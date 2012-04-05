@@ -1602,35 +1602,6 @@
 			<finder-column name="roleId" />
 		</finder>
 	</entity>
-	<entity name="ResourceCode" local-service="true" remote-service="false">
-
-		<!-- PK fields -->
-
-		<column name="codeId" type="long" primary="true" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-
-		<!-- Other fields -->
-
-		<column name="name" type="String" />
-		<column name="scope" type="int" />
-
-		<!-- Finder methods -->
-
-		<finder name="CompanyId" return-type="Collection">
-			<finder-column name="companyId" />
-		</finder>
-		<finder name="Name" return-type="Collection">
-			<finder-column name="name" />
-		</finder>
-		<finder name="C_N_S" return-type="ResourceCode" unique="true">
-			<finder-column name="companyId" />
-			<finder-column name="name" />
-			<finder-column name="scope" />
-		</finder>
-	</entity>
 	<entity name="ResourcePermission" local-service="true" remote-service="true">
 
 		<!-- PK fields -->

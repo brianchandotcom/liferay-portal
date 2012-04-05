@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.ClassedModel;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.model.PermissionedModel;
 import com.liferay.portal.model.Resource;
@@ -39,11 +37,12 @@ import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.ResourceLocalServiceBaseImpl;
 import com.liferay.portal.util.ResourcePermissionsThreadLocal;
-import org.apache.commons.lang.time.StopWatch;
 
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+
+import org.apache.commons.lang.time.StopWatch;
 
 /**
  * @author Brian Wing Shun Chan
@@ -263,7 +262,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 
 		}
 		else {
-			updateResources_6(companyId, name, scope, primKey, newPrimKey);
+			updateResourcePermissions(companyId, name, scope, primKey, newPrimKey);
 		}
 	}
 
@@ -394,11 +393,6 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		}
 
 		validate(name, false);
-
-		// Guest
-
-		Group guestGroup = groupLocalService.getGroup(
-			companyId, GroupConstants.GUEST);
 
 		if (primKey == null) {
 			return;
@@ -554,7 +548,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			addResources(
 				companyId, groupId, userId, resource, portletActions,
 				permissionedModel);
-			
+
 			// Group permissions
 
 			if ((groupId > 0) && addGroupPermissions) {
@@ -633,23 +627,20 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			PermissionedModel permissionedModel)
 		throws PortalException, SystemException{
 
-			if (resourceBlockLocalService.isSupported(name)) {
-				if (permissionedModel == null) {
-					throw new IllegalArgumentException(
-						"Permissioned model is null");
-				}
-
-				resourceBlockLocalService.releasePermissionedModelResourceBlock(
-					permissionedModel);
-
-				return;
+		if (resourceBlockLocalService.isSupported(name)) {
+			if (permissionedModel == null) {
+				throw new IllegalArgumentException(
+					"Permissioned model is null");
 			}
-			else {
-				resourcePermissionLocalService.deleteResourcePermissions(
-					companyId, name, scope, primKey);
 
-				return;
-			}
+			resourceBlockLocalService.releasePermissionedModelResourceBlock(
+				permissionedModel);
+
+			return;
+		}
+
+		resourcePermissionLocalService.deleteResourcePermissions(
+			companyId, name, scope, primKey);
 	}
 
 	protected void filterOwnerActions(String name, List<String> actionIds) {
@@ -713,18 +704,18 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		}
 
 		if (resourceBlockLocalService.isSupported(name)) {
-			updateResources_6Blocks(
+			updateResourceBlocks(
 				companyId, groupId, resource, groupPermissions,
 				guestPermissions, permissionedModel);
 		}
 		else {
-			updateResources_6(
+			updateResourcePermissions(
 				companyId, groupId, resource, groupPermissions,
 				guestPermissions);
 		}
 	}
 
-	protected void updateResources_6(
+	protected void updateResourcePermissions(
 			long companyId, long groupId, Resource resource,
 			String[] groupPermissions, String[] guestPermissions)
 		throws PortalException, SystemException {
@@ -742,7 +733,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			resource.getPrimKey(), role.getRoleId(), guestPermissions);
 	}
 
-	protected void updateResources_6(
+	protected void updateResourcePermissions(
 			long companyId, String name, int scope, String primKey,
 			String newPrimKey)
 		throws SystemException {
@@ -758,7 +749,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		}
 	}
 
-	protected void updateResources_6Blocks(
+	protected void updateResourceBlocks(
 			long companyId, long groupId, Resource resource,
 			String[] groupPermissions, String[] guestPermissions,
 			PermissionedModel permissionedModel)

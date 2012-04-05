@@ -34,7 +34,6 @@ import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.Resource;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.tools.ArgumentsUtil;
@@ -187,7 +186,6 @@ public class SampleSQLBuilder {
 			_dlDateCounter = new SimpleCounter();
 			_permissionCounter = new SimpleCounter();
 			_resourceCounter = new SimpleCounter();
-			_resourceCodeCounter = new SimpleCounter();
 			_resourcePermissionCounter = new SimpleCounter();
 			_socialActivityCounter = new SimpleCounter();
 
@@ -196,7 +194,7 @@ public class SampleSQLBuilder {
 			_dataFactory = new DataFactory(
 				baseDir, _maxGroupCount, maxJournalArticleSize,
 				_maxUserToGroupCount, _counter, _dlDateCounter,
-				_permissionCounter, _resourceCounter, _resourceCodeCounter,
+				_permissionCounter, _resourceCounter,
 				_resourcePermissionCounter, _socialActivityCounter);
 
 			_db = DBFactoryUtil.getDB(_dbType);
@@ -384,24 +382,6 @@ public class SampleSQLBuilder {
 		put(context, "resourcePrimkey", primKey);
 
 		processTemplate(_tplResourcePermission, context);
-	}
-
-	public void insertSecurity(String name, long primKey) throws Exception {
-		insertSecurity(name, String.valueOf(primKey));
-	}
-
-	public void insertSecurity(String name, String primKey) throws Exception {
-		if (!_securityEnabled) {
-			return;
-		}
-
-		Map<String, Object> context = getContext();
-
-		Resource resource = _dataFactory.addResource(name, primKey);
-
-		put(context, "resource", resource);
-
-		processTemplate(_tplSecurity, context);
 	}
 
 	public void insertUser(
@@ -785,7 +765,6 @@ public class SampleSQLBuilder {
 	private String _tplResourcePermission =
 		_TPL_ROOT + "resource_permission.ftl";
 	private String _tplSample = _TPL_ROOT + "sample.ftl";
-	private String _tplSecurity = _TPL_ROOT + "security.ftl";
 	private String _tplUser = _TPL_ROOT + "user.ftl";
 	private String _tplWikiPage = _TPL_ROOT + "wiki_page.ftl";
 	private SimpleCounter _userScreenNameIncrementer;

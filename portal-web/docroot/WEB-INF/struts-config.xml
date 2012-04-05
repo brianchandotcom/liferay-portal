@@ -166,11 +166,6 @@
 			<forward name="portlet.users_admin.error" path="portlet.directory.error" />
 		</action>
 
-		<action path="/admin_server/edit_permissions" type="com.liferay.portal.convert.action.EditPermissionsAction">
-			<forward name="portlet.admin.edit_permissions" path="portlet.admin.edit_permissions" />
-			<forward name="portlet.admin.error" path="portlet.admin.error" />
-		</action>
-
 		<action path="/admin_server/edit_role_permissions" type="com.liferay.portlet.rolesadmin.action.EditRolePermissionsAction">
 			<forward name="portlet.roles_admin.edit_role_permissions" path="portlet.roles_admin.edit_role_permissions" />
 			<forward name="portlet.roles_admin.error" path="portlet.roles_admin.error" />
@@ -1430,10 +1425,10 @@
 			<forward name="portlet.polls_display.view" path="portlet.polls_display.view" />
 		</action>
 
-        <action path="/polls_display/vote_question" type="com.liferay.portlet.polls.action.ViewQuestionAction" >
-            <forward name="portlet.polls.edit_question" path="portlet.polls_display.view" />
-            <forward name="portlet.polls.error" path="portlet.polls_display.error" />
-            <forward name="portlet.polls_display.view" path="portlet.polls_display.view" />
+		<action path="/polls_display/vote_question" type="com.liferay.portlet.polls.action.ViewQuestionAction" >
+			<forward name="portlet.polls.edit_question" path="portlet.polls_display.view" />
+			<forward name="portlet.polls.error" path="portlet.polls_display.error" />
+			<forward name="portlet.polls_display.view" path="portlet.polls_display.view" />
 		</action>
 
 		<!-- Portal Settings -->
@@ -1954,7 +1949,7 @@
 
 		<action path="/users_admin/select_site_role" forward="portlet.roles_admin.select_site_role" />
 
-        <action path="/users_admin/select_user_group" forward="portlet.user_groups_admin.select_user_group" />
+		<action path="/users_admin/select_user_group" forward="portlet.user_groups_admin.select_user_group" />
 
 		<action path="/users_admin/view" forward="portlet.users_admin.view" />
 

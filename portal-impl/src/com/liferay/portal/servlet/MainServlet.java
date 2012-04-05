@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -70,7 +69,6 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutTemplateLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ResourceActionLocalServiceUtil;
-import com.liferay.portal.service.ResourceCodeLocalServiceUtil;
 import com.liferay.portal.service.ThemeLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.servlet.filters.absoluteredirects.AbsoluteRedirectsResponse;
@@ -314,17 +312,6 @@ public class MainServlet extends ActionServlet {
 
 		try {
 			initResourceActions(portlets);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Initialize resource codes");
-		}
-
-		try {
-			initResourceCodes(portlets);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -620,8 +607,8 @@ public class MainServlet extends ActionServlet {
 	protected void destroyCompanies() throws Exception {
 		long[] companyIds = PortalInstances.getCompanyIds();
 
-		for (int i = 0; i < companyIds.length; i++) {
-			destroyCompany(companyIds[i]);
+		for (long companyId : companyIds) {
+			destroyCompany(companyId);
 		}
 	}
 
@@ -763,8 +750,8 @@ public class MainServlet extends ActionServlet {
 		try {
 			String[] webIds = PortalInstances.getWebIds();
 
-			for (int i = 0; i < webIds.length; i++) {
-				PortalInstances.initCompany(servletContext, webIds[i]);
+			for (String webId : webIds) {
+				PortalInstances.initCompany(servletContext, webId);
 			}
 		}
 		finally {
@@ -917,16 +904,6 @@ public class MainServlet extends ActionServlet {
 				ResourceActionLocalServiceUtil.checkResourceActions(
 					modelName, modelActions);
 			}
-		}
-	}
-
-	protected void initResourceCodes(List<Portlet> portlets) throws Exception {
-		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
-
-		for (Portlet portlet : portlets) {
-			List<String> modelNames =
-				ResourceActionsUtil.getPortletModelResources(
-					portlet.getPortletId());
 		}
 	}
 

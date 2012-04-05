@@ -624,12 +624,12 @@ public class ConvertPermissionAlgorithm extends ConvertProcess {
 		try {
 			release = ReleaseLocalServiceUtil.getRelease(
 				ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME,
-				ReleaseInfo.getBuildNumber());
+				ReleaseInfo.getParentBuildNumber());
 		}
 		catch (PortalException pe) {
 			release = ReleaseLocalServiceUtil.addRelease(
 				ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME,
-				ReleaseInfo.getBuildNumber());
+				ReleaseInfo.getParentBuildNumber());
 		}
 
 		ReleaseLocalServiceUtil.updateRelease(

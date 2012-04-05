@@ -25,7 +25,11 @@ import com.liferay.portal.security.ldap.PortalLDAPImporterUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,10 +40,36 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class RequestHeaderAutoLogin implements AutoLogin {
 
+	public RequestHeaderAutoLogin() {
+		super();
+
+		String[] hostsAllowedArray = PropsUtil.getArray(
+			"request.header.auth.hosts.allowed");
+
+		for (int i = 0; i < hostsAllowedArray.length; i++) {
+			_hostsAllowed.add(hostsAllowedArray[i]);
+		}
+	}
+
 	public String[] login(
 		HttpServletRequest request, HttpServletResponse response) {
 
 		String[] credentials = null;
+
+		String remoteAddr = request.getRemoteAddr();
+
+		if (AuthSettingsUtil.isAccessAllowed(request, _hostsAllowed)) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Access allowed for " + remoteAddr);
+			}
+		}
+		else {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Access denied for " + remoteAddr);
+			}
+
+			return credentials;
+		}
 
 		try {
 			long companyId = PortalUtil.getCompanyId(request);
@@ -87,5 +117,7 @@ public class RequestHeaderAutoLogin implements AutoLogin {
 
 	private static Log _log = LogFactoryUtil.getLog(
 		RequestHeaderAutoLogin.class);
+
+	private Set<String> _hostsAllowed = new HashSet<String>();
 
 }

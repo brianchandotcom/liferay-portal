@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.AuthSettingsUtil;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
@@ -177,28 +178,6 @@ public class SecureFilter extends BasePortalFilter {
 		return request;
 	}
 
-	protected boolean isAccessAllowed(HttpServletRequest request) {
-		if (_hostsAllowed.isEmpty()) {
-			return true;
-		}
-
-		String remoteAddr = request.getRemoteAddr();
-
-		if (_hostsAllowed.contains(remoteAddr)) {
-			return true;
-		}
-
-		String computerAddress = PortalUtil.getComputerAddress();
-
-		if (computerAddress.equals(remoteAddr) &&
-			_hostsAllowed.contains(_SERVER_IP)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	@Override
 	protected void processFilter(
 			HttpServletRequest request, HttpServletResponse response,
@@ -207,7 +186,7 @@ public class SecureFilter extends BasePortalFilter {
 
 		String remoteAddr = request.getRemoteAddr();
 
-		if (isAccessAllowed(request)) {
+		if (AuthSettingsUtil.isAccessAllowed(request, _hostsAllowed)) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Access allowed for " + remoteAddr);
 			}
@@ -332,8 +311,6 @@ public class SecureFilter extends BasePortalFilter {
 
 	private static final String _DIGEST_REALM =
 		"Digest realm=\"" + Portal.PORTAL_REALM + "\"";
-
-	private static final String _SERVER_IP = "SERVER_IP";
 
 	private static Log _log = LogFactoryUtil.getLog(SecureFilter.class);
 

@@ -137,13 +137,10 @@ public class InstanceWrapperBuilder {
 					TypeVariable typeParameter = typeParameters[i];
 
 					sb.append(typeParameter.getName());
-
-					if ((i + 1) != typeParameters.length) {
-						sb.append(", ");
-					}
+					sb.append(", ");
 				}
 
-				sb.append("> ");
+				sb.setStringAt("> ", sb.index());
 			}
 
 			sb.append(_getTypeGenericsName(javaMethod.getReturns()));
@@ -164,10 +161,11 @@ public class InstanceWrapperBuilder {
 
 				sb.append(" ");
 				sb.append(javaParameter.getName());
+				sb.append(", ");
+			}
 
-				if ((i + 1) != javaParameters.length) {
-					sb.append(", ");
-				}
+			if (javaParameters.length > 0) {
+				sb.setIndex(sb.index() - 1);
 			}
 
 			sb.append(")");
@@ -205,10 +203,11 @@ public class InstanceWrapperBuilder {
 				JavaParameter javaParameter = javaParameters[j];
 
 				sb.append(javaParameter.getName());
+				sb.append(", ");
+			}
 
-				if ((j + 1) != javaParameters.length) {
-					sb.append(", ");
-				}
+			if (javaParameters.length > 0) {
+				sb.setIndex(sb.index() - 1);
 			}
 
 			sb.append(");");
@@ -283,11 +282,12 @@ public class InstanceWrapperBuilder {
 			sb.append("<");
 
 			for (int i = 0; i < actualTypeArguments.length; i++) {
-				if (i > 0) {
-					sb.append(", ");
-				}
-
 				sb.append(_getTypeGenericsName(actualTypeArguments[i]));
+				sb.append(", ");
+			}
+
+			if (actualTypeArguments.length > 0) {
+				sb.setIndex(sb.index() - 1);
 			}
 
 			sb.append(">");

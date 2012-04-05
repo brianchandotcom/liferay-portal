@@ -30199,6 +30199,9 @@ Never call the update methods of this service directly, always go through the re
 				<type>long</type>
 				<comment><![CDATA[the primary key of the role]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
@@ -30218,6 +30221,9 @@ Never call the update methods of this service directly, always go through the re
 				<type>com.liferay.portal.model.Role</type>
 				<comment><![CDATA[the role]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
@@ -30368,28 +30374,6 @@ If the group is a site, then the default role is {@link com.liferay.portal.model
 				<comment><![CDATA[if a system exception occurred]]></comment>
 			</throws>
 			<see><![CDATA[com.liferay.portal.service.persistence.RoleFinder#findByC_N_S_P_A( long, String, int, String, String)]]></see>
-		</method>
-		<method>
-			<name>getRole</name>
-			<comment><![CDATA[Returns the role with the primary key.]]></comment>
-			<param>
-				<name>roleId</name>
-				<type>long</type>
-				<comment><![CDATA[the primary key of the role]]></comment>
-			</param>
-			<return>
-				<comment><![CDATA[the role with the primary key]]></comment>
-			</return>
-			<throws>
-				<name>PortalException</name>
-				<type>com.liferay.portal.kernel.exception.PortalException</type>
-				<comment><![CDATA[if a role with the primary key could not be found]]></comment>
-			</throws>
-			<throws>
-				<name>SystemException</name>
-				<type>com.liferay.portal.kernel.exception.SystemException</type>
-				<comment><![CDATA[if a system exception occurred]]></comment>
-			</throws>
 		</method>
 		<method>
 			<name>getRole</name>

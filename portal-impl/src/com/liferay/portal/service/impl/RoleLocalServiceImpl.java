@@ -291,6 +291,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 * Deletes the role with the primary key and its associated permissions.
 	 *
 	 * @param  roleId the primary key of the role
+	 * @return
 	 * @throws PortalException if a role with the primary key could not be
 	 *         found, if the role is a default system role, or if the role's
 	 *         resource could not be found
@@ -309,6 +310,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 * Deletes the role and its associated permissions.
 	 *
 	 * @param  role the role
+	 * @return
 	 * @throws PortalException if the role is a default system role or if the
 	 *         role's resource could not be found
 	 * @throws SystemException if a system exception occurred
@@ -906,9 +908,8 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 * @param  keywords the keywords (space separated), which may occur in the
 	 *         role's name or description (optionally <code>null</code>)
 	 * @param  types the role types (optionally <code>null</code>)
-	 * @param  params the finder parameters. Can specify values for
-	 *         "permissionsResourceId" and "usersRoles" keys. For more
-	 *         information, see {@link
+	 * @param  params the finder parameters. Can specify values for the
+	 *         "usersRoles" key. For more information, see {@link
 	 *         com.liferay.portal.service.persistence.RoleFinder}
 	 * @param  start the lower bound of the range of roles to return
 	 * @param  end the upper bound of the range of roles to return (not
@@ -986,9 +987,8 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 * @param  name the role's name (optionally <code>null</code>)
 	 * @param  description the role's description (optionally <code>null</code>)
 	 * @param  types the role types (optionally <code>null</code>)
-	 * @param  params the finder's parameters. Can specify values for
-	 *         "permissionsResourceId" and "usersRoles" keys. For more
-	 *         information, see {@link
+	 * @param  params the finder's parameters. Can specify values for the
+	 *         "usersRoles" key. For more information, see {@link
 	 *         com.liferay.portal.service.persistence.RoleFinder}
 	 * @param  start the lower bound of the range of the roles to return
 	 * @param  end the upper bound of the range of the roles to return (not
@@ -1074,9 +1074,8 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 * @param  name the role's name (optionally <code>null</code>)
 	 * @param  description the role's description (optionally <code>null</code>)
 	 * @param  types the role types (optionally <code>null</code>)
-	 * @param  params the finder parameters. Can specify values for
-	 *         "permissionsResourceId" and "usersRoles" keys. For more
-	 *         information, see {@link
+	 * @param  params the finder parameters. Can specify values for the
+	 *         "usersRoles" key. For more information, see {@link
 	 *         com.liferay.portal.service.persistence.RoleFinder}
 	 * @return the number of matching roles
 	 * @throws SystemException if a system exception occurred

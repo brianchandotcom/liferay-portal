@@ -156,7 +156,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			for (String roleName : roleNames) {
 				Role role = roleLocalService.getRole(companyId, roleName);
 
-				if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
 					if (resourceBlockLocalService.isSupported(name)) {
 						resourceBlockLocalService.addCompanyScopePermission(
 							companyId, name, role.getRoleId(), actionId);
@@ -166,12 +165,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 							companyId, name, scope, primKey, role.getRoleId(),
 							actionId);
 					}
-				}
-				else {
-					permissionLocalService.setRolePermission(
-						role.getRoleId(), companyId, name, scope, primKey,
-						actionId);
-				}
 			}
 		}
 

@@ -253,18 +253,6 @@
 		<property name="service" ref="com.liferay.portal.service.PasswordPolicyService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.PasswordPolicyService" />
 	</bean>
-	<bean name="/com_liferay_portal_service_spring_PermissionService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.PermissionService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.PermissionService" />
-	</bean>
-	<bean name="/com_liferay_portal_service_spring_PermissionService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.PermissionService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.PermissionService" />
-	</bean>
-	<bean name="/com_liferay_portal_service_spring_PermissionService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.PermissionService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.PermissionService" />
-	</bean>
 	<bean name="/com_liferay_portal_service_spring_PhoneService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.PhoneService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.PhoneService" />
@@ -348,18 +336,6 @@
 	<bean name="/com_liferay_portal_service_spring_RepositoryService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.RepositoryService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.RepositoryService" />
-	</bean>
-	<bean name="/com_liferay_portal_service_spring_ResourceService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.ResourceService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.ResourceService" />
-	</bean>
-	<bean name="/com_liferay_portal_service_spring_ResourceService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.ResourceService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.ResourceService" />
-	</bean>
-	<bean name="/com_liferay_portal_service_spring_ResourceService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.ResourceService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.ResourceService" />
 	</bean>
 	<bean name="/com_liferay_portal_service_spring_ResourceBlockService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.ResourceBlockService" />

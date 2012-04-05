@@ -29,7 +29,6 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 
@@ -141,12 +140,10 @@ public class UpgradePermission extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-			convertResourcePermissions(
-				BookmarksEntry.class.getName(), "BookmarksEntry", "entryId");
-			convertResourcePermissions(
-				BookmarksFolder.class.getName(), "BookmarksFolder", "folderId");
-		}
+		convertResourcePermissions(
+			BookmarksEntry.class.getName(), "BookmarksEntry", "entryId");
+		convertResourcePermissions(
+			BookmarksFolder.class.getName(), "BookmarksFolder", "folderId");
 	}
 
 	protected ResourceBlockPermissionsContainer

@@ -225,11 +225,6 @@ private List<Role> _filterRoles(List<Role> roles, String portletId, String actio
 }
 
 private boolean _hasPermission(Role role, String actionId, String resourceName, Integer scope) throws Exception {
-	if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-		return ResourcePermissionLocalServiceUtil.hasScopeResourcePermission(role.getCompanyId(), resourceName, scope, role.getRoleId(), actionId);
-	}
-	else {
-		return PermissionLocalServiceUtil.hasRolePermission(role.getRoleId(), role.getCompanyId(), resourceName, scope, actionId);
-	}
+	return ResourcePermissionLocalServiceUtil.hasScopeResourcePermission(role.getCompanyId(), resourceName, scope, role.getRoleId(), actionId);
 }
 %>

@@ -529,10 +529,6 @@ public class UpgradeImageGallery extends UpgradeProcess {
 	}
 
 	protected void updateIGFolderPermissions() throws Exception {
-		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM != 6) {
-			return;
-		}
-
 		runSQL(
 			"delete from ResourcePermission where " +
 				"name = 'com.liferay.portlet.imagegallery.model.IGFolder' " +
@@ -681,10 +677,6 @@ public class UpgradeImageGallery extends UpgradeProcess {
 	}
 
 	protected void updateIGImagePermissions() throws Exception {
-		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM != 6) {
-			return;
-		}
-
 		runSQL(
 			"delete from ResourcePermission where name = '" +
 				_IG_IMAGE_CLASS_NAME + "' and primKey = '0'");

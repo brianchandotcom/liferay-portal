@@ -211,14 +211,6 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	public static final String MAPPING_TABLE_USERS_ORGS_SQL_CREATE = "create table Users_Orgs (userId LONG not null,organizationId LONG not null,primary key (userId, organizationId))";
 	public static final boolean FINDER_CACHE_ENABLED_USERS_ORGS = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.Users_Orgs"), true);
-	public static final String MAPPING_TABLE_USERS_PERMISSIONS_NAME = "Users_Permissions";
-	public static final Object[][] MAPPING_TABLE_USERS_PERMISSIONS_COLUMNS = {
-			{ "userId", Types.BIGINT },
-			{ "permissionId", Types.BIGINT }
-		};
-	public static final String MAPPING_TABLE_USERS_PERMISSIONS_SQL_CREATE = "create table Users_Permissions (userId LONG not null,permissionId LONG not null,primary key (userId, permissionId))";
-	public static final boolean FINDER_CACHE_ENABLED_USERS_PERMISSIONS = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.Users_Permissions"), true);
 	public static final String MAPPING_TABLE_USERS_ROLES_NAME = "Users_Roles";
 	public static final Object[][] MAPPING_TABLE_USERS_ROLES_COLUMNS = {
 			{ "userId", Types.BIGINT },

@@ -556,9 +556,6 @@ public class SitesUtil {
 		parameterMap.put(
 			PortletDataHandlerKeys.USER_ID_STRATEGY,
 			new String[] {UserIdStrategy.CURRENT_USER_ID});
-		parameterMap.put(
-			PortletDataHandlerKeys.USER_PERMISSIONS,
-			new String[] {Boolean.FALSE.toString()});
 
 		return parameterMap;
 	}

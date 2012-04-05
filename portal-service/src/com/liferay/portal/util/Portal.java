@@ -27,7 +27,6 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.model.Resource;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.User;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -281,19 +280,6 @@ public interface Portal {
 	 *         authentication token
 	 */
 	public Set<String> getAuthTokenIgnorePortlets();
-
-	/**
-	 * Returns the base model instance for the resource.
-	 *
-	 * @param  resource the resource
-	 * @return the base model instance, or <code>null</code> if the resource
-	 *         does not have a base model instance (such as if its a portlet)
-	 * @throws PortalException if a base model instance for the resource could
-	 *         not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public BaseModel<?> getBaseModel(Resource resource)
-		throws PortalException, SystemException;
 
 	/**
 	 * Returns the base model instance for the resource permission.

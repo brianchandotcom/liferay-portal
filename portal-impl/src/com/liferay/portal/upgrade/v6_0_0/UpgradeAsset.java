@@ -18,9 +18,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-import com.liferay.portal.model.ResourceCode;
 import com.liferay.portal.model.ResourceConstants;
-import com.liferay.portal.service.ResourceCodeLocalServiceUtil;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -392,7 +390,7 @@ public class UpgradeAsset extends UpgradeProcess {
 		updateAssetEntries();
 		updateAssetCategories();
 		updateAssetTags();
-		updateResourceCodes();
+		updateResources();
 	}
 
 	protected void updateAssetCategories() throws Exception {
@@ -544,28 +542,7 @@ public class UpgradeAsset extends UpgradeProcess {
 
 		String oldName = "com.liferay.portlet.tags.model.TagsEntry";
 
-		ResourceCode oldResourceCode =
-			ResourceCodeLocalServiceUtil.getResourceCode(
-				companyId, oldName, ResourceConstants.SCOPE_INDIVIDUAL);
-
-		long oldCodeId = oldResourceCode.getCodeId();
-
 		String newName = AssetCategory.class.getName();
-
-		ResourceCode newResourceCode =
-			ResourceCodeLocalServiceUtil.getResourceCode(
-				companyId, newName, ResourceConstants.SCOPE_INDIVIDUAL);
-
-		long newCodeId = newResourceCode.getCodeId();
-
-		// Algorithm 1-5
-
-		runSQL(
-			"update Resource_ set codeId = " + newCodeId + " where " +
-				"codeId = " + oldCodeId + " and primKey = '" + categoryId +
-					"';");
-
-		// Algorithm 6
 
 		runSQL(
 			"update ResourcePermission set name = '" + newName + "' where " +
@@ -574,36 +551,28 @@ public class UpgradeAsset extends UpgradeProcess {
 						" and primKey = '" + categoryId + "';");
 	}
 
-	protected void updateResourceCodes() throws Exception {
-		updateResourceCodes(
+	protected void updateResources() throws Exception {
+		updateResources(
 			"com.liferay.portlet.tags", "com.liferay.portlet.asset"
 		);
 
-		updateResourceCodes(
+		updateResources(
 			"com.liferay.portlet.tags.model.TagsEntry", AssetTag.class.getName()
 		);
 
-		updateResourceCodes(
+		updateResources(
 			"com.liferay.portlet.tags.model.TagsAsset",
 			AssetEntry.class.getName()
 		);
 
-		updateResourceCodes(
+		updateResources(
 			"com.liferay.portlet.tags.model.TagsVocabulary",
 			AssetVocabulary.class.getName()
 		);
 	}
 
-	protected void updateResourceCodes(String oldCodeName, String newCodeName)
+	protected void updateResources(String oldCodeName, String newCodeName)
 		throws Exception {
-
-		// Algorithm 1-5
-
-		runSQL(
-			"update ResourceCode set name = '" + newCodeName + "' where" +
-				" name = '" + oldCodeName + "';");
-
-		// Algorithm 6
 
 		runSQL(
 			"update ResourceAction set name = '" + newCodeName + "' where" +

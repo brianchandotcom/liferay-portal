@@ -1,7 +1,5 @@
 <#include "class_names.ftl">
 
-<#include "resource_codes.ftl">
-
 <#include "company.ftl">
 
 <#include "roles.ftl">

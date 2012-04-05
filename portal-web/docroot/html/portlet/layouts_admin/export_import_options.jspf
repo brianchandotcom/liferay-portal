@@ -364,21 +364,9 @@
 					<aui:input label="permissions" name="<%= PortletDataHandlerKeys.PERMISSIONS %>" type="checkbox" />
 
 					<ul id="<portlet:namespace />permissionsUl">
-						<c:choose>
-							<c:when test="<%= (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) || (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) %>">
-								<li class="tree-item">
-									<aui:input label="permissions-assigned-to-roles" name="permissionsAssignedToRoles" type="checkbox" value="<%= true %>" />
-								</li>
-							</c:when>
-							<c:otherwise>
-								<li class="tree-item">
-									<aui:input label="permissions-assigned-to-organizations-user-groups-roles-and-sites" name="permissionsAssignedToOrganizationsUserGroupsRolesAndCommunities" type="checkbox" value="<%= true %>" />
-								</li>
-								<li class="tree-item">
-									<aui:input helpMessage="export-import-permissions-assigned-to-users-help" label="permissions-assigned-to-users" name="permissionsAssignedToUsers" type="checkbox" />
-								</li>
-							</c:otherwise>
-						</c:choose>
+						<li class="tree-item">
+							<aui:input label="permissions-assigned-to-roles" name="permissionsAssignedToRoles" type="checkbox" value="<%= true %>" />
+						</li>
 					</ul>
 				</li>
 

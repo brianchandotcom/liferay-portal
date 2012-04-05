@@ -17,7 +17,6 @@ package com.liferay.portal.util;
 import com.liferay.portal.NoSuchCompanyException;
 import com.liferay.portal.NoSuchImageException;
 import com.liferay.portal.NoSuchLayoutException;
-import com.liferay.portal.NoSuchResourceException;
 import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
@@ -91,8 +90,6 @@ import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PublicRenderParameter;
-import com.liferay.portal.model.Resource;
-import com.liferay.portal.model.ResourceCode;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.Role;
@@ -121,7 +118,6 @@ import com.liferay.portal.service.GroupServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
-import com.liferay.portal.service.ResourceCodeLocalServiceUtil;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.TicketLocalServiceUtil;
@@ -916,18 +912,6 @@ public class PortalImpl implements Portal {
 
 	public Set<String> getAuthTokenIgnorePortlets() {
 		return _authTokenIgnorePortlets;
-	}
-
-	public BaseModel<?> getBaseModel(Resource resource)
-		throws PortalException, SystemException {
-
-		ResourceCode resourceCode =
-			ResourceCodeLocalServiceUtil.getResourceCode(resource.getCodeId());
-
-		String modelName = resourceCode.getName();
-		String primKey = resource.getPrimKey();
-
-		return getBaseModel(modelName, primKey);
 	}
 
 	public BaseModel<?> getBaseModel(ResourcePermission resourcePermission)
@@ -5404,28 +5388,16 @@ public class PortalImpl implements Portal {
 			return;
 		}
 
-		try {
-			if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-				int count =
-					ResourcePermissionLocalServiceUtil.
-						getResourcePermissionsCount(
-							companyId, name, ResourceConstants.SCOPE_INDIVIDUAL,
-							primaryKey);
-
-				if (count == 0) {
-					throw new NoSuchResourceException();
-				}
-			}
-			else if (!portlet.isUndeployedPortlet()) {
-				ResourceLocalServiceUtil.getResource(
+		int count =
+			ResourcePermissionLocalServiceUtil.
+				getResourcePermissionsCount(
 					companyId, name, ResourceConstants.SCOPE_INDIVIDUAL,
 					primaryKey);
-			}
-		}
-		catch (NoSuchResourceException nsre) {
+
+		if (count == 0) {
 			ResourceLocalServiceUtil.addResources(
-				companyId, groupId, 0, name, primaryKey, portletActions, true,
-				true);
+					companyId, groupId, 0, name, primaryKey, portletActions, true,
+					true);
 		}
 	}
 

@@ -575,16 +575,6 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="com.liferay.portal.model.impl.OrgGroupPermissionModelImpl">
-		<id-class class="com.liferay.portal.service.persistence.OrgGroupPermissionPK" />
-		<attributes>
-			<id name="organizationId" />
-			<id name="groupId" />
-			<id name="permissionId" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-		</attributes>
-	</mapped-superclass>
 	<mapped-superclass class="com.liferay.portal.model.impl.OrgGroupRoleModelImpl">
 		<id-class class="com.liferay.portal.service.persistence.OrgGroupRolePK" />
 		<attributes>
@@ -684,16 +674,6 @@
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 			<transient name="userUuid" />
-		</attributes>
-	</mapped-superclass>
-	<mapped-superclass class="com.liferay.portal.model.impl.PermissionModelImpl">
-		<attributes>
-			<id name="permissionId" />
-			<basic name="companyId" />
-			<basic name="actionId" />
-			<basic name="resourceId" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
 	<mapped-superclass class="com.liferay.portal.model.impl.PhoneModelImpl">
@@ -871,15 +851,6 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="com.liferay.portal.model.impl.ResourceModelImpl">
-		<attributes>
-			<id name="resourceId" />
-			<basic name="codeId" />
-			<basic name="primKey" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-		</attributes>
-	</mapped-superclass>
 	<mapped-superclass class="com.liferay.portal.model.impl.ResourceActionModelImpl">
 		<attributes>
 			<id name="resourceActionId" />
@@ -908,16 +879,6 @@
 			<basic name="resourceBlockId" />
 			<basic name="roleId" />
 			<basic name="actionIds" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-		</attributes>
-	</mapped-superclass>
-	<mapped-superclass class="com.liferay.portal.model.impl.ResourceCodeModelImpl">
-		<attributes>
-			<id name="codeId" />
-			<basic name="companyId" />
-			<basic name="name" />
-			<basic name="scope" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 		</attributes>
@@ -3531,10 +3492,6 @@
 		<table name="Organization_" />
 		<attributes />
 	</entity>
-	<entity class="com.liferay.portal.model.impl.OrgGroupPermissionImpl" name="OrgGroupPermission">
-		<table name="OrgGroupPermission" />
-		<attributes />
-	</entity>
 	<entity class="com.liferay.portal.model.impl.OrgGroupRoleImpl" name="OrgGroupRole">
 		<table name="OrgGroupRole" />
 		<attributes />
@@ -3554,14 +3511,6 @@
 	<entity class="com.liferay.portal.model.impl.PasswordTrackerImpl" name="PasswordTracker">
 		<table name="PasswordTracker" />
 		<attributes />
-	</entity>
-	<entity class="com.liferay.portal.model.impl.PermissionImpl" name="Permission">
-		<table name="Permission_" />
-		<attributes>
-			<transient name="name" />
-			<transient name="primKey" />
-			<transient name="scope" />
-		</attributes>
 	</entity>
 	<entity class="com.liferay.portal.model.impl.PhoneImpl" name="Phone">
 		<table name="Phone" />
@@ -3701,14 +3650,6 @@
 		<table name="RepositoryEntry" />
 		<attributes />
 	</entity>
-	<entity class="com.liferay.portal.model.impl.ResourceImpl" name="Resource">
-		<table name="Resource_" />
-		<attributes>
-			<transient name="companyId" />
-			<transient name="name" />
-			<transient name="scope" />
-		</attributes>
-	</entity>
 	<entity class="com.liferay.portal.model.impl.ResourceActionImpl" name="ResourceAction">
 		<table name="ResourceAction" />
 		<attributes />
@@ -3719,10 +3660,6 @@
 	</entity>
 	<entity class="com.liferay.portal.model.impl.ResourceBlockPermissionImpl" name="ResourceBlockPermission">
 		<table name="ResourceBlockPermission" />
-		<attributes />
-	</entity>
-	<entity class="com.liferay.portal.model.impl.ResourceCodeImpl" name="ResourceCode">
-		<table name="ResourceCode" />
 		<attributes />
 	</entity>
 	<entity class="com.liferay.portal.model.impl.ResourcePermissionImpl" name="ResourcePermission">

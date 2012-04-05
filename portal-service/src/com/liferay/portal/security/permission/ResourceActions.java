@@ -17,7 +17,6 @@ package com.liferay.portal.security.permission;
 import com.liferay.portal.NoSuchResourceActionException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Permission;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.Role;
 
@@ -42,8 +41,6 @@ public interface ResourceActions {
 	public String getAction(PageContext pageContext, String action);
 
 	public String getActionNamePrefix();
-
-	public List<String> getActions(List<Permission> permissions);
 
 	public List<String> getActionsNames(
 		PageContext pageContext, List<String> actions);

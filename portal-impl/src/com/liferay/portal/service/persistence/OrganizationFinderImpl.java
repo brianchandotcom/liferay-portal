@@ -63,9 +63,6 @@ public class OrganizationFinderImpl
 	public static final String FIND_BY_C_PO_N_L_S_C_Z_R_C =
 		OrganizationFinder.class.getName() + ".findByC_PO_N_L_S_C_Z_R_C";
 
-	public static final String JOIN_BY_GROUPS_PERMISSIONS =
-		OrganizationFinder.class.getName() + ".joinByGroupsPermissions";
-
 	public static final String JOIN_BY_ORGANIZATIONS_GROUPS =
 		OrganizationFinder.class.getName() + ".joinByOrganizationsGroups";
 
@@ -78,9 +75,6 @@ public class OrganizationFinderImpl
 
 	public static final String JOIN_BY_ORGANIZATIONS_USERS =
 		OrganizationFinder.class.getName() + ".joinByOrganizationsUsers";
-
-	public static final String JOIN_BY_ORG_GROUP_PERMISSION =
-		OrganizationFinder.class.getName() + ".joinByOrgGroupPermission";
 
 	public static final String JOIN_BY_USERS_ORGS =
 		OrganizationFinder.class.getName() + ".joinByUsersOrgs";
@@ -170,21 +164,6 @@ public class OrganizationFinderImpl
 		streets = CustomSQLUtil.keywords(streets);
 		cities = CustomSQLUtil.keywords(cities);
 		zips = CustomSQLUtil.keywords(zips);
-
-		if (params != null) {
-			Long resourceId = (Long)params.get("permissionsResourceId");
-			Long groupId = (Long)params.get("permissionsGroupId");
-
-			if (Validator.isNotNull(groupId) &&
-				Validator.isNotNull(resourceId)) {
-
-				return countByPermissions(
-					companyId, parentOrganizationId,
-					parentOrganizationIdComparator, names, type, streets,
-					cities, zips, regionId, countryId, resourceId.longValue(),
-					groupId.longValue(), andOperator);
-			}
-		}
 
 		Session session = null;
 
@@ -407,23 +386,7 @@ public class OrganizationFinderImpl
 		cities = CustomSQLUtil.keywords(cities);
 		zips = CustomSQLUtil.keywords(zips);
 
-		if (params != null) {
-			Long resourceId = (Long)params.get("permissionsResourceId");
-			Long groupId = (Long)params.get("permissionsGroupId");
-
-			if (Validator.isNotNull(groupId) &&
-				Validator.isNotNull(resourceId)) {
-
-				return findByPermissions(
-					companyId, parentOrganizationId,
-					parentOrganizationIdComparator, names, type, streets,
-					cities, zips, regionId, countryId, resourceId.longValue(),
-					groupId.longValue(), andOperator, start, end, obc);
-			}
-		}
-		else {
-			params = new LinkedHashMap<String, Object>();
-		}
+		params = new LinkedHashMap<String, Object>();
 
 		StringBundler sb = new StringBundler();
 
@@ -560,332 +523,6 @@ public class OrganizationFinderImpl
 		return 0;
 	}
 
-	protected int countByPermissions(
-			long companyId, long parentOrganizationId,
-			String parentOrganizationIdComparator, String[] names, String type,
-			String[] streets, String[] cities, String[] zips, Long regionId,
-			Long countryId, long resourceId, long groupId, boolean andOperator)
-		throws SystemException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			StringBundler sb = new StringBundler();
-
-			sb.append("(");
-
-			if (Validator.isNotNull(type)) {
-				sb.append(CustomSQLUtil.get(COUNT_BY_C_PO_N_L_S_C_Z_R_C));
-			}
-			else {
-				sb.append(CustomSQLUtil.get(COUNT_BY_C_PO_N_S_C_Z_R_C));
-			}
-
-			String sql = sb.toString();
-
-			if (regionId == null) {
-				sql = StringUtil.replace(sql, _REGION_ID_SQL, StringPool.BLANK);
-			}
-
-			if (countryId == null) {
-				sql = StringUtil.replace(
-					sql, _COUNTRY_ID_SQL, StringPool.BLANK);
-			}
-
-			sql = StringUtil.replace(
-				sql, "[$JOIN$]", getJoin("groupsPermissions"));
-			sql = StringUtil.replace(
-				sql, "[$WHERE$]", getWhere("groupsPermissions"));
-
-			sb.setIndex(0);
-
-			sb.append(sql);
-			sb.append(") UNION (");
-
-			if (Validator.isNotNull(type)) {
-				sb.append(CustomSQLUtil.get(COUNT_BY_C_PO_N_L_S_C_Z_R_C));
-			}
-			else {
-				sb.append(CustomSQLUtil.get(COUNT_BY_C_PO_N_S_C_Z_R_C));
-			}
-
-			sql = sb.toString();
-
-			if (regionId == null) {
-				sql = StringUtil.replace(sql, _REGION_ID_SQL, StringPool.BLANK);
-			}
-
-			if (countryId == null) {
-				sql = StringUtil.replace(
-					sql, _COUNTRY_ID_SQL, StringPool.BLANK);
-			}
-
-			sql = StringUtil.replace(
-				sql, "[$JOIN$]", getJoin("orgGroupPermission"));
-			sql = StringUtil.replace(
-				sql, "[$WHERE$]", getWhere("orgGroupPermission"));
-			sql = StringUtil.replace(
-				sql, "[$PARENT_ORGANIZATION_ID_COMPARATOR$]",
-				parentOrganizationIdComparator);
-			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
-
-			sb.setIndex(0);
-
-			sb.append(sql);
-			sb.append(")");
-
-			sql = sb.toString();
-
-			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(Organization_.name)", StringPool.LIKE, false,
-				names);
-			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(Address.street1)", StringPool.LIKE, true, streets);
-			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(Address.street2)", StringPool.LIKE, true, streets);
-			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(Address.street3)", StringPool.LIKE, true, streets);
-			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(Address.city)", StringPool.LIKE, false, cities);
-			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(Address.zip)", StringPool.LIKE, true, zips);
-
-			if (regionId == null) {
-				sql = StringUtil.replace(sql, _REGION_ID_SQL, StringPool.BLANK);
-			}
-
-			if (countryId == null) {
-				sql = StringUtil.replace(
-					sql, _COUNTRY_ID_SQL, StringPool.BLANK);
-			}
-
-			SQLQuery q = session.createSQLQuery(sql);
-
-			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			for (int i = 0; i < 2; i++) {
-				qPos.add(resourceId);
-
-				if (i == 1) {
-					qPos.add(groupId);
-				}
-
-				qPos.add(companyId);
-				qPos.add(parentOrganizationId);
-
-				if (Validator.isNotNull(type)) {
-					qPos.add(type);
-				}
-
-				qPos.add(names, 2);
-				qPos.add(streets, 6);
-
-				if (regionId != null) {
-					qPos.add(regionId);
-					qPos.add(regionId);
-				}
-
-				if (countryId != null) {
-					qPos.add(countryId);
-					qPos.add(countryId);
-				}
-
-				qPos.add(cities, 2);
-				qPos.add(zips, 2);
-			}
-
-			int count = 0;
-
-			Iterator<Long> itr = q.iterate();
-
-			while (itr.hasNext()) {
-				Long l = itr.next();
-
-				if (l != null) {
-					count += l.intValue();
-				}
-			}
-
-			return count;
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected List<Organization> findByPermissions(
-			long companyId, long parentOrganizationId,
-			String parentOrganizationIdComparator, String[] names, String type,
-			String[] streets, String[] cities, String[] zips, Long regionId,
-			Long countryId, long resourceId, long groupId, boolean andOperator,
-			int start, int end, OrderByComparator obc)
-		throws SystemException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			StringBundler sb = new StringBundler();
-
-			sb.append("(");
-
-			if (Validator.isNotNull(type)) {
-				sb.append(CustomSQLUtil.get(FIND_BY_C_PO_N_L_S_C_Z_R_C));
-			}
-			else {
-				sb.append(CustomSQLUtil.get(FIND_BY_C_PO_N_S_C_Z_R_C));
-			}
-
-			String sql = sb.toString();
-
-			if (regionId == null) {
-				sql = StringUtil.replace(sql, _REGION_ID_SQL, StringPool.BLANK);
-			}
-
-			if (countryId == null) {
-				sql = StringUtil.replace(
-					sql, _COUNTRY_ID_SQL, StringPool.BLANK);
-			}
-
-			sql = StringUtil.replace(
-				sql, "[$JOIN$]", getJoin("groupsPermissions"));
-			sql = StringUtil.replace(
-				sql, "[$WHERE$]", getWhere("groupsPermissions"));
-
-			sb.setIndex(0);
-
-			sb.append(sql);
-			sb.append(") UNION (");
-
-			if (Validator.isNotNull(type)) {
-				sb.append(CustomSQLUtil.get(FIND_BY_C_PO_N_L_S_C_Z_R_C));
-			}
-			else {
-				sb.append(CustomSQLUtil.get(FIND_BY_C_PO_N_S_C_Z_R_C));
-			}
-
-			sql = sb.toString();
-
-			if (regionId == null) {
-				sql = StringUtil.replace(sql, _REGION_ID_SQL, StringPool.BLANK);
-			}
-
-			if (countryId == null) {
-				sql = StringUtil.replace(
-					sql, _COUNTRY_ID_SQL, StringPool.BLANK);
-			}
-
-			sql = StringUtil.replace(
-				sql, "[$JOIN$]", getJoin("orgGroupPermission"));
-			sql = StringUtil.replace(
-				sql, "[$WHERE$]", getWhere("orgGroupPermission"));
-			sql = StringUtil.replace(
-				sql, "[$PARENT_ORGANIZATION_ID_COMPARATOR$]",
-				parentOrganizationIdComparator);
-			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
-
-			sb.setIndex(0);
-
-			sb.append(sql);
-
-			sb.append(") ");
-
-			sql = sb.toString();
-
-			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(Organization_.name)", StringPool.LIKE, false,
-				names);
-			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(Address.street1)", StringPool.LIKE, true, streets);
-			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(Address.street2)", StringPool.LIKE, true, streets);
-			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(Address.street3)", StringPool.LIKE, true, streets);
-			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(Address.city)", StringPool.LIKE, false, cities);
-			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(Address.zip)", StringPool.LIKE, true, zips);
-
-			if (regionId == null) {
-				sql = StringUtil.replace(sql, _REGION_ID_SQL, StringPool.BLANK);
-			}
-
-			if (countryId == null) {
-				sql = StringUtil.replace(
-					sql, _COUNTRY_ID_SQL, StringPool.BLANK);
-			}
-
-			sql = CustomSQLUtil.replaceOrderBy(sql, obc);
-
-			SQLQuery q = session.createSQLQuery(sql);
-
-			q.addScalar("orgId", Type.LONG);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			for (int i = 0; i < 2; i++) {
-				qPos.add(resourceId);
-
-				if (i == 1) {
-					qPos.add(groupId);
-				}
-
-				qPos.add(companyId);
-				qPos.add(parentOrganizationId);
-
-				if (Validator.isNotNull(type)) {
-					qPos.add(type);
-				}
-
-				qPos.add(names, 2);
-				qPos.add(streets, 6);
-
-				if (regionId != null) {
-					qPos.add(regionId);
-					qPos.add(regionId);
-				}
-
-				if (countryId != null) {
-					qPos.add(countryId);
-					qPos.add(countryId);
-				}
-
-				qPos.add(cities, 2);
-				qPos.add(zips, 2);
-			}
-
-			List<Organization> organizations = new ArrayList<Organization>();
-
-			Iterator<Long> itr = (Iterator<Long>)QueryUtil.iterate(
-				q, getDialect(), start, end);
-
-			while (itr.hasNext()) {
-				Long organizationId = itr.next();
-
-				Organization organization = OrganizationUtil.findByPrimaryKey(
-					organizationId.longValue());
-
-				organizations.add(organization);
-			}
-
-			return organizations;
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
 	protected String getJoin(LinkedHashMap<String, Object> params) {
 		if ((params == null) || params.isEmpty()) {
 			return StringPool.BLANK;
@@ -913,10 +550,7 @@ public class OrganizationFinderImpl
 	protected String getJoin(String key) {
 		String join = StringPool.BLANK;
 
-		if (key.equals("groupsPermissions")) {
-			join = CustomSQLUtil.get(JOIN_BY_GROUPS_PERMISSIONS);
-		}
-		else if (key.equals("organizationsGroups")) {
+		if (key.equals("organizationsGroups")) {
 			join = CustomSQLUtil.get(JOIN_BY_ORGANIZATIONS_GROUPS);
 		}
 		else if (key.equals("organizationsPasswordPolicies")) {
@@ -927,9 +561,6 @@ public class OrganizationFinderImpl
 		}
 		else if (key.equals("organizationsUsers")) {
 			join = CustomSQLUtil.get(JOIN_BY_ORGANIZATIONS_USERS);
-		}
-		else if (key.equals("orgGroupPermission")) {
-			join = CustomSQLUtil.get(JOIN_BY_ORG_GROUP_PERMISSION);
 		}
 		else if (key.equals("usersOrgs")) {
 			join = CustomSQLUtil.get(JOIN_BY_USERS_ORGS);
@@ -977,10 +608,7 @@ public class OrganizationFinderImpl
 	protected String getWhere(String key, Object value) {
 		String join = StringPool.BLANK;
 
-		if (key.equals("groupsPermissions")) {
-			join = CustomSQLUtil.get(JOIN_BY_GROUPS_PERMISSIONS);
-		}
-		else if (key.equals("organizations")) {
+		if (key.equals("organizations")) {
 			Long[] organizationIds = (Long[])value;
 
 			if (organizationIds.length == 0) {
@@ -1039,9 +667,6 @@ public class OrganizationFinderImpl
 		}
 		else if (key.equals("organizationsUsers")) {
 			join = CustomSQLUtil.get(JOIN_BY_ORGANIZATIONS_USERS);
-		}
-		else if (key.equals("orgGroupPermission")) {
-			join = CustomSQLUtil.get(JOIN_BY_ORG_GROUP_PERMISSION);
 		}
 		else if (key.equals("usersOrgs")) {
 			join = CustomSQLUtil.get(JOIN_BY_USERS_ORGS);

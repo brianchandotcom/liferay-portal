@@ -28,14 +28,11 @@ import com.liferay.portal.model.ResourceBlockPermissionsContainer;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
-import com.liferay.portal.service.PermissionLocalServiceUtil;
 import com.liferay.portal.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 
@@ -48,6 +45,7 @@ import java.util.List;
 /**
  * @author Alexander Chow
  * @author Connor McKay
+ * @author Igor Beslic
  */
 public class UpgradePermission extends UpgradeProcess {
 
@@ -158,12 +156,10 @@ public class UpgradePermission extends UpgradeProcess {
 		updatePermissions("com.liferay.portlet.messageboards", true, true);
 		updatePermissions("com.liferay.portlet.shopping", true, true);
 
-		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-			convertResourcePermissions(
-				BookmarksEntry.class.getName(), "BookmarksEntry", "entryId");
-			convertResourcePermissions(
-				BookmarksFolder.class.getName(), "BookmarksFolder", "folderId");
-		}
+		convertResourcePermissions(
+			BookmarksEntry.class.getName(), "BookmarksEntry", "entryId");
+		convertResourcePermissions(
+			BookmarksFolder.class.getName(), "BookmarksFolder", "folderId");
 	}
 
 	protected ResourceBlockPermissionsContainer
@@ -188,38 +184,6 @@ public class UpgradePermission extends UpgradeProcess {
 	}
 
 	protected void updatePermissions(
-			String name, boolean community, boolean guest)
-		throws Exception {
-
-		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-			updatePermissions_6(name, community, guest);
-		}
-		else {
-			updatePermissions_1to5(name, community, guest);
-		}
-	}
-
-	protected void updatePermissions_1to5(
-			String name, boolean community, boolean guest)
-		throws Exception {
-
-		if (community) {
-			PermissionLocalServiceUtil.setContainerResourcePermissions(
-				name, RoleConstants.ORGANIZATION_USER, ActionKeys.VIEW);
-			PermissionLocalServiceUtil.setContainerResourcePermissions(
-				name, RoleConstants.SITE_MEMBER, ActionKeys.VIEW);
-		}
-
-		if (guest) {
-			PermissionLocalServiceUtil.setContainerResourcePermissions(
-				name, RoleConstants.GUEST, ActionKeys.VIEW);
-		}
-
-		PermissionLocalServiceUtil.setContainerResourcePermissions(
-			name, RoleConstants.OWNER, ActionKeys.VIEW);
-	}
-
-	protected void updatePermissions_6(
 			String name, boolean community, boolean guest)
 		throws Exception {
 

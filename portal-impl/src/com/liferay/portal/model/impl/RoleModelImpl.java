@@ -144,14 +144,6 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	public static final String MAPPING_TABLE_GROUPS_ROLES_SQL_CREATE = "create table Groups_Roles (groupId LONG not null,roleId LONG not null,primary key (groupId, roleId))";
 	public static final boolean FINDER_CACHE_ENABLED_GROUPS_ROLES = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.Groups_Roles"), true);
-	public static final String MAPPING_TABLE_ROLES_PERMISSIONS_NAME = "Roles_Permissions";
-	public static final Object[][] MAPPING_TABLE_ROLES_PERMISSIONS_COLUMNS = {
-			{ "roleId", Types.BIGINT },
-			{ "permissionId", Types.BIGINT }
-		};
-	public static final String MAPPING_TABLE_ROLES_PERMISSIONS_SQL_CREATE = "create table Roles_Permissions (roleId LONG not null,permissionId LONG not null,primary key (roleId, permissionId))";
-	public static final boolean FINDER_CACHE_ENABLED_ROLES_PERMISSIONS = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.Roles_Permissions"), true);
 	public static final String MAPPING_TABLE_USERS_ROLES_NAME = "Users_Roles";
 	public static final Object[][] MAPPING_TABLE_USERS_ROLES_COLUMNS = {
 			{ "userId", Types.BIGINT },

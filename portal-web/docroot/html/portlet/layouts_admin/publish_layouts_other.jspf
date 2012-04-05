@@ -20,21 +20,9 @@
 			<aui:input helpMessage="export-import-permissions-help" label="permissions" name="<%= PortletDataHandlerKeys.PERMISSIONS %>" type="checkbox" />
 
 			<ul id="<portlet:namespace />permissionsUl">
-				<c:choose>
-					<c:when test="<%= (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) || (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) %>">
-						<li class="tree-item">
-							<aui:input name="permissionsAssignedToRoles" type="checkbox" value="<%= true %>" />
-						</li>
-					</c:when>
-					<c:otherwise>
-						<li class="tree-item">
-							<aui:input name="permissionsAssignedToOrganizationsUserGroupsRolesAndCommunities" type="checkbox" value="<%= true %>" />
-						</li>
-						<li class="tree-item">
-							<aui:input helpMessage="export-import-permissions-assigned-to-users-help" label="permissions-assigned-to-users" name="<%= PortletDataHandlerKeys.USER_PERMISSIONS %>" type="checkbox" />
-						</li>
-					</c:otherwise>
-				</c:choose>
+				<li class="tree-item">
+					<aui:input name="permissionsAssignedToRoles" type="checkbox" value="<%= true %>" />
+				</li>
 			</ul>
 		</li>
 

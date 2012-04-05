@@ -234,25 +234,6 @@ Liferay.Service.registerClass(
 );
 
 Liferay.Service.registerClass(
-	Liferay.Service.Portal, "Permission",
-	{
-		checkPermission: true,
-		hasGroupPermission: true,
-		hasUserPermission: true,
-		hasUserPermissions: true,
-		setGroupPermissions: true,
-		setIndividualPermissions: true,
-		setOrgGroupPermissions: true,
-		setRolePermission: true,
-		setRolePermissions: true,
-		setUserPermissions: true,
-		unsetRolePermission: true,
-		unsetRolePermissions: true,
-		unsetUserPermissions: true
-	}
-);
-
-Liferay.Service.registerClass(
 	Liferay.Service.Portal, "Phone",
 	{
 		addPhone: true,
@@ -325,13 +306,6 @@ Liferay.Service.registerClass(
 		getSupportedParameters: true,
 		getTypeSettingsProperties: true,
 		updateRepository: true
-	}
-);
-
-Liferay.Service.registerClass(
-	Liferay.Service.Portal, "Resource",
-	{
-		getResource: true
 	}
 );
 

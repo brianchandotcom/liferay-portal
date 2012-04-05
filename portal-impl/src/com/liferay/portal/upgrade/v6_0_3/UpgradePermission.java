@@ -26,7 +26,6 @@ import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -215,41 +214,11 @@ public class UpgradePermission extends UpgradeProcess {
 		}
 	}
 
-	protected void deletePermissions_5() throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getConnection();
-
-			ps = con.prepareStatement(
-				"delete from Roles_Permissions where permissionId in (" +
-					"select permissionId from Permission_ where " +
-						"actionId = 'APPROVE_ARTICLE')");
-
-			ps.executeUpdate();
-
-			ps = con.prepareStatement(
-				"delete from Permission_ where actionId = 'APPROVE_ARTICLE'");
-
-			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
-	}
-
 	@Override
 	protected void doUpgrade() throws Exception {
 		addSingleApproverWorkflowRoles();
 
-		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) {
-			updatePermissions_5();
-		}
-		else if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-			updatePermissions_6();
-		}
+		updatePermissions();
 	}
 
 	protected long getRoleId(long companyId, String name) throws Exception {
@@ -279,49 +248,7 @@ public class UpgradePermission extends UpgradeProcess {
 		}
 	}
 
-	protected void updatePermissions_5() throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getConnection();
-
-			StringBundler sb = new StringBundler();
-
-			sb.append("select ResourceCode.companyId, ");
-			sb.append("Roles_Permissions.roleId, Resource_.primKey from ");
-			sb.append("Resource_, ResourceCode, Permission_, ");
-			sb.append("Roles_Permissions where Resource_.codeId = ");
-			sb.append("ResourceCode.codeId and ResourceCode.name = ");
-			sb.append("'com.liferay.portlet.journal' and ");
-			sb.append("ResourceCode.scope = 4 and Resource_.resourceId = ");
-			sb.append("Permission_.resourceId and Permission_.actionId = ");
-			sb.append("'APPROVE_ARTICLE' and Permission_.permissionId = ");
-			sb.append("Roles_Permissions.permissionId");
-
-			String sql = sb.toString();
-
-			ps = con.prepareStatement(sql);
-
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				long companyId = rs.getLong("companyId");
-				long roleId = rs.getLong("roleId");
-				long groupId = GetterUtil.getLong(rs.getString("primKey"));
-
-				assignSingleApproverWorkflowRoles(companyId, roleId, groupId);
-			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
-
-		deletePermissions_5();
-	}
-
-	protected void updatePermissions_6() throws Exception {
+	protected void updatePermissions() throws Exception {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;

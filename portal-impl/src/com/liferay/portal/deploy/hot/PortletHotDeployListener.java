@@ -59,7 +59,6 @@ import com.liferay.portal.pop.POPServerUtil;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ResourceActionLocalServiceUtil;
-import com.liferay.portal.service.ResourceCodeLocalServiceUtil;
 import com.liferay.portal.spring.context.PortletContextLoader;
 import com.liferay.portal.spring.context.PortletContextLoaderListener;
 import com.liferay.portal.util.Portal;
@@ -359,16 +358,6 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 			List<String> modelNames =
 				ResourceActionsUtil.getPortletModelResources(
 					portlet.getPortletId());
-
-			for (long companyId : companyIds) {
-				ResourceCodeLocalServiceUtil.checkResourceCodes(
-					companyId, portlet.getPortletId());
-
-				for (String modelName : modelNames) {
-					ResourceCodeLocalServiceUtil.checkResourceCodes(
-						companyId, modelName);
-				}
-			}
 
 			List<String> portletActions =
 				ResourceActionsUtil.getPortletResourceActions(

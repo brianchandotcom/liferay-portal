@@ -745,12 +745,6 @@ create table Groups_Orgs (
 	primary key (groupId, organizationId)
 );
 
-create table Groups_Permissions (
-	groupId LONG not null,
-	permissionId LONG not null,
-	primary key (groupId, permissionId)
-);
-
 create table Groups_Roles (
 	groupId LONG not null,
 	roleId LONG not null,
@@ -1281,13 +1275,6 @@ create table Organization_ (
 	comments STRING null
 );
 
-create table OrgGroupPermission (
-	organizationId LONG not null,
-	groupId LONG not null,
-	permissionId LONG not null,
-	primary key (organizationId, groupId, permissionId)
-);
-
 create table OrgGroupRole (
 	organizationId LONG not null,
 	groupId LONG not null,
@@ -1362,13 +1349,6 @@ create table PasswordTracker (
 	userId LONG,
 	createDate DATE null,
 	password_ VARCHAR(75) null
-);
-
-create table Permission_ (
-	permissionId LONG not null primary key,
-	companyId LONG,
-	actionId VARCHAR(75) null,
-	resourceId LONG
 );
 
 create table Phone (
@@ -1558,24 +1538,11 @@ create table ResourceTypePermission (
 	actionIds LONG
 );
 
-create table Resource_ (
-	resourceId LONG not null primary key,
-	codeId LONG,
-	primKey VARCHAR(255) null
-);
-
 create table ResourceAction (
 	resourceActionId LONG not null primary key,
 	name VARCHAR(255) null,
 	actionId VARCHAR(75) null,
 	bitwiseValue LONG
-);
-
-create table ResourceCode (
-	codeId LONG not null primary key,
-	companyId LONG,
-	name VARCHAR(255) null,
-	scope INTEGER
 );
 
 create table ResourcePermission (
@@ -1599,12 +1566,6 @@ create table Role_ (
 	description STRING null,
 	type_ INTEGER,
 	subtype VARCHAR(75) null
-);
-
-create table Roles_Permissions (
-	roleId LONG not null,
-	permissionId LONG not null,
-	primary key (roleId, permissionId)
 );
 
 create table SCFrameworkVersi_SCProductVers (
@@ -2098,12 +2059,6 @@ create table Users_Orgs (
 	userId LONG not null,
 	organizationId LONG not null,
 	primary key (userId, organizationId)
-);
-
-create table Users_Permissions (
-	userId LONG not null,
-	permissionId LONG not null,
-	primary key (userId, permissionId)
 );
 
 create table Users_Roles (

@@ -14,55 +14,44 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.model.ResourceCode;
-import com.liferay.portal.service.ResourceCodeLocalServiceUtil;
+import com.liferay.portal.model.Resource;
 
 /**
  * Represents a permissionable resource in permissions versions &lt; 6.
  *
  * @author Brian Wing Shun Chan
  */
-public class ResourceImpl extends ResourceBaseImpl {
+public class ResourceImpl implements Resource{
 
 	public ResourceImpl() {
 	}
 
-	public long getCompanyId() throws PortalException, SystemException {
-		if (_companyId != 0) {
-			return _companyId;
-		}
-		else {
-			ResourceCode resourceCode =
-				ResourceCodeLocalServiceUtil.getResourceCode(getCodeId());
-
-			return resourceCode.getCompanyId();
-		}
+	public long getCodeId() {
+		return _codeId;
 	}
 
-	public String getName() throws PortalException, SystemException {
-		if (_name != null) {
-			return _name;
-		}
-		else {
-			ResourceCode resourceCode =
-				ResourceCodeLocalServiceUtil.getResourceCode(getCodeId());
-
-			return resourceCode.getName();
-		}
+	public long getCompanyId() {
+		return _companyId;
 	}
 
-	public int getScope() throws PortalException, SystemException {
-		if (_scope != 0) {
-			return _scope;
-		}
-		else {
-			ResourceCode resourceCode =
-				ResourceCodeLocalServiceUtil.getResourceCode(getCodeId());
+	public String getName() {
+		return _name;
+	}
 
-			return resourceCode.getScope();
-		}
+	public String getPrimKey() {
+		return _primKey;
+	}
+
+	public long getResourceId() {
+		return _resourceId;
+	}
+
+	public int getScope() {
+		return _scope;
+	}
+
+	public void setCodeId(long codeId) {
+		_codeId = codeId;
 	}
 
 	public void setCompanyId(long companyId) {
@@ -73,12 +62,23 @@ public class ResourceImpl extends ResourceBaseImpl {
 		_name = name;
 	}
 
+	public void setPrimKey(String primKey) {
+		_primKey = primKey;
+	}
+
+	public void setResourceId(long resourceId) {
+		_resourceId = resourceId;
+	}
+
 	public void setScope(int scope) {
 		_scope = scope;
 	}
 
+	private long _codeId;
 	private long _companyId;
 	private String _name;
+	private String _primKey;
+	private long _resourceId;
 	private int _scope;
 
 }

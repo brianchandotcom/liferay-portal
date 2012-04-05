@@ -45,7 +45,7 @@ public class SearchFolderEntryQuotesTest extends BaseTestCase {
 			RuntimeVariables.replace("Bookmarks Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.type("//input[@id='_28_keywords']",
+		selenium.type("//input[@name='_28_keywords']",
 			RuntimeVariables.replace("\"Test Folder Entry\""));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
@@ -78,7 +78,7 @@ public class SearchFolderEntryQuotesTest extends BaseTestCase {
 			RuntimeVariables.replace("Bookmarks Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.type("//input[@id='_28_keywords']",
+		selenium.type("//input[@name='_28_keywords']",
 			RuntimeVariables.replace("\"Test Entry\""));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));

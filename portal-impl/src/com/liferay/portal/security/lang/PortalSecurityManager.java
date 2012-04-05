@@ -18,8 +18,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.security.pacl.PACLClassUtil;
 import com.liferay.portal.security.pacl.PACLPolicy;
+import com.liferay.portal.security.pacl.PACLPolicyManager;
 
 import java.security.Permission;
+
+import sun.reflect.Reflection;
 
 /**
  * @author Brian Wing Shun Chan
@@ -131,8 +134,14 @@ public class PortalSecurityManager extends SecurityManager {
 		String name = permission.getName();
 
 		if (name.equals(_PERMISSION_SET_SECURITY_MANAGER)) {
-			throw new SecurityException(
-				"Attempted to set another security manager");
+			Class<?> callerClass = Reflection.getCallerClass(4);
+
+			if ((callerClass == null) ||
+				(callerClass != PACLPolicyManager.class)) {
+
+				throw new SecurityException(
+					"Attempted to set another security manager");
+			}
 		}
 		else if (name.equals(_PERMISSION_EXIT_VM)) {
 			Thread.dumpStack();

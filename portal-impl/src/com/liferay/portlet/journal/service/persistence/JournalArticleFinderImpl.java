@@ -589,7 +589,7 @@ public class JournalArticleFinderImpl
 					sql, "(status = ?) AND", StringPool.BLANK);
 			}
 
-			if (type == null) {
+			if (Validator.isNull(type)) {
 				sql = StringUtil.replace(sql, _TYPE_SQL, StringPool.BLANK);
 			}
 
@@ -656,7 +656,7 @@ public class JournalArticleFinderImpl
 			qPos.add(reviewDate_TS);
 			qPos.add(reviewDate_TS);
 
-			if (type != null) {
+			if (Validator.isNotNull(type)) {
 				qPos.add(type);
 				qPos.add(type);
 			}
@@ -738,7 +738,7 @@ public class JournalArticleFinderImpl
 					sql, "(status = ?) AND", StringPool.BLANK);
 			}
 
-			if (type == null) {
+			if (Validator.isNull(type)) {
 				sql = StringUtil.replace(sql, _TYPE_SQL, StringPool.BLANK);
 			}
 
@@ -807,7 +807,7 @@ public class JournalArticleFinderImpl
 			qPos.add(reviewDate_TS);
 			qPos.add(reviewDate_TS);
 
-			if (type != null) {
+			if (Validator.isNotNull(type)) {
 				qPos.add(type);
 				qPos.add(type);
 			}

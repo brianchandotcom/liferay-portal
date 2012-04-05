@@ -40,7 +40,7 @@ import org.junit.runner.RunWith;
 public class DLAppServiceSoapTest {
 
 	@BeforeClass
-	public void setUp() throws Exception {
+	public static void setUp() throws Exception {
 		String name = "Test Folder";
 		String description = "This is a test folder.";
 
@@ -64,7 +64,7 @@ public class DLAppServiceSoapTest {
 	}
 
 	@AfterClass
-	public void tearDown() throws Exception {
+	public static void tearDown() throws Exception {
 		try {
 			if (_folder != null) {
 				getDLAppServiceSoap().deleteFolder(_folder.getFolderId());
@@ -94,6 +94,19 @@ public class DLAppServiceSoapTest {
 			fileEntry.getUuid(), fileEntry.getGroupId());
 	}
 
+	protected static DLAppServiceSoap getDLAppServiceSoap() throws Exception {
+		if (_service == null) {
+			DLAppServiceSoapServiceLocator locator =
+				new DLAppServiceSoapServiceLocator();
+
+			_service = locator.getPortlet_DL_DLAppService(
+				TestPropsValues.getSoapURL(
+					locator.getPortlet_DL_DLAppServiceWSDDServiceName()));
+		}
+
+		return _service;
+	}
+
 	protected FileEntrySoap addFileEntry(String title) throws Exception {
 		long folderId = _folder.getFolderId();
 		String description = StringPool.BLANK;
@@ -111,20 +124,10 @@ public class DLAppServiceSoapTest {
 			serviceContext);
 	}
 
-	protected DLAppServiceSoap getDLAppServiceSoap() throws Exception {
-		DLAppServiceSoapServiceLocator locator =
-			new DLAppServiceSoapServiceLocator();
-
-		DLAppServiceSoap service = locator.getPortlet_DL_DLAppService(
-			TestPropsValues.getSoapURL(
-				locator.getPortlet_DL_DLAppServiceWSDDServiceName()));
-
-		return service;
-	}
-
 	private static final String _CONTENT =
 		"Content: Enterprise. Open Source. For Life.";
 
 	private static FolderSoap _folder;
+	private static DLAppServiceSoap _service;
 
 }

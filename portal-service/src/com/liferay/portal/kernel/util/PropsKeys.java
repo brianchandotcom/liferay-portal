@@ -681,8 +681,6 @@ public interface PropsKeys {
 
 	public static final String EHCACHE_STATISTICS_ENABLED = "ehcache.statistics.enabled";
 
-	public static final String ENTITY_RESOLVER_DEFINITIONS_PATH = "entity.resolver.definitions.path";
-
 	public static final String FACEBOOK_CONNECT_APP_ID = "facebook.connect.app.id";
 
 	public static final String FACEBOOK_CONNECT_APP_SECRET = "facebook.connect.app.secret";

@@ -99,11 +99,11 @@ public class StartupHelper {
 	}
 
 	public void upgradeProcess(int buildNumber) throws UpgradeException {
-		if (buildNumber == ReleaseInfo.getBuildNumber()) {
+		if (buildNumber == ReleaseInfo.getParentBuildNumber()) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Skipping upgrade process from " + buildNumber + " to " +
-						ReleaseInfo.getBuildNumber());
+						ReleaseInfo.getParentBuildNumber());
 			}
 
 			return;
@@ -120,7 +120,8 @@ public class StartupHelper {
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						"Upgrading from " + buildNumber + " to " +
-							ReleaseInfo.getBuildNumber() + " is not supported");
+							ReleaseInfo.getParentBuildNumber() + " is not " +
+								"supported");
 				}
 
 				System.exit(0);

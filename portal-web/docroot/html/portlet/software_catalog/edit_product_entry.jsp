@@ -285,6 +285,7 @@ for (int i = 0; i < screenshotsCount; i++) {
 <%
 }
 %>
+
 </table>
 
 <input type="button" value="<liferay-ui:message key="add-screenshot" />" onClick="<portlet:namespace />addScreenShot();" />

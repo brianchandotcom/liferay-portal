@@ -47,6 +47,7 @@ if (rule != null) {
 
 	for (VersionableName knownOperationSystem : knownOperationSystems) {
 	%>
+
 		<aui:option label="<%= knownOperationSystem.getName() %>" selected="<%= operatingSystems.contains(knownOperationSystem.getName()) %>" />
 
 	<%

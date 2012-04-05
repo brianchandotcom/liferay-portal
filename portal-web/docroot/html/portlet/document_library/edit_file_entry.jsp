@@ -345,6 +345,7 @@ else if (dlFileEntryType != null) {
 					}
 				}
 				%>
+
 			</c:if>
 
 			<liferay-ui:custom-attributes-available className="<%= DLFileEntryConstants.getClassName() %>">

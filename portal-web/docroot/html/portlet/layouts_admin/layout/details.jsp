@@ -181,6 +181,7 @@ StringBuilder friendlyURLBase = new StringBuilder();
 	<%
 	}
 	%>
+
 </aui:fieldset>
 
 <aui:script use="aui-base">

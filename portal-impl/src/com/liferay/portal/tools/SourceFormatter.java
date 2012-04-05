@@ -1798,7 +1798,7 @@ public class SourceFormatter {
 
 		String line = null;
 
-		String previousLine = null;
+		String previousLine = StringPool.BLANK;
 
 		String currentAttributeAndValue = null;
 		String previousAttribute = null;
@@ -1823,20 +1823,52 @@ public class SourceFormatter {
 			}
 
 			String trimmedLine = StringUtil.trimLeading(line);
+			String trimmedPreviousLine = StringUtil.trimLeading(previousLine);
+
+			if (trimmedPreviousLine.equals("%>") && Validator.isNotNull(line) &&
+				!trimmedLine.equals("-->")) {
+
+				sb.append("\n");
+			}
+			else if (Validator.isNotNull(previousLine) &&
+					 !trimmedPreviousLine.equals("<!--") &&
+					 trimmedLine.equals("<%")) {
+
+				sb.append("\n");
+			}
+			else if (trimmedPreviousLine.equals("<%") &&
+					 Validator.isNull(line)) {
+
+				continue;
+			}
+			else if (trimmedPreviousLine.equals("<%") &&
+					 trimmedLine.startsWith("//")) {
+
+				sb.append("\n");
+			}
+			else if (Validator.isNull(previousLine) &&
+					 trimmedLine.equals("%>") && (sb.index() > 2)) {
+
+				String lineBeforePreviousLine = sb.stringAt(sb.index() - 3);
+
+				if (!lineBeforePreviousLine.startsWith("//")) {
+					sb.setIndex(sb.index() - 1);
+				}
+			}
+
+			if ((trimmedLine.startsWith("if (") ||
+				 trimmedLine.startsWith("else if (") ||
+				 trimmedLine.startsWith("while (")) &&
+				trimmedLine.endsWith(") {")) {
+
+				_checkIfClause(trimmedLine, fileName, lineCount);
+			}
 
 			if (readAttributes) {
 				if (!trimmedLine.startsWith(StringPool.FORWARD_SLASH) &&
 					!trimmedLine.startsWith(StringPool.GREATER_THAN)) {
 
 					int pos = trimmedLine.indexOf(StringPool.EQUAL);
-
-					if ((trimmedLine.startsWith("if (") ||
-						 trimmedLine.startsWith("else if (") ||
-						 trimmedLine.startsWith("while (")) &&
-						trimmedLine.endsWith(") {")) {
-
-						_checkIfClause(trimmedLine, fileName, lineCount);
-					}
 
 					if (pos != -1) {
 						String attribute = trimmedLine.substring(0, pos);
@@ -1858,12 +1890,10 @@ public class SourceFormatter {
 						}
 
 						previousAttribute = attribute;
-						previousLine = line;
 					}
 				}
 				else {
 					previousAttribute = null;
-					previousLine = null;
 
 					readAttributes = false;
 				}
@@ -1929,6 +1959,8 @@ public class SourceFormatter {
 
 			line = _replacePrimitiveWrapperInstantiation(
 				fileName, line, lineCount);
+
+			previousLine = line;
 
 			sb.append(line);
 			sb.append("\n");

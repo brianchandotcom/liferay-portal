@@ -503,6 +503,7 @@ if (Validator.isNull(redirect)) {
 	<%
 	for (int i = 1; i <= existingAttachments.length; i++) {
 	%>
+
 		var removeExisting = A.one("#<portlet:namespace />removeExisting" + <%= i %>);
 
 		if (removeExisting) {
@@ -527,6 +528,7 @@ if (Validator.isNull(redirect)) {
 				}
 			);
 		}
+
 	<%
 	}
 	%>

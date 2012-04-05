@@ -74,6 +74,7 @@ numberFormat.setMinimumIntegerDigits(2);
 								<%
 								}
 								%>
+
 							</aui:select>
 						</aui:fieldset>
 
@@ -620,6 +621,7 @@ numberFormat.setMinimumIntegerDigits(2);
 						<%
 						}
 						%>
+
 					</aui:select>
 
 					<aui:input cssClass="lfr-textarea-container" name="script" type="textarea" value="<%= script %>" />

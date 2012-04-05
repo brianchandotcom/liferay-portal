@@ -109,7 +109,6 @@ portletURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
 		else {
 			folderName = LanguageUtil.get(pageContext, "home");
 		}
-
 		%>
 
 		<portlet:renderURL var="viewFolderURL">

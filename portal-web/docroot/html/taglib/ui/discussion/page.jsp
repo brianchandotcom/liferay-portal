@@ -245,7 +245,6 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 				<aui:layout>
 
 					<%
-
 					if (messages != null) {
 						messages = ListUtil.sort(messages, new MessageCreateDateComparator(true));
 

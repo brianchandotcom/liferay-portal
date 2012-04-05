@@ -382,6 +382,7 @@ boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChec
 				<%
 				for (LayoutPrototype layoutPrototype : layoutPrototypes) {
 				%>
+
 					<li>
 						<label>
 							<a href="javascript:;">
@@ -389,6 +390,7 @@ boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChec
 							</a>
 						</label>
 					</li>
+
 				<%
 				}
 				%>

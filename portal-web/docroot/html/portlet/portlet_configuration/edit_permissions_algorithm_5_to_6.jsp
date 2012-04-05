@@ -485,6 +485,7 @@ definePermissionsURL.setParameter(Constants.CMD, Constants.VIEW);
 						%>
 
 					</liferay-ui:search-container-column-text>
+
 				<%
 				}
 				%>

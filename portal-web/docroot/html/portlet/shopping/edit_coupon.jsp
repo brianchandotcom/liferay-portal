@@ -131,6 +131,7 @@ String discountType = BeanParamUtil.getString(coupon, request, "discountType");
 					<%
 					}
 					%>
+
 				</aui:select>
 			</aui:fieldset>
 		</liferay-ui:panel>

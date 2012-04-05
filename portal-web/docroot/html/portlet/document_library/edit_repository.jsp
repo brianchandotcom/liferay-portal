@@ -168,6 +168,7 @@ long folderId = ParamUtil.getLong(request, "folderId");
 		}
 	}
 	%>
+
 </div>
 
 <aui:script use="aui-base">

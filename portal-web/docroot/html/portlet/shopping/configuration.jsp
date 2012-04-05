@@ -82,7 +82,6 @@ else if (tabs3.equals("shipping-email")) {
 				<aui:field-wrapper label="credit-cards">
 
 					<%
-
 					String[] ccTypes1 = ShoppingPreferences.CC_TYPES;
 					String[] ccTypes2 = shoppingPrefs.getCcTypes();
 

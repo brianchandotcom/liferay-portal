@@ -218,7 +218,9 @@ PortletURL portletURL = renderResponse.createRenderURL();
 											value = "0";
 										}
 									%>
+
 										<aui:option label="<%= value %>" />
+
 									<%
 									}
 								%>

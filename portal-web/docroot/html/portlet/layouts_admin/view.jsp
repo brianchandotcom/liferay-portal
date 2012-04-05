@@ -82,6 +82,7 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 			PortalUtil.addPortletBreadcrumbEntry(request, selLayout.getName(locale), currentURL);
 		}
 		%>
+
 	</c:when>
 	<c:otherwise>
 

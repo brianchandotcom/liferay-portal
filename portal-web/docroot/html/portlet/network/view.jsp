@@ -38,6 +38,7 @@ portletURL.setParameter("tabs1", tabs1);
 
 <c:choose>
 	<c:when test='<%= tabs1.equals("dns-lookup") %>'>
+
 		<%
 		String domain = ParamUtil.getString(request, "domain");
 

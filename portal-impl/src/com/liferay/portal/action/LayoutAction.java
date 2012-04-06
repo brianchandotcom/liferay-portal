@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouterUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -33,8 +31,6 @@ import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.HeaderCacheServletResponse;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
-import com.liferay.portal.kernel.servlet.ServletResponseUtil;
-import com.liferay.portal.kernel.servlet.StringServletResponse;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
@@ -44,7 +40,6 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webdav.WebDAVStorage;
 import com.liferay.portal.kernel.xml.QName;
@@ -96,17 +91,15 @@ import com.liferay.portlet.PortletRequestImpl;
 import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.PublicRenderParametersPool;
 import com.liferay.portlet.RenderParametersPool;
-import com.liferay.portlet.RenderRequestImpl;
-import com.liferay.portlet.RenderResponseImpl;
 import com.liferay.portlet.ResourceRequestFactory;
 import com.liferay.portlet.ResourceRequestImpl;
 import com.liferay.portlet.ResourceResponseFactory;
 import com.liferay.portlet.ResourceResponseImpl;
 import com.liferay.portlet.StateAwareResponseImpl;
+import com.liferay.portlet.layoutconfiguration.util.RuntimePortletUtil;
 import com.liferay.portlet.login.util.LoginUtil;
 import com.liferay.util.servlet.filters.CacheResponseUtil;
 
-import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -383,8 +376,7 @@ public class LayoutAction extends Action {
 
 		// Manually check the p_p_id. See LEP-1724.
 
-		if (themeDisplay.isStateExclusive() ||
-			Validator.isNotNull(ParamUtil.getString(request, "p_p_id"))) {
+		if (Validator.isNotNull(ParamUtil.getString(request, "p_p_id"))) {
 
 			if (layout.isTypePanel()) {
 				path += "/portal/layout/view/panel.jsp";
@@ -653,6 +645,10 @@ public class LayoutAction extends Action {
 
 						return null;
 					}
+
+					if (response.isCommitted()) {
+						return null;
+					}
 				}
 			}
 			else if (themeDisplay.isLifecycleRender()) {
@@ -666,29 +662,25 @@ public class LayoutAction extends Action {
 
 				return null;
 			}
-			else {
-				if (response.isCommitted()) {
+
+			if (layout != null) {
+				if (themeDisplay.isStateExclusive()) {
+					RuntimePortletUtil.processPortlet(
+						request, response, portletId);
+
 					return null;
 				}
-
-				if (layout != null) {
-
+				else {
 					// Include layout content before the page loads because
 					// portlets on the page can set the page title and page
 					// subtitle
 
 					includeLayoutContent(
 						request, response, themeDisplay, layout);
-
-					if (themeDisplay.isStateExclusive()) {
-						renderExclusive(request, response, themeDisplay);
-
-						return null;
-					}
 				}
-
-				return mapping.findForward("portal.layout");
 			}
+
+			return mapping.findForward("portal.layout");
 		}
 		catch (Exception e) {
 			PortalUtil.sendError(e, request, response);
@@ -1045,65 +1037,6 @@ public class LayoutAction extends Action {
 		}
 
 		response.sendRedirect(portletURL.toString());
-	}
-
-	protected void renderExclusive(
-			HttpServletRequest request, HttpServletResponse response,
-			ThemeDisplay themeDisplay)
-		throws Exception {
-
-		RenderRequestImpl renderRequestImpl =
-			(RenderRequestImpl)request.getAttribute(
-				JavaConstants.JAVAX_PORTLET_REQUEST);
-
-		RenderResponseImpl renderResponseImpl =
-			(RenderResponseImpl)request.getAttribute(
-				JavaConstants.JAVAX_PORTLET_RESPONSE);
-
-		StringServletResponse stringResponse =
-			(StringServletResponse)renderRequestImpl.getAttribute(
-				WebKeys.STRING_SERVLET_RESPONSE);
-
-		if (stringResponse == null) {
-			stringResponse = (StringServletResponse)
-				renderResponseImpl.getHttpServletResponse();
-
-			Portlet portlet = processPortletRequest(
-				request, response, PortletRequest.RENDER_PHASE);
-
-			InvokerPortlet invokerPortlet = PortletInstanceFactoryUtil.create(
-				portlet, null);
-
-			invokerPortlet.render(renderRequestImpl, renderResponseImpl);
-
-			if (Validator.isNull(stringResponse.getString())) {
-				stringResponse.setString(null);
-			}
-		}
-
-		renderResponseImpl.transferHeaders(response);
-
-		if (stringResponse.isCalledGetOutputStream()) {
-			UnsyncByteArrayOutputStream ubaos =
-				stringResponse.getUnsyncByteArrayOutputStream();
-
-			InputStream is = new UnsyncByteArrayInputStream(
-				ubaos.unsafeGetByteArray(), 0, ubaos.size());
-
-			ServletResponseUtil.sendFile(
-				request, response, renderResponseImpl.getResourceName(), is,
-				renderResponseImpl.getContentType());
-		}
-		else if (stringResponse.isCalledGetWriter()) {
-			byte[] content = stringResponse.getString().getBytes(
-				StringPool.UTF8);
-
-			ServletResponseUtil.sendFile(
-				request, response, renderResponseImpl.getResourceName(),
-				content, renderResponseImpl.getContentType());
-		}
-
-		renderRequestImpl.cleanUp();
 	}
 
 	protected Event serializeEvent(

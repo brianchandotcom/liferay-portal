@@ -746,10 +746,6 @@ if (portlet.isActive() && portlet.isReady() && access && supportsMimeType) {
 			request.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, portletVisibility);
 		}
 
-		if (themeDisplay.isFacebook() || themeDisplay.isStateExclusive()) {
-			renderRequestImpl.setAttribute(WebKeys.STRING_SERVLET_RESPONSE, stringResponse);
-		}
-
 		renderResponseImpl.transferHeaders(stringResponse);
 	}
 	catch (UnavailableException ue) {
@@ -1096,13 +1092,7 @@ if (showPortletCssIcon) {
 SessionMessages.clear(renderRequestImpl);
 SessionErrors.clear(renderRequestImpl);
 
-if (themeDisplay.isFacebook() || themeDisplay.isStateExclusive()) {
-	request.setAttribute(JavaConstants.JAVAX_PORTLET_REQUEST, renderRequestImpl);
-	request.setAttribute(JavaConstants.JAVAX_PORTLET_RESPONSE, renderResponseImpl);
-}
-else {
-	renderRequestImpl.cleanUp();
-}
+renderRequestImpl.cleanUp();
 %>
 
 <%!

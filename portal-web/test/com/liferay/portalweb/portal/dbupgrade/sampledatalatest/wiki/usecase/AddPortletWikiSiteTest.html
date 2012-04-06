@@ -14,14 +14,34 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>clickAtAndWait</td>
 	<td>link=Wiki Test Page</td>
 	<td>Wiki Test Page</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Wiki Test Page</td>
-	<td>Wiki Test Page</td>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_addContent']/a/span</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_addContent']/a/span</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//a[@id='_145_addApplication']</td>
+	<td>More</td>
 </tr>
 <tr>
 	<td>assertPartialText</td>
@@ -35,6 +55,21 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]</td>
+	<td>AUI Live Search Min</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@id='layout_configuration_content']</td>
+	<td>Search applications (searches as you type).</td>
+</tr>
+<tr>
+	<td>typeKeys</td>
+	<td>//input[@id='layout_configuration_content']</td>
+	<td>w</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>//div[@title='Wiki']/p/a</td>
 	<td>Add</td>
 </tr>

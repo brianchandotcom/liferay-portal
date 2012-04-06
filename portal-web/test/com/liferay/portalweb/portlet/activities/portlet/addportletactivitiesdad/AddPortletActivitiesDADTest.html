@@ -14,14 +14,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>clickAtAndWait</td>
 	<td>link=Activities Test Page</td>
 	<td>Activities Test Page</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Activities Test Page</td>
-	<td>Activities Test Page</td>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -29,7 +34,7 @@
 	<td>Add</td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>mouseOver</td>
 	<td>//li[@id='_145_addContent']/a/span</td>
 	<td>Add</td>
 </tr>
@@ -49,9 +54,9 @@
 	<td>More</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]</td>
+	<td>AUI Live Search Min</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -62,11 +67,6 @@
 	<td>typeKeys</td>
 	<td>//input[@id='layout_configuration_content']</td>
 	<td>ac</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>

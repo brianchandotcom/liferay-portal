@@ -15,6 +15,7 @@
 package com.liferay.portalweb.portlet.webcontentlist.portlet;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portlet.webcontentlist.portlet.addportletwcl.AddPortletWCLTests;
 import com.liferay.portalweb.portlet.webcontentlist.portlet.configureportletdisplayguest.ConfigurePortletDisplayGuestTests;
 
 import junit.framework.Test;
@@ -28,6 +29,7 @@ public class PortletTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
+		testSuite.addTest(AddPortletWCLTests.suite());
 		testSuite.addTest(ConfigurePortletDisplayGuestTests.suite());
 
 		return testSuite;

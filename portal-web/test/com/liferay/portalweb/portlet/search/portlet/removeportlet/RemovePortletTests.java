@@ -16,8 +16,8 @@ package com.liferay.portalweb.portlet.search.portlet.removeportlet;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
-import com.liferay.portalweb.portlet.search.portlet.addportlet.AddPageSearchTest;
-import com.liferay.portalweb.portlet.search.portlet.addportlet.AddPortletSearchTest;
+import com.liferay.portalweb.portlet.search.portlet.addportletsearch.AddPageSearchTest;
+import com.liferay.portalweb.portlet.search.portlet.addportletsearch.AddPortletSearchTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

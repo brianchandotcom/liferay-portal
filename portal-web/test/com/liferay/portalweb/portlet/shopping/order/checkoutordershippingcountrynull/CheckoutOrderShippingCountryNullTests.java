@@ -16,8 +16,8 @@ package com.liferay.portalweb.portlet.shopping.order.checkoutordershippingcountr
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
-import com.liferay.portalweb.portlet.shopping.portlet.addportlet.AddPageShoppingTest;
-import com.liferay.portalweb.portlet.shopping.portlet.addportlet.AddPortletShoppingTest;
+import com.liferay.portalweb.portlet.shopping.portlet.addportletshopping.AddPageShoppingTest;
+import com.liferay.portalweb.portlet.shopping.portlet.addportletshopping.AddPortletShoppingTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

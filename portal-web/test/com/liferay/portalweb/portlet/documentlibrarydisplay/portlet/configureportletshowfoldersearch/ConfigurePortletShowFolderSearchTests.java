@@ -16,8 +16,8 @@ package com.liferay.portalweb.portlet.documentlibrarydisplay.portlet.configurepo
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
-import com.liferay.portalweb.portlet.documentlibrarydisplay.portlet.addportlet.AddPageDLDTest;
-import com.liferay.portalweb.portlet.documentlibrarydisplay.portlet.addportlet.AddPortletDLDTest;
+import com.liferay.portalweb.portlet.documentlibrarydisplay.portlet.addportletdmd.AddPageDMDTest;
+import com.liferay.portalweb.portlet.documentlibrarydisplay.portlet.addportletdmd.AddPortletDMDTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -28,8 +28,8 @@ import junit.framework.TestSuite;
 public class ConfigurePortletShowFolderSearchTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AddPageDLDTest.class);
-		testSuite.addTestSuite(AddPortletDLDTest.class);
+		testSuite.addTestSuite(AddPageDMDTest.class);
+		testSuite.addTestSuite(AddPortletDMDTest.class);
 		testSuite.addTestSuite(ConfigurePortletShowFolderSearchTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

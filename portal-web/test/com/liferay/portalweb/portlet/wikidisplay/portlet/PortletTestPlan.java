@@ -15,7 +15,7 @@
 package com.liferay.portalweb.portlet.wikidisplay.portlet;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portlet.wikidisplay.portlet.addportlet.AddPortletTests;
+import com.liferay.portalweb.portlet.wikidisplay.portlet.addportletwd.AddPortletWDTests;
 import com.liferay.portalweb.portlet.wikidisplay.portlet.addportletmultiple.AddPortletMultipleTests;
 import com.liferay.portalweb.portlet.wikidisplay.portlet.removeportlet.RemovePortletTests;
 
@@ -30,8 +30,8 @@ public class PortletTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(AddPortletTests.suite());
 		testSuite.addTest(AddPortletMultipleTests.suite());
+		testSuite.addTest(AddPortletWDTests.suite());
 		testSuite.addTest(RemovePortletTests.suite());
 
 		return testSuite;

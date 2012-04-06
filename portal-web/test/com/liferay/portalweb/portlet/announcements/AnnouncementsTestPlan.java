@@ -16,6 +16,7 @@ package com.liferay.portalweb.portlet.announcements;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portlet.announcements.announcementsentry.AnnouncementsEntryTestPlan;
+import com.liferay.portalweb.portlet.announcements.portlet.PortletTestPlan;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -29,6 +30,7 @@ public class AnnouncementsTestPlan extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(AnnouncementsEntryTestPlan.suite());
+		testSuite.addTest(PortletTestPlan.suite());
 
 		return testSuite;
 	}

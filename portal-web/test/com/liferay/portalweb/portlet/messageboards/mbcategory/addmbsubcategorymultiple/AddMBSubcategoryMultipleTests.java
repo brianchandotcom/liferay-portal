@@ -21,8 +21,8 @@ import com.liferay.portalweb.portlet.messageboards.mbcategory.addmbcategory.Tear
 import com.liferay.portalweb.portlet.messageboards.mbcategory.addmbsubcategory.AddMBSubcategory1Test;
 import com.liferay.portalweb.portlet.messageboards.mbcategory.addmbsubcategory.AddMBSubcategory2Test;
 import com.liferay.portalweb.portlet.messageboards.mbcategory.addmbsubcategory.AddMBSubcategory3Test;
-import com.liferay.portalweb.portlet.messageboards.portlet.addportlet.AddPageMBTest;
-import com.liferay.portalweb.portlet.messageboards.portlet.addportlet.AddPortletMBTest;
+import com.liferay.portalweb.portlet.messageboards.portlet.addportletmb.AddPageMBTest;
+import com.liferay.portalweb.portlet.messageboards.portlet.addportletmb.AddPortletMBTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

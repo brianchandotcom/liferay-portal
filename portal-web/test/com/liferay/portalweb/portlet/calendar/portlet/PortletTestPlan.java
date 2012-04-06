@@ -15,7 +15,7 @@
 package com.liferay.portalweb.portlet.calendar.portlet;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portlet.calendar.portlet.addportlet.AddPortletTests;
+import com.liferay.portalweb.portlet.calendar.portlet.addportletcalendar.AddPortletCalendarTests;
 import com.liferay.portalweb.portlet.calendar.portlet.addportletduplicate.AddPortletDuplicateTests;
 import com.liferay.portalweb.portlet.calendar.portlet.removeportlet.RemovePortletTests;
 
@@ -30,7 +30,7 @@ public class PortletTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(AddPortletTests.suite());
+		testSuite.addTest(AddPortletCalendarTests.suite());
 		testSuite.addTest(AddPortletDuplicateTests.suite());
 		testSuite.addTest(RemovePortletTests.suite());
 

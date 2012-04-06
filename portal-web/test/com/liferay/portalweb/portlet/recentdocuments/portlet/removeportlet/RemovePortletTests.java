@@ -16,8 +16,8 @@ package com.liferay.portalweb.portlet.recentdocuments.portlet.removeportlet;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
-import com.liferay.portalweb.portlet.recentdocuments.portlet.addportlet.AddPageRDTest;
-import com.liferay.portalweb.portlet.recentdocuments.portlet.addportlet.AddPortletRDTest;
+import com.liferay.portalweb.portlet.recentdocuments.portlet.addportletrd.AddPageRDTest;
+import com.liferay.portalweb.portlet.recentdocuments.portlet.addportletrd.AddPortletRDTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

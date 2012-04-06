@@ -16,8 +16,8 @@ package com.liferay.portalweb.portlet.documentlibrary.document.deletedldocumentt
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
-import com.liferay.portalweb.portlet.documentlibrary.portlet.addportlet.AddPageDMTest;
-import com.liferay.portalweb.portlet.documentlibrary.portlet.addportlet.AddPortletDMTest;
+import com.liferay.portalweb.portlet.documentlibrary.portlet.addportletdm.AddPageDMTest;
+import com.liferay.portalweb.portlet.documentlibrary.portlet.addportletdm.AddPortletDMTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

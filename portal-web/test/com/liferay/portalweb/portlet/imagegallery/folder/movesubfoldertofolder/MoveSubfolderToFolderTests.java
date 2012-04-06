@@ -16,8 +16,8 @@ package com.liferay.portalweb.portlet.imagegallery.folder.movesubfoldertofolder;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
-import com.liferay.portalweb.portlet.imagegallery.portlet.addportlet.AddPageIGTest;
-import com.liferay.portalweb.portlet.imagegallery.portlet.addportlet.AddPortletIGTest;
+import com.liferay.portalweb.portlet.imagegallery.portlet.addportletmg.AddPageMGTest;
+import com.liferay.portalweb.portlet.imagegallery.portlet.addportletmg.AddPortletMGTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -28,8 +28,8 @@ import junit.framework.TestSuite;
 public class MoveSubfolderToFolderTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AddPageIGTest.class);
-		testSuite.addTestSuite(AddPortletIGTest.class);
+		testSuite.addTestSuite(AddPageMGTest.class);
+		testSuite.addTestSuite(AddPortletMGTest.class);
 		testSuite.addTestSuite(ConfigurePortletDisplaySettingsTest.class);
 		testSuite.addTestSuite(AddFolder1Test.class);
 		testSuite.addTestSuite(AddSubfolderTest.class);

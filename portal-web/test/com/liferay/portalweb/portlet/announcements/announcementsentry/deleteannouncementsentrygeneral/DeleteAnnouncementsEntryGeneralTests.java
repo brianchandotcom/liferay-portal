@@ -16,8 +16,8 @@ package com.liferay.portalweb.portlet.announcements.announcementsentry.deleteann
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
-import com.liferay.portalweb.portlet.announcements.announcementsentry.addannouncementsentrygeneral.AddPageAnnouncementsTest;
-import com.liferay.portalweb.portlet.announcements.announcementsentry.addannouncementsentrygeneral.AddPortletAnnouncementsTest;
+import com.liferay.portalweb.portlet.announcements.portlet.addportletannouncements.AddPageAnnouncementsTest;
+import com.liferay.portalweb.portlet.announcements.portlet.addportletannouncements.AddPortletAnnouncementsTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

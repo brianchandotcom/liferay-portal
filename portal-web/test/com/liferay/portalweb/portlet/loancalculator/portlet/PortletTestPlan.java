@@ -15,8 +15,8 @@
 package com.liferay.portalweb.portlet.loancalculator.portlet;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portlet.loancalculator.portlet.addportlet.AddPortletTests;
 import com.liferay.portalweb.portlet.loancalculator.portlet.addportletduplicate.AddPortletDuplicateTests;
+import com.liferay.portalweb.portlet.loancalculator.portlet.addportletlc.AddPortletLCTests;
 import com.liferay.portalweb.portlet.loancalculator.portlet.removeportlet.RemovePortletTests;
 
 import junit.framework.Test;
@@ -30,8 +30,8 @@ public class PortletTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(AddPortletTests.suite());
 		testSuite.addTest(AddPortletDuplicateTests.suite());
+		testSuite.addTest(AddPortletLCTests.suite());
 		testSuite.addTest(RemovePortletTests.suite());
 
 		return testSuite;

@@ -16,8 +16,8 @@ package com.liferay.portalweb.portlet.networkutilities.portlet.removeportlet;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
-import com.liferay.portalweb.portlet.networkutilities.portlet.addportlet.AddPageNUTest;
-import com.liferay.portalweb.portlet.networkutilities.portlet.addportlet.AddPortletNUTest;
+import com.liferay.portalweb.portlet.networkutilities.portlet.addportletnu.AddPageNUTest;
+import com.liferay.portalweb.portlet.networkutilities.portlet.addportletnu.AddPortletNUTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

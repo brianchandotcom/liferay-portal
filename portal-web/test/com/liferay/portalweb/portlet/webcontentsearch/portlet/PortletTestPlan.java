@@ -15,8 +15,8 @@
 package com.liferay.portalweb.portlet.webcontentsearch.portlet;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portlet.webcontentsearch.portlet.addportlet.AddPortletTests;
 import com.liferay.portalweb.portlet.webcontentsearch.portlet.addportletduplicate.AddPortletDuplicateTests;
+import com.liferay.portalweb.portlet.webcontentsearch.portlet.addportletwcs.AddPortletWCSTests;
 import com.liferay.portalweb.portlet.webcontentsearch.portlet.removeportlet.RemovePortletTests;
 
 import junit.framework.Test;
@@ -30,8 +30,8 @@ public class PortletTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(AddPortletTests.suite());
 		testSuite.addTest(AddPortletDuplicateTests.suite());
+		testSuite.addTest(AddPortletWCSTests.suite());
 		testSuite.addTest(RemovePortletTests.suite());
 
 		return testSuite;

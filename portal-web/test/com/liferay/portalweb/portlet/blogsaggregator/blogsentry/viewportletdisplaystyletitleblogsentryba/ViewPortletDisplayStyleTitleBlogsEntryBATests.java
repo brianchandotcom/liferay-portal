@@ -20,8 +20,8 @@ import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.AddBlogsEntr
 import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.TearDownBlogsEntryTest;
 import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPageBlogsTest;
 import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPortletBlogsTest;
-import com.liferay.portalweb.portlet.blogsaggregator.blogsentry.viewblogsentryba.AddPageBATest;
-import com.liferay.portalweb.portlet.blogsaggregator.blogsentry.viewblogsentryba.AddPortletBATest;
+import com.liferay.portalweb.portlet.blogsaggregator.portlet.addportletba.AddPageBATest;
+import com.liferay.portalweb.portlet.blogsaggregator.portlet.addportletba.AddPortletBATest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

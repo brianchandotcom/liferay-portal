@@ -16,8 +16,8 @@ package com.liferay.portalweb.portlet.invitation.portlet.removeportlet;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
-import com.liferay.portalweb.portlet.invitation.portlet.addportlet.AddPageInvitationTest;
-import com.liferay.portalweb.portlet.invitation.portlet.addportlet.AddPortletInvitationTest;
+import com.liferay.portalweb.portlet.invitation.portlet.addportletinvitation.AddPageInvitationTest;
+import com.liferay.portalweb.portlet.invitation.portlet.addportletinvitation.AddPortletInvitationTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

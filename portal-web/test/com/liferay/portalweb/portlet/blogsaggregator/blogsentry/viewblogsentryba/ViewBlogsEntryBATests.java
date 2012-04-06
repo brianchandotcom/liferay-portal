@@ -19,6 +19,8 @@ import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.TearDownBlogsEntryTest;
 import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPageBlogsTest;
 import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPortletBlogsTest;
+import com.liferay.portalweb.portlet.blogsaggregator.portlet.addportletba.AddPageBATest;
+import com.liferay.portalweb.portlet.blogsaggregator.portlet.addportletba.AddPortletBATest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

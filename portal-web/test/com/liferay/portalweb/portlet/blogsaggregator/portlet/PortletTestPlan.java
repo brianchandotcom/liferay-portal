@@ -15,6 +15,7 @@
 package com.liferay.portalweb.portlet.blogsaggregator.portlet;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portlet.blogsaggregator.portlet.addportletba.AddPortletBATests;
 import com.liferay.portalweb.portlet.blogsaggregator.portlet.configureportletdisplaystyletitle.ConfigurePortletDisplayStyleTitleTests;
 
 import junit.framework.Test;
@@ -28,6 +29,7 @@ public class PortletTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
+		testSuite.addTest(AddPortletBATests.suite());
 		testSuite.addTest(ConfigurePortletDisplayStyleTitleTests.suite());
 
 		return testSuite;

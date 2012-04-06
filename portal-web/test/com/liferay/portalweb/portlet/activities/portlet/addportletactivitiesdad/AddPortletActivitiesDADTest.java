@@ -24,6 +24,12 @@ public class AddPortletActivitiesDADTest extends BaseTestCase {
 	public void testAddPortletActivitiesDAD() throws Exception {
 		selenium.open("/group/joebloggs/home/");
 		loadRequiredJavaScriptModules();
+		selenium.clickAt("link=Activities Test Page",
+			RuntimeVariables.replace("Activities Test Page"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -31,7 +37,8 @@ public class AddPortletActivitiesDADTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Activities Test Page")) {
+				if (selenium.isElementPresent(
+							"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]")) {
 					break;
 				}
 			}
@@ -41,14 +48,9 @@ public class AddPortletActivitiesDADTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Activities Test Page",
-			RuntimeVariables.replace("Activities Test Page"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//li[@id='_145_addContent']/a/span"));
-		selenium.clickAt("//li[@id='_145_addContent']/a/span",
-			RuntimeVariables.replace("Add"));
+		selenium.mouseOver("//li[@id='_145_addContent']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -70,7 +72,23 @@ public class AddPortletActivitiesDADTest extends BaseTestCase {
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
 			RuntimeVariables.replace("More"));
-		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -91,7 +109,6 @@ public class AddPortletActivitiesDADTest extends BaseTestCase {
 
 		selenium.typeKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("ac"));
-		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

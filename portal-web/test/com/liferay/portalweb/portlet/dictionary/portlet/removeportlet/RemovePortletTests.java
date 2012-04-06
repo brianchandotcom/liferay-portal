@@ -16,8 +16,8 @@ package com.liferay.portalweb.portlet.dictionary.portlet.removeportlet;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
-import com.liferay.portalweb.portlet.dictionary.portlet.addportlet.AddPageDictionaryTest;
-import com.liferay.portalweb.portlet.dictionary.portlet.addportlet.AddPortletDictionaryTest;
+import com.liferay.portalweb.portlet.dictionary.portlet.addportletdictionary.AddPageDictionaryTest;
+import com.liferay.portalweb.portlet.dictionary.portlet.addportletdictionary.AddPortletDictionaryTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

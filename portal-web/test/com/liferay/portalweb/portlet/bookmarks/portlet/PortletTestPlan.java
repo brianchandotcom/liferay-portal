@@ -15,7 +15,7 @@
 package com.liferay.portalweb.portlet.bookmarks.portlet;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portlet.bookmarks.portlet.addportlet.AddPortletTests;
+import com.liferay.portalweb.portlet.bookmarks.portlet.addportletbookmarks.AddPortletBookmarksTests;
 import com.liferay.portalweb.portlet.bookmarks.portlet.addportletduplicate.AddPortletDuplicateTests;
 import com.liferay.portalweb.portlet.bookmarks.portlet.removeportlet.RemovePortletTests;
 
@@ -30,7 +30,7 @@ public class PortletTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(AddPortletTests.suite());
+		testSuite.addTest(AddPortletBookmarksTests.suite());
 		testSuite.addTest(AddPortletDuplicateTests.suite());
 		testSuite.addTest(RemovePortletTests.suite());
 

@@ -16,12 +16,12 @@ package com.liferay.portalweb.portlet.wikidisplay.wikipage.reverteditwikifrontpa
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
-import com.liferay.portalweb.portlet.wiki.portlet.addportlet.AddPageWikiTest;
-import com.liferay.portalweb.portlet.wiki.portlet.addportlet.AddPortletWikiTest;
+import com.liferay.portalweb.portlet.wiki.portlet.addportletwiki.AddPageWikiTest;
+import com.liferay.portalweb.portlet.wiki.portlet.addportletwiki.AddPortletWikiTest;
 import com.liferay.portalweb.portlet.wiki.wikinode.addwikinode.TearDownWikiNodeTest;
 import com.liferay.portalweb.portlet.wiki.wikipage.addwikifrontpage.AddWikiFrontPageTest;
-import com.liferay.portalweb.portlet.wikidisplay.portlet.addportlet.AddPageWDTest;
-import com.liferay.portalweb.portlet.wikidisplay.portlet.addportlet.AddPortletWDTest;
+import com.liferay.portalweb.portlet.wikidisplay.portlet.addportletwd.AddPageWDTest;
+import com.liferay.portalweb.portlet.wikidisplay.portlet.addportletwd.AddPortletWDTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

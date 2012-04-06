@@ -16,8 +16,8 @@ package com.liferay.portalweb.portlet.blogsaggregator.portlet.configureportletdi
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
-import com.liferay.portalweb.portlet.blogsaggregator.blogsentry.viewblogsentryba.AddPageBATest;
-import com.liferay.portalweb.portlet.blogsaggregator.blogsentry.viewblogsentryba.AddPortletBATest;
+import com.liferay.portalweb.portlet.blogsaggregator.portlet.addportletba.AddPageBATest;
+import com.liferay.portalweb.portlet.blogsaggregator.portlet.addportletba.AddPortletBATest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

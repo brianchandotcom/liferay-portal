@@ -15,8 +15,8 @@
 package com.liferay.portalweb.portlet.pagecomments.portlet;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portlet.pagecomments.portlet.addportlet.AddPortletTests;
 import com.liferay.portalweb.portlet.pagecomments.portlet.addportletduplicate.AddPortletDuplicateTests;
+import com.liferay.portalweb.portlet.pagecomments.portlet.addportletpc.AddPortletPCTests;
 import com.liferay.portalweb.portlet.pagecomments.portlet.editportletname.EditPortletNameTests;
 import com.liferay.portalweb.portlet.pagecomments.portlet.removeportlet.RemovePortletTests;
 
@@ -31,8 +31,8 @@ public class PortletTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(AddPortletTests.suite());
 		testSuite.addTest(AddPortletDuplicateTests.suite());
+		testSuite.addTest(AddPortletPCTests.suite());
 		testSuite.addTest(EditPortletNameTests.suite());
 		testSuite.addTest(RemovePortletTests.suite());
 

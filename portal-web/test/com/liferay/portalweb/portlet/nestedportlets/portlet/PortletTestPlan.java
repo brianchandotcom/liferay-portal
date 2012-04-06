@@ -15,8 +15,8 @@
 package com.liferay.portalweb.portlet.nestedportlets.portlet;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portlet.nestedportlets.portlet.addportlet.AddPortletTests;
 import com.liferay.portalweb.portlet.nestedportlets.portlet.addportletmultiple.AddPortletMultipleTests;
+import com.liferay.portalweb.portlet.nestedportlets.portlet.addportletnp.AddPortletNPTests;
 import com.liferay.portalweb.portlet.nestedportlets.portlet.removeportlet.RemovePortletTests;
 
 import junit.framework.Test;
@@ -30,8 +30,8 @@ public class PortletTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(AddPortletTests.suite());
 		testSuite.addTest(AddPortletMultipleTests.suite());
+		testSuite.addTest(AddPortletNPTests.suite());
 		testSuite.addTest(RemovePortletTests.suite());
 
 		return testSuite;

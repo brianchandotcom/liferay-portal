@@ -16,7 +16,7 @@ package com.liferay.portalweb.portlet.documentlibrarydisplay.portlet.addportletm
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
-import com.liferay.portalweb.portlet.documentlibrarydisplay.portlet.addportlet.AddPageDLDTest;
+import com.liferay.portalweb.portlet.documentlibrarydisplay.portlet.addportletdmd.AddPageDMDTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -27,7 +27,7 @@ import junit.framework.TestSuite;
 public class AddPortletMultipleTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AddPageDLDTest.class);
+		testSuite.addTestSuite(AddPageDMDTest.class);
 		testSuite.addTestSuite(AddPortletDLD1Test.class);
 		testSuite.addTestSuite(AddPortletDLD2Test.class);
 		testSuite.addTestSuite(AddPortletDLD3Test.class);

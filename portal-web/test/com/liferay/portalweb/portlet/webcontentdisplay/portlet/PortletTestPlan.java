@@ -15,6 +15,7 @@
 package com.liferay.portalweb.portlet.webcontentdisplay.portlet;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portlet.webcontentdisplay.portlet.addportletwcd.AddPortletWCDTests;
 import com.liferay.portalweb.portlet.webcontentdisplay.portlet.configureportletenablecommentratings.ConfigurePortletEnableCommentRatingsTests;
 import com.liferay.portalweb.portlet.webcontentdisplay.portlet.configureportletenablecomments.ConfigurePortletEnableCommentsTests;
 import com.liferay.portalweb.portlet.webcontentdisplay.portlet.configureportletenableratings.ConfigurePortletEnableRatingsTests;
@@ -34,6 +35,7 @@ public class PortletTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
+		testSuite.addTest(AddPortletWCDTests.suite());
 		testSuite.addTest(ConfigurePortletEnableCommentRatingsTests.suite());
 		testSuite.addTest(ConfigurePortletEnableCommentsTests.suite());
 		testSuite.addTest(ConfigurePortletEnableRatingsTests.suite());

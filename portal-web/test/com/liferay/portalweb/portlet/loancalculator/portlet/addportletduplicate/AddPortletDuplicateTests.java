@@ -16,8 +16,8 @@ package com.liferay.portalweb.portlet.loancalculator.portlet.addportletduplicate
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
-import com.liferay.portalweb.portlet.loancalculator.portlet.addportlet.AddPageLCTest;
-import com.liferay.portalweb.portlet.loancalculator.portlet.addportlet.AddPortletLCTest;
+import com.liferay.portalweb.portlet.loancalculator.portlet.addportletlc.AddPageLCTest;
+import com.liferay.portalweb.portlet.loancalculator.portlet.addportletlc.AddPortletLCTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

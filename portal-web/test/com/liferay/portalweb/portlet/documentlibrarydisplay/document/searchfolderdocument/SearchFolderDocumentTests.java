@@ -17,10 +17,10 @@ package com.liferay.portalweb.portlet.documentlibrarydisplay.document.searchfold
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.documentlibrary.document.addfolderdocument.TearDownDLDocumentTest;
-import com.liferay.portalweb.portlet.documentlibrary.portlet.addportlet.AddPageDMTest;
-import com.liferay.portalweb.portlet.documentlibrary.portlet.addportlet.AddPortletDMTest;
-import com.liferay.portalweb.portlet.documentlibrarydisplay.portlet.addportlet.AddPageDLDTest;
-import com.liferay.portalweb.portlet.documentlibrarydisplay.portlet.addportlet.AddPortletDLDTest;
+import com.liferay.portalweb.portlet.documentlibrary.portlet.addportletdm.AddPageDMTest;
+import com.liferay.portalweb.portlet.documentlibrary.portlet.addportletdm.AddPortletDMTest;
+import com.liferay.portalweb.portlet.documentlibrarydisplay.portlet.addportletdmd.AddPageDMDTest;
+import com.liferay.portalweb.portlet.documentlibrarydisplay.portlet.addportletdmd.AddPortletDMDTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -33,8 +33,8 @@ public class SearchFolderDocumentTests extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddPageDMTest.class);
 		testSuite.addTestSuite(AddPortletDMTest.class);
-		testSuite.addTestSuite(AddPageDLDTest.class);
-		testSuite.addTestSuite(AddPortletDLDTest.class);
+		testSuite.addTestSuite(AddPageDMDTest.class);
+		testSuite.addTestSuite(AddPortletDMDTest.class);
 		testSuite.addTestSuite(AddFolderTest.class);
 		testSuite.addTestSuite(AddFolderDocumentTest.class);
 		testSuite.addTestSuite(ConfigurePortletShowFolderSearchTest.class);

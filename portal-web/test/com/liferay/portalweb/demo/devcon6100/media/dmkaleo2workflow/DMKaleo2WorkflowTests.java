@@ -22,8 +22,8 @@ import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.documentlibrary.document.addfolderdocument.TearDownDLDocumentTest;
-import com.liferay.portalweb.portlet.documentlibrary.portlet.addportlet.AddPageDMTest;
-import com.liferay.portalweb.portlet.documentlibrary.portlet.addportlet.AddPortletDMTest;
+import com.liferay.portalweb.portlet.documentlibrary.portlet.addportletdm.AddPageDMTest;
+import com.liferay.portalweb.portlet.documentlibrary.portlet.addportletdm.AddPortletDMTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

@@ -16,6 +16,8 @@ package com.liferay.portalweb.portlet.webcontentlist.portlet.configureportletdis
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.webcontentlist.portlet.addportletwcl.AddPageWCLTest;
+import com.liferay.portalweb.portlet.webcontentlist.portlet.addportletwcl.AddPortletWCLTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

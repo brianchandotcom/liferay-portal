@@ -21,8 +21,8 @@ import com.liferay.portalweb.portlet.messageboards.mbmessage.postnewmbthreadmess
 import com.liferay.portalweb.portlet.messageboards.mbmessage.replymbthreadmessagereply.ReplyMBThreadMessageReply1Test;
 import com.liferay.portalweb.portlet.messageboards.mbmessage.replymbthreadmessagereply.ReplyMBThreadMessageReply2Test;
 import com.liferay.portalweb.portlet.messageboards.mbmessage.replymbthreadmessagereply.ReplyMBThreadMessageReply3Test;
-import com.liferay.portalweb.portlet.messageboards.portlet.addportlet.AddPageMBTest;
-import com.liferay.portalweb.portlet.messageboards.portlet.addportlet.AddPortletMBTest;
+import com.liferay.portalweb.portlet.messageboards.portlet.addportletmb.AddPageMBTest;
+import com.liferay.portalweb.portlet.messageboards.portlet.addportletmb.AddPortletMBTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

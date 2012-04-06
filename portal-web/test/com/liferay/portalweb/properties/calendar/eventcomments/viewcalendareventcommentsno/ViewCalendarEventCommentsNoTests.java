@@ -16,8 +16,8 @@ package com.liferay.portalweb.properties.calendar.eventcomments.viewcalendareven
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
-import com.liferay.portalweb.portlet.calendar.portlet.addportlet.AddPageCalendarTest;
-import com.liferay.portalweb.portlet.calendar.portlet.addportlet.AddPortletCalendarTest;
+import com.liferay.portalweb.portlet.calendar.portlet.addportletcalendar.AddPageCalendarTest;
+import com.liferay.portalweb.portlet.calendar.portlet.addportletcalendar.AddPortletCalendarTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

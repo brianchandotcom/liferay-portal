@@ -16,7 +16,7 @@ package com.liferay.portalweb.portlet.sitemap.portlet.addportletmultiple;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
-import com.liferay.portalweb.portlet.sitemap.portlet.addportlet.AddPageSMTest;
+import com.liferay.portalweb.portlet.sitemap.portlet.addportletsm.AddPageSMTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

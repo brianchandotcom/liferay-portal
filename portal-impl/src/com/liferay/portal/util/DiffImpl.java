@@ -28,14 +28,12 @@ import org.incava.util.diff.Diff;
 import org.incava.util.diff.Difference;
 
 /**
- * <p>
  * This class can compare two different versions of a text. Source refers to the
  * earliest version of the text and target refers to a modified version of
  * source. Changes are considered either as a removal from the source or as an
  * addition to the target. This class detects changes to an entire line and also
  * detects changes within lines, such as, removal or addition of characters.
  * Take a look at <code>DiffTest</code> to see the expected inputs and outputs.
- * </p>
  *
  * @author Bruno Farache
  */
@@ -44,6 +42,8 @@ public class DiffImpl implements com.liferay.portal.kernel.util.Diff {
 	/**
 	 * This is a diff method with default values.
 	 *
+	 * @param  source the source text
+	 * @param  target the modified version of the source text
 	 * @return an array containing two lists of <code>DiffResults</code>, the
 	 *         first element contains DiffResults related to changes in source
 	 *         and the second element to changes in target
@@ -60,6 +60,18 @@ public class DiffImpl implements com.liferay.portal.kernel.util.Diff {
 	 * highlight the changes by enclosing them with markers and return a list of
 	 * <code>DiffResults</code>.
 	 *
+	 * @param  source the source text
+	 * @param  target the modified version of the source text
+	 * @param  addedMarkerStart the marker to indicate the start of text added
+	 *         to the source
+	 * @param  addedMarkerEnd the marker to indicate the end of text added to
+	 *         the source
+	 * @param  deletedMarkerStart the marker to indicate the start of text
+	 *         deleted from the source
+	 * @param  deletedMarkerEnd the marker to indicate the end of text deleted
+	 *         from the source
+	 * @param  margin the vertical margin to use in displaying differences
+	 *         between changed line changes
 	 * @return an array containing two lists of <code>DiffResults</code>, the
 	 *         first element contains DiffResults related to changes in source
 	 *         and the second element to changes in target

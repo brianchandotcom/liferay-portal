@@ -281,8 +281,10 @@ public class HttpUtil {
 	 * represent a file or some JNDI resource. In that case, the default Java
 	 * implementation is used.
 	 *
+	 * @param  url the URL
 	 * @return A string representation of the resource referenced by the URL
 	 *         object
+	 * @throws IOException if an IO Exception occurred
 	 */
 	public static String URLtoString(URL url) throws IOException {
 		return getHttp().URLtoString(url);

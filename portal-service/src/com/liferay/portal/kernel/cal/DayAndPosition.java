@@ -63,9 +63,12 @@ public class DayAndPosition implements Cloneable, Serializable {
 	public static final int NO_WEEKDAY = 0;
 
 	/**
-	 * Method isValidDayOfWeek
+	 * Returns <code>true</code> if the day is a valid day of the week.
 	 *
-	 * @return boolean
+	 * @param  d the day of the week in terms of {@link java.util.Calendar} or
+	 *         {@link #NO_WEEKDAY}
+	 * @return <code>true</code> if the day is a valid day of the week;
+	 *         <code>false</code> otherwise
 	 */
 	public static boolean isValidDayOfWeek(int d) {
 		switch (d) {
@@ -86,16 +89,18 @@ public class DayAndPosition implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Method isValidDayPosition
+	 * Returns <code>true</code> if the day position is valid.
 	 *
-	 * @return boolean
+	 * @param  p the day position
+	 * @return <code>true</code> if the day position is valid;
+	 *         <code>false</code> otherwise
 	 */
 	public static boolean isValidDayPosition(int p) {
 		return ((p >= -53) && (p <= 53));
 	}
 
 	/**
-	 * Constructor DayAndPosition
+	 * Constructs a DayAndPosition
 	 */
 	public DayAndPosition() {
 		_day = NO_WEEKDAY;
@@ -103,7 +108,7 @@ public class DayAndPosition implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Constructor DayAndPosition
+	 * Constructs a DayAndPosition with the day of the week and day position.
 	 */
 	public DayAndPosition(int d, int p) {
 		if (!isValidDayOfWeek(d)) {
@@ -119,9 +124,9 @@ public class DayAndPosition implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Method clone
+	 * Returns a clone of this DayAndPosition.
 	 *
-	 * @return Object
+	 * @return a clone of this DayAndPosition
 	 */
 	@Override
 	public Object clone() {
@@ -139,9 +144,11 @@ public class DayAndPosition implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Method equals
+	 * Returns <code>true</code> if the object equals this DayAndPosition.
 	 *
-	 * @return boolean
+	 * @param  obj the other object
+	 * @return <code>true</code> if the object equals this DayAndPosition,
+	 *         <code>false</code> otherwise
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -164,23 +171,28 @@ public class DayAndPosition implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Method getDayOfWeek
+	 * Returns the day of the week.
 	 *
-	 * @return int
+	 * @return the day of the week
 	 */
 	public int getDayOfWeek() {
 		return _day;
 	}
 
 	/**
-	 * Method getDayPosition
+	 * Returns the day position.
 	 *
-	 * @return int
+	 * @return the day position
 	 */
 	public int getDayPosition() {
 		return _position;
 	}
 
+	/**
+	 * Returns the hash code of this DayAndPosition.
+	 *
+	 * @return the hash code of this DayAndPosition
+	 */
 	@Override
 	public int hashCode() {
 		HashCode hashCode = HashCodeFactoryUtil.getHashCode();
@@ -192,7 +204,9 @@ public class DayAndPosition implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Method setDayOfWeek
+	 * Sets the day of the week
+	 *
+	 * @param d the day of the week
 	 */
 	public void setDayOfWeek(int d) {
 		if (!isValidDayOfWeek(d)) {
@@ -203,7 +217,9 @@ public class DayAndPosition implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Method setDayPosition
+	 * Sets the day position
+	 *
+	 * @param p the day position
 	 */
 	public void setDayPosition(int p) {
 		if (!isValidDayPosition(p)) {
@@ -214,9 +230,9 @@ public class DayAndPosition implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Method toString
+	 * Returns a string representation of the DayAndPosition
 	 *
-	 * @return String
+	 * @return a string representation of the DayAndPosition
 	 */
 	@Override
 	public String toString() {

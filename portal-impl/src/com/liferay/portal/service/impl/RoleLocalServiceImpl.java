@@ -291,6 +291,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 * Deletes the role with the primary key and its associated permissions.
 	 *
 	 * @param  roleId the primary key of the role
+	 * @return the deleted role
 	 * @throws PortalException if a role with the primary key could not be
 	 *         found, if the role is a default system role, or if the role's
 	 *         resource could not be found
@@ -309,6 +310,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 * Deletes the role and its associated permissions.
 	 *
 	 * @param  role the role
+	 * @return the deleted role
 	 * @throws PortalException if the role is a default system role or if the
 	 *         role's resource could not be found
 	 * @throws SystemException if a system exception occurred

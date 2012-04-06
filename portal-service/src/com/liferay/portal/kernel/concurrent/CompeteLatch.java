@@ -18,7 +18,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 
 /**
- * <p>
  * A synchronizer based on the JDK's AQS framework to simulate a single winner
  * competition. This synchronizer supports cyclical competition. In this
  * situation, loser threads should try again. The single winner thread will lock
@@ -26,7 +25,6 @@ import java.util.concurrent.locks.AbstractQueuedSynchronizer;
  * <code>await</code>. After the winner thread finishes its job, it should call
  * <code>done</code> which will open the latch. All blocking loser threads can
  * pass the latch at the same time.
- * </p>
  *
  * <p>
  * See LPS-3744 for a sample use case.
@@ -59,6 +57,8 @@ public class CompeteLatch {
 	 * winner thread calls this method before his job completed, then all
 	 * threads will deadlock.
 	 *
+	 * @param  timeout the timeout value
+	 * @param  timeUnit the time unit
 	 * @return <code>true</code> if the latch was open, <code>false</code> if
 	 *         the waiting time elapsed before the latch be opened.
 	 * @throws InterruptedException if the current thread is interrupted
@@ -104,6 +104,9 @@ public class CompeteLatch {
 	 * thread safe. The only purpose for this method is to give external systems
 	 * a way to monitor the latch which is usually be used for deadlock
 	 * detection.
+	 *
+	 * @return <code>true</code> if the latch is locked; <code>false</code>
+	 *         otherwise
 	 */
 	public boolean isLocked() {
 		return _sync._isLocked();

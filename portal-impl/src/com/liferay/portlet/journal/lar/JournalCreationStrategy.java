@@ -18,12 +18,10 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portlet.journal.model.JournalArticle;
 
 /**
- * <p>
  * An interface defining how newly created content should be added to the
  * Journal when imported from a LAR file. A class implementing this interface
  * should be specified in <i>portal.properties</i> under the
  * <b>journal.lar.creation.strategy</b> property.
- * </p>
  *
  * @author Joel Kozikowski
  */
@@ -46,8 +44,11 @@ public interface JournalCreationStrategy {
 	 * Returns <code>true</code> if the default group permissions should be
 	 * added when the specified journalObj is created.
 	 *
+	 * @param  context the portlet data context
+	 * @param  journalObj the journal object
 	 * @return <code>true</code> if default group permissions should be added to
 	 *         the specified journalObj
+	 * @throws Exception if an exception occurred
 	 */
 	public boolean addGroupPermissions(
 			PortletDataContext context, Object journalObj)
@@ -57,8 +58,11 @@ public interface JournalCreationStrategy {
 	 * Returns <code>true</code> if the default guest permissions should be
 	 * added when the specified journalObj is created.
 	 *
+	 * @param  context the portlet data context
+	 * @param  journalObj the journal object
 	 * @return <code>true</code> if default guest permissions should be added to
 	 *         the specified journalObj
+	 * @throws Exception if an exception occurred
 	 */
 	public boolean addGuestPermissions(
 			PortletDataContext context, Object journalObj)
@@ -69,8 +73,11 @@ public interface JournalCreationStrategy {
 	 * is returned, the default user ID import strategy will determine the
 	 * author ID.
 	 *
+	 * @param  context the portlet data context
+	 * @param  journalObj the journal object
 	 * @return the author's user ID or USE_DEFAULT_USER_ID_STRATEGY to use the
 	 *         default user ID strategy
+	 * @throws Exception if an exception occurred
 	 */
 	public long getAuthorUserId(PortletDataContext context, Object journalObj)
 		throws Exception;
@@ -83,9 +90,12 @@ public interface JournalCreationStrategy {
 	 * <code>null</code> is returned, the article content will be added
 	 * unchanged.
 	 *
+	 * @param  context the portlet data context
+	 * @param  newArticle the new journal article
 	 * @return the transformed content to save in the database or
 	 *         ARTICLE_CONTENT_UNCHANGED if the content should be added
 	 *         unchanged
+	 * @throws Exception if an exception occurred
 	 */
 	public String getTransformedContent(
 			PortletDataContext context, JournalArticle newArticle)

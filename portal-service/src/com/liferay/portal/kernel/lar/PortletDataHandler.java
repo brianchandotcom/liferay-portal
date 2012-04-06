@@ -17,13 +17,11 @@ package com.liferay.portal.kernel.lar;
 import javax.portlet.PortletPreferences;
 
 /**
- * <p>
  * A <code>PortletDataHandler</code> is a special class capable of exporting and
  * importing portlet specific data to a Liferay Archive file (LAR) when a site's
  * layouts are exported or imported. <code>PortletDataHandler</code>s are
  * defined by placing a <code>portlet-data-handler-class</code> element in the
  * <code>portlet</code> section of the <b>liferay-portlet.xml</b> file.
- * </p>
  *
  * @author Raymond Augé
  * @author Joel Kozikowski
@@ -42,6 +40,7 @@ public interface PortletDataHandler {
 	 * @return A modified version of portlet preferences that should be saved.
 	 *         <code>Null</code> if the portlet preferences were unmodified by
 	 *         this data handler.
+	 * @throws PortletDataException if a portlet data exception occurred
 	 */
 	public PortletPreferences deleteData(
 			PortletDataContext portletDataContext, String portletId,
@@ -59,6 +58,7 @@ public interface PortletDataHandler {
 	 * @return A string of data to be placed in the LAR. It may be XML, but not
 	 *         necessarily. <code>Null</code> should be returned if no portlet
 	 *         data is to be written out.
+	 * @throws PortletDataException if a portlet data exception occurred
 	 */
 	public String exportData(
 			PortletDataContext portletDataContext, String portletId,
@@ -71,6 +71,7 @@ public interface PortletDataHandler {
 	 * behavior. The controls are rendered in the export UI.
 	 *
 	 * @return an array of PortletDataHandlerControls
+	 * @throws PortletDataException if a portlet data exception occurred
 	 */
 	public PortletDataHandlerControl[] getExportControls()
 		throws PortletDataException;
@@ -82,6 +83,7 @@ public interface PortletDataHandler {
 	 * comments. The controls are rendered in the export UI.
 	 *
 	 * @return an array of PortletDataHandlerControls
+	 * @throws PortletDataException if a portlet data exception occurred
 	 */
 	public PortletDataHandlerControl[] getExportMetadataControls()
 		throws PortletDataException;
@@ -92,6 +94,7 @@ public interface PortletDataHandler {
 	 * behavior. The controls are rendered in the import UI.
 	 *
 	 * @return An array of PortletDataHandlerControls
+	 * @throws PortletDataException if a portlet data exception occurred
 	 */
 	public PortletDataHandlerControl[] getImportControls()
 		throws PortletDataException;
@@ -103,6 +106,7 @@ public interface PortletDataHandler {
 	 * comments. The controls are rendered in the export UI.
 	 *
 	 * @return an array of PortletDataHandlerControls
+	 * @throws PortletDataException if a portlet data exception occurred
 	 */
 	public PortletDataHandlerControl[] getImportMetadataControls()
 		throws PortletDataException;
@@ -120,6 +124,7 @@ public interface PortletDataHandler {
 	 * @return A modified version of portlet preferences that should be saved.
 	 *         <code>Null</code> if the portlet preferences were unmodified by
 	 *         this data handler.
+	 * @throws PortletDataException if a portlet data exception occurred
 	 */
 	public PortletPreferences importData(
 			PortletDataContext portletDataContext, String portletId,

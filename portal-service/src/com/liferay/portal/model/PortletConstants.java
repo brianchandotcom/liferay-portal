@@ -63,6 +63,7 @@ public class PortletConstants {
 	/**
 	 * Returns the instance ID of the portlet.
 	 *
+	 * @param  portletId the portlet ID
 	 * @return the instance ID of the portlet
 	 */
 	public static String getInstanceId(String portletId) {
@@ -79,6 +80,7 @@ public class PortletConstants {
 	/**
 	 * Returns the root portlet ID of the portlet.
 	 *
+	 * @param  portletId the portlet ID
 	 * @return the root portlet ID of the portlet
 	 */
 	public static String getRootPortletId(String portletId) {
@@ -92,6 +94,13 @@ public class PortletConstants {
 		}
 	}
 
+	/**
+	 * Returns <code>true</code> if the portlet ID contains an instance ID.
+	 *
+	 * @param  portletId theh portlet ID
+	 * @return <code>true</code> if the portlet ID contains an instance ID;
+	 *         <code>false</code> otherwise
+	 */
 	public static boolean hasInstanceId(String portletId) {
 		return portletId.contains(INSTANCE_SEPARATOR);
 	}

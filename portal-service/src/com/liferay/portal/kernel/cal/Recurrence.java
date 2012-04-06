@@ -205,6 +205,7 @@ public class Recurrence implements Serializable {
 	/**
 	 * Method getCandidateStartTime
 	 *
+	 * @param  current the current time
 	 * @return Calendar
 	 */
 	public Calendar getCandidateStartTime(Calendar current) {
@@ -346,6 +347,7 @@ public class Recurrence implements Serializable {
 	/**
 	 * Method isInRecurrence
 	 *
+	 * @param  current the current time
 	 * @return boolean
 	 */
 	public boolean isInRecurrence(Calendar current) {
@@ -355,6 +357,8 @@ public class Recurrence implements Serializable {
 	/**
 	 * Method isInRecurrence
 	 *
+	 * @param  current the current time
+	 * @param  debug whether to print debug messages
 	 * @return boolean
 	 */
 	public boolean isInRecurrence(Calendar current, boolean debug) {

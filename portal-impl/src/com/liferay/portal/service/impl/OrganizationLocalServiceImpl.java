@@ -308,6 +308,7 @@ public class OrganizationLocalServiceImpl
 	 * assets are also deleted.
 	 *
 	 * @param  organizationId the primary key of the organization
+	 * @return the deleted organization
 	 * @throws PortalException if an organization with the primary key could not
 	 *         be found, if the organization had a workflow in approved status,
 	 *         or if the organization was a parent organization
@@ -328,6 +329,7 @@ public class OrganizationLocalServiceImpl
 	 * assets are also deleted.
 	 *
 	 * @param  organization the organization
+	 * @return the deleted organization
 	 * @throws PortalException if the organization had a workflow in approved
 	 *         status or if the organization was a parent organization
 	 * @throws SystemException if a system exception occurred

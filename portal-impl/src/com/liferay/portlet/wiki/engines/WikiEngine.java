@@ -27,10 +27,16 @@ import javax.portlet.PortletURL;
 public interface WikiEngine {
 
 	/**
-	 * Convert the content of the given page to HTML using the view and edit
-	 * URLs to build links.
+	 * Returns the content of the given page converted to HTML using the view
+	 * and edit URLs to build links.
 	 *
-	 * @return HTML string
+	 * @param  page the wiki page
+	 * @param  viewPageURL the URL to view the page
+	 * @param  editPageURL the URL to edit the page
+	 * @param  attachmentURLPrefix the URL prefix to use for attachments to the
+	 *         page
+	 * @return the content of the given page converted to HTML
+	 * @throws PageContentException if a page content exception occurred
 	 */
 	public String convert(
 			WikiPage page, PortletURL viewPageURL, PortletURL editPageURL,
@@ -38,31 +44,40 @@ public interface WikiEngine {
 		throws PageContentException;
 
 	/**
-	 * Get a map with the links included in the given page. The key of each map
-	 * entry is the title of the linked page. The value is a Boolean object that
-	 * indicates if the linked page exists or not.
+	 * Returns a map of the links included in the given page. The key of each
+	 * map entry is the title of the linked page. The value is a Boolean object
+	 * that indicates if the linked page exists or not.
 	 *
-	 * @return a map of links
+	 * @param  page the page
+	 * @return a map of links included in the given page
+	 * @throws PageContentException if a page content exception occurred
 	 */
 	public Map<String, Boolean> getOutgoingLinks(WikiPage page)
 		throws PageContentException;
 
 	/**
-	 * Set the configuraton to support quick links to other wikis. The format of
-	 * the configuration is specific to the wiki engine.
+	 * Set the configuration to support quick links to other wikis. The format
+	 * of the configuration is specific to the wiki engine.
+	 *
+	 * @param interWikiConfiguration the configuration to support quick links to
+	 *        other wikis
 	 */
 	public void setInterWikiConfiguration(String interWikiConfiguration);
 
 	/**
-	 * Set the main wiki configuraiton as a String. The format of the
+	 * Sets the main wiki configuration as a String. The format of the
 	 * configuration is specific to the wiki engine.
+	 *
+	 * @param mainConfiguration the main configuration of the wiki engine
 	 */
 	public void setMainConfiguration(String mainConfiguration);
 
 	/**
-	 * Validate the content of a wiki page for this engine.
+	 * Returns <code>true</code> if the content of a wiki page for this engine
+	 * is valid.
 	 *
-	 * @return <code>true</code> if the content is valid
+	 * @param nodeId the ID of the wiki page node
+	 * @param content the page content
 	 */
 	public boolean validate(long nodeId, String content);
 

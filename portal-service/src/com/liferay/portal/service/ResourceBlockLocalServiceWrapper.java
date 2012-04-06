@@ -330,6 +330,10 @@ public class ResourceBlockLocalServiceWrapper
 	*
 	* @param companyId the primary key of the resource block's company
 	* @param groupId the primary key of the resource block's group
+	* @param name the resource block's name
+	* @param permissionsHash the resource block's permission hash
+	* @param resourceBlockPermissionsContainer the resource block's
+	permissions container
 	* @return the new resource block
 	* @throws SystemException if a system exception occurred
 	*/
@@ -464,6 +468,8 @@ public class ResourceBlockLocalServiceWrapper
 	* zero.
 	*
 	* @param resourceBlockId the primary key of the resource block
+	* @throws PortalException if a resource block with the primary key could
+	not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public void releaseResourceBlock(long resourceBlockId)
@@ -572,6 +578,8 @@ public class ResourceBlockLocalServiceWrapper
 	* the database.
 	*
 	* @param resourceBlockId the primary key of the resource block
+	* @throws PortalException if a resource block with the primary key could
+	not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public void retainResourceBlock(long resourceBlockId)

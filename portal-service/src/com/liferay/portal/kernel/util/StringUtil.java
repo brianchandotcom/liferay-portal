@@ -2100,6 +2100,7 @@ public class StringUtil {
 	 * Splits the string <code>s</code> around comma characters returning the
 	 * boolean values of the substrings.
 	 *
+	 * @param  s the string to split
 	 * @param  x the default value to use for a substring in case an exception
 	 *         occurs in getting the boolean value for that substring
 	 * @return the array of boolean values resulting from splitting string
@@ -2170,6 +2171,7 @@ public class StringUtil {
 	 * Splits the string <code>s</code> around comma characters returning the
 	 * double-precision decimal values of the substrings.
 	 *
+	 * @param  s the string to split
 	 * @param  x the default value to use for a substring in case an exception
 	 *         occurs in getting the double-precision decimal value for that
 	 *         substring
@@ -2185,6 +2187,7 @@ public class StringUtil {
 	 * Splits the string <code>s</code> around comma characters returning the
 	 * decimal values of the substrings.
 	 *
+	 * @param  s the string to split
 	 * @param  x the default value to use for a substring in case an exception
 	 *         occurs in getting the decimal value for that substring
 	 * @return the array of decimal values resulting from splitting string
@@ -2199,6 +2202,7 @@ public class StringUtil {
 	 * Splits the string <code>s</code> around comma characters returning the
 	 * integer values of the substrings.
 	 *
+	 * @param  s the string to split
 	 * @param  x the default value to use for a substring in case an exception
 	 *         occurs in getting the integer value for that substring
 	 * @return the array of integer values resulting from splitting string
@@ -2213,6 +2217,7 @@ public class StringUtil {
 	 * Splits the string <code>s</code> around comma characters returning the
 	 * long integer values of the substrings.
 	 *
+	 * @param  s the string to split
 	 * @param  x the default value to use for a substring in case an exception
 	 *         occurs in getting the long integer value for that substring
 	 * @return the array of long integer values resulting from splitting string
@@ -2227,6 +2232,7 @@ public class StringUtil {
 	 * Splits the string <code>s</code> around comma characters returning the
 	 * short integer values of the substrings.
 	 *
+	 * @param  s the string to split
 	 * @param  x the default value to use for a substring in case an exception
 	 *         occurs in getting the short integer value for that substring
 	 * @return the array of short integer values resulting from splitting string

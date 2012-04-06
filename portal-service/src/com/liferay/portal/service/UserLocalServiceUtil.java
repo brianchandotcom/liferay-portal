@@ -261,6 +261,20 @@ public class UserLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
+	/**
+	* Adds a default admin user for the company.
+	*
+	* @param companyId the primary key of the user's company
+	* @param screenName the user's screen name
+	* @param emailAddress the user's email address
+	* @param locale the user's locale
+	* @param firstName the user's first name
+	* @param middleName the user's middle name
+	* @param lastName the user's last name
+	* @return the new default admin user
+	* @throws PortalException n if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
 	public static com.liferay.portal.model.User addDefaultAdminUser(
 		long companyId, java.lang.String screenName,
 		java.lang.String emailAddress, java.util.Locale locale,
@@ -1837,6 +1851,14 @@ public class UserLocalServiceUtil {
 		return getService().isPasswordExpiringSoon(user);
 	}
 
+	/**
+	* Returns the default user for the company.
+	*
+	* @param companyId the primary key of the company
+	* @return the default user for the company
+	* @throws PortalException if the user could not be found
+	* @throws SystemException if a system exception occurred
+	*/
 	public static com.liferay.portal.model.User loadGetDefaultUser(
 		long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -2171,6 +2193,7 @@ public class UserLocalServiceUtil {
 	*
 	* @param groupId the primary key of the group
 	* @param userIds the primary keys of the users
+	* @param serviceContext the service context (optionally <code>null</code>)
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
@@ -2346,6 +2369,9 @@ public class UserLocalServiceUtil {
 	* @param password the user's password
 	* @param emailAddress1 the user's new email address
 	* @param emailAddress2 the user's new email address confirmation
+	* @param serviceContext the service context. Must set the portal URL, main
+	path, primary key of the layout, remote address, remote host, and
+	agent for the user.
 	* @return the user
 	* @throws PortalException if a user with the primary key could not be found
 	* @throws SystemException if a system exception occurred
@@ -2399,6 +2425,7 @@ public class UserLocalServiceUtil {
 	*
 	* @param userId the primary key of the user
 	* @param newGroupIds the primary keys of the groups
+	* @param serviceContext the service context (optionally <code>null</code>)
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
@@ -2611,6 +2638,8 @@ public class UserLocalServiceUtil {
 	*
 	* @param userId the primary key of the user
 	* @param newOrganizationIds the primary keys of the organizations
+	* @param serviceContext the service context. Must set whether user
+	indexing is enabled.
 	* @throws PortalException if a user with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/

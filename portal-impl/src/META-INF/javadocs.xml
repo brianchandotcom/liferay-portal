@@ -4043,7 +4043,7 @@ The group is unstaged and its assets and resources including layouts, membership
 				<comment><![CDATA[the group]]></comment>
 			</param>
 			<return>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the deleted group]]></comment>
 			</return>
 			<throws>
 				<name>PortalException</name>
@@ -4069,7 +4069,7 @@ The group is unstaged and its assets and resources including layouts, membership
 				<comment><![CDATA[the primary key of the group]]></comment>
 			</param>
 			<return>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the deleted group]]></comment>
 			</return>
 			<throws>
 				<name>PortalException</name>
@@ -4106,7 +4106,7 @@ The group is unstaged and its assets and resources including layouts, membership
 		</method>
 		<method>
 			<name>fetchGroup</name>
-			<comment><![CDATA[Returns the group with the matching group name.]]></comment>
+			<comment><![CDATA[Returns the group with the matching group name by first searching the system groups and then using the finder cache.]]></comment>
 			<param>
 				<name>companyId</name>
 				<type>long</type>
@@ -4875,83 +4875,87 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 		</method>
 		<method>
 			<name>loadFetchGroup</name>
-			<comment><![CDATA[]]></comment>
+			<comment><![CDATA[Returns the group with the matching group name by first searching the system groups and then using the finder cache.]]></comment>
 			<param>
 				<name>companyId</name>
 				<type>long</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the primary key of the company]]></comment>
 			</param>
 			<param>
 				<name>name</name>
 				<type>java.lang.String</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the group's name]]></comment>
 			</param>
 			<return>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the group with the name and associated company, or <code>null</code> if a matching group could not be found]]></comment>
 			</return>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[if a system exception occurred]]></comment>
 			</throws>
 		</method>
 		<method>
 			<name>loadGetGroup</name>
-			<comment><![CDATA[]]></comment>
+			<comment><![CDATA[Returns the group with the matching group name.]]></comment>
 			<param>
 				<name>companyId</name>
 				<type>long</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the primary key of the company]]></comment>
 			</param>
 			<param>
 				<name>name</name>
 				<type>java.lang.String</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the group's name]]></comment>
 			</param>
 			<return>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the group with the name and associated company]]></comment>
 			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[if a matching group could not be found]]></comment>
 			</throws>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[if a system exception occurred]]></comment>
 			</throws>
 		</method>
 		<method>
 			<name>search</name>
-			<comment><![CDATA[]]></comment>
+			<comment><![CDATA[Returns a name ordered range of all the company's groups, optionally including the user's inherited organization groups and user groups. System and staged groups are not included.
+
+<p>
+Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+</p>]]></comment>
 			<param>
 				<name>companyId</name>
 				<type>long</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the primary key of the company]]></comment>
 			</param>
 			<param>
 				<name>params</name>
 				<type>java.util.LinkedHashMap</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the finder params (optionally <code>null</code>). To include a user's organizations, inherited organizations, and user groups in the search, add an entry with key &quot;usersGroups&quot; mapped to the user's ID and an entry with key &quot;inherit&quot; mapped to a non-<code>null</code> object. For more information see {@link com.liferay.portal.service.persistence.GroupFinder}]]></comment>
 			</param>
 			<param>
 				<name>start</name>
 				<type>int</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the lower bound of the range of groups to return]]></comment>
 			</param>
 			<param>
 				<name>end</name>
 				<type>int</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the upper bound of the range of groups to return (not inclusive)]]></comment>
 			</param>
 			<return>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the matching groups ordered by name]]></comment>
 			</return>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[if a system exception occurred]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -4984,7 +4988,7 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 			<param>
 				<name>params</name>
 				<type>java.util.LinkedHashMap</type>
-				<comment><![CDATA[the finder params (optionally <code>null</code>). To include a user's organizations, inherited organizations, and user groups in the search, add an entry with key &quot;usersGroups&quot; mapped to the user's ID and an entry with key &quot;inherit&quot; mapped to a non-<code>null</code> object. For more information see {@link com.liferay.portal.service.persistence.GroupFinder} com.liferay.portal.service.persistence.GroupFinder}]]></comment>
+				<comment><![CDATA[the finder params (optionally <code>null</code>). To include a user's organizations, inherited organizations, and user groups in the search, add an entry with key &quot;usersGroups&quot; mapped to the user's ID and an entry with key &quot;inherit&quot; mapped to a non-<code>null</code> object. For more information see {@link com.liferay.portal.service.persistence.GroupFinder}]]></comment>
 			</param>
 			<param>
 				<name>start</name>
@@ -9560,6 +9564,16 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 				<type>long</type>
 				<comment><![CDATA[]]></comment>
 			</param>
+			<param>
+				<name>sourcePrototypeLayoutUuid</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>defaultPriority</name>
+				<type>int</type>
+				<comment><![CDATA[]]></comment>
+			</param>
 			<return>
 				<comment><![CDATA[]]></comment>
 			</return>
@@ -9792,6 +9806,10 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
+		<field>
+			<name>_PRIORITY_BUFFER</name>
+			<comment><![CDATA[]]></comment>
+		</field>
 	</javadoc>
 	<javadoc>
 		<name>LayoutPrototypeLocalServiceImpl</name>
@@ -16448,7 +16466,7 @@ This method handles the creation and bookkeeping of the organization including i
 				<comment><![CDATA[the primary key of the organization]]></comment>
 			</param>
 			<return>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the deleted organization]]></comment>
 			</return>
 			<throws>
 				<name>PortalException</name>
@@ -16470,7 +16488,7 @@ This method handles the creation and bookkeeping of the organization including i
 				<comment><![CDATA[the organization]]></comment>
 			</param>
 			<return>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the deleted organization]]></comment>
 			</return>
 			<throws>
 				<name>PortalException</name>
@@ -24430,17 +24448,17 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 			<param>
 				<name>name</name>
 				<type>java.lang.String</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the resource block's name]]></comment>
 			</param>
 			<param>
 				<name>permissionsHash</name>
 				<type>java.lang.String</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the resource block's permission hash]]></comment>
 			</param>
 			<param>
 				<name>resourceBlockPermissionsContainer</name>
 				<type>com.liferay.portal.model.ResourceBlockPermissionsContainer</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the resource block's permissions container]]></comment>
 			</param>
 			<return>
 				<comment><![CDATA[the new resource block]]></comment>
@@ -24882,7 +24900,7 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[if a resource block with the primary key could not be found]]></comment>
 			</throws>
 			<throws>
 				<name>SystemException</name>
@@ -25285,7 +25303,7 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[if a resource block with the primary key could not be found]]></comment>
 			</throws>
 			<throws>
 				<name>SystemException</name>
@@ -29768,7 +29786,7 @@ Never call the update methods of this service directly, always go through the re
 				<comment><![CDATA[the primary key of the role]]></comment>
 			</param>
 			<return>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the deleted role]]></comment>
 			</return>
 			<throws>
 				<name>PortalException</name>
@@ -29790,7 +29808,7 @@ Never call the update methods of this service directly, always go through the re
 				<comment><![CDATA[the role]]></comment>
 			</param>
 			<return>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the deleted role]]></comment>
 			</return>
 			<throws>
 				<name>PortalException</name>
@@ -33755,7 +33773,7 @@ This method is called from {@link #deleteUserGroup(UserGroup)}.
 				<comment><![CDATA[the primary key of the user group]]></comment>
 			</param>
 			<return>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the deleted user group]]></comment>
 			</return>
 			<throws>
 				<name>PortalException</name>
@@ -33777,7 +33795,7 @@ This method is called from {@link #deleteUserGroup(UserGroup)}.
 				<comment><![CDATA[the user group]]></comment>
 			</param>
 			<return>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the deleted user group]]></comment>
 			</return>
 			<throws>
 				<name>PortalException</name>
@@ -33919,45 +33937,50 @@ This method is called from {@link #deleteUserGroup(UserGroup)}.
 		</method>
 		<method>
 			<name>search</name>
-			<comment><![CDATA[]]></comment>
+			<comment><![CDATA[Returns an ordered range of all the user groups that match the keywords.
+
+<p>
+Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+</p>]]></comment>
 			<param>
 				<name>companyId</name>
 				<type>long</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the primary key of the user group's company]]></comment>
 			</param>
 			<param>
 				<name>keywords</name>
 				<type>java.lang.String</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the keywords (space separated), which may occur in the user group's name or description (optionally <code>null</code>)]]></comment>
 			</param>
 			<param>
 				<name>params</name>
 				<type>java.util.LinkedHashMap</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the finder params (optionally <code>null</code>). For more information see {@link com.liferay.portal.service.persistence.UserGroupFinder}]]></comment>
 			</param>
 			<param>
 				<name>start</name>
 				<type>int</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the lower bound of the range of user groups to return]]></comment>
 			</param>
 			<param>
 				<name>end</name>
 				<type>int</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the upper bound of the range of user groups to return (not inclusive)]]></comment>
 			</param>
 			<param>
 				<name>obc</name>
 				<type>com.liferay.portal.kernel.util.OrderByComparator</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the comparator to order the user groups (optionally <code>null</code>)]]></comment>
 			</param>
 			<return>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the matching user groups ordered by comparator <code>obc</code>]]></comment>
 			</return>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[if a system exception occurred]]></comment>
 			</throws>
+			<see><![CDATA[com.liferay.portal.service.persistence.UserGroupFinder]]></see>
 		</method>
 		<method>
 			<name>search</name>
@@ -34013,30 +34036,31 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 		</method>
 		<method>
 			<name>searchCount</name>
-			<comment><![CDATA[]]></comment>
+			<comment><![CDATA[Returns the number of user groups that match the keywords]]></comment>
 			<param>
 				<name>companyId</name>
 				<type>long</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the primary key of the user group's company]]></comment>
 			</param>
 			<param>
 				<name>keywords</name>
 				<type>java.lang.String</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the keywords (space separated), which may occur in the user group's name or description (optionally <code>null</code>)]]></comment>
 			</param>
 			<param>
 				<name>params</name>
 				<type>java.util.LinkedHashMap</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the finder params (optionally <code>null</code>). For more information see {@link com.liferay.portal.service.persistence.UserGroupFinder}]]></comment>
 			</param>
 			<return>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the number of matching user groups]]></comment>
 			</return>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[if a system exception occurred]]></comment>
 			</throws>
+			<see><![CDATA[com.liferay.portal.service.persistence.UserGroupFinder]]></see>
 		</method>
 		<method>
 			<name>searchCount</name>
@@ -35181,54 +35205,54 @@ This method handles the creation and bookkeeping of the user group, including it
 		<author><![CDATA[Zsigmond Rab]]></author>
 		<method>
 			<name>addDefaultAdminUser</name>
-			<comment><![CDATA[]]></comment>
+			<comment><![CDATA[Adds a default admin user for the company.]]></comment>
 			<param>
 				<name>companyId</name>
 				<type>long</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the primary key of the user's company]]></comment>
 			</param>
 			<param>
 				<name>screenName</name>
 				<type>java.lang.String</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the user's screen name]]></comment>
 			</param>
 			<param>
 				<name>emailAddress</name>
 				<type>java.lang.String</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the user's email address]]></comment>
 			</param>
 			<param>
 				<name>locale</name>
 				<type>java.util.Locale</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the user's locale]]></comment>
 			</param>
 			<param>
 				<name>firstName</name>
 				<type>java.lang.String</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the user's first name]]></comment>
 			</param>
 			<param>
 				<name>middleName</name>
 				<type>java.lang.String</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the user's middle name]]></comment>
 			</param>
 			<param>
 				<name>lastName</name>
 				<type>java.lang.String</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the user's last name]]></comment>
 			</param>
 			<return>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the new default admin user]]></comment>
 			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[n if a portal exception occurred]]></comment>
 			</throws>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[if a system exception occurred]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -36263,7 +36287,7 @@ user's primary key
 				<comment><![CDATA[the primary key of the user]]></comment>
 			</param>
 			<return>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the deleted user]]></comment>
 			</return>
 			<throws>
 				<name>PortalException</name>
@@ -36285,7 +36309,7 @@ user's primary key
 				<comment><![CDATA[the user]]></comment>
 			</param>
 			<return>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the deleted user]]></comment>
 			</return>
 			<throws>
 				<name>PortalException</name>
@@ -37626,24 +37650,24 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 		</method>
 		<method>
 			<name>loadGetDefaultUser</name>
-			<comment><![CDATA[]]></comment>
+			<comment><![CDATA[Returns the default user for the company.]]></comment>
 			<param>
 				<name>companyId</name>
 				<type>long</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the primary key of the company]]></comment>
 			</param>
 			<return>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the default user for the company]]></comment>
 			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[if the user could not be found]]></comment>
 			</throws>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[if a system exception occurred]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -38135,7 +38159,7 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 			<param>
 				<name>serviceContext</name>
 				<type>com.liferay.portal.service.ServiceContext</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the service context (optionally <code>null</code>)]]></comment>
 			</param>
 			<throws>
 				<name>PortalException</name>
@@ -38438,7 +38462,7 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 			<param>
 				<name>serviceContext</name>
 				<type>com.liferay.portal.service.ServiceContext</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the service context. Must set the portal URL, main path, primary key of the layout, remote address, remote host, and agent for the user.]]></comment>
 			</param>
 			<return>
 				<comment><![CDATA[the user]]></comment>
@@ -38524,7 +38548,7 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 			<param>
 				<name>serviceContext</name>
 				<type>com.liferay.portal.service.ServiceContext</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the service context (optionally <code>null</code>)]]></comment>
 			</param>
 			<throws>
 				<name>PortalException</name>
@@ -38916,7 +38940,7 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 			<param>
 				<name>serviceContext</name>
 				<type>com.liferay.portal.service.ServiceContext</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the service context. Must set whether user indexing is enabled.]]></comment>
 			</param>
 			<throws>
 				<name>PortalException</name>
@@ -40451,7 +40475,7 @@ user's primary key
 			<param>
 				<name>serviceContext</name>
 				<type>com.liferay.portal.service.ServiceContext</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the service context (optionally <code>null</code>)]]></comment>
 			</param>
 			<throws>
 				<name>PortalException</name>
@@ -41663,7 +41687,7 @@ This method handles the creation and bookkeeping of the user including its resou
 			<param>
 				<name>serviceContext</name>
 				<type>com.liferay.portal.service.ServiceContext</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the service context (optionally <code>null</code>)]]></comment>
 			</param>
 			<throws>
 				<name>PortalException</name>
@@ -41849,7 +41873,7 @@ This method handles the creation and bookkeeping of the user including its resou
 			<param>
 				<name>serviceContext</name>
 				<type>com.liferay.portal.service.ServiceContext</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the service context. Must set the portal URL, main path, primary key of the layout, remote address, remote host, and agent for the user.]]></comment>
 			</param>
 			<return>
 				<comment><![CDATA[the user]]></comment>
@@ -42067,7 +42091,7 @@ This method handles the creation and bookkeeping of the user including its resou
 			<param>
 				<name>serviceContext</name>
 				<type>com.liferay.portal.service.ServiceContext</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the service context. Must set whether user indexing is enabled.]]></comment>
 			</param>
 			<throws>
 				<name>PortalException</name>
@@ -115973,16 +115997,16 @@ For the main functionality see {@link #addActivity(long, long, Date, String, lon
 		</method>
 		<method>
 			<name>deleteActivities</name>
-			<comment><![CDATA[Removes stored activities for the asset identified by the class name ID and class primary key.]]></comment>
+			<comment><![CDATA[Removes stored activities for the asset.]]></comment>
 			<param>
 				<name>assetEntry</name>
 				<type>com.liferay.portlet.asset.model.AssetEntry</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[the asset from which to remove stored activities]]></comment>
 			</param>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
-				<comment><![CDATA[]]></comment>
+				<comment><![CDATA[if a portal exception occurred]]></comment>
 			</throws>
 			<throws>
 				<name>SystemException</name>

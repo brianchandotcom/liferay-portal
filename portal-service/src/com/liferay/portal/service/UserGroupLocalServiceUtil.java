@@ -463,6 +463,34 @@ public class UserGroupLocalServiceUtil {
 		return getService().hasTeamUserGroup(teamId, userGroupId);
 	}
 
+	/**
+	* Returns an ordered range of all the user groups that match the keywords.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param companyId the primary key of the user group's company
+	* @param keywords the keywords (space separated), which may occur in the
+	user group's name or description (optionally <code>null</code>)
+	* @param params the finder params (optionally <code>null</code>). For more
+	information see {@link
+	com.liferay.portal.service.persistence.UserGroupFinder}
+	* @param start the lower bound of the range of user groups to return
+	* @param end the upper bound of the range of user groups to return (not
+	inclusive)
+	* @param obc the comparator to order the user groups (optionally
+	<code>null</code>)
+	* @return the matching user groups ordered by comparator <code>obc</code>
+	* @throws SystemException if a system exception occurred
+	* @see com.liferay.portal.service.persistence.UserGroupFinder
+	*/
 	public static java.util.List<com.liferay.portal.model.UserGroup> search(
 		long companyId, java.lang.String keywords,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
@@ -510,6 +538,19 @@ public class UserGroupLocalServiceUtil {
 				   .search(companyId, name, description, params, start, end, obc);
 	}
 
+	/**
+	* Returns the number of user groups that match the keywords
+	*
+	* @param companyId the primary key of the user group's company
+	* @param keywords the keywords (space separated), which may occur in the
+	user group's name or description (optionally <code>null</code>)
+	* @param params the finder params (optionally <code>null</code>). For more
+	information see {@link
+	com.liferay.portal.service.persistence.UserGroupFinder}
+	* @return the number of matching user groups
+	* @throws SystemException if a system exception occurred
+	* @see com.liferay.portal.service.persistence.UserGroupFinder
+	*/
 	public static int searchCount(long companyId, java.lang.String keywords,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params)
 		throws com.liferay.portal.kernel.exception.SystemException {

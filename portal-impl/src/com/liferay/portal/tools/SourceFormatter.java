@@ -2391,6 +2391,13 @@ public class SourceFormatter {
 
 				return new String[] {previousLine + StringPool.SPACE + line};
 			}
+
+			if (line.startsWith("throws ") &&
+				line.endsWith(StringPool.OPEN_CURLY_BRACE) &&
+				(lineTabCount == (previousLineTabCount + 1))) {
+
+				return new String[] {previousLine + StringPool.SPACE + line};
+			}
 		}
 
 		if (previousLine.endsWith(StringPool.EQUAL) &&

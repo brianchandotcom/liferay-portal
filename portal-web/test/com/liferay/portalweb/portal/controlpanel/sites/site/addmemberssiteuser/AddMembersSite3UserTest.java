@@ -62,8 +62,8 @@ public class AddMembersSite3UserTest extends BaseTestCase {
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-				assertEquals(RuntimeVariables.replace("Site3 Name"),
-					selenium.getText("//tr[3]/td[1]/a"));
+				assertTrue(selenium.isPartialText("//tr[3]/td[1]/a",
+						"Site3 Name"));
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
 						"//span[@title='Actions']/ul/li/strong/a/span"));

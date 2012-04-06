@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.socialactivity.usecase.messageboard;
+package com.liferay.portalweb.portal.controlpanel.socialactivity.usecase.wikipage;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddPortletUSSiteTest extends BaseTestCase {
-	public void testAddPortletUSSite() throws Exception {
+public class ViewUserStatisticsAddWikiPageAttachment2Test extends BaseTestCase {
+	public void testViewUserStatisticsAddWikiPageAttachment2()
+		throws Exception {
 		selenium.open("/web/site-name/");
 		loadRequiredJavaScriptModules();
 
@@ -45,10 +46,6 @@ public class AddPortletUSSiteTest extends BaseTestCase {
 			RuntimeVariables.replace("User Statistics Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
-				"More"));
-		selenium.clickAt("//a[@id='_145_addApplication']",
-			RuntimeVariables.replace("More"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -56,8 +53,9 @@ public class AddPortletUSSiteTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"//div[@title='User Statistics']/p/a")) {
+				if (RuntimeVariables.replace("Joe Bloggs")
+										.equals(selenium.getText(
+								"//span[@class='user-name']"))) {
 					break;
 				}
 			}
@@ -67,25 +65,17 @@ public class AddPortletUSSiteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//div[@title='User Statistics']/p/a",
-			RuntimeVariables.replace("User Statistics"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//section")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertTrue(selenium.isVisible("//section"));
+		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
+			selenium.getText("//span[@class='user-name']"));
+		assertEquals(RuntimeVariables.replace("Rank: 1"),
+			selenium.getText("//div[@class='user-rank']"));
+		assertEquals(RuntimeVariables.replace("Contribution Score: 0"),
+			selenium.getText("//div[@class='contribution-score']"));
+		assertEquals(RuntimeVariables.replace("Participation Score: 28"),
+			selenium.getText("//div[@class='participation-score']"));
+		assertEquals(RuntimeVariables.replace("User's Wiki Pages: 1"),
+			selenium.getText("//div[@class='social-counter-user.wikis']"));
+		assertEquals(RuntimeVariables.replace("User's Attachments: 2"),
+			selenium.getText("//div[@class='social-counter-user.attachments']"));
 	}
 }

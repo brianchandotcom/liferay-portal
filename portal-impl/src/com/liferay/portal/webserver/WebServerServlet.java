@@ -1106,9 +1106,7 @@ public class WebServerServlet extends HttpServlet {
 		}
 	}
 
-	private static void _checkDDMRecord(String[] pathArray)
-		throws Exception {
-
+	private static void _checkDDMRecord(String[] pathArray) throws Exception {
 		if (pathArray.length == 3) {
 			String className = GetterUtil.getString(pathArray[1]);
 			long classPK = GetterUtil.getLong(pathArray[2]);
@@ -1123,9 +1121,7 @@ public class WebServerServlet extends HttpServlet {
 		}
 	}
 
-	private static void _checkFileEntry(String[] pathArray)
-		throws Exception {
-
+	private static void _checkFileEntry(String[] pathArray) throws Exception {
 		if (pathArray.length == 1) {
 			long dlFileShortcutId = GetterUtil.getLong(pathArray[0]);
 

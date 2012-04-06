@@ -127,9 +127,7 @@ public class AssetTagFinderImpl
 			groupId, name, tagProperties, start, end, obc, true);
 	}
 
-	public List<AssetTag> findByEntryId(long entryId)
-		throws SystemException {
-
+	public List<AssetTag> findByEntryId(long entryId) throws SystemException {
 		Session session = null;
 
 		try {

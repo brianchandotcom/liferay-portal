@@ -92,9 +92,7 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 		mdrActionPersistence.remove(action);
 	}
 
-	public void deleteActions(long ruleGroupInstanceId)
-		throws SystemException {
-
+	public void deleteActions(long ruleGroupInstanceId) throws SystemException {
 		List<MDRAction> actions =
 			mdrActionPersistence.findByRuleGroupInstanceId(ruleGroupInstanceId);
 

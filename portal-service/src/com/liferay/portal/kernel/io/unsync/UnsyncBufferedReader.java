@@ -119,9 +119,7 @@ public class UnsyncBufferedReader extends Reader {
 	}
 
 	@Override
-	public int read(char[] chars, int offset, int length)
-		throws IOException {
-
+	public int read(char[] chars, int offset, int length) throws IOException {
 		if (reader == null) {
 			throw new IOException("Reader is null");
 		}

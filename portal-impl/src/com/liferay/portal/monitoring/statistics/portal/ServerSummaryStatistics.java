@@ -115,15 +115,11 @@ public class ServerSummaryStatistics implements SummaryStatistics {
 		return minTime;
 	}
 
-	public long getMinTimeByCompany(long companyId)
-		throws MonitoringException {
-
+	public long getMinTimeByCompany(long companyId) throws MonitoringException {
 		return getRequestStatistics(companyId).getMinTime();
 	}
 
-	public long getMinTimeByCompany(String webId)
-		throws MonitoringException {
-
+	public long getMinTimeByCompany(String webId) throws MonitoringException {
 		return getRequestStatistics(webId).getMinTime();
 	}
 

@@ -578,9 +578,7 @@ public class VelocityTaglib {
 			queryString);
 	}
 
-	public void runtime(String portletName)
-		throws Exception {
-
+	public void runtime(String portletName) throws Exception {
 		runtime(portletName, null);
 	}
 

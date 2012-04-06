@@ -61,9 +61,7 @@ public class TeamServiceImpl extends TeamServiceBaseImpl {
 
 	}
 
-	public Team getTeam(long teamId)
-		throws PortalException, SystemException {
-
+	public Team getTeam(long teamId) throws PortalException, SystemException {
 		TeamPermissionUtil.check(
 			getPermissionChecker(), teamId, ActionKeys.VIEW);
 

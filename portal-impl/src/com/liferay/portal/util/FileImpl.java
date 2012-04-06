@@ -760,9 +760,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		write(file, s, false);
 	}
 
-	public void write(File file, String s, boolean lazy)
-		throws IOException {
-
+	public void write(File file, String s, boolean lazy) throws IOException {
 		write(file, s, lazy, false);
 	}
 

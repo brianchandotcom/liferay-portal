@@ -73,9 +73,7 @@ public class VideoProcessorImpl
 		return _instance;
 	}
 
-	public void generateVideo(FileVersion fileVersion)
-		throws Exception {
-
+	public void generateVideo(FileVersion fileVersion) throws Exception {
 		_instance._generateVideo(fileVersion);
 	}
 

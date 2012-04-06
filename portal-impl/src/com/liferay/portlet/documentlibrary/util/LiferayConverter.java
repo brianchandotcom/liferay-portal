@@ -557,9 +557,7 @@ public abstract class LiferayConverter {
 		}
 	}
 
-	protected void openStreamCoder(IStreamCoder iStreamCoder)
-		throws Exception {
-
+	protected void openStreamCoder(IStreamCoder iStreamCoder) throws Exception {
 		if ((iStreamCoder != null) &&
 			(iStreamCoder.getCodecType() != ICodec.Type.CODEC_TYPE_UNKNOWN)) {
 

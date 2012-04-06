@@ -25,9 +25,7 @@ import java.io.IOException;
  */
 public class DDMXMLUtil {
 
-	public static String formatXML(Document document)
-		throws IOException {
-
+	public static String formatXML(Document document) throws IOException {
 		return getDDMXML().formatXML(document);
 	}
 

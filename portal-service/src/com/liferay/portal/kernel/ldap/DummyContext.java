@@ -148,9 +148,7 @@ public class DummyContext implements Context {
 		throw new OperationNotSupportedException();
 	}
 
-	public void rename(String oldName, String newName)
-		throws NamingException {
-
+	public void rename(String oldName, String newName) throws NamingException {
 		throw new OperationNotSupportedException();
 	}
 

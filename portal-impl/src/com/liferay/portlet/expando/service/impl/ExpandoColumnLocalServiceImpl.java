@@ -108,9 +108,7 @@ public class ExpandoColumnLocalServiceImpl
 		deleteColumn(table.getTableId(), name);
 	}
 
-	public void deleteColumn(long tableId, String name)
-		throws SystemException {
-
+	public void deleteColumn(long tableId, String name) throws SystemException {
 		List<ExpandoColumn> columns = expandoColumnPersistence.findByT_N(
 			tableId, name);
 
@@ -205,9 +203,7 @@ public class ExpandoColumnLocalServiceImpl
 		return getColumn(companyId, classNameId, tableName, name);
 	}
 
-	public List<ExpandoColumn> getColumns(long tableId)
-		throws SystemException {
-
+	public List<ExpandoColumn> getColumns(long tableId) throws SystemException {
 		return expandoColumnPersistence.findByTableId(tableId);
 	}
 

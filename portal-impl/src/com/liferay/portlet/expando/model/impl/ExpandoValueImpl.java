@@ -312,9 +312,7 @@ public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 		setData(StringUtil.merge(data));
 	}
 
-	public void setNumber(Number data)
-		throws PortalException, SystemException {
-
+	public void setNumber(Number data) throws PortalException, SystemException {
 		validate(ExpandoColumnConstants.NUMBER);
 
 		setData(String.valueOf(data));

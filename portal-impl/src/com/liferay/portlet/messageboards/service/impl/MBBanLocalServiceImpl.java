@@ -151,9 +151,7 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 		return mbBanPersistence.countByGroupId(groupId);
 	}
 
-	public boolean hasBan(long groupId, long banUserId)
-		throws SystemException {
-
+	public boolean hasBan(long groupId, long banUserId) throws SystemException {
 		if (mbBanPersistence.fetchByG_B(groupId, banUserId) == null) {
 			return false;
 		}

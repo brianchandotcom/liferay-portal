@@ -67,9 +67,7 @@ public class AuthSettingsUtil {
 		}
 	}
 
-	public static boolean isNtlmEnabled(long companyId)
-		throws SystemException {
-
+	public static boolean isNtlmEnabled(long companyId) throws SystemException {
 		if (PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.NTLM_AUTH_ENABLED,
 				PropsValues.NTLM_AUTH_ENABLED)) {

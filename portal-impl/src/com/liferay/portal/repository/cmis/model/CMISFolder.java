@@ -63,9 +63,7 @@ public class CMISFolder extends CMISModel implements Folder {
 		return containsPermission(_cmisFolder, actionId);
 	}
 
-	public List<Folder> getAncestors()
-		throws PortalException, SystemException {
-
+	public List<Folder> getAncestors() throws PortalException, SystemException {
 		List<Folder> folders = new ArrayList<Folder>();
 
 		Folder folder = this;

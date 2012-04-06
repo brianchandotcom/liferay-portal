@@ -45,9 +45,7 @@ public class PipingServletOutputStream extends ServletOutputStream {
 	}
 
 	@Override
-	public void write(byte[] bytes, int offset, int length)
-		throws IOException {
-
+	public void write(byte[] bytes, int offset, int length) throws IOException {
 		_outputStream.write(bytes, offset, length);
 	}
 

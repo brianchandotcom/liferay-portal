@@ -118,9 +118,7 @@ public class EditRecordAction extends PortletAction {
 				renderRequest, "portlet.dynamic_data_lists.edit_record"));
 	}
 
-	protected void deleteRecord(ActionRequest actionRequest)
-		throws Exception {
-
+	protected void deleteRecord(ActionRequest actionRequest) throws Exception {
 		long recordId = ParamUtil.getLong(actionRequest, "recordId");
 
 		DDLRecordLocalServiceUtil.deleteRecord(recordId);

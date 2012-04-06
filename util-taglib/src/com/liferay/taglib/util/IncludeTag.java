@@ -312,9 +312,7 @@ public class IncludeTag extends AttributesTagSupport {
 		_calledSetAttributes = calledSetAttributes;
 	}
 
-	protected boolean themeResourceExists(String page)
-		throws Exception {
-
+	protected boolean themeResourceExists(String page) throws Exception {
 		if ((page == null) || !_THEME_JSP_OVERRIDE_ENABLED || _strict) {
 			return false;
 		}

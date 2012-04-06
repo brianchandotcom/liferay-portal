@@ -327,9 +327,7 @@ public class MembershipRequestLocalServiceImpl
 		}
 	}
 
-	protected void validate(String comments)
-		throws PortalException {
-
+	protected void validate(String comments) throws PortalException {
 		if (Validator.isNull(comments) || Validator.isNumber(comments)) {
 			throw new MembershipRequestCommentsException();
 		}

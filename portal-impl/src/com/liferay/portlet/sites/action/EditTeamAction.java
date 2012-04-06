@@ -112,17 +112,13 @@ public class EditTeamAction extends PortletAction {
 			renderRequest, "portlet.sites_admin.edit_team"));
 	}
 
-	protected void deleteTeam(ActionRequest actionRequest)
-		throws Exception {
-
+	protected void deleteTeam(ActionRequest actionRequest) throws Exception {
 		long teamId = ParamUtil.getLong(actionRequest, "teamId");
 
 		TeamServiceUtil.deleteTeam(teamId);
 	}
 
-	protected void updateTeam(ActionRequest actionRequest)
-		throws Exception {
-
+	protected void updateTeam(ActionRequest actionRequest) throws Exception {
 		long teamId = ParamUtil.getLong(actionRequest, "teamId");
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");

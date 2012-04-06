@@ -72,9 +72,7 @@ public class UnsyncStringReader extends Reader {
 	}
 
 	@Override
-	public int read(char[] chars, int offset, int length)
-		throws IOException {
-
+	public int read(char[] chars, int offset, int length) throws IOException {
 		if (string == null) {
 			throw new IOException("String is null");
 		}

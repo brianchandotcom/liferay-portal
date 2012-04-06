@@ -36,9 +36,7 @@ import java.util.List;
  */
 public class POPServerUtil {
 
-	public static void addListener(MessageListener listener)
-		throws Exception {
-
+	public static void addListener(MessageListener listener) throws Exception {
 		_instance._addListener(listener);
 	}
 

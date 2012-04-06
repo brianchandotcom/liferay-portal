@@ -34,9 +34,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ActionUtil {
 
-	public static void getRecord(HttpServletRequest request)
-		throws Exception {
-
+	public static void getRecord(HttpServletRequest request) throws Exception {
 		long recordId = ParamUtil.getLong(request, "recordId");
 
 		DDLRecord record = null;

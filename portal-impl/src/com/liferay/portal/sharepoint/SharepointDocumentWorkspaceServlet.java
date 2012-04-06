@@ -97,9 +97,7 @@ public class SharepointDocumentWorkspaceServlet extends HttpServlet {
 		ServletResponseUtil.write(response, sb.toString());
 	}
 
-	protected String getResults(HttpServletRequest request)
-		throws Exception {
-
+	protected String getResults(HttpServletRequest request) throws Exception {
 		String xml = StringUtil.read(request.getInputStream());
 
 		String documentName = null;

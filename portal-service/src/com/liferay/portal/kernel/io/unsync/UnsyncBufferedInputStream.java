@@ -118,9 +118,7 @@ public class UnsyncBufferedInputStream extends UnsyncFilterInputStream {
 	}
 
 	@Override
-	public int read(byte[] bytes, int offset, int length)
-		throws IOException {
-
+	public int read(byte[] bytes, int offset, int length) throws IOException {
 		if (inputStream == null) {
 			throw new IOException("Input stream is null");
 		}

@@ -217,9 +217,7 @@ public class UpgradeLayout extends UpgradeProcess {
 		return typeSettingsProperties;
 	}
 
-	protected void updateName(long plid, String name)
-		throws Exception {
-
+	protected void updateName(long plid, String name) throws Exception {
 		Connection con = null;
 		PreparedStatement ps = null;
 

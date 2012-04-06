@@ -107,9 +107,7 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 			groupId, start, end, obc);
 	}
 
-	public int getGroupTagsCount(long groupId)
-		throws SystemException {
-
+	public int getGroupTagsCount(long groupId) throws SystemException {
 		return assetTagPersistence.filterCountByGroupId(groupId);
 	}
 
@@ -193,9 +191,7 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 		return assetTagFinder.filterCountByG_C_N(groupId, classNameId, name);
 	}
 
-	public int getTagsCount(long groupId, String name)
-		throws SystemException {
-
+	public int getTagsCount(long groupId, String name) throws SystemException {
 		return assetTagFinder.filterCountByG_N(groupId, name);
 	}
 

@@ -99,9 +99,7 @@ public class NotificationEvent implements Serializable {
 		_archived = archived;
 	}
 
-	public void setDeliverBy(long deliverBy)
-		throws IllegalArgumentException {
-
+	public void setDeliverBy(long deliverBy) throws IllegalArgumentException {
 		if ((deliverBy < 0) && _deliveryRequired) {
 			throw new IllegalArgumentException(
 				"Deliver by must be greater than or equal to 0 if delivery " +

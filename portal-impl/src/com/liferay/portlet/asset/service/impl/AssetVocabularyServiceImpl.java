@@ -142,9 +142,7 @@ public class AssetVocabularyServiceImpl
 			groupId, name, start, end, obc);
 	}
 
-	public int getGroupVocabulariesCount(long groupId)
-		throws SystemException {
-
+	public int getGroupVocabulariesCount(long groupId) throws SystemException {
 		return assetVocabularyPersistence.filterCountByGroupId(groupId);
 	}
 

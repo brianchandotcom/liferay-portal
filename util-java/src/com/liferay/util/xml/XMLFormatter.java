@@ -96,9 +96,7 @@ public class XMLFormatter {
 		return toString(node, StringPool.TAB);
 	}
 
-	public static String toString(Node node, String indent)
-		throws IOException {
-
+	public static String toString(Node node, String indent) throws IOException {
 		return toString(node, StringPool.TAB, false);
 	}
 

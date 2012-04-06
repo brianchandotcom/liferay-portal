@@ -129,9 +129,7 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 	 *         or if the user did not have permission to view the role
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Role getRole(long roleId)
-		throws PortalException, SystemException {
-
+	public Role getRole(long roleId) throws PortalException, SystemException {
 		RolePermissionUtil.check(
 			getPermissionChecker(), roleId, ActionKeys.VIEW);
 

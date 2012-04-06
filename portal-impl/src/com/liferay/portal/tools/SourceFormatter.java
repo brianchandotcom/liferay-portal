@@ -2403,18 +2403,28 @@ public class SourceFormatter {
 		if (previousLine.endsWith(StringPool.EQUAL) &&
 			line.endsWith(StringPool.SEMICOLON)) {
 
-			int pos = line.indexOf(StringPool.DASH);
+			String tempLine = line;
 
-			if (pos == -1) {
-				pos = line.indexOf(StringPool.PLUS);
-			}
+			for (int pos = 0;;) {
+				pos = tempLine.indexOf(StringPool.DASH);
 
-			if (pos == -1) {
-				pos = line.indexOf(StringPool.STAR);
-			}
+				if (pos == -1) {
+					pos = tempLine.indexOf(StringPool.PLUS);
+				}
 
-			if (pos != -1) {
-				String linePart = line.substring(0, pos);
+				if (pos == -1) {
+					pos = tempLine.indexOf(StringPool.SLASH);
+				}
+
+				if (pos == -1) {
+					pos = tempLine.indexOf(StringPool.STAR);
+				}
+
+				if (pos == -1) {
+					break;
+				}
+
+				String linePart = tempLine.substring(0, pos);
 
 				int openParenthesisCount = StringUtil.count(
 					linePart, StringPool.OPEN_PARENTHESIS);
@@ -2424,6 +2434,9 @@ public class SourceFormatter {
 				if (openParenthesisCount == closeParenthesisCount) {
 					return null;
 				}
+
+				tempLine =
+					tempLine.substring(0, pos) + tempLine.substring(pos + 1);
 			}
 
 			int x = line.indexOf(StringPool.OPEN_PARENTHESIS);

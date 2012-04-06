@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddWikiPageAttachmentSiteTest extends BaseTestCase {
-	public void testAddWikiPageAttachmentSite() throws Exception {
+public class AddWikiPageAttachment1SiteTest extends BaseTestCase {
+	public void testAddWikiPageAttachment1Site() throws Exception {
 		selenium.open("/web/site-name/");
 		loadRequiredJavaScriptModules();
 
@@ -49,8 +49,8 @@ public class AddWikiPageAttachmentSiteTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Wiki Page Title"),
-			selenium.getText("//tr[4]/td[1]/a"));
-		selenium.clickAt("//tr[4]/td[1]/a",
+			selenium.getText("//tr[contains(.,'Wiki Page Title')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'Wiki Page Title')]/td[1]/a",
 			RuntimeVariables.replace("Wiki Page Title"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
@@ -129,7 +129,7 @@ public class AddWikiPageAttachmentSiteTest extends BaseTestCase {
 
 		selenium.type("//input[@id='_36_file1']",
 			RuntimeVariables.replace(
-				"L:\\liferay-portal\\portal-web\\test\\com\\liferay\\portalweb\\portal\\controlpanel\\socialactivity\\wikipage\\dependencies\\Wiki_Attachment.jpg"));
+				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\controlpanel\\socialactivity\\usecase\\wikipage\\dependencies\\Wiki_Attachment.jpg"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -138,7 +138,7 @@ public class AddWikiPageAttachmentSiteTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Wiki_Attachment.jpg"),
-			selenium.getText("//td[1]/a"));
+			selenium.getText("//td[contains(.,'Wiki_Attachment')]/a"));
 		assertEquals(RuntimeVariables.replace("Showing 1 result."),
 			selenium.getText("//div[@class='search-results']"));
 	}

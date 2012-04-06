@@ -24,67 +24,65 @@
 	<td>User Statistics Test Page</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//td/div[1]/a/span[2]</td>
+	<td>waitForText</td>
+	<td>xPath=(//span[@class='user-name'])[1]</td>
 	<td>Joe Bloggs</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td/div/div/div[1]</td>
-	<td>exact:Rank: 1</td>
+	<td>xPath=(//span[@class='user-name'])[1]</td>
+	<td>Joe Bloggs</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td/div/div/div[2]</td>
+	<td>xPath=(//div[@class='user-rank'])[1]</td>
+	<td>Rank: 1</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='contribution-score'])[1]</td>
 	<td>Contribution Score: 2</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td/div/div/div[3]</td>
-	<td>Participation Score: 27</td>
+	<td>xPath=(//div[@class='participation-score'])[1]</td>
+	<td>Participation Score: 28</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td/div[3]</td>
-	<td>User's Wiki Pages: 2</td>
+	<td>//div[@class='social-counter-user.wikis']</td>
+	<td>User's Wiki Pages: 1</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td/div[4]</td>
+	<td>//div[@class='social-counter-user.attachments']</td>
 	<td>User's Attachments: 2</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td/div[5]</td>
-	<td>User's Wiki Page Updates: 1</td>
+	<td>xPath=(//span[@class='user-name'])[2]</td>
+	<td>userfn userln</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[2]/td/div[1]/a/span[2]</td>
-	<td>User User</td>
+	<td>xPath=(//div[@class='user-rank'])[2]</td>
+	<td>Rank: 2</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[2]/td/div[1]/div/div[1]</td>
-	<td>exact:Rank: 2</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[2]/td/div[1]/div/div[2]</td>
+	<td>xPath=(//div[@class='contribution-score'])[2]</td>
 	<td>Contribution Score: 0</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[2]/td/div[1]/div/div[3]</td>
-	<td>Participation Score: 6</td>
+	<td>xPath=(//div[@class='participation-score'])[2]</td>
+	<td>Participation Score: 10</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[2]/td/div[3]</td>
+	<td>//div[@class='social-counter-user.subscriptions']	</td>
 	<td>User's Subscriptions: 1</td>
 </tr>
-
-
 </tbody></table>
 </body>
 </html>

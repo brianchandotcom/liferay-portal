@@ -30,12 +30,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[1]/a</td>
+	<td>//tr[contains(.,'Wiki Page Title')]/td[1]/a</td>
 	<td>Wiki Page Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//tr[4]/td[1]/a</td>
+	<td>//tr[contains(.,'Wiki Page Title')]/td[1]/a</td>
 	<td>Wiki Page Title</td>
 </tr>
 <tr>
@@ -44,37 +44,77 @@
 	<td>Wiki Page Content</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//a[@id='_36_mefv']/span</td>
+	<td>assertText</td>
+	<td>//div[contains(.,'Edit')]/span/a/span</td>
 	<td>Edit</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[contains(.,'Edit')]/span/a/span</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1[@class='header-title']/span</td>
+	<td>Wiki Page Title</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//textarea[@id='_36_editor' and @style='display: none;']</td>
+	<td>Text Area</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//a[@id='_36_mefv']/span</td>
-	<td>Edit</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//td[@id='cke_contents__36_editor']/iframe</td>
-	<td>IFrame</td>
+	<td>//a[@class='cke_button_source cke_on']</td>
+	<td>Source Button On</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//td[@id='cke_contents__36_editor']/textarea</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//td[@id='cke_contents__36_editor']/textarea</td>
+	<td>Wiki Page Content Edit</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//textarea[@id='_36_editor' and @style='display: none;']</td>
+	<td>Text Area</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
 	<td>//td[@id='cke_contents__36_editor']/iframe</td>
-	<td>IFrame</td>
+	<td>CK Editor</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
 	<td>//td[@id='cke_contents__36_editor']/iframe</td>
-	<td>IFrame</td>
+	<td>CK Editor</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
+	<td>waitForText</td>
 	<td>//body</td>
 	<td>Wiki Page Content Edit</td>
 </tr>
@@ -84,18 +124,13 @@
 	<td>top</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>_36_publishButton</td>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Publish']</td>
 	<td>Publish</td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>//section/div/div/div/div[1]</td>
-	<td>Your request completed successfully.</td>
-</tr>
-<tr>
 	<td>assertText</td>
-	<td>//section/div/div/div/div[1]</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
@@ -103,7 +138,6 @@
 	<td>//div[@class='wiki-body']/p</td>
 	<td>Wiki Page Content Edit</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

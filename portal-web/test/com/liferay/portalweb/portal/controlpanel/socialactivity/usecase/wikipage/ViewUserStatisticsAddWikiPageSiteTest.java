@@ -46,15 +46,34 @@ public class ViewUserStatisticsAddWikiPageSiteTest extends BaseTestCase {
 			RuntimeVariables.replace("User Statistics Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Joe Bloggs")
+										.equals(selenium.getText(
+								"//span[@class='user-name']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//div/a/span[2]"));
-		assertEquals(RuntimeVariables.replace("exact:Rank: 1"),
-			selenium.getText("//td/div/div/div[1]"));
+			selenium.getText("//span[@class='user-name']"));
+		assertEquals(RuntimeVariables.replace("Rank: 1"),
+			selenium.getText("//div[@class='user-rank']"));
 		assertEquals(RuntimeVariables.replace("Contribution Score: 0"),
-			selenium.getText("//td/div/div/div[2]"));
-		assertEquals(RuntimeVariables.replace("Participation Score: 13"),
-			selenium.getText("//td/div/div/div[3]"));
-		assertEquals(RuntimeVariables.replace("User's Wiki Pages: 2"),
-			selenium.getText("//td/div[3]"));
+			selenium.getText("//div[@class='contribution-score']"));
+		assertEquals(RuntimeVariables.replace("Participation Score: 16"),
+			selenium.getText("//div[@class='participation-score']"));
+		assertEquals(RuntimeVariables.replace("User's Wiki Pages: 1"),
+			selenium.getText("//div[@class='social-counter-user.wikis']"));
 	}
 }

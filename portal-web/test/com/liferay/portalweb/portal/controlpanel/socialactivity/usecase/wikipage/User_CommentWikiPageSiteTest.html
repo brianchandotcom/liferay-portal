@@ -30,12 +30,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[1]/a</td>
+	<td>//tr[contains(.,'Wiki Page Title')]/td[1]/a</td>
 	<td>Wiki Page Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//tr[4]/td[1]/a</td>
+	<td>//tr[contains(.,'Wiki Page Title')]/td[1]/a</td>
 	<td>Wiki Page Title</td>
 </tr>
 <tr>
@@ -45,40 +45,49 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>link=Be the first.</td>
+	<td>//fieldset[contains(@class,'add-comment')]/div/a	</td>
 	<td>Be the first.</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>link=Be the first.</td>
+	<td>//fieldset[contains(@class,'add-comment')]/div/a	</td>
 	<td>Be the first.</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>_36_postReplyBody0</td>
-	<td>Wiki Page Reply</td>
+	<td>waitForVisible</td>
+	<td>//textarea[@name='_36_postReplyBody0']</td>
+	<td>Comment</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//div/span[1]/span/input</td>
-	<td>Save</td>
+	<td>type</td>
+	<td>//textarea[@name='_36_postReplyBody0']</td>
+	<td>Wiki Page Comment</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@value='Reply']</td>
+	<td>Reply</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[9]/div/div[2]/div[1]</td>
+	<td>//div[@id='_36_discussion-status-messages']</td>
 	<td>Your request processed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[9]/div/div[2]/div[1]</td>
+	<td>//div[@id='_36_discussion-status-messages']</td>
 	<td>Your request processed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/div[3]/div/div[1]</td>
-	<td>Wiki Page Reply</td>
+	<td>//span[@class='user-name']</td>
+	<td>userfn userln</td>
 </tr>
-
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-discussion-message']</td>
+	<td>Wiki Page Comment</td>
+</tr>
 </tbody></table>
 </body>
 </html>

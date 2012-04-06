@@ -49,8 +49,8 @@ public class User_ReadWikiPageSiteTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Wiki Page Title"),
-			selenium.getText("//tr[4]/td[1]/a"));
-		selenium.clickAt("//tr[4]/td[1]/a",
+			selenium.getText("//tr[contains(.,'Wiki Page Title')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'Wiki Page Title')]/td[1]/a",
 			RuntimeVariables.replace("Wiki Page Title"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();

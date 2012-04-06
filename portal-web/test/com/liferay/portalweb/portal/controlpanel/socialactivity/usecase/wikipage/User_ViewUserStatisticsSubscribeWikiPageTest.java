@@ -46,29 +46,47 @@ public class User_ViewUserStatisticsSubscribeWikiPageTest extends BaseTestCase {
 			RuntimeVariables.replace("User Statistics Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Joe Bloggs")
+										.equals(selenium.getText(
+								"xPath=(//span[@class='user-name'])[1]"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//td/div[1]/a/span[2]"));
-		assertEquals(RuntimeVariables.replace("exact:Rank: 1"),
-			selenium.getText("//td/div/div/div[1]"));
+			selenium.getText("xPath=(//span[@class='user-name'])[1]"));
+		assertEquals(RuntimeVariables.replace("Rank: 1"),
+			selenium.getText("xPath=(//div[@class='user-rank'])[1]"));
 		assertEquals(RuntimeVariables.replace("Contribution Score: 2"),
-			selenium.getText("//td/div/div/div[2]"));
-		assertEquals(RuntimeVariables.replace("Participation Score: 27"),
-			selenium.getText("//td/div/div/div[3]"));
-		assertEquals(RuntimeVariables.replace("User's Wiki Pages: 2"),
-			selenium.getText("//td/div[3]"));
+			selenium.getText("xPath=(//div[@class='contribution-score'])[1]"));
+		assertEquals(RuntimeVariables.replace("Participation Score: 28"),
+			selenium.getText("xPath=(//div[@class='participation-score'])[1]"));
+		assertEquals(RuntimeVariables.replace("User's Wiki Pages: 1"),
+			selenium.getText("//div[@class='social-counter-user.wikis']"));
 		assertEquals(RuntimeVariables.replace("User's Attachments: 2"),
-			selenium.getText("//td/div[4]"));
-		assertEquals(RuntimeVariables.replace("User's Wiki Page Updates: 1"),
-			selenium.getText("//td/div[5]"));
-		assertEquals(RuntimeVariables.replace("User User"),
-			selenium.getText("//tr[2]/td/div[1]/a/span[2]"));
-		assertEquals(RuntimeVariables.replace("exact:Rank: 2"),
-			selenium.getText("//tr[2]/td/div[1]/div/div[1]"));
+			selenium.getText("//div[@class='social-counter-user.attachments']"));
+		assertEquals(RuntimeVariables.replace("userfn userln"),
+			selenium.getText("xPath=(//span[@class='user-name'])[2]"));
+		assertEquals(RuntimeVariables.replace("Rank: 2"),
+			selenium.getText("xPath=(//div[@class='user-rank'])[2]"));
 		assertEquals(RuntimeVariables.replace("Contribution Score: 0"),
-			selenium.getText("//tr[2]/td/div[1]/div/div[2]"));
-		assertEquals(RuntimeVariables.replace("Participation Score: 6"),
-			selenium.getText("//tr[2]/td/div[1]/div/div[3]"));
+			selenium.getText("xPath=(//div[@class='contribution-score'])[2]"));
+		assertEquals(RuntimeVariables.replace("Participation Score: 10"),
+			selenium.getText("xPath=(//div[@class='participation-score'])[2]"));
 		assertEquals(RuntimeVariables.replace("User's Subscriptions: 1"),
-			selenium.getText("//tr[2]/td/div[3]"));
+			selenium.getText(
+				"//div[@class='social-counter-user.subscriptions']	"));
 	}
 }

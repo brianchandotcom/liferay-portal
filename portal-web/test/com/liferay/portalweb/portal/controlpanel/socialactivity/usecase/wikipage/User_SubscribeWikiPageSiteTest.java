@@ -49,8 +49,8 @@ public class User_SubscribeWikiPageSiteTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Wiki Page Title"),
-			selenium.getText("//tr[4]/td[1]/a"));
-		selenium.clickAt("//tr[4]/td[1]/a",
+			selenium.getText("//tr[contains(.,'Wiki Page Title')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'Wiki Page Title')]/td[1]/a",
 			RuntimeVariables.replace("Wiki Page Title"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
@@ -63,7 +63,8 @@ public class User_SubscribeWikiPageSiteTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("//fieldset/div/span/a/span")) {
+				if (selenium.isElementPresent(
+							"//span[@class='subscribe-link']/a/span")) {
 					break;
 				}
 			}
@@ -73,7 +74,7 @@ public class User_SubscribeWikiPageSiteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//fieldset/div/span/a/span",
+		selenium.clickAt("//span[@class='subscribe-link']/a/span",
 			RuntimeVariables.replace("Subscribe to Comments"));
 
 		for (int second = 0;; second++) {
@@ -85,7 +86,7 @@ public class User_SubscribeWikiPageSiteTest extends BaseTestCase {
 				if (RuntimeVariables.replace(
 							"Your request processed successfully.")
 										.equals(selenium.getText(
-								"//div[9]/div/div[2]/div[1]"))) {
+								"//div[@id='_36_discussion-status-messages']	"))) {
 					break;
 				}
 			}
@@ -97,25 +98,8 @@ public class User_SubscribeWikiPageSiteTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
-			selenium.getText("//div[9]/div/div[2]/div[1]"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("//fieldset/div/span/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+			selenium.getText("//div[@id='_36_discussion-status-messages']"));
 		assertEquals(RuntimeVariables.replace("Unsubscribe from Comments"),
-			selenium.getText("//fieldset/div/span/a/span"));
+			selenium.getText("//span[@class='subscribe-link']/a/span"));
 	}
 }

@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>AddWikiPageAttachmentSiteTest</title>
+<title>AddWikiPageAttachment1SiteTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">AddWikiPageAttachmentSiteTest</td></tr>
+<tr><td rowspan="1" colspan="3">AddWikiPageAttachment1SiteTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -30,12 +30,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[1]/a</td>
+	<td>//tr[contains(.,'Wiki Page Title')]/td[1]/a</td>
 	<td>Wiki Page Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//tr[4]/td[1]/a</td>
+	<td>//tr[contains(.,'Wiki Page Title')]/td[1]/a</td>
 	<td>Wiki Page Title</td>
 </tr>
 <tr>
@@ -96,7 +96,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_36_file1']</td>
-	<td>L:\liferay-portal\portal-web\test\com\liferay\portalweb\portal\controlpanel\socialactivity\wikipage\dependencies\Wiki_Attachment.jpg</td>
+	<td>L:\portal\build\portal-web\test\com\liferay\portalweb\portal\controlpanel\socialactivity\usecase\wikipage\dependencies\Wiki_Attachment.jpg</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -110,7 +110,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
+	<td>//td[contains(.,'Wiki_Attachment')]/a</td>
 	<td>Wiki_Attachment.jpg</td>
 </tr>
 <tr>

@@ -30,12 +30,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[1]/a</td>
+	<td>//tr[contains(.,'Wiki Page Title')]/td[1]/a</td>
 	<td>Wiki Page Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//tr[4]/td[1]/a</td>
+	<td>//tr[contains(.,'Wiki Page Title')]/td[1]/a</td>
 	<td>Wiki Page Title</td>
 </tr>
 <tr>
@@ -86,7 +86,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_36_file1']</td>
-	<td>L:\liferay-portal\portal-web\test\com\liferay\portalweb\portal\controlpanel\socialactivity\wikipage\dependencies\Wiki_Attachment2.jpg</td>
+	<td>L:\portal\build\portal-web\test\com\liferay\portalweb\portal\controlpanel\socialactivity\usecase\wikipage\dependencies\Wiki_Attachment2.jpg</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -100,13 +100,18 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
+	<td>//td[contains(.,'Wiki_Attachment')]/a</td>
+	<td>Wiki_Attachment.jpg</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[contains(.,'Wiki_Attachment2')]/a</td>
 	<td>Wiki_Attachment2.jpg</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='search-results']</td>
-	<td>Showing 2 result.</td>
+	<td>Showing 2 results.</td>
 </tr>
 </tbody></table>
 </body>

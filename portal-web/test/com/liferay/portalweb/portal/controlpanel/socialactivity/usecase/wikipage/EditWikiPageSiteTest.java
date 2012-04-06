@@ -49,13 +49,21 @@ public class EditWikiPageSiteTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Wiki Page Title"),
-			selenium.getText("//tr[4]/td[1]/a"));
-		selenium.clickAt("//tr[4]/td[1]/a",
+			selenium.getText("//tr[contains(.,'Wiki Page Title')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'Wiki Page Title')]/td[1]/a",
 			RuntimeVariables.replace("Wiki Page Title"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Wiki Page Content"),
 			selenium.getText("//div[@class='wiki-body']/p"));
+		assertEquals(RuntimeVariables.replace("Edit"),
+			selenium.getText("//div[contains(.,'Edit')]/span/a/span"));
+		selenium.clickAt("//div[contains(.,'Edit')]/span/a/span",
+			RuntimeVariables.replace("Edit"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Wiki Page Title"),
+			selenium.getText("//h1[@class='header-title']/span"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -63,7 +71,8 @@ public class EditWikiPageSiteTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//a[@id='_36_mefv']/span")) {
+				if (selenium.isElementPresent(
+							"//textarea[@id='_36_editor' and @style='display: none;']")) {
 					break;
 				}
 			}
@@ -73,8 +82,26 @@ public class EditWikiPageSiteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//a[@id='_36_mefv']/span",
-			RuntimeVariables.replace("Edit"));
+		assertEquals(RuntimeVariables.replace("Source"),
+			selenium.getText("//span[.='Source']"));
+		selenium.clickAt("//span[.='Source']",
+			RuntimeVariables.replace("Source"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//a[@class='cke_button_source cke_on']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -83,7 +110,31 @@ public class EditWikiPageSiteTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//td[@id='cke_contents__36_editor']/iframe")) {
+							"//td[@id='cke_contents__36_editor']/textarea")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.type("//td[@id='cke_contents__36_editor']/textarea",
+			RuntimeVariables.replace("Wiki Page Content Edit"));
+		assertEquals(RuntimeVariables.replace("Source"),
+			selenium.getText("//span[.='Source']"));
+		selenium.clickAt("//span[.='Source']",
+			RuntimeVariables.replace("Source"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//textarea[@id='_36_editor' and @style='display: none;']")) {
 					break;
 				}
 			}
@@ -96,13 +147,6 @@ public class EditWikiPageSiteTest extends BaseTestCase {
 		assertTrue(selenium.isVisible(
 				"//td[@id='cke_contents__36_editor']/iframe"));
 		selenium.selectFrame("//td[@id='cke_contents__36_editor']/iframe");
-		Thread.sleep(5000);
-		selenium.type("//body",
-			RuntimeVariables.replace("Wiki Page Content Edit"));
-		selenium.selectFrame("relative=top");
-		selenium.click(RuntimeVariables.replace("_36_publishButton"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -110,10 +154,8 @@ public class EditWikiPageSiteTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace(
-							"Your request completed successfully.")
-										.equals(selenium.getText(
-								"//section/div/div/div/div[1]"))) {
+				if (RuntimeVariables.replace("Wiki Page Content Edit")
+										.equals(selenium.getText("//body"))) {
 					break;
 				}
 			}
@@ -123,9 +165,14 @@ public class EditWikiPageSiteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		selenium.selectFrame("relative=top");
+		selenium.clickAt("//input[@value='Publish']",
+			RuntimeVariables.replace("Publish"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
-			selenium.getText("//section/div/div/div/div[1]"));
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Wiki Page Content Edit"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 	}

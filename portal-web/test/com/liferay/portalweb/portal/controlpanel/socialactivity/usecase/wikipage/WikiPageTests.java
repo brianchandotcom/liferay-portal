@@ -52,8 +52,8 @@ public class WikiPageTests extends BaseTestSuite {
 		testSuite.addTestSuite(ConfigurePortletAddCounter5WikiPageTest.class);
 		testSuite.addTestSuite(AddWikiPageSiteTest.class);
 		testSuite.addTestSuite(ViewUserStatisticsAddWikiPageSiteTest.class);
-		testSuite.addTestSuite(AddWikiPageAttachmentSiteTest.class);
-		testSuite.addTestSuite(ViewUserStatisticsAddWikiPageAttachmentTest.class);
+		testSuite.addTestSuite(AddWikiPageAttachment1SiteTest.class);
+		testSuite.addTestSuite(ViewUserStatisticsAddWikiPageAttachment1Test.class);
 		testSuite.addTestSuite(AddWikiPageAttachment2SiteTest.class);
 		testSuite.addTestSuite(ViewUserStatisticsAddWikiPageAttachment2Test.class);
 		testSuite.addTestSuite(AddUserTest.class);

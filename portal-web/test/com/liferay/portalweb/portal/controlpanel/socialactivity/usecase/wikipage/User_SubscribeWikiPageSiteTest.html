@@ -30,12 +30,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[1]/a</td>
+	<td>//tr[contains(.,'Wiki Page Title')]/td[1]/a</td>
 	<td>Wiki Page Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//tr[4]/td[1]/a</td>
+	<td>//tr[contains(.,'Wiki Page Title')]/td[1]/a</td>
 	<td>Wiki Page Title</td>
 </tr>
 <tr>
@@ -45,36 +45,29 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//fieldset/div/span/a/span</td>
+	<td>//span[@class='subscribe-link']/a/span</td>
 	<td>Subscribe to Comments</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//fieldset/div/span/a/span</td>
+	<td>//span[@class='subscribe-link']/a/span</td>
 	<td>Subscribe to Comments</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[9]/div/div[2]/div[1]</td>
+	<td>//div[@id='_36_discussion-status-messages']	</td>
 	<td>Your request processed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[9]/div/div[2]/div[1]</td>
+	<td>//div[@id='_36_discussion-status-messages']</td>
 	<td>Your request processed successfully.</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//fieldset/div/span/a/span</td>
-	<td>Unsubscribe from Comments</td>
-</tr>
-<tr>
 	<td>assertText</td>
-	<td>//fieldset/div/span/a/span</td>
+	<td>//span[@class='subscribe-link']/a/span</td>
 	<td>Unsubscribe from Comments</td>
 </tr>
-
-
 </tbody></table>
 </body>
 </html>

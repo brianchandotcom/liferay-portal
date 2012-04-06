@@ -49,20 +49,39 @@ public class User_CommentWikiPageSiteTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Wiki Page Title"),
-			selenium.getText("//tr[4]/td[1]/a"));
-		selenium.clickAt("//tr[4]/td[1]/a",
+			selenium.getText("//tr[contains(.,'Wiki Page Title')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'Wiki Page Title')]/td[1]/a",
 			RuntimeVariables.replace("Wiki Page Title"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Wiki Page Content"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 		assertEquals(RuntimeVariables.replace("Be the first."),
-			selenium.getText("link=Be the first."));
-		selenium.clickAt("link=Be the first.",
+			selenium.getText(
+				"//fieldset[contains(@class,'add-comment')]/div/a	"));
+		selenium.clickAt("//fieldset[contains(@class,'add-comment')]/div/a	",
 			RuntimeVariables.replace("Be the first."));
-		selenium.type("_36_postReplyBody0",
-			RuntimeVariables.replace("Wiki Page Reply"));
-		selenium.click("//div/span[1]/span/input");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//textarea[@name='_36_postReplyBody0']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.type("//textarea[@name='_36_postReplyBody0']",
+			RuntimeVariables.replace("Wiki Page Comment"));
+		selenium.clickAt("//input[@value='Reply']",
+			RuntimeVariables.replace("Reply"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -73,7 +92,7 @@ public class User_CommentWikiPageSiteTest extends BaseTestCase {
 				if (RuntimeVariables.replace(
 							"Your request processed successfully.")
 										.equals(selenium.getText(
-								"//div[9]/div/div[2]/div[1]"))) {
+								"//div[@id='_36_discussion-status-messages']"))) {
 					break;
 				}
 			}
@@ -85,8 +104,10 @@ public class User_CommentWikiPageSiteTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
-			selenium.getText("//div[9]/div/div[2]/div[1]"));
-		assertEquals(RuntimeVariables.replace("Wiki Page Reply"),
-			selenium.getText("//div/div[3]/div/div[1]"));
+			selenium.getText("//div[@id='_36_discussion-status-messages']"));
+		assertEquals(RuntimeVariables.replace("userfn userln"),
+			selenium.getText("//span[@class='user-name']"));
+		assertEquals(RuntimeVariables.replace("Wiki Page Comment"),
+			selenium.getText("//div[@class='lfr-discussion-message']"));
 	}
 }

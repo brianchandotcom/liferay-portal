@@ -73,7 +73,7 @@ public class ViewUserStatisticsEditWikiPageSiteTest extends BaseTestCase {
 			selenium.getText("xPath=(//div[@class='contribution-score'])[1]"));
 		assertEquals(RuntimeVariables.replace("Participation Score: 38"),
 			selenium.getText("xPath=(//div[@class='participation-score'])[1]"));
-		assertEquals(RuntimeVariables.replace("User's Wiki Pages: 2"),
+		assertEquals(RuntimeVariables.replace("User's Wiki Pages: 1"),
 			selenium.getText("//div[@class='social-counter-user.wikis']"));
 		assertEquals(RuntimeVariables.replace("User's Attachments: 2"),
 			selenium.getText("//div[@class='social-counter-user.attachments']"));

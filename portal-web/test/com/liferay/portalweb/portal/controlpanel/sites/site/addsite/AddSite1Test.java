@@ -123,7 +123,6 @@ public class AddSite1Test extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Site1 Name"),
-			selenium.getText("//td[1]/a"));
+		assertTrue(selenium.isPartialText("//td[1]/a", "Site1 Name"));
 	}
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.socialactivity.usecase.blogsentry;
+package com.liferay.portalweb.portal.controlpanel.sites.siteportlet.addportletsite;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;

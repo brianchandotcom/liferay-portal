@@ -5106,6 +5106,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 				// Let LDAP handle max failure event
 
+				user = userPersistence.fetchByPrimaryKey(user.getUserId());
+
 				if (!LDAPSettingsUtil.isPasswordPolicyEnabled(
 						user.getCompanyId())) {
 

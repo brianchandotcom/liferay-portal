@@ -324,9 +324,7 @@ public class UpgradeSocial extends UpgradeProcess {
 		}
 	}
 
-	protected void migrateEquityGroupSettings()
-		throws Exception {
-
+	protected void migrateEquityGroupSettings() throws Exception {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -541,9 +539,7 @@ public class UpgradeSocial extends UpgradeProcess {
 		}
 	}
 
-	protected void migrateEquitySettings()
-		throws Exception {
-
+	protected void migrateEquitySettings() throws Exception {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;

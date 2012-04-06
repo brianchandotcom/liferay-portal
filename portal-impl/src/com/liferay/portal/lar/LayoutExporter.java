@@ -949,9 +949,7 @@ public class LayoutExporter {
 		}
 	}
 
-	protected void fixTypeSettings(Layout layout)
-		throws Exception {
-
+	protected void fixTypeSettings(Layout layout) throws Exception {
 		if (!layout.isTypeURL()) {
 			return;
 		}

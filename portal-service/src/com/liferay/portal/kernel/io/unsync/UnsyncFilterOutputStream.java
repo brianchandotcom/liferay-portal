@@ -52,9 +52,7 @@ public class UnsyncFilterOutputStream extends OutputStream {
 	}
 
 	@Override
-	public void write(byte[] bytes, int offset, int length)
-		throws IOException {
-
+	public void write(byte[] bytes, int offset, int length) throws IOException {
 		outputStream.write(bytes, offset, length);
 	}
 

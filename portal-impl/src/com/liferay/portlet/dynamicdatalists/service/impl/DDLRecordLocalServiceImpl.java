@@ -294,9 +294,7 @@ public class DDLRecordLocalServiceImpl
 		return ddlRecordPersistence.findByPrimaryKey(recordId);
 	}
 
-	public List<DDLRecord> getRecords(long recordSetId)
-		throws SystemException {
-
+	public List<DDLRecord> getRecords(long recordSetId) throws SystemException {
 		return ddlRecordPersistence.findByRecordSetId(recordSetId);
 	}
 
@@ -342,9 +340,7 @@ public class DDLRecordLocalServiceImpl
 			recordId, start, end, orderByComparator);
 	}
 
-	public int getRecordVersionsCount(long recordId)
-		throws SystemException {
-
+	public int getRecordVersionsCount(long recordId) throws SystemException {
 		return ddlRecordVersionPersistence.countByRecordId(recordId);
 	}
 

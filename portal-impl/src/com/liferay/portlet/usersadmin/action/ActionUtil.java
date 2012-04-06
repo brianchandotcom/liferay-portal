@@ -40,9 +40,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ActionUtil {
 
-	public static void getAddress(HttpServletRequest request)
-		throws Exception {
-
+	public static void getAddress(HttpServletRequest request) throws Exception {
 		long addressId = ParamUtil.getLong(request, "addressId");
 
 		Address address = null;

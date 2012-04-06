@@ -141,9 +141,7 @@ public class EditNodeAction extends PortletAction {
 		return node.getName();
 	}
 
-	protected void subscribeNode(ActionRequest actionRequest)
-		throws Exception {
-
+	protected void subscribeNode(ActionRequest actionRequest) throws Exception {
 		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
 
 		WikiNodeServiceUtil.subscribeNode(nodeId);

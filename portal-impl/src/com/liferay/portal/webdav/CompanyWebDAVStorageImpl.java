@@ -54,9 +54,7 @@ public class CompanyWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		}
 	}
 
-	protected List<Resource> getResources(long userId)
-		throws Exception {
-
+	protected List<Resource> getResources(long userId) throws Exception {
 		User user = UserLocalServiceUtil.getUserById(userId);
 
 		Company company = CompanyLocalServiceUtil.getCompanyById(

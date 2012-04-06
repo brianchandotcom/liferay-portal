@@ -223,9 +223,7 @@ public class BaseRepositoryProxyBean
 			folderId, status, mimeTypes);
 	}
 
-	public int getFileEntriesCount(long folderId)
-		throws SystemException {
-
+	public int getFileEntriesCount(long folderId) throws SystemException {
 		return _baseRepository.getFileEntriesCount(folderId);
 	}
 

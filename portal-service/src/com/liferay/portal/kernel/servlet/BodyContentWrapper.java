@@ -220,9 +220,7 @@ public class BodyContentWrapper extends BodyContent {
 	}
 
 	@Override
-	public void write(char[] chars, int offset, int length)
-		throws IOException {
-
+	public void write(char[] chars, int offset, int length) throws IOException {
 		_bodyContent.write(chars, offset, length);
 	}
 

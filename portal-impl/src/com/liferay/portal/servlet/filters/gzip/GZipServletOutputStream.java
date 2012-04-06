@@ -57,9 +57,7 @@ public class GZipServletOutputStream extends ServletOutputStream {
 	}
 
 	@Override
-	public void write(byte[] bytes, int offset, int length)
-		throws IOException {
-
+	public void write(byte[] bytes, int offset, int length) throws IOException {
 		_gZipOutputStream.write(bytes, offset, length);
 	}
 

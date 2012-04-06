@@ -317,9 +317,7 @@ public class SAXReaderImpl implements SAXReader {
 		return read(file, false);
 	}
 
-	public Document read(File file, boolean validate)
-		throws DocumentException {
-
+	public Document read(File file, boolean validate) throws DocumentException {
 		ClassLoader classLoader = getClass().getClassLoader();
 
 		Thread currentThread = Thread.currentThread();

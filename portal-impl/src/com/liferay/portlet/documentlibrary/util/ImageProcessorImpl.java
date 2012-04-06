@@ -91,9 +91,7 @@ public class ImageProcessorImpl
 		return fileVersion.getContentStream(false);
 	}
 
-	public long getPreviewFileSize(FileVersion fileVersion)
-		throws Exception {
-
+	public long getPreviewFileSize(FileVersion fileVersion) throws Exception {
 		if (_previewGenerationRequired(fileVersion)) {
 			String type = getPreviewType(fileVersion);
 

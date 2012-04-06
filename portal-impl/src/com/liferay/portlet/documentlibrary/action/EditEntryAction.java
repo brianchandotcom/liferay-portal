@@ -237,9 +237,7 @@ public class EditEntryAction extends PortletAction {
 		}
 	}
 
-	protected void deleteEntries(ActionRequest actionRequest)
-		throws Exception {
-
+	protected void deleteEntries(ActionRequest actionRequest) throws Exception {
 		long[] deleteFolderIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "folderIds"), 0L);
 
@@ -264,9 +262,7 @@ public class EditEntryAction extends PortletAction {
 		}
 	}
 
-	protected void moveEntries(ActionRequest actionRequest)
-		throws Exception {
-
+	protected void moveEntries(ActionRequest actionRequest) throws Exception {
 		long newFolderId = ParamUtil.getLong(actionRequest, "newFolderId");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(

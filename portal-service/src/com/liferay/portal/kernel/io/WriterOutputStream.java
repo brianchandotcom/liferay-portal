@@ -106,9 +106,7 @@ public class WriterOutputStream extends OutputStream {
 	}
 
 	@Override
-	public void write(byte[] bytes, int offset, int length)
-		throws IOException {
-
+	public void write(byte[] bytes, int offset, int length) throws IOException {
 		while (length > 0) {
 			int blockSize = Math.min(length, _inputBuffer.remaining());
 

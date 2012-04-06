@@ -79,9 +79,7 @@ public class ChannelHubManagerImpl implements ChannelHubManager {
 		return channelHub.createChannel(userId);
 	}
 
-	public ChannelHub createChannelHub(long companyId)
-		throws ChannelException {
-
+	public ChannelHub createChannelHub(long companyId) throws ChannelException {
 		ChannelHub channelHub = _channelHub.clone(companyId);
 
 		if (_channelHubs.putIfAbsent(companyId, channelHub) != null) {

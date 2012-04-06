@@ -275,9 +275,7 @@ public class SampleSQLBuilder {
 		processTemplate(_tplDDLRecord, context);
 	}
 
-	public void insertDDLRecordSet(DDMStructure ddmStructure)
-		throws Exception {
-
+	public void insertDDLRecordSet(DDMStructure ddmStructure) throws Exception {
 		Map<String, Object> context = getContext();
 
 		put(context, "ddmStructure", ddmStructure);

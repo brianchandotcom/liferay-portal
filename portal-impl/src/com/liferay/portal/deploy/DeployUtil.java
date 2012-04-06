@@ -98,9 +98,7 @@ public class DeployUtil {
 		return destDir;
 	}
 
-	public static String getResourcePath(String resource)
-		throws Exception {
-
+	public static String getResourcePath(String resource) throws Exception {
 		return _instance._getResourcePath(resource);
 	}
 

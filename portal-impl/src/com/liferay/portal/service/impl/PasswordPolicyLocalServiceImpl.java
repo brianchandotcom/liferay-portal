@@ -287,9 +287,7 @@ public class PasswordPolicyLocalServiceImpl
 		return passwordPolicyFinder.findByC_N(companyId, name, start, end, obc);
 	}
 
-	public int searchCount(long companyId, String name)
-		throws SystemException {
-
+	public int searchCount(long companyId, String name) throws SystemException {
 		return passwordPolicyFinder.countByC_N(companyId, name);
 	}
 

@@ -313,9 +313,7 @@ public class EditUserAction extends PortletAction {
 			getForward(renderRequest, "portlet.users_admin.edit_user"));
 	}
 
-	protected User addUser(ActionRequest actionRequest)
-		throws Exception {
-
+	protected User addUser(ActionRequest actionRequest) throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 

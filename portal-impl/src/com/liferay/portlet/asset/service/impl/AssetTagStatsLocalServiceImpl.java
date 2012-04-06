@@ -77,9 +77,7 @@ public class AssetTagStatsLocalServiceImpl
 	 * @param  tagStats the asset tag statistics instance
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteTagStats(AssetTagStats tagStats)
-		throws SystemException {
-
+	public void deleteTagStats(AssetTagStats tagStats) throws SystemException {
 		assetTagStatsPersistence.remove(tagStats);
 	}
 
@@ -124,9 +122,7 @@ public class AssetTagStatsLocalServiceImpl
 	 * @param  tagId the primary key of the tag
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteTagStatsByTagId(long tagId)
-		throws SystemException {
-
+	public void deleteTagStatsByTagId(long tagId) throws SystemException {
 		List<AssetTagStats> tagStatsList = assetTagStatsPersistence.findByTagId(
 			tagId);
 

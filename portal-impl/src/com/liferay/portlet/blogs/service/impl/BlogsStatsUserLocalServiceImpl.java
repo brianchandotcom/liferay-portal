@@ -51,9 +51,7 @@ public class BlogsStatsUserLocalServiceImpl
 		deleteStatsUser(statsUsers);
 	}
 
-	public void deleteStatsUserByGroupId(long groupId)
-		throws SystemException {
-
+	public void deleteStatsUserByGroupId(long groupId) throws SystemException {
 		List<BlogsStatsUser> statsUsers =
 			blogsStatsUserPersistence.findByGroupId(groupId);
 

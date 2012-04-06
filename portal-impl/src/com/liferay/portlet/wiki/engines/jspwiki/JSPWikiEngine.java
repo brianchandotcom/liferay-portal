@@ -158,9 +158,7 @@ public class JSPWikiEngine implements WikiEngine {
 		return _decodeJSPWikiContent(engine.textToHTML(wikiContext, content));
 	}
 
-	protected LiferayJSPWikiEngine getEngine(long nodeId)
-		throws WikiException {
-
+	protected LiferayJSPWikiEngine getEngine(long nodeId) throws WikiException {
 		LiferayJSPWikiEngine engine = _engines.get(nodeId);
 
 		if (engine != null) {

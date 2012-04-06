@@ -178,9 +178,7 @@ public class AggregateClassLoader extends ClassLoader {
 	}
 
 	@Override
-	public Enumeration<URL> getResources(String name)
-		throws IOException {
-
+	public Enumeration<URL> getResources(String name) throws IOException {
 		List<URL> urls = new ArrayList<URL>();
 
 		for (ClassLoader classLoader : getClassLoaders()) {

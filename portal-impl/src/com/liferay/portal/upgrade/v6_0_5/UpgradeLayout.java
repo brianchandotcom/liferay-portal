@@ -54,9 +54,7 @@ public class UpgradeLayout extends UpgradeProcess {
 		}
 	}
 
-	protected void updateUUID(long groupId, long liveGroupId)
-		throws Exception {
-
+	protected void updateUUID(long groupId, long liveGroupId) throws Exception {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;

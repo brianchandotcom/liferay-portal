@@ -31,9 +31,7 @@ import java.io.Writer;
  */
 public class FreeMarkerUtil {
 
-	public static String process(String name, Object context)
-		throws Exception {
-
+	public static String process(String name, Object context) throws Exception {
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
 		process(name, context, unsyncStringWriter);

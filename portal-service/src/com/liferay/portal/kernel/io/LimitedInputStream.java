@@ -122,9 +122,7 @@ public class LimitedInputStream extends InputStream {
 	}
 
 	@Override
-	public int read(byte[] bytes, int offset, int length)
-		throws IOException {
-
+	public int read(byte[] bytes, int offset, int length) throws IOException {
 		if (_read >= _length) {
 			return -1;
 		}

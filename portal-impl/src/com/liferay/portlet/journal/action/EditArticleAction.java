@@ -442,9 +442,7 @@ public class EditArticleAction extends PortletAction {
 		return portletURL.toString();
 	}
 
-	protected boolean hasArticle(ActionRequest actionRequest)
-		throws Exception {
-
+	protected boolean hasArticle(ActionRequest actionRequest) throws Exception {
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 		String articleId = ParamUtil.getString(actionRequest, "articleId");
 

@@ -80,9 +80,7 @@ public class UnsyncBufferedWriter extends Writer {
 	}
 
 	@Override
-	public void write(char[] chars, int offset, int length)
-		throws IOException {
-
+	public void write(char[] chars, int offset, int length) throws IOException {
 		if (writer == null) {
 			throw new IOException("Writer is null");
 		}

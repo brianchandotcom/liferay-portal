@@ -25,9 +25,7 @@ import java.util.Set;
  */
 public class VideoProcessorUtil {
 
-	public static void generateVideo(FileVersion fileVersion)
-		throws Exception {
-
+	public static void generateVideo(FileVersion fileVersion) throws Exception {
 		getVideoProcessor().generateVideo(fileVersion);
 	}
 

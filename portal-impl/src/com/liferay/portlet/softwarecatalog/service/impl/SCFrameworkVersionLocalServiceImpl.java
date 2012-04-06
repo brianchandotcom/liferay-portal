@@ -183,9 +183,7 @@ public class SCFrameworkVersionLocalServiceImpl
 		return scFrameworkVersionPersistence.findByGroupId(groupId, start, end);
 	}
 
-	public int getFrameworkVersionsCount(long groupId)
-		throws SystemException {
-
+	public int getFrameworkVersionsCount(long groupId) throws SystemException {
 		return scFrameworkVersionPersistence.countByGroupId(groupId);
 	}
 

@@ -374,9 +374,7 @@ public class XMLStorageAdapter extends BaseStorageAdapter {
 		}
 	}
 
-	private long[] _getStructureClassPKs(long ddmStructureId)
-		throws Exception {
-
+	private long[] _getStructureClassPKs(long ddmStructureId) throws Exception {
 		List<Long> classPKs = new ArrayList<Long>();
 
 		List<DDMStorageLink> ddmStorageLinks =

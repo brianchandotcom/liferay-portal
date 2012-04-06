@@ -347,9 +347,7 @@ public class PDFProcessorImpl
 	private PDFProcessorImpl() {
 	}
 
-	private void _generateImages(FileVersion fileVersion)
-		throws Exception {
-
+	private void _generateImages(FileVersion fileVersion) throws Exception {
 		InputStream inputStream = null;
 
 		try {

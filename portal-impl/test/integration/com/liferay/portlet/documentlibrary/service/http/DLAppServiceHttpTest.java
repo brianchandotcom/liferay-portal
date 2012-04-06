@@ -25,8 +25,8 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -37,8 +37,8 @@ import org.junit.runner.RunWith;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class DLAppServiceHttpTest {
 
-	@BeforeClass
-	public static void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		String name = "Test Folder";
 		String description = "This is a test folder.";
 
@@ -62,8 +62,8 @@ public class DLAppServiceHttpTest {
 			serviceContext);
 	}
 
-	@AfterClass
-	public static void tearDown() throws Exception {
+	@After
+	public void tearDown() throws Exception {
 		try {
 			if (_folder != null) {
 				DLAppServiceHttp.deleteFolder(
@@ -116,6 +116,6 @@ public class DLAppServiceHttpTest {
 	private static final String _CONTENT =
 		"Content: Enterprise. Open Source. For Life.";
 
-	private static Folder _folder;
+	private Folder _folder;
 
 }

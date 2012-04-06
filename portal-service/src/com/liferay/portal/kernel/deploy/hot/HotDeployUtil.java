@@ -17,18 +17,25 @@ package com.liferay.portal.kernel.deploy.hot;
 import com.liferay.portal.kernel.concurrent.LockRegistry;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.spring.context.PortletContextLoaderListener;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
 
 /**
  * @author Ivica Cardic
@@ -36,12 +43,24 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class HotDeployUtil {
 
+	public static boolean checkMissingDependencies(HotDeployEvent event) {
+		return _instance._checkMissingDependencies(event);
+	}
+
 	public static void fireDeployEvent(HotDeployEvent event) {
 		_instance._fireDeployEvent(event);
 	}
 
 	public static void fireUndeployEvent(HotDeployEvent event) {
 		_instance._fireUndeployEvent(event);
+	}
+
+	public static void registerDependentServletContextListener(
+		HotDeployEvent event, ServletContextEvent servletContextEvent,
+		ServletContextListener servletContextListener) {
+
+		_instance._registerDependentServletContextListener(
+			event, servletContextEvent, servletContextListener);
 	}
 
 	public static void registerListener(HotDeployListener listener) {
@@ -72,18 +91,20 @@ public class HotDeployUtil {
 		}
 
 		_dependentEvents = new ArrayList<HotDeployEvent>();
+		_dependentServletContexts =
+			new HashMap<String, Set<_DependentServletContext>>();
 		_deployedServletContextNames = new HashSet<String>();
 		_listeners = new CopyOnWriteArrayList<HotDeployListener>();
 	}
 
-	private void _doFireDeployEvent(HotDeployEvent event) {
+	private boolean _checkMissingDependencies(HotDeployEvent event) {
 		if (_deployedServletContextNames.contains(
-				event.getServletContextName())) {
+			event.getServletContextName())) {
 
-			return;
+			return false;
 		}
 
-		boolean hasDependencies = true;
+		boolean missingDependencies = false;
 
 		for (String dependentServletContextName :
 				event.getDependentServletContextNames()) {
@@ -91,19 +112,31 @@ public class HotDeployUtil {
 			if (!_deployedServletContextNames.contains(
 					dependentServletContextName)) {
 
-				hasDependencies = false;
+				missingDependencies = true;
 
 				break;
 			}
 		}
 
-		if (hasDependencies) {
+		return missingDependencies;
+	}
+
+	private void _doFireDeployEvent(HotDeployEvent event) {
+		if (!_checkMissingDependencies(event)) {
 			if (_dependentEvents.contains(event)) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						"Deploying " + event.getServletContextName() +
 							" from queue");
 				}
+			}
+
+			String servletContextName = event.getServletContextName();
+
+			synchronized (_dependentServletContexts) {
+				_initDependentServletContextListeners(servletContextName);
+
+				_dependentServletContexts.remove(servletContextName);
 			}
 
 			for (HotDeployListener listener : _listeners) {
@@ -123,7 +156,7 @@ public class HotDeployUtil {
 				}
 			}
 
-			_deployedServletContextNames.add(event.getServletContextName());
+			_deployedServletContextNames.add(servletContextName);
 
 			_dependentEvents.remove(event);
 
@@ -235,6 +268,78 @@ public class HotDeployUtil {
 		return StringUtil.merge(requiredServletContextNames, ", ");
 	}
 
+	private void _initDependentServletContextListeners(
+		String servletContextName) {
+
+		Set<_DependentServletContext> dependentServletContexts =
+			_dependentServletContexts.get(servletContextName);
+
+		if ((dependentServletContexts != null) &&
+			!dependentServletContexts.isEmpty()) {
+
+			ClassLoader currentContextClassLoader =
+				Thread.currentThread().getContextClassLoader();
+
+			try {
+				for (_DependentServletContext dependentContext :
+						dependentServletContexts) {
+
+					PortletClassLoaderUtil.setClassLoader(
+						dependentContext.getContextClassLoader());
+
+					ServletContextEvent servletContextEvent =
+						dependentContext.getServletContextEvent();
+					
+					String dependentContextName =
+						servletContextEvent.getServletContext().
+							getServletContextName();
+
+					PortletClassLoaderUtil.setServletContextName(
+						dependentContextName);
+
+					ServletContextListener servletContextListener =
+						dependentContext.getServletContextListener();
+
+					Thread.currentThread().setContextClassLoader(
+						PortalClassLoaderUtil.getClassLoader());
+
+					servletContextListener.contextInitialized(
+						servletContextEvent);
+				}
+			}
+			finally {
+				Thread.currentThread().setContextClassLoader(
+					currentContextClassLoader);
+			}
+		}
+	}
+
+	private  void _registerDependentServletContextListener(
+		HotDeployEvent event, ServletContextEvent servletContextEvent,
+		ServletContextListener servletContextListener) {
+
+		String servletContextName = event.getServletContextName();
+
+		synchronized (_dependentServletContexts) {
+			Set<_DependentServletContext>
+				dependentServletContexts =
+				_dependentServletContexts.get(servletContextName);
+
+			if (dependentServletContexts  == null) {
+				dependentServletContexts =
+					new HashSet<_DependentServletContext>();
+
+				_dependentServletContexts.put(
+					servletContextName, dependentServletContexts);
+			}
+
+			dependentServletContexts .add(
+				new _DependentServletContext(
+					event.getContextClassLoader(), servletContextEvent,
+					servletContextListener));
+		}
+	}
+
 	private void _registerListener(HotDeployListener listener) {
 		_listeners.add(listener);
 	}
@@ -243,6 +348,7 @@ public class HotDeployUtil {
 		_capturePrematureEvents = true;
 		_dependentEvents.clear();
 		_deployedServletContextNames.clear();
+		_dependentServletContexts.clear();
 		_listeners.clear();
 	}
 
@@ -258,6 +364,64 @@ public class HotDeployUtil {
 		_listeners.clear();
 	}
 
+	private class _DependentServletContext {
+		public _DependentServletContext(
+			ClassLoader contextClassLoader,
+			ServletContextEvent servletContextEvent,
+			ServletContextListener servletContextListener) {
+
+			_contextClassLoader = contextClassLoader;
+			_servletContextEvent = servletContextEvent;
+			_servletContextListener = servletContextListener;
+		}
+
+		@Override
+		public boolean equals(Object object) {
+			if (this == object) {
+				return true;
+			}
+			if ((object == null) || (getClass() != object.getClass())) {
+				return false;
+			}
+
+			_DependentServletContext toCompare =
+				(_DependentServletContext)object;
+
+			if (_servletContextEvent.equals(
+				toCompare.getServletContextEvent())) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		public ClassLoader getContextClassLoader() {
+			return _contextClassLoader;
+		}
+
+		public ServletContextEvent getServletContextEvent() {
+			return _servletContextEvent;
+		}
+
+		public ServletContextListener getServletContextListener() {
+			return _servletContextListener;
+		}
+
+		@Override
+		public int hashCode() {
+			if (_servletContextEvent != null) {
+				return _servletContextEvent.hashCode();
+			}
+
+			return 0;
+		}
+
+		private ClassLoader _contextClassLoader;
+		private ServletContextEvent _servletContextEvent;
+		private ServletContextListener _servletContextListener;
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(HotDeployUtil.class);
 
 	private static HotDeployUtil _instance = new HotDeployUtil();
@@ -265,6 +429,8 @@ public class HotDeployUtil {
 	private boolean _capturePrematureEvents = true;
 	private List<HotDeployEvent> _dependentEvents;
 	private Set<String> _deployedServletContextNames;
+	private Map<String, Set<_DependentServletContext>>
+		_dependentServletContexts;
 	private List<HotDeployListener> _listeners;
 
 }

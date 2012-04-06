@@ -68,16 +68,8 @@ public class HookDeployer extends BaseDeployer {
 	}
 
 	@Override
-	public String getExtraContent(
-			double webXmlVersion, File srcFile, String displayName)
-		throws Exception {
-
+	public String getPluginContextListener() {
 		StringBundler sb = new StringBundler(6);
-
-		String extraContent = super.getExtraContent(
-			webXmlVersion, srcFile, displayName);
-
-		sb.append(extraContent);
 
 		// HookContextListener
 

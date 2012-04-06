@@ -73,16 +73,8 @@ public class ThemeDeployer extends BaseDeployer {
 	}
 
 	@Override
-	public String getExtraContent(
-			double webXmlVersion, File srcFile, String displayName)
-		throws Exception {
-
-		StringBundler sb = new StringBundler(7);
-
-		String extraContent = super.getExtraContent(
-			webXmlVersion, srcFile, displayName);
-
-		sb.append(extraContent);
+	public String getPluginContextListener() {
+		StringBundler sb = new StringBundler(5);
 
 		// ThemeContextListener
 

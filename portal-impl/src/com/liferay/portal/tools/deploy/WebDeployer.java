@@ -68,16 +68,8 @@ public class WebDeployer extends BaseDeployer {
 	}
 
 	@Override
-	public String getExtraContent(
-			double webXmlVersion, File srcFile, String displayName)
-		throws Exception {
-
-		StringBundler sb = new StringBundler(6);
-
-		String extraContent = super.getExtraContent(
-			webXmlVersion, srcFile, displayName);
-
-		sb.append(extraContent);
+	public String getPluginContextListener() {
+		StringBundler sb = new StringBundler(5);
 
 		// WebContextListener
 

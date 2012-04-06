@@ -49,6 +49,10 @@ public class InactivePACLPolicy extends BasePACLPolicy {
 		return true;
 	}
 
+	public boolean hasHookService(String className) {
+		return true;
+	}
+
 	public boolean hasServicePermission(Object object, Method method) {
 		return true;
 	}

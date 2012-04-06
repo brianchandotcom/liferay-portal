@@ -21,7 +21,6 @@
 <%
 Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("aui:field-wrapper:dynamicAttributes");
 Map<String, Object> scopedAttributes = (Map<String, Object>)request.getAttribute("aui:field-wrapper:scopedAttributes");
-CustomAttributes customAttributes = (CustomAttributes)request.getAttribute("aui:field-wrapper:customAttributes");
 
 Map<String, Object> _options = new HashMap<String, Object>();
 

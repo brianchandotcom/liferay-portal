@@ -33,6 +33,8 @@ public interface PACLPolicy {
 
 	public boolean hasFileWritePermission(String fileName);
 
+	public boolean hasHookService(String className);
+
 	public boolean hasServicePermission(Object object, Method method);
 
 	public boolean hasSocketConnectPermission(String host, int port);

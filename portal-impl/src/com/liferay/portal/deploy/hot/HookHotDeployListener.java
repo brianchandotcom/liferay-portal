@@ -110,6 +110,8 @@ import com.liferay.portal.security.auth.ScreenNameValidator;
 import com.liferay.portal.security.auth.ScreenNameValidatorFactory;
 import com.liferay.portal.security.ldap.AttributesTransformer;
 import com.liferay.portal.security.ldap.AttributesTransformerFactory;
+import com.liferay.portal.security.pacl.PACLPolicy;
+import com.liferay.portal.security.pacl.PACLPolicyManager;
 import com.liferay.portal.service.ReleaseLocalServiceUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.servlet.filters.autologin.AutoLoginFilter;
@@ -521,6 +523,13 @@ public class HookHotDeployListener
 
 		ClassLoader portletClassLoader = hotDeployEvent.getContextClassLoader();
 
+		PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(
+			portletClassLoader);
+
+		if (paclPolicy == null) {
+			paclPolicy = PACLPolicyManager.getDefaultPACLPolicy();
+		}
+
 		initLogger(portletClassLoader);
 
 		Document document = SAXReaderUtil.read(xml, true);
@@ -752,6 +761,14 @@ public class HookHotDeployListener
 		for (Element serviceElement : serviceElements) {
 			String serviceType = serviceElement.elementText("service-type");
 			String serviceImpl = serviceElement.elementText("service-impl");
+
+			if (!paclPolicy.hasHookService(serviceType)) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Rejecting service " + serviceImpl);
+				}
+
+				continue;
+			}
 
 			Class<?> serviceTypeClass = portletClassLoader.loadClass(
 				serviceType);

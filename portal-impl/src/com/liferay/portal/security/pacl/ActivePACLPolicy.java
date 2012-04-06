@@ -74,7 +74,7 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 
 		Set<String> services = getServices(paclPolicy);
 
-		String className = clazz.getName();
+		String className = getInterfaceName(clazz.getName());
 
 		if (services.contains(className)) {
 			return true;
@@ -152,7 +152,7 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 
 		Set<String> services = getServices(paclPolicy);
 
-		String className = clazz.getName();
+		String className = getInterfaceName(clazz.getName());
 
 		if (services.contains(className)) {
 			return true;
@@ -254,6 +254,21 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		}
 
 		return permissions;
+	}
+
+	protected String getInterfaceName(String className) {
+		int pos = className.indexOf(".impl.");
+
+		if (pos != -1) {
+			className =
+				className.substring(0, pos + 1) + className.substring(pos + 6);
+		}
+
+		if (className.endsWith("Impl")) {
+			className = className.substring(0, className.length() - 4);
+		}
+
+		return className;
 	}
 
 	protected Set<String> getServices(PACLPolicy paclPolicy) {

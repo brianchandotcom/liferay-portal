@@ -104,9 +104,8 @@ public class AddWikiPageAttachment2SiteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.type("//input[@id='_36_file1']",
-			RuntimeVariables.replace(
-				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\controlpanel\\socialactivity\\usecase\\wikipage\\dependencies\\Wiki_Attachment2.jpg"));
+		selenium.uploadCommonFile("//input[@id='_36_file1']",
+			RuntimeVariables.replace("Document_2.jpg"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -114,10 +113,10 @@ public class AddWikiPageAttachment2SiteTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Wiki_Attachment.jpg"),
-			selenium.getText("//td[contains(.,'Wiki_Attachment')]/a"));
-		assertEquals(RuntimeVariables.replace("Wiki_Attachment2.jpg"),
-			selenium.getText("//td[contains(.,'Wiki_Attachment2')]/a"));
+		assertEquals(RuntimeVariables.replace("Document_1.jpg"),
+			selenium.getText("//td[contains(.,'Document_1')]/a"));
+		assertEquals(RuntimeVariables.replace("Document_2.jpg"),
+			selenium.getText("//td[contains(.,'Document_2')]/a"));
 		assertEquals(RuntimeVariables.replace("Showing 2 results."),
 			selenium.getText("//div[@class='search-results']"));
 	}

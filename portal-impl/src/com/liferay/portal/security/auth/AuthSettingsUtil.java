@@ -16,13 +16,42 @@ package com.liferay.portal.security.auth;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
+
+import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Michael C. Han
  */
 public class AuthSettingsUtil {
+
+	public static boolean isAccessAllowed(
+		HttpServletRequest request, Set<String> hostsAllowed) {
+
+		if (hostsAllowed.isEmpty()) {
+			return true;
+		}
+
+		String remoteAddr = request.getRemoteAddr();
+
+		if (hostsAllowed.contains(remoteAddr)) {
+			return true;
+		}
+
+		String computerAddress = PortalUtil.getComputerAddress();
+
+		if (computerAddress.equals(remoteAddr) &&
+			hostsAllowed.contains(_SERVER_IP)) {
+
+			return true;
+		}
+
+		return false;
+	}
 
 	public static boolean isLDAPAuthEnabled(long companyId)
 		throws SystemException {
@@ -65,5 +94,7 @@ public class AuthSettingsUtil {
 			return false;
 		}
 	}
+
+	private static final String _SERVER_IP = "SERVER_IP";
 
 }

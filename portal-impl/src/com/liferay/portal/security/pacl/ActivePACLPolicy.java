@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PortalUtil;
 
 import java.io.FilePermission;
 
@@ -51,9 +52,12 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 
 		super(servletContextName, properties);
 
+		_properties = properties;
+
 		_rootDir = WebDirDetector.getRootDir(classLoader);
 
 		initFiles();
+		initHookServices();
 		initServices();
 		initSocketConnectHostsAndPorts();
 		initSocketListenPorts();
@@ -131,6 +135,10 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		return false;
 	}
 
+	public boolean hasHookService(String className) {
+		return _hookServices.contains(className);
+	}
+
 	public boolean hasServicePermission(Object object, Method method) {
 		Class<?> clazz = object.getClass();
 
@@ -179,20 +187,22 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		return true;
 	}
 
-	protected Permission getFilePermission(String path, String action) {
+	protected void addFilePermission(
+		List<Permission> permissions, String path, String action) {
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Allowing " + action + " on " + path);
 		}
 
-		return new FilePermission(path, action);
+		Permission permission = new FilePermission(path, action);
+
+		permissions.add(permission);
 	}
 
 	protected List<Permission> getFilePermissions(String key, String action) {
 		List<Permission> permissions = new CopyOnWriteArrayList<Permission>();
 
-		Properties properties = getProperties();
-
-		String value = properties.getProperty(key);
+		String value = _properties.getProperty(key);
 
 		String[] paths = StringUtil.split(value);
 
@@ -204,23 +214,43 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		}
 
 		for (String path : paths) {
-			Permission permission = getFilePermission(path, action);
-
-			permissions.add(permission);
+			addFilePermission(permissions, path, action);
 		}
 
-		if (action.equals(_FILE_PERMISSION_READ)) {
-			Permission permission = getFilePermission(_rootDir + "-", action);
+		if (!action.equals(_FILE_PERMISSION_READ)) {
+			return permissions;
+		}
 
-			permissions.add(permission);
+		String catalinaHome = System.getProperty("catalina.home") + "/";
 
-			permission = getFilePermission(
-				System.getProperty("catalina.home") +
-					"/work/Catalina/localhost/" + getServletContextName() +
-						"/-",
-				action);
+		String portalWebDir = PortalUtil.getPortalWebDir();
 
-			permissions.add(permission);
+		String[] defaultPaths = {
+
+			// Plugin
+
+			_rootDir + "-",
+
+			// Plugin JSPC
+
+			catalinaHome + "work/Catalina/localhost/" +
+				getServletContextName() + "/-",
+
+			// Portal taglibs
+
+			portalWebDir + "html/common/-", portalWebDir + "html/taglib/-",
+			portalWebDir + "localhost/html/taglib/-",
+
+			// Portal JSPC
+
+			portalWebDir + "WEB-INF/classes/org/apache/jasper/-",
+			portalWebDir + "WEB-INF/classes/org/apache/tomcat/-",
+			catalinaHome + "work/Catalina/localhost/_",
+			catalinaHome + "work/Catalina/localhost/_/-"
+		};
+
+		for (String defaultPath : defaultPaths) {
+			addFilePermission(permissions, defaultPath, action);
 		}
 
 		return permissions;
@@ -250,10 +280,14 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 			"security-manager-files-write", _FILE_PERMISSION_WRITE);
 	}
 
-	protected void initServices() {
-		Properties properties = getProperties();
+	protected void initHookServices() {
+		_hookServices = SetUtil.fromArray(
+			StringUtil.split(
+				_properties.getProperty("security-manager-hook-services")));
+	}
 
-		for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+	protected void initServices() {
+		for (Map.Entry<Object, Object> entry : _properties.entrySet()) {
 			String key = (String)entry.getKey();
 			String value = (String)entry.getValue();
 
@@ -280,9 +314,7 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 	}
 
 	protected void initSocketConnectHostsAndPorts() {
-		Properties properties = getProperties();
-
-		String socketConnect = properties.getProperty(
+		String socketConnect = _properties.getProperty(
 			"security-manager-sockets-connect");
 
 		String[] socketConnectParts = StringUtil.split(socketConnect);
@@ -366,9 +398,7 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 	}
 
 	protected void initSocketListenPorts() {
-		Properties properties = getProperties();
-
-		String socketListen = properties.getProperty(
+		String socketListen = _properties.getProperty(
 			"security-manager-sockets-listen");
 
 		String[] socketListenParts = StringUtil.split(socketListen);
@@ -461,9 +491,11 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 
 	private List<Permission> _deleteFilePermissions;
 	private List<Permission> _executeFilePermissions;
+	private Set<String> _hookServices = new HashSet<String>();
 	private Map<String, Set<String>> _pluginServices =
 		new HashMap<String, Set<String>>();
 	private Set<String> _portalServices;
+	private Properties _properties;
 	private List<Permission> _readFilePermissions;
 	private String _rootDir;
 	private Map<String, Set<Integer>> _socketConnectHostsAndPorts =

@@ -42,17 +42,8 @@ if (!layoutMaximized) {
 	RuntimePortletUtil.processTemplate(pageContext, velocityTemplateId, velocityTemplateContent);
 }
 else {
-	String velocityTemplateId = null;
-	String velocityTemplateContent = null;
-
-	if (themeDisplay.isStateExclusive()) {
-		velocityTemplateId = theme.getThemeId() + LayoutTemplateConstants.STANDARD_SEPARATOR + "exclusive";
-		velocityTemplateContent = LayoutTemplateLocalServiceUtil.getWapContent("exclusive", true, theme.getThemeId());
-	}
-	else {
-		velocityTemplateId = theme.getThemeId() + LayoutTemplateConstants.STANDARD_SEPARATOR + "max";
-		velocityTemplateContent = LayoutTemplateLocalServiceUtil.getWapContent("max", true, theme.getThemeId());
-	}
+	String velocityTemplateId = theme.getThemeId() + LayoutTemplateConstants.STANDARD_SEPARATOR + "max";
+	String velocityTemplateContent = LayoutTemplateLocalServiceUtil.getWapContent("max", true, theme.getThemeId());
 
 	RuntimePortletUtil.processTemplate(pageContext, StringUtil.split(layoutTypePortlet.getStateMax())[0], velocityTemplateId, velocityTemplateContent);
 }

@@ -75,7 +75,7 @@ request.setAttribute("control_panel.jsp-ppid", ppid);
 %>
 
 <c:choose>
-	<c:when test="<%= !themeDisplay.isStateExclusive() && !themeDisplay.isStatePopUp() %>">
+	<c:when test="<%= !themeDisplay.isStatePopUp() %>">
 
 		<%
 		String panelBodyCssClass = "panel-page-body";

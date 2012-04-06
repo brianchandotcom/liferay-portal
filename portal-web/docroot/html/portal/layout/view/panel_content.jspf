@@ -15,17 +15,12 @@
 --%>
 
 <%
-if (!denyAccess && (themeDisplay.isStateExclusive() || themeDisplay.isStatePopUp() || layoutTypePortlet.hasStateMax() || Validator.isNotNull(controlPanelCategory))) {
+if (!denyAccess && (themeDisplay.isStatePopUp() || layoutTypePortlet.hasStateMax() || Validator.isNotNull(controlPanelCategory))) {
 	String velocityTemplateId = null;
 
 	String content = null;
 
-	if (themeDisplay.isStateExclusive()) {
-		velocityTemplateId = theme.getThemeId() + LayoutTemplateConstants.STANDARD_SEPARATOR + "exclusive";
-
-		content = LayoutTemplateLocalServiceUtil.getContent("exclusive", true, theme.getThemeId());
-	}
-	else if (themeDisplay.isStatePopUp()) {
+	if (themeDisplay.isStatePopUp()) {
 		velocityTemplateId = theme.getThemeId() + LayoutTemplateConstants.STANDARD_SEPARATOR + "pop_up";
 
 		content = LayoutTemplateLocalServiceUtil.getContent("pop_up", true, theme.getThemeId());

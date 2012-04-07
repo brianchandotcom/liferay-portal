@@ -14,9 +14,12 @@
 
 package com.liferay.portal.security.pacl;
 
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Properties;
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -49,6 +52,18 @@ public abstract class BasePACLPolicy implements PACLPolicy {
 
 	protected Properties getProperties() {
 		return _properties;
+	}
+
+	protected String getProperty(String key) {
+		return _properties.getProperty(key);
+	}
+
+	protected String[] getPropertyArray(String key) {
+		return StringUtil.split(getProperty(key));
+	}
+
+	protected Set<String> getPropertySet(String key) {
+		return SetUtil.fromArray(getPropertyArray(key));
 	}
 
 	private Properties _properties;

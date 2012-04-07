@@ -34,10 +34,17 @@ public class LayoutPriorityComparator extends OrderByComparator {
 	}
 
 	public LayoutPriorityComparator(boolean ascending) {
-		_ascending = ascending;
+		this(null, false, ascending);
 	}
 
 	public LayoutPriorityComparator(Layout layout, boolean lessThan) {
+		this(layout, lessThan, true);
+	}
+
+	public LayoutPriorityComparator(
+		Layout layout, boolean lessThan, boolean ascending) {
+
+		_ascending = ascending;
 		_layout = layout;
 		_lessThan = lessThan;
 	}

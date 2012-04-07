@@ -106,7 +106,7 @@ public class DynamicQueryFactoryImpl implements DynamicQueryFactory {
 		}
 
 		if (paclPolicy != null) {
-			if (!paclPolicy.hasDynamicQueryPermission(implClass)) {
+			if (!paclPolicy.hasDynamicQuery(implClass)) {
 				throw new SecurityException(
 					"Attempted to create a dynamic query for " + implClass);
 			}

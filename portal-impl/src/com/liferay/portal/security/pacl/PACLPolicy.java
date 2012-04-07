@@ -16,6 +16,8 @@ package com.liferay.portal.security.pacl;
 
 import java.lang.reflect.Method;
 
+import java.util.Locale;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -23,25 +25,27 @@ public interface PACLPolicy {
 
 	public String getServletContextName();
 
-	public boolean hasDynamicQueryPermission(Class<?> clazz);
+	public boolean hasDynamicQuery(Class<?> clazz);
 
-	public boolean hasFileDeletePermission(String fileName);
+	public boolean hasFileDelete(String fileName);
 
-	public boolean hasFileExecutePermission(String fileName);
+	public boolean hasFileExecute(String fileName);
 
-	public boolean hasFileReadPermission(String fileName);
+	public boolean hasFileRead(String fileName);
 
-	public boolean hasFileWritePermission(String fileName);
+	public boolean hasFileWrite(String fileName);
 
-	public boolean hasHookPortalProperty(String key);
+	public boolean hasHookLanguagePropertiesLocale(Locale locale);
+
+	public boolean hasHookPortalPropertiesKey(String key);
 
 	public boolean hasHookService(String className);
 
-	public boolean hasServicePermission(Object object, Method method);
+	public boolean hasService(Object object, Method method);
 
-	public boolean hasSocketConnectPermission(String host, int port);
+	public boolean hasSocketConnect(String host, int port);
 
-	public boolean hasSocketListenPermission(int port);
+	public boolean hasSocketListen(int port);
 
 	public boolean isActive();
 

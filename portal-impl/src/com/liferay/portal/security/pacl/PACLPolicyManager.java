@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.lang.PortalSecurityManager;
+import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.portal.util.PropsValues;
 
@@ -174,7 +175,16 @@ public class PACLPolicyManager {
 				_log.info("Resetting to the original security manager");
 			}
 
-			System.setSecurityManager(_originalSecurityManager);
+			boolean enabled = PortalSecurityManagerThreadLocal.isEnabled();
+
+			try {
+				PortalSecurityManagerThreadLocal.setEnabled(false);
+
+				System.setSecurityManager(_originalSecurityManager);
+			}
+			finally {
+				PortalSecurityManagerThreadLocal.setEnabled(enabled);
+			}
 		}
 		catch (SecurityException se) {
 			_log.error("Unable to reset to the original security manager");

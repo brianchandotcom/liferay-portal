@@ -38,9 +38,11 @@ import java.security.Permission;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -57,14 +59,15 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		_rootDir = WebDirDetector.getRootDir(classLoader);
 
 		initFiles();
-		initHookPortalProperties();
+		initHookLanguagePropertiesLocales();
+		initHookPortalPropertiesKeys();
 		initHookServices();
 		initServices();
 		initSocketConnectHostsAndPorts();
 		initSocketListenPorts();
 	}
 
-	public boolean hasDynamicQueryPermission(Class<?> clazz) {
+	public boolean hasDynamicQuery(Class<?> clazz) {
 		ClassLoader classLoader = clazz.getClassLoader();
 
 		PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(classLoader);
@@ -84,7 +87,7 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		return false;
 	}
 
-	public boolean hasFileDeletePermission(String fileName) {
+	public boolean hasFileDelete(String fileName) {
 		Permission permission = new FilePermission(
 			fileName, _FILE_PERMISSION_DELETE);
 
@@ -97,7 +100,7 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		return false;
 	}
 
-	public boolean hasFileExecutePermission(String fileName) {
+	public boolean hasFileExecute(String fileName) {
 		Permission permission = new FilePermission(
 			fileName, _FILE_PERMISSION_EXECUTE);
 
@@ -110,7 +113,7 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		return false;
 	}
 
-	public boolean hasFileReadPermission(String fileName) {
+	public boolean hasFileRead(String fileName) {
 		Permission permission = new FilePermission(
 			fileName, _FILE_PERMISSION_READ);
 
@@ -123,7 +126,7 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		return false;
 	}
 
-	public boolean hasFileWritePermission(String fileName) {
+	public boolean hasFileWrite(String fileName) {
 		Permission permission = new FilePermission(
 			fileName, _FILE_PERMISSION_WRITE);
 
@@ -136,15 +139,29 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		return false;
 	}
 
-	public boolean hasHookPortalProperty(String key) {
-		return _hookPortalProperties.contains(key);
+	public boolean hasHookLanguagePropertiesLocale(Locale locale) {
+		if (_hookLanguagePropertiesLanguageIds.contains(locale.getLanguage())) {
+			return true;
+		}
+
+		if (_hookLanguagePropertiesLanguageIds.contains(
+				locale.getLanguage() + "_" + locale.getCountry())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean hasHookPortalPropertiesKey(String key) {
+		return _hookPortalPropertiesKeys.contains(key);
 	}
 
 	public boolean hasHookService(String className) {
 		return _hookServices.contains(className);
 	}
 
-	public boolean hasServicePermission(Object object, Method method) {
+	public boolean hasService(Object object, Method method) {
 		Class<?> clazz = object.getClass();
 
 		ClassLoader classLoader = clazz.getClassLoader();
@@ -174,7 +191,7 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		return false;
 	}
 
-	public boolean hasSocketConnectPermission(String host, int port) {
+	public boolean hasSocketConnect(String host, int port) {
 		Set<Integer> ports = _socketConnectHostsAndPorts.get(host);
 
 		if (ports == null) {
@@ -184,7 +201,7 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		return ports.contains(port);
 	}
 
-	public boolean hasSocketListenPermission(int port) {
+	public boolean hasSocketListen(int port) {
 		return _socketListenPorts.contains(port);
 	}
 
@@ -302,9 +319,31 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 			"security-manager-files-write", _FILE_PERMISSION_WRITE);
 	}
 
-	protected void initHookPortalProperties() {
-		_hookPortalProperties = getPropertySet(
-			"security-manager-hook-portal-properties");
+	protected void initHookLanguagePropertiesLocales() {
+		_hookLanguagePropertiesLanguageIds = getPropertySet(
+			"security-manager-hook-language-properties-locales");
+
+		if (_log.isDebugEnabled()) {
+			Set<String> languageIds = new TreeSet<String>(
+				_hookLanguagePropertiesLanguageIds);
+
+			for (String languageId : languageIds) {
+				_log.debug("Allowing language " + languageId);
+			}
+		}
+	}
+
+	protected void initHookPortalPropertiesKeys() {
+		_hookPortalPropertiesKeys = getPropertySet(
+			"security-manager-hook-portal-properties-keys");
+
+		if (_log.isDebugEnabled()) {
+			Set<String> keys = new TreeSet<String>(_hookPortalPropertiesKeys);
+
+			for (String key : keys) {
+				_log.debug("Allowing portal.properties key " + key);
+			}
+		}
 	}
 
 	protected void initHookServices() {
@@ -514,7 +553,9 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 
 	private List<Permission> _deleteFilePermissions;
 	private List<Permission> _executeFilePermissions;
-	private Set<String> _hookPortalProperties = Collections.emptySet();
+	private Set<String> _hookLanguagePropertiesLanguageIds =
+		Collections.emptySet();
+	private Set<String> _hookPortalPropertiesKeys = Collections.emptySet();
 	private Set<String> _hookServices = Collections.emptySet();
 	private Map<String, Set<String>> _pluginServices =
 		new HashMap<String, Set<String>>();

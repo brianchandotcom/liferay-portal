@@ -728,6 +728,8 @@ public class PropsValues {
 
 	public static final String JPA_PROVIDER = PropsUtil.get(PropsKeys.JPA_PROVIDER);
 
+	public static final boolean JSON_DESERIALIZER_STRICT_MODE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.JSON_DESERIALIZER_STRICT_MODE));
+
 	public static final String[] JSON_SERVICE_INVALID_CLASS_NAMES = PropsUtil.getArray(PropsKeys.JSON_SERVICE_INVALID_CLASS_NAMES);
 
 	public static final String[] JSON_SERVICE_PUBLIC_METHODS = PropsUtil.getArray(PropsKeys.JSON_SERVICE_PUBLIC_METHODS);

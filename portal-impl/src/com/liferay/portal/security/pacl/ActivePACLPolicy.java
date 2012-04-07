@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalUtil;
 
+import edu.emory.mathcs.backport.java.util.Collections;
+
 import java.io.FilePermission;
 
 import java.lang.reflect.Method;
@@ -52,11 +54,10 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 
 		super(servletContextName, properties);
 
-		_properties = properties;
-
 		_rootDir = WebDirDetector.getRootDir(classLoader);
 
 		initFiles();
+		initHookPortalProperties();
 		initHookServices();
 		initServices();
 		initSocketConnectHostsAndPorts();
@@ -135,6 +136,10 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		return false;
 	}
 
+	public boolean hasHookPortalProperty(String key) {
+		return _hookPortalProperties.contains(key);
+	}
+
 	public boolean hasHookService(String className) {
 		return _hookServices.contains(className);
 	}
@@ -202,7 +207,7 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 	protected List<Permission> getFilePermissions(String key, String action) {
 		List<Permission> permissions = new CopyOnWriteArrayList<Permission>();
 
-		String value = _properties.getProperty(key);
+		String value = getProperty(key);
 
 		String[] paths = StringUtil.split(value);
 
@@ -231,20 +236,22 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 
 			_rootDir + "-",
 
-			// Plugin JSPC
+			// Plugin runtime
 
 			catalinaHome + "work/Catalina/localhost/" +
 				getServletContextName() + "/-",
 
-			// Portal taglibs
+			// Portal
 
 			portalWebDir + "html/common/-", portalWebDir + "html/taglib/-",
 			portalWebDir + "localhost/html/taglib/-",
 
-			// Portal JSPC
+			// Portal runtime
 
 			portalWebDir + "WEB-INF/classes/org/apache/jasper/-",
 			portalWebDir + "WEB-INF/classes/org/apache/tomcat/-",
+			portalWebDir +
+				"WEB-INF/classes/services/javax.el.ExpressionFactory",
 			catalinaHome + "work/Catalina/localhost/_",
 			catalinaHome + "work/Catalina/localhost/_/-"
 		};
@@ -295,14 +302,19 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 			"security-manager-files-write", _FILE_PERMISSION_WRITE);
 	}
 
+	protected void initHookPortalProperties() {
+		_hookPortalProperties = getPropertySet(
+			"security-manager-hook-portal-properties");
+	}
+
 	protected void initHookServices() {
-		_hookServices = SetUtil.fromArray(
-			StringUtil.split(
-				_properties.getProperty("security-manager-hook-services")));
+		_hookServices = getPropertySet("security-manager-hook-services");
 	}
 
 	protected void initServices() {
-		for (Map.Entry<Object, Object> entry : _properties.entrySet()) {
+		Properties properties = getProperties();
+
+		for (Map.Entry<Object, Object> entry : properties.entrySet()) {
 			String key = (String)entry.getKey();
 			String value = (String)entry.getValue();
 
@@ -329,10 +341,8 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 	}
 
 	protected void initSocketConnectHostsAndPorts() {
-		String socketConnect = _properties.getProperty(
+		String[] socketConnectParts = getPropertyArray(
 			"security-manager-sockets-connect");
-
-		String[] socketConnectParts = StringUtil.split(socketConnect);
 
 		for (String socketConnectPart : socketConnectParts) {
 			initSocketConnectHostsAndPorts(socketConnectPart);
@@ -413,10 +423,8 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 	}
 
 	protected void initSocketListenPorts() {
-		String socketListen = _properties.getProperty(
+		String[] socketListenParts = getPropertyArray(
 			"security-manager-sockets-listen");
-
-		String[] socketListenParts = StringUtil.split(socketListen);
 
 		for (String socketListenPart : socketListenParts) {
 			initSocketListenPorts(socketListenPart);
@@ -506,11 +514,11 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 
 	private List<Permission> _deleteFilePermissions;
 	private List<Permission> _executeFilePermissions;
-	private Set<String> _hookServices = new HashSet<String>();
+	private Set<String> _hookPortalProperties = Collections.emptySet();
+	private Set<String> _hookServices = Collections.emptySet();
 	private Map<String, Set<String>> _pluginServices =
 		new HashMap<String, Set<String>>();
 	private Set<String> _portalServices;
-	private Properties _properties;
 	private List<Permission> _readFilePermissions;
 	private String _rootDir;
 	private Map<String, Set<Integer>> _socketConnectHostsAndPorts =

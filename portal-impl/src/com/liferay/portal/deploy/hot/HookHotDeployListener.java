@@ -537,74 +537,11 @@ public class HookHotDeployListener
 
 		Element rootElement = document.getRootElement();
 
-		String portalPropertiesLocation = rootElement.elementText(
-			"portal-properties");
-
 		initPortalProperties(
-			paclPolicy, servletContextName, portletClassLoader,
-			portalPropertiesLocation);
+			paclPolicy, servletContextName, portletClassLoader, rootElement);
 
-		LanguagesContainer languagesContainer = new LanguagesContainer();
-
-		_languagesContainerMap.put(servletContextName, languagesContainer);
-
-		List<Element> languagePropertiesElements = rootElement.elements(
-			"language-properties");
-
-		Map<String, String> baseLanguageMap = null;
-
-		for (Element languagePropertiesElement : languagePropertiesElements) {
-			String languagePropertiesLocation =
-				languagePropertiesElement.getText();
-
-			try {
-				URL url = portletClassLoader.getResource(
-					languagePropertiesLocation);
-
-				if (url == null) {
-					continue;
-				}
-
-				InputStream is = url.openStream();
-
-				Properties properties = PropertiesUtil.load(
-					is, StringPool.UTF8);
-
-				is.close();
-
-				Map<String, String> languageMap = new HashMap<String, String>();
-
-				if (baseLanguageMap != null) {
-					languageMap.putAll(baseLanguageMap);
-				}
-
-				for (Map.Entry<Object, Object> entry : properties.entrySet()) {
-					String key = (String)entry.getKey();
-					String value = (String)entry.getValue();
-
-					value = LanguageResources.fixValue(value);
-
-					languageMap.put(key, value);
-				}
-
-				Locale locale = getLocale(languagePropertiesLocation);
-
-				if (locale != null) {
-					languagesContainer.addLanguage(locale, languageMap);
-				}
-				else if (!languageMap.isEmpty()) {
-					baseLanguageMap = languageMap;
-				}
-			}
-			catch (Exception e) {
-				_log.error("Unable to read " + languagePropertiesLocation, e);
-			}
-		}
-
-		if (baseLanguageMap != null) {
-			languagesContainer.addLanguage(
-				new Locale(StringPool.BLANK), baseLanguageMap);
-		}
+		initLanguageProperties(
+			paclPolicy, servletContextName, portletClassLoader, rootElement);
 
 		String customJspDir = rootElement.elementText("custom-jsp-dir");
 
@@ -1426,6 +1363,88 @@ public class HookHotDeployListener
 		}
 	}
 
+	protected void initLanguageProperties(
+			PACLPolicy paclPolicy, String servletContextName,
+			ClassLoader portletClassLoader, Element parentElement)
+		throws Exception {
+
+		LanguagesContainer languagesContainer = new LanguagesContainer();
+
+		_languagesContainerMap.put(servletContextName, languagesContainer);
+
+		List<Element> languagePropertiesElements = parentElement.elements(
+			"language-properties");
+
+		Map<String, String> baseLanguageMap = null;
+
+		for (Element languagePropertiesElement : languagePropertiesElements) {
+			Properties properties = null;
+
+			String languagePropertiesLocation =
+				languagePropertiesElement.getText();
+
+			Locale locale = getLocale(languagePropertiesLocation);
+
+			if (locale != null) {
+				if (!paclPolicy.hasHookLanguagePropertiesLocale(locale)) {
+					if (_log.isInfoEnabled()) {
+						_log.info("Rejecting locale " + locale);
+					}
+
+					continue;
+				}
+			}
+
+			try {
+				URL url = portletClassLoader.getResource(
+					languagePropertiesLocation);
+
+				if (url == null) {
+					continue;
+				}
+
+				InputStream is = url.openStream();
+
+				properties = PropertiesUtil.load(is, StringPool.UTF8);
+
+				is.close();
+			}
+			catch (Exception e) {
+				_log.error("Unable to read " + languagePropertiesLocation, e);
+
+				continue;
+			}
+
+			Map<String, String> languageMap = new HashMap<String, String>();
+
+			if (baseLanguageMap != null) {
+				languageMap.putAll(baseLanguageMap);
+			}
+
+			for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+				String key = (String)entry.getKey();
+				String value = (String)entry.getValue();
+
+				value = LanguageResources.fixValue(value);
+
+				languageMap.put(key, value);
+			}
+
+			if (locale != null) {
+				languagesContainer.addLanguage(locale, languageMap);
+			}
+			else if (!languageMap.isEmpty()) {
+				baseLanguageMap = languageMap;
+			}
+		}
+
+		if (baseLanguageMap != null) {
+			Locale locale = new Locale(StringPool.BLANK);
+
+			languagesContainer.addLanguage(locale, baseLanguageMap);
+		}
+	}
+
 	protected void initLogger(ClassLoader portletClassLoader) {
 		Log4JUtil.configureLog4J(
 			portletClassLoader.getResource("META-INF/portal-log4j.xml"));
@@ -1486,8 +1505,11 @@ public class HookHotDeployListener
 
 	protected void initPortalProperties(
 			PACLPolicy paclPolicy, String servletContextName,
-			ClassLoader portletClassLoader, String portalPropertiesLocation)
+			ClassLoader portletClassLoader, Element parentElement)
 		throws Exception {
+
+		String portalPropertiesLocation = parentElement.elementText(
+			"portal-properties");
 
 		if (Validator.isNull(portalPropertiesLocation)) {
 			return;
@@ -1530,7 +1552,7 @@ public class HookHotDeployListener
 		while (iterator.hasNext()) {
 			String key = (String)iterator.next();
 
-			if (!paclPolicy.hasHookPortalProperty(key)) {
+			if (!paclPolicy.hasHookPortalPropertiesKey(key)) {
 				if (_log.isInfoEnabled()) {
 					_log.info("Rejecting portal.properties key " + key);
 				}

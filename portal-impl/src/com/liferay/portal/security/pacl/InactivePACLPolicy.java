@@ -16,6 +16,7 @@ package com.liferay.portal.security.pacl;
 
 import java.lang.reflect.Method;
 
+import java.util.Locale;
 import java.util.Properties;
 
 /**
@@ -29,27 +30,31 @@ public class InactivePACLPolicy extends BasePACLPolicy {
 		super(servletContextName, properties);
 	}
 
-	public boolean hasDynamicQueryPermission(Class<?> clazz) {
+	public boolean hasDynamicQuery(Class<?> clazz) {
 		return true;
 	}
 
-	public boolean hasFileDeletePermission(String fileName) {
+	public boolean hasFileDelete(String fileName) {
 		return true;
 	}
 
-	public boolean hasFileExecutePermission(String fileName) {
+	public boolean hasFileExecute(String fileName) {
 		return true;
 	}
 
-	public boolean hasFileReadPermission(String fileName) {
+	public boolean hasFileRead(String fileName) {
 		return true;
 	}
 
-	public boolean hasFileWritePermission(String fileName) {
+	public boolean hasFileWrite(String fileName) {
 		return true;
 	}
 
-	public boolean hasHookPortalProperty(String key) {
+	public boolean hasHookLanguagePropertiesLocale(Locale locale) {
+		return true;
+	}
+
+	public boolean hasHookPortalPropertiesKey(String key) {
 		return true;
 	}
 
@@ -57,15 +62,15 @@ public class InactivePACLPolicy extends BasePACLPolicy {
 		return true;
 	}
 
-	public boolean hasServicePermission(Object object, Method method) {
+	public boolean hasService(Object object, Method method) {
 		return true;
 	}
 
-	public boolean hasSocketConnectPermission(String host, int port) {
+	public boolean hasSocketConnect(String host, int port) {
 		return true;
 	}
 
-	public boolean hasSocketListenPermission(int port) {
+	public boolean hasSocketListen(int port) {
 		return true;
 	}
 

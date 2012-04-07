@@ -18,11 +18,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.security.pacl.PACLClassUtil;
 import com.liferay.portal.security.pacl.PACLPolicy;
-import com.liferay.portal.security.pacl.PACLPolicyManager;
 
 import java.security.Permission;
-
-import sun.reflect.Reflection;
 
 /**
  * @author Brian Wing Shun Chan
@@ -31,6 +28,10 @@ public class PortalSecurityManager extends SecurityManager {
 
 	@Override
 	public void checkConnect(String host, int port) {
+		if (!PortalSecurityManagerThreadLocal.isEnabled()) {
+			return;
+		}
+
 		if (port == -1) {
 			if (_logCheckConnect.isDebugEnabled()) {
 				_logCheckConnect.debug(
@@ -51,7 +52,7 @@ public class PortalSecurityManager extends SecurityManager {
 		}
 
 		if (paclPolicy != null) {
-			if (!paclPolicy.hasSocketConnectPermission(host, port)) {
+			if (!paclPolicy.hasSocketConnect(host, port)) {
 				throw new SecurityException(
 					"Attempted to connect to host " + host + " on port " +
 						port);
@@ -63,6 +64,10 @@ public class PortalSecurityManager extends SecurityManager {
 
 	@Override
 	public void checkDelete(String fileName) {
+		if (!PortalSecurityManagerThreadLocal.isEnabled()) {
+			return;
+		}
+
 		PACLPolicy paclPolicy = getPACLPolicy(_logCheckDelete.isDebugEnabled());
 
 		if (_logCheckDelete.isDebugEnabled()) {
@@ -72,7 +77,7 @@ public class PortalSecurityManager extends SecurityManager {
 		}
 
 		if (paclPolicy != null) {
-			if (!paclPolicy.hasFileDeletePermission(fileName)) {
+			if (!paclPolicy.hasFileDelete(fileName)) {
 				throw new SecurityException(
 					"Attempted to delete file " + fileName);
 			}
@@ -83,6 +88,10 @@ public class PortalSecurityManager extends SecurityManager {
 
 	@Override
 	public void checkExec(String fileName) {
+		if (!PortalSecurityManagerThreadLocal.isEnabled()) {
+			return;
+		}
+
 		PACLPolicy paclPolicy = getPACLPolicy(_logCheckExec.isDebugEnabled());
 
 		if (_logCheckExec.isDebugEnabled()) {
@@ -92,7 +101,7 @@ public class PortalSecurityManager extends SecurityManager {
 		}
 
 		if (paclPolicy != null) {
-			if (!paclPolicy.hasFileExecutePermission(fileName)) {
+			if (!paclPolicy.hasFileExecute(fileName)) {
 				throw new SecurityException(
 					"Attempted to execute file " + fileName);
 			}
@@ -103,6 +112,10 @@ public class PortalSecurityManager extends SecurityManager {
 
 	@Override
 	public void checkListen(int port) {
+		if (!PortalSecurityManagerThreadLocal.isEnabled()) {
+			return;
+		}
+
 		PACLPolicy paclPolicy = getPACLPolicy(_logCheckListen.isDebugEnabled());
 
 		if (_logCheckListen.isDebugEnabled()) {
@@ -112,7 +125,7 @@ public class PortalSecurityManager extends SecurityManager {
 		}
 
 		if (paclPolicy != null) {
-			if (!paclPolicy.hasSocketListenPermission(port)) {
+			if (!paclPolicy.hasSocketListen(port)) {
 				throw new SecurityException(
 					"Attempted to listen on port " + port);
 			}
@@ -123,6 +136,10 @@ public class PortalSecurityManager extends SecurityManager {
 
 	@Override
 	public void checkPackageAccess(String pkg) {
+		if (!PortalSecurityManagerThreadLocal.isEnabled()) {
+			return;
+		}
+
 		if (pkg.startsWith("sun.reflect")) {
 		}
 
@@ -131,17 +148,15 @@ public class PortalSecurityManager extends SecurityManager {
 
 	@Override
 	public void checkPermission(Permission permission) {
+		if (!PortalSecurityManagerThreadLocal.isEnabled()) {
+			return;
+		}
+
 		String name = permission.getName();
 
 		if (name.equals(_PERMISSION_SET_SECURITY_MANAGER)) {
-			Class<?> callerClass = Reflection.getCallerClass(4);
-
-			if ((callerClass == null) ||
-				(callerClass != PACLPolicyManager.class)) {
-
-				throw new SecurityException(
-					"Attempted to set another security manager");
-			}
+			throw new SecurityException(
+				"Attempted to set another security manager");
 		}
 		else if (name.equals(_PERMISSION_EXIT_VM)) {
 			Thread.dumpStack();
@@ -150,10 +165,17 @@ public class PortalSecurityManager extends SecurityManager {
 
 	@Override
 	public void checkPermission(Permission permission, Object context) {
+		if (!PortalSecurityManagerThreadLocal.isEnabled()) {
+			return;
+		}
 	}
 
 	@Override
 	public void checkRead(String fileName) {
+		if (!PortalSecurityManagerThreadLocal.isEnabled()) {
+			return;
+		}
+
 		PACLPolicy paclPolicy = null;
 
 		try {
@@ -172,7 +194,7 @@ public class PortalSecurityManager extends SecurityManager {
 		}
 
 		if (paclPolicy != null) {
-			if (!paclPolicy.hasFileReadPermission(fileName)) {
+			if (!paclPolicy.hasFileRead(fileName)) {
 				throw new SecurityException(
 					"Attempted to read file " + fileName);
 			}
@@ -183,6 +205,10 @@ public class PortalSecurityManager extends SecurityManager {
 
 	@Override
 	public void checkWrite(String fileName) {
+		if (!PortalSecurityManagerThreadLocal.isEnabled()) {
+			return;
+		}
+
 		PACLPolicy paclPolicy = getPACLPolicy(_logCheckWrite.isDebugEnabled());
 
 		if (_logCheckWrite.isDebugEnabled()) {
@@ -192,7 +218,7 @@ public class PortalSecurityManager extends SecurityManager {
 		}
 
 		if (paclPolicy != null) {
-			if (!paclPolicy.hasFileWritePermission(fileName)) {
+			if (!paclPolicy.hasFileWrite(fileName)) {
 				throw new SecurityException(
 					"Attempted to write file " + fileName);
 			}

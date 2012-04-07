@@ -49,6 +49,10 @@ public class InactivePACLPolicy extends BasePACLPolicy {
 		return true;
 	}
 
+	public boolean hasHookPortalProperty(String key) {
+		return true;
+	}
+
 	public boolean hasHookService(String className) {
 		return true;
 	}

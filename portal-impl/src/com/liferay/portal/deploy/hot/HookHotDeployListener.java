@@ -150,6 +150,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -539,75 +540,9 @@ public class HookHotDeployListener
 		String portalPropertiesLocation = rootElement.elementText(
 			"portal-properties");
 
-		if (Validator.isNotNull(portalPropertiesLocation)) {
-			Configuration portalPropertiesConfiguration = null;
-
-			try {
-				String name = portalPropertiesLocation;
-
-				int pos = name.lastIndexOf(".properties");
-
-				if (pos != -1) {
-					name = name.substring(0, pos);
-				}
-
-				portalPropertiesConfiguration =
-					ConfigurationFactoryUtil.getConfiguration(
-						portletClassLoader, name);
-			}
-			catch (Exception e) {
-				_log.error("Unable to read " + portalPropertiesLocation, e);
-			}
-
-			if (portalPropertiesConfiguration != null) {
-				Properties portalProperties =
-					portalPropertiesConfiguration.getProperties();
-
-				if (!portalProperties.isEmpty()) {
-					Properties unfilteredPortalProperties =
-						(Properties)portalProperties.clone();
-
-					portalProperties.remove(
-						PropsKeys.RELEASE_INFO_BUILD_NUMBER);
-					portalProperties.remove(
-						PropsKeys.RELEASE_INFO_PREVIOUS_BUILD_NUMBER);
-					portalProperties.remove(PropsKeys.UPGRADE_PROCESSES);
-
-					_portalPropertiesMap.put(
-						servletContextName, portalProperties);
-
-					// Initialize properties, auto logins, model listeners, and
-					// events in that specific order. Events have to be loaded
-					// last because they may require model listeners to have
-					// been registered.
-
-					initPortalProperties(
-						servletContextName, portletClassLoader,
-						portalProperties, unfilteredPortalProperties);
-					initAuthFailures(
-						servletContextName, portletClassLoader,
-						portalProperties);
-					initAutoDeployListeners(
-						servletContextName, portletClassLoader,
-						portalProperties);
-					initAutoLogins(
-						servletContextName, portletClassLoader,
-						portalProperties);
-					initAuthenticators(
-						servletContextName, portletClassLoader,
-						portalProperties);
-					initHotDeployListeners(
-						servletContextName, portletClassLoader,
-						portalProperties);
-					initModelListeners(
-						servletContextName, portletClassLoader,
-						portalProperties);
-					initEvents(
-						servletContextName, portletClassLoader,
-						portalProperties);
-				}
-			}
-		}
+		initPortalProperties(
+			paclPolicy, servletContextName, portletClassLoader,
+			portalPropertiesLocation);
 
 		LanguagesContainer languagesContainer = new LanguagesContainer();
 
@@ -1547,6 +1482,92 @@ public class HookHotDeployListener
 				}
 			}
 		}
+	}
+
+	protected void initPortalProperties(
+			PACLPolicy paclPolicy, String servletContextName,
+			ClassLoader portletClassLoader, String portalPropertiesLocation)
+		throws Exception {
+
+		if (Validator.isNull(portalPropertiesLocation)) {
+			return;
+		}
+
+		Configuration portalPropertiesConfiguration = null;
+
+		try {
+			String name = portalPropertiesLocation;
+
+			int pos = name.lastIndexOf(".properties");
+
+			if (pos != -1) {
+				name = name.substring(0, pos);
+			}
+
+			portalPropertiesConfiguration =
+				ConfigurationFactoryUtil.getConfiguration(
+					portletClassLoader, name);
+		}
+		catch (Exception e) {
+			_log.error("Unable to read " + portalPropertiesLocation, e);
+		}
+
+		if (portalPropertiesConfiguration == null) {
+			return;
+		}
+
+		Properties portalProperties =
+			portalPropertiesConfiguration.getProperties();
+
+		if (portalProperties.isEmpty()) {
+			return;
+		}
+
+		Set<Object> set = portalProperties.keySet();
+
+		Iterator<Object> iterator = set.iterator();
+
+		while (iterator.hasNext()) {
+			String key = (String)iterator.next();
+
+			if (!paclPolicy.hasHookPortalProperty(key)) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Rejecting portal.properties key " + key);
+				}
+
+				iterator.remove();
+			}
+		}
+
+		Properties unfilteredPortalProperties =
+			(Properties)portalProperties.clone();
+
+		portalProperties.remove(PropsKeys.RELEASE_INFO_BUILD_NUMBER);
+		portalProperties.remove(PropsKeys.RELEASE_INFO_PREVIOUS_BUILD_NUMBER);
+		portalProperties.remove(PropsKeys.UPGRADE_PROCESSES);
+
+		_portalPropertiesMap.put(servletContextName, portalProperties);
+
+		// Initialize properties, auto logins, model listeners, and events in
+		// that specific order. Events have to be loaded last because they may
+		// require model listeners to have been registered.
+
+		initPortalProperties(
+			servletContextName, portletClassLoader, portalProperties,
+			unfilteredPortalProperties);
+		initAuthFailures(
+			servletContextName, portletClassLoader, portalProperties);
+		initAutoDeployListeners(
+			servletContextName, portletClassLoader, portalProperties);
+		initAutoLogins(
+			servletContextName, portletClassLoader, portalProperties);
+		initAuthenticators(
+			servletContextName, portletClassLoader, portalProperties);
+		initHotDeployListeners(
+			servletContextName, portletClassLoader, portalProperties);
+		initModelListeners(
+			servletContextName, portletClassLoader, portalProperties);
+		initEvents(servletContextName, portletClassLoader, portalProperties);
 	}
 
 	protected void initPortalProperties(

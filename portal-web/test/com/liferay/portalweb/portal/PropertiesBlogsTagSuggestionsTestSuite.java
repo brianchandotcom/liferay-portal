@@ -15,7 +15,7 @@
 package com.liferay.portalweb.portal;
 
 import com.liferay.portalweb.portal.login.LoginTests;
-import com.liferay.portalweb.properties.asset.categoriessearchhierachical.CategoriesSearcnHierachicalTestPlan;
+import com.liferay.portalweb.properties.blogs.tagsuggestions.TagSuggestionsTestPlan;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -23,14 +23,13 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class PropertiesAssetCategoriesSearchHierarchicalTestSuite
-	extends BaseTestSuite {
+public class PropertiesBlogsTagSuggestionsTestSuite extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(LoginTests.suite());
-		testSuite.addTest(CategoriesSearcnHierachicalTestPlan.suite());
+		testSuite.addTest(TagSuggestionsTestPlan.suite());
 
 		testSuite.addTestSuite(StopSeleniumTest.class);
 

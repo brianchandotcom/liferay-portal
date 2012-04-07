@@ -15,7 +15,7 @@
 package com.liferay.portalweb.portal;
 
 import com.liferay.portalweb.portal.login.LoginTests;
-import com.liferay.portalweb.properties.asset.tagsuggestions.TagSuggestionTestPlan;
+import com.liferay.portalweb.properties.blogs.entryincrementviewcounter.EntryIncrementViewCounterTestPlan;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -23,13 +23,14 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class PropertiesAssetTagSuggestionsTestSuite extends BaseTestSuite {
+public class PropertiesBlogsEntryIncrementViewCounterTestSuite
+	extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(LoginTests.suite());
-		testSuite.addTest(TagSuggestionTestPlan.suite());
+		testSuite.addTest(EntryIncrementViewCounterTestPlan.suite());
 
 		testSuite.addTestSuite(StopSeleniumTest.class);
 

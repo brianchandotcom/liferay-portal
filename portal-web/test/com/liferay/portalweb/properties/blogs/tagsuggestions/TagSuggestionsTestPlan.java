@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portalweb.properties.asset.tagsuggestions;
+package com.liferay.portalweb.properties.blogs.tagsuggestions;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.properties.asset.tagsuggestions.viewassettagsuggestionsno.ViewSuggestionsNoTests;
+import com.liferay.portalweb.properties.blogs.tagsuggestions.viewblogstagsuggestionsno.ViewBlogsTagSuggestionsNoTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -23,12 +23,12 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class TagSuggestionTestPlan extends BaseTestSuite {
+public class TagSuggestionsTestPlan extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(ViewSuggestionsNoTests.suite());
+		testSuite.addTest(ViewBlogsTagSuggestionsNoTests.suite());
 
 		return testSuite;
 	}

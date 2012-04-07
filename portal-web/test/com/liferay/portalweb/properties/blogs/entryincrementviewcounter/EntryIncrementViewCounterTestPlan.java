@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portalweb.properties.asset.entryincrementviewcounter;
+package com.liferay.portalweb.properties.blogs.entryincrementviewcounter;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.properties.asset.entryincrementviewcounter.viewentrycrementviewcounterno.ViewEntrycrementViewCounterNoTests;
+import com.liferay.portalweb.properties.blogs.entryincrementviewcounter.viewblogsentryincrementviewcounterno.ViewBlogsEntryIncrementViewCounterNoTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -23,12 +23,12 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class EntryCrementViewCounterTestPlan extends BaseTestSuite {
+public class EntryIncrementViewCounterTestPlan extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(ViewEntrycrementViewCounterNoTests.suite());
+		testSuite.addTest(ViewBlogsEntryIncrementViewCounterNoTests.suite());
 
 		return testSuite;
 	}

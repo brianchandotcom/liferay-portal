@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.properties.asset.entryincrementviewcounter.viewentrycrementviewcounterno;
+package com.liferay.portalweb.properties.blogs.entryincrementviewcounter.viewblogsentryincrementviewcounterno;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
@@ -27,13 +27,13 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewEntrycrementViewCounterNoTests extends BaseTestSuite {
+public class ViewBlogsEntryIncrementViewCounterNoTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddPageBlogsTest.class);
 		testSuite.addTestSuite(AddPortletBlogsTest.class);
 		testSuite.addTestSuite(AddBlogsEntryTest.class);
-		testSuite.addTestSuite(ViewEntrycrementViewCounterNoTest.class);
+		testSuite.addTestSuite(ViewBlogsEntryIncrementViewCounterNoTest.class);
 		testSuite.addTestSuite(TearDownBlogsEntryTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

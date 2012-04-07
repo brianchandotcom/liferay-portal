@@ -12,10 +12,12 @@
  * details.
  */
 
-package com.liferay.portalweb.properties.asset.categoriessearchhierachical;
+package com.liferay.portalweb.properties.blogs.tagsuggestions.viewblogstagsuggestionsno;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.properties.asset.categoriessearchhierachical.viewcategoriessearchhierachicalno.ViewCategoriessSearchHierachicalNoTests;
+import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPageBlogsTest;
+import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPortletBlogsTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -23,14 +25,14 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class CategoriesSearcnHierachicalTestPlan extends BaseTestSuite {
-
+public class ViewBlogsTagSuggestionsNoTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(ViewCategoriessSearchHierachicalNoTests.suite());
+		testSuite.addTestSuite(AddPageBlogsTest.class);
+		testSuite.addTestSuite(AddPortletBlogsTest.class);
+		testSuite.addTestSuite(ViewBlogsTagSuggestionsNoTest.class);
+		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;
 	}
-
 }

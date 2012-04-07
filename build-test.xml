@@ -276,7 +276,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="8" />
+		<property name="build-test-ant-scripts.version" value="9" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -1661,6 +1661,12 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="properties-blogs-entry-increment-view-counter" />
+			<param name="test.ant.script.properties" value="asset.entry.increment.view.counter.enabled=false" />
+			<param name="test.ant.script.suite" value="PropertiesBlogsEntryIncrementViewCounterTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="properties-blogs-entry-previous-next" />
 			<param name="test.ant.script.properties" value="blogs.entry.previous.and.next.navigation.enabled=false" />
 			<param name="test.ant.script.suite" value="PropertiesBlogsEntryPreviousNextTestSuite" />
@@ -1676,6 +1682,12 @@
 			<param name="test.ant.script.command" value="properties-blogs-publish-to-live-by-default" />
 			<param name="test.ant.script.properties" value="blogs.publish.to.live.by.default=true" />
 			<param name="test.ant.script.suite" value="PropertiesBlogsPublishToLiveByDefaultTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="properties-blogs-tag-suggestions" />
+			<param name="test.ant.script.properties" value="asset.tag.suggestions.enabled=false" />
+			<param name="test.ant.script.suite" value="PropertiesBlogsTagSuggestionsTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">

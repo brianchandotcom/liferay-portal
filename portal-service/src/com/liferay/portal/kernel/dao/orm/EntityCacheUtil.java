@@ -34,7 +34,7 @@ public class EntityCacheUtil {
 	}
 
 	public static EntityCache getEntityCache() {
-		return _finderCache;
+		return _entityCache;
 	}
 
 	public static Object getResult(
@@ -74,10 +74,10 @@ public class EntityCacheUtil {
 		getEntityCache().removeResult(entityCacheEnabled, clazz, primaryKey);
 	}
 
-	public void setEntityCache(EntityCache finderCache) {
-		_finderCache = finderCache;
+	public void setEntityCache(EntityCache entityCache) {
+		_entityCache = entityCache;
 	}
 
-	private static EntityCache _finderCache;
+	private static EntityCache _entityCache;
 
 }

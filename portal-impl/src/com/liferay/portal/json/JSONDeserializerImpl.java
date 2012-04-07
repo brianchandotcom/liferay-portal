@@ -25,6 +25,8 @@ public class JSONDeserializerImpl<T> implements JSONDeserializer<T> {
 
 	public JSONDeserializerImpl() {
 		_jsonDeserializer = new flexjson.JSONDeserializer<T>();
+
+		_jsonDeserializer.use(Object.class, new PortalBeanObjectFactory());
 	}
 
 	public T deserialize(Reader input) {

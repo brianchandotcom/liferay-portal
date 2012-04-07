@@ -69,9 +69,7 @@ public class PACLAdvice extends ChainableMethodAdvice {
 		}
 
 		if (paclPolicy != null) {
-			if (!paclPolicy.hasServicePermission(
-					methodInvocation.getThis(), method)) {
-
+			if (!paclPolicy.hasService(methodInvocation.getThis(), method)) {
 				throw new SecurityException("Attempted to invoke " + method);
 			}
 		}

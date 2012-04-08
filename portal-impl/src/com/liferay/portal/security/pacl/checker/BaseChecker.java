@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.security.pacl;
+package com.liferay.portal.security.pacl.checker;
 
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Properties;
@@ -24,38 +23,10 @@ import java.util.Set;
 /**
  * @author Brian Wing Shun Chan
  */
-public abstract class BasePACLPolicy implements PACLPolicy {
+public abstract class BaseChecker {
 
-	public BasePACLPolicy(
-		String servletContextName, ClassLoader classLoader,
-		Properties properties) {
-
-		_servletContextName = servletContextName;
-		_classLoader = classLoader;
+	public BaseChecker(Properties properties) {
 		_properties = properties;
-	}
-
-	public ClassLoader getClassLoader() {
-		return _classLoader;
-	}
-
-	public String getServletContextName() {
-		return _servletContextName;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(7);
-
-		sb.append("{active=");
-		sb.append(isActive());
-		sb.append(", hashCode=");
-		sb.append(hashCode());
-		sb.append(", servletContextName=");
-		sb.append(_servletContextName);
-		sb.append("}");
-
-		return sb.toString();
 	}
 
 	protected Properties getProperties() {
@@ -74,8 +45,6 @@ public abstract class BasePACLPolicy implements PACLPolicy {
 		return SetUtil.fromArray(getPropertyArray(key));
 	}
 
-	private ClassLoader _classLoader;
 	private Properties _properties;
-	private String _servletContextName;
 
 }

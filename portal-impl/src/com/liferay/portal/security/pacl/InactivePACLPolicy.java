@@ -25,9 +25,10 @@ import java.util.Properties;
 public class InactivePACLPolicy extends BasePACLPolicy {
 
 	public InactivePACLPolicy(
-		String servletContextName, Properties properties) {
+		String servletContextName, ClassLoader classLoader,
+		Properties properties) {
 
-		super(servletContextName, properties);
+		super(servletContextName, classLoader, properties);
 	}
 
 	public boolean hasDynamicQuery(Class<?> clazz) {
@@ -71,6 +72,10 @@ public class InactivePACLPolicy extends BasePACLPolicy {
 	}
 
 	public boolean hasSocketListen(int port) {
+		return true;
+	}
+
+	public boolean hasSQL(String sql) {
 		return true;
 	}
 

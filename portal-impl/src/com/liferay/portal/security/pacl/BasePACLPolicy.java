@@ -26,9 +26,17 @@ import java.util.Set;
  */
 public abstract class BasePACLPolicy implements PACLPolicy {
 
-	public BasePACLPolicy(String servletContextName, Properties properties) {
+	public BasePACLPolicy(
+		String servletContextName, ClassLoader classLoader,
+		Properties properties) {
+
 		_servletContextName = servletContextName;
+		_classLoader = classLoader;
 		_properties = properties;
+	}
+
+	public ClassLoader getClassLoader() {
+		return _classLoader;
 	}
 
 	public String getServletContextName() {
@@ -66,6 +74,7 @@ public abstract class BasePACLPolicy implements PACLPolicy {
 		return SetUtil.fromArray(getPropertyArray(key));
 	}
 
+	private ClassLoader _classLoader;
 	private Properties _properties;
 	private String _servletContextName;
 

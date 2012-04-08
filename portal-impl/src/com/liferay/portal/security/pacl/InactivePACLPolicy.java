@@ -25,9 +25,10 @@ import java.util.Properties;
 public class InactivePACLPolicy extends BasePACLPolicy {
 
 	public InactivePACLPolicy(
-		String servletContextName, Properties properties) {
+		String servletContextName, ClassLoader classLoader,
+		Properties properties) {
 
-		super(servletContextName, properties);
+		super(servletContextName, classLoader, properties);
 	}
 
 	public boolean hasDynamicQuery(Class<?> clazz) {

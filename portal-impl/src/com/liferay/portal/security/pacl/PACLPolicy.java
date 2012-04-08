@@ -23,6 +23,8 @@ import java.util.Locale;
  */
 public interface PACLPolicy {
 
+	public ClassLoader getClassLoader();
+
 	public String getServletContextName();
 
 	public boolean hasDynamicQuery(Class<?> clazz);

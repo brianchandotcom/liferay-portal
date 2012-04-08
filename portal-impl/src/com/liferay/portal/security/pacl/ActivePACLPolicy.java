@@ -54,7 +54,7 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		String servletContextName, ClassLoader classLoader,
 		Properties properties) {
 
-		super(servletContextName, properties);
+		super(servletContextName, classLoader, properties);
 
 		_rootDir = WebDirDetector.getRootDir(classLoader);
 

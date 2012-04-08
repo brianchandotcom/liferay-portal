@@ -23,6 +23,8 @@ import java.util.Locale;
  */
 public interface PACLPolicy {
 
+	public ClassLoader getClassLoader();
+
 	public String getServletContextName();
 
 	public boolean hasDynamicQuery(Class<?> clazz);
@@ -46,6 +48,8 @@ public interface PACLPolicy {
 	public boolean hasSocketConnect(String host, int port);
 
 	public boolean hasSocketListen(int port);
+
+	public boolean hasSQL(String sql);
 
 	public boolean isActive();
 

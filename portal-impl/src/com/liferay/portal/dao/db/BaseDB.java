@@ -263,6 +263,11 @@ public abstract class BaseDB implements DB {
 				try {
 					s.executeUpdate(sql);
 				}
+				catch (SecurityException se) {
+					if (_log.isInfoEnabled()) {
+						_log.info(se.getMessage());
+					}
+				}
 				catch (SQLException sqle) {
 					throw sqle;
 				}

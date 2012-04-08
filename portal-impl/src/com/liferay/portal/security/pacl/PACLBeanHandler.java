@@ -16,6 +16,7 @@ package com.liferay.portal.security.pacl;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.service.persistence.GroupPersistenceImpl;
 import com.liferay.portal.service.persistence.UserPersistenceImpl;
 
@@ -99,13 +100,33 @@ public class PACLBeanHandler implements InvocationHandler {
 			}
 		}
 
-		if (paclPolicy != null) {
-			if (!paclPolicy.hasService(_bean, method)) {
-				throw new SecurityException("Attempted to invoke " + method);
-			}
+		if (paclPolicy == null) {
+			return method.invoke(_bean, arguments);
 		}
 
-		return method.invoke(_bean, arguments);
+		if (!paclPolicy.hasService(_bean, method)) {
+			throw new SecurityException("Attempted to invoke " + method);
+		}
+
+		boolean enabled = PortalSecurityManagerThreadLocal.isEnabled();
+
+		try {
+			Class<?> beanClass = _bean.getClass();
+
+			if (paclPolicy.getClassLoader() != beanClass.getClassLoader()) {
+
+				// Disable the portal security manager so that PACLDataSource
+				// does not try to check access to tables that can be accessed
+				// since the service is already approved
+
+				PortalSecurityManagerThreadLocal.setEnabled(false);
+			}
+
+			return method.invoke(_bean, arguments);
+		}
+		finally {
+			PortalSecurityManagerThreadLocal.setEnabled(enabled);
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(PACLBeanHandler.class);

@@ -15,11 +15,16 @@
 package com.liferay.portal.security.lang;
 
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
+import com.liferay.portal.security.pacl.PACLPolicy;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class PortalSecurityManagerThreadLocal {
+
+	public static PACLPolicy getPACLPolicy() {
+		return _paclPolicy.get();
+	}
 
 	public static boolean isEnabled() {
 		return _enabled.get();
@@ -29,8 +34,15 @@ public class PortalSecurityManagerThreadLocal {
 		_enabled.set(enabled);
 	}
 
+	public static void setPACLPolicy(PACLPolicy paclPolicy) {
+		_paclPolicy.set(paclPolicy);
+	}
+
 	private static ThreadLocal<Boolean> _enabled =
 		new AutoResetThreadLocal<Boolean>(
 			PortalSecurityManagerThreadLocal.class + "._enabled", true);
+	private static ThreadLocal<PACLPolicy> _paclPolicy =
+		new AutoResetThreadLocal<PACLPolicy>(
+			PortalSecurityManagerThreadLocal.class + "._paclPolicy");
 
 }

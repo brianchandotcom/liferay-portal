@@ -16,6 +16,7 @@ package com.liferay.portal.security.pacl;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.service.impl.PortalServiceImpl;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
 import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
@@ -30,11 +31,16 @@ import org.aopalliance.intercept.MethodInvocation;
 public class PACLAdvice extends ChainableMethodAdvice {
 
 	@Override
-	public Object before(MethodInvocation methodInvocation) throws Throwable {
+	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
 		if (!PACLPolicyManager.isActive()) {
 			ServiceBeanAopProxy.removeMethodInterceptor(methodInvocation, this);
 
-			return null;
+			try {
+				return methodInvocation.proceed();
+			}
+			catch (Throwable throwable) {
+				throw throwable;
+			}
 		}
 
 		Method method = methodInvocation.getMethod();
@@ -68,13 +74,44 @@ public class PACLAdvice extends ChainableMethodAdvice {
 			}
 		}
 
-		if (paclPolicy != null) {
-			if (!paclPolicy.hasService(methodInvocation.getThis(), method)) {
-				throw new SecurityException("Attempted to invoke " + method);
+		if (paclPolicy == null) {
+			try {
+				return methodInvocation.proceed();
+			}
+			catch (Throwable throwable) {
+				throw throwable;
 			}
 		}
 
-		return null;
+		if (!paclPolicy.hasService(methodInvocation.getThis(), method)) {
+			throw new SecurityException("Attempted to invoke " + method);
+		}
+
+		boolean enabled = PortalSecurityManagerThreadLocal.isEnabled();
+
+		try {
+			Object thisObject = methodInvocation.getThis();
+
+			Class<?> thisObjectClass = thisObject.getClass();
+
+			if (paclPolicy.getClassLoader() !=
+					thisObjectClass.getClassLoader()) {
+
+				// Disable the portal security manager so that PACLDataSource
+				// does not try to check access to tables that can be accessed
+				// since the service is already approved
+
+				PortalSecurityManagerThreadLocal.setEnabled(false);
+			}
+
+			return methodInvocation.proceed();
+		}
+		catch (Throwable throwable) {
+			throw throwable;
+		}
+		finally {
+			PortalSecurityManagerThreadLocal.setEnabled(enabled);
+		}
 	}
 
 	private static final String _STATUS_LOCAL_SERVICE_IMPL_CLASS_NAME =

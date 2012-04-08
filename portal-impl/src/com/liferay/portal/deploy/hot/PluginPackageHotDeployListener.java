@@ -121,13 +121,13 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 
 		ClassLoader classLoader = hotDeployEvent.getContextClassLoader();
 
+		registerPACL(servletContext, classLoader);
+
 		initServiceComponent(servletContext, classLoader);
 
 		registerClpMessageListeners(servletContext, classLoader);
 
 		reconfigureCaches(classLoader);
-
-		registerPACL(servletContext, portletClassLoader);
 
 		if (_log.isInfoEnabled()) {
 			_log.info(

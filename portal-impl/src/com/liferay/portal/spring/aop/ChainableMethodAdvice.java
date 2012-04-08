@@ -41,9 +41,7 @@ public abstract class ChainableMethodAdvice implements MethodInterceptor {
 	public void duringFinally(MethodInvocation methodInvocation) {
 	}
 
-	public final Object invoke(MethodInvocation methodInvocation)
-		throws Throwable {
-
+	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
 		Object returnValue = before(methodInvocation);
 
 		if (returnValue != null) {

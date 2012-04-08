@@ -55,9 +55,7 @@ public class ChainableMethodAdviceInjector {
 	}
 
 	private boolean _injectCondition;
-
 	private ChainableMethodAdvice _newChainableMethodAdvice;
-
 	private ChainableMethodAdvice _parentChainableMethodAdvice;
 
 }

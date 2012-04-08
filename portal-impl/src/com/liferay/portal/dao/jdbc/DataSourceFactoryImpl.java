@@ -14,6 +14,8 @@
 
 package com.liferay.portal.dao.jdbc;
 
+import com.liferay.portal.dao.jdbc.pacl.PACLDataSource;
+import com.liferay.portal.dao.jdbc.util.DataSourceWrapper;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.jdbc.DataSourceFactory;
 import com.liferay.portal.kernel.jndi.JNDIUtil;
@@ -62,6 +64,12 @@ import org.apache.tomcat.jdbc.pool.jmx.ConnectionPool;
 public class DataSourceFactoryImpl implements DataSourceFactory {
 
 	public void destroyDataSource(DataSource dataSource) throws Exception {
+		while (dataSource instanceof DataSourceWrapper) {
+			DataSourceWrapper dataSourceWrapper = (DataSourceWrapper)dataSource;
+
+			dataSource = dataSourceWrapper.getWrappedDataSource();
+		}
+
 		if (dataSource instanceof ComboPooledDataSource) {
 			ComboPooledDataSource comboPooledDataSource =
 				(ComboPooledDataSource)dataSource;
@@ -144,7 +152,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 			_log.debug("Created data source " + dataSource.getClass());
 		}
 
-		return dataSource;
+		return new PACLDataSource(dataSource);
 	}
 
 	public DataSource initDataSource(

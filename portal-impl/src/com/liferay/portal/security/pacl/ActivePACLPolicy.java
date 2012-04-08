@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.pacl.checker.SQLChecker;
 import com.liferay.portal.util.PortalUtil;
 
 import edu.emory.mathcs.backport.java.util.Collections;
@@ -54,7 +55,7 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		String servletContextName, ClassLoader classLoader,
 		Properties properties) {
 
-		super(servletContextName, properties);
+		super(servletContextName, classLoader, properties);
 
 		_rootDir = WebDirDetector.getRootDir(classLoader);
 
@@ -65,6 +66,8 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		initServices();
 		initSocketConnectHostsAndPorts();
 		initSocketListenPorts();
+
+		_sqlChecker = new SQLChecker(properties);
 	}
 
 	public boolean hasDynamicQuery(Class<?> clazz) {
@@ -203,6 +206,10 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 
 	public boolean hasSocketListen(int port) {
 		return _socketListenPorts.contains(port);
+	}
+
+	public boolean hasSQL(String sql) {
+		return _sqlChecker.hasSQL(sql);
 	}
 
 	public boolean isActive() {
@@ -565,6 +572,7 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 	private Map<String, Set<Integer>> _socketConnectHostsAndPorts =
 		new HashMap<String, Set<Integer>>();
 	private Set<Integer> _socketListenPorts = new HashSet<Integer>();
+	private SQLChecker _sqlChecker;
 	private List<Permission> _writeFilePermissions;
 
 }

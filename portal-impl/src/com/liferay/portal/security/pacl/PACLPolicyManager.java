@@ -47,7 +47,8 @@ public class PACLPolicyManager {
 				servletContextName, classLoader, properties);
 		}
 		else {
-			paclPolicy = new InactivePACLPolicy(servletContextName, properties);
+			paclPolicy = new InactivePACLPolicy(
+				servletContextName, classLoader, properties);
 		}
 
 		return paclPolicy;
@@ -197,7 +198,8 @@ public class PACLPolicyManager {
 
 	private static int _activeCount;
 	private static PACLPolicy _defaultPACLPolicy = new InactivePACLPolicy(
-		StringPool.BLANK, new Properties());
+		StringPool.BLANK, PACLPolicyManager.class.getClassLoader(),
+		new Properties());
 	private static SecurityManager _originalSecurityManager;
 	private static Map<ClassLoader, PACLPolicy> _paclPolicies =
 		new HashMap<ClassLoader, PACLPolicy>();

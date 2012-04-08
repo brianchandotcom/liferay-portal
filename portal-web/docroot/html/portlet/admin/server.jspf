@@ -681,21 +681,21 @@ numberFormat.setMinimumIntegerDigits(2);
 				%>
 
 				<div>
-					<portlet:actionURL var="totalMemoryChartURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+					<portlet:resourceURL var="totalMemoryChartURL">
 						<portlet:param name="struts_action" value="/admin_server/view_chart" />
 						<portlet:param name="type" value="total" />
 						<portlet:param name="totalMemory" value="<%= String.valueOf(totalMemory) %>" />
 						<portlet:param name="usedMemory" value="<%= String.valueOf(usedMemory) %>" />
-					</portlet:actionURL>
+					</portlet:resourceURL>
 
 					<img border="0" src="<%= totalMemoryChartURL %>" />
 
-					<portlet:actionURL var="maxMemoryChartURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+					<portlet:resourceURL var="maxMemoryChartURL">
 						<portlet:param name="struts_action" value="/admin_server/view_chart" />
 						<portlet:param name="type" value="max" />
 						<portlet:param name="maxMemory" value="<%= String.valueOf(runtime.maxMemory()) %>" />
 						<portlet:param name="usedMemory" value="<%= String.valueOf(usedMemory) %>" />
-					</portlet:actionURL>
+					</portlet:resourceURL>
 
 					<img border="0" src="<%= maxMemoryChartURL %>" />
 				</div>

@@ -18,10 +18,8 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 
 import java.awt.BasicStroke;
@@ -30,11 +28,9 @@ import java.awt.Font;
 
 import java.io.OutputStream;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
-
-import javax.servlet.http.HttpServletResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
@@ -54,18 +50,18 @@ import org.jfree.data.general.ValueDataset;
 public class ViewChartAction extends PortletAction {
 
 	@Override
-	public void processAction(
+	public void serveResource(
 			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
-			ActionRequest actionRequest, ActionResponse actionResponse)
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String type = ParamUtil.getString(actionRequest, "type", "max");
-		long maxMemory = ParamUtil.getLong(actionRequest, "maxMemory");
-		long totalMemory = ParamUtil.getLong(actionRequest, "totalMemory");
-		long usedMemory = ParamUtil.getLong(actionRequest, "usedMemory");
+		String type = ParamUtil.getString(resourceRequest, "type", "max");
+		long maxMemory = ParamUtil.getLong(resourceRequest, "maxMemory");
+		long totalMemory = ParamUtil.getLong(resourceRequest, "totalMemory");
+		long usedMemory = ParamUtil.getLong(resourceRequest, "usedMemory");
 
 		ValueDataset valueDataset = null;
 
@@ -93,16 +89,11 @@ public class ViewChartAction extends PortletAction {
 
 		JFreeChart jFreeChart = getJFreeChart(sb.toString(), meterPlot);
 
-		HttpServletResponse response = PortalUtil.getHttpServletResponse(
-			actionResponse);
+		resourceResponse.setContentType(ContentTypes.IMAGE_JPEG);
 
-		response.setContentType(ContentTypes.IMAGE_JPEG);
-
-		OutputStream outputStream = response.getOutputStream();
+		OutputStream outputStream = resourceResponse.getPortletOutputStream();
 
 		ChartUtilities.writeChartAsPNG(outputStream, jFreeChart, 280, 180);
-
-		setForward(actionRequest, ActionConstants.COMMON_NULL);
 	}
 
 	protected JFreeChart getJFreeChart(String title, MeterPlot meterPlot) {

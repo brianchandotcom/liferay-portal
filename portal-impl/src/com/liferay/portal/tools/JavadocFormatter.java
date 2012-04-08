@@ -216,8 +216,8 @@ public class JavadocFormatter {
 	}
 
 	private String _addDocletTags(
-		Element parentElement, String[] tagNames, String indent,
-		boolean publicAccess) {
+		Element parentElement, AbstractBaseJavaEntity abstractBaseJavaEntity,
+		String[] tagNames, String indent, boolean publicAccess) {
 
 		List<String> allTagNames = new ArrayList<String>();
 		List<String> commonTagNamesWithComments = new ArrayList<String>();
@@ -321,6 +321,31 @@ public class JavadocFormatter {
 					if (_initializeMissingJavadocs && publicAccess) {
 
 						// Write out all tags
+
+						if (abstractBaseJavaEntity instanceof JavaClass) {
+							if (tagName.equals("deprecated")) {
+								comment = DEPRECATED_DESC;
+							}
+							else if (tagName.equals("see")) {
+								comment = SEE_DESC;
+							}
+							else if (tagName.equals("since")) {
+								comment = SINCE_DESC;
+							}
+							else if (tagName.equals("version")) {
+								comment = VERSION_DESC;
+							}
+							else {
+
+								// Use current comment
+
+							}
+						}
+						else {
+
+							// Use current comment
+
+						}
 
 						comment = _assembleTagComment(
 							tagName, elementName, comment, indent,
@@ -802,12 +827,26 @@ public class JavadocFormatter {
 
 		String comment = rootElement.elementText("comment");
 
-		if (_initializeMissingJavadocs || Validator.isNotNull(comment)) {
-			sb.append(_wrapText(comment, indent + " * "));
+		if (Validator.isNull(comment)) {
+			if (_initializeMissingJavadocs) {
+				StringBundler desc_sb = new StringBundler(CLASS_DESC);
+
+				desc_sb.append("\n");
+				desc_sb.append("\n");
+				desc_sb.append(CLASS_DESC_DETAIL);
+				desc_sb.append("\n");
+				desc_sb.append("\n");
+				desc_sb.append(CLASS_USAGE_EXAMPLE);
+				desc_sb.append("\n");
+
+				comment = _wrapText(desc_sb.toString(), indent + " * ");
+
+				sb.append(comment);
+			}
 		}
 
 		String docletTags = _addDocletTags(
-			rootElement,
+			rootElement, javaClass,
 			new String[] {
 				"author", "version", "see", "since", "serial", "deprecated"
 			},
@@ -962,7 +1001,7 @@ public class JavadocFormatter {
 		}
 
 		String docletTags = _addDocletTags(
-			fieldElement,
+			fieldElement, javaField,
 			new String[] {"version", "see", "since", "deprecated"},
 			indent + " * ", _hasPublicModifier(javaField));
 
@@ -1019,7 +1058,7 @@ public class JavadocFormatter {
 		}
 
 		String docletTags = _addDocletTags(
-			methodElement,
+			methodElement, javaMethod,
 			new String[] {
 				"version", "param", "return", "throws", "see", "since",
 				"deprecated"
@@ -1489,6 +1528,26 @@ public class JavadocFormatter {
 
 		return text;
 	}
+
+	private static final String CLASS_DESC =
+		" TODO Initial description to introduce the class and its purpose.";
+
+	private static final String CLASS_DESC_DETAIL =
+		" TODO Detailed description to include class's abilities (optional).";
+
+	private static final String CLASS_USAGE_EXAMPLE =
+		" TODO Example usage expressed explicitly here and/or referred to " +
+		"in another class (optional).";
+
+	private static final String DEPRECATED_DESC =
+		" As of TODO some version, for some reason";
+
+	private static final String SEE_DESC = " TODO some reference";
+
+	private static final String SINCE_DESC =
+		" TODO some version (optionally, for some reason)";
+
+	private static final String VERSION_DESC = " TODO some version";
 
 	private static FileImpl _fileUtil = FileImpl.getInstance();
 

@@ -1559,19 +1559,19 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			boolean update)
 		throws PortalException, SystemException {
 
-		PortletPreferences preferences =
-			ServiceContextUtil.getPortletPreferences(serviceContext);
+		String portletId = serviceContext.getPortletId();
 
-		if (preferences == null) {
-			long ownerId = node.getGroupId();
-			int ownerType = PortletKeys.PREFS_OWNER_TYPE_GROUP;
-			long plid = PortletKeys.PREFS_PLID_SHARED;
-			String portletId = PortletKeys.WIKI;
-			String defaultPreferences = null;
+		PortletPreferences preferences = null;
 
+		if (portletId.equals(PortletKeys.WIKI)) {
+			preferences = ServiceContextUtil.getPortletPreferences(
+				serviceContext);
+		}
+		else {
 			preferences = portletPreferencesLocalService.getPreferences(
-				node.getCompanyId(), ownerId, ownerType, plid, portletId,
-				defaultPreferences);
+				node.getCompanyId(), node.getGroupId(),
+				PortletKeys.PREFS_OWNER_TYPE_GROUP,
+				PortletKeys.PREFS_PLID_SHARED, PortletKeys.WIKI_ADMIN, null);
 		}
 
 		if (!update && WikiUtil.getEmailPageAddedEnabled(preferences)) {

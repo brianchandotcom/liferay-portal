@@ -61,7 +61,7 @@ request.setAttribute("search.jsp-portletURL", portletURL);
 	<aui:input name="format" type="hidden" value="<%= format %>" />
 
 	<aui:fieldset>
-		<aui:input inlineField="<%= true %>" label="" name="keywords" size="30" value="<%= keywords %>" />
+		<aui:input inlineField="<%= true %>" label="" name="keywords" size="30" value="<%= HtmlUtil.escape(keywords) %>" />
 
 		<aui:select inlineField="<%= true %>" label="" name="groupId">
 			<aui:option label="everything" selected="<%= groupId == 0 %>" value="0" />

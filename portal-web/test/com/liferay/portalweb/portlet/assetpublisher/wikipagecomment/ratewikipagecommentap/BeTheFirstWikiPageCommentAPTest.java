@@ -67,7 +67,7 @@ public class BeTheFirstWikiPageCommentAPTest extends BaseTestCase {
 		}
 
 		selenium.type("//textarea",
-			RuntimeVariables.replace("Wiki Front Page Comment"));
+			RuntimeVariables.replace("Wiki FrontPage Comment"));
 		selenium.clickAt("//input[@value='Reply']",
 			RuntimeVariables.replace("Reply"));
 
@@ -92,7 +92,7 @@ public class BeTheFirstWikiPageCommentAPTest extends BaseTestCase {
 				"Your request processed successfully."),
 			selenium.getText(
 				"//div[@class='lfr-message-response portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Wiki Front Page Comment"),
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage Comment"),
 			selenium.getText("//div[@class='lfr-discussion-message']"));
 	}
 }

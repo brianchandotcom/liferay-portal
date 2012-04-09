@@ -34,7 +34,10 @@ public class MessageTag extends TagSupport {
 			String value = StringPool.BLANK;
 
 			if (_arguments == null) {
-				if (_unicode) {
+				if (!_localizeKey) {
+					value = _key;
+				}
+				else if (_unicode) {
 					value = UnicodeLanguageUtil.get(pageContext, _key);
 				}
 				else {
@@ -65,6 +68,7 @@ public class MessageTag extends TagSupport {
 			if (!ServerDetector.isResin()) {
 				_arguments = null;
 				_key = null;
+				_localizeKey = true;
 				_translateArguments = true;
 				_unicode = false;
 			}
@@ -83,6 +87,10 @@ public class MessageTag extends TagSupport {
 		_key = key;
 	}
 
+	public void setLocalizeKey(boolean localizeKey) {
+		_localizeKey = localizeKey;
+	}
+
 	public void setTranslateArguments(boolean translateArguments) {
 		_translateArguments = translateArguments;
 	}
@@ -93,6 +101,7 @@ public class MessageTag extends TagSupport {
 
 	private Object[] _arguments;
 	private String _key;
+	private boolean _localizeKey = true;
 	private boolean _translateArguments = true;
 	private boolean _unicode;
 

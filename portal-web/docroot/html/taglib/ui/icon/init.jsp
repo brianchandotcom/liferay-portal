@@ -93,6 +93,7 @@ if (Validator.isNull(method)) {
 String target = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon:target"));
 boolean label = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:icon:label"));
 String lang = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon:lang"));
+boolean localizeMessage = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:icon:localizeMessage"));
 boolean toolTip = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:icon:toolTip"));
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon:cssClass"));
 Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-ui:icon:data");

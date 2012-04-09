@@ -132,14 +132,14 @@ boolean urlIsNotNull = Validator.isNotNull(url);
 
 	<c:choose>
 		<c:when test="<%= (iconMenuIconCount != null) && ((iconMenuSingleIcon == null) || iconMenuShowWhenSingleIcon) %>">
-			<liferay-ui:message key="<%= message %>" />
+			<liferay-ui:message key="<%= message %>" localizeKey="<%= localizeMessage %>" />
 		</c:when>
 		<c:when test="<%= (iconListIconCount != null) && ((iconListSingleIcon == null) || iconListShowWhenSingleIcon) %>">
-			<span class="taglib-text"><liferay-ui:message key="<%= message %>" /></span>
+			<span class="taglib-text"><liferay-ui:message key="<%= message %>" localizeKey="<%= localizeMessage %>" /></span>
 		</c:when>
 		<c:otherwise>
 			<c:if test="<%= label %>">
-				<span class="taglib-text"><liferay-ui:message key="<%= message %>" /></span>
+				<span class="taglib-text"><liferay-ui:message key="<%= message %>" localizeKey="<%= localizeMessage %>" /></span>
 			</c:if>
 		</c:otherwise>
 	</c:choose>

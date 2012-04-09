@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletMode;
 import com.liferay.portal.kernel.portlet.PortletModeFactory;
 import com.liferay.portal.kernel.portlet.WindowStateFactory;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
+import com.liferay.portal.kernel.servlet.DirectRequestDispatcherUtil;
 import com.liferay.portal.kernel.servlet.HeaderCacheServletResponse;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
@@ -103,7 +104,6 @@ import com.liferay.util.servlet.filters.CacheResponseUtil;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -115,7 +115,6 @@ import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
-import javax.portlet.UnavailableException;
 import javax.portlet.WindowState;
 
 import javax.servlet.RequestDispatcher;
@@ -150,15 +149,13 @@ public class LayoutAction extends Action {
 				response);
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Layout layout = themeDisplay.getLayout();
-
 		Boolean layoutDefault = (Boolean)request.getAttribute(
 			WebKeys.LAYOUT_DEFAULT);
 
-		if ((layoutDefault != null) && layoutDefault.booleanValue()) {
+		if (Boolean.TRUE.equals(layoutDefault)) {
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 			Layout requestedLayout = (Layout)request.getAttribute(
 				WebKeys.REQUESTED_LAYOUT);
 
@@ -216,6 +213,8 @@ public class LayoutAction extends Action {
 				headerCacheServletResponse.sendRedirect(authLoginURL);
 			}
 			else {
+				Layout layout = themeDisplay.getLayout();
+
 				String redirect = PortalUtil.getLayoutURL(layout, themeDisplay);
 
 				if (_log.isDebugEnabled()) {
@@ -362,7 +361,7 @@ public class LayoutAction extends Action {
 
 	protected void includeLayoutContent(
 			HttpServletRequest request, HttpServletResponse response,
-			ThemeDisplay themeDisplay, Layout layout)
+			ThemeDisplay themeDisplay, Layout layout, String portletId)
 		throws Exception {
 
 		ServletContext servletContext = (ServletContext)request.getAttribute(
@@ -375,10 +374,7 @@ public class LayoutAction extends Action {
 		}
 
 		// Manually check the p_p_id. See LEP-1724.
-
-		String ppid = ParamUtil.getString(request, "p_p_id");
-
-		if (Validator.isNotNull(ppid)) {
+		if (Validator.isNotNull(portletId)) {
 			if (layout.isTypePanel()) {
 				path += "/portal/layout/view/panel.jsp";
 			}
@@ -394,7 +390,8 @@ public class LayoutAction extends Action {
 		}
 
 		RequestDispatcher requestDispatcher =
-			servletContext.getRequestDispatcher(path);
+			DirectRequestDispatcherUtil.getRequestDispatcher(
+				servletContext, path);
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
@@ -504,28 +501,21 @@ public class LayoutAction extends Action {
 		eventRequestImpl.defineObjects(portletConfig, eventResponseImpl);
 
 		try {
-			try {
-				InvokerPortletImpl.clearResponse(
-					session, layout.getPrimaryKey(), portletId,
-					LanguageUtil.getLanguageId(eventRequestImpl));
+			InvokerPortletImpl.clearResponse(
+				session, layout.getPrimaryKey(), portletId,
+				LanguageUtil.getLanguageId(eventRequestImpl));
 
-				invokerPortlet.processEvent(
-					eventRequestImpl, eventResponseImpl);
+			invokerPortlet.processEvent(eventRequestImpl, eventResponseImpl);
 
-				if (eventResponseImpl.isCalledSetRenderParameter()) {
-					Map<String, String[]> renderParameterMap =
-						new HashMap<String, String[]>();
+			if (eventResponseImpl.isCalledSetRenderParameter()) {
+				Map<String, String[]> renderParameterMap =
+					new HashMap<String, String[]>();
 
-					renderParameterMap.putAll(
-						eventResponseImpl.getRenderParameterMap());
+				renderParameterMap.putAll(
+					eventResponseImpl.getRenderParameterMap());
 
-					RenderParametersPool.put(
-						request, layout.getPlid(), portletId,
-						renderParameterMap);
-				}
-			}
-			catch (UnavailableException ue) {
-				throw ue;
+				RenderParametersPool.put(
+					request, layout.getPlid(), portletId, renderParameterMap);
 			}
 
 			processEvents(
@@ -542,13 +532,7 @@ public class LayoutAction extends Action {
 			List<LayoutTypePortlet> layoutTypePortlets)
 		throws Exception {
 
-		List<Event> events = stateAwareResponseImpl.getEvents();
-
-		if (events.size() == 0) {
-			return;
-		}
-
-		for (Event event : events) {
+		for (Event event : stateAwareResponseImpl.getEvents()) {
 			javax.xml.namespace.QName qName = event.getQName();
 
 			for (LayoutTypePortlet layoutTypePortlet : layoutTypePortlets) {
@@ -582,11 +566,6 @@ public class LayoutAction extends Action {
 		try {
 			Layout layout = themeDisplay.getLayout();
 
-			boolean resetLayout = ParamUtil.getBoolean(
-				request, "p_l_reset", PropsValues.LAYOUT_DEFAULT_P_L_RESET);
-
-			String portletId = ParamUtil.getString(request, "p_p_id");
-
 			Layout previousLayout = (Layout)session.getAttribute(
 				WebKeys.PREVIOUS_LAYOUT);
 
@@ -611,6 +590,11 @@ public class LayoutAction extends Action {
 				}
 			}
 
+			boolean resetLayout = ParamUtil.getBoolean(
+				request, "p_l_reset", PropsValues.LAYOUT_DEFAULT_P_L_RESET);
+
+			String portletId = ParamUtil.getString(request, "p_p_id");
+
 			if (!PropsValues.TCK_URL && resetLayout &&
 				(Validator.isNull(portletId) ||
 				 ((previousLayout != null) &&
@@ -622,11 +606,21 @@ public class LayoutAction extends Action {
 				RenderParametersPool.clear(request, plid);
 			}
 
-			if (themeDisplay.isLifecycleAction()) {
-				Portlet portlet = processPortletRequest(
-					request, response, PortletRequest.ACTION_PHASE);
+			Portlet portlet = null;
 
-				if (portlet != null) {
+			if (Validator.isNotNull(portletId)) {
+				long companyId = PortalUtil.getCompanyId(request);
+
+				portlet = PortletLocalServiceUtil.getPortletById(
+					companyId, portletId);
+			}
+
+			if (portlet != null) {
+				if (themeDisplay.isLifecycleAction()) {
+					processPortletRequest(
+						portlet, request, response,
+						PortletRequest.ACTION_PHASE);
+
 					ActionResponseImpl actionResponseImpl =
 						(ActionResponseImpl)request.getAttribute(
 							JavaConstants.JAVAX_PORTLET_RESPONSE);
@@ -651,23 +645,25 @@ public class LayoutAction extends Action {
 						return null;
 					}
 				}
-			}
-			else if (themeDisplay.isLifecycleRender()) {
-				processPortletRequest(
-					request, response, PortletRequest.RENDER_PHASE);
-			}
+				else if (themeDisplay.isLifecycleRender()) {
+					processPortletRequest(
+						portlet, request, response,
+						PortletRequest.RENDER_PHASE);
+				}
 
-			if (themeDisplay.isLifecycleResource()) {
-				processPortletRequest(
-					request, response, PortletRequest.RESOURCE_PHASE);
+				if (themeDisplay.isLifecycleResource()) {
+					processPortletRequest(
+						portlet, request, response,
+						PortletRequest.RESOURCE_PHASE);
 
-				return null;
+					return null;
+				}
 			}
 
 			if (layout != null) {
 				if (themeDisplay.isStateExclusive()) {
 					RuntimePortletUtil.processPortlet(
-						request, response, portletId);
+						request, response, portlet);
 
 					return null;
 				}
@@ -678,7 +674,7 @@ public class LayoutAction extends Action {
 					// subtitle
 
 					includeLayoutContent(
-						request, response, themeDisplay, layout);
+						request, response, themeDisplay, layout, portletId);
 				}
 			}
 
@@ -705,29 +701,17 @@ public class LayoutAction extends Action {
 		}
 	}
 
-	protected Portlet processPortletRequest(
-			HttpServletRequest request, HttpServletResponse response,
-			String lifecycle)
+	protected void processPortletRequest(
+			Portlet portlet, HttpServletRequest request,
+			HttpServletResponse response, String lifecycle)
 		throws Exception {
 
 		HttpSession session = request.getSession();
 
-		long companyId = PortalUtil.getCompanyId(request);
 		User user = PortalUtil.getUser(request);
 		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
 
-		String portletId = ParamUtil.getString(request, "p_p_id");
-
-		if (Validator.isNull(portletId)) {
-			return null;
-		}
-
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			companyId, portletId);
-
-		if (portlet == null) {
-			return null;
-		}
+		String portletId = portlet.getPortletId();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -928,6 +912,8 @@ public class LayoutAction extends Action {
 					windowState, portletMode, portletPreferences,
 					layout.getPlid());
 
+			long companyId = PortalUtil.getCompanyId(request);
+
 			ResourceResponseImpl resourceResponseImpl =
 				ResourceResponseFactory.create(
 					resourceRequestImpl, response, portletId, companyId);
@@ -956,8 +942,6 @@ public class LayoutAction extends Action {
 				ServiceContextThreadLocal.popServiceContext();
 			}
 		}
-
-		return portlet;
 	}
 
 	protected void processPublicRenderParameters(
@@ -969,12 +953,10 @@ public class LayoutAction extends Action {
 		Map<String, String[]> publicRenderParameters =
 			PublicRenderParametersPool.get(request, layout.getPlid());
 
-		Enumeration<String> enu = request.getParameterNames();
+		Map<String, String[]> parameters = request.getParameterMap();
 
-		while (enu.hasMoreElements()) {
-			String name = enu.nextElement();
-
-			String[] values = request.getParameterValues(name);
+		for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
+			String name = entry.getKey();
 
 			QName qName = PortletQNameUtil.getQName(name);
 
@@ -995,6 +977,8 @@ public class LayoutAction extends Action {
 
 			if (name.startsWith(
 					PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE)) {
+
+				String[] values = entry.getValue();
 
 				if (themeDisplay.isLifecycleAction()) {
 					String[] oldValues = publicRenderParameters.get(

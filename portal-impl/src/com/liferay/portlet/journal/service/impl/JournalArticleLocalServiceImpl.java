@@ -754,11 +754,21 @@ public class JournalArticleLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		List<JournalArticle> articles = journalArticlePersistence.findByG_A(
-			groupId, articleId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new ArticleVersionComparator(true));
+		if (PropsValues.JOURNAL_ARTICLE_EXPIRE_ALL_VERSIONS) {
+			List<JournalArticle> articles = journalArticlePersistence.findByG_A(
+				groupId, articleId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new ArticleVersionComparator(true));
 
-		for (JournalArticle article : articles) {
+			for (JournalArticle article : articles) {
+				expireArticle(
+					userId, groupId, article.getArticleId(),
+					article.getVersion(), articleURL, serviceContext);
+			}
+		}
+		else {
+			JournalArticle article = getLatestArticle(
+				groupId, articleId, WorkflowConstants.STATUS_APPROVED);
+
 			expireArticle(
 				userId, groupId, article.getArticleId(), article.getVersion(),
 				articleURL, serviceContext);

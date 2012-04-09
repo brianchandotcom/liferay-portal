@@ -74,9 +74,9 @@
 	<td>Document Library Test Page</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>waitForElementPresent</td>
+	<td>//nav[@class='site-breadcrumbs aui-helper-hidden lfr-hudcrumbs']</td>
+	<td>AUI Help Hidden Lfr hudcrumbs</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -104,9 +104,64 @@
 	<td>Publish to Live Now</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/panel.js')]</td>
+	<td>Liferay Panel</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//div[@class='yui3-widget-bd aui-panel-bd aui-dialog-bd']</td>
+	<td>AUI Dialog BD</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>There are no selected pages. All pages will therefore be exported.</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@value='Select Pages']</td>
+	<td>Select Pages</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/dataschema-xml/dataschema-xml-min.js')]</td>
+	<td>AUI Data Schema XML Min</td>
+</tr>
+<tr>
+	<td>storeVisible</td>
+	<td>//li/ul/li/div/div[contains(.,'Document Library Test Page')]</td>
+	<td>pageVisible</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${pageVisible}</td>
+	<td>PageVisible</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//li/div/div</td>
+	<td>Drop down arrow</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>PageVisible</td>
 	<td></td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//li/ul/li/div/div[contains(.,'Document Library Test Page')]</td>
+	<td>Document Library Test Page</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//div[contains(@class,'aui-tree-node-checked')]</td>
+	<td>Checked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@value='Select']</td>
+	<td>Select</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>

@@ -138,6 +138,36 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 		return newMap;
 	}
 
+	private void _injectInnerParametersIntoValue(
+		String parameterName, Object parameterValue) {
+
+		if (parameterValue == null) {
+			return;
+		}
+
+		List<KeyValue<String, Object>> innerParameters =
+			_jsonWebServiceActionParameters.getInnerParameters(parameterName);
+
+		if (innerParameters == null) {
+			return;
+		}
+
+		for (KeyValue<String, Object> innerParameter : innerParameters) {
+
+			try {
+				BeanUtil.setProperty(parameterValue, innerParameter.getKey(),
+					innerParameter.getValue());
+			}
+			catch (Exception e) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Unable to set inner parameter: " +
+						parameterName + "." + innerParameter.getKey() +
+						", skipping... ", e);
+				}
+			}
+		}
+	}
+
 	private Object _invokeActionMethod() throws Exception {
 		Method actionMethod = _jsonWebServiceActionConfig.getActionMethod();
 
@@ -173,6 +203,13 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 							parameterName);
 
 					if (parameterTypeName != null) {
+						if (parameterTypeName.contains("com.liferay") &&
+							parameterTypeName.contains("Util")) {
+
+							throw new IllegalArgumentException(
+								"Not instantiating " + parameterTypeName);
+						}
+
 						ClassLoader classLoader = actionClass.getClassLoader();
 
 						parameterType = classLoader.loadClass(
@@ -217,21 +254,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 				}
 			}
 
-			if (parameterValue != null) {
-				List<KeyValue<String, Object>> innerParameters =
-					_jsonWebServiceActionParameters.getInnerParameters(
-						parameterName);
-
-				if (innerParameters != null) {
-					for (KeyValue<String, Object> innerParameter :
-							innerParameters) {
-
-						BeanUtil.setPropertySilent(
-							parameterValue, innerParameter.getKey(),
-							innerParameter.getValue());
-					}
-				}
-			}
+			_injectInnerParametersIntoValue(parameterName, parameterValue);
 
 			parameters[i] = parameterValue;
 		}

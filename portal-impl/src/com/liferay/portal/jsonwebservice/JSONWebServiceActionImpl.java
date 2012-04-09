@@ -87,6 +87,15 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 			return new ServiceContext();
 		}
 
+		String className = parameterType.getName();
+
+		if (className.contains("com.liferay") &&
+			className.contains("Util")) {
+
+			throw new IllegalArgumentException(
+				"Not instantiating " + className);
+		}
+
 		return parameterType.newInstance();
 	}
 
@@ -203,13 +212,6 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 							parameterName);
 
 					if (parameterTypeName != null) {
-						if (parameterTypeName.contains("com.liferay") &&
-							parameterTypeName.contains("Util")) {
-
-							throw new IllegalArgumentException(
-								"Not instantiating " + parameterTypeName);
-						}
-
 						ClassLoader classLoader = actionClass.getClassLoader();
 
 						parameterType = classLoader.loadClass(

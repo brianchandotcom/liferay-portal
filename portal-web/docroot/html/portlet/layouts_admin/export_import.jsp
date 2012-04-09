@@ -99,7 +99,7 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 				LayoutPrototypeException lpe = (LayoutPrototypeException)errorException;
 				%>
 
-				<liferay-ui:message key="the-lar-file-could-not-be-imported-because-it-requires-layout-templates-or-layout-set-templates-that-could-not-be-found.-please-import-the-following-templates-manually-with-the-advanced-options" />
+				<liferay-ui:message key="the-lar-file-could-not-be-imported-because-it-requires-layout-templates-or-layout-set-templates-that-could-not-be-found.-please-import-the-following-templates-manually" />
 
 				<ul>
 

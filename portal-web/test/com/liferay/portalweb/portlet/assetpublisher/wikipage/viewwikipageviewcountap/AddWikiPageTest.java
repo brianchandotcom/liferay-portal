@@ -73,7 +73,7 @@ public class AddWikiPageTest extends BaseTestCase {
 		}
 
 		selenium.selectFrame("//td[@id='cke_contents__36_editor']/iframe");
-		selenium.type("//body", RuntimeVariables.replace("Wiki Front Page Body"));
+		selenium.type("//body", RuntimeVariables.replace("Wiki FrontPage Body"));
 		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
@@ -84,7 +84,7 @@ public class AddWikiPageTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("FrontPage"),
 			selenium.getText("//h1[@class='header-title']/span"));
-		assertEquals(RuntimeVariables.replace("Wiki Front Page Body"),
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage Body"),
 			selenium.getText("//div[@class='wiki-body']"));
 	}
 }

@@ -5159,6 +5159,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 						parameterMap);
 				}
 
+				try {
+					user = userPersistence.findByPrimaryKey(user.getUserId());
+				}
+				catch (NoSuchUserException nsue) {
+					return Authenticator.DNE;
+				}
+
 				// Let LDAP handle max failure event
 
 				if (!LDAPSettingsUtil.isPasswordPolicyEnabled(

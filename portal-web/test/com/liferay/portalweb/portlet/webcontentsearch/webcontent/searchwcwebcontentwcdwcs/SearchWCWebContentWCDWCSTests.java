@@ -15,6 +15,7 @@
 package com.liferay.portalweb.portlet.webcontentsearch.webcontent.searchwcwebcontentwcdwcs;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.TearDownWCWebContentTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.webcontentdisplay.portlet.addportletwcd.AddPageWCDTest;
 import com.liferay.portalweb.portlet.webcontentdisplay.portlet.addportletwcd.AddPortletWCDTest;
@@ -38,7 +39,7 @@ public class SearchWCWebContentWCDWCSTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddWCWebContentWCDTest.class);
 		testSuite.addTestSuite(SearchWCWebContentWCDWCSTest.class);
 		testSuite.addTestSuite(SearchWCWebContentWCDQuotesWCSTest.class);
-		testSuite.addTestSuite(TearDownWebContentTest.class);
+		testSuite.addTestSuite(TearDownWCWebContentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

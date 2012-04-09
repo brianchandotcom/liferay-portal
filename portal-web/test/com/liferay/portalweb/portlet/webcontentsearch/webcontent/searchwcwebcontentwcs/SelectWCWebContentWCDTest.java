@@ -46,6 +46,8 @@ public class SelectWCWebContentWCDTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//strong/a"));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
@@ -86,10 +88,10 @@ public class SelectWCWebContentWCDTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Web Content Title"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//td[2]/a"));
 		selenium.clickAt("//td[2]/a",
-			RuntimeVariables.replace("Web Content Title"));
+			RuntimeVariables.replace("WC WebContent Title"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -97,7 +99,7 @@ public class SelectWCWebContentWCDTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("Web Content Title (Modified)")
+				if (RuntimeVariables.replace("WC WebContent Title (Modified)")
 										.equals(selenium.getText(
 								"//span[@class='displaying-article-id modified']"))) {
 					break;
@@ -109,7 +111,7 @@ public class SelectWCWebContentWCDTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Web Content Title (Modified)"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Title (Modified)"),
 			selenium.getText("//span[@class='displaying-article-id modified']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
@@ -156,7 +158,7 @@ public class SelectWCWebContentWCDTest extends BaseTestCase {
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Web Content Content"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Content"),
 			selenium.getText("//div[@class='journal-content-article']/p"));
 	}
 }

@@ -34,9 +34,9 @@
 	<td>Staging</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
+	<td>Navigation Interaction</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -59,19 +59,19 @@
 	<td>Publish to Live Now</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//tr[3]/td[2]</td>
-	<td>Page Staging Organization Web Content Display</td>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>There are no selected pages. All pages will therefore be exported.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[2]</td>
-	<td>Page Staging Organization Web Content Display</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>There are no selected pages. All pages will therefore be exported.</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/panel.js')]</td>
+	<td>Liferay Panel</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>

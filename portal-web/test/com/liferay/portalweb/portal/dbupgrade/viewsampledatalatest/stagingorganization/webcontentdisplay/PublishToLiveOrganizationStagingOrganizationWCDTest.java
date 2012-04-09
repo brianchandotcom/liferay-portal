@@ -55,7 +55,24 @@ public class PublishToLiveOrganizationStagingOrganizationWCDTest
 			RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//script[contains(@src,'/liferay/navigation_interaction.js')]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.clickAt("//span[@class='staging-icon-menu-container']/span/ul/li/strong/a",
 			RuntimeVariables.replace("Staging Dropdown"));
 
@@ -81,7 +98,6 @@ public class PublishToLiveOrganizationStagingOrganizationWCDTest
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a",
 			RuntimeVariables.replace("Publish to Live Now"));
-		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -89,10 +105,7 @@ public class PublishToLiveOrganizationStagingOrganizationWCDTest
 			}
 
 			try {
-				if (RuntimeVariables.replace(
-							"Page Staging Organization Web Content Display")
-										.equals(selenium.getText(
-								"//tr[3]/td[2]"))) {
+				if (selenium.isVisible("//div[@class='portlet-msg-info']")) {
 					break;
 				}
 			}
@@ -103,8 +116,25 @@ public class PublishToLiveOrganizationStagingOrganizationWCDTest
 		}
 
 		assertEquals(RuntimeVariables.replace(
-				"Page Staging Organization Web Content Display"),
-			selenium.getText("//tr[3]/td[2]"));
+				"There are no selected pages. All pages will therefore be exported."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//script[contains(@src,'/liferay/panel.js')]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

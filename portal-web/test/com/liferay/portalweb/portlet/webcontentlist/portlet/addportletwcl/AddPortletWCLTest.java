@@ -127,7 +127,7 @@ public class AddPortletWCLTest extends BaseTestCase {
 		}
 
 		selenium.clickAt("//div[@title='Web Content List']/p/a",
-			RuntimeVariables.replace("Web Content List"));
+			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

@@ -94,8 +94,7 @@ public class ConfigurePortletDisplayGuestTest extends BaseTestCase {
 
 		selenium.select("//select[@id='_86_groupId']",
 			RuntimeVariables.replace("Liferay"));
-		selenium.select("//select[@id='_86_type']",
-			RuntimeVariables.replace("Announcements"));
+		selenium.select("//select[@id='_86_type']", RuntimeVariables.replace(""));
 		selenium.select("//select[@id='_86_pageUrl']",
 			RuntimeVariables.replace("Normal"));
 		selenium.select("//select[@id='_86_pageDelta']",
@@ -134,7 +133,7 @@ public class ConfigurePortletDisplayGuestTest extends BaseTestCase {
 			RuntimeVariables.replace("Web Content List Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Web Content Name"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//td[1]/a"));
 	}
 }

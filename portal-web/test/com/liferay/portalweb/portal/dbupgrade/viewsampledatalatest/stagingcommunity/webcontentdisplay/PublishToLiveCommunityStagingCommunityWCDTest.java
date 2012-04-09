@@ -94,7 +94,24 @@ public class PublishToLiveCommunityStagingCommunityWCDTest extends BaseTestCase 
 					selenium.getText("//span[@class='workflow-status']"));
 
 			case 2:
-				Thread.sleep(5000);
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isElementPresent(
+									"//script[contains(@src,'/liferay/navigation_interaction.js')]")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
 				selenium.clickAt("//span[@class='staging-icon-menu-container']/span/ul/li/strong/a",
 					RuntimeVariables.replace("Staging Dropdown"));
 
@@ -127,10 +144,8 @@ public class PublishToLiveCommunityStagingCommunityWCDTest extends BaseTestCase 
 					}
 
 					try {
-						if (RuntimeVariables.replace(
-									"Page Staging Community Web Content Display")
-												.equals(selenium.getText(
-										"//tr[3]/td[2]"))) {
+						if (selenium.isVisible(
+									"//div[@class='portlet-msg-info']")) {
 							break;
 						}
 					}
@@ -141,9 +156,25 @@ public class PublishToLiveCommunityStagingCommunityWCDTest extends BaseTestCase 
 				}
 
 				assertEquals(RuntimeVariables.replace(
-						"Page Staging Community Web Content Display"),
-					selenium.getText("//tr[3]/td[2]"));
-				Thread.sleep(5000);
+						"There are no selected pages. All pages will therefore be exported."),
+					selenium.getText("//div[@class='portlet-msg-info']"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isElementPresent(
+									"//script[contains(@src,'/liferay/panel.js')]")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {

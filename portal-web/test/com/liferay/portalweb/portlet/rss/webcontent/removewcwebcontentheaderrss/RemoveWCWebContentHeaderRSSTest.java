@@ -52,7 +52,7 @@ public class RemoveWCWebContentHeaderRSSTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isTextPresent("Web Content Content")) {
+				if (selenium.isTextPresent("WC WebContent Content")) {
 					break;
 				}
 			}
@@ -62,7 +62,7 @@ public class RemoveWCWebContentHeaderRSSTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertTrue(selenium.isTextPresent("Web Content Content"));
+		assertTrue(selenium.isTextPresent("WC WebContent Content"));
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//strong/a"));
@@ -162,6 +162,6 @@ public class RemoveWCWebContentHeaderRSSTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
-		assertFalse(selenium.isTextPresent("Web Content Content"));
+		assertFalse(selenium.isTextPresent("WC WebContent Content"));
 	}
 }

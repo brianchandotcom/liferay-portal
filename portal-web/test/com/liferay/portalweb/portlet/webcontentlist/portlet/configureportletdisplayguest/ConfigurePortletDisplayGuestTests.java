@@ -15,6 +15,8 @@
 package com.liferay.portalweb.portlet.webcontentlist.portlet.configureportletdisplayguest;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.AddWCWebContentTest;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.TearDownWCWebContentTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.webcontentlist.portlet.addportletwcl.AddPageWCLTest;
 import com.liferay.portalweb.portlet.webcontentlist.portlet.addportletwcl.AddPortletWCLTest;
@@ -30,9 +32,9 @@ public class ConfigurePortletDisplayGuestTests extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddPageWCLTest.class);
 		testSuite.addTestSuite(AddPortletWCLTest.class);
-		testSuite.addTestSuite(AddWebContentTest.class);
+		testSuite.addTestSuite(AddWCWebContentTest.class);
 		testSuite.addTestSuite(ConfigurePortletDisplayGuestTest.class);
-		testSuite.addTestSuite(TearDownWebContentTest.class);
+		testSuite.addTestSuite(TearDownWCWebContentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

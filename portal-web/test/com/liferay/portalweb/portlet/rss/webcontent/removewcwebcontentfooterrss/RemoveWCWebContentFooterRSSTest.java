@@ -52,7 +52,8 @@ public class RemoveWCWebContentFooterRSSTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isTextPresent("Web Content Content")) {
+				if (selenium.isVisible(
+							"//div[@class='portlet-content']/div/div/p")) {
 					break;
 				}
 			}
@@ -62,7 +63,8 @@ public class RemoveWCWebContentFooterRSSTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertTrue(selenium.isTextPresent("Web Content Content"));
+		assertEquals(RuntimeVariables.replace("WC WebContent Content"),
+			selenium.getText("//div[@class='portlet-content']/div/div/p"));
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//strong/a"));
@@ -162,6 +164,6 @@ public class RemoveWCWebContentFooterRSSTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
-		assertFalse(selenium.isTextPresent("Web Content Content"));
+		assertFalse(selenium.isTextPresent("WC WebContent Content"));
 	}
 }

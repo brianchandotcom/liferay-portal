@@ -15,6 +15,8 @@
 package com.liferay.portalweb.portlet.rss.webcontent.selectwcwebcontentfooterrss;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.AddWCWebContentTest;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.TearDownWCWebContentTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.rss.portlet.addportletrss.AddPageRSSTest;
 import com.liferay.portalweb.portlet.rss.portlet.addportletrss.AddPortletRSSTest;
@@ -32,7 +34,7 @@ public class SelectWCWebContentFooterRSSTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPortletRSSTest.class);
 		testSuite.addTestSuite(AddWCWebContentTest.class);
 		testSuite.addTestSuite(SelectWCWebContentFooterRSSTest.class);
-		testSuite.addTestSuite(TearDownWebContentTest.class);
+		testSuite.addTestSuite(TearDownWCWebContentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

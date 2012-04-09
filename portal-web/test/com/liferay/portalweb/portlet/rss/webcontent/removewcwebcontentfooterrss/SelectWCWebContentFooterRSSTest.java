@@ -109,10 +109,10 @@ public class SelectWCWebContentFooterRSSTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Web Content Title"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//td[2]/a"));
 		selenium.clickAt("//td[2]/a",
-			RuntimeVariables.replace("Web Content Title"));
+			RuntimeVariables.replace("WC WebContent Title"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -134,7 +134,7 @@ public class SelectWCWebContentFooterRSSTest extends BaseTestCase {
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace(
-				"Footer Web Content Web Content Title"),
+				"Footer Web Content WC WebContent Title"),
 			selenium.getText("//div[2]/div[2]/fieldset/div/div[2]/div"));
 		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Save']",
@@ -174,7 +174,8 @@ public class SelectWCWebContentFooterRSSTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isTextPresent("Web Content Content")) {
+				if (selenium.isVisible(
+							"//div[@class='portlet-content']/div/div/p")) {
 					break;
 				}
 			}
@@ -184,6 +185,7 @@ public class SelectWCWebContentFooterRSSTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertTrue(selenium.isTextPresent("Web Content Content"));
+		assertEquals(RuntimeVariables.replace("WC WebContent Content"),
+			selenium.getText("//div[@class='portlet-content']/div/div/p"));
 	}
 }

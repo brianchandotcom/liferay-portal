@@ -46,13 +46,13 @@ public class SearchWCWebContentWCSTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_77_keywords']",
-			RuntimeVariables.replace("Web Content Title"));
+			RuntimeVariables.replace("WC WebContent Title"));
 		selenium.clickAt("//input[@type='image']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertTrue(selenium.isTextPresent("Web Content Title"));
-		assertTrue(selenium.isTextPresent("Web Content Content"));
+		assertTrue(selenium.isTextPresent("WC WebContent Title"));
+		assertTrue(selenium.isTextPresent("WC WebContent Content"));
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -77,12 +77,12 @@ public class SearchWCWebContentWCSTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_77_keywords']",
-			RuntimeVariables.replace("Web1 Content1 Title1"));
+			RuntimeVariables.replace("WC1 WebContent1 Title1"));
 		selenium.clickAt("//input[@type='image']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isTextPresent("Web Content Title"));
-		assertFalse(selenium.isTextPresent("Web Content Content"));
+		assertFalse(selenium.isTextPresent("WC WebContent Title"));
+		assertFalse(selenium.isTextPresent("WC WebContent Content"));
 	}
 }

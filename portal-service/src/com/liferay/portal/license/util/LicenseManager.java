@@ -14,8 +14,11 @@
 
 package com.liferay.portal.license.util;
 
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.license.LicenseInfo;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -25,14 +28,25 @@ public interface LicenseManager {
 
 	public void checkLicense(String productId);
 
+	public List<Map<String, String>> getClusterLicenseProperties(
+		String clusterNodeId);
+
 	public String getHostName();
 
 	public Set<String> getIpAddresses();
 
 	public LicenseInfo getLicenseInfo(String productId);
 
+	public List<Map<String, String>> getLicenseProperties();
+
+	public Map<String, String> getLicenseProperties(String productId);
+
+	public int getLicenseState(Map<String, String> licenseProperties);
+
 	public int getLicenseState(String productId);
 
 	public Set<String> getMacAddresses();
+
+	public void registerLicense(JSONObject jsonObject) throws Exception;
 
 }

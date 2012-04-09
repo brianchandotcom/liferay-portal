@@ -1,0 +1,153 @@
+/**
+ * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.license.util;
+
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.license.LicenseInfo;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
+
+/**
+ * @author Amos Fong
+ */
+public class DefaultLicenseManagerImpl
+	implements com.liferay.portal.license.util.LicenseManager {
+
+	public void checkLicense(String productId) {
+	}
+
+	public List<Map<String, String>> getClusterLicenseProperties(
+		String clusterNodeId) {
+
+		return null;
+	}
+
+	public String getHostName() {
+		return LicenseUtil.getHostName();
+	}
+
+	public Set<String> getIpAddresses() {
+		return LicenseUtil.getIpAddresses();
+	}
+
+	public LicenseInfo getLicenseInfo(String productId) {
+		return null;
+	}
+
+	public List<Map<String, String>> getLicenseProperties() {
+		return null;
+	}
+
+	public Map<String, String> getLicenseProperties(String productId) {
+		return null;
+	}
+
+	public int getLicenseState(Map<String, String> licenseProperties) {
+		String productId = licenseProperties.get("productId");
+
+		if (Validator.isNull(productId)) {
+			return 0;
+		}
+
+		String productVersion = licenseProperties.get("productVersion");
+		String userCount = licenseProperties.get("userCount");
+
+		String randomUuid = UUID.randomUUID().toString();
+
+		try {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			byte[] serverIdBytes = LicenseUtil.getServerIdBytes();
+
+			jsonObject.put("cmd", "GET_LICENSE_STATE");
+			jsonObject.put("productId", productId);
+			jsonObject.put("productVersion", productVersion);
+			jsonObject.put("randomUuid", randomUuid);
+			jsonObject.put("serverId", Arrays.toString(serverIdBytes));
+			jsonObject.put("userCount", userCount);
+			jsonObject.put("version", 2);
+
+			String response = LicenseUtil.sendRequest(jsonObject.toString());
+
+			JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(
+				response);
+
+			String errorMessage = responseJSONObject.getString("errorMessage");
+
+			if (Validator.isNotNull(errorMessage)) {
+				throw new Exception(errorMessage);
+			}
+
+			int licenseState = responseJSONObject.getInt("licenseState");
+			String responseRandomUuid = responseJSONObject.getString(
+				"randomUuid");
+
+			if (responseRandomUuid.equals(randomUuid)) {
+				return licenseState;
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return 0;
+	}
+
+	public int getLicenseState(String productId) {
+		Map<String, String> licenseProperties = new HashMap<String, String>();
+
+		licenseProperties.put("productId", productId);
+
+		return getLicenseState(licenseProperties);
+	}
+
+	public Set<String> getMacAddresses() {
+		return LicenseUtil.getMacAddresses();
+	}
+
+	public void registerLicense(JSONObject jsonObject) throws Exception {
+		String serverId = jsonObject.getString("serverId");
+
+		if (serverId.length() <= 2) {
+			return;
+		}
+
+		serverId = serverId.substring(1, serverId.length() - 1);
+
+		String[] serverIdArray = StringUtil.split(serverId);
+
+		byte[] bytes = new byte[serverIdArray.length];
+
+		for (int i = 0; i < bytes.length; i++) {
+		   bytes[i] = Byte.valueOf(serverIdArray[i].trim());
+		}
+
+		LicenseUtil.writeServerProperties(bytes);
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		DefaultLicenseManagerImpl.class);
+
+}

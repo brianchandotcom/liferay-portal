@@ -38,7 +38,7 @@ if (portletName.equals(PortletKeys.MY_ACCOUNT) || permissionChecker.hasPermissio
 
 boolean filterManageableUserGroups = true;
 
-if (portletName.equals(PortletKeys.MY_ACCOUNT) || permissionChecker.hasPermission(scopeGroupId, PortletKeys.USER_GROUPS_ADMIN, String.valueOf(company.getCompanyId()), ActionKeys.VIEW)) {
+if (portletName.equals(PortletKeys.MY_ACCOUNT) || permissionChecker.hasPermission(scopeGroupId, UserGroup.class.getName(), String.valueOf(company.getCompanyId()), ActionKeys.VIEW)) {
 	filterManageableUserGroups = false;
 }
 %>

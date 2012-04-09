@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
+import com.liferay.portal.model.impl.ContactImpl;
 import com.liferay.portal.security.auth.FullNameGenerator;
 import com.liferay.portal.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
@@ -206,7 +207,12 @@ public class UserIndexer extends BaseIndexer {
 
 		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(Contact.class);
 
-		indexer.delete(user.getContact());
+		Contact contact = new ContactImpl();
+
+		contact.setContactId(user.getContactId());
+		contact.setCompanyId(user.getCompanyId());
+
+		indexer.delete(contact);
 	}
 
 	@Override

@@ -27,7 +27,7 @@ import java.util.Map;
 /**
  * @author Raymond Augé
  */
-public interface ExpandoBridge extends Serializable {
+public interface ExpandoBridge {
 
 	public void addAttribute(String name) throws PortalException;
 

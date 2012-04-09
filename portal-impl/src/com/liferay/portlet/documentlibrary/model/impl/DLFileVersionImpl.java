@@ -128,7 +128,7 @@ public class DLFileVersionImpl extends DLFileVersionBaseImpl {
 
 	private static Log _log = LogFactoryUtil.getLog(DLFileVersionImpl.class);
 
-	private ExpandoBridge _expandoBridge;
+	private transient ExpandoBridge _expandoBridge;
 	private UnicodeProperties _extraSettingsProperties;
 
 }

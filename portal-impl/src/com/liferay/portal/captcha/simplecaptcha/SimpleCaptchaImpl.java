@@ -25,15 +25,15 @@ import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Randomizer;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 
 import java.io.IOException;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 import javax.portlet.PortletSession;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -143,21 +143,19 @@ public class SimpleCaptchaImpl implements Captcha {
 	}
 
 	public void serveImage(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException {
 
-		PortletSession portletSession = portletRequest.getPortletSession();
+		PortletSession portletSession = resourceRequest.getPortletSession();
 
 		nl.captcha.Captcha simpleCaptcha = getSimpleCaptcha();
 
 		portletSession.setAttribute(
 			WebKeys.CAPTCHA_TEXT, simpleCaptcha.getAnswer());
 
-		HttpServletResponse response = PortalUtil.getHttpServletResponse(
-			portletResponse);
-
 		CaptchaServletUtil.writeImage(
-			response.getOutputStream(), simpleCaptcha.getImage());
+			resourceResponse.getPortletOutputStream(),
+			simpleCaptcha.getImage());
 	}
 
 	protected void checkMaxChallenges(HttpServletRequest request)

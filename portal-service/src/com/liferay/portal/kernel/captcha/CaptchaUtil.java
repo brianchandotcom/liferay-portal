@@ -17,7 +17,8 @@ package com.liferay.portal.kernel.captcha;
 import java.io.IOException;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -67,10 +68,10 @@ public class CaptchaUtil {
 	}
 
 	public static void serveImage(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException {
 
-		getCaptcha().serveImage(portletRequest, portletResponse);
+		getCaptcha().serveImage(resourceRequest, resourceResponse);
 	}
 
 	public void setCaptcha(Captcha captcha) {

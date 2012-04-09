@@ -17,12 +17,11 @@ package com.liferay.portal.captcha;
 import com.liferay.portal.kernel.captcha.CaptchaUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.struts.PortletAction;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
@@ -33,15 +32,13 @@ import org.apache.struts.action.ActionMapping;
 public class CaptchaPortletAction extends PortletAction {
 
 	@Override
-	public void processAction(
+	public void serveResource(
 			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
-			ActionRequest actionRequest, ActionResponse actionResponse)
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
 		try {
-			CaptchaUtil.serveImage(actionRequest, actionResponse);
-
-			setForward(actionRequest, ActionConstants.COMMON_NULL);
+			CaptchaUtil.serveImage(resourceRequest, resourceResponse);
 		}
 		catch (Exception e) {
 			_log.error(e);

@@ -45,7 +45,24 @@ public class DeleteAPArchivedSetupActionsTest extends BaseTestCase {
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//nav[@class='site-breadcrumbs aui-helper-hidden lfr-hudcrumbs']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
@@ -96,7 +113,26 @@ public class DeleteAPArchivedSetupActionsTest extends BaseTestCase {
 			RuntimeVariables.replace("Archive/Restore Setup"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//script[contains(@src,'liferay/navigation_interaction.js')]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.selectFrame(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
 		assertEquals(RuntimeVariables.replace("Archive Name"),
 			selenium.getText("//tr[3]/td[1]"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
@@ -113,7 +149,7 @@ public class DeleteAPArchivedSetupActionsTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a[@id='_86_ctvk']")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
 					break;
 				}
 			}
@@ -125,9 +161,9 @@ public class DeleteAPArchivedSetupActionsTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Delete"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a[@id='_86_ctvk']"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a[@id='_86_ctvk']"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.getConfirmation()
@@ -137,6 +173,8 @@ public class DeleteAPArchivedSetupActionsTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("There are no archived setups."),
 			selenium.getText("//form/div[@class='portlet-msg-info']"));
-		assertFalse(selenium.isTextPresent("Archive Name"));
+		assertNotEquals(RuntimeVariables.replace("Archive Name"),
+			selenium.getText("//tr[3]/td[1]"));
+		selenium.selectFrame("relative=top");
 	}
 }

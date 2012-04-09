@@ -21,6 +21,7 @@ import com.liferay.portalweb.portlet.assetpublisher.portlet.addportletap.AddPort
 import com.liferay.portalweb.portlet.wiki.portlet.addportletwiki.AddPageWikiTest;
 import com.liferay.portalweb.portlet.wiki.portlet.addportletwiki.AddPortletWikiTest;
 import com.liferay.portalweb.portlet.wiki.wikinode.addwikinode.TearDownWikiNodeTest;
+import com.liferay.portalweb.portlet.wiki.wikipage.addwikifrontpage.AddWikiFrontPageTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -35,7 +36,7 @@ public class ViewConfigurePortletAvailableWikiPageAPTests extends BaseTestSuite 
 		testSuite.addTestSuite(AddPortletAPTest.class);
 		testSuite.addTestSuite(AddPageWikiTest.class);
 		testSuite.addTestSuite(AddPortletWikiTest.class);
-		testSuite.addTestSuite(AddWikiPageTest.class);
+		testSuite.addTestSuite(AddWikiFrontPageTest.class);
 		testSuite.addTestSuite(ConfigurePortletAvailableWikiPageTest.class);
 		testSuite.addTestSuite(ViewConfigurePortletAvailableWikiPageAPTest.class);
 		testSuite.addTestSuite(TearDownWikiNodeTest.class);

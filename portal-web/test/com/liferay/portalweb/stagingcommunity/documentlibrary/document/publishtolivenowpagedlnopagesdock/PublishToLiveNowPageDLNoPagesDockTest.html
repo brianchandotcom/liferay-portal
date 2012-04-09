@@ -54,9 +54,9 @@
 	<td>Document Library Test Page</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>waitForElementPresent</td>
+	<td>//nav[@class='site-breadcrumbs aui-helper-hidden lfr-hudcrumbs']</td>
+	<td>AUI Help Hidden Lfr hudcrumbs</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -82,81 +82,6 @@
 	<td>clickAt</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
 	<td>Publish to Live Now</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//input[@value='Change Selection']</td>
-	<td>Change Selection</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@value='Change Selection']</td>
-	<td>Change Selection</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='portlet-msg-info']</td>
-	<td>Note that selecting no pages from the tree reverts to implicit selection of all pages.</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='portlet-msg-info']</td>
-	<td>Note that selecting no pages from the tree reverts to implicit selection of all pages.</td>
-</tr>
-<tr>
-	<td>storeElementPresent</td>
-	<td>//div[contains(@class,'aui-tree-expanded')]</td>
-	<td>treeNotExpanded</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>${treeNotExpanded}</td>
-	<td>TreeExpanded</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//li/div/div[1]</td>
-	<td>Drop Down Arrow</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[contains(@class,'aui-tree-expanded')]</td>
-	<td>Public Pages</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//div[contains(@class,'aui-tree-expanded')]</td>
-	<td>Public Pages</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//div[contains(@class,'aui-tree-collapsed')]</td>
-	<td>Document Library Test Page</td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>TreeExpanded</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//li/ul/li[1]/div/div[4]</td>
-	<td>Document Library Test Page</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@value='Select']</td>
-	<td>Select</td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//div[@class='portlet-msg-info']</td>
-	<td>There are no selected pages. All pages will therefore be exported.</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -283,7 +208,6 @@
 	<td>//li[1]/span/a</td>
 	<td>Live</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

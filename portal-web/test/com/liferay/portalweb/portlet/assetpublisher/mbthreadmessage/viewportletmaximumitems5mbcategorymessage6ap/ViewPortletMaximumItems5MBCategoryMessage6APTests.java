@@ -18,6 +18,8 @@ import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.addportletap.AddPageAPTest;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.addportletap.AddPortletAPTest;
+import com.liferay.portalweb.portlet.messageboards.mbcategory.addmbcategory.AddMBCategoryTest;
+import com.liferay.portalweb.portlet.messageboards.mbmessage.postnewmbthreadmessage.TearDownMBThreadTest;
 import com.liferay.portalweb.portlet.messageboards.portlet.addportletmb.AddPageMBTest;
 import com.liferay.portalweb.portlet.messageboards.portlet.addportletmb.AddPortletMBTest;
 
@@ -45,7 +47,7 @@ public class ViewPortletMaximumItems5MBCategoryMessage6APTests
 		testSuite.addTestSuite(ViewMBCategoryThreadMessage6APTest.class);
 		testSuite.addTestSuite(ConfigurePortletMaximumItemsToDisplay5Test.class);
 		testSuite.addTestSuite(ViewPortletMaximumItems5MBCategoryMessage6APTest.class);
-		testSuite.addTestSuite(TearDownMBMessageTest.class);
+		testSuite.addTestSuite(TearDownMBThreadTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

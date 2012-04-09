@@ -18,6 +18,8 @@ import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.addportletap.AddPageAPTest;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.addportletap.AddPortletAPTest;
+import com.liferay.portalweb.portlet.messageboards.mbcategory.addmbcategory.AddMBCategoryTest;
+import com.liferay.portalweb.portlet.messageboards.mbmessage.postnewmbthreadmessage.TearDownMBThreadTest;
 import com.liferay.portalweb.portlet.messageboards.portlet.addportletmb.AddPageMBTest;
 import com.liferay.portalweb.portlet.messageboards.portlet.addportletmb.AddPortletMBTest;
 
@@ -46,7 +48,7 @@ public class ViewPortletPaginationSimpleMBCategoryThread6APTests
 		testSuite.addTestSuite(ConfigurePortletPaginationTypeSimpleTest.class);
 		testSuite.addTestSuite(NextButtonAPTest.class);
 		testSuite.addTestSuite(PreviousButtonAPTest.class);
-		testSuite.addTestSuite(TearDownMBMessageTest.class);
+		testSuite.addTestSuite(TearDownMBThreadTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

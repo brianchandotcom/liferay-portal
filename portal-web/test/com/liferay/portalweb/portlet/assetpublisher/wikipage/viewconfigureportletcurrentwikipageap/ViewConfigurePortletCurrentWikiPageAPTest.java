@@ -48,7 +48,7 @@ public class ViewConfigurePortletCurrentWikiPageAPTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("FrontPage"),
 			selenium.getText("//h3[@class='asset-title']/a"));
-		assertEquals(RuntimeVariables.replace("Wiki Front Page Body"),
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage Body"),
 			selenium.getText("//div[@class='asset-summary']"));
 	}
 }

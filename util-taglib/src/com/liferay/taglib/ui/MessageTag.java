@@ -83,12 +83,12 @@ public class MessageTag extends TagSupport {
 		_arguments = arguments;
 	}
 
-	public void setLocalizeKey(boolean localizeKey) {
-		_localizeKey = localizeKey;
-	}
-
 	public void setKey(String key) {
 		_key = key;
+	}
+
+	public void setLocalizeKey(boolean localizeKey) {
+		_localizeKey = localizeKey;
 	}
 
 	public void setTranslateArguments(boolean translateArguments) {

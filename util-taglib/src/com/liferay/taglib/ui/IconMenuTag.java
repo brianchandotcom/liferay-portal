@@ -84,6 +84,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 				_extended = true;
 				_icon = null;
 				_id = null;
+				_localizeMessage = true;
 				_maxDisplayItems = _DEFAULT_MAX_DISPLAY_ITEMS;
 				_message = "actions";
 				_showArrow = true;
@@ -176,6 +177,10 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 		_id = id;
 	}
 
+	public void setLocalizeMessage(boolean localizeMessage) {
+		_localizeMessage = localizeMessage;
+	}
+
 	public void setMaxDisplayItems(int maxDisplayItems) {
 		if (maxDisplayItems <= 0) {
 			maxDisplayItems = _DEFAULT_MAX_DISPLAY_ITEMS;
@@ -258,8 +263,14 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 					jspWriter.write("\">");
 				}
 				else {
+					String message = _message;
+
+					if (_localizeMessage) {
+						message = LanguageUtil.get(pageContext, _message);
+					}
+
 					jspWriter.write("<span title=\"");
-					jspWriter.write(LanguageUtil.get(pageContext, _message));
+					jspWriter.write(message);
 					jspWriter.write("\"><ul class='lfr-component lfr-actions ");
 					jspWriter.write("align-");
 					jspWriter.write(_align);
@@ -301,7 +312,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 					}
 
 					jspWriter.write("<span class=\"taglib-text\">");
-					jspWriter.write(LanguageUtil.get(pageContext, _message));
+					jspWriter.write(message);
 					jspWriter.write("</span></a></strong>");
 
 					ScriptTag.doTag(
@@ -365,6 +376,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 	private boolean _extended = true;
 	private String _icon;
 	private String _id;
+	private boolean _localizeMessage = true;
 	private int _maxDisplayItems = _DEFAULT_MAX_DISPLAY_ITEMS;
 	private String _message = "actions";
 	private boolean _showArrow = true;

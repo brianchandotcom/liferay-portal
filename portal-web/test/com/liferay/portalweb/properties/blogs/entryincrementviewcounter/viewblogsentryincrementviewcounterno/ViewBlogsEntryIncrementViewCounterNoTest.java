@@ -81,6 +81,6 @@ public class ViewBlogsEntryIncrementViewCounterNoTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
 			selenium.getText("//div[@class='entry-body']"));
-		assertFalse(selenium.isTextPresent("1 View"));
+		assertFalse(selenium.isTextPresent("View"));
 	}
 }

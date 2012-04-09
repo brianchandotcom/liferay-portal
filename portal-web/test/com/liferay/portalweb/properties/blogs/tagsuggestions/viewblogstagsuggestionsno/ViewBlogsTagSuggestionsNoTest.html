@@ -27,19 +27,19 @@
 	<td>Add Blog Entry</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//div[@id='blogsEntryCategorizationPanel']/div/div/span</td>
-	<td>Categorization</td>
+	<td>waitForElementPresent</td>
+	<td>//textarea[@id='_33_editor' and @style='display: none;']</td>
+	<td>Text Area</td>
 </tr>
 <tr>
-	<td>storeVisible</td>
-	<td>//input[@title='Add Tags']</td>
-	<td>tagsVisible</td>
+	<td>storeElementPresent</td>
+	<td>//div[@id='blogsEntryCategorizationPanel' and contains(@class,'lfr-collapsed')]</td>
+	<td>categorizationCollapsed</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>${tagsVisible}</td>
-	<td>TagsVisible</td>
+	<td>!${categorizationCollapsed}</td>
+	<td>CategorizationNotCollapsed</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -47,18 +47,18 @@
 	<td>Categorization</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//input[@title='Add Tags']</td>
-	<td>Tags Field</td>
+	<td>waitForElementNotPresent</td>
+	<td>//div[@id='blogsEntryCategorizationPanel' and contains(@class,'lfr-collapsed')]</td>
+	<td>categorizationNotVisible</td>
 </tr>
 <tr>
 	<td>label</td>
-	<td>TagsVisible</td>
+	<td>CategorizationNotCollapsed</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[4]/div[2]/fieldset/div/span/span/label</td>
+	<td>//label[contains(@for,'TagNames')]</td>
 	<td>Tags</td>
 </tr>
 <tr>
@@ -70,6 +70,11 @@
 	<td>assertTextNotPresent</td>
 	<td>Suggestions</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>//button[@id='suggest']</td>
+	<td>Suggestions</td>
 </tr>
 </tbody>
 </table>

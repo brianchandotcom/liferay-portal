@@ -61,8 +61,8 @@ public class ViewBlogsTagSuggestionsNoTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible(
-									"//div[@id='blogsEntryCategorizationPanel']/div/div/span")) {
+						if (selenium.isElementPresent(
+									"//textarea[@id='_33_editor' and @style='display: none;']")) {
 							break;
 						}
 					}
@@ -72,10 +72,10 @@ public class ViewBlogsTagSuggestionsNoTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				boolean tagsVisible = selenium.isVisible(
-						"//input[@title='Add Tags']");
+				boolean categorizationCollapsed = selenium.isElementPresent(
+						"//div[@id='blogsEntryCategorizationPanel' and contains(@class,'lfr-collapsed')]");
 
-				if (tagsVisible) {
+				if (!categorizationCollapsed) {
 					label = 2;
 
 					continue;
@@ -90,7 +90,8 @@ public class ViewBlogsTagSuggestionsNoTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//input[@title='Add Tags']")) {
+						if (!selenium.isElementPresent(
+									"//div[@id='blogsEntryCategorizationPanel' and contains(@class,'lfr-collapsed')]")) {
 							break;
 						}
 					}
@@ -102,10 +103,10 @@ public class ViewBlogsTagSuggestionsNoTest extends BaseTestCase {
 
 			case 2:
 				assertEquals(RuntimeVariables.replace("Tags"),
-					selenium.getText(
-						"//div[4]/div[2]/fieldset/div/span/span/label"));
+					selenium.getText("//label[contains(@for,'TagNames')]"));
 				assertTrue(selenium.isVisible("//input[@title='Add Tags']"));
 				assertFalse(selenium.isTextPresent("Suggestions"));
+				assertFalse(selenium.isElementPresent("//button[@id='suggest']"));
 
 			case 100:
 				label = -1;

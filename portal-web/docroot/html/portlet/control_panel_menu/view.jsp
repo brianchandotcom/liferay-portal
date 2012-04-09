@@ -158,7 +158,7 @@
 							}
 							%>
 
-							<liferay-ui:icon-menu align="left" direction="down" icon="<%= icon %>" id="groupSelector" message="<%= HtmlUtil.escape(StringUtil.shorten(curGroupName, 25)) %>">
+							<liferay-ui:icon-menu align="left" direction="down" icon="<%= icon %>" id="groupSelector" localizeMessage="<%= false %>" message="<%= HtmlUtil.escape(StringUtil.shorten(curGroupName, 25)) %>">
 
 								<%
 								for (int i = 0; i < manageableSites.size(); i++) {
@@ -187,6 +187,7 @@
 
 									<liferay-ui:icon
 										image="<%= image %>"
+										localizeMessage="<%= false %>"
 										message="<%= HtmlUtil.escape(message) %>"
 										url="<%= url %>"
 									/>

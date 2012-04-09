@@ -213,6 +213,8 @@ public interface PropsKeys {
 
 	public static final String BLOGS_ENTRY_COMMENTS_ENABLED = "blogs.entry.comments.enabled";
 
+	public static final String BLOGS_ENTRY_CONTEXT_URL_TITLE_REGEXP = "blogs.entry.context.url.title.regexp";
+
 	public static final String BLOGS_ENTRY_PREVIOUS_AND_NEXT_NAVIGATION_ENABLED = "blogs.entry.previous.and.next.navigation.enabled";
 
 	public static final String BLOGS_IMAGE_EXTENSIONS = "blogs.image.extensions";
@@ -890,6 +892,8 @@ public interface PropsKeys {
 	public static final String JOURNAL_ARTICLE_CHECK_INTERVAL = "journal.article.check.interval";
 
 	public static final String JOURNAL_ARTICLE_COMMENTS_ENABLED = "journal.article.comments.enabled";
+
+	public static final String JOURNAL_ARTICLE_CONTEXT_URL_TITLE_REGEXP = "journal.article.context.url.title.regexp";
 
 	public static final String JOURNAL_ARTICLE_CUSTOM_TOKEN_VALUE = "journal.article.custom.token.value";
 

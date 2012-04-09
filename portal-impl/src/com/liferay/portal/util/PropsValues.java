@@ -164,6 +164,8 @@ public class PropsValues {
 
 	public static final boolean BLOGS_ENTRY_COMMENTS_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.BLOGS_ENTRY_COMMENTS_ENABLED));
 
+	public static final String BLOGS_ENTRY_CONTEXT_URL_TITLE_REGEXP = PropsUtil.get(PropsKeys.BLOGS_ENTRY_CONTEXT_URL_TITLE_REGEXP);
+
 	public static final boolean BLOGS_ENTRY_PREVIOUS_AND_NEXT_NAVIGATION_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.BLOGS_ENTRY_PREVIOUS_AND_NEXT_NAVIGATION_ENABLED));
 
 	public static final int BLOGS_LINKBACK_EXCERPT_LENGTH = GetterUtil.getInteger(PropsUtil.get(PropsKeys.BLOGS_LINKBACK_EXCERPT_LENGTH));
@@ -675,6 +677,8 @@ public class PropsValues {
 	public static final int JOURNAL_ARTICLE_CHECK_INTERVAL = GetterUtil.getInteger(PropsUtil.get(PropsKeys.JOURNAL_ARTICLE_CHECK_INTERVAL));
 
 	public static final boolean JOURNAL_ARTICLE_COMMENTS_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.JOURNAL_ARTICLE_COMMENTS_ENABLED));
+
+	public static final String JOURNAL_ARTICLE_CONTEXT_URL_TITLE_REGEXP = PropsUtil.get(PropsKeys.JOURNAL_ARTICLE_CONTEXT_URL_TITLE_REGEXP);
 
 	public static final String[] JOURNAL_ARTICLE_CUSTOM_TOKENS = PropsUtil.getArray(PropsKeys.JOURNAL_ARTICLE_CUSTOM_TOKENS);
 

@@ -403,12 +403,6 @@ public class JSONServiceAction extends JSONAction {
 			return LocalizationUtil.deserialize(jsonObject);
 		}
 		else {
-			try {
-				return JSONFactoryUtil.looseDeserialize(value);
-			}
-			catch (Exception e) {
-			}
-
 			_log.error(
 				"Unsupported parameter type for class " + clazz + ", method " +
 					methodName + ", parameter " + parameter + ", and type " +

@@ -15,6 +15,7 @@
 package com.liferay.portalweb.stagingcommunity.sites.sitepagesvariation.addsitepagesvariation;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.AddSiteTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

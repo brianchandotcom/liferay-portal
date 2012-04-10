@@ -217,6 +217,20 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 							parameterTypeName);
 					}
 
+					// checks if passed type that is about to be created
+					// is of the same type as current method argument
+					// this prevents creation of types that are not used in the
+					// method and that can be dangerous for application
+
+					if (!ReflectUtil.isSubclass(
+						parameterType, methodParameters[i].getType())) {
+
+						throw new IllegalArgumentException(
+							"Unmatched argument type: " +
+							parameterType.getName() + " for method argument #"
+							+ i);
+					}
+
 					parameterValue = _createDefaultParameterValue(
 						parameterName, parameterType);
 				}

@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -96,14 +95,15 @@ import com.liferay.portlet.ResourceRequestFactory;
 import com.liferay.portlet.ResourceRequestImpl;
 import com.liferay.portlet.ResourceResponseFactory;
 import com.liferay.portlet.ResourceResponseImpl;
-import com.liferay.portlet.StateAwareResponseImpl;
 import com.liferay.portlet.layoutconfiguration.util.RuntimePortletUtil;
 import com.liferay.portlet.login.util.LoginUtil;
+import com.liferay.util.SerializableUtil;
 import com.liferay.util.servlet.filters.CacheResponseUtil;
 
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -130,6 +130,7 @@ import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public class LayoutAction extends Action {
 
@@ -308,42 +309,53 @@ public class LayoutAction extends Action {
 	}
 
 	protected List<LayoutTypePortlet> getLayoutTypePortlets(
-			long groupId, boolean privateLayout)
+			Layout requestLayout)
 		throws Exception {
 
-		List<LayoutTypePortlet> layoutTypePortlets =
-			new ArrayList<LayoutTypePortlet>();
+		if (PropsValues.PORTLET_EVENT_DISTRIBUTION_LAYOUT_SET) {
+			List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+				requestLayout.getGroupId(), requestLayout.isPrivateLayout(),
+				LayoutConstants.TYPE_PORTLET);
 
-		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			groupId, privateLayout, LayoutConstants.TYPE_PORTLET);
+			List<LayoutTypePortlet> layoutTypePortlets =
+				new ArrayList<LayoutTypePortlet>(layouts.size());
 
-		for (Layout layout : layouts) {
-			if (!layout.isTypePortlet()) {
-				continue;
+			for (Layout layout : layouts) {
+				LayoutTypePortlet layoutTypePortlet =
+					(LayoutTypePortlet)layout.getLayoutType();
+
+				layoutTypePortlets.add(layoutTypePortlet);
 			}
 
-			LayoutTypePortlet layoutTypePortlet =
-				(LayoutTypePortlet)layout.getLayoutType();
-
-			layoutTypePortlets.add(layoutTypePortlet);
+			return layoutTypePortlets;
 		}
 
-		return layoutTypePortlets;
+		if (requestLayout.isTypePortlet()) {
+			List<LayoutTypePortlet> layoutTypePortlets =
+				new ArrayList<LayoutTypePortlet>(1);
+
+			LayoutTypePortlet layoutTypePortlet =
+				(LayoutTypePortlet)requestLayout.getLayoutType();
+
+			layoutTypePortlets.add(layoutTypePortlet);
+
+			return layoutTypePortlets;
+		}
+		else {
+			return Collections.emptyList();
+		}
 	}
 
 	protected long getScopeGroupId(
-			HttpServletRequest request, LayoutTypePortlet layoutTypePortlet,
-			String portletId)
+			HttpServletRequest request, Layout layout, String portletId)
 		throws PortalException, SystemException {
 
 		long scopeGroupId = 0;
 
-		Layout layoutTypePortletLayout = layoutTypePortlet.getLayout();
-
 		Layout requestLayout = (Layout)request.getAttribute(WebKeys.LAYOUT);
 
 		try {
-			request.setAttribute(WebKeys.LAYOUT, layoutTypePortletLayout);
+			request.setAttribute(WebKeys.LAYOUT, layout);
 
 			scopeGroupId = PortalUtil.getScopeGroupId(request, portletId);
 		}
@@ -352,8 +364,7 @@ public class LayoutAction extends Action {
 		}
 
 		if (scopeGroupId <= 0) {
-			scopeGroupId = PortalUtil.getScopeGroupId(
-				layoutTypePortletLayout, portletId);
+			scopeGroupId = PortalUtil.getScopeGroupId(layout, portletId);
 		}
 
 		return scopeGroupId;
@@ -412,15 +423,10 @@ public class LayoutAction extends Action {
 	}
 
 	protected void processEvent(
-			PortletRequestImpl portletRequestImpl,
-			StateAwareResponseImpl stateAwareResponseImpl,
-			List<LayoutTypePortlet> layoutTypePortlets,
-			LayoutTypePortlet layoutTypePortlet, Portlet portlet, Event event)
+			HttpServletRequest request, HttpServletResponse response,
+			Layout layout, Portlet portlet, Event event)
 		throws Exception {
 
-		HttpServletRequest request = portletRequestImpl.getHttpServletRequest();
-		HttpServletResponse response =
-			stateAwareResponseImpl.getHttpServletResponse();
 		HttpSession session = request.getSession();
 
 		String portletId = portlet.getPortletId();
@@ -434,6 +440,9 @@ public class LayoutAction extends Action {
 		PortletConfig portletConfig = PortletConfigFactoryUtil.create(
 			portlet, servletContext);
 		PortletContext portletContext = portletConfig.getPortletContext();
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
 
 		WindowState windowState = null;
 
@@ -477,33 +486,30 @@ public class LayoutAction extends Action {
 			portletMode = PortletMode.VIEW;
 		}
 
-		long scopeGroupId = getScopeGroupId(
-			request, layoutTypePortlet, portletId);
-
-		Layout layoutTypePortletLayout = layoutTypePortlet.getLayout();
+		long scopeGroupId = getScopeGroupId(request, layout, portletId);
 
 		PortletPreferences portletPreferences =
 			PortletPreferencesFactoryUtil.getPortletSetup(
-				scopeGroupId, layoutTypePortletLayout, portletId, null);
+				scopeGroupId, layout, portletId, null);
 
 		EventRequestImpl eventRequestImpl = EventRequestFactory.create(
 			request, portlet, invokerPortlet, portletContext, windowState,
-			portletMode, portletPreferences, layoutTypePortletLayout.getPlid());
+			portletMode, portletPreferences, layout.getPlid());
 
 		eventRequestImpl.setEvent(
 			serializeEvent(event, invokerPortlet.getPortletClassLoader()));
 
-		Layout layout = stateAwareResponseImpl.getLayout();
+		User user = PortalUtil.getUser(request);
+		Layout requestLayout = (Layout)request.getAttribute(WebKeys.LAYOUT);
 
 		EventResponseImpl eventResponseImpl = EventResponseFactory.create(
-			eventRequestImpl, response, portletId,
-			stateAwareResponseImpl.getUser(), layout);
+			eventRequestImpl, response, portletId, user, requestLayout);
 
 		eventRequestImpl.defineObjects(portletConfig, eventResponseImpl);
 
 		try {
 			InvokerPortletImpl.clearResponse(
-				session, layout.getPrimaryKey(), portletId,
+				session, requestLayout.getPrimaryKey(), portletId,
 				LanguageUtil.getLanguageId(eventRequestImpl));
 
 			invokerPortlet.processEvent(eventRequestImpl, eventResponseImpl);
@@ -516,11 +522,11 @@ public class LayoutAction extends Action {
 					eventResponseImpl.getRenderParameterMap());
 
 				RenderParametersPool.put(
-					request, layout.getPlid(), portletId, renderParameterMap);
+					request, requestLayout.getPlid(), portletId,
+					renderParameterMap);
 			}
 
-			processEvents(
-				eventRequestImpl, eventResponseImpl, layoutTypePortlets);
+			processEvents(request, response, eventResponseImpl.getEvents());
 		}
 		finally {
 			eventRequestImpl.cleanUp();
@@ -528,26 +534,29 @@ public class LayoutAction extends Action {
 	}
 
 	protected void processEvents(
-			PortletRequestImpl portletRequestImpl,
-			StateAwareResponseImpl stateAwareResponseImpl,
-			List<LayoutTypePortlet> layoutTypePortlets)
+			HttpServletRequest request, HttpServletResponse response,
+			List<Event> events)
 		throws Exception {
 
-		for (Event event : stateAwareResponseImpl.getEvents()) {
-			javax.xml.namespace.QName qName = event.getQName();
+		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
 
-			for (LayoutTypePortlet layoutTypePortlet : layoutTypePortlets) {
-				List<Portlet> portlets = layoutTypePortlet.getAllPortlets();
+		for (LayoutTypePortlet layoutTypePortlet :
+			getLayoutTypePortlets(layout)) {
 
-				for (Portlet portlet : portlets) {
+			List<Portlet> portlets = layoutTypePortlet.getAllPortlets();
+
+			for (Portlet portlet : portlets) {
+
+				for (Event event : events) {
+					javax.xml.namespace.QName qName = event.getQName();
+
 					QName processingQName = portlet.getProcessingEvent(
 						qName.getNamespaceURI(), qName.getLocalPart());
 
 					if (processingQName != null) {
 						processEvent(
-							portletRequestImpl, stateAwareResponseImpl,
-							layoutTypePortlets, layoutTypePortlet, portlet,
-							event);
+							request, response, layoutTypePortlet.getLayout(),
+							portlet, event);
 					}
 				}
 			}
@@ -839,28 +848,10 @@ public class LayoutAction extends Action {
 					request, layout.getPlid(), portletId,
 					actionResponseImpl.getRenderParameterMap());
 
-				List<LayoutTypePortlet> layoutTypePortlets = null;
+				List<Event> events = actionResponseImpl.getEvents();
 
-				if (!actionResponseImpl.getEvents().isEmpty()) {
-					if (PropsValues.PORTLET_EVENT_DISTRIBUTION_LAYOUT_SET) {
-						layoutTypePortlets = getLayoutTypePortlets(
-							layout.getGroupId(), layout.isPrivateLayout());
-					}
-					else {
-						if (layout.isTypePortlet()) {
-							LayoutTypePortlet layoutTypePortlet =
-								(LayoutTypePortlet)layout.getLayoutType();
-
-							layoutTypePortlets =
-								new ArrayList<LayoutTypePortlet>();
-
-							layoutTypePortlets.add(layoutTypePortlet);
-						}
-					}
-
-					processEvents(
-						actionRequestImpl, actionResponseImpl,
-						layoutTypePortlets);
+				if (!events.isEmpty()) {
+					processEvents(request, response, events);
 
 					actionRequestImpl.defineObjects(
 						portletConfig, actionResponseImpl);
@@ -1058,10 +1049,10 @@ public class LayoutAction extends Action {
 
 		EventImpl eventImpl = (EventImpl)event;
 
-		String base64Value = eventImpl.getBase64Value();
+		byte[] serializedValue = eventImpl.getSerializedValue();
 
-		value = (Serializable)Base64.stringToObject(
-			base64Value, portletClassLoader);
+		value = (Serializable)SerializableUtil.deserialize(
+			serializedValue, portletClassLoader);
 
 		return new EventImpl(event.getName(), event.getQName(), value);
 	}

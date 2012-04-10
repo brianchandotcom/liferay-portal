@@ -237,10 +237,10 @@ dateFormatDateTime.setTimeZone(timeZone);
 									</c:choose>
 								</td>
 								<td>
-									<%= curLicenseProperties.get("owner") %>
+									<%= HtmlUtil.escape(curLicenseProperties.get("owner")) %>
 								</td>
 								<td>
-									<%= curLicenseProperties.get("description") %>
+									<%= HtmlUtil.escape(curLicenseProperties.get("description")) %>
 								</td>
 								<td>
 									<liferay-ui:message key='<%= curLicenseProperties.get("type") %>' />
@@ -513,8 +513,8 @@ dateFormatDateTime.setTimeZone(timeZone);
 
 							addColumn(row, productEntryName);
 							addColumn(row, getLicenseState(message[i].licenseState));
-							addColumn(row, message[i].owner);
-							addColumn(row, message[i].description);
+							addColumn(row, Liferay.Util.escapeHTML(message[i].owner));
+							addColumn(row, Liferay.Util.escapeHTML(message[i].description));
 							addColumn(row, message[i].type);
 							addColumn(row, new Date(Number(message[i].startDate)).toLocaleDateString());
 							addColumn(row, new Date(Number(message[i].expirationDate)).toLocaleDateString());

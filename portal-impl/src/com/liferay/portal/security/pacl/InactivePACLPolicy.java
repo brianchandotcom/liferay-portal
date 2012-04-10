@@ -63,6 +63,10 @@ public class InactivePACLPolicy extends BasePACLPolicy {
 		return true;
 	}
 
+	public boolean hasSQLStatement(String sql) {
+		return true;
+	}
+
 	public boolean hasService(Object object, Method method) {
 		return true;
 	}

@@ -59,7 +59,7 @@ public class PACLDataSource extends DataSourceWrapper {
 
 		return (Connection)ProxyUtil.newProxyInstance(
 			paclPolicy.getClassLoader(), new Class<?>[] {Connection.class},
-			new PACLConnectionHandler(connection));
+			new PACLJDBCProxyHandler(connection, paclPolicy));
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

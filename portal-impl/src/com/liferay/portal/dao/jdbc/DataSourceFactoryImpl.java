@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.SortedProperties;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.pacl.PACLDataSourceWrapper;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.HttpImpl;
 import com.liferay.portal.util.PropsUtil;
@@ -108,7 +109,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 
 				Context context = new InitialContext(jndiEnvironmentProperties);
 
-				return (DataSource)JNDIUtil.lookup(context, jndiName);
+				return new PACLDataSource((DataSource)JNDIUtil.lookup(context, jndiName));
 			}
 			catch (Exception e) {
 				_log.error("Unable to lookup " + jndiName, e);

@@ -141,6 +141,12 @@ public class GroupImpl extends GroupBaseImpl {
 				OrganizationLocalServiceUtil.getOrganization(organizationId);
 
 			name = organization.getName();
+
+			Group group = organization.getGroup();
+
+			if (group.isStaged() && isStagingGroup()) {
+				name = name.concat(" (Staging)");
+			}
 		}
 		else if (isUser()) {
 			long userId = getClassPK();

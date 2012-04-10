@@ -45,8 +45,9 @@ public class GmailServer_TearDownMailingListMessageTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Sign out"),
-					selenium.getText("//td/a"));
-				selenium.clickAt("//td/a", RuntimeVariables.replace("Sign out"));
+					selenium.getText("//td[2]/a"));
+				selenium.clickAt("//td[2]/a",
+					RuntimeVariables.replace("Sign out"));
 				selenium.clickAt("//span/a",
 					RuntimeVariables.replace("Sign in to Gmail"));
 				selenium.waitForPageToLoad("30000");
@@ -484,7 +485,8 @@ public class GmailServer_TearDownMailingListMessageTest extends BaseTestCase {
 			case 8:
 			case 9:
 
-				boolean SignedIn2 = selenium.isPartialText("//td/a", "Sign out");
+				boolean SignedIn2 = selenium.isPartialText("//td[2]/a",
+						"Sign out");
 
 				if (!SignedIn2) {
 					label = 10;
@@ -493,8 +495,9 @@ public class GmailServer_TearDownMailingListMessageTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Sign out"),
-					selenium.getText("//td/a"));
-				selenium.clickAt("//td/a", RuntimeVariables.replace("Sign out"));
+					selenium.getText("//td[2]/a"));
+				selenium.clickAt("//td[2]/a",
+					RuntimeVariables.replace("Sign out"));
 
 			case 10:
 				Thread.sleep(10000);

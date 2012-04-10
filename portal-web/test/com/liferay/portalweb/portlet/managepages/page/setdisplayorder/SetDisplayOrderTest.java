@@ -197,6 +197,7 @@ public class SetDisplayOrderTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Child Test Page3"),
 					selenium.getText("//li[2]/ul/li[3]/div/div[3]/a"));
 				selenium.mouseOver("//li[2]/ul/li[1]/div/div[3]/a");
+				Thread.sleep(5000);
 				selenium.mouseDown("//li[2]/ul/li[1]/div/div[3]/a");
 
 				for (int second = 0;; second++) {

@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletMode;
 import com.liferay.portal.kernel.portlet.PortletModeFactory;
 import com.liferay.portal.kernel.portlet.WindowStateFactory;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
-import com.liferay.portal.kernel.servlet.DirectRequestDispatcherUtil;
 import com.liferay.portal.kernel.servlet.HeaderCacheServletResponse;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
@@ -391,8 +390,7 @@ public class LayoutAction extends Action {
 		}
 
 		RequestDispatcher requestDispatcher =
-			DirectRequestDispatcherUtil.getRequestDispatcher(
-				servletContext, path);
+			servletContext.getRequestDispatcher(path);
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 

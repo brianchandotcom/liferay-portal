@@ -24,6 +24,9 @@ public class AddCustomSiteWikiUseCaseTest extends BaseTestCase {
 	public void testAddCustomSiteWikiUseCase() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -31,7 +34,7 @@ public class AddCustomSiteWikiUseCaseTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -90,6 +93,9 @@ public class AddCustomSiteWikiUseCaseTest extends BaseTestCase {
 			selenium.getText("//h1[@class='header-title']/span"));
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -97,7 +103,7 @@ public class AddCustomSiteWikiUseCaseTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -120,7 +126,7 @@ public class AddCustomSiteWikiUseCaseTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Wiki Use Case Community"),
-			selenium.getText("//tr[3]/td[1]"));
+		assertTrue(selenium.isPartialText("//tr[3]/td[1]",
+				"Wiki Use Case Community"));
 	}
 }

@@ -50,7 +50,7 @@ AUI.add(
 		var TPL_TAG = new A.Template(
 			'<fieldset class="{[(!values.tags || !values.tags.length) ? "', CSS_NO_MATCHES, '" : "', STR_BLANK ,'" ]}">',
 				'<tpl for="tags">',
-					'<label title="{name}"><input type="checkbox" value="{name}" {checked} />{name}</label>',
+					'<label title="{name}"><input {checked} type="checkbox" value="{name}" />{name}</label>',
 				'</tpl>',
 				'<div class="lfr-tag-message">{message}</div>',
 			'</fieldset>'
@@ -388,7 +388,7 @@ AUI.add(
 										instance.entries.add(item, {});
 									}
 								);
-							} 
+							}
 							else {
 								instance.entries.add(text, {});
 							}
@@ -497,6 +497,7 @@ AUI.add(
 						popup.searchField.resetValue();
 
 						popup.liveSearch.get('nodes').refresh();
+
 						popup.liveSearch.refreshIndex();
 					},
 
@@ -540,6 +541,7 @@ AUI.add(
 						var contentCallback = instance.get('contentCallback');
 
 						var context = STR_BLANK;
+
 						var data = [];
 
 						if (contentCallback) {
@@ -565,15 +567,15 @@ AUI.add(
 									success: function(event, id, obj) {
 										var results = this.get('responseData');
 
-										var resultData = results.ResultSet.Result;
+											var resultData = results && results.ResultSet && results.ResultSet.Result;
 
-										if (results && resultData) {
+										if (resultData) {
 											for (var i = 0; i < resultData.length; i++) {
-												var tag = {
-													name: resultData[i]
-												}
-
-												data[i] = tag;
+												data.push(
+													{
+														name: resultData[i]
+													}
+												);
 											}
 										}
 
@@ -651,9 +653,9 @@ AUI.add(
 						var instance = this;
 
 						for (var i = 0; i < data.length; i++) {
-							var tag = data[i];					
+							var tag = data[i];
 
-							tag.checked =  instance.entries.indexOfKey(tag.name) > -1 ? TPL_CHECKED : STR_BLANK;
+							tag.checked = instance.entries.indexOfKey(tag.name) > -1 ? TPL_CHECKED : STR_BLANK;
 						}
 
 						instance._renderTemplate(data);

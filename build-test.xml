@@ -276,7 +276,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="9" />
+		<property name="build-test-ant-scripts.version" value="0" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -1715,9 +1715,39 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="properties-message-boards-anonymous-posting" />
+			<param name="test.ant.script.properties" value="message.boards.anonymous.posting.enabled=false" />
+			<param name="test.ant.script.suite" value="PropertiesMessageBoardsAnonymousPostingTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="properties-message-boards-mail-integration" />
 			<param name="test.ant.script.properties" value="pop.server.notifications.enabled=true$${line.separator}pop.server.notifications.interval=1$${line.separator}pop.server.subdomain=" />
 			<param name="test.ant.script.suite" value="PropertiesMessageBoardsMailIntegrationTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="properties-message-boards-pingback" />
+			<param name="test.ant.script.properties" value="message.boards.pingback.enabled=false" />
+			<param name="test.ant.script.suite" value="PropertiesMessageBoardsPingbackTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="properties-message-boards-publish-to-live-by-default" />
+			<param name="test.ant.script.properties" value="Message.boards.publish.to.live.by.default=true" />
+			<param name="test.ant.script.suite" value="PropertiesMessageBoardsPublishToLiveByDefaultTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="properties-message-boards-subscribe-by-default" />
+			<param name="test.ant.script.properties" value="message.boards.subscribe.by.default=false" />
+			<param name="test.ant.script.suite" value="PropertiesMessageBoardsSubscribeByDefaultTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="properties-message-boards-thread-previous-next" />
+			<param name="test.ant.script.properties" value="message.boards.thread.previous.and.next.navigation.enabled=false" />
+			<param name="test.ant.script.suite" value="PropertiesMessageBoardsThreadPreviousNextTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">

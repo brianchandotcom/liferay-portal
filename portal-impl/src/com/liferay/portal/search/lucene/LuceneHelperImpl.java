@@ -70,6 +70,7 @@ import java.util.concurrent.TimeoutException;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.document.Document;
+import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.BooleanClause;
@@ -390,8 +391,10 @@ public class LuceneHelperImpl implements LuceneHelper {
 
 		IndexAccessor indexAccessor = _getIndexAccessor(companyId);
 
-		IndexSearcher indexSearcher = new IndexSearcher(
+		IndexReader indexReader = IndexReader.open(
 			indexAccessor.getLuceneDir(), readOnly);
+
+		IndexSearcher indexSearcher = new IndexSearcher(indexReader);
 
 		indexSearcher.setDefaultFieldSortScoring(true, true);
 		indexSearcher.setSimilarity(new FieldWeightSimilarity());

@@ -18,9 +18,13 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.search.lucene.dump.DumpIndexDeletionPolicy;
 import com.liferay.portal.search.lucene.dump.IndexCommitSerializationUtil;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -37,8 +41,13 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import org.apache.lucene.analysis.LimitTokenCountAnalyzer;
 import org.apache.lucene.document.Document;
+import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.index.LogMergePolicy;
+import org.apache.lucene.index.MergePolicy;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
@@ -50,6 +59,7 @@ import org.apache.lucene.store.RAMDirectory;
  * @author Brian Wing Shun Chan
  * @author Bruno Farache
  * @author Shuyang Zhou
+ * @author Mate Thurzo
  */
 public class IndexAccessorImpl implements IndexAccessor {
 
@@ -84,6 +94,10 @@ public class IndexAccessorImpl implements IndexAccessor {
 		}
 
 		close();
+
+		if (PropsValues.INDEX_FORCE_GC_BEFORE_DELETE) {
+			System.gc();
+		}
 
 		_deleteDirectory();
 
@@ -158,9 +172,15 @@ public class IndexAccessorImpl implements IndexAccessor {
 
 		close();
 
+		if (PropsValues.INDEX_FORCE_GC_BEFORE_DELETE) {
+			System.gc();
+		}
+
 		_deleteDirectory();
 
-		Directory.copy(tempDirectory, getLuceneDir(), true);
+		for (String file : tempDirectory.listAll()) {
+			tempDirectory.copy(getLuceneDir(), file, file);
+		}
 
 		_initIndexWriter();
 
@@ -347,12 +367,53 @@ public class IndexAccessorImpl implements IndexAccessor {
 
 	private void _initIndexWriter() {
 		try {
-			_indexWriter = new IndexWriter(
-				getLuceneDir(), LuceneHelperUtil.getAnalyzer(),
-				_dumpIndexDeletionPolicy, IndexWriter.MaxFieldLength.LIMITED);
+			LimitTokenCountAnalyzer analyzer = new LimitTokenCountAnalyzer(
+				LuceneHelperUtil.getAnalyzer(), _DEFAULT_MAX_FIELD_LENGTH);
 
-			_indexWriter.setMergeFactor(PropsValues.LUCENE_MERGE_FACTOR);
-			_indexWriter.setRAMBufferSizeMB(PropsValues.LUCENE_BUFFER_SIZE);
+			IndexWriterConfig indexWriterConfig = new IndexWriterConfig(
+				LuceneHelperUtil.getVersion(), analyzer);
+
+			// Merge Policy
+
+			String mergePolicyClassName = PropsUtil.get(
+				PropsKeys.LUCENE_MERGE_POLICY);
+
+			ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+
+			MergePolicy mergePolicy = (MergePolicy)InstanceFactory.newInstance(
+				classLoader, mergePolicyClassName);
+
+			if (mergePolicy instanceof LogMergePolicy) {
+				LogMergePolicy logMergePolicy = (LogMergePolicy)mergePolicy;
+
+				logMergePolicy.setMergeFactor(PropsValues.LUCENE_MERGE_FACTOR);
+			}
+
+			indexWriterConfig.setMergePolicy(mergePolicy);
+
+			// Buffer Size
+
+			indexWriterConfig.setRAMBufferSizeMB(
+				PropsValues.LUCENE_BUFFER_SIZE);
+
+			// Index Deletion Policy
+
+			indexWriterConfig.setIndexDeletionPolicy(_dumpIndexDeletionPolicy);
+
+			_indexWriter = new IndexWriter(getLuceneDir(), indexWriterConfig);
+
+			// LUCENE-2386
+
+			IndexReader indexReader = IndexReader.open(_indexWriter, false);
+
+			if (!indexReader.indexExists(getLuceneDir())) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Index file does not exists, creating empty" +
+						" index, please reindex to make it up-to-date.");
+				}
+
+				_doCommit();
+			}
 		}
 		catch (Exception e) {
 			_log.error(
@@ -369,22 +430,14 @@ public class IndexAccessorImpl implements IndexAccessor {
 				_indexWriter.addDocument(document);
 			}
 
-			_optimizeCount++;
-
-			if ((PropsValues.LUCENE_OPTIMIZE_INTERVAL == 0) ||
-				(_optimizeCount >= PropsValues.LUCENE_OPTIMIZE_INTERVAL)) {
-
-				_indexWriter.optimize();
-
-				_optimizeCount = 0;
-			}
-
 			_batchCount++;
 		}
 		finally {
 			_commit();
 		}
 	}
+
+	private static final int _DEFAULT_MAX_FIELD_LENGTH = 10000;
 
 	private static final String _LUCENE_STORE_TYPE_FILE = "file";
 
@@ -401,7 +454,6 @@ public class IndexAccessorImpl implements IndexAccessor {
 	private DumpIndexDeletionPolicy _dumpIndexDeletionPolicy =
 		new DumpIndexDeletionPolicy();
 	private IndexWriter _indexWriter;
-	private int _optimizeCount;
 	private Map<String, Directory> _ramDirectories =
 		new ConcurrentHashMap<String, Directory>();
 

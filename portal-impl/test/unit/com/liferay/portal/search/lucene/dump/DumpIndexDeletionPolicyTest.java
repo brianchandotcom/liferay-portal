@@ -14,8 +14,6 @@
 
 package com.liferay.portal.search.lucene.dump;
 
-import com.liferay.portal.kernel.test.TestCase;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
@@ -25,7 +23,9 @@ import java.util.concurrent.locks.ReentrantLock;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
+import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.TermQuery;
@@ -35,21 +35,30 @@ import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.store.RAMDirectory;
 import org.apache.lucene.util.Version;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
 /**
  * @author Shuyang Zhou
+ * @author Mate Thurzo
  */
-public class DumpIndexDeletionPolicyTest extends TestCase {
+public class DumpIndexDeletionPolicyTest {
 
-	@Override
+	@Before
 	public void setUp() throws Exception {
 		_sourceDirectory = new RAMDirectory();
 		_dumpIndexDeletionPolicy = new DumpIndexDeletionPolicy();
 
-		_indexWriter = new IndexWriter(
-			_sourceDirectory, new StandardAnalyzer(Version.LUCENE_30),
-			_dumpIndexDeletionPolicy, IndexWriter.MaxFieldLength.UNLIMITED);
+		IndexWriterConfig indexWriterConfig = new IndexWriterConfig(
+			Version.LUCENE_35, new StandardAnalyzer(Version.LUCENE_35));
+
+		indexWriterConfig.setIndexDeletionPolicy(_dumpIndexDeletionPolicy);
+
+		_indexWriter = new IndexWriter(_sourceDirectory, indexWriterConfig);
 	}
 
+	@Test
 	public void testEmptyDump() throws Exception {
 		Directory targetDirectory = _dumpToTargetDirectory(_indexWriter);
 
@@ -58,6 +67,7 @@ public class DumpIndexDeletionPolicyTest extends TestCase {
 		_indexWriter.close();
 	}
 
+	@Test
 	public void testOneCommitDump() throws Exception {
 		_addDocument("name", "test1");
 
@@ -76,6 +86,7 @@ public class DumpIndexDeletionPolicyTest extends TestCase {
 		_indexWriter.close();
 	}
 
+	@Test
 	public void testThreeCommitsDump() throws Exception {
 		_addDocument("name", "test1");
 		_addDocument("name", "test2");
@@ -98,6 +109,7 @@ public class DumpIndexDeletionPolicyTest extends TestCase {
 		_indexWriter.close();
 	}
 
+	@Test
 	public void testThreeCommitsOneDeletionDump() throws Exception {
 		_addDocument("name", "test1");
 		_addDocument("name", "test2");
@@ -122,6 +134,7 @@ public class DumpIndexDeletionPolicyTest extends TestCase {
 		_indexWriter.close();
 	}
 
+	@Test
 	public void testThreeCommitsTwoDeletionsDump() throws Exception {
 		_addDocument("name", "test1");
 		_addDocument("name", "test2");
@@ -147,6 +160,7 @@ public class DumpIndexDeletionPolicyTest extends TestCase {
 		_indexWriter.close();
 	}
 
+	@Test
 	public void testThreeCommitsTwoDeletionsWithOptimizationDump()
 		throws Exception {
 
@@ -156,8 +170,6 @@ public class DumpIndexDeletionPolicyTest extends TestCase {
 
 		_deleteDocument("name", "test2");
 		_deleteDocument("name", "test3");
-
-		_indexWriter.optimize();
 
 		_indexWriter.commit();
 
@@ -178,12 +190,11 @@ public class DumpIndexDeletionPolicyTest extends TestCase {
 		_indexWriter.close();
 	}
 
+	@Test
 	public void testThreeCommitsWithOptimizationDump() throws Exception {
 		_addDocument("name", "test1");
 		_addDocument("name", "test2");
 		_addDocument("name", "test3");
-
-		_indexWriter.optimize();
 
 		_indexWriter.commit();
 
@@ -204,6 +215,7 @@ public class DumpIndexDeletionPolicyTest extends TestCase {
 		_indexWriter.close();
 	}
 
+	@Test
 	public void testTwoCommitsDump() throws Exception {
 		_addDocument("name", "test1");
 		_addDocument("name", "test2");
@@ -245,7 +257,7 @@ public class DumpIndexDeletionPolicyTest extends TestCase {
 
 		for (long i = 0; i < sourceIndexInput.length(); i++) {
 			if (sourceIndexInput.readByte() != targetIndexInput.readByte()) {
-				fail(
+				Assert.fail(
 					fileName +
 						" has different source and target byte value at " + i);
 			}
@@ -268,7 +280,7 @@ public class DumpIndexDeletionPolicyTest extends TestCase {
 		Arrays.sort(targetFileNames);
 
 		if (sourceFileNames.length != targetFileNames.length) {
-			fail(
+			Assert.fail(
 				Arrays.toString(sourceFileNames) +
 					" does not have the same length as " +
 						Arrays.toString(targetFileNames));
@@ -279,7 +291,8 @@ public class DumpIndexDeletionPolicyTest extends TestCase {
 			long targetLength = targetDirectory.fileLength(fileName);
 
 			if (sourceLength != targetLength) {
-				fail(fileName + " has different source and target lengths");
+				Assert.fail(fileName +
+					" has different source and target lengths");
 			}
 
 			_assertContent(
@@ -293,7 +306,9 @@ public class DumpIndexDeletionPolicyTest extends TestCase {
 			int totalHits)
 		throws Exception {
 
-		IndexSearcher indexSearcher = new IndexSearcher(directory);
+		IndexReader indexReader = IndexReader.open(directory);
+
+		IndexSearcher indexSearcher = new IndexSearcher(indexReader);
 
 		Term term = new Term(fieldName, fieldValue);
 
@@ -301,7 +316,7 @@ public class DumpIndexDeletionPolicyTest extends TestCase {
 
 		TopDocs topDocs = indexSearcher.search(termQuery, 1);
 
-		assertEquals(totalHits, topDocs.totalHits);
+		Assert.assertEquals(totalHits, topDocs.totalHits);
 	}
 
 	private void _deleteDocument(String fieldName, String fieldValue)

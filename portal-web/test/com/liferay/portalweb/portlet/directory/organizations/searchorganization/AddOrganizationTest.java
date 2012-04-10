@@ -93,7 +93,8 @@ public class AddOrganizationTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//input[@id='_125_street1']")) {
+				if (selenium.isVisible(
+							"//input[contains(@id,'addressStreet1')]")) {
 					break;
 				}
 			}
@@ -103,15 +104,15 @@ public class AddOrganizationTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.type("//input[@id='_125_street1']",
+		selenium.type("//input[contains(@id,'addressStreet1')]",
 			RuntimeVariables.replace("12345 Test Street"));
-		selenium.select("//select[@id='_125_addressTypeId0']",
+		selenium.select("//select[contains(@id,'addressType')]",
 			RuntimeVariables.replace("Billing"));
-		selenium.type("//input[@id='_125_zip']",
+		selenium.type("//input[contains(@id,'addressZip')]",
 			RuntimeVariables.replace("11111"));
-		selenium.type("//input[@id='_125_city']",
+		selenium.type("//input[contains(@id,'addressCity')]",
 			RuntimeVariables.replace("Diamond Bar"));
-		selenium.clickAt("//input[@id='_125_addressPrimary0']",
+		selenium.clickAt("//input[contains(@id,'addressPrimary')]",
 			RuntimeVariables.replace("Primary"));
 
 		for (int second = 0;; second++) {
@@ -121,7 +122,7 @@ public class AddOrganizationTest extends BaseTestCase {
 
 			try {
 				if (selenium.isPartialText(
-							"//select[@id='_125_addressCountryId0']",
+							"//select[contains(@id,'addressCountry')]",
 							"United States")) {
 					break;
 				}
@@ -132,9 +133,9 @@ public class AddOrganizationTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.select("//select[@id='_125_addressCountryId0']",
+		selenium.select("//select[contains(@id,'addressCountry')]",
 			RuntimeVariables.replace("United States"));
-		selenium.clickAt("//input[@id='_125_mailingCheckbox']",
+		selenium.clickAt("//input[contains(@id,'addressMailing') and contains(@type,'checkbox')]",
 			RuntimeVariables.replace("Mailing"));
 
 		for (int second = 0;; second++) {
@@ -144,7 +145,7 @@ public class AddOrganizationTest extends BaseTestCase {
 
 			try {
 				if (selenium.isPartialText(
-							"//select[@id='_125_addressRegionId0']",
+							"//select[contains(@id,'addressRegion')]",
 							"California")) {
 					break;
 				}
@@ -155,7 +156,7 @@ public class AddOrganizationTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.select("//select[@id='_125_addressRegionId0']",
+		selenium.select("//select[contains(@id,'addressRegion')]",
 			RuntimeVariables.replace("California"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

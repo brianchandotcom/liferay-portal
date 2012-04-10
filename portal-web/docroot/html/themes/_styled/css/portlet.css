@@ -742,6 +742,10 @@ body.portlet {
 		display: inline;
 		zoom: 1;
 	}
+
+	.lfr-message .lfr-message-close {
+		float: left;
+	}
 }
 
 .ie6 {

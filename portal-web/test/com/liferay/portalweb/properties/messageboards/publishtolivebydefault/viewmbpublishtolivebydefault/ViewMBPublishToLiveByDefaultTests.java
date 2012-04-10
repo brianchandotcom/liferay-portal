@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.properties.messageboards.publishtolivebydefault.viewmbpublishtolivebydefaultno;
+package com.liferay.portalweb.properties.messageboards.publishtolivebydefault.viewmbpublishtolivebydefault;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.AddSiteTest;
@@ -24,11 +24,11 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewMBPublishToLiveByDefaultNoTests extends BaseTestSuite {
+public class ViewMBPublishToLiveByDefaultTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddSiteTest.class);
-		testSuite.addTestSuite(ViewMBPublishToLiveByDefaultNoTest.class);
+		testSuite.addTestSuite(ViewMBPublishToLiveByDefaultTest.class);
 		testSuite.addTestSuite(TearDownSiteTest.class);
 
 		return testSuite;

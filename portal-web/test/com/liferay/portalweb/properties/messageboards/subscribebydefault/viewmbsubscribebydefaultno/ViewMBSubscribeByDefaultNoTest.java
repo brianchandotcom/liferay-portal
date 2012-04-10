@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.properties.messageboards.threadpreviousnext.viewthreadpreviousnextno;
+package com.liferay.portalweb.properties.messageboards.subscribebydefault.viewmbsubscribebydefaultno;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddThread2Test extends BaseTestCase {
-	public void testAddThread2() throws Exception {
+public class ViewMBSubscribeByDefaultNoTest extends BaseTestCase {
+	public void testViewMBSubscribeByDefaultNo() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -49,9 +49,6 @@ public class AddThread2Test extends BaseTestCase {
 			RuntimeVariables.replace("Post New Thread"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.type("//input[@id='_19_subject']",
-			RuntimeVariables.replace("Thread2"));
-		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -59,8 +56,8 @@ public class AddThread2Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible(
-							"//td[@id='cke_contents__19_editor']/iframe")) {
+				if (selenium.isElementPresent(
+							"//textarea[@id='_19_editor' and @style='display: none;']")) {
 					break;
 				}
 			}
@@ -70,19 +67,6 @@ public class AddThread2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.selectFrame("//td[@id='cke_contents__19_editor']/iframe");
-		selenium.type("//body", RuntimeVariables.replace("Body"));
-		selenium.selectFrame("relative=top");
-		assertFalse(selenium.isElementPresent("Anonymous"));
-		assertFalse(selenium.isElementPresent("Allow Pingbacks"));
-		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace("Publish"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Thread2"),
-			selenium.getText("//h1[@class='header-title']/span"));
+		assertFalse(selenium.isChecked("//input[@id='_19_subscribeCheckbox']"));
 	}
 }

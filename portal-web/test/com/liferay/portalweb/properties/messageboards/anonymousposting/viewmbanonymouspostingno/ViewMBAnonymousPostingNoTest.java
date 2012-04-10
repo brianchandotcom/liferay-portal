@@ -24,6 +24,14 @@ public class ViewMBAnonymousPostingNoTest extends BaseTestCase {
 	public void testViewMBAnonymousPostingNo() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		selenium.clickAt("link=Message Boards Test Page",
+			RuntimeVariables.replace("Message Boards Test Page"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		selenium.clickAt("//input[@value='Post New Thread']",
+			RuntimeVariables.replace("Post New Thread"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -31,7 +39,8 @@ public class ViewMBAnonymousPostingNoTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Message Boards Test Page")) {
+				if (selenium.isElementPresent(
+							"//textarea[@id='_19_editor' and @style='display: none;']")) {
 					break;
 				}
 			}
@@ -41,17 +50,9 @@ public class ViewMBAnonymousPostingNoTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Message Boards Test Page",
-			RuntimeVariables.replace("Message Boards Test Page"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		selenium.clickAt("//input[@value='Post New Thread']",
-			RuntimeVariables.replace("Post New Thread"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
+		assertFalse(selenium.isTextPresent("Anonymous"));
 		assertFalse(selenium.isTextPresent(
 				"If this is checked, then this message will be posted anonymously."));
-		assertFalse(selenium.isTextPresent("Anonymous"));
 		assertFalse(selenium.isElementPresent(
 				"//input[@id='_19_anonymousCheckbox']"));
 	}

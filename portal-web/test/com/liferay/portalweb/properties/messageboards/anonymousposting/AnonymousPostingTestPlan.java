@@ -12,12 +12,10 @@
  * details.
  */
 
-package com.liferay.portalweb.properties.messageboards.subscribebydefault.viewmbsubscribebydefaultkno;
+package com.liferay.portalweb.properties.messageboards.anonymousposting;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.util.TearDownPageTest;
-import com.liferay.portalweb.portlet.messageboards.portlet.addportlet.AddPageMBTest;
-import com.liferay.portalweb.portlet.messageboards.portlet.addportlet.AddPortletMBTest;
+import com.liferay.portalweb.properties.messageboards.anonymousposting.viewmbanonymouspostingno.ViewMBAnonymousPostingNoTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -25,14 +23,14 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewMBSubscribeByDefaultNoTests extends BaseTestSuite {
+public class AnonymousPostingTestPlan extends BaseTestSuite {
+
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AddPageMBTest.class);
-		testSuite.addTestSuite(AddPortletMBTest.class);
-		testSuite.addTestSuite(ViewMBSubscribeByDefaultNoTest.class);
-		testSuite.addTestSuite(TearDownPageTest.class);
+
+		testSuite.addTest(ViewMBAnonymousPostingNoTests.suite());
 
 		return testSuite;
 	}
+
 }

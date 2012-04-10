@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.portalweb.properties.messageboards.anonymousposting;
-import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.properties.messageboards.anonymousposting.viewmbanonymouspostingno.ViewMBAnonymousPostingNoTests;
+package com.liferay.portalweb.portal;
+
+import com.liferay.portalweb.portal.login.LoginTests;
+import com.liferay.portalweb.properties.messageboards.anonymousposting.AnonymousPostingTestPlan;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -22,12 +23,15 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AnonymousTestPlan extends BaseTestSuite {
+public class PropertiesMessageBoardsAnonymousPostingTestSuite
+	extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(ViewMBAnonymousPostingNoTests.suite());
+		testSuite.addTest(LoginTests.suite());
+		testSuite.addTest(AnonymousPostingTestPlan.suite());
+		testSuite.addTestSuite(StopSeleniumTest.class);
 
 		return testSuite;
 	}

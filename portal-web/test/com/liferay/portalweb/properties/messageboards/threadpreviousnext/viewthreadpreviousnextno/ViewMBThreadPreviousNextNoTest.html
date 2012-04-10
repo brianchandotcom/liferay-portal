@@ -13,31 +13,30 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Message Boards Test Page</td>
-	<td>Message Boards Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Message Boards Test Page</td>
 	<td>Message Boards Test Page</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Thread1</td>
+	<td>assertText</td>
+	<td>//td[@id='_19_mbThreadsSearchContainer_col-thread_row-1']/a</td>
+	<td>MB Thread2 Message Subject</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//td[@id='_19_mbThreadsSearchContainer_col-thread_row-1']/a</td>
+	<td>MB Thread2 Message Subject</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Previous</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>Previous</td>
-	<td>Previous</td>
-</tr>
-<tr>
-	<td>assertTextNotPresent</td>
 	<td>Next</td>
-	<td>Next</td>
+	<td></td>
 </tr>
-
 </tbody>
 </table>
 </body>

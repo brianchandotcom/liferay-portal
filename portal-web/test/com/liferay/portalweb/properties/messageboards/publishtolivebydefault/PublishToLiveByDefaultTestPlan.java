@@ -15,7 +15,7 @@
 package com.liferay.portalweb.properties.messageboards.publishtolivebydefault;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.properties.messageboards.publishtolivebydefault.viewmbpublishtolivebydefaultno.ViewMBPublishToLiveByDefaultNoTests;
+import com.liferay.portalweb.properties.messageboards.publishtolivebydefault.viewmbpublishtolivebydefault.ViewMBPublishToLiveByDefaultTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -28,7 +28,7 @@ public class PublishToLiveByDefaultTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(ViewMBPublishToLiveByDefaultNoTests.suite());
+		testSuite.addTest(ViewMBPublishToLiveByDefaultTests.suite());
 
 		return testSuite;
 	}

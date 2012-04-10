@@ -15,7 +15,7 @@
 package com.liferay.portalweb.properties.messageboards.subscribebydefault;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.properties.messageboards.subscribebydefault.viewmbsubscribebydefaultkno.ViewMBSubscribeByDefaultNoTests;
+import com.liferay.portalweb.properties.messageboards.subscribebydefault.viewmbsubscribebydefaultno.ViewMBSubscribeByDefaultNoTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

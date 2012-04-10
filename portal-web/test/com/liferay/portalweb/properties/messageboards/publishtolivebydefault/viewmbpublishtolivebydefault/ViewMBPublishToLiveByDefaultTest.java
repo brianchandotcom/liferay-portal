@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.properties.messageboards.publishtolivebydefault.viewmbpublishtolivebydefaultno;
+package com.liferay.portalweb.properties.messageboards.publishtolivebydefault.viewmbpublishtolivebydefault;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewMBPublishToLiveByDefaultNoTest extends BaseTestCase {
-	public void testViewMBPublishToLiveByDefaultNo() throws Exception {
+public class ViewMBPublishToLiveByDefaultTest extends BaseTestCase {
+	public void testViewMBPublishToLiveByDefault() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Go to"),

@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.portalweb.portal;
+package com.liferay.portalweb.properties.messageboards.subscribebydefault.viewmbsubscribebydefaultno;
 
-import com.liferay.portalweb.portal.login.LoginTests;
-import com.liferay.portalweb.properties.messageboards.anonymousposting.AnonymousTestPlan;
-
+import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.messageboards.portlet.addportletmb.AddPageMBTest;
+import com.liferay.portalweb.portlet.messageboards.portlet.addportletmb.AddPortletMBTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -24,16 +25,14 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class PropertiesMessageBoardsAnonymousTestSuite extends BaseTestSuite {
-
+public class ViewMBSubscribeByDefaultNoTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(LoginTests.suite());
-		testSuite.addTest(AnonymousTestPlan.suite());
-        testSuite.addTestSuite(StopSeleniumTest.class);
+		testSuite.addTestSuite(AddPageMBTest.class);
+		testSuite.addTestSuite(AddPortletMBTest.class);
+		testSuite.addTestSuite(ViewMBSubscribeByDefaultNoTest.class);
+		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;
 	}
-
 }

@@ -45,15 +45,22 @@ AUI.add(
 
 		var TPL_CHECKED = ' checked="checked" ';
 
-		var TPL_INPUT = '<label title="{name}"><input type="checkbox" value="{name}" {checked} />{name}</label>';
-
 		var TPL_LOADING = '<div class="loading-animation" />';
 
-		var TPL_MESSAGE = '<div class="lfr-tag-message">{0}</div>';
+		var TPL_TAG = new A.Template(
+			'<fieldset class="{[(!values.tags || !values.tags.length) ? "', CSS_NO_MATCHES, '" : "', STR_BLANK ,'" ]}">',
+				'<tpl for="tags">',
+					'<label title="{name}"><input {checked} type="checkbox" value="{name}" />{name}</label>',
+				'</tpl>',
+				'<div class="lfr-tag-message">{message}</div>',
+			'</fieldset>'
+		);
 
 		var TPL_URL_SUGGESTIONS = 'http://search.yahooapis.com/ContentAnalysisService/V1/termExtraction?appid=YahooDemo&output=json&context={context}';
 
 		var TPL_TAGS_CONTAINER = '<div class="' + CSS_TAGS_LIST + '"></div>';
+
+		var STR_BLANK = '';
 
 		/**
 		 * OPTIONS
@@ -186,14 +193,6 @@ AUI.add(
 						instance.get('boundingBox').on('keypress', instance._onKeyPress, instance);
 					},
 
-					_formatEntry: function(item) {
-						var instance = this;
-
-						var input = Lang.sub(TPL_INPUT, item);
-
-						instance._buffer.push(input);
-					},
-
 					_getPopup: function() {
 						var instance = this;
 
@@ -216,7 +215,7 @@ AUI.add(
 
 							var bodyNode = popup.bodyNode;
 
-							bodyNode.html('');
+							bodyNode.html(STR_BLANK);
 
 							var searchField = new A.Textfield(
 								{
@@ -299,7 +298,7 @@ AUI.add(
 										var key = term;
 
 										if (term == '*') {
-											term = '';
+											term = STR_BLANK;
 										}
 
 										var serviceQueryObj = serviceQueryCache[key];
@@ -308,7 +307,7 @@ AUI.add(
 											serviceQueryObj = {
 												groupId: themeDisplay.getParentGroupId(),
 												name: '%' + term + '%',
-												properties: '',
+												properties: STR_BLANK,
 												begin: 0,
 												end: 20
 											};
@@ -380,7 +379,7 @@ AUI.add(
 						var text = instance.inputNode.val();
 
 						if (text) {
-							if(text.indexOf(',') > -1) {
+							if (text.indexOf(',') > -1) {
 								var items = text.split(',');
 
 								A.each(
@@ -389,7 +388,8 @@ AUI.add(
 										instance.entries.add(item, {});
 									}
 								);
-							} else {
+							}
+							else {
 								instance.entries.add(text, {});
 							}
 						}
@@ -479,6 +479,28 @@ AUI.add(
 						instance.entryHolder.placeAfter(iconsBoundingBox);
 					},
 
+					_renderTemplate: function(data) {
+						var instance = this;
+
+						var popup = instance._popup;
+
+						var tplTag = TPL_TAG.render(
+							{
+								checked: data.checked,
+								message: Liferay.Language.get('no-tags-found'),
+								name: data.name,
+								tags: data
+							},
+							popup.entriesNode
+						);
+
+						popup.searchField.resetValue();
+
+						popup.liveSearch.get('nodes').refresh();
+
+						popup.liveSearch.refreshIndex();
+					},
+
 					_showPopup: function(event) {
 						var instance = this;
 
@@ -504,7 +526,7 @@ AUI.add(
 
 						instance._getEntries(
 							function(entries) {
-								instance._updateSelectList(entries, instance._entriesIterator);
+								instance._updateSelectList(entries);
 							}
 						);
 					},
@@ -518,7 +540,8 @@ AUI.add(
 
 						var contentCallback = instance.get('contentCallback');
 
-						var context = '';
+						var context = STR_BLANK;
+
 						var data = [];
 
 						if (contentCallback) {
@@ -544,8 +567,16 @@ AUI.add(
 									success: function(event, id, obj) {
 										var results = this.get('responseData');
 
-										if (results && results.ResultSet && results.ResultSet.Result) {
-											data = data.concat(results.ResultSet.Result);
+											var resultData = results && results.ResultSet && results.ResultSet.Result;
+
+										if (resultData) {
+											for (var i = 0; i < resultData.length; i++) {
+												data.push(
+													{
+														name: resultData[i]
+													}
+												);
+											}
 										}
 
 										queue.run();
@@ -587,32 +618,11 @@ AUI.add(
 						queue.after(
 							'complete',
 							function(event) {
-								instance._updateSelectList(AArray.unique(data), instance._suggestionsIterator);
+								instance._updateSelectList(AArray.unique(data));
 							}
 						);
 
 						queue.run();
-					},
-
-					_suggestionsIterator: function(item, index, collection) {
-						var instance = this;
-
-						var checked = instance.entries.indexOfKey(item) > -1 ? TPL_CHECKED : '';
-
-						var tag = {
-							checked: checked,
-							name: item
-						};
-
-						instance._formatEntry(tag);
-					},
-
-					_entriesIterator: function(item, index, collection) {
-						var instance = this;
-
-						item.checked = instance.entries.indexOfKey(item.name) > -1 ? TPL_CHECKED : '';
-
-						instance._formatEntry(item);
 					},
 
 					_updateHiddenInput: function(event) {
@@ -639,31 +649,17 @@ AUI.add(
 						}
 					},
 
-					_updateSelectList: function(data, iterator) {
+					_updateSelectList: function(data) {
 						var instance = this;
 
-						var popup = instance._popup;
+						for (var i = 0; i < data.length; i++) {
+							var tag = data[i];
 
-						popup.searchField.resetValue();
+							tag.checked = instance.entries.indexOfKey(tag.name) > -1 ? TPL_CHECKED : STR_BLANK;
+						}
 
-						instance._buffer = ['<fieldset class="' + (!data || !data.length ? CSS_NO_MATCHES : '') + '">'];
-
-						A.each(data, iterator, instance);
-
-						var buffer = instance._buffer;
-
-						var message = Lang.sub(TPL_MESSAGE, [Liferay.Language.get('no-tags-found')]);
-
-						buffer.push(message);
-						buffer.push('</fieldset>');
-
-						popup.entriesNode.html(buffer.join(''));
-
-						popup.liveSearch.get('nodes').refresh();
-						popup.liveSearch.refreshIndex();
-					},
-
-					_buffer: []
+						instance._renderTemplate(data);
+					}
 				}
 			}
 		);
@@ -672,6 +668,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['array-extras', 'async-queue', 'aui-autocomplete', 'aui-dialog', 'aui-io-request', 'aui-live-search', 'aui-textboxlist', 'aui-form-textfield', 'datasource-cache', 'liferay-service-datasource']
+		requires: ['array-extras', 'async-queue', 'aui-autocomplete', 'aui-dialog', 'aui-form-textfield', 'aui-io-request', 'aui-live-search', 'aui-template', 'aui-textboxlist', 'datasource-cache', 'liferay-service-datasource']
 	}
 );

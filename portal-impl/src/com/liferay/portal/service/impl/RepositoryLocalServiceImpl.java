@@ -196,6 +196,14 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 		long repositoryEntryId = getRepositoryEntryId(
 			folderId, fileEntryId, fileVersionId);
 
+		if (repositoryEntryId == folderId) {
+			DLFolder dlFolder = dlFolderLocalService.fetchDLFolder(folderId);
+
+			if ((dlFolder != null) && dlFolder.isMountPoint()) {
+				return getLocalRepositoryImpl(dlFolder.getRepositoryId());
+			}
+		}
+
 		LocalRepository localRepositoryImpl =
 			_localRepositoriesByRepositoryEntryId.get(repositoryEntryId);
 
@@ -271,14 +279,11 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 		long repositoryEntryId = getRepositoryEntryId(
 			folderId, fileEntryId, fileVersionId);
 
-		RepositoryEntry repositoryEntry =
-			repositoryEntryLocalService.fetchRepositoryEntry(repositoryEntryId);
+		if (repositoryEntryId == folderId) {
+			DLFolder dlFolder = dlFolderLocalService.fetchDLFolder(folderId);
 
-		if ((repositoryEntry == null) && (repositoryEntryId == folderId)) {
-			DLFolder folder = dlFolderLocalService.fetchDLFolder(folderId);
-
-			if ((folder != null) && folder.isMountPoint()) {
-				return getRepositoryImpl(folder.getRepositoryId());
+			if ((dlFolder != null) && dlFolder.isMountPoint()) {
+				return getRepositoryImpl(dlFolder.getRepositoryId());
 			}
 		}
 

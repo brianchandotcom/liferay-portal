@@ -41,6 +41,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -198,6 +200,63 @@ public abstract class BaseDB implements DB {
 
 	public long increment(String name) throws SystemException {
 		return CounterLocalServiceUtil.increment(name);
+	}
+
+	public boolean isPortalIndex(
+		Connection con, String indexName, boolean unique, String tableName) {
+
+		if ((con == null) || Validator.isNull(indexName) ||
+			Validator.isNull(tableName)) {
+
+			return false;
+		}
+
+		ResultSet rs = null;
+		StringBundler sb = new StringBundler();
+
+		sb.append(tableName + " (");
+
+		try {
+			DatabaseMetaData databaseMetaData = con.getMetaData();
+
+			rs = databaseMetaData.getIndexInfo(
+				null, null, tableName, unique, false);
+
+			while (rs.next()) {
+				String storedIndexName = rs.getString(
+					"INDEX_NAME").toUpperCase();
+
+				if (storedIndexName.equals(indexName)) {
+					sb.append(rs.getString("COLUMN_NAME"));
+					sb.append(", ");
+				}
+			}
+		}
+		catch (SQLException e) {
+			_log.error(e, e);
+		}
+		finally {
+			DataAccess.cleanUp(rs);
+		}
+
+		String indexSpec = sb.toString();
+
+		if (indexSpec.endsWith(", ")) {
+			indexSpec = indexSpec.substring(0, indexSpec.length()-2);
+		}
+
+		indexSpec = indexSpec.concat(");");
+
+		String indexHash = StringUtil.toHexString(
+			indexSpec.hashCode()).toUpperCase();
+
+		String generatedIndexName = "IX_" + indexHash;
+
+		if (indexName.equals(generatedIndexName)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isSupportsAlterColumnName() {
@@ -677,10 +736,28 @@ public abstract class BaseDB implements DB {
 				}
 			}
 
-			validIndexNames.remove(indexNameUpperCase);
+			int pos = tablesSQLLowerCase.indexOf(tableNameLowerCase);
+			String originalTableName = StringPool.BLANK;
 
-			runSQL(
-				con, "drop index " + indexNameUpperCase + " on " + tableName);
+			if (pos > 0) {
+				originalTableName = tablesSQL.substring(
+					pos, pos + tableName.length());
+
+				if (isPortalIndex(
+						con, indexNameUpperCase, unique, originalTableName)) {
+
+					validIndexNames.remove(indexNameUpperCase);
+
+					String sql =
+						"drop index " + indexNameUpperCase + " on " + tableName;
+
+					if (_log.isInfoEnabled()) {
+						_log.info(sql);
+					}
+
+					runSQL(con, sql);
+				}
+			}
 		}
 
 		return validIndexNames;

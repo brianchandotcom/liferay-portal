@@ -33,6 +33,7 @@ import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.service.ReleaseLocalServiceUtil;
 import com.liferay.portal.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.util.InitUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.sql.Connection;
@@ -208,9 +209,11 @@ public class DBUpgrader {
 
 		// Update indexes
 
-		if (StartupHelperUtil.isUpgraded()) {
-			StartupHelperUtil.updateIndexes();
+		if (PropsValues.VERIFY_DROP_UNUSED_INDEXES) {
+			StartupHelperUtil.setDropIndexes(true);
 		}
+
+		StartupHelperUtil.updateIndexes();
 
 		// Update release
 

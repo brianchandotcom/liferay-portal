@@ -2159,6 +2159,8 @@ public interface PropsKeys {
 
 	public static final String VELOCITY_ENGINE_VELOCIMACRO_LIBRARY = "velocity.engine.velocimacro.library";
 
+	public static final String VERIFY_DROP_UNUSED_INDEXES = "verify.drop.unused.indexes";
+
 	public static final String VERIFY_FREQUENCY = "verify.frequency";
 
 	public static final String VERIFY_PROCESSES = "verify.processes";

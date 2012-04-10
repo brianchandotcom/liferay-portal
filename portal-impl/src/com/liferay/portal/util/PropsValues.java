@@ -1574,6 +1574,8 @@ public class PropsValues {
 
 	public static final int VALUE_OBJECT_FINDER_THREAD_LOCAL_CACHE_MAX_SIZE = GetterUtil.getInteger(PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_THREAD_LOCAL_CACHE_MAX_SIZE));
 
+	public static final boolean VERIFY_DROP_UNUSED_INDEXES = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.VERIFY_DROP_UNUSED_INDEXES));
+
 	public static final String[] VELOCITY_ENGINE_RESOURCE_LISTENERS = PropsUtil.getArray(PropsKeys.VELOCITY_ENGINE_RESOURCE_LISTENERS);
 
 	public static final boolean VELOCITY_ENGINE_RESOURCE_MANAGER_CACHE_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.VELOCITY_ENGINE_RESOURCE_MANAGER_CACHE_ENABLED));

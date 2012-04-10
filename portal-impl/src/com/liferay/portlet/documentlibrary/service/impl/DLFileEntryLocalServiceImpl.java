@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageToolUtil;
+import com.liferay.portal.kernel.increment.BufferedIncrement;
+import com.liferay.portal.kernel.increment.NumberIncrement;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
@@ -601,14 +603,18 @@ public class DLFileEntryLocalServiceImpl
 			boolean incrementCounter)
 		throws PortalException, SystemException {
 
+		return getFile(userId, fileEntryId, version, incrementCounter, 1);
+	}
+
+	public File getFile(
+			long userId, long fileEntryId, String version,
+			boolean incrementCounter, int increment)
+		throws PortalException, SystemException {
+
 		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
 			fileEntryId);
 
-		if (PropsValues.DL_FILE_ENTRY_READ_COUNT_ENABLED && incrementCounter) {
-			dlFileEntry.setReadCount(dlFileEntry.getReadCount() + 1);
-
-			dlFileEntryPersistence.update(dlFileEntry, false);
-		}
+		incrementViewCounter(dlFileEntry, incrementCounter, increment);
 
 		dlAppHelperLocalService.getFileAsStream(
 			userId, new LiferayFileEntry(dlFileEntry), incrementCounter);
@@ -622,7 +628,7 @@ public class DLFileEntryLocalServiceImpl
 			long userId, long fileEntryId, String version)
 		throws PortalException, SystemException {
 
-		return getFileAsStream(userId, fileEntryId, version, true);
+		return getFileAsStream(userId, fileEntryId, version, true, 1);
 	}
 
 	public InputStream getFileAsStream(
@@ -630,14 +636,19 @@ public class DLFileEntryLocalServiceImpl
 			boolean incrementCounter)
 		throws PortalException, SystemException {
 
+		return getFileAsStream(
+			userId, fileEntryId, version, incrementCounter, 1);
+	}
+
+	public InputStream getFileAsStream(
+			long userId, long fileEntryId, String version,
+			boolean incrementCounter, int increment)
+		throws PortalException, SystemException {
+
 		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
 			fileEntryId);
 
-		if (PropsValues.DL_FILE_ENTRY_READ_COUNT_ENABLED && incrementCounter) {
-			dlFileEntry.setReadCount(dlFileEntry.getReadCount() + 1);
-
-			dlFileEntryPersistence.update(dlFileEntry, false);
-		}
+		incrementViewCounter(dlFileEntry, incrementCounter, increment);
 
 		dlAppHelperLocalService.getFileAsStream(
 			userId, new LiferayFileEntry(dlFileEntry), incrementCounter);
@@ -817,6 +828,21 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		return hasLock;
+	}
+
+	@BufferedIncrement(incrementClass = NumberIncrement.class)
+	public void incrementViewCounter(
+			DLFileEntry dlFileEntry, boolean incrementCounter, int increment)
+		throws PortalException, SystemException {
+
+		if ( !(PropsValues.DL_FILE_ENTRY_READ_COUNT_ENABLED &&
+				incrementCounter) ) {
+			return;
+		}
+
+		dlFileEntry.setReadCount(dlFileEntry.getReadCount() + increment);
+
+		dlFileEntryPersistence.update(dlFileEntry, false);
 	}
 
 	public boolean isFileEntryCheckedOut(long fileEntryId)

@@ -3768,6 +3768,7 @@ file.
 		<ant dir="portal-service" target="test-integration" inheritAll="false" />
 		<ant dir="portal-impl" target="test-integration" inheritAll="false" />
 		<ant dir="util-java" target="test-integration" inheritAll="false" />
+		<ant dir="portal-impl" target="test-integration-with-tomcat-started" inheritAll="false" />
 	</target>
 
 	<target name="test-unit">

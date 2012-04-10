@@ -43,6 +43,8 @@ public interface PACLPolicy {
 
 	public boolean hasHookService(String className);
 
+	public boolean hasSQLStatement(String sql);
+
 	public boolean hasService(Object object, Method method);
 
 	public boolean hasSocketConnect(String host, int port);

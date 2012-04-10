@@ -27,6 +27,7 @@ import com.liferay.portal.util.PortalUtil;
 import edu.emory.mathcs.backport.java.util.Collections;
 
 import java.io.FilePermission;
+import java.io.*;
 
 import java.lang.reflect.Method;
 
@@ -44,9 +45,12 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Tomas Polesovsky
  */
 public class ActivePACLPolicy extends BasePACLPolicy {
 
@@ -65,6 +69,7 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		initServices();
 		initSocketConnectHostsAndPorts();
 		initSocketListenPorts();
+		initSQLStatements();
 	}
 
 	public boolean hasDynamicQuery(Class<?> clazz) {
@@ -159,6 +164,59 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 
 	public boolean hasHookService(String className) {
 		return _hookServices.contains(className);
+	}
+
+	public boolean hasSQLStatement(String sql) {
+		String normalizedSQL = sql.trim().toLowerCase();
+
+		if(normalizedSQL.charAt(0) == 'i'){
+			String tableName = normalizedSQL.substring(12, normalizedSQL.indexOf(" ", 12));
+			return isTableAllowed(SQL_STATEMENT_TYPE.INSERT, tableName);
+		}
+		if(normalizedSQL.charAt(0) == 'u'){
+			String tableName = normalizedSQL.substring(7, normalizedSQL.indexOf(" ", 7));
+			return isTableAllowed(SQL_STATEMENT_TYPE.UPDATE, tableName);
+		}
+		if(normalizedSQL.charAt(0) == 'd'){
+			String tableName = normalizedSQL.substring(12, normalizedSQL.indexOf(" ", 12));
+			return isTableAllowed(SQL_STATEMENT_TYPE.DELETE, tableName);
+		}
+
+		if(normalizedSQL.charAt(0) == 's'){
+
+			int fromIdx = normalizedSQL.indexOf(" from ");
+			int whereIdx = normalizedSQL.indexOf(" where ", fromIdx);
+
+			String tablesDefinition = normalizedSQL.substring(fromIdx + 6, whereIdx > 0 ? whereIdx : normalizedSQL.length());
+			String[] tablesDefinitionParts = StringUtil.split(tablesDefinition, " join ");
+
+			if(tablesDefinition.length() > 0){
+				String fromDefinition = tablesDefinitionParts[0];
+				String[] fromTables = StringUtil.split(fromDefinition);
+
+				for(String table : fromTables){
+					String tableNormalized = table.trim();
+					int spaceIdx = tableNormalized.indexOf(" ");
+					String tableName = spaceIdx > -1 ? tableNormalized.substring(0, spaceIdx) : tableNormalized;
+					if(!isTableAllowed(SQL_STATEMENT_TYPE.SELECT, tableName)){
+						return false;
+					}
+				}
+
+				for (int i = 1; i < tablesDefinitionParts.length; i++) {
+					String tableNormalized = tablesDefinitionParts[i].trim();
+					int spaceIdx = tableNormalized.indexOf(" ");
+					String tableName = spaceIdx > -1 ? tableNormalized.substring(0, spaceIdx) : tableNormalized;
+					if(!isTableAllowed(SQL_STATEMENT_TYPE.SELECT, tableName)){
+						return false;
+					}
+				}
+			}
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean hasService(Object object, Method method) {
@@ -306,6 +364,15 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		}
 
 		return services;
+	}
+
+	protected boolean isTableAllowed(SQL_STATEMENT_TYPE type, String tableName){
+		for(String allowedTables : _databaseTables.get(type)){
+			if(allowedTables.equals(tableName)){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	protected void initFiles() {
@@ -539,6 +606,73 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		}
 	}
 
+	protected void initSQLStatements(){
+		Properties properties = getProperties();
+		for(SQL_STATEMENT_TYPE type : SQL_STATEMENT_TYPE.values()){
+			_databaseTables.put(type, new HashSet<String>());
+		}
+
+		initDBTables(SQL_STATEMENT_TYPE.INSERT,
+				properties.getProperty(
+						"security-manager-db-tables-insert"));
+		initDBTables(SQL_STATEMENT_TYPE.SELECT,
+				properties.getProperty(
+						"security-manager-db-tables-select"));
+		initDBTables(SQL_STATEMENT_TYPE.UPDATE,
+				properties.getProperty(
+						"security-manager-db-tables-update"));
+		initDBTables(SQL_STATEMENT_TYPE.DELETE,
+				properties.getProperty(
+						"security-manager-db-tables-delete"));
+
+		InputStream is = getClassLoader().getResourceAsStream("/META-INF/portlet-hbm.xml");
+		Pattern tablePattern = Pattern.compile("^.*class .* table=\"([^\"]+)\".*$");
+		try {
+			if(is != null){
+				BufferedReader br = new BufferedReader(new InputStreamReader(is));
+				String line = br.readLine();
+				while(line != null){
+					Matcher m = tablePattern.matcher(line);
+					if(m.matches()){
+						String tableName = m.group(1);
+						// TODO: we need to be aware of portal tables that can be referenced from the portlet hibernate also (which is not common but can happen). In this case we should not allow this automatic addition and force user to specify permissions for these portal tables explicitly in the properties file
+						initDBTables(SQL_STATEMENT_TYPE.INSERT, tableName);
+						initDBTables(SQL_STATEMENT_TYPE.SELECT, tableName);
+						initDBTables(SQL_STATEMENT_TYPE.UPDATE, tableName);
+						initDBTables(SQL_STATEMENT_TYPE.DELETE, tableName);
+					}
+					line = br.readLine();
+				}
+			}
+		} catch(Exception ex) {
+			_log.error(ex);
+		} finally {
+			if(is!=null){
+				try {
+					is.close();
+				} catch(IOException ex){
+					_log.error(ex);
+				}
+			}
+		}
+
+	}
+
+	protected void initDBTables(SQL_STATEMENT_TYPE type, String tables){
+		if(tables != null && tables.length() > 0){
+			String[] tableParts = StringUtil.split(tables);
+			for (String table : tableParts) {
+				if(table.length() > 0){
+					if(_log.isDebugEnabled()){
+						_log.debug("Allowing SQL operation " + type + " on " + table);
+					}
+					Set<String> dbTable = _databaseTables.get(type);
+					dbTable.add(table.toLowerCase().trim());
+				}
+			}
+		}
+	}
+
 	private static final String _FILE_PERMISSION_DELETE = "delete";
 
 	private static final String _FILE_PERMISSION_EXECUTE = "execute";
@@ -548,6 +682,10 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 	private static final String _FILE_PERMISSION_WRITE = "write";
 
 	private static final String _PORTAL_SERVLET_CONTEXT_NAME = "portal";
+
+	private enum SQL_STATEMENT_TYPE {
+		INSERT, UPDATE, DELETE, SELECT
+	}
 
 	private static Log _log = LogFactoryUtil.getLog(ActivePACLPolicy.class);
 
@@ -565,6 +703,7 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 	private Map<String, Set<Integer>> _socketConnectHostsAndPorts =
 		new HashMap<String, Set<Integer>>();
 	private Set<Integer> _socketListenPorts = new HashSet<Integer>();
+	private Map<SQL_STATEMENT_TYPE, Set<String>> _databaseTables = new HashMap<SQL_STATEMENT_TYPE, Set<String>>();
 	private List<Permission> _writeFilePermissions;
 
 }

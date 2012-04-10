@@ -1562,16 +1562,13 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		PortletPreferences preferences =
 			ServiceContextUtil.getPortletPreferences(serviceContext);
 
-		if (preferences == null) {
-			long ownerId = node.getGroupId();
-			int ownerType = PortletKeys.PREFS_OWNER_TYPE_GROUP;
-			long plid = PortletKeys.PREFS_PLID_SHARED;
-			String portletId = PortletKeys.WIKI;
-			String defaultPreferences = null;
+		String portletId = serviceContext.getPortletId();
 
+		if ((preferences == null) || !portletId.equals(PortletKeys.WIKI)) {
 			preferences = portletPreferencesLocalService.getPreferences(
-				node.getCompanyId(), ownerId, ownerType, plid, portletId,
-				defaultPreferences);
+				node.getCompanyId(), node.getGroupId(),
+				PortletKeys.PREFS_OWNER_TYPE_GROUP,
+				PortletKeys.PREFS_PLID_SHARED, portletId, null);
 		}
 
 		if (!update && WikiUtil.getEmailPageAddedEnabled(preferences)) {

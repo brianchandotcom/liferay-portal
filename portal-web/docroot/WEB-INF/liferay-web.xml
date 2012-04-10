@@ -807,12 +807,6 @@
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>Cache Filter - Resource</filter-name>
-		<url-pattern>/image/*</url-pattern>
-		<dispatcher>FORWARD</dispatcher>
-		<dispatcher>REQUEST</dispatcher>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>Cache Filter - Resource</filter-name>
 		<url-pattern>/language/*</url-pattern>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>REQUEST</dispatcher>

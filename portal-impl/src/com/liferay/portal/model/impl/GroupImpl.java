@@ -144,7 +144,7 @@ public class GroupImpl extends GroupBaseImpl {
 
 			Group group = organization.getGroup();
 
-			if (group.isStaged() && !hasStagingGroup()) {
+			if (group.isStaged() && isStagingGroup()) {
 				name = name.concat(" (Staging)");
 			}
 		}

@@ -271,6 +271,17 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 		long repositoryEntryId = getRepositoryEntryId(
 			folderId, fileEntryId, fileVersionId);
 
+		RepositoryEntry repositoryEntry =
+			repositoryEntryLocalService.fetchRepositoryEntry(repositoryEntryId);
+
+		if ((repositoryEntry == null) && (repositoryEntryId == folderId)) {
+			DLFolder folder = dlFolderLocalService.fetchDLFolder(folderId);
+
+			if ((folder != null) && folder.isMountPoint()) {
+				return getRepositoryImpl(folder.getRepositoryId());
+			}
+		}
+
 		com.liferay.portal.kernel.repository.Repository repositoryImpl =
 			_repositoriesByEntryId.get(repositoryEntryId);
 

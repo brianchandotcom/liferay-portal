@@ -585,11 +585,11 @@ public class ServiceContext implements Cloneable, Serializable {
 	 * @see    com.liferay.portal.kernel.servlet.HttpHeaders
 	 */
 	public String getUserAgent() {
-		if (_headers == null) {
+		if (_request == null) {
 			return null;
 		}
 
-		return _headers.get(HttpHeaders.USER_AGENT);
+		return _request.getHeader(HttpHeaders.USER_AGENT);
 	}
 
 	/**

@@ -58,8 +58,8 @@ public class ViewAssignMembersCommunityUserGroupTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Community Groups User Groups"),
-			selenium.getText("//tr[3]/td[1]"));
+		assertTrue(selenium.isPartialText("//tr[3]/td[1]",
+				"Community Groups User Groups"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",

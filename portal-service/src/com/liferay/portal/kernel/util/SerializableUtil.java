@@ -52,6 +52,26 @@ public class SerializableUtil {
 		}
 	}
 
+	public static Object deserialize(byte[] bytes, ClassLoader classLoader) {
+		ObjectInputStream objectInputStream = null;
+
+		try {
+			objectInputStream = new ClassLoaderObjectInputStream(
+				new UnsyncByteArrayInputStream(bytes), classLoader);
+
+			return objectInputStream.readObject();
+		}
+		catch (ClassNotFoundException cnfe) {
+			throw new RuntimeException(cnfe);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+		finally {
+			StreamUtil.cleanUp(objectInputStream);
+		}
+	}
+
 	public static byte[] serialize(Object object) {
 		ObjectOutputStream objectOutputStream = null;
 

@@ -14,7 +14,7 @@
 
 package com.liferay.portlet;
 
-import com.liferay.portal.kernel.util.Base64;
+import com.liferay.util.SerializableUtil;
 
 import java.io.Serializable;
 
@@ -33,17 +33,6 @@ public class EventImpl implements Event {
 		_value = value;
 	}
 
-	public String getBase64Value() {
-		if (_base64Value != null) {
-			return _base64Value;
-		}
-		else {
-			_base64Value = Base64.objectToString(_value);
-
-			return _base64Value;
-		}
-	}
-
 	public String getName() {
 		return _name;
 	}
@@ -52,13 +41,21 @@ public class EventImpl implements Event {
 		return _qName;
 	}
 
+	public byte[] getSerializedValue() {
+		if (_serializedValue == null) {
+			_serializedValue = SerializableUtil.serialize(_value);
+		}
+
+		return _serializedValue;
+	}
+
 	public Serializable getValue() {
 		return _value;
 	}
 
-	private String _base64Value;
 	private String _name;
 	private QName _qName;
+	private byte[] _serializedValue;
 	private Serializable _value;
 
 }

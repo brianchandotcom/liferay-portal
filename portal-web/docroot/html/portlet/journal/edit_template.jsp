@@ -51,14 +51,6 @@ if (Validator.isNotNull(structureId)) {
 	catch (NoSuchStructureException nsse) {
 	}
 
-	if ((structure == null) && (groupId != themeDisplay.getCompanyGroupId())) {
-		try {
-			structure = JournalStructureLocalServiceUtil.getStructure(themeDisplay.getCompanyGroupId(), structureId);
-		}
-		catch (NoSuchStructureException nsse) {
-		}
-	}
-
 	if (structure != null) {
 		structureGroupId = structure.getGroupId();
 		structureName = structure.getName(locale);

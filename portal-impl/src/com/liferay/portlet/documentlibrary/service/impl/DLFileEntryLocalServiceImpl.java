@@ -835,8 +835,9 @@ public class DLFileEntryLocalServiceImpl
 			DLFileEntry dlFileEntry, boolean incrementCounter, int increment)
 		throws PortalException, SystemException {
 
-		if ( !(PropsValues.DL_FILE_ENTRY_READ_COUNT_ENABLED &&
-				incrementCounter) ) {
+		if (!(PropsValues.DL_FILE_ENTRY_READ_COUNT_ENABLED &&
+				incrementCounter)) {
+
 			return;
 		}
 

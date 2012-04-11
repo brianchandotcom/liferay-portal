@@ -21,7 +21,9 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portlet.PortletPreferencesImpl;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
@@ -170,6 +172,35 @@ public class LocalizationImplTest {
 			_germanHello,
 			LocalizationUtil.getPreferencesValue(
 				preferences, "greeting", _germanId));
+	}
+
+	@Test
+	public void testUpdateLocalizationXmlFromMap() {
+		Map<Locale, String>localizationMap = new HashMap<Locale, String>();
+		localizationMap.put(_english, _englishHello);
+
+		StringBundler sb = new StringBundler();
+		sb.append("<?xml version='1.0' encoding='UTF-8'?>");
+		sb.append("<root available-locales=\"en_US,de_DE\" ");
+		sb.append("default-locale=\"en_US\">");
+		sb.append("<greeting language-id=\"de_DE\">");
+		sb.append("<![CDATA[Beispiel auf Deutschl]]>");
+		sb.append("</greeting>");
+		sb.append("<greeting language-id=\"en_US\">");
+		sb.append("<![CDATA[Example in English]]>");
+		sb.append("</greeting>");
+		sb.append("</root>");
+
+		String xml = LocalizationUtil.updateLocalizationXmlFromMap(
+			localizationMap, sb.toString(), "greeting",
+			LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
+
+		Assert.assertEquals(
+			_englishHello, LocalizationUtil.getLocalization(
+				xml, _englishId, false));
+		Assert.assertEquals(
+			StringPool.BLANK, LocalizationUtil.getLocalization(
+				xml, _germanId, false));
 	}
 
 	private Locale _english;

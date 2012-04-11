@@ -99,7 +99,7 @@ public class JournalTemplatePermission {
 		throws PortalException, SystemException {
 
 		JournalTemplate template = JournalTemplateLocalServiceUtil.getTemplate(
-			groupId, templateId);
+			groupId, templateId, true);
 
 		return contains(permissionChecker, template, actionId);
 	}

@@ -64,18 +64,9 @@ if ((structure == null) && Validator.isNotNull(templateId)) {
 	JournalTemplate template = null;
 
 	try {
-		template = JournalTemplateLocalServiceUtil.getTemplate(groupId, templateId);
+		template = JournalTemplateLocalServiceUtil.getTemplate(groupId, templateId, true);
 	}
-	catch (NoSuchTemplateException nste1) {
-		if (groupId != themeDisplay.getCompanyGroupId()) {
-			try {
-				template = JournalTemplateLocalServiceUtil.getTemplate(themeDisplay.getCompanyGroupId(), templateId);
-
-				structureGroupId = themeDisplay.getCompanyGroupId();
-			}
-			catch (NoSuchTemplateException nste2) {
-			}
-		}
+	catch (NoSuchTemplateException nste) {
 	}
 
 	if (template != null) {

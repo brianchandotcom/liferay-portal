@@ -68,7 +68,7 @@ public class GetTemplateAction extends Action {
 
 			JournalTemplate template =
 				JournalTemplateLocalServiceUtil.getTemplate(
-					groupId, templateId);
+					groupId, templateId, true);
 
 			String script = JournalUtil.getTemplateScript(
 				template, tokens, languageId, transform);

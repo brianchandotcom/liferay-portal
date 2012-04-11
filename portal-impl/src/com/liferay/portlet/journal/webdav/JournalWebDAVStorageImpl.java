@@ -125,7 +125,8 @@ public class JournalWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 					try {
 						JournalTemplate journalTemplate =
 							JournalTemplateLocalServiceUtil.getTemplate(
-								webDavRequest.getGroupId(), journalTypeId);
+								webDavRequest.getGroupId(), journalTypeId,
+								true);
 
 						return toResource(
 							webDavRequest, journalTemplate, false);

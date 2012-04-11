@@ -403,6 +403,15 @@ public class JournalTemplateLocalServiceUtil {
 		return getService().getTemplate(groupId, templateId);
 	}
 
+	public static com.liferay.portlet.journal.model.JournalTemplate getTemplate(
+		long groupId, java.lang.String templateId,
+		boolean includeGlobalStructures)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getTemplate(groupId, templateId, includeGlobalStructures);
+	}
+
 	public static com.liferay.portlet.journal.model.JournalTemplate getTemplateBySmallImageId(
 		long smallImageId)
 		throws com.liferay.portal.kernel.exception.PortalException,

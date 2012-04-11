@@ -338,6 +338,13 @@ public interface JournalTemplateLocalService extends PersistedModelLocalService 
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.journal.model.JournalTemplate getTemplate(
+		long groupId, java.lang.String templateId,
+		boolean includeGlobalStructures)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.journal.model.JournalTemplate getTemplateBySmallImageId(
 		long smallImageId)
 		throws com.liferay.portal.kernel.exception.PortalException,

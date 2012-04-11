@@ -58,7 +58,6 @@ import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.journal.FeedTargetLayoutFriendlyUrlException;
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.NoSuchStructureException;
-import com.liferay.portlet.journal.NoSuchTemplateException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalArticleImage;
@@ -180,16 +179,9 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		}
 
 		if (Validator.isNotNull(article.getTemplateId())) {
-			JournalTemplate template = null;
-
-			try {
-				template = JournalTemplateLocalServiceUtil.getTemplate(
-					article.getGroupId(), article.getTemplateId());
-			}
-			catch (NoSuchTemplateException nste) {
-				template = JournalTemplateLocalServiceUtil.getTemplate(
-					companyGroup.getGroupId(), article.getTemplateId());
-			}
+			JournalTemplate template =
+				JournalTemplateLocalServiceUtil.getTemplate(
+					article.getGroupId(), article.getTemplateId(), true);
 
 			articleElement.addAttribute("template-uuid", template.getUuid());
 

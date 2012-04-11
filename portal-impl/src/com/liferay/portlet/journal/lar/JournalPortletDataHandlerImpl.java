@@ -170,16 +170,9 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			article.getCompanyId());
 
 		if (Validator.isNotNull(article.getStructureId())) {
-			JournalStructure structure = null;
-
-			try {
-				structure = JournalStructureLocalServiceUtil.getStructure(
+			JournalStructure structure =
+				JournalStructureLocalServiceUtil.getStructure(
 					article.getGroupId(), article.getStructureId());
-			}
-			catch (NoSuchStructureException nsse) {
-				structure = JournalStructureLocalServiceUtil.getStructure(
-					companyGroup.getGroupId(), article.getStructureId());
-			}
 
 			articleElement.addAttribute("structure-uuid", structure.getUuid());
 

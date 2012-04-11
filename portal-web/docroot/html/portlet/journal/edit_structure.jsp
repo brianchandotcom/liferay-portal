@@ -59,14 +59,6 @@ if (Validator.isNotNull(parentStructureId)) {
 	}
 }
 
-if ((parentStructure == null) && (groupId != themeDisplay.getCompanyGroupId())) {
-	try {
-		parentStructure = JournalStructureLocalServiceUtil.getStructure(themeDisplay.getCompanyGroupId(), parentStructureId);
-	}
-	catch (NoSuchStructureException nsse) {
-	}
-}
-
 if (parentStructure != null) {
 	parentStructureName = parentStructure.getName(locale);
 }

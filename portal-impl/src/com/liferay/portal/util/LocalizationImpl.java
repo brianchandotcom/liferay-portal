@@ -725,6 +725,28 @@ public class LocalizationImpl implements Localization {
 		return xml;
 	}
 
+	public String updateLocalizationXmlFromMap(
+		Map<Locale, String> localizationMap, String xml, String key,
+		String defaultLanguageId) {
+
+		Locale[] locales = LanguageUtil.getAvailableLocales();
+
+		for (Locale locale : locales) {
+			String value = localizationMap.get(locale);
+			String languageId = LocaleUtil.toLanguageId(locale);
+
+			if (Validator.isNotNull(value)) {
+				xml = updateLocalization(
+					xml, key, value, languageId, defaultLanguageId);
+			}
+			else {
+				xml = removeLocalization(xml, key, languageId);
+			}
+		}
+
+		return xml;
+	}
+
 	private void _copyNonExempt(
 			XMLStreamReader xmlStreamReader, XMLStreamWriter xmlStreamWriter,
 			String exemptLanguageId, String defaultLanguageId, boolean cdata)

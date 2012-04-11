@@ -53,15 +53,7 @@ String parentStructureName = StringPool.BLANK;
 
 if (Validator.isNotNull(parentStructureId)) {
 	try {
-		parentStructure = JournalStructureLocalServiceUtil.getStructure(groupId, parentStructureId);
-	}
-	catch (NoSuchStructureException nsse) {
-	}
-}
-
-if ((parentStructure == null) && (groupId != themeDisplay.getCompanyGroupId())) {
-	try {
-		parentStructure = JournalStructureLocalServiceUtil.getStructure(themeDisplay.getCompanyGroupId(), parentStructureId);
+		parentStructure = JournalStructureLocalServiceUtil.getStructure(groupId, parentStructureId, true);
 	}
 	catch (NoSuchStructureException nsse) {
 	}

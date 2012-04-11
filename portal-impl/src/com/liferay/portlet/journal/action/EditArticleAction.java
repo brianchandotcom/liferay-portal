@@ -719,18 +719,9 @@ public class EditArticleAction extends PortletAction {
 			}
 			else {
 				if (curArticle.isTemplateDriven()) {
-					JournalStructure structure = null;
-
-					try {
-						structure =
-							JournalStructureLocalServiceUtil.getStructure(
-								groupId, structureId);
-					}
-					catch (NoSuchStructureException nsse) {
-						structure =
-							JournalStructureLocalServiceUtil.getStructure(
-								themeDisplay.getCompanyGroupId(), structureId);
-					}
+					JournalStructure structure =
+						JournalStructureLocalServiceUtil.getStructure(
+							groupId, structureId, true);
 
 					content = JournalUtil.mergeArticleContent(
 						curArticle.getContent(), content, true);

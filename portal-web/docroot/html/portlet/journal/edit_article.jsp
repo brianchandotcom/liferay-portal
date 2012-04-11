@@ -70,18 +70,11 @@ long structureGroupId = groupId;
 
 if (Validator.isNotNull(structureId)) {
 	try {
-		structure = JournalStructureLocalServiceUtil.getStructure(groupId, structureId);
-	}
-	catch (NoSuchStructureException nsse1) {
-		if (groupId != themeDisplay.getCompanyGroupId()) {
-			try {
-				structure = JournalStructureLocalServiceUtil.getStructure(themeDisplay.getCompanyGroupId(), structureId);
+		structure = JournalStructureLocalServiceUtil.getStructure(groupId, structureId, true);
 
-				structureGroupId = structure.getGroupId();
-			}
-			catch (NoSuchStructureException nsse2) {
-			}
-		}
+		structureGroupId = structure.getGroupId();
+	}
+	catch (NoSuchStructureException nsse) {
 	}
 }
 

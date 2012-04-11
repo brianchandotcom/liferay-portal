@@ -47,7 +47,7 @@ public class GetStructureAction extends Action {
 
 			JournalStructure structure =
 				JournalStructureLocalServiceUtil.getStructure(
-					groupId, structureId);
+					groupId, structureId, true);
 
 			String fileName = null;
 			byte[] bytes = structure.getXsd().getBytes();

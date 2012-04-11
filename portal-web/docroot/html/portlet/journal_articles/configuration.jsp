@@ -27,19 +27,14 @@ JournalStructure structure= null;
 
 if (Validator.isNotNull(structureId)) {
 	try {
-		structure = JournalStructureLocalServiceUtil.getStructure(groupId, structureId);
+		structure = JournalStructureLocalServiceUtil.getStructure(groupId, structureId, true);
 	}
-	catch (NoSuchStructureException nsse1) {
-		try {
-			structure = JournalStructureLocalServiceUtil.getStructure(themeDisplay.getCompanyGroupId(), structureId);
-		}
-		catch (NoSuchStructureException nsse2) {
-			structureId = StringPool.BLANK;
+	catch (NoSuchStructureException nsse) {
+		structureId = StringPool.BLANK;
 
-			preferences.setValue("structure-id", structureId);
+		preferences.setValue("structure-id", structureId);
 
-			preferences.store();
-		}
+		preferences.store();
 	}
 }
 %>

@@ -88,7 +88,8 @@ public class JournalStructurePermission {
 		throws PortalException, SystemException {
 
 		JournalStructure structure =
-			JournalStructureLocalServiceUtil.getStructure(groupId, structureId);
+			JournalStructureLocalServiceUtil.getStructure(
+				groupId, structureId, true);
 
 		return contains(permissionChecker, structure, actionId);
 	}

@@ -46,17 +46,9 @@ if (Validator.isNotNull(structureId)) {
 	JournalStructure structure = null;
 
 	try {
-		structure = JournalStructureLocalServiceUtil.getStructure(groupId, structureId);
+		structure = JournalStructureLocalServiceUtil.getStructure(groupId, structureId, true);
 	}
 	catch (NoSuchStructureException nsse) {
-	}
-
-	if ((structure == null) && (groupId != themeDisplay.getCompanyGroupId())) {
-		try {
-			structure = JournalStructureLocalServiceUtil.getStructure(themeDisplay.getCompanyGroupId(), structureId);
-		}
-		catch (NoSuchStructureException nsse) {
-		}
 	}
 
 	if (structure != null) {

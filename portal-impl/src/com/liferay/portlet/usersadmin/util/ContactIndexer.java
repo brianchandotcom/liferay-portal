@@ -178,8 +178,10 @@ public class ContactIndexer extends BaseIndexer {
 
 		Document document = getDocument(contact);
 
-		SearchEngineUtil.updateDocument(
-			getSearchEngineId(), contact.getCompanyId(), document);
+		if (document != null) {
+			SearchEngineUtil.updateDocument(
+				getSearchEngineId(), contact.getCompanyId(), document);
+		}
 	}
 
 	@Override

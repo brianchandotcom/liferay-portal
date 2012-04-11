@@ -402,6 +402,13 @@ public class JournalTemplateLocalServiceImpl
 	public JournalTemplate getTemplate(long groupId, String templateId)
 		throws PortalException, SystemException {
 
+		return getTemplate(groupId, templateId, false);
+	}
+
+	public JournalTemplate getTemplate(
+			long groupId, String templateId, boolean includeGlobalStructures)
+		throws PortalException, SystemException {
+
 		templateId = GetterUtil.getString(templateId).toUpperCase();
 
 		if (groupId == 0) {
@@ -413,18 +420,33 @@ public class JournalTemplateLocalServiceImpl
 			List<JournalTemplate> templates =
 				journalTemplatePersistence.findByTemplateId(templateId);
 
-			if (templates.size() == 0) {
-				throw new NoSuchTemplateException(
-					"No JournalTemplate exists with the template id " +
-						templateId);
-			}
-			else {
+			if (!templates.isEmpty()) {
 				return templates.get(0);
 			}
+
+			throw new NoSuchTemplateException(
+				"No JournalTemplate exists with the template id " + templateId);
 		}
-		else {
-			return journalTemplatePersistence.findByG_T(groupId, templateId);
+
+		JournalTemplate template = journalTemplatePersistence.fetchByG_T(
+			groupId, templateId);
+
+		if (template != null) {
+			return template;
 		}
+
+		if (!includeGlobalStructures) {
+			throw new NoSuchTemplateException(
+				"No JournalTemplate exists with the template id " + templateId);
+		}
+
+		Group group = groupPersistence.findByPrimaryKey(groupId);
+
+		Group companyGroup = groupLocalService.getCompanyGroup(
+			group.getCompanyId());
+
+		return journalTemplatePersistence.findByG_T(
+			companyGroup.getGroupId(), templateId);
 	}
 
 	public JournalTemplate getTemplateBySmallImageId(long smallImageId)

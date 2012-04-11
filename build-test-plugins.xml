@@ -247,6 +247,60 @@ print AdminConfig.save()</echo>
 		</exec>
 	</target>
 
+	<target name="test-build-plugins-marketplace">
+		<delete file="${lp.plugins.dir}/liferay-releng-properties.txt" />
+
+		<for param="releng.properties.file">
+			<path>
+				<fileset
+					dir="${lp.plugins.dir}"
+					includes="**/liferay-releng.properties"
+				/>
+			</path>
+			<sequential>
+				<var name="releng.properties.content" unset="true" />
+
+				<loadfile property="releng.properties.content" srcfile="@{releng.properties.file}">
+					<filterchain>
+						<expandproperties />
+					</filterchain>
+				</loadfile>
+
+				<if>
+					<contains string="${releng.properties.content}" substring="marketplace=true" />
+					<then>
+						<echo file="${lp.plugins.dir}/liferay-releng-properties.txt" append="true">@{releng.properties.file}
+</echo>
+					</then>
+				</if>
+			</sequential>
+		</for>
+
+		<replaceregexp
+			file="${lp.plugins.dir}/liferay-releng-properties.txt"
+			match=".*\\(hooks|layouttpl|portlets|themes|webs)\\"
+			replace=""
+			byline="true"
+		/>
+
+		<replaceregexp
+			file="${lp.plugins.dir}/liferay-releng-properties.txt"
+			match="\\docroot\\WEB-INF\\liferay-releng.properties\n"
+			replace=","
+			flags="g"
+		/>
+
+		<loadfile property="liferay.releng.properties.list" srcfile="${lp.plugins.dir}/liferay-releng-properties.txt" />
+
+		<delete file="${lp.plugins.dir}/liferay-releng-properties.txt" />
+
+		<echo file="${lp.plugins.dir}/build.${user.name}.properties">plugins.includes=${liferay.releng.properties.list}</echo>
+
+		<ant antfile="${lp.plugins.dir}/build.xml" target="all" inheritAll="false" />
+
+		<delete file="${lp.plugins.dir}/build.${user.name}.properties" />
+	</target>
+
 	<target name="test-create">
 		<echo file="${lp.plugins.dir}/build.${user.name}.properties">app.server.dir=${app.server.tomcat.dir}</echo>
 

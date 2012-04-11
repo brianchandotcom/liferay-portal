@@ -3790,6 +3790,7 @@ file.
 
 		<!--<ant dir="util-java" target="test" inheritAll="false" />-->
 
+		<ant antfile="build-test-plugins.xml" target="test-build-plugins-marketplace" inheritAll="false" />
 		<ant antfile="build-test-plugins.xml" target="test-create" inheritAll="false" />
 		<ant antfile="build-test-plugins.xml" target="test-service-builder" inheritAll="false" />
 	</target>

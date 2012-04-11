@@ -397,9 +397,25 @@ public class JournalStructureLocalServiceImpl
 				return structures.get(0);
 			}
 		}
-		else {
-			return journalStructurePersistence.findByG_S(groupId, structureId);
+
+		JournalStructure structure = journalStructurePersistence.fetchByG_S(
+			groupId, structureId);
+
+		if (structure != null) {
+			return structure;
 		}
+
+		Group group = groupPersistence.findByPrimaryKey(groupId);
+
+		Group companyGroup = groupLocalService.getCompanyGroup(
+			group.getCompanyId());
+
+		if (groupId != companyGroup.getGroupId()) {
+			structure = journalStructurePersistence.findByG_S(
+				companyGroup.getGroupId(), structureId);
+		}
+
+		return structure;
 	}
 
 	public List<JournalStructure> getStructures() throws SystemException {

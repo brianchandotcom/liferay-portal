@@ -500,6 +500,8 @@ AUI.add(
 			function(event) {
 				var instance = Menu._INSTANCE;
 
+				var handles = instance._handles;
+
 				var trigger = event.currentTarget;
 
 				var activeTrigger = instance._activeTrigger;
@@ -514,12 +516,17 @@ AUI.add(
 					instance._activeMenu = menu;
 					instance._activeTrigger = trigger;
 
-					if (!instance._handles.length) {
-						instance._handles.push(
-							Liferay.on('portletDragStart', instance._closeActiveMenu, instance),
+					if (!handles.length) {
+						handles.push(
 							A.getWin().on('resize', A.debounce(instance._positionActiveMenu, 200, instance)),
 							A.getDoc().on(EVENT_CLICK, instance._closeActiveMenu, instance)
 						);
+
+						var DDM = A.DD && A.DD.DDM;
+
+						if (DDM) {
+							handles.push(DDM.on('ddm:start', instance._closeActiveMenu, instance));
+						}
 					}
 
 					instance._positionActiveMenu();

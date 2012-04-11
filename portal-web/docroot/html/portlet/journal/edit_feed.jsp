@@ -34,20 +34,11 @@ String structureName = StringPool.BLANK;
 
 if (Validator.isNotNull(structureId)) {
 	try {
-		structure = JournalStructureLocalServiceUtil.getStructure(groupId, structureId);
+		structure = JournalStructureLocalServiceUtil.getStructure(groupId, structureId, true);
 
 		structureName = structure.getName(locale);
 	}
-	catch (NoSuchStructureException nsse1) {
-		if (groupId != themeDisplay.getCompanyGroupId()) {
-			try {
-				structure = JournalStructureLocalServiceUtil.getStructure(themeDisplay.getCompanyGroupId(), structureId);
-
-				structureName = structure.getName(locale);
-			}
-			catch (NoSuchStructureException nsse2) {
-			}
-		}
+	catch (NoSuchStructureException nsse) {
 	}
 }
 
@@ -80,24 +71,13 @@ if ((structure == null) && Validator.isNotNull(templateId)) {
 		structureId = template.getStructureId();
 
 		try {
-			structure = JournalStructureLocalServiceUtil.getStructure(groupId, structureId);
+			structure = JournalStructureLocalServiceUtil.getStructure(groupId, structureId, true);
 
 			structureName = structure.getName(locale);
 
 			templates = JournalTemplateLocalServiceUtil.getStructureTemplates(groupId, structureId);
 		}
-		catch (NoSuchStructureException nsse1) {
-			if (groupId != themeDisplay.getCompanyGroupId()) {
-				try {
-					structure = JournalStructureLocalServiceUtil.getStructure(themeDisplay.getCompanyGroupId(), structureId);
-
-					structureName = structure.getName(locale);
-
-					templates = JournalTemplateLocalServiceUtil.getStructureTemplates(themeDisplay.getCompanyGroupId(), structureId);
-				}
-				catch (NoSuchStructureException nsse2) {
-				}
-			}
+		catch (NoSuchStructureException nsse) {
 		}
 	}
 }

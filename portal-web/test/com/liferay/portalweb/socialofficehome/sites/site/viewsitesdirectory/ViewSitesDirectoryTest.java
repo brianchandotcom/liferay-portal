@@ -27,7 +27,7 @@ public class ViewSitesDirectoryTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
-				selenium.open("/user/joebloggs/home1/");
+				selenium.open("/user/joebloggs/so/dashboard/");
 				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {

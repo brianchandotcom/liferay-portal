@@ -51,7 +51,7 @@ public class ViewIgnoreAddAsConnectionProfileUserTest extends BaseTestCase {
 			selenium.getText("//div[@class='lfr-contact-extra']"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs has no contacts."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
-		selenium.open("/user/joebloggs/home1/");
+		selenium.open("/user/joebloggs/so/dashboard/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {

@@ -24,7 +24,7 @@ public class SOUs_ViewConnectionMBContentViewableByConnectionsTest
 	extends BaseTestCase {
 	public void testSOUs_ViewConnectionMBContentViewableByConnections()
 		throws Exception {
-		selenium.open("/user/socialoffice01/home1");
+		selenium.open("/user/socialoffice01/so/dashboard");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Microblogs Status Update"),
 			selenium.getText("//span[@class='portlet-title-default']"));

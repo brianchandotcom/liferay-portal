@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewSitesSiteTypeRestrictedTest extends BaseTestCase {
 	public void testViewSitesSiteTypeRestricted() throws Exception {
-		selenium.open("/user/joebloggs/home1/");
+		selenium.open("/user/joebloggs/so/dashboard/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -94,7 +94,7 @@ public class ViewSitesSiteTypeRestrictedTest extends BaseTestCase {
 			selenium.getText("//nav/ul/li[6]/a/span"));
 		assertEquals(RuntimeVariables.replace("Members"),
 			selenium.getText("//nav/ul/li[7]/a/span"));
-		selenium.open("/user/joebloggs/home1/");
+		selenium.open("/user/joebloggs/so/dashboard/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {

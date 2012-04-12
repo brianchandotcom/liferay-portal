@@ -15,6 +15,12 @@
 package com.liferay.portalweb.socialofficehome.contactscenter.contacts.sousunfollowccuser;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.socialoffice.users.user.addsouser.AddSOUserTest;
+import com.liferay.portalweb.socialoffice.users.user.addsouser.TearDownSOUserTest;
+import com.liferay.portalweb.socialoffice.users.user.editsouserpassword.EditSOUserPasswordTest;
+import com.liferay.portalweb.socialoffice.users.user.selectregularrolessouser.SelectRegularRolesSOUserTest;
+import com.liferay.portalweb.socialoffice.users.user.signinso.SOUs_SignInSOTest;
+import com.liferay.portalweb.socialoffice.users.user.signinso.SignInSOTest;
 import com.liferay.portalweb.socialoffice.users.user.signinso.SignOutSOTest;
 
 import junit.framework.Test;
@@ -27,16 +33,18 @@ public class SOUs_UnfollowCCUserTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddSOUserTest.class);
+		testSuite.addTestSuite(SelectRegularRolesSOUserTest.class);
+		testSuite.addTestSuite(EditSOUserPasswordTest.class);
 		testSuite.addTestSuite(SignOutSOTest.class);
-		testSuite.addTestSuite(SOUs_SignInTest.class);
+		testSuite.addTestSuite(SOUs_SignInSOTest.class);
 		testSuite.addTestSuite(SOUs_FollowCCUserTest.class);
 		testSuite.addTestSuite(SOUs_ViewFollowCCUserTest.class);
 		testSuite.addTestSuite(SOUs_UnfollowCCUserTest.class);
 		testSuite.addTestSuite(SOUs_ViewUnfollowCCUserTest.class);
 		testSuite.addTestSuite(SignOutSOTest.class);
-		testSuite.addTestSuite(SOSignInTest.class);
+		testSuite.addTestSuite(SignInSOTest.class);
 		testSuite.addTestSuite(ViewUnfollowCCUserTest.class);
-		testSuite.addTestSuite(TearDownUserTest.class);
+		testSuite.addTestSuite(TearDownSOUserTest.class);
 
 		return testSuite;
 	}

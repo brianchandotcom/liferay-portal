@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SOUs_ViewWHContentViewableByConnectionsTest extends BaseTestCase {
 	public void testSOUs_ViewWHContentViewableByConnections()
 		throws Exception {
-		selenium.open("/user/socialoffice01/home1");
+		selenium.open("/user/socialoffice01/so/dashboard");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Microblogs Status Update"),
 			selenium.getText("//span[@class='portlet-title-default']"));

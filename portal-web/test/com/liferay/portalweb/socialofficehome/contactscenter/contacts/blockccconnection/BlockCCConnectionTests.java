@@ -15,7 +15,14 @@
 package com.liferay.portalweb.socialofficehome.contactscenter.contacts.blockccconnection;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.socialoffice.users.user.addsouser.AddSOUserTest;
+import com.liferay.portalweb.socialoffice.users.user.addsouser.TearDownSOUserTest;
+import com.liferay.portalweb.socialoffice.users.user.editsouserpassword.EditSOUserPasswordTest;
+import com.liferay.portalweb.socialoffice.users.user.selectregularrolessouser.SelectRegularRolesSOUserTest;
+import com.liferay.portalweb.socialoffice.users.user.signinso.SOUs_SignInSOTest;
+import com.liferay.portalweb.socialoffice.users.user.signinso.SignInSOTest;
 import com.liferay.portalweb.socialoffice.users.user.signinso.SignOutSOTest;
+import com.liferay.portalweb.socialofficehome.contactscenter.contacts.sousaddasconnectionccuser.ConfirmNotificationsAddConnectionTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -27,20 +34,22 @@ public class BlockCCConnectionTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddSOUserTest.class);
+		testSuite.addTestSuite(SelectRegularRolesSOUserTest.class);
+		testSuite.addTestSuite(EditSOUserPasswordTest.class);
 		testSuite.addTestSuite(SignOutSOTest.class);
-		testSuite.addTestSuite(SOUs_SignInTest.class);
+		testSuite.addTestSuite(SOUs_SignInSOTest.class);
 		testSuite.addTestSuite(SOUs_AddAsConnectionCCUserTest.class);
 		testSuite.addTestSuite(SignOutSOTest.class);
-		testSuite.addTestSuite(SOSignInTest.class);
-		testSuite.addTestSuite(ConfirmNotificationsAddConnnectionTest.class);
+		testSuite.addTestSuite(SignInSOTest.class);
+		testSuite.addTestSuite(ConfirmNotificationsAddConnectionTest.class);
 		testSuite.addTestSuite(BlockCCConnectionTest.class);
 		testSuite.addTestSuite(SignOutSOTest.class);
-		testSuite.addTestSuite(SOUs_SignInTest.class);
+		testSuite.addTestSuite(SOUs_SignInSOTest.class);
 		testSuite.addTestSuite(SOUs_ViewBlockCCConnectionTest.class);
 		testSuite.addTestSuite(SignOutSOTest.class);
-		testSuite.addTestSuite(SOSignInTest.class);
+		testSuite.addTestSuite(SignInSOTest.class);
 		testSuite.addTestSuite(ViewBlockCCConnectionTest.class);
-		testSuite.addTestSuite(TearDownUserTest.class);
+		testSuite.addTestSuite(TearDownSOUserTest.class);
 
 		return testSuite;
 	}

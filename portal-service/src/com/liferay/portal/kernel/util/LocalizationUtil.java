@@ -249,6 +249,14 @@ public class LocalizationUtil {
 			localized);
 	}
 
+	public static String updateLocalization(
+		Map<Locale, String> localizationMap, String xml, String key,
+		String defaultLanguageId) {
+
+		return getLocalization().updateLocalization(
+			localizationMap, xml, key, defaultLanguageId);
+	}
+
 	public void setLocalization(Localization localization) {
 		_localization = localization;
 	}

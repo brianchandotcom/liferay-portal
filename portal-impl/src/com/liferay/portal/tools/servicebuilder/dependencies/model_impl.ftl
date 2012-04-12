@@ -528,13 +528,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 					return;
 				}
 
-				Locale[] locales = LanguageUtil.getAvailableLocales();
-
-				for (Locale locale : locales) {
-					String ${column.name} = ${column.name}Map.get(locale);
-
-					set${column.methodName}(${column.name}, locale, defaultLocale);
-				}
+				set${column.methodName}(LocalizationUtil.updateLocalization(${column.name}Map, get${column.methodName}(), "${column.methodName}", LocaleUtil.toLanguageId(defaultLocale)));
 			}
 		</#if>
 

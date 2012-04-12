@@ -406,7 +406,7 @@ public class JournalTemplateLocalServiceImpl
 	}
 
 	public JournalTemplate getTemplate(
-			long groupId, String templateId, boolean includeGlobalStructures)
+			long groupId, String templateId, boolean includeGlobalTemplates)
 		throws PortalException, SystemException {
 
 		templateId = GetterUtil.getString(templateId).toUpperCase();
@@ -435,7 +435,7 @@ public class JournalTemplateLocalServiceImpl
 			return template;
 		}
 
-		if (!includeGlobalStructures) {
+		if (!includeGlobalTemplates) {
 			throw new NoSuchTemplateException(
 				"No JournalTemplate exists with the template id " + templateId);
 		}

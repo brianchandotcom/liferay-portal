@@ -57,9 +57,8 @@ public class PACLConnectionHandler implements InvocationHandler {
 			else if (methodName.equals("hashCode")) {
 				return System.identityHashCode(proxy);
 			}
-
-			if (methodName.equals("prepareCall") ||
-				methodName.equals("prepareStatement")) {
+			else if (methodName.equals("prepareCall") ||
+					 methodName.equals("prepareStatement")) {
 
 				String sql = (String)arguments[0];
 

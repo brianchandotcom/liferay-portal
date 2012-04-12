@@ -43,7 +43,8 @@ public class Gmail_TearDownEmailTest extends BaseTestCase {
 					continue;
 				}
 
-				boolean signedIn1 = selenium.isPartialText("//td/a", "Sign out");
+				boolean signedIn1 = selenium.isPartialText("//td[2]/a",
+						"Sign out");
 
 				if (!signedIn1) {
 					label = 2;
@@ -52,8 +53,9 @@ public class Gmail_TearDownEmailTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Sign out"),
-					selenium.getText("//td/a"));
-				selenium.clickAt("//td/a", RuntimeVariables.replace("Sign out"));
+					selenium.getText("//td[2]/a"));
+				selenium.clickAt("//td[2]/a",
+					RuntimeVariables.replace("Sign out"));
 
 			case 2:
 				Thread.sleep(5000);
@@ -192,7 +194,8 @@ public class Gmail_TearDownEmailTest extends BaseTestCase {
 			case 7:
 				Thread.sleep(10000);
 
-				boolean signedIn2 = selenium.isPartialText("//td/a", "Sign out");
+				boolean signedIn2 = selenium.isPartialText("//td[2]/a",
+						"Sign out");
 
 				if (!signedIn2) {
 					label = 8;
@@ -201,8 +204,9 @@ public class Gmail_TearDownEmailTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Sign out"),
-					selenium.getText("//td/a"));
-				selenium.clickAt("//td/a", RuntimeVariables.replace("Sign out"));
+					selenium.getText("//td[2]/a"));
+				selenium.clickAt("//td[2]/a",
+					RuntimeVariables.replace("Sign out"));
 
 			case 8:
 				Thread.sleep(5000);

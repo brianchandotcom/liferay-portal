@@ -47,6 +47,6 @@ public class ViewConfigurePortletAvailableWikiPageAPTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isTextPresent("FrontPage"));
-		assertFalse(selenium.isTextPresent("Wiki FrontPage Body"));
+		assertFalse(selenium.isTextPresent("Wiki FrontPage Content"));
 	}
 }

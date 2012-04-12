@@ -48,7 +48,7 @@ public class ViewConfigurePortletFullContentWikiPageAPTest extends BaseTestCase 
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("FrontPage"),
 			selenium.getText("//h1[@class='header-title']"));
-		assertEquals(RuntimeVariables.replace("Wiki FrontPage Body"),
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage Content"),
 			selenium.getText("//div[@class='asset-content']/p"));
 		assertEquals(RuntimeVariables.replace("View in Context \u00bb"),
 			selenium.getText("//div[@class='asset-more']/a"));
@@ -58,7 +58,7 @@ public class ViewConfigurePortletFullContentWikiPageAPTest extends BaseTestCase 
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("FrontPage"),
 			selenium.getText("//h1[@class='header-title']/span"));
-		assertEquals(RuntimeVariables.replace("Wiki FrontPage Body"),
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage Content"),
 			selenium.getText("//div[@class='wiki-body']"));
 	}
 }

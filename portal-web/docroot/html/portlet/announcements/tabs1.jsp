@@ -26,7 +26,7 @@ tabs1URL.setParameter("tabs1", tabs1);
 
 String tabs1Names = "entries";
 
-if (PortletPermissionUtil.contains(permissionChecker, layout, PortletKeys.ANNOUNCEMENTS, ActionKeys.ADD_ENTRY)) {
+if (permissionChecker.hasPermission(scopeGroupId, AnnouncementsEntry.class.getName(), scopeGroupId, ActionKeys.ADD_ENTRY)) {
 	tabs1Names += ",manage-entries";
 }
 %>

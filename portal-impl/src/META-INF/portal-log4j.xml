@@ -422,23 +422,7 @@
 		<priority value="WARN" />
 	</category>
 
-	<category name="com.liferay.portal.security.lang.PortalSecurityManager#checkConnect">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portal.security.lang.PortalSecurityManager#checkExec">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portal.security.lang.PortalSecurityManager#checkListen">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portal.security.lang.PortalSecurityManager#checkRead">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portal.security.lang.PortalSecurityManager#checkWrite">
+	<category name="com.liferay.portal.security.lang.PortalSecurityManager">
 		<priority value="ERROR" />
 	</category>
 
@@ -447,6 +431,10 @@
 	</category>
 
 	<category name="com.liferay.portal.security.ldap.PortalLDAPUtil">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.portal.security.pacl.ActivePACLPolicy">
 		<priority value="ERROR" />
 	</category>
 
@@ -459,7 +447,7 @@
 	</category>
 
 	<category name="com.liferay.portal.security.pacl.PACLClassUtil">
-		<priority value="DEBUG" />
+		<priority value="ERROR" />
 	</category>
 
 	<category name="com.liferay.portal.security.pacl.PACLPolicyManager">

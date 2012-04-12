@@ -29,9 +29,15 @@
 		String unicodeDefaultKeywords = UnicodeFormatter.toString(defaultKeywords);
 
 		String keywords = ParamUtil.getString(request, "keywords", defaultKeywords);
+		type = ParamUtil.getString(request, "articleType", type);
+		showListed = ParamUtil.getBoolean(request, "showListed", showListed);
+		targetPortletId = ParamUtil.getString(request, "targetPortletId", targetPortletId);
 		%>
 
 		<portlet:renderURL var="searchURL">
+			<portlet:param name="articleType" value="<%= type %>" />
+			<portlet:param name="showListed" value="<%= String.valueOf(showListed) %>" />
+			<portlet:param name="targetPortletId" value="<%= targetPortletId %>" />
 			<portlet:param name="struts_action" value="/journal_content_search/search" />
 		</portlet:renderURL>
 

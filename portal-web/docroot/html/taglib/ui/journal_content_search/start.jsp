@@ -22,6 +22,10 @@ String unicodeDefaultKeywords = UnicodeFormatter.toString(defaultKeywords);
 
 String keywords = ParamUtil.getString(request, namespace + "keywords", defaultKeywords);
 
+String articleType = (String)request.getAttribute("liferay-ui:journal-content-search:type");
+boolean showListed = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:journal-content-search:showListed"));
+String targetPortletId = (String)request.getAttribute("liferay-ui:journal-content-search:targetPortletId");
+
 PortletURL portletURL = null;
 
 if (portletResponse != null) {
@@ -36,6 +40,15 @@ else {
 portletURL.setWindowState(WindowState.MAXIMIZED);
 portletURL.setPortletMode(PortletMode.VIEW);
 
+if(Validator.isNotNull(articleType)) {
+	portletURL.setParameter("articleType", articleType);
+}
+
+if(Validator.isNotNull(targetPortletId)) {
+	portletURL.setParameter("targetPortletId", targetPortletId);
+}
+
+portletURL.setParameter("showListed", String.valueOf(showListed));
 portletURL.setParameter("struts_action", "/journal_content_search/search");
 %>
 

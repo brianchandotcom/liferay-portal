@@ -2090,6 +2090,10 @@
 		<delete file="portal-web/test-ant-scripts/log" />
 	</target>
 
+	<target name="clean-up-plugins">
+		<delete dir="${lp.plugins.dir}/dist" />
+	</target>
+
 	<target name="clean-up-vms">
 		<if>
 			<available file="${vm.drive}\${vm.host}\${vm.host}.vmdk.lck" />
@@ -3780,6 +3784,10 @@ file.
 	</target>
 
 	<target name="test">
+		<antcall target="clean-up-bundles" />
+
+		<antcall target="clean-up-plugins" />
+
 		<antcall target="prepare-mysql" />
 
 		<antcall target="rebuild-database" inheritAll="false">
@@ -3796,6 +3804,7 @@ file.
 
 		<!--<ant dir="util-java" target="test" inheritAll="false" />-->
 
+		<ant antfile="build-test-plugins.xml" target="test-build-plugins-release" inheritAll="false" />
 		<ant antfile="build-test-plugins.xml" target="test-create" inheritAll="false" />
 		<ant antfile="build-test-plugins.xml" target="test-service-builder" inheritAll="false" />
 	</target>

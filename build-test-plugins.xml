@@ -247,6 +247,33 @@ print AdminConfig.save()</echo>
 		</exec>
 	</target>
 
+	<target name="test-build-plugins-release">
+		<taskdef classname="com.oopsconsultancy.xmltask.ant.XmlTask" classpath="lib/development/xmltask.jar" name="xmltask" />
+
+		<ant dir="${lp.plugins.dir}" target="build-summary" inheritAll="false" />
+
+		<echo file="${lp.plugins.dir}/build.${user.name}.properties">plugins.includes=</echo>
+
+		<xmltask source="${lp.plugins.dir}/summary.xml">
+			<call path="plugins-summary/plugin">
+				<param name="plugins.includes.plugin.marketplace" path="releng/marketplace/text()" />
+				<param name="plugins.includes.plugin.name" path="artifact-id/text()" />
+				<actions>
+					<if>
+						<equals arg1="@{plugins.includes.plugin.marketplace}" arg2="true" />
+						<then>
+							<echo append="true" file="${lp.plugins.dir}/build.${user.name}.properties">@{plugins.includes.plugin.name},</echo>
+						</then>
+					</if>
+				</actions>
+			</call>
+		</xmltask>
+
+		<ant antfile="${lp.plugins.dir}/build.xml" target="all" inheritAll="false" />
+
+		<delete file="${lp.plugins.dir}/build.${user.name}.properties" />
+	</target>
+
 	<target name="test-create">
 		<echo file="${lp.plugins.dir}/build.${user.name}.properties">app.server.dir=${app.server.tomcat.dir}</echo>
 

@@ -47,8 +47,7 @@ public class SessionClickAction extends Action {
 				String name = enu.nextElement();
 
 				if (!name.equals("doAsUserId")) {
-					String value = HtmlUtil.escape(
-						ParamUtil.getString(request, name));
+					String value = ParamUtil.getString(request, name);
 
 					SessionClicks.put(request, name, value);
 				}

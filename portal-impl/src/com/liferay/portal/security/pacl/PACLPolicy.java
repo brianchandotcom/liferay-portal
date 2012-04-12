@@ -17,6 +17,8 @@ package com.liferay.portal.security.pacl;
 import java.lang.reflect.Method;
 
 import java.util.Locale;
+import java.util.Properties;
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -24,6 +26,14 @@ import java.util.Locale;
 public interface PACLPolicy {
 
 	public ClassLoader getClassLoader();
+
+	public Properties getProperties();
+
+	public String getProperty(String key);
+
+	public String[] getPropertyArray(String key);
+
+	public Set<String> getPropertySet(String key);
 
 	public String getServletContextName();
 

@@ -16,12 +16,12 @@ package com.liferay.portal.security.pacl.checker;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.security.pacl.PACLPolicy;
 
 import java.io.StringReader;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import java.util.Set;
 
 import net.sf.jsqlparser.expression.Expression;
@@ -46,24 +46,24 @@ import net.sf.jsqlparser.test.tablesfinder.TablesNamesFinder;
  */
 public class SQLChecker extends BaseChecker {
 
-	public SQLChecker(Properties properties) {
-		super(properties);
+	public SQLChecker(PACLPolicy paclPolicy) {
+		super(paclPolicy);
 
-		_allSqlTableNames = getPropertySet("security-manager-sql-tables-all");
-		_createSqlTableNames = getPropertySet(
+		_allTableNames = getPropertySet("security-manager-sql-tables-all");
+		_createTableNames = getPropertySet(
 			"security-manager-sql-tables-create");
-		_deleteSqlTableNames = getPropertySet(
+		_deleteTableNames = getPropertySet(
 			"security-manager-sql-tables-delete");
-		_dropSqlTableNames = getPropertySet("security-manager-sql-tables-drop");
-		_insertSqlTableNames = getPropertySet(
+		_dropTableNames = getPropertySet("security-manager-sql-tables-drop");
+		_insertTableNames = getPropertySet(
 			"security-manager-sql-tables-insert");
-		_replaceSqlTableNames = getPropertySet(
+		_replaceTableNames = getPropertySet(
 			"security-manager-sql-tables-replace");
-		_selectSqlTableNames = getPropertySet(
+		_selectTableNames = getPropertySet(
 			"security-manager-sql-tables-select");
-		_truncateSqlTableNames = getPropertySet(
+		_truncateTableNames = getPropertySet(
 			"security-manager-sql-tables-truncate");
-		_updateSqlTableNames = getPropertySet(
+		_updateTableNames = getPropertySet(
 			"security-manager-sql-tables-update");
 	}
 
@@ -129,7 +129,7 @@ public class SQLChecker extends BaseChecker {
 	}
 
 	protected boolean hasSQL(CreateTable createTable) {
-		return isAllowedTable(createTable.getTable(), _createSqlTableNames);
+		return isAllowedTable(createTable.getTable(), _createTableNames);
 	}
 
 	protected boolean hasSQL(Delete delete) {
@@ -137,11 +137,11 @@ public class SQLChecker extends BaseChecker {
 
 		List<String> tableNames = tableNamesFinder.getTableNames(delete);
 
-		return isAllowedTables(tableNames, _deleteSqlTableNames);
+		return isAllowedTables(tableNames, _deleteTableNames);
 	}
 
 	protected boolean hasSQL(Drop drop) {
-		return isAllowedTable(drop.getName(), _dropSqlTableNames);
+		return isAllowedTable(drop.getName(), _dropTableNames);
 	}
 
 	protected boolean hasSQL(Insert insert) {
@@ -149,7 +149,7 @@ public class SQLChecker extends BaseChecker {
 
 		List<String> tableNames = tableNamesFinder.getTableNames(insert);
 
-		return isAllowedTables(tableNames, _insertSqlTableNames);
+		return isAllowedTables(tableNames, _insertTableNames);
 	}
 
 	protected boolean hasSQL(Replace replace) {
@@ -157,7 +157,7 @@ public class SQLChecker extends BaseChecker {
 
 		List<String> tableNames = tableNamesFinder.getTableNames(replace);
 
-		return isAllowedTables(tableNames, _replaceSqlTableNames);
+		return isAllowedTables(tableNames, _replaceTableNames);
 	}
 
 	protected boolean hasSQL(Select select) {
@@ -165,11 +165,11 @@ public class SQLChecker extends BaseChecker {
 
 		List<String> tableNames = tableNamesFinder.getTableNames(select);
 
-		return isAllowedTables(tableNames, _selectSqlTableNames);
+		return isAllowedTables(tableNames, _selectTableNames);
 	}
 
 	protected boolean hasSQL(Truncate truncate) {
-		return isAllowedTable(truncate.getTable(), _truncateSqlTableNames);
+		return isAllowedTable(truncate.getTable(), _truncateTableNames);
 	}
 
 	protected boolean hasSQL(Update update) {
@@ -177,13 +177,13 @@ public class SQLChecker extends BaseChecker {
 
 		List<String> tableNames = tableNamesFinder.getTableNames(update);
 
-		return isAllowedTables(tableNames, _updateSqlTableNames);
+		return isAllowedTables(tableNames, _updateTableNames);
 	}
 
 	protected boolean isAllowedTable(
 		String tableName, Set<String> allowedTableNames) {
 
-		if (_allSqlTableNames.contains(tableName) ||
+		if (_allTableNames.contains(tableName) ||
 			allowedTableNames.contains(tableName)) {
 
 			return true;
@@ -214,16 +214,16 @@ public class SQLChecker extends BaseChecker {
 
 	private static Log _log = LogFactoryUtil.getLog(SQLChecker.class);
 
-	private Set<String> _allSqlTableNames;
-	private Set<String> _createSqlTableNames;
-	private Set<String> _deleteSqlTableNames;
-	private Set<String> _dropSqlTableNames;
-	private Set<String> _insertSqlTableNames;
+	private Set<String> _allTableNames;
+	private Set<String> _createTableNames;
+	private Set<String> _deleteTableNames;
+	private Set<String> _dropTableNames;
+	private Set<String> _insertTableNames;
 	private JSqlParser _jSqlParser = new CCJSqlParserManager();
-	private Set<String> _replaceSqlTableNames;
-	private Set<String> _selectSqlTableNames;
-	private Set<String> _truncateSqlTableNames;
-	private Set<String> _updateSqlTableNames;
+	private Set<String> _replaceTableNames;
+	private Set<String> _selectTableNames;
+	private Set<String> _truncateTableNames;
+	private Set<String> _updateTableNames;
 
 	private class TableNamesFinder extends TablesNamesFinder {
 

@@ -450,10 +450,6 @@
 		<priority value="ERROR" />
 	</category>
 
-	<category name="com.liferay.portal.security.pacl.ActivePACLPolicy">
-		<priority value="DEBUG" />
-	</category>
-
 	<category name="com.liferay.portal.security.pacl.PACLAdvice">
 		<priority value="ERROR" />
 	</category>
@@ -468,6 +464,22 @@
 
 	<category name="com.liferay.portal.security.pacl.PACLPolicyManager">
 		<priority value="INFO" />
+	</category>
+
+	<category name="com.liferay.portal.security.checker.FileChecker">
+		<priority value="DEBUG" />
+	</category>
+
+	<category name="com.liferay.portal.security.checker.HookChecker">
+		<priority value="DEBUG" />
+	</category>
+
+	<category name="com.liferay.portal.security.checker.SocketChecker">
+		<priority value="DEBUG" />
+	</category>
+
+	<category name="com.liferay.portal.security.checker.SQLChecker">
+		<priority value="DEBUG" />
 	</category>
 
 	<category name="com.liferay.portal.security.permission.AdvancedPermissionChecker">

@@ -247,54 +247,27 @@ print AdminConfig.save()</echo>
 		</exec>
 	</target>
 
-	<target name="test-build-plugins-marketplace">
-		<delete file="${lp.plugins.dir}/liferay-releng-properties.txt" />
+	<target name="test-build-plugins-release">
+		<taskdef classname="com.oopsconsultancy.xmltask.ant.XmlTask" classpath="lib/development/xmltask.jar" name="xmltask" />
 
-		<for param="releng.properties.file">
-			<path>
-				<fileset
-					dir="${lp.plugins.dir}"
-					includes="**/liferay-releng.properties"
-				/>
-			</path>
-			<sequential>
-				<var name="releng.properties.content" unset="true" />
+		<ant dir="${lp.plugins.dir}" target="build-summary" inheritAll="false" />
 
-				<loadfile property="releng.properties.content" srcfile="@{releng.properties.file}">
-					<filterchain>
-						<expandproperties />
-					</filterchain>
-				</loadfile>
+		<echo file="${lp.plugins.dir}/build.${user.name}.properties">plugins.includes=</echo>
 
-				<if>
-					<contains string="${releng.properties.content}" substring="marketplace=true" />
-					<then>
-						<echo file="${lp.plugins.dir}/liferay-releng-properties.txt" append="true">@{releng.properties.file}
-</echo>
-					</then>
-				</if>
-			</sequential>
-		</for>
-
-		<replaceregexp
-			file="${lp.plugins.dir}/liferay-releng-properties.txt"
-			match=".*\\(hooks|layouttpl|portlets|themes|webs)\\"
-			replace=""
-			byline="true"
-		/>
-
-		<replaceregexp
-			file="${lp.plugins.dir}/liferay-releng-properties.txt"
-			match="\\docroot\\WEB-INF\\liferay-releng.properties\n"
-			replace=","
-			flags="g"
-		/>
-
-		<loadfile property="liferay.releng.properties.list" srcfile="${lp.plugins.dir}/liferay-releng-properties.txt" />
-
-		<delete file="${lp.plugins.dir}/liferay-releng-properties.txt" />
-
-		<echo file="${lp.plugins.dir}/build.${user.name}.properties">plugins.includes=${liferay.releng.properties.list}</echo>
+		<xmltask source="${lp.plugins.dir}/summary.xml">
+			<call path="plugins-summary/plugin">
+				<param name="plugins.includes.plugin.marketplace" path="releng/marketplace/text()" />
+				<param name="plugins.includes.plugin.name" path="artifact-id/text()" />
+				<actions>
+					<if>
+						<equals arg1="@{plugins.includes.plugin.marketplace}" arg2="true" />
+						<then>
+							<echo append="true" file="${lp.plugins.dir}/build.${user.name}.properties">@{plugins.includes.plugin.name},</echo>
+						</then>
+					</if>
+				</actions>
+			</call>
+		</xmltask>
 
 		<ant antfile="${lp.plugins.dir}/build.xml" target="all" inheritAll="false" />
 

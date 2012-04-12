@@ -80,6 +80,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.comparator.GroupNameComparator;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.util.UniqueList;
 
 import java.io.File;
@@ -607,7 +608,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			group.getCompanyId(), JournalArticle.class.getName(),
 			group.getGroupId());
 
-		/// Teams
+		// Teams
 
 		teamLocalService.deleteTeams(group.getGroupId());
 
@@ -670,6 +671,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		mbBanLocalService.deleteBansByGroupId(group.getGroupId());
 		mbCategoryLocalService.deleteCategories(group.getGroupId());
 		mbStatsUserLocalService.deleteStatsUsersByGroupId(group.getGroupId());
+		mbThreadLocalService.deleteThreads(
+			group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 
 		// Polls
 

@@ -62,6 +62,7 @@ import com.liferay.portlet.journal.service.persistence.JournalTemplatePersistenc
 import com.liferay.portlet.messageboards.service.persistence.MBBanPersistence;
 import com.liferay.portlet.messageboards.service.persistence.MBCategoryPersistence;
 import com.liferay.portlet.messageboards.service.persistence.MBStatsUserPersistence;
+import com.liferay.portlet.messageboards.service.persistence.MBThreadPersistence;
 import com.liferay.portlet.polls.service.persistence.PollsQuestionPersistence;
 import com.liferay.portlet.shopping.service.persistence.ShoppingCartPersistence;
 import com.liferay.portlet.shopping.service.persistence.ShoppingCategoryPersistence;
@@ -5512,6 +5513,8 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	protected MBCategoryPersistence mbCategoryPersistence;
 	@BeanReference(type = MBStatsUserPersistence.class)
 	protected MBStatsUserPersistence mbStatsUserPersistence;
+	@BeanReference(type = MBThreadPersistence.class)
+	protected MBThreadPersistence mbThreadPersistence;
 	@BeanReference(type = PollsQuestionPersistence.class)
 	protected PollsQuestionPersistence pollsQuestionPersistence;
 	@BeanReference(type = ShoppingCartPersistence.class)

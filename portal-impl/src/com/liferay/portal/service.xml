@@ -414,6 +414,7 @@
 		<reference package-path="com.liferay.portlet.messageboards" entity="MBBan" />
 		<reference package-path="com.liferay.portlet.messageboards" entity="MBCategory" />
 		<reference package-path="com.liferay.portlet.messageboards" entity="MBStatsUser" />
+		<reference package-path="com.liferay.portlet.messageboards" entity="MBThread" />
 		<reference package-path="com.liferay.portlet.polls" entity="PollsQuestion" />
 		<reference package-path="com.liferay.portlet.shopping" entity="ShoppingCart" />
 		<reference package-path="com.liferay.portlet.shopping" entity="ShoppingCategory" />

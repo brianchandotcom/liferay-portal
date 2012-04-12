@@ -17,6 +17,7 @@ package com.liferay.portal.security.pacl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.lang.PortalSecurityManager;
@@ -148,7 +149,13 @@ public class PACLPolicyManager {
 						"plugin security management");
 			}
 
-			System.setSecurityManager(new PortalSecurityManager());
+			ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+
+			PortalSecurityManager portalSecurityManager =
+				new PortalSecurityManager(_originalSecurityManager,
+				classLoader);
+
+			System.setSecurityManager(portalSecurityManager);
 		}
 		catch (SecurityException se) {
 			_log.error(

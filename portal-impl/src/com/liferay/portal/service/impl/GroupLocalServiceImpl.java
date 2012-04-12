@@ -608,7 +608,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			group.getCompanyId(), JournalArticle.class.getName(),
 			group.getGroupId());
 
-		/// Teams
+		// Teams
 
 		teamLocalService.deleteTeams(group.getGroupId());
 

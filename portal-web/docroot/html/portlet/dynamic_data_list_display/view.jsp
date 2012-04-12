@@ -86,7 +86,8 @@ boolean showEditListTemplateIcon = (listDDMTemplateId != 0) && DDMTemplatePermis
 					<portlet:param name="portletResource" value="<%= portletDisplay.getId() %>" />
 					<portlet:param name="portletResourceNamespace" value="<%= renderResponse.getNamespace() %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
-					<portlet:param name="structureId" value="<%= String.valueOf(recordSet.getDDMStructureId()) %>" />
+					<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)) %>" />
+					<portlet:param name="classPK" value="<%= String.valueOf(recordSet.getDDMStructureId()) %>" />
 					<portlet:param name="structureAvailableFields" value='<%= renderResponse.getNamespace() + "structureAvailableFields" %>' />
 					<portlet:param name="ddmResource" value="<%= ddmResource %>" />
 				</liferay-portlet:renderURL>
@@ -102,7 +103,8 @@ boolean showEditListTemplateIcon = (listDDMTemplateId != 0) && DDMTemplatePermis
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="portletResource" value="<%= portletDisplay.getId() %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
-					<portlet:param name="structureId" value="<%= String.valueOf(recordSet.getDDMStructureId()) %>" />
+					<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)) %>" />
+					<portlet:param name="classPK" value="<%= String.valueOf(recordSet.getDDMStructureId()) %>" />
 					<portlet:param name="type" value="<%= DDMTemplateConstants.TEMPLATE_TYPE_LIST %>" />
 					<portlet:param name="ddmResource" value="<%= ddmResource %>" />
 				</liferay-portlet:renderURL>
@@ -120,7 +122,6 @@ boolean showEditListTemplateIcon = (listDDMTemplateId != 0) && DDMTemplatePermis
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="portletResourceNamespace" value="<%= renderResponse.getNamespace() %>" />
 					<portlet:param name="templateId" value="<%= String.valueOf(detailDDMTemplateId) %>" />
-					<portlet:param name="structureId" value="<%= String.valueOf(recordSet.getDDMStructureId()) %>" />
 					<portlet:param name="structureAvailableFields" value='<%= renderResponse.getNamespace() + "structureAvailableFields" %>' />
 				</liferay-portlet:renderURL>
 
@@ -136,7 +137,6 @@ boolean showEditListTemplateIcon = (listDDMTemplateId != 0) && DDMTemplatePermis
 					<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="templateId" value="<%= String.valueOf(listDDMTemplateId) %>" />
-					<portlet:param name="structureId" value="<%= String.valueOf(recordSet.getDDMStructureId()) %>" />
 				</liferay-portlet:renderURL>
 
 				<liferay-ui:icon

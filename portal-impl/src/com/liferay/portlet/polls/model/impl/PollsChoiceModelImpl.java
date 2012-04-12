@@ -315,8 +315,8 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 			return;
 		}
 
-		setDescription(LocalizationUtil.updateLocalizationXmlFromMap(
-				descriptionMap, getDescription(), "Description",
+		setDescription(LocalizationUtil.updateLocalization(descriptionMap,
+				getDescription(), "Description",
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 

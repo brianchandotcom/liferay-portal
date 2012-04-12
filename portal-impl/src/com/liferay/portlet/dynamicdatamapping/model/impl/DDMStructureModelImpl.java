@@ -439,8 +439,8 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 			return;
 		}
 
-		setName(LocalizationUtil.updateLocalizationXmlFromMap(nameMap,
-				getName(), "Name", LocaleUtil.toLanguageId(defaultLocale)));
+		setName(LocalizationUtil.updateLocalization(nameMap, getName(), "Name",
+				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
 	public String getOriginalName() {
@@ -537,8 +537,8 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 			return;
 		}
 
-		setDescription(LocalizationUtil.updateLocalizationXmlFromMap(
-				descriptionMap, getDescription(), "Description",
+		setDescription(LocalizationUtil.updateLocalization(descriptionMap,
+				getDescription(), "Description",
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 

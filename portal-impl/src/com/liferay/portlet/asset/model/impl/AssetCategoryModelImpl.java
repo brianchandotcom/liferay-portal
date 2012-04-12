@@ -446,8 +446,8 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 			return;
 		}
 
-		setTitle(LocalizationUtil.updateLocalizationXmlFromMap(titleMap,
-				getTitle(), "Title", LocaleUtil.toLanguageId(defaultLocale)));
+		setTitle(LocalizationUtil.updateLocalization(titleMap, getTitle(),
+				"Title", LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
 	@JSON
@@ -534,8 +534,8 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 			return;
 		}
 
-		setDescription(LocalizationUtil.updateLocalizationXmlFromMap(
-				descriptionMap, getDescription(), "Description",
+		setDescription(LocalizationUtil.updateLocalization(descriptionMap,
+				getDescription(), "Description",
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 

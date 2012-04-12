@@ -593,8 +593,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 			return;
 		}
 
-		setTitle(LocalizationUtil.updateLocalizationXmlFromMap(titleMap,
-				getTitle(), "Title", LocaleUtil.toLanguageId(defaultLocale)));
+		setTitle(LocalizationUtil.updateLocalization(titleMap, getTitle(),
+				"Title", LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
 	@JSON
@@ -681,8 +681,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 			return;
 		}
 
-		setDescription(LocalizationUtil.updateLocalizationXmlFromMap(
-				descriptionMap, getDescription(), "Description",
+		setDescription(LocalizationUtil.updateLocalization(descriptionMap,
+				getDescription(), "Description",
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
@@ -768,7 +768,7 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 			return;
 		}
 
-		setSummary(LocalizationUtil.updateLocalizationXmlFromMap(summaryMap,
+		setSummary(LocalizationUtil.updateLocalization(summaryMap,
 				getSummary(), "Summary", LocaleUtil.toLanguageId(defaultLocale)));
 	}
 

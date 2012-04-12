@@ -508,8 +508,8 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 			return;
 		}
 
-		setName(LocalizationUtil.updateLocalizationXmlFromMap(nameMap,
-				getName(), "Name", LocaleUtil.toLanguageId(defaultLocale)));
+		setName(LocalizationUtil.updateLocalization(nameMap, getName(), "Name",
+				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
 	@JSON
@@ -593,8 +593,8 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 			return;
 		}
 
-		setTitle(LocalizationUtil.updateLocalizationXmlFromMap(titleMap,
-				getTitle(), "Title", LocaleUtil.toLanguageId(defaultLocale)));
+		setTitle(LocalizationUtil.updateLocalization(titleMap, getTitle(),
+				"Title", LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
 	@JSON
@@ -681,8 +681,8 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 			return;
 		}
 
-		setDescription(LocalizationUtil.updateLocalizationXmlFromMap(
-				descriptionMap, getDescription(), "Description",
+		setDescription(LocalizationUtil.updateLocalization(descriptionMap,
+				getDescription(), "Description",
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
@@ -768,7 +768,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 			return;
 		}
 
-		setKeywords(LocalizationUtil.updateLocalizationXmlFromMap(keywordsMap,
+		setKeywords(LocalizationUtil.updateLocalization(keywordsMap,
 				getKeywords(), "Keywords",
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
@@ -854,8 +854,8 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 			return;
 		}
 
-		setRobots(LocalizationUtil.updateLocalizationXmlFromMap(robotsMap,
-				getRobots(), "Robots", LocaleUtil.toLanguageId(defaultLocale)));
+		setRobots(LocalizationUtil.updateLocalization(robotsMap, getRobots(),
+				"Robots", LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
 	@JSON

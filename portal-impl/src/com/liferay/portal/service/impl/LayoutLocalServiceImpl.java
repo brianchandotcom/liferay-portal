@@ -2057,33 +2057,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Updates the priorities of the layouts within the group after the
-	 * LayoutSetPrototype is updated.
-	 *
-	 * @param  groupId the primary key of the group
-	 * @param  privateLayout whether the layout is private to the group
-	 * @throws PortalException if a matching layout could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void updatePriorities(long groupId, boolean privateLayout)
-		throws PortalException, SystemException {
-
-		List<Layout> layouts = layoutPersistence.findByG_P(
-			groupId, privateLayout);
-
-		for(Layout layout : layouts) {
-			int nextPriority = getNextPriority(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getParentLayoutId(),
-				layout.getSourcePrototypeLayoutUuid(), layout.getPriority());
-
-			layout.setPriority(nextPriority);
-
-			layoutPersistence.update(layout, false);
-		}
-	}
-
-	/**
 	 * Updates the priority of the layout matching the group, layout ID, and
 	 * privacy.
 	 *
@@ -2121,6 +2094,33 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		Layout layout = layoutPersistence.findByPrimaryKey(plid);
 
 		return updatePriority(layout, priority);
+	}
+
+	/**
+	 * Updates the priorities of the layouts within the group after the
+	 * LayoutSetPrototype is updated.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  privateLayout whether the layout is private to the group
+	 * @throws PortalException if a matching layout could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void updatePriorities(long groupId, boolean privateLayout)
+		throws PortalException, SystemException {
+
+		List<Layout> layouts = layoutPersistence.findByG_P(
+			groupId, privateLayout);
+
+		for (Layout layout : layouts) {
+			int nextPriority = getNextPriority(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getParentLayoutId(),
+				layout.getSourcePrototypeLayoutUuid(), layout.getPriority());
+
+			layout.setPriority(nextPriority);
+
+			layoutPersistence.update(layout, false);
+		}
 	}
 
 	public void updateScopedPortletNames(

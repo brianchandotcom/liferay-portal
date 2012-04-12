@@ -1393,21 +1393,6 @@ public class LayoutLocalServiceUtil {
 	}
 
 	/**
-	* Updates the priorities of the layouts within the group after the
-	* LayoutSetPrototype is updated.
-	*
-	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
-	* @throws PortalException if a matching layout could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void updatePriorities(long groupId, boolean privateLayout)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		getService().updatePriorities(groupId, privateLayout);
-	}
-
-	/**
 	* Updates the priority of the layout matching the group, layout ID, and
 	* privacy.
 	*
@@ -1442,6 +1427,21 @@ public class LayoutLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().updatePriority(plid, priority);
+	}
+
+	/**
+	* Updates the priorities of the layouts within the group after the
+	* LayoutSetPrototype is updated.
+	*
+	* @param groupId the primary key of the group
+	* @param privateLayout whether the layout is private to the group
+	* @throws PortalException if a matching layout could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void updatePriorities(long groupId, boolean privateLayout)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().updatePriorities(groupId, privateLayout);
 	}
 
 	public static void updateScopedPortletNames(long groupId,

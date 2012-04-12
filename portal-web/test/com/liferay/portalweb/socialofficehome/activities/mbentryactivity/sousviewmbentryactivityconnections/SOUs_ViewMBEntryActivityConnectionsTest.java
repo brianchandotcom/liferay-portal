@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SOUs_ViewMBEntryActivityConnectionsTest extends BaseTestCase {
 	public void testSOUs_ViewMBEntryActivityConnections()
 		throws Exception {
-		selenium.open("/user/socialoffice01/home1");
+		selenium.open("/user/socialoffice01/so/dashboard");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Activities"),
 			selenium.getText("xPath=(//h1[@class='portlet-title']/span)[2]"));

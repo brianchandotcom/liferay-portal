@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SOUs_ViewRepostMicroblogsContentTest extends BaseTestCase {
 	public void testSOUs_ViewRepostMicroblogsContent()
 		throws Exception {
-		selenium.open("/user/socialoffice01/home1");
+		selenium.open("/user/socialoffice01/so/dashboard");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {

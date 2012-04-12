@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddWHEntryContent151CharacterTest extends BaseTestCase {
 	public void testAddWHEntryContent151Character() throws Exception {
-		selenium.open("/user/joebloggs/home1");
+		selenium.open("/user/joebloggs/so/dashboard");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Microblogs Status Update"),
 			selenium.getText("//span[@class='portlet-title-default']"));
@@ -78,7 +78,7 @@ public class AddWHEntryContent151CharacterTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Post']",
 			RuntimeVariables.replace("Post"));
 		Thread.sleep(5000);
-		selenium.open("/user/joebloggs/home1");
+		selenium.open("/user/joebloggs/so/dashboard");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Microblogs Status Update"),
 			selenium.getText("//span[@class='portlet-title-default']"));

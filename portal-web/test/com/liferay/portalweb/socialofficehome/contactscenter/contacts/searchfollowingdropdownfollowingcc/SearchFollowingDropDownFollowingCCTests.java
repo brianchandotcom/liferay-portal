@@ -15,6 +15,10 @@
 package com.liferay.portalweb.socialofficehome.contactscenter.contacts.searchfollowingdropdownfollowingcc;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.socialoffice.users.user.addsouser.AddSOUserTest;
+import com.liferay.portalweb.socialoffice.users.user.addsouser.TearDownSOUserTest;
+import com.liferay.portalweb.socialoffice.users.user.editsouserpassword.EditSOUserPasswordTest;
+import com.liferay.portalweb.socialoffice.users.user.selectregularrolessouser.SelectRegularRolesSOUserTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -26,10 +30,12 @@ public class SearchFollowingDropDownFollowingCCTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddSOUserTest.class);
+		testSuite.addTestSuite(SelectRegularRolesSOUserTest.class);
+		testSuite.addTestSuite(EditSOUserPasswordTest.class);
 		testSuite.addTestSuite(SearchUserDropDownFollowingCCTest.class);
 		testSuite.addTestSuite(FollowCCUserTest.class);
 		testSuite.addTestSuite(SearchFollowingDropDownFollowingCCTest.class);
-		testSuite.addTestSuite(TearDownUserTest.class);
+		testSuite.addTestSuite(TearDownSOUserTest.class);
 
 		return testSuite;
 	}

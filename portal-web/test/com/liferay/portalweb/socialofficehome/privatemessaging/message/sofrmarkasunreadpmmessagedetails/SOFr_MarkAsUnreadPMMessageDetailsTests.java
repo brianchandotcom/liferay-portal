@@ -15,6 +15,7 @@
 package com.liferay.portalweb.socialofficehome.privatemessaging.message.sofrmarkasunreadpmmessagedetails;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.socialoffice.users.user.signinso.SignOutSOTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -26,20 +27,20 @@ public class SOFr_MarkAsUnreadPMMessageDetailsTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddUserSOFriendTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOFr_NewPasswordTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOFr_SignInTest.class);
 		testSuite.addTestSuite(SOFr_AddAsFriendCCActionsTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOSignInTest.class);
 		testSuite.addTestSuite(ConfirmCCFriendRequestTest.class);
 		testSuite.addTestSuite(AddPMMessageTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOFr_SignInTest.class);
 		testSuite.addTestSuite(SOFr_ViewPMMessageTest.class);
 		testSuite.addTestSuite(SOFr_MarkAsUnreadPMMessageDetailsTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOSignInTest.class);
 		testSuite.addTestSuite(TearDownPMMessageTest.class);
 		testSuite.addTestSuite(TearDownSOUserTest.class);

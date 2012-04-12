@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SOUs_ViewAddAsConnectionCCUserTest extends BaseTestCase {
 	public void testSOUs_ViewAddAsConnectionCCUser() throws Exception {
-		selenium.open("/user/socialoffice01/home1/");
+		selenium.open("/user/socialoffice01/so/dashboard/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -82,7 +82,8 @@ public class SOUs_ViewAddAsConnectionCCUserTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@class='contacts-profile']")) {
+				if (selenium.isVisible(
+							"//div[contains(@class, 'contacts-profile')]")) {
 					break;
 				}
 			}
@@ -94,10 +95,10 @@ public class SOUs_ViewAddAsConnectionCCUserTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText(
-				"//div[@class='contacts-profile']/div/div[2]/div/a"));
+				"//div[contains(@class, 'contacts-profile')]/div/div[2]/div/a"));
 		assertEquals(RuntimeVariables.replace("test@liferay.com"),
 			selenium.getText(
-				"//div[@class='contacts-profile']/div/div[2]/div[3]"));
+				"//div[contains(@class, 'contacts-profile')]/div/div[2]/div[3]"));
 		assertFalse(selenium.isElementPresent(
 				"//div[contains(@class, 'contacts-center-home-content')]"));
 		assertEquals(RuntimeVariables.replace("Remove as Connection"),

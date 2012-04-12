@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ClickTasksProgressBar60PercentCompleteTest extends BaseTestCase {
 	public void testClickTasksProgressBar60PercentComplete()
 		throws Exception {
-		selenium.open("/user/joebloggs/home1/");
+		selenium.open("/user/joebloggs/so/dashboard/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {

@@ -14,8 +14,7 @@
 
 package com.liferay.portalweb.portal;
 
-import com.liferay.portalweb.portal.login.LoginSocialOfficeTests;
-import com.liferay.portalweb.portal.logout.LogoutTests;
+import com.liferay.portalweb.socialoffice.setup.SetupTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -28,8 +27,7 @@ public class SocialOfficeSmokeTestSuite extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(LoginSocialOfficeTests.suite());
-		testSuite.addTest(LogoutTests.suite());
+		testSuite.addTest(SetupTests.suite());
 
 		testSuite.addTestSuite(StopSeleniumTest.class);
 

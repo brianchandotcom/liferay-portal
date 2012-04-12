@@ -15,6 +15,7 @@
 package com.liferay.portalweb.socialofficehome.privatemessaging.message.gmailviewpmmessage;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.socialoffice.users.user.signinso.SignOutSOTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -28,14 +29,14 @@ public class Gmail_ViewPMMessageTests extends BaseTestSuite {
 		testSuite.addTestSuite(ConfigureServerAdministrationMailTest.class);
 		testSuite.addTestSuite(EditPortalInstanceMailDomainTest.class);
 		testSuite.addTestSuite(AddUserSOFriendGmailTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(Gmail_TearDownEmailTest.class);
 		testSuite.addTestSuite(GmailServer_TearDownEmailTest.class);
 		testSuite.addTestSuite(SOFrGmail_NewPasswordTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOFrGmail_SignInTest.class);
 		testSuite.addTestSuite(SOFrGmail_AddAsFriendCCActionsTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOSignInTest.class);
 		testSuite.addTestSuite(ConfirmCCFriendRequestTest.class);
 		testSuite.addTestSuite(AddPMMessageTest.class);

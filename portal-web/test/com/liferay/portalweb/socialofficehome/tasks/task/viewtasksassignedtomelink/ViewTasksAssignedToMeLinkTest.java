@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewTasksAssignedToMeLinkTest extends BaseTestCase {
 	public void testViewTasksAssignedToMeLink() throws Exception {
-		selenium.open("/user/joebloggs/home1/");
+		selenium.open("/user/joebloggs/so/dashboard/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {

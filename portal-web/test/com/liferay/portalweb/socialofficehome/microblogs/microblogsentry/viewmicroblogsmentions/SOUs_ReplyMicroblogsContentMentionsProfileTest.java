@@ -180,7 +180,9 @@ public class SOUs_ReplyMicroblogsContentMentionsProfileTest extends BaseTestCase
 			selenium.getText("xPath=(//div[@class='content'])[1]"));
 		assertEquals(RuntimeVariables.replace("Social01 Office01 User01 says"),
 			selenium.getText("xPath=(//div[@class='user-name'])[2]"));
-		assertEquals(RuntimeVariables.replace("Microblogs Post Comment"),
-			selenium.getText("xPath=(//div[@class='content'])[2]"));
+		assertTrue(selenium.isPartialText(
+				"xPath=(//div[@class='content'])[2]", "Microblogs Post Comment"));
+		assertTrue(selenium.isPartialText(
+				"xPath=(//div[@class='content'])[2]", "Joe Bloggs"));
 	}
 }

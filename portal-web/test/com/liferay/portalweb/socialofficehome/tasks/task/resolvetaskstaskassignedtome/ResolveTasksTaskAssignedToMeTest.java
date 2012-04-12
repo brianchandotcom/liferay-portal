@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ResolveTasksTaskAssignedToMeTest extends BaseTestCase {
 	public void testResolveTasksTaskAssignedToMe() throws Exception {
-		selenium.open("/user/joebloggs/home1/");
+		selenium.open("/user/joebloggs/so/dashboard/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -107,7 +107,7 @@ public class ResolveTasksTaskAssignedToMeTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.open("/user/joebloggs/home1/");
+		selenium.open("/user/joebloggs/so/dashboard/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {

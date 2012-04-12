@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SOUs_ViewDeleteReplyMicroblogsContentTest extends BaseTestCase {
 	public void testSOUs_ViewDeleteReplyMicroblogsContent()
 		throws Exception {
-		selenium.open("/user/socialoffice01/home1");
+		selenium.open("/user/socialoffice01/so/dashboard");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("There are no recent activities."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[2]"));

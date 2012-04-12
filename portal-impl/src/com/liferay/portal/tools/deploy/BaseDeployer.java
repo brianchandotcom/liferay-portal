@@ -1829,7 +1829,9 @@ public class BaseDeployer implements Deployer {
 
 		Class<?> pluginContextListenerClass = getPluginContextListenerClass();
 
-		if (pluginContextListenerClass != null) {
+		if ((pluginContextListenerClass != null) &&
+			!content.contains(pluginContextListenerClass.getName())) {
+
 			StringBundler sb = new StringBundler(5);
 
 			sb.append("<listener>");

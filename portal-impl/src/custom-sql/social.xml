@@ -395,49 +395,49 @@
 			SELECT
 				TEMP_TABLE.*
 			FROM
-			(
-				SELECT
-					SocialActivity.activityId AS activityId, SocialActivity.createDate AS createDate
-				FROM
-					SocialActivity
-				WHERE
-					(
-						groupId IN (
-							SELECT
-								groupId
-							FROM
-								Users_Groups
-							WHERE
-								userId = ?
-						)
-					) AND
-					(mirrorActivityId = 0)
+				(
+					SELECT
+						SocialActivity.activityId AS activityId, SocialActivity.createDate AS createDate
+					FROM
+						SocialActivity
+					WHERE
+						(
+							groupId IN (
+								SELECT
+									groupId
+								FROM
+									Users_Groups
+								WHERE
+									userId = ?
+							)
+						) AND
+						(mirrorActivityId = 0)
 
-				UNION ALL
+					UNION ALL
 
-				SELECT
-					SocialActivity.activityId AS activityId, SocialActivity.createDate AS createDate
-				FROM
-					SocialActivity
-				INNER JOIN
-					Group_ ON
-						(Group_.groupId = SocialActivity.groupId)
-				INNER JOIN
-					Organization_ ON
-						(Organization_.organizationId = Group_.classPK)
-				WHERE
-					(SocialActivity.mirrorActivityId = 0) AND
-					(
-						Organization_.organizationId IN (
-							SELECT
-								organizationId
-							FROM
-								Users_Orgs
-							WHERE
-								Users_Orgs.userId = ?
+					SELECT
+						SocialActivity.activityId AS activityId, SocialActivity.createDate AS createDate
+					FROM
+						SocialActivity
+					INNER JOIN
+						Group_ ON
+							(Group_.groupId = SocialActivity.groupId)
+					INNER JOIN
+						Organization_ ON
+							(Organization_.organizationId = Group_.classPK)
+					WHERE
+						(SocialActivity.mirrorActivityId = 0) AND
+						(
+							Organization_.organizationId IN (
+								SELECT
+									organizationId
+								FROM
+									Users_Orgs
+								WHERE
+									Users_Orgs.userId = ?
+							)
 						)
-					)
-			) TEMP_TABLE
+				) TEMP_TABLE
 			ORDER BY
 				createDate DESC
 		]]>

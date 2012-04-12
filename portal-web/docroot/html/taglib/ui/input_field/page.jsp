@@ -400,8 +400,8 @@ Map<String, String> hints = ModelHintsUtil.getHints(model, field);
 					Map<Locale, String> localizationMap =
 							LocalizationUtil.getLocalizationMap(portletRequest, field);
 
-					fieldXml = LocalizationUtil.updateLocalizationXmlFromMap(
-							localizationMap, fieldXml, field, defaultLanguageId);
+					fieldXml = LocalizationUtil.updateLocalization(
+						localizationMap, fieldXml, field, defaultLanguageId);
 				}
 			}
 			%>

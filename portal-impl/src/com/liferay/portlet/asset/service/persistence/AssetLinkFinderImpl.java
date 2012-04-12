@@ -32,22 +32,23 @@ import java.util.List;
 public class AssetLinkFinderImpl
 	extends BasePersistenceImpl<AssetLink> implements AssetLinkFinder {
 
-	public static final String findVisibleDirectLinks =
+	public static final String FIND_VISIBLE_DIRECT_LINKS =
 		AssetLinkFinder.class.getName() + ".findVisibleDirectLinks";
 
-	public static final String findVisibleDirectLinksByType =
+	public static final String FIND_VISIBLE_DIRECT_LINKS_BY_TYPE =
 		AssetLinkFinder.class.getName() + ".findVisibleDirectLinksByType";
 
 	public List<AssetLink> findVisibleDirectLinks(long entryId)
 		throws SystemException {
 
-		return findVisible(findVisibleDirectLinks, entryId, -1);
+		return findVisible(FIND_VISIBLE_DIRECT_LINKS, entryId, -1);
 	}
 
-	public List<AssetLink> findVisibleDirectLinksByType(long entryId, int typeId)
+	public List<AssetLink> findVisibleDirectLinksByType(
+			long entryId, int typeId)
 		throws SystemException {
 
-		return findVisible(findVisibleDirectLinksByType, entryId, typeId);
+		return findVisible(FIND_VISIBLE_DIRECT_LINKS_BY_TYPE, entryId, typeId);
 	}
 
 	protected List<AssetLink> findVisible(

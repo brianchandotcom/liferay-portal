@@ -130,7 +130,8 @@ public class MergeOrganizationPageTest extends BaseTestCase {
 			RuntimeVariables.replace("Merge Liferay public pages"));
 		assertTrue(selenium.isChecked(
 				"//input[@id='_156_mergeGuestPublicPagesCheckbox']"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 

@@ -122,51 +122,51 @@
 			SELECT
 				TEMP_TABLE.userId, TEMP_TABLE.lastPostDate
 			FROM
-			(
-				SELECT
-					BlogsStatsUser.userId AS userId, MAX(BlogsStatsUser.lastPostDate) AS lastPostDate
-				FROM
-					BlogsStatsUser
-				INNER JOIN
-					Group_ ON
-						(Group_.groupId = BlogsStatsUser.groupId)
-				WHERE
-					(
-						(Group_.companyId = ?) AND
+				(
+					SELECT
+						BlogsStatsUser.userId AS userId, MAX(BlogsStatsUser.lastPostDate) AS lastPostDate
+					FROM
+						BlogsStatsUser
+					INNER JOIN
+						Group_ ON
+							(Group_.groupId = BlogsStatsUser.groupId)
+					WHERE
 						(
-							(Group_.groupId = ?) OR
+							(Group_.companyId = ?) AND
 							(
-								(Group_.liveGroupId = 0) AND
+								(Group_.groupId = ?) OR
 								(
-									Group_.groupId NOT IN(
-										SELECT
-											liveGroupId
-										FROM
-											Group_
-										WHERE
-											groupId = ?
-									)
-								) AND
-								(
-									(Group_.classNameId != [$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.LAYOUT$]) OR
+									(Group_.liveGroupId = 0) AND
 									(
-										Group_.parentGroupId NOT IN(
+										Group_.groupId NOT IN(
 											SELECT
-												groupId
+												liveGroupId
 											FROM
 												Group_
 											WHERE
-												(groupId != ?) AND
-												(liveGroupId != 0)
+												groupId = ?
+										)
+									) AND
+									(
+										(Group_.classNameId != [$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.LAYOUT$]) OR
+										(
+											Group_.parentGroupId NOT IN(
+												SELECT
+													groupId
+												FROM
+													Group_
+												WHERE
+													(groupId != ?) AND
+													(liveGroupId != 0)
+											)
 										)
 									)
 								)
 							)
 						)
-					)
-				GROUP BY
-					userId
-			) TEMP_TABLE
+					GROUP BY
+						userId
+				) TEMP_TABLE
 			ORDER BY
 				lastPostDate DESC
 		]]>

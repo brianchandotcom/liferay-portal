@@ -398,9 +398,10 @@ public interface Localization {
 		String defaultLanguageId, boolean cdata, boolean localized);
 
 	/**
-	 * Updates the localized string for the all the available languages in the
-	 * localizations XML for the map of locales and localized strings and changes the
-	 * default language. Stores the localized strings as characters in the XML.
+	 * Updates the localized string for all the available languages in the
+	 * localizations XML for the map of locales and localized strings and
+	 * changes the default language. Stores the localized strings as characters
+	 * in the XML.
 	 *
 	 * @param  localizationMap the locales and localized strings
 	 * @param  xml the localizations XML
@@ -408,7 +409,7 @@ public interface Localization {
 	 * @param  defaultLanguageId the ID of the default language
 	 * @return the updated localizations XML
 	 */
-	public String updateLocalizationXmlFromMap(
+	public String updateLocalization(
 		Map<Locale, String> localizationMap, String xml, String key,
 		String defaultLanguageId);
 

@@ -528,7 +528,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 					return;
 				}
 
-				set${column.methodName}(LocalizationUtil.updateLocalizationXmlFromMap(${column.name}Map, get${column.methodName}(), "${column.methodName}", LocaleUtil.toLanguageId(defaultLocale)));
+				set${column.methodName}(LocalizationUtil.updateLocalization(${column.name}Map, get${column.methodName}(), "${column.methodName}", LocaleUtil.toLanguageId(defaultLocale)));
 			}
 		</#if>
 

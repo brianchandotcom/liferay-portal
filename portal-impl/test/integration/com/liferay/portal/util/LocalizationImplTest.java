@@ -175,7 +175,7 @@ public class LocalizationImplTest {
 	}
 
 	@Test
-	public void testUpdateLocalizationXmlFromMap() {
+	public void testUpdateLocalization() {
 		Map<Locale, String>localizationMap = new HashMap<Locale, String>();
 		localizationMap.put(_english, _englishHello);
 
@@ -191,7 +191,7 @@ public class LocalizationImplTest {
 		sb.append("</greeting>");
 		sb.append("</root>");
 
-		String xml = LocalizationUtil.updateLocalizationXmlFromMap(
+		String xml = LocalizationUtil.updateLocalization(
 			localizationMap, sb.toString(), "greeting",
 			LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
 

@@ -725,7 +725,7 @@ public class LocalizationImpl implements Localization {
 		return xml;
 	}
 
-	public String updateLocalizationXmlFromMap(
+	public String updateLocalization(
 		Map<Locale, String> localizationMap, String xml, String key,
 		String defaultLanguageId) {
 

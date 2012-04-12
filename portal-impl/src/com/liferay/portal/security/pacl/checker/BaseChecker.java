@@ -14,8 +14,7 @@
 
 package com.liferay.portal.security.pacl.checker;
 
-import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.security.pacl.PACLPolicy;
 
 import java.util.Properties;
 import java.util.Set;
@@ -25,26 +24,38 @@ import java.util.Set;
  */
 public abstract class BaseChecker {
 
-	public BaseChecker(Properties properties) {
-		_properties = properties;
+	public BaseChecker(PACLPolicy paclPolicy) {
+		_paclPolicy = paclPolicy;
+	}
+
+	public ClassLoader getClassLoader() {
+		return _paclPolicy.getClassLoader();
+	}
+
+	public PACLPolicy getPACLPolicy() {
+		return _paclPolicy;
+	}
+
+	public String getServletContextName() {
+		return _paclPolicy.getServletContextName();
 	}
 
 	protected Properties getProperties() {
-		return _properties;
+		return _paclPolicy.getProperties();
 	}
 
 	protected String getProperty(String key) {
-		return _properties.getProperty(key);
+		return _paclPolicy.getProperty(key);
 	}
 
 	protected String[] getPropertyArray(String key) {
-		return StringUtil.split(getProperty(key));
+		return _paclPolicy.getPropertyArray(key);
 	}
 
 	protected Set<String> getPropertySet(String key) {
-		return SetUtil.fromArray(getPropertyArray(key));
+		return _paclPolicy.getPropertySet(key);
 	}
 
-	private Properties _properties;
+	private PACLPolicy _paclPolicy;
 
 }

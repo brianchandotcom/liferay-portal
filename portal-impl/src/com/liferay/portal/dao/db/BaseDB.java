@@ -263,11 +263,6 @@ public abstract class BaseDB implements DB {
 				try {
 					s.executeUpdate(sql);
 				}
-				catch (SecurityException se) {
-					if (_log.isInfoEnabled()) {
-						_log.info(se.getMessage());
-					}
-				}
 				catch (SQLException sqle) {
 					throw sqle;
 				}
@@ -415,6 +410,14 @@ public abstract class BaseDB implements DB {
 							}
 							else if (_log.isWarnEnabled()) {
 								_log.warn(ioe.getMessage());
+							}
+						}
+						catch (SecurityException se) {							
+							if (failOnError) {
+								throw se;
+							}
+							else if (_log.isWarnEnabled()) {
+								_log.warn(se.getMessage());
 							}
 						}
 						catch (SQLException sqle) {

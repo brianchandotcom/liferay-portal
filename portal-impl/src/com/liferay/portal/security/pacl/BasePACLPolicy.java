@@ -39,6 +39,22 @@ public abstract class BasePACLPolicy implements PACLPolicy {
 		return _classLoader;
 	}
 
+	public Properties getProperties() {
+		return _properties;
+	}
+
+	public String getProperty(String key) {
+		return _properties.getProperty(key);
+	}
+
+	public String[] getPropertyArray(String key) {
+		return StringUtil.split(getProperty(key));
+	}
+
+	public Set<String> getPropertySet(String key) {
+		return SetUtil.fromArray(getPropertyArray(key));
+	}
+
 	public String getServletContextName() {
 		return _servletContextName;
 	}
@@ -56,22 +72,6 @@ public abstract class BasePACLPolicy implements PACLPolicy {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	protected Properties getProperties() {
-		return _properties;
-	}
-
-	protected String getProperty(String key) {
-		return _properties.getProperty(key);
-	}
-
-	protected String[] getPropertyArray(String key) {
-		return StringUtil.split(getProperty(key));
-	}
-
-	protected Set<String> getPropertySet(String key) {
-		return SetUtil.fromArray(getPropertyArray(key));
 	}
 
 	private ClassLoader _classLoader;

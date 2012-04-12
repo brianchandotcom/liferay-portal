@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.SystemEnv;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
@@ -807,6 +808,9 @@ public class PDFProcessorImpl
 		}
 
 		public String call() throws ProcessException {
+			Properties systemProperties = System.getProperties();
+			SystemEnv.setProperties(systemProperties);
+
 			try {
 				LiferayConvertCmd.run(
 					_globalSearchPath, _resourceLimits, _commandArguments);

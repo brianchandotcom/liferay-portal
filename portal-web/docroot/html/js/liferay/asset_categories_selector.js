@@ -3,6 +3,8 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
+		var AObject = A.Object;
+
 		var BOUNDING_BOX = 'boundingBox';
 
 		var CSS_TAGS_LIST = 'lfr-categories-selector-list';
@@ -309,31 +311,31 @@ AUI.add(
 							searchResults = A.Node.create(TPL_SEARCH_RESULTS);
 
 							instance._searchResultsNode = searchResults;
+
+							var processSearchResults = A.bind(
+								instance._processSearchResults,
+								instance,
+								searchResults
+							);
+
+							var searchCategoriesTask = A.debounce(
+								instance._searchCategories,
+								350,
+								instance,
+								searchResults,
+								vocabularyIds,
+								vocabularyGroupIds,
+								processSearchResults
+							);
+
+							var input = popup.searchField.get('node');
+
+							input.on('keyup', searchCategoriesTask);
 						}
 
 						popup.entriesNode.append(searchResults);
 
 						instance._searchBuffer = [];
-
-						var processSearchResults = A.bind(
-							instance._processSearchResults,
-							instance,
-							searchResults
-						);
-
-						var searchCategoriesTask = A.debounce(
-							instance._searchCategories,
-							350,
-							instance,
-							searchResults,
-							vocabularyIds,
-							vocabularyGroupIds,
-							processSearchResults
-						);
-
-						var input = popup.searchField.get('node');
-
-						input.on('keypress', searchCategoriesTask);
 					},
 
 					_onBoundingBoxClick: EMPTY_FN,
@@ -473,14 +475,13 @@ AUI.add(
 
 							searchResults.addClass('loading-animation');
 
-							Liferay.Service.Asset.AssetCategory.getJSONSearch(
+							Liferay.Service.Asset.AssetCategory.getJSONByName(
 								{
 									groupId: vocabularyGroupIds[0],
 									name: Lang.sub(TPL_SEARCH_QUERY, [searchValue]),
-									vocabularyId: vocabularyIds[0],
+									vocabularyIds: vocabularyIds,
 									start: -1,
-									end: -1,
-									obc: null
+									end: -1
 								},
 								callback
 							);
@@ -488,7 +489,14 @@ AUI.add(
 
 						searchResults.toggle(!!searchValue);
 
-						instance.TREEVIEWS[vocabularyIds[0]].toggle(!searchValue);
+						var treeViews = instance.TREEVIEWS;
+
+						AObject.each(
+							treeViews,
+							function(tree, vocabularyId, collection) {
+								tree.toggle(!searchValue);
+							}
+						);
 					},
 
 					_showSelectPopup: function(event) {
@@ -526,7 +534,7 @@ AUI.add(
 
 						var searchField = popup.searchField.get(BOUNDING_BOX);
 
-						instance._bindSearchHandle = searchField.on('focus', A.bind(instance._initSearch, instance));
+						instance._bindSearchHandle = searchField.once('focus', A.bind(instance._initSearch, instance));
 					},
 
 					_vocabulariesIterator: function(item, index, collection) {
@@ -555,7 +563,25 @@ AUI.add(
 								children: [vocabularyRootNode],
 								io: {
 									cfg: {
-										data: A.bind(instance._formatRequestData, instance)
+										data: A.bind(instance._formatRequestData, instance),
+										on: {
+											success: A.bind(
+												function(event) {
+													var treeViews = instance.TREEVIEWS;
+
+													var tree = treeViews[vocabularyId];
+
+													var children = tree.get('children');
+
+													if (!children || !children.length || !children[0].hasChildNodes()) {
+														tree.destroy();
+
+														delete treeViews[vocabularyId];
+													}
+												},
+												instance
+											)
+										}
 									},
 									formatter: A.bind(instance._formatJSONResult, instance),
 									url: themeDisplay.getPathMain() + '/asset/get_categories'

@@ -27,23 +27,23 @@ String hiddenInput = (String)request.getAttribute("liferay-ui:asset-categories-s
 String curCategoryIds = GetterUtil.getString((String)request.getAttribute("liferay-ui:asset-categories-selector:curCategoryIds"), "");
 String curCategoryNames = StringPool.BLANK;
 
+List<AssetVocabulary> vocabularies = new ArrayList<AssetVocabulary>();
+
+Group group = themeDisplay.getScopeGroup();
+
+if (group.isLayout()) {
+	vocabularies.addAll(AssetVocabularyLocalServiceUtil.getGroupVocabularies(group.getParentGroupId(), false));
+}
+else {
+	vocabularies.addAll(AssetVocabularyLocalServiceUtil.getGroupVocabularies(scopeGroupId, false));
+}
+
+if (scopeGroupId != themeDisplay.getCompanyGroupId()) {
+	vocabularies.addAll(AssetVocabularyLocalServiceUtil.getGroupVocabularies(themeDisplay.getCompanyGroupId(), false));
+}
+
 if (Validator.isNotNull(className)) {
 	long classNameId = PortalUtil.getClassNameId(className);
-
-	List<AssetVocabulary> vocabularies = new ArrayList<AssetVocabulary>();
-
-	Group group = themeDisplay.getScopeGroup();
-
-	if (group.isLayout()) {
-		vocabularies.addAll(AssetVocabularyLocalServiceUtil.getGroupVocabularies(group.getParentGroupId(), false));
-	}
-	else {
-		vocabularies.addAll(AssetVocabularyLocalServiceUtil.getGroupVocabularies(scopeGroupId, false));
-	}
-
-	if (scopeGroupId != themeDisplay.getCompanyGroupId()) {
-		vocabularies.addAll(AssetVocabularyLocalServiceUtil.getGroupVocabularies(themeDisplay.getCompanyGroupId(), false));
-	}
 
 	for (AssetVocabulary vocabulary : vocabularies) {
 		vocabulary = vocabulary.toEscapedModel();
@@ -126,6 +126,18 @@ else {
 	}
 
 	String[] categoryIdsTitles = _getCategoryIdsTitles(curCategoryIds, curCategoryNames, 0, themeDisplay);
+
+	StringBundler vocabulariesIds = new StringBundler(vocabularies.size());
+
+	for (AssetVocabulary vocabulary : vocabularies) {
+		vocabulary = vocabulary.toEscapedModel();
+
+		if (vocabulariesIds.length() > 0) {
+			vocabulariesIds.append(",");
+		}
+
+		vocabulariesIds.append(vocabulary.getVocabularyId());
+	}
 %>
 
 	<div class="lfr-tags-selector-content" id="<%= namespace + randomNamespace %>assetCategoriesSelector">
@@ -141,7 +153,9 @@ else {
 				curEntryIds: '<%= categoryIdsTitles[0] %>',
 				hiddenInput: '#<%= namespace + hiddenInput %>',
 				instanceVar: '<%= namespace + randomNamespace %>',
-				portalModelResource: <%= Validator.isNotNull(className) && (ResourceActionsUtil.isPortalModelResource(className) || className.equals(Group.class.getName())) %>
+				portalModelResource: <%= Validator.isNotNull(className) && (ResourceActionsUtil.isPortalModelResource(className) || className.equals(Group.class.getName())) %>,
+				vocabularyIds: '<%= vocabulariesIds.toString() %>',
+				vocabularyGroupIds: '<%= scopeGroupId %>'
 			}
 		).render();
 	</aui:script>

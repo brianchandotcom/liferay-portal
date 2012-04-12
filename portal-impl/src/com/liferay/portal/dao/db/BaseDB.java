@@ -63,6 +63,7 @@ import javax.naming.NamingException;
  * @author Alexander Chow
  * @author Ganesh Ram
  * @author Brian Wing Shun Chan
+ * @author Daniel Kocsis
  */
 public abstract class BaseDB implements DB {
 
@@ -234,6 +235,8 @@ public abstract class BaseDB implements DB {
 		}
 		catch (SQLException e) {
 			_log.error(e, e);
+
+			return false;
 		}
 		finally {
 			DataAccess.cleanUp(rs);
@@ -242,7 +245,7 @@ public abstract class BaseDB implements DB {
 		String indexSpec = sb.toString();
 
 		if (indexSpec.endsWith(", ")) {
-			indexSpec = indexSpec.substring(0, indexSpec.length()-2);
+			indexSpec = indexSpec.substring(0, indexSpec.length() - 2);
 		}
 
 		indexSpec = indexSpec.concat(");");
@@ -728,36 +731,42 @@ public abstract class BaseDB implements DB {
 					continue;
 				}
 			}
-			else {
-				if (!tablesSQLLowerCase.contains(
+			else if (!tablesSQLLowerCase.contains(
 						"create table " + tableNameLowerCase + " (")) {
 
-					continue;
-				}
+				continue;
 			}
+			else {
+				// Find original table name
 
-			int pos = tablesSQLLowerCase.indexOf(tableNameLowerCase);
-			String originalTableName = StringPool.BLANK;
+				int pos = tablesSQLLowerCase.indexOf(tableNameLowerCase);
+				String originalTableName = StringPool.BLANK;
 
-			if (pos > 0) {
-				originalTableName = tablesSQL.substring(
-					pos, pos + tableName.length());
+				if (pos > 0) {
+					originalTableName = tablesSQL.substring(
+						pos, pos + tableName.length());
 
-				if (isPortalIndex(
-						con, indexNameUpperCase, unique, originalTableName)) {
+					// Check for user created index
 
-					validIndexNames.remove(indexNameUpperCase);
+					if (!isPortalIndex(
+							con, indexNameUpperCase, unique,
+							originalTableName)) {
 
-					String sql =
-						"drop index " + indexNameUpperCase + " on " + tableName;
-
-					if (_log.isInfoEnabled()) {
-						_log.info(sql);
+						continue;
 					}
-
-					runSQL(con, sql);
 				}
 			}
+
+			validIndexNames.remove(indexNameUpperCase);
+
+			String sql =
+				"drop index " + indexNameUpperCase + " on " + tableName;
+
+			if (_log.isInfoEnabled()) {
+				_log.info(sql);
+			}
+
+			runSQL(con, sql);
 		}
 
 		return validIndexNames;

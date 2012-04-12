@@ -15,8 +15,7 @@
 --%>
 
 <%
-String collapsed = GetterUtil.getString(SessionClicks.get(request, _LIFERAY_JS_CONSOLE_COLLAPSED_SESSION_CLICKS_KEY, null), "false");
-collapsed = HtmlUtil.escape(collapsed);
+String collapsed = HtmlUtil.escape(GetterUtil.getString(SessionClicks.get(request, _LIFERAY_JS_CONSOLE_COLLAPSED_SESSION_CLICKS_KEY, null), "false"));
 %>
 
 <div id="liferayJSConsole"></div>

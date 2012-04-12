@@ -39,18 +39,6 @@ public class PACLStatementHandler implements InvocationHandler {
 		try {
 			String methodName = method.getName();
 
-			if (methodName.equals("equals")) {
-				if (proxy == arguments[0]) {
-					return true;
-				}
-				else {
-					return false;
-				}
-			}
-			else if (methodName.equals("hashCode")) {
-				return System.identityHashCode(proxy);
-			}
-
 			if (methodName.equals("addBatch") || methodName.equals("execute") ||
 				methodName.equals("executeQuery") ||
 				methodName.equals("executeUpdate")) {
@@ -63,6 +51,17 @@ public class PACLStatementHandler implements InvocationHandler {
 							"Attempted to execute unapproved SQL " + sql);
 					}
 				}
+			}
+			else if (methodName.equals("equals")) {
+				if (proxy == arguments[0]) {
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+			else if (methodName.equals("hashCode")) {
+				return System.identityHashCode(proxy);
 			}
 
 			return method.invoke(_statement, arguments);

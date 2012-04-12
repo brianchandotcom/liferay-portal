@@ -203,6 +203,7 @@
 	<bean id="com.liferay.portlet.asset.service.persistence.AssetEntryFinder" class="com.liferay.portlet.asset.service.persistence.AssetEntryFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.asset.service.AssetLinkLocalService" class="com.liferay.portlet.asset.service.impl.AssetLinkLocalServiceImpl" />
 	<bean id="com.liferay.portlet.asset.service.persistence.AssetLinkPersistence" class="com.liferay.portlet.asset.service.persistence.AssetLinkPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portlet.asset.service.persistence.AssetLinkFinder" class="com.liferay.portlet.asset.service.persistence.AssetLinkFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.asset.service.AssetTagLocalService" class="com.liferay.portlet.asset.service.impl.AssetTagLocalServiceImpl" />
 	<bean id="com.liferay.portlet.asset.service.AssetTagService" class="com.liferay.portlet.asset.service.impl.AssetTagServiceImpl" />
 	<bean id="com.liferay.portlet.asset.service.persistence.AssetTagPersistence" class="com.liferay.portlet.asset.service.persistence.AssetTagPersistenceImpl" parent="basePersistence" />

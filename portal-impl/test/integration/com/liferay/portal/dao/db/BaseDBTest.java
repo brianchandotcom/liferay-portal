@@ -28,6 +28,7 @@ import java.sql.SQLException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 
 /**
  * @author Daniel Kocsis
@@ -59,6 +60,12 @@ public class BaseDBTest {
 
 			result = baseDB.isPortalIndex(
 				connection, "IX_TEST_NON_PORTAL", true, "AssetEntry");
+
+			Assert.assertFalse(result);
+
+			result = baseDB.isPortalIndex(
+				connection, Mockito.anyString(), Mockito.anyBoolean(),
+				Mockito.anyString());
 
 			Assert.assertFalse(result);
 		}

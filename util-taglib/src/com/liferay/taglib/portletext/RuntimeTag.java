@@ -16,13 +16,16 @@ package com.liferay.taglib.portletext;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletContainerUtil;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.Portlet;
+import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portlet.layoutconfiguration.util.RuntimePortletUtil;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -78,7 +81,13 @@ public class RuntimeTag extends TagSupport {
 			request = DynamicServletRequest.addQueryString(
 				request, queryString);
 
-			RuntimePortletUtil.processPortlet(request, response, portletId);
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+				themeDisplay.getCompanyId(), portletId);
+
+			PortletContainerUtil.render(request, response, portlet);
 
 			Set<String> runtimePortletIds = (Set<String>)request.getAttribute(
 				WebKeys.RUNTIME_PORTLET_IDS);

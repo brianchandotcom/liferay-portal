@@ -14,11 +14,9 @@
 
 package com.liferay.portlet.layoutconfiguration.util;
 
-import com.liferay.portal.model.Portlet;
 import com.liferay.portlet.layoutconfiguration.util.xml.RuntimeLogic;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
 /**
@@ -26,10 +24,10 @@ import javax.servlet.jsp.PageContext;
  * @author Raymond Augé
  * @author Shuyang Zhou
  */
-public class RuntimePortletUtil {
+public class RuntimePageUtil {
 
-	public static RuntimePortlet getRuntimePortlet() {
-		return _runtimePortlet;
+	public static RuntimePage getRuntimePage() {
+		return _runtimePage;
 	}
 
 	public static void processCustomizationSettings(
@@ -37,34 +35,8 @@ public class RuntimePortletUtil {
 			String velocityTemplateContent)
 		throws Exception {
 
-		getRuntimePortlet().processCustomizationSettings(
+		getRuntimePage().processCustomizationSettings(
 			pageContext, velocityTemplateId, velocityTemplateContent);
-	}
-
-	public static void processPortlet(
-			HttpServletRequest request, HttpServletResponse response,
-			Portlet portlet)
-		throws Exception {
-
-		getRuntimePortlet().processPortlet(request, response, portlet);
-	}
-
-	public static void processPortlet(
-			HttpServletRequest request, HttpServletResponse response,
-			Portlet portlet, String columnId, Integer columnPos,
-			Integer columnCount, String path)
-		throws Exception {
-
-		getRuntimePortlet().processPortlet(
-			request, response, portlet, columnId, columnPos, columnCount, path);
-	}
-
-	public static void processPortlet(
-			HttpServletRequest request, HttpServletResponse response,
-			String portletId)
-		throws Exception {
-
-		getRuntimePortlet().processPortlet(request, response, portletId);
 	}
 
 	public static void processTemplate(
@@ -72,7 +44,7 @@ public class RuntimePortletUtil {
 			String velocityTemplateContent)
 		throws Exception {
 
-		getRuntimePortlet().processTemplate(
+		getRuntimePage().processTemplate(
 			pageContext, velocityTemplateId, velocityTemplateContent);
 	}
 
@@ -81,7 +53,7 @@ public class RuntimePortletUtil {
 			String velocityTemplateId, String velocityTemplateContent)
 		throws Exception {
 
-		getRuntimePortlet().processTemplate(
+		getRuntimePage().processTemplate(
 			pageContext, portletId, velocityTemplateId,
 			velocityTemplateContent);
 	}
@@ -91,13 +63,13 @@ public class RuntimePortletUtil {
 			RuntimeLogic runtimeLogic)
 		throws Exception {
 
-		return getRuntimePortlet().processXML(request, content, runtimeLogic);
+		return getRuntimePage().processXML(request, content, runtimeLogic);
 	}
 
-	public void setRuntimePortlet(RuntimePortlet runtimePortlet) {
-		_runtimePortlet = runtimePortlet;
+	public void setRuntimePage(RuntimePage runtimePage) {
+		_runtimePage = runtimePage;
 	}
 
-	private static RuntimePortlet _runtimePortlet;
+	private static RuntimePage _runtimePage;
 
 }

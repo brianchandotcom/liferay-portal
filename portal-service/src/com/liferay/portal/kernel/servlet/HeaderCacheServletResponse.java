@@ -166,7 +166,7 @@ public class HeaderCacheServletResponse extends HttpServletResponseWrapper {
 
 	@Override
 	public boolean isCommitted() {
-		return _committed;
+		return _committed || getResponse().isCommitted();
 	}
 
 	@Override

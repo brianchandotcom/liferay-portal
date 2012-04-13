@@ -43,7 +43,7 @@ if (themeDisplay.isStatePopUp() || layoutTypePortlet.hasStateMax()) {
 		velocityTemplateContent = LayoutTemplateLocalServiceUtil.getContent("max", true, theme.getThemeId());
 	}
 
-	RuntimePortletUtil.processTemplate(pageContext, ppid, velocityTemplateId, velocityTemplateContent);
+	RuntimePageUtil.processTemplate(pageContext, ppid, velocityTemplateId, velocityTemplateContent);
 }
 else {
 	UnicodeProperties typeSettingsProperties = layout.getTypeSettingsProperties();

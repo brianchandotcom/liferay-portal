@@ -97,6 +97,8 @@ public interface WebKeys {
 
 	public static final String REDIRECT = "REDIRECT";
 
+	public static final String RENDER_PATH = "RENDER_PATH";
+
 	public static final String RENDER_PORTLET = "RENDER_PORTLET";
 
 	public static final String RENDER_PORTLET_COLUMN_COUNT = "RENDER_PORTLET_COLUMN_COUNT";

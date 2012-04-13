@@ -72,10 +72,10 @@ public class DynamicQueryFactoryImpl implements DynamicQueryFactory {
 			classLoader = currentThread.getContextClassLoader();
 		}
 
-		Package pakkage = clazz.getPackage();
+		Package pkg = clazz.getPackage();
 
 		String implClassName =
-			pakkage.getName() + ".impl." + clazz.getSimpleName() + "Impl";
+			pkg.getName() + ".impl." + clazz.getSimpleName() + "Impl";
 
 		try {
 			implClass = getImplClass(implClassName, classLoader);

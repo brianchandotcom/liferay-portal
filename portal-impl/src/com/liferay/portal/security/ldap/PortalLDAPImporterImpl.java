@@ -237,6 +237,8 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 
 		LdapContext ldapContext = null;
 
+		NamingEnumeration<SearchResult> enu = null;
+
 		try {
 			String postfix = LDAPSettingsUtil.getPropertyPostfix(ldapServerId);
 
@@ -279,8 +281,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 				SearchControls.SUBTREE_SCOPE, 1, 0,
 				new String[] {userMappingsScreenName}, false, false);
 
-			NamingEnumeration<SearchResult> enu = ldapContext.search(
-				baseDN, filter, searchControls);
+			enu = ldapContext.search(baseDN, filter, searchControls);
 
 			if (enu.hasMoreElements()) {
 				if (_log.isDebugEnabled()) {
@@ -315,6 +316,10 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 				"Problem accessing LDAP server " + e.getMessage());
 		}
 		finally {
+			if (enu != null) {
+				enu.close();
+			}
+
 			if (ldapContext != null) {
 				ldapContext.close();
 			}

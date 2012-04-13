@@ -222,7 +222,7 @@ public class LDAPAuth implements Authenticator {
 			return FAILURE;
 		}
 
-		NamingEnumeration<SearchResult> enu = null; 
+		NamingEnumeration<SearchResult> enu = null;
 
 		try {
 			String baseDN = PrefsPropsUtil.getString(

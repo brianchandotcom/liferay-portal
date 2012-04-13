@@ -447,11 +447,7 @@ dateFormatDateTime.setTimeZone(timeZone);
 
 									var message = instance.get('responseData');
 
-									if (message) {
-										A.one('#' + clusterNodeId + '_' + cmd).html('');
-
-										success(message);
-									}
+									A.one('#' + clusterNodeId + '_' + cmd).html('');
 								}
 							}
 						}
@@ -492,8 +488,10 @@ dateFormatDateTime.setTimeZone(timeZone);
 
 						A.one('#<%= clusterNode.getClusterNodeId() %>_registerCheckbox').attr('disabled', false);
 
-						if (message == '') {
+						if (!message) {
 							A.one('#<%= clusterNode.getClusterNodeId() %>_licenseProperties').html('License information is not available.');
+
+							return;
 						}
 
 						var empty = true;

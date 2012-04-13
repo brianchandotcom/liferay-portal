@@ -64,7 +64,7 @@ public class PACLClassUtil {
 			}
 		}
 
-		if (callerClassLoaderClassName.equals(_JASPER_LOADER_CLASS_NAME)) {
+		if (callerClassLoaderClassName.equals(_ClASS_NAME_JASPER_LOADER)) {
 			callerClassLoader = callerClassLoader.getParent();
 		}
 
@@ -194,7 +194,7 @@ public class PACLClassUtil {
 		return null;
 	}
 
-	private static final String _JASPER_LOADER_CLASS_NAME =
+	private static final String _ClASS_NAME_JASPER_LOADER =
 		"org.apache.jasper.servlet.JasperLoader";
 
 	private static Log _log = LogFactoryUtil.getLog(PACLClassUtil.class);

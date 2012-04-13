@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -32,7 +33,9 @@ import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.portlet.PortletRequest;
 
@@ -80,7 +83,7 @@ public class AssetEntryQuery {
 
 	public AssetEntryQuery(AssetEntryQuery assetEntryQuery) {
 		setAllCategoryIds(assetEntryQuery.getAllCategoryIds());
-		setAllTagIds(assetEntryQuery.getAllTagIds());
+		setAllTagIdsArray(assetEntryQuery.getAllTagIdsArray());
 		setAnyCategoryIds(assetEntryQuery.getAnyCategoryIds());
 		setAnyTagIds(assetEntryQuery.getAnyTagIds());
 		setClassNameIds(assetEntryQuery.getClassNameIds());
@@ -93,7 +96,7 @@ public class AssetEntryQuery {
 		setLayout(assetEntryQuery.getLayout());
 		setLinkedAssetEntryId(assetEntryQuery.getLinkedAssetEntryId());
 		setNotAllCategoryIds(assetEntryQuery.getNotAllCategoryIds());
-		setNotAllTagIds(assetEntryQuery.getNotAllTagIds());
+		setNotAllTagIdsArray(assetEntryQuery.getNotAllTagIdsArray());
 		setNotAnyCategoryIds(assetEntryQuery.getNotAnyCategoryIds());
 		setNotAnyTagIds(assetEntryQuery.getNotAnyTagIds());
 		setOrderByCol1(assetEntryQuery.getOrderByCol1());
@@ -138,6 +141,8 @@ public class AssetEntryQuery {
 		if (Validator.isNotNull(tagName)) {
 			_allTagIds = AssetTagLocalServiceUtil.getTagIds(
 				themeDisplay.getParentGroupId(), new String[] {tagName});
+
+			_allTagIdsArray = new long[][]{_allTagIds};
 		}
 	}
 
@@ -146,6 +151,27 @@ public class AssetEntryQuery {
 
 		this(
 			new long[] {PortalUtil.getClassNameId(className)}, searchContainer);
+	}
+
+	public void addAllTagIdsArray(long[] allTagsIds) {
+		if (allTagsIds.length == 0) {
+			return;
+		}
+
+		_allTagIdsArray = ArrayUtil.append(_allTagIdsArray, allTagsIds);
+
+		_allTagIds = _flatTagIds(_allTagIdsArray);
+	}
+
+	public void addNotAllTagIdsArray(long[] notAllTagsIds) {
+		if (notAllTagsIds.length == 0) {
+			return;
+		}
+
+		_notAllTagIdsArray = ArrayUtil.append(
+			_notAllTagIdsArray, notAllTagsIds);
+
+		_notAllTagIds = _flatTagIds(_notAllTagIdsArray);
 	}
 
 	public long[] getAllCategoryIds() {
@@ -158,6 +184,10 @@ public class AssetEntryQuery {
 
 	public long[] getAllTagIds() {
 		return _allTagIds;
+	}
+
+	public long[][] getAllTagIdsArray() {
+		return _allTagIdsArray;
 	}
 
 	public long[] getAnyCategoryIds() {
@@ -210,6 +240,10 @@ public class AssetEntryQuery {
 
 	public long[] getNotAllTagIds() {
 		return _notAllTagIds;
+	}
+
+	public long[][] getNotAllTagIdsArray() {
+		return _notAllTagIdsArray;
 	}
 
 	public long[] getNotAnyCategoryIds() {
@@ -268,6 +302,16 @@ public class AssetEntryQuery {
 
 	public void setAllTagIds(long[] allTagIds) {
 		_allTagIds = allTagIds;
+
+		_allTagIdsArray = new long[][]{_allTagIds};
+
+		_toString = null;
+	}
+
+	public void setAllTagIdsArray(long[][] allTagIdsArray) {
+		_allTagIdsArray = allTagIdsArray;
+
+		_allTagIds = _flatTagIds(allTagIdsArray);
 
 		_toString = null;
 	}
@@ -352,6 +396,16 @@ public class AssetEntryQuery {
 
 	public void setNotAllTagIds(long[] notAllTagIds) {
 		_notAllTagIds = notAllTagIds;
+
+		_notAllTagIdsArray = new long[][]{_notAllTagIds};
+
+		_toString = null;
+	}
+
+	public void setNotAllTagIdsArray(long[][] notAllTagIdsArray) {
+		_notAllTagIdsArray = notAllTagIdsArray;
+
+		_notAllTagIds = _flatTagIds(notAllTagIdsArray);
 
 		_toString = null;
 	}
@@ -475,6 +529,23 @@ public class AssetEntryQuery {
 		return _toString;
 	}
 
+	private long[] _flatTagIds(long[][] tagIdsArray) {
+		List<Long> tagIdsList = new ArrayList<Long>();
+
+		for (int i = 0; i < tagIdsArray.length; i++) {
+			long[] tagIds = tagIdsArray[i];
+
+			for (int j = 0; j < tagIds.length; j++) {
+				long tagId = tagIds[j];
+
+				tagIdsList.add(tagId);
+			}
+		}
+
+		return ArrayUtil.toArray(
+			tagIdsList.toArray(new Long[tagIdsList.size()]));
+	}
+
 	private long[] _getLeftAndRightCategoryIds(long[] categoryIds) {
 		long[] leftRightIds = new long[categoryIds.length * 3];
 
@@ -501,6 +572,7 @@ public class AssetEntryQuery {
 
 	private long[] _allCategoryIds = new long[0];
 	private long[] _allTagIds = new long[0];
+	private long[][] _allTagIdsArray = new long[0][];
 	private long[] _anyCategoryIds = new long[0];
 	private long[] _anyTagIds = new long[0];
 	private long[] _classNameIds = new long[0];
@@ -514,6 +586,7 @@ public class AssetEntryQuery {
 	private long _linkedAssetEntryId = 0;
 	private long[] _notAllCategoryIds = new long[0];
 	private long[] _notAllTagIds = new long[0];
+	private long[][] _notAllTagIdsArray = new long[0][];
 	private long[] _notAnyCategoryIds = new long[0];
 	private long[] _notAnyTagIds = new long[0];
 	private String _orderByCol1;

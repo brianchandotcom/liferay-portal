@@ -52,6 +52,10 @@ public abstract class BaseChecker {
 		return _paclPolicy.getPropertyArray(key);
 	}
 
+	protected boolean getPropertyBoolean(String key) {
+		return _paclPolicy.getPropertyBoolean(key);
+	}
+
 	protected Set<String> getPropertySet(String key) {
 		return _paclPolicy.getPropertySet(key);
 	}

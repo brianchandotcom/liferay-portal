@@ -422,7 +422,23 @@
 		<priority value="WARN" />
 	</category>
 
-	<category name="com.liferay.portal.security.lang.PortalSecurityManager">
+	<category name="com.liferay.portal.security.lang.PortalSecurityManager#doCheckConnect">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.portal.security.lang.PortalSecurityManager#doCheckExec">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.portal.security.lang.PortalSecurityManager#doCheckListen">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.portal.security.lang.PortalSecurityManager#doCheckRead">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.portal.security.lang.PortalSecurityManager#doCheckWrite">
 		<priority value="ERROR" />
 	</category>
 

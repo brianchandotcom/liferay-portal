@@ -3,6 +3,7 @@ AUI.add(
 	function(A) {
 		var D = A.DataType;
 		var Lang = A.Lang;
+		var JSON = A.JSON;
 
 		var generateInstanceId = function() {
 			var instanceId = '';
@@ -375,23 +376,31 @@ AUI.add(
 					'com.liferay.portal.service.ServiceContext'
 				];
 
+				var nameMap = {};
+
+				nameMap[defaultLocale] = name;
+
+				var descriptionMap = {};
+
+				descriptionMap[defaultLocale] = description == '' ? null : description;
+
 				Liferay.Service.Journal.JournalStructure.addStructure(
 					{
 						groupId: groupId,
 						structureId: structureId,
 						autoStructureId: autoStructureId,
 						parentStructureId: parentStructureId,
-						nameMap: '{' + defaultLocale + ':' + name + '}',
-						descriptionMap: '{' + defaultLocale + ':' + (description == '' ? null : description ) + '}',
+						nameMap: JSON.stringify(nameMap),
+						descriptionMap: JSON.stringify(descriptionMap),
 						xsd: xsd,
-						serviceContext: A.JSON.stringify(
+						serviceContext: JSON.stringify(
 							{
 								addGroupPermissions: addGroupPermissions,
 								addGuestPermissions: addGuestPermissions,
 								scopeGroupId: groupId
 							}
 						),
-						serviceParameterTypes: A.JSON.stringify(serviceParameterTypes)
+						serviceParameterTypes: JSON.stringify(serviceParameterTypes)
 					},
 					function(message) {
 						if (Lang.isFunction(callback)) {
@@ -1659,20 +1668,28 @@ AUI.add(
 					'com.liferay.portal.service.ServiceContext'
 				];
 
+				var nameMap = {};
+
+				nameMap[defaultLocale] = name;
+
+				var descriptionMap = {};
+
+				descriptionMap[defaultLocale] = description == '' ? null : description;
+
 				Liferay.Service.Journal.JournalStructure.updateStructure(
 					{
 						groupId: groupId,
 						structureId: structureId,
 						parentStructureId: parentStructureId || '',
-						nameMap: '{' + defaultLocale + ':' + name + '}',
-						descriptionMap: '{' + defaultLocale + ':' + (description == '' ? null : description ) + '}',
+						nameMap: JSON.stringify(nameMap),
+						descriptionMap: JSON.stringify(descriptionMap),
 						xsd: xsd,
-						serviceContext: A.JSON.stringify(
+						serviceContext: JSON.stringify(
 							{
 								scopeGroupId: groupId
 							}
 						),
-						serviceParameterTypes: A.JSON.stringify(serviceParameterTypes)
+						serviceParameterTypes: JSON.stringify(serviceParameterTypes)
 					},
 					function(message) {
 						if (Lang.isFunction(callback)) {

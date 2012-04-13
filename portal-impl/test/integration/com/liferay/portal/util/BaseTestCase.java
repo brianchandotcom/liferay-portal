@@ -16,7 +16,6 @@ package com.liferay.portal.util;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.test.TestCase;
-import com.liferay.portal.util.InitUtil;
 import com.liferay.util.PwdGenerator;
 
 import java.util.Calendar;

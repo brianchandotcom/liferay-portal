@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webdav.WebDAVUtil;
 import com.liferay.portal.webdav.WebDAVServlet;
 import com.liferay.portal.webdav.methods.Method;
-import com.liferay.portlet.documentlibrary.webdav.DLWebDAVStorageImpl;
 
 import java.util.HashMap;
 import java.util.Map;

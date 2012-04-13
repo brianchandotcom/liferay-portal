@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.cal;
 
-import com.liferay.portal.kernel.cal.Duration;
-import com.liferay.portal.kernel.cal.Recurrence;
 import com.liferay.portal.kernel.util.RecurrenceTestCase;
 import com.liferay.portal.kernel.util.Time;
 

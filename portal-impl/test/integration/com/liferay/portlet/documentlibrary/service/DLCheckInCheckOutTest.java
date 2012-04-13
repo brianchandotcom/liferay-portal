@@ -30,7 +30,6 @@ import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 
 import java.io.InputStream;
 

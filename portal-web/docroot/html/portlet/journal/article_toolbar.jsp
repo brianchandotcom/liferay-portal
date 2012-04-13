@@ -74,7 +74,7 @@ if ((article != null) && article.isDraft()) {
 						permissionPopUp = Liferay.Util.openWindow(
 							{
 								dialog: {
-									centered: true,
+									align: Liferay.Util.Window.ALIGN_CENTER,
 									cssClass: 'portlet-asset-categories-admin-dialog permissions-change',
 									width: 700
 								},

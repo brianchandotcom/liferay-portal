@@ -549,7 +549,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 				Liferay.Util.openWindow(
 					{
 						dialog: {
-							centered: true,
+							align: Liferay.Util.Window.ALIGN_CENTER,
 							modal: true
 						},
 						id: '<%= namespace %>signInDialog',

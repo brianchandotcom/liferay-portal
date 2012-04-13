@@ -84,8 +84,8 @@
 				handler: function(event) {
 					var popUp = new A.Dialog(
 						{
+							align: Liferay.Util.Window.ALIGN_CENTER,
 							bodyContent: content.show(),
-							centered: true,
 							destroyOnClose: true,
 							modal: true,
 							title: '<%= UnicodeLanguageUtil.get(pageContext, "copy-portlets-from-page") %>',

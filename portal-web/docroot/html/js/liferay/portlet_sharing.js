@@ -14,7 +14,7 @@ Liferay.provide(
 
 		var dialog = new A.Dialog(
 			{
-				centered: true,
+				align: Liferay.Util.Window.ALIGN_CENTER,
 				destroyOnClose: true,
 				modal: true,
 				title: Liferay.Language.get('add-to-netvibes'),
@@ -46,7 +46,7 @@ Liferay.provide(
 
 		var dialog = new A.Dialog(
 			{
-				centered: true,
+				align: Liferay.Util.Window.ALIGN_CENTER,
 				destroyOnClose: true,
 				modal: true,
 				title: Liferay.Language.get('add-to-any-website'),

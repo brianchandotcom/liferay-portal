@@ -274,7 +274,7 @@ AUI.add(
 											maxOverlayMask.set('visible', event.newVal);
 										}
 									},
-									centered: true,
+									align: Liferay.Util.Window.ALIGN_CENTER,
 									cssClass: 'lfr-preview-file-image-overlay',
 									height: '90%',
 									width: '85%',

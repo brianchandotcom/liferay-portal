@@ -47,6 +47,7 @@ AUI.add(
 
 				var dialog = new A.Dialog(
 					{
+						align: Liferay.Util.Window.ALIGN_CENTER,
 						bodyContent: form,
 						buttons: [
 							{
@@ -62,7 +63,6 @@ AUI.add(
 								label: Liferay.Language.get('cancel')
 							}
 						],
-						centered: true,
 						modal: true,
 						title: title,
 						width: 400

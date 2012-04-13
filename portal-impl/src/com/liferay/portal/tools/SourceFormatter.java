@@ -1266,6 +1266,8 @@ public class SourceFormatter {
 
 		String ifClause = StringPool.BLANK;
 
+		String packageName = StringPool.BLANK;
+
 		while ((line = unsyncBufferedReader.readLine()) != null) {
 			lineCount++;
 
@@ -1283,6 +1285,22 @@ public class SourceFormatter {
 				new String[] {
 					"* Copyright (c) 2000-2012 Liferay, Inc."
 				});
+
+			if (line.startsWith("package ")) {
+				packageName = line.substring(8, line.length() - 1);
+			}
+
+			if (line.startsWith("import ")) {
+				int pos = line.lastIndexOf(StringPool.PERIOD);
+
+				if (pos != -1) {
+					String importPackageName = line.substring(7, pos);
+
+					if (importPackageName.equals(packageName)) {
+						continue;
+					}
+				}
+			}
 
 			if (line.startsWith(StringPool.SPACE) && !line.startsWith(" *")) {
 				if (!line.startsWith(StringPool.FOUR_SPACES)) {

@@ -411,7 +411,7 @@ public abstract class BaseDB implements DB {
 								_log.warn(ioe.getMessage());
 							}
 						}
-						catch (SecurityException se) {							
+						catch (SecurityException se) {
 							if (failOnError) {
 								throw se;
 							}

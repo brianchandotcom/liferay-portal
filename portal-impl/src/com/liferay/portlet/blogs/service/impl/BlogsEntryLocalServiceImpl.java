@@ -71,6 +71,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.portlet.PortletPreferences;
 
@@ -126,6 +128,29 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		BlogsEntry entry = blogsEntryPersistence.create(entryId);
 
+		String urlTitleFromContext = GetterUtil.getString(
+				serviceContext.getAttribute("urlTitle"));
+
+		String urlTitle = null;
+		if (isContextUrlTitleRegexpMatch(urlTitleFromContext)) {
+			urlTitle = BlogsUtil.getUrlTitle(entryId, urlTitleFromContext);
+
+			urlTitle = ModelHintsUtil.trimString(
+				BlogsEntry.class.getName(), "urlTitle", urlTitle);
+
+			BlogsEntry entryWithUrlTitle = blogsEntryPersistence.fetchByG_UT(
+				groupId, urlTitle);
+
+			if ((entryWithUrlTitle != null) &&
+				(entryWithUrlTitle.getEntryId() != entryId)) {
+
+				urlTitle = getUniqueUrlTitle(
+					entry.getEntryId(), groupId, urlTitle);
+			}
+		} else {
+			urlTitle = getUniqueUrlTitle(entryId, groupId, title);
+		}
+
 		entry.setUuid(serviceContext.getUuid());
 		entry.setGroupId(groupId);
 		entry.setCompanyId(user.getCompanyId());
@@ -134,7 +159,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		entry.setCreateDate(serviceContext.getCreateDate(now));
 		entry.setModifiedDate(serviceContext.getModifiedDate(now));
 		entry.setTitle(title);
-		entry.setUrlTitle(getUniqueUrlTitle(entryId, groupId, title));
+		entry.setUrlTitle(urlTitle);
 		entry.setDescription(description);
 		entry.setContent(content);
 		entry.setDisplayDate(displayDate);
@@ -622,10 +647,38 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		String oldUrlTitle = entry.getUrlTitle();
 
+		String urlTitleFromContext = GetterUtil.getString(
+				serviceContext.getAttribute("urlTitle"));
+
+		String urlTitle = null;
+		if (isContextUrlTitleRegexpMatch(urlTitleFromContext)) {
+			urlTitle = BlogsUtil.getUrlTitle(
+				entry.getEntryId(), urlTitleFromContext);
+
+			urlTitle = ModelHintsUtil.trimString(
+				BlogsEntry.class.getName(), "urlTitle", urlTitle);
+
+			BlogsEntry entryWithUrlTitle = blogsEntryPersistence.fetchByG_UT(
+					serviceContext.getScopeGroupId(), urlTitle);
+
+			if ((entryWithUrlTitle != null) &&
+				(entryWithUrlTitle.getEntryId() != entry.getEntryId())) {
+
+				urlTitle = getUniqueUrlTitle(
+					entry.getEntryId(), entry.getGroupId(), urlTitle);
+			}
+		}
+		else if (isContextUrlTitleRegexpMatch(oldUrlTitle)) {
+			urlTitle = oldUrlTitle;
+		}
+		else {
+			urlTitle = getUniqueUrlTitle(
+					entry.getEntryId(), entry.getGroupId(), title);
+		}
+
 		entry.setModifiedDate(serviceContext.getModifiedDate(null));
 		entry.setTitle(title);
-		entry.setUrlTitle(
-			getUniqueUrlTitle(entryId, entry.getGroupId(), title));
+		entry.setUrlTitle(urlTitle);
 		entry.setDescription(description);
 		entry.setContent(content);
 		entry.setDisplayDate(displayDate);
@@ -836,6 +889,23 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 
 		return newUrlTitle;
+	}
+
+	protected boolean isContextUrlTitleRegexpMatch(String urlTitle)
+			throws PortalException {
+		if (Validator.isNotNull(urlTitle) &&
+			Validator.isNotNull(
+				PropsValues.BLOGS_ENTRY_CONTEXT_URL_TITLE_REGEXP)) {
+
+			Pattern pattern = Pattern.compile(
+				PropsValues.BLOGS_ENTRY_CONTEXT_URL_TITLE_REGEXP);
+
+			Matcher matcher = pattern.matcher(urlTitle);
+
+			return matcher.matches();
+		}
+
+		return false;
 	}
 
 	protected void notifySubscribers(

@@ -1228,6 +1228,8 @@ public class SitesUtil {
 		LayoutSetServiceUtil.updateLayoutSetPrototypeLinkEnabled(
 			groupId, privateLayout, layoutSetPrototypeLinkEnabled,
 			layoutSetPrototypeUuid);
+
+		LayoutLocalServiceUtil.updatePriorities(groupId, privateLayout);
 	}
 
 	private static final String _TEMP_DIR =

@@ -543,50 +543,9 @@ public class HookHotDeployListener
 		initLanguageProperties(
 			paclPolicy, servletContextName, portletClassLoader, rootElement);
 
-		String customJspDir = rootElement.elementText("custom-jsp-dir");
-
-		if (Validator.isNotNull(customJspDir)) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Custom JSP directory: " + customJspDir);
-			}
-
-			boolean customJspGlobal = GetterUtil.getBoolean(
-				rootElement.elementText("custom-jsp-global"), true);
-
-			List<String> customJsps = new ArrayList<String>();
-
-			String webDir = servletContext.getRealPath(StringPool.SLASH);
-
-			getCustomJsps(servletContext, webDir, customJspDir, customJsps);
-
-			if (!customJsps.isEmpty()) {
-				CustomJspBag customJspBag = new CustomJspBag(
-					customJspDir, customJspGlobal, customJsps);
-
-				if (_log.isDebugEnabled()) {
-					StringBundler sb = new StringBundler(
-						customJsps.size() * 2 + 1);
-
-					sb.append("Custom JSP files:\n");
-
-					for (String customJsp : customJsps) {
-						sb.append(customJsp);
-						sb.append(StringPool.NEW_LINE);
-					}
-
-					sb.setIndex(sb.index() - 1);
-
-					_log.debug(sb.toString());
-				}
-
-				_customJspBagsMap.put(servletContextName, customJspBag);
-
-				PluginPackage pluginPackage = hotDeployEvent.getPluginPackage();
-
-				initCustomJspBag(
-					servletContextName, pluginPackage.getName(), customJspBag);
-			}
-		}
+		initCustomJspDir(
+			paclPolicy, servletContext, servletContextName,
+			hotDeployEvent.getPluginPackage(), rootElement);
 
 		IndexerPostProcessorContainer indexerPostProcessorContainer =
 			_indexerPostProcessorContainerMap.get(servletContextName);
@@ -1237,6 +1196,63 @@ public class HookHotDeployListener
 			CustomJspRegistryUtil.registerServletContextName(
 				servletContextName, displayName);
 		}
+	}
+
+	protected void initCustomJspDir(
+			PACLPolicy paclPolicy, ServletContext servletContext,
+			String servletContextName, PluginPackage pluginPackage,
+			Element rootElement)
+		throws Exception {
+
+		if (!paclPolicy.hasHookCustomJspDir()) {
+			return;
+		}
+
+		String customJspDir = rootElement.elementText("custom-jsp-dir");
+
+		if (Validator.isNull(customJspDir)) {
+			return;
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Custom JSP directory: " + customJspDir);
+		}
+
+		boolean customJspGlobal = GetterUtil.getBoolean(
+			rootElement.elementText("custom-jsp-global"), true);
+
+		List<String> customJsps = new ArrayList<String>();
+
+		String webDir = servletContext.getRealPath(StringPool.SLASH);
+
+		getCustomJsps(servletContext, webDir, customJspDir, customJsps);
+
+		if (customJsps.isEmpty()) {
+			return;
+		}
+
+		CustomJspBag customJspBag = new CustomJspBag(
+			customJspDir, customJspGlobal, customJsps);
+
+		if (_log.isDebugEnabled()) {
+			StringBundler sb = new StringBundler(customJsps.size() * 2 + 1);
+
+			sb.append("Custom JSP files:\n");
+
+			for (String customJsp : customJsps) {
+				sb.append(customJsp);
+				sb.append(StringPool.NEW_LINE);
+			}
+
+			sb.setIndex(sb.index() - 1);
+
+			_log.debug(sb.toString());
+		}
+
+		_customJspBagsMap.put(servletContextName, customJspBag);
+
+		initCustomJspBag(
+			servletContextName, pluginPackage.getName(), customJspBag);
 	}
 
 	protected Object initEvent(

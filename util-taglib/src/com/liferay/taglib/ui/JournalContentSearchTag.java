@@ -16,12 +16,32 @@ package com.liferay.taglib.ui;
 
 import com.liferay.taglib.util.IncludeTag;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspWriter;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class JournalContentSearchTag extends IncludeTag {
+
+	public void setShowListed(boolean showListed) {
+		_showListed = showListed;
+	}
+
+	public void setTargetPortletId(String targetPortletId) {
+		_targetPortletId = targetPortletId;
+	}
+
+	public void setType(String type) {
+		_type = type;
+	}
+
+	@Override
+	protected void cleanUp() {
+		_showListed = true;
+		_targetPortletId = null;
+		_type = null;
+	}
 
 	@Override
 	protected String getEndPage() {
@@ -42,10 +62,25 @@ public class JournalContentSearchTag extends IncludeTag {
 		return EVAL_PAGE;
 	}
 
+	@Override
+	protected void setAttributes(HttpServletRequest request) {
+		request.setAttribute(
+			"liferay-ui:journal-content-search:showListed",
+			String.valueOf(_showListed));
+		request.setAttribute(
+			"liferay-ui:journal-content-search:targetPortletId",
+			_targetPortletId);
+		request.setAttribute("liferay-ui:journal-content-search:type", _type);
+	}
+
 	private static final String _END_PAGE =
 		"/html/taglib/ui/journal_content_search/end.jsp";
 
 	private static final String _START_PAGE =
 		"/html/taglib/ui/journal_content_search/start.jsp";
+
+	private boolean _showListed;
+	private String _targetPortletId;
+	private String _type;
 
 }

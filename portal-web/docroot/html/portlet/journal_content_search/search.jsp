@@ -33,6 +33,9 @@
 
 		<portlet:renderURL var="searchURL">
 			<portlet:param name="struts_action" value="/journal_content_search/search" />
+			<portlet:param name="showListed" value="<%= String.valueOf(showListed) %>" />
+			<portlet:param name="targetPortletId" value="<%= targetPortletId %>" />
+			<portlet:param name="type" value="<%= type %>" />
 		</portlet:renderURL>
 
 		<aui:form action="<%= searchURL %>" method="post" name="fm">

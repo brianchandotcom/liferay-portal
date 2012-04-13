@@ -386,10 +386,22 @@ public class VelocityTaglib {
 	}
 
 	public void journalContentSearch() throws Exception {
+
+		journalContentSearch(true, null, null);
+	}
+
+	public void journalContentSearch(
+			boolean showListed, String targetPortletId, String type)
+		throws Exception {
+
 		JournalContentSearchTag journalContentSearchTag =
 			new JournalContentSearchTag();
 
 		setUp(journalContentSearchTag);
+
+		journalContentSearchTag.setShowListed(showListed);
+		journalContentSearchTag.setTargetPortletId(targetPortletId);
+		journalContentSearchTag.setType(type);
 
 		journalContentSearchTag.runTag();
 	}

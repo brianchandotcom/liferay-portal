@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.pacl.PACLClassUtil;
 import com.liferay.portal.security.pacl.PACLPolicy;
+import com.liferay.portal.spring.util.FilterClassLoader;
 
 import java.awt.AWTPermission;
 
@@ -72,8 +73,10 @@ public class PortalSecurityManager extends SecurityManager {
 
 		// Preload dependent classes to prevent ClassCircularityError
 
-		PACLClassUtil.class.getName();
-		PortalSecurityManagerThreadLocal.class.getName();
+		_log.info("Loading " + FilterClassLoader.class.getName());
+		_log.info("Loading " + PACLClassUtil.class.getName());
+		_log.info(
+			"Loading " + PortalSecurityManagerThreadLocal.class.getName());
 	}
 
 	@Override
@@ -425,6 +428,9 @@ public class PortalSecurityManager extends SecurityManager {
 
 	private static final String _RUNTIME_PERMISSION_SET_SECURITY_MANAGER =
 		"setSecurityManager";
+
+	private static Log _log = LogFactoryUtil.getLog(
+		PortalSecurityManager.class.getName());
 
 	private static Log _logDoCheckConnect = LogFactoryUtil.getLog(
 		PortalSecurityManager.class.getName() + "#doCheckConnect");

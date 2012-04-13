@@ -40,6 +40,7 @@ import jodd.util.KeyValue;
 
 /**
  * @author Igor Spasic
+ * @author Eduardo Lundgren
  */
 public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 
@@ -116,6 +117,54 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 		return list;
 	}
 
+	private Object _addVariableStatement(
+			Statement variableStatement, Object result)
+		throws Exception {
+
+		String name = variableStatement.getName();
+
+		Object variableResult = _executeStatement(variableStatement);
+
+		Map<String, Object> map = _convertObjectToMap(result);
+
+		map.put(name.substring(1), variableResult);
+
+		return map;
+	}
+
+	private Object _addVariableStatementList(
+			Statement variableStatement, Object result, List<Object> results)
+		throws Exception {
+
+		List<Object> list = _convertObjectToList(result);
+
+		for (Object object : list) {
+			if (object instanceof List) {
+				Object value = _addVariableStatementList(
+					variableStatement, object, results);
+
+				results.add(value);
+			}
+			else {
+				Object value = _addVariableStatement(variableStatement, object);
+
+				results.add(value);
+			}
+		}
+
+		return results;
+	}
+
+	private List<Object> _convertObjectToList(Object object) {
+		if (!(object instanceof List)) {
+			String json = JSONFactoryUtil.looseSerialize(object);
+
+			object = JSONFactoryUtil.looseDeserialize(json, ArrayList.class);
+		}
+
+		return (List<Object>)object;
+	}
+
 	private Map<String, Object> _convertObjectToMap(Object object) {
 		if (!(object instanceof Map)) {
 			String json = JSONFactoryUtil.looseSerialize(object);
@@ -134,23 +183,30 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 
 		Object result = jsonWebServiceAction.invoke();
 
-		_populateFlags(statement.getName(), result);
+		if (result instanceof List) {
+			result = _populateFlagsList(
+				statement.getName(), result, new ArrayList<Object>());
 
-		result = _filterResult(statement, result);
+			result = _filterResultList(
+				statement, result, new ArrayList<Object>());
+		}
+		else {
+			_populateFlags(statement.getName(), result);
+
+			result = _filterResult(statement, result);
+		}
 
 		List<Statement> variableStatements = statement.getVariableStatements();
 
 		if (variableStatements != null) {
 			for (Statement variableStatement : variableStatements) {
-				String name = variableStatement.getName();
-
-				Object variableResult = _executeStatement(variableStatement);
-
-				Map<String, Object> map = _convertObjectToMap(result);
-
-				map.put(name.substring(1), variableResult);
-
-				result = map;
+				if (result instanceof List) {
+					result = _addVariableStatementList(
+						variableStatement, result, new ArrayList<Object>());
+				}
+				else {
+					result = _addVariableStatement(variableStatement, result);
+				}
 			}
 		}
 
@@ -180,6 +236,27 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 		}
 
 		return whitelistMap;
+	}
+
+	private Object _filterResultList(
+		Statement statement, Object result, List<Object> results) {
+
+		List<Object> list = _convertObjectToList(result);
+
+		for (Object object : list) {
+			if (object instanceof List) {
+				Object value = _filterResultList(statement, object, results);
+
+				results.add(value);
+			}
+			else {
+				Object value = _filterResult(statement, object);
+
+				results.add(value);
+			}
+		}
+
+		return results;
 	}
 
 	private Statement _parseStatement(
@@ -297,6 +374,27 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 				flag.setValue(null);
 			}
 		}
+	}
+
+	private List<Object> _populateFlagsList(
+		String name, Object result, List<Object> results) {
+
+		List<Object> list = _convertObjectToList(result);
+
+		for (Object object : list) {
+			if (object instanceof List) {
+				Object value = _populateFlagsList(name, object, results);
+
+				results.add(value);
+			}
+			else {
+				_populateFlags(name, object);
+
+				results.add(object);
+			}
+		}
+
+		return results;
 	}
 
 	private String _command;

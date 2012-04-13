@@ -222,6 +222,8 @@ public class LDAPAuth implements Authenticator {
 			return FAILURE;
 		}
 
+		NamingEnumeration<SearchResult> enu = null; 
+
 		try {
 			String baseDN = PrefsPropsUtil.getString(
 				companyId, PropsKeys.LDAP_BASE_DN + postfix);
@@ -242,8 +244,7 @@ public class LDAPAuth implements Authenticator {
 				SearchControls.SUBTREE_SCOPE, 1, 0,
 				new String[] {userMappingsScreenName}, false, false);
 
-			NamingEnumeration<SearchResult> enu = ldapContext.search(
-				baseDN, filter, searchControls);
+			enu = ldapContext.search(baseDN, filter, searchControls);
 
 			if (enu.hasMoreElements()) {
 				if (_log.isDebugEnabled()) {
@@ -308,8 +309,6 @@ public class LDAPAuth implements Authenticator {
 
 				return DNE;
 			}
-
-			enu.close();
 		}
 		catch (Exception e) {
 			if (e instanceof PasswordExpiredException ||
@@ -323,6 +322,10 @@ public class LDAPAuth implements Authenticator {
 			return FAILURE;
 		}
 		finally {
+			if (enu != null) {
+				enu.close();
+			}
+
 			if (ldapContext != null) {
 				ldapContext.close();
 			}

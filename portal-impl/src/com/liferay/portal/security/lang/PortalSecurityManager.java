@@ -16,10 +16,8 @@ package com.liferay.portal.security.lang;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.InitialThreadLocal;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.pacl.PACLClassUtil;
 import com.liferay.portal.security.pacl.PACLPolicy;
 
@@ -34,11 +32,8 @@ import java.lang.reflect.ReflectPermission;
 import java.net.NetPermission;
 import java.net.SocketPermission;
 
-import java.security.AccessControlContext;
-import java.security.AccessController;
 import java.security.AllPermission;
 import java.security.Permission;
-import java.security.PrivilegedAction;
 import java.security.SecurityPermission;
 import java.security.UnresolvedPermission;
 
@@ -51,7 +46,9 @@ import javax.management.MBeanPermission;
 import javax.management.MBeanServerPermission;
 import javax.management.MBeanTrustPermission;
 import javax.management.remote.SubjectDelegationPermission;
+
 import javax.net.ssl.SSLPermission;
+
 import javax.security.auth.AuthPermission;
 import javax.security.auth.PrivateCredentialPermission;
 import javax.security.auth.kerberos.DelegationPermission;
@@ -61,101 +58,268 @@ import javax.security.auth.kerberos.ServicePermission;
  * This is the portal's implementation of a security manager. The goal is to
  * protect portal resources from plugins and prevent security issues by
  * forcing plugin developers to openly declare their requirements. Where a
- * SecurityManager exists, we set that as the parent and delegate to it as fall
- * back. This class will not delegate checks to super when there is no parent so
- * as to avoid forcing the need for a default policy.
+ * SecurityManager exists, we set that as the parent and delegate to it as a
+ * fallback. This class will not delegate checks to super when there is no
+ * parent so as to avoid forcing the need for a default policy.
  *
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  */
 public class PortalSecurityManager extends SecurityManager {
 
-	static {
-		Class<?> c;
-		c = ExecutionState.class;
-		c.getName(); // to prevent compiler warnings
-	}
+	public PortalSecurityManager() {
+		_parentSecurityManager = System.getSecurityManager();
 
-	public PortalSecurityManager(
-		SecurityManager parent, ClassLoader portalClassLoader) {
+		// Preload dependent classes to prevent ClassCircularityError
 
-		_parent = parent;
-
-		_portalClassLoader = portalClassLoader;
-		_commonClassLoader = _portalClassLoader.getParent();
-		_systemClassLoader = ClassLoader.getSystemClassLoader();
-
-		_portalContext = AccessController.getContext();
+		PACLClassUtil.class.getName();
+		PortalSecurityManagerThreadLocal.class.getName();
 	}
 
 	@Override
 	public void checkPermission(Permission permission) {
-		ExecutionState state = findExecutionState(permission, null);
-
-		if (state == ExecutionState.PORTAL) {
-			if (_parent != null) {
-				_parent.checkPermission(permission);
-			}
-
-			return;
-		}
-
-		if (state == ExecutionState.PASS_THROUGH) {
-			_inProcessCheck.set(Boolean.TRUE);
-		}
-
-		invokeHandlers(permission, null);
-
-		if (state == ExecutionState.PASS_THROUGH) {
-			_inProcessCheck.set(Boolean.FALSE);
-		}
-
-		if (_parent != null) {
-			_parent.checkPermission(permission);
-		}
+		doCheckPermission(permission, null);
 	}
 
 	@Override
 	public void checkPermission(Permission permission, Object context) {
-		ExecutionState state = findExecutionState(permission, context);
+		doCheckPermission(permission, context);
+	}
 
-		if (state == ExecutionState.PORTAL) {
-			if (_parent != null) {
-				_parent.checkPermission(permission, context);
+	protected void checkAuthPermission(
+		AuthPermission authPermission, Object context) {
+	}
+
+	protected void checkFilePermission(
+		FilePermission filePermission, Object context) {
+
+		String actions = filePermission.getActions();
+
+		if (actions.equals(_FILE_PERMISSION_ACTION_DELETE)) {
+			doCheckDelete(filePermission.getName());
+		}
+		else if (actions.equals(_FILE_PERMISSION_ACTION_EXECUTE)) {
+			doCheckExec(filePermission.getName());
+		}
+		else if (actions.equals(_FILE_PERMISSION_ACTION_READ)) {
+			doCheckRead(filePermission.getName());
+		}
+		else if (actions.equals(_FILE_PERMISSION_ACTION_WRITE)) {
+			doCheckWrite(filePermission.getName());
+		}
+	}
+
+	protected void checkLoggingPermission(
+		LoggingPermission loggingPermission, Object context) {
+
+		// TODO
+
+	}
+
+	protected void checkManagementPermission(
+		ManagementPermission managementPermission, Object context) {
+
+		// TODO
+
+	}
+
+	protected void checkMBeanPermission(
+		MBeanPermission mBeanPermission, Object context) {
+
+		// TODO
+
+	}
+
+	protected void checkMBeanServerPermission(
+		MBeanServerPermission mBeanServerPermission, Object context) {
+
+		// TODO
+
+	}
+
+	protected void checkMBeanTrustPermission(
+		MBeanTrustPermission mBeanTrustPermission, Object context) {
+
+		// TODO
+
+	}
+
+	protected void checkNetPermission(
+		NetPermission netPermission, Object context) {
+
+		// TODO
+	}
+
+	protected void checkPropertyPermission(
+		PropertyPermission propertyPermission, Object context) {
+
+		// TODO
+
+	}
+
+	protected void checkReflectPermission(
+		ReflectPermission reflectPermission, Object context) {
+
+		// TODO
+
+	}
+
+	protected void checkRuntimePermission(
+		RuntimePermission runtimePermission, Object context) {
+
+		// TODO
+
+		String name = runtimePermission.getName();
+
+		if (name.startsWith(_RUNTIME_PERMISSION_ACCESS_CLASS_IN_PACKAGE)) {
+			int pos = name.indexOf(StringPool.PERIOD);
+
+			String pkg = name.substring(pos);
+
+			doCheckPackageAccess(pkg);
+		}
+		else if (name.equals(_RUNTIME_PERMISSION_SET_SECURITY_MANAGER)) {
+			throw new SecurityException(
+				"Attempted to set another security manager");
+		}
+		else if (name.equals(_RUNTIME_PERMISSION_EXIT_VM)) {
+			Thread.dumpStack();
+
+			throw new SecurityException("Attempted to shutdown the VM!");
+		}
+	}
+
+	protected void checkSecurityPermission(
+		SecurityPermission securityPermission, Object context) {
+
+		// TODO
+
+	}
+
+	protected void checkSocketPermission(
+		SocketPermission socketPermission, Object context) {
+
+		String actions = socketPermission.getActions();
+
+		String name = socketPermission.getName();
+
+		int pos = name.indexOf(StringPool.COLON);
+
+		String host = "localhost";
+
+		if (pos != -1) {
+			host = name.substring(0, pos);
+		}
+
+		String portRange = name.substring(pos + 1);
+
+		if (actions.contains("accept")) {
+
+			// TODO
+
+		}
+		else if (actions.contains("connect")) {
+			doCheckConnect(host, GetterUtil.getInteger(portRange));
+		}
+		else if (actions.contains("listen")) {
+			doCheckListen(GetterUtil.getInteger(portRange));
+		}
+		else if (actions.contains("resolve")) {
+			doCheckConnect(host, -1);
+		}
+	}
+
+	protected void checkUnresolvedPermission(
+		UnresolvedPermission unresolvedPermission, Object context) {
+
+		// TODO
+
+	}
+
+	protected void doCheckAccept(String host, int port) {
+
+		// TODO
+
+	}
+
+	protected void doCheckConnect(String host, int port) {
+		if (port == -1) {
+			if (_logDoCheckConnect.isDebugEnabled()) {
+				_logDoCheckConnect.debug(
+					"Always allow resolving of host " + host);
 			}
 
 			return;
 		}
 
-		if (state == ExecutionState.PASS_THROUGH) {
-			_inProcessCheck.set(Boolean.TRUE);
-		}
+		PACLPolicy paclPolicy = getPACLPolicy(
+			_logDoCheckConnect.isDebugEnabled());
 
-		invokeHandlers(permission, context);
-
-		if (state == ExecutionState.PASS_THROUGH) {
-			_inProcessCheck.set(Boolean.FALSE);
-		}
-
-		if (_parent != null) {
-			_parent.checkPermission(permission, context);
+		if (paclPolicy != null) {
+			if (!paclPolicy.hasSocketConnect(host, port)) {
+				throw new SecurityException(
+					"Attempted to connect to host " + host + " on port " +
+						port);
+			}
 		}
 	}
 
-	protected void invokeHandlers(Permission permission, Object context) {
+	protected void doCheckDelete(String fileName) {
+		PACLPolicy paclPolicy = getPACLPolicy(
+			_logDoCheckDelete.isDebugEnabled());
+
+		if (paclPolicy != null) {
+			if (!paclPolicy.hasFileDelete(fileName)) {
+				throw new SecurityException(
+					"Attempted to delete file " + fileName);
+			}
+		}
+	}
+
+	protected void doCheckExec(String fileName) {
+		PACLPolicy paclPolicy = getPACLPolicy(_logDoCheckExec.isDebugEnabled());
+
+		if (paclPolicy != null) {
+			if (!paclPolicy.hasFileExecute(fileName)) {
+				throw new SecurityException(
+					"Attempted to execute file " + fileName);
+			}
+		}
+	}
+
+	protected void doCheckListen(int port) {
+		PACLPolicy paclPolicy = getPACLPolicy(
+			_logDoCheckListen.isDebugEnabled());
+
+		if (paclPolicy != null) {
+			if (!paclPolicy.hasSocketListen(port)) {
+				throw new SecurityException(
+					"Attempted to listen on port " + port);
+			}
+		}
+	}
+
+	protected void doCheckPackageAccess(String pkg) {
+
+		// TODO
+
+		if (pkg.startsWith("sun.reflect")) {
+		}
+	}
+
+	protected void doCheckPermission(Permission permission, Object context) {
+		if (!PortalSecurityManagerThreadLocal.isEnabled()) {
+			return;
+		}
+
 		if (permission instanceof AllPermission) {
-			// Has all permissions
 		}
 		else if (permission instanceof AuthPermission) {
 			checkAuthPermission((AuthPermission)permission, context);
 		}
 		else if (permission instanceof AWTPermission) {
-			// http://docs.oracle.com/javase/1.5.0/docs/api/java/awt/AWTPermission.html
-			// I don't think we need this.
 		}
 		else if (permission instanceof DelegationPermission) {
-			// http://docs.oracle.com/javase/1.5.0/docs/api/javax/security/auth/kerberos/DelegationPermission.html
-			// I don't think we need this.
 		}
 		else if (permission instanceof FilePermission) {
 			checkFilePermission((FilePermission)permission, context);
@@ -182,8 +346,6 @@ public class PortalSecurityManager extends SecurityManager {
 			checkNetPermission((NetPermission)permission, context);
 		}
 		else if (permission instanceof PrivateCredentialPermission) {
-			// http://docs.oracle.com/javase/1.5.0/docs/api/javax/security/auth/PrivateCredentialPermission.html
-			// I don't think we need this
 		}
 		else if (permission instanceof PropertyPermission) {
 			checkPropertyPermission((PropertyPermission)permission, context);
@@ -198,366 +360,30 @@ public class PortalSecurityManager extends SecurityManager {
 			checkSecurityPermission((SecurityPermission)permission, context);
 		}
 		else if (permission instanceof SerializablePermission) {
-			// http://docs.oracle.com/javase/1.5.0/docs/api/java/io/SerializablePermission.html
-			// I don't think we need this
 		}
 		else if (permission instanceof ServicePermission) {
-			// http://docs.oracle.com/javase/1.5.0/docs/api/javax/security/auth/kerberos/ServicePermission.html
-			// I don't think we need this
 		}
 		else if (permission instanceof SocketPermission) {
 			checkSocketPermission((SocketPermission)permission, context);
 		}
 		else if (permission instanceof SQLPermission) {
-			// http://docs.oracle.com/javase/1.5.0/docs/api/java/sql/SQLPermission.html
-			// I don't think we need this
 		}
 		else if (permission instanceof SSLPermission) {
-			// http://docs.oracle.com/javase/1.5.0/docs/api/javax/net/ssl/SSLPermission.html
-			// TODO Not sure about this one
 		}
 		else if (permission instanceof SubjectDelegationPermission) {
-			// http://docs.oracle.com/javase/1.5.0/docs/api/javax/management/remote/SubjectDelegationPermission.html
-			// I don't think we need this
 		}
 		else if (permission instanceof UnresolvedPermission) {
 			checkUnresolvedPermission(
 				(UnresolvedPermission)permission, context);
 		}
-	}
 
-	protected ExecutionState findExecutionState(
-		Permission permission, Object context) {
-
-		if (((permission instanceof RuntimePermission) &&
-			 permission.getName().equals("getClassLoader")) ||
-			((permission instanceof FilePermission) &&
-			 permission.getActions().equals("read"))) {
-
-			return ExecutionState.PASS_THROUGH;
-		}
-
-		return AccessController.doPrivileged(
-			new PrivilegedAction<ExecutionState>() {
-				public ExecutionState run() {
-					try {
-						_inProcessCheck.set(Boolean.TRUE);
-
-						Class<?>[] classContext = getClassContext();
-
-						ClassLoader foreignClassLoader = null;
-
-						for (Class<?> clazz : classContext) {
-							ClassLoader classLoader = clazz.getClassLoader();
-
-							if ((classLoader != null) &&
-								(classLoader != _portalClassLoader) &&
-								(classLoader != _commonClassLoader) &&
-								(classLoader != _systemClassLoader)) {
-
-								foreignClassLoader = classLoader;
-
-								break;
-							}
-						}
-
-						if (foreignClassLoader == null) {
-							return ExecutionState.PORTAL;
-						}
-
-						return ExecutionState.FOREIGN;
-					}
-					finally {
-						_inProcessCheck.set(Boolean.FALSE);
-					}
-				}
-			}
-		, _portalContext);
-	}
-
-	protected void checkAuthPermission(
-		AuthPermission permission, Object context) {
-
-		// http://docs.oracle.com/javase/1.5.0/docs/api/javax/security/auth/AuthPermission.html
-
-		_log(permission, context);
-
-		// TODO Do we care about this?
-	}
-
-	protected void checkFilePermission(
-		FilePermission permission, Object context) {
-
-		// http://docs.oracle.com/javase/1.5.0/docs/api/java/io/FilePermission.html
-
-		if (_inProcessCheck.get().booleanValue()) {
-			return;
-		}
-
-		_log(permission, context);
-
-		String name = permission.getName();
-		String actions = permission.getActions();
-
-		if (actions.equals("delete")) {
-			_checkDelete(name);
-		}
-		else if (actions.equals("execute")) {
-			_checkExec(name);
-		}
-		else if (actions.equals("read")) {
-			_checkRead(name);
-		}
-		else if (actions.equals("write")) {
-			_checkWrite(name);
+		if (_parentSecurityManager != null) {
+			_parentSecurityManager.checkPermission(permission, context);
 		}
 	}
 
-	protected void checkLoggingPermission(
-		LoggingPermission permission, Object context) {
-
-		// http://docs.oracle.com/javase/1.5.0/docs/api/java/util/logging/LoggingPermission.html
-
-		if (_inProcessCheck.get().booleanValue()) {
-			return;
-		}
-
-		_log(permission, context);
-
-		// TODO
-	}
-
-	protected void checkManagementPermission(
-		ManagementPermission permission, Object context) {
-
-		// http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/management/ManagementPermission.html
-
-		_log(permission, context);
-
-		// TODO
-	}
-
-	protected void checkMBeanPermission(
-		MBeanPermission permission, Object context) {
-
-		// http://docs.oracle.com/javase/1.5.0/docs/api/javax/management/MBeanPermission.html
-
-		_log(permission, context);
-
-		// TODO
-	}
-
-	protected void checkMBeanServerPermission(
-		MBeanServerPermission permission, Object context) {
-
-		// http://docs.oracle.com/javase/1.5.0/docs/api/javax/management/MBeanServerPermission.html
-
-		_log(permission, context);
-
-		// TODO
-	}
-
-	protected void checkMBeanTrustPermission(
-		MBeanTrustPermission permission, Object context) {
-
-		// http://docs.oracle.com/javase/1.5.0/docs/api/javax/management/MBeanTrustPermission.html
-
-		_log(permission, context);
-
-		// TODO
-	}
-
-	protected void checkNetPermission(
-		NetPermission permission, Object context) {
-
-		// http://docs.oracle.com/javase/1.5.0/docs/api/java/net/NetPermission.html
-
-		_log(permission, context);
-
-		// TODO
-	}
-
-	protected void checkPropertyPermission(
-		PropertyPermission permission, Object context) {
-
-		// http://docs.oracle.com/javase/1.5.0/docs/api/java/util/PropertyPermission.html
-
-		_log(permission, context);
-
-		// TODO
-	}
-
-	protected void checkReflectPermission(
-		ReflectPermission permission, Object context) {
-
-		// http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/reflect/ReflectPermission.html
-
-		_log(permission, context);
-
-		// TODO
-	}
-
-	protected void checkRuntimePermission(
-		RuntimePermission permission, Object context) {
-
-		// http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/RuntimePermission.html
-
-		if (_inProcessCheck.get().booleanValue()) {
-			return;
-		}
-
-		_log(permission, context);
-
-		String name = permission.getName();
-
-		if (name.equals(_PERMISSION_SET_SECURITY_MANAGER)) {
-			throw new SecurityException(
-				"Attempted to set another security manager");
-		}
-		else if (name.equals(_PERMISSION_EXIT_VM)) {
-			Thread.dumpStack();
-
-			throw new SecurityException("Attempted to shutdown the VM!");
-		}
-		else if (name.startsWith("accessClassInPackage.")) {
-			int pos = name.indexOf(StringPool.PERIOD);
-
-			String pkg = name.substring(pos);
-
-			_checkPackageAccess(pkg);
-		}
-
-		// TODO
-	}
-
-	protected void checkSecurityPermission(
-		SecurityPermission permission, Object context) {
-
-		// http://docs.oracle.com/javase/1.5.0/docs/api/java/security/SecurityPermission.html
-
-		_log(permission, context);
-
-		// TODO
-	}
-
-	protected void checkSocketPermission(
-		SocketPermission permission, Object context) {
-
-		// http://docs.oracle.com/javase/1.5.0/docs/api/java/net/SocketPermission.html
-
-		_log(permission, context);
-
-		String name = permission.getName();
-		String actions = permission.getActions();
-
-		int pos = name.indexOf(StringPool.COLON);
-
-		String host = "localhost";
-
-		if (pos != -1) {
-			host = name.substring(0, pos);
-		}
-
-		String portRange = name.substring(pos + 1);
-
-		if (actions.contains("accept")) {
-			// TODO
-		}
-		else if (actions.contains("connect")) {
-			_checkConnect(host, Integer.parseInt(portRange));
-		}
-		else if (actions.contains("listen")) {
-			_checkListen(Integer.parseInt(portRange));
-		}
-		else if (actions.contains("resolve")) {
-			// TODO
-		}
-	}
-
-	protected void checkUnresolvedPermission(
-		UnresolvedPermission permission, Object context) {
-
-		// http://docs.oracle.com/javase/1.5.0/docs/api/java/security/UnresolvedPermission.html
-
-		_log(permission, context);
-
-		// TODO
-	}
-
-	protected PACLPolicy getPACLPolicy(final boolean debug) {
-		return AccessController.doPrivileged(
-			new PrivilegedAction<PACLPolicy>() {
-				public PACLPolicy run() {
-					return PACLClassUtil.getPACLPolicyBySecurityManagerClassContext(
-						getClassContext(), debug);
-				}
-			}
-		);
-	}
-
-	protected void _checkConnect(String host, int port) {
-		if (port == -1) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Always allow resolving of host " + host);
-			}
-
-			return;
-		}
-
-		PACLPolicy paclPolicy = getPACLPolicy(_log.isDebugEnabled());
-
-		if (paclPolicy != null) {
-			if (!paclPolicy.hasSocketConnect(host, port)) {
-				throw new SecurityException(
-					"Attempted to connect to host " + host + " on port " +
-						port);
-			}
-		}
-	}
-
-	protected void _checkDelete(String fileName) {
-		PACLPolicy paclPolicy = getPACLPolicy(_log.isDebugEnabled());
-
-		if (paclPolicy != null) {
-			if (!paclPolicy.hasFileDelete(fileName)) {
-				throw new SecurityException(
-					"Attempted to delete file " + fileName);
-			}
-		}
-	}
-
-	protected void _checkExec(String fileName) {
-		PACLPolicy paclPolicy = getPACLPolicy(_log.isDebugEnabled());
-
-		if (paclPolicy != null) {
-			if (!paclPolicy.hasFileExecute(fileName)) {
-				throw new SecurityException(
-					"Attempted to execute file " + fileName);
-			}
-		}
-	}
-
-	protected void _checkListen(int port) {
-		PACLPolicy paclPolicy = getPACLPolicy(_log.isDebugEnabled());
-
-		if (paclPolicy != null) {
-			if (!paclPolicy.hasSocketListen(port)) {
-				throw new SecurityException(
-					"Attempted to listen on port " + port);
-			}
-		}
-	}
-
-	protected void _checkPackageAccess(String pkg) {
-		// TODO
-
-		if (pkg.startsWith("sun.reflect")) {
-		}
-	}
-
-	protected void _checkRead(String fileName) {
-		PACLPolicy paclPolicy = getPACLPolicy(_log.isDebugEnabled());
+	protected void doCheckRead(String fileName) {
+		PACLPolicy paclPolicy = getPACLPolicy(_logDoCheckRead.isDebugEnabled());
 
 		if (paclPolicy != null) {
 			if (!paclPolicy.hasFileRead(fileName)) {
@@ -567,8 +393,9 @@ public class PortalSecurityManager extends SecurityManager {
 		}
 	}
 
-	protected void _checkWrite(String fileName) {
-		PACLPolicy paclPolicy = getPACLPolicy(_log.isDebugEnabled());
+	protected void doCheckWrite(String fileName) {
+		PACLPolicy paclPolicy = getPACLPolicy(
+			_logDoCheckWrite.isDebugEnabled());
 
 		if (paclPolicy != null) {
 			if (!paclPolicy.hasFileWrite(fileName)) {
@@ -578,92 +405,45 @@ public class PortalSecurityManager extends SecurityManager {
 		}
 	}
 
-	protected void _log(Permission permission, Object context) {
-
-		try {
-			_inProcessCheck.set(Boolean.TRUE);
-
-			if (!_log.isDebugEnabled()) {
-				return;
-			}
-
-			PACLPolicy paclPolicy = getPACLPolicy(_log.isDebugEnabled());
-
-			String actions = permission.getActions();
-
-			StringBundler sb = new StringBundler(12);
-
-			sb.append(permission.getClass().getSimpleName());
-			sb.append(" {");
-
-			if ((paclPolicy != null) &&
-				Validator.isNotNull(paclPolicy.getServletContextName())) {
-
-				sb.append("servletContextName=");
-				sb.append(paclPolicy.getServletContextName());
-				sb.append(", ");
-			}
-
-			sb.append("name=");
-			sb.append(permission.getName());
-
-			if (Validator.isNotNull(actions)) {
-				sb.append(", actions=");
-				sb.append(actions);
-			}
-
-			if (context != null) {
-				sb.append(", context=");
-				sb.append(String.valueOf(context));
-			}
-
-			sb.append("}");
-
-			_log.debug(sb.toString());
-		}
-		finally {
-			_inProcessCheck.set(Boolean.FALSE);
-		}
+	protected PACLPolicy getPACLPolicy(boolean debug) {
+		return PACLClassUtil.getPACLPolicyBySecurityManagerClassContext(
+			getClassContext(), debug);
 	}
 
-	private static final String _PERMISSION_EXIT_VM = "exitVM";
+	private static final String _FILE_PERMISSION_ACTION_DELETE = "delete";
 
-	private static final String _PERMISSION_SET_SECURITY_MANAGER =
+	private static final String _FILE_PERMISSION_ACTION_EXECUTE = "execute";
+
+	private static final String _FILE_PERMISSION_ACTION_READ = "read";
+
+	private static final String _FILE_PERMISSION_ACTION_WRITE = "write";
+
+	private static final String _RUNTIME_PERMISSION_ACCESS_CLASS_IN_PACKAGE =
+		"accessClassInPackage.";
+
+	private static final String _RUNTIME_PERMISSION_EXIT_VM = "exitVM";
+
+	private static final String _RUNTIME_PERMISSION_SET_SECURITY_MANAGER =
 		"setSecurityManager";
 
-	private static Log _log = LogFactoryUtil.getLog(
-		PortalSecurityManager.class.getName());
+	private static Log _logDoCheckConnect = LogFactoryUtil.getLog(
+		PortalSecurityManager.class.getName() + "#doCheckConnect");
 
-	private static ThreadLocal<Boolean> _inProcessCheck =
-		new InitialThreadLocal<Boolean>(
-			PortalSecurityManager.class.getName() + "inProcessCheck",
-			Boolean.FALSE);
+	private static Log _logDoCheckDelete = LogFactoryUtil.getLog(
+		PortalSecurityManager.class.getName() + "#doCheckDelete");
 
-	private enum ExecutionState {
+	private static Log _logDoCheckExec = LogFactoryUtil.getLog(
+		PortalSecurityManager.class.getName() + "#doCheckExec");
 
-		/**
-		 * The stack has a foreign classloader so do checks
-		 */
-		FOREIGN,
+	private static Log _logDoCheckListen = LogFactoryUtil.getLog(
+		PortalSecurityManager.class.getName() + "#doCheckListen");
 
-		/**
-		 * Only the portal's or it's parent classloader were found, passively
-		 * avoid checks
-		 */
-		PORTAL,
+	private static Log _logDoCheckRead = LogFactoryUtil.getLog(
+		PortalSecurityManager.class.getName() + "#doCheckRead");
 
-		/**
-		 * The system has to be allowed to proceed without checks, forcibly
-		 * avoid checks
-		 */
-		PASS_THROUGH
+	private static Log _logDoCheckWrite = LogFactoryUtil.getLog(
+		PortalSecurityManager.class.getName() + "#doCheckWrite");
 
-	};
-
-	private ClassLoader _commonClassLoader;
-	private SecurityManager _parent;
-	private ClassLoader _portalClassLoader;
-	private AccessControlContext _portalContext;
-	private ClassLoader _systemClassLoader;
+	private SecurityManager _parentSecurityManager;
 
 }

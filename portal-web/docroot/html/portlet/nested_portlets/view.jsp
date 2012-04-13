@@ -41,7 +41,7 @@ try {
 	String velocityTemplateId = (String)request.getAttribute(WebKeys.NESTED_PORTLET_VELOCITY_TEMPLATE_ID);
 	String velocityTemplateContent = (String)request.getAttribute(WebKeys.NESTED_PORTLET_VELOCITY_TEMPLATE_CONTENT);
 
-	RuntimePortletUtil.processTemplate(pageContext, velocityTemplateId, velocityTemplateContent);
+	RuntimePageUtil.processTemplate(pageContext, velocityTemplateId, velocityTemplateContent);
 }
 catch (Exception e) {
 	_log.error("Cannot render Nested Portlets portlet", e);

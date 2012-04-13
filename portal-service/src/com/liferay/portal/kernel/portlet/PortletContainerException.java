@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
  *
@@ -12,21 +11,29 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+package com.liferay.portal.kernel.portlet;
 
-<%@ page import="com.liferay.portal.plugin.PluginUtil" %><%@
-page import="com.liferay.portlet.layoutconfiguration.util.RuntimePageUtil" %>
+import com.liferay.portal.kernel.exception.PortalException;
 
-<%
-PortletPreferences preferences = renderRequest.getPreferences();
+/**
+ * @author Shuyang Zhou
+ */
+public class PortletContainerException extends PortalException {
 
-String portletResource = ParamUtil.getString(request, "portletResource");
+	public PortletContainerException() {
+	}
 
-if (Validator.isNotNull(portletResource)) {
-	preferences = PortletPreferencesFactoryUtil.getPortletSetup(request, portletResource);
+	public PortletContainerException(String msg) {
+		super(msg);
+	}
+
+	public PortletContainerException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public PortletContainerException(Throwable cause) {
+		super(cause);
+	}
+
 }
-%>
-
-<%@ include file="/html/portlet/nested_portlets/init-ext.jsp" %>

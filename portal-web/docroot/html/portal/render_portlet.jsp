@@ -27,9 +27,9 @@ String instanceId = portlet.getInstanceId();
 
 String portletPrimaryKey = PortletPermissionUtil.getPrimaryKey(plid, portletId);
 
-String columnId = (String)request.getAttribute(WebKeys.RENDER_PORTLET_COLUMN_ID);
-Integer columnPos = (Integer)request.getAttribute(WebKeys.RENDER_PORTLET_COLUMN_POS);
-Integer columnCount = (Integer)request.getAttribute(WebKeys.RENDER_PORTLET_COLUMN_COUNT);
+String columnId = GetterUtil.getString(request.getAttribute(WebKeys.RENDER_PORTLET_COLUMN_ID));
+int columnPos = GetterUtil.getInteger(request.getAttribute(WebKeys.RENDER_PORTLET_COLUMN_POS));
+int columnCount = GetterUtil.getInteger(request.getAttribute(WebKeys.RENDER_PORTLET_COLUMN_COUNT));
 Boolean renderPortletResource = (Boolean)request.getAttribute(WebKeys.RENDER_PORTLET_RESOURCE);
 
 boolean allowAddPortletDefaultResource = PortalUtil.isAllowAddPortletDefaultResource(request, portlet);
@@ -353,8 +353,8 @@ portletDisplay.setAccess(access);
 portletDisplay.setActive(portlet.isActive());
 
 portletDisplay.setColumnId(columnId);
-portletDisplay.setColumnPos(columnPos.intValue());
-portletDisplay.setColumnCount(columnCount.intValue());
+portletDisplay.setColumnPos(columnPos);
+portletDisplay.setColumnCount(columnCount);
 
 portletDisplay.setStateExclusive(themeDisplay.isStateExclusive());
 portletDisplay.setStateMax(stateMax);

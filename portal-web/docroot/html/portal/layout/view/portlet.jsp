@@ -34,7 +34,7 @@ if (themeDisplay.isFacebook() || themeDisplay.isStatePopUp() || themeDisplay.isW
 		velocityTemplateContent = LayoutTemplateLocalServiceUtil.getContent("max", true, theme.getThemeId());
 	}
 
-	RuntimePortletUtil.processTemplate(pageContext, ppid, velocityTemplateId, velocityTemplateContent);
+	RuntimePageUtil.processTemplate(pageContext, ppid, velocityTemplateId, velocityTemplateContent);
 }
 else {
 	String themeId = theme.getThemeId();
@@ -60,7 +60,7 @@ else {
 	</c:if>
 
 <%
-	RuntimePortletUtil.processTemplate(pageContext, velocityTemplateId, velocityTemplateContent);
+	RuntimePageUtil.processTemplate(pageContext, velocityTemplateId, velocityTemplateContent);
 }
 %>
 

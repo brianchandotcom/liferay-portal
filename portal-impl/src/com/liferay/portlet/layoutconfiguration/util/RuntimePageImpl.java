@@ -17,13 +17,9 @@ package com.liferay.portlet.layoutconfiguration.util;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.DirectRequestDispatcherUtil;
+import com.liferay.portal.kernel.portlet.PortletContainerUtil;
 import com.liferay.portal.kernel.servlet.PipingPageContext;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
-import com.liferay.portal.kernel.servlet.StringServletResponse;
-import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -33,15 +29,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.velocity.VelocityContext;
 import com.liferay.portal.kernel.velocity.VelocityEngineUtil;
 import com.liferay.portal.kernel.velocity.VelocityVariablesUtil;
-import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.service.PortletLocalServiceUtil;
-import com.liferay.portal.service.permission.LayoutPermissionUtil;
-import com.liferay.portal.service.permission.PortletPermissionUtil;
-import com.liferay.portal.theme.PortletDisplay;
-import com.liferay.portal.theme.PortletDisplayFactory;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.layoutconfiguration.util.velocity.CustomizationSettingsProcessor;
 import com.liferay.portlet.layoutconfiguration.util.velocity.TemplateProcessor;
@@ -50,13 +38,6 @@ import com.liferay.portlet.layoutconfiguration.util.xml.RuntimeLogic;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -67,7 +48,7 @@ import javax.servlet.jsp.PageContext;
  * @author Raymond Augé
  * @author Shuyang Zhou
  */
-public class RuntimePortletImpl implements RuntimePortlet {
+public class RuntimePageImpl implements RuntimePage {
 
 	public void processCustomizationSettings(
 			PageContext pageContext, String velocityTemplateId,
@@ -125,183 +106,6 @@ public class RuntimePortletImpl implements RuntimePortlet {
 		StringBundler sb = unsyncStringWriter.getStringBundler();
 
 		sb.writeTo(pageContext.getOut());
-	}
-
-	public void processPortlet(
-			HttpServletRequest request, HttpServletResponse response,
-			Portlet portlet)
-		throws Exception {
-
-		processPortlet(request, response, portlet, null, null, null, null);
-	}
-
-	public void processPortlet(
-			HttpServletRequest request, HttpServletResponse response,
-			Portlet portlet, String columnId, Integer columnPos,
-			Integer columnCount, String path)
-		throws Exception {
-
-		if ((portlet != null) && portlet.isInstanceable() &&
-			!portlet.isAddDefaultResource()) {
-
-			String instanceId = portlet.getInstanceId();
-
-			if (!Validator.isPassword(instanceId)) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Portlet " + portlet.getPortletId() +
-							" is instanceable but does not have a " +
-								"valid instance id");
-				}
-
-				portlet = null;
-			}
-		}
-
-		if (portlet == null) {
-			return;
-		}
-
-		// Capture the current portlet's settings to reset them once the child
-		// portlet is rendered
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		PortletDisplay portletDisplayClone = PortletDisplayFactory.create();
-
-		portletDisplay.copyTo(portletDisplayClone);
-
-		PortletConfig portletConfig = (PortletConfig)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_CONFIG);
-
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
-
-		if (!(portletRequest instanceof RenderRequest)) {
-			portletRequest = null;
-		}
-
-		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_RESPONSE);
-
-		if (!(portletResponse instanceof RenderResponse)) {
-			portletResponse = null;
-		}
-
-		String lifecycle = (String)request.getAttribute(
-			PortletRequest.LIFECYCLE_PHASE);
-
-		columnId = GetterUtil.getString(columnId);
-
-		if (columnPos == null) {
-			columnPos = Integer.valueOf(0);
-		}
-
-		if (columnCount == null) {
-			columnCount = Integer.valueOf(0);
-		}
-
-		request.setAttribute(WebKeys.RENDER_PORTLET, portlet);
-		request.setAttribute(WebKeys.RENDER_PORTLET_COLUMN_ID, columnId);
-		request.setAttribute(WebKeys.RENDER_PORTLET_COLUMN_POS, columnPos);
-		request.setAttribute(WebKeys.RENDER_PORTLET_COLUMN_COUNT, columnCount);
-
-		if (path == null) {
-			path = "/html/portal/render_portlet.jsp";
-		}
-
-		RequestDispatcher requestDispatcher =
-			DirectRequestDispatcherUtil.getRequestDispatcher(request, path);
-
-		StringServletResponse stringServletResponse = null;
-
-		boolean writeOutput = false;
-
-		if (response instanceof StringServletResponse) {
-			stringServletResponse = (StringServletResponse)response;
-		}
-		else {
-			writeOutput = true;
-			stringServletResponse = new StringServletResponse(response);
-		}
-
-		try {
-			requestDispatcher.include(request, stringServletResponse);
-
-			Boolean portletConfiguratorVisibility =
-				(Boolean)request.getAttribute(
-					WebKeys.PORTLET_CONFIGURATOR_VISIBILITY);
-
-			if (portletConfiguratorVisibility != null) {
-				request.removeAttribute(
-					WebKeys.PORTLET_CONFIGURATOR_VISIBILITY);
-
-				Layout layout = themeDisplay.getLayout();
-
-				if (!layout.isTypeControlPanel() &&
-					!LayoutPermissionUtil.contains(
-						themeDisplay.getPermissionChecker(), layout,
-						ActionKeys.UPDATE) &&
-					!PortletPermissionUtil.contains(
-						themeDisplay.getPermissionChecker(),
-						themeDisplay.getPlid(), portlet.getPortletId(),
-						ActionKeys.CONFIGURATION)) {
-
-					response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-
-					stringServletResponse.setString(StringPool.BLANK);
-
-					return;
-				}
-			}
-
-			if (writeOutput) {
-				response.setContentType(ContentTypes.TEXT_HTML_UTF8);
-
-				stringServletResponse.writeTo(response.getWriter());
-			}
-		}
-		finally {
-			portletDisplay.copyFrom(portletDisplayClone);
-
-			portletDisplayClone.recycle();
-
-			if (portletConfig != null) {
-				request.setAttribute(
-					JavaConstants.JAVAX_PORTLET_CONFIG, portletConfig);
-			}
-
-			if (portletRequest != null) {
-				request.setAttribute(
-					JavaConstants.JAVAX_PORTLET_REQUEST, portletRequest);
-			}
-
-			if (portletResponse != null) {
-				request.setAttribute(
-					JavaConstants.JAVAX_PORTLET_RESPONSE, portletResponse);
-			}
-
-			if (lifecycle != null) {
-				request.setAttribute(PortletRequest.LIFECYCLE_PHASE, lifecycle);
-			}
-		}
-	}
-
-	public void processPortlet(
-			HttpServletRequest request, HttpServletResponse response,
-			String portletId)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			themeDisplay.getCompanyId(), portletId);
-
-		processPortlet(request, response, portlet, null, null, null, null);
 	}
 
 	public void processTemplate(
@@ -385,9 +189,12 @@ public class RuntimePortletImpl implements RuntimePortlet {
 			PipingServletResponse pipingServletResponse =
 				new PipingServletResponse(response, portletUnsyncStringWriter);
 
-			processPortlet(
-				request, pipingServletResponse, portlet, columnId, columnPos,
-				columnCount, null);
+			HttpServletRequest setupRequest =
+				PortletContainerUtil.setupOptionalRenderParameters(
+					request, null, columnId, columnPos, columnCount);
+
+			PortletContainerUtil.render(
+				setupRequest, pipingServletResponse, portlet);
 
 			contentsMap.put(
 				portlet.getPortletId(),
@@ -478,7 +285,7 @@ public class RuntimePortletImpl implements RuntimePortlet {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(RuntimePortletUtil.class);
+	private static Log _log = LogFactoryUtil.getLog(RuntimePageUtil.class);
 
 	private static MethodKey _initMethodKey = new MethodKey(
 		"com.liferay.taglib.util.VelocityTaglib", "init", ServletContext.class,

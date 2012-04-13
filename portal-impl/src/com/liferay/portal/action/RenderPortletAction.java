@@ -14,6 +14,7 @@
 
 package com.liferay.portal.action;
 
+import com.liferay.portal.kernel.portlet.PortletContainerUtil;
 import com.liferay.portal.kernel.portlet.WindowStateFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.model.Layout;
@@ -22,7 +23,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.layoutconfiguration.util.RuntimePortletUtil;
 
 import javax.portlet.WindowState;
 
@@ -79,8 +79,10 @@ public class RenderPortletAction extends Action {
 		PortalUtil.updateWindowState(
 			portletId, user, layout, windowState, request);
 
-		RuntimePortletUtil.processPortlet(
-			request, response, portlet, columnId, columnPos, columnCount, null);
+		request = PortletContainerUtil.setupOptionalRenderParameters(
+			request, null, columnId, columnPos, columnCount);
+
+		PortletContainerUtil.render(request, response, portlet);
 
 		return null;
 	}

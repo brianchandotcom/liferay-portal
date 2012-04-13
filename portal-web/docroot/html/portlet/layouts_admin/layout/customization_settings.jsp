@@ -88,7 +88,7 @@ if (selLayout != null) {
 
 	<%
 	if (velocityTemplateId != null) {
-		RuntimePortletUtil.processCustomizationSettings(pageContext, velocityTemplateId, velocityTemplateContent);
+		RuntimePageUtil.processCustomizationSettings(pageContext, velocityTemplateId, velocityTemplateContent);
 	}
 	%>
 

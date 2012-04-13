@@ -29,6 +29,8 @@ import java.security.Permission;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import sun.reflect.Reflection;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -40,6 +42,10 @@ public class FileChecker extends BaseChecker {
 		_rootDir = WebDirDetector.getRootDir(getClassLoader());
 
 		initPermissions();
+
+		ClassLoader portalClassLoader = FileChecker.class.getClassLoader();
+
+		_commonClassLoader = portalClassLoader.getParent();
 	}
 
 	public boolean hasDelete(String fileName) {
@@ -50,6 +56,10 @@ public class FileChecker extends BaseChecker {
 			if (deleteFilePermission.implies(permission)) {
 				return true;
 			}
+		}
+
+		if (isJSPCompiler(fileName, _PERMISSION_DELETE)) {
+			return true;
 		}
 
 		return false;
@@ -77,6 +87,10 @@ public class FileChecker extends BaseChecker {
 			}
 		}
 
+		if (isJSPCompiler(fileName, _PERMISSION_READ)) {
+			return true;
+		}
+
 		return false;
 	}
 
@@ -87,6 +101,10 @@ public class FileChecker extends BaseChecker {
 			if (writeFilePermission.implies(permission)) {
 				return true;
 			}
+		}
+
+		if (isJSPCompiler(fileName, _PERMISSION_WRITE)) {
+			return true;
 		}
 
 		return false;
@@ -127,31 +145,37 @@ public class FileChecker extends BaseChecker {
 		}
 
 		String catalinaHome = System.getProperty("catalina.home") + "/";
+		String javaHome = System.getProperty("java.home") + "/";
 
 		String portalWebDir = PortalUtil.getPortalWebDir();
 
 		String[] defaultPaths = {
 
+			// JDK
+
+			javaHome + "lib/-",
+
 			// Plugin
 
 			_rootDir + "-",
-
-			// Plugin runtime
-
-			catalinaHome + "work/Catalina/localhost/" +
-				getServletContextName() + "/-",
 
 			// Portal
 
 			portalWebDir + "html/common/-", portalWebDir + "html/taglib/-",
 			portalWebDir + "localhost/html/taglib/-",
-
-			// Portal runtime
-
-			portalWebDir + "WEB-INF/classes/org/apache/jasper/-",
-			portalWebDir + "WEB-INF/classes/org/apache/tomcat/-",
+			portalWebDir + "localhost/WEB-INF/tld/-",
+			portalWebDir + "WEB-INF/classes/java/-",
+			portalWebDir + "WEB-INF/classes/javax/-",
+			portalWebDir + "WEB-INF/classes/org/apache/-",
 			portalWebDir +
-				"WEB-INF/classes/services/javax.el.ExpressionFactory",
+				"WEB-INF/classes/META-INF/services/javax.el.ExpressionFactory",
+			portalWebDir + "WEB-INF/tld/-",
+
+			// Tomcat
+
+			catalinaHome + "lib/-",
+			catalinaHome + "work/Catalina/localhost/" +
+				getServletContextName() + "/-",
 			catalinaHome + "work/Catalina/localhost/_",
 			catalinaHome + "work/Catalina/localhost/_/-"
 		};
@@ -174,6 +198,57 @@ public class FileChecker extends BaseChecker {
 			"security-manager-files-write", _PERMISSION_WRITE);
 	}
 
+	protected boolean isJSPCompiler(String fileName, String action) {
+		for (int i = 1;; i++) {
+			Class<?> callerClass = Reflection.getCallerClass(i);
+
+			if (callerClass == null) {
+				break;
+			}
+
+			String callerClassName = callerClass.getName();
+
+			if (callerClassName.startsWith(
+					_PACKAGE_ORG_APACHE_JASPER_COMPILER) ||
+				callerClassName.startsWith(
+					_PACKAGE_ORG_APACHE_JASPER_XMLPARSER) ||
+				callerClassName.startsWith(
+					_PACKAGE_ORG_APACHE_NAMING_RESOURCES) ||
+				callerClassName.equals(_ClASS_NAME_JASPER_LOADER)) {
+
+				if (callerClass.getClassLoader() != _commonClassLoader) {
+					_log.error(
+						"A plugin is hijacking the JSP compiler via " +
+							callerClassName + " to " + action + " " + fileName);
+
+					return false;
+				}
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Allowing the JSP compiler via " + callerClassName +
+							" to " + action + " " + fileName);
+				}
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private static final String _ClASS_NAME_JASPER_LOADER =
+		"org.apache.jasper.servlet.JasperLoader";
+
+	private static final String _PACKAGE_ORG_APACHE_JASPER_COMPILER =
+		"org.apache.jasper.compiler.";
+
+	private static final String _PACKAGE_ORG_APACHE_JASPER_XMLPARSER =
+		"org.apache.jasper.xmlparser.";
+
+	private static final String _PACKAGE_ORG_APACHE_NAMING_RESOURCES =
+		"org.apache.naming.resources";
+
 	private static final String _PERMISSION_DELETE = "delete";
 
 	private static final String _PERMISSION_EXECUTE = "execute";
@@ -184,6 +259,7 @@ public class FileChecker extends BaseChecker {
 
 	private static Log _log = LogFactoryUtil.getLog(FileChecker.class);
 
+	private ClassLoader _commonClassLoader;
 	private List<Permission> _deletePermissions;
 	private List<Permission> _executePermissions;
 	private List<Permission> _readPermissions;

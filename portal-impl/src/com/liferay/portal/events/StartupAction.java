@@ -96,8 +96,6 @@ public class StartupAction extends SimpleAction {
 		String portalSecurityManagerStrategy =
 			PropsValues.PORTAL_SECURITY_MANAGER_STRATEGY;
 
-		SecurityManager securityManager = System.getSecurityManager();
-
 		if (portalSecurityManagerStrategy.equals("smart")) {
 			if (ServerDetector.isWebSphere()) {
 				portalSecurityManagerStrategy = "none";
@@ -108,13 +106,9 @@ public class StartupAction extends SimpleAction {
 		}
 
 		if (portalSecurityManagerStrategy.equals("liferay")) {
-			Thread currentThread = Thread.currentThread();
-
-			PortalSecurityManager portalSecurityManager =
-				new PortalSecurityManager(securityManager,
-					currentThread.getContextClassLoader());
-
-			System.setSecurityManager(portalSecurityManager);
+			if (System.getSecurityManager() == null) {
+				System.setSecurityManager(new PortalSecurityManager());
+			}
 		}
 		else if (portalSecurityManagerStrategy.equals("none")) {
 			System.setSecurityManager(null);

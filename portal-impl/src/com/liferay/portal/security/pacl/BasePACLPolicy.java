@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.pacl;
 
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -49,6 +50,10 @@ public abstract class BasePACLPolicy implements PACLPolicy {
 
 	public String[] getPropertyArray(String key) {
 		return StringUtil.split(getProperty(key));
+	}
+
+	public boolean getPropertyBoolean(String key) {
+		return GetterUtil.getBoolean(getProperty(key));
 	}
 
 	public Set<String> getPropertySet(String key) {

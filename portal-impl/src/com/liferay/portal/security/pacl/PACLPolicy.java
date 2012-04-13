@@ -33,6 +33,8 @@ public interface PACLPolicy {
 
 	public String[] getPropertyArray(String key);
 
+	public boolean getPropertyBoolean(String key);
+
 	public Set<String> getPropertySet(String key);
 
 	public String getServletContextName();
@@ -46,6 +48,8 @@ public interface PACLPolicy {
 	public boolean hasFileRead(String fileName);
 
 	public boolean hasFileWrite(String fileName);
+
+	public boolean hasHookCustomJspDir();
 
 	public boolean hasHookLanguagePropertiesLocale(Locale locale);
 

@@ -51,6 +51,10 @@ public class InactivePACLPolicy extends BasePACLPolicy {
 		return true;
 	}
 
+	public boolean hasHookCustomJspDir() {
+		return true;
+	}
+
 	public boolean hasHookLanguagePropertiesLocale(Locale locale) {
 		return true;
 	}

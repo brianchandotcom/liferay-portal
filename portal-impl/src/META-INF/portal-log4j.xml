@@ -422,6 +422,10 @@
 		<priority value="WARN" />
 	</category>
 
+	<category name="com.liferay.portal.security.lang.PortalSecurityManager">
+		<priority value="ERROR" />
+	</category>
+
 	<category name="com.liferay.portal.security.lang.PortalSecurityManager#doCheckConnect">
 		<priority value="ERROR" />
 	</category>

@@ -263,23 +263,31 @@ public class AssetPublisherUtil {
 			}
 		}
 
-		long[] allAssetTagIds = AssetTagLocalServiceUtil.getTagIds(
-			scopeGroupIds, allAssetTagNames);
 		long[] anyAssetTagIds = AssetTagLocalServiceUtil.getTagIds(
 			scopeGroupIds, anyAssetTagNames);
-		long[] notAllAssetTagIds = AssetTagLocalServiceUtil.getTagIds(
-			scopeGroupIds, notAllAssetTagNames);
 		long[] notAnyAssetTagIds = AssetTagLocalServiceUtil.getTagIds(
 			scopeGroupIds, notAnyAssetTagNames);
 
 		assetEntryQuery.setAllCategoryIds(allAssetCategoryIds);
-		assetEntryQuery.setAllTagIds(allAssetTagIds);
 		assetEntryQuery.setAnyCategoryIds(anyAssetCategoryIds);
 		assetEntryQuery.setAnyTagIds(anyAssetTagIds);
 		assetEntryQuery.setNotAllCategoryIds(notAllAssetCategoryIds);
-		assetEntryQuery.setNotAllTagIds(notAllAssetTagIds);
 		assetEntryQuery.setNotAnyCategoryIds(notAnyAssetCategoryIds);
 		assetEntryQuery.setNotAnyTagIds(notAnyAssetTagIds);
+
+		for (String tagName : allAssetTagNames) {
+			long[] allAssetTagIds = AssetTagLocalServiceUtil.getTagIds(
+				scopeGroupIds, tagName);
+
+			assetEntryQuery.addAllTagIdsArray(allAssetTagIds);
+		}
+
+		for (String tagName : notAllAssetTagNames) {
+			long[] notAllAssetTagIds = AssetTagLocalServiceUtil.getTagIds(
+				scopeGroupIds, tagName);
+
+			assetEntryQuery.addNotAllTagIdsArray(notAllAssetTagIds);
+		}
 
 		return assetEntryQuery;
 	}

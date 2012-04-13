@@ -171,7 +171,7 @@
 			FROM
 				AssetEntries_AssetTags
 			WHERE
-				tagId = ?
+				([TAG_ID])
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetLinkFinder.findByE1_V">

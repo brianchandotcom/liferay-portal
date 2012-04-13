@@ -21,6 +21,7 @@ import com.liferay.portal.security.pacl.PACLPolicy;
 import com.liferay.portal.security.pacl.PACLPolicyManager;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -60,6 +61,16 @@ public class ServiceChecker extends BaseChecker {
 
 	public boolean hasService(Object object, Method method) {
 		Class<?> clazz = object.getClass();
+
+		if (Proxy.isProxyClass(clazz)) {
+			Class<?>[] interfaces = clazz.getInterfaces();
+
+			if (interfaces.length == 0) {
+				return false;
+			}
+
+			clazz = interfaces[0];
+		}
 
 		ClassLoader classLoader = clazz.getClassLoader();
 

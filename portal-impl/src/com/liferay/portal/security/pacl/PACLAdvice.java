@@ -55,6 +55,7 @@ public class PACLAdvice extends ChainableMethodAdvice {
 			String className = clazz.getName();
 
 			if (className.equals(PortalServiceImpl.class.getName()) ||
+				className.equals(_ENTRY_LOCAL_SERVICE_IMPL_CLASS_NAME) ||
 				className.equals(_STATUS_LOCAL_SERVICE_IMPL_CLASS_NAME)) {
 
 				debug = true;
@@ -113,6 +114,9 @@ public class PACLAdvice extends ChainableMethodAdvice {
 			PortalSecurityManagerThreadLocal.setEnabled(enabled);
 		}
 	}
+
+	private static final String _ENTRY_LOCAL_SERVICE_IMPL_CLASS_NAME =
+		"com.liferay.chat.service.impl.EntryLocalServiceImpl";
 
 	private static final String _STATUS_LOCAL_SERVICE_IMPL_CLASS_NAME =
 		"com.liferay.chat.service.impl.StatusLocalServiceImpl";

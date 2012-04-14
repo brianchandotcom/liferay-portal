@@ -493,8 +493,8 @@ AUI.add(
 
 						AObject.each(
 							treeViews,
-							function(tree, vocabularyId, collection) {
-								tree.toggle(!searchValue);
+							function(item, index, collection) {
+								item.toggle(!searchValue);
 							}
 						);
 					},
@@ -534,7 +534,7 @@ AUI.add(
 
 						var searchField = popup.searchField.get(BOUNDING_BOX);
 
-						instance._bindSearchHandle = searchField.once('focus', A.bind(instance._initSearch, instance));
+						instance._bindSearchHandle = searchField.once('focus', instance._initSearch, instance);
 					},
 
 					_vocabulariesIterator: function(item, index, collection) {
@@ -565,22 +565,19 @@ AUI.add(
 									cfg: {
 										data: A.bind(instance._formatRequestData, instance),
 										on: {
-											success: A.bind(
-												function(event) {
-													var treeViews = instance.TREEVIEWS;
+											success: function(event) {
+												var treeViews = instance.TREEVIEWS;
 
-													var tree = treeViews[vocabularyId];
+												var tree = treeViews[vocabularyId];
 
-													var children = tree.get('children');
+												var children = tree.get('children');
 
-													if (!children || !children.length || !children[0].hasChildNodes()) {
-														tree.destroy();
+												if (!children || !children.length || !children[0].hasChildNodes()) {
+													tree.destroy();
 
-														delete treeViews[vocabularyId];
-													}
-												},
-												instance
-											)
+													delete treeViews[vocabularyId];
+												}
+											}
 										}
 									},
 									formatter: A.bind(instance._formatJSONResult, instance),

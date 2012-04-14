@@ -311,6 +311,44 @@ public class AssetCategoryServiceHttp {
 		}
 	}
 
+	public static com.liferay.portal.kernel.json.JSONArray getJSONByName(
+		HttpPrincipal httpPrincipal, long groupId, java.lang.String name,
+		long[] vocabularyIds, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class.getName(),
+					"getJSONByName", _getJSONByNameParameterTypes7);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					name, vocabularyIds, start, end);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portal.kernel.json.JSONArray)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.portal.kernel.json.JSONArray getJSONSearch(
 		HttpPrincipal httpPrincipal, long groupId, java.lang.String keywords,
 		long vocabularyId, int start, int end,
@@ -319,7 +357,7 @@ public class AssetCategoryServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class.getName(),
-					"getJSONSearch", _getJSONSearchParameterTypes7);
+					"getJSONSearch", _getJSONSearchParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					keywords, vocabularyId, start, end, obc);
@@ -359,7 +397,7 @@ public class AssetCategoryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class.getName(),
 					"getJSONVocabularyCategories",
-					_getJSONVocabularyCategoriesParameterTypes8);
+					_getJSONVocabularyCategoriesParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					name, vocabularyId, start, end, obc);
@@ -398,7 +436,7 @@ public class AssetCategoryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class.getName(),
 					"getVocabularyCategories",
-					_getVocabularyCategoriesParameterTypes9);
+					_getVocabularyCategoriesParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					vocabularyId, start, end, obc);
@@ -437,7 +475,7 @@ public class AssetCategoryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class.getName(),
 					"getVocabularyCategories",
-					_getVocabularyCategoriesParameterTypes10);
+					_getVocabularyCategoriesParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					parentCategoryId, vocabularyId, start, end, obc);
@@ -476,7 +514,7 @@ public class AssetCategoryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class.getName(),
 					"getVocabularyCategories",
-					_getVocabularyCategoriesParameterTypes11);
+					_getVocabularyCategoriesParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					name, vocabularyId, start, end, obc);
@@ -509,7 +547,7 @@ public class AssetCategoryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class.getName(),
 					"getVocabularyCategoriesCount",
-					_getVocabularyCategoriesCountParameterTypes12);
+					_getVocabularyCategoriesCountParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					vocabularyId);
@@ -543,7 +581,7 @@ public class AssetCategoryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class.getName(),
 					"getVocabularyCategoriesCount",
-					_getVocabularyCategoriesCountParameterTypes13);
+					_getVocabularyCategoriesCountParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					name, vocabularyId);
@@ -578,7 +616,7 @@ public class AssetCategoryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class.getName(),
 					"getVocabularyRootCategories",
-					_getVocabularyRootCategoriesParameterTypes14);
+					_getVocabularyRootCategoriesParameterTypes15);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					vocabularyId, start, end, obc);
@@ -617,7 +655,7 @@ public class AssetCategoryServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class.getName(),
-					"moveCategory", _moveCategoryParameterTypes15);
+					"moveCategory", _moveCategoryParameterTypes16);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					categoryId, parentCategoryId, vocabularyId, serviceContext);
@@ -656,7 +694,7 @@ public class AssetCategoryServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class.getName(),
-					"search", _searchParameterTypes16);
+					"search", _searchParameterTypes17);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					keywords, vocabularyId, start, end, obc);
@@ -694,7 +732,7 @@ public class AssetCategoryServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class.getName(),
-					"search", _searchParameterTypes17);
+					"search", _searchParameterTypes18);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					name, categoryProperties, start, end);
@@ -735,7 +773,7 @@ public class AssetCategoryServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class.getName(),
-					"updateCategory", _updateCategoryParameterTypes18);
+					"updateCategory", _updateCategoryParameterTypes19);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					categoryId, parentCategoryId, titleMap, descriptionMap,
@@ -792,48 +830,52 @@ public class AssetCategoryServiceHttp {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getJSONSearchParameterTypes7 = new Class[] {
+	private static final Class<?>[] _getJSONByNameParameterTypes7 = new Class[] {
+			long.class, java.lang.String.class, long[].class, int.class,
+			int.class
+		};
+	private static final Class<?>[] _getJSONSearchParameterTypes8 = new Class[] {
 			long.class, java.lang.String.class, long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getJSONVocabularyCategoriesParameterTypes8 = new Class[] {
+	private static final Class<?>[] _getJSONVocabularyCategoriesParameterTypes9 = new Class[] {
 			long.class, java.lang.String.class, long.class, int.class, int.class,
-			com.liferay.portal.kernel.util.OrderByComparator.class
-		};
-	private static final Class<?>[] _getVocabularyCategoriesParameterTypes9 = new Class[] {
-			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getVocabularyCategoriesParameterTypes10 = new Class[] {
-			long.class, long.class, int.class, int.class,
+			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getVocabularyCategoriesParameterTypes11 = new Class[] {
+			long.class, long.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
+		};
+	private static final Class<?>[] _getVocabularyCategoriesParameterTypes12 = new Class[] {
 			long.class, java.lang.String.class, long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getVocabularyCategoriesCountParameterTypes12 =
-		new Class[] { long.class, long.class };
 	private static final Class<?>[] _getVocabularyCategoriesCountParameterTypes13 =
+		new Class[] { long.class, long.class };
+	private static final Class<?>[] _getVocabularyCategoriesCountParameterTypes14 =
 		new Class[] { long.class, java.lang.String.class, long.class };
-	private static final Class<?>[] _getVocabularyRootCategoriesParameterTypes14 =
+	private static final Class<?>[] _getVocabularyRootCategoriesParameterTypes15 =
 		new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _moveCategoryParameterTypes15 = new Class[] {
+	private static final Class<?>[] _moveCategoryParameterTypes16 = new Class[] {
 			long.class, long.class, long.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
-	private static final Class<?>[] _searchParameterTypes16 = new Class[] {
+	private static final Class<?>[] _searchParameterTypes17 = new Class[] {
 			long.class, java.lang.String.class, long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _searchParameterTypes17 = new Class[] {
+	private static final Class<?>[] _searchParameterTypes18 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String[].class,
 			int.class, int.class
 		};
-	private static final Class<?>[] _updateCategoryParameterTypes18 = new Class[] {
+	private static final Class<?>[] _updateCategoryParameterTypes19 = new Class[] {
 			long.class, long.class, java.util.Map.class, java.util.Map.class,
 			long.class, java.lang.String[].class,
 			com.liferay.portal.service.ServiceContext.class

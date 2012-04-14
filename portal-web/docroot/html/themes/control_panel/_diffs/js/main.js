@@ -2,7 +2,7 @@ Liferay.Util.portletTitleEdit = function() {
 };
 
 if (!themeDisplay.isStatePopUp()) {
-	AUI().ready('aui-io-request', 'aui-live-search', 'aui-overlay-context-panel', 'event-mouseenter', 'liferay-message', 'node-focusmanager', 'transition',
+	AUI().ready('aui-live-search', 'aui-overlay-context-panel', 'event-mouseenter', 'liferay-message', 'liferay-store', 'node-focusmanager', 'transition',
 		function(A) {
 			var body = A.getBody();
 
@@ -131,12 +131,7 @@ if (!themeDisplay.isStatePopUp()) {
 				_createDataConnection: function() {
 					var instance = this;
 
-					instance._saveData = A.io.request(
-						themeDisplay.getPathMain() + '/portal/session_click',
-						{
-							autoLoad: false
-						}
-					);
+					Liferay.Store('autoLoad', false);
 				},
 
 				_createFocusManager: function() {

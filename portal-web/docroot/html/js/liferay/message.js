@@ -150,12 +150,7 @@ AUI.add(
 
 							sessionData[instance.get('id')] = messageVisible;
 
-							A.io.request(
-								themeDisplay.getPathMain() + '/portal/session_click',
-								{
-									data: sessionData
-								}
-							);
+							Liferay.Store(sessionData);
 						}
 					},
 
@@ -220,6 +215,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-io-request']
+		requires: ['aui-base', 'liferay-store']
 	}
 );

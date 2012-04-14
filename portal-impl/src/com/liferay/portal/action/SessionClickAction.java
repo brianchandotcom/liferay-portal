@@ -14,12 +14,21 @@
 
 package com.liferay.portal.action;
 
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
+
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
+
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.SessionClicks;
 
 import java.util.Enumeration;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -52,6 +61,37 @@ public class SessionClickAction extends Action {
 				}
 			}
 
+			String cmd = ParamUtil.getString(request, "cmd");
+
+			String key = ParamUtil.getString(request, "key");
+
+			if (Validator.isNotNull(key) &&
+			    (cmd.equals("get") || cmd.equals("getAll"))) {
+
+				String result = StringPool.BLANK;
+
+				if (cmd.equals("get")) {
+					result = SessionClicks.get(request, key, cmd);
+				}
+				else if (cmd.equals("getAll")) {
+					String[] keys = request.getParameterValues("key");
+
+					JSONObject storedValues = 
+						JSONFactoryUtil.createJSONObject();
+
+					for (String storedKey : keys) {
+						storedValues.put(storedKey,
+							SessionClicks.get(request, storedKey, cmd));
+					}
+
+					result = storedValues.toString();
+				}
+
+				ServletOutputStream out = response.getOutputStream();
+
+				out.println(result);
+			}
+
 			return null;
 		}
 		catch (Exception e) {
@@ -60,5 +100,4 @@ public class SessionClickAction extends Action {
 			return null;
 		}
 	}
-
 }

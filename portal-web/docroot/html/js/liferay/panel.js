@@ -201,12 +201,7 @@ AUI.add(
 
 							data[id] = state;
 
-							A.io.request(
-								themeDisplay.getPathMain() + '/portal/session_click',
-								{
-									data: data
-								}
-							);
+							Liferay.Store(data);
 						}
 					}
 				},
@@ -225,6 +220,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-io-request']
+		requires: ['aui-base', 'liferay-store']
 	}
 );

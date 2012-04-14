@@ -22,9 +22,9 @@ String collapsed = HtmlUtil.escapeJS(GetterUtil.getString(SessionClicks.get(requ
 
 <aui:script>
 	AUI().use(
-		'aui-io',
 		'console',
 		'console-filters',
+		'liferay-store',
 		function(A) {
 			var maxHeight = '300px';
 			var autoHeight = 'auto';
@@ -43,14 +43,7 @@ String collapsed = HtmlUtil.escapeJS(GetterUtil.getString(SessionClicks.get(requ
 
 							instance.set('height', height);
 
-							A.io.request(
-								'<%= themeDisplay.getPathMain() %>/portal/session_click',
-								{
-									data: {
-										<%= _LIFERAY_JS_CONSOLE_COLLAPSED_SESSION_CLICKS_KEY %>: String(event.newVal)
-									}
-								}
-							);
+							Liferay.Store('<%= _LIFERAY_JS_CONSOLE_COLLAPSED_SESSION_CLICKS_KEY %>', String(event.newVal));
 						}
 					},
 					collapsed: <%= collapsed %>,

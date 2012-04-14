@@ -30,7 +30,7 @@
 	var <%= id %>curClickValue = "<%= clickValue %>";
 </aui:script>
 
-<aui:script use="aui-io-request">
+<aui:script use="liferay-store">
 	var basicForm = A.one("#<%= id %>basic");
 	var advancedForm = A.one("#<%= id %>advanced");
 
@@ -69,14 +69,7 @@
 				advancedControls.attr('disabled', 'disabled');
 			}
 
-			A.io.request(
-				'<%= themeDisplay.getPathMain() %>/portal/session_click',
-				{
-					data: {
-						'<%= id %>': <%= id %>curClickValue
-					}
-				}
-			);
+			Liferay.Store('<%= id %>', <%= id %>curClickValue);
 		}
 	);
 </aui:script>

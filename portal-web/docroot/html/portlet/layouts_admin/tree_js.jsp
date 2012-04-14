@@ -30,7 +30,7 @@ boolean expandFirstNode = ParamUtil.getBoolean(request, "expandFirstNode", true)
 boolean saveState = ParamUtil.getBoolean(request, "saveState", true);
 boolean selectableTree = ParamUtil.getBoolean(request, "selectableTree");
 
-String modules = "aui-io-request,aui-tree-view,dataschema-xml,datatype-xml";
+String modules = "aui-io-request,aui-tree-view,dataschema-xml,datatype-xml,liferay-store";
 
 if (!selectableTree) {
 	modules += ",liferay-history-manager";
@@ -329,16 +329,7 @@ if (!selectableTree) {
 						TreeUtil.updateSessionTreeCheckedState('<%= HtmlUtil.escape(treeId) %>SelectedNode', <%= LayoutConstants.DEFAULT_PLID %>, event.newVal);
 					},
 					expandedChange: function(event) {
-						var sessionClickURL = themeDisplay.getPathMain() + '/portal/session_click';
-
-						A.io.request(
-							sessionClickURL,
-							{
-								data: {
-									'<%= HtmlUtil.escape(treeId) %>RootNode': event.newVal
-								}
-							}
-						);
+						Liferay.Store('<%= HtmlUtil.escape(treeId) %>RootNode', event.newVal);
 					}
 				},
 			</c:if>

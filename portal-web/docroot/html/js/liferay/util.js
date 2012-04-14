@@ -1559,19 +1559,12 @@
 
 						Liferay._editControlsState = (docBody.hasClass(visibleClass) ? 'visible' : 'hidden');
 
-						A.io.request(
-							themeDisplay.getPathMain() + '/portal/session_click',
-							{
-								data: {
-									'liferay_toggle_controls': Liferay._editControlsState
-								}
-							}
-						);
+						Liferay.Store('liferay_toggle_controls', Liferay._editControlsState);
 					}
 				);
 			}
 		},
-		['aui-io']
+		['liferay-store']
 	);
 
 	Liferay.provide(

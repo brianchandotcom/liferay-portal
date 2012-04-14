@@ -71,14 +71,7 @@ String defaultMessage = (String)request.getAttribute("liferay-ui:toggle:defaultM
 				</c:choose>
 
 				if ((saveState == null) || saveState) {
-					A.io(
-						themeDisplay.getPathMain() + '/portal/session_click',
-						{
-							data: {
-								'<%= id %>': 'none'
-							}
-						}
-					);
+					Liferay.Store('<%= id %>', 'none');
 				}
 			}
 			else {
@@ -96,17 +89,10 @@ String defaultMessage = (String)request.getAttribute("liferay-ui:toggle:defaultM
 				</c:choose>
 
 				if ((saveState == null) || saveState) {
-					A.io(
-						themeDisplay.getPathMain() + '/portal/session_click',
-						{
-							data: {
-								'<%= id %>': 'block'
-							}
-						}
-					);
+					Liferay.Store('<%= id %>', 'block');
 				}
 			}
 		},
-		['aui-io']
+		['liferay-store']
 	);
 </aui:script>

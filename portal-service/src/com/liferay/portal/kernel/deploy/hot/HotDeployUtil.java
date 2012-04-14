@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -113,12 +114,6 @@ public class HotDeployUtil {
 				}
 			}
 
-			synchronized (_dependentServletContexts) {
-				_initDependentServletContextListeners(servletContextName);
-
-				_dependentServletContexts.remove(servletContextName);
-			}
-
 			for (HotDeployListener hotDeployListener : _hotDeployListeners) {
 				try {
 					hotDeployListener.invokeDeploy(hotDeployEvent);
@@ -131,6 +126,8 @@ public class HotDeployUtil {
 			_deployedServletContextNames.add(servletContextName);
 
 			_dependentHotDeployEvents.remove(hotDeployEvent);
+
+			_initDependentServletContextListeners();
 
 			List<HotDeployEvent> dependentEvents =
 				new ArrayList<HotDeployEvent>(_dependentHotDeployEvents);
@@ -275,32 +272,49 @@ public class HotDeployUtil {
 		}
 	}
 
-	private void _initDependentServletContextListeners(
-		String servletContextName) {
+	private void _initDependentServletContextListeners() {
 
-		Set<DependentServletContext> dependentServletContexts =
-			_dependentServletContexts.get(servletContextName);
+		Iterator<String> dependentContextKeysIter =
+			_dependentServletContexts.keySet().iterator();
 
-		if ((dependentServletContexts == null) ||
-			dependentServletContexts.isEmpty()) {
+		while (dependentContextKeysIter.hasNext()) {
+			Set<DependentServletContext> dependentServletContexts =
+				_dependentServletContexts.get(dependentContextKeysIter.next());
 
-			return;
-		}
+			Iterator<DependentServletContext> dependentServletContextsIter =
+				dependentServletContexts.iterator();
 
-		Thread currentThread = Thread.currentThread();
+			while (dependentServletContextsIter.hasNext()) {
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+				DependentServletContext dependentServletContext =
+					dependentServletContextsIter.next();
 
-		try {
-			for (DependentServletContext dependentServletContext :
-					dependentServletContexts) {
+				HotDeployEvent hotDeployEvent =
+					dependentServletContext.getHotDeployEvent();
 
-				_initDependentServletContextListener(
-					currentThread, dependentServletContext);
+				if (isMissingDependentServletContext(hotDeployEvent)) {
+					continue;
+				}
+
+				Thread currentThread = Thread.currentThread();
+
+				ClassLoader contextClassLoader =
+					currentThread.getContextClassLoader();
+
+				try {
+					_initDependentServletContextListener(
+						currentThread, dependentServletContext);
+				}
+				finally {
+					currentThread.setContextClassLoader(contextClassLoader);
+				}
+
+				dependentServletContextsIter.remove();
 			}
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
+
+			if (dependentServletContexts.isEmpty()) {
+				dependentContextKeysIter.remove();
+			}
 		}
 	}
 
@@ -346,7 +360,7 @@ public class HotDeployUtil {
 
 			DependentServletContext dependentServletContext =
 				new DependentServletContext(
-					hotDeployEvent.getContextClassLoader(), servletContextEvent,
+					hotDeployEvent, servletContextEvent,
 					servletContextListener);
 
 			dependentServletContexts.add(dependentServletContext);
@@ -391,11 +405,11 @@ public class HotDeployUtil {
 	private class DependentServletContext {
 
 		public DependentServletContext(
-			ClassLoader contextClassLoader,
+			HotDeployEvent hotDeployEvent,
 			ServletContextEvent servletContextEvent,
 			ServletContextListener servletContextListener) {
 
-			_classLoader = contextClassLoader;
+			_hotDeployEvent = hotDeployEvent;
 			_servletContextEvent = servletContextEvent;
 			_servletContextListener = servletContextListener;
 		}
@@ -424,7 +438,11 @@ public class HotDeployUtil {
 		}
 
 		public ClassLoader getClassLoader() {
-			return _classLoader;
+			return _hotDeployEvent.getContextClassLoader();
+		}
+
+		public HotDeployEvent getHotDeployEvent() {
+			return _hotDeployEvent;
 		}
 
 		public ServletContextEvent getServletContextEvent() {
@@ -451,7 +469,7 @@ public class HotDeployUtil {
 			return 0;
 		}
 
-		private ClassLoader _classLoader;
+		private HotDeployEvent _hotDeployEvent;
 		private ServletContextEvent _servletContextEvent;
 		private ServletContextListener _servletContextListener;
 

@@ -772,7 +772,7 @@ public class PortalImpl implements Portal {
 			WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay.isLifecycleResource() ||
-			themeDisplay.isStateExclusive()) {
+			themeDisplay.isStateExclusive() || themeDisplay.isAjax()) {
 
 			return PwdGenerator.getPassword(PwdGenerator.KEY3, 4);
 		}

@@ -21,6 +21,7 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 
@@ -72,6 +73,11 @@ public class RenderPortletAction extends Action {
 		if (ajaxId != null) {
 			response.setHeader("Ajax-ID", ajaxId);
 		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		themeDisplay.setAjax(true);
 
 		WindowState windowState = WindowStateFactory.getWindowState(
 			ParamUtil.getString(request, "p_p_state"));

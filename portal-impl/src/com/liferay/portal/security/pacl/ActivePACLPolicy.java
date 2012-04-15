@@ -79,6 +79,10 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		return _hookChecker.hasService(className);
 	}
 
+	public boolean hasHookServletFilters() {
+		return _hookChecker.hasServletFilters();
+	}
+
 	public boolean hasService(Object object, Method method) {
 		return _serviceChecker.hasService(object, method);
 	}

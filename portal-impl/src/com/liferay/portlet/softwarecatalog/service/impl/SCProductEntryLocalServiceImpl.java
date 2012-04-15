@@ -17,8 +17,8 @@ package com.liferay.portlet.softwarecatalog.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.plugin.Version;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -63,6 +63,7 @@ import java.util.Properties;
 public class SCProductEntryLocalServiceImpl
 	extends SCProductEntryLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	public SCProductEntry addProductEntry(
 			long userId, String name, String type, String tags,
 			String shortDescription, String longDescription, String pageURL,
@@ -138,13 +139,6 @@ public class SCProductEntryLocalServiceImpl
 				SCProductEntry.class.getName(), productEntryId,
 				WorkflowConstants.ACTION_PUBLISH);
 		}
-
-		// Indexer
-
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			SCProductEntry.class);
-
-		indexer.reindex(productEntry);
 
 		return productEntry;
 	}
@@ -398,6 +392,7 @@ public class SCProductEntryLocalServiceImpl
 		return doc.asXML();
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	public SCProductEntry updateProductEntry(
 			long productEntryId, String name, String type, String tags,
 			String shortDescription, String longDescription, String pageURL,
@@ -445,13 +440,6 @@ public class SCProductEntryLocalServiceImpl
 		else {
 			saveProductScreenshots(productEntry, thumbnails, fullImages);
 		}
-
-		// Indexer
-
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			SCProductEntry.class);
-
-		indexer.reindex(productEntry);
 
 		return productEntry;
 	}

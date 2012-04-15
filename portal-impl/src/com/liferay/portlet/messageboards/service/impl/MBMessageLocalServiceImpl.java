@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -465,14 +467,15 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			guestPermissions);
 	}
 
-	public void deleteDiscussionMessage(long messageId)
+	@Indexable(type = IndexableType.DELETE)
+	public MBMessage deleteDiscussionMessage(long messageId)
 		throws PortalException, SystemException {
 
 		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
 
 		deleteDiscussionSocialActivities(BlogsEntry.class.getName(), message);
 
-		deleteMessage(message);
+		return deleteMessage(message);
 	}
 
 	public void deleteDiscussionMessages(String className, long classPK)
@@ -506,23 +509,18 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 	}
 
-	public void deleteMessage(long messageId)
+	@Indexable(type = IndexableType.DELETE)
+	public MBMessage deleteMessage(long messageId)
 		throws PortalException, SystemException {
 
 		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
 
-		deleteMessage(message);
+		return deleteMessage(message);
 	}
 
-	public void deleteMessage(MBMessage message)
+	@Indexable(type = IndexableType.DELETE)
+	public MBMessage deleteMessage(MBMessage message)
 		throws PortalException, SystemException {
-
-		// Indexer
-
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			MBMessage.class);
-
-		indexer.delete(message);
 
 		// Attachments
 
@@ -733,6 +731,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
 			message.getCompanyId(), message.getGroupId(),
 			message.getWorkflowClassName(), message.getMessageId());
+
+		return message;
 	}
 
 	public List<MBMessage> getCategoryMessages(

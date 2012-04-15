@@ -1851,8 +1851,8 @@ public class BaseDeployer implements Deployer {
 		}
 
 		String newContent =
-			content.substring(0, pos) + pluginContextListenerContent +
-				extraContent + content.substring(pos);
+			content.substring(0, pos) + extraContent +
+				pluginContextListenerContent + content.substring(pos);
 
 		// Replace old package names
 

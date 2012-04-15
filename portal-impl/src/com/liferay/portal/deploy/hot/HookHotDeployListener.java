@@ -622,99 +622,9 @@ public class HookHotDeployListener
 			}
 		}
 
-		ServletFiltersContainer servletFiltersContainer =
-			_servletFiltersContainerMap.get(servletContextName);
-
-		if (servletFiltersContainer == null) {
-			servletFiltersContainer = new ServletFiltersContainer();
-
-			_servletFiltersContainerMap.put(
-				servletContextName, servletFiltersContainer);
-		}
-
-		List<Element> servletFilterElements = rootElement.elements(
-			"servlet-filter");
-
-		for (Element servletFilterElement : servletFilterElements) {
-			String servletFilterName = servletFilterElement.elementText(
-				"servlet-filter-name");
-			String servletFilterImpl = servletFilterElement.elementText(
-				"servlet-filter-impl");
-
-			List<Element> initParamElements = servletFilterElement.elements(
-				"init-param");
-
-			Map<String, String> initParameterMap =
-				new HashMap<String, String>();
-
-			for (Element initParamElement : initParamElements) {
-				String paramName = initParamElement.elementText("param-name");
-				String paramValue = initParamElement.elementText("param-value");
-
-				initParameterMap.put(paramName, paramValue);
-			}
-
-			Filter filter = initServletFilter(
-				servletFilterImpl, portletClassLoader);
-
-			FilterConfig filterConfig = new InvokerFilterConfig(
-				servletContext, servletFilterName, initParameterMap);
-
-			filter.init(filterConfig);
-
-			servletFiltersContainer.registerFilter(
-				servletFilterName, filter, filterConfig);
-		}
-
-		List<Element> servletFilterMappingElements = rootElement.elements(
-			"servlet-filter-mapping");
-
-		for (Element servletFilterMappingElement :
-				servletFilterMappingElements) {
-
-			String servletFilterName = servletFilterMappingElement.elementText(
-				"servlet-filter-name");
-			String afterFilter = servletFilterMappingElement.elementText(
-				"after-filter");
-			String beforeFilter = servletFilterMappingElement.elementText(
-				"before-filter");
-
-			String positionFilterName = beforeFilter;
-			boolean after = false;
-
-			if (Validator.isNotNull(afterFilter)) {
-				positionFilterName = afterFilter;
-				after = true;
-			}
-
-			List<Element> urlPatternElements =
-				servletFilterMappingElement.elements("url-pattern");
-
-			List<String> urlPatterns = new ArrayList<String>();
-
-			for (Element urlPatternElement : urlPatternElements) {
-				String urlPattern = urlPatternElement.getTextTrim();
-
-				urlPatterns.add(urlPattern);
-			}
-
-			List<Element> dispatcherElements =
-				servletFilterMappingElement.elements("dispatcher");
-
-			List<String> dispatchers = new ArrayList<String>();
-
-			for (Element dispatcherElement : dispatcherElements) {
-				String dispatcher = dispatcherElement.getTextTrim();
-
-				dispatcher = dispatcher.toUpperCase();
-
-				dispatchers.add(dispatcher);
-			}
-
-			servletFiltersContainer.registerFilterMapping(
-				servletFilterName, urlPatterns, dispatchers, positionFilterName,
-				after);
-		}
+		initServletFilters(
+			paclPolicy, servletContext, servletContextName, portletClassLoader,
+			rootElement);
 
 		StrutsActionsContainer strutsActionContainer =
 			_strutsActionsContainerMap.get(servletContextName);
@@ -1969,6 +1879,111 @@ public class HookHotDeployListener
 			new ClassLoaderBeanHandler(filter, portletClassLoader));
 
 		return filter;
+	}
+
+	protected void initServletFilters(
+			PACLPolicy paclPolicy, ServletContext servletContext,
+			String servletContextName, ClassLoader portletClassLoader,
+			Element parentElement)
+		throws Exception {
+
+		if (!paclPolicy.hasHookServletFilters()) {
+			return;
+		}
+
+		ServletFiltersContainer servletFiltersContainer =
+			_servletFiltersContainerMap.get(servletContextName);
+
+		if (servletFiltersContainer == null) {
+			servletFiltersContainer = new ServletFiltersContainer();
+
+			_servletFiltersContainerMap.put(
+				servletContextName, servletFiltersContainer);
+		}
+
+		List<Element> servletFilterElements = parentElement.elements(
+			"servlet-filter");
+
+		for (Element servletFilterElement : servletFilterElements) {
+			String servletFilterName = servletFilterElement.elementText(
+				"servlet-filter-name");
+			String servletFilterImpl = servletFilterElement.elementText(
+				"servlet-filter-impl");
+
+			List<Element> initParamElements = servletFilterElement.elements(
+				"init-param");
+
+			Map<String, String> initParameterMap =
+				new HashMap<String, String>();
+
+			for (Element initParamElement : initParamElements) {
+				String paramName = initParamElement.elementText("param-name");
+				String paramValue = initParamElement.elementText("param-value");
+
+				initParameterMap.put(paramName, paramValue);
+			}
+
+			Filter filter = initServletFilter(
+				servletFilterImpl, portletClassLoader);
+
+			FilterConfig filterConfig = new InvokerFilterConfig(
+				servletContext, servletFilterName, initParameterMap);
+
+			filter.init(filterConfig);
+
+			servletFiltersContainer.registerFilter(
+				servletFilterName, filter, filterConfig);
+		}
+
+		List<Element> servletFilterMappingElements = parentElement.elements(
+			"servlet-filter-mapping");
+
+		for (Element servletFilterMappingElement :
+				servletFilterMappingElements) {
+
+			String servletFilterName = servletFilterMappingElement.elementText(
+				"servlet-filter-name");
+			String afterFilter = servletFilterMappingElement.elementText(
+				"after-filter");
+			String beforeFilter = servletFilterMappingElement.elementText(
+				"before-filter");
+
+			String positionFilterName = beforeFilter;
+			boolean after = false;
+
+			if (Validator.isNotNull(afterFilter)) {
+				positionFilterName = afterFilter;
+				after = true;
+			}
+
+			List<Element> urlPatternElements =
+				servletFilterMappingElement.elements("url-pattern");
+
+			List<String> urlPatterns = new ArrayList<String>();
+
+			for (Element urlPatternElement : urlPatternElements) {
+				String urlPattern = urlPatternElement.getTextTrim();
+
+				urlPatterns.add(urlPattern);
+			}
+
+			List<Element> dispatcherElements =
+				servletFilterMappingElement.elements("dispatcher");
+
+			List<String> dispatchers = new ArrayList<String>();
+
+			for (Element dispatcherElement : dispatcherElements) {
+				String dispatcher = dispatcherElement.getTextTrim();
+
+				dispatcher = dispatcher.toUpperCase();
+
+				dispatchers.add(dispatcher);
+			}
+
+			servletFiltersContainer.registerFilterMapping(
+				servletFilterName, urlPatterns, dispatchers, positionFilterName,
+				after);
+		}
 	}
 
 	protected Object initStrutsAction(

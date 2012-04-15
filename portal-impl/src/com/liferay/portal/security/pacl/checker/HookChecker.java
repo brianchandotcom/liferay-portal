@@ -31,9 +31,10 @@ public class HookChecker extends BaseChecker {
 	public HookChecker(PACLPolicy paclPolicy) {
 		super(paclPolicy);
 
-		initCustomJspDirEnabled();
+		initCustomJspDir();
 		initLanguagePropertiesLocales();
 		initPortalPropertiesKeys();
+		initServletFilters();
 		initServices();
 	}
 
@@ -63,7 +64,11 @@ public class HookChecker extends BaseChecker {
 		return _services.contains(className);
 	}
 
-	protected void initCustomJspDirEnabled() {
+	public boolean hasServletFilters() {
+		return _servletFilters;
+	}
+
+	protected void initCustomJspDir() {
 		_customJspDir = getPropertyBoolean(
 			"security-manager-hook-custom-jsp-dir-enabled");
 	}
@@ -99,11 +104,17 @@ public class HookChecker extends BaseChecker {
 		_services = getPropertySet("security-manager-hook-services");
 	}
 
+	protected void initServletFilters() {
+		_servletFilters = getPropertyBoolean(
+			"security-manager-hook-servlet-filters-enabled");
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(HookChecker.class);
 
 	private boolean _customJspDir;
 	private Set<String> _languagePropertiesLanguageIds = Collections.emptySet();
 	private Set<String> _portalPropertiesKeys = Collections.emptySet();
 	private Set<String> _services = Collections.emptySet();
+	private boolean _servletFilters;
 
 }

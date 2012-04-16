@@ -73,26 +73,28 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID = new FinderPath(UserNotificationEventModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(UserNotificationEventModelImpl.ENTITY_CACHE_ENABLED,
 			UserNotificationEventModelImpl.FINDER_CACHE_ENABLED,
 			UserNotificationEventImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
-				String.class.getName(),
+				String.class.getName(), Long.class.getName(),
 				
 			"java.lang.Integer", "java.lang.Integer",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID = new FinderPath(UserNotificationEventModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C =
+		new FinderPath(UserNotificationEventModelImpl.ENTITY_CACHE_ENABLED,
 			UserNotificationEventModelImpl.FINDER_CACHE_ENABLED,
 			UserNotificationEventImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] { String.class.getName() },
-			UserNotificationEventModelImpl.UUID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(UserNotificationEventModelImpl.ENTITY_CACHE_ENABLED,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+			new String[] { String.class.getName(), Long.class.getName() },
+			UserNotificationEventModelImpl.UUID_COLUMN_BITMASK |
+			UserNotificationEventModelImpl.COMPANYID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_C = new FinderPath(UserNotificationEventModelImpl.ENTITY_CACHE_ENABLED,
 			UserNotificationEventModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] { String.class.getName() });
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+			new String[] { String.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_USERID = new FinderPath(UserNotificationEventModelImpl.ENTITY_CACHE_ENABLED,
 			UserNotificationEventModelImpl.FINDER_CACHE_ENABLED,
 			UserNotificationEventImpl.class,
@@ -364,19 +366,23 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 		}
 		else {
 			if ((userNotificationEventModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID.getColumnBitmask()) != 0) {
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						userNotificationEventModelImpl.getOriginalUuid()
+						userNotificationEventModelImpl.getOriginalUuid(),
+						Long.valueOf(userNotificationEventModelImpl.getOriginalCompanyId())
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 
-				args = new Object[] { userNotificationEventModelImpl.getUuid() };
+				args = new Object[] {
+						userNotificationEventModelImpl.getUuid(),
+						Long.valueOf(userNotificationEventModelImpl.getCompanyId())
+					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 			}
 
@@ -554,62 +560,71 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	}
 
 	/**
-	 * Returns all the user notification events where uuid = &#63;.
+	 * Returns all the user notification events where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
+	 * @param companyId the company ID
 	 * @return the matching user notification events
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<UserNotificationEvent> findByUuid(String uuid)
+	public List<UserNotificationEvent> findByUuid_C(String uuid, long companyId)
 		throws SystemException {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		return findByUuid_C(uuid, companyId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the user notification events where uuid = &#63;.
+	 * Returns a range of all the user notification events where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
 	 * @param uuid the uuid
+	 * @param companyId the company ID
 	 * @param start the lower bound of the range of user notification events
 	 * @param end the upper bound of the range of user notification events (not inclusive)
 	 * @return the range of matching user notification events
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<UserNotificationEvent> findByUuid(String uuid, int start,
-		int end) throws SystemException {
-		return findByUuid(uuid, start, end, null);
+	public List<UserNotificationEvent> findByUuid_C(String uuid,
+		long companyId, int start, int end) throws SystemException {
+		return findByUuid_C(uuid, companyId, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the user notification events where uuid = &#63;.
+	 * Returns an ordered range of all the user notification events where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
 	 * @param uuid the uuid
+	 * @param companyId the company ID
 	 * @param start the lower bound of the range of user notification events
 	 * @param end the upper bound of the range of user notification events (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching user notification events
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<UserNotificationEvent> findByUuid(String uuid, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+	public List<UserNotificationEvent> findByUuid_C(String uuid,
+		long companyId, int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID;
-			finderArgs = new Object[] { uuid };
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C;
+			finderArgs = new Object[] { uuid, companyId };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID;
-			finderArgs = new Object[] { uuid, start, end, orderByComparator };
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C;
+			finderArgs = new Object[] {
+					uuid, companyId,
+					
+					start, end, orderByComparator
+				};
 		}
 
 		List<UserNotificationEvent> list = (List<UserNotificationEvent>)FinderCacheUtil.getResult(finderPath,
@@ -617,7 +632,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 
 		if ((list != null) && !list.isEmpty()) {
 			for (UserNotificationEvent userNotificationEvent : list) {
-				if (!Validator.equals(uuid, userNotificationEvent.getUuid())) {
+				if (!Validator.equals(uuid, userNotificationEvent.getUuid()) ||
+						(companyId != userNotificationEvent.getCompanyId())) {
 					list = null;
 
 					break;
@@ -629,26 +645,28 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(3 +
+				query = new StringBundler(4 +
 						(orderByComparator.getOrderByFields().length * 3));
 			}
 			else {
-				query = new StringBundler(3);
+				query = new StringBundler(4);
 			}
 
 			query.append(_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE);
 
 			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_UUID_1);
+				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
 			else {
 				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_UUID_3);
+					query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_UUID_UUID_2);
+					query.append(_FINDER_COLUMN_UUID_C_UUID_2);
 				}
 			}
+
+			query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -674,6 +692,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 					qPos.add(uuid);
 				}
 
+				qPos.add(companyId);
+
 				list = (List<UserNotificationEvent>)QueryUtil.list(q,
 						getDialect(), start, end);
 			}
@@ -698,31 +718,35 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	}
 
 	/**
-	 * Returns the first user notification event in the ordered set where uuid = &#63;.
+	 * Returns the first user notification event in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
 	 * @param uuid the uuid
+	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user notification event
 	 * @throws com.liferay.portal.NoSuchUserNotificationEventException if a matching user notification event could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public UserNotificationEvent findByUuid_First(String uuid,
-		OrderByComparator orderByComparator)
+	public UserNotificationEvent findByUuid_C_First(String uuid,
+		long companyId, OrderByComparator orderByComparator)
 		throws NoSuchUserNotificationEventException, SystemException {
-		List<UserNotificationEvent> list = findByUuid(uuid, 0, 1,
+		List<UserNotificationEvent> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
 		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
+			StringBundler msg = new StringBundler(6);
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
 			msg.append("uuid=");
 			msg.append(uuid);
+
+			msg.append(", companyId=");
+			msg.append(companyId);
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -734,33 +758,37 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	}
 
 	/**
-	 * Returns the last user notification event in the ordered set where uuid = &#63;.
+	 * Returns the last user notification event in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
 	 * @param uuid the uuid
+	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching user notification event
 	 * @throws com.liferay.portal.NoSuchUserNotificationEventException if a matching user notification event could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public UserNotificationEvent findByUuid_Last(String uuid,
+	public UserNotificationEvent findByUuid_C_Last(String uuid, long companyId,
 		OrderByComparator orderByComparator)
 		throws NoSuchUserNotificationEventException, SystemException {
-		int count = countByUuid(uuid);
+		int count = countByUuid_C(uuid, companyId);
 
-		List<UserNotificationEvent> list = findByUuid(uuid, count - 1, count,
-				orderByComparator);
+		List<UserNotificationEvent> list = findByUuid_C(uuid, companyId,
+				count - 1, count, orderByComparator);
 
 		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
+			StringBundler msg = new StringBundler(6);
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
 			msg.append("uuid=");
 			msg.append(uuid);
+
+			msg.append(", companyId=");
+			msg.append(companyId);
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -772,7 +800,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	}
 
 	/**
-	 * Returns the user notification events before and after the current user notification event in the ordered set where uuid = &#63;.
+	 * Returns the user notification events before and after the current user notification event in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -780,13 +808,14 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 *
 	 * @param userNotificationEventId the primary key of the current user notification event
 	 * @param uuid the uuid
+	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next user notification event
 	 * @throws com.liferay.portal.NoSuchUserNotificationEventException if a user notification event with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public UserNotificationEvent[] findByUuid_PrevAndNext(
-		long userNotificationEventId, String uuid,
+	public UserNotificationEvent[] findByUuid_C_PrevAndNext(
+		long userNotificationEventId, String uuid, long companyId,
 		OrderByComparator orderByComparator)
 		throws NoSuchUserNotificationEventException, SystemException {
 		UserNotificationEvent userNotificationEvent = findByPrimaryKey(userNotificationEventId);
@@ -798,13 +827,13 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 
 			UserNotificationEvent[] array = new UserNotificationEventImpl[3];
 
-			array[0] = getByUuid_PrevAndNext(session, userNotificationEvent,
-					uuid, orderByComparator, true);
+			array[0] = getByUuid_C_PrevAndNext(session, userNotificationEvent,
+					uuid, companyId, orderByComparator, true);
 
 			array[1] = userNotificationEvent;
 
-			array[2] = getByUuid_PrevAndNext(session, userNotificationEvent,
-					uuid, orderByComparator, false);
+			array[2] = getByUuid_C_PrevAndNext(session, userNotificationEvent,
+					uuid, companyId, orderByComparator, false);
 
 			return array;
 		}
@@ -816,9 +845,9 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 		}
 	}
 
-	protected UserNotificationEvent getByUuid_PrevAndNext(Session session,
+	protected UserNotificationEvent getByUuid_C_PrevAndNext(Session session,
 		UserNotificationEvent userNotificationEvent, String uuid,
-		OrderByComparator orderByComparator, boolean previous) {
+		long companyId, OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -832,16 +861,18 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 		query.append(_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE);
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 		}
 		else {
 			if (uuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_UUID_UUID_3);
+				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
-				query.append(_FINDER_COLUMN_UUID_UUID_2);
+				query.append(_FINDER_COLUMN_UUID_C_UUID_2);
 			}
 		}
+
+		query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -915,6 +946,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 		if (uuid != null) {
 			qPos.add(uuid);
 		}
+
+		qPos.add(companyId);
 
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByConditionValues(userNotificationEvent);
@@ -1791,13 +1824,16 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	}
 
 	/**
-	 * Removes all the user notification events where uuid = &#63; from the database.
+	 * Removes all the user notification events where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
+	 * @param companyId the company ID
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByUuid(String uuid) throws SystemException {
-		for (UserNotificationEvent userNotificationEvent : findByUuid(uuid)) {
+	public void removeByUuid_C(String uuid, long companyId)
+		throws SystemException {
+		for (UserNotificationEvent userNotificationEvent : findByUuid_C(uuid,
+				companyId)) {
 			remove(userNotificationEvent);
 		}
 	}
@@ -1841,34 +1877,38 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	}
 
 	/**
-	 * Returns the number of user notification events where uuid = &#63;.
+	 * Returns the number of user notification events where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
+	 * @param companyId the company ID
 	 * @return the number of matching user notification events
 	 * @throws SystemException if a system exception occurred
 	 */
-	public int countByUuid(String uuid) throws SystemException {
-		Object[] finderArgs = new Object[] { uuid };
+	public int countByUuid_C(String uuid, long companyId)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { uuid, companyId };
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_UUID,
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_UUID_C,
 				finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(2);
+			StringBundler query = new StringBundler(3);
 
 			query.append(_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE);
 
 			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_UUID_1);
+				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
 			else {
 				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_UUID_3);
+					query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_UUID_UUID_2);
+					query.append(_FINDER_COLUMN_UUID_C_UUID_2);
 				}
 			}
+
+			query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
 
 			String sql = query.toString();
 
@@ -1885,6 +1925,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 					qPos.add(uuid);
 				}
 
+				qPos.add(companyId);
+
 				count = (Long)q.uniqueResult();
 			}
 			catch (Exception e) {
@@ -1895,7 +1937,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID,
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_C,
 					finderArgs, count);
 
 				closeSession(session);
@@ -2212,9 +2254,10 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	private static final String _SQL_SELECT_USERNOTIFICATIONEVENT_WHERE = "SELECT userNotificationEvent FROM UserNotificationEvent userNotificationEvent WHERE ";
 	private static final String _SQL_COUNT_USERNOTIFICATIONEVENT = "SELECT COUNT(userNotificationEvent) FROM UserNotificationEvent userNotificationEvent";
 	private static final String _SQL_COUNT_USERNOTIFICATIONEVENT_WHERE = "SELECT COUNT(userNotificationEvent) FROM UserNotificationEvent userNotificationEvent WHERE ";
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "userNotificationEvent.uuid IS NULL";
-	private static final String _FINDER_COLUMN_UUID_UUID_2 = "userNotificationEvent.uuid = ?";
-	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(userNotificationEvent.uuid IS NULL OR userNotificationEvent.uuid = ?)";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "userNotificationEvent.uuid IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "userNotificationEvent.uuid = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(userNotificationEvent.uuid IS NULL OR userNotificationEvent.uuid = ?) AND ";
+	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "userNotificationEvent.companyId = ?";
 	private static final String _FINDER_COLUMN_USERID_USERID_2 = "userNotificationEvent.userId = ?";
 	private static final String _FINDER_COLUMN_U_A_USERID_2 = "userNotificationEvent.userId = ? AND ";
 	private static final String _FINDER_COLUMN_U_A_ARCHIVED_2 = "userNotificationEvent.archived = ?";

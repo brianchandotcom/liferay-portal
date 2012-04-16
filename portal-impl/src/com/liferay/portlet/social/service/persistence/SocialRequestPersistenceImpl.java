@@ -76,25 +76,28 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
 			SocialRequestModelImpl.FINDER_CACHE_ENABLED,
 			SocialRequestImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByUuid",
+			"findByUuid_C",
 			new String[] {
-				String.class.getName(),
+				String.class.getName(), Long.class.getName(),
 				
 			"java.lang.Integer", "java.lang.Integer",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C =
+		new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
 			SocialRequestModelImpl.FINDER_CACHE_ENABLED,
 			SocialRequestImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByUuid", new String[] { String.class.getName() },
-			SocialRequestModelImpl.UUID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			"findByUuid_C",
+			new String[] { String.class.getName(), Long.class.getName() },
+			SocialRequestModelImpl.UUID_COLUMN_BITMASK |
+			SocialRequestModelImpl.COMPANYID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_C = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
 			SocialRequestModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] { String.class.getName() });
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+			new String[] { String.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
 			SocialRequestModelImpl.FINDER_CACHE_ENABLED,
 			SocialRequestImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
@@ -560,19 +563,23 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		}
 		else {
 			if ((socialRequestModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID.getColumnBitmask()) != 0) {
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						socialRequestModelImpl.getOriginalUuid()
+						socialRequestModelImpl.getOriginalUuid(),
+						Long.valueOf(socialRequestModelImpl.getOriginalCompanyId())
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 
-				args = new Object[] { socialRequestModelImpl.getUuid() };
+				args = new Object[] {
+						socialRequestModelImpl.getUuid(),
+						Long.valueOf(socialRequestModelImpl.getCompanyId())
+					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 			}
 
@@ -932,62 +939,71 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	}
 
 	/**
-	 * Returns all the social requests where uuid = &#63;.
+	 * Returns all the social requests where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
+	 * @param companyId the company ID
 	 * @return the matching social requests
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<SocialRequest> findByUuid(String uuid)
+	public List<SocialRequest> findByUuid_C(String uuid, long companyId)
 		throws SystemException {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		return findByUuid_C(uuid, companyId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the social requests where uuid = &#63;.
+	 * Returns a range of all the social requests where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
 	 * @param uuid the uuid
+	 * @param companyId the company ID
 	 * @param start the lower bound of the range of social requests
 	 * @param end the upper bound of the range of social requests (not inclusive)
 	 * @return the range of matching social requests
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<SocialRequest> findByUuid(String uuid, int start, int end)
-		throws SystemException {
-		return findByUuid(uuid, start, end, null);
+	public List<SocialRequest> findByUuid_C(String uuid, long companyId,
+		int start, int end) throws SystemException {
+		return findByUuid_C(uuid, companyId, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the social requests where uuid = &#63;.
+	 * Returns an ordered range of all the social requests where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
 	 * @param uuid the uuid
+	 * @param companyId the company ID
 	 * @param start the lower bound of the range of social requests
 	 * @param end the upper bound of the range of social requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching social requests
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<SocialRequest> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+	public List<SocialRequest> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID;
-			finderArgs = new Object[] { uuid };
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C;
+			finderArgs = new Object[] { uuid, companyId };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID;
-			finderArgs = new Object[] { uuid, start, end, orderByComparator };
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C;
+			finderArgs = new Object[] {
+					uuid, companyId,
+					
+					start, end, orderByComparator
+				};
 		}
 
 		List<SocialRequest> list = (List<SocialRequest>)FinderCacheUtil.getResult(finderPath,
@@ -995,7 +1011,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 
 		if ((list != null) && !list.isEmpty()) {
 			for (SocialRequest socialRequest : list) {
-				if (!Validator.equals(uuid, socialRequest.getUuid())) {
+				if (!Validator.equals(uuid, socialRequest.getUuid()) ||
+						(companyId != socialRequest.getCompanyId())) {
 					list = null;
 
 					break;
@@ -1007,26 +1024,28 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(3 +
+				query = new StringBundler(4 +
 						(orderByComparator.getOrderByFields().length * 3));
 			}
 			else {
-				query = new StringBundler(3);
+				query = new StringBundler(4);
 			}
 
 			query.append(_SQL_SELECT_SOCIALREQUEST_WHERE);
 
 			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_UUID_1);
+				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
 			else {
 				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_UUID_3);
+					query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_UUID_UUID_2);
+					query.append(_FINDER_COLUMN_UUID_C_UUID_2);
 				}
 			}
+
+			query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -1052,6 +1071,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 					qPos.add(uuid);
 				}
 
+				qPos.add(companyId);
+
 				list = (List<SocialRequest>)QueryUtil.list(q, getDialect(),
 						start, end);
 			}
@@ -1076,30 +1097,35 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	}
 
 	/**
-	 * Returns the first social request in the ordered set where uuid = &#63;.
+	 * Returns the first social request in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
 	 * @param uuid the uuid
+	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching social request
 	 * @throws com.liferay.portlet.social.NoSuchRequestException if a matching social request could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public SocialRequest findByUuid_First(String uuid,
+	public SocialRequest findByUuid_C_First(String uuid, long companyId,
 		OrderByComparator orderByComparator)
 		throws NoSuchRequestException, SystemException {
-		List<SocialRequest> list = findByUuid(uuid, 0, 1, orderByComparator);
+		List<SocialRequest> list = findByUuid_C(uuid, companyId, 0, 1,
+				orderByComparator);
 
 		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
+			StringBundler msg = new StringBundler(6);
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
 			msg.append("uuid=");
 			msg.append(uuid);
+
+			msg.append(", companyId=");
+			msg.append(companyId);
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -1111,33 +1137,37 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	}
 
 	/**
-	 * Returns the last social request in the ordered set where uuid = &#63;.
+	 * Returns the last social request in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
 	 * @param uuid the uuid
+	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching social request
 	 * @throws com.liferay.portlet.social.NoSuchRequestException if a matching social request could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public SocialRequest findByUuid_Last(String uuid,
+	public SocialRequest findByUuid_C_Last(String uuid, long companyId,
 		OrderByComparator orderByComparator)
 		throws NoSuchRequestException, SystemException {
-		int count = countByUuid(uuid);
+		int count = countByUuid_C(uuid, companyId);
 
-		List<SocialRequest> list = findByUuid(uuid, count - 1, count,
-				orderByComparator);
+		List<SocialRequest> list = findByUuid_C(uuid, companyId, count - 1,
+				count, orderByComparator);
 
 		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
+			StringBundler msg = new StringBundler(6);
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
 			msg.append("uuid=");
 			msg.append(uuid);
+
+			msg.append(", companyId=");
+			msg.append(companyId);
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -1149,7 +1179,7 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	}
 
 	/**
-	 * Returns the social requests before and after the current social request in the ordered set where uuid = &#63;.
+	 * Returns the social requests before and after the current social request in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -1157,13 +1187,14 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 *
 	 * @param requestId the primary key of the current social request
 	 * @param uuid the uuid
+	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next social request
 	 * @throws com.liferay.portlet.social.NoSuchRequestException if a social request with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public SocialRequest[] findByUuid_PrevAndNext(long requestId, String uuid,
-		OrderByComparator orderByComparator)
+	public SocialRequest[] findByUuid_C_PrevAndNext(long requestId,
+		String uuid, long companyId, OrderByComparator orderByComparator)
 		throws NoSuchRequestException, SystemException {
 		SocialRequest socialRequest = findByPrimaryKey(requestId);
 
@@ -1174,13 +1205,13 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 
 			SocialRequest[] array = new SocialRequestImpl[3];
 
-			array[0] = getByUuid_PrevAndNext(session, socialRequest, uuid,
-					orderByComparator, true);
+			array[0] = getByUuid_C_PrevAndNext(session, socialRequest, uuid,
+					companyId, orderByComparator, true);
 
 			array[1] = socialRequest;
 
-			array[2] = getByUuid_PrevAndNext(session, socialRequest, uuid,
-					orderByComparator, false);
+			array[2] = getByUuid_C_PrevAndNext(session, socialRequest, uuid,
+					companyId, orderByComparator, false);
 
 			return array;
 		}
@@ -1192,8 +1223,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		}
 	}
 
-	protected SocialRequest getByUuid_PrevAndNext(Session session,
-		SocialRequest socialRequest, String uuid,
+	protected SocialRequest getByUuid_C_PrevAndNext(Session session,
+		SocialRequest socialRequest, String uuid, long companyId,
 		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
@@ -1208,16 +1239,18 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		query.append(_SQL_SELECT_SOCIALREQUEST_WHERE);
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 		}
 		else {
 			if (uuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_UUID_UUID_3);
+				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
-				query.append(_FINDER_COLUMN_UUID_UUID_2);
+				query.append(_FINDER_COLUMN_UUID_C_UUID_2);
 			}
 		}
+
+		query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -1291,6 +1324,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		if (uuid != null) {
 			qPos.add(uuid);
 		}
+
+		qPos.add(companyId);
 
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByConditionValues(socialRequest);
@@ -4529,13 +4564,15 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	}
 
 	/**
-	 * Removes all the social requests where uuid = &#63; from the database.
+	 * Removes all the social requests where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
+	 * @param companyId the company ID
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByUuid(String uuid) throws SystemException {
-		for (SocialRequest socialRequest : findByUuid(uuid)) {
+	public void removeByUuid_C(String uuid, long companyId)
+		throws SystemException {
+		for (SocialRequest socialRequest : findByUuid_C(uuid, companyId)) {
 			remove(socialRequest);
 		}
 	}
@@ -4687,34 +4724,38 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	}
 
 	/**
-	 * Returns the number of social requests where uuid = &#63;.
+	 * Returns the number of social requests where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
+	 * @param companyId the company ID
 	 * @return the number of matching social requests
 	 * @throws SystemException if a system exception occurred
 	 */
-	public int countByUuid(String uuid) throws SystemException {
-		Object[] finderArgs = new Object[] { uuid };
+	public int countByUuid_C(String uuid, long companyId)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { uuid, companyId };
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_UUID,
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_UUID_C,
 				finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(2);
+			StringBundler query = new StringBundler(3);
 
 			query.append(_SQL_COUNT_SOCIALREQUEST_WHERE);
 
 			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_UUID_1);
+				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
 			else {
 				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_UUID_3);
+					query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_UUID_UUID_2);
+					query.append(_FINDER_COLUMN_UUID_C_UUID_2);
 				}
 			}
+
+			query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
 
 			String sql = query.toString();
 
@@ -4731,6 +4772,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 					qPos.add(uuid);
 				}
 
+				qPos.add(companyId);
+
 				count = (Long)q.uniqueResult();
 			}
 			catch (Exception e) {
@@ -4741,7 +4784,7 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID,
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_C,
 					finderArgs, count);
 
 				closeSession(session);
@@ -5416,9 +5459,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	private static final String _SQL_SELECT_SOCIALREQUEST_WHERE = "SELECT socialRequest FROM SocialRequest socialRequest WHERE ";
 	private static final String _SQL_COUNT_SOCIALREQUEST = "SELECT COUNT(socialRequest) FROM SocialRequest socialRequest";
 	private static final String _SQL_COUNT_SOCIALREQUEST_WHERE = "SELECT COUNT(socialRequest) FROM SocialRequest socialRequest WHERE ";
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "socialRequest.uuid IS NULL";
-	private static final String _FINDER_COLUMN_UUID_UUID_2 = "socialRequest.uuid = ?";
-	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(socialRequest.uuid IS NULL OR socialRequest.uuid = ?)";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "socialRequest.uuid IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "socialRequest.uuid = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(socialRequest.uuid IS NULL OR socialRequest.uuid = ?) AND ";
+	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "socialRequest.companyId = ?";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "socialRequest.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "socialRequest.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(socialRequest.uuid IS NULL OR socialRequest.uuid = ?) AND ";

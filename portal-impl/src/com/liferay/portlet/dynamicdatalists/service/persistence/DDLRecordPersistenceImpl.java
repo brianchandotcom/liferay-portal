@@ -79,24 +79,26 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID = new FinderPath(DDLRecordModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(DDLRecordModelImpl.ENTITY_CACHE_ENABLED,
 			DDLRecordModelImpl.FINDER_CACHE_ENABLED, DDLRecordImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
-				String.class.getName(),
+				String.class.getName(), Long.class.getName(),
 				
 			"java.lang.Integer", "java.lang.Integer",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID = new FinderPath(DDLRecordModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C =
+		new FinderPath(DDLRecordModelImpl.ENTITY_CACHE_ENABLED,
 			DDLRecordModelImpl.FINDER_CACHE_ENABLED, DDLRecordImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] { String.class.getName() },
-			DDLRecordModelImpl.UUID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(DDLRecordModelImpl.ENTITY_CACHE_ENABLED,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+			new String[] { String.class.getName(), Long.class.getName() },
+			DDLRecordModelImpl.UUID_COLUMN_BITMASK |
+			DDLRecordModelImpl.COMPANYID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_C = new FinderPath(DDLRecordModelImpl.ENTITY_CACHE_ENABLED,
 			DDLRecordModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] { String.class.getName() });
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+			new String[] { String.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(DDLRecordModelImpl.ENTITY_CACHE_ENABLED,
 			DDLRecordModelImpl.FINDER_CACHE_ENABLED, DDLRecordImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
@@ -405,19 +407,23 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 		}
 		else {
 			if ((ddlRecordModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID.getColumnBitmask()) != 0) {
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						ddlRecordModelImpl.getOriginalUuid()
+						ddlRecordModelImpl.getOriginalUuid(),
+						Long.valueOf(ddlRecordModelImpl.getOriginalCompanyId())
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 
-				args = new Object[] { ddlRecordModelImpl.getUuid() };
+				args = new Object[] {
+						ddlRecordModelImpl.getUuid(),
+						Long.valueOf(ddlRecordModelImpl.getCompanyId())
+					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 			}
 
@@ -643,61 +649,70 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 	}
 
 	/**
-	 * Returns all the d d l records where uuid = &#63;.
+	 * Returns all the d d l records where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
+	 * @param companyId the company ID
 	 * @return the matching d d l records
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<DDLRecord> findByUuid(String uuid) throws SystemException {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	public List<DDLRecord> findByUuid_C(String uuid, long companyId)
+		throws SystemException {
+		return findByUuid_C(uuid, companyId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the d d l records where uuid = &#63;.
+	 * Returns a range of all the d d l records where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
 	 * @param uuid the uuid
+	 * @param companyId the company ID
 	 * @param start the lower bound of the range of d d l records
 	 * @param end the upper bound of the range of d d l records (not inclusive)
 	 * @return the range of matching d d l records
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<DDLRecord> findByUuid(String uuid, int start, int end)
-		throws SystemException {
-		return findByUuid(uuid, start, end, null);
+	public List<DDLRecord> findByUuid_C(String uuid, long companyId, int start,
+		int end) throws SystemException {
+		return findByUuid_C(uuid, companyId, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the d d l records where uuid = &#63;.
+	 * Returns an ordered range of all the d d l records where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
 	 * @param uuid the uuid
+	 * @param companyId the company ID
 	 * @param start the lower bound of the range of d d l records
 	 * @param end the upper bound of the range of d d l records (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching d d l records
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<DDLRecord> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+	public List<DDLRecord> findByUuid_C(String uuid, long companyId, int start,
+		int end, OrderByComparator orderByComparator) throws SystemException {
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID;
-			finderArgs = new Object[] { uuid };
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C;
+			finderArgs = new Object[] { uuid, companyId };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID;
-			finderArgs = new Object[] { uuid, start, end, orderByComparator };
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C;
+			finderArgs = new Object[] {
+					uuid, companyId,
+					
+					start, end, orderByComparator
+				};
 		}
 
 		List<DDLRecord> list = (List<DDLRecord>)FinderCacheUtil.getResult(finderPath,
@@ -705,7 +720,8 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 
 		if ((list != null) && !list.isEmpty()) {
 			for (DDLRecord ddlRecord : list) {
-				if (!Validator.equals(uuid, ddlRecord.getUuid())) {
+				if (!Validator.equals(uuid, ddlRecord.getUuid()) ||
+						(companyId != ddlRecord.getCompanyId())) {
 					list = null;
 
 					break;
@@ -717,26 +733,28 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(3 +
+				query = new StringBundler(4 +
 						(orderByComparator.getOrderByFields().length * 3));
 			}
 			else {
-				query = new StringBundler(2);
+				query = new StringBundler(3);
 			}
 
 			query.append(_SQL_SELECT_DDLRECORD_WHERE);
 
 			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_UUID_1);
+				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
 			else {
 				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_UUID_3);
+					query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_UUID_UUID_2);
+					query.append(_FINDER_COLUMN_UUID_C_UUID_2);
 				}
 			}
+
+			query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -757,6 +775,8 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 				if (uuid != null) {
 					qPos.add(uuid);
 				}
+
+				qPos.add(companyId);
 
 				list = (List<DDLRecord>)QueryUtil.list(q, getDialect(), start,
 						end);
@@ -782,30 +802,35 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 	}
 
 	/**
-	 * Returns the first d d l record in the ordered set where uuid = &#63;.
+	 * Returns the first d d l record in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
 	 * @param uuid the uuid
+	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching d d l record
 	 * @throws com.liferay.portlet.dynamicdatalists.NoSuchRecordException if a matching d d l record could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public DDLRecord findByUuid_First(String uuid,
+	public DDLRecord findByUuid_C_First(String uuid, long companyId,
 		OrderByComparator orderByComparator)
 		throws NoSuchRecordException, SystemException {
-		List<DDLRecord> list = findByUuid(uuid, 0, 1, orderByComparator);
+		List<DDLRecord> list = findByUuid_C(uuid, companyId, 0, 1,
+				orderByComparator);
 
 		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
+			StringBundler msg = new StringBundler(6);
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
 			msg.append("uuid=");
 			msg.append(uuid);
+
+			msg.append(", companyId=");
+			msg.append(companyId);
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -817,33 +842,37 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 	}
 
 	/**
-	 * Returns the last d d l record in the ordered set where uuid = &#63;.
+	 * Returns the last d d l record in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
 	 * @param uuid the uuid
+	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching d d l record
 	 * @throws com.liferay.portlet.dynamicdatalists.NoSuchRecordException if a matching d d l record could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public DDLRecord findByUuid_Last(String uuid,
+	public DDLRecord findByUuid_C_Last(String uuid, long companyId,
 		OrderByComparator orderByComparator)
 		throws NoSuchRecordException, SystemException {
-		int count = countByUuid(uuid);
+		int count = countByUuid_C(uuid, companyId);
 
-		List<DDLRecord> list = findByUuid(uuid, count - 1, count,
+		List<DDLRecord> list = findByUuid_C(uuid, companyId, count - 1, count,
 				orderByComparator);
 
 		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
+			StringBundler msg = new StringBundler(6);
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
 			msg.append("uuid=");
 			msg.append(uuid);
+
+			msg.append(", companyId=");
+			msg.append(companyId);
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -855,7 +884,7 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 	}
 
 	/**
-	 * Returns the d d l records before and after the current d d l record in the ordered set where uuid = &#63;.
+	 * Returns the d d l records before and after the current d d l record in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -863,13 +892,14 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 	 *
 	 * @param recordId the primary key of the current d d l record
 	 * @param uuid the uuid
+	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next d d l record
 	 * @throws com.liferay.portlet.dynamicdatalists.NoSuchRecordException if a d d l record with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public DDLRecord[] findByUuid_PrevAndNext(long recordId, String uuid,
-		OrderByComparator orderByComparator)
+	public DDLRecord[] findByUuid_C_PrevAndNext(long recordId, String uuid,
+		long companyId, OrderByComparator orderByComparator)
 		throws NoSuchRecordException, SystemException {
 		DDLRecord ddlRecord = findByPrimaryKey(recordId);
 
@@ -880,13 +910,13 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 
 			DDLRecord[] array = new DDLRecordImpl[3];
 
-			array[0] = getByUuid_PrevAndNext(session, ddlRecord, uuid,
-					orderByComparator, true);
+			array[0] = getByUuid_C_PrevAndNext(session, ddlRecord, uuid,
+					companyId, orderByComparator, true);
 
 			array[1] = ddlRecord;
 
-			array[2] = getByUuid_PrevAndNext(session, ddlRecord, uuid,
-					orderByComparator, false);
+			array[2] = getByUuid_C_PrevAndNext(session, ddlRecord, uuid,
+					companyId, orderByComparator, false);
 
 			return array;
 		}
@@ -898,9 +928,9 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 		}
 	}
 
-	protected DDLRecord getByUuid_PrevAndNext(Session session,
-		DDLRecord ddlRecord, String uuid, OrderByComparator orderByComparator,
-		boolean previous) {
+	protected DDLRecord getByUuid_C_PrevAndNext(Session session,
+		DDLRecord ddlRecord, String uuid, long companyId,
+		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -914,16 +944,18 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 		query.append(_SQL_SELECT_DDLRECORD_WHERE);
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 		}
 		else {
 			if (uuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_UUID_UUID_3);
+				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
-				query.append(_FINDER_COLUMN_UUID_UUID_2);
+				query.append(_FINDER_COLUMN_UUID_C_UUID_2);
 			}
 		}
+
+		query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -993,6 +1025,8 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 		if (uuid != null) {
 			qPos.add(uuid);
 		}
+
+		qPos.add(companyId);
 
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByConditionValues(ddlRecord);
@@ -2361,13 +2395,15 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 	}
 
 	/**
-	 * Removes all the d d l records where uuid = &#63; from the database.
+	 * Removes all the d d l records where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
+	 * @param companyId the company ID
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByUuid(String uuid) throws SystemException {
-		for (DDLRecord ddlRecord : findByUuid(uuid)) {
+	public void removeByUuid_C(String uuid, long companyId)
+		throws SystemException {
+		for (DDLRecord ddlRecord : findByUuid_C(uuid, companyId)) {
 			remove(ddlRecord);
 		}
 	}
@@ -2437,34 +2473,38 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 	}
 
 	/**
-	 * Returns the number of d d l records where uuid = &#63;.
+	 * Returns the number of d d l records where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
+	 * @param companyId the company ID
 	 * @return the number of matching d d l records
 	 * @throws SystemException if a system exception occurred
 	 */
-	public int countByUuid(String uuid) throws SystemException {
-		Object[] finderArgs = new Object[] { uuid };
+	public int countByUuid_C(String uuid, long companyId)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { uuid, companyId };
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_UUID,
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_UUID_C,
 				finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(2);
+			StringBundler query = new StringBundler(3);
 
 			query.append(_SQL_COUNT_DDLRECORD_WHERE);
 
 			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_UUID_1);
+				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
 			else {
 				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_UUID_3);
+					query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_UUID_UUID_2);
+					query.append(_FINDER_COLUMN_UUID_C_UUID_2);
 				}
 			}
+
+			query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
 
 			String sql = query.toString();
 
@@ -2481,6 +2521,8 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 					qPos.add(uuid);
 				}
 
+				qPos.add(companyId);
+
 				count = (Long)q.uniqueResult();
 			}
 			catch (Exception e) {
@@ -2491,7 +2533,7 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID,
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_C,
 					finderArgs, count);
 
 				closeSession(session);
@@ -2824,9 +2866,10 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 	private static final String _SQL_SELECT_DDLRECORD_WHERE = "SELECT ddlRecord FROM DDLRecord ddlRecord WHERE ";
 	private static final String _SQL_COUNT_DDLRECORD = "SELECT COUNT(ddlRecord) FROM DDLRecord ddlRecord";
 	private static final String _SQL_COUNT_DDLRECORD_WHERE = "SELECT COUNT(ddlRecord) FROM DDLRecord ddlRecord WHERE ";
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "ddlRecord.uuid IS NULL";
-	private static final String _FINDER_COLUMN_UUID_UUID_2 = "ddlRecord.uuid = ?";
-	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(ddlRecord.uuid IS NULL OR ddlRecord.uuid = ?)";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "ddlRecord.uuid IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "ddlRecord.uuid = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(ddlRecord.uuid IS NULL OR ddlRecord.uuid = ?) AND ";
+	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "ddlRecord.companyId = ?";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "ddlRecord.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "ddlRecord.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(ddlRecord.uuid IS NULL OR ddlRecord.uuid = ?) AND ";

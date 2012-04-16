@@ -83,10 +83,11 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 				"value.object.column.bitmask.enabled.com.liferay.portal.model.Lock"),
 			true);
 	public static long CLASSNAME_COLUMN_BITMASK = 1L;
-	public static long EXPIRATIONDATE_COLUMN_BITMASK = 2L;
-	public static long KEY_COLUMN_BITMASK = 4L;
-	public static long OWNER_COLUMN_BITMASK = 8L;
-	public static long UUID_COLUMN_BITMASK = 16L;
+	public static long COMPANYID_COLUMN_BITMASK = 2L;
+	public static long EXPIRATIONDATE_COLUMN_BITMASK = 4L;
+	public static long KEY_COLUMN_BITMASK = 8L;
+	public static long OWNER_COLUMN_BITMASK = 16L;
+	public static long UUID_COLUMN_BITMASK = 32L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.Lock"));
 
@@ -151,7 +152,19 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	public long getUserId() {
@@ -391,6 +404,10 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 
 		lockModelImpl._originalUuid = lockModelImpl._uuid;
 
+		lockModelImpl._originalCompanyId = lockModelImpl._companyId;
+
+		lockModelImpl._setOriginalCompanyId = false;
+
 		lockModelImpl._originalClassName = lockModelImpl._className;
 
 		lockModelImpl._originalKey = lockModelImpl._key;
@@ -571,6 +588,8 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 	private String _originalUuid;
 	private long _lockId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private String _userName;

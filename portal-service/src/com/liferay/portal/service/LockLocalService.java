@@ -248,7 +248,8 @@ public interface LockLocalService extends PersistedModelLocalService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Lock getLockByUuid(java.lang.String uuid)
+	public com.liferay.portal.model.Lock getLockByUuid(java.lang.String uuid,
+		long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -291,7 +292,7 @@ public interface LockLocalService extends PersistedModelLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.Lock refresh(java.lang.String uuid,
-		long expirationTime)
+		long companyId, long expirationTime)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

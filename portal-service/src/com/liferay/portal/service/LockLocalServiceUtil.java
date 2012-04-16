@@ -279,10 +279,10 @@ public class LockLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.model.Lock getLockByUuid(
-		java.lang.String uuid)
+		java.lang.String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getLockByUuid(uuid);
+		return getService().getLockByUuid(uuid, companyId);
 	}
 
 	public static boolean hasLock(long userId, java.lang.String className,
@@ -345,10 +345,10 @@ public class LockLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.model.Lock refresh(java.lang.String uuid,
-		long expirationTime)
+		long companyId, long expirationTime)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().refresh(uuid, expirationTime);
+		return getService().refresh(uuid, companyId, expirationTime);
 	}
 
 	public static void unlock(java.lang.String className, long key)

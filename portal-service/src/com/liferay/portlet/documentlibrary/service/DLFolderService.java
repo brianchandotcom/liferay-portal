@@ -191,7 +191,7 @@ public interface DLFolderService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.Lock refreshFolderLock(
-		java.lang.String lockUuid, long expirationTime)
+		java.lang.String lockUuid, long companyId, long expirationTime)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

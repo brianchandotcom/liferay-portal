@@ -102,8 +102,9 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 	public static long ALERT_COLUMN_BITMASK = 1L;
 	public static long CLASSNAMEID_COLUMN_BITMASK = 2L;
 	public static long CLASSPK_COLUMN_BITMASK = 4L;
-	public static long USERID_COLUMN_BITMASK = 8L;
-	public static long UUID_COLUMN_BITMASK = 16L;
+	public static long COMPANYID_COLUMN_BITMASK = 8L;
+	public static long USERID_COLUMN_BITMASK = 16L;
+	public static long UUID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -219,7 +220,19 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -575,6 +588,10 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 
 		announcementsEntryModelImpl._originalUuid = announcementsEntryModelImpl._uuid;
 
+		announcementsEntryModelImpl._originalCompanyId = announcementsEntryModelImpl._companyId;
+
+		announcementsEntryModelImpl._setOriginalCompanyId = false;
+
 		announcementsEntryModelImpl._originalUserId = announcementsEntryModelImpl._userId;
 
 		announcementsEntryModelImpl._setOriginalUserId = false;
@@ -831,6 +848,8 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 	private String _originalUuid;
 	private long _entryId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private long _originalUserId;

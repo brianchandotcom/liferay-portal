@@ -92,8 +92,9 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portal.model.Repository"),
 			true);
-	public static long GROUPID_COLUMN_BITMASK = 1L;
-	public static long UUID_COLUMN_BITMASK = 2L;
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long GROUPID_COLUMN_BITMASK = 2L;
+	public static long UUID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -226,7 +227,19 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -478,6 +491,10 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 
 		repositoryModelImpl._setOriginalGroupId = false;
 
+		repositoryModelImpl._originalCompanyId = repositoryModelImpl._companyId;
+
+		repositoryModelImpl._setOriginalCompanyId = false;
+
 		repositoryModelImpl._columnBitmask = 0;
 	}
 
@@ -683,6 +700,8 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private String _userName;

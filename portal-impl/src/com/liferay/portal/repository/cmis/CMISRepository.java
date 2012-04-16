@@ -1073,11 +1073,15 @@ public class CMISRepository extends BaseCmisRepository {
 		}
 	}
 
-	public Lock refreshFileEntryLock(String lockUuid, long expirationTime) {
+	public Lock refreshFileEntryLock(
+		String lockUuid, long companyId, long expirationTime) {
+
 		throw new UnsupportedOperationException();
 	}
 
-	public Lock refreshFolderLock(String lockUuid, long expirationTime) {
+	public Lock refreshFolderLock(
+		String lockUuid, long companyId, long expirationTime) {
+
 		throw new UnsupportedOperationException();
 	}
 

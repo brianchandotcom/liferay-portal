@@ -503,19 +503,22 @@ public class BaseRepositoryProxyBean
 		return newFolderProxyBean(folder);
 	}
 
-	public Lock refreshFileEntryLock(String lockUuid, long expirationTime)
+	public Lock refreshFileEntryLock(
+			String lockUuid, long companyId, long expirationTime)
 		throws PortalException, SystemException {
 
 		Lock lock = _baseRepository.refreshFileEntryLock(
-			lockUuid, expirationTime);
+			lockUuid, companyId, expirationTime);
 
 		return (Lock)newProxyInstance(lock, Lock.class);
 	}
 
-	public Lock refreshFolderLock(String lockUuid, long expirationTime)
+	public Lock refreshFolderLock(
+			String lockUuid, long companyId, long expirationTime)
 		throws PortalException, SystemException {
 
-		Lock lock = _baseRepository.refreshFolderLock(lockUuid, expirationTime);
+		Lock lock = _baseRepository.refreshFolderLock(
+			lockUuid, companyId, expirationTime);
 
 		return (Lock)newProxyInstance(lock, Lock.class);
 	}

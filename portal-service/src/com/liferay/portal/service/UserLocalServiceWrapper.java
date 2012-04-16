@@ -1603,15 +1603,17 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	* Returns the user with the universally unique identifier.
 	*
 	* @param uuid the user's universally unique identifier
+	* @param companyId the primary key of the user's company
 	* @return the user with the universally unique identifier
 	* @throws PortalException if a user with the universally unique identifier
 	could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.User getUserByUuid(java.lang.String uuid)
+	public com.liferay.portal.model.User getUserByUuid(java.lang.String uuid,
+		long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _userLocalService.getUserByUuid(uuid);
+		return _userLocalService.getUserByUuid(uuid, companyId);
 	}
 
 	/**

@@ -1556,6 +1556,7 @@ public interface DLAppService {
 	* WebDAV.
 	*
 	* @param lockUuid the lock's universally unique identifier
+	* @param companyId the primary key of the file entry's company
 	* @param expirationTime the time in milliseconds before the lock expires.
 	If the value is <code>0</code>, the default expiration time will
 	be used from <code>portal.properties>.
@@ -1564,7 +1565,7 @@ public interface DLAppService {
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Lock refreshFileEntryLock(
-		java.lang.String lockUuid, long expirationTime)
+		java.lang.String lockUuid, long companyId, long expirationTime)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -1573,6 +1574,7 @@ public interface DLAppService {
 	* WebDAV.
 	*
 	* @param lockUuid the lock's universally unique identifier
+	* @param companyId the primary key of the file entry's company
 	* @param expirationTime the time in milliseconds before the lock expires.
 	If the value is <code>0</code>, the default expiration time will
 	be used from <code>portal.properties>.
@@ -1581,7 +1583,7 @@ public interface DLAppService {
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Lock refreshFolderLock(
-		java.lang.String lockUuid, long expirationTime)
+		java.lang.String lockUuid, long companyId, long expirationTime)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

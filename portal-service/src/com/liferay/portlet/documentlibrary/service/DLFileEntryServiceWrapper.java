@@ -292,10 +292,11 @@ public class DLFileEntryServiceWrapper implements DLFileEntryService,
 	}
 
 	public com.liferay.portal.model.Lock refreshFileEntryLock(
-		java.lang.String lockUuid, long expirationTime)
+		java.lang.String lockUuid, long companyId, long expirationTime)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _dlFileEntryService.refreshFileEntryLock(lockUuid, expirationTime);
+		return _dlFileEntryService.refreshFileEntryLock(lockUuid, companyId,
+			expirationTime);
 	}
 
 	public void revertFileEntry(long fileEntryId, java.lang.String version,

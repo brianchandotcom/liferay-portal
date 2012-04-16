@@ -1013,7 +1013,7 @@ public class DLFolderServiceHttp {
 	}
 
 	public static com.liferay.portal.model.Lock refreshFolderLock(
-		HttpPrincipal httpPrincipal, java.lang.String lockUuid,
+		HttpPrincipal httpPrincipal, java.lang.String lockUuid, long companyId,
 		long expirationTime)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -1022,7 +1022,7 @@ public class DLFolderServiceHttp {
 					"refreshFolderLock", _refreshFolderLockParameterTypes28);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					lockUuid, expirationTime);
+					lockUuid, companyId, expirationTime);
 
 			Object returnObj = null;
 
@@ -1293,7 +1293,7 @@ public class DLFolderServiceHttp {
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _refreshFolderLockParameterTypes28 = new Class[] {
-			java.lang.String.class, long.class
+			java.lang.String.class, long.class, long.class
 		};
 	private static final Class<?>[] _unlockFolderParameterTypes29 = new Class[] {
 			long.class, long.class, java.lang.String.class

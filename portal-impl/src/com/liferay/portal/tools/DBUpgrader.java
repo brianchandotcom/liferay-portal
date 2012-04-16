@@ -213,7 +213,9 @@ public class DBUpgrader {
 			StartupHelperUtil.setDropIndexes(true);
 		}
 
-		StartupHelperUtil.updateIndexes();
+		if (StartupHelperUtil.isUpgraded()) {
+			StartupHelperUtil.updateIndexes();
+		}
 
 		// Update release
 

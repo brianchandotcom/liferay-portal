@@ -203,65 +203,6 @@ public abstract class BaseDB implements DB {
 		return CounterLocalServiceUtil.increment(name);
 	}
 
-	public boolean isPortalIndex(
-		Connection con, String indexName, boolean unique, String tableName) {
-
-		if ((con == null) || Validator.isNull(indexName) ||
-			Validator.isNull(tableName)) {
-
-			return false;
-		}
-
-		ResultSet rs = null;
-		StringBundler sb = new StringBundler();
-
-		sb.append(tableName + " (");
-
-		try {
-			DatabaseMetaData databaseMetaData = con.getMetaData();
-
-			rs = databaseMetaData.getIndexInfo(
-				null, null, tableName, unique, false);
-
-			while (rs.next()) {
-				String storedIndexName = rs.getString(
-					"INDEX_NAME").toUpperCase();
-
-				if (storedIndexName.equals(indexName)) {
-					sb.append(rs.getString("COLUMN_NAME"));
-					sb.append(", ");
-				}
-			}
-		}
-		catch (SQLException e) {
-			_log.error(e, e);
-
-			return false;
-		}
-		finally {
-			DataAccess.cleanUp(rs);
-		}
-
-		String indexSpec = sb.toString();
-
-		if (indexSpec.endsWith(", ")) {
-			indexSpec = indexSpec.substring(0, indexSpec.length() - 2);
-		}
-
-		indexSpec = indexSpec.concat(");");
-
-		String indexHash = StringUtil.toHexString(
-			indexSpec.hashCode()).toUpperCase();
-
-		String generatedIndexName = "IX_" + indexHash;
-
-		if (indexName.equals(generatedIndexName)) {
-			return true;
-		}
-
-		return false;
-	}
-
 	public boolean isSupportsAlterColumnName() {
 		return _SUPPORTS_ALTER_COLUMN_NAME;
 	}
@@ -737,20 +678,15 @@ public abstract class BaseDB implements DB {
 				continue;
 			}
 			else {
-				// Find original table name
-
-				int pos = tablesSQLLowerCase.indexOf(tableNameLowerCase);
 				String originalTableName = StringPool.BLANK;
+				int pos = tablesSQLLowerCase.indexOf(tableNameLowerCase);
 
 				if (pos > 0) {
 					originalTableName = tablesSQL.substring(
 						pos, pos + tableName.length());
 
-					// Check for user created index
-
 					if (!isPortalIndex(
-							con, indexNameUpperCase, unique,
-							originalTableName)) {
+						con, indexNameUpperCase, unique, originalTableName)) {
 
 						continue;
 					}
@@ -830,6 +766,65 @@ public abstract class BaseDB implements DB {
 	}
 
 	protected abstract String[] getTemplate();
+
+	protected boolean isPortalIndex(
+		Connection con, String indexName, boolean unique, String tableName) {
+
+		if ((con == null) || Validator.isNull(indexName) ||
+			Validator.isNull(tableName)) {
+
+			return false;
+		}
+
+		ResultSet rs = null;
+		StringBundler sb = new StringBundler();
+
+		sb.append(tableName + " (");
+
+		try {
+			DatabaseMetaData databaseMetaData = con.getMetaData();
+
+			rs = databaseMetaData.getIndexInfo(
+				null, null, tableName, unique, false);
+
+			while (rs.next()) {
+				String storedIndexName = rs.getString(
+					"INDEX_NAME").toUpperCase();
+
+				if (storedIndexName.equals(indexName)) {
+					sb.append(rs.getString("COLUMN_NAME"));
+					sb.append(", ");
+				}
+			}
+		}
+		catch (SQLException e) {
+			_log.error(e, e);
+
+			return false;
+		}
+		finally {
+			DataAccess.cleanUp(rs);
+		}
+
+		String indexSpec = sb.toString();
+
+		if (indexSpec.endsWith(", ")) {
+			indexSpec = indexSpec.substring(0, indexSpec.length() - 2);
+		}
+
+		indexSpec = indexSpec.concat(");");
+
+		String indexHash = StringUtil.toHexString(
+			indexSpec.hashCode()).toUpperCase();
+
+		String generatedIndexName = "IX_" + indexHash;
+
+		if (indexName.equals(generatedIndexName)) {
+			return true;
+		}
+
+		return false;
+	}
 
 	protected String readFile(String fileName) throws IOException {
 		if (FileUtil.exists(fileName)) {

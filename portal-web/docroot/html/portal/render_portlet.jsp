@@ -51,23 +51,6 @@ boolean modeHelp = layoutTypePortlet.hasModeHelpPortletId(portletId);
 boolean modePreview = layoutTypePortlet.hasModePreviewPortletId(portletId);
 boolean modePrint = layoutTypePortlet.hasModePrintPortletId(portletId);
 
-InvokerPortlet invokerPortlet = null;
-
-try {
-	if (portlet.isReady()) {
-		invokerPortlet = PortletInstanceFactoryUtil.create(portlet, application);
-	}
-}
-/*catch (UnavailableException ue) {
-	ue.printStackTrace();
-}*/
-catch (PortletException pe) {
-	pe.printStackTrace();
-}
-catch (RuntimeException re) {
-	re.printStackTrace();
-}
-
 PortletPreferences portletSetup = PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(layout, portletId);
 
 PortletPreferencesIds portletPreferencesIds = PortletPreferencesFactoryUtil.getPortletPreferencesIds(request, portletId);
@@ -139,6 +122,23 @@ if (portlet.isUndeployedPortlet()) {
 }
 else if (allowAddPortletDefaultResource) {
 	access = PortletPermissionUtil.hasAccessPermission(permissionChecker, themeDisplay.getScopeGroupId(), layout, portlet, portletMode);
+}
+
+InvokerPortlet invokerPortlet = null;
+
+try {
+	if (portlet.isReady() && access) {
+		invokerPortlet = PortletInstanceFactoryUtil.create(portlet, application);
+	}
+}
+/*catch (UnavailableException ue) {
+	ue.printStackTrace();
+}*/
+catch (PortletException pe) {
+	pe.printStackTrace();
+}
+catch (RuntimeException re) {
+	re.printStackTrace();
 }
 
 HttpServletRequest originalRequest = PortalUtil.getOriginalServletRequest(request);
@@ -853,7 +853,7 @@ if ((layout.isTypePanel() || layout.isTypeControlPanel()) && !portletDisplay.get
 			useDefaultTemplate = useDefaultTemplateObj.booleanValue();
 		}
 
-		if ((invokerPortlet != null) && (invokerPortlet.isStrutsPortlet() || invokerPortlet.isStrutsBridgePortlet())) {
+		if ((invokerPortlet == null) || (invokerPortlet.isStrutsPortlet() || invokerPortlet.isStrutsBridgePortlet())) {
 			if (!access || portletException) {
 				PortletRequestProcessor portletReqProcessor = (PortletRequestProcessor)portletCtx.getAttribute(WebKeys.PORTLET_STRUTS_PROCESSOR);
 

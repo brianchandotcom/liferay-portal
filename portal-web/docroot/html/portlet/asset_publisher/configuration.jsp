@@ -81,8 +81,6 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 
 			List<KeyValuePair> scopesLeftList = new ArrayList<KeyValuePair>();
 
-			groupIds = AssetPublisherUtil.getGroupIds(preferences, scopeGroupId, layout);
-
 			for (long groupId : groupIds) {
 				Group group = GroupLocalServiceUtil.getGroup(groupId);
 
@@ -768,7 +766,7 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 				document.<portlet:namespace />fm.<portlet:namespace />scopeIds.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentScopeIds);
 			}
 
-			document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'select-scope-ids';
+			document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'select-scope';
 
 			submitForm(document.<portlet:namespace />fm);
 		},

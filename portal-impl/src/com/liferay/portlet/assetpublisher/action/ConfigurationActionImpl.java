@@ -95,10 +95,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 					setSelectionStyle(actionRequest, preferences);
 				}
 				else if (cmd.equals("select-scope")) {
-					setScope(actionRequest, preferences);
-				}
-				else if (cmd.equals("select-scope-ids")) {
-					setScopeIds(actionRequest, preferences);
+					setScopes(actionRequest, preferences);
 				}
 
 				if (SessionErrors.isEmpty(actionRequest)) {
@@ -275,16 +272,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		preferences.setValues("assetEntryXml", newEntries);
 	}
 
-	protected void setScope(
-			ActionRequest actionRequest, PortletPreferences preferences)
-		throws Exception {
-
-		String defaultScope = getParameter(actionRequest, "defaultScope");
-
-		preferences.setValue("defaultScope", defaultScope);
-	}
-
-	protected void setScopeIds(
+	protected void setScopes(
 			ActionRequest actionRequest, PortletPreferences preferences)
 		throws Exception {
 

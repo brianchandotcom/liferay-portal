@@ -76,7 +76,7 @@ public class VerifySQLServer extends VerifyProcess {
 						tableName, columnName, length, nullable);
 				}
 				else if (dataType.equals("text")) {
-					convertTextColumn(tableName, columnName, length, nullable);
+					convertTextColumn(tableName, columnName, nullable);
 				}
 			}
 
@@ -93,7 +93,7 @@ public class VerifySQLServer extends VerifyProcess {
 	}
 
 	protected void convertTextColumn(
-			String tableName, String columnName, int length, boolean nullable)
+			String tableName, String columnName, boolean nullable)
 		throws Exception {
 
 		if (_log.isInfoEnabled()) {
@@ -139,7 +139,14 @@ public class VerifySQLServer extends VerifyProcess {
 		sb.append(" alter column ");
 		sb.append(columnName);
 		sb.append(" nvarchar(");
-		sb.append(length);
+
+		if (length == -1) {
+			sb.append("max");
+		}
+		else {
+			sb.append(length);
+		}
+
 		sb.append(")");
 
 		if (!nullable) {
@@ -170,7 +177,7 @@ public class VerifySQLServer extends VerifyProcess {
 		try {
 			con = DataAccess.getConnection();
 
-			StringBundler sb = new StringBundler(12);
+			StringBundler sb = new StringBundler(14);
 
 			sb.append("select distinct sysobjects.name as table_name, ");
 			sb.append("sysindexes.name as index_name FROM sysobjects inner ");

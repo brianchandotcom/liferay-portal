@@ -235,9 +235,9 @@ public class ShoppingCouponLocalServiceImpl
 			PwdGenerator.KEY1 + PwdGenerator.KEY2, 8);
 
 		try {
-			ShoppingCoupon foundCoupon = shoppingCouponPersistence.findByCode(code);
+			ShoppingCoupon coupon = shoppingCouponPersistence.findByCode(code);
 
-			return foundCoupon.getCode();
+			return coupon.getCode();
 		}
 		catch (NoSuchCouponException nsce) {
 			return code;

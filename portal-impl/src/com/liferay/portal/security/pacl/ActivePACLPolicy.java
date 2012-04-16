@@ -83,6 +83,10 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		return _hookChecker.hasServletFilters();
 	}
 
+	public boolean hasHookStrutsActionPath(String path) {
+		return _hookChecker.hasStrutsActionPath(path);
+	}
+
 	public boolean hasService(Object object, Method method) {
 		return _serviceChecker.hasService(object, method);
 	}

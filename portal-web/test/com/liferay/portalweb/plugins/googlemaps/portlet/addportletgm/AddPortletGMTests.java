@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portalweb.portal;
+package com.liferay.portalweb.plugins.googlemaps.portlet.addportletgm;
 
-import com.liferay.portalweb.plugins.googlemaps.GoogleMapsTestPlan;
-import com.liferay.portalweb.portal.login.LoginTests;
+import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.util.TearDownPageTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -23,17 +23,13 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class PluginsGoogleMapsTestSuite extends BaseTestSuite {
-
+public class AddPortletGMTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(LoginTests.suite());
-		testSuite.addTest(GoogleMapsTestPlan.suite());
-
-		testSuite.addTestSuite(StopSeleniumTest.class);
+		testSuite.addTestSuite(AddPageGMTest.class);
+		testSuite.addTestSuite(AddPortletGMTest.class);
+		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;
 	}
-
 }

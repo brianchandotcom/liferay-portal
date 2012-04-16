@@ -56,7 +56,7 @@ public class ViewPaginationTaskMBMessage5ItemsPerPageTest extends BaseTestCase {
 		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.select("//select[@id='_151_itemsPerPage']",
+		selenium.select("//select[@name='_151_itemsPerPage']",
 			RuntimeVariables.replace("5"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
@@ -66,12 +66,12 @@ public class ViewPaginationTaskMBMessage5ItemsPerPageTest extends BaseTestCase {
 				"Items per Page (Changing the value of this field will reload the page.)"),
 			selenium.getText("//div[@class='delta-selector']/span/span/label"));
 		assertEquals(RuntimeVariables.replace("5 10 20 30 50 75"),
-			selenium.getText("//select[@id='_151_itemsPerPage']"));
+			selenium.getText("//select[@name='_151_itemsPerPage']"));
 		assertEquals(RuntimeVariables.replace(
 				"Page (Changing the value of this field will reload the page.)"),
 			selenium.getText("//div[@class='page-selector']/span/span/label"));
 		assertEquals(RuntimeVariables.replace("1 2 3 4 5"),
-			selenium.getText("//select[@id='_151_page']"));
+			selenium.getText("//select[@name='_151_page']"));
 		assertEquals(RuntimeVariables.replace("First"),
 			selenium.getText("//span[@class='first']"));
 		assertEquals(RuntimeVariables.replace("Previous"),
@@ -80,7 +80,7 @@ public class ViewPaginationTaskMBMessage5ItemsPerPageTest extends BaseTestCase {
 			selenium.getText("//a[@class='next']"));
 		assertEquals(RuntimeVariables.replace("Last"),
 			selenium.getText("//a[@class='last']"));
-		selenium.select("//select[@id='_151_page']",
+		selenium.select("//select[@name='_151_page']",
 			RuntimeVariables.replace("2"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
@@ -90,12 +90,12 @@ public class ViewPaginationTaskMBMessage5ItemsPerPageTest extends BaseTestCase {
 				"Items per Page (Changing the value of this field will reload the page.)"),
 			selenium.getText("//div[@class='delta-selector']/span/span/label"));
 		assertEquals(RuntimeVariables.replace("5 10 20 30 50 75"),
-			selenium.getText("//select[@id='_151_itemsPerPage']"));
+			selenium.getText("//select[@name='_151_itemsPerPage']"));
 		assertEquals(RuntimeVariables.replace(
 				"Page (Changing the value of this field will reload the page.)"),
 			selenium.getText("//div[@class='page-selector']/span/span/label"));
 		assertEquals(RuntimeVariables.replace("1 2 3 4 5"),
-			selenium.getText("//select[@id='_151_page']"));
+			selenium.getText("//select[@name='_151_page']"));
 		assertEquals(RuntimeVariables.replace("First"),
 			selenium.getText("//a[@class='first']"));
 		assertEquals(RuntimeVariables.replace("Previous"),
@@ -104,7 +104,7 @@ public class ViewPaginationTaskMBMessage5ItemsPerPageTest extends BaseTestCase {
 			selenium.getText("//a[@class='next']"));
 		assertEquals(RuntimeVariables.replace("Last"),
 			selenium.getText("//a[@class='last']"));
-		selenium.select("//select[@id='_151_page']",
+		selenium.select("//select[@name='_151_page']",
 			RuntimeVariables.replace("3"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
@@ -114,12 +114,12 @@ public class ViewPaginationTaskMBMessage5ItemsPerPageTest extends BaseTestCase {
 				"Items per Page (Changing the value of this field will reload the page.)"),
 			selenium.getText("//div[@class='delta-selector']/span/span/label"));
 		assertEquals(RuntimeVariables.replace("5 10 20 30 50 75"),
-			selenium.getText("//select[@id='_151_itemsPerPage']"));
+			selenium.getText("//select[@name='_151_itemsPerPage']"));
 		assertEquals(RuntimeVariables.replace(
 				"Page (Changing the value of this field will reload the page.)"),
 			selenium.getText("//div[@class='page-selector']/span/span/label"));
 		assertEquals(RuntimeVariables.replace("1 2 3 4 5"),
-			selenium.getText("//select[@id='_151_page']"));
+			selenium.getText("//select[@name='_151_page']"));
 		assertEquals(RuntimeVariables.replace("First"),
 			selenium.getText("//a[@class='first']"));
 		assertEquals(RuntimeVariables.replace("Previous"),
@@ -128,7 +128,7 @@ public class ViewPaginationTaskMBMessage5ItemsPerPageTest extends BaseTestCase {
 			selenium.getText("//a[@class='next']"));
 		assertEquals(RuntimeVariables.replace("Last"),
 			selenium.getText("//a[@class='last']"));
-		selenium.select("//select[@id='_151_page']",
+		selenium.select("//select[@name='_151_page']",
 			RuntimeVariables.replace("4"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
@@ -138,12 +138,12 @@ public class ViewPaginationTaskMBMessage5ItemsPerPageTest extends BaseTestCase {
 				"Items per Page (Changing the value of this field will reload the page.)"),
 			selenium.getText("//div[@class='delta-selector']/span/span/label"));
 		assertEquals(RuntimeVariables.replace("5 10 20 30 50 75"),
-			selenium.getText("//select[@id='_151_itemsPerPage']"));
+			selenium.getText("//select[@name='_151_itemsPerPage']"));
 		assertEquals(RuntimeVariables.replace(
 				"Page (Changing the value of this field will reload the page.)"),
 			selenium.getText("//div[@class='page-selector']/span/span/label"));
 		assertEquals(RuntimeVariables.replace("1 2 3 4 5"),
-			selenium.getText("//select[@id='_151_page']"));
+			selenium.getText("//select[@name='_151_page']"));
 		assertEquals(RuntimeVariables.replace("First"),
 			selenium.getText("//a[@class='first']"));
 		assertEquals(RuntimeVariables.replace("Previous"),
@@ -152,7 +152,7 @@ public class ViewPaginationTaskMBMessage5ItemsPerPageTest extends BaseTestCase {
 			selenium.getText("//a[@class='next']"));
 		assertEquals(RuntimeVariables.replace("Last"),
 			selenium.getText("//a[@class='last']"));
-		selenium.select("//select[@id='_151_page']",
+		selenium.select("//select[@name='_151_page']",
 			RuntimeVariables.replace("5"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
@@ -162,12 +162,12 @@ public class ViewPaginationTaskMBMessage5ItemsPerPageTest extends BaseTestCase {
 				"Items per Page (Changing the value of this field will reload the page.)"),
 			selenium.getText("//div[@class='delta-selector']/span/span/label"));
 		assertEquals(RuntimeVariables.replace("5 10 20 30 50 75"),
-			selenium.getText("//select[@id='_151_itemsPerPage']"));
+			selenium.getText("//select[@name='_151_itemsPerPage']"));
 		assertEquals(RuntimeVariables.replace(
 				"Page (Changing the value of this field will reload the page.)"),
 			selenium.getText("//div[@class='page-selector']/span/span/label"));
 		assertEquals(RuntimeVariables.replace("1 2 3 4 5"),
-			selenium.getText("//select[@id='_151_page']"));
+			selenium.getText("//select[@name='_151_page']"));
 		assertEquals(RuntimeVariables.replace("First"),
 			selenium.getText("//a[@class='first']"));
 		assertEquals(RuntimeVariables.replace("Previous"),
@@ -176,7 +176,7 @@ public class ViewPaginationTaskMBMessage5ItemsPerPageTest extends BaseTestCase {
 			selenium.getText("//span[@class='next']"));
 		assertEquals(RuntimeVariables.replace("Last"),
 			selenium.getText("//span[@class='last']"));
-		selenium.select("//select[@id='_151_page']",
+		selenium.select("//select[@name='_151_page']",
 			RuntimeVariables.replace("1"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
@@ -186,12 +186,12 @@ public class ViewPaginationTaskMBMessage5ItemsPerPageTest extends BaseTestCase {
 				"Items per Page (Changing the value of this field will reload the page.)"),
 			selenium.getText("//div[@class='delta-selector']/span/span/label"));
 		assertEquals(RuntimeVariables.replace("5 10 20 30 50 75"),
-			selenium.getText("//select[@id='_151_itemsPerPage']"));
+			selenium.getText("//select[@name='_151_itemsPerPage']"));
 		assertEquals(RuntimeVariables.replace(
 				"Page (Changing the value of this field will reload the page.)"),
 			selenium.getText("//div[@class='page-selector']/span/span/label"));
 		assertEquals(RuntimeVariables.replace("1 2 3 4 5"),
-			selenium.getText("//select[@id='_151_page']"));
+			selenium.getText("//select[@name='_151_page']"));
 		assertEquals(RuntimeVariables.replace("First"),
 			selenium.getText("//span[@class='first']"));
 		assertEquals(RuntimeVariables.replace("Previous"),
@@ -209,12 +209,12 @@ public class ViewPaginationTaskMBMessage5ItemsPerPageTest extends BaseTestCase {
 				"Items per Page (Changing the value of this field will reload the page.)"),
 			selenium.getText("//div[@class='delta-selector']/span/span/label"));
 		assertEquals(RuntimeVariables.replace("5 10 20 30 50 75"),
-			selenium.getText("//select[@id='_151_itemsPerPage']"));
+			selenium.getText("//select[@name='_151_itemsPerPage']"));
 		assertEquals(RuntimeVariables.replace(
 				"Page (Changing the value of this field will reload the page.)"),
 			selenium.getText("//div[@class='page-selector']/span/span/label"));
 		assertEquals(RuntimeVariables.replace("1 2 3 4 5"),
-			selenium.getText("//select[@id='_151_page']"));
+			selenium.getText("//select[@name='_151_page']"));
 		assertEquals(RuntimeVariables.replace("First"),
 			selenium.getText("//a[@class='first']"));
 		assertEquals(RuntimeVariables.replace("Previous"),
@@ -232,12 +232,12 @@ public class ViewPaginationTaskMBMessage5ItemsPerPageTest extends BaseTestCase {
 				"Items per Page (Changing the value of this field will reload the page.)"),
 			selenium.getText("//div[@class='delta-selector']/span/span/label"));
 		assertEquals(RuntimeVariables.replace("5 10 20 30 50 75"),
-			selenium.getText("//select[@id='_151_itemsPerPage']"));
+			selenium.getText("//select[@name='_151_itemsPerPage']"));
 		assertEquals(RuntimeVariables.replace(
 				"Page (Changing the value of this field will reload the page.)"),
 			selenium.getText("//div[@class='page-selector']/span/span/label"));
 		assertEquals(RuntimeVariables.replace("1 2 3 4 5"),
-			selenium.getText("//select[@id='_151_page']"));
+			selenium.getText("//select[@name='_151_page']"));
 		assertEquals(RuntimeVariables.replace("First"),
 			selenium.getText("//a[@class='first']"));
 		assertEquals(RuntimeVariables.replace("Previous"),
@@ -255,12 +255,12 @@ public class ViewPaginationTaskMBMessage5ItemsPerPageTest extends BaseTestCase {
 				"Items per Page (Changing the value of this field will reload the page.)"),
 			selenium.getText("//div[@class='delta-selector']/span/span/label"));
 		assertEquals(RuntimeVariables.replace("5 10 20 30 50 75"),
-			selenium.getText("//select[@id='_151_itemsPerPage']"));
+			selenium.getText("//select[@name='_151_itemsPerPage']"));
 		assertEquals(RuntimeVariables.replace(
 				"Page (Changing the value of this field will reload the page.)"),
 			selenium.getText("//div[@class='page-selector']/span/span/label"));
 		assertEquals(RuntimeVariables.replace("1 2 3 4 5"),
-			selenium.getText("//select[@id='_151_page']"));
+			selenium.getText("//select[@name='_151_page']"));
 		assertEquals(RuntimeVariables.replace("First"),
 			selenium.getText("//a[@class='first']"));
 		assertEquals(RuntimeVariables.replace("Previous"),
@@ -278,12 +278,12 @@ public class ViewPaginationTaskMBMessage5ItemsPerPageTest extends BaseTestCase {
 				"Items per Page (Changing the value of this field will reload the page.)"),
 			selenium.getText("//div[@class='delta-selector']/span/span/label"));
 		assertEquals(RuntimeVariables.replace("5 10 20 30 50 75"),
-			selenium.getText("//select[@id='_151_itemsPerPage']"));
+			selenium.getText("//select[@name='_151_itemsPerPage']"));
 		assertEquals(RuntimeVariables.replace(
 				"Page (Changing the value of this field will reload the page.)"),
 			selenium.getText("//div[@class='page-selector']/span/span/label"));
 		assertEquals(RuntimeVariables.replace("1 2 3 4 5"),
-			selenium.getText("//select[@id='_151_page']"));
+			selenium.getText("//select[@name='_151_page']"));
 		assertEquals(RuntimeVariables.replace("First"),
 			selenium.getText("//a[@class='first']"));
 		assertEquals(RuntimeVariables.replace("Previous"),
@@ -302,12 +302,12 @@ public class ViewPaginationTaskMBMessage5ItemsPerPageTest extends BaseTestCase {
 				"Items per Page (Changing the value of this field will reload the page.)"),
 			selenium.getText("//div[@class='delta-selector']/span/span/label"));
 		assertEquals(RuntimeVariables.replace("5 10 20 30 50 75"),
-			selenium.getText("//select[@id='_151_itemsPerPage']"));
+			selenium.getText("//select[@name='_151_itemsPerPage']"));
 		assertEquals(RuntimeVariables.replace(
 				"Page (Changing the value of this field will reload the page.)"),
 			selenium.getText("//div[@class='page-selector']/span/span/label"));
 		assertEquals(RuntimeVariables.replace("1 2 3 4 5"),
-			selenium.getText("//select[@id='_151_page']"));
+			selenium.getText("//select[@name='_151_page']"));
 		assertEquals(RuntimeVariables.replace("First"),
 			selenium.getText("//a[@class='first']"));
 		assertEquals(RuntimeVariables.replace("Previous"),
@@ -326,12 +326,12 @@ public class ViewPaginationTaskMBMessage5ItemsPerPageTest extends BaseTestCase {
 				"Items per Page (Changing the value of this field will reload the page.)"),
 			selenium.getText("//div[@class='delta-selector']/span/span/label"));
 		assertEquals(RuntimeVariables.replace("5 10 20 30 50 75"),
-			selenium.getText("//select[@id='_151_itemsPerPage']"));
+			selenium.getText("//select[@name='_151_itemsPerPage']"));
 		assertEquals(RuntimeVariables.replace(
 				"Page (Changing the value of this field will reload the page.)"),
 			selenium.getText("//div[@class='page-selector']/span/span/label"));
 		assertEquals(RuntimeVariables.replace("1 2 3 4 5"),
-			selenium.getText("//select[@id='_151_page']"));
+			selenium.getText("//select[@name='_151_page']"));
 		assertEquals(RuntimeVariables.replace("First"),
 			selenium.getText("//a[@class='first']"));
 		assertEquals(RuntimeVariables.replace("Previous"),
@@ -350,12 +350,12 @@ public class ViewPaginationTaskMBMessage5ItemsPerPageTest extends BaseTestCase {
 				"Items per Page (Changing the value of this field will reload the page.)"),
 			selenium.getText("//div[@class='delta-selector']/span/span/label"));
 		assertEquals(RuntimeVariables.replace("5 10 20 30 50 75"),
-			selenium.getText("//select[@id='_151_itemsPerPage']"));
+			selenium.getText("//select[@name='_151_itemsPerPage']"));
 		assertEquals(RuntimeVariables.replace(
 				"Page (Changing the value of this field will reload the page.)"),
 			selenium.getText("//div[@class='page-selector']/span/span/label"));
 		assertEquals(RuntimeVariables.replace("1 2 3 4 5"),
-			selenium.getText("//select[@id='_151_page']"));
+			selenium.getText("//select[@name='_151_page']"));
 		assertEquals(RuntimeVariables.replace("First"),
 			selenium.getText("//a[@class='first']"));
 		assertEquals(RuntimeVariables.replace("Previous"),
@@ -374,12 +374,12 @@ public class ViewPaginationTaskMBMessage5ItemsPerPageTest extends BaseTestCase {
 				"Items per Page (Changing the value of this field will reload the page.)"),
 			selenium.getText("//div[@class='delta-selector']/span/span/label"));
 		assertEquals(RuntimeVariables.replace("5 10 20 30 50 75"),
-			selenium.getText("//select[@id='_151_itemsPerPage']"));
+			selenium.getText("//select[@name='_151_itemsPerPage']"));
 		assertEquals(RuntimeVariables.replace(
 				"Page (Changing the value of this field will reload the page.)"),
 			selenium.getText("//div[@class='page-selector']/span/span/label"));
 		assertEquals(RuntimeVariables.replace("1 2 3 4 5"),
-			selenium.getText("//select[@id='_151_page']"));
+			selenium.getText("//select[@name='_151_page']"));
 		assertEquals(RuntimeVariables.replace("First"),
 			selenium.getText("//span[@class='first']"));
 		assertEquals(RuntimeVariables.replace("Previous"),
@@ -397,12 +397,12 @@ public class ViewPaginationTaskMBMessage5ItemsPerPageTest extends BaseTestCase {
 				"Items per Page (Changing the value of this field will reload the page.)"),
 			selenium.getText("//div[@class='delta-selector']/span/span/label"));
 		assertEquals(RuntimeVariables.replace("5 10 20 30 50 75"),
-			selenium.getText("//select[@id='_151_itemsPerPage']"));
+			selenium.getText("//select[@name='_151_itemsPerPage']"));
 		assertEquals(RuntimeVariables.replace(
 				"Page (Changing the value of this field will reload the page.)"),
 			selenium.getText("//div[@class='page-selector']/span/span/label"));
 		assertEquals(RuntimeVariables.replace("1 2 3 4 5"),
-			selenium.getText("//select[@id='_151_page']"));
+			selenium.getText("//select[@name='_151_page']"));
 		assertEquals(RuntimeVariables.replace("First"),
 			selenium.getText("//a[@class='first']"));
 		assertEquals(RuntimeVariables.replace("Previous"),
@@ -421,12 +421,12 @@ public class ViewPaginationTaskMBMessage5ItemsPerPageTest extends BaseTestCase {
 				"Items per Page (Changing the value of this field will reload the page.)"),
 			selenium.getText("//div[@class='delta-selector']/span/span/label"));
 		assertEquals(RuntimeVariables.replace("5 10 20 30 50 75"),
-			selenium.getText("//select[@id='_151_itemsPerPage']"));
+			selenium.getText("//select[@name='_151_itemsPerPage']"));
 		assertEquals(RuntimeVariables.replace(
 				"Page (Changing the value of this field will reload the page.)"),
 			selenium.getText("//div[@class='page-selector']/span/span/label"));
 		assertEquals(RuntimeVariables.replace("1 2 3 4 5"),
-			selenium.getText("//select[@id='_151_page']"));
+			selenium.getText("//select[@name='_151_page']"));
 		assertEquals(RuntimeVariables.replace("First"),
 			selenium.getText("//span[@class='first']"));
 		assertEquals(RuntimeVariables.replace("Previous"),

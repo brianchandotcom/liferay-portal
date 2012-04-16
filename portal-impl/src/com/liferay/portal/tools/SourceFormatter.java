@@ -577,18 +577,18 @@ public class SourceFormatter {
 			previousJavaTermName.toLowerCase();
 
 		if (fileName.contains("persistence") &&
-			(previousJavaTermName.startsWith("doCount") &&
-			 javaTermName.startsWith("doCount")) ||
-			(previousJavaTermName.startsWith("doFind") &&
-			 javaTermName.startsWith("doFind")) ||
-			(previousJavaTermNameLowerCase.startsWith("count") &&
-			 javaTermNameLowerCase.startsWith("count")) ||
-			(previousJavaTermNameLowerCase.startsWith("filter") &&
-			 javaTermNameLowerCase.startsWith("filter")) ||
-			(previousJavaTermNameLowerCase.startsWith("find") &&
-			 javaTermNameLowerCase.startsWith("find")) ||
-			(previousJavaTermNameLowerCase.startsWith("join") &&
-			 javaTermNameLowerCase.startsWith("join"))) {
+			((previousJavaTermName.startsWith("doCount") &&
+			  javaTermName.startsWith("doCount")) ||
+			 (previousJavaTermName.startsWith("doFind") &&
+			  javaTermName.startsWith("doFind")) ||
+			 (previousJavaTermNameLowerCase.startsWith("count") &&
+			  javaTermNameLowerCase.startsWith("count")) ||
+			 (previousJavaTermNameLowerCase.startsWith("filter") &&
+			  javaTermNameLowerCase.startsWith("filter")) ||
+			 (previousJavaTermNameLowerCase.startsWith("find") &&
+			  javaTermNameLowerCase.startsWith("find")) ||
+			 (previousJavaTermNameLowerCase.startsWith("join") &&
+			  javaTermNameLowerCase.startsWith("join")))) {
 
 			return;
 		}

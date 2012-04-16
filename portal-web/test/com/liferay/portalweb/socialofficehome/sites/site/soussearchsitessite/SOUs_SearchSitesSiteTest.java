@@ -42,7 +42,7 @@ public class SOUs_SearchSitesSiteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Home"),
+		assertEquals(RuntimeVariables.replace("Dashboard"),
 			selenium.getText("//li[contains(@class, 'selected')]/a/span"));
 		assertEquals(RuntimeVariables.replace("Sites"),
 			selenium.getText("//div[@id='so-sidebar']/h3"));

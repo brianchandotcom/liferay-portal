@@ -42,7 +42,7 @@ public class SOUs_JoinSitesSiteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Home"),
+		assertEquals(RuntimeVariables.replace("Dashboard"),
 			selenium.getText("//li[contains(@class, 'selected')]/a/span"));
 
 		for (int second = 0;; second++) {

@@ -194,23 +194,45 @@
 	</target>
 
 	<target name="build-dist-tcat">
-		<property name="tcat.dir" value="${app.server.parent.dir}/tcat-6.4.4" />
-		<property name="tcat.zip.name" value="TcatServer-6.4.4.zip" />
+		<property name="tcat.dir" value="${app.server.parent.dir}/tcat-6.4.5" />
+		<property name="tcat.zip.name" value="TcatServer-6.4.5.zip" />
 		<property name="tcat.zip.url" value="http://files.liferay.com/public/bundles/trunk/${tcat.zip.name}" />
 
-		<script classpathref="project.classpath" language="beanshell">
-			String lpVersion = project.getProperty("lp.version");
+		<antcall target="update-properties-tcat" inheritAll="false" />
 
-			String lpVersionTcat = lpVersion.replace(".", "_");
+		<antcall target="build-dist-tomcat" inheritAll="false">
+			<param name="tcat.dir" value="${tcat.dir}" />
+			<param name="tcat.tomcat" value="true" />
+		</antcall>
 
-			project.setProperty("lp.version.tcat", lpVersionTcat);
-		</script>
+		<if>
+			<not>
+				<isset property="lp.version.tcat" />
+			</not>
+			<then>
+				<script classpathref="project.classpath" language="beanshell">
+					String lpVersion = project.getProperty("lp.version");
+
+					String lpVersionTcat = lpVersion.replace(".", "_");
+
+					project.setProperty("lp.version.tcat", lpVersionTcat);
+				</script>
+			</then>
+		</if>
+
+		<echo append="true" file="release.${user.name}.properties">
+lp.version.tcat=${lp.version.tcat}
+		</echo>
 
 		<delete dir="${tcat.dir}" />
 
-		<antcall target="build-dist-tcat-profile" />
+		<antcall target="build-dist-tcat-profile" inheritAll="false">
+			<param name="tcat.dir" value="${tcat.dir}" />
+		</antcall>
 
-		<antcall target="build-dist-tcat-tomcat" />
+		<antcall target="build-dist-tcat-tomcat" inheritAll="false">
+			<param name="tcat.dir" value="${tcat.dir}" />
+		</antcall>
 
 		<if>
 			<not>
@@ -227,8 +249,17 @@
 			</then>
 		</if>
 
-		<antcall target="build-dist-tcat-admin" />
-		<antcall target="build-dist-tcat-agent" />
+		<antcall target="build-dist-tcat-admin" inheritAll="false">
+			<param name="tcat.dir" value="${tcat.dir}" />
+			<param name="tcat.zip.name" value="${tcat.zip.name}" />
+		</antcall>
+		
+		<antcall target="build-dist-tcat-agent" inheritAll="false">
+			<param name="tcat.dir" value="${tcat.dir}" />
+			<param name="tcat.zip.name" value="${tcat.zip.name}" />
+		</antcall>
+
+		<delete file="app.server.${user.name}.properties" />
 	</target>
 
 	<target name="build-dist-tcat-admin">
@@ -252,8 +283,13 @@
 
 		<copy file="tools/servers/tcat/LiferayDeployerFactory.groovy" todir="${tcat.dir}/admin/tcat_init/scripts" />
 
-		<antcall target="build-dist-tcat-admin-webapps-plugins" />
-		<antcall target="build-dist-tcat-admin-webapps-portal" />
+		<antcall target="build-dist-tcat-admin-webapps-plugins">
+			<param name="tcat.dir" value="${tcat.dir}" />
+		</antcall>
+
+		<antcall target="build-dist-tcat-admin-webapps-portal">
+			<param name="tcat.dir" value="${tcat.dir}" />
+		</antcall>
 	</target>
 
 	<target name="build-dist-tcat-admin-webapps-plugins">
@@ -261,7 +297,8 @@
 
 plugins.includes=${lp.plugins.includes.tcat}
 
-plugins.war.excludes=**/WEB-INF/src/**</echo>
+plugins.war.excludes=**/WEB-INF/src/**
+		</echo>
 
 		<ant dir="${lp.plugins.dir}" target="all" inheritAll="false" />
 
@@ -374,15 +411,30 @@ plugins.war.excludes=**/WEB-INF/src/**</echo>
 	</target>
 
 	<target name="build-dist-tomcat">
-		<antcall target="unzip-tomcat" />
-
-		<echo file="app.server.${user.name}.properties">app.server.type=tomcat</echo>
+		<if>
+			<equals arg1="${tcat.tomcat}" arg2="true" />
+			<then>
+				<antcall target="unzip-tomcat" inheritAll="false" />
+			</then>
+			<else>
+				<antcall target="unzip-tomcat" />
+				<echo file="app.server.${user.name}.properties">
+app.server.type=tomcat
+				</echo>
+			</else>
+		</if>
 
 		<delete dir="${project.dir}/portal-web/classes" />
 
 		<ant target="deploy" inheritAll="false" />
-
-		<delete file="app.server.${user.name}.properties" />
+		<if>
+			<not>
+				<equals arg1="${tcat.tomcat}" arg2="true" />
+			</not>
+			<then>
+				<delete file="app.server.${user.name}.properties" />
+			</then>
+		</if>
 
 		<antcall target="deploy-plugins">
 			<param name="deployer.dest.dir" value="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}/webapps" />
@@ -740,6 +792,15 @@ release was successful.</echo>
 				<exec dir="${app.server.tomcat.bin.dir}" executable="shutdown.bat" resolveexecutable="true" />
 			</sequential>
 		</parallel>
+	</target>
+
+	<target name="update-properties-tcat">
+		<echo file="app.server.${user.name}.properties">
+app.server.type=tomcat
+app.server.tomcat.dir=${app.server.parent.dir}/tomcat-6.0.35
+app.server.tomcat.version=6.0.35
+app.server.tomcat.zip.url=http://archive.apache.org/dist/tomcat/tomcat-6/v6.0.35/bin/apache-tomcat-6.0.35.zip
+		</echo>
 	</target>
 
 	<target name="unzip-geronimo">
@@ -1725,7 +1786,7 @@ sh startWebLogic.sh</echo>
 	</target>
 
 	<target name="zip-tcat">
-		<property name="tcat.dir" value="${app.server.parent.dir}/tcat-6.4.4" />
+		<property name="tcat.dir" value="${app.server.parent.dir}/tcat-6.4.5" />
 
 		<antcall target="zip-executable">
 			<param name="zip.executable.file" value="liferay-portal-tcat-admin" />

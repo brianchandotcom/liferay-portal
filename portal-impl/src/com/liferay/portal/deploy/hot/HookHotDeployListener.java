@@ -628,31 +628,8 @@ public class HookHotDeployListener
 			paclPolicy, servletContext, servletContextName, portletClassLoader,
 			rootElement);
 
-		StrutsActionsContainer strutsActionContainer =
-			_strutsActionsContainerMap.get(servletContextName);
-
-		if (strutsActionContainer == null) {
-			strutsActionContainer = new StrutsActionsContainer();
-
-			_strutsActionsContainerMap.put(
-				servletContextName, strutsActionContainer);
-		}
-
-		List<Element> strutsActionElements = rootElement.elements(
-			"struts-action");
-
-		for (Element strutsActionElement : strutsActionElements) {
-			String strutsActionPath = strutsActionElement.elementText(
-				"struts-action-path");
-			String strutsActionImpl = strutsActionElement.elementText(
-				"struts-action-impl");
-
-			Object strutsAction = initStrutsAction(
-				strutsActionPath, strutsActionImpl, portletClassLoader);
-
-			strutsActionContainer.registerStrutsAction(
-				strutsActionPath, strutsAction);
-		}
+		initStrutsActions(
+			paclPolicy, servletContextName, portletClassLoader, rootElement);
 
 		// Begin backwards compatibility for 5.1.0
 
@@ -1989,8 +1966,7 @@ public class HookHotDeployListener
 	}
 
 	protected Object initStrutsAction(
-			String path, String strutsActionClassName,
-			ClassLoader portletClassLoader)
+			String strutsActionClassName, ClassLoader portletClassLoader)
 		throws Exception {
 
 		Object strutsAction = InstanceFactory.newInstance(
@@ -2005,6 +1981,43 @@ public class HookHotDeployListener
 			return ProxyUtil.newProxyInstance(
 				portletClassLoader, new Class[] {StrutsPortletAction.class},
 				new ClassLoaderBeanHandler(strutsAction, portletClassLoader));
+		}
+	}
+
+	protected void initStrutsActions(
+			PACLPolicy paclPolicy, String servletContextName,
+			ClassLoader portletClassLoader, Element parentElement)
+		throws Exception {
+
+		StrutsActionsContainer strutsActionContainer =
+			_strutsActionsContainerMap.get(servletContextName);
+
+		if (strutsActionContainer == null) {
+			strutsActionContainer = new StrutsActionsContainer();
+
+			_strutsActionsContainerMap.put(
+				servletContextName, strutsActionContainer);
+		}
+
+		List<Element> strutsActionElements = parentElement.elements(
+			"struts-action");
+
+		for (Element strutsActionElement : strutsActionElements) {
+			String strutsActionPath = strutsActionElement.elementText(
+				"struts-action-path");
+
+			if (!paclPolicy.hasHookStrutsActionPath(strutsActionPath)) {
+				continue;
+			}
+
+			String strutsActionImpl = strutsActionElement.elementText(
+				"struts-action-impl");
+
+			Object strutsAction = initStrutsAction(
+				strutsActionImpl, portletClassLoader);
+
+			strutsActionContainer.registerStrutsAction(
+				strutsActionPath, strutsAction);
 		}
 	}
 

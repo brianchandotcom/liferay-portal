@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewProfilePhoneNumberTest extends BaseTestCase {
 	public void testViewProfilePhoneNumber() throws Exception {
-		selenium.open("/web/socialoffice01/profile");
+		selenium.open("/web/socialoffice01/so/profile");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -49,14 +49,15 @@ public class ViewProfilePhoneNumberTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("socialoffice01@liferay.com"),
 			selenium.getText("//div[@class='lfr-contact-extra']"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='section lfr-user-phones']/h3"));
+				"//div[@class='section field-group lfr-user-phones']/h3"));
 		assertEquals(RuntimeVariables.replace("Phones:"),
-			selenium.getText("//div[@class='section lfr-user-phones']/h3"));
+			selenium.getText(
+				"//div[@class='section field-group lfr-user-phones']/h3"));
 		assertEquals(RuntimeVariables.replace("Business"),
 			selenium.getText(
-				"//div[@class='section lfr-user-phones']/ul/li/span"));
+				"//div[@class='section field-group lfr-user-phones']/ul/li/span"));
 		assertEquals(RuntimeVariables.replace("123-123-1234 123"),
 			selenium.getText(
-				"//div[@class='section lfr-user-phones']/ul/li/span[2]"));
+				"//div[@class='section field-group lfr-user-phones']/ul/li/span[2]"));
 	}
 }

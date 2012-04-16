@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewProfileAddressTest extends BaseTestCase {
 	public void testViewProfileAddress() throws Exception {
-		selenium.open("/web/socialoffice01/profile");
+		selenium.open("/web/socialoffice01/so/profile");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -49,11 +49,13 @@ public class ViewProfileAddressTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("socialoffice01@liferay.com"),
 			selenium.getText("//div[@class='lfr-contact-extra']"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='section lfr-user-addresses']/h3"));
+				"//div[@class='section field-group lfr-user-addresses']/h3"));
 		assertEquals(RuntimeVariables.replace("Addresses:"),
-			selenium.getText("//div[@class='section lfr-user-addresses']/h3"));
+			selenium.getText(
+				"//div[@class='section field-group lfr-user-addresses']/h3"));
 		assertEquals(RuntimeVariables.replace(
 				"Personal 123 Liferay Ln., Ray of Light, 91234 (Mailing)"),
-			selenium.getText("//div[@class='section lfr-user-addresses']/ul/li"));
+			selenium.getText(
+				"//div[@class='section field-group lfr-user-addresses']/ul/li"));
 	}
 }

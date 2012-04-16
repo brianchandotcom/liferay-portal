@@ -137,33 +137,35 @@ public class TemplateProcessor implements ColumnProcessor {
 		for (int i = 0; i < portlets.size(); i++) {
 			Portlet portlet = portlets.get(i);
 
-			Integer columnPos = new Integer(i);
-			Integer columnCount = new Integer(portlets.size());
-			String path = null;
+			if (parallelRenderEnable && (portlet.getRenderWeight() < 1)) {
+				String path = "/html/portal/load_render_portlet.jsp";
 
-			if (parallelRenderEnable) {
-				path = "/html/portal/load_render_portlet.jsp";
+				StringServletResponse stringServletResponse =
+					new StringServletResponse(_response);
 
-				if (portlet.getRenderWeight() >= 1) {
-					_portletsMap.put(
-						portlet,
-						new Object[] {
-							columnId, columnPos, columnCount
-						});
-				}
+				HttpServletRequest request =
+					PortletContainerUtil.setupOptionalRenderParameters(
+						_request, path, null, null, null);
+
+				PortletContainerUtil.render(
+					request, stringServletResponse, portlet);
+
+				sb.append(stringServletResponse.getString());
 			}
+			else {
+				Integer columnPos = new Integer(i);
+				Integer columnCount = new Integer(portlets.size());
 
-			StringServletResponse stringServletResponse =
-				new StringServletResponse(_response);
+				_portletsMap.put(
+					portlet,
+					new Object[] {
+						columnId, columnPos, columnCount
+					});
 
-			HttpServletRequest request =
-				PortletContainerUtil.setupOptionalRenderParameters(
-					_request, path, columnId, columnPos, columnCount);
-
-			PortletContainerUtil.render(
-				request, stringServletResponse, portlet);
-
-			sb.append(stringServletResponse.getString());
+				sb.append("[$TEMPLATE_PORTLET_");
+				sb.append(portlet.getPortletId());
+				sb.append("$]");
+			}
 		}
 
 		sb.append("</div>");

@@ -20,35 +20,25 @@
 Portlet portlet = (Portlet)request.getAttribute(WebKeys.RENDER_PORTLET);
 
 String portletId = portlet.getPortletId();
+
+portletDisplay.setId(portletId);
+portletDisplay.setNamespace(PortalUtil.getPortletNamespace(portletId));
+
+String url = PortletURLUtil.getRefreshURL(request, themeDisplay);
 %>
 
-<c:choose>
-	<c:when test="<%= portlet.getRenderWeight() >= 1 %>">
-		[$TEMPLATE_PORTLET_<%= portletId %>$]
-	</c:when>
-	<c:otherwise>
+<div class="loading-animation" id="p_load<%= portletDisplay.getNamespace() %>"></div>
 
-		<%
-		portletDisplay.setId(portletId);
-		portletDisplay.setNamespace(PortalUtil.getPortletNamespace(portletId));
+<aui:script use="aui-base">
+	var ns = '<%= portletDisplay.getNamespace() %>';
 
-		String url = PortletURLUtil.getRefreshURL(request, themeDisplay);
-		%>
-
-		<div class="loading-animation" id="p_load<%= portletDisplay.getNamespace() %>"></div>
-
-		<aui:script use="aui-base">
-			var ns = '<%= portletDisplay.getNamespace() %>';
-
-			Liferay.Portlet.addHTML(
-				{
-					onComplete: function(portlet, portletId) {
-						portlet.refreshURL = '<%= HtmlUtil.escapeJS(url) %>';
-					},
-					placeHolder: A.one('#p_load' + ns),
-					url: '<%= HtmlUtil.escapeJS(url) %>'
-				}
-			);
-		</aui:script>
-	</c:otherwise>
-</c:choose>
+	Liferay.Portlet.addHTML(
+		{
+			onComplete: function(portlet, portletId) {
+				portlet.refreshURL = '<%= HtmlUtil.escapeJS(url) %>';
+			},
+			placeHolder: A.one('#p_load' + ns),
+			url: '<%= HtmlUtil.escapeJS(url) %>'
+		}
+	);
+</aui:script>

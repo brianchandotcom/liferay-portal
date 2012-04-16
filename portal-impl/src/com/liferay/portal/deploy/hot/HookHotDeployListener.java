@@ -545,45 +545,8 @@ public class HookHotDeployListener
 			paclPolicy, servletContext, servletContextName,
 			hotDeployEvent.getPluginPackage(), rootElement);
 
-		IndexerPostProcessorContainer indexerPostProcessorContainer =
-			_indexerPostProcessorContainerMap.get(servletContextName);
-
-		if (indexerPostProcessorContainer == null) {
-			indexerPostProcessorContainer = new IndexerPostProcessorContainer();
-
-			_indexerPostProcessorContainerMap.put(
-				servletContextName, indexerPostProcessorContainer);
-		}
-
-		List<Element> indexerPostProcessorElements = rootElement.elements(
-			"indexer-post-processor");
-
-		for (Element indexerPostProcessorElement :
-				indexerPostProcessorElements) {
-
-			String indexerClassName = indexerPostProcessorElement.elementText(
-				"indexer-class-name");
-			String indexerPostProcessorImpl =
-				indexerPostProcessorElement.elementText(
-					"indexer-post-processor-impl");
-
-			Indexer indexer = IndexerRegistryUtil.getIndexer(indexerClassName);
-
-			if (indexer == null) {
-				_log.error("No indexer for " + indexerClassName + " was found");
-
-				continue;
-			}
-
-			IndexerPostProcessor indexerPostProcessor =
-				(IndexerPostProcessor)InstanceFactory.newInstance(
-					portletClassLoader, indexerPostProcessorImpl);
-
-			indexer.registerIndexerPostProcessor(indexerPostProcessor);
-
-			indexerPostProcessorContainer.registerIndexerPostProcessor(
-				indexerClassName, indexerPostProcessor);
-		}
+		initIndexerPostProcessors(
+			paclPolicy, servletContextName, portletClassLoader, rootElement);
 
 		List<Element> serviceElements = rootElement.elements("service");
 
@@ -1261,6 +1224,57 @@ public class HookHotDeployListener
 
 			hotDeployListenersContainer.registerHotDeployListener(
 				hotDeployListener);
+		}
+	}
+
+	protected void initIndexerPostProcessors(
+			PACLPolicy paclPolicy, String servletContextName,
+			ClassLoader portletClassLoader, Element parentElement)
+		throws Exception {
+
+		IndexerPostProcessorContainer indexerPostProcessorContainer =
+			_indexerPostProcessorContainerMap.get(servletContextName);
+
+		if (indexerPostProcessorContainer == null) {
+			indexerPostProcessorContainer = new IndexerPostProcessorContainer();
+
+			_indexerPostProcessorContainerMap.put(
+				servletContextName, indexerPostProcessorContainer);
+		}
+
+		List<Element> indexerPostProcessorElements = parentElement.elements(
+			"indexer-post-processor");
+
+		for (Element indexerPostProcessorElement :
+				indexerPostProcessorElements) {
+
+			String indexerClassName = indexerPostProcessorElement.elementText(
+				"indexer-class-name");
+
+			if (!paclPolicy.hasHookIndexer(indexerClassName)) {
+				continue;
+			}
+
+			String indexerPostProcessorImpl =
+				indexerPostProcessorElement.elementText(
+					"indexer-post-processor-impl");
+
+			Indexer indexer = IndexerRegistryUtil.getIndexer(indexerClassName);
+
+			if (indexer == null) {
+				_log.error("No indexer for " + indexerClassName + " was found");
+
+				continue;
+			}
+
+			IndexerPostProcessor indexerPostProcessor =
+				(IndexerPostProcessor)InstanceFactory.newInstance(
+					portletClassLoader, indexerPostProcessorImpl);
+
+			indexer.registerIndexerPostProcessor(indexerPostProcessor);
+
+			indexerPostProcessorContainer.registerIndexerPostProcessor(
+				indexerClassName, indexerPostProcessor);
 		}
 	}
 

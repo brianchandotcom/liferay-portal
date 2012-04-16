@@ -41,14 +41,14 @@ public class ViewLinkHomeTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Home"),
+		assertEquals(RuntimeVariables.replace("Dashboard"),
 			selenium.getText("//li[contains(@class, 'selected')]/a/span"));
 		assertEquals(RuntimeVariables.replace("Microblogs Status Update"),
 			selenium.getText(
 				"xPath=(//span[@class='portlet-title-default'])[1]"));
 		assertEquals(RuntimeVariables.replace("Update your status..."),
 			selenium.getText(
-				"//div[@id='_2_WAR_microblogsportlet_autocompleteContent']"));
+				"//div[contains(@id,'_2_WAR_microblogsportlet_autocompleteContent')]"));
 		assertEquals(RuntimeVariables.replace("You have no microblogs entry."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[1]"));
 		assertEquals(RuntimeVariables.replace("Activities"),

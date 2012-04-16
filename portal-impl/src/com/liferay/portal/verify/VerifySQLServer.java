@@ -76,7 +76,7 @@ public class VerifySQLServer extends VerifyProcess {
 						tableName, columnName, length, nullable);
 				}
 				else if (dataType.equals("text")) {
-					convertTextColumn(tableName, columnName, length, nullable);
+					convertTextColumn(tableName, columnName, nullable);
 				}
 			}
 
@@ -93,7 +93,7 @@ public class VerifySQLServer extends VerifyProcess {
 	}
 
 	protected void convertTextColumn(
-			String tableName, String columnName, int length, boolean nullable)
+			String tableName, String columnName, boolean nullable)
 		throws Exception {
 
 		if (_log.isInfoEnabled()) {

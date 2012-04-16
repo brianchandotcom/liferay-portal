@@ -51,6 +51,8 @@ public interface PACLPolicy {
 
 	public boolean hasHookCustomJspDir();
 
+	public boolean hasHookIndexer(String className);
+
 	public boolean hasHookLanguagePropertiesLocale(Locale locale);
 
 	public boolean hasHookPortalPropertiesKey(String key);

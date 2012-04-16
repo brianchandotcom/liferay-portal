@@ -67,6 +67,10 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		return _hookChecker.hasCustomJspDir();
 	}
 
+	public boolean hasHookIndexer(String className) {
+		return _hookChecker.hasIndexer(className);
+	}
+
 	public boolean hasHookLanguagePropertiesLocale(Locale locale) {
 		return _hookChecker.hasLanguagePropertiesLocale(locale);
 	}

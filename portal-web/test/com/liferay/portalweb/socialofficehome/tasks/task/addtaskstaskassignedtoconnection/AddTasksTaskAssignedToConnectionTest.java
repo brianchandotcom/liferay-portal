@@ -67,27 +67,8 @@ public class AddTasksTaskAssignedToConnectionTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//h1[@class='header-title']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				assertEquals(RuntimeVariables.replace("Add Task"),
-					selenium.getText("//h1[@class='header-title']"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
 						if (selenium.isVisible(
-									"//input[@class='input-task-description lfr-input-text']")) {
+									"//input[@id='_1_WAR_tasksportlet_title']")) {
 							break;
 						}
 					}
@@ -97,7 +78,7 @@ public class AddTasksTaskAssignedToConnectionTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.type("//input[@class='input-task-description lfr-input-text']",
+				selenium.type("//input[@id='_1_WAR_tasksportlet_title']",
 					RuntimeVariables.replace("Task Description"));
 				selenium.select("//select[@name='_1_WAR_tasksportlet_assigneeUserId']",
 					RuntimeVariables.replace("label=Social01 Office01 User01"));

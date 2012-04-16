@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.kernel.util.ServerHotDeployDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -327,6 +328,12 @@ public class MainServlet extends ActionServlet {
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Initialize hot deploy detector");
+		}
+
+		ServerHotDeployDetector.init();
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Initialize plugins");

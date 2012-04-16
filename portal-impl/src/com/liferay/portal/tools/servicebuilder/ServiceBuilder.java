@@ -4642,15 +4642,32 @@ public class ServiceBuilder {
 		if (uuid) {
 			Element finderElement = SAXReaderUtil.createElement("finder");
 
-			finderElement.addAttribute("name", "Uuid");
-			finderElement.addAttribute("return-type", "Collection");
+			if (columnList.contains(new EntityColumn("companyId"))) {
+				finderElement.addAttribute("name", "Uuid_C");
+				finderElement.addAttribute("return-type", "Collection");
 
-			Element finderColumnElement = finderElement.addElement(
-				"finder-column");
+				Element finderColumnElement = finderElement.addElement(
+					"finder-column");
 
-			finderColumnElement.addAttribute("name", "uuid");
+				finderColumnElement.addAttribute("name", "uuid");
 
-			finderElements.add(0, finderElement);
+				finderColumnElement = finderElement.addElement("finder-column");
+
+				finderColumnElement.addAttribute("name", "companyId");
+
+				finderElements.add(0, finderElement);
+			}
+			else {
+				finderElement.addAttribute("name", "Uuid");
+				finderElement.addAttribute("return-type", "Collection");
+
+				Element finderColumnElement = finderElement.addElement(
+					"finder-column");
+
+				finderColumnElement.addAttribute("name", "uuid");
+
+				finderElements.add(0, finderElement);
+			}
 
 			if (columnList.contains(new EntityColumn("groupId"))) {
 				finderElement = SAXReaderUtil.createElement("finder");
@@ -4659,7 +4676,8 @@ public class ServiceBuilder {
 				finderElement.addAttribute("return-type", ejbName);
 				finderElement.addAttribute("unique", "true");
 
-				finderColumnElement = finderElement.addElement("finder-column");
+				Element finderColumnElement = finderElement.addElement(
+					"finder-column");
 
 				finderColumnElement.addAttribute("name", "uuid");
 

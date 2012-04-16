@@ -103,11 +103,12 @@ public class JournalTemplateModelImpl extends BaseModelImpl<JournalTemplate>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portlet.journal.model.JournalTemplate"),
 			true);
-	public static long GROUPID_COLUMN_BITMASK = 1L;
-	public static long SMALLIMAGEID_COLUMN_BITMASK = 2L;
-	public static long STRUCTUREID_COLUMN_BITMASK = 4L;
-	public static long TEMPLATEID_COLUMN_BITMASK = 8L;
-	public static long UUID_COLUMN_BITMASK = 16L;
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long GROUPID_COLUMN_BITMASK = 2L;
+	public static long SMALLIMAGEID_COLUMN_BITMASK = 4L;
+	public static long STRUCTUREID_COLUMN_BITMASK = 8L;
+	public static long TEMPLATEID_COLUMN_BITMASK = 16L;
+	public static long UUID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -245,7 +246,19 @@ public class JournalTemplateModelImpl extends BaseModelImpl<JournalTemplate>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -718,6 +731,10 @@ public class JournalTemplateModelImpl extends BaseModelImpl<JournalTemplate>
 
 		journalTemplateModelImpl._setOriginalGroupId = false;
 
+		journalTemplateModelImpl._originalCompanyId = journalTemplateModelImpl._companyId;
+
+		journalTemplateModelImpl._setOriginalCompanyId = false;
+
 		journalTemplateModelImpl._originalTemplateId = journalTemplateModelImpl._templateId;
 
 		journalTemplateModelImpl._originalStructureId = journalTemplateModelImpl._structureId;
@@ -981,6 +998,8 @@ public class JournalTemplateModelImpl extends BaseModelImpl<JournalTemplate>
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private String _userName;

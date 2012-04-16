@@ -356,7 +356,7 @@ public class LayoutImporter {
 
 		List<Element> layoutElements = layoutsElement.elements("layout");
 
-		validateLayoutPrototypes(layoutsElement, layoutElements);
+		validateLayoutPrototypes(companyId, layoutsElement, layoutElements);
 
 		// Group id
 
@@ -383,7 +383,8 @@ public class LayoutImporter {
 				try {
 					existingLayoutSetPrototype =
 						LayoutSetPrototypeLocalServiceUtil.
-							getLayoutSetPrototypeByUuid(layoutSetPrototypeUuid);
+							getLayoutSetPrototypeByUuid(
+								layoutSetPrototypeUuid, companyId);
 				}
 				catch(NoSuchLayoutSetPrototypeException nslspe) {
 				}
@@ -515,7 +516,7 @@ public class LayoutImporter {
 
 			LayoutSetPrototype layoutSetPrototype =
 				LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuid(
-					layoutSetPrototypeUuid);
+					layoutSetPrototypeUuid, companyId);
 
 			Group layoutSetPrototypeGroup = layoutSetPrototype.getGroup();
 
@@ -1254,7 +1255,7 @@ public class LayoutImporter {
 		try {
 			layoutSetPrototype =
 				LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuid(
-					layoutSetPrototypeUuid);
+					layoutSetPrototypeUuid, serviceContext.getCompanyId());
 		}
 		catch (NoSuchLayoutSetPrototypeException nslspe) {
 		}
@@ -1438,7 +1439,8 @@ public class LayoutImporter {
 	}
 
 	protected void validateLayoutPrototypes(
-			Element layoutsElement, List<Element> layoutElements)
+			long companyId, Element layoutsElement,
+			List<Element> layoutElements)
 		throws Exception {
 
 		List<Tuple> missingLayoutPrototypes = new ArrayList<Tuple>();
@@ -1449,7 +1451,7 @@ public class LayoutImporter {
 		if (Validator.isNotNull(layoutSetPrototypeUuid)) {
 			try {
 				LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuid(
-					layoutSetPrototypeUuid);
+					layoutSetPrototypeUuid, companyId);
 			}
 			catch (NoSuchLayoutSetPrototypeException nlspe) {
 				String layoutSetPrototypeName = layoutsElement.attributeValue(
@@ -1469,7 +1471,7 @@ public class LayoutImporter {
 			if (Validator.isNotNull(layoutPrototypeUuid)) {
 				try {
 					LayoutPrototypeLocalServiceUtil.getLayoutPrototypeByUuid(
-						layoutPrototypeUuid);
+						layoutPrototypeUuid, companyId);
 				}
 				catch (NoSuchLayoutPrototypeException nslpe) {
 					String layoutPrototypeName = GetterUtil.getString(

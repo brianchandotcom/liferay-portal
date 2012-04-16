@@ -268,10 +268,11 @@ public class LockLocalServiceWrapper implements LockLocalService,
 		return _lockLocalService.getLock(className, key);
 	}
 
-	public com.liferay.portal.model.Lock getLockByUuid(java.lang.String uuid)
+	public com.liferay.portal.model.Lock getLockByUuid(java.lang.String uuid,
+		long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _lockLocalService.getLockByUuid(uuid);
+		return _lockLocalService.getLockByUuid(uuid, companyId);
 	}
 
 	public boolean hasLock(long userId, java.lang.String className, long key)
@@ -328,10 +329,10 @@ public class LockLocalServiceWrapper implements LockLocalService,
 	}
 
 	public com.liferay.portal.model.Lock refresh(java.lang.String uuid,
-		long expirationTime)
+		long companyId, long expirationTime)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _lockLocalService.refresh(uuid, expirationTime);
+		return _lockLocalService.refresh(uuid, companyId, expirationTime);
 	}
 
 	public void unlock(java.lang.String className, long key)

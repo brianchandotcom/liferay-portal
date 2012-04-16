@@ -94,17 +94,18 @@ public class UserNotificationEventLocalServiceImpl
 		return userNotificationEvents;
 	}
 
-	public void deleteUserNotificationEvent(String uuid)
+	public void deleteUserNotificationEvent(String uuid, long companyId)
 		throws SystemException {
 
-		userNotificationEventPersistence.removeByUuid(uuid);
+		userNotificationEventPersistence.removeByUuid_C(uuid, companyId);
 	}
 
-	public void deleteUserNotificationEvents(Collection<String> uuids)
+	public void deleteUserNotificationEvents(
+			Collection<String> uuids, long companyId)
 		throws SystemException {
 
 		for (String uuid : uuids) {
-			deleteUserNotificationEvent(uuid);
+			deleteUserNotificationEvent(uuid, companyId);
 		}
 	}
 
@@ -150,11 +151,11 @@ public class UserNotificationEventLocalServiceImpl
 	}
 
 	public UserNotificationEvent updateUserNotificationEvent(
-			String uuid, boolean archive)
+			String uuid, long companyId, boolean archive)
 		throws SystemException {
 
 		List<UserNotificationEvent> userNotificationEvents =
-			userNotificationEventPersistence.findByUuid(uuid);
+			userNotificationEventPersistence.findByUuid_C(uuid, companyId);
 
 		if (userNotificationEvents.isEmpty()) {
 			return null;
@@ -171,7 +172,7 @@ public class UserNotificationEventLocalServiceImpl
 	}
 
 	public List<UserNotificationEvent> updateUserNotificationEvents(
-			Collection<String> uuids, boolean archive)
+			Collection<String> uuids, long companyId, boolean archive)
 		throws SystemException {
 
 		List<UserNotificationEvent> userNotificationEvents =
@@ -179,7 +180,7 @@ public class UserNotificationEventLocalServiceImpl
 
 		for (String uuid : uuids) {
 			userNotificationEvents.add(
-				updateUserNotificationEvent(uuid, archive));
+				updateUserNotificationEvent(uuid, companyId, archive));
 		}
 
 		return userNotificationEvents;

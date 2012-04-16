@@ -280,10 +280,10 @@ public class LayoutSetPrototypeLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.model.LayoutSetPrototype getLayoutSetPrototypeByUuid(
-		java.lang.String uuid)
+		java.lang.String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getLayoutSetPrototypeByUuid(uuid);
+		return getService().getLayoutSetPrototypeByUuid(uuid, companyId);
 	}
 
 	public static java.util.List<com.liferay.portal.model.LayoutSetPrototype> search(

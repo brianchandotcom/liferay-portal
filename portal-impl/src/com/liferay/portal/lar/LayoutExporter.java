@@ -411,7 +411,7 @@ public class LayoutExporter {
 		if (Validator.isNotNull(layoutSetPrototypeUuid)) {
 			LayoutSetPrototype layoutSetPrototype =
 				LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuid(
-					layoutSetPrototypeUuid);
+					layoutSetPrototypeUuid, companyId);
 
 			layoutsElement.addAttribute(
 				"layout-set-prototype-uuid", layoutSetPrototypeUuid);
@@ -691,7 +691,7 @@ public class LayoutExporter {
 		if (Validator.isNotNull(layoutPrototypeUuid)) {
 			LayoutPrototype layoutPrototype =
 				LayoutPrototypeLocalServiceUtil.getLayoutPrototypeByUuid(
-					layoutPrototypeUuid);
+					layoutPrototypeUuid, portletDataContext.getCompanyId());
 
 			layoutElement.addAttribute(
 				"layout-prototype-uuid", layoutPrototypeUuid);

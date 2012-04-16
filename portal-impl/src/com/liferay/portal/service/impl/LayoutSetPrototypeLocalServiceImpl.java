@@ -149,10 +149,12 @@ public class LayoutSetPrototypeLocalServiceImpl
 		return deleteLayoutSetPrototype(layoutSetPrototype);
 	}
 
-	public LayoutSetPrototype getLayoutSetPrototypeByUuid(String uuid)
+	public LayoutSetPrototype getLayoutSetPrototypeByUuid(
+			String uuid, long companyId)
 		throws PortalException, SystemException {
 
-		return layoutSetPrototypePersistence.findByUuid_First(uuid, null);
+		return layoutSetPrototypePersistence.findByUuid_C_First(
+			uuid, companyId, null);
 	}
 
 	public List<LayoutSetPrototype> search(

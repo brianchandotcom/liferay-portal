@@ -303,10 +303,11 @@ public class DLFileEntryServiceUtil {
 	}
 
 	public static com.liferay.portal.model.Lock refreshFileEntryLock(
-		java.lang.String lockUuid, long expirationTime)
+		java.lang.String lockUuid, long companyId, long expirationTime)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().refreshFileEntryLock(lockUuid, expirationTime);
+		return getService()
+				   .refreshFileEntryLock(lockUuid, companyId, expirationTime);
 	}
 
 	public static void revertFileEntry(long fileEntryId,

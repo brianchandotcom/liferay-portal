@@ -2778,7 +2778,7 @@ public class DLAppServiceHttp {
 	}
 
 	public static com.liferay.portal.model.Lock refreshFileEntryLock(
-		HttpPrincipal httpPrincipal, java.lang.String lockUuid,
+		HttpPrincipal httpPrincipal, java.lang.String lockUuid, long companyId,
 		long expirationTime)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -2788,7 +2788,7 @@ public class DLAppServiceHttp {
 					_refreshFileEntryLockParameterTypes72);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					lockUuid, expirationTime);
+					lockUuid, companyId, expirationTime);
 
 			Object returnObj = null;
 
@@ -2817,7 +2817,7 @@ public class DLAppServiceHttp {
 	}
 
 	public static com.liferay.portal.model.Lock refreshFolderLock(
-		HttpPrincipal httpPrincipal, java.lang.String lockUuid,
+		HttpPrincipal httpPrincipal, java.lang.String lockUuid, long companyId,
 		long expirationTime)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -2826,7 +2826,7 @@ public class DLAppServiceHttp {
 					"refreshFolderLock", _refreshFolderLockParameterTypes73);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					lockUuid, expirationTime);
+					lockUuid, companyId, expirationTime);
 
 			Object returnObj = null;
 
@@ -3750,10 +3750,10 @@ public class DLAppServiceHttp {
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _refreshFileEntryLockParameterTypes72 = new Class[] {
-			java.lang.String.class, long.class
+			java.lang.String.class, long.class, long.class
 		};
 	private static final Class<?>[] _refreshFolderLockParameterTypes73 = new Class[] {
-			java.lang.String.class, long.class
+			java.lang.String.class, long.class, long.class
 		};
 	private static final Class<?>[] _revertFileEntryParameterTypes74 = new Class[] {
 			long.class, java.lang.String.class,

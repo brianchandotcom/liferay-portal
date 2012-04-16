@@ -31,13 +31,13 @@ LayoutSetPrototype publicLayoutSetPrototype = null;
 boolean publicLayoutSetPrototypeLinkEnabled = false;
 
 if (Validator.isNotNull(privateLayoutSet.getLayoutSetPrototypeUuid())) {
-	privateLayoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuid(privateLayoutSet.getLayoutSetPrototypeUuid());
+	privateLayoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuid(privateLayoutSet.getLayoutSetPrototypeUuid(), company.getCompanyId());
 
 	privateLayoutSetPrototypeLinkEnabled = privateLayoutSet.isLayoutSetPrototypeLinkEnabled();
 }
 
 if (Validator.isNotNull(publicLayoutSet.getLayoutSetPrototypeUuid())) {
-	publicLayoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuid(publicLayoutSet.getLayoutSetPrototypeUuid());
+	publicLayoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuid(publicLayoutSet.getLayoutSetPrototypeUuid(), company.getCompanyId());
 
 	publicLayoutSetPrototypeLinkEnabled = publicLayoutSet.isLayoutSetPrototypeLinkEnabled();
 }

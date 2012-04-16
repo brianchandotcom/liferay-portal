@@ -97,9 +97,10 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portlet.dynamicdatalists.model.DDLRecordSet"),
 			true);
-	public static long GROUPID_COLUMN_BITMASK = 1L;
-	public static long RECORDSETKEY_COLUMN_BITMASK = 2L;
-	public static long UUID_COLUMN_BITMASK = 4L;
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long GROUPID_COLUMN_BITMASK = 2L;
+	public static long RECORDSETKEY_COLUMN_BITMASK = 4L;
+	public static long UUID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -232,7 +233,19 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -617,6 +630,10 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 
 		ddlRecordSetModelImpl._setOriginalGroupId = false;
 
+		ddlRecordSetModelImpl._originalCompanyId = ddlRecordSetModelImpl._companyId;
+
+		ddlRecordSetModelImpl._setOriginalCompanyId = false;
+
 		ddlRecordSetModelImpl._originalRecordSetKey = ddlRecordSetModelImpl._recordSetKey;
 
 		ddlRecordSetModelImpl._columnBitmask = 0;
@@ -818,6 +835,8 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private String _userName;

@@ -210,92 +210,97 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 			com.liferay.portlet.bookmarks.NoSuchFolderException;
 
 	/**
-	* Returns all the bookmarks folders where uuid = &#63;.
+	* Returns all the bookmarks folders where uuid = &#63; and companyId = &#63;.
 	*
 	* @param uuid the uuid
+	* @param companyId the company ID
 	* @return the matching bookmarks folders
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.bookmarks.model.BookmarksFolder> findByUuid(
-		java.lang.String uuid)
+	public java.util.List<com.liferay.portlet.bookmarks.model.BookmarksFolder> findByUuid_C(
+		java.lang.String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns a range of all the bookmarks folders where uuid = &#63;.
+	* Returns a range of all the bookmarks folders where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
 	* @param uuid the uuid
+	* @param companyId the company ID
 	* @param start the lower bound of the range of bookmarks folders
 	* @param end the upper bound of the range of bookmarks folders (not inclusive)
 	* @return the range of matching bookmarks folders
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.bookmarks.model.BookmarksFolder> findByUuid(
-		java.lang.String uuid, int start, int end)
+	public java.util.List<com.liferay.portlet.bookmarks.model.BookmarksFolder> findByUuid_C(
+		java.lang.String uuid, long companyId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns an ordered range of all the bookmarks folders where uuid = &#63;.
+	* Returns an ordered range of all the bookmarks folders where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
 	* @param uuid the uuid
+	* @param companyId the company ID
 	* @param start the lower bound of the range of bookmarks folders
 	* @param end the upper bound of the range of bookmarks folders (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching bookmarks folders
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.bookmarks.model.BookmarksFolder> findByUuid(
-		java.lang.String uuid, int start, int end,
+	public java.util.List<com.liferay.portlet.bookmarks.model.BookmarksFolder> findByUuid_C(
+		java.lang.String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the first bookmarks folder in the ordered set where uuid = &#63;.
+	* Returns the first bookmarks folder in the ordered set where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
 	* @param uuid the uuid
+	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching bookmarks folder
 	* @throws com.liferay.portlet.bookmarks.NoSuchFolderException if a matching bookmarks folder could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.bookmarks.model.BookmarksFolder findByUuid_First(
-		java.lang.String uuid,
+	public com.liferay.portlet.bookmarks.model.BookmarksFolder findByUuid_C_First(
+		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.bookmarks.NoSuchFolderException;
 
 	/**
-	* Returns the last bookmarks folder in the ordered set where uuid = &#63;.
+	* Returns the last bookmarks folder in the ordered set where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
 	* @param uuid the uuid
+	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching bookmarks folder
 	* @throws com.liferay.portlet.bookmarks.NoSuchFolderException if a matching bookmarks folder could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.bookmarks.model.BookmarksFolder findByUuid_Last(
-		java.lang.String uuid,
+	public com.liferay.portlet.bookmarks.model.BookmarksFolder findByUuid_C_Last(
+		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.bookmarks.NoSuchFolderException;
 
 	/**
-	* Returns the bookmarks folders before and after the current bookmarks folder in the ordered set where uuid = &#63;.
+	* Returns the bookmarks folders before and after the current bookmarks folder in the ordered set where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -303,13 +308,14 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	*
 	* @param folderId the primary key of the current bookmarks folder
 	* @param uuid the uuid
+	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next bookmarks folder
 	* @throws com.liferay.portlet.bookmarks.NoSuchFolderException if a bookmarks folder with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.bookmarks.model.BookmarksFolder[] findByUuid_PrevAndNext(
-		long folderId, java.lang.String uuid,
+	public com.liferay.portlet.bookmarks.model.BookmarksFolder[] findByUuid_C_PrevAndNext(
+		long folderId, java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.bookmarks.NoSuchFolderException;
@@ -857,12 +863,13 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Removes all the bookmarks folders where uuid = &#63; from the database.
+	* Removes all the bookmarks folders where uuid = &#63; and companyId = &#63; from the database.
 	*
 	* @param uuid the uuid
+	* @param companyId the company ID
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByUuid(java.lang.String uuid)
+	public void removeByUuid_C(java.lang.String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -925,13 +932,14 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the number of bookmarks folders where uuid = &#63;.
+	* Returns the number of bookmarks folders where uuid = &#63; and companyId = &#63;.
 	*
 	* @param uuid the uuid
+	* @param companyId the company ID
 	* @return the number of matching bookmarks folders
 	* @throws SystemException if a system exception occurred
 	*/
-	public int countByUuid(java.lang.String uuid)
+	public int countByUuid_C(java.lang.String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

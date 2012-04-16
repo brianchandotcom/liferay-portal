@@ -258,11 +258,12 @@ public interface UserNotificationEventLocalService
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public void deleteUserNotificationEvent(java.lang.String uuid)
+	public void deleteUserNotificationEvent(java.lang.String uuid,
+		long companyId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public void deleteUserNotificationEvents(
-		java.util.Collection<java.lang.String> uuids)
+		java.util.Collection<java.lang.String> uuids, long companyId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -293,10 +294,11 @@ public interface UserNotificationEventLocalService
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.UserNotificationEvent updateUserNotificationEvent(
-		java.lang.String uuid, boolean archive)
+		java.lang.String uuid, long companyId, boolean archive)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<com.liferay.portal.model.UserNotificationEvent> updateUserNotificationEvents(
-		java.util.Collection<java.lang.String> uuids, boolean archive)
+		java.util.Collection<java.lang.String> uuids, long companyId,
+		boolean archive)
 		throws com.liferay.portal.kernel.exception.SystemException;
 }

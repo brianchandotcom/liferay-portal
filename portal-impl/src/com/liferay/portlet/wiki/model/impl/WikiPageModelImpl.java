@@ -104,18 +104,19 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portlet.wiki.model.WikiPage"),
 			true);
-	public static long FORMAT_COLUMN_BITMASK = 1L;
-	public static long GROUPID_COLUMN_BITMASK = 2L;
-	public static long HEAD_COLUMN_BITMASK = 4L;
-	public static long NODEID_COLUMN_BITMASK = 8L;
-	public static long PARENTTITLE_COLUMN_BITMASK = 16L;
-	public static long REDIRECTTITLE_COLUMN_BITMASK = 32L;
-	public static long RESOURCEPRIMKEY_COLUMN_BITMASK = 64L;
-	public static long STATUS_COLUMN_BITMASK = 128L;
-	public static long TITLE_COLUMN_BITMASK = 256L;
-	public static long USERID_COLUMN_BITMASK = 512L;
-	public static long UUID_COLUMN_BITMASK = 1024L;
-	public static long VERSION_COLUMN_BITMASK = 2048L;
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long FORMAT_COLUMN_BITMASK = 2L;
+	public static long GROUPID_COLUMN_BITMASK = 4L;
+	public static long HEAD_COLUMN_BITMASK = 8L;
+	public static long NODEID_COLUMN_BITMASK = 16L;
+	public static long PARENTTITLE_COLUMN_BITMASK = 32L;
+	public static long REDIRECTTITLE_COLUMN_BITMASK = 64L;
+	public static long RESOURCEPRIMKEY_COLUMN_BITMASK = 128L;
+	public static long STATUS_COLUMN_BITMASK = 256L;
+	public static long TITLE_COLUMN_BITMASK = 512L;
+	public static long USERID_COLUMN_BITMASK = 1024L;
+	public static long UUID_COLUMN_BITMASK = 2048L;
+	public static long VERSION_COLUMN_BITMASK = 4096L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -282,7 +283,19 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -806,6 +819,10 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 
 		wikiPageModelImpl._setOriginalGroupId = false;
 
+		wikiPageModelImpl._originalCompanyId = wikiPageModelImpl._companyId;
+
+		wikiPageModelImpl._setOriginalCompanyId = false;
+
 		wikiPageModelImpl._originalUserId = wikiPageModelImpl._userId;
 
 		wikiPageModelImpl._setOriginalUserId = false;
@@ -1139,6 +1156,8 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private long _originalUserId;

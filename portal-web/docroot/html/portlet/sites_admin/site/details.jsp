@@ -43,7 +43,7 @@ if (showPrototypes && (group != null)) {
 		String layoutSetPrototypeUuid = privateLayoutSet.getLayoutSetPrototypeUuid();
 
 		if (Validator.isNotNull(layoutSetPrototypeUuid)) {
-			privateLayoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuid(layoutSetPrototypeUuid);
+			privateLayoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuid(layoutSetPrototypeUuid, company.getCompanyId());
 		}
 	}
 	catch (Exception e) {
@@ -59,7 +59,7 @@ if (showPrototypes && (group != null)) {
 		String layoutSetPrototypeUuid = publicLayoutSet.getLayoutSetPrototypeUuid();
 
 		if (Validator.isNotNull(layoutSetPrototypeUuid)) {
-			publicLayoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuid(layoutSetPrototypeUuid);
+			publicLayoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuid(layoutSetPrototypeUuid, company.getCompanyId());
 		}
 	}
 	catch (Exception e) {

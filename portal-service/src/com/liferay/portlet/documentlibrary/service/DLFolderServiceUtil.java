@@ -243,10 +243,11 @@ public class DLFolderServiceUtil {
 	}
 
 	public static com.liferay.portal.model.Lock refreshFolderLock(
-		java.lang.String lockUuid, long expirationTime)
+		java.lang.String lockUuid, long companyId, long expirationTime)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().refreshFolderLock(lockUuid, expirationTime);
+		return getService()
+				   .refreshFolderLock(lockUuid, companyId, expirationTime);
 	}
 
 	public static void unlockFolder(long groupId, long folderId,

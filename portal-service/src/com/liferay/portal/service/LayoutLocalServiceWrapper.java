@@ -958,11 +958,12 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	}
 
 	public boolean hasLayoutSetPrototypeLayout(
-		java.lang.String layoutSetPrototypeUuid, java.lang.String layoutUuid)
+		java.lang.String layoutSetPrototypeUuid, java.lang.String layoutUuid,
+		long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _layoutLocalService.hasLayoutSetPrototypeLayout(layoutSetPrototypeUuid,
-			layoutUuid);
+			layoutUuid, companyId);
 	}
 
 	/**

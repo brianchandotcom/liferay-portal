@@ -777,6 +777,8 @@ public class PortletImporter {
 					sb.append("because the user does not have permissions.");
 
 					_log.error(sb.toString());
+
+					return;
 				}
 			}
 
@@ -980,6 +982,8 @@ public class PortletImporter {
 				sb.append("the user does not have permissions.");
 
 				_log.error(sb.toString());
+
+				return;
 			}
 		}
 

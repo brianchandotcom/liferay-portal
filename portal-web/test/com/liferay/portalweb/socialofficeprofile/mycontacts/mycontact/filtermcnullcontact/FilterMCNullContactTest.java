@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class FilterMCNullContactTest extends BaseTestCase {
 	public void testFilterMCNullContact() throws Exception {
-		selenium.open("/web/joebloggs/profile/");
+		selenium.open("/web/joebloggs/so/profile/");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("My Contacts"),
 			selenium.getText("//h1/span[2]"));

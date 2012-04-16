@@ -129,5 +129,71 @@ public class AddUserSOCoworkerTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertTrue(selenium.isPartialText("//a[@id='_125_rolesLink']", "Roles"));
+		selenium.clickAt("//a[@id='_125_rolesLink']",
+			RuntimeVariables.replace("Roles"));
+		assertEquals(RuntimeVariables.replace("Power User"),
+			selenium.getText("//tr[3]/td"));
+		assertEquals(RuntimeVariables.replace("Select"),
+			selenium.getText("//div[6]/span/a/span"));
+		selenium.clickAt("//div[6]/span/a/span",
+			RuntimeVariables.replace("Select"));
+		Thread.sleep(5000);
+		selenium.selectWindow("title=Users and Organizations");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//input[@id='_125_keywords']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.type("//input[@id='_125_keywords']",
+			RuntimeVariables.replace("Social Office"));
+		selenium.clickAt("//input[@value='Search']",
+			RuntimeVariables.replace("Search"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Social Office User"),
+			selenium.getText("//a"));
+		selenium.click("//a");
+		selenium.selectWindow("null");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Social Office User")
+										.equals(selenium.getText(
+								"//table/tr/td"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Social Office User"),
+			selenium.getText("//table/tr/td"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 	}
 }

@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewMCCoworkerProfileTest extends BaseTestCase {
 	public void testViewMCCoworkerProfile() throws Exception {
-		selenium.open("/web/joebloggs/profile/");
+		selenium.open("/web/joebloggs/so/profile/");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Profile"),
 			selenium.getText("//nav/ul/li[2]/a/span"));

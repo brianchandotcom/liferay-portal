@@ -103,7 +103,7 @@ public class BlockCCUserTest extends BaseTestCase {
 				"//div[contains(@class, 'contacts-center-home-content')]"));
 		assertEquals(RuntimeVariables.replace("Add as Connection"),
 			selenium.getText(
-				"//button[@id='_1_WAR_contactsportlet_addConnectionButton']/a/span"));
+				"//button[@id='_1_WAR_contactsportlet_addConnectionButton']"));
 		assertEquals(RuntimeVariables.replace("Block"),
 			selenium.getText(
 				"//button[@id='_1_WAR_contactsportlet_blockButton']"));

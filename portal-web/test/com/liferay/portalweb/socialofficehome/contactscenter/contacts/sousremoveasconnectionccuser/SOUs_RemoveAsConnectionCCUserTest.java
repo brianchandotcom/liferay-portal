@@ -114,7 +114,7 @@ public class SOUs_RemoveAsConnectionCCUserTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//button[@id='_1_WAR_contactsportlet_addConnectionButton']/a/span")) {
+							"//button[@id='_1_WAR_contactsportlet_addConnectionButton']")) {
 					break;
 				}
 			}
@@ -126,7 +126,7 @@ public class SOUs_RemoveAsConnectionCCUserTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Add as Connection"),
 			selenium.getText(
-				"//button[@id='_1_WAR_contactsportlet_addConnectionButton']/a/span"));
+				"//button[@id='_1_WAR_contactsportlet_addConnectionButton']"));
 		assertFalse(selenium.isVisible(
 				"//button[@id='_1_WAR_contactsportlet_removeConnectionButton']"));
 	}

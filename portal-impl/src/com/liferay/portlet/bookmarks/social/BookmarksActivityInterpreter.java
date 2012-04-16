@@ -78,14 +78,20 @@ public class BookmarksActivityInterpreter
 		String titlePattern = null;
 
 		if (activityType == BookmarksActivityKeys.ADD_ENTRY) {
-			titlePattern = "activity-bookmarks-add-entry";
+			if (Validator.isNull(groupName)) {
+				titlePattern = "activity-bookmarks-add-entry";
+			}
+			else {
+				titlePattern = "activity-bookmarks-add-entry-in";
+			}
 		}
 		else if (activityType == BookmarksActivityKeys.UPDATE_ENTRY) {
-			titlePattern = "activity-bookmarks-update-entry";
-		}
-
-		if (Validator.isNotNull(groupName)) {
-			titlePattern += "-in";
+			if (Validator.isNull(groupName)) {
+				titlePattern = "activity-bookmarks-update-entry";
+			}
+			else {
+				titlePattern = "activity-bookmarks-update-entry-in";
+			}
 		}
 
 		String entryTitle = wrapLink(

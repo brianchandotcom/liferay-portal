@@ -28,10 +28,10 @@ public class AddWHEntryContentViewableByConnectionsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Microblogs Status Update"),
 			selenium.getText("//span[@class='portlet-title-default']"));
 		assertTrue(selenium.isElementPresent(
-				"//div[@id='_2_WAR_microblogsportlet_highlighterContent']"));
+				"//div[contains(@id,'_2_WAR_microblogsportlet_autocompleteContent')]"));
 		assertEquals(RuntimeVariables.replace("You have no microblogs entry."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
-		selenium.clickAt("//div[@id='_2_WAR_microblogsportlet_highlighterContent']",
+		selenium.clickAt("//div[contains(@id,'_2_WAR_microblogsportlet_autocompleteContent')]",
 			RuntimeVariables.replace("Update your status..."));
 
 		for (int second = 0;; second++) {

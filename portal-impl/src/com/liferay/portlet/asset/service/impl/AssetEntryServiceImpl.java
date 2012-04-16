@@ -287,6 +287,23 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 		return results;
 	}
 
+	protected long[] filterTagIds(long[] tagIds)
+		throws PortalException, SystemException {
+
+		List<Long> viewableTagIds = new ArrayList<Long>();
+
+		for (long tagId : tagIds) {
+			if (AssetTagPermission.contains(
+					getPermissionChecker(), tagId, ActionKeys.VIEW)) {
+
+				viewableTagIds.add(tagId);
+			}
+		}
+
+		return ArrayUtil.toArray(
+			viewableTagIds.toArray(new Long[viewableTagIds.size()]));
+	}
+
 	protected long[][] filterTagIdsArray(long[][] tagIdsArray)
 		throws PortalException, SystemException {
 
@@ -312,23 +329,6 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 
 		return viewableTagIdsArray.toArray(
 			new long[viewableTagIdsArray.size()][]);
-	}
-
-	protected long[] filterTagIds(long[] tagIds)
-		throws PortalException, SystemException {
-
-		List<Long> viewableTagIds = new ArrayList<Long>();
-
-		for (long tagId : tagIds) {
-			if (AssetTagPermission.contains(
-					getPermissionChecker(), tagId, ActionKeys.VIEW)) {
-
-				viewableTagIds.add(tagId);
-			}
-		}
-
-		return ArrayUtil.toArray(
-			viewableTagIds.toArray(new Long[viewableTagIds.size()]));
 	}
 
 	protected boolean hasEntryQueryResults(

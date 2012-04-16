@@ -50,10 +50,10 @@ public class AddMicroblogsContentViewableByFollowersTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Microblogs"),
 			selenium.getText("//span[@class='portlet-title-default']"));
 		assertTrue(selenium.isElementPresent(
-				"//div[@id='_1_WAR_microblogsportlet_autocompleteContent']"));
+				"//div[contains(@id,'_1_WAR_microblogsportlet_autocompleteContent')]"));
 		assertEquals(RuntimeVariables.replace("You have no microblogs entry."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
-		selenium.clickAt("//div[@id='_1_WAR_microblogsportlet_autocompleteContent']",
+		selenium.clickAt("//div[contains(@id,'_1_WAR_microblogsportlet_autocompleteContent')]",
 			RuntimeVariables.replace("Update your status..."));
 
 		for (int second = 0;; second++) {

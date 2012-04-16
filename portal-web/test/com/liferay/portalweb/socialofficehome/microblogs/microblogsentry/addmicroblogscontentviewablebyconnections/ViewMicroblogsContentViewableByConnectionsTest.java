@@ -28,7 +28,7 @@ public class ViewMicroblogsContentViewableByConnectionsTest extends BaseTestCase
 		assertEquals(RuntimeVariables.replace("Microblogs Status Update"),
 			selenium.getText("//span[@class='portlet-title-default']"));
 		assertTrue(selenium.isElementPresent(
-				"//div[@id='_2_WAR_microblogsportlet_autocompleteContent']"));
+				"//div[contains(@id,'_2_WAR_microblogsportlet_autocompleteContent')]"));
 		assertEquals(RuntimeVariables.replace("Microblogs Post"),
 			selenium.getText("//div[@class='content']"));
 

@@ -29,7 +29,7 @@ public class SOUs_ViewMicroblogsContentViewableByConnectionsTest
 		assertEquals(RuntimeVariables.replace("Microblogs Status Update"),
 			selenium.getText("//span[@class='portlet-title-default']"));
 		assertTrue(selenium.isElementPresent(
-				"//div[@id='_2_WAR_microblogsportlet_autocompleteContent']"));
+				"//div[contains(@id,'_2_WAR_microblogsportlet_autocompleteContent')]"));
 		assertEquals(RuntimeVariables.replace("You have no microblogs entry."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertEquals(RuntimeVariables.replace("Connections"),

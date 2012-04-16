@@ -24,7 +24,7 @@ public class SOUs_ViewEditMBContentViewableByEveryoneProfileTest
 	extends BaseTestCase {
 	public void testSOUs_ViewEditMBContentViewableByEveryoneProfile()
 		throws Exception {
-		selenium.open("/web/joebloggs/profile");
+		selenium.open("/web/joebloggs/so/profile");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Microblogs PostEdit"),
 			selenium.getText("//div[@class='content']"));

@@ -26,7 +26,7 @@ import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.io.Writer;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.ServletRequest;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.Tag;
 
@@ -35,14 +35,14 @@ import javax.servlet.jsp.tagext.Tag;
  */
 public class CustomizationSettingsProcessor implements ColumnProcessor {
 
-	public CustomizationSettingsProcessor(
-		HttpServletRequest request, PageContext pageContext, Writer writer) {
+	public CustomizationSettingsProcessor(PageContext pageContext) {
 
 		_pageContext = pageContext;
-		_request = request;
-		_writer = writer;
+		_writer = pageContext.getOut();
 
-		Layout selLayout = (Layout)_request.getAttribute(
+		ServletRequest request = pageContext.getRequest();
+
+		Layout selLayout = (Layout)request.getAttribute(
 			"edit_pages.jsp-selLayout");
 
 		_layoutTypeSettings = selLayout.getTypeSettingsProperties();
@@ -132,7 +132,6 @@ public class CustomizationSettingsProcessor implements ColumnProcessor {
 	private boolean _customizationEnabled;
 	private UnicodeProperties _layoutTypeSettings;
 	private PageContext _pageContext;
-	private HttpServletRequest _request;
 	private Writer _writer;
 
 	static {

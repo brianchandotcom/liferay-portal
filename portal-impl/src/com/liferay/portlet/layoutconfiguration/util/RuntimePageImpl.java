@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletContainerUtil;
-import com.liferay.portal.kernel.servlet.PipingPageContext;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
@@ -64,12 +63,8 @@ public class RuntimePageImpl implements RuntimePage {
 		HttpServletResponse response =
 			(HttpServletResponse)pageContext.getResponse();
 
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
 		CustomizationSettingsProcessor processor =
-			new CustomizationSettingsProcessor(
-				request, new PipingPageContext(pageContext, unsyncStringWriter),
-				unsyncStringWriter);
+			new CustomizationSettingsProcessor(pageContext);
 
 		VelocityContext velocityContext =
 			VelocityEngineUtil.getWrappedStandardToolsContext();
@@ -83,8 +78,7 @@ public class RuntimePageImpl implements RuntimePage {
 		// liferay:include tag library
 
 		MethodHandler methodHandler = new MethodHandler(
-			_initMethodKey, pageContext.getServletContext(), request,
-			new PipingServletResponse(response, unsyncStringWriter),
+			_initMethodKey, pageContext.getServletContext(), request, response,
 			pageContext);
 
 		Object velocityTaglib = methodHandler.invoke(true);
@@ -95,17 +89,13 @@ public class RuntimePageImpl implements RuntimePage {
 		try {
 			VelocityEngineUtil.mergeTemplate(
 				velocityTemplateId, velocityTemplateContent, velocityContext,
-				unsyncStringWriter);
+				pageContext.getOut());
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 
 			throw e;
 		}
-
-		StringBundler sb = unsyncStringWriter.getStringBundler();
-
-		sb.writeTo(pageContext.getOut());
 	}
 
 	public void processTemplate(

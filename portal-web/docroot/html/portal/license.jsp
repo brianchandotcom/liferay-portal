@@ -448,6 +448,8 @@ dateFormatDateTime.setTimeZone(timeZone);
 									var message = instance.get('responseData');
 
 									A.one('#' + clusterNodeId + '_' + cmd).html('');
+
+									success(message);
 								}
 							}
 						}

@@ -59,6 +59,8 @@ public interface PACLPolicy {
 
 	public boolean hasHookServletFilters();
 
+	public boolean hasHookStrutsActionPath(String path);
+
 	public boolean hasService(Object object, Method method);
 
 	public boolean hasSocketConnect(String host, int port);

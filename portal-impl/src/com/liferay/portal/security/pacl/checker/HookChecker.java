@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.security.pacl.PACLPolicy;
 
-import java.util.Collections;
 import java.util.Locale;
 import java.util.Set;
 import java.util.TreeSet;
@@ -36,6 +35,7 @@ public class HookChecker extends BaseChecker {
 		initPortalPropertiesKeys();
 		initServletFilters();
 		initServices();
+		initStrutsActionPaths();
 	}
 
 	public boolean hasCustomJspDir() {
@@ -66,6 +66,10 @@ public class HookChecker extends BaseChecker {
 
 	public boolean hasServletFilters() {
 		return _servletFilters;
+	}
+
+	public boolean hasStrutsActionPath(String path) {
+		return _strutsActionPaths.contains(path);
 	}
 
 	protected void initCustomJspDir() {
@@ -109,12 +113,18 @@ public class HookChecker extends BaseChecker {
 			"security-manager-hook-servlet-filters-enabled");
 	}
 
+	protected void initStrutsActionPaths() {
+		_strutsActionPaths = getPropertySet(
+			"security-manager-hook-struts-action-paths");
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(HookChecker.class);
 
 	private boolean _customJspDir;
-	private Set<String> _languagePropertiesLanguageIds = Collections.emptySet();
-	private Set<String> _portalPropertiesKeys = Collections.emptySet();
-	private Set<String> _services = Collections.emptySet();
+	private Set<String> _languagePropertiesLanguageIds;
+	private Set<String> _portalPropertiesKeys;
+	private Set<String> _services;
 	private boolean _servletFilters;
+	private Set<String> _strutsActionPaths;
 
 }

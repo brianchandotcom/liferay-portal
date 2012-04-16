@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewIgnoreAddAsConnectionProfileUserTest extends BaseTestCase {
 	public void testViewIgnoreAddAsConnectionProfileUser()
 		throws Exception {
-		selenium.open("/web/joebloggs/profile/");
+		selenium.open("/web/joebloggs/so/profile/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {

@@ -41,6 +41,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -61,6 +63,7 @@ import javax.naming.NamingException;
  * @author Alexander Chow
  * @author Ganesh Ram
  * @author Brian Wing Shun Chan
+ * @author Daniel Kocsis
  */
 public abstract class BaseDB implements DB {
 
@@ -669,18 +672,37 @@ public abstract class BaseDB implements DB {
 					continue;
 				}
 			}
-			else {
-				if (!tablesSQLLowerCase.contains(
+			else if (!tablesSQLLowerCase.contains(
 						"create table " + tableNameLowerCase + " (")) {
 
-					continue;
+				continue;
+			}
+			else {
+				String originalTableName = StringPool.BLANK;
+				int pos = tablesSQLLowerCase.indexOf(tableNameLowerCase);
+
+				if (pos > 0) {
+					originalTableName = tablesSQL.substring(
+						pos, pos + tableName.length());
+
+					if (!isPortalIndex(
+						con, indexNameUpperCase, unique, originalTableName)) {
+
+						continue;
+					}
 				}
 			}
 
 			validIndexNames.remove(indexNameUpperCase);
 
-			runSQL(
-				con, "drop index " + indexNameUpperCase + " on " + tableName);
+			String sql =
+				"drop index " + indexNameUpperCase + " on " + tableName;
+
+			if (_log.isInfoEnabled()) {
+				_log.info(sql);
+			}
+
+			runSQL(con, sql);
 		}
 
 		return validIndexNames;
@@ -744,6 +766,65 @@ public abstract class BaseDB implements DB {
 	}
 
 	protected abstract String[] getTemplate();
+
+	protected boolean isPortalIndex(
+		Connection con, String indexName, boolean unique, String tableName) {
+
+		if ((con == null) || Validator.isNull(indexName) ||
+			Validator.isNull(tableName)) {
+
+			return false;
+		}
+
+		ResultSet rs = null;
+		StringBundler sb = new StringBundler();
+
+		sb.append(tableName + " (");
+
+		try {
+			DatabaseMetaData databaseMetaData = con.getMetaData();
+
+			rs = databaseMetaData.getIndexInfo(
+				null, null, tableName, unique, false);
+
+			while (rs.next()) {
+				String storedIndexName = rs.getString(
+					"INDEX_NAME").toUpperCase();
+
+				if (storedIndexName.equals(indexName)) {
+					sb.append(rs.getString("COLUMN_NAME"));
+					sb.append(", ");
+				}
+			}
+		}
+		catch (SQLException e) {
+			_log.error(e, e);
+
+			return false;
+		}
+		finally {
+			DataAccess.cleanUp(rs);
+		}
+
+		String indexSpec = sb.toString();
+
+		if (indexSpec.endsWith(", ")) {
+			indexSpec = indexSpec.substring(0, indexSpec.length() - 2);
+		}
+
+		indexSpec = indexSpec.concat(");");
+
+		String indexHash = StringUtil.toHexString(
+			indexSpec.hashCode()).toUpperCase();
+
+		String generatedIndexName = "IX_" + indexHash;
+
+		if (indexName.equals(generatedIndexName)) {
+			return true;
+		}
+
+		return false;
+	}
 
 	protected String readFile(String fileName) throws IOException {
 		if (FileUtil.exists(fileName)) {

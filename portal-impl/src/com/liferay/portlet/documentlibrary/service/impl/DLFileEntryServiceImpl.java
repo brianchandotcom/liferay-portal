@@ -501,10 +501,11 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 	}
 
-	public Lock refreshFileEntryLock(String lockUuid, long expirationTime)
+	public Lock refreshFileEntryLock(
+			String lockUuid, long companyId, long expirationTime)
 		throws PortalException, SystemException {
 
-		return lockLocalService.refresh(lockUuid, expirationTime);
+		return lockLocalService.refresh(lockUuid, companyId, expirationTime);
 	}
 
 	public void revertFileEntry(

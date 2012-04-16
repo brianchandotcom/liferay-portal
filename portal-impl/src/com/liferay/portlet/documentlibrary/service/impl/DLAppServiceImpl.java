@@ -1987,6 +1987,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 * WebDAV.
 	 *
 	 * @param  lockUuid the lock's universally unique identifier
+	 * @param  companyId the primary key of the file entry's company
 	 * @param  expirationTime the time in milliseconds before the lock expires.
 	 *         If the value is <code>0</code>, the default expiration time will
 	 *         be used from <code>portal.properties>.
@@ -1994,16 +1995,18 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 * @throws PortalException if the file entry or lock could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Lock refreshFileEntryLock(String lockUuid, long expirationTime)
+	public Lock refreshFileEntryLock(
+			String lockUuid, long companyId, long expirationTime)
 		throws PortalException, SystemException {
 
-		Lock lock = lockLocalService.getLockByUuid(lockUuid);
+		Lock lock = lockLocalService.getLockByUuid(lockUuid, companyId);
 
 		long fileEntryId = GetterUtil.getLong(lock.getKey());
 
 		Repository repository = getRepository(0, fileEntryId, 0);
 
-		return repository.refreshFileEntryLock(lockUuid, expirationTime);
+		return repository.refreshFileEntryLock(
+			lockUuid, companyId, expirationTime);
 	}
 
 	/**
@@ -2011,6 +2014,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 * WebDAV.
 	 *
 	 * @param  lockUuid the lock's universally unique identifier
+	 * @param  companyId the primary key of the file entry's company
 	 * @param  expirationTime the time in milliseconds before the lock expires.
 	 *         If the value is <code>0</code>, the default expiration time will
 	 *         be used from <code>portal.properties>.
@@ -2018,16 +2022,18 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 * @throws PortalException if the folder or lock could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Lock refreshFolderLock(String lockUuid, long expirationTime)
+	public Lock refreshFolderLock(
+			String lockUuid, long companyId, long expirationTime)
 		throws PortalException, SystemException {
 
-		Lock lock = lockLocalService.getLockByUuid(lockUuid);
+		Lock lock = lockLocalService.getLockByUuid(lockUuid, companyId);
 
 		long folderId = GetterUtil.getLong(lock.getKey());
 
 		Repository repository = getRepository(0, folderId, 0);
 
-		return repository.refreshFolderLock(lockUuid, expirationTime);
+		return repository.refreshFolderLock(
+			lockUuid, companyId, expirationTime);
 	}
 
 	/**

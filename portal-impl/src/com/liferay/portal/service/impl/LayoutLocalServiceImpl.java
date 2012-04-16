@@ -1286,12 +1286,12 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	public boolean hasLayoutSetPrototypeLayout(
-			String layoutSetPrototypeUuid, String layoutUuid)
+			String layoutSetPrototypeUuid, String layoutUuid, long companyId)
 		throws PortalException, SystemException {
 
 		LayoutSetPrototype layoutSetPrototype =
 			layoutSetPrototypeLocalService.getLayoutSetPrototypeByUuid(
-				layoutSetPrototypeUuid);
+				layoutSetPrototypeUuid, companyId);
 
 		return hasLayoutSetPrototypeLayout(layoutSetPrototype, layoutUuid);
 	}

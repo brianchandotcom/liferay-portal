@@ -746,15 +746,18 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		throws WebDAVException {
 
 		Resource resource = getResource(webDavRequest);
+		long companyId = webDavRequest.getCompanyId();
 
 		Lock lock = null;
 
 		try {
 			if (resource instanceof DLFileEntryResourceImpl) {
-				lock = DLAppServiceUtil.refreshFileEntryLock(uuid, timeout);
+				lock = DLAppServiceUtil.refreshFileEntryLock(
+					uuid, companyId, timeout);
 			}
 			else {
-				lock = DLAppServiceUtil.refreshFolderLock(uuid, timeout);
+				lock = DLAppServiceUtil.refreshFolderLock(
+					uuid, companyId, timeout);
 			}
 		}
 		catch (Exception e) {

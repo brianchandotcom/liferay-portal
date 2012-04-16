@@ -390,10 +390,11 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 		}
 	}
 
-	public Lock refreshFolderLock(String lockUuid, long expirationTime)
+	public Lock refreshFolderLock(
+			String lockUuid, long companyId, long expirationTime)
 		throws PortalException, SystemException {
 
-		return lockLocalService.refresh(lockUuid, expirationTime);
+		return lockLocalService.refresh(lockUuid, companyId, expirationTime);
 	}
 
 	public void unlockFolder(long groupId, long folderId, String lockUuid)

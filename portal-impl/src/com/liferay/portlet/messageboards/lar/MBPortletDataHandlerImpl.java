@@ -615,7 +615,8 @@ public class MBPortletDataHandlerImpl extends BasePortletDataHandler {
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			userBanElement, ban, _NAMESPACE);
 
-		List<User> users = UserUtil.findByUuid(ban.getBanUserUuid());
+		List<User> users = UserUtil.findByUuid_C(
+			ban.getBanUserUuid(), portletDataContext.getCompanyId());
 
 		Iterator<User> itr = users.iterator();
 

@@ -86,11 +86,12 @@ public class ChannelImpl extends BaseChannelImpl {
 				if (archive) {
 					UserNotificationEventLocalServiceUtil.
 						updateUserNotificationEvents(
-							notificationEventUuids, archive);
+							notificationEventUuids, getCompanyId(), archive);
 				}
 				else {
 					UserNotificationEventLocalServiceUtil.
-						deleteUserNotificationEvents(notificationEventUuids);
+						deleteUserNotificationEvents(
+							notificationEventUuids, getCompanyId());
 				}
 			}
 		}
@@ -124,11 +125,12 @@ public class ChannelImpl extends BaseChannelImpl {
 				if (archive) {
 					UserNotificationEventLocalServiceUtil.
 						updateUserNotificationEvent(
-							notificationEventUuid, archive);
+							notificationEventUuid, getCompanyId(), archive);
 				}
 				else {
 					UserNotificationEventLocalServiceUtil.
-						deleteUserNotificationEvent(notificationEventUuid);
+						deleteUserNotificationEvent(
+							notificationEventUuid, getCompanyId());
 				}
 			}
 		}
@@ -146,7 +148,8 @@ public class ChannelImpl extends BaseChannelImpl {
 
 		try {
 			UserNotificationEventLocalServiceUtil.
-				deleteUserNotificationEvent(notificationEventUuid);
+				deleteUserNotificationEvent(
+					notificationEventUuid, getCompanyId());
 		}
 		catch (Exception e) {
 			throw new ChannelException(
@@ -160,7 +163,8 @@ public class ChannelImpl extends BaseChannelImpl {
 
 		try {
 			UserNotificationEventLocalServiceUtil.
-				deleteUserNotificationEvents(notificationEventUuids);
+				deleteUserNotificationEvents(
+					notificationEventUuids, getCompanyId());
 		}
 		catch (Exception e) {
 			throw new ChannelException(
@@ -398,7 +402,8 @@ public class ChannelImpl extends BaseChannelImpl {
 				!invalidNotificationEventUuids.isEmpty()) {
 
 				UserNotificationEventLocalServiceUtil.
-					deleteUserNotificationEvents(invalidNotificationEventUuids);
+					deleteUserNotificationEvents(
+						invalidNotificationEventUuids, getCompanyId());
 			}
 		}
 		catch (Exception e) {
@@ -473,7 +478,7 @@ public class ChannelImpl extends BaseChannelImpl {
 			!invalidNotificationEventUuids.isEmpty()) {
 
 			UserNotificationEventLocalServiceUtil.deleteUserNotificationEvents(
-				invalidNotificationEventUuids);
+				invalidNotificationEventUuids, getCompanyId());
 		}
 
 		return notificationEvents;
@@ -533,7 +538,7 @@ public class ChannelImpl extends BaseChannelImpl {
 
 		if (!invalidNotificationEventUuids.isEmpty()) {
 			UserNotificationEventLocalServiceUtil.deleteUserNotificationEvents(
-				invalidNotificationEventUuids);
+				invalidNotificationEventUuids, getCompanyId());
 		}
 	}
 

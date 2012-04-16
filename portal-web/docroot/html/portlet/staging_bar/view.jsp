@@ -551,7 +551,7 @@ if (layout != null) {
 
 												if (Validator.isNotNull(lastImportUserUuid)) {
 													try {
-														User publisher = UserLocalServiceUtil.getUserByUuid(lastImportUserUuid);
+														User publisher = UserLocalServiceUtil.getUserByUuid(lastImportUserUuid, company.getCompanyId());
 
 														publisherName = publisher.getFullName();
 													}

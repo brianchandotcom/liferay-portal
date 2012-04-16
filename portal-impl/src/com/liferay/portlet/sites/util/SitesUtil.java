@@ -481,7 +481,8 @@ public class SitesUtil {
 			LayoutSetPrototype layoutSetPrototype =
 				LayoutSetPrototypeLocalServiceUtil.
 					getLayoutSetPrototypeByUuid(
-						layoutSet.getLayoutSetPrototypeUuid());
+						layoutSet.getLayoutSetPrototypeUuid(),
+						layout.getCompanyId());
 
 			Group group = layoutSetPrototype.getGroup();
 
@@ -596,7 +597,8 @@ public class SitesUtil {
 
 			if (LayoutLocalServiceUtil.hasLayoutSetPrototypeLayout(
 					layoutSet.getLayoutSetPrototypeUuid(),
-					layout.getSourcePrototypeLayoutUuid())) {
+					layout.getSourcePrototypeLayoutUuid(),
+					layout.getCompanyId())) {
 
 				return false;
 			}
@@ -646,7 +648,8 @@ public class SitesUtil {
 			LayoutSetPrototype layoutSetPrototype =
 				LayoutSetPrototypeLocalServiceUtil.
 					getLayoutSetPrototypeByUuid(
-						layoutSet.getLayoutSetPrototypeUuid());
+						layoutSet.getLayoutSetPrototypeUuid(),
+						layoutSet.getCompanyId());
 
 			String layoutsUpdateable = layoutSetPrototype.getSettingsProperty(
 				"layoutsUpdateable");
@@ -756,7 +759,7 @@ public class SitesUtil {
 
 		LayoutPrototype layoutPrototype =
 			LayoutPrototypeLocalServiceUtil.getLayoutPrototypeByUuid(
-				layout.getLayoutPrototypeUuid());
+				layout.getLayoutPrototypeUuid(), layout.getCompanyId());
 
 		Layout layoutPrototypeLayout = layoutPrototype.getLayout();
 
@@ -854,7 +857,7 @@ public class SitesUtil {
 
 		LayoutSetPrototype layoutSetPrototype =
 			LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuid(
-				layoutSet.getLayoutSetPrototypeUuid());
+				layoutSet.getLayoutSetPrototypeUuid(), layoutSet.getGroupId());
 
 		Date modifiedDate = layoutSetPrototype.getModifiedDate();
 

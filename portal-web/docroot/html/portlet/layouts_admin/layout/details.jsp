@@ -135,7 +135,7 @@ StringBuilder friendlyURLBase = new StringBuilder();
 	<c:if test="<%= Validator.isNotNull(selLayout.getLayoutPrototypeUuid()) %>">
 
 		<%
-		LayoutPrototype layoutPrototype = LayoutPrototypeLocalServiceUtil.getLayoutPrototypeByUuid(selLayout.getLayoutPrototypeUuid());
+		LayoutPrototype layoutPrototype = LayoutPrototypeLocalServiceUtil.getLayoutPrototypeByUuid(selLayout.getLayoutPrototypeUuid(), company.getCompanyId());
 		%>
 
 		<aui:input name="layoutPrototypeUuid" type="hidden" value="<%= selLayout.getLayoutPrototypeUuid() %>" />

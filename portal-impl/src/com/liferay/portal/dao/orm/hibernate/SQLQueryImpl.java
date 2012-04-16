@@ -40,6 +40,7 @@ public class SQLQueryImpl implements SQLQuery {
 
 	public SQLQueryImpl(org.hibernate.SQLQuery sqlQuery, boolean strictName) {
 		_sqlQuery = sqlQuery;
+		_strictName = strictName;
 
 		if (!_strictName) {
 			_names = sqlQuery.getNamedParameters();

@@ -90,7 +90,7 @@ public class XSLTemplateParser extends VelocityTemplateParser {
 				xmlSource, new StreamResult(unsyncStringWriter));
 		}
 
-		return false;
+		return true;
 	}
 
 	private TemplateContext _getTemplateContext(String script)
@@ -106,11 +106,10 @@ public class XSLTemplateParser extends VelocityTemplateParser {
 
 	private TransformerFactory _getTransformerFactory() {
 		if (_transformerFactory == null) {
-			TransformerFactory transformerFactory =
-				TransformerFactory.newInstance();
+			_transformerFactory = TransformerFactory.newInstance();
 
-			transformerFactory.setErrorListener(_getXSLErrorListener());
-			transformerFactory.setURIResolver(
+			_transformerFactory.setErrorListener(_getXSLErrorListener());
+			_transformerFactory.setURIResolver(
 				new URIResolver(getTokens(), getLanguageId()));
 		}
 

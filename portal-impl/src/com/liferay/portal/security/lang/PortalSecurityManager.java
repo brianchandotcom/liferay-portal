@@ -89,85 +89,93 @@ public class PortalSecurityManager extends SecurityManager {
 	}
 
 	protected void checkAuthPermission(
-		AuthPermission authPermission, Object context) {
+		PACLPolicy paclPolicy, AuthPermission authPermission, Object context) {
 	}
 
 	protected void checkFilePermission(
-		FilePermission filePermission, Object context) {
+		PACLPolicy paclPolicy, FilePermission filePermission, Object context) {
 
 		String actions = filePermission.getActions();
 
 		if (actions.equals(_FILE_PERMISSION_ACTION_DELETE)) {
-			doCheckDelete(filePermission.getName());
+			doCheckDelete(paclPolicy, filePermission.getName());
 		}
 		else if (actions.equals(_FILE_PERMISSION_ACTION_EXECUTE)) {
-			doCheckExec(filePermission.getName());
+			doCheckExec(paclPolicy, filePermission.getName());
 		}
 		else if (actions.equals(_FILE_PERMISSION_ACTION_READ)) {
-			doCheckRead(filePermission.getName());
+			doCheckRead(paclPolicy, filePermission.getName());
 		}
 		else if (actions.equals(_FILE_PERMISSION_ACTION_WRITE)) {
-			doCheckWrite(filePermission.getName());
+			doCheckWrite(paclPolicy, filePermission.getName());
 		}
 	}
 
 	protected void checkLoggingPermission(
-		LoggingPermission loggingPermission, Object context) {
+		PACLPolicy paclPolicy, LoggingPermission loggingPermission,
+		Object context) {
 
 		// TODO
 
 	}
 
 	protected void checkManagementPermission(
-		ManagementPermission managementPermission, Object context) {
+		PACLPolicy paclPolicy, ManagementPermission managementPermission,
+		Object context) {
 
 		// TODO
 
 	}
 
 	protected void checkMBeanPermission(
-		MBeanPermission mBeanPermission, Object context) {
+		PACLPolicy paclPolicy, MBeanPermission mBeanPermission,
+		Object context) {
 
 		// TODO
 
 	}
 
 	protected void checkMBeanServerPermission(
-		MBeanServerPermission mBeanServerPermission, Object context) {
+		PACLPolicy paclPolicy, MBeanServerPermission mBeanServerPermission,
+		Object context) {
 
 		// TODO
 
 	}
 
 	protected void checkMBeanTrustPermission(
-		MBeanTrustPermission mBeanTrustPermission, Object context) {
+		PACLPolicy paclPolicy, MBeanTrustPermission mBeanTrustPermission,
+		Object context) {
 
 		// TODO
 
 	}
 
 	protected void checkNetPermission(
-		NetPermission netPermission, Object context) {
+		PACLPolicy paclPolicy, NetPermission netPermission, Object context) {
 
 		// TODO
 	}
 
 	protected void checkPropertyPermission(
-		PropertyPermission propertyPermission, Object context) {
+		PACLPolicy paclPolicy, PropertyPermission propertyPermission,
+		Object context) {
 
 		// TODO
 
 	}
 
 	protected void checkReflectPermission(
-		ReflectPermission reflectPermission, Object context) {
+		PACLPolicy paclPolicy, ReflectPermission reflectPermission,
+		Object context) {
 
 		// TODO
 
 	}
 
 	protected void checkRuntimePermission(
-		RuntimePermission runtimePermission, Object context) {
+		PACLPolicy paclPolicy, RuntimePermission runtimePermission,
+		Object context) {
 
 		// TODO
 
@@ -178,7 +186,7 @@ public class PortalSecurityManager extends SecurityManager {
 
 			String pkg = name.substring(pos);
 
-			doCheckPackageAccess(pkg);
+			doCheckPackageAccess(paclPolicy, pkg);
 		}
 		else if (name.equals(_RUNTIME_PERMISSION_SET_SECURITY_MANAGER)) {
 			throw new SecurityException(
@@ -192,14 +200,16 @@ public class PortalSecurityManager extends SecurityManager {
 	}
 
 	protected void checkSecurityPermission(
-		SecurityPermission securityPermission, Object context) {
+		PACLPolicy paclPolicy, SecurityPermission securityPermission,
+		Object context) {
 
 		// TODO
 
 	}
 
 	protected void checkSocketPermission(
-		SocketPermission socketPermission, Object context) {
+		PACLPolicy paclPolicy, SocketPermission socketPermission,
+		Object context) {
 
 		String actions = socketPermission.getActions();
 
@@ -221,30 +231,31 @@ public class PortalSecurityManager extends SecurityManager {
 
 		}
 		else if (actions.contains("connect")) {
-			doCheckConnect(host, GetterUtil.getInteger(portRange));
+			doCheckConnect(paclPolicy, host, GetterUtil.getInteger(portRange));
 		}
 		else if (actions.contains("listen")) {
-			doCheckListen(GetterUtil.getInteger(portRange));
+			doCheckListen(paclPolicy, GetterUtil.getInteger(portRange));
 		}
 		else if (actions.contains("resolve")) {
-			doCheckConnect(host, -1);
+			doCheckConnect(paclPolicy, host, -1);
 		}
 	}
 
 	protected void checkUnresolvedPermission(
-		UnresolvedPermission unresolvedPermission, Object context) {
+		PACLPolicy paclPolicy, UnresolvedPermission unresolvedPermission,
+		Object context) {
 
 		// TODO
 
 	}
 
-	protected void doCheckAccept(String host, int port) {
+	protected void doCheckAccept(PACLPolicy paclPolicy, String host, int port) {
 
 		// TODO
 
 	}
 
-	protected void doCheckConnect(String host, int port) {
+	protected void doCheckConnect(PACLPolicy paclPolicy, String host, int port) {
 		if (port == -1) {
 			if (_logDoCheckConnect.isDebugEnabled()) {
 				_logDoCheckConnect.debug(
@@ -254,54 +265,35 @@ public class PortalSecurityManager extends SecurityManager {
 			return;
 		}
 
-		PACLPolicy paclPolicy = getPACLPolicy(
-			_logDoCheckConnect.isDebugEnabled());
-
-		if (paclPolicy != null) {
-			if (!paclPolicy.hasSocketConnect(host, port)) {
-				throw new SecurityException(
-					"Attempted to connect to host " + host + " on port " +
-						port);
-			}
+		if (!paclPolicy.hasSocketConnect(host, port)) {
+			throw new SecurityException(
+				"Attempted to connect to host " + host + " on port " +
+					port);
 		}
 	}
 
-	protected void doCheckDelete(String fileName) {
-		PACLPolicy paclPolicy = getPACLPolicy(
-			_logDoCheckDelete.isDebugEnabled());
-
-		if (paclPolicy != null) {
-			if (!paclPolicy.hasFileDelete(fileName)) {
-				throw new SecurityException(
-					"Attempted to delete file " + fileName);
-			}
+	protected void doCheckDelete(PACLPolicy paclPolicy, String fileName) {
+		if (!paclPolicy.hasFileDelete(fileName)) {
+			throw new SecurityException(
+				"Attempted to delete file " + fileName);
 		}
 	}
 
-	protected void doCheckExec(String fileName) {
-		PACLPolicy paclPolicy = getPACLPolicy(_logDoCheckExec.isDebugEnabled());
-
-		if (paclPolicy != null) {
-			if (!paclPolicy.hasFileExecute(fileName)) {
-				throw new SecurityException(
-					"Attempted to execute file " + fileName);
-			}
+	protected void doCheckExec(PACLPolicy paclPolicy, String fileName) {
+		if (!paclPolicy.hasFileExecute(fileName)) {
+			throw new SecurityException(
+				"Attempted to execute file " + fileName);
 		}
 	}
 
-	protected void doCheckListen(int port) {
-		PACLPolicy paclPolicy = getPACLPolicy(
-			_logDoCheckListen.isDebugEnabled());
-
-		if (paclPolicy != null) {
-			if (!paclPolicy.hasSocketListen(port)) {
-				throw new SecurityException(
-					"Attempted to listen on port " + port);
-			}
+	protected void doCheckListen(PACLPolicy paclPolicy, int port) {
+		if (!paclPolicy.hasSocketListen(port)) {
+			throw new SecurityException(
+				"Attempted to listen on port " + port);
 		}
 	}
 
-	protected void doCheckPackageAccess(String pkg) {
+	protected void doCheckPackageAccess(PACLPolicy paclPolicy, String pkg) {
 
 		// TODO
 
@@ -342,56 +334,66 @@ public class PortalSecurityManager extends SecurityManager {
 		if (permission instanceof AllPermission) {
 		}
 		else if (permission instanceof AuthPermission) {
-			checkAuthPermission((AuthPermission)permission, context);
+			checkAuthPermission(
+				paclPolicy, (AuthPermission)permission, context);
 		}
 		else if (permission instanceof AWTPermission) {
 		}
 		else if (permission instanceof DelegationPermission) {
 		}
 		else if (permission instanceof FilePermission) {
-			checkFilePermission((FilePermission)permission, context);
+			checkFilePermission(
+				paclPolicy, (FilePermission)permission, context);
 		}
 		else if (permission instanceof LoggingPermission) {
-			checkLoggingPermission((LoggingPermission)permission, context);
+			checkLoggingPermission(
+				paclPolicy, (LoggingPermission)permission, context);
 		}
 		else if (permission instanceof ManagementPermission) {
 			checkManagementPermission(
-				(ManagementPermission)permission, context);
+				paclPolicy, (ManagementPermission)permission, context);
 		}
 		else if (permission instanceof MBeanPermission) {
-			checkMBeanPermission((MBeanPermission)permission, context);
+			checkMBeanPermission(
+				paclPolicy, (MBeanPermission)permission, context);
 		}
 		else if (permission instanceof MBeanServerPermission) {
 			checkMBeanServerPermission(
-				(MBeanServerPermission)permission, context);
+				paclPolicy, (MBeanServerPermission)permission, context);
 		}
 		else if (permission instanceof MBeanTrustPermission) {
 			checkMBeanTrustPermission(
-				(MBeanTrustPermission)permission, context);
+				paclPolicy, (MBeanTrustPermission)permission, context);
 		}
 		else if (permission instanceof NetPermission) {
-			checkNetPermission((NetPermission)permission, context);
+			checkNetPermission(
+				paclPolicy, (NetPermission)permission, context);
 		}
 		else if (permission instanceof PrivateCredentialPermission) {
 		}
 		else if (permission instanceof PropertyPermission) {
-			checkPropertyPermission((PropertyPermission)permission, context);
+			checkPropertyPermission(
+				paclPolicy, (PropertyPermission)permission, context);
 		}
 		else if (permission instanceof ReflectPermission) {
-			checkReflectPermission((ReflectPermission)permission, context);
+			checkReflectPermission(
+				paclPolicy, (ReflectPermission)permission, context);
 		}
 		else if (permission instanceof RuntimePermission) {
-			checkRuntimePermission((RuntimePermission)permission, context);
+			checkRuntimePermission(
+				paclPolicy, (RuntimePermission)permission, context);
 		}
 		else if (permission instanceof SecurityPermission) {
-			checkSecurityPermission((SecurityPermission)permission, context);
+			checkSecurityPermission(
+				paclPolicy, (SecurityPermission)permission, context);
 		}
 		else if (permission instanceof SerializablePermission) {
 		}
 		else if (permission instanceof ServicePermission) {
 		}
 		else if (permission instanceof SocketPermission) {
-			checkSocketPermission((SocketPermission)permission, context);
+			checkSocketPermission(
+				paclPolicy, (SocketPermission)permission, context);
 		}
 		else if (permission instanceof SQLPermission) {
 		}
@@ -401,7 +403,7 @@ public class PortalSecurityManager extends SecurityManager {
 		}
 		else if (permission instanceof UnresolvedPermission) {
 			checkUnresolvedPermission(
-				(UnresolvedPermission)permission, context);
+				paclPolicy, (UnresolvedPermission)permission, context);
 		}
 
 		if (_parentSecurityManager != null) {
@@ -409,26 +411,17 @@ public class PortalSecurityManager extends SecurityManager {
 		}
 	}
 
-	protected void doCheckRead(String fileName) {
-		PACLPolicy paclPolicy = getPACLPolicy(_logDoCheckRead.isDebugEnabled());
-
-		if (paclPolicy != null) {
-			if (!paclPolicy.hasFileRead(fileName)) {
-				throw new SecurityException(
-					"Attempted to read file " + fileName);
-			}
+	protected void doCheckRead(PACLPolicy paclPolicy, String fileName) {
+		if (!paclPolicy.hasFileRead(fileName)) {
+			throw new SecurityException(
+				"Attempted to read file " + fileName);
 		}
 	}
 
-	protected void doCheckWrite(String fileName) {
-		PACLPolicy paclPolicy = getPACLPolicy(
-			_logDoCheckWrite.isDebugEnabled());
-
-		if (paclPolicy != null) {
-			if (!paclPolicy.hasFileWrite(fileName)) {
-				throw new SecurityException(
-					"Attempted to write file " + fileName);
-			}
+	protected void doCheckWrite(PACLPolicy paclPolicy, String fileName) {
+		if (!paclPolicy.hasFileWrite(fileName)) {
+			throw new SecurityException(
+				"Attempted to write file " + fileName);
 		}
 	}
 

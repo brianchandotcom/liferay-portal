@@ -670,11 +670,37 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public void select(String selectLocator, String optionLocator) {
-		throw new UnsupportedOperationException();
+		WebElement webElement = getWebElement(selectLocator);
+
+		Select select = new Select(webElement);
+
+		if (optionLocator.startsWith("index=")) {
+			select.selectByIndex(GetterUtil.getInteger(optionLocator.substring(6)));
+		}
+		else if (optionLocator.startsWith("label=")) {
+			select.selectByVisibleText(optionLocator.substring(6));
+		}
+		else if (optionLocator.startsWith("value=")) {
+			select.selectByValue(optionLocator.substring(6));
+		}
+		else {
+			select.selectByVisibleText(optionLocator);
+		}
 	}
 
 	public void selectFrame(String locator) {
-		throw new UnsupportedOperationException();
+		if (locator.equals("relative=top")) {
+			WebDriver.TargetLocator targetLocator = switchTo();
+
+			targetLocator.defaultContent();
+		}
+		else {
+			WebElement frameElement = getWebElement(locator);
+
+			WebDriver.TargetLocator targetLocator = switchTo();
+
+			targetLocator.frame(frameElement);
+		}
 	}
 
 	public void selectPopUp(String windowID) {

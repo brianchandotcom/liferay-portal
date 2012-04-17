@@ -61,8 +61,8 @@ public class AssignToMeWebContentActionsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Never"),
 			selenium.getText("//td[5]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//td[6]/span/ul/li/strong/a/span"));
-		selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {

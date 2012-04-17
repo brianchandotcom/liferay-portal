@@ -64,18 +64,12 @@ public class FileEntrySearch extends SearchContainer<FileEntry> {
 	}
 
 	public FileEntrySearch(
-		PortletRequest portletRequest, int delta, PortletURL iteratorURL) {
+		PortletRequest portletRequest, PortletURL iteratorURL) {
 
 		this(
 			portletRequest, new FileEntryDisplayTerms(portletRequest),
-			new FileEntrySearchTerms(portletRequest), DEFAULT_CUR_PARAM, delta,
-			iteratorURL, headerNames, EMPTY_RESULTS_MESSAGE);
-	}
-
-	public FileEntrySearch(
-		PortletRequest portletRequest, PortletURL iteratorURL) {
-
-		this(portletRequest, DEFAULT_DELTA, iteratorURL);
+			new FileEntrySearchTerms(portletRequest), DEFAULT_CUR_PARAM,
+			DEFAULT_DELTA, iteratorURL, headerNames, EMPTY_RESULTS_MESSAGE);
 	}
 
 }

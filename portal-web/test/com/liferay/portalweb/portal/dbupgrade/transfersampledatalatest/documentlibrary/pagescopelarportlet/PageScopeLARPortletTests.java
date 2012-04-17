@@ -15,6 +15,16 @@
 package com.liferay.portalweb.portal.dbupgrade.transfersampledatalatest.documentlibrary.pagescopelarportlet;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.pagescope.AddCustomSiteDLPageScopeTest;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.pagescope.AddPage1DLTest;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.pagescope.AddPage1PortletDLTest;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.pagescope.AddPage2DLTest;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.pagescope.AddPage2PortletDLTest;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.pagescope.AddPage3DLTest;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.pagescope.AddPage3PortletDLTest;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.pagescope.ConfigurePage1PortletDLScopeDefaultTest;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.pagescope.ConfigurePage2PortletDLScopeLayoutCurrentPageTest;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.pagescope.ConfigurePage3PortletDLScopeLayoutPage2Test;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

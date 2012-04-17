@@ -15,6 +15,17 @@
 package com.liferay.portalweb.portal.dbupgrade.transfersampledatalatest.blogs.pagescopelarcp;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.blogs.pagescope.AddCustomSiteBlogsPageScopeTest;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.blogs.pagescope.AddPage1BlogsPageScopeTest;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.blogs.pagescope.AddPage1PortletBlogsPageScopeTest;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.blogs.pagescope.AddPage2BlogsPageScopeTest;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.blogs.pagescope.AddPage2PortletBlogsPageScopeTest;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.blogs.pagescope.AddPage3BlogsPageScopeTest;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.blogs.pagescope.AddPage3PortletBlogsPageScopeTest;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.blogs.pagescope.ConfigurePortlet1BlogsScopeDefaultTest;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.blogs.pagescope.ConfigurePortlet2BlogsScopeLayoutCurrentPageTest;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.blogs.pagescope.ConfigurePortlet2MaximumItemsToDisplay1Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.blogs.pagescope.ConfigurePortlet3BlogsScopeLayoutPage2Test;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

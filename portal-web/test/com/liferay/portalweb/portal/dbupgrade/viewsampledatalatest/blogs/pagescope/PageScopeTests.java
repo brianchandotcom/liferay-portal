@@ -16,6 +16,27 @@ package com.liferay.portalweb.portal.dbupgrade.viewsampledatalatest.blogs.pagesc
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.blogs.pagescope.Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.blogs.pagescope.Guest_ViewPage1BlogsEntry1Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.blogs.pagescope.Guest_ViewPage2BlogsEntry2Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.blogs.pagescope.Guest_ViewPage2BlogsEntry3Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.blogs.pagescope.Guest_ViewPage2BlogsEntry4Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.blogs.pagescope.SignInTest;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.blogs.pagescope.ViewConfigurePortlet2MaximumItemsToDisplay1Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.blogs.pagescope.ViewPage1BlogsEntry1Comment1Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.blogs.pagescope.ViewPage1BlogsEntry1Comment2Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.blogs.pagescope.ViewPage1BlogsEntry1Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.blogs.pagescope.ViewPage2BlogsEntry2Comment1Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.blogs.pagescope.ViewPage2BlogsEntry2Comment2Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.blogs.pagescope.ViewPage2BlogsEntry2Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.blogs.pagescope.ViewPage2BlogsEntry3Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.blogs.pagescope.ViewPage2BlogsEntry4Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.blogs.pagescope.ViewRatePage1BlogsEntry1Comment1Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.blogs.pagescope.ViewRatePage1BlogsEntry1Comment2Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.blogs.pagescope.ViewRatePage1BlogsEntry1Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.blogs.pagescope.ViewRatePage2BlogsEntry2Comment1Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.blogs.pagescope.ViewRatePage2BlogsEntry2Comment2Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.blogs.pagescope.ViewRatePage2BlogsEntry2Test;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

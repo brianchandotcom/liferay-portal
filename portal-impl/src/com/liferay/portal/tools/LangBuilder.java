@@ -555,6 +555,7 @@ public class LangBuilder {
 			translationId.equals("en_hr") ||
 			translationId.equals("en_cs") ||
 			translationId.equals("en_da") ||
+			translationId.equals("en_de") || // LPS-26741
 			translationId.equals("en_fi") ||
 			translationId.equals("en_gl") ||
 			translationId.equals("en_iw") ||

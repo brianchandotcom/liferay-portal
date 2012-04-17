@@ -75,9 +75,7 @@ AUI.add(
 
 						branchDialog = new A.Dialog(
 							{
-								align: {
-									points: ['tc', 'tc']
-								},
+								align: Liferay.Util.Window.ALIGN_CENTER,
 								bodyContent: A.one('#' + namespace + 'addBranch').show(),
 								modal: true,
 								width: 530
@@ -100,9 +98,7 @@ AUI.add(
 					if (!mergeDialog) {
 						mergeDialog = new A.Dialog(
 							{
-								align: {
-									points: ['tc', 'tc']
-								},
+								align: Liferay.Util.Window.ALIGN_CENTER,
 								draggable: true,
 								modal: true,
 								width: 530
@@ -142,9 +138,7 @@ AUI.add(
 
 					var	updateBranchDialog = new A.Dialog(
 						{
-							align: {
-								points: ['tc', 'tc']
-							},
+							align: Liferay.Util.Window.ALIGN_CENTER,
 							draggable: true,
 							modal: true,
 							width: 530

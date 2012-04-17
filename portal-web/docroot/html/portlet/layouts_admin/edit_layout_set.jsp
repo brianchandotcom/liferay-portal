@@ -87,8 +87,8 @@ boolean hasExportImportLayoutsPermission = GroupPermissionUtil.contains(permissi
 					<aui:script use="aui-dialog">
 						new A.Dialog(
 							{
+								align: Liferay.Util.Window.ALIGN_CENTER,
 								bodyContent: A.one('#<portlet:namespace />importPage').show(),
-								centered: true,
 								modal: true,
 								title: '<%= UnicodeLanguageUtil.get(pageContext, "import") %>',
 								width: 600
@@ -146,8 +146,8 @@ boolean hasExportImportLayoutsPermission = GroupPermissionUtil.contains(permissi
 					if (!popup) {
 						popup = new A.Dialog(
 							{
+								align: Liferay.Util.Window.ALIGN_CENTER,
 								bodyContent: content.show(),
-								centered: true,
 								title: '<%= UnicodeLanguageUtil.get(pageContext, "add-page") %>',
 								modal: true,
 								width: 500
@@ -203,7 +203,7 @@ boolean hasExportImportLayoutsPermission = GroupPermissionUtil.contains(permissi
 						{
 							dialog:
 								{
-									centered: true,
+									align: Liferay.Util.Window.ALIGN_CENTER,
 									constrain: true,
 									modal: true,
 									width: 600
@@ -232,7 +232,7 @@ boolean hasExportImportLayoutsPermission = GroupPermissionUtil.contains(permissi
 						{
 							dialog:
 								{
-									centered: true,
+									align: Liferay.Util.Window.ALIGN_CENTER,
 									constrain: true,
 									modal: true,
 									width: 600

@@ -938,6 +938,7 @@ AUI.add(
 
 					instance._saveDialog = new A.Dialog(
 						{
+							align: Liferay.Util.Window.ALIGN_CENTER,
 							bodyContent: htmlTemplate,
 							buttons: [
 								{
@@ -951,7 +952,6 @@ AUI.add(
 									label: Liferay.Language.get('cancel')
 								}
 							],
-							centered: true,
 							modal: true,
 							title: title,
 							width: 550

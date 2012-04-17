@@ -106,6 +106,7 @@ portletURL.setParameter("struts_action", "/dynamic_data_lists/view");
 
 			var dialog = new A.Dialog(
 				{
+					align: Liferay.Util.Window.ALIGN_CENTER,
 					bodyContent: form,
 					buttons: [
 						{
@@ -121,7 +122,6 @@ portletURL.setParameter("struts_action", "/dynamic_data_lists/view");
 							label: Liferay.Language.get('cancel')
 						}
 					],
-					centered: true,
 					modal: true,
 					title: '<%= UnicodeLanguageUtil.get(pageContext, "export") %>',
 					width: 400

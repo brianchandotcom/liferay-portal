@@ -455,8 +455,8 @@ if ((row == null) && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) |
 
 				new A.Dialog(
 					{
+						align: Liferay.Util.Window.ALIGN_CENTER,
 						bodyContent: A.one('#<%= randomNamespace %>webDav').html(),
-						centered: true,
 						destroyOnClose: true,
 						modal: true,
 						title: '<%= UnicodeLanguageUtil.get(pageContext, "access-from-desktop") %>',

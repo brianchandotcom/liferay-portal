@@ -49,7 +49,7 @@ long reportedUserId = GetterUtil.getLong((String)request.getAttribute("liferay-u
 					function() {
 						var popup = new A.Dialog(
 							{
-								centered: true,
+								align: Liferay.Util.Window.ALIGN_CENTER,
 								destroyOnClose: true,
 								draggable: true,
 								modal: true,
@@ -90,8 +90,8 @@ long reportedUserId = GetterUtil.getLong((String)request.getAttribute("liferay-u
 					function(event) {
 						var popup = new A.Dialog(
 							{
+								align: Liferay.Util.Window.ALIGN_CENTER,
 								bodyContent: A.one('#<%= randomNamespace %>signIn').html(),
-								centered: true,
 								destroyOnClose: true,
 								title: '<%= UnicodeLanguageUtil.get(pageContext, "report-inappropriate-content") %>',
 								modal: true,

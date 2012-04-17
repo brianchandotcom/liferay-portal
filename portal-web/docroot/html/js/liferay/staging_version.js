@@ -147,9 +147,7 @@ AUI.add(
 					if (!graphDialog) {
 						graphDialog = new A.Dialog(
 							{
-								align: {
-									points: ['tc', 'tc']
-								},
+								align: Liferay.Util.Window.ALIGN_CENTER,
 								draggable: true,
 								height: 600,
 								modal: true,

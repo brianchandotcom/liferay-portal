@@ -104,6 +104,7 @@ WorkflowTask workflowTask = (WorkflowTask)row.getObject();
 
 		var dialog = new A.Dialog(
 			{
+				align: Liferay.Util.Window.ALIGN_CENTER,
 				bodyContent: form,
 				buttons: [
 					{
@@ -119,7 +120,6 @@ WorkflowTask workflowTask = (WorkflowTask)row.getObject();
 						label: '<%= UnicodeLanguageUtil.get(pageContext, "cancel") %>'
 					}
 				],
-				centered: true,
 				modal: true,
 				title: title,
 				width: 400

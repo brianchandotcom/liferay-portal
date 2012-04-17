@@ -204,7 +204,7 @@ request.setAttribute("view.jsp-total", String.valueOf(total));
 %>
 
 <c:if test="<%= results.isEmpty() %>">
-	<div class="portlet-msg-info entries-empty">
+	<div class="entries-empty portlet-msg-info">
 		<liferay-ui:message key="there-are-no-documents-or-media-files-in-this-folder" />
 	</div>
 </c:if>

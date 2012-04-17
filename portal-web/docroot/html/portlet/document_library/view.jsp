@@ -104,7 +104,7 @@ String strutsAction = ParamUtil.getString(request, "struts_action");
 			String cssClass = "show-sync-message-icon-container";
 
 			if (showSyncMessage || !PropsValues.DL_SHOW_LIFERAY_SYNC_MESSAGE) {
-				cssClass = "show-sync-message-icon-container aui-helper-hidden";
+				cssClass += " aui-helper-hidden";
 			}
 			%>
 

@@ -2,17 +2,15 @@ AUI.add(
 	'liferay-document-library',
 	function(A) {
 		var AObject = A.Object;
-		var QueryString = A.QueryString;
+		var History = Liferay.HistoryManager;
 		var Lang = A.Lang;
-		var UA = A.UA;
+		var QueryString = A.QueryString;
 
 		var formatSelectorNS = A.Node.formatSelectorNS;
 
 		var owns = AObject.owns;
 
-		var WIN = A.config.win;
-
-		var History = Liferay.HistoryManager;
+		var UA = A.UA;
 
 		var PAIR_SEPARATOR = History.PAIR_SEPARATOR;
 
@@ -142,17 +140,15 @@ AUI.add(
 
 		var TPL_MESSAGE_RESPONSE = '<div class="lfr-message-response" />';
 
-		var TPL_MESSAGE_SEARCHING =
-			'<div class="portlet-msg-info">' +
-				Liferay.Language.get('searching,-please-wait') +
-			'</div>' +
-			'<div class="loading-animation"/>';
+		var TPL_MESSAGE_SEARCHING = '<div class="portlet-msg-info">{0}</div><div class="loading-animation" />';
 
 		var VIEW_ENTRIES = 'viewEntries';
 
 		var VIEW_ENTRIES_PAGE = 'viewEntriesPage';
 
 		var VIEW_FOLDERS = 'viewFolders';
+
+		var WIN = A.config.win;
 
 		Liferay.DL_DISPLAY_STYLE_BUTTONS = SRC_DISPLAY_STYLE_BUTTONS;
 
@@ -214,7 +210,7 @@ AUI.add(
 									boundingBox: instance.byId('syncNotification'),
 									contentBox: instance.byId('syncNotificationContent'),
 									id: instance.NS + 'show-sync-message',
-									trigger: A.one('#' + instance.ns('showSyncMessageIconContainer')),
+									trigger: instance.one('#showSyncMessageIconContainer'),
 									visible: !config.syncMessageSuppressed
 								}
 							).render();
@@ -332,7 +328,7 @@ AUI.add(
 
 						eventHandles.push(Liferay.on(config.portletId + ':portletRefreshed', A.bind(instance.destructor, instance)));
 
-						A.one('#' + instance.ns('fm1')).on('submit', instance._onSearchFormSubmit, instance);
+						instance.one('#fm1').on('submit', instance._onSearchFormSubmit, instance);
 
 						instance._toggleSyncNotification();
 
@@ -597,7 +593,7 @@ AUI.add(
 						A.mix(tmpParams, QueryString.parse(location.hash, PAIR_SEPARATOR, VALUE_SEPARATOR));
 
 						for (var paramName in tmpParams) {
-							if (paramName.indexOf(namespace) == 0) {
+							if (owns(tmpParams, paramName) && paramName.indexOf(namespace) == 0) {
 								params[paramName] = tmpParams[paramName];
 							}
 						}
@@ -832,9 +828,9 @@ AUI.add(
 						var selectedFolder = instance._getSelectedFolder();
 
 						var searchData = {
-							repositoryId: selectedFolder.repositoryId,
 							folderId: selectedFolder.id,
 							keywords: instance._keywordsNode.get('value'),
+							repositoryId: selectedFolder.repositoryId,
 							showSearchInfo: true
 						};
 
@@ -1182,13 +1178,13 @@ AUI.add(
 						var showTabs = (selectedFolder.id == DEFAULT_FOLDER_ID);
 
 						var searchData = {
-							repositoryId: selectedFolder.repositoryId,
-							searchRepositoryId: selectedFolder.repositoryId,
 							folderId: selectedFolder.id,
-							searchFolderId: selectedFolder.id,
 							keywords: instance._keywordsNode.get('value'),
-							showSearchInfo: true,
-							showRepositoryTabs: showTabs
+							repositoryId: selectedFolder.repositoryId,
+							searchFolderId: selectedFolder.id,
+							searchRepositoryId: selectedFolder.repositoryId,
+							showRepositoryTabs: showTabs,
+							showSearchInfo: true
 						};
 
 						instance._searchFileEntry(searchData);
@@ -1227,11 +1223,11 @@ AUI.add(
 							var selectedFolder = instance._getSelectedFolder();
 
 							var searchData = {
-								repositoryId: selectedFolder.repositoryId,
-								searchRepositoryId: repositoryId,
 								folderId: selectedFolder.id,
+								keywords: instance._keywordsNode.get('value'),
+								repositoryId: selectedFolder.repositoryId,
 								searchFolderId: DEFAULT_FOLDER_ID,
-								keywords: instance._keywordsNode.get('value')
+								searchRepositoryId: repositoryId
 							};
 
 							instance._searchFileEntry(searchData);
@@ -1351,7 +1347,9 @@ AUI.add(
 
 							entriesContainer.empty();
 
-							entriesContainer.html(TPL_MESSAGE_SEARCHING);
+							var searchingTPL = Lang.sub(TPL_MESSAGE_SEARCHING, [Liferay.Language.get('searching,-please-wait')]);
+
+							entriesContainer.html(searchingTPL);
 						}
 
 						instance._documentLibraryContainer.all('.document-entries-paginator').hide();
@@ -1520,10 +1518,12 @@ AUI.add(
 							entriesContainer.setContent(searchInfo);
 						}
 
-						var fragmentSearchResults = instance.one('#' + instance.ns('fragmentSearchResults'), content);
+						var fragmentSearchResults = instance.one('#fragmentSearchResults', content);
+
+						var searchResults;
 
 						if (fragmentSearchResults) {
-							var searchResults = entriesContainer.one('#' + instance.ns(STR_SEARCH_RESULTS_CONTAINER) + repositoryId);
+							searchResults = instance.one('#' + STR_SEARCH_RESULTS_CONTAINER + repositoryId, entriesContainer);
 
 							if (searchResults) {
 								searchResults.empty();
@@ -1537,7 +1537,7 @@ AUI.add(
 						searchResults = instance.one('.local-search-results', content);
 
 						if (searchResults) {
-							var searchResultsContainer = instance.one('#' + instance.ns(STR_SEARCH_RESULTS_CONTAINER), content);
+							var searchResultsContainer = instance.one('#' + STR_SEARCH_RESULTS_CONTAINER, content);
 
 							if (!searchInfo) {
 								entriesContainer.empty();
@@ -1551,7 +1551,7 @@ AUI.add(
 						var repositorySearchResults = instance.one('.repository-search-results', content);
 
 						if (repositorySearchResults) {
-							var resultsContainer = entriesContainer.one('#' + instance.ns(STR_SEARCH_RESULTS_CONTAINER) + repositoryId);
+							var resultsContainer = instance.one('#' + STR_SEARCH_RESULTS_CONTAINER + repositoryId, entriesContainer);
 
 							if (!resultsContainer) {
 								resultsContainer = entriesContainer;
@@ -1694,13 +1694,13 @@ AUI.add(
 					_tuneStateChangeParams: function(requestParams) {
 						var instance = this;
 
-						var _entriesContainer = instance._entriesContainer;
+						var entriesContainer = instance._entriesContainer;
 
 						var namespacedShowRepositoryTabs = instance.ns(STR_SHOW_REPOSITORY_TABS);
 
 						if (AObject.owns(requestParams, namespacedShowRepositoryTabs) &&
 							!requestParams[namespacedShowRepositoryTabs] &&
-							!_entriesContainer.one('ul.aui-tabview-list')) {
+							!entriesContainer.one('ul.aui-tabview-list')) {
 
 							requestParams[namespacedShowRepositoryTabs] = true;
 
@@ -1711,7 +1711,7 @@ AUI.add(
 
 						if (AObject.owns(requestParams, namespacedShowSearchInfo) &&
 							!requestParams[namespacedShowSearchInfo] &&
-							!_entriesContainer.one('.search-info')) {
+							!entriesContainer.one('.search-info')) {
 
 							requestParams[namespacedShowSearchInfo] = true;
 

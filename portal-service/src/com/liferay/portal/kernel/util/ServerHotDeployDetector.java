@@ -16,18 +16,10 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.xml.Attribute;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.DocumentException;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.Node;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.util.PortalUtil;
 
-import java.io.File;
-import java.io.IOException;
+import java.lang.reflect.Field;
 
-import java.util.List;
+import javax.servlet.ServletContext;
 
 /**
  * @author Igor Spasic
@@ -35,122 +27,71 @@ import java.util.List;
 public class ServerHotDeployDetector {
 
 	public static ServerHotDeployDetector getInstance() {
-		if (_instance == null) {
-			init();
-		}
-
 		return _instance;
 	}
 
-	public static void init() {
+	public static void init(ServletContext servletContext) {
+		if (_instance != null) {
+			return;
+		}
+
 		_instance = new ServerHotDeployDetector();
 
-		_instance._init();
+		_instance._init(servletContext);
 	}
 
 	public static boolean isHotDeployEnabled() {
 		return getInstance()._hotDeployEnabled;
 	}
 
-	private static boolean _isHotDeployEnabledOnTomcat() {
+	private static boolean _isHotDeployEnabledOnTomcat(
+		ServletContext servletContext) throws Exception {
 
-		String catalinaBaseDir = System.getenv("CATALINA_BASE");
+		// 1 ApplicationContextFacade
+		Class type = servletContext.getClass();
 
-		File serverXmlFile = new File(catalinaBaseDir, "conf/server.xml");
+		Field field = ReflectionUtil.getDeclaredField(type, "context");
 
-		Document document = null;
+		Object applicationContextFacade = field.get(servletContext);
 
-		try {
-			document = SAXReaderUtil.read(serverXmlFile);
-		}
-		catch (DocumentException e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Can't parse Tomcat server.xml", e);
-			}
+		// 2 ApplicationContext
+		type = field.getType();
 
-			return false;
-		}
+		field = ReflectionUtil.getDeclaredField(type, "context");
 
-		List<Node> hostNodes = document.selectNodes(
-			"/Server/Service/Engine/Host");
+		Object applicationContext = field.get(applicationContextFacade);
 
-		if (hostNodes.isEmpty()) {
-			return false;
-		}
+		// 3 StandardContext
+		type = field.getType();
 
-		String portalWebDir = PortalUtil.getPortalWebDir();
+		// 4 ContextBase
+		type = type.getSuperclass();
 
-		File portalWebDirFile = null;
+		field = ReflectionUtil.getDeclaredField(type, "parent");
 
-		try {
-			portalWebDirFile = new File(portalWebDir).getCanonicalFile();
-		}
-		catch (IOException e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to resolve portal web dir", e);
-			}
-			return false;
-		}
+		Object standardContext = field.get(applicationContext);
 
-		for (Node node : hostNodes) {
-			Element element = (Element) node;
+		type = standardContext.getClass();
 
-			Attribute appBaseAttribute = element.attribute("appBase");
+		field = ReflectionUtil.getDeclaredField(type, "autoDeploy");
 
-			if (appBaseAttribute == null) {
-				continue;
-			}
+		Boolean autoDeploy = (Boolean)field.get(standardContext);
 
-			String appBase = appBaseAttribute.getValue();
-
-			File appBaseFile = new File(catalinaBaseDir, appBase);
-
-			if (!appBaseFile.exists()) {
-				appBaseFile = new File(appBase);
-			}
-
-			if (!appBaseFile.exists()) {
-				continue;
-			}
-
-			try {
-				appBaseFile = appBaseFile.getCanonicalFile();
-			}
-			catch (IOException e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Unable to resolve appBase dir", e);
-				}
-				continue;
-			}
-
-			portalWebDir = portalWebDirFile.getPath();
-			appBase = appBaseFile.getPath();
-
-			if (!portalWebDir.startsWith(appBase)) {
-				continue;
-			}
-
-			Attribute autoDeployAttribute = element.attribute("autoDeploy");
-
-			if (autoDeployAttribute == null) {
-				return true;
-			}
-
-			String autoDeploy = autoDeployAttribute.getValue();
-
-			return Boolean.parseBoolean(autoDeploy);
-		}
-
-		return false;
+		return autoDeploy.booleanValue();
 	}
 
-	private void _init() {
+	private void _init(ServletContext servletContext) {
 		if (ServerDetector.isTomcat()) {
-			_hotDeployEnabled = _isHotDeployEnabledOnTomcat();
+			try {
+				_hotDeployEnabled = _isHotDeployEnabledOnTomcat(servletContext);
+			}
+			catch (Exception e) {
+				_log.error("Tomcat Hot Deploy detection failed", e);
+			}
 		}
 		else {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to detect if hot deploy is enabled");
+				_log.debug("Unable to detect hot deploy mode of app server");
 			}
 		}
 

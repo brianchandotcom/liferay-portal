@@ -333,7 +333,7 @@ public class MainServlet extends ActionServlet {
 			_log.debug("Initialize hot deploy detector");
 		}
 
-		ServerHotDeployDetector.init();
+		ServerHotDeployDetector.init(servletContext);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Initialize plugins");

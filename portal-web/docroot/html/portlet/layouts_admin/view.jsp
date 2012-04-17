@@ -41,6 +41,17 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 
 <liferay-ui:error exception="<%= LayoutNameException.class %>" message="please-enter-a-valid-name" />
 
+<liferay-ui:error exception="<%= RequiredLayoutException.class %>">
+
+	<%
+	RequiredLayoutException rle = (RequiredLayoutException)errorException;
+	%>
+
+	<c:if test="<%= rle.getType() == RequiredLayoutException.AT_LEAST_ONE %>">
+		<liferay-ui:message key="you-must-have-at-least-one-page" />
+	</c:if>
+</liferay-ui:error>
+
 <c:choose>
 	<c:when test="<%= portletName.equals(PortletKeys.MY_SITES) || portletName.equals(PortletKeys.GROUP_PAGES) || portletName.equals(PortletKeys.MY_PAGES) || portletName.equals(PortletKeys.SITES_ADMIN) || portletName.equals(PortletKeys.USER_GROUPS_ADMIN) || portletName.equals(PortletKeys.USERS_ADMIN) %>">
 		<c:if test="<%= portletName.equals(PortletKeys.MY_SITES) || portletName.equals(PortletKeys.GROUP_PAGES) || portletName.equals(PortletKeys.SITES_ADMIN) || portletName.equals(PortletKeys.USER_GROUPS_ADMIN) || portletName.equals(PortletKeys.USERS_ADMIN) %>">

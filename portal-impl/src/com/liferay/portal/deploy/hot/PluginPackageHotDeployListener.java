@@ -30,10 +30,14 @@ import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.plugin.PluginPackageUtil;
+import com.liferay.portal.security.pacl.PACLPolicy;
+import com.liferay.portal.security.pacl.PACLPolicyManager;
 import com.liferay.portal.service.ServiceComponentLocalServiceUtil;
 
 import java.net.URL;
@@ -119,6 +123,8 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 
 		ServletContextPool.put(servletContextName, servletContext);
 
+		registerPACL(servletContext, portletClassLoader);
+
 		initServiceComponent(servletContext, portletClassLoader);
 
 		registerClpMessageListeners(servletContext, portletClassLoader);
@@ -160,6 +166,8 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 			servletContext, hotDeployEvent.getContextClassLoader());
 
 		unregisterClpMessageListeners(servletContext);
+
+		unregisterPACL(hotDeployEvent.getContextClassLoader());
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -329,6 +337,33 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 
 			liferayEhcacheRegionFactory.reconfigureCaches(configurationFile);
 		}
+	}
+
+	protected void registerPACL(
+			ServletContext servletContext, ClassLoader classLoader)
+		throws Exception {
+
+		Properties properties = null;
+
+		String propertiesString = HttpUtil.URLtoString(
+			servletContext.getResource(
+				"/WEB-INF/liferay-plugin-package.properties"));
+
+		if (propertiesString != null) {
+			properties = PropertiesUtil.load(propertiesString);
+		}
+		else {
+			properties = new Properties();
+		}
+
+		PACLPolicy paclPolicy = PACLPolicyManager.buildPACLPolicy(
+			servletContext.getServletContextName(), classLoader, properties);
+
+		PACLPolicyManager.register(classLoader, paclPolicy);
+	}
+
+	protected void unregisterPACL(ClassLoader classLoader) {
+		PACLPolicyManager.unregister(classLoader);
 	}
 
 	private static final String _MULTI_VM_PORTAL_CACHE_MANAGER_BEAN_NAME =

@@ -118,6 +118,10 @@
 		<priority value="ERROR" />
 	</category>
 
+	<category name="com.liferay.portal.dao.jdbc.pacl.PACLDataSource">
+		<priority value="ERROR" />
+	</category>
+
 	<category name="com.liferay.portal.dao.jdbc.pool">
 		<priority value="ERROR" />
 	</category>
@@ -310,6 +314,10 @@
 		<priority value="INFO" />
 	</category>
 
+	<category name="com.liferay.portal.language.LanguageResources">
+		<priority value="WARN" />
+	</category>
+
 	<category name="com.liferay.portal.lar">
 		<priority value="ERROR" />
 	</category>
@@ -394,12 +402,72 @@
 		<priority value="WARN" />
 	</category>
 
+	<category name="com.liferay.portal.security.lang.PortalSecurityManager">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.portal.security.lang.PortalSecurityManager#doCheckConnect">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.portal.security.lang.PortalSecurityManager#doCheckExec">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.portal.security.lang.PortalSecurityManager#doCheckListen">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.portal.security.lang.PortalSecurityManager#doCheckRead">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.portal.security.lang.PortalSecurityManager#doCheckWrite">
+		<priority value="ERROR" />
+	</category>
+
 	<category name="com.liferay.portal.security.ldap">
 		<priority value="ERROR" />
 	</category>
 
 	<category name="com.liferay.portal.security.ldap.PortalLDAPUtil">
 		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.portal.security.pacl.ActivePACLPolicy">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.portal.security.pacl.PACLAdvice">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.portal.security.pacl.PACLBeanHandler">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.portal.security.pacl.PACLClassUtil">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.portal.security.pacl.PACLPolicyManager">
+		<priority value="INFO" />
+	</category>
+
+	<category name="com.liferay.portal.security.checker.FileChecker">
+		<priority value="DEBUG" />
+	</category>
+
+	<category name="com.liferay.portal.security.checker.HookChecker">
+		<priority value="DEBUG" />
+	</category>
+
+	<category name="com.liferay.portal.security.checker.SocketChecker">
+		<priority value="DEBUG" />
+	</category>
+
+	<category name="com.liferay.portal.security.checker.SQLChecker">
+		<priority value="DEBUG" />
 	</category>
 
 	<category name="com.liferay.portal.security.permission.AdvancedPermissionChecker">

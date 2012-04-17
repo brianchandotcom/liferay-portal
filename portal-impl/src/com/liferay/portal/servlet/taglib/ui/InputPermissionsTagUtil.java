@@ -26,7 +26,8 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
 /**
- * @author Brian Chan
+ * @author     Brian Chan
+ * @deprecated {@link com.liferay.taglib.ui.InputPermissionsTag}
  */
 public class InputPermissionsTagUtil {
 

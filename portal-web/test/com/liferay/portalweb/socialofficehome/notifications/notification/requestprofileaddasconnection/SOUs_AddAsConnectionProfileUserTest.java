@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SOUs_AddAsConnectionProfileUserTest extends BaseTestCase {
 	public void testSOUs_AddAsConnectionProfileUser() throws Exception {
-		selenium.open("/web/joebloggs/profile/");
+		selenium.open("/web/joebloggs/so/profile/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -51,9 +51,8 @@ public class SOUs_AddAsConnectionProfileUserTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("test@liferay.com"),
 			selenium.getText("//div[@class='lfr-contact-extra']"));
 		assertEquals(RuntimeVariables.replace("Add as Connection"),
-			selenium.getText(
-				"//button[@id='_1_WAR_contactsportlet_addConnectionButton']/a/span"));
-		selenium.clickAt("//button[@id='_1_WAR_contactsportlet_addConnectionButton']/a/span",
+			selenium.getText("//span[@class='action add-connection']/a"));
+		selenium.clickAt("//span[@class='action add-connection']/a",
 			RuntimeVariables.replace("Add as Connection"));
 
 		for (int second = 0;; second++) {
@@ -74,7 +73,7 @@ public class SOUs_AddAsConnectionProfileUserTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Connection Requested"),
 			selenium.getText("//span[@class='disabled']/span"));
-		assertFalse(selenium.isVisible(
-				"//button[@id='_1_WAR_contactsportlet_addConnectionButton']"));
+		assertFalse(selenium.isElementPresent(
+				"//span[@class='action add-connection']/a"));
 	}
 }

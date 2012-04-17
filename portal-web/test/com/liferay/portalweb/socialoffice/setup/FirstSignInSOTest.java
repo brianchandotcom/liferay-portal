@@ -25,6 +25,23 @@ public class FirstSignInSOTest extends BaseTestCase {
 		selenium.setTimeout("180000");
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=Sign In")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.clickAt("link=Sign In", RuntimeVariables.replace("Sign In"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();

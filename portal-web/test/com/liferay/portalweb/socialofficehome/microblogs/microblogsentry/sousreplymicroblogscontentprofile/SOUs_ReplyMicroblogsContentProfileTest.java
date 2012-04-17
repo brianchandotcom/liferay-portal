@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SOUs_ReplyMicroblogsContentProfileTest extends BaseTestCase {
 	public void testSOUs_ReplyMicroblogsContentProfile()
 		throws Exception {
-		selenium.open("/web/joebloggs/profile");
+		selenium.open("/web/joebloggs/so/profile");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {

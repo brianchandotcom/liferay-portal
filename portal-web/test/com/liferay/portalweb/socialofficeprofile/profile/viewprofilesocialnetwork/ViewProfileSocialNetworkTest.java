@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewProfileSocialNetworkTest extends BaseTestCase {
 	public void testViewProfileSocialNetwork() throws Exception {
-		selenium.open("/web/socialoffice01/profile");
+		selenium.open("/web/socialoffice01/so/profile");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -49,27 +49,27 @@ public class ViewProfileSocialNetworkTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("socialoffice01@liferay.com"),
 			selenium.getText("//div[@class='lfr-contact-extra']"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='section lfr-user-social-network']/h3"));
+				"//div[@class='section field-group lfr-user-social-network']/h3"));
 		assertEquals(RuntimeVariables.replace("Social Network:"),
 			selenium.getText(
-				"//div[@class='section lfr-user-social-network']/h3"));
+				"//div[@class='section field-group lfr-user-social-network']/h3"));
 		assertEquals(RuntimeVariables.replace("Facebook"),
 			selenium.getText(
-				"//div[@class='section lfr-user-social-network']/ul/li/span"));
+				"//div[@class='section field-group lfr-user-social-network']/ul/li/span"));
 		assertEquals(RuntimeVariables.replace("socialoffice01"),
 			selenium.getText(
-				"//div[@class='section lfr-user-social-network']/ul/li/span[2]"));
+				"//div[@class='section field-group lfr-user-social-network']/ul/li/span[2]"));
 		assertEquals(RuntimeVariables.replace("MySpace"),
 			selenium.getText(
-				"//div[@class='section lfr-user-social-network']/ul/li[2]/span"));
+				"//div[@class='section field-group lfr-user-social-network']/ul/li[2]/span"));
 		assertEquals(RuntimeVariables.replace("socialoffice01"),
 			selenium.getText(
-				"//div[@class='section lfr-user-social-network']/ul/li[2]/span[2]"));
+				"//div[@class='section field-group lfr-user-social-network']/ul/li[2]/span[2]"));
 		assertEquals(RuntimeVariables.replace("Twitter"),
 			selenium.getText(
-				"//div[@class='section lfr-user-social-network']/ul/li[3]/span"));
+				"//div[@class='section field-group lfr-user-social-network']/ul/li[3]/span"));
 		assertEquals(RuntimeVariables.replace("socialoffice01"),
 			selenium.getText(
-				"//div[@class='section lfr-user-social-network']/ul/li[3]/span[2]"));
+				"//div[@class='section field-group lfr-user-social-network']/ul/li[3]/span[2]"));
 	}
 }

@@ -28,7 +28,7 @@ public class SOUs_DeleteReplyMicroblogsContentProfileTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
-				selenium.open("/web/joebloggs/profile");
+				selenium.open("/web/joebloggs/so/profile");
 				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {

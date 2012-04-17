@@ -29,6 +29,24 @@ public class EditSOUserPasswordTest extends BaseTestCase {
 			case 1:
 				selenium.open("/web/guest/home/");
 				loadRequiredJavaScriptModules();
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//li[@id='_145_mySites']/a/span")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
 				assertEquals(RuntimeVariables.replace("Go to"),
 					selenium.getText("//li[@id='_145_mySites']/a/span"));
 				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -163,6 +181,23 @@ public class EditSOUserPasswordTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 				selenium.open("/web/guest/home/");
 				loadRequiredJavaScriptModules();
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("link=Sign In")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
 				selenium.clickAt("link=Sign In",
 					RuntimeVariables.replace("Sign In"));
 				selenium.waitForPageToLoad("30000");
@@ -222,6 +257,23 @@ public class EditSOUserPasswordTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 				selenium.open("/web/guest/home/");
 				loadRequiredJavaScriptModules();
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("link=Sign In")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
 				selenium.clickAt("link=Sign In",
 					RuntimeVariables.replace("Sign In"));
 				selenium.waitForPageToLoad("30000");

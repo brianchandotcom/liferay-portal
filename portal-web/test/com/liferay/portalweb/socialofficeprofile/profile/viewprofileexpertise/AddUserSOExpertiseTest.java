@@ -80,7 +80,7 @@ public class AddUserSOExpertiseTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//a[@id='_125_expertiseLink']")) {
+						if (selenium.isVisible("//a[@id='_125_projectsLink']")) {
 							break;
 						}
 					}
@@ -91,9 +91,9 @@ public class AddUserSOExpertiseTest extends BaseTestCase {
 				}
 
 				assertTrue(selenium.isPartialText(
-						"//a[@id='_125_expertiseLink']", "Expertise"));
-				selenium.clickAt("//a[@id='_125_expertiseLink']",
-					RuntimeVariables.replace("Expertise"));
+						"//a[@id='_125_projectsLink']", "Projects"));
+				selenium.clickAt("//a[@id='_125_projectsLink']",
+					RuntimeVariables.replace("Projects"));
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {

@@ -42,7 +42,7 @@ public class AddSitesSiteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Home"),
+		assertEquals(RuntimeVariables.replace("Dashboard"),
 			selenium.getText("//li[contains(@class, 'selected')]/a/span"));
 		assertEquals(RuntimeVariables.replace("Sites"),
 			selenium.getText("//div[@id='so-sidebar']/h3"));
@@ -165,7 +165,7 @@ public class AddSitesSiteTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+				if (selenium.isVisible("//span[@class='portlet-msg-success']")) {
 					break;
 				}
 			}
@@ -176,8 +176,8 @@ public class AddSitesSiteTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace(
-				"Your request processed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
+				"Your request completed successfully."),
+			selenium.getText("//span[@class='portlet-msg-success']"));
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Open Site Name"),
 			selenium.getText(

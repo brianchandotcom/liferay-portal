@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewProfileAdditionalEmailAddressTest extends BaseTestCase {
 	public void testViewProfileAdditionalEmailAddress()
 		throws Exception {
-		selenium.open("/web/socialoffice01/profile");
+		selenium.open("/web/socialoffice01/so/profile");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -50,16 +50,16 @@ public class ViewProfileAdditionalEmailAddressTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("socialoffice01@liferay.com"),
 			selenium.getText("//div[@class='lfr-contact-extra']"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='section lfr-user-email-addresses']/h3"));
+				"//div[@class='section field-group lfr-user-email-addresses']/h3"));
 		assertEquals(RuntimeVariables.replace("Additional Email Addresses:"),
 			selenium.getText(
-				"//div[@class='section lfr-user-email-addresses']/h3"));
+				"//div[@class='section field-group lfr-user-email-addresses']/h3"));
 		assertEquals(RuntimeVariables.replace("Email Address"),
 			selenium.getText(
-				"//div[@class='section lfr-user-email-addresses']/ul/li/span"));
+				"//div[@class='section field-group lfr-user-email-addresses']/ul/li/span"));
 		assertEquals(RuntimeVariables.replace(
 				"socialofficefriendea02@liferay.com"),
 			selenium.getText(
-				"//div[@class='section lfr-user-email-addresses']/ul/li/span[2]/a"));
+				"//div[@class='section field-group lfr-user-email-addresses']/ul/li/span[2]/a"));
 	}
 }

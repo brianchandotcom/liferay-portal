@@ -24,7 +24,23 @@ public class SOUs1_SignOutSOTest extends BaseTestCase {
 	public void testSOUs1_SignOutSO() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-		assertTrue(selenium.isVisible("//li[@id='_145_userMenu']/a"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//li[@id='_145_userMenu']/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.mouseOver("//li[@id='_145_userMenu']/a");
 
 		for (int second = 0;; second++) {

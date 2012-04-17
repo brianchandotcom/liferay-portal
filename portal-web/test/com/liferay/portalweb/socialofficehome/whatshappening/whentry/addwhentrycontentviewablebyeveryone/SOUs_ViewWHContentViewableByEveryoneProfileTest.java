@@ -24,7 +24,7 @@ public class SOUs_ViewWHContentViewableByEveryoneProfileTest
 	extends BaseTestCase {
 	public void testSOUs_ViewWHContentViewableByEveryoneProfile()
 		throws Exception {
-		selenium.open("/web/joebloggs/profile");
+		selenium.open("/web/joebloggs/so/profile");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Microblogs Post"),
 			selenium.getText("//div[@class='content']"));
